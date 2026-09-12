@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.0.1-research.2 — Research Preview 2
+
+Recommended first public research snapshot.
+
+### Corrected after publication audit
+
+- Corrected two transcription errors in the v3 human-readable Guarded Hierarchical Deoptimization report.
+- Normalized the published v1 benchmark summary CSV to the audited values.
+- Release notes now explicitly distinguish local wall time, serialization-byte proxies, observed pixels, and model/token claims.
+
+The underlying promoted conclusions are unchanged. `research.1` remains in the release history as the first publication, but `research.2` should be used for citation and comparison.
+
 ## 0.0.1-research.1 — Research Preview 1
 
 Initial public research snapshot.
