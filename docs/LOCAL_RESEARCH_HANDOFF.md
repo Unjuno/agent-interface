@@ -1,5 +1,30 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — worker yield and guided correction (2026-09-13)
+
+[Guided pointer pilot](../research/live_control/GUIDED_POINTER.md) connects
+session_v15/owner_v9 to one bounded reply during the original pointer hold, exposed
+through candidate interactive_v12. No preplanned tail competes with correction.
+Three known-fixture scripted Inkscape runs achieved 23 px for a requested 24 px,
+within declared ±1 px. Audit verifies 39 exact frames and release/cleanup evidence.
+Reply timeout and original expiry release despite blocked output; a consumed-reply
+worker stall also releases and rejects late movement. That case still reports
+`failed`, followed by successful observe recovery. Remote assistant use, fresh
+cases and matched performance remain next; no baseline promotion or freeze credit.
+
+Hourly Issue monitoring is configured for Unjuno/agent-interface. New Issues and
+comments inform ongoing research; unchanged state stays quiet. Issue #2/#3 priorities
+remain relevant feedback/continuation and separately evaluated selectable grids.
+
+Issue #4, `Build the computer interface frontier models deserve`, and Issue #5,
+`Explore agent-native visual addressing and feedback contracts`, were read in full
+at publication (no comments). Treat #4 as the design thesis and #5 as an experiment
+menu, not a bundled implementation mandate. Prioritize actual assistant use of
+the continuation candidate, then isolated observation-bound addressing/effect
+feedback experiments with fresh-case correctness and planner-boundary measurements.
+Keep universal GUI fallback and independent scoring; deterministic fixture tracking
+does not establish a general visual anchor or servo implementation.
+
 ## Latest follow-up — same-hold continuation admission (2026-09-13)
 
 [Continuation admission](../research/live_control/CONTINUATION_ADMISSION.md) adds

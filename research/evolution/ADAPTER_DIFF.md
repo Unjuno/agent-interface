@@ -98,3 +98,11 @@ owner_v8 instance/revision matching for movement within one live hold and origin
 lease. Two component cohorts pass 11/12 checks. This is core churn; executor yield,
 path replacement, observation freshness and actual assistant continuation remain
 unimplemented and unqualified.
+
+[Guided pointer replies](../live_control/GUIDED_POINTER.md) subsequently add
+session_v14/v15, owner_v9, a one-reply mailbox and candidate interactive_v12.
+This is core semantic churn: executor yield, count/age bounds and timer lifetime
+through owner admission. Three known-fixture local visual-controller runs meet
+±1 px displacement tolerance, with blocked-output and consumed-reply stall release
+evidence. The stall retains a `failed` terminal classification. No remote-model
+performance, fresh-case generality, promotion or freeze qualification is claimed.

@@ -104,3 +104,12 @@ X11固有部分の分離、入力権限・期限・解放・フォーカス・�
 See [freeze criteria](../research/evolution/freeze_criteria.md),
 [ledger](../research/evolution/evolution.csv), and
 [original proposal](../research/evolution/source_proposal.md).
+
+2026-09-13 Issue #4/#5 refinement: optimize the capability a planner can express
+through observation, action and feedback, preserving universal GUI fallback.
+Observation-bound visual addressing, selectable presentation, deterministic effect
+feedback and bounded continuation are isolated research candidates, not a bundled
+new requirement or evidence of performance. Evaluate correctness, application
+effect, planner boundaries and cost on fresh cases across the Domain Coverage
+Matrix. See the latest [handoff](LOCAL_RESEARCH_HANDOFF.md) and
+[guided pointer evidence](../research/live_control/GUIDED_POINTER.md).

@@ -1,5 +1,9 @@
 # Same-hold continuation admission — 2026-09-13
 
+Follow-up: [guided pointer reply pilot](GUIDED_POINTER.md) integrates the worker
+yield and reply protocol in newer candidates. The component evidence below remains
+the frozen owner_v8 result.
+
 Candidate `input_owner_v8.py` adds an owner-instance ID and `continue_move` to the
 existing independent input owner. This addresses the admission boundary needed
 by Issue #2's bounded continuation direction. It does not yet replace the running
