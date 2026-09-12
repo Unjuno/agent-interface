@@ -1,5 +1,9 @@
 # Asynchronous live control: development evidence
 
+Follow-up: [cooperative intent expiry and input-boundary fault injection](LEASE.md).
+Use `session_v4.py` for the current lease experiment; other revisions retain
+their original behavior and evidence.
+
 Follow-up: [revision 2 decision boundaries and assistant trial](DECISION_BOUNDARY.md).
 The description below records the original `session.py` revision.
 

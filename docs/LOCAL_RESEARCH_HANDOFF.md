@@ -117,6 +117,18 @@ DOOM remains a transfer environment. Do not substitute basic-room completion
 for reducing planner boundaries or for practical GUI correctness. Candidate
 future states, leases and semantic versions are not implemented by this note.
 
+## Cooperative expiry experiment
+
+The first [cooperative expiry experiment](../research/live_control/LEASE.md)
+now exists. An absolute runtime-clock deadline is checked at admission, during
+held input and before key-down. Two fresh paired XTerm cases stop the tail on
+expiry and complete via a new intent, while duration-only proceeds beyond the
+comparison deadline. Latest release overshoot was 0.929/0.940 ms, not a bound.
+Assistant use verified stale-request rejection and fresh completion. A mocked
+slow logger exposed late input in revision 3; revision 4 moves logging after
+the input call. Blocking can still delay release. Planner/model timestamps,
+hard watchdogs and semantic-version guards remain open.
+
 ## Parallel control-codec discussion (existing branch)
 
 A remote [control-codec research branch](https://github.com/Unjuno/agent-interface/tree/research/control-codec-track)
