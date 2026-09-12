@@ -137,3 +137,11 @@ returns images with action results. Actual self-use completed with eight exact
 frames. Runtime acceptances were 12.384s apart; a separately measured10.444s
 interval remains after the image tool returns. These are scoped diagnostics,
 not a same-model speed improvement or pure inference measurement.
+
+## Paired feedback pilot and corrected image diagnosis
+
+[Feedback pilot](FEEDBACK_PILOT.md): four actual tasks in AB/BA order, three
+completed and one aborted after expiry/recovery. All28 frames and delivery audit.
+The perceived black recovery image is a normal saved PNG; an older failed PNG
+also matches its published bytes and renders normally at original detail.
+Investigate end-to-end image presentation before more timing claims.

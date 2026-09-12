@@ -4,6 +4,17 @@ This is the entry point for discussion in another chat. The user has authorized
 direct updates to `main` when validated progress is ready. Keep successes,
 failures, reproducible code and remaining limitations together in each update.
 
+## Latest paired pilot and diagnosis correction
+
+[Feedback pilot](../research/doom/FEEDBACK_PILOT.md) completed four AB/BA trials
+on two matched seeds: combined2/2 complete, separate1/2, with a rejected expired
+shot and aborted recovery retained. All28 frames and delivery audit. No general
+speedup claim. Important: the apparently black recovery image and the older
+shared-assistant-01/002.png contain normal scene pixels; original-detail rereads
+show them correctly and the older PNG matches its published Git bytes. Thus
+engine black-screen failure was not established. Next verify saved PNG through
+encoded tool image and model-visible presentation, then resume timing studies.
+
 ## Latest timing evidence
 
 [Traced combined feedback](../research/doom/TRACED_CLIENT.md) records local pipe

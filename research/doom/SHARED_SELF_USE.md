@@ -1,4 +1,9 @@
-# Shared DOOM self-use: rendering gap remains unresolved
+# Shared DOOM self-use: observed presentation gap
+
+**Correction:** [later byte/image audit](FEEDBACK_PILOT.md) confirms the saved
+002.png contains the normal scene and matches its published Git bytes. The
+black appearance described below was the assistant-received presentation, not
+a proven black saved PNG or engine-rendering failure. The failed task remains.
 
 `shared-assistant-01` is actual assistant operation of frozen `session_v6.py`,
 seed 990201. The assistant viewed initial PNG 001, saw the target left of center,
