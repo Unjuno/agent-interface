@@ -1,5 +1,23 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — guarded placement negative/positive (2026-09-13)
+
+[Guarded placement study](../research/openttd_task/GUARDED_PLACEMENT.md) found that
+replaying the prior coordinates adds an unwanted road at tile 681: old score
+passes, new 42-tile road/owner preservation score fails. This is a new replay,
+not a retrospective surrounding-state measurement of the original episode.
+
+A fresh assistant episode previewed the C selection outline and corrected the
+drag endpoint; both target and surrounding-preservation checks passed. Thirteen
+exact images across the negative replay and visual positive, matching initial
+neighborhoods, source/save hashes, release and process cleanup were audited.
+The visual development episode used two programs, seven frames and 43.42 seconds
+including tool/reasoning delays. No speed comparison or held-out skill claim.
+
+The shared backend is unchanged. Scoring covers roads/ownership in a bounded
+neighborhood, not every side effect or the whole world. Fresh cases, wider desktop
+regressions, hand-made GUI startup and continuous feedback remain open gates.
+
 ## Latest follow-up — shared pointer and OpenTTD self-use (2026-09-13)
 
 [Shared pointer backend](../research/live_control/POINTER_BACKEND.md) now binds

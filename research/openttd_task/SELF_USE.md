@@ -1,5 +1,10 @@
 # First OpenTTD shared-pointer self-use — 2026-09-13
 
+Follow-up: [guarded placement](GUARDED_PLACEMENT.md) replayed these coordinates and
+detected one extra surrounding road that this original score did not constrain.
+A separate corrected visual episode passed the expanded score. The original
+single-episode result below retains its original, narrower interpretation.
+
 One assistant-controlled visual episode passed the existing independent three-tile
 road contract. This is evidence that the shared pointer candidate can perform a
 small dense-GUI/placement task. It is not formal benchmark adoption, human-speed

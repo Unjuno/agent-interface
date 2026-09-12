@@ -8,6 +8,10 @@ Later task evidence: [one OpenTTD visual self-use episode](../openttd_task/SELF_
 passed the small independent road contract with the shared pointer candidate.
 This adds toolbar/placement coverage, without formal adoption or a speed claim.
 
+[Guarded placement follow-up](../openttd_task/GUARDED_PLACEMENT.md) now distinguishes
+an overlong-drag replay (old score passes, surrounding-state score fails) from a
+corrected visual episode. This strengthens local placement scoring, not adoption.
+
 **Decision: keep DOOM as one orthogonal stress domain. Shortlist OpenTTD and
 Mindustry for the next task-level pilots; retain Luanti as the 3D candidate.**
 None of these three is adopted as a formal benchmark yet. No result here is a

@@ -65,3 +65,9 @@ cohort passed; three setup failures remain. [One OpenTTD self-use episode](../op
 passed independent scoring with this shared candidate. The OpenTTD adapter uses
 no custom input semantics. This is new core semantics/churn, not runtime promotion
 or a qualifying freeze revision; broad/fresh regressions remain open.
+
+[Guarded OpenTTD placement](../openttd_task/GUARDED_PLACEMENT.md) subsequently adds
+a query-only surrounding-state observer and stricter independent task score.
+The shared backend/executor are unchanged. A real overlong-drag replay fails the
+new score and a corrected visual development episode passes; this is a task/oracle
+revision, not another core-semantics change or qualifying freeze revision.
