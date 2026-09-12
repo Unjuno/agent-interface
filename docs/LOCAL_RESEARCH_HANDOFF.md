@@ -1,5 +1,21 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — same-hold continuation admission (2026-09-13)
+
+[Continuation admission](../research/live_control/CONTINUATION_ADMISSION.md) adds
+candidate owner_v8 identity/revision checks and `continue_move` on the original
+pointer-only hold. No button re-press, deadline extension or target rebinding.
+Two controlled X11 cohorts passed 11/12 checks, including concurrent duplicate
+replies (one admission), obsolete owner IDs, post-release/expiry/cancel rejection,
+external physical release and focus/geometry boundaries.
+
+This is the owner component only. No executor path replacement or planner-facing
+continuation yet; do not run a correction alongside an unmodified preplanned tail.
+Next integrate explicit yield/one response and sequence/age/update-count limits,
+then real-app/assistant feedback correction. Issue #2/#3 were checked unchanged;
+their priorities remain task-relevant feedback and fewer planner boundaries, with
+selectable grids a separate matched presentation experiment. No speed claim.
+
 ## Latest follow-up — historical input-state bracketing (2026-09-13)
 
 [Input-state report](../research/live_control/INPUT_STATE.md) adds candidate

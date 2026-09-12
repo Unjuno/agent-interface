@@ -92,3 +92,9 @@ change/churn, not qualification, precision improvement or runtime promotion.
 owner_v7/session_v13 state samples around capture/preparation. Four race/stall
 cases and eight focus regressions passed, including a held-state record delivered
 after release. This is state-contract churn; bounded continuation is not implemented.
+
+[Owner continuation admission](../live_control/CONTINUATION_ADMISSION.md) introduces
+owner_v8 instance/revision matching for movement within one live hold and original
+lease. Two component cohorts pass 11/12 checks. This is core churn; executor yield,
+path replacement, observation freshness and actual assistant continuation remain
+unimplemented and unqualified.
