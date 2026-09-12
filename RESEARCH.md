@@ -66,7 +66,92 @@ Primary artifacts:
 - [`guarded_hidden_summary.csv`](research/real_apps_v3/guarded_hidden_summary.csv)
 - [`complete_hidden_summary.csv`](research/real_apps_v3/complete_hidden_summary.csv)
 
-## Current hypothesis — Observation Gating
+## Observation Gating — A1 scoped result
+
+Path: [`research/observation_gating/`](research/observation_gating/)
+
+On 2026-09-13 JST, frozen A1 revision 3 completed two fresh replicates, 24 paired
+episodes/app across XTerm, a Chromium-family browser (Chrome for Testing), Calc
+and Inkscape under Ubuntu/WSL2/Xvfb. O0 and O1 each achieved **96/96 success**.
+All **1,446 sampled frames** reconstructed exactly, with zero false suppressions
+or missed sampled changes.
+
+- Exact same-trace image reduction: **17.15%**, 95% pair-bootstrap interval
+  **13.86–20.65%**.
+- Live intended-model-boundary images: **722 → 604**, **16.34%** reduction
+  (12.14–20.64% interval). The receiver is a local reconstructing sink; no LLM
+  was invoked.
+- Median paired local task-wall delta (O1 minus O0): **+0.59 ms**, interval
+  **-2.36 to +4.73 ms**. A speedup was not established.
+- O1 exact compare cost: p50/p95/p99 **0.025/0.337/0.729 ms** per sample.
+
+Decision: **PASS as a scoped O1 research baseline**, enabling the next O2
+experiment. This is not a user-runtime promotion or evidence of token savings.
+Captures still happen, and benefits differ strongly by application.
+
+The result retains a rejected Calc startup-grey screen and two earlier frozen
+Inkscape baseline failures. A visible selection barrier alone did not repair the
+drag failure. The final local policy uses a conservative 30 ms press dwell,
+validated with both pair orders; it is not a universal input specification.
+
+Primary artifacts:
+
+- [`REPORT.md`](research/observation_gating/REPORT.md)
+- [`PROTOCOL.md`](research/observation_gating/PROTOCOL.md)
+- [`DEVELOPMENT.md`](research/observation_gating/DEVELOPMENT.md)
+- [`summary.csv`](research/observation_gating/results/a1r3-summary/summary.csv)
+- [`frozen source and environment`](research/observation_gating/results/frozen-a1r3/)
+
+## Observation tiles — A2 scoped result and actual assistant use
+
+Path: [`research/observation_tiles/`](research/observation_tiles/).
+
+On 2026-09-13 JST, frozen A2 revision 2 completed **64/64 fresh episodes**, eight
+O1/O2 pairs/app across the same four real apps. All **553 sampled frames** passed
+independent archived-wire/raw-PNG reconstruction and saved-output checks.
+
+- Same-trace serialized-byte reduction: **70.73%**, 95% pair-bootstrap interval
+  **64.72–75.19%**. Both representations use identical zlib level 1 and metadata.
+- Live bytes: **13,562,871 → 3,853,968**, **71.58%** reduction.
+- Paired task-wall delta (O2 minus O1): median **+2.00 ms**, interval
+  **−4.00 to +12.27 ms**. A local speedup is not established.
+- Full images are reconstructed before controller/model viewing. This does not
+  establish image-token savings, and captures still occur in full.
+
+Revision 1 stopped at a baseline Inkscape drag failure after 31 attempts; its
+entire fresh efficacy comparison is retained as rejected. Revision 2 adds a
+shared segmented gesture with observations while the button is held. This does
+not isolate motor reliability from pacing and is not adaptive path correction.
+
+The parent assistant also directly used the new stdin research interface to
+operate Calc, Inkscape and XTerm through reconstructed screenshots. These three
+exploratory sessions led to bounded change waits, unchanged PNG reuse, explicit
+image/context timestamps, command logs and atomic unsupported-text rejection.
+All three outputs and 18 observations were re-verified. This is actual use, but
+not a controlled model latency/token comparison or a universal runtime.
+
+Decision: **PASS for exact transport research; HOLD for a speed/token/runtime
+claim**. A bounded Luna sourcing/review pilot was useful but needed fresh-source
+verification after stale findings; no controlled model ranking was obtained.
+
+Primary artifacts: [report](research/observation_tiles/REPORT.md),
+[protocol](research/observation_tiles/PROTOCOL.md),
+[failures and actual use](research/observation_tiles/DEVELOPMENT.md),
+[primary-source research](research/observation_tiles/RELATED_WORK.md), and
+[fresh summary](research/observation_tiles/results/a2r2-summary/summary.json).
+
+### Continuing hypothesis
+
+Image preparation was subsequently isolated in an [offline replay study](research/observation_tiles/IMAGE_ARTIFACT.md).
+On the two archived A2 replicates, exact PNG reuse reduced local preparation
+time by 10.81% / 16.59%; PNG level 1 instead of level 6 reduced reuse-path time
+by a further 15.89% / 16.03%, with larger PNG files. All 1,659 validation outputs
+decoded exactly. This is not new live-task, model-token or end-to-end evidence.
+The shared sink is integrated into dogfooding with an explicit compression option;
+the default remains 6. Actual assistant use at level 1 completed XTerm correctly,
+but revealed a roughly 10.22-second inter-command interval despite local images
+being ready in 41–56 ms after action issue. The next priority is the real
+agent/tool interaction boundary, not further isolated image micro-optimization.
 
 The next major question is whether image feedback can be treated as a local state-change signal rather than automatically forwarding every screenshot to a model.
 
@@ -121,8 +206,8 @@ Negative results are retained because they constrain the design space.
 
 ## Next experiments
 
-1. Observation Gating on the real-app suite.
-2. Multi-resolution image change vectors vs global hashes.
-3. Automatic guard placement: compare guard cost against expected stale-route failure cost.
-4. Longer mixed-app sessions with app restarts, focus drift, geometry drift, and modal transitions.
+1. Paired agent-in-the-loop adapter measurement: PNG/reference reuse, real image tokens and resume latency.
+2. Isolate adaptive motor feedback from additional pacing/observation cost; retain the failed drag regression.
+3. Longer mixed-app sessions with app restarts, focus drift, geometry drift, and modal transitions.
+4. ROI/visual-state experiments with full-base recovery, plus guard placement cost vs expected failure cost.
 5. Only after algorithmic semantics stabilize: production-oriented implementation work.

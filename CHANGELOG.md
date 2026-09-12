@@ -1,5 +1,24 @@
 # Changelog
 
+## Unreleased — 2026-09-13 research update
+
+- Publish A1 exact unchanged observation results: 192 fresh episodes, 1,446 exact
+  frames and 17.15% same-trace image reduction; no established local speedup.
+- Publish A2 exact tile transport results: 64 fresh episodes, 553 exact frames
+  and 70.73% same-trace serialized-byte reduction; not image-token savings.
+- Include failed/rejected experiments, frozen source manifests, raw images,
+  packets, action records and independent output/audit summaries.
+- Add an assistant-operated Python research interface, timestamped incremental
+  feedback, bounded change waits, exact PNG reuse and unsupported-text rejection.
+- Isolate PNG preparation costs through archived-frame replay and record the
+  remaining seconds-scale gap between actual assistant commands.
+- Preserve frozen evidence bytes across Git checkouts and add a cross-chat
+  handoff describing open work and the separate control-codec research branch.
+- Add real-time DOOM as a later evaluation/Product Hunt demonstration milestone.
+
+This update publishes research evidence, not a runnable runtime release. True
+asynchronous control, a human-speed baseline and actual token savings remain open.
+
 ## 0.0.1-research.2 — Research Preview 2
 
 Recommended first public research snapshot.

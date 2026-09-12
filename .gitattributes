@@ -1,0 +1,8 @@
+# Frozen research hashes describe exact on-disk bytes, including line endings.
+# Preserve sources, manifests and raw evidence across Windows/Linux checkouts.
+research/observation_gating/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/observation_tiles/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/real_apps_v1/real_app_suite_v1.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Captured application diagnostics are immutable evidence, including spaces.
+research/observation_gating/results/**/application.txt -whitespace
+research/observation_tiles/results/**/application.txt -whitespace

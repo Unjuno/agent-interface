@@ -2,6 +2,8 @@
 
 Design and research notes for Agent Interface.
 
+- [Latest local research handoff](LOCAL_RESEARCH_HANDOFF.md) — measured results, limitations and coordination across chats.
+
 - `principles.md` — thesis and component principles.
 - `architecture.md` — current architecture.
 - `product-hunt.md` — launch positioning notes.

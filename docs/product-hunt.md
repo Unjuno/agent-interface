@@ -20,7 +20,8 @@ Do not launch this as “another GUI agent.” The product/research object is th
 planner -> semantic program -> local guarded execution -> meaningful observation only
 ```
 
-The public repository is intentionally both the research record and the release artifact.
+The public repository is the research record. Runnable user distributions have
+a separate release gate; see [release contract](../release/README.md).
 
 ## What can be claimed today
 
@@ -28,6 +29,8 @@ The public repository is intentionally both the research record and the release 
 - route-level deoptimization and pre-execution guards have real-app evidence in the included experiments;
 - raw reports and CSVs are public;
 - the project is actively researching Observation Gating to suppress redundant model-visible screenshots.
+- scoped O1/A2 experiments and actual assistant-operated sessions are recorded;
+  use the [research handoff](LOCAL_RESEARCH_HANDOFF.md) for exact claims and limits.
 
 ## What should not be claimed yet
 
@@ -43,3 +46,7 @@ The public repository is intentionally both the research record and the release 
 2. Short real-app recording with a stale route being guarded/deoptimized before failure.
 3. One benchmark card with exact environment and `n` visible.
 4. Repository/release link showing that the raw evidence ships with the release.
+5. Later: real-time DOOM with the assistant choosing actions while the game keeps
+   running at normal speed. Link a short edit to an uninterrupted master and
+   synchronized input/observation traces; disclose the model and local controller
+   roles. This demo has not been built or recorded yet.

@@ -2,17 +2,29 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
-## Now — Observation Gating
+## Now — actual agent interaction loop
+
+The scoped O1/O2 studies and actual assistant use are summarized in the
+[research handoff](docs/LOCAL_RESEARCH_HANDOFF.md). Local feedback in tens of
+milliseconds has not yet produced a human-like end-to-end operating tempo.
+
+- [ ] Persistent asynchronous execution and incremental observations.
+- [ ] Bounded input holds, cancellation/release and stale-state handling.
+- [ ] Guarded local progress that eliminates unnecessary agent/tool round trips.
+- [ ] Same-model live measurements of task quality, completion latency and actual tokens.
+- [ ] Comparable human operating-tempo measurements.
+
+## Observation Gating — scoped foundation and remaining work
 
 Goal: remove visual/model input that carries no new task-relevant information while keeping correctness as a hard gate.
 
-- [ ] Freeze O0: full screenshot after each logical step.
-- [ ] Add O1: exact unchanged-frame suppression.
-- [ ] Add O2: exact changed-tile / spatial-delta feedback.
+- [x] Freeze O0: full screenshot after each logical step (A1 scoped baseline).
+- [x] Add O1: exact unchanged-frame suppression (A1 scoped pass).
+- [x] Add O2: exact changed-tile / spatial-delta feedback (A2 transport-only pass).
 - [ ] Add O3: relevant-region gating.
 - [ ] Add O4: local `VERIFY` before model escalation.
-- [ ] Measure action-to-first-useful-feedback latency.
-- [ ] Measure image-observation elimination at equal correctness.
+- [x] Measure local action-to-first-feedback latency; full agent latency remains open.
+- [x] Measure image-observation elimination at equal correctness in A1's four-app suite.
 - [ ] Stress tiny but semantically important changes so approximate hashes cannot silently hide them.
 
 Active track: [`research/observation_gating/`](research/observation_gating/).
@@ -23,6 +35,39 @@ Active track: [`research/observation_gating/`](research/observation_gating/).
 - [ ] Automatically select pre-execution guard vs postcondition-only verification.
 - [ ] Continue separating binding, precondition, route, observation-cache, and motor-calibration lifetimes.
 - [ ] Run longer multi-app sessions with focus drift, window replacement, modal transitions, and geometry changes.
+
+## Demonstration milestone — real-time DOOM
+
+User direction (2026-09-13): once the live control foundation is usable, have
+the assistant play DOOM in real time and develop a Product Hunt demonstration.
+This extends the human-like operating-tempo objective; it does not replace
+ordinary desktop task correctness or establish that capability by itself.
+
+- [ ] Establish persistent observation/action delivery, bounded held inputs,
+  cancellation/release and stale-observation handling before an extended run.
+- [ ] Start with navigation and turning, then navigation under moving threats,
+  then a short repeatable gameplay objective. The assistant chooses actions
+  from current visual observations through Agent Interface.
+- [ ] Keep the game progressing at ordinary wall-clock speed during reasoning.
+  Report game speed, render rate, capture rate, observation age, decision rate,
+  action duration and action-to-visible-effect latency separately.
+- [ ] Compare interfaces with the same model, map/seed schedule, difficulty,
+  resolution and action capabilities. Keep failed episodes and measure success,
+  survival/progress, actual tokens and end-to-end time; human comparison needs
+  an actual comparable human run.
+- [ ] Record an uninterrupted real-time master video with synchronized input,
+  observation and decision traces. A short Product Hunt edit should link to the
+  full run and disclose model, local controller responsibilities and settings.
+- [ ] Verify reproducible setup and usable distribution before publication.
+
+Candidate instrumentation: [ViZDoom](https://github.com/Farama-Foundation/ViZDoom).
+Its [mode documentation](https://vizdoom.farama.org/api/cpp/enums/) distinguishes
+synchronous modes that wait for the agent from asynchronous modes that advance
+without waiting. Use asynchronous ordinary-speed execution for the real-time
+claim. A direct screen-buffer/action API experiment must be labeled separately
+from an OS screen-capture and keyboard/mouse demonstration. Keep privileged
+game state out of the visual controller; any scoring-only instrumentation is
+separate. This milestone is planned, not an existing DOOM result.
 
 ## Runtime consolidation
 

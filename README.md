@@ -8,6 +8,8 @@
 
 [Landing page](https://unjuno.github.io/agent-interface/) · [Principles](docs/principles.md) · [Research index](RESEARCH.md) · [Architecture](docs/architecture.md) · [Roadmap](ROADMAP.md) · [Open an idea](https://github.com/Unjuno/agent-interface/issues/new?template=idea.yml)
 
+Latest research handoff: [measured progress, failures and next steps](docs/LOCAL_RESEARCH_HANDOFF.md).
+
 ## The hypothesis
 
 Most computer-use systems still resemble:
@@ -79,6 +81,9 @@ These are scoped research measurements, not production claims.
 | XTerm focus guard | p99 reduced about **77.5%** | 72 hidden episodes |
 | Chromium geometry guard | p99 reduced about **75.4%** | 72 hidden episodes |
 | Layered binding + route guards | 72/72 success with predictable stale-route execution eliminated before execution | Chromium drift + process replacement |
+| Exact unchanged-frame suppression (O1) | 96/96 tasks per strategy; 17.15% same-trace image reduction; zero false suppressions | [Four real apps, 24 fresh pairs/app](research/observation_gating/REPORT.md); scripted controller, no model/token measurement; local speedup unproven |
+| Exact tile transport (O2) | 32/32 tasks per strategy; 70.73% same-trace serialized-byte reduction; 553 exact frames | [Four apps, 8 fresh pairs/app](research/observation_tiles/REPORT.md); reconstructed full images, no token saving or local speedup established |
+| Assistant-operated research interface | Calc, Inkscape and XTerm tasks completed through reconstructed images; feedback wait and PNG-reference reuse exercised | [Three exploratory sessions](research/observation_tiles/DEVELOPMENT.md), not a controlled model performance comparison |
 
 Raw reports and CSVs are under [`research/`](research/). `planner bytes` are not tokens, `observed pixels` are not image tokens, and local wall time is not model-in-loop latency.
 
@@ -98,7 +103,9 @@ Raw reports and CSVs are under [`research/`](research/). `planner bytes` are not
 │   ├── requirements.txt       # research-only Python dependencies
 │   ├── real_apps_v1/          # input delivery + sparse reactive control
 │   ├── real_apps_v2/          # method lifetime vs route lifetime
-│   └── real_apps_v3/          # guarded hierarchical deoptimization
+│   ├── real_apps_v3/          # guarded hierarchical deoptimization
+│   ├── observation_gating/   # frozen O0/O1 experiments and raw evidence
+│   └── observation_tiles/    # exact transport, assistant use and image preparation
 ├── runtime/
 │   └── README.md              # future runnable runtime workspace
 ├── release/
