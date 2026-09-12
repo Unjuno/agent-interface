@@ -10,7 +10,7 @@ baseline entrypoints remain available; this candidate is not promoted or qualifi
 An ordinary submitted program can contain this step:
 
 ```json
-{"op":"pointer_guided","points":[[619,390],[631,390]],"duration_ms":100,"reply_timeout_ms":1000,"max_updates":2,"feedback_delay_ms":80}
+{"op":"pointer_guided","points":[{"x":619,"y":390},{"x":631,"y":390}],"duration_ms":100,"reply_timeout_ms":1000,"max_updates":2,"feedback_delay_ms":80}
 ```
 
 The initial path ends before yielding: there is no remaining preplanned tail

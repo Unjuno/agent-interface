@@ -1,5 +1,17 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — actual assistant reply misses deadline (2026-09-13)
+
+[Actual guided self-use](../research/live_control/GUIDED_SELF_USE.md) tested the
+published candidate with assistant screenshot decisions. A correction arrived
+13.391 s after yield, beyond the maximum 5 s reply window; independent release
+and stale rejection worked, but saved-object scoring was false (no displacement).
+Seven exact frames and source hashes audited. A launch-only stdin-EOF attempt and
+two schema mistakes are retained; the incorrect documented point example is fixed.
+Next prioritize self-describing schemas and an isolated planner-declared bounded
+visual-effect experiment on fresh cases. The local scripted controller's success
+does not transfer automatically to a remote assistant. Goal remains active.
+
 ## Latest follow-up — worker yield and guided correction (2026-09-13)
 
 [Guided pointer pilot](../research/live_control/GUIDED_POINTER.md) connects
