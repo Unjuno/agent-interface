@@ -1,5 +1,8 @@
 # Moving-screen visual feedback development study
 
+Follow-up: [asynchronous execution and latest-observation delivery](ASYNC_INTEGRATION.md)
+are now connected and exercised by the assistant. The frozen study below remains unchanged.
+
 This experiment adds a wall-clock-driven X11 target-tracking task. The red
 target keeps moving while the controller waits. A green player responds to OS
 Left/Right keys. The controller locates both from RGB screenshots; application

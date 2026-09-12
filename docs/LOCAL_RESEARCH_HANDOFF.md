@@ -71,6 +71,18 @@ inspected the start screen and invoked a six-second local method successfully.
 Next integrate bounded visual feedback methods into asynchronous execution;
 the current tracking invocation itself does not stream planner feedback.
 
+The [async integration follow-up](../research/visual_tracking/ASYNC_INTEGRATION.md)
+now connects tracking to the executor and exact observation transport. In two
+actual assistant sessions, tracking continued between tool calls and accepted
+live cancellation with verified release (35.68/49.84 ms server-local latency).
+All 443 recorded frames independently reconstructed exactly. Full streaming
+flooded tool output, so a second entry point retains all local events while
+returning initial/step feedback, critical control notifications and a polled
+latest image. Same-trace replay reduced JSON presentation bytes from 166,673 to
+3,304; this is lossy presentation selection, not image-token savings. The latest
+image can omit intermediate events. General event escalation and real target
+loss/focus drift still require validation.
+
 The next controlled evaluation must measure the actual agent loop, completion
 quality and measured token use, not replace those with bytes or local timers.
 No LLM API/token-metered comparison or comparable human baseline has run here.
