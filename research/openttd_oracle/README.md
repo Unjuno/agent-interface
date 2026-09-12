@@ -1,5 +1,8 @@
 # OpenTTD road-placement oracle calibration — 2026-09-13
 
+Follow-up: [visible saved task and read-only observer](../openttd_task/README.md)
+now provide the initial fixture and two fresh save-load checks.
+
 The independent scorer now distinguishes **empty, partial, complete and extra
 placement** on two real OpenTTD 13.4 worlds. This removes one prerequisite for
 a small dense-GUI placement pilot. It is not assistant gameplay, shared-runtime

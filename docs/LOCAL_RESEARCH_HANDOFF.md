@@ -1,6 +1,27 @@
 # Local research handoff — 2026-09-13
 
 
+## Latest follow-up — visible saved OpenTTD task (2026-09-13)
+
+[Saved task and observer](../research/openttd_task/README.md) now provide a visible
+A-to-C road placement fixture, a forbidden X row, and an observer-only script.
+The canonical save is `research/openttd_task/results/cohort-03/baseline.sav`.
+Two fresh process/profile/X11 restores preserve the declared six tile states
+and two edges; both source screenshots show the task. An unsaved observer start
+is rejected. The source save hash stays unchanged. Nine launches include an
+initial save-suffix failure and a working but visually offscreen intermediate
+fixture; those records remain available.
+
+Setup and observer packages share a GameScript identity to load saved metadata,
+but have separately pinned entry points. Only setup places signs. Never load
+this save with the setup package during agent evaluation. Use the observer, and
+keep fixture console operations out of agent task accounting. The six-tile
+scorer is not a full-map damage check; repeated crash reset is still untested.
+Next implement/verify the shared pointer/button/drag/wheel path with ownership,
+focus/deadline/cancel/release invariants and use this fixture in actual assistant
+operation. No performance improvement or benchmark qualification is claimed.
+
+
 ## Latest follow-up — OpenTTD placement scorer (2026-09-13)
 
 [Oracle calibration](../research/openttd_oracle/README.md) advances the selected
