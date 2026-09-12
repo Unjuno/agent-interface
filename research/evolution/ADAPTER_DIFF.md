@@ -33,3 +33,12 @@ Priority: DOOM adapter first because its existing operations fit the shared inpu
 vocabulary; track_red integration follows an explicit authority/event contract.
 This prioritization reduces architecture uncertainty and cross-domain gaps.
 No port is implemented or promoted by this note. Frozen legacy sources remain.
+
+## Transfer update
+
+[DOOM revision 6](../doom/SHARED_RUNTIME.md) now uses the pinned shared backend
+and executor. Three scripted readiness cases and ten exact frames passed; two
+failed development cohorts are retained. The table above describes the legacy
+entrypoints only. Shared assistant gameplay and broader qualification remain
+open; tracking still requires the explicit authority/event contract described
+above. No new core semantics or performance gain is claimed.

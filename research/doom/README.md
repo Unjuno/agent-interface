@@ -6,6 +6,13 @@ transport. This uses the bundled **Freedoom assets**, not original commercial
 DOOM assets. It is a one-room integration test, not full-game competence or a
 Product Hunt-ready demonstration.
 
+## Shared runtime transfer
+
+[Shared runtime report](SHARED_RUNTIME.md): revision 6 now uses the pinned common
+input owner/focus/lease backend. Three scripted readiness cases pass, including
+cancel and expiry during a hold, with ten exact image frames. Two failed
+development cohorts are retained. This adds no game-success or speed claim.
+
 ## Actual operation and retained failures
 
 | Run | Revision | Evidence |
@@ -15,7 +22,7 @@ Product Hunt-ready demonstration.
 | `development-03` | `session_v3.py` | Spectator telemetry refreshed before/after the clock probe and after control. Assistant inspected images, rotated toward the monster, discovered Space did not fire, then fired with default Control. Finish screen appeared; post-control API reported episode finished and player alive. |
 | `development-04` | `session_v4.py` | Explicit `Doom.Bindings` ini replaced ineffective command-line binding setup. Assistant inspected the initial screen, fired with Space and reached the finish screen; post-control API again reported finished/alive. |
 
-Use revision 4 for new trials. Old ready-event binding claims and revision 2
+Revision 4 records the legacy successful gameplay; use revision 6 for new common-runtime trials. Old ready-event binding claims and revision 2
 clock/score values are retained as failed assumptions, not authoritative controls.
 The generated ini is archived after engine shutdown in the revision 4 result.
 

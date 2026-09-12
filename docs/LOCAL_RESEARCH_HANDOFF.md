@@ -4,6 +4,15 @@ This is the entry point for discussion in another chat. The user has authorized
 direct updates to `main` when validated progress is ready. Keep successes,
 failures, reproducible code and remaining limitations together in each update.
 
+## Latest implementation evidence
+
+[Shared DOOM adapter](../research/doom/SHARED_RUNTIME.md) now uses the pinned
+common backend/executor with full output. Three scripted readiness cases passed
+(ordinary, cancel, expiry), ten frames reconstructed exactly, all terminal
+releases and owner closes verified. Two failed adapter/harness cohorts are kept.
+No game was completed in these probes. Next: actual assistant use of this adapter,
+then remaining shared stress/continuous tracking coverage and qualification.
+
 ## Latest criteria revision
 
 The user's Research Freeze Criteria Revision Proposal is adopted in

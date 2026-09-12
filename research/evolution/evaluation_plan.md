@@ -34,7 +34,7 @@ stress or cover the continuous/DOOM adapters listed below.
 | Graphics/editor | Inkscape fixture selectable; keyboard vocabulary available | Explicit task adapter and correctness check; no new pointer ISA assumed |
 | Multi-window/modal | Controlled focus probe and Calc modal evidence | Shared scenario harness, including wrong target, cleanup and recovery |
 | Continuous motor | Historical separate tracking runtime | Adapter to this input owner/focus/lease semantics; not currently qualified |
-| DOOM real time | Historical separate DOOM runtime | Adapter and normal-speed clock verification under the same semantics |
+| DOOM real time | Shared revision 6 scripted readiness: ordinary/cancel/expiry, ten exact frames | Actual assistant use, broader stress and complete qualification manifest remain |
 
 This is an inventory, not a pass matrix. Inspect the transitive implementation
 and pin the adapter before each domain becomes runnable. Shared critical-event
