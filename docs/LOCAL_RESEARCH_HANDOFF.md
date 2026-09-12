@@ -6,6 +6,13 @@ failures, reproducible code and remaining limitations together in each update.
 
 ## Objective
 
+**Updated working objective:** [CURRENT_GOAL.md](CURRENT_GOAL.md) adopts the
+user's convergence/freeze proposal. Prioritize the evolution ledger, failure
+taxonomy audit and shared evaluation plan before further local feature additions.
+The final human-tempo objective remains. Research Freeze ends architecture
+discovery only; the overall goal remains active. App goal text cannot be edited
+with the currently available goal tool, so this document governs working scope.
+
 Let the assistant itself operate a changing screen at an ordinary human-like
 tempo. Optimize the full observation–decision–action loop, including unnecessary
 model/tool boundaries, waiting, input/observation representation and actual token

@@ -2,6 +2,12 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
+Current priority (2026-09-13): follow [the updated goal](docs/CURRENT_GOAL.md).
+Establish an evolution ledger, audit failure classes/regressions, and define
+shared cross-domain evaluation before adding more local mechanisms. Use the
+[convergence review](research/evolution/freeze_criteria.md) to end discovery;
+the sections below remain a backlog, not automatic implementation instructions.
+
 ## Now — actual agent interaction loop
 
 The scoped O1/O2 studies and actual assistant use are summarized in the
