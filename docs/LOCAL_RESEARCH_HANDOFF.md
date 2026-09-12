@@ -4,6 +4,16 @@ This is the entry point for discussion in another chat. The user has authorized
 direct updates to `main` when validated progress is ready. Keep successes,
 failures, reproducible code and remaining limitations together in each update.
 
+## Latest boundary experiment
+
+[Observation deadlines](../research/doom/OBSERVATION_DEADLINE.md) let the assistant
+complete another basic-room task without clock requests (11 exact frames, 2
+programs, all cleanup verified). Deadlines are fixed at latest capture +25 s;
+this is a generous exploratory budget, not general real-time freshness. The
+second operation gap still took 22.347 s. No speed promotion: next instrument
+image-ready/tool-return/model-decision boundaries and reduce unnecessary result
+retrieval calls. Unchanged runtime v7; final human-tempo goal remains active.
+
 ## Latest fix and actual self-use
 
 [DOOM bindings fix](../research/doom/BINDINGS_FIX.md): correct arrow names resolve

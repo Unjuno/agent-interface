@@ -122,3 +122,10 @@ left/right/forward/back cases pass, and the assistant completed a basic-room
 task by visually aiming and firing with normal revision 7. Nine self-use frames
 and cleanup audit. Planner/tool gaps still take about 20 seconds; human-tempo
 performance and the earlier black-screen root cause remain unresolved.
+
+## Clock round-trip experiment
+
+[Observation-anchored deadlines](OBSERVATION_DEADLINE.md) completed another actual
+assistant task with zero clock commands and eleven exact frames. The second
+operation interval still took 22.347 seconds; no causal speed gain is claimed.
+This is a client usage pattern on unchanged v7, not architecture promotion.
