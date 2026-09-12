@@ -60,3 +60,10 @@ states that asynchronous play progresses without waiting for agent actions.
 describes render-all-frames for visible previews; neither establishes that this
 specific integration stays visually fresh across planner gaps. Root cause remains
 unproven. Shared DOOM task correctness and Research Freeze qualification stay open.
+
+## Response diagnostic update
+
+[Four response probes](RESPONSE_DIAGNOSTIC.md) establish successful OS-key shooting
+through the shared backend in one scripted trial, while Right-key rotation stays
+unresolved. Extra engine refresh and delta-button availability did not fix it.
+The 43 frames and release/close records audit; no candidate is promoted.

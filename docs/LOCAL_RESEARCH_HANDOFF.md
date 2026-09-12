@@ -4,6 +4,16 @@ This is the entry point for discussion in another chat. The user has authorized
 direct updates to `main` when validated progress is ready. Keep successes,
 failures, reproducible code and remaining limitations together in each update.
 
+## Latest response diagnosis
+
+[Response diagnostics](../research/doom/RESPONSE_DIAGNOSTIC.md): one scripted
+Space hold consumed one round and completed the basic scenario with player alive.
+Three directional-input probes retained angle 0; per-image engine refresh and
+delta-button availability did not resolve it. All 43 frames and cleanup audited.
+The black-screen root cause and directional response remain open. Next: positive
+control for keyboard binding and engine response, then fresh assistant gameplay.
+No diagnostic candidate was promoted.
+
 ## Latest self-use evidence
 
 [Shared DOOM self-use](../research/doom/SHARED_SELF_USE.md) failed: the assistant

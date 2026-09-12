@@ -107,3 +107,10 @@ episode: black output after the first planner gap, retained despite frame/cleanu
 audits passing. A fresh 0/20-second scripted pair did not reproduce black output,
 but showed no world-crop change after its short turn. Game response and rendering
 freshness are unresolved; readiness does not prove useful feedback.
+
+## Response diagnostic update
+
+[Four response probes](RESPONSE_DIAGNOSTIC.md) establish successful OS-key shooting
+through the shared backend in one scripted trial, while Right-key rotation stays
+unresolved. Extra engine refresh and delta-button availability did not fix it.
+The 43 frames and release/close records audit; no candidate is promoted.
