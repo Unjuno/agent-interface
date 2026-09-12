@@ -29,7 +29,7 @@
 <body>
   <header class="wrap nav">
     <a class="brand" href="#">Agent Interface</a>
-    <nav class="links"><a href="https://github.com/Unjuno/agent-interface">GitHub</a><a href="https://github.com/Unjuno/agent-interface/blob/main/RESEARCH.md">Research</a><a href="https://github.com/Unjuno/agent-interface/releases">Releases</a></nav>
+    <nav class="links"><a href="https://github.com/Unjuno/agent-interface">GitHub</a><a href="https://github.com/Unjuno/agent-interface/blob/main/RESEARCH.md">Research</a><a href="https://github.com/Unjuno/agent-interface/issues/new?template=idea.yml">Propose an idea</a></nav>
   </header>
 
   <main>
@@ -39,9 +39,9 @@
       <p class="lede">Agent Interface researches a local runtime that executes guarded computer-control programs, learns reusable routes, suppresses redundant observations, and deoptimizes only the stale layer when the GUI changes.</p>
       <div class="actions">
         <a class="btn primary" href="https://github.com/Unjuno/agent-interface">View the research</a>
-        <a class="btn" href="https://github.com/Unjuno/agent-interface/releases">Research releases</a>
+        <a class="btn" href="https://github.com/Unjuno/agent-interface/issues/new?template=idea.yml">Propose an idea</a>
       </div>
-      <p class="note">Not production-stable. Current real-app evidence is Linux/X11. Raw reports and CSVs ship with the repository.</p>
+      <p class="note">Not production-stable. Current real-app evidence is Linux/X11. If you see a way to remove wasted observations, model calls, retries, or fragile assumptions, open an Idea issue.</p>
     </div>
 
     <div class="wrap grid" aria-label="research highlights">
@@ -118,7 +118,7 @@ Model only when semantics require it</pre></div>
     <section>
       <div class="wrap">
         <h2>Research, not a black box.</h2>
-        <p class="intro">Each public checkpoint includes the harnesses, reports, and summary CSVs behind the claim.</p>
+        <p class="intro">Each public checkpoint keeps the harnesses, reports, and summary CSVs behind the claim in the repository.</p>
         <div class="card">
           <div class="research-row"><div class="version">real_apps_v1</div><div><h3>Input delivery + sparse reactive control</h3><p>XTerm, Chromium, LibreOffice Calc, and Inkscape. Established that fixed sleeps do not guarantee application consumption or semantic completion.</p></div><div class="status">EVIDENCE</div></div>
           <div class="research-row"><div class="version">real_apps_v2</div><div><h3>Method lifetime ≠ route lifetime</h3><p>Route suspension preserved semantic methods and reduced observation/redefinition churn in real Inkscape sessions.</p></div><div class="status">PROMOTED</div></div>
@@ -130,10 +130,10 @@ Model only when semantics require it</pre></div>
 
     <section>
       <div class="wrap callout">
-        <div class="pill"><span class="dot"></span> Apache-2.0 · Research releases on GitHub</div>
-        <h2>Audit the result. Break the hypothesis.</h2>
-        <p>The project is deliberately published before the architecture is frozen. The useful feedback right now is not “add more features”; it is finding where the current assumptions fail across apps, toolkits, observation policies, and recovery paths.</p>
-        <div class="actions"><a class="btn primary" href="https://github.com/Unjuno/agent-interface">Open GitHub</a><a class="btn" href="https://github.com/Unjuno/agent-interface/blob/main/CONTRIBUTING.md">Experiment rules</a></div>
+        <div class="pill"><span class="dot"></span> Apache-2.0 · Open research</div>
+        <h2>See wasted work? Propose a better interface.</h2>
+        <p>The project is deliberately published before the architecture is frozen. Ideas are first-class contributions: token/image efficiency, correctness, recovery, portability, simpler guards, better observation policies, or harder benchmarks. You do not need a finished implementation to open an idea.</p>
+        <div class="actions"><a class="btn primary" href="https://github.com/Unjuno/agent-interface/issues/new?template=idea.yml">Open an Idea issue</a><a class="btn" href="https://github.com/Unjuno/agent-interface/blob/main/CONTRIBUTING.md">Contribution guide</a></div>
       </div>
     </section>
   </main>
