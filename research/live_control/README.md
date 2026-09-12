@@ -1,5 +1,8 @@
 # Asynchronous live control: development evidence
 
+Latest experiment: [observed-focus binding and wrong-target probes](FOCUS.md).
+`interactive_v7.py` is experimental; observe-only recovery still needs work.
+
 Latest: [independent input release under blocked logging/capture](INPUT_OWNER.md).
 The [interactive owner follow-up](OWNER_SELF_USE.md) adds `interactive_v6.py`
 and records actual assistant use, including a retained Calc task failure.

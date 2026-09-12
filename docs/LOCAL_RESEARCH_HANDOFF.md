@@ -164,6 +164,22 @@ trial requested a fresh observation before ending; saved workbook contents
 independently verified success. Focus validity, blocking notifications and
 matched planner measurement remain the next work.
 
+## Focus-binding experiment
+
+The [focus experiment](../research/live_control/FOCUS.md) adds before/after
+observation focus samples and checks the observed X11 input-focus ID at key-down.
+In eight controlled probes, both baseline focus-transfer cases sent a letter to
+the other window; both guarded cases stopped without input. Four unchanged-focus
+cases completed. Fourteen frames audited exactly. A held-input test verifies
+release and persistent invalidation after focus returns. Actual assistant use
+also completed XTerm with three exact frames and independently correct saved text.
+
+This is not atomic wrong-target prevention: check/injection races and missed
+away-and-back changes remain. `interactive_v7.py` is experimental, and mismatched
+capture-time focus samples currently prevent even observe-only recovery. The
+next iteration must separate recovery observation from input authorization and
+test legitimate modal transitions before adopting this as the default.
+
 ## Parallel control-codec discussion (existing branch)
 
 A remote [control-codec research branch](https://github.com/Unjuno/agent-interface/tree/research/control-codec-track)
