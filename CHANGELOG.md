@@ -2,6 +2,11 @@
 
 ## Unreleased — 2026-09-13 research update
 
+- Add a separate asynchronous research executor with whole-program validation,
+  early feedback, cancellation and X11 key-release verification. Six fresh
+  XTerm/Calc probes pass; retain an actual assistant's missed cancellation and
+  subsequent verified recovery in the live-control development record.
+
 - Publish A1 exact unchanged observation results: 192 fresh episodes, 1,446 exact
   frames and 17.15% same-trace image reduction; no established local speedup.
 - Publish A2 exact tile transport results: 64 fresh episodes, 553 exact frames
@@ -16,8 +21,8 @@
   handoff describing open work and the separate control-codec research branch.
 - Add real-time DOOM as a later evaluation/Product Hunt demonstration milestone.
 
-This update publishes research evidence, not a runnable runtime release. True
-asynchronous control, a human-speed baseline and actual token savings remain open.
+This update publishes research evidence, not a runnable runtime release. A
+general-purpose guarded control, a human-speed baseline and actual token savings remain open.
 
 ## 0.0.1-research.2 — Research Preview 2
 

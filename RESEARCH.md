@@ -14,6 +14,17 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Experimental ladder
 
+### Live control — asynchronous functional prototype
+
+Path: [`research/live_control/`](research/live_control/README.md).
+A separate command reader and GUI worker support early feedback, held inputs,
+cancellation and verified key release. The latest six scripted XTerm/Calc
+probes passed with 54 exact frames. Local cancel-to-release observations ranged
+from 0.50 to 20.79 ms; this is not model end-to-end latency or a speedup claim.
+An actual assistant cancellation arrived after the program ended; the raw
+failure and successful GUI recovery are retained. Intent expiry and stale-state
+guards remain necessary before claiming dependable real-time planner control.
+
 ### Real Apps v1 — input delivery and sparse observation
 
 Path: [`research/real_apps_v1/`](research/real_apps_v1/)

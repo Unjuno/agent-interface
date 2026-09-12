@@ -38,11 +38,20 @@ was approximately 41–56 ms, but two command receipt timestamps were about
 10.22 seconds apart. That interval includes inspection, reasoning and tool
 boundaries. Further PNG optimization alone will not meet the actual objective.
 
-Next implementation: persistent asynchronous execution with early feedback,
-bounded held inputs, cancellation/release, explicit stale-state handling and
-guarded local progress while the planner is waiting. This is **not implemented
-yet**. The current `dogfood.py` reads stdin commands sequentially, despite
-streaming early acknowledgments. Do not describe it as a concurrent runtime.
+The new [live-control prototype](../research/live_control/README.md) implements
+a separate command reader and GUI worker, early feedback, finite held inputs,
+cancellation and verified key release. Six fresh XTerm/Calc functional probes
+passed with 54 exact frames; local cancel-to-release times were 0.50–20.79 ms.
+These are scripted development probes, not model latency or speedup evidence.
+The older `dogfood.py` remains sequential; the new entry point is
+`research/live_control/session.py`.
+
+Actual assistant use exposed a different failure: across a context handoff,
+cancel arrived about 176.20 seconds after a five-second program had completed,
+so its trailing test text ran. The assistant inspected the screen, cleared the
+line and recovered successfully, with independent output verification. Preserve
+this negative result. Explicit intent expiry, stale-state/focus guards and
+guarded local progress remain open; finite duration is not an execution lease.
 
 The next controlled evaluation must measure the actual agent loop, completion
 quality and measured token use, not replace those with bytes or local timers.
