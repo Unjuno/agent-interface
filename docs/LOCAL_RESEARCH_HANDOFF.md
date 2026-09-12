@@ -1,5 +1,20 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — historical input-state bracketing (2026-09-13)
+
+[Input-state report](../research/live_control/INPUT_STATE.md) adds candidate
+owner_v7/session_v13. Observations include owner state samples before capture and
+after image preparation: revision, owned input, physical pointer sample, focus,
+lease deadline/time validity and timestamps. No lease renewal or atomic-state claim.
+
+Four actual-app scripted cases passed: normal checkpoint, cancel/expiry during a
+blocked capture wrapper, and cancel during blocked delivery. The last deliberately
+shows unchanged held-state samples arriving after independent release. Ten exact
+images and eight owner focus-boundary regressions passed audit. Existing entrypoints
+are unchanged. Next define owner identity and bounded continuation admission;
+never treat historical state as permission to revive input. No overhead/token or
+live assistant replanning improvement measured yet.
+
 ## Latest follow-up — same-client pointer focus (2026-09-13)
 
 [Pointer focus investigation](../research/live_control/POINTER_FOCUS.md) reproduced

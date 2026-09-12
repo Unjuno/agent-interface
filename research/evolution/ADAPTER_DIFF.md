@@ -87,3 +87,8 @@ owner_v6/session_v12 after capturing a same-client child-to-parent focus stop.
 Eight controlled boundary checks and three real Inkscape integration runs pass;
 keyboard exact focus remains unchanged. This is another explicit core-semantic
 change/churn, not qualification, precision improvement or runtime promotion.
+
+[Historical input-state bracketing](../live_control/INPUT_STATE.md) adds candidate
+owner_v7/session_v13 state samples around capture/preparation. Four race/stall
+cases and eight focus regressions passed, including a held-state record delivered
+after release. This is state-contract churn; bounded continuation is not implemented.
