@@ -147,6 +147,23 @@ task completion, robust connection failure handling and actual assistant use of
 this backend are the next integration checks. Existing research startup warnings
 and temporary-directory cleanup limitations are documented in the report.
 
+## Interactive input-owner follow-up
+
+The [self-use integration](../research/live_control/OWNER_SELF_USE.md) now provides
+`interactive_v6.py` with explicit owner lifecycle and task instructions. Actual
+assistant use passed XTerm, failed one Calc task by choosing B1 instead of A2,
+then passed a new Calc task after the destination was made explicit. The failure
+and learning effect are retained; this is not a randomized message comparison.
+Eighteen frames and all three saved outcomes were audited. All six programs and
+three owner shutdowns verified input release. Local acceptance-to-first-image
+timing was 93.5–165.8 ms, not model latency or a performance comparison.
+
+Calc also exposed image/window-context skew around dialog dismissal. Separate
+timestamps already exist, but there is no guard for that skew yet. The final
+trial requested a fresh observation before ending; saved workbook contents
+independently verified success. Focus validity, blocking notifications and
+matched planner measurement remain the next work.
+
 ## Parallel control-codec discussion (existing branch)
 
 A remote [control-codec research branch](https://github.com/Unjuno/agent-interface/tree/research/control-codec-track)
