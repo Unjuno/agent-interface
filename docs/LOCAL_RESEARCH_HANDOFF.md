@@ -4,6 +4,16 @@ This is the entry point for discussion in another chat. The user has authorized
 direct updates to `main` when validated progress is ready. Keep successes,
 failures, reproducible code and remaining limitations together in each update.
 
+## Latest timing evidence
+
+[Traced combined feedback](../research/doom/TRACED_CLIENT.md) records local pipe
+receipt and emits the image in the action call. Actual aiming/firing succeeds
+(8 exact frames, all delivery/cleanup verified). Acceptance gap12.384s; combined
+call bodies1.960/2.175s; first image-tool return to next call body10.444s. The
+latter includes infrastructure/model/orchestration, not pure reasoning time.
+Different cases prevent a speedup claim. Next: a matched, counterbalanced
+combined-versus-separate feedback study with explicit missing outer endpoints.
+
 ## Latest boundary experiment
 
 [Observation deadlines](../research/doom/OBSERVATION_DEADLINE.md) let the assistant

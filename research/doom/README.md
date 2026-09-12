@@ -129,3 +129,11 @@ performance and the earlier black-screen root cause remain unresolved.
 assistant task with zero clock commands and eleven exact frames. The second
 operation interval still took 22.347 seconds; no causal speed gain is claimed.
 This is a client usage pattern on unchanged v7, not architecture promotion.
+
+## Traced combined feedback
+
+[Local receipt tracing](TRACED_CLIENT.md) adds an unchanged-runtime client and
+returns images with action results. Actual self-use completed with eight exact
+frames. Runtime acceptances were 12.384s apart; a separately measured10.444s
+interval remains after the image tool returns. These are scoped diagnostics,
+not a same-model speed improvement or pure inference measurement.
