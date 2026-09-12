@@ -120,3 +120,8 @@ must compare restores of its own unchanged save. To audit committed evidence:
 ```sh
 python research/openttd_task/audit.py research/openttd_task/results/cohort-03
 ```
+## Follow-up: shared pointer self-use
+
+The preparation above is followed by [one successful visual self-use episode](SELF_USE.md)
+through the shared pointer candidate. Its scope, independent score, measured
+intervals and unresolved qualification gates are recorded separately.

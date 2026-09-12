@@ -1,5 +1,26 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — shared pointer and OpenTTD self-use (2026-09-13)
+
+[Shared pointer backend](../research/live_control/POINTER_BACKEND.md) now binds
+observed surface/geometry once per program and validates bounded pointer steps
+through the existing executor. The candidate is `session_v9.py`; pinned v10 is
+unchanged. One managed-window cohort passed ten integration checks, but three
+other fixture starts timed out; the setup fault remains unresolved.
+
+[OpenTTD visual self-use](../research/openttd_task/SELF_USE.md) then passed the
+independent target-road/connection/forbidden-row score through the same backend.
+Three programs and fifteen exact frames are archived. This one known-task pilot
+took 63.51 seconds from initial capture to final program terminal, including
+assistant/tool delays; no human-speed or improvement claim. Cleanup and unchanged
+canonical save were verified. The scorer does not constrain outside-region edits.
+
+Full-frame quiet timed out in the animated scene (nine samples, 1222.8 ms), adding
+cross-domain evidence for task-relevant feedback design. Next resolve fixture
+reproduction, strengthen placement coverage, run fresh/desktop regressions, and
+define observation-age/continuous-pointer feedback before promotion. Domain
+Coverage Matrix and the OpenTTD → fixed-state Mindustry shortlist remain in force.
+
 
 ## Latest follow-up — pointer geometry/lifecycle (2026-09-13)
 

@@ -33,6 +33,12 @@ Linux/X11のArchitecture Discoveryに集中する。まずMindustry・OpenTTD・
 書き換えない。Windows/macOS対応のためだけに候補を広げる作業はPhase Cまで待つ。
 画面提示経路の未解決問題と既存の正確性hard gateは継続して扱う。
 
+2026-09-13進捗: 三候補の初期feasibility比較を記録し、OpenTTDの保存済み小課題で
+shared pointer候補による自己操作・独立採点を1回通過した。正式採用・freeze合格には
+数えない。直近はテスト用GUI起動失敗の再現性、対象周辺を含む配置採点、fresh caseと
+desktop回帰、動く画面での有用な観測・入力継続を検証する。次の領域は初期状態を
+固定したMindustry。詳細は[自己操作記録](../research/openttd_task/SELF_USE.md)を参照。
+
 ## 現在のフェーズと直近の目標
 
 現在は **Phase A: Architecture Discovery**。新しい局所機能の追加をいったん

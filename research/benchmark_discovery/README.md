@@ -4,10 +4,15 @@ Follow-up: [OpenTTD oracle calibration](../openttd_oracle/README.md) now tests
 actual empty/partial/complete/extra-placement states on two seeds. This is a
 separate narrow scoring study; the discovery results below remain unchanged.
 
+Later task evidence: [one OpenTTD visual self-use episode](../openttd_task/SELF_USE.md)
+passed the small independent road contract with the shared pointer candidate.
+This adds toolbar/placement coverage, without formal adoption or a speed claim.
+
 **Decision: keep DOOM as one orthogonal stress domain. Shortlist OpenTTD and
 Mindustry for the next task-level pilots; retain Luanti as the 3D candidate.**
 None of these three is adopted as a formal benchmark yet. No result here is a
-shared-runtime success, assistant gameplay success, or qualifying freeze revision.
+shared-runtime success, assistant gameplay success, or qualifying freeze revision;
+the later self-use episode is separately linked above.
 
 The immediate implementation order is OpenTTD's small placement/GUI pilot,
 then Mindustry after its initial-state gate is resolved. This ordering follows
@@ -26,7 +31,7 @@ DOOM score. Do not average these domains into a single difficulty leaderboard.
 | Desktop apps | ordinary text/document use, dialogs, navigation, focus and recovery | four-app keyboard readiness/stress; historical assistant tasks | broaden pointer, drag, scroll, overlapping windows and semantic completion |
 | DOOM | fast continuous motor/reaction, held input, first-person visual feedback | shared key-input readiness and small actual assistant tasks | deadline/feedback latency, critical events, held-input release; not a proxy for planning or dense GUI |
 | Mindustry | real-time planning, pointer targeting, placement, multi-object control, resources and dynamic recovery | GUI + map/oracle feasibility only | shared pointer/button/drag/placement semantics; long-running plans interrupted by events |
-| OpenTTD | dense toolbar/window/menu GUI, map navigation, placement/drag/scroll, long-horizon planning | GUI + seed/terrain/oracle feasibility only | coordinate context, window routing, drag boundaries, delayed task completion |
+| OpenTTD | dense toolbar/window/menu GUI, map navigation, placement/drag/scroll, long-horizon planning | feasibility, calibrated oracle, saved reset, one shared-pointer visual road-task success | fresh/repeated GUI tasks, surrounding-placement scoring, task-relevant feedback; long-horizon planning remains untested |
 | Luanti | 3D navigation, camera control, inventory, object interaction and construction | current engine + tiny world/oracle feasibility only | relative camera vs absolute pointer, inventory mode transitions, object binding |
 
 The pinned shared runtime currently admits keyboard programs; the historical

@@ -58,3 +58,10 @@ The follow-up [v5 owner candidate](../live_control/POINTER_LIFECYCLE.md) adds
 observed geometry and failure-lifecycle handling. Sixteen primitive checks and
 two private-server fault injections are evidence for that component only. Shared
 backend integration, snapshot binding and real-app regression remain unqualified.
+
+The subsequent [session_v9 candidate](../live_control/POINTER_BACKEND.md) integrates
+snapshot-bound pointer programs with the existing executor. One managed-window
+cohort passed; three setup failures remain. [One OpenTTD self-use episode](../openttd_task/SELF_USE.md)
+passed independent scoring with this shared candidate. The OpenTTD adapter uses
+no custom input semantics. This is new core semantics/churn, not runtime promotion
+or a qualifying freeze revision; broad/fresh regressions remain open.
