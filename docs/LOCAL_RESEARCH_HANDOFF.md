@@ -1,5 +1,20 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — desktop pointer transfer/precision (2026-09-13)
+
+[Desktop pointer report](../research/live_control/DESKTOP_POINTER.md): candidate
+entrypoint `interactive_v11.py` uses unchanged session_v9 with existing desktop
+fixtures. One assistant Inkscape select/drag/save passed the narrow legacy SVG
+score, but moved only ~12 px for a 24 px cursor path. One malformed chord program
+was rejected before input and is retained. The API needs discoverable field names.
+
+Two scripted pairs, in reversed order, confirmed that three-point paths moved
+12/12 px and 25-point paths moved 20/19 px for the same 24 px request. All four
+legacy scores passed; all four ±1 px precision checks failed. More samples alone
+are not a fix. Fifty-three exact images, source/record consistency and releases
+were audited. Task-level feedback during bounded manipulation is the next design
+gate; the hand-made GUI startup issue remains unresolved. No runtime promotion.
+
 ## Latest follow-up — guarded placement negative/positive (2026-09-13)
 
 [Guarded placement study](../research/openttd_task/GUARDED_PLACEMENT.md) found that

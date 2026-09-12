@@ -71,3 +71,8 @@ a query-only surrounding-state observer and stricter independent task score.
 The shared backend/executor are unchanged. A real overlong-drag replay fails the
 new score and a corrected visual development episode passes; this is a task/oracle
 revision, not another core-semantics change or qualifying freeze revision.
+
+[Desktop pointer transfer](../live_control/DESKTOP_POINTER.md) adds an entrypoint
+using unchanged session_v9 for existing desktop fixtures. The legacy SVG task
+passes but exact-displacement checks fail in four real-app trials, including dense
+paths. This is transfer/failure evidence, not core promotion or a freeze pass.

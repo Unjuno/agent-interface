@@ -12,6 +12,11 @@ This adds toolbar/placement coverage, without formal adoption or a speed claim.
 an overlong-drag replay (old score passes, surrounding-state score fails) from a
 corrected visual episode. This strengthens local placement scoring, not adoption.
 
+[Desktop pointer transfer](../live_control/DESKTOP_POINTER.md) now covers one
+Inkscape visual select/drag/save episode through the same candidate. Four scripted
+trials expose inaccurate object displacement despite successful pointer programs;
+dense path sampling alone did not meet the declared precision check.
+
 **Decision: keep DOOM as one orthogonal stress domain. Shortlist OpenTTD and
 Mindustry for the next task-level pilots; retain Luanti as the 3D candidate.**
 None of these three is adopted as a formal benchmark yet. No result here is a
