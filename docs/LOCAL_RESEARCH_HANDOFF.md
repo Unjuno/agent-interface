@@ -83,6 +83,16 @@ latest image. Same-trace replay reduced JSON presentation bytes from 166,673 to
 image can omit intermediate events. General event escalation and real target
 loss/focus drift still require validation.
 
+The [event-retention study](../research/visual_tracking/EVENT_RETENTION.md) now
+tests known yellow warnings and target loss in the real private X11 fixture.
+Six fresh functional cases passed, with 191 exact frames; one assistant trial
+added 21 exact frames. Detected signals retain their evidence image even after
+a clear newer observation, block new input until acknowledgement, and stop the
+method with verified release. These color-specific detectors do not establish
+generic critical-event recall; focus drift and short/unrecognized events remain
+open. Next transfer work should start the planned DOOM environment rather than
+continue optimizing this simple arena indefinitely.
+
 The next controlled evaluation must measure the actual agent loop, completion
 quality and measured token use, not replace those with bytes or local timers.
 No LLM API/token-metered comparison or comparable human baseline has run here.

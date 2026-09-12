@@ -3,6 +3,10 @@
 Follow-up: [asynchronous execution and latest-observation delivery](ASYNC_INTEGRATION.md)
 are now connected and exercised by the assistant. The frozen study below remains unchanged.
 
+The [event-retention follow-up](EVENT_RETENTION.md) preserves detected warnings
+and target loss across latest-image changes, with six fresh functional probes
+and one assistant-operated trial. It uses fixture-specific pixel detectors.
+
 This experiment adds a wall-clock-driven X11 target-tracking task. The red
 target keeps moving while the controller waits. A green player responds to OS
 Left/Right keys. The controller locates both from RGB screenshots; application
