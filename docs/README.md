@@ -4,6 +4,7 @@ Design and research notes for Agent Interface.
 
 - `principles.md` — thesis and component principles.
 - `architecture.md` — current architecture.
+- `design-theses.md` — idea ledger with promoted, active, proposed, and deferred system theses.
 - `control-codec.md` — compact planner-to-computer control representation, persistent dictionaries, and amortized method/workflow references.
 - `product-hunt.md` — launch positioning notes.
 - `../research/` — experiments, reports, CSVs, and negative results.
