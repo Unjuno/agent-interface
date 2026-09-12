@@ -25,6 +25,15 @@ replace desktop task correctness. See [roadmap](../ROADMAP.md).
 
 ## Evidence ready for discussion
 
+The [common active-input stress cohort](../research/evolution/STRESS.md) now
+checks cancellation and expiry while Control is held across the four apps.
+All eight interruptions stopped the text tail, then fresh intents completed
+the saved tasks; 90 frames and all release records audited. This is scripted
+functional evidence, not model latency or a qualifying freeze revision.
+The [adapter inventory](../research/evolution/ADAPTER_DIFF.md) recommends bringing
+DOOM onto the shared owner/lease/focus semantics before the more complex tracking
+operation/event integration. Neither port is implemented by that inventory.
+
 The [shared-runtime readiness smoke](../research/evolution/READINESS.md) now runs
 the same pinned candidate across XTerm, Chromium, Calc and Inkscape keyboard
 nudging. Eight declared cases passed saved-task checks; four expired requests

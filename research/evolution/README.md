@@ -9,6 +9,10 @@ Separate new evidence: [common-runtime readiness](READINESS.md) has eight
 scripted cases across four applications. These are not pooled into the historical
 self-use ledger or used as a qualifying freeze revision.
 
+[Active interruption stress](STRESS.md) adds eight scripted cases on that same
+runtime, with 90 exact frames and correct post-interruption saved tasks. The
+[adapter inventory](ADAPTER_DIFF.md) identifies why tracking/DOOM still differ.
+
 The original four-row ledger omitted the earlier failed Calc self-use cohort.
 That cohort is now included as `owner-v5` (1/2 success); the task-description
 follow-up is separately `owner-v6` (1/1). No historical raw result was changed.
