@@ -1,5 +1,10 @@
 # Bounded drag feedback candidate — 2026-09-13
 
+Follow-up: [pointer focus investigation](POINTER_FOCUS.md) records a same-client
+child-to-parent transition and tests a pointer-only equivalence candidate. Use
+`audit_drag_focus.py` for repeatable auditing of all cohorts; the original auditor
+also matches its own generated JSON file after its first run.
+
 New unpromoted `session_v10.py` / `session_v11.py` add intermediate observations
 to the shared bounded drag. Existing `interactive_v11.py` still uses session_v9;
 the similarly numbered files are different entrypoint/backend version series.

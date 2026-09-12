@@ -81,3 +81,9 @@ paths. This is transfer/failure evidence, not core promotion or a freeze pass.
 semantics in session_v10/v11: checkpoint observations and a bounded optional delay.
 This is churn. The five integration cohorts include three partial focus failures;
 freshness, held-state ordering and bounded continuation remain unresolved.
+
+[Pointer focus equivalence](../live_control/POINTER_FOCUS.md) introduces candidate
+owner_v6/session_v12 after capturing a same-client child-to-parent focus stop.
+Eight controlled boundary checks and three real Inkscape integration runs pass;
+keyboard exact focus remains unchanged. This is another explicit core-semantic
+change/churn, not qualification, precision improvement or runtime promotion.

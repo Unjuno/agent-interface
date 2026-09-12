@@ -1,5 +1,23 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — same-client pointer focus (2026-09-13)
+
+[Pointer focus investigation](../research/live_control/POINTER_FOCUS.md) reproduced
+expected-child/actual-parent focus (6291464 → 6291463) within Inkscape in cohort 08.
+Candidate owner_v6 allows pointer focus within the original still-active client,
+retaining geometry/hit-surface checks. Keyboard and mixed held keys remain exact
+focus; the original lease fields are not rewritten. Session_v12 initializes this
+owner directly; established entrypoints are unchanged.
+
+Eight controlled boundary checks and three rapid-gesture Inkscape integration
+runs passed, including blocked-output cancel/expiry release and absent tail motion.
+The prior spaced diagnostic runs 06/07 also passed, while 08 remains a failure.
+The new repeatable `audit_drag_focus.py` verifies 11 cohorts/131 exact images and
+preserves the historical audit report. This is candidate core churn, not promotion.
+Next: cross-app regression, explicit stale-feedback/release ordering, bounded
+continuation and actual assistant in-flight feedback use. Precision and the
+hand-made-window startup failure remain separate unresolved problems.
+
 ## Latest follow-up — bounded intermediate drag feedback (2026-09-13)
 
 [Drag feedback study](../research/live_control/DRAG_FEEDBACK.md) adds candidate
