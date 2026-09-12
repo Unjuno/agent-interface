@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — deterministic patch effect sensor (2026-09-13)
+
+[Patch anchor feasibility](../research/live_control/VISUAL_ANCHOR.md) adds offline
+NumPy patch search after the assistant reply timeout. Four generated movement,
+duplicate and disappearance fixtures plus three boundary checks pass. Historical
+Inkscape replay distinguishes zero object movement from 23 px movement; search-only
+times were 25–65 ms. This is not fresh-app or integrated servo evidence. Next connect
+planner-declared target/update bounds to owner admission, then test fresh positions
+and distractors with independent effect/collateral scoring. No runtime promotion.
+
 ## Latest follow-up — actual assistant reply misses deadline (2026-09-13)
 
 [Actual guided self-use](../research/live_control/GUIDED_SELF_USE.md) tested the
