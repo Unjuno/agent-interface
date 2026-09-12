@@ -1,5 +1,9 @@
 # Asynchronous live control: development evidence
 
+Latest: [recovery observation and actual Calc modal transition](RECOVERY.md).
+`interactive_v8.py` permits observation after ambiguous focus without granting
+input authority to the same program's tail.
+
 Latest experiment: [observed-focus binding and wrong-target probes](FOCUS.md).
 `interactive_v7.py` is experimental; observe-only recovery still needs work.
 

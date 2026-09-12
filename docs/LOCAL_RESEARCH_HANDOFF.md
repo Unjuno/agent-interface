@@ -180,6 +180,21 @@ capture-time focus samples currently prevent even observe-only recovery. The
 next iteration must separate recovery observation from input authorization and
 test legitimate modal transitions before adopting this as the default.
 
+## Recovery after ambiguous focus
+
+The [recovery follow-up](../research/live_control/RECOVERY.md) now separates
+observe-only execution from focus binding in `interactive_v8.py`. Four controlled
+episodes show the previous backend blocking recovery and both candidate episodes
+recovering; an observation cannot grant input authority to its own program's
+tail. Ten packet frames audited exactly.
+
+Actual assistant use in Calc encountered a natural focus mismatch while closing
+the save-format dialog, recovered by observation, and independently saved correct
+A1/A2 values. Nine frames and four program releases audited successfully. The
+first dialog image was not fully painted, requiring an extra observation.
+Reducing these not-yet-useful observations and planner round trips is the next
+performance problem; focus consistency alone is not paint or save completion.
+
 ## Parallel control-codec discussion (existing branch)
 
 A remote [control-codec research branch](https://github.com/Unjuno/agent-interface/tree/research/control-codec-track)
