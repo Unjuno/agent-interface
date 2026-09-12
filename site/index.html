@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Agent Interface — A faster interface between AI agents and computers</title>
+  <meta name="description" content="Open research on a reactive, self-optimizing interface between strong AI planners and computer I/O." />
+  <meta property="og:title" content="Agent Interface" />
+  <meta property="og:description" content="A faster interface between AI agents and computers. Research preview." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0b0d10" />
+  <style>
+    :root{--bg:#0b0d10;--panel:#11151a;--line:#242b33;--text:#f3f6f8;--muted:#9ca8b3;--accent:#8be9c0;--accent2:#8fb6ff;--warn:#ffd479;--max:1120px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:inherit;text-decoration:none}.wrap{width:min(var(--max),calc(100% - 40px));margin:auto}.nav{height:70px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+    .brand{font-weight:700;letter-spacing:-.03em}.links{display:flex;gap:20px;color:var(--muted);font-size:14px}.links a:hover{color:var(--text)}
+    .hero{padding:92px 0 70px}.pill{display:inline-flex;gap:9px;align-items:center;border:1px solid #31423d;background:#101a16;color:var(--accent);padding:7px 12px;border-radius:999px;font-size:13px;font-weight:650}.dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+    h1{font-size:clamp(48px,8vw,92px);line-height:.98;letter-spacing:-.065em;margin:26px 0 26px;max-width:1000px}.lede{max-width:760px;color:#c4ccd3;font-size:clamp(19px,2.3vw,25px);line-height:1.45}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}.btn{padding:12px 17px;border:1px solid var(--line);border-radius:10px;background:#151a20;font-weight:650}.btn.primary{background:var(--text);color:#0b0d10;border-color:var(--text)}.btn:hover{transform:translateY(-1px)}
+    .note{margin-top:22px;color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px}.metric{grid-column:span 4}.metric b{font-size:34px;letter-spacing:-.045em;display:block}.metric span{color:var(--muted);font-size:14px}.metric small{display:block;color:#727f8a;margin-top:10px}
+    section{padding:74px 0;border-top:1px solid var(--line)}h2{font-size:clamp(30px,4.5vw,52px);line-height:1.05;letter-spacing:-.045em;margin:0 0 18px}.intro{color:var(--muted);max-width:720px;font-size:18px;margin-bottom:34px}
+    .compare{grid-column:span 6}.compare pre,.arch pre{white-space:pre-wrap;margin:0;color:#bdc8d2;font:14px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace}.compare strong{color:var(--accent)}
+    .feature{grid-column:span 4}.feature h3{margin:0 0 8px;font-size:18px}.feature p{margin:0;color:var(--muted)}.tag{font:12px ui-monospace,monospace;color:var(--accent2);margin-bottom:13px}
+    .arch{grid-column:span 7}.principles{grid-column:span 5}.principles ol{padding-left:20px;margin:0}.principles li{margin:0 0 16px;color:#c8d0d6}.principles li::marker{color:var(--accent)}
+    .research-row{display:grid;grid-template-columns:120px 1fr auto;gap:20px;align-items:start;padding:19px 0;border-top:1px solid var(--line)}.research-row:first-child{border-top:0}.version{font:13px ui-monospace,monospace;color:var(--accent2)}.research-row h3{margin:0 0 4px;font-size:16px}.research-row p{margin:0;color:var(--muted);font-size:14px}.status{font:12px ui-monospace,monospace;border:1px solid var(--line);padding:5px 8px;border-radius:999px;color:var(--accent)}
+    .callout{background:linear-gradient(135deg,#101715,#10141a);border:1px solid #2b3834;border-radius:20px;padding:34px}.callout h2{font-size:38px}.callout p{color:#b6c1c9;max-width:720px}.footer{padding:42px 0 64px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    @media(max-width:800px){.links{display:none}.metric,.feature,.compare,.arch,.principles{grid-column:1/-1}.research-row{grid-template-columns:1fr}.hero{padding-top:70px}h1{font-size:54px}}
+  </style>
+</head>
+<body>
+  <header class="wrap nav">
+    <a class="brand" href="#">Agent Interface</a>
+    <nav class="links"><a href="https://github.com/Unjuno/agent-interface">GitHub</a><a href="https://github.com/Unjuno/agent-interface/blob/main/RESEARCH.md">Research</a><a href="https://github.com/Unjuno/agent-interface/releases">Releases</a></nav>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <div class="pill"><span class="dot"></span> Research Preview · Active experiments</div>
+      <h1>A faster interface between AI agents and computers.</h1>
+      <p class="lede">Agent Interface researches a local runtime that executes guarded computer-control programs, learns reusable routes, suppresses redundant observations, and deoptimizes only the stale layer when the GUI changes.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/Unjuno/agent-interface">View the research</a>
+        <a class="btn" href="https://github.com/Unjuno/agent-interface/releases">Research releases</a>
+      </div>
+      <p class="note">Not production-stable. Current real-app evidence is Linux/X11. Raw reports and CSVs ship with the repository.</p>
+    </div>
+
+    <div class="wrap grid" aria-label="research highlights">
+      <div class="card metric"><b>72 / 72</b><span>success in XTerm guarded hidden episodes</span><small>focus drift · real X11</small></div>
+      <div class="card metric"><b>−77.5%</b><span>XTerm p99 with pre-execution focus guards</span><small>guarded vs unguarded</small></div>
+      <div class="card metric"><b>−75.4%</b><span>Chromium p99 with geometry guards</span><small>72 hidden episodes</small></div>
+    </div>
+
+    <section>
+      <div class="wrap">
+        <h2>Stop paying for information you already have.</h2>
+        <p class="intro">The default computer-use loop repeatedly serializes actions and sends screenshots even when the local system can already determine that nothing relevant changed. Agent Interface moves deterministic control and verification below the model boundary.</p>
+        <div class="grid">
+          <div class="card compare"><div class="tag">TODAY</div><pre>model
+  ↓
+one action
+  ↓
+full screenshot
+  ↓
+model
+  ↓
+repeat</pre></div>
+          <div class="card compare"><div class="tag">AGENT INTERFACE</div><pre>planner
+  ↓
+<strong>semantic method / reactive program</strong>
+  ↓
+local guarded execution
+  ↓
+<strong>observe only meaningful change</strong>
+  ↓
+escalate when needed</pre></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>The current design.</h2>
+        <p class="intro">Research has converged on separating long-lived semantic knowledge from short-lived bindings, routes, visual anchors, and motor calibration.</p>
+        <div class="grid">
+          <article class="card feature"><div class="tag">01 · UNIVERSAL</div><h3>Unknown apps still work</h3><p>Keyboard, pointer, text, focus, drag, scroll, and observation remain the universal fallback floor.</p></article>
+          <article class="card feature"><div class="tag">02 · LEARN</div><h3>Successful use becomes cheaper</h3><p>Repeated traces can become semantic methods and short workflows instead of being replayed verbatim.</p></article>
+          <article class="card feature"><div class="tag">03 · DEOPT</div><h3>Invalidate the smallest stale layer</h3><p>A stale click route does not imply that the semantic method itself is wrong.</p></article>
+          <article class="card feature"><div class="tag">04 · GUARD</div><h3>Skip predictable failures</h3><p>If focus, geometry, or binding is observably stale, deopt before paying the failure timeout.</p></article>
+          <article class="card feature"><div class="tag">05 · OBSERVE</div><h3>Gate redundant images</h3><p>The next research track suppresses unchanged or irrelevant visual observations before they reach the model.</p></article>
+          <article class="card feature"><div class="tag">06 · VERIFY</div><h3>Escalate uncertainty</h3><p>Cheap local verification handles the normal path; ambiguous state can still escalate to a richer observation.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap grid">
+        <div class="card arch"><div class="tag">ARCHITECTURE</div><pre>User intent
+    ↓
+Strong planner / LLM
+    ↓
+Semantic methods
+    ↓
+Binding + precondition guards
+    ↓
+Optimized route ── stale? ──► DEOPT
+    ↓                         ↓
+Reactive execution       Universal fallback
+    ↓                         ↓
+Local VERIFY ◄──────────────┘
+    ↓
+Observation gating
+    ↓
+Model only when semantics require it</pre></div>
+        <div class="card principles"><div class="tag">RESEARCH RULES</div><ol><li>Correctness is a hard gate.</li><li>Fresh/hidden evaluation follows tuning.</li><li>Bytes are not tokens; observed pixels are not image tokens.</li><li>Negative results stay in the record.</li><li>Python is for fast iteration now; implementation stabilization comes later.</li></ol></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>Research, not a black box.</h2>
+        <p class="intro">Each public checkpoint includes the harnesses, reports, and summary CSVs behind the claim.</p>
+        <div class="card">
+          <div class="research-row"><div class="version">real_apps_v1</div><div><h3>Input delivery + sparse reactive control</h3><p>XTerm, Chromium, LibreOffice Calc, and Inkscape. Established that fixed sleeps do not guarantee application consumption or semantic completion.</p></div><div class="status">EVIDENCE</div></div>
+          <div class="research-row"><div class="version">real_apps_v2</div><div><h3>Method lifetime ≠ route lifetime</h3><p>Route suspension preserved semantic methods and reduced observation/redefinition churn in real Inkscape sessions.</p></div><div class="status">PROMOTED</div></div>
+          <div class="research-row"><div class="version">real_apps_v3</div><div><h3>Guarded Hierarchical Deoptimization</h3><p>Pre-execution guards eliminated predictable stale routes in XTerm and Chromium while preserving task correctness.</p></div><div class="status">PROMOTED</div></div>
+          <div class="research-row"><div class="version">next</div><div><h3>Observation Gating</h3><p>Measure how many model-visible images can be eliminated at identical correctness using unchanged-frame, region, and local verification gates.</p></div><div class="status">ACTIVE</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap callout">
+        <div class="pill"><span class="dot"></span> Apache-2.0 · Research releases on GitHub</div>
+        <h2>Audit the result. Break the hypothesis.</h2>
+        <p>The project is deliberately published before the architecture is frozen. The useful feedback right now is not “add more features”; it is finding where the current assumptions fail across apps, toolkits, observation policies, and recovery paths.</p>
+        <div class="actions"><a class="btn primary" href="https://github.com/Unjuno/agent-interface">Open GitHub</a><a class="btn" href="https://github.com/Unjuno/agent-interface/blob/main/CONTRIBUTING.md">Experiment rules</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap footer"><span>Agent Interface · Research Preview</span><span>Apache-2.0 · Measurements are scoped to their published environments.</span></footer>
+</body>
+</html>

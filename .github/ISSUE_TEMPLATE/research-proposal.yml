@@ -1,0 +1,43 @@
+name: Research proposal
+about: Propose a falsifiable experiment or benchmark improvement
+title: "[experiment] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: "Please frame the proposal so it can fail, not only succeed."
+  - type: textarea
+    id: hypothesis
+    attributes:
+      label: Hypothesis (H)
+      description: What measurable claim should be falsified?
+    validations:
+      required: true
+  - type: textarea
+    id: test
+    attributes:
+      label: Minimum test (T)
+      description: Environment, tasks/data, n, changed variable, and stopping rule.
+    validations:
+      required: true
+  - type: textarea
+    id: decision
+    attributes:
+      label: Decision rule (D)
+      description: Exact PASS / FAIL / UNCERTAIN criterion.
+    validations:
+      required: true
+  - type: textarea
+    id: competing
+    attributes:
+      label: Competing explanation (C)
+      description: How could an apparent win be misleading?
+    validations:
+      required: true
+  - type: textarea
+    id: uncertainty
+    attributes:
+      label: Uncertainty (U)
+      description: Dominant error sources and scope limits.
+    validations:
+      required: true
