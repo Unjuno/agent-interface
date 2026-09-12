@@ -1,5 +1,21 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — bounded intermediate drag feedback (2026-09-13)
+
+[Drag feedback study](../research/live_control/DRAG_FEEDBACK.md) adds candidate
+session_v10/v11 with up to four intermediate observations and optional bounded
+pre-capture delay. Same original lease and independent owner; no path replacement
+or actual-assistant in-flight replanning yet. Existing entrypoints stay on v9.
+
+Five Inkscape integration cohorts retained: 01 and instrumented 05 pass their
+checks; 02–04 stop partially on focus changes. Blocked-output cancel/expiry tests
+verify independent release and no tail motion. Immediate images missed object
+movement; a 60 ms delayed capture in 05 showed movement before drag completion.
+This does not establish paint readiness. Spacing gestures did not fix focus stops;
+diagnostic instrumentation did not reproduce them. Fifty-eight exact images and
+all owned-process cleanup/release records were audited. Next resolve explicit
+freshness/release ordering and investigate focus before bounded continuation.
+
 ## Latest follow-up — desktop pointer transfer/precision (2026-09-13)
 
 [Desktop pointer report](../research/live_control/DESKTOP_POINTER.md): candidate

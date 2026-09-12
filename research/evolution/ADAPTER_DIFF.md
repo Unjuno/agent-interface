@@ -76,3 +76,8 @@ revision, not another core-semantics change or qualifying freeze revision.
 using unchanged session_v9 for existing desktop fixtures. The legacy SVG task
 passes but exact-displacement checks fail in four real-app trials, including dense
 paths. This is transfer/failure evidence, not core promotion or a freeze pass.
+
+[Intermediate drag feedback](../live_control/DRAG_FEEDBACK.md) adds candidate core
+semantics in session_v10/v11: checkpoint observations and a bounded optional delay.
+This is churn. The five integration cohorts include three partial focus failures;
+freshness, held-state ordering and bounded continuation remain unresolved.
