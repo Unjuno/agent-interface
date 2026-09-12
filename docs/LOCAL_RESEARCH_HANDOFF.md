@@ -1,6 +1,24 @@
 # Local research handoff — 2026-09-13
 
 
+## Latest follow-up — OpenTTD placement scorer (2026-09-13)
+
+[Oracle calibration](../research/openttd_oracle/README.md) advances the selected
+OpenTTD pilot. Two seeds produced actual empty/partial/complete/extra-placement
+states. The independent Python scorer accepts only complete, checking company
+ownership, bidirectional adjacency and a declared forbidden row. Eight stage
+observations are two episodes, not eight independent tasks. Three synthetic
+counterfactual controls also reject wrong required owner, disconnected evidence
+and missing tiles. Six failed setup attempts are preserved separately.
+
+This is engine-API fixture construction, not assistant gameplay. The count-only
+feasibility check is insufficient for the new placement contract: the actual
+extra-placement state still has all required roads. Next split setup from a
+read-only observer, freeze a visible task/save and verify restore/reset before
+shared pointer input and assistant use. Goal revision 3 and Phase A remain active;
+no runtime promotion or freeze qualification follows from this calibration.
+
+
 ## Latest handoff — Domain Coverage Matrix / Linux feasibility (2026-09-13)
 
 The user's latest direction supersedes a DOOM-centric next-experiment priority.

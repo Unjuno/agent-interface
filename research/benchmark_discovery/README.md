@@ -1,5 +1,9 @@
 # Domain Coverage Matrix and Linux feasibility — 2026-09-13
 
+Follow-up: [OpenTTD oracle calibration](../openttd_oracle/README.md) now tests
+actual empty/partial/complete/extra-placement states on two seeds. This is a
+separate narrow scoring study; the discovery results below remain unchanged.
+
 **Decision: keep DOOM as one orthogonal stress domain. Shortlist OpenTTD and
 Mindustry for the next task-level pilots; retain Luanti as the 3D candidate.**
 None of these three is adopted as a formal benchmark yet. No result here is a
