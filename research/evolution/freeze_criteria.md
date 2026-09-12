@@ -55,8 +55,9 @@ are explicitly partial. Churn scores are reviewer judgments: 0 implementation,
 1 minor semantics, 2 subsystem semantics, 3 core protocol/runtime semantics.
 Decision HOLD is not failure; functional PASS is not product PROMOTED.
 
-Next deliverables: complete historical backfill; an occurrence-level failure
-register; `generate_curves.py`; separate charts for cumulative discoveries,
+Initial occurrence register and `generate_curves.py` now exist, with scoped
+backfill and missing-data handling. Complete historical backfill remains open.
+The generator produces separate charts for cumulative discoveries,
 discoveries/revision, regressions, churn, comparable marginal gains, success,
 p95/p99, boundaries/success, observations/success, wrong-target/stale incidents.
 Missing data must appear as gaps or 'not measured', never flat zero curves.

@@ -2,6 +2,8 @@
 
 Stable IDs below distinguish categories from individual occurrences. This is an
 initial, incomplete retrospective index. Discovery counts are not yet audited.
+The scoped [occurrence register](occurrences.csv) currently indexes nine observed
+examples in F03/F04/F10/F14. This is not full recurrence or discovery coverage.
 Do not count a proposed risk or a unit-test assertion race as a newly discovered
 product failure without an explicit classification decision.
 

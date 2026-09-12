@@ -25,6 +25,14 @@ replace desktop task correctness. See [roadmap](../ROADMAP.md).
 
 ## Evidence ready for discussion
 
+Convergence indexing now covers seven recent revision groups and eight actual
+assistant tasks (7 success / 1 failure). A separate register indexes nine selected
+failure occurrences in four classes, including baseline controls and the known
+focus/recovery regression. Ten charts preserve missing evidence as gaps or
+not-measured panels; they do not establish convergence. See the
+[evolution index](../research/evolution/README.md) and
+[shared evaluation preparation](../research/evolution/evaluation_plan.md).
+
 | Track | Verified result | Limit |
 |---|---|---|
 | [A1 exact unchanged observation](../research/observation_gating/REPORT.md) | 192 fresh real-app episodes, 96/96 success per arm, 1,446 exact frames; 17.15% same-trace image reduction | Scripted controller, zero model calls; local speedup unproven |
