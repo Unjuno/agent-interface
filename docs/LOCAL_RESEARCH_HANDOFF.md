@@ -61,6 +61,16 @@ and the fresh task submission succeeded. All 12 frames audited exactly.
 This does not detect external screen changes after observation or solve planner
 waiting. Avoid requiring a new decision after every low-level action.
 
+The [moving-screen visual tracking study](../research/visual_tracking/README.md)
+now tests a pixel-driven local motor method on a continuously moving X11 target.
+All 12 frozen six-second episodes completed. At 250 ms decision cadence, mean
+error was 39.52 px versus 20.04 px with nominal 50 ms local updates; at 1000 ms,
+242.31 versus 20.26 px. This is simulated decision cadence with a fresh image
+per update, not in-flight inference delay or model overlap. The assistant also
+inspected the start screen and invoked a six-second local method successfully.
+Next integrate bounded visual feedback methods into asynchronous execution;
+the current tracking invocation itself does not stream planner feedback.
+
 The next controlled evaluation must measure the actual agent loop, completion
 quality and measured token use, not replace those with bytes or local timers.
 No LLM API/token-metered comparison or comparable human baseline has run here.

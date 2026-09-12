@@ -14,6 +14,16 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Experimental ladder
 
+### Moving-screen tracking — local visual motor feedback
+
+Path: [`research/visual_tracking/`](research/visual_tracking/README.md).
+Twelve frozen synthetic X11 episodes compare the same pixel-based policy at
+50 ms local updates versus 250/1000 ms decision cadence. All completed with
+verified release; application-side scoring favored local updates in all six
+pairs. One assistant-selected local method also completed. This is a narrow
+dynamic motor study, not LLM inference overlap, generic GUI understanding,
+human comparison or a DOOM result. Failures and raw scoring records are retained.
+
 ### Live control — asynchronous functional prototype
 
 Path: [`research/live_control/`](research/live_control/README.md).
