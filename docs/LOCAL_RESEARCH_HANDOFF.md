@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — real distractor breaks visual identity (2026-09-13)
+
+[Distractor failure](../research/live_control/SERVO_DISTRACTOR.md): session17 tracks
+a neighboring red rectangle and moves the held target -48 px for a +12 px goal.
+Authority bounds hold but identity is wrong. Candidate session18 adds source-match
+uniqueness screening and rejects this case before servo input; blue-distractor
+small-object tracking remains unstable. 30 frames/source hashes/saved attributes
+audited. Rejection is not task success; multi-object patch servo is unqualified.
+Next temporal association/decoration sensitivity and recovery on fresh cases; retain
+all prior single-object successes within their narrow scope.
+
 ## Latest follow-up — local callback stall classification (2026-09-13)
 
 [Servo stall tests](../research/live_control/SERVO_STALL.md) compare four actual-app
