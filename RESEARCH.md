@@ -14,6 +14,14 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Experimental ladder
 
+### First DOOM-engine transfer
+
+Path: [`research/doom/`](research/doom/README.md). The assistant used X11 screenshots
+and OS keys in ViZDoom/Freedoom's basic room, reaching completion in two development
+runs. An async-clock probe is consistent with 35 tics/second; 50 recorded frames
+audit exactly across three operated sessions. Initial window, cached-telemetry
+and binding failures are retained. This is not full-game or human-speed evidence.
+
 ### Moving-screen tracking — local visual motor feedback
 
 Path: [`research/visual_tracking/`](research/visual_tracking/README.md).

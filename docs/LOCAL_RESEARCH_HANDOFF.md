@@ -93,6 +93,16 @@ generic critical-event recall; focus drift and short/unrecognized events remain
 open. Next transfer work should start the planned DOOM environment rather than
 continue optimizing this simple arena indefinitely.
 
+The [first DOOM-engine transfer](../research/doom/README.md) is now implemented.
+The assistant operated ViZDoom 1.3.0's basic room with bundled Freedoom assets
+through X11 screenshots and OS keys. Two development runs reached the finish
+screen with independent post-control finished/alive confirmation. A revised
+clock probe recorded 71 tics over about 2.028 seconds with no advance calls
+during the idle interval. Cached API time, case-sensitive window lookup and
+ineffective command-line key bindings were discovered and retained; use
+`research/doom/session_v4.py`, which supplies an explicit ini. This is a basic
+integration, not full DOOM skill, human-speed play or a finished launch demo.
+
 The next controlled evaluation must measure the actual agent loop, completion
 quality and measured token use, not replace those with bytes or local timers.
 No LLM API/token-metered comparison or comparable human baseline has run here.

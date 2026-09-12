@@ -67,7 +67,9 @@ without waiting. Use asynchronous ordinary-speed execution for the real-time
 claim. A direct screen-buffer/action API experiment must be labeled separately
 from an OS screen-capture and keyboard/mouse demonstration. Keep privileged
 game state out of the visual controller; any scoring-only instrumentation is
-separate. This milestone is planned, not an existing DOOM result.
+separate. A [first ViZDoom/Freedoom basic-room integration](research/doom/README.md)
+now exists, including assistant-operated completion and an async-clock probe.
+The broader real-time gameplay demonstration remains unfinished.
 
 ## Runtime consolidation
 
