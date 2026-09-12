@@ -106,3 +106,9 @@ through owner admission. Three known-fixture local visual-controller runs meet
 ±1 px displacement tolerance, with blocked-output and consumed-reply stall release
 evidence. The stall retains a `failed` terminal classification. No remote-model
 performance, fresh-case generality, promotion or freeze qualification is claimed.
+
+[Planner-facing patch servo](../live_control/SERVO_INTERFACE.md) adds session_v16
+and interactive_v13 with source-bound single-step local correction and needs_decision
+mapping for non-goal tracking outcomes. This is explicit core operation/feedback
+churn. Actual assistant use and selected-source failure mapping have narrow evidence;
+cross-domain and fresh distractor gates remain open. No freeze credit.

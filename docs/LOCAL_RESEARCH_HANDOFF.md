@@ -1,5 +1,17 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — assistant-declared servo and explicit loss outcome (2026-09-13)
+
+[Servo interface](../research/live_control/SERVO_INTERFACE.md) exposes candidate
+session_v16/interactive_v13 pointer_servo with source patch/sequence, target and bounds.
+Actual assistant image-based submission reaches 30 px with two local corrections,
+zero remote pointer replies, preserved saved y/size and a 1.179 s local program.
+This is a familiar layout and excludes planning/save/scoring; no speedup claim.
+Actual-app selected-source loss now reports needs_decision instead of completed.
+32 exact frames/source hashes/release outcomes audited. Ready advertises a partial
+operation descriptor, not full JSON Schema. Next real distractors/loss, callback
+stall tests, complete schema and cross-domain evaluation; no promotion.
+
 ## Latest follow-up — patch correction in actual Inkscape (2026-09-13)
 
 [Patch servo integration](../research/live_control/PATCH_SERVO.md) connects a bounded
