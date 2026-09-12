@@ -1,5 +1,8 @@
 # Asynchronous live control: development evidence
 
+Latest: [independent input release under blocked logging/capture](INPUT_OWNER.md).
+Revision 5 is currently a probe backend; revision 4 remains the interactive CLI.
+
 Follow-up: [cooperative intent expiry and input-boundary fault injection](LEASE.md).
 Use `session_v4.py` for the current lease experiment; other revisions retain
 their original behavior and evidence.

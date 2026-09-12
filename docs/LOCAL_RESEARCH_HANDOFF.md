@@ -129,6 +129,24 @@ slow logger exposed late input in revision 3; revision 4 moves logging after
 the input call. Blocking can still delay release. Planner/model timestamps,
 hard watchdogs and semantic-version guards remain open.
 
+## Input release during worker stalls
+
+The [input-owner experiment](../research/live_control/INPUT_OWNER.md) exposes
+and addresses a local failure: 500 ms logging/capture stalls kept the cooperative
+backend's key held until roughly 302–372 ms after a 200 ms lease expired in the
+fresh paired comparison. A dedicated input thread with its own X11 connection
+reduced first-sampled-up delay to 1.2–2.3 ms in four candidate episodes, while
+terminal notification remained delayed by the stalled worker. These are local
+development measurements, not hard deadline bounds or planner speed results.
+
+Both arms stopped the tail. Twelve retained episodes, six exact frames and
+eight tests passed the relevant checks. New real-X11 tests cover independent
+cancellation and stale-cleanup ownership. `session_v5.py` is currently a backend
+used by the probe, not an interactive entry point or DOOM integration. Ordinary
+task completion, robust connection failure handling and actual assistant use of
+this backend are the next integration checks. Existing research startup warnings
+and temporary-directory cleanup limitations are documented in the report.
+
 ## Parallel control-codec discussion (existing branch)
 
 A remote [control-codec research branch](https://github.com/Unjuno/agent-interface/tree/research/control-codec-track)

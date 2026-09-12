@@ -77,6 +77,8 @@ python3 -m unittest test_lease test_input_boundary -v
 python3 probe_lease_v2.py --out ../../results-local/lease-new
 ```
 
-Next: measure deadline overshoot under deliberately blocked observation/logging
-and add focus/window validity separately. Preserve the distinction between
-intent validity, release guarantees, and successful task completion.
+The [independent input-owner follow-up](INPUT_OWNER.md) now measures the blocked
+observation/logging failure and compares a dedicated input thread against this
+cooperative backend. It also distinguishes early key release from delayed
+terminal notification. Focus/window validity and task-level integration remain
+separate work.
