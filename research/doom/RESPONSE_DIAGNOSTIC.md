@@ -52,3 +52,9 @@ not mean full task correctness. Research Freeze remains unqualified.
 
 References: [DoomGame API](https://vizdoom.farama.org/main/api/python/doom_game/)
 and [button/mode definitions](https://vizdoom.farama.org/api/cpp/enums/).
+
+## Follow-up resolution of directional input
+
+[BINDINGS_FIX.md](BINDINGS_FIX.md) records the arrow-name correction and fresh
+directional response, followed by successful actual assistant gameplay in v7.
+The historical failure/diagnostic evidence above remains unchanged.

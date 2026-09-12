@@ -4,6 +4,15 @@ This is the entry point for discussion in another chat. The user has authorized
 direct updates to `main` when validated progress is ready. Keep successes,
 failures, reproducible code and remaining limitations together in each update.
 
+## Latest fix and actual self-use
+
+[DOOM bindings fix](../research/doom/BINDINGS_FIX.md): correct arrow names resolve
+directional nonresponse. Four fresh direction cases and actual assistant aiming/
+firing pass; the latter completes the basic room with player alive (9 exact
+frames, 2 programs). Use normal session_v7.py for new trials. Core runtime is
+unchanged. About 20-second planner/tool gaps and the earlier black-screen root
+cause remain open; there is no human-tempo or freeze claim.
+
 ## Latest response diagnosis
 
 [Response diagnostics](../research/doom/RESPONSE_DIAGNOSTIC.md): one scripted

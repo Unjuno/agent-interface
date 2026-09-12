@@ -22,7 +22,7 @@ development cohorts are retained. This adds no game-success or speed claim.
 | `development-03` | `session_v3.py` | Spectator telemetry refreshed before/after the clock probe and after control. Assistant inspected images, rotated toward the monster, discovered Space did not fire, then fired with default Control. Finish screen appeared; post-control API reported episode finished and player alive. |
 | `development-04` | `session_v4.py` | Explicit `Doom.Bindings` ini replaced ineffective command-line binding setup. Assistant inspected the initial screen, fired with Space and reached the finish screen; post-control API again reported finished/alive. |
 
-Revision 4 records the legacy successful gameplay; use revision 6 for new common-runtime trials. Old ready-event binding claims and revision 2
+Revision 4 records the legacy successful gameplay; use revision 7 for new common-runtime trials. Old ready-event binding claims and revision 2
 clock/score values are retained as failed assumptions, not authoritative controls.
 The generated ini is archived after engine shutdown in the revision 4 result.
 
@@ -114,3 +114,11 @@ freshness are unresolved; readiness does not prove useful feedback.
 through the shared backend in one scripted trial, while Right-key rotation stays
 unresolved. Extra engine refresh and delta-button availability did not fix it.
 The 43 frames and release/close records audit; no candidate is promoted.
+
+## Corrected bindings and successful shared self-use
+
+[Binding correction](BINDINGS_FIX.md) fixes the four arrow-key names. Fresh
+left/right/forward/back cases pass, and the assistant completed a basic-room
+task by visually aiming and firing with normal revision 7. Nine self-use frames
+and cleanup audit. Planner/tool gaps still take about 20 seconds; human-tempo
+performance and the earlier black-screen root cause remain unresolved.

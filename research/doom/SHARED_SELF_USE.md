@@ -67,3 +67,9 @@ unproven. Shared DOOM task correctness and Research Freeze qualification stay op
 through the shared backend in one scripted trial, while Right-key rotation stays
 unresolved. Extra engine refresh and delta-button availability did not fix it.
 The 43 frames and release/close records audit; no candidate is promoted.
+
+## Follow-up resolution of directional input
+
+[BINDINGS_FIX.md](BINDINGS_FIX.md) records the arrow-name correction and fresh
+directional response, followed by successful actual assistant gameplay in v7.
+The historical failure/diagnostic evidence above remains unchanged.
