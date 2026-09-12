@@ -1,11 +1,14 @@
 name: Research proposal
-about: Propose a falsifiable experiment or benchmark improvement
+description: Propose a falsifiable experiment or benchmark improvement.
 title: "[experiment] "
 labels: []
 body:
   - type: markdown
     attributes:
-      value: "Please frame the proposal so it can fail, not only succeed."
+      value: |
+        Use this form when the idea is mature enough to test. If you only have the design idea, use the simpler Idea form instead.
+
+        Frame the proposal so it can fail, not only succeed.
   - type: textarea
     id: hypothesis
     attributes:
@@ -17,7 +20,7 @@ body:
     id: test
     attributes:
       label: Minimum test (T)
-      description: Environment, tasks/data, n, changed variable, and stopping rule.
+      description: Environment, tasks/data, sample size, changed variable, and stopping rule.
     validations:
       required: true
   - type: textarea
