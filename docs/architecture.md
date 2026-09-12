@@ -65,6 +65,37 @@ Strong planner / LLM
                     OS / GUI
 ```
 
+## Model-boundary codec and executable semantics are separate
+
+The planner-facing representation should not be confused with the executable representation used by the local runtime.
+
+The same validated semantic program may arrive as:
+
+- verbose structured actions;
+- a compact textual IR;
+- persistent semantic method references;
+- workflow references;
+- a future binary or vendor-specific transport.
+
+All of these should resolve into the same validated semantic AST before execution.
+
+```text
+planner-visible codec
+        |
+        v
+codec parser / persistent dictionary
+        |
+        v
+validated semantic AST
+        |
+        v
+Universal Reactive Control / Input ISA
+```
+
+This separation lets the project optimize model-visible serialization without weakening guards, held-input state validation, retry, state-version checks, or recovery. It also prevents an early compact syntax from accidentally becoming the permanent runtime ABI.
+
+The active research track is [`../research/control_codec/`](../research/control_codec/); design rationale is in [`control-codec.md`](control-codec.md).
+
 ## Universal control is the floor
 
 An unknown application must be controllable without an app-specific API. App methods are optimizers over universal control, not replacements for it.
