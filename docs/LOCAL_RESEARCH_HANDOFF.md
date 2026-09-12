@@ -53,6 +53,14 @@ line and recovered successfully, with independent output verification. Preserve
 this negative result. Explicit intent expiry, stale-state/focus guards and
 guarded local progress remain open; finite duration is not an execution lease.
 
+The [revision 2 follow-up](../research/live_control/DECISION_BOUNDARY.md) adds a
+`decide` step that terminates with verified release and discards the tail, plus
+rejection of old observation references. In one actual assistant XTerm trial,
+the next valid request arrived 10.998 seconds later; the tail stayed stopped
+and the fresh task submission succeeded. All 12 frames audited exactly.
+This does not detect external screen changes after observation or solve planner
+waiting. Avoid requiring a new decision after every low-level action.
+
 The next controlled evaluation must measure the actual agent loop, completion
 quality and measured token use, not replace those with bytes or local timers.
 No LLM API/token-metered comparison or comparable human baseline has run here.

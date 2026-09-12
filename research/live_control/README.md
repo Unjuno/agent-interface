@@ -1,5 +1,8 @@
 # Asynchronous live control: development evidence
 
+Follow-up: [revision 2 decision boundaries and assistant trial](DECISION_BOUNDARY.md).
+The description below records the original `session.py` revision.
+
 This research prototype separates command reading from a single GUI execution
 worker. A planner can submit a finite program, receive early acknowledgements
 and observations, and request cancellation while the worker is active.
