@@ -99,3 +99,11 @@ Do not publish this basic-room success as the final demonstration.
 
 These sources describe the platform; the local records establish what actually
 worked in this environment.
+
+## Actual shared self-use update
+
+[Shared self-use report](SHARED_SELF_USE.md) records an unsuccessful assistant
+episode: black output after the first planner gap, retained despite frame/cleanup
+audits passing. A fresh 0/20-second scripted pair did not reproduce black output,
+but showed no world-crop change after its short turn. Game response and rendering
+freshness are unresolved; readiness does not prove useful feedback.

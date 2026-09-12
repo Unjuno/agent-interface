@@ -4,6 +4,15 @@ This is the entry point for discussion in another chat. The user has authorized
 direct updates to `main` when validated progress is ready. Keep successes,
 failures, reproducible code and remaining limitations together in each update.
 
+## Latest self-use evidence
+
+[Shared DOOM self-use](../research/doom/SHARED_SELF_USE.md) failed: the assistant
+encountered persistent black output and stopped with the episode unfinished.
+Five frames and cleanup audited; a fresh scripted gap pair added eight frames
+but did not reproduce black output. Both short-turn world crops were unchanged.
+Next priority is separating game input response from rendering freshness, before
+claiming shared DOOM task correctness. No performance or freeze claim follows.
+
 ## Latest implementation evidence
 
 [Shared DOOM adapter](../research/doom/SHARED_RUNTIME.md) now uses the pinned

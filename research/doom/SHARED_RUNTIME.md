@@ -56,3 +56,11 @@ are not preregistered, so this is not yet the complete qualification manifest.
 The auditor verifies source bytes, image transport against saved PNGs, stale
 rejection, interruption ordering, release/close and retained tails from raw logs.
 Its success does not replace the missing full qualification study.
+
+## Actual shared self-use update
+
+[Shared self-use report](SHARED_SELF_USE.md) records an unsuccessful assistant
+episode: black output after the first planner gap, retained despite frame/cleanup
+audits passing. A fresh 0/20-second scripted pair did not reproduce black output,
+but showed no world-crop change after its short turn. Game response and rendering
+freshness are unresolved; readiness does not prove useful feedback.
