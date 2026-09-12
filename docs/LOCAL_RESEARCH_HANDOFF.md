@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — local callback stall classification (2026-09-13)
+
+[Servo stall tests](../research/live_control/SERVO_STALL.md) compare four actual-app
+output/cancel/expiry conditions on session_v16 and candidate session_v17. Both
+release during blocked output and prevent late motion. v17 reports needs_decision,
+expired or cancelled instead of generic failed after resumption. Two actual-app
+goal/lost regressions also pass; 39 exact frames and source hashes audited. The
+candidate is Python-harness only; interactive_v13 remains frozen on v16. Real
+distractors, actual target disappearance and broader feedback/schema remain next.
+
 ## Latest follow-up — assistant-declared servo and explicit loss outcome (2026-09-13)
 
 [Servo interface](../research/live_control/SERVO_INTERFACE.md) exposes candidate
