@@ -1,8 +1,27 @@
-# Contributing experiments
+# Contributing
 
-Agent Interface is currently research-first. Contributions are most useful when they falsify a specific design claim rather than only add features.
+Agent Interface is research-first. Contributions do not need to start as code.
 
-## Required experiment record
+The most useful contribution is often a simpler explanation of **what work or information the current interface is wasting**, plus an idea for removing that waste without removing information the agent actually needs.
+
+## Three ways to contribute
+
+### 1. Idea
+
+Use the [Idea issue form](https://github.com/Unjuno/agent-interface/issues/new?template=idea.yml) for an architectural or algorithmic suggestion.
+
+A good idea can be short. Explain:
+
+- what is currently wasteful, inaccurate, fragile, or unnecessarily complex;
+- what should change;
+- why the change should improve token/image efficiency, correctness, latency, reliability, generality, or simplicity;
+- any obvious tradeoff or failure mode you already see.
+
+You do **not** need benchmark results or an implementation before opening an idea.
+
+### 2. Research proposal
+
+Use the [Research proposal form](https://github.com/Unjuno/agent-interface/issues/new?template=research-proposal.yml) once an idea is specific enough to test.
 
 Every promoted experiment should state:
 
@@ -11,6 +30,23 @@ Every promoted experiment should state:
 - **D — Decision:** explicit PASS / FAIL / UNCERTAIN condition.
 - **C — Competing explanation:** how the apparent win could be misleading.
 - **U — Uncertainty:** dominant error sources and scope limits.
+
+### 3. Research harness bug
+
+Use the bug form for reproducible defects in the benchmark harnesses, reports, or runtime experiments. Bugs are important, but Issues are intentionally not limited to bugs.
+
+## First-principles review questions
+
+Before promoting a design change, ask:
+
+1. **What information is actually required for the next correct decision?**
+2. **What computation, observation, serialization, or model call carries no new useful information?**
+3. **Can that work be eliminated rather than merely compressed?**
+4. **What is the cheapest local mechanism that can preserve the same correctness?**
+5. **What uncertainty remains, and when must the system escalate back to a stronger observation or planner?**
+6. **Does the idea generalize beyond one application or one benchmark fixture?**
+
+The project prefers mechanisms that remove unnecessary boundaries while preserving an explicit fallback.
 
 ## Benchmark rules
 
@@ -22,6 +58,8 @@ Every promoted experiment should state:
 6. Do not call simulator latency model-in-loop latency.
 7. Keep failed/rejected ideas in the research record when they constrain future design.
 8. Prefer paired comparisons and multiple fresh replicates for noisy GUI timings.
+9. Prefer eliminating unnecessary observation/work before applying lossy compression.
+10. A fast path must retain a safe fallback when its assumptions are no longer valid.
 
 ## Adding a research track
 
