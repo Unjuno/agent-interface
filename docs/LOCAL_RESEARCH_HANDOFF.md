@@ -1,6 +1,24 @@
 # Local research handoff — 2026-09-13
 
 
+## Latest follow-up — pointer owner candidate (2026-09-13)
+
+[Pointer owner candidate](../research/live_control/POINTER_OWNER.md) adds absolute
+motion, held buttons 1-3 and bounded vertical wheel pulses to a new independent
+owner, `input_owner_v3.py`. Two private real-X11 runs completed 11/12 checks:
+input delivery, expiry/cancel rejection, other-surface/wrong-focus rejection,
+independent button release on deadline/cancel/focus/overlay, old-lease isolation
+and keyboard keymap regression. Source/result/release logs are preserved.
+
+This is not integrated into the shared backend or OpenTTD and is not a promoted
+runtime. The v10 baseline stays unchanged. Geometry binding, destroyed surfaces,
+X11 disconnect/owner-thread failure (synchronous waits can strand callers),
+whole-program validation and actual-app regressions remain gates before use.
+The added core semantics are architecture churn, not freeze convergence. Next
+resolve those ownership/context lifecycle gaps, then connect the saved OpenTTD
+fixture for actual pointer self-use. No speed, token or task-success claim yet.
+
+
 ## Latest follow-up — visible saved OpenTTD task (2026-09-13)
 
 [Saved task and observer](../research/openttd_task/README.md) now provide a visible

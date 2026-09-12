@@ -42,3 +42,13 @@ failed development cohorts are retained. The table above describes the legacy
 entrypoints only. Shared assistant gameplay and broader qualification remain
 open; tracking still requires the explicit authority/event contract described
 above. No new core semantics or performance gain is claimed.
+
+
+## Pointer owner candidate — 2026-09-13
+
+[Primitive implementation and probes](../live_control/POINTER_OWNER.md) introduce
+`input_owner_v3.py` separately from the shared v10 backend. This is proposed new
+core input semantics (churn), not an adapter-only change or qualified domain.
+No pointer operation is admitted by the existing shared program validator yet.
+Geometry binding, destruction/disconnect lifecycle and shared-app regressions
+remain prerequisites to integrating it with the saved OpenTTD task.
