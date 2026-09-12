@@ -1,5 +1,17 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — patch correction in actual Inkscape (2026-09-13)
+
+[Patch servo integration](../research/live_control/PATCH_SERVO.md) connects a bounded
+scripted patch policy through existing guided replies. Completed cohort 03 achieves
+24 px movement from original and verified shifted positions with y/size preserved.
+Selection-decoration tracking loss, ineffective coarse setup and an oversized setup
+program rejection remain archived. 69 exact frames audited. Lost tracking currently
+maps to finish/completed at the program level, so inspect controller outcome and
+independent score. Deselection is a declared setup condition, not a robustness fix.
+Next real distractors/loss, outcome/schema integration and actual assistant target
+submission; no remote-model speedup or promotion.
+
 ## Latest follow-up — deterministic patch effect sensor (2026-09-13)
 
 [Patch anchor feasibility](../research/live_control/VISUAL_ANCHOR.md) adds offline
