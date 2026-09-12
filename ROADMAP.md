@@ -17,6 +17,22 @@ Goal: remove visual/model input that carries no new task-relevant information wh
 
 Active track: [`research/observation_gating/`](research/observation_gating/).
 
+## Parallel — Control Serialization / Compact IR
+
+Goal: reduce repeated planner-to-computer representation while preserving exactly the same validated control semantics.
+
+- [ ] Freeze C0: verbose structured-action / JSON-like baseline.
+- [ ] Add C1: compact fixed-grammar Universal Input IR.
+- [ ] Measure bytes / semantic operation and parse+validation latency.
+- [ ] Add persistent opcode / field dictionary and include setup cost.
+- [ ] Measure app-method definition + reference break-even.
+- [ ] Measure short workflow-reference break-even and reject definition-cost losers.
+- [ ] Stress stale method/route invalidation and include relearning cost.
+- [ ] Keep bytes/characters separate from real text tokens.
+- [ ] When a model endpoint is available, replay paired hidden tasks and record exact text/image token usage.
+
+Active track: [`research/control_codec/`](research/control_codec/). Design note: [`docs/control-codec.md`](docs/control-codec.md).
+
 ## Next — automatic speculation and guard policy
 
 - [ ] Estimate guard cost vs `P(stale) × failure cost` per route.
@@ -34,6 +50,7 @@ Goal: turn promoted research semantics into one coherent component without freez
 - [ ] Keep deterministic fast loops local; do not fork a CLI process per action.
 - [ ] Expose immediate/incremental feedback so the agent is not blocked on unnecessary waits.
 - [ ] Preserve Universal Control as the fallback floor.
+- [ ] Keep the validated semantic AST independent from its model-boundary codec so compact text, structured tool calls, and future binary transports can be compared without changing execution semantics.
 
 ## User-facing runtime preview
 
@@ -55,6 +72,7 @@ See [`release/README.md`](release/README.md).
 ## Later — production stabilization
 
 - [ ] Freeze executable IR and error taxonomy.
+- [ ] Freeze or version the model-boundary codec separately from executable semantics.
 - [ ] Port the frozen hot path to a systems implementation.
 - [ ] Native backends beyond X11.
 - [ ] Actual model-in-loop measurements: model calls, text tokens, image tokens, end-to-end latency.
