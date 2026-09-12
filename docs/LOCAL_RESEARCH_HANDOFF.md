@@ -107,7 +107,17 @@ The next controlled evaluation must measure the actual agent loop, completion
 quality and measured token use, not replace those with bytes or local timers.
 No LLM API/token-metered comparison or comparable human baseline has run here.
 
-## Parallel control-codec discussion
+## Updated design priorities from the user's candidate report
+
+The [candidate architecture review](CANDIDATE_ARCHITECTURE_REVIEW.md) treats the
+new report as design material, not a rewrite instruction. Next priority is an
+isolated action-validity/expiry experiment with interaction timing, followed by
+observable focus/window validity and an explicit retained-subscription contract.
+DOOM remains a transfer environment. Do not substitute basic-room completion
+for reducing planner boundaries or for practical GUI correctness. Candidate
+future states, leases and semantic versions are not implemented by this note.
+
+## Parallel control-codec discussion (existing branch)
 
 A remote [control-codec research branch](https://github.com/Unjuno/agent-interface/tree/research/control-codec-track)
 was observed at `6d49811` during this publication review. It contains control
