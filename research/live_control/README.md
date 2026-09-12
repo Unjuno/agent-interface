@@ -1,5 +1,8 @@
 # Asynchronous live control: development evidence
 
+Latest: [optional compact presentation and actual assistant pair](PRESENTATION.md)
+in `interactive_v10.py`. Full output remains the default.
+
 Latest trial: [bounded pixel-quiet observation](PIXEL_QUIET.md) in
 `interactive_v9.py`. Quietness is advisory, never task completion.
 

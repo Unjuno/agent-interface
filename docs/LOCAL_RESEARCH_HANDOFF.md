@@ -209,6 +209,21 @@ Static loading screens also satisfy quietness; animation may never satisfy it.
 Both counterexamples constrain its use. Next work is matched planner evaluation
 and compact feedback delivery, not treating quietness as semantic readiness.
 
+## Compact presentation pilot
+
+The [presentation pilot](../research/live_control/PRESENTATION.md) adds optional
+compact output to `interactive_v10.py`, retaining full local events and frames.
+Two actual assistant Calc sessions used the same seed, runtime and action
+programs; both saved correct values, with 29 exact frames across the pair.
+Same-trace JSON output selection reduced bytes 36.39%/38.96%; replay of the prior
+trial reduced 39.07%. These are byte counts, not actual model tokens.
+
+The live pair is exploratory and ordered, with differing tool truncation limits;
+its 19.43/28.51 s acceptance-to-evaluation intervals are not causal speed evidence.
+Both required two programs. Compact mode preserves structural focus changes but
+can omit transient visual-only warnings during settle. Full remains the default
+until critical-event retention and stronger measurement are integrated.
+
 ## Parallel control-codec discussion (existing branch)
 
 A remote [control-codec research branch](https://github.com/Unjuno/agent-interface/tree/research/control-codec-track)
