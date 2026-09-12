@@ -19,6 +19,16 @@ follow-up is separately `owner-v6` (1/1). No historical raw result was changed.
 Same-commit groups represent different measured runtime revisions, not separate
 commits. Controlled probe episodes do not enter saved-task success denominators.
 
+## Revised freeze decision
+
+[Revision 2 criteria](freeze_criteria.md) separate individual promotion from
+research freeze. The 10% signal is not a freeze threshold. Small gains can be
+retained; measured bundles and their correctness-preserving Pareto tradeoffs
+determine remaining improvement alongside failure/regression/churn convergence.
+See [bundle contract](BUNDLE_EVALUATION.md) and the header-only
+[bundle register](bundle_evaluations.csv). No bundle efficacy is measured yet.
+The seven new historical ledger fields stay blank rather than inventing gains.
+
 ## Rebuild
 
 With Python and matplotlib available (generated with matplotlib 3.10.6):

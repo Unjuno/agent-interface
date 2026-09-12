@@ -1,4 +1,4 @@
-# Current goal — 2026-09-13 revision 1
+# Current goal — 2026-09-13 revision 2
 
 This document incorporates the user's research convergence proposal. It is the
 current working objective for this task and future handoffs. The app's existing
@@ -28,8 +28,10 @@ DOOMは実時間で進む環境への転用とデモの評価対象とし、他�
    評価できる実験計画へ収束させる。まだ全履歴ファイルを統合・削除しない。
 4. 比較前にbaseline・候補・正確性ゲート・主要指標・評価量を固定する。
    同じモデル、課題、環境、出力上限を揃え、順序効果を扱う。
-5. failure discovery、regression、architecture churn、marginal gain、
-   cross-domain correctnessの同時収束を審査してResearch Freeze Candidateを判断する。
+5. failure discovery、regression、architecture churnの収束に加え、合理的な候補と
+   実測した組み合わせがPareto frontierを意味のある量だけ改善できなくなったかを
+   審査する。cross-domain correctnessをhard gateとし、単独効果の縮小は補助指標にする。
+   単発10%はpromotionの強い目安であり、Research Freezeの終了条件にはしない。
 
 直近のコンパクト表示への機能追加より、ledger・分類監査・共通評価計画を先に行う。
 重要イベント保持は未解決のcritical-event lossとして候補に残すが、追加実装を
@@ -57,6 +59,11 @@ X11固有部分の分離、入力権限・期限・解放・フォーカス・�
 入力命令体系・planner/runtime境界の安定を要する。
 
 ## Change log
+
+- 2026-09-13 r2: Research Freeze Criteria Revision Proposalを採用。
+  単独候補の採用判断と研究終了判断を分離。小さく再現可能な改善を保持し、
+  組み合わせ効果・相互作用・複雑性・移植コストを含めて残る改善余地を実測する。
+  組み合わせの未測定を収束と扱わない。現在もfreeze未達、最終目標は継続。
 
 - 2026-09-13 r1: ユーザーのConvergence / Freeze Proposalを採用。
   終了条件のない局所改善ループから、収束記録と段階的freezeを伴う研究へ変更。

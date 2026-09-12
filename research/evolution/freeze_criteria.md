@@ -1,7 +1,7 @@
 # Research convergence and freeze review
 
 Status: **NOT READY — evidence incomplete**, not a failed product and not a
-completed architecture phase. This adopts the user's convergence proposal;
+completed architecture phase. Revision 2 adopts the user's freeze revision;
 the numeric gates below are initial working criteria, not measured outcomes.
 
 ## Review contract
@@ -24,10 +24,11 @@ All of these must hold together:
   unresolved correctness-blocking recurrence. Report denominators and uncertainty.
 - No core protocol/runtime semantic change (churn score 3); the work is mainly
   engineering/tuning. A low count cannot override an unresolved architecture issue.
-- Tested architecture candidates no longer exceed the predeclared meaningful
-  improvement threshold. Working starting point: 10% on one nominated primary
-  metric, with correctness gates and uncertainty considered. Bytes cannot stand
-  in for model tokens; incomparable metrics cannot be pooled into one gain curve.
+- Reasonable remaining candidates AND measured candidate bundles no longer move
+  the correctness-preserving Pareto frontier by a predeclared meaningful amount.
+  Assess performance, recovery, complexity and portability with uncertainty;
+  individual diminishing gains are supplementary, never sufficient for freeze.
+  Missing bundle evidence is unknown, not saturation. There is no 10% freeze gate.
 - The **same candidate semantics** pass terminal/text, browser, spreadsheet,
   graphics/editor, multi-window/modal, continuous motor and real-time DOOM checks.
   Historical successes from different runtime revisions do not establish this.
@@ -47,13 +48,32 @@ lease, release, focus, observation/event, stale-action, input ISA and planner
 boundary semantics are stable and separable from X11. Final product/human-tempo
 claims still require the original goal's evidence.
 
-## Ledger and chart rules
+## Candidate promotion is a separate decision
+
+A reproducible 10% improvement on a nominated metric is a strong individual
+promotion signal, not automatic adoption or a minimum worth retaining. Smaller
+gains can be retained when correctness holds, regressions are absent, complexity
+is low, a distinct bottleneck is addressed and cross-domain replication supports
+the effect. Evaluate actual bundles; do not sum individual percentages.
+
+Use the [bundle evaluation contract](BUNDLE_EVALUATION.md) to predeclare the
+reasonable candidate pool, interactions, metric-specific meaningful movement,
+uncertainty and stopping review. An untested plausible high-value bundle blocks
+a saturation claim. No exhaustive search of every possible combination is required.
+Known minor non-correctness issues require explicit impact and disposition;
+wrong-target, stale-input and other correctness violations cannot be traded for speed.
+
+## Ledger and chart interpretation
 
 `evolution.csv` indexes raw records without moving them. Empty numeric fields
 mean unknown/not established; zero requires audited coverage. Historical rows
 are explicitly partial. Churn scores are reviewer judgments: 0 implementation,
 1 minor semantics, 2 subsystem semantics, 3 core protocol/runtime semantics.
 Decision HOLD is not failure; functional PASS is not product PROMOTED.
+The ledger separates individual_gain, bundle_id, bundle_gain, interaction_effect,
+complexity_delta, new_core_semantics and net_decision. See the bundle contract for
+units and provenance. Historical blank fields remain unknown; the individual
+marginal-gain chart is supplementary and does not establish bundle saturation.
 
 Initial occurrence register and `generate_curves.py` now exist, with scoped
 backfill and missing-data handling. Complete historical backfill remains open.

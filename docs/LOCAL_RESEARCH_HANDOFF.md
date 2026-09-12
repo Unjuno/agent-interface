@@ -4,6 +4,23 @@ This is the entry point for discussion in another chat. The user has authorized
 direct updates to `main` when validated progress is ready. Keep successes,
 failures, reproducible code and remaining limitations together in each update.
 
+## Latest criteria revision
+
+The user's Research Freeze Criteria Revision Proposal is adopted in
+[CURRENT_GOAL revision 2](CURRENT_GOAL.md) and
+[freeze criteria](../research/evolution/freeze_criteria.md). A 10% individual gain
+is a strong promotion signal, not the threshold for ending architecture discovery.
+Retain worthwhile smaller candidates and measure actual bundles, their interactions
+and complexity/portability tradeoffs. Freeze requires small remaining meaningful
+Pareto frontier movement plus failure/regression/churn convergence and hard
+cross-domain correctness. Unknown bundle gains cannot establish saturation.
+
+The [bundle contract](../research/evolution/BUNDLE_EVALUATION.md) fixes units,
+provenance and study/stopping rules. The register has no measured rows yet;
+historical ledger additions remain blank. This criteria update changes no runtime
+and establishes no performance gain. Shared DOOM/tracking coverage and statistical
+qualification remain open; no revision qualifies for freeze.
+
 ## Objective
 
 **Updated working objective:** [CURRENT_GOAL.md](CURRENT_GOAL.md) adopts the

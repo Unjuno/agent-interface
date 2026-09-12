@@ -4,7 +4,7 @@ from pathlib import Path
 
 HERE=Path(__file__).resolve().parent
 LIVE=HERE.parent/'live_control'
-FIELDS=['revision','commit','date','hypothesis','mechanism_added','environments','episodes','success_rate','hard_success_rate','new_failure_classes','known_failure_recurrences','regressions','p50','p95','p99','latency_endpoint','planner_boundaries','accepted_programs','observations','serialization_bytes','actual_tokens_if_available','architecture_changes','architecture_churn_score','best_marginal_gain','decision','evidence','backfill_status','notes','successful_tasks','controlled_episodes']
+FIELDS=['revision','commit','date','hypothesis','mechanism_added','environments','episodes','success_rate','hard_success_rate','new_failure_classes','known_failure_recurrences','regressions','p50','p95','p99','latency_endpoint','planner_boundaries','accepted_programs','observations','serialization_bytes','actual_tokens_if_available','architecture_changes','architecture_churn_score','best_marginal_gain','decision','evidence','backfill_status','notes','successful_tasks','controlled_episodes','individual_gain','bundle_id','bundle_gain','interaction_effect','complexity_delta','new_core_semantics','net_decision']
 SPECS=[
     ('input-owner','936069a',[],8,3,'Independent owner isolates expiry from worker stalls','INPUT_OWNER.md'),
     ('owner-v5','b98f672',['owner-assistant-01','owner-assistant-02'],0,1,'Explicit interactive owner lifecycle','OWNER_SELF_USE.md'),

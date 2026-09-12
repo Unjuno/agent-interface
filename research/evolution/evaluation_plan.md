@@ -76,7 +76,15 @@ cannot claim same-model token savings.
 - New taxonomy class versus recurrence; newly introduced regression versus a
   known baseline failure; changed semantic primitives and reviewer churn rating.
 
-Next action: finish historical occurrence ordering and inventory the current
-reference adapters, then freeze a readiness manifest for the runnable domains.
-The collection/qualification design must be ready before another performance
-claim or Research Freeze nomination. The ultimate human-tempo goal remains.
+Next action: extend the pinned reference to the remaining domains using the
+[adapter inventory](ADAPTER_DIFF.md); DOOM is the first transfer candidate.
+Continue historical occurrence ordering and declare qualification allocation.
+Readiness and active interruption stress already cover four applications, but
+neither cohort qualifies a freeze revision.
+
+Before any performance promotion, use the [bundle contract](BUNDLE_EVALUATION.md)
+to declare baseline, individual arms, reasonable bundles, interactions and
+complexity/portability review. Keep the 10% individual promotion signal separate
+from freeze: measured remaining frontier movement is required for saturation.
+The collection/qualification design must precede performance claims or Research
+Freeze nomination. The ultimate human-tempo goal remains.
