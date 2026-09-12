@@ -20,6 +20,12 @@ if needed, preserve the failed cohort and start a separately identified revision
 
 ## Capability inventory
 
+Update: the [first readiness cohort](READINESS.md) executed ordinary plus
+already-expired-request cases in XTerm, Chromium, Calc and Inkscape (keyboard
+nudge). All eight task artifacts and 78 frames audited. This confirms runnable
+adapters for those cases; it does not qualify the common semantics under broader
+stress or cover the continuous/DOOM adapters listed below.
+
 | Domain | Current reference coverage | Preparation needed |
 |---|---|---|
 | Terminal/text | Entry point and independent saved-text oracle exist | Fresh task + stale request + cancellation scenarios |

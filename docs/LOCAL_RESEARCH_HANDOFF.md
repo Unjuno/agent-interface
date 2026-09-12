@@ -25,6 +25,13 @@ replace desktop task correctness. See [roadmap](../ROADMAP.md).
 
 ## Evidence ready for discussion
 
+The [shared-runtime readiness smoke](../research/evolution/READINESS.md) now runs
+the same pinned candidate across XTerm, Chromium, Calc and Inkscape keyboard
+nudging. Eight declared cases passed saved-task checks; four expired requests
+were rejected before input; 78 frames audited exactly. This is scripted harness
+readiness, separate from actual assistant performance and freeze qualification.
+Continuous/DOOM adapters and broader shared stress remain open.
+
 Convergence indexing now covers seven recent revision groups and eight actual
 assistant tasks (7 success / 1 failure). A separate register indexes nine selected
 failure occurrences in four classes, including baseline controls and the known

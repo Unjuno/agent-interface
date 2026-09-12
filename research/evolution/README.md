@@ -5,6 +5,10 @@ revision groups, eight actual assistant tasks (seven independently successful,
 one failed), and nine selected observed failure occurrences across four taxonomy
 classes. It is not a census of all Agent Interface research.
 
+Separate new evidence: [common-runtime readiness](READINESS.md) has eight
+scripted cases across four applications. These are not pooled into the historical
+self-use ledger or used as a qualifying freeze revision.
+
 The original four-row ledger omitted the earlier failed Calc self-use cohort.
 That cohort is now included as `owner-v5` (1/2 success); the task-description
 follow-up is separately `owner-v6` (1/1). No historical raw result was changed.
