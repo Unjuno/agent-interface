@@ -88,6 +88,37 @@ The primary metric should be:
 
 Secondary metrics: observed pixels, false update detection, missed update, local compute time, tail latency, and escalation rate.
 
+## Parallel hypothesis — Control Codec / Compact IR
+
+The model-to-computer direction has a separate source of waste: repeated control representation.
+
+The project currently measures `planner bytes`, but that proxy should be paired with an explicit experiment on how the same validated control semantics are serialized across the model boundary.
+
+Path: [`research/control_codec/`](research/control_codec/)
+
+Candidate ladder:
+
+```text
+C0 verbose structured action list / JSON-like baseline
+C1 compact fixed-grammar primitive IR
+C2 + persistent opcode / field dictionary
+C3 + persistent semantic method references
+C4 + short workflow references
+C5 + session-local target/state aliases
+```
+
+The goal is not to make strings short at any cost. The goal is to remove repeated representation while preserving the same validated semantic AST, guards, retries, held-input state, and recovery behavior.
+
+Until real model/API accounting is available:
+
+- serialization bytes remain a proxy;
+- observed pixels / visual bytes remain observation proxies;
+- neither may be renamed as tokens.
+
+Actual token-efficiency claims require exact tokenizer/API usage on paired hidden tasks.
+
+Design rationale: [`docs/control-codec.md`](docs/control-codec.md).
+
 ## Promotion policy
 
 A candidate is promoted only when:
@@ -122,7 +153,10 @@ Negative results are retained because they constrain the design space.
 ## Next experiments
 
 1. Observation Gating on the real-app suite.
-2. Multi-resolution image change vectors vs global hashes.
-3. Automatic guard placement: compare guard cost against expected stale-route failure cost.
-4. Longer mixed-app sessions with app restarts, focus drift, geometry drift, and modal transitions.
-5. Only after algorithmic semantics stabilize: production-oriented implementation work.
+2. Control Codec primitive-serialization baseline (`C0` vs `C1`) using the same Universal Input semantics.
+3. Dictionary/method-reference amortization: include definition, invalidation, and relearning cost rather than only invocation length.
+4. Multi-resolution image change vectors vs global hashes.
+5. Automatic guard placement: compare guard cost against expected stale-route failure cost.
+6. Longer mixed-app sessions with app restarts, focus drift, geometry drift, and modal transitions.
+7. When a real model endpoint is available, replay the same hidden schedules and replace byte proxies with exact text/image token accounting.
+8. Only after algorithmic semantics stabilize: production-oriented implementation work.
