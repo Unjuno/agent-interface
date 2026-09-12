@@ -1,5 +1,10 @@
 # Evolution index and convergence review
 
+Latest scope update: [Linux domain coverage discovery](../benchmark_discovery/README.md)
+adds 20 setup/feasibility launch attempts for Mindustry, OpenTTD, current Luanti
+and a failed old Minetest proxy. These are not assistant tasks, ledger promotion
+rows or qualifying revisions. DOOM remains one orthogonal stress domain.
+
 This index is deliberately scoped. It currently reconstructs seven recent
 revision groups, eight actual assistant tasks (seven independently successful,
 one failed), and nine selected observed failure occurrences across four taxonomy

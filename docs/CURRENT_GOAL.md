@@ -1,4 +1,4 @@
-# Current goal — 2026-09-13 revision 2
+# Current goal — 2026-09-13 revision 3
 
 This document incorporates the user's research convergence proposal. It is the
 current working objective for this task and future handoffs. The app's existing
@@ -14,6 +14,24 @@ Agent Interfaceを、私自身が実際に使い、画面の変化に応じて�
 トークン削減は実際のモデル入力・費用で評価し、バイト削減と区別する。
 DOOMは実時間で進む環境への転用とデモの評価対象とし、他のGUIでの正確性を
 代替しない。人間並みの性能・製品完成は比較可能な証拠なしに宣言しない。
+
+## Domain coverageを基準にした直近の優先順位
+
+DOOMを最大・最難関benchmarkとして扱わない。重要なfast continuous motor /
+reactionのstress benchmarkとして残し、Desktop apps、real-time planning /
+multi-object manipulation、dense GUI / long-horizon planning、3D navigation /
+manipulationと直交する一領域に位置づける。
+
+Linux/X11のArchitecture Discoveryに集中する。まずMindustry・OpenTTD・Luantiの
+小さなfeasibility studyで導入・固定scenario・Xvfb・独立採点・reset・資源負荷・
+課題の明確さを比較する。正式採用やcross-domain合格と起動成功を混同しない。
+[Domain Coverage Matrix](../research/benchmark_discovery/README.md)に要求能力、
+現在のshared runtimeで測れた範囲、未検証の能力を分けて記録する。
+
+設計変更は「どの能力軸の不足を解消するか」で選ぶ。DOOMのスコアだけで選ばない。
+候補の追加は評価範囲の改訂として次の比較前に宣言し、過去のfreeze条件を遡って
+書き換えない。Windows/macOS対応のためだけに候補を広げる作業はPhase Cまで待つ。
+画面提示経路の未解決問題と既存の正確性hard gateは継続して扱う。
 
 ## 現在のフェーズと直近の目標
 
@@ -59,6 +77,10 @@ X11固有部分の分離、入力権限・期限・解放・フォーカス・�
 入力命令体系・planner/runtime境界の安定を要する。
 
 ## Change log
+
+- 2026-09-13 r3: ユーザーのDomain Coverage Matrix提案を採用。DOOM中心の
+  次段階から、Linuxでの直交benchmark候補のfeasibilityを直近の優先に変更。
+  正式採用・freeze qualificationは未達のまま維持する。
 
 - 2026-09-13 r2: Research Freeze Criteria Revision Proposalを採用。
   単独候補の採用判断と研究終了判断を分離。小さく再現可能な改善を保持し、

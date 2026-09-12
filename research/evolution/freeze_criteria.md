@@ -4,6 +4,16 @@ Status: **NOT READY — evidence incomplete**, not a failed product and not a
 completed architecture phase. Revision 2 adopts the user's freeze revision;
 the numeric gates below are initial working criteria, not measured outcomes.
 
+## Coverage interpretation — 2026-09-13
+
+DOOM is one orthogonal stress domain, never a strongest-benchmark shortcut.
+The [coverage discovery matrix](../benchmark_discovery/README.md) tracks Linux
+candidate feasibility separately from demonstrated shared-runtime capability.
+Before another qualification study, nominate representative scenarios for the
+missing capability axes and preregister the revised allocation. Discovery menu
+launches do not qualify a revision or establish task correctness. Existing
+required invariants remain; no historical cohort is relabeled as broader coverage.
+
 ## Review contract
 
 Before the next promotion study, declare the reference runtime/semantics,

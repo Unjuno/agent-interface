@@ -13,3 +13,7 @@ research/real_apps_v1/real_app_suite_v1.py -text whitespace=blank-at-eol,blank-a
 # Captured application diagnostics are immutable evidence, including spaces.
 research/observation_gating/results/**/application.txt -whitespace
 research/observation_tiles/results/**/application.txt -whitespace
+
+# Domain discovery cohorts retain measured source and raw artifact bytes.
+research/benchmark_discovery/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/benchmark_discovery/results/** -whitespace

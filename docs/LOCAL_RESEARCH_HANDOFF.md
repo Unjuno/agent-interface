@@ -1,5 +1,46 @@
 # Local research handoff — 2026-09-13
 
+
+## Latest handoff — Domain Coverage Matrix / Linux feasibility (2026-09-13)
+
+The user's latest direction supersedes a DOOM-centric next-experiment priority.
+[Current goal revision 3](CURRENT_GOAL.md) keeps the final live computer-use goal
+and Phase A active. DOOM is one fast continuous motor/reaction stress domain,
+not a strongest-benchmark proxy. Linux/X11 is the scope; do not expand candidates
+for Windows/macOS yet.
+
+[Domain discovery report](../research/benchmark_discovery/README.md) records
+20 exploratory launch attempts, including setup failures. Current Mindustry
+v160.2, OpenTTD 13.4/OpenGFX 7.1 and Luanti 5.17.0 rendered real game scenes in
+private Xvfb. The old Ubuntu Minetest 5.6.1 font crash is separate evidence.
+
+- OpenTTD: two seeded 64x64 initial height/owner/road traces match; independent
+  negative road-count oracle works. It required SIGKILL after a 10-second
+  SIGTERM wait. Short dense-GUI/placement pilot is the next candidate.
+- Mindustry: two Fork loads differ at 10,817 of 75,000 tiles. Initial copper/core
+  agree, but map name does not fix the loaded world. Tile rotation is unmeasured
+  in this prototype oracle. Keep as the real-time planning candidate, gated on
+  controlled small map/save and resource/rotation scoring.
+- Luanti: authored small pad, fixed pose and independent zero-node score work
+  with clean shutdown. Final fixture uses zero gravity; navigation is not tested.
+  Retain as the 3D candidate, not a formal benchmark or public demo yet.
+
+Five-second main-process samples under software rendering: OpenTTD 1.8% of one
+CPU / about 197 MiB RSS; Mindustry about 718-730% / 913-915 MiB; Luanti about
+187-208% / 203-217 MiB. Different workloads and setup/oracle overhead mean these
+are feasibility warnings, not normalized rankings or shared-runtime performance.
+Hardware GPU use and actual frame rate were not measured.
+
+Next: preregister a small OpenTTD placement/GUI task and independent positive,
+negative and near-miss scorer controls; establish restore/restart checks. Design
+shared pointer/button/drag/wheel and mode/context binding from the missing axes,
+while retaining DOOM and desktop correctness regressions. Do not bypass missing
+shared actions with gameplay engine APIs. Mindustry fixed-state and renderer
+budget gates precede its real-time planning pilot. Existing image-presentation,
+critical-event and bundle/frontier evidence gaps remain open. No new runtime
+semantics were introduced and no qualifying freeze revision was earned here.
+
+
 This is the entry point for discussion in another chat. The user has authorized
 direct updates to `main` when validated progress is ready. Keep successes,
 failures, reproducible code and remaining limitations together in each update.

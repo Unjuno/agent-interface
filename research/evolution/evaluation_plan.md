@@ -18,6 +18,18 @@ outcomes, action vocabulary, input limits, clocks and adapter versions. Historic
 results do not count as this new suite. No candidate modification mid-suite;
 if needed, preserve the failed cohort and start a separately identified revision.
 
+## Domain coverage policy update — 2026-09-13
+
+Use the [Domain Coverage Matrix](../benchmark_discovery/README.md) to choose
+architecture experiments. DOOM remains a real-time motor/reaction stress domain,
+not a maximum-difficulty proxy for all computer use. Mindustry, OpenTTD and
+Luanti enter Linux/X11 feasibility discovery, not formal qualification. Declare
+any selected scenario and expanded evaluation allocation before the next study.
+The seven-domain inventory below is historical preparation, not an exhaustive
+coverage claim. Pointer targeting, drag/scroll, placement, multi-object control
+and long-horizon planning need explicit exposure; keyboard-only editor success
+does not establish them. No Windows/macOS expansion is needed in this phase.
+
 ## Capability inventory
 
 Update: the [first readiness cohort](READINESS.md) executed ordinary plus
