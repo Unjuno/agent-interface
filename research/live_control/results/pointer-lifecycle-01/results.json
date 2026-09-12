@@ -1,0 +1,54 @@
+[
+  {
+    "case": "stopped_server",
+    "call_error": "RuntimeError",
+    "call_seconds": 2.0001845369999955,
+    "retry_rejected_seconds": 3.4370000037142745e-06,
+    "release_verified_after_resume": true,
+    "queued_move_not_replayed": true,
+    "owner_thread_stopped": true,
+    "owner_events": [
+      {
+        "event": "owner_release",
+        "reason": "cancelled",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 109436686764,
+        "valid_until_ns": 117380813152
+      },
+      {
+        "event": "owner_release",
+        "reason": "stop_requested",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 109438193942,
+        "valid_until_ns": null
+      }
+    ],
+    "all_owned_processes_exited": true
+  },
+  {
+    "case": "disconnected_server",
+    "call_error": "RuntimeError",
+    "call_seconds": 2.269199998750082e-05,
+    "retry_rejected_seconds": 1.346000004787129e-06,
+    "release_verified": false,
+    "release_status": "unverifiable after X server termination, not a successful cleanup claim",
+    "owner_thread_stopped": true,
+    "owner_events": [
+      {
+        "event": "cleanup_failed",
+        "error": "ConnectionClosedError('server: [Errno 104] Connection reset by peer')",
+        "verified": false
+      },
+      {
+        "event": "owner_failed",
+        "error": "ConnectionClosedError('server: [Errno 104] Connection reset by peer')",
+        "verified": false
+      }
+    ],
+    "all_owned_processes_exited": true
+  }
+]

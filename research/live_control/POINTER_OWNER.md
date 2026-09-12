@@ -1,5 +1,8 @@
 # Pointer input owner candidate — 2026-09-13
 
+Follow-up: [geometry and lifecycle candidate](POINTER_LIFECYCLE.md) adds v5,
+window-change tests and private-Xvfb failure injection. This report retains v3 evidence.
+
 `input_owner_v3.py` extends the independent X11 owner with absolute motion,
 buttons 1–3 and bounded vertical wheel pulses. Two real-X11 probe runs completed
 11 and 12 checks respectively. This is a candidate primitive implementation,

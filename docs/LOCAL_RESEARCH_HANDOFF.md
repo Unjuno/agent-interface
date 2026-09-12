@@ -1,6 +1,28 @@
 # Local research handoff — 2026-09-13
 
 
+## Latest follow-up — pointer geometry/lifecycle (2026-09-13)
+
+[Geometry and lifecycle report](../research/live_control/POINTER_LIFECYCLE.md)
+advances the unintegrated owner candidate to `input_owner_v5.py`. Pointer leases
+now require observed client geometry and reject movement/resizing/destruction.
+The owner exposes termination and bounded two-second caller watchdogs; timed-out
+owners reject retries and do not replay queued movement after a tested server
+pause. Unexpected thread exit attempts release and records failed verification.
+
+Sixteen private-X11 checks passed. Two additional fault cases covered a paused
+and a terminated private Xvfb: pause/resume verified release and no queued move;
+termination made release unverifiable, correctly recorded as failure rather than
+success. The failed v4 BadDrawable cohort and its partial logs are retained.
+The corrected release checks match their exact lease, not earlier release events.
+
+Next bind surface/geometry to snapshot sequence in a new shared backend, add
+whole-program pointer validation/cleanup, and run actual-app regressions plus
+OpenTTD self-use. Existing v10 stays unchanged. Watchdog errors do not prove
+resource cleanup while an X server is stalled; the supervisor must resolve the
+old owner before any replacement can resume input. No speed/qualification claim.
+
+
 ## Latest follow-up — pointer owner candidate (2026-09-13)
 
 [Pointer owner candidate](../research/live_control/POINTER_OWNER.md) adds absolute

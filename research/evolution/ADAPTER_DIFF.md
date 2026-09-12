@@ -52,3 +52,9 @@ core input semantics (churn), not an adapter-only change or qualified domain.
 No pointer operation is admitted by the existing shared program validator yet.
 Geometry binding, destruction/disconnect lifecycle and shared-app regressions
 remain prerequisites to integrating it with the saved OpenTTD task.
+
+
+The follow-up [v5 owner candidate](../live_control/POINTER_LIFECYCLE.md) adds
+observed geometry and failure-lifecycle handling. Sixteen primitive checks and
+two private-server fault injections are evidence for that component only. Shared
+backend integration, snapshot binding and real-app regression remain unqualified.
