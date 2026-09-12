@@ -1,5 +1,8 @@
 # Asynchronous live control: development evidence
 
+Latest trial: [bounded pixel-quiet observation](PIXEL_QUIET.md) in
+`interactive_v9.py`. Quietness is advisory, never task completion.
+
 Latest: [recovery observation and actual Calc modal transition](RECOVERY.md).
 `interactive_v8.py` permits observation after ambiguous focus without granting
 input authority to the same program's tail.

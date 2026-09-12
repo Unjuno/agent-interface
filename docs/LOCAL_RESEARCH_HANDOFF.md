@@ -195,6 +195,20 @@ first dialog image was not fully painted, requiring an extra observation.
 Reducing these not-yet-useful observations and planner round trips is the next
 performance problem; focus consistency alone is not paint or save completion.
 
+## Pixel-quiet observation trial
+
+The [pixel-quiet follow-up](../research/live_control/PIXEL_QUIET.md) adds an explicit
+bounded `settle` step in `interactive_v9.py`. In actual assistant Calc use,
+settling after Ctrl+S and after confirmation returned usable final images after
+165/342 ms of local observation. Saved A1/A2 values were independently correct;
+15 frames and both program releases audited. Six targeted tests passed.
+
+The trial used two programs versus four in the preceding different-seed trial,
+but this is not a matched causal comparison. It captured/emitted more frames.
+Static loading screens also satisfy quietness; animation may never satisfy it.
+Both counterexamples constrain its use. Next work is matched planner evaluation
+and compact feedback delivery, not treating quietness as semantic readiness.
+
 ## Parallel control-codec discussion (existing branch)
 
 A remote [control-codec research branch](https://github.com/Unjuno/agent-interface/tree/research/control-codec-track)
