@@ -10,6 +10,20 @@ goal/lost regressions also pass; 39 exact frames and source hashes audited. The
 candidate is Python-harness only; interactive_v13 remains frozen on v16. Real
 distractors, actual target disappearance and broader feedback/schema remain next.
 
+Issue #6–#10 intake (2026-09-13): reactive macros/watch (#6) reinforce bounded
+local effect control, but multi-surface/background authority is not implemented.
+Adaptive views (#7) and composite packing (#8) remain optional matched presentation
+experiments; retain plain overview, coordinate provenance and actual model-cost
+accounting rather than image-count claims. Ephemeral learned control (#9) is an
+optional accelerator track: first improve externally observable planner-latency
+telemetry and deterministic baselines, then isolated shadow evaluation on fresh
+cases before bounded real input. Learning cannot grant/extend authority; record
+training cost, labels, retained data/weights and break-even reuse. Issue #10 adds
+explicit planner-boundary / architecture / Python-implementation timing categories;
+profile stable components before native probes, with differential semantic checks.
+No immediate Rust rewrite or formal-proof project is inferred. These are research
+menus, not a bundle to implement before evaluating the current correctness gaps.
+
 ## Latest follow-up — assistant-declared servo and explicit loss outcome (2026-09-13)
 
 [Servo interface](../research/live_control/SERVO_INTERFACE.md) exposes candidate

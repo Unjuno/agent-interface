@@ -113,3 +113,11 @@ new requirement or evidence of performance. Evaluate correctness, application
 effect, planner boundaries and cost on fresh cases across the Domain Coverage
 Matrix. See the latest [handoff](LOCAL_RESEARCH_HANDOFF.md) and
 [guided pointer evidence](../research/live_control/GUIDED_POINTER.md).
+
+2026-09-13 Issue #6–#10 refinement: consider reactive local macros, optional
+multi-view/composite presentation and ephemeral learned accelerators as isolated
+comparison arms. Preserve independent scoring, original authority and plain GUI
+fallback. Measure observable planner absence and distinguish planner/tool latency,
+architectural latency and Python research overhead. Rust/native probes require
+stable contracts and measured relevance; formal methods target narrow invariants.
+These refinements do not change cross-domain correctness or freeze requirements.
