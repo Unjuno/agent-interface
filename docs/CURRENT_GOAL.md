@@ -1,3 +1,10 @@
+Latest self-use: [live application cause delivery](../research/live_control/CAUSE_LIVE.md).
+Candidate owner10/executor4 interruption survives actual Inkscape, socket, and compact
+receipt; explicit reviewed recovery saves the correct SVG. Audit verifies 52 events,
+19 frames, six exchanges. New issue: hold continues 11 captures after release and
+reports that step completed; terminal arrives 1121.361052 ms after release. Next wake
+cooperative waits on interruption, check completion, and test single-step holds plus
+receipt attention for completed-with-cause. No speed/token promotion or freeze.
 # Current goal — 2026-09-13 revision 3
 
 Latest verification: [actual X11 interruption cause](../research/live_control/LEASE_CAUSE_X11.md).
