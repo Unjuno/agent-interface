@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — actual Calc use exposes an avoidable outer final-read turn
+
+[Prepared Calc self-use](../research/live_control/PREPARED_CALC_SELF_USE.md)
+validates terminal→visible dialog→outcome with two prepared programs and twelve
+exact frames. Early result arrives at 48.084 s; final read at 66.408 s. Final
+evaluation emits just 12.862 ms after early evidence, yet its next client starts
+18.319 s later. Missing model endpoints remain explicit (Issue #46 not fulfilled).
+Next test an optional immediate final drain in the same caller while retaining
+all records and preserving early return on genuinely delayed evaluation.
+
 ## Latest follow-up — combined prepared send/wait used by the assistant
 
 [Prepared exchange self-use](../research/live_control/PREPARED_EXCHANGE_SELF_USE.md)
