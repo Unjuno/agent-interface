@@ -1,5 +1,17 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — route-specific focus, movement and occlusion failures
+
+[Modal target routes](../research/live_control/MODAL_TARGET_ROUTES.md) compares
+Return and coordinate click in eight private X11 Calc trials. Click saves after
+internal-focus change but stops on movement and is swallowed by a same-surface
+child overlay; Return fails internal-focus change but saves in those latter
+conditions. Fifteen exact public frames, saved artifacts and overlay button
+events audited. The moved-click owner revision advances for an attempted rejected
+operation, so revision is not a physical-input count. First-step-bound guard v3
+is a private candidate only; no semantic target identity, route promotion or
+freeze credit. Next evaluate explicit effect outcomes across this failure matrix.
+
 ## Latest follow-up — live check/input race falsifies target binding
 
 [Modal check/input race](../research/live_control/MODAL_CHECK_INPUT_RACE.md)
