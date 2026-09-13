@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — comparison rejects a premature speed conclusion
+
+[Recovery accounting](../research/live_control/RECOVERY_COMPARISON.md) proves both
+actual cohorts used one recovery read. The full two-exchange difference is entirely
+the previous invalid save request. Pending-clock-to-reply is 13.718 s manual and
+16.371 s helper, with uncontrolled decision/orchestration delay; no causal speed
+effect. Keep helper as explicit checked convenience. The adjacent v1 JSON plan
+registers eight prospective episodes across Inkscape/OpenTTD and one/three-boundary
+depths, counterbalanced A/B order. None executed yet. Next execute that plan rather
+than add more mechanisms or count the old cohorts as its arms.
+
 ## Latest follow-up — pending-clock helper used before successful task
 
 [Live reader use](../research/live_control/PENDING_CLOCK_LIVE.md): actual assistant

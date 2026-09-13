@@ -1,5 +1,11 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest comparison decision: [phase accounting and prospective study](../research/live_control/RECOVERY_COMPARISON.md)
+finds zero recovery-read reduction in the existing actual cohorts. The 10-to-8
+total difference is fully explained by the older malformed save attempt. Keep the
+helper explicit/unpromoted for speed. An eight-episode, two-domain/depth comparison
+is registered but not executed; follow its fixed order and retain all outcomes.
+
 Latest actual use: [live pending-clock recovery](../research/live_control/PENDING_CLOCK_LIVE.md)
 returned history and image in one response; explicit reviewed move/save passed.
 Eight frames/40 unique events verified; one read-only recovery exchange. Total
