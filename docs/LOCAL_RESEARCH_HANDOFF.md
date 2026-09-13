@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — acquisition and tracking error policies separated (2026-09-13)
+
+[Trimmed tracking study](../research/live_control/SERVO_TRIM.md) diagnoses small-object
+appearance error separately from identity. Trimming alone still prefers a red
+distractor. Candidate session20 keeps raw source uniqueness and trims the largest
+10% tracking pixel residuals. Blue-distractor trials complete +12 px at original
+and one shifted position; red duplicates are rejected before input. Earlier
+over-rejecting session19 is retained. 36 exact frames/source/saved-state checks pass.
+Red rejection is not recovery; dynamic identity/occlusion remains open. No CLI
+promotion or speed claim. Next negative target-loss tests and planner recovery.
+
 ## Latest follow-up — real distractor breaks visual identity (2026-09-13)
 
 [Distractor failure](../research/live_control/SERVO_DISTRACTOR.md): session17 tracks
