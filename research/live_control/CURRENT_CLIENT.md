@@ -7,8 +7,9 @@ Keep the older sources/results: versions name measured implementations.
 An optional [non-final artifact checkpoint](EFFECT_CHECKPOINT.md) candidate uses
 runtime v29/socket v14. It can sample saved fields while leaving admission open;
 its scoped VERIFIED evidence is separate from task success. Browser integration
-is scripted, and CPU/output contention during cancellation and Calc integration remain
-untested. It does not replace the default stack below.
+is scripted. [Actual Calc checkpoint use](CHECKPOINT_CALC_SELF_USE.md) now verifies
+the specified saved cells before/after format confirmation. CPU/output contention
+during cancellation remains untested. It does not replace the default stack below.
 
 A [sleeping-verifier cancellation control](CHECKPOINT_CANCEL.md) now confirms
 matched cancellation and verified release before the verifier gate opens in one

@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — actual Calc checkpoint use separates displayed and saved cells
+
+[Calc checkpoint self-use](../research/live_control/CHECKPOINT_CALC_SELF_USE.md)
+returns UNKNOWN while the format modal remains and the saved cells are empty,
+then VERIFIED after confirmation; both retain task_success=null. Explicit finish
+independently succeeds. Twelve frames, two released programs and all 27 records
+pass audit. Query roundtrips are 16/17 ms, but outer boundaries remain 27 seconds
+before confirmation and 23 seconds before finish; no speedup claim. The pre-save
+artifact bytes were not retained separately. No conditional finish is implemented.
+
 ## Latest follow-up — sleeping checkpoint does not prevent live cancellation
 
 [Checkpoint cancellation](../research/live_control/CHECKPOINT_CANCEL.md) gates
