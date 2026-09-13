@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — live pipe integration preserves expiry during stdin pause
+
+[Live pipe expiry](../research/live_control/LIVE_PIPE_EXPIRY.md) integrates an
+exclusive unbuffered writer in private socket v5; ordinary cancel/retry passes.
+A separate real-runtime fault pauses stdin two seconds, writes 4096/8031 bytes,
+times out at 100 ms, and closes stdin. Hold expires/release verifies while reading
+is paused; partial EOF JSON rejects and runtime exits normally. Twelve exact
+frames and owner close audited. Socket failure reply itself is not yet fault-tested;
+generic write_uncertain recovery wording conflates validation and poisoned pipe.
+Next distinguish those states and exercise the end-to-end socket fault.
+
 ## Latest follow-up — bounded pipe writes expose partial-command uncertainty
 
 [Bounded pipe writer](../research/live_control/BOUNDED_PIPE_WRITER.md) adds an
