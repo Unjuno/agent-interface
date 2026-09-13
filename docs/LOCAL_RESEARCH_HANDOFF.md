@@ -1,5 +1,12 @@
 # Local research handoff — 2026-09-13
 
+Latest actual use: [saved report page retry](../research/live_control/REPORT_PAGES_SELF_USE.md).
+Six displayed pages, seven CLI calls with one deliberately withheld response;
+exact reconstruction and missing-page rejection verified, zero runtime input.
+17,624 source bytes become 21,056 unique wire bytes, not token savings. Observed
+coordinate split 64/1 motivates line-aware boundaries in a new version, retaining
+explicit fallback for oversized lines. No live/model/image qualification.
+
 Latest implementation: [resumable saved-evidence pages](../research/live_control/REPORT_PAGES.md).
 Offline reader preserves UTF-8 source bytes with digest-bound offsets and bounded
 complete JSON lines. Real 17,624-byte overflow report round-trips in 28 pages at
