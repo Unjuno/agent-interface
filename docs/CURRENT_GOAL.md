@@ -1,3 +1,7 @@
+## Fixed-image model tier screen supports a live-loop follow-up
+
+Same archived Calc image/prompt, requested Luna-low, default/fast/fast/default: four correct confirmation proposals, no GUI execution. Mean proposal arrival6.852s versus5.098s; runner7.481s versus5.728s. Only two calls per arm, unequal cache/output, actual service tier unreported: no verified causal speedup or interface improvement. Source/argument/prompt/image/raw-event audit passes. Default stays unchanged; next matched live full-task comparison must retain independent correctness, action count, waiting and usage. See research/live_control/MODEL_TIER_SCREEN.md and results/model-tier-01. Local Spark metadata lacks image modality, so no direct-image Spark call was attempted.
+
 ## Terminal presentation ABBA gives only0.66% input reduction, no speed/turn gain
 
 Optional known-schema view omits historical timing/opaque IDs, preserves decision/release/error/held-input fields; unknown fields fallback full, original history archived. Same full/view/view/full Calc seed238/Luna-low; all independently480/192,4 model calls/2 saves. Mean input52677.5→52331.5(-346), capture-to-evaluation30.984→33.053s descriptive, no latency benefit. Audit342 events/61 exact frames/100 append records/56 exchanges/all exits0; full trials/controls retained. See research/live_control/TERMINAL_CONTEXT_ABBA.md. Lossy view not promoted; full prior outcome stays default. Next isolate model-call latency with fixed-task capability-validated settings, separate from interface claims; avoid more tiny metadata-only variants.
