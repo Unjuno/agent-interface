@@ -23,6 +23,14 @@ tokens, repeated A-to-B twice and failed. This is one sequential same-task resul
 retain for replication, with no causal percentage or general speed claim. See
 [live effect evidence](research/live_control/OPENTTD_EFFECT_LIVE_V1.md).
 
+An unchanged preregistered replication then builds A-to-B once but cannot resolve
+the effect beneath sign/transient occlusion. It performs two observation-only
+inspections and safely stops on turn8, with no repeated A-to-B mutation. The
+candidate is now1/2 for same-task hard success and2/2 for preventing that repeated
+completed-segment drag, so it remains HOLD. The run also exposes and repairs a
+finish classifier that mislabeled typed safe stop as a turn limit. See
+[effect replication](research/live_control/OPENTTD_EFFECT_REPLICATION_V2.md).
+
 Process-scoped timing envelopes now cover fresh Calc and OpenTTD tasks. Calc
 saves 480/192 in 23.976s with 21.334s of wrapper-observed model wait. OpenTTD uses
 batched delayed-hover contact sheets and an adaptive two-Luna/six-Astra route to

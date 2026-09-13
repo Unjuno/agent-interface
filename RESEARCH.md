@@ -28,6 +28,15 @@ drags; v7 repeats none. See
 The single sequential same-task result is retained for replication and does not
 establish a causal percentage, geometry transfer or human tempo.
 
+An unchanged preregistered replication is a hard failure. It builds A-to-B once,
+marks the effect uncertain, performs two observation-only inspections and issues
+a typed safe stop on turn8. It never repeats the completed A-to-B drag. Across
+v7/v8 the candidate is1/2 for hard success and2/2 for preventing the specific
+repeat mutation. The frozen failure also reveals that finish-outcome-v1 labels
+every abort file `bounded_turn_limit`; explicit finish-kind v2 corrects the replay
+to `typed_model_safe_stop` and keeps independent task success separate. See
+[effect replication](research/live_control/OPENTTD_EFFECT_REPLICATION_V2.md).
+
 ### Retained OpenTTD effect-state diagnosis
 
 The frozen seed991003 v6 run lacks a formal finish evaluation because its driver

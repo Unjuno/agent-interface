@@ -259,3 +259,11 @@ turns,116,879 input tokens,26 durable calls,32 frames and109.034s, with zero
 repeated A-to-B drag. Retained v6 failed after12 turns/199,613 tokens and two
 repeats. See [OPENTTD_EFFECT_LIVE_V1.md](OPENTTD_EFFECT_LIVE_V1.md). Retain for
 replication; this one sequential same-task result is not a general speedup.
+
+The unchanged preregistered v8 replication builds A-to-B once but remains
+uncertain after two observation-only inspections and safely stops on turn8. It
+does not repeat A-to-B. The candidate is1/2 hard success and2/2 repeat-prevention
+on this task, so it remains HOLD pending persistent effect evidence and bounded
+occlusion recovery. V8 also exposes a raw typed-stop/turn-limit classification
+defect; explicit finish-kind v2 corrects future semantics. See
+[OPENTTD_EFFECT_REPLICATION_V2.md](OPENTTD_EFFECT_REPLICATION_V2.md).

@@ -1,4 +1,14 @@
-Latest live effect evidence: preregistered v7 appends bounded path-local
+Latest replication evidence: unchanged preregistered v8 builds A-to-B once but
+cannot resolve it beneath sign/transient occlusion, performs two observation-only
+inspections and safely stops on turn8. No A-to-B repeat or B-to-C mutation occurs.
+Across v7/v8 the candidate is1/2 hard success and2/2 prevention of the repeated
+completed-segment drag. V8 uses133,041 input tokens,30 calls and32 frames. HOLD;
+next retain effect evidence across inspection and improve bounded occlusion
+recovery. Explicit finish-kind v2 also fixes v8's raw safe-stop/turn-limit label
+confusion without changing the frozen artifact. See
+research/live_control/OPENTTD_EFFECT_REPLICATION_V2.md. Full goal remains open.
+
+Prior live effect evidence: preregistered v7 appends bounded path-local
 before/after/difference panels after each drag while retaining the v6 task/model/
 checkpoint/independent score. Astra recognizes A-to-B, proceeds directly to
 B-to-C and passes all engine gates on turn7. It uses116,879 input tokens,26
