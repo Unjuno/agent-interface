@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — modal focus counterexample before speculative control
+
+[Modal predicate](../research/live_control/MODAL_PREDICATE.md) collects actual
+Calc checkbox/ODF/Excel focus variants sharing X11 focus ID/window list. Broad
+modal similarity accepts wrong keyboard targets; an additional button-region
+comparison rejects them in nine known image cases. Candidate returns no authority
+and no semantic verification. No autonomous branch or speedup claimed. Next freeze
+fresh variants and admission dependencies; generic appearance cannot authorize Return.
+
 ## Latest follow-up — live finalizer faults and status recovery
 
 [Live finalizer faults](../research/live_control/LIVE_FINALIZATION_FAULTS.md)
