@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — caller performs a bounded, identity-checked status fallback
+
+[Outcome fallback](../research/live_control/OUTCOME_FALLBACK.md) adds candidate v2:
+one outcome read plus at most one fresh status query after timeout. Both direct
+outcomes and status validate the expected program, separately from query identity.
+Live evaluator-fault integration uses two fallback calls without resubmission;
+three exact frames and release audited. Ten controls pass. V1's omitted direct
+program check and its narrow evidence are preserved. This bounds call count, not
+arbitrary exchange wall time. Next test live pending-to-available and self-use.
+
 ## Latest follow-up — request-scoped status queries including concurrent callers
 
 [Status correlation](../research/live_control/STATUS_CORRELATION.md) adds query
