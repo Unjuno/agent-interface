@@ -1,3 +1,7 @@
+## Equal-policy focus model pair passes explicit rule checks, not live recovery
+
+New view v2 keeps full latest observation/terminal and rejects ambiguous sequence/action order. Three archived cases with synthetic freshness; six Luna/low calls all eight fields exact. Input reduces388/1386/1386 tokens (3.07%/10.22%/10.22%); stale view slower locally. Audit/source/prompt/args/usage passes; no reruns or v1 result replacement. See research/benchmark_discovery/FOCUS_MODEL_PAIR_V2.md. Explicit rule adherence only; target-needs_decision case remains uncovered here. Next live scoped decision boundary with real age and model-output timing, not more static passing cases. Issue #40–51 timestamps rechecked unchanged.
+
 ## Actual model focus pair reduces input but fails decision acceptance
 
 Four Luna/low text-only calls on recorded lost/restored Mindustry focus: view input reduces869/1830 tokens (6.91%/13.50%), but only1/4 answers matches all eight predeclared fields. Both restored answers see target binding yet choose restore again; both full answers mark replay true. Retain all outputs; no reruns. Audit source/prompt/args/arrival hashes and usage passes, model acceptance fails. See research/benchmark_discovery/FOCUS_MODEL_PAIR.md. Rubric next-step/replay wording is ambiguous and view adds a cue absent from full, so no isolated reasoning/safety or compression benefit claim. Next clarify policy versus evidence, match cues and use new cases; no default promotion/live speed claim.

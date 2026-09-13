@@ -1,3 +1,5 @@
+[Equal-policy focus model pair](FOCUS_MODEL_PAIR_V2.md): six explicit-rule checks pass with3–10% fewer input tokens; synthetic freshness, no live speed claim.
+
 [Actual focus model pair](FOCUS_MODEL_PAIR.md): input reduced, but decision acceptance failed; four outputs retained with rubric/confounding limitations.
 
 [Assistant focus recovery](MINDUSTRY_FOCUS_SELF_USE.md): actual Alt+Tab restores game focus, then a fresh pointer action succeeds; recovery overhead remains72 seconds.
