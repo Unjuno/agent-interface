@@ -1,5 +1,13 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest live integration: [sequence mismatch and history assembly](../research/live_control/LIVE_HISTORY.md)
+uses a current cursor with deliberately stale image records. Own clock identity
+matches, sequence mismatch stops before input, and real received-history assembly
+supports a separate observe-only recovery. Three frames/22 records verified; no
+physical input recorded. Scripted readiness, not task/model performance. Next
+bound read-only progress through historical clock boundaries without weakening
+identity or review requirements.
+
 Latest implementation: [bounded received-history assembly](../research/live_control/RECEIVED_HISTORY.md)
 replaces manual concatenation with cursor/overlap checks and complete slice
 metadata retention. Seven actual slices restore exactly; ten negative controls

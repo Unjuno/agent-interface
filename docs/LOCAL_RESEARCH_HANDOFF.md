@@ -1,5 +1,17 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — live isolated sequence mismatch
+
+[Live history](../research/live_control/LIVE_HISTORY.md) records a scripted
+Inkscape probe with a current cursor but synthetically old observation records.
+The own clock echo matches; sequence 1 versus 2 stops before submit. Actual
+received slices assemble into the source of an explicit observe-only recovery.
+Three frames/22 records/seven exchanges audited, no recorded physical input.
+Movement-task score is intentionally false and retained. Next address bounded
+read-only draining of historical clock boundaries; this probe does not establish
+same-sequence freshness, concurrent-client safety, automatic input recovery or
+model latency/token gains.
+
 ## Latest follow-up — checked received-history assembly
 
 [Received history](../research/live_control/RECEIVED_HISTORY.md) adds an offline,
