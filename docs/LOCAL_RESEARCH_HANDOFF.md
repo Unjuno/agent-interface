@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — terminal receipt resolves current image without guessing (2026-09-13)
+
+[Review receipt](../research/live_control/REVIEW_RECEIPT.md) adds candidate compact
+presentation_v2 / interactive_v14. Terminals carry latest observation identity and
+actual reused-image path, historical runtime timestamp and local outcome without
+changing source logs or authority. Eight replayed terminals pass; actual assistant
+xterm task uses sequence 6 → 003.png directly and scores successfully, with six exact
+frames audited. No matched recovery speedup or clock/token saving established.
+Next same-task receipt comparison and planner/tool endpoint profiling.
+
 ## Latest follow-up — assistant recovery succeeds, end-to-end path remains slow (2026-09-13)
 
 [Actual recovery](../research/live_control/SERVO_RECOVERY.md): the assistant observes
