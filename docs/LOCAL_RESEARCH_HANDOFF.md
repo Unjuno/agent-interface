@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — actual Mindustry six-conveyor construction
+
+[Visual build episode](../research/benchmark_discovery/MINDUSTRY_BUILD_SELF_USE.md)
+uses unchanged session_v9/executor_v3. Five programs and 18 exact frames include
+wrong titanium selection and Q cancelling pending plans, both visually recovered.
+Final target/112-tile guard passes; a separate no-input 601.438-tick window delivers
+48 copper (275→323). Initial capture→last terminal is 145.184 seconds, →evaluation
+175.052 seconds. No held-out comparison, human-speed claim or latest-stack merge.
+Next priority is common candidate/domain comparison with these costs retained.
+
 ## Latest follow-up — Mindustry actual engine resource-flow calibration
 
 [Flow calibration](../research/benchmark_discovery/MINDUSTRY_FLOW.md) archives six

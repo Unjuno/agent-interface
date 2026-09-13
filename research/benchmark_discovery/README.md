@@ -1,5 +1,11 @@
 # Domain Coverage Matrix and Linux feasibility — 2026-09-13
 
+[Mindustry actual construction](MINDUSTRY_BUILD_SELF_USE.md): one assistant visual
+episode builds six conveyors through shared pointer input, preserves the 112-tile
+guard and delivers 48 copper during a separate post-control window. Wrong block
+selection and accidental plan cancellation required recovery. Known task only;
+145 seconds to final input terminal does not establish human-like tempo.
+
 [Mindustry flow-score calibration](MINDUSTRY_FLOW.md): six engine-authored GUI
 states distinguish complete, missing, reversed, partial, extra and empty routes.
 The extra route delivers 31 copper yet fails the 112-tile guard. These are scoring
