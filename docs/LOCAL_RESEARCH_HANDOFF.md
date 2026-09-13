@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — optional drain has a shared absolute I/O deadline
+
+[Drain socket deadline](../research/live_control/DRAIN_SOCKET_DEADLINE.md) replaces
+the optional drain's 35 s socket timeout with a 250 ms absolute connect/send/read
+budget in candidate prepared_exchange v4. Real socket stall/trickle controls
+return around 251 ms and retain early evidence; four other cases pass. Full
+Calc gated-evaluation integration still passes with twelve exact frames. Initial
+send timeout is unchanged; this is not a hard wall-time or model-latency bound.
+
 ## Latest follow-up — integrated CLI returns early while final evaluation is gated
 
 [Live drain delay](../research/live_control/LIVE_DRAIN_DELAY.md) verifies the full
