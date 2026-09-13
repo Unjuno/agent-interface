@@ -6,13 +6,13 @@ baseline into a Linux/X11 control candidate with durable recovery, scoped local
 execution and independent effect checks. It still does not deliver human-tempo
 general computer use or an installable Agent Market product.
 
-Latest delta: the tracked OpenTTD pre-action view transition costs428.854ms
-with no model boundary. It reduces one sampled episode from12 turns/198,746
-input tokens to7/115,045, but independent correctness still fails and the model
-falsely verifies. A prose-only sign-to-tile refinement then reaches12 turns and
-199,613 tokens without verify or safe stop; a retained limit-handshake defect
-prevents an independent final score. Visibility and measurement improved, while
-reliable human-tempo task completion remains open.
+Latest delta: bounded drag-effect memory now retains one unresolved OpenTTD
+mutation across inspection-only turns. Two preregistered fresh seed991003
+five-tile L episodes independently succeed in9 turns, with zero repeated
+completed-segment drags. They use151,853/151,842 input tokens and take
+153.027/160.837 seconds to semantic completion. This advances the candidate to
+changed-geometry testing without promotion. Reliable human-tempo task completion
+remains open.
 
 ## What changed
 
@@ -98,7 +98,7 @@ the rows must not be averaged into one difficulty score.
 | Desktop apps | Small Calc, Chromium, Inkscape and XTerm tasks; dialogs, focus loss, interruption, saving and independent effect checks | Unknown applications, richer window/scroll/drag workflows and repeated held-out tasks |
 | DOOM | Shared held-key/cancel/expiry readiness and later directional-input repair/assistant gameplay evidence | Stable continuous useful-feedback loop, reaction distribution and public real-time demo |
 | Mindustry | Actual assistant construction of eight directed conveyors on a known route; 112-tile guard and 49-copper post-control delivery; shared caller scripted replay and cancellation | Fresh route planning, multi-object control, event-driven recovery and much shorter decision gaps |
-| OpenTTD | Fixed Astra passes3/3 canonical closed-toolbar,1/1 pre-opened and1/1 seed991002 shifted geometry; adaptive1/2 and fixed Luna0/2; the changed five-tile L remains0 successful with typed/independent failures; dynamic geometry score, TimingEnvelopes and contact sheets | Correct changed-objective grounding, multiple held-out geometries, fuller order balancing, matched human control, scroll/window complexity and long-horizon planning |
+| OpenTTD | Fixed Astra passes3/3 canonical closed-toolbar,1/1 pre-opened and1/1 seed991002 shifted straight geometry; adaptive1/2 and fixed Luna0/2; bounded effect memory passes2/2 on the seed991003 five-tile L with independent scoring and zero repeated completed-segment drags | L-objective transfer to changed geometry, fewer/slimmer model boundaries, fuller order balancing, matched human control, scroll/window complexity and long-horizon planning |
 | Luanti | Current-engine launch, deterministic tiny pad/pose and read-only node/pose feasibility | Normal navigation, camera-mode contract, inventory, interaction and successful construction |
 
 DOOM remains valuable for continuous motor pressure. Mindustry and OpenTTD are
@@ -211,13 +211,19 @@ under the same recovery semantics. Human baselines and
 model-boundary timestamps must then be collected on identical task allocations.
 Only after those pass should the runtime/API be frozen and packaged.
 
-The first typed-view allocation has now run. It prevents another task mutation
-and stops safely, but invokes a toggle three times, consumes 198,746 input tokens
-and leaves the task false. Zero-model calibration shows the chosen drag pixels
-are valid across a five-offset band and that tool selection survives an immediate
-or 15-second program boundary. The next candidate is a one-way, state-aware
-pre-action view transition. These results improve failure isolation rather than
-the human-tempo or broad-correctness assessment above.
+Later allocations turn the tree view toggle into a one-way pre-action method,
+repair the bounded-limit finish path, reject a sign-view transform after a
+matched2/2-versus2/2 diagnostic, and expose persistent application effects to
+the planner. The first effect-sheet episode succeeds in7 turns, while its
+unchanged replication safely stops after occlusion instead of repeating a
+completed drag. Bounded effect memory then preserves the original before/after,
+latest inspection and action difference across that boundary. Its first two
+fresh live episodes both independently complete the L in9 turns with no repeated
+completed-segment drag. They still require34 durable calls,44 exact frames,
+more than151k input tokens and153 to161 seconds. The next allocation changes L
+geometry while preserving the same memory and scoring semantics. These results
+improve changed-objective correctness and recovery; they do not establish
+human-tempo operation, token efficiency or broad reliability.
 
 Primary evidence: [research index](../RESEARCH.md), [current architecture](architecture.md),
 [domain feasibility](../research/benchmark_discovery/README.md),
