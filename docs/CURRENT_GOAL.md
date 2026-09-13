@@ -1,3 +1,7 @@
+## Calc live modal recovery through the candidate socket
+
+Actual seed-225 Calc self-use with executor v6 and full receipt/state table saved A1=816 and A2=345 successfully. Natural dialog open/close each yielded needs_decision/focus_changed with zero completed steps despite useful application effects. Fresh observations recovered without old causes; two partially painted images required extra observe programs. Audit verified 72 events, 13 exchanges, 14 frames and workbook. See research/live_control/CALC_TABLE_LIVE.md. Next candidate: bounded observation-only continuation after interruption, preserving release and requiring a new input decision. No default promotion or speed/token claim.
+
 ## Terminal reason fallback verified on X11 keyboard interruption
 
 Executor v6 fills only empty needs_decision reasons from the same lease focus/surface interruption snapshot. Eight synthetic cases and bundle-focus-03 pass: actual Control_L release while output is blocked, no tail input, explicit focus_changed terminal, and fresh same-deadline observation without stale cause. Separate audit verifies nine frames and source/owner evidence. Earlier failed cohorts remain frozen; no default promotion or model-speed claim. See research/live_control/TERMINAL_REASON_FALLBACK.md. Next: live transport and non-Inkscape recovery coverage.
