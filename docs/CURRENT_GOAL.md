@@ -1,5 +1,12 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest prospective execution: [recovery pair 1](../research/live_control/RECOVERY_PAIR1.md)
+completed A then B at Inkscape depth 1. Both need one recovery call/read. B's move
+stopped on recorded focus change and required explicit recovery; retain full
+51.799/104.123 s durations. Exact model identity/configuration remains unavailable,
+so model-performance qualification fails. Two of eight episodes executed; next
+pair 2 is Inkscape depth 3, B then A. Do not rerun pair 1 to erase the interruption.
+
 Latest comparison decision: [phase accounting and prospective study](../research/live_control/RECOVERY_COMPARISON.md)
 finds zero recovery-read reduction in the existing actual cohorts. The 10-to-8
 total difference is fully explained by the older malformed save attempt. Keep the

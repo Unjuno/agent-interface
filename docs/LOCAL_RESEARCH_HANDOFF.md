@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — first registered recovery pair executed
+
+[Pair 1](../research/live_control/RECOVERY_PAIR1.md): Inkscape seed 201 depth 1,
+A then B, same initial PNG/move steps/runtime sources. Recovery call/read is 1/1
+in both. A final duration 51.799 s; B 104.123 s including focus_changed owner release,
+needs_decision after click and explicit 80-ms-click recovery. Both final SVGs pass.
+All 18 frames/92 events audited. Exact model/config unavailable: performance
+qualification not met. 2/8 episodes done; next pair 2 depth 3 B then A. Preserve
+measured runner v1 and first-pair failure; no clean-result rerun or promotion.
+
 ## Latest follow-up — comparison rejects a premature speed conclusion
 
 [Recovery accounting](../research/live_control/RECOVERY_COMPARISON.md) proves both
