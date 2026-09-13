@@ -1,5 +1,17 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — pair 2 B done, A next
+
+[Pair 2](../research/live_control/RECOVERY_PAIR2.md): Inkscape seed 202, registered
+depth-3 prose instantiated as three additional historical clocks plus own clock:
+four recovery reads. B grouped them into one model call, returned history/image,
+and reviewed move/save passed. Nine frames/47 records/14 socket exchanges audited;
+59.039 s total, no paired effect, exact model/config still missing. 3/8 episodes
+done. Next A with unchanged recovery_pair2_v1.py: initial, prepare, then recover1,
+recover2, recover3, recover4 as FOUR SEPARATE model tool calls, followed by reviewed
+move and finish. Do not batch manual recovery stages or rerun B. All B processes
+exited; result archived under results/recovery-pair2-01/B.
+
 ## Latest follow-up — first registered recovery pair executed
 
 [Pair 1](../research/live_control/RECOVERY_PAIR1.md): Inkscape seed 201 depth 1,

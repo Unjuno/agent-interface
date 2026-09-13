@@ -1,5 +1,11 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest execution: [pair 2 B](../research/live_control/RECOVERY_PAIR2.md) traversed
+three additional historical clocks plus its own clock in four reads within one
+model orchestration. Reviewed move/save passed, nine frames/47 events audited.
+Pair 2 A is pending: same frozen runner, seed 202, four separate recovery calls.
+3/8 episodes executed; no paired effect or model-performance qualification yet.
+
 Latest prospective execution: [recovery pair 1](../research/live_control/RECOVERY_PAIR1.md)
 completed A then B at Inkscape depth 1. Both need one recovery call/read. B's move
 stopped on recorded focus change and required explicit recovery; retain full
