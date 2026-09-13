@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — transport/runtime rejection identity survives concurrent attempts
+
+[Request identity](../research/live_control/REQUEST_IDENTITY.md) connects private
+socket v8 request IDs to interactive_v25 command/rejection records and optional
+request-scoped reads. Two concurrent rejected submits share one action ID but
+return distinct matched request identities. Same-ID replay does not resend;
+payload conflict/reserved-field injection reject before runtime. Subsequent token
+save succeeds, source/frame/owner-close audit retained. Scope remains local process
+lifetime; terminal/effect attempt lineage and restart identity are not established.
+
 ## Latest follow-up — runtime rejection correlation avoids stale parsed IDs
 
 [Rejection correlation](../research/live_control/REJECTION_CORRELATION.md) adds
