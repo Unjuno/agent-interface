@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — actual browser use exposes completion coverage gap
+
+[Browser receipt self-use](../research/live_control/RECEIPT_BROWSER_SELF_USE.md)
+successfully navigates and submits a local form after image inspection. Two
+programs, one clock, three socket calls, twelve exact frames; independent result
+returned 52.728 s after initial capture. Form decision gap remains 15.999 s.
+Unlike Calc, Chromium emits no early effect_evidence: callers must request the
+supported independent evaluation outcome. Next make completion capabilities or
+fallback explicit and test delayed/failed outcomes. This is an existing simple
+desktop fixture, not a new benchmark domain or evidence of human-like speed.
+
 ## Latest follow-up — receipt-selected images used in a live Calc episode
 
 [Actual receipt image self-use](../research/live_control/RECEIPT_IMAGE_SELF_USE.md)
