@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — premature-finalization counterexample reproduced
+
+[Confirmation boundary comparison](../research/live_control/CONFIRMATION_BOUNDARY.md)
+uses the same scripted fixture and input sequence with only the first submit
+boundary changed. Premature outcome fails and rejects later confirmation;
+terminal review permits confirmation and succeeds. Sixteen/twenty-two exact
+frames, full prefixes, lineage and release pass. The v2 attempt archive survives
+both complete GUI cleanups. No admission-preserving verifier has been implemented;
+Issue #34's broader effect contract remains open. Current client guidance now
+states explicitly that outcome requests closure, not an ordinary effect query.
+
 ## Latest follow-up — confirmation recovery succeeds; expiry and log loss retained
 
 [Confirmation self-use](../research/live_control/CONFIRMATION_SELF_USE.md) adds a

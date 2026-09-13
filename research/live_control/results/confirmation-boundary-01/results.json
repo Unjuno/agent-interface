@@ -1,0 +1,28 @@
+{
+  "cases": [
+    {
+      "mode": "premature_final",
+      "task_success": false,
+      "exact_frames": 16,
+      "admitted_programs": 2,
+      "http_acceptance": [
+        false
+      ],
+      "log_survived_cleanup": true,
+      "confirmation_status": "request_rejected"
+    },
+    {
+      "mode": "review_then_confirm",
+      "task_success": true,
+      "exact_frames": 22,
+      "admitted_programs": 3,
+      "http_acceptance": [
+        false,
+        true
+      ],
+      "log_survived_cleanup": true,
+      "confirmation_status": "boundary"
+    }
+  ],
+  "scope": "Two scripted runs, fixed order and known fixture; not model recovery, live-tempo or full Issue 34 contract"
+}

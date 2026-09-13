@@ -45,6 +45,12 @@ program and closes admission after it ends. --producer scripted distinguishes
 automated probes; actual assistant use defaults to assistant. Attribution is
 caller-declared, not proof of viewing.
 
+[The confirmation boundary comparison](CONFIRMATION_BOUNDARY.md) demonstrates
+the practical difference: outcome on the first submission closes admission before
+a required confirmation can run, while terminal review permits that additional
+program. Outcome is a finalization request, not an admission-preserving effect
+query. Terminal completion itself provides no independent task-success verdict.
+
 --drain-final is optional. On early effect evidence, it tries one final-only read
 without server event waiting. A ready final evaluation can return within the same
 caller invocation; otherwise scoped early evidence and a continuation remain.
