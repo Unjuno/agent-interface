@@ -1,5 +1,12 @@
 # Local research handoff — 2026-09-13
 
+Latest execution: [OpenTTD pair 4 A audited](../research/live_control/RECOVERY_PAIR4.md).
+Seven of eight episodes executed. Four separate recovery reads/calls; seven exact
+frames and 53 events audited; independent guarded score and cleanup pass.
+Sequence-2 saved PNG is nonblack and matches AIT despite intermittent black
+presentation. Retain extra inspection and 112.397 s total, no clean presentation
+or performance claim. Next pair 4 B with unchanged runner; do not rerun A.
+
 Latest paired result: [OpenTTD pair 3 complete](../research/live_control/RECOVERY_PAIR3.md).
 Six of eight episodes executed. A/B both pass guard scoring and require one
 recovery call/read; 14 exact frames and 94 events audited. Initial PNG, steps,
