@@ -1,3 +1,5 @@
+Latest shared caller: phased_submit_v1 extracts checked activation/keyboard execution and refuses unresolved or interrupted intermediate observations. Eleven archived-response fault controls pass; shared_phased_ink_v1 live integration completes both phases and saves X104/50/40/30, with 323.999ms handoff. See research/live_control/PHASED_SUBMIT.md. Real inter-phase fault injection and different-domain validation remain open.
+
 Latest measured candidate: phased_replan_ink_v1 separates fresh target activation from a checked keyboard-only tail. One live episode completes both phases and independently saves X104/50/40/30; handoff adds 315.835ms, whole episode 42.083s. No general speed claim. See research/live_control/PHASED_REPLAN_INK.md (or PHASED_REPLAN_INK.md from this directory). Next test inter-phase failure and extract a reusable caller; broad live-control goal remains open.
 
 ## Expired execution now has opt-in post-release observations, status remains expired
