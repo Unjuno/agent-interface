@@ -1,0 +1,111 @@
+# Progress from the initial baseline
+
+Status date: 2026-09-14. This is an evidence-based progress map, not a release
+claim. The repository grew from an initial coordinate-and-screenshot research
+baseline into a Linux/X11 control candidate with durable recovery, scoped local
+execution and independent effect checks. It still does not deliver human-tempo
+general computer use or an installable Agent Market product.
+
+## What changed
+
+| Stage | Initial state | Current evidence | Status |
+| --- | --- | --- | --- |
+| Observation | Repeated full screenshots around individual actions | Exact unchanged-frame suppression, exact tile transport, changed-region and compact planner views | Proven in scoped fixtures; general visual/token policy remains experimental |
+| Input | Coordinates and short scripted keyboard/pointer actions | Absolute intent deadlines, focus/surface binding, held input, cancellation/expiry, verified release and tail suppression | Strong scoped Linux/X11 evidence |
+| Execution | One action followed by another model boundary | Bounded multi-step programs, phased submit, passive followups and local continuation | Working in selected desktop/game tasks; semantic replans still need the model |
+| Freshness | Screenshot age was mostly implicit | Observation identity/age, stale refusal, route and binding guards, re-observation after interruption | Mechanism exists; model delay can still age a frame by seconds |
+| Recovery | Transport uncertainty risked repeated work | Durable journal, request IDs, read-only outcome recovery and lost-query reconciliation without resend | Live input and saved-effect recovery demonstrated |
+| Completion | Program completion could be mistaken for task success | Program terminal, application effect and independent task score are separate states; UNKNOWN is preserved | Demonstrated on Calc, Chromium, Inkscape and game fixtures |
+| Model evidence | Full durable records were passed to the planner | Strict typed compact view retains action/effect authority and retry rules | Fixed 16-call check passed; first live action passed; adversarial adoption gate remains |
+| Benchmarking | Four small desktop fixtures | Domain matrix spans desktop apps, DOOM, Mindustry, OpenTTD and Luanti | Useful breadth; no formal benchmark suite or aggregate score yet |
+
+The repository currently contains 277 commits since the initial 2026-09-12
+snapshot. Commit count only indicates iteration density; the claims above depend
+on retained runs, source hashes, negative controls and independent audits.
+
+## Closest current live loop
+
+The newest Chromium episode is the clearest small end-to-end sample. A fresh
+screenshot and a 621-byte strict compact UNKNOWN record drove one real model
+decision. The resulting program saved the exact requested value, survived two
+deliberately abandoned saved-effect query connections through read-only recovery,
+and reached independent evaluation in 9.706 seconds from the first runtime
+capture. The model runner consumed 6.542 seconds; the caller handoff consumed
+230 ms. This is one sample, not a latency distribution or human comparison.
+
+Earlier actual-use samples were slower: the current-runtime known Mindustry bend
+task took 84.967 seconds to its final input terminal and 117.358 seconds to
+independent evaluation, with 18–23 second gaps between programs. The corrected
+OpenTTD visual placement took 43.42 seconds to its last terminal. These numbers
+include model/tool/host gaps and show why local millisecond execution alone does
+not yet produce ordinary human interaction tempo.
+
+The present bottleneck is the semantic boundary. Local admissions, cancellation,
+recovery reads and feedback production commonly operate in milliseconds to
+hundreds of milliseconds, while model decisions in recent measured samples take
+seconds. The architecture now has enough correctness structure to reduce the
+number and size of those boundaries; it has not yet shown that reduction across
+unseen, long-running tasks.
+
+## Domain coverage
+
+Each domain exposes a different weakness. There is no single king benchmark and
+the rows must not be averaged into one difficulty score.
+
+| Domain | What has actually been shown | Main missing proof |
+| --- | --- | --- |
+| Desktop apps | Small Calc, Chromium, Inkscape and XTerm tasks; dialogs, focus loss, interruption, saving and independent effect checks | Unknown applications, richer window/scroll/drag workflows and repeated held-out tasks |
+| DOOM | Shared held-key/cancel/expiry readiness and later directional-input repair/assistant gameplay evidence | Stable continuous useful-feedback loop, reaction distribution and public real-time demo |
+| Mindustry | Actual assistant construction of eight directed conveyors on a known route; 112-tile guard and 49-copper post-control delivery; shared caller scripted replay and cancellation | Fresh route planning, multi-object control, event-driven recovery and much shorter decision gaps |
+| OpenTTD | Actual visual toolbar/drag placement; corrected 42-tile side-effect guard; shared caller scripted replay | Fresh repeated GUI tasks, scroll/window complexity and long-horizon transport planning |
+| Luanti | Current-engine launch, deterministic tiny pad/pose and read-only node/pose feasibility | Normal navigation, camera-mode contract, inventory, interaction and successful construction |
+
+DOOM remains valuable for continuous motor pressure. Mindustry and OpenTTD are
+already catching errors that an FPS benchmark would miss: long planner gaps,
+overlong placement drags, local side effects and resource-flow completion.
+Luanti remains a feasibility candidate rather than demonstrated agent control.
+
+## Quantified evidence so far
+
+- Sparse reactive control reached 8/8 development-screen successes in each of
+  XTerm, Chromium, Calc and Inkscape.
+- Exact unchanged-frame suppression preserved 96/96 tasks per strategy and cut
+  same-trace image count by 17.15%, with zero measured false suppressions.
+- Exact tile transport preserved 32/32 tasks per strategy and cut serialized
+  bytes by 70.73% across 553 exactly reconstructed frames. This is transport
+  reduction, not a token or latency claim.
+- The strict compact planner experiment preserved the expected decision in 8/8
+  full and 8/8 compact calls. Reported input fell from 80,564 to 77,880 tokens,
+  a 3.33% reduction across the fixed calls. The first fresh live compact-driven
+  form action then succeeded with one model call.
+- Lost-response recovery has been exercised for input outcomes and saved-effect
+  queries. The current form episode recovered two queries by identity with zero
+  resend and admitted no input after VERIFIED.
+
+## Distance to the stated goal
+
+| Goal gate | Current assessment |
+| --- | --- |
+| Trustworthy low-level Linux/X11 control | Substantial scoped evidence; still a research candidate |
+| Continuous live model operation | Partial; works in bounded episodes, but seconds-long semantic gaps dominate |
+| Human-like speed and iteration | Not demonstrated |
+| Broad task judgment | Not demonstrated; successful tasks are small and often known during development |
+| Token-efficient operation | Small measured planner-input reduction; large image transport reduction has not become an equivalent model-token reduction |
+| Cross-platform Windows/macOS | Outside the current architecture-discovery scope and untested |
+| Easy installation and agent-agnostic API | Design intent only; no runnable distribution |
+| Product Hunt / Agent Market demonstration | Research material exists; public demo and product packaging are not ready |
+
+The next promotion gate is not another success on the same known route. It is a
+fresh, adversarial series where compact evidence must preserve the right decision
+under conflicting identity, partial completion, unavailable verification and
+redacted observations, followed by current-runtime Mindustry/OpenTTD tasks with
+new geometry and the same recovery semantics. Human baselines and model-boundary
+timestamps must then be collected on identical task allocations. Only after those
+pass should the runtime/API be frozen and packaged.
+
+Primary evidence: [research index](../RESEARCH.md), [current architecture](architecture.md),
+[domain feasibility](../research/benchmark_discovery/README.md),
+[Mindustry current-runtime self-use](../research/benchmark_discovery/MINDUSTRY_BEND_V2_SELF_USE.md),
+[OpenTTD guarded placement](../research/openttd_task/GUARDED_PLACEMENT.md),
+[compact fixed comparison](../research/live_control/COMPACT_PLANNER_EVIDENCE.md), and
+[compact live form](../research/live_control/COMPACT_LIVE_FORM.md).

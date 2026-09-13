@@ -3,6 +3,7 @@
 Design and research notes for Agent Interface.
 
 - [Latest local research handoff](LOCAL_RESEARCH_HANDOFF.md) — measured results, limitations and coordination across chats.
+- [Progress from the initial baseline](PROGRESS_FROM_BASELINE.md) — current capabilities, domain coverage, measured bottlenecks and remaining release gates.
 - [Current Linux research client](../research/live_control/CURRENT_CLIENT.md) — versioned caller/runtime entry points, evidence and unresolved behavior.
 
 - `principles.md` — thesis and component principles.
