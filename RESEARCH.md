@@ -39,6 +39,12 @@ A same-seed no-model A/B then moves the bounded effect polling into one verifier
 request: post-UNKNOWN durable calls fall from 10 to 1 and completion detection
 from 5,060.458 to 4,897.769 ms. The verifier still performs 97 filesystem samples,
 so this is round-trip reduction rather than event-driven readiness or CPU savings.
+A fresh model-driven follow-up preserves submit-once versus wait/check across the
+partial Return boundary and uses one bounded query after either decision. On the
+fresh-submission path, post-decision queries fall from 10 to 1 and total durable
+calls from 17 to 8 versus the previous live route. Model-time variation prevents
+a causal end-to-end latency claim, and explicit v6 provenance adds about 20 input
+tokens.
 
 Primary artifacts:
 
@@ -49,6 +55,7 @@ Primary artifacts:
 - [`DELAYED_EFFECT_LIVE.md`](research/live_control/DELAYED_EFFECT_LIVE.md)
 - [`PARTIAL_TERMINAL_LIVE.md`](research/live_control/PARTIAL_TERMINAL_LIVE.md)
 - [`EFFECT_WAIT.md`](research/live_control/EFFECT_WAIT.md)
+- [`PARTIAL_TERMINAL_WAIT.md`](research/live_control/PARTIAL_TERMINAL_WAIT.md)
 
 ### First DOOM-engine transfer
 

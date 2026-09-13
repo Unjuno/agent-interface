@@ -1,3 +1,15 @@
+Latest live wait integration: planner_evidence_v4 explicitly accepts durable
+v4/v5/v6 and exposes journal provenance. Fresh seed248 partial-terminal sessions
+again produce submit_once at3/6 and wait_and_check at4/6; only the former admits
+one new submission. Both use exactly one6000/50ms bounded effect query and save
+t000248. Before-Return post-decision queries10->1 and total durable calls17->8
+versus the prior live route. Model runners7.053/5.356s, inputs9823/9822, expired
+admission-to-VERIFIED14.139/6.834s. Latency is not causal because model times
+changed; v4 adds about20 input tokens. The first v6 integration refusal and five
+presenter controls are retained; cross-OS audit passes. See
+research/live_control/PARTIAL_TERMINAL_WAIT.md. Next test conflicting evidence or
+actual pixel redaction; full goal remains open.
+
 Latest round-trip candidate: effect_checkpoint_v3 accepts one bounded verifier
 wait. Same-seed fresh Chromium A/B saves t000246 in both conditions: caller
 500ms polling needs10 post-UNKNOWN durable calls and5060.458ms; one6000/50ms

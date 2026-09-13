@@ -55,3 +55,7 @@ the no-model causal calibration, exact prompt/evidence/image binding, raw model
 arrivals, completed prefixes, input admission differences, effect logs, saved
 bytes, exact frame reconstruction, release and independent success on Windows
 and Linux.
+
+The bounded-wait follow-up preserves both model decisions while replacing the
+ten-query fresh-submission tail with one verifier query. See
+`PARTIAL_TERMINAL_WAIT.md`.

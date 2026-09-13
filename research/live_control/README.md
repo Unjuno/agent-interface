@@ -1,5 +1,9 @@
 # Asynchronous live control: development evidence
 
+Latest live integration: [bounded effect wait after a partial terminal](PARTIAL_TERMINAL_WAIT.md).
+The model again distinguishes expiry before and after Return; one verifier query
+replaces ten caller queries on the fresh-submission path.
+
 Latest round-trip experiment: [bounded verifier wait](EFFECT_WAIT.md). One
 declared long poll replaces ten caller checkpoint calls in a fixed delayed-effect
 A/B while retaining explicit UNKNOWN/VERIFIED evidence.

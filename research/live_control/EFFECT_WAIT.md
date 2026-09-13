@@ -30,3 +30,9 @@ Artifacts are in `results/effect-wait-ab-01/` and
 sources, exact frames, one task Return per session, empty releases, checkpoint
 counts and commands, saved bytes, independent scores and cleanup on Windows and
 Linux.
+
+The next fresh integration uses this wait after actual model decisions. Its
+before-Return recovery path reduces post-decision effect calls from ten to one
+and total durable calls from 17 to 8 while preserving independent success. See
+`PARTIAL_TERMINAL_WAIT.md`. Cross-run latency remains confounded by model-time
+variation.

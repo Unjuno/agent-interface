@@ -1,5 +1,12 @@
 # Planner evidence binding and partial-evidence pilot
 
+`planner_evidence_v4.py` is the current opt-in extension for the bounded effect
+wait path. It preserves caller request/contract binding and explicitly records
+whether a validated program came from durable journal v4, v5 or v6. Three known
+revisions pass; two unknown revisions plus three malformed/binding cases refuse
+before model or GUI work. The first live v6 attempt using v3 is retained because
+v3 correctly rejected the new journal revision. See `PARTIAL_TERMINAL_WAIT.md`.
+
 `planner_evidence_v2` validates a checkpoint against the contract carried by
 that checkpoint. It did not itself require the caller to state the request ID
 and completion contract expected at the current decision boundary. The durable

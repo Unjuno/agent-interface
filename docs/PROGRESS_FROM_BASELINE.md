@@ -94,6 +94,10 @@ Luanti remains a feasibility candidate rather than demonstrated agent control.
   query. Both fresh tasks succeeded; post-UNKNOWN detection fell from 5,060.458
   to 4,897.769 ms. The worker still made 97 filesystem samples, so this proves
   round-trip reduction rather than event-driven readiness or compute savings.
+- A new live model follow-up retained submit-once versus wait/check at the partial
+  Return boundary and used one bounded query after each decision. The fresh-submit
+  route fell from ten to one post-decision queries and 17 to 8 total durable calls.
+  Different model times prevent attributing the end-to-end latency change.
 - Lost-response recovery has been exercised for input outcomes and saved-effect
   queries. The current form episode recovered two queries by identity with zero
   resend and admitted no input after VERIFIED.
@@ -129,7 +133,18 @@ Primary evidence: [research index](../RESEARCH.md), [current architecture](archi
 [delayed-effect decision evidence](../research/live_control/DELAYED_EFFECT_DECISION.md), and
 [model-driven delayed-effect live use](../research/live_control/DELAYED_EFFECT_LIVE.md), and
 [partial-terminal live decisions](../research/live_control/PARTIAL_TERMINAL_LIVE.md), and
-[bounded effect wait](../research/live_control/EFFECT_WAIT.md).
+[bounded effect wait](../research/live_control/EFFECT_WAIT.md), and
+[live partial-terminal wait](../research/live_control/PARTIAL_TERMINAL_WAIT.md).
+Latest live integration: seed248 again yields model submit_once for3/6 before
+Return and wait_and_check for4/6 after Return. Only the former admits one new
+submission; both use one bounded effect query and independently save t000248.
+Before-Return post-decision queries fall10->1 and total durable calls17->8 versus
+the prior live route. Model runners7.053/5.356s and inputs9823/9822 mean the
+admission-to-VERIFIED times14.139/6.834s are not a causal latency comparison.
+Planner v4 adds explicit v6 provenance, about20 tokens, and rejects five unknown
+revision/binding controls. The first integration refusal is retained; exact
+frames and full evidence audit cross-OS. See PARTIAL_TERMINAL_WAIT.md.
+
 Latest round-trip candidate: a same-seed fresh Chromium A/B compares 500ms caller
 polling with one6000/50ms verifier wait. Both independently save t000246. The
 post-UNKNOWN path changes from10 durable calls/5060.458ms to1/4897.769ms; total
