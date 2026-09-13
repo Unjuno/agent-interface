@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — action-scoped event reads avoid wrong-terminal boundaries
+
+[Action-scoped events](../research/live_control/ACTION_SCOPED_EVENTS.md) adds an
+explicit identity map in EventCursor v2/socket v7. Frozen actual Calc replay now
+waits through enter_save to confirm_excel while preserving the entire prefix.
+Missing/conflicting IDs and unattributed rejection return explicit uncertainty.
+Live scoped xterm cancel/retry passes (49 ms response), two exact frames audited.
+Runtime rejections still lack request correlation; next address that without
+guessing ownership from arrival time. Optional candidate, no default promotion.
+
 ## Latest follow-up — socket failure path distinguishes transmission states
 
 [Socket pipe fault](../research/live_control/SOCKET_PIPE_FAULT.md) adds typed
