@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — runtime rejection correlation avoids stale parsed IDs
+
+[Rejection correlation](../research/live_control/REJECTION_CORRELATION.md) adds
+per-input-line runtime sequence and bounded caller-declared IDs in interactive_v24.
+Two live cohorts cover five rejections then successful token save; the second
+actually advances observations before testing stale admission. Bad JSON/arrays
+do not inherit prior action identity. Command/rejection joins, frames and owner
+close audited. Socket request-ID mapping and concurrent-reader use remain open;
+do not interpret reused caller action IDs as unique rejected attempts.
+
 ## Latest follow-up — action-scoped event reads avoid wrong-terminal boundaries
 
 [Action-scoped events](../research/live_control/ACTION_SCOPED_EVENTS.md) adds an
