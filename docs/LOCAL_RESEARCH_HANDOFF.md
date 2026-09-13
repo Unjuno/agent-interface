@@ -1,5 +1,11 @@
 # Local research handoff — 2026-09-13
 
+Latest implementation: [resumable saved-evidence pages](../research/live_control/REPORT_PAGES.md).
+Offline reader preserves UTF-8 source bytes with digest-bound offsets and bounded
+complete JSON lines. Real 17,624-byte overflow report round-trips in 28 pages at
+1024 bytes; 13 negative controls pass. No compression/token/latency or image fix
+claim. Next actual resumed saved-report inspection, then new live allocation.
+
 Latest decision: [eight-episode recovery results](../research/live_control/RECOVERY_RESULTS.md).
 Allocation finished; no reruns. Structural calls B-A [0,-3,0,-3], reads all zero,
 full elapsed median +9.288 s (not causal). All final tasks pass, but pair 4 A's
