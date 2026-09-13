@@ -1,3 +1,7 @@
+## Terminal reason fallback verified on X11 keyboard interruption
+
+Executor v6 fills only empty needs_decision reasons from the same lease focus/surface interruption snapshot. Eight synthetic cases and bundle-focus-03 pass: actual Control_L release while output is blocked, no tail input, explicit focus_changed terminal, and fresh same-deadline observation without stale cause. Separate audit verifies nine frames and source/owner evidence. Earlier failed cohorts remain frozen; no default promotion or model-speed claim. See research/live_control/TERMINAL_REASON_FALLBACK.md. Next: live transport and non-Inkscape recovery coverage.
+
 Latest bundled faults: [physical release/tail stop and reason gap](../research/live_control/BUNDLE_FOCUS_FAULTS.md).
 Three actual injections (select/field buttons, Ctrl modifier) release during blocked
 output and stop tail at prefix0/2/3.38 frames audited. Preserve v1 key non-injection

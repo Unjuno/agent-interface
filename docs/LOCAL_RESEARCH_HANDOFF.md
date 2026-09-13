@@ -1,3 +1,7 @@
+## Terminal reason fallback verified on X11 keyboard interruption
+
+Executor v6 fills only empty needs_decision reasons from the same lease focus/surface interruption snapshot. Eight synthetic cases and bundle-focus-03 pass: actual Control_L release while output is blocked, no tail input, explicit focus_changed terminal, and fresh same-deadline observation without stale cause. Separate audit verifies nine frames and source/owner evidence. Earlier failed cohorts remain frozen; no default promotion or model-speed claim. See research/live_control/TERMINAL_REASON_FALLBACK.md. Next: live transport and non-Inkscape recovery coverage.
+
 Latest bundled faults: [physical release/tail stop and reason gap](../research/live_control/BUNDLE_FOCUS_FAULTS.md).
 bundle-focus01 two buttons pass, key trigger never fires (key admissions lack id/
 step). Corrected v2 key injection releases/halts tail but decision_reason null makes
