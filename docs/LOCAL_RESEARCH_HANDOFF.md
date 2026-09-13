@@ -1,5 +1,19 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — actual Inkscape stale-boundary and rejection recovery
+
+[Recovery study](../research/live_control/POINTER_VIEW_RECOVERY.md) records a
+deliberately old batch returning a historical clock before the current echo. The
+caller stopped without submitting input. Read-only prefix recovery was followed
+by an unplanned incorrect save-key schema rejection, then explicit corrected
+submission. Only observe and corrected move/save were admitted. Nine frames,
+45 unique events (53 received including overlap), source hashes and saved SVG pass
+the audit; x=52, y=50, width=40, height=30. Total capture-to-evaluation 118.155 s.
+This is legacy rightward movement, not precision; stale historical boundary, not
+direct sequence mismatch. Next exercise sequence mismatch separately and reduce
+manual reconciliation reads while retaining event/identity evidence. Both actual
+failures remain in the cohort; no automatic input retry occurred.
+
 ## Latest follow-up — live reversible views with original images
 
 [Live report view](../research/live_control/POINTER_VIEW_LIVE.md) adds an explicit

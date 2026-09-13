@@ -1,5 +1,12 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest recovery evidence: [Inkscape live view](../research/live_control/POINTER_VIEW_RECOVERY.md)
+stopped on a stale historical clock boundary before input. A subsequent malformed
+save-key program was rejected before admission; explicit correction completed the
+legacy move-right task. All 45 unique records and nine frames are audited, with
+both failures retained. Direct sequence-mismatch and automatic bounded recovery
+remain unqualified; do not weaken identity checks to bypass the observed boundary.
+
 Latest follow-up: [live reversible report use](../research/live_control/POINTER_VIEW_LIVE.md)
 completed a new known OpenTTD task with both program views and original images in
 their respective single responses, without observed truncation or image-only

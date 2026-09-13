@@ -1,5 +1,10 @@
 # Reversible report presentation in actual OpenTTD use
 
+Follow-up: [actual Inkscape recovery](POINTER_VIEW_RECOVERY.md) retains a stale
+historical clock response, an unplanned key-schema rejection and explicit corrected
+execution. This extends actual-use evidence without claiming direct sequence-race
+qualification or automatic recovery.
+
 The assistant completed a new known guarded-road episode through
 `pointer_exchange_view_v1.py`. Both program calls returned the reversible report
 and their validated original PNG in the same orchestration response. Neither
