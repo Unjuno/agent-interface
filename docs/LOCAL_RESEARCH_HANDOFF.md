@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — combined prepared send/wait used by the assistant
+
+[Prepared exchange self-use](../research/live_control/PREPARED_EXCHANGE_SELF_USE.md)
+combines preparation and send/wait in one CLI and preserves exact requests/replies.
+Same seed/steps as prior token task: one exchange replaces two; three exact frames
+and saved result audited. First capture to socket return 27.448 s, outer initial
+decision interval 13.097 s. Sequential single runs and differing final timing
+boundaries do not prove causal speedup. Next exercise a branching GUI case.
+
 ## Latest follow-up — build actual input requests without evidence-field copying
 
 [Prepared self-use](../research/live_control/PREPARED_SELF_USE.md) derives sequence,
