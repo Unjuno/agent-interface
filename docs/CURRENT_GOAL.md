@@ -1,5 +1,12 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest actual-use decision: [paged live result audited](../research/live_control/PAGED_LIVE.md).
+Eight exact frames, 31 events, four socket exchanges; saved SVG task passes.
+Seven pages add six CLI calls: 25.582 s capture-to-terminal, 95.544 s to evaluation;
+review/commentary included. Keep full paging for detail/recovery, not normal flow.
+Next compact decision receipt with source identity, explicit coverage, exceptional
+records and unknown-event escalation; validate on retained failures before live use.
+
 Latest implementation: [line-aware pages v2](../research/live_control/REPORT_PAGES_V2.md).
 Observed split-coordinate issue addressed with LF-preferred boundaries and verified
 partial-line flags. At 4096-byte limit the actual report remains six pages, zero
