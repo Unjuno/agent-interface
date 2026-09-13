@@ -1,5 +1,12 @@
 # Local research handoff — 2026-09-13
 
+Latest implementation: [line-aware pages v2](../research/live_control/REPORT_PAGES_V2.md).
+Observed split-coordinate issue addressed with LF-preferred boundaries and verified
+partial-line flags. At 4096-byte limit the actual report remains six pages, zero
+partial lines, 21,332 wire bytes (v1 21,056). Twelve cases and ten negative controls
+pass; frozen v1 preserved. Next fresh private-task integration with explicit page
+coverage/image inspection, rather than further offline formatting variants.
+
 Latest actual use: [saved report page retry](../research/live_control/REPORT_PAGES_SELF_USE.md).
 Six displayed pages, seven CLI calls with one deliberately withheld response;
 exact reconstruction and missing-page rejection verified, zero runtime input.

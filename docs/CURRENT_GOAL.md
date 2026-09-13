@@ -1,5 +1,12 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest implementation: [line-aware pages v2](../research/live_control/REPORT_PAGES_V2.md).
+Observed split-coordinate issue addressed with LF-preferred boundaries and verified
+partial-line flags. At 4096-byte limit the actual report remains six pages, zero
+partial lines, 21,332 wire bytes (v1 21,056). Twelve cases and ten negative controls
+pass; frozen v1 preserved. Next fresh private-task integration with explicit page
+coverage/image inspection, rather than further offline formatting variants.
+
 Latest implementation: [resumable saved-evidence pages](../research/live_control/REPORT_PAGES.md).
 Offline reader preserves UTF-8 source bytes with digest-bound offsets and bounded
 complete JSON lines. Real 17,624-byte overflow report round-trips in 28 pages at
