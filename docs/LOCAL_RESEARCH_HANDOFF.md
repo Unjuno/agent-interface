@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — Calc self-use and basic-operation discovery
+
+[Calc self-use](../research/live_control/JOURNAL_CALC.md) uses interactive_v17
+to enter two cells and handle Excel format confirmation from terminal receipt
+imagery. Saved values pass, 19 frames/33 delivery pairs audited. An initial wrong
+chord shape was rejected before input and is retained. Interactive_v18 now includes
+validator-checked basic examples in ready (not yet live-tested); full schema
+discovery and matched task-speed comparison remain open.
+
 ## Latest follow-up — serialized journal and actual assistant integration
 
 [Journal integration](../research/live_control/JOURNAL_INTEGRATION.md) resolves
