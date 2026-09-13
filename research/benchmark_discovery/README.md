@@ -1,3 +1,5 @@
+[Live bounded menu intent](LIVE_MENU_INTENT.md): new observation plus local target check permits one click after model delay; fresh-capture-to-click358ms, fixture-specific scope.
+
 [Live model freshness boundary](LIVE_FOCUS_BOUNDARY.md): real model call ages observation from116ms to12.6s; configured stale veto sends observe-only, exposing a potential no-progress loop.
 
 [Equal-policy focus model pair](FOCUS_MODEL_PAIR_V2.md): six explicit-rule checks pass with3–10% fewer input tokens; synthetic freshness, no live speed claim.
