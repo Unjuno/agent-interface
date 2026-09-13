@@ -27,6 +27,18 @@ disclosure. Inputs9364/9329/9477; model runners6.664/5.605/4.908s; live gate
 setup is atomically rejected before input/model and retained. Next bind policy
 identity across model latency and reject an actual stale unsafe proposal.
 
+Policy-bound mutation follow-up: two fresh seed253 sessions use byte-identical
+full-image prompts and both Luna-low calls propose `replace_and_save`. Stable
+`full-control` version1 admits the five-step program and independently verifies
+the saved value. In the paired session the current policy changes after model
+return to `hide-current-text-entry` version2; the proposal remains bound to
+version1, so the gate returns `policy_binding_mismatch` in0.006ms and submits
+zero post-observation input. Stable gate time is0.035ms; both calls report9359
+input tokens; model runners6.476/7.701s; 23 frames replay exactly. Cross-OS audit
+passes. This is one actual stale-proposal refusal, not retroactive privacy for the
+already disclosed full image. Next test authorized refinement and crop/history/
+alternate-channel bypass; full goal remains open.
+
 Latest live wait integration: planner_evidence_v4 explicitly accepts durable
 v4/v5/v6 and exposes journal provenance. Fresh seed248 partial-terminal sessions
 again produce submit_once at3/6 and wait_and_check at4/6; only the former admits

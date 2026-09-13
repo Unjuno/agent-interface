@@ -11,7 +11,7 @@ general computer use or an installable Agent Market product.
 | Stage | Initial state | Current evidence | Status |
 | --- | --- | --- | --- |
 | Observation | Repeated full screenshots around individual actions | Exact unchanged-frame suppression, exact tile transport, changed-region and compact planner views | Proven in scoped fixtures; general visual/token policy remains experimental |
-| Evidence withholding | Missing pixels could be confused with empty or absent content | Actual region pixels withheld with explicit policy UNKNOWN; full 4/4 exact versus redacted 4/4 UNKNOWN | Geometry/readability gate passed in one Chromium frame; action and bypass tests remain |
+| Evidence withholding | Missing pixels could be confused with empty or absent content | Actual region pixels withheld with explicit policy UNKNOWN; full 4/4 exact versus redacted 4/4 UNKNOWN; stale policy-bound mutation refused before input | Scoped Chromium geometry, adjacent-action, hidden-target and post-model policy-change gates pass; refinement and bypass remain |
 | Input | Coordinates and short scripted keyboard/pointer actions | Absolute intent deadlines, focus/surface binding, held input, cancellation/expiry, verified release and tail suppression | Strong scoped Linux/X11 evidence |
 | Execution | One action followed by another model boundary | Bounded multi-step programs, phased submit, passive followups and local continuation | Working in selected desktop/game tasks; semantic replans still need the model |
 | Freshness | Screenshot age was mostly implicit | Observation identity/age, stale refusal, route and binding guards, re-observation after interruption | Mechanism exists; model delay can still age a frame by seconds |
@@ -114,7 +114,13 @@ Luanti remains a feasibility candidate rather than demonstrated agent control.
 - When the task instead requires editing the hidden field, the full condition
   completes and independently verifies, while both redacted conditions stop with
   zero post-observation input and zero private-value disclosure. This is one
-  sample per condition; policy-change and unsafe-proposal rejection remain open.
+  sample per condition.
+- Two fresh same-prompt policy-race sessions both produce an actual mutation
+  proposal. The stable policy admits and verifies it; tightening the policy after
+  model return creates a version mismatch and rejects it with zero input. Both
+  calls use 9,359 input tokens and 23 frames replay exactly. This closes one stale
+  unsafe-proposal case, but the already presented full image means it is not a
+  retroactive confidentiality claim.
 
 ## Distance to the stated goal
 
@@ -132,9 +138,10 @@ Luanti remains a feasibility candidate rather than demonstrated agent control.
 The adversarial boundary rejects nine wrong or missing request/contract cases
 before model delivery. Corrected delayed and partial-terminal experiments now
 show that prior execution and the completed prefix change wait-versus-submit
-decisions in three fresh states. Actual redacted-observation geometry and
-readability semantics now pass one scoped gate. The next gate covers conflicting
-evidence plus action/refinement and alternate-channel bypass, followed by current-runtime Mindustry/OpenTTD
+decisions in three fresh states. Actual redacted-observation geometry,
+readability, adjacent action, hidden-target refusal and one post-model policy
+transition now pass scoped gates. The next gate covers authorized refinement and
+alternate-channel/history bypass, followed by current-runtime Mindustry/OpenTTD
 tasks with new geometry and the same recovery semantics. Human baselines and
 model-boundary timestamps must then be collected on identical task allocations.
 Only after those pass should the runtime/API be frozen and packaged.

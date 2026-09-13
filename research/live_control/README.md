@@ -11,6 +11,11 @@ A required-field mutation follow-up succeeds in the full condition and produces
 zero post-observation input in both redacted conditions; both model calls stop
 before the local gate. The first unsupported setup string is retained as an
 atomic pre-input refusal.
+A policy-race follow-up gives two fresh sessions the same full presentation and
+prompt; both model calls propose the edit. The unchanged policy executes and
+verifies, while a policy tightened after model return causes
+`policy_binding_mismatch` and zero input. This proves one actual stale-proposal
+refusal, while authorized refinement and alternate-channel/history bypass remain.
 
 Latest live integration: [bounded effect wait after a partial terminal](PARTIAL_TERMINAL_WAIT.md).
 The model again distinguishes expiry before and after Return; one verifier query

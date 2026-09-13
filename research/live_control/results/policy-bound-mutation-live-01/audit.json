@@ -1,0 +1,32 @@
+{
+  "scope": "two fresh same-seed sessions; byte-identical model prompt and full presentation contract; policy stable versus tightened after return",
+  "rows": [
+    {
+      "condition": "stable",
+      "proposal_kind": "replace_and_save",
+      "gate": "visible_unredacted_targets",
+      "input_tokens": 9359,
+      "model_runner_s": 6.475759219,
+      "gate_ms": 0.035396,
+      "post_observation_input_programs": 1,
+      "independent_success": true
+    },
+    {
+      "condition": "tightened",
+      "proposal_kind": "replace_and_save",
+      "gate": "policy_binding_mismatch",
+      "input_tokens": 9359,
+      "model_runner_s": 7.701093263,
+      "gate_ms": 0.006418,
+      "post_observation_input_programs": 0,
+      "independent_success": false
+    }
+  ],
+  "exact_runtime_frames": 23,
+  "stable_task_success": true,
+  "tightened_actual_model_proposal_refused": true,
+  "tightened_post_observation_input_programs": 0,
+  "promotion": true,
+  "promotion_scope": "mutation proposal carries observation/policy binding; post-model policy change refuses before input",
+  "limits": "one task/policy transition; fresh screenshots have ephemeral browser-port differences; no timing population or privacy claim"
+}

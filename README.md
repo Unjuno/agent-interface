@@ -20,8 +20,11 @@ policy UNKNOWN 4/4. The region geometry audits exactly, but metadata adds 112
 input tokens/call. A six-episode follow-up completes the adjacent visible Save
 task in all three full/unmarked/explicit conditions with zero hidden-region
 actions. A required-field mutation succeeds only with full evidence; both
-redacted conditions stop with zero live input. Policy-change, unsafe refinement
-and bypass cases remain open.
+redacted conditions stop with zero live input. A later same-prompt pair binds
+the model proposal to its observation and policy version: a stable policy
+executes and verifies, while a policy tightened after model return rejects the
+model's actual edit proposal before any input. Authorized refinement and
+crop/history/alternate-channel bypass cases remain open.
 The assistant has used received-image references and bounded programs in Calc
 and browser fixtures. An optional final-result read collected ready Calc early
 and final evidence in one caller invocation, and skipped itself on a browser
