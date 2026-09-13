@@ -1,3 +1,7 @@
+## Known-field composition retains negative data and round-trips
+
+composed_result_v1 removes only equal known image/terminal duplicates and state values reconstructible from a unique state-table row. Ten archived results round-trip; five changed-evidence controls preserve mismatches/unknown errors and four corrupt encodings reject. Total canonical bytes 95814 -> 79496 (~17%). See research/live_control/COMPOSED_RESULT.md. Offline byte result only, no model-token/accuracy/speed claim or default promotion. Next compare on a task requiring negative state rather than an obvious image; keep full goal active.
+
 ## Actual full/shared presentation token pairs measured
 
 Four preregistered Luna/low turns on two known browser screenshots all answered correctly. Shared-result v1 lowers reported total input by 135 and 131 tokens (~0.87% each); cache differs on one pair. See research/live_control/MODEL_PRESENTATION_PAIR.md. Audit v1 newline-hash assumption failed and is retained; v2 distinguishes CRLF files from normalized stdin intent and passes, no model reruns. Keep sharing experimental: easy static scenes do not prove reference reasoning, live recovery or cost/speed gains. Next prioritize simpler nonduplicated composition and less obvious evidence, not threshold tuning.
