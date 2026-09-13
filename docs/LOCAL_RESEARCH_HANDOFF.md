@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — live finalization carries scoped saved-effect evidence
+
+[Live saved effect](../research/live_control/LIVE_SAVED_EFFECT.md) connects the
+candidate to interactive_v22 finish_after. Two scripted Calc episodes complete
+their programs but return distinct VERIFIED / CONTRADICTED effects. Fourteen
+exact frames and flush receipts audited; callback UNKNOWN/failure retention passes.
+Unsaved effect computes in 15 ms but combined evaluation emission waits 3023 ms,
+identifying the next delivery bottleneck. Initial wrong settle-field rejection
+is retained separately. Next separate early effect delivery from final scoring;
+no assistant speed claim, default promotion or freeze credit.
+
 ## Latest follow-up — scoped three-way saved-effect evidence
 
 [Saved effect](../research/live_control/SAVED_EFFECT.md) introduces a private
