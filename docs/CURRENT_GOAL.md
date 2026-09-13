@@ -1,3 +1,7 @@
+## Lifecycle receipt binding now validates completed early/combined histories
+
+Receipt v5 validates contiguous clock/submit/read history and reconstructed lifecycle before verifying terminal_received. Eight archived live reports: six completed bindings verified, two pending remain unbound. Twelve controls detect eleven inconsistencies and preserve an unknown nested error while retaining valid binding. Only obsolete root-level unresolved/binding warnings removed; interruption/focus/errors/unknown fields remain visible. See research/live_control/RECEIPT_LIFECYCLE.md. Next explicit client on different desktop task using v5; payload duplication/schema still open. No default promotion or new GUI/speed/token claim.
+
 ## Combined bounded followup verified in actual Calc self-use
 
 Same runtime/seed/input sequence as prior early-return run; one outer operation now collects promptly arriving terminal/images after early stop. Save/confirm bounded reads took 254/279ms; terminal-to-reply gaps ~11/13ms instead of prior manual followups ~10s. Separate followup stage calls 2 to 0; socket exchanges remain 11. Independent saved [816,345] pass; audit checks 60 events/14 frames and bindings. See research/live_control/CALC_COMBINED_LIVE.md. No causal speed/default promotion. Next fix receipt compatibility/presentation duplication, then test a different desktop transition; avoid further identical Calc wall-time trials.
