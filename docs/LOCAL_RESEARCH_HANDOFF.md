@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — actual socket reads separate results but add overhead
+
+[Event socket self-use](../research/live_control/EVENT_SOCKET_SELF_USE.md) records
+actual assistant Calc control with inherited stdin and read-only local socket.
+Effect/final results arrive through separate tool calls; six read batches match
+the entire 25-record prefix, saved values and twelve exact frames verified.
+First capture to effect read is 77.053 s; no speed gain shown. Final already
+existed before the early read returned. Next combine send/wait in one caller
+operation, then test slow readers/disconnects; private transport only.
+
 ## Latest follow-up — retained event-prefix reads separate early/final results
 
 [Event cursor](../research/live_control/EVENT_CURSOR.md) adds a bounded private
