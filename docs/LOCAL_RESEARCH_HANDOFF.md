@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — fresh modal translations preserve focus discrimination
+
+[Modal translation](../research/live_control/MODAL_TRANSLATION.md) tests two
+predeclared new positions with Excel/ODF focus, four real images. Fixed coordinates
+reject all; observed-geometry translation accepts Excel and rejects ODF with the
+same source/threshold. Replay, stale-offset and bounds controls pass. Fresh variant
+within known family, no autonomous input. Next bind window/frame/age dependencies
+and revalidate any prepared branch at ordinary admission.
+
 ## Latest follow-up — modal focus counterexample before speculative control
 
 [Modal predicate](../research/live_control/MODAL_PREDICATE.md) collects actual
