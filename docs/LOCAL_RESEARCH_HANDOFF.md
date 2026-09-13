@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — actual request-scoped Calc effect and final result reads
+
+[Request outcome self-use](../research/live_control/REQUEST_OUTCOME_SELF_USE.md)
+exercises socket v10/EventCursor v4 with actual assistant image inspection and
+two Calc programs. Terminal, early effect and final score retain confirm request
+identity; saved cells, twelve exact frames and replay suppression audited. Five
+caller operations, 57.082 s first-capture-to-effect-read, 24.658 s modal gap; no
+speedup claim. Six identity/rejection controls pass. Next use this lineage for
+end-to-end decision-boundary comparisons rather than more metadata-only tuning.
+
 ## Latest follow-up — accepted request identity persists through completion
 
 [Admitted lineage](../research/live_control/ADMITTED_LINEAGE.md) binds receive
