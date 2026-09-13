@@ -1,0 +1,15 @@
+{
+  "scope": "bounded autonomous screenshot proposal/action handoff on isolated Calc; no general supervisor claim",
+  "sources": {
+    "history_calc_supervisor_v1.py": "dafbd3b727c91b0b78a5c54b667e8c2d45fe57f40a927cb696aa2ed974c733e5",
+    "history_calc_driver_v1.py": "6ea7ebba4b8be4102a52f353957520f650b363a4f2421bd2104daf4f9ec1e6cf",
+    "calc_proposal_schema_v1.py": "0b8fc11a67e6b4a9731b7d4413b5e851e3268d68cb5f3465576681fd406e0377",
+    "model_pair_runner_v1.py": "2b746a670c68b578eac7b1c4eb68d6377a76732e1e2b5f847e72a60b8d209ef8"
+  },
+  "history_mode": "all",
+  "max_turns": 5,
+  "seed": 238,
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "prompt_policy": "one exact typed schema; malformed response stops without model retry"
+}
