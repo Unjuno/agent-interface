@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — journal stall integration exposes ordering failure
+
+[Journal stalls](../research/live_control/JOURNAL_STALL.md): initial cohort 01
+failed at Inkscape setup; cohort 02 verifies physical/owned release while write
+or flush is blocked under expiry/cancel, with no late continuation. Write/cancel
+reorders receipts because the probe concurrently calls a single-writer journal.
+Ordering failure is retained and reproduced by audit; no runtime adoption.
+Next serialize probe emission and move cancel invocation to an independent caller,
+checking authority cancellation despite blocked notification delivery.
+
 ## Latest follow-up — persistent receipt file isolates open/close cost
 
 [Receipt journal](../research/live_control/RECEIPT_JOURNAL.md) preserves per-record
