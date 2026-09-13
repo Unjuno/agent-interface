@@ -1,3 +1,7 @@
+## Browser confirmation recovery with measured local output
+
+New explicit emission client was used on the known confirmation fixture with seed 227. Program completion accompanied a visible unsaved warning; the assistant reviewed it, confirmed replacement and independently saved t000227. Audit passes 108 events, nine exchanges, 17 frames and five exact local output payloads; process exit 0. See research/live_control/BROWSER_EMISSION_LIVE.md. Local write/flush is measured; downstream model receipt/tokens/cost and matched speed remain missing. Next prioritize authoritative downstream measurement or a controlled comparison harness, not more similar wall-clock episodes. No default change.
+
 ## Local presentation output boundary measured
 
 presentation_emission_v1 retains exact intended bytes and local serialization/write/flush timestamps, propagating failures with receipts. Linux controls cover short writes, broken pipe, flush failure, real subprocess byte equality and attempt overwrite rejection. See research/live_control/PRESENTATION_EMISSION.md and results/presentation-emission-01. Model receipt/tokens/cost remain explicitly unavailable; this does not measure model-facing latency or token savings. Next integrate into a new client on a changed task with negative evidence. Existing defaults unchanged.

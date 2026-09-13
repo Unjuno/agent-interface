@@ -1,0 +1,61 @@
+{
+  "audit_passed": true,
+  "audit_sha256": "8ea5a68801b299a62d532cc36939b045dd055f91e794305480959e0184bb2d6d",
+  "events": 108,
+  "exchanges": 9,
+  "frames": 17,
+  "emissions": [
+    {
+      "stage": "initial",
+      "bytes": 3420,
+      "serialization_ms": 0.071511,
+      "write_flush_ms": 0.151015
+    },
+    {
+      "stage": "navigate",
+      "bytes": 11413,
+      "serialization_ms": 0.275029,
+      "write_flush_ms": 0.067301
+    },
+    {
+      "stage": "replace",
+      "bytes": 10945,
+      "serialization_ms": 0.292451,
+      "write_flush_ms": 0.038963
+    },
+    {
+      "stage": "confirm",
+      "bytes": 9578,
+      "serialization_ms": 0.231248,
+      "write_flush_ms": 0.129036
+    },
+    {
+      "stage": "finish",
+      "bytes": 532,
+      "serialization_ms": 0.095783,
+      "write_flush_ms": 0.059182
+    }
+  ],
+  "actual": {
+    "value": [
+      "t000227"
+    ]
+  },
+  "submitted_sha256": "8fdb1e0074e714037d07d8a37db8dbf391b7c58344a792e9fe5fc3549fb06c5d",
+  "timings": [
+    {
+      "stage": "navigate",
+      "outer_preparation_ms": 1303.481247
+    },
+    {
+      "stage": "replace",
+      "outer_preparation_ms": 1269.83973
+    },
+    {
+      "stage": "confirm",
+      "outer_preparation_ms": 861.115383
+    }
+  ],
+  "initial_capture_to_gui_decision_seconds": 101.283495047,
+  "limits": "One known confirmation fixture with new seed and measured local emission; no matched speed, token or novel-task generalization claim."
+}
