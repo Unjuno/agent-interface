@@ -1,3 +1,7 @@
+## Actual Mindustry construction verified on newer shared runtime
+
+Assistant self-use of unchanged bend interactive v2 built eight directional conveyors with cause-servo/executor8. Four programs/18 exact frames; separate600.024-tick window delivered49 copper,112-tile guard and all directions pass. Pre-finish GUI commitment, eight score controls, source pins and cleanup audited; process exit0. See research/benchmark_discovery/MINDUSTRY_BEND_V2_SELF_USE.md.84.967 seconds to final input terminal;18–23-second between-program gaps remain. Runtime first-image-ready235–574ms excludes model receipt/usefulness. Known task, no controlled speed claim. Basic gameplay compatibility now demonstrated; next private socket focus-interruption/same-handle recovery and model-boundary timing, not another identical route repetition.
+
 ## Shared newer runtime now runs in Mindustry; explicit cancellation verified
 
 New mindustry_bend_interactive_v2 uses cause-servo/executor8 and corrects copied six-conveyor prose without touching v1. Actual GUI scripted drag cancellation: acknowledged button down, verified release2.540ms after request, terminal14.199ms, tail click suppressed; fresh observe-only recovery image ready68.472ms after acceptance. Audit passes22 events/two exact frames/source pins/cleanup. Empty-route independent game score correctly false; exit0. See research/benchmark_discovery/MINDUSTRY_RUNTIME_CANCEL.md. Not assistant gameplay, focus-loss or socket-recovery validation; those remain next. No model-boundary speed/cost claim.
