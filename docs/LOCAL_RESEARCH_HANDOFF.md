@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — actual prepared checkpoint caller avoids a finish-only turn
+
+[Prepared checkpoint self-use](../research/live_control/PREPARED_CHECKPOINT_SELF_USE.md)
+composes explicit terminal input with the chosen saved-contract finish policy.
+Actual assistant Calc use returns UNKNOWN/modal first, then VERIFIED plus scoped
+independent success after confirmation. Twelve frames, all 27 records and both
+archived states pass. Reply-to-finish-call gap is 4.037 ms, while the visual decision
+boundary still takes 18.208 seconds. Six socket exchanges remain; only the outer
+finish-only turn is removed. No matched speedup, default promotion or general
+completion claim. Exception paths and continuation interpretation remain limited.
+
 ## Latest follow-up — explicit conditional finish removes a finalization-only turn
 
 [Checkpoint finish](../research/live_control/CHECKPOINT_FINISH.md) requires an

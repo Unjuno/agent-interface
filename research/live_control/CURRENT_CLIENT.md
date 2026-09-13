@@ -4,6 +4,12 @@ These versioned candidates are research tools used in private Linux/X11 fixtures
 They are not a released desktop product or a promotion of the frozen architecture.
 Keep the older sources/results: versions name measured implementations.
 
+[prepared_checkpoint.py](PREPARED_CHECKPOINT_SELF_USE.md) now combines an explicit
+program, saved-contract checkpoint and opt-in conditional finish. Actual Calc
+use returns the modal for a decision, then independently finishes in the second
+call. It remains optional and requires runtime v31/socket v16; do not infer a
+general completion policy from this known task.
+
 An optional [explicit checkpoint-then-finish policy](CHECKPOINT_FINISH.md) uses
 checkpoint_finish.py with runtime v31/socket v16. It leaves UNKNOWN open and sends
 scoped final evaluation only for a caller-selected matching saved-artifact contract.
