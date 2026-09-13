@@ -1,5 +1,12 @@
 # Local research handoff — 2026-09-13
 
+Latest actual use: [compact live interruption/recovery audited](../research/live_control/COMPACT_LIVE.md).
+Nine exact frames, 42 unique/69 received events, six socket exchanges; final SVG
+passes. Initial index surfaced needs_decision; explicit inspected recovery passed.
+91.422 s total, 50.595 s interruption-to-recovery admission includes diagnostics.
+Next inspect newer runtimes for intent-attributed interruption cause before adding
+a version. Tested executor_v3 drops DecisionRequired detail and emits final release.
+
 Latest prototype: [compact report binding v2](../research/live_control/DECISION_RECEIPT_V2.md).
 Own clock/submit/admission/terminal consistency checked; contradictory top-level
 receipts rejected and nested error paths surfaced. Three recorded cases/eight
