@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — bounded read-only pending clock
+
+[Pending clock](../research/live_control/PENDING_CLOCK.md) adds an explicit helper
+for an unsubmitted single-clock attempt. It reads from the received cursor,
+assembles all slices, and returns review-required when the own echo/clock is found.
+Recorded Inkscape recovery takes one read; nine injected controls remain unresolved.
+Already-submitted reports trigger zero reads. No runtime input semantics changed.
+Next test live and present the retained history/image before deciding on new input;
+do not claim automatic recovery or measured model speed/token gains from replay.
+
 ## Latest follow-up — live isolated sequence mismatch
 
 [Live history](../research/live_control/LIVE_HISTORY.md) records a scripted

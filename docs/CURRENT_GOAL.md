@@ -1,5 +1,11 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest implementation: [pending-clock reader](../research/live_control/PENDING_CLOCK.md)
+adds bounded read-only progress to an already-issued clock. Recorded recovery
+reconstructs the intervening history in one read; nine injected controls remain
+unresolved. No commands/retries/continuation approval are generated. New live use
+and model round-trip/latency benefits remain to be tested.
+
 Latest live integration: [sequence mismatch and history assembly](../research/live_control/LIVE_HISTORY.md)
 uses a current cursor with deliberately stale image records. Own clock identity
 matches, sequence mismatch stops before input, and real received-history assembly
