@@ -1,5 +1,17 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — confirmation recovery succeeds; expiry and log loss retained
+
+[Confirmation self-use](../research/live_control/CONFIRMATION_SELF_USE.md) adds a
+visible second confirmation requirement. Actual assistant use completes it with
+three admitted programs, 21 exact frames and correct independent evaluation.
+An unplanned expired request adds a clock refresh and explicit new attempt; six
+socket calls and 128967 ms total capture-to-flush retain that recovery cost.
+The auxiliary HTTP attempt log was lost during cleanup. A v2 fixture fixes its
+destination and passes a separate survival probe; no retroactive reconstruction.
+Keep finalization deferred for known additional decisions; unfamiliar completion
+and admission-preserving evaluation remain unresolved.
+
 ## Latest follow-up — combined report/image delivery removes a display-only turn
 
 [Combined image self-use](../research/live_control/COMBINED_IMAGE_SELF_USE.md)
