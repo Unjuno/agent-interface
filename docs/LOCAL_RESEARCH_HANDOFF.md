@@ -1,3 +1,10 @@
+Latest recovery decision: [tracking loss after achieved geometry](../research/live_control/EFFECT_LOSS_LIVE.md).
+effect-live-03 seed220 returns lost after one correction, but saved x66.94915 passes.
+Model reads image + benchmark effect, records no-extra-move decision and finishes;
+40 events/seven exchanges/eight frames audited, zero pointer admissions after lost.
+Both contradiction directions now have actual caller evidence. Next ordinary GUI
+geometry readback with decision committed before oracle evaluation, rather than
+more same-pattern injections. No general recovery policy or speed claim; exit0.
 Latest live checkpoint: [actual caller false-goal/effect separation](../research/live_control/EFFECT_CHECKPOINT_LIVE.md).
 Replacement now passes compact program checks yet fails saved task in two fresh
 trials. First effect request rejected before runtime; socket v2 forwards new effect

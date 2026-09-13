@@ -1,3 +1,10 @@
+Latest recovery decision: [tracking loss after achieved geometry](../research/live_control/EFFECT_LOSS_LIVE.md).
+Fresh seed220: fixed second-feedback occlusion after one correction yields lost /
+needs_decision; save/effect proves x66.94915 task pass. Model finishes without another
+move; zero pointer admissions after lost. Forty events/seven exchanges/eight exact
+frames audited, normal process exit. Decision was benchmark-oracle-assisted. Next
+GUI-visible geometry readback and recorded decision BEFORE independent scoring;
+avoid more near-identical fault passes. No general recovery/speed/freeze claim.
 Latest live checkpoint: [actual caller false-goal/effect separation](../research/live_control/EFFECT_CHECKPOINT_LIVE.md).
 Two fresh replacement trials both return compact completed/local-goal with saved
 x=50 failure. First effect command rejected by transport whitelist; preserved and

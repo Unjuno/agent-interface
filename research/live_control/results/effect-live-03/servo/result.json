@@ -1,0 +1,544 @@
+{
+  "receipt": {
+    "format": "decision-receipt-v4",
+    "source": {
+      "sha256": "92ad7c855aeb1b3d7ae1bf3c28a47f0b8f5bef5ae94c090bfe9ed4fc009c0a28",
+      "bytes": 50657
+    },
+    "reported_state": "terminal",
+    "reported_reason": null,
+    "program_write_may_have_been_attempted": true,
+    "terminals": [
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          15
+        ],
+        "record": {
+          "event": "terminal",
+          "id": "servo",
+          "status": "needs_decision",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 28414288895,
+            "valid_until_ns": 56895229584
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "terminal_ns": 28414342936,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 28414345506
+        }
+      }
+    ],
+    "image": {
+      "status": "image",
+      "sequence": 4,
+      "capture_ns": 28361996910,
+      "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/effect-live-03/runtime/003.png",
+      "relative_path": "003.png",
+      "sha256": "8129977f8c1eb5b1f04a6ed34f8c8c0235c9aec473d24a7d3023dd7f3b394382",
+      "authority": "none",
+      "freshness": "historical referenced capture; no new observation"
+    },
+    "event_index": {
+      "command": {
+        "count": 2,
+        "paths": [
+          [
+            "exchanges",
+            0,
+            "reply",
+            "records",
+            0
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            0
+          ]
+        ]
+      },
+      "clock": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            0,
+            "reply",
+            "records",
+            1
+          ]
+        ]
+      },
+      "accepted": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            1
+          ]
+        ]
+      },
+      "step_started": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            2
+          ]
+        ]
+      },
+      "pointer_admission": {
+        "count": 4,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            3
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            9
+          ]
+        ]
+      },
+      "observation": {
+        "count": 3,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            6
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            10
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            13
+          ]
+        ]
+      },
+      "pointer_yield": {
+        "count": 2,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            7
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            11
+          ]
+        ]
+      },
+      "servo_feedback": {
+        "count": 2,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            8
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            12
+          ]
+        ]
+      },
+      "servo_outcome": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            14
+          ]
+        ]
+      },
+      "terminal": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            15
+          ]
+        ]
+      }
+    },
+    "attention": [
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          6
+        ],
+        "reason": "unknown event fields",
+        "fields": [
+          "input_state_after",
+          "input_state_before",
+          "input_state_scope",
+          "owner_revision_unchanged"
+        ]
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          7
+        ],
+        "reason": "event requires detail review"
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          8
+        ],
+        "reason": "event requires detail review"
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          9
+        ],
+        "reason": "unknown event fields",
+        "fields": [
+          "continuation",
+          "owner_id",
+          "revision"
+        ]
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          10
+        ],
+        "reason": "unknown event fields",
+        "fields": [
+          "input_state_after",
+          "input_state_before",
+          "input_state_scope",
+          "owner_revision_unchanged"
+        ]
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          11
+        ],
+        "reason": "event requires detail review"
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          12
+        ],
+        "reason": "event requires detail review"
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          13
+        ],
+        "reason": "unknown event fields",
+        "fields": [
+          "input_state_after",
+          "input_state_before",
+          "input_state_scope",
+          "owner_revision_unchanged"
+        ]
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          14
+        ],
+        "reason": "event requires detail review"
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          15
+        ],
+        "reason": "terminal interruption/error/unverified release"
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          12,
+          "tracking",
+          "error"
+        ],
+        "reason": "nested exception or negative evidence"
+      },
+      {
+        "path": [
+          "last_reply",
+          "records",
+          12,
+          "tracking",
+          "error"
+        ],
+        "reason": "nested exception or negative evidence"
+      },
+      {
+        "path": [
+          "continuation_batch",
+          "records",
+          12,
+          "tracking",
+          "error"
+        ],
+        "reason": "nested exception or negative evidence"
+      }
+    ],
+    "detail_review_required": true,
+    "task_success": "unknown; program completion is not independent task scoring",
+    "coverage": "Index of exchange events only; routine payloads and other report fields remain in source. Not full review or schema validation.",
+    "authority": "none; no new input approval, refreshed image, or model receipt",
+    "limits": "Binding checks only recorded consistency, not authenticity or full nested schema semantics. No attention is not approval. Unknown nested fields may need manual review.",
+    "program_binding": {
+      "program_id": "servo",
+      "request_id": "program-a874c058a4904bb0ad01c70d81a6a12d",
+      "terminal": {
+        "event": "terminal",
+        "id": "servo",
+        "status": "needs_decision",
+        "error": null,
+        "steps_completed": 0,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 28414288895,
+          "valid_until_ns": 56895229584
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "terminal_ns": 28414342936,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 28414345506
+      },
+      "meaning": "internally consistent recorded program binding; not task success, provenance, current lease or input approval"
+    },
+    "tracking_metrics": [
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          8,
+          "tracking",
+          "error"
+        ],
+        "meaning": "reported normalized image distance, not an exception; match status is not object identity or task success"
+      },
+      {
+        "path": [
+          "last_reply",
+          "records",
+          8,
+          "tracking",
+          "error"
+        ],
+        "meaning": "reported normalized image distance, not an exception; match status is not object identity or task success"
+      },
+      {
+        "path": [
+          "continuation_batch",
+          "records",
+          8,
+          "tracking",
+          "error"
+        ],
+        "meaning": "reported normalized image distance, not an exception; match status is not object identity or task success"
+      }
+    ],
+    "servo_feedback": [
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          8
+        ],
+        "record": {
+          "event": "servo_feedback",
+          "id": "servo",
+          "step": 0,
+          "observation": 2,
+          "tracking": {
+            "status": "matched",
+            "error": 0.021451914098972923,
+            "margin": 0.04567523979288685,
+            "rival_error": 0.06712715389185978,
+            "source_observation": 1,
+            "observation": 2,
+            "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+            "patch_sha256": "87765ac1f76508ecded989749724fbea2b8c88dc2ab3ab9c4ff5fdb2eaa96adc",
+            "box": [
+              592,
+              369,
+              56,
+              44
+            ],
+            "delta": [
+              0,
+              0
+            ],
+            "error_method": "raw"
+          },
+          "reason": "correct",
+          "command": {
+            "op": "move",
+            "x": 648,
+            "y": 391
+          },
+          "updates_remaining": 2,
+          "emit_started_ns": 27504839324
+        }
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          12
+        ],
+        "record": {
+          "event": "servo_feedback",
+          "id": "servo",
+          "step": 0,
+          "observation": 3,
+          "tracking": {
+            "status": "lost",
+            "error": 0.4281697282732067,
+            "margin": 0.0,
+            "rival_error": 0.4281697282732067,
+            "source_observation": 1,
+            "observation": 3,
+            "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+            "patch_sha256": "87765ac1f76508ecded989749724fbea2b8c88dc2ab3ab9c4ff5fdb2eaa96adc",
+            "error_method": "trimmed_fallback",
+            "raw_error": 0.4520774976657329
+          },
+          "reason": "lost",
+          "command": {
+            "op": "finish"
+          },
+          "updates_remaining": 2,
+          "emit_started_ns": 28343644609
+        }
+      }
+    ],
+    "compact_unavailable": "non-normal terminal"
+  },
+  "image": {
+    "status": "image",
+    "sequence": 4,
+    "capture_ns": 28361996910,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/effect-live-03/runtime/003.png",
+    "relative_path": "003.png",
+    "sha256": "8129977f8c1eb5b1f04a6ed34f8c8c0235c9aec473d24a7d3023dd7f3b394382",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  }
+}

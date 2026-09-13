@@ -1,0 +1,323 @@
+{
+  "receipt": {
+    "format": "decision-receipt-v4",
+    "source": {
+      "sha256": "d13d0ea9526b58070594853564b732f0bd379cbe8a2996faa14b3f3ea2dfec00",
+      "bytes": 48727
+    },
+    "reported_state": "terminal",
+    "reported_reason": null,
+    "program_write_may_have_been_attempted": true,
+    "terminals": [
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          13
+        ],
+        "record": {
+          "event": "terminal",
+          "id": "save",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 2,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 43628713619,
+            "valid_until_ns": 73081417532
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "terminal_ns": 43628821768,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 43628824708
+        }
+      }
+    ],
+    "image": {
+      "status": "image",
+      "sequence": 8,
+      "capture_ns": 43562275671,
+      "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/effect-live-03/runtime/006.png",
+      "relative_path": "006.png",
+      "sha256": "74a4be1e046652bd86b2d270fdb6439d262866de2b8348f82d214a86edee3868",
+      "authority": "none",
+      "freshness": "historical referenced capture; no new observation"
+    },
+    "event_index": {
+      "command": {
+        "count": 2,
+        "paths": [
+          [
+            "exchanges",
+            0,
+            "reply",
+            "records",
+            0
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            0
+          ]
+        ]
+      },
+      "clock": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            0,
+            "reply",
+            "records",
+            1
+          ]
+        ]
+      },
+      "accepted": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            1
+          ]
+        ]
+      },
+      "step_started": {
+        "count": 2,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            2
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            7
+          ]
+        ]
+      },
+      "input_admission": {
+        "count": 2,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            3
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ]
+        ]
+      },
+      "observation": {
+        "count": 4,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            8
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            9
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            10
+          ]
+        ]
+      },
+      "step_completed": {
+        "count": 2,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            6
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            12
+          ]
+        ]
+      },
+      "settle_result": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            11
+          ]
+        ]
+      },
+      "terminal": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            13
+          ]
+        ]
+      }
+    },
+    "attention": [
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          5
+        ],
+        "reason": "unknown event fields",
+        "fields": [
+          "input_state_after",
+          "input_state_before",
+          "input_state_scope",
+          "owner_revision_unchanged"
+        ]
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          8
+        ],
+        "reason": "unknown event fields",
+        "fields": [
+          "input_state_after",
+          "input_state_before",
+          "input_state_scope",
+          "owner_revision_unchanged"
+        ]
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          9
+        ],
+        "reason": "unknown event fields",
+        "fields": [
+          "input_state_after",
+          "input_state_before",
+          "input_state_scope",
+          "owner_revision_unchanged"
+        ]
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          10
+        ],
+        "reason": "unknown event fields",
+        "fields": [
+          "input_state_after",
+          "input_state_before",
+          "input_state_scope",
+          "owner_revision_unchanged"
+        ]
+      }
+    ],
+    "detail_review_required": true,
+    "task_success": "unknown; program completion is not independent task scoring",
+    "coverage": "Index of exchange events only; routine payloads and other report fields remain in source. Not full review or schema validation.",
+    "authority": "none; no new input approval, refreshed image, or model receipt",
+    "limits": "Binding checks only recorded consistency, not authenticity or full nested schema semantics. No attention is not approval. Unknown nested fields may need manual review.",
+    "program_binding": {
+      "program_id": "save",
+      "request_id": "program-9d4d934569e9473bbfe163b2cd3d696d",
+      "terminal": {
+        "event": "terminal",
+        "id": "save",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 2,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 43628713619,
+          "valid_until_ns": 73081417532
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "terminal_ns": 43628821768,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 43628824708
+      },
+      "meaning": "internally consistent recorded program binding; not task success, provenance, current lease or input approval"
+    },
+    "tracking_metrics": [],
+    "servo_feedback": [],
+    "compact_unavailable": "non-normal terminal"
+  },
+  "image": {
+    "status": "image",
+    "sequence": 8,
+    "capture_ns": 43562275671,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/effect-live-03/runtime/006.png",
+    "relative_path": "006.png",
+    "sha256": "74a4be1e046652bd86b2d270fdb6439d262866de2b8348f82d214a86edee3868",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  }
+}
