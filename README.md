@@ -30,7 +30,11 @@ fixed-Astra episode changes the initial UI by pre-opening Road Construction and
 passes in89.272s with6 calls/97,696 input tokens. It removes toolbar discovery
 but still uses the same number of model turns and durable calls because targeting
 confirmation expands. This is one changed UI state, not a speedup or new-geometry
-result.
+result. A subsequent preregistered seed-991002 task moves the engine contract
+from tiles678..680 to465..467 and shifts the visible target. Fixed Astra passes
+in89.097s, but uses7 turns,114,177 input tokens,32 frames and24 durable calls:
+more interface work than the prior geometry despite a shorter sampled wall time.
+The geometry-derived scorer is retained; no speed or general-route claim follows.
 The newest observation-boundary study physically withholds one live Chromium
 region: full input reads the exact value 4/4 and redacted input preserves explicit
 policy UNKNOWN 4/4. The region geometry audits exactly, but metadata adds 112

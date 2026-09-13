@@ -27,9 +27,9 @@ negative controls and independent audits.
 ## Closest current live loop
 
 The first process-scoped timing envelope now covers one fresh Calc task. It saves
-and independently verifies480/192 in three Luna-low turns. Initial observation
-detection to semantic completion is23.976 seconds; wrapper-observed model wait
-totals21.334 seconds, while proposal-to-useful-feedback takes1.105 and0.873
+and independently verifies 480/192 in three Luna-low turns. Initial observation
+detection to semantic completion is 23.976 seconds; wrapper-observed model wait
+totals 21.334 seconds, while proposal-to-useful-feedback takes 1.105 and 0.873
 seconds. Missing provider/runtime/OS endpoints remain explicit. The initial
 per-event-fsync recorder proved too costly and was replaced by a buffered candidate;
 An OpenTTD envelope now follows it. A fixed adaptive route uses two Luna-low and
@@ -50,7 +50,13 @@ the timed observation and passes in89.272 seconds with6 calls,97,696 input
 tokens,24 exact frames and20 durable calls. It handles the first changed initial
 UI state, but the same task geometry remains. The removed toolbar-discovery
 boundary is replaced by targeting confirmation, so turns and durable calls do
-not fall and the3.105-second descriptive difference is not a speedup.
+not fall and the3.105-second descriptive difference is not a speedup. The next
+preregistered allocation changes the save, map contract and visible target:
+seed991002 moves target tiles from678..680 to465..467. Fixed Astra independently
+passes in89.097 seconds, but uses7 turns,114,177 input tokens,32 frames and24
+durable calls. Those are+1 turn,+16,448 tokens,+4 frames and+4 calls versus the
+prior closed-toolbar geometry. A shorter sampled model wait hides the added
+interface work in total time, so the wall-time difference is not a speedup.
 
 The newest Chromium episode is the clearest small end-to-end sample. A fresh
 screenshot and a 621-byte strict compact UNKNOWN record drove one real model
@@ -84,7 +90,7 @@ the rows must not be averaged into one difficulty score.
 | Desktop apps | Small Calc, Chromium, Inkscape and XTerm tasks; dialogs, focus loss, interruption, saving and independent effect checks | Unknown applications, richer window/scroll/drag workflows and repeated held-out tasks |
 | DOOM | Shared held-key/cancel/expiry readiness and later directional-input repair/assistant gameplay evidence | Stable continuous useful-feedback loop, reaction distribution and public real-time demo |
 | Mindustry | Actual assistant construction of eight directed conveyors on a known route; 112-tile guard and 49-copper post-control delivery; shared caller scripted replay and cancellation | Fresh route planning, multi-object control, event-driven recovery and much shorter decision gaps |
-| OpenTTD | Fixed Astra passes the canonical task3/3 from a closed toolbar plus1/1 with Road Construction pre-opened; adaptive1/2 and fixed Luna0/2; false visual completion is caught and persisted; complete TimingEnvelopes and contact sheets | New task geometry/objectives, more initial states, fuller order balancing, matched human control, scroll/window complexity and long-horizon planning |
+| OpenTTD | Fixed Astra passes3/3 canonical closed-toolbar,1/1 pre-opened and1/1 seed991002 shifted geometry; adaptive1/2 and fixed Luna0/2; dynamic geometry score, typed failures, TimingEnvelopes and contact sheets | Multiple held-out geometries, changed objectives, fuller order balancing, matched human control, scroll/window complexity and long-horizon planning |
 | Luanti | Current-engine launch, deterministic tiny pad/pose and read-only node/pose feasibility | Normal navigation, camera-mode contract, inventory, interaction and successful construction |
 
 DOOM remains valuable for continuous motor pressure. Mindustry and OpenTTD are
@@ -176,9 +182,9 @@ decisions in three fresh states. Actual redacted-observation geometry,
 readability, adjacent action, hidden-target refusal and one post-model policy
 transition, authorized whole replacement, and declared presentation/plan bypass
 controls now pass scoped gates. The first OpenTTD initial-state variation passes
-without reducing model boundaries. The next work returns to current-runtime
-Mindustry/OpenTTD tasks with new geometry or objective structure and the same
-recovery semantics. Human baselines and
+without reducing model boundaries; the first new geometry passes while requiring
+more boundaries and tokens. The next work should change objective structure or
+allocate multiple geometries under the same recovery semantics. Human baselines and
 model-boundary timestamps must then be collected on identical task allocations.
 Only after those pass should the runtime/API be frozen and packaged.
 

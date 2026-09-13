@@ -1,5 +1,13 @@
 # Asynchronous live control: development evidence
 
+Latest geometry result: [seed-991002 OpenTTD transfer](OPENTTD_GEOMETRY_V5.md).
+The dynamic scorer derives target/forbidden/guard tiles from the baseline and
+the new fixture moves the visible target. A preregistered negative control and
+fixed-Astra episode both pass their declared gates. The positive run takes
+89.097s with7 calls/114,177 input tokens/32 frames/24 durable calls. More
+boundaries and tokens than the prior geometry are masked by shorter sampled
+model waits, so no speedup or general-route claim is made.
+
 Latest changed-state result: [pre-opened OpenTTD road toolbar](OPENTTD_INITIAL_STATE_V4.md).
 One preregistered fixed-Astra episode retains the canonical task and independent
 guard but changes the initial UI. It passes in89.272s with6 calls/97,696 input

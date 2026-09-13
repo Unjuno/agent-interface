@@ -1,3 +1,18 @@
+Latest new-geometry evidence: seed991002 produces a different byte-pinned save,
+map and screen position with target tiles465..467, forbidden529..531 and a
+42-tile guard. The geometry-derived scorer preserves old positive/negative
+outcomes and rejects changed geometry, missing/unknown guard records,
+contradictory overlap and surrounding mutation. Two fresh restores, an unsaved
+rejection, a zero-model negative live control and the fixed-Astra episode pass
+Windows/WSL audits. Astra independently succeeds in89.097s with75.421s model
+wait,12.032s proposal-to-feedback,7 calls,114,177 input tokens,32 frames and24
+durable calls. Versus the prior geometry, wall time is descriptively3.280s
+shorter but calls/tokens/frames/durable calls rise by1/16,448/4/4. Shorter model
+wait masked more interface work; no speedup or general route is promoted.
+Retain the dynamic scorer; next change objective structure or allocate multiple
+geometries, then add a matched human control. See
+research/live_control/OPENTTD_GEOMETRY_V5.md. Full goal stays open.
+
 Latest changed-initial-state evidence: a preregistered fixed-Astra OpenTTD
 episode retains the canonical save, guarded A-C task, prompt and independent
 engine score but opens Road Construction before the timed initial observation.

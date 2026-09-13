@@ -65,6 +65,15 @@ The prior closed-toolbar episode used6 calls and20 durable calls as well.
 Toolbar discovery disappeared, but targeting confirmation occupied the freed
 boundary. The descriptive3.105s difference is not a causal speedup. See
 [changed initial UI](research/live_control/OPENTTD_INITIAL_STATE_V4.md).
+A new seed-991002 fixture then changes the byte-pinned save, map contract and
+visible target position. A geometry-derived scorer preserves the prior outcomes,
+rejects six malformed/change controls and evaluates target465..467 with a
+42-tile guard. The preregistered zero-input negative control passes, followed by
+a fixed-Astra hard success in89.097s. It uses7 calls,114,177 input tokens,32
+frames and24 durable calls: one more planner boundary and four more calls than
+the prior geometry. Shorter model waits mask this extra interface work in total
+wall time, so no speedup is claimed. See
+[new geometry transfer](research/live_control/OPENTTD_GEOMETRY_V5.md).
 
 ### Actual pixel redaction with explicit unknown semantics
 
