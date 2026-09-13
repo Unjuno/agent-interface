@@ -1,3 +1,7 @@
+## Local presentation output boundary measured
+
+presentation_emission_v1 retains exact intended bytes and local serialization/write/flush timestamps, propagating failures with receipts. Linux controls cover short writes, broken pipe, flush failure, real subprocess byte equality and attempt overwrite rejection. See research/live_control/PRESENTATION_EMISSION.md and results/presentation-emission-01. Model receipt/tokens/cost remain explicitly unavailable; this does not measure model-facing latency or token savings. Next integrate into a new client on a changed task with negative evidence. Existing defaults unchanged.
+
 ## Exact duplicate-result sharing measured; not selected as default
 
 shared_result_v1 preserves full JSON values via self-contained definitions and explicit reference paths. Nine archived live results round-trip exactly; six value controls and five invalid-input/encoding checks pass. Seven completed results shrink modestly, two pending results grow; aggregate reduction ~5%. See research/live_control/SHARED_RESULT.md. No token/usability benefit measured, so defer adoption and avoid tuning against the same corpus. Next prioritize actual model-facing measurement and simpler result composition retaining negative evidence. No runtime/default changes.
