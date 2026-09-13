@@ -1,3 +1,11 @@
+Latest implementation/self-use: [cooperative interruption wake](../research/live_control/INTERRUPT_WAKE.md).
+lease_cause_v2/executor_v5 wake waits and check step/final completion. Nine controlled
+cases pass. Actual single-hold Inkscape interruption: needs_decision, zero completed
+steps, release-to-terminal 22.968832 ms, no new image. Explicit observation then
+reviewed recovery saves correct SVG; 47 events/9 frames/eight exchanges audited.
+Whole episode 87.9347 s is not a speedup claim. Receipt v3 separately flags causes
+on completed terminals. Next actual pointer waits and finite matched old/new tests;
+no automatic image authority, model-token claim, or Research Freeze.
 Latest self-use: [live application cause delivery](../research/live_control/CAUSE_LIVE.md).
 Candidate owner10/executor4 interruption survives actual Inkscape, socket, and compact
 receipt; explicit reviewed recovery saves the correct SVG. Audit verifies 52 events,
