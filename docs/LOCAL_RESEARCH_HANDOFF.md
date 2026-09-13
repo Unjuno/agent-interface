@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — occlusion exposes false visual completion (2026-09-13)
+
+[Occlusion report](../research/live_control/SERVO_OCCLUSION.md) adds private X11
+same-surface overlays during Inkscape drag feedback. Session20 stops on partial,
+hidden and replacement cases but also fails the large-object positive control.
+Candidate session21 uses raw matching before trimmed fallback: normal 24 px move
+passes, but replacement at the target yields local_goal_reached with zero actual
+saved movement. 57 frames/source/release/saved-state checks verified. Both candidates
+remain unqualified. Next effect-verification/recovery and temporal/action consistency;
+do not mistake stricter stopping or pixel resemblance for successful application work.
+
 ## Latest follow-up — acquisition and tracking error policies separated (2026-09-13)
 
 [Trimmed tracking study](../research/live_control/SERVO_TRIM.md) diagnoses small-object
