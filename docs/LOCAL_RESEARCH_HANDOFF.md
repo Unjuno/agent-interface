@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — one less clock call does not yet improve total self-use time
+
+[Receipt clock self-use](../research/live_control/RECEIPT_CLOCK_SELF_USE.md) uses
+existing terminal time for a new bounded confirmation deadline with unchanged
+runtime checks. Actual Calc save succeeds, twelve exact frames audited; clocks
+fall 2→1 and caller operations 5→4. Modal gap falls 24.658→20.654 s, but initial
+delay grows and total effect-read time increases 57.082→61.548 s. A guessed image
+filename failed then was corrected from the receipt; failure time is retained.
+No speedup claim. Next measure/streamline observation handling and outer tool gaps.
+
 ## Latest follow-up — actual request-scoped Calc effect and final result reads
 
 [Request outcome self-use](../research/live_control/REQUEST_OUTCOME_SELF_USE.md)
