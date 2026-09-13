@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — checkpoint continuation rejects inconsistent evidence
+
+[Checkpoint continuation](../research/live_control/CHECKPOINT_CONTINUATION.md)
+adds explicit continuation_allowed in policy v2 and uses it in prepared caller v2.
+Valid UNKNOWN/busy can return for a new decision; wrong identity/contract/cursor,
+gap and malformed evidence require reconciliation without a continuation file.
+Thirteen policy controls and ten mocked wrapper cases pass. No new GUI speed
+claim or default promotion; v1 actual-use records stay frozen.
+
 ## Latest follow-up — actual prepared checkpoint caller avoids a finish-only turn
 
 [Prepared checkpoint self-use](../research/live_control/PREPARED_CHECKPOINT_SELF_USE.md)

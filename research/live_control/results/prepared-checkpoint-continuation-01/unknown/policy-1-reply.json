@@ -1,0 +1,85 @@
+{
+  "status": "boundary",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "contract": {
+          "expected": {
+            "A1": 612,
+            "A2": 129
+          },
+          "kind": "saved_cells"
+        },
+        "op": "effect_checkpoint",
+        "transport_request_id": "checkpoint:2317483f512b4b78a7cc2071278ffa8a"
+      },
+      "received_ns": 69369429940,
+      "transport_request_id": "checkpoint:2317483f512b4b78a7cc2071278ffa8a",
+      "runtime_request_sequence": 3,
+      "declared_action_id": null,
+      "command_op": "effect_checkpoint",
+      "correlation_scope": "current runtime input line; action ID is caller-declared",
+      "clock_domain_id": "76a3e76201dd2aa0d8d56ba685ad12294abe290bfd1fb0a0434c6ffe967d1976",
+      "emit_started_ns": 69369441379,
+      "delivery_id": "delivery:17"
+    },
+    {
+      "event": "effect_checkpoint",
+      "evidence": {
+        "status": "UNKNOWN",
+        "authority": "none",
+        "attribution": "not_established",
+        "task_success": null,
+        "observation_closed": false,
+        "contract": {
+          "expected": {
+            "A1": 612,
+            "A2": 129
+          },
+          "kind": "saved_cells"
+        },
+        "started_ns": 69388894265,
+        "scope": "saved first worksheet cells at one sample",
+        "expected": {
+          "A1": 612,
+          "A2": 129
+        },
+        "sampled_ns": 69407379159,
+        "artifact_sha256": "2cd397ac71efe65e42e12f0e6855aba42a255d490395826bd28125ec3a317f9f",
+        "actual": {
+          "A1": null,
+          "A2": null
+        },
+        "reason": "sample_mismatch_window_open",
+        "finished_ns": 69413760899,
+        "archive_path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/prepared-checkpoint-self-use-01/checkpoint-artifacts/2cd397ac71efe65e42e12f0e6855aba42a255d490395826bd28125ec3a317f9f.bin",
+        "source_sampled_ns": 69376644524,
+        "archive_source_path": "/tmp/realapp-x-mtfxatjk/sheet.xlsx",
+        "archive_started_ns": 69376383883,
+        "archive_bytes": 4770,
+        "archive_scope": "parsed archived bytes; original read not atomic; no durability or actor attribution"
+      },
+      "task_success": null,
+      "authority": "none",
+      "scope": "non-final artifact query; input admission unchanged",
+      "transport_request_id": "checkpoint:85f5c0e2e8844306ab70fa9a3e4da02c",
+      "runtime_request_sequence": 3,
+      "declared_action_id": null,
+      "command_op": "effect_checkpoint",
+      "correlation_scope": "current runtime input line; action ID is caller-declared",
+      "clock_domain_id": "76a3e76201dd2aa0d8d56ba685ad12294abe290bfd1fb0a0434c6ffe967d1976",
+      "emit_started_ns": 69420845564,
+      "delivery_id": "delivery:18"
+    }
+  ],
+  "cursor": 18,
+  "returned_ns": 69428230068,
+  "authority": "none",
+  "acknowledgement": "not implied",
+  "command_receipt": {
+    "request_id": "checkpoint:2317483f512b4b78a7cc2071278ffa8a",
+    "replayed": false,
+    "state": "stdin_flushed"
+  }
+}

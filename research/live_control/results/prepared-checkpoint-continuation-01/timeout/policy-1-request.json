@@ -1,0 +1,19 @@
+{
+  "after": 16,
+  "events": [
+    "effect_checkpoint"
+  ],
+  "timeout": 5,
+  "command": {
+    "op": "effect_checkpoint",
+    "contract": {
+      "expected": {
+        "A1": 612,
+        "A2": 129
+      },
+      "kind": "saved_cells"
+    }
+  },
+  "request_id": "checkpoint:acc456542c0c474f84b5d30d439ba88e",
+  "read_request_id": "checkpoint:acc456542c0c474f84b5d30d439ba88e"
+}

@@ -4,6 +4,11 @@ These versioned candidates are research tools used in private Linux/X11 fixtures
 They are not a released desktop product or a promotion of the frozen architecture.
 Keep the older sources/results: versions name measured implementations.
 
+The [v2 prepared checkpoint caller](CHECKPOINT_CONTINUATION.md) distinguishes valid
+UNKNOWN/busy evidence from inconsistent replies before writing continuation data.
+Its policy and mocked wrapper controls pass; actual GUI self-use evidence below
+still belongs to v1. Both remain optional.
+
 [prepared_checkpoint.py](PREPARED_CHECKPOINT_SELF_USE.md) now combines an explicit
 program, saved-contract checkpoint and opt-in conditional finish. Actual Calc
 use returns the modal for a decision, then independently finishes in the second
