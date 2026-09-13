@@ -45,6 +45,12 @@ caseの改善であり、未知課題での性能や速度改善の証拠には�
 
 ## 現在のフェーズと直近の目標
 
+caller game接続追記: 同じv1 caller/adapterでOpenTTD・Mindustryの期限切れ要求拒否、
+実行中Shift hold取消・解放、その後の既知課題のscripted replay採点を通過した。
+初回OpenTTD起動引数不足は入力なしの失敗として保持。22画像と134記録を監査済み。
+次は実自己操作での画像同時提示、live古い観測/途中期限/混雑条件を確認してから対比較へ。
+[接続試験](../research/live_control/POINTER_DOMAINS.md)。
+
 caller統合追記: session_v9を変更せずsocket11で包む候補と、時計問い合わせ＋明示操作を
 1回のcaller起動で扱う候補を実装。Inkscape実操作の保存結果・9観測・39記録を監査した。
 10応答制御例も確認。次はOpenTTD/Mindustry接続とlive取消・期限・古い観測の検証を行い、

@@ -1,11 +1,15 @@
 # Fixed-v9 pointer caller: first integration readiness
 
+Follow-up: [OpenTTD/Mindustry integration](POINTER_DOMAINS.md) now runs both game
+adapters with live expired-request/cancellation checks and scripted task scores.
+The Inkscape-only scope below describes the first cohort; no paired gain follows.
+
 `pointer_socket_entry_v1.py` wraps existing domain entry points with the unchanged
 socket11/cursor5/once-only writer. It selects Inkscape `interactive_v11`, OpenTTD
 `interactive_v2`, or Mindustry `mindustry_build_interactive_v1`; it does not replace
-their session_v9 backend or task oracles. **Only Inkscape has run through this
-adapter so far.** The other two paths, cancellation and expiry integration remain
-unqualified; this is not the completed three-domain comparison.
+their session_v9 backend or task oracles. **The first cohort ran only Inkscape.**
+The linked follow-up adds limited game integration/stress evidence; this is not
+the completed three-domain performance comparison.
 
 `pointer_exchange_v1.py` takes an explicitly received batch and explicit steps.
 Within one caller invocation it persists a clock request, checks the returned

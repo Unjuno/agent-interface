@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — game adapters plus live expiry/cancel readiness
+
+[Pointer domains](../research/live_control/POINTER_DOMAINS.md): unchanged caller and
+adapter run scripted OpenTTD/Mindustry tasks after already-expired rejection and
+active Shift-hold cancellation. Both scores and cleanup pass; 22 exact frames and
+134 full-prefix records audit. OpenTTD initial missing --controller failure stays
+in cohort01; probe v2 fixes only launch arguments for cohort02. No actual-use pair
+or speed claim. Combined-image actual use and remaining live stress gates are next.
+
 ## Latest follow-up — fixed-v9 caller integration, Inkscape first
 
 [Pointer caller](../research/live_control/POINTER_CALLER.md) wraps unchanged v9

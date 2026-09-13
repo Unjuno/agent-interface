@@ -10,6 +10,8 @@ research/evolution/pointer_timeline_v1.py -text
 research/evolution/stress_probe.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 research/evolution/results/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 research/doom/results/**/doom.ini -whitespace
+# Preserve the exact measured game configuration, including its empty value space.
+research/live_control/results/pointer-domains-02/openttd/runtime/openttd.cfg -whitespace
 research/real_apps_v1/real_app_suite_v1.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 # Captured application diagnostics are immutable evidence, including spaces.
 research/observation_gating/results/**/application.txt -whitespace

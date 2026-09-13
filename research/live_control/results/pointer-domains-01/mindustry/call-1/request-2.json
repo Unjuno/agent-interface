@@ -1,0 +1,31 @@
+{
+  "after": 17,
+  "events": [
+    "terminal"
+  ],
+  "timeout": 15,
+  "action_id": "select-basic-conveyor",
+  "request_id": "program-7a3f3590294b41de8460a1acbbcbf61f",
+  "command": {
+    "op": "submit",
+    "id": "select-basic-conveyor",
+    "steps": [
+      {
+        "op": "pointer_click",
+        "x": 1008,
+        "y": 578,
+        "duration_ms": 80
+      },
+      {
+        "op": "pointer_move",
+        "x": 400,
+        "y": 426
+      },
+      {
+        "op": "observe"
+      }
+    ],
+    "expected_sequence": 2,
+    "valid_until_ns": 119543983230
+  }
+}
