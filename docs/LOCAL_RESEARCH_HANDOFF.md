@@ -1,5 +1,17 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — live check/input race falsifies target binding
+
+[Modal check/input race](../research/live_control/MODAL_CHECK_INPUT_RACE.md)
+retains a control and a post-check internal-focus mutation against frozen guard
+v2. Both pass the guard and terminate completed with verified release; only the
+control saves XLSX values. The negative opens ODF Save as while X11 binding stays
+unchanged. Four exact public frames, diagnostic samples and independent workbook
+contents audited. Fault-injection timings are not natural race rates or assistant
+speed. Issues #34/#45 support separating verified effects from target revalidation;
+next compare target-addressed activation with movement/occlusion negatives.
+No guard promotion or freeze credit.
+
 ## Latest follow-up — actual X11 pre-input modal guard
 
 [Live modal guard](../research/live_control/LIVE_MODAL_GUARD.md) connects a private
