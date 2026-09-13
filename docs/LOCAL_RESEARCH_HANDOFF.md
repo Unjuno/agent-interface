@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — clock metadata has measurable byte overhead
+
+[Clock metadata cost](../research/live_control/CLOCK_METADATA_COST.md) measures
+the same 52 raw events: repeated clock IDs add 4524 bytes (12.880%). Paired local
+JSON CPU changes are sub-microsecond/record, with no live latency inference.
+An offline shared-domain batch codec round-trips all records and reduces the
+equivalent JSON array by 4396 bytes (11.073%); four negative controls pass.
+No live transport or token savings claim. Next measure delivered-batch costs
+and preservation of cursor/gap semantics before any integration.
+
 ## Latest follow-up — clock domain identity prevents unsupported interval claims
 
 [Timing clock](../research/live_control/TIMING_CLOCK.md) records Linux boot/time

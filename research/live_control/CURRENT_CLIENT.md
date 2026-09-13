@@ -48,7 +48,11 @@ an old request. No caller may turn metadata into fresh authority.
 Optional timing instrumentation is a separate candidate: interactive_v28,
 event_socket_v12 and prepared_exchange_v5 record explicit Linux clock identity.
 [Clock identity evidence](TIMING_CLOCK.md) covers one scripted Calc integration;
-model timestamps and instrumentation overhead remain unmeasured.
+model timestamps and live instrumentation overhead remain unmeasured.
+
+[Local metadata cost audit](CLOCK_METADATA_COST.md) now measures raw JSON byte
+and serialization overhead only. A lossless shared-domain batch codec is offline;
+live critical-path overhead and actual model tokens are still unmeasured.
 
 | Path | Evidence |
 |---|---|
