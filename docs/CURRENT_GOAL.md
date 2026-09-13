@@ -1,3 +1,7 @@
+## Bounded followup read tested against delayed capture and silent socket
+
+bounded_followup_v2 performs one command-free terminal read (400ms server wait/650ms socket deadline), keeping early evidence and cursor on I/O failure. Preserved v1 failure: missing synthetic image reference crashed post-terminal report construction; v2 returns image unavailable separately. Actual socket probes return pending at ~401ms and prompt terminal at ~291ms; silent peer exits read at ~668ms including overhead. No new Calc run/default promotion/hard whole-function bound. See research/live_control/BOUNDED_FOLLOWUP.md. Next combine with early exchange in one outer client operation and self-use on Calc; receipt compatibility remains open.
+
 ## Actual early-return Calc self-use completed; keep optional
 
 Image-facing early_exchange/resume candidates used on Calc seed 225. Save/confirm early replies arrived 281/339ms before runtime terminal; independent saved values [816,345] pass. Separate manual followups added ~10s each after terminal availability; 11 socket exchanges versus prior passive terminal-wait run's 9. Audit verifies 59 events/13 frames, lifecycle, command/history/owner evidence and workbook. Receipt v4 does not support new state names and keeps binding null; warnings retained. See research/live_control/CALC_EARLY_LIVE.md. Next: bounded client wait to combine prompt terminal/images while returning pending for slow capture; fix report compatibility before promotion. No causal speed/token claim.
