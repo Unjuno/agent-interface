@@ -1,3 +1,11 @@
+Latest compact self-use: [typed successful-servo card](../research/live_control/SERVO_REVIEW_CARD.md).
+Selected consistency checks permit 1385-byte historical/1388-byte fresh servo card;
+16 consistent-copy negative controls and actual interruption fall back to full receipt.
+Fresh model review + save reaches x=66.94915; 39 events/six exchanges/eight frames
+verified. Servo details needed no separate fetch, but save remains detailed; whole
+capture→score 67.793 s, no speed/token claim. Not complete schema validation. Next
+existing failure/occlusion/distractor corpus and clearer unsupported-program fallback;
+no default runtime changes or Research Freeze.
 Latest presentation candidate: [tracking metric classification](../research/live_control/RECEIPT_TRACKING_METRICS.md).
 Receipt v4 distinguishes finite matched servo tracking.error from exceptions and
 includes full feedback records. Saved success attention 15→9; ten negative controls
