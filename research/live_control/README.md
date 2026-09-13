@@ -235,3 +235,9 @@ Ctrl+1 sign-transparency probes then preserve task/save state while changing
 custom sign presentation on the L fixture and held-out seed991002 geometry.
 Because normal simulation progress is present between frames, treat the paired
 view as feasibility only. See [OPENTTD_VIEW_PAIR_V1.md](OPENTTD_VIEW_PAIR_V1.md).
+
+The paused held-out probe isolates that view change to1,151 pixels after an
+exact zero-change stability frame. A fixed Astra A/B/B/A endpoint diagnostic
+then passes2/2 for opaque signs and2/2 for transparent signs, with30,572 input
+tokens per condition. The sign transform has no detected grounding/token benefit
+and is not promoted. Next target live tool/effect-state evidence.

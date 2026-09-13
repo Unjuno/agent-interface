@@ -70,6 +70,11 @@ held-out seed991002 straight geometry without changing scored task/save state.
 Normal game progress contaminates full-frame difference counts, so this remains
 an unpromoted paired-observation candidate pending a paused matched comparison.
 
+The paused comparison now isolates1,151 changed pixels after a zero-change
+stability frame. In a fixed Astra A/B/B/A targeting diagnostic, opaque and
+transparent sign views both pass2/2 and each use30,572 input tokens. No
+grounding or token benefit is detected, so the sign transform is not promoted.
+
 The newest observation-boundary study physically withholds one live Chromium
 region: full input reads the exact value 4/4 and redacted input preserves explicit
 policy UNKNOWN 4/4. The region geometry audits exactly, but metadata adds 112

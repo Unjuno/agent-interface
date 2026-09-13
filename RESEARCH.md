@@ -480,3 +480,11 @@ independent road/owner state and save bytes while changing custom sign
 presentation. Full-frame deltas include normal simulation progress, so the
 method is not promoted. Next freeze a paused or temporally matched pair before
 testing model targeting and independent task correctness.
+
+The paused held-out probe removes that contamination: its consecutive stability
+frame changes zero pixels and Ctrl+1 changes1,151/1,024,000 while preserving
+task/save state. A preregistered fixed Astra A/B/B/A targeting diagnostic then
+passes2/2 in both opaque and transparent conditions, with30,572 input tokens per
+condition. The transform yields no measured coordinate or token benefit and is
+not promoted. Direct endpoint grounding is already correct in this isolated
+question; next investigate live tool/effect-state evidence.

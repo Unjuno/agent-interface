@@ -2322,6 +2322,26 @@ text is rejected as the next recovery direction. DOOM remains one continuous-
 control stress domain in the Domain Coverage Matrix, and freeze status is
 unchanged.
 
+## Latest follow-up — paused sign isolation and negative A/B (2026-09-14)
+
+The held-out seed991002 view probe now pauses OpenTTD through the official F1
+hotkey. A consecutive observation is byte-identical/zero changed pixels. Ctrl+1
+then changes1,151/1,024,000 pixels while independent road/owner state and save
+bytes remain unchanged. This replaces the contaminated unpaused effect size with
+a matched presentation delta.
+
+Fixed Astra-medium then receives opaque/transparent/transparent/opaque images
+under one prompt and hidden endpoint gate. Both conditions pass2/2. Each reports
+30,572 input tokens. Calls1-2 return the same `[737,255]` to `[673,287]` pair;
+calls3-4 return the same `[737,256]` to `[673,288]` pair. Transparent total
+runner time58.247s versus41.851s opaque has two samples and unequal cached input,
+so it is not a speed result.
+
+No coordinate-grounding or token benefit is detected. Reject sign transparency
+as the next interface promotion and do not repeat this fixed task. Directly
+queried endpoints are already correct; investigate live construction-tool state,
+drag effect evidence and post-action verification. Full goal/freeze unchanged.
+
 ## Latest follow-up — scored limit stop and sign-view transfer (2026-09-14)
 
 `timing_envelope_openttd_l_driver_v5.py` fixes the deterministic v6 limit race

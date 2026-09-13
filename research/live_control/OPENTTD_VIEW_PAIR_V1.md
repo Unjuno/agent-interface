@@ -50,6 +50,30 @@ presentation delta, and compare actual model targeting plus independent task
 correctness. A changed screenshot alone is not evidence of better grounding,
 lower token use or faster operation.
 
+## Paused isolation and fixed targeting comparison
+
+A follow-up pauses the held-out seed991002 fixture with the official F1 hotkey.
+The next observation reuses the exact same image and changes zero pixels. Ctrl+1
+then changes1,151/1,024,000 pixels (0.1124%) while all independently scored
+state and save bytes remain unchanged. This is the isolated presentation delta
+that the unpaused probes could not measure.
+
+A preregistered fixed-image A/B/B/A diagnostic then asks fixed Astra-medium for
+the A and C underlying ground-tile centers. The hidden gate comes from a prior
+independently successful live drag and requires x error <=12 and y error <=6.
+Opaque and transparent sign backgrounds both pass2/2. Each condition reports
+30,572 input tokens. The answers are paired-identical: `[737,255]`/`[673,287]`
+for calls1-2 and `[737,256]`/`[673,288]` for calls3-4. Transparent-sign total
+runner time is58.247s versus41.851s opaque, with only two calls and unequal
+cache usage; this is not a latency effect.
+
+The isolated coordinate-grounding test detects no accuracy or input-token
+benefit from sign transparency. Do not promote or repeat this transform on the
+same task. The model can locate the underlying centers when asked directly, so
+the L-task failure is more likely in maintaining tool/effect state across live
+actions and judging whether the drag took effect. The next candidate should
+improve action-to-effect evidence rather than add another label-view toggle.
+
 Official sources:
 
 - https://wiki.openttd.org/en/Manual/Transparency%20options
