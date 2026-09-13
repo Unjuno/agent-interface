@@ -1,5 +1,12 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest actual use: [live pending-clock recovery](../research/live_control/PENDING_CLOCK_LIVE.md)
+returned history and image in one response; explicit reviewed move/save passed.
+Eight frames/40 unique events verified; one read-only recovery exchange. Total
+capture-to-evaluation 75.753 s, local reader/persistence 20.182 ms; these are not
+paired speed/model-token gains. Next fix comparison conditions before adding
+more local mechanisms, and preserve failure/recovery and domain coverage gates.
+
 Latest implementation: [pending-clock reader](../research/live_control/PENDING_CLOCK.md)
 adds bounded read-only progress to an already-issued clock. Recorded recovery
 reconstructs the intervening history in one read; nine injected controls remain

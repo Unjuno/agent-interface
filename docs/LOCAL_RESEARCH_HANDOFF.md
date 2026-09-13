@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — pending-clock helper used before successful task
+
+[Live reader use](../research/live_control/PENDING_CLOCK_LIVE.md): actual assistant
+Inkscape episode with scripted deliberate stale setup; reader recovered history
+and image in one response, then explicit reviewed move/save passed. Eight frames,
+40 records, source hashes, reader batch and saved SVG audited. One extra read,
+20.182 ms local reader/persistence, 75.753 s capture-to-evaluation. No paired speed
+or token claim; raw reader/history display still duplicates some records. Next
+predeclare matched interaction conditions and compare helper/no-helper before
+adding more mechanisms; gap/timeout/interleaving live qualification remains open.
+
 ## Latest follow-up — bounded read-only pending clock
 
 [Pending clock](../research/live_control/PENDING_CLOCK.md) adds an explicit helper

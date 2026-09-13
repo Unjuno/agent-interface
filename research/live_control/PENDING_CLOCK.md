@@ -1,5 +1,9 @@
 # Read-only progress to an already-issued clock
 
+Follow-up: [actual live reader use](PENDING_CLOCK_LIVE.md) combines retained history
+and an original image before explicit successful move/save. One read was needed;
+this is a single integration result, not paired performance qualification.
+
 `read_pending_clock_v1.py` addresses the historical clock boundary observed during
 [actual Inkscape recovery](POINTER_VIEW_RECOVERY.md). It accepts only a report with
 one existing clock attempt and `program_sent: false`. It never issues a clock or
