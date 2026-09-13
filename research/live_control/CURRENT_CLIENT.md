@@ -45,6 +45,11 @@ an old request. No caller may turn metadata into fresh authority.
 
 ## Evidence and unresolved behavior
 
+Optional timing instrumentation is a separate candidate: interactive_v28,
+event_socket_v12 and prepared_exchange_v5 record explicit Linux clock identity.
+[Clock identity evidence](TIMING_CLOCK.md) covers one scripted Calc integration;
+model timestamps and instrumentation overhead remain unmeasured.
+
 | Path | Evidence |
 |---|---|
 | Ready Calc early + final, same caller | [actual assistant use](DRAIN_FINAL_SELF_USE.md), 13 exact frames |

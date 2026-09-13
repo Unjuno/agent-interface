@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — clock domain identity prevents unsupported interval claims
+
+[Timing clock](../research/live_control/TIMING_CLOCK.md) records Linux boot/time
+namespace/offset/implementation identity in runtime v28 and caller v5 (socket v12).
+Two processes and a full scripted Calc run match domains; four invalid/missing
+controls return no duration. Twelve exact frames and saved result still pass.
+Issue #46 remains partial: model endpoints, overhead and matched OpenTTD coverage
+are missing. No retrospective clock labels or synthesized model times are added.
+
 ## Latest follow-up — browser final result skips the optional drain
 
 [Browser drain self-use](../research/live_control/DRAIN_BROWSER_SELF_USE.md)
