@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — bounded outcome CLI used by the assistant
+
+[Outcome client self-use](../research/live_control/OUTCOME_CLIENT_SELF_USE.md)
+adds a transcript-preserving CLI and uses it after actual image-based xterm
+input. Saved token and independent evaluation match; three exact frames,
+release and eleven-record prefix audited. Client wait 81.423 ms, but total
+first-capture-to-client-return 36.125 s. No fallback query was needed and no
+speedup is established. Live pending-to-available remains the next missing test.
+
 ## Latest follow-up — caller performs a bounded, identity-checked status fallback
 
 [Outcome fallback](../research/live_control/OUTCOME_FALLBACK.md) adds candidate v2:
