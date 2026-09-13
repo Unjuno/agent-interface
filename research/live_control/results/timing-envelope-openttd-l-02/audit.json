@@ -1,0 +1,292 @@
+{
+  "audit_passed": true,
+  "preregistered": true,
+  "fixture": {
+    "seed": 991003,
+    "save_sha256": "c91ea76b4dc8c280f98de2e3a4c9b34d6033c833a34fc401bd0c076a15b4bc5b",
+    "target": [
+      977,
+      978,
+      979,
+      1043,
+      1107
+    ],
+    "forbidden": [
+      1041,
+      1042,
+      1105,
+      1106
+    ]
+  },
+  "negative_control": {
+    "passed": true,
+    "model_calls": 0,
+    "durable_calls": 0,
+    "independent_success": false,
+    "failure_mode": "visual_verify_false_positive"
+  },
+  "fixed_astra": {
+    "arm": "fixed-astra",
+    "audit_passed": true,
+    "hard_success": false,
+    "failure_mode": "visual_verify_false_positive",
+    "model_turns": [
+      {
+        "turn": 1,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 15768,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 140,
+          "reasoning_output_tokens": 77
+        },
+        "runner_wall_ms": 12286.9695
+      },
+      {
+        "turn": 2,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 16247,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 143,
+          "reasoning_output_tokens": 33
+        },
+        "runner_wall_ms": 11358.5959
+      },
+      {
+        "turn": 3,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 16747,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 61,
+          "reasoning_output_tokens": 0
+        },
+        "runner_wall_ms": 10676.3524
+      },
+      {
+        "turn": 4,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 16099,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 146,
+          "reasoning_output_tokens": 46
+        },
+        "runner_wall_ms": 14638.5763
+      },
+      {
+        "turn": 5,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 16595,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 416,
+          "reasoning_output_tokens": 332
+        },
+        "runner_wall_ms": 21638.4607
+      },
+      {
+        "turn": 6,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 16245,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 290,
+          "reasoning_output_tokens": 197
+        },
+        "runner_wall_ms": 18852.9571
+      },
+      {
+        "turn": 7,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 16252,
+          "cached_input_tokens": 13056,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 166,
+          "reasoning_output_tokens": 53
+        },
+        "runner_wall_ms": 14271.7554
+      },
+      {
+        "turn": 8,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 16285,
+          "cached_input_tokens": 13056,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 153,
+          "reasoning_output_tokens": 66
+        },
+        "runner_wall_ms": 13904.6264
+      },
+      {
+        "turn": 9,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "verify",
+        "usage": {
+          "input_tokens": 16498,
+          "cached_input_tokens": 13056,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 137,
+          "reasoning_output_tokens": 81
+        },
+        "runner_wall_ms": 11761.2514
+      }
+    ],
+    "model_wait_total_ms": 130847.2538,
+    "proposal_to_useful_feedback_ms": [
+      1712.4276,
+      4131.0713,
+      969.4206,
+      2909.4767,
+      1328.1476,
+      1581.2003,
+      1788.5705,
+      2344.6291
+    ],
+    "proposal_to_useful_feedback_total_ms": 16764.9437,
+    "initial_observation_to_semantic_completion_ms": null,
+    "initial_to_completion_uncertainty_ms": null,
+    "input_tokens_total": 146736,
+    "cached_input_tokens_total": 39168,
+    "output_tokens_total": 1652,
+    "reasoning_output_tokens_total": 885,
+    "runtime_exact_frames": 42,
+    "contact_sheets": 4,
+    "durable_calls": 32,
+    "append_records": 65,
+    "save_sha256": "c91ea76b4dc8c280f98de2e3a4c9b34d6033c833a34fc401bd0c076a15b4bc5b",
+    "task": "Build one connected L-shaped road from A through B to C, using only the five path tiles: three tiles across from A to B and three tiles down from B to C, sharing B. Keep the four other tiles in that 3x3 square, marked by X, free of roads and preserve surrounding roads/ownership. Use visual GUI controls.",
+    "initial_geometry": [
+      129,
+      40,
+      1024,
+      720
+    ],
+    "missing_endpoints": [
+      "os_injection",
+      "provider_first_token",
+      "provider_request_received",
+      "runtime_receipt"
+    ],
+    "independent_checks": {
+      "target_owned_roads": false,
+      "ordered_bidirectional_connections": false,
+      "forbidden_tiles_clear": true,
+      "surrounding_road_owner_unchanged": false
+    },
+    "changed_surrounding_tiles": [
+      912,
+      913,
+      914,
+      915
+    ],
+    "visual_verify_request_ms": 148338.901,
+    "visual_verify_request_uncertainty_ms": 25.0
+  },
+  "engine_diagnosis": {
+    "built_target_tiles": [
+      979,
+      1043,
+      1107
+    ],
+    "missing_target_tiles": [
+      977,
+      978
+    ],
+    "connected_target_edges": [
+      [
+        979,
+        1043
+      ],
+      [
+        1043,
+        1107
+      ]
+    ],
+    "missing_target_edges": [
+      [
+        977,
+        978
+      ],
+      [
+        978,
+        979
+      ]
+    ],
+    "forbidden_tiles_clear": true,
+    "changed_surrounding_tiles": [
+      912,
+      913,
+      914,
+      915
+    ],
+    "model_drags": [
+      {
+        "op": "pointer_drag",
+        "points": [
+          {
+            "x": 705,
+            "y": 224
+          },
+          {
+            "x": 673,
+            "y": 240
+          },
+          {
+            "x": 641,
+            "y": 256
+          }
+        ],
+        "duration_ms": 600
+      },
+      {
+        "op": "pointer_drag",
+        "points": [
+          {
+            "x": 641,
+            "y": 256
+          },
+          {
+            "x": 673,
+            "y": 272
+          },
+          {
+            "x": 705,
+            "y": 288
+          }
+        ],
+        "duration_ms": 600
+      }
+    ]
+  },
+  "interpretation": "The B-to-C leg is correct. The intended A-to-B leg is absent and a four-tile road appears one map row above it. The exact cause is not instrumented; the drag at sign-label height and engine delta support a target-binding error as a hypothesis, not a proven cause.",
+  "decision": "Do not promote the fixed route. Preserve the failure and test a generic magnified changed-region feedback candidate before another fresh allocation.",
+  "scope": "one changed-objective episode; no success, general reliability, human comparison, latency distribution or speed claim",
+  "audit_sha256": "19b1370a0b2f05dc2042803b33de86a8ce95a8167760002f10f95f8a9db3bb6f"
+}

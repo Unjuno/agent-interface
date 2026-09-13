@@ -183,3 +183,29 @@ unit test mutates the caller's accepted program while execution is paused and
 verifies that the originally accepted steps run to completion.
 This is a development record, without preregistered efficacy comparisons,
 measured model tokens, a comparable human baseline or a DOOM run.
+
+## OpenTTD changed-objective allocation
+
+The [five-tile L objective](OPENTTD_L_OBJECTIVE_V1.md) changes the task from one
+straight segment to two connected directional segments sharing a guarded
+corner. Its seed-991003 fixture, two fresh restores, dynamic score and zero-input
+negative control pass on Windows and WSL. The first preregistered Astra
+allocation is retained as a harness failure before pointer input: the new driver
+incorrectly supplied an identity that the durable journal owns. A separately
+preregistered v2 fixes that path and runs eight actions, but Astra then falsely
+declares completion. The B-to-C leg is correct; the A-to-B leg remains empty and
+a four-tile road is built one map row above it. The independent score rejects
+the run after 148.339 seconds and 146,736 reported input tokens. No task success
+or speed result is claimed. The next candidate is magnified changed-region
+feedback with full-frame fallback. Its archived diagnostic is now negative:
+full-only and composite both return `uncertain`, while the composite costs 526
+more reported input tokens. The next candidate is an explicit semantic-subgoal
+checkpoint before the next mutation.
+
+That checkpoint has now run live. It prevents a second task mutation and the
+earlier false verify, but Astra spends 11 turns and 182,284 input tokens before
+an uncertain safe stop; the task remains incomplete. The frozen checkpoint-v1
+parser incorrectly rejects that stop, and checkpoint v2 fixes the rule in
+cross-OS probes. A no-model Ctrl+2 recovery probe makes the obstructing trees
+transparent while preserving every scored road/owner field and save bytes.
+Exposing that verified view method to the planner is the next live candidate.

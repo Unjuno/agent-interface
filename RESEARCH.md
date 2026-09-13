@@ -408,3 +408,31 @@ Negative results are retained because they constrain the design space.
 3. Longer mixed-app sessions with app restarts, focus drift, geometry drift, and modal transitions.
 4. ROI/visual-state experiments with full-base recovery, plus guard placement cost vs expected failure cost.
 5. Only after algorithmic semantics stabilize: production-oriented implementation work.
+
+The first changed-objective OpenTTD allocation is now frozen. A seed-991003
+five-tile L fixture and independent 49-tile guard pass cross-OS replay, but the
+preregistered Astra episode stopped before pointer input because the new driver
+violated the durable journal's identity-assignment contract. The rejection,
+single model proposal, observation-only calls and traceback are retained. A
+separately preregistered corrected allocation executes eight actions, then
+produces a typed false visual completion: the B-to-C leg is correct, the A-to-B
+leg is absent, and a four-tile road appears one map row above it. It spends
+146,736 reported input tokens and 148.339 seconds before the rejected verify.
+This newly exposes target-binding/visual-assurance weakness; see
+`research/live_control/OPENTTD_L_OBJECTIVE_V1.md`.
+
+A visual-only two-times before/after crop around the failed drag was then tested
+against the exact full frame. Both fixed-Astra calls judge the A-to-B alignment
+`uncertain`; the composite uses 526 more reported input tokens. The crop is not
+promoted. Since the full frame expresses uncertainty when explicitly asked for
+subgoal status, the next mechanism is a semantic checkpoint that blocks a new
+mutation until the prior expected effect is observed, contradicted or uncertain.
+
+That checkpoint now has one fresh live allocation. It prevents a second task
+mutation and false verify, but the model makes five uncertain inspections and
+stops on turn 11 after 182,284 input tokens. The task remains false and the
+frozen v1 parser mistakenly rejects the safe stop; checkpoint v2 corrects that
+shape boundary. A zero-model Ctrl+2 probe verifies a recovery affordance from
+the official OpenTTD manual: trees become transparent while all road, owner,
+guard and save state remains unchanged. Typed planner access and fresh recovery
+efficacy remain untested.

@@ -2225,3 +2225,53 @@ elimination of unnecessary decisions/boundaries distinct when discussing it.
 
 For status claims, use [RESEARCH.md](../RESEARCH.md) and the primary reports, not
 an unchecked roadmap box or an isolated successful screenshot.
+
+## Latest follow-up — OpenTTD changed objective and retained harness failure (2026-09-14)
+
+Seed 991003 introduces a five-tile L-road objective with two directional
+segments sharing B, four forbidden tiles and a 49-tile preservation guard. The
+byte-pinned fixture reproduces in two fresh restores and its dynamic scorer,
+unsaved refusal, malformed controls and Windows/WSL audits pass. The no-model
+negative finish control also passes with zero durable calls.
+
+The first preregistered fixed-Astra allocation is not a task result. Astra made
+one valid toolbar-hover proposal (15,768 input tokens), after which the new
+driver supplied a caller identity to `durable_submit_v4`. The journal correctly
+rejected it because it owns unique identity assignment. One observation-only
+submit completed; no pointer step began, no semantic outcome was recorded and
+the run was not retried. Frozen results and the traceback remain under
+`research/live_control/results/timing-envelope-openttd-l-01/`.
+
+`timing_envelope_openttd_l_driver_v2.py` restores the passing call convention:
+no caller ID, an appended final observation and timeout derived from dwell and
+program length. A separate preregistration and result root freeze it. The v2
+negative control passes, then Astra executes eight actions and falsely requests
+verification on turn nine. Engine evidence shows a correct B-to-C leg, an empty
+A-to-B leg and a four-tile road one map row above the missing leg. The hard gate
+fails after 148.339s, 130.847s of model wait, 16.765s of feedback time, 146,736
+input tokens, 42 frames and 32 durable calls. Test magnified changed-region
+feedback offline before another live allocation; do not use oracle state in the
+planner presentation.
+
+That archived diagnostic is now complete. The exact full frame and a visual-only
+two-times before/after action-region composite both make fixed Astra answer
+`uncertain`; the composite adds 40,680 PNG bytes and 526 reported input tokens.
+Reject the crop alone. Since the full frame expresses uncertainty when asked for
+exact A-to-B status, the next candidate is an observed/contradicted/uncertain
+semantic checkpoint before admitting another mutation.
+
+The checkpoint then ran in a fresh third allocation. After one misplaced drag,
+Astra remains `uncertain` for turns 6..10, starts no later task mutation and
+emits a safe stop on turn 11 instead of a false verify. The task still fails;
+the stop arrives after 185.761s with 182,284 input tokens and 40 durable calls.
+The frozen v1 parser incorrectly applies its observed-only verify rule to stop,
+so the supervisor records an exception. Checkpoint v2 fixes and probes that
+boundary without altering the frozen allocation.
+
+Official OpenTTD documentation identifies Ctrl+2 as tree transparency. A
+preregistered zero-model shared-runtime probe executes it: 398,590/1,024,000
+pixels change, while every target/forbidden/guard road-owner field and the save
+remain unchanged. Treat `openttd.transparent_trees` as an app-specific learned
+view optimizer candidate. Next expose it as a typed view method allowed under
+an uncertain checkpoint, expand it locally to the verified chord, and run a
+fresh recovery allocation.

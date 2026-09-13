@@ -723,3 +723,15 @@ fallback. Measure observable planner absence and distinguish planner/tool latenc
 architectural latency and Python research overhead. Rust/native probes require
 stable contracts and measured relevance; formal methods target narrow invariants.
 These refinements do not change cross-domain correctness or freeze requirements.
+
+- 2026-09-14 r4: OpenTTDのchanged-objective実測により、次の局所目標を
+  「画像を増やす」から「未確認の意味的効果を次mutationへ持ち越さず、
+  task stateを変えないview recoveryを使えること」へ更新。5-tile L課題では
+  full+action cropがfull単独より判断を改善せず526 input tokens増加したため不採用。
+  observed/contradicted/uncertain checkpointはfalse verifyと第2mutationを防いだが、
+  11 turns/182,284 input tokensでsafe stopし未完了。公式に定義されたCtrl+2 tree
+  transparencyは0-model実測で道路・owner・saveを保ちつつ視認性を改善した。
+  次はtyped view methodとしてcheckpoint回復へ統合し、同一seed/model/taskで
+  task correctness、model boundaries、feedback、tokens、repair costを比較する。
+  これはOpenTTD固有optimizer候補であり、universal fallback・Domain Coverage
+  Matrix・human-tempo最終目標・freeze未達の判定は維持する。

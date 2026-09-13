@@ -183,8 +183,23 @@ readability, adjacent action, hidden-target refusal and one post-model policy
 transition, authorized whole replacement, and declared presentation/plan bypass
 controls now pass scoped gates. The first OpenTTD initial-state variation passes
 without reducing model boundaries; the first new geometry passes while requiring
-more boundaries and tokens. The next work should change objective structure or
-allocate multiple geometries under the same recovery semantics. Human baselines and
+more boundaries and tokens. A five-tile L objective now changes the structure to
+two connected directional segments and passes model-free fixture/negative gates.
+Its first preregistered model allocation exposed a driver identity-contract bug
+before pointer input and is retained without retry, so it provides no task
+success or latency evidence. A separately preregistered corrected allocation
+runs eight actions, but its ninth-turn visual verification is false: the B-to-C
+leg is correct while A-to-B is absent and four surrounding tiles are changed.
+The 148.339-second path uses 146,736 input tokens and does not reach semantic
+completion. A posthoc visual-only action-region crop then leaves both full and
+composite Astra judgments at `uncertain`, while adding 526 input tokens. The crop
+is rejected. The full image supports uncertainty when explicitly asked. A fresh
+semantic-checkpoint allocation then prevents the second mutation and false
+verify, but uses 11 turns/182,284 input tokens before a safe uncertain stop; the
+task remains incomplete. A zero-model Ctrl+2 probe makes trees transparent while
+preserving every scored road/owner field and save bytes. Typed access to that
+view method is the next recovery candidate, followed by multiple geometries
+under the same recovery semantics. Human baselines and
 model-boundary timestamps must then be collected on identical task allocations.
 Only after those pass should the runtime/API be frozen and packaged.
 

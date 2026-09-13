@@ -15,7 +15,7 @@ Latest research handoff: [measured progress, failures and next steps](docs/LOCAL
 
 Current Linux research caller: [components, usage and evidence limits](research/live_control/CURRENT_CLIENT.md).
 Process-scoped timing envelopes now cover fresh Calc and OpenTTD tasks. Calc
-saves480/192 in23.976s with21.334s of wrapper-observed model wait. OpenTTD uses
+saves 480/192 in 23.976s with 21.334s of wrapper-observed model wait. OpenTTD uses
 batched delayed-hover contact sheets and an adaptive two-Luna/six-Astra route to
 build a guarded three-tile road in111.853s with91.781s of model wait and126,420
 reported input tokens. The OpenTTD task independently succeeds in two fresh
@@ -35,6 +35,19 @@ from tiles678..680 to465..467 and shifts the visible target. Fixed Astra passes
 in89.097s, but uses7 turns,114,177 input tokens,32 frames and24 durable calls:
 more interface work than the prior geometry despite a shorter sampled wall time.
 The geometry-derived scorer is retained; no speed or general-route claim follows.
+The next seed-991003 allocation changes the objective to a five-tile L with two
+directional segments and a shared corner. Its fixture and negative control pass,
+but the first preregistered Astra allocation stops before pointer input when its
+new driver violates the durable journal identity contract. That harness failure
+is retained without retry. A separately preregistered corrected allocation runs
+eight actions, but Astra falsely verifies completion after 148.339s and 146,736
+reported input tokens. The B-to-C leg is correct; the A-to-B leg is empty and a
+four-tile road appears one map row above it. The route is rejected.
+A checkpointed allocation prevents the second mutation and false verify, but
+uses 11 turns/182,284 input tokens before an uncertain safe stop; it does not
+complete the task. A model-free Ctrl+2 probe then makes the obstructing trees
+transparent while independently preserving all road, owner and save state.
+This app-specific view optimizer is not yet exposed to the planner.
 The newest observation-boundary study physically withholds one live Chromium
 region: full input reads the exact value 4/4 and redacted input preserves explicit
 policy UNKNOWN 4/4. The region geometry audits exactly, but metadata adds 112
