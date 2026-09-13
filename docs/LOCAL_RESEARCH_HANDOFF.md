@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — early saved-effect publication removes scorer wait
+
+[Early saved effect](../research/live_control/EARLY_SAVED_EFFECT.md) connects
+interactive_v23 to separate effect_evidence before independent scoring. Matched
+scripted unsaved case emits effect at 18.585 ms versus v22's 3023.367 ms; final
+scoring still emits at 3032.829 ms. Save remains correct. Fourteen exact frames,
+early/final receipts and four callback failure/UNKNOWN controls audited. This is
+runtime emit timing, not assistant recognition latency. Next actual self-use and
+live output faults; synchronous blocked-output risk remains. No default promotion.
+
 ## Latest follow-up — live finalization carries scoped saved-effect evidence
 
 [Live saved effect](../research/live_control/LIVE_SAVED_EFFECT.md) connects the
