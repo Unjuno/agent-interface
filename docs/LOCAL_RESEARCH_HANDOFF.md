@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — early and final Calc results returned in the same caller
+
+[Final drain self-use](../research/live_control/DRAIN_FINAL_SELF_USE.md) adds opt-in
+zero-server-wait final read after early result processing. Actual same-seed Calc
+returns both records in one confirmation invocation; caller commands 4→3, socket
+count unchanged at four. Thirteen exact frames and full prefix audited. Early to
+processing-end is 34.275 ms; total 45.541 s with missing model receipt endpoint.
+No causal speedup claim. Six controls pass; next test integrated live delayed
+evaluation to validate returning early when a final result is not yet available.
+
 ## Latest follow-up — actual Calc use exposes an avoidable outer final-read turn
 
 [Prepared Calc self-use](../research/live_control/PREPARED_CALC_SELF_USE.md)
