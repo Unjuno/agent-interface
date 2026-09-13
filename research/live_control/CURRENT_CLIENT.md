@@ -4,6 +4,12 @@ These versioned candidates are research tools used in private Linux/X11 fixtures
 They are not a released desktop product or a promotion of the frozen architecture.
 Keep the older sources/results: versions name measured implementations.
 
+An optional [explicit checkpoint-then-finish policy](CHECKPOINT_FINISH.md) uses
+checkpoint_finish.py with runtime v31/socket v16. It leaves UNKNOWN open and sends
+scoped final evaluation only for a caller-selected matching saved-artifact contract.
+This has scripted Calc evidence, not actual assistant or general completion-policy
+validation. It is separate from the default stack below.
+
 For checkpoint evidence that must be re-parsed after the source changes, optional
 [runtime v30/socket v15](CHECKPOINT_ARCHIVE.md) archives the sampled bytes. A scripted
 Calc run replays both pre-save and saved states after source cleanup. Archiving

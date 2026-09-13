@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — explicit conditional finish removes a finalization-only turn
+
+[Checkpoint finish](../research/live_control/CHECKPOINT_FINISH.md) requires an
+explicit saved-contract policy and validates the fresh query before finish. UNKNOWN
+leaves admission open. Runtime v31/socket v16 correlate explicit finish evaluation
+to its own request. Thirteen controls retain false/unresolved outcomes. A scripted
+Calc run passes 12 frames and archived replay; matching reply to finish-call start
+is 0.199 ms without a model boundary. No comparison to actual assistant speed is
+claimed; actual use and wider finish-identity regression remain pending.
+
 ## Latest follow-up — checkpoint byte snapshots survive source overwrite/cleanup
 
 [Checkpoint archive](../research/live_control/CHECKPOINT_ARCHIVE.md) adds optional
