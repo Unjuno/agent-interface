@@ -1,3 +1,5 @@
+Actual checkpoint caller recovery: [Inkscape response abandonment](INKSCAPE_LOST_REPLY.md). One edit/save is recovered by reading from prior cursor; no resend. Scripted GUI test, not a general failure supervisor.
+
 Real transport continuation test: [split clock response over private socket](SPLIT_CLOCK_SOCKET.md). One clock request survives old response and pending timeout; synthetic runtime, not GUI/model performance.
 
 Continuation candidate: [retained images, received cursors and request-correlated clocks](RECEIVED_CONTINUATION.md). Archive replay and injected transport tests only; use v2 wrapper for pre-send session validation.

@@ -1,3 +1,7 @@
+## Checkpoint caller recovers actual Inkscape lost response without resending edit
+
+Real socket sendall then deliberate client close before recv for one move-save request. Caller checkpoint unchanged, bridge checked live; command-free read recovers original admission/terminal and image9. Audit49 events/6 returned replies/one abandoned request, exactly one edit submission and Ctrl+S step, nine exact frames, SVG88,50,40,30/no transform. Processes exit0/socket paths removed. See research/live_control/INKSCAPE_LOST_REPLY.md. Scripted GUI/receiver abandonment, no natural outage or model timing. Next persistent unresolved-command/write-uncertainty guard across recovery; caller currently chooses read-only policy but does not enforce pending lock.
+
 ## Received continuation now verified over real private socket with split clock
 
 Unchanged stopped socket plus synthetic subprocess gate: first response old clock, next read times out after own echo, same pending request later matches via command-free read. Five real AF_UNIX calls/seven events, one new clock command and two read-only followups; image sequence1 retained while cursor advances7. Process checked live during timeout, final exit0, sockets removed. Audit/source/event slices pass. See research/live_control/SPLIT_CLOCK_SOCKET.md. No GUI/model timing; client socket exceptions and dropped responses remain untested. Next actual caller migration/lost-response recovery, not repeated split-clock passes.
