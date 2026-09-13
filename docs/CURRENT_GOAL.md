@@ -1,3 +1,7 @@
+## Early-stop client lifecycle verified with real socket fixture
+
+PendingAction now distinguishes input_stopped_capture_pending from terminal_received, tracks contiguous history/exact replay, and keeps timeout/cancel replies pending. Twelve controls and archived evidence pass; a fresh AF_UNIX fixture produces pending/pending/pending/terminal_received across early stop, timeout, cancellation and released capture. Six exchanges/11 events match raw history; exit 0. See research/live_control/STOPPED_CLIENT.md. Next: GUI-facing early-return helper and actual Calc self-use. No new GUI trial, input authority, default promotion or speed claim.
+
 ## Early input-stopped boundary verified through actual private socket
 
 Added explicit stopped_scope/cursor/socket candidates: action-scoped input_stopped is now a valid boundary. A real AF_UNIX/subprocess probe with synthetic blocked capture receives early focus_changed, then verifies terminal timeout without restart, busy rejection of new input, and cancellation reply while capture remains blocked. After releasing the gate, one capture completes, terminal retains original cause, and processes exit 0. Seven exchanges/13 events checked against raw history. See research/live_control/STOPPED_TRANSPORT.md. Next: live client representation of input-stopped/capture-pending versus terminal, then actual Calc comparison. No hard capture timeout or default promotion.
