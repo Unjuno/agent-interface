@@ -1,3 +1,5 @@
+[Bent-route calibration](MINDUSTRY_BEND.md): eight direction-specific targets deliver 33 copper in the complete engine-authored case; wrong-turn and empty cases fail. This prepares a changed-geometry pilot, not agent construction success.
+
 # Domain Coverage Matrix and Linux feasibility — 2026-09-13
 
 [Mindustry actual construction](MINDUSTRY_BUILD_SELF_USE.md): one assistant visual

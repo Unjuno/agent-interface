@@ -1,3 +1,7 @@
+## Mindustry changed-geometry route calibrated in actual engine
+
+New eight-tile bent route requires north/south direction changes. Three fresh Linux GUI engine-authored cases: complete delivers33 copper, wrong-turn/empty deliver0; local guard unchanged. Audit passes sources/screenshots, three outcomes and four malformed/direction controls; all processes exited without SIGKILL. See research/benchmark_discovery/MINDUSTRY_BEND.md. Not assistant construction or deterministic timing evidence. Next player-ready empty route plus combined per-direction/three-phase score and actual shared-pointer self-use; no adoption claim.
+
 ## Domain review exposes Mindustry delivery measurement validation gap
 
 Issue list rechecked; #49 read. Matrix corrected to include completed Mindustry build/delivery and OpenTTD guard pilots. New Mindustry score v2 rejects nine invalid measurement controls; old v1 falsely verified eight. Archived actual 48-copper result exactly unchanged and four existing negative outcomes retained. See research/benchmark_discovery/MINDUSTRY_WINDOW_VALIDATION.md. Offline scorer candidate only; existing frozen interactive v1 unchanged. Next fresh route/interruption with validated phase scoring; no domain-performance or benchmark-adoption claim.
