@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — live finalizer faults and status recovery
+
+[Live finalizer faults](../research/live_control/LIVE_FINALIZATION_FAULTS.md)
+inject pre-write failure, post-flush failure and scorer exception in actual X11
+processes. Six scripted tasks preserve saved content/release; 18 frames audited.
+Interactive_v21 exposes read-only retained finalization_status, tested twice after
+each fault without additional score output. Visible bytes can coexist with an
+unconfirmed flush. Permanent outages/pending-query behavior remain unqualified.
+Next return to earlier modal planner gaps while keeping oracle scoring post-controller.
+
 ## Latest follow-up — finalization failures separate from task outcome
 
 [Finalization failures](../research/live_control/FINALIZATION_FAILURES.md) adds
