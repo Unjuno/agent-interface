@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — live evaluator exception recovered through retained status
+
+[Failed outcome wait](../research/live_control/FAILED_OUTCOME_WAIT.md) injects an
+evaluator exception after real private X11 input. The generic wait returns pending;
+sequential status queries retrieve the same evaluate-stage finalization_error,
+without rescore or resubmit. Three exact frames, verified release, full prefix,
+one submit and clean process exit audited. Task success stays unknown. Error is
+retained at 19.587 ms and status received at 235.190 ms after terminal (including
+chosen 200 ms wait). Status response currently lacks query identity: add that
+before making fallback automatic or supporting concurrent status reads.
+
 ## Latest follow-up — live delayed outcome continuation without input replay
 
 [Live outcome wait](../research/live_control/LIVE_OUTCOME_WAIT.md) exercises the
