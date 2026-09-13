@@ -42,7 +42,10 @@ adaptive1/2 and fixed Luna0/2. Astra completes in98.351 and94.929 seconds with7
 turns each. The second adaptive run falsely declares visible completion before
 the independent score fails. This rejects adaptive-route promotion but two
 episodes cannot promote Astra. New tasks, fuller order balancing and a human
-comparison remain.
+comparison remain. A fresh v3 negative control then turns independent score=false
+into a persisted typed failure with zero model/input calls and driver exit0. A
+third fixed-Astra episode passes in92.377 seconds with6 calls, taking the same-task
+record to3/3; different tasks remain untested.
 
 The newest Chromium episode is the clearest small end-to-end sample. A fresh
 screenshot and a 621-byte strict compact UNKNOWN record drove one real model
@@ -76,7 +79,7 @@ the rows must not be averaged into one difficulty score.
 | Desktop apps | Small Calc, Chromium, Inkscape and XTerm tasks; dialogs, focus loss, interruption, saving and independent effect checks | Unknown applications, richer window/scroll/drag workflows and repeated held-out tasks |
 | DOOM | Shared held-key/cancel/expiry readiness and later directional-input repair/assistant gameplay evidence | Stable continuous useful-feedback loop, reaction distribution and public real-time demo |
 | Mindustry | Actual assistant construction of eight directed conveyors on a known route; 112-tile guard and 49-copper post-control delivery; shared caller scripted replay and cancellation | Fresh route planning, multi-object control, event-driven recovery and much shorter decision gaps |
-| OpenTTD | Fixed Astra matched arms pass2/2, adaptive1/2 and fixed Luna0/2; false visual completion is caught by independent guards; complete TimingEnvelopes and batched tooltip contact sheets | Different task allocations, fuller order balancing, fresh validation of typed negative finish, matched human control, scroll/window complexity and long-horizon planning |
+| OpenTTD | Fixed Astra passes the same task3/3, adaptive1/2 and fixed Luna0/2; false visual completion is caught by independent guards and now persists as a typed failure; complete TimingEnvelopes and batched tooltip contact sheets | Different task allocations and initial states, fuller order balancing, matched human control, scroll/window complexity and long-horizon planning |
 | Luanti | Current-engine launch, deterministic tiny pad/pose and read-only node/pose feasibility | Normal navigation, camera-mode contract, inventory, interaction and successful construction |
 
 DOOM remains valuable for continuous motor pressure. Mindustry and OpenTTD are

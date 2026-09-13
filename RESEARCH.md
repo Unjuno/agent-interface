@@ -51,6 +51,12 @@ and fails the independent score. Cumulative hard results are Astra2/2,
 adaptive1/2 and Luna0/2. The newly exposed driver assertion is replaced by an
 explicit negative finish outcome candidate and a three-path artifact regression.
 See [matched model replication](research/live_control/OPENTTD_MATCHED_MODELS_V2.md).
+A preregistered v3 follow-up then validates both finish paths on fresh fixtures.
+The zero-input/no-model control preserves a negative independent score as a typed
+failure with driver exit0; a normal fixed-Astra run passes in92.377s with6 calls
+and97,729 input tokens. Fixed Astra is now3/3 on this same task, with a descriptive
+95.219s mean. Windows/WSL audit passes; different tasks remain required. See
+[typed finish outcome](research/live_control/OPENTTD_FINISH_V3.md).
 
 ### Actual pixel redaction with explicit unknown semantics
 

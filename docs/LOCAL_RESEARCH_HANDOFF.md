@@ -10,6 +10,14 @@ retained. Orders reverse the endpoint arms while Astra remains middle, so fuller
 balancing, different tasks and a human control remain. See
 research/live_control/OPENTTD_MATCHED_MODELS_V2.md.
 
+Latest failure-path repair: a preregistered fresh v3 negative control makes zero
+model/input calls and receives independent score=false. The driver exits0 and
+persists typed `visual_verify_false_positive`; a normal fixed-Astra v3 episode
+then independently passes in92.377s with6 calls/97,729 input tokens. Astra is3/3
+on the same task, mean95.219s, but no different-task generality follows. The v3
+audit passes Windows/WSL. See research/live_control/OPENTTD_FINISH_V3.md. Next
+change geometry or initial toolbar state while retaining the independent gate.
+
 Prior dynamic-domain evidence: fresh OpenTTD v8 builds the exact three-tile A-C
 road and passes independent target, connectivity, forbidden-row and surrounding
 guard checks. The process-scoped envelope is111.853s, including91.781s of

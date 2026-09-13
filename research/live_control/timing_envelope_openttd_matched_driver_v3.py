@@ -7,9 +7,9 @@ from received_continuation_v1 import start
 from received_exchange_v2 import request_once
 from openttd_finish_outcome_v1 import classify as classify_finish
 HERE=Path(__file__).resolve().parent
-arms={'fixed-luna','fixed-astra','adaptive'}
+arms={'fixed-luna','fixed-astra','adaptive','negative-control'}
 arm=sys.argv[1]
-if arm not in arms:raise SystemExit('arm must be fixed-luna/fixed-astra/adaptive')
+if arm not in arms:raise SystemExit('arm must be fixed-luna/fixed-astra/adaptive/negative-control')
 root=HERE/'results/timing-envelope-openttd-matched-03'/arm;root.mkdir(parents=True,exist_ok=False)
 def dump(name,value):
  path=root/name;temp_path=path.with_suffix(path.suffix+'.tmp');temp_path.write_text(json.dumps(value,indent=2)+'\n',encoding='utf-8');os.replace(temp_path,path)

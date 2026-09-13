@@ -89,3 +89,6 @@ outcome handling before another route comparison. Then rotate Astra into a
 different order position or randomize preregistered block order. Add tasks with
 different toolbar state and geometry before treating 2/2 as task-level
 reliability. A matched human run remains necessary for human-tempo language.
+
+A subsequent preregistered v3 run validates typed negative finish packaging and
+adds a third fixed-Astra success in92.377 seconds. See `OPENTTD_FINISH_V3.md`.

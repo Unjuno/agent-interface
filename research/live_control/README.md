@@ -1,6 +1,12 @@
 # Asynchronous live control: development evidence
 
-Latest timing result: [matched OpenTTD replication](OPENTTD_MATCHED_MODELS_V2.md).
+Latest timing result: [typed OpenTTD finish outcome](OPENTTD_FINISH_V3.md).
+A fresh zero-input/no-model control preserves independent score=false as a typed
+failure with driver exit0. The same v3 path then completes a third fixed-Astra
+episode in92.377s with6 calls/97,729 input tokens, taking the exact-task record to
+3/3. Different task states and a human baseline remain.
+
+Prior timing result: [matched OpenTTD replication](OPENTTD_MATCHED_MODELS_V2.md).
 Across two preregistered blocks, fixed Astra passes2/2 in98.351s and94.929s,
 adaptive passes1/2 and fixed Luna passes0/2. The new adaptive failure is a visual
 completion false positive caught by the engine score. This rejects promotion of
