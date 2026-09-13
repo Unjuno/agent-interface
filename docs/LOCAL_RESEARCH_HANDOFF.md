@@ -1,3 +1,7 @@
+## Actual early-return Calc self-use completed; keep optional
+
+Image-facing early_exchange/resume candidates used on Calc seed 225. Save/confirm early replies arrived 281/339ms before runtime terminal; independent saved values [816,345] pass. Separate manual followups added ~10s each after terminal availability; 11 socket exchanges versus prior passive terminal-wait run's 9. Audit verifies 59 events/13 frames, lifecycle, command/history/owner evidence and workbook. Receipt v4 does not support new state names and keeps binding null; warnings retained. See research/live_control/CALC_EARLY_LIVE.md. Next: bounded client wait to combine prompt terminal/images while returning pending for slow capture; fix report compatibility before promotion. No causal speed/token claim.
+
 ## Early-stop client lifecycle verified with real socket fixture
 
 PendingAction now distinguishes input_stopped_capture_pending from terminal_received, tracks contiguous history/exact replay, and keeps timeout/cancel replies pending. Twelve controls and archived evidence pass; a fresh AF_UNIX fixture produces pending/pending/pending/terminal_received across early stop, timeout, cancellation and released capture. Six exchanges/11 events match raw history; exit 0. See research/live_control/STOPPED_CLIENT.md. Next: GUI-facing early-return helper and actual Calc self-use. No new GUI trial, input authority, default promotion or speed claim.
