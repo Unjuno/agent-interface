@@ -1,5 +1,13 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest execution: [OpenTTD pair 3 B](../research/live_control/RECOVERY_PAIR3.md).
+Five of eight episodes executed; A pending. One recovery read/call, 47 events and
+7 exact frames audited, independent guarded road score passed, cleanup verified.
+Build output overflow required saved-result/image inspection without input retry.
+Keep full 51.689 s to terminal / 317.617 s to evaluation; presentation failure
+retained, no qualified performance claim. Next pair 3 A with unchanged runner.
+The older chronological entries below describe earlier states, not remaining work.
+
 Latest paired result: [pair 2 complete](../research/live_control/RECOVERY_PAIR2.md).
 A needed four separate recovery calls; B grouped the same four socket reads into
 one call. Both tasks passed, same initial PNG/steps/sources, 18 frames/94 events

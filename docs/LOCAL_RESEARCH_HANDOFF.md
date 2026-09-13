@@ -1,5 +1,13 @@
 # Local research handoff — 2026-09-13
 
+Latest execution: [OpenTTD pair 3 B](../research/live_control/RECOVERY_PAIR3.md).
+Five of eight episodes executed; A pending. One recovery read/call, 47 events and
+7 exact frames audited, independent guarded road score passed, cleanup verified.
+Build output overflow required saved-result/image inspection without input retry.
+Keep full 51.689 s to terminal / 317.617 s to evaluation; presentation failure
+retained, no qualified performance claim. Next pair 3 A with unchanged runner.
+The older chronological entries below describe earlier states, not remaining work.
+
 ## Latest follow-up — pair 2 complete, OpenTTD next
 
 [Pair 2](../research/live_control/RECOVERY_PAIR2.md): A executed recover1..4 in
