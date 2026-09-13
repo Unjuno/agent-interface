@@ -20,8 +20,11 @@ batched delayed-hover contact sheets and an adaptive two-Luna/six-Astra route to
 build a guarded three-tile road in111.853s with91.781s of model wait and126,420
 reported input tokens. The OpenTTD task independently succeeds in two fresh
 runs, although the first run exposed a result-schema packaging failure after
-the positive score. Matched routing and human controls remain before any speed
-claim.
+the positive score. A preregistered one-episode-per-arm matched follow-up finds
+fixed Luna fails, while fixed Astra and adaptive pass in98.351s and100.201s.
+Fixed Astra uses7 turns/114,186 input tokens versus adaptive8/126,424, so the
+authored adaptive route is not promoted. Repeated counterbalanced blocks and a
+human control remain before any route or speed claim.
 The newest observation-boundary study physically withholds one live Chromium
 region: full input reads the exact value 4/4 and redacted input preserves explicit
 policy UNKNOWN 4/4. The region geometry audits exactly, but metadata adds 112

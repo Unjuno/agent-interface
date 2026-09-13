@@ -1,4 +1,14 @@
-Latest dynamic-domain evidence: fresh OpenTTD v8 builds the exact three-tile A-C
+Latest matched dynamic-domain evidence: one preregistered fixed-order OpenTTD
+block uses the same canonical save, task, source, prompt policy and evaluator.
+Fixed Luna fails after9 turns and changes three surrounding guard tiles. Fixed
+Astra passes in98.351s with7 calls/114,186 reported input tokens; adaptive passes
+in100.201s with8 calls/126,424 tokens. Windows/WSL audits replay88 durable calls
+and141 exact frames. This rejects promotion of the authored two-turn adaptive
+route, but one episode per arm cannot promote Astra or establish a population
+latency result. Next repeat with counterbalanced order and collect the matched
+human control. See research/live_control/OPENTTD_MATCHED_MODELS_V1.md.
+
+Prior dynamic-domain evidence: fresh OpenTTD v8 builds the exact three-tile A-C
 road and passes independent target, connectivity, forbidden-row and surrounding
 guard checks. The process-scoped envelope is111.853s, including91.781s of
 wrapper-observed model wait,18.286s across seven proposal-to-feedback intervals,
@@ -9,8 +19,7 @@ Luna-only, fixed-timeout, lost-intermediate-observation and result-schema failur
 are retained across v1-v7; v7 independently succeeds before its packaging fault,
 and corrected v8 reproduces success. Windows/WSL audit passes. No matched causal
 speedup or human-tempo claim. See research/live_control/TIMING_ENVELOPE_OPENTTD_V1.md.
-Next run identical-task fixed-Luna, fixed-Astra and adaptive allocations plus a
-human baseline. Full goal remains open.
+The matched allocation is now complete as a first block. Full goal remains open.
 
 Latest fixed-context compression evidence: planner_evidence_v2 retains checkpoint status/contract/request identity, scoped actual/digest, UNKNOWN reason, execution terminals, authority, no-retry and raw-evidence availability while omitting duplicated durable continuation. In16 predeclared fixed-image Luna/low calls across Chromium and Calc UNKNOWN/VERIFIED states, full and compact views both make8/8 expected decisions; no extra Save. Input80564->77880 tokens (-2684, -3.33%;335.5/call), with Calc dialog -704/call (-6.60%). Two samples/mode/case, no live latency claim. Measured v1 had a missing-contract UNKNOWN validation hole; frozen. V2 rejects malformed contracts and is byte-identical on all4 valid views. Two cross-OS audit path failures retained; final raw-call audit passes. See research/live_control/COMPACT_PLANNER_EVIDENCE.md. Next use v2 in a fresh live episode and adversarial omitted/conflicting evidence; full goal open.
 

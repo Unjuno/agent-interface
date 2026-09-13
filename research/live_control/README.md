@@ -1,13 +1,21 @@
 # Asynchronous live control: development evidence
 
-Latest timing result: [OpenTTD adaptive live control](TIMING_ENVELOPE_OPENTTD_V1.md).
+Latest timing result: [matched OpenTTD model routes](OPENTTD_MATCHED_MODELS_V1.md).
+A preregistered same-save/same-task block finds fixed Luna fails after nine
+turns, fixed Astra passes in98.351s with7 calls/114,186 input tokens, and adaptive
+passes in100.201s with8 calls/126,424 tokens. One fixed-order episode per arm
+rejects promotion of the authored adaptive route but cannot promote Astra.
+Windows/WSL audits pass across141 exact frames and88 durable calls. Repeated
+counterbalanced blocks and the human baseline remain.
+
+Prior timing result: [OpenTTD adaptive live control](TIMING_ENVELOPE_OPENTTD_V1.md).
 One fresh v8 episode builds the guarded three-tile road and independently passes
 all four checks in111.853s. It uses two Luna-low then six Astra-medium calls;
 wrapper-observed model wait totals91.781s and actual reported input is126,420
 tokens. Batched delayed-hover contact sheets preserve three tooltip observations
 per planner boundary. The prior Calc envelope remains
-[here](TIMING_ENVELOPE_V1.md). Matched fixed-model controls and a human baseline
-remain before any speed claim.
+[here](TIMING_ENVELOPE_V1.md). A human baseline and repeated matched blocks remain
+before any speed claim.
 
 Latest observation-boundary result: [actual pixel redaction](REDACTED_OBSERVATION.md).
 One fresh Chromium frame yields exact text in 4/4 full calls and explicit policy

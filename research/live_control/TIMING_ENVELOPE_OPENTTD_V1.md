@@ -115,9 +115,11 @@ WSL.
 
 ## Decision
 
-Retain batched delayed observation, content-derived timeout budgets, exact
-target-semantic guards and adaptive model routing as candidates. Do not promote
-a speed claim. The next comparison must allocate the identical OpenTTD task to
-fixed Luna-low, fixed Astra-medium and adaptive routing with the same turn,
-correctness and timeout rules. A human baseline is also required before using
-human-tempo language.
+Retain batched delayed observation, content-derived timeout budgets and exact
+target-semantic guards as candidates. A subsequent preregistered matched block
+allocated the identical task to fixed Luna-low, fixed Astra-medium and adaptive
+routing. Fixed Luna failed the hard score; fixed Astra and adaptive passed, with
+fixed Astra using fewer turns, reported input tokens, frames and durable calls
+in that one block. The authored adaptive route is therefore not promoted. See
+`OPENTTD_MATCHED_MODELS_V1.md`. Repeated counterbalanced blocks and a matched
+human baseline remain required before a route or human-tempo claim.

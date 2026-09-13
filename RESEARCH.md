@@ -38,7 +38,14 @@ durable calls. Windows and WSL artifact audits pass. This is one corrected
 adaptive episode plus one positive task effect, not a matched speedup or
 human-tempo result. See
 [OpenTTD TimingEnvelope](research/live_control/TIMING_ENVELOPE_OPENTTD_V1.md).
-Matched fixed-Luna, fixed-Astra and adaptive allocations remain required.
+A preregistered matched follow-up then runs one fresh fixed-order episode per
+route with the same canonical save, task, nine-turn limit and evaluator. Fixed
+Luna fails after nine turns and changes three surrounding guard tiles. Fixed
+Astra passes in98.351s with7 calls and114,186 reported input tokens; adaptive
+passes in100.201s with8 calls and126,424 tokens. All141 exact frames and88
+durable calls audit across Windows and WSL. This rejects promotion of the authored
+adaptive route, but one episode per arm cannot promote fixed Astra or establish
+a latency distribution. See [matched model routes](research/live_control/OPENTTD_MATCHED_MODELS_V1.md).
 
 ### Actual pixel redaction with explicit unknown semantics
 
