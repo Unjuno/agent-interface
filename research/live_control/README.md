@@ -1,5 +1,12 @@
 # Asynchronous live control: development evidence
 
+Latest timing result: [process-scoped end-to-end timing envelope](TIMING_ENVELOPE_V1.md).
+One fresh Calc task independently saves480/192 in three Luna-low turns. Initial
+observation detection to semantic completion is23.976s; wrapper-observed model
+wait totals21.334s. Per-event fsync costs5.264/8.702ms median on Windows/Linux
+and is rejected; buffered v2 records cost18.1/14.718us median plus one close sync.
+OpenTTD and matched strategy comparisons remain.
+
 Latest observation-boundary result: [actual pixel redaction](REDACTED_OBSERVATION.md).
 One fresh Chromium frame yields exact text in 4/4 full calls and explicit policy
 UNKNOWN in 4/4 redacted calls. V2 fixes and audits half-open region geometry;

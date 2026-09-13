@@ -14,6 +14,19 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Experimental ladder
 
+### Process-scoped end-to-end timing envelope
+
+Path: [`research/live_control/TIMING_ENVELOPE_V1.md`](research/live_control/TIMING_ENVELOPE_V1.md).
+A fresh Calc task saves and independently verifies480/192 in three Luna/low
+turns. One supervisor clock measures23.976s from initial observation detection
+to semantic completion, including21.334s of wrapper-observed model waits; two
+proposal-to-useful-feedback intervals are1.105s and0.873s. Missing provider,
+runtime and OS endpoints remain explicitly unrecorded. Per-event fsync is rejected
+after isolated median record costs of5.264ms Windows/8.702ms Linux. Buffered v2
+reduces record medians to18.1/14.718us plus one close-time sync, with weaker
+crash durability. No speedup follows from this single episode; OpenTTD and matched
+baseline/compact/local-continuation runs remain required.
+
 ### Actual pixel redaction with explicit unknown semantics
 
 Path: [`research/live_control/REDACTED_OBSERVATION.md`](research/live_control/REDACTED_OBSERVATION.md).

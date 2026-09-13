@@ -26,6 +26,14 @@ negative controls and independent audits.
 
 ## Closest current live loop
 
+The first process-scoped timing envelope now covers one fresh Calc task. It saves
+and independently verifies480/192 in three Luna-low turns. Initial observation
+detection to semantic completion is23.976 seconds; wrapper-observed model wait
+totals21.334 seconds, while proposal-to-useful-feedback takes1.105 and0.873
+seconds. Missing provider/runtime/OS endpoints remain explicit. The initial
+per-event-fsync recorder proved too costly and was replaced by a buffered candidate;
+OpenTTD and matched comparisons remain before promotion.
+
 The newest Chromium episode is the clearest small end-to-end sample. A fresh
 screenshot and a 621-byte strict compact UNKNOWN record drove one real model
 decision. The resulting program saved the exact requested value, survived two
