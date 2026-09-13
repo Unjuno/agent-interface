@@ -1,3 +1,9 @@
+Latest attribution: [observation cost and registered bundling pair](../research/live_control/OBSERVATION_COST_PROFILE.md).
+Profile48 archived frames: field-table68.49s end-to-end vs1.91s completed steps /
+1.15s observation brackets. Capture-only optimization cannot remove most elapsed
+time. Next registered AB seed223/X69.5: existing select/edit/save separately vs
+identical9-step program, all captures retained, GUI judgment before oracle. Preserve
+failed arms/recovery, no reruns. Pair not yet run; not controlled model-speed proof.
 Latest companion self-use: [fresh changed-value field task](../research/live_control/INPUT_STATE_TABLE_LIVE.md).
 field-table-live-01 seed222 X73.25 strict pass. Model uses full receipt + table,
 no additional raw-state expansion, GUI decision echoed before score.73 events/nine

@@ -1,3 +1,10 @@
+Latest attribution: [observation cost and registered bundling pair](../research/live_control/OBSERVATION_COST_PROFILE.md).
+48 existing frames across Inkscape/Calc checked. Field task68.49s includes1.91s in
+completed steps and1.15s observation brackets; most elapsed time is outside those
+steps, not proven all model inference. Prioritize existing nine-step execution vs
+three outer programs before capture skipping. Registered one AB pair seed223/X69.5,
+identical steps/full captures, GUI decisions before score, retain failures. Not yet
+executed; no causal speed or freeze claim, intermediate intervention tradeoff explicit.
 Latest companion self-use: [fresh changed-value field task](../research/live_control/INPUT_STATE_TABLE_LIVE.md).
 Seed222 X73.25 task passes strict saved geometry. Full receipts + nonempty tables
 used without extra raw-state dumps; GUI decision committed before independent
