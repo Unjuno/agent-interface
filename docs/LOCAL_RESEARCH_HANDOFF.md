@@ -1,5 +1,17 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — assistant recovery succeeds, end-to-end path remains slow (2026-09-13)
+
+[Actual recovery](../research/live_control/SERVO_RECOVERY.md): the assistant observes
+a known false visual goal, notices unchanged GUI X coordinate, obtains fresh feedback
+after the test environment removes its overlay, then reissues under a new lease.
+Saved displacement reaches 24 px with y/size preserved. Four programs, five clock
+commands; first acceptance to independent score is 97.4 s despite 0.4–0.8 s programs.
+False terminal to recovery acceptance is 59.7 s. 16 frames/source/order/release/scoring
+checks pass. This is controlled restoration, not automatic verifier or persistent
+occlusion recovery. Next current-image addressing/endpoint telemetry and effect
+evidence to address planner/tool overhead; patch identity remains unqualified.
+
 ## Latest follow-up — occlusion exposes false visual completion (2026-09-13)
 
 [Occlusion report](../research/live_control/SERVO_OCCLUSION.md) adds private X11
