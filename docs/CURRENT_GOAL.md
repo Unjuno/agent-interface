@@ -1,5 +1,11 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest implementation: [bounded received-history assembly](../research/live_control/RECEIVED_HISTORY.md)
+replaces manual concatenation with cursor/overlap checks and complete slice
+metadata retention. Seven actual slices restore exactly; ten negative controls
+reject invalid or unresolved histories. This remains offline review assistance;
+live read-only draining and direct sequence-mismatch validation are outstanding.
+
 Latest recovery evidence: [Inkscape live view](../research/live_control/POINTER_VIEW_RECOVERY.md)
 stopped on a stale historical clock boundary before input. A subsequent malformed
 save-key program was rejected before admission; explicit correction completed the

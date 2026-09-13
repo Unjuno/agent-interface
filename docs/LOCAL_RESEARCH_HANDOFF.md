@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — checked received-history assembly
+
+[Received history](../research/live_control/RECEIVED_HISTORY.md) adds an offline,
+bounded helper for the previous manual reconciliation. Seven actual slices yield
+16 unique raw events with exact per-slice restoration, including the rejection.
+Ten negative controls reject gaps/conflicts/bad cursors/unresolved statuses and
+capacity violations. No transport/input code was changed. Next use this reviewed
+assembly live and independently test current-cursor/stale-observation mismatch.
+
 ## Latest follow-up — actual Inkscape stale-boundary and rejection recovery
 
 [Recovery study](../research/live_control/POINTER_VIEW_RECOVERY.md) records a
