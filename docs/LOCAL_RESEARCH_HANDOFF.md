@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — socket failure path distinguishes transmission states
+
+[Socket pipe fault](../research/live_control/SOCKET_PIPE_FAULT.md) adds typed
+rejected_before_write / write_uncertain / channel_unusable receipts in v6.
+Actual socket-to-paused-runtime test preserves normal sending after pre-write
+rejection, reports 4096/8028 partial bytes in 101 ms, suppresses retry and later
+cancel writes, then observes expired/released terminal and normal exit. Source,
+frame and owner-close audit retained. This closes the direct-pipe-only evidence
+gap; permanent reader stall/restart and action-bound event matching remain open.
+
 ## Latest follow-up — live pipe integration preserves expiry during stdin pause
 
 [Live pipe expiry](../research/live_control/LIVE_PIPE_EXPIRY.md) integrates an
