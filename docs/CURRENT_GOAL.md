@@ -1,3 +1,7 @@
+## Domain review exposes Mindustry delivery measurement validation gap
+
+Issue list rechecked; #49 read. Matrix corrected to include completed Mindustry build/delivery and OpenTTD guard pilots. New Mindustry score v2 rejects nine invalid measurement controls; old v1 falsely verified eight. Archived actual 48-copper result exactly unchanged and four existing negative outcomes retained. See research/benchmark_discovery/MINDUSTRY_WINDOW_VALIDATION.md. Offline scorer candidate only; existing frozen interactive v1 unchanged. Next fresh route/interruption with validated phase scoring; no domain-performance or benchmark-adoption claim.
+
 ## Actual Inkscape fallback received and continued without replay
 
 Test-only fallback client injected composer failure after one completed move-save. Assistant received full original result/error, viewed X74/Y50/W40/H30, then issued observe only and independently verified saved SVG. Audit passes 66 events/9 exchanges/15 frames, five output choices and exactly one save input; process exit0. See research/live_control/INKSCAPE_FALLBACK_LIVE.md. No live token/speed claim. Stop repeating this scenario; next address pre-result recovery from saved events or cross-domain runtime gaps. Defaults remain experimental.
