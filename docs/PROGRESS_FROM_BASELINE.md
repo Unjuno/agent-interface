@@ -19,9 +19,9 @@ general computer use or an installable Agent Market product.
 | Model evidence | Full durable records were passed to the planner | Strict typed compact view retains action/effect authority and retry rules | Fixed 16-call check passed; first live action passed; adversarial adoption gate remains |
 | Benchmarking | Four small desktop fixtures | Domain matrix spans desktop apps, DOOM, Mindustry, OpenTTD and Luanti | Useful breadth; no formal benchmark suite or aggregate score yet |
 
-The repository currently contains 277 commits since the initial 2026-09-12
-snapshot. Commit count only indicates iteration density; the claims above depend
-on retained runs, source hashes, negative controls and independent audits.
+The initial repository snapshot dates to 2026-09-12. Iteration volume is not a
+progress metric; the claims above depend on retained runs, source hashes,
+negative controls and independent audits.
 
 ## Closest current live loop
 
