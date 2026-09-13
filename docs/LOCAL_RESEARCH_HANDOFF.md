@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — saturation requires separately reserved cancel capacity
+
+[Socket saturation](../research/live_control/SOCKET_SATURATION.md) confirms eight
+active observation handlers cause normal cancel to return busy. Private v4 adds
+two cancel-only slots on a separate socket; under the same saturation key release
+occurs before any long read ends. First cancel attempt to verified release is
+1764 ms in v3's wait/retry policy versus 27 ms via v4's reserved endpoint. Twenty-four
+exact frames and actual key admission/release audited. Shared blocked stdin and
+cancel-slot saturation remain unresolved; no universal latency claim or promotion.
+
 ## Latest follow-up — live observation wait blocks cancel; bounded concurrency helps
 
 [Socket cancel delay](../research/live_control/SOCKET_CANCEL_DELAY.md) retains
