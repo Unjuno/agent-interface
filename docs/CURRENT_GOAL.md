@@ -1,3 +1,7 @@
+## Shared sampled-target contract separates app coordinates from guard logic
+
+New application-independent evaluator takes trusted name/box/point/age contract, returns sampled evidence only and relies on existing owner/unique command admission. Replay preserves Mindustry positive point/deadline and both actual mutation refusals. Archived Inkscape frame12→15 X-field stays eligible despite tooltip outside patch, retaining child focus/top-level surface distinction. Nine malformed/change controls refuse. See research/live_control/SAMPLED_TARGET_CONTRACT.md. No new live input/model call or default promotion. Next wire one actual desktop caller and independent effect verification; do not accumulate further offline guard variants.
+
 ## Live bounded intent rejects changed menu pixels and focus
 
 Two actual X11 mutation cases between prompt preparation/revalidation return target_patch_changed/binding_changed with zero input admissions. Each26 events/8 calls/3 exact frames; audit/cleanup pass, processes exit0. New strict intent gate rejects numeric1 instead of true and preserves archived valid result. First patch attempt retained: consumer JSONDecodeError closed cursor while runtime alive; one cleanup finish, bridge exit1. Fixture display setup moved into diagnostic redirection; later cases pass. See research/benchmark_discovery/LIVE_MENU_MUTATION.md. Fixed guided intent/fixture restoration, not autonomous recovery/general identity. Next reusable contract or cross-domain validation, not more identical menu tests.
