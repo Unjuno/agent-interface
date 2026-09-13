@@ -1,3 +1,7 @@
+## Received continuation separates latest cursor from retained image evidence
+
+New session-scoped checkpoint replays actual Inkscape stale-clock failure: cursor25 retains image4/event21; own clock absent, then command-free read obtains correlated current clock instead of old one. Full79-event/JSON/overlap replay and six refusal controls pass. Received exchange v2 injects recorded replies through caller function: one command/one read; cross-session rejected before transport. V1 pre-send identity gap retained/unpromoted. See research/live_control/RECEIVED_CONTINUATION.md. Offline/injected-transport only; next real private socket split-clock/exception verification and caller migration. No live speed claim.
+
 ## Shared contract completes actual Inkscape edit; caller bugs retained and corrected
 
 Assistant seed231 self-use guarded X-field click then separately entered92/saved; SVG independently92,50,40,30 without transform. Audit79 events/12 exact frames/five completed programs/one expired rejection passes; bridge exit0. First exact patch refused228 differing pixels despite visual50.000. Next helper consumed old clock from stale cursor; runtime rejected before admission. V2 separates image source/continuation cursor and correlates own clock echo; same session recovered. See research/live_control/INKSCAPE_GUARDED_CLICK.md. Guarded button ack235.240ms after fresh capture, whole manual episode193.518s; no human-tempo claim. Next reusable image/cursor continuation result, not another repeated edit.
