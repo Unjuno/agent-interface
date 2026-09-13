@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — actual reply batching weakens the compression case
+
+[Delivered clock cost](../research/live_control/DELIVERED_CLOCK_COST.md) replays
+seven distinct recorded socket replies, preserving the entire response exactly.
+Savings fall to 4.024%; empty and single-record replies grow. With deep-copy
+packing included, paired CPU increases are about 50 microseconds for encoding
+and 46 microseconds for decoding per reply. Keep the codec offline; no protocol
+change or default promotion. This is one scripted Calc trace, not a token or
+live-latency result. Prioritize caller boundary costs and missing timing endpoints.
+
 ## Latest follow-up — clock metadata has measurable byte overhead
 
 [Clock metadata cost](../research/live_control/CLOCK_METADATA_COST.md) measures
