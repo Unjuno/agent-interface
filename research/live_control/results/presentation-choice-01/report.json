@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "name": "normal",
+      "choice": {
+        "source_sha256": "68c336dea63783f4c481e521d290e992b2a89a0e3ebeb1001d7264c386ec2c7d",
+        "original_bytes": 12124,
+        "choice": "composed",
+        "chosen_bytes": 10270
+      },
+      "passed": true
+    },
+    {
+      "name": "no-benefit",
+      "choice": {
+        "source_sha256": "5ba454c339abf6590d933a0572d30bfdce98f84391d2dac81bb57daa18fb1bb2",
+        "original_bytes": 35,
+        "choice": "original_no_size_benefit",
+        "chosen_bytes": 35
+      },
+      "passed": true
+    },
+    {
+      "name": "formatter-error",
+      "choice": {
+        "source_sha256": "68c336dea63783f4c481e521d290e992b2a89a0e3ebeb1001d7264c386ec2c7d",
+        "original_bytes": 12124,
+        "choice": "original_with_presentation_error",
+        "chosen_bytes": 12353
+      },
+      "passed": true
+    },
+    {
+      "name": "wrong-reconstruction",
+      "choice": {
+        "source_sha256": "68c336dea63783f4c481e521d290e992b2a89a0e3ebeb1001d7264c386ec2c7d",
+        "original_bytes": 12124,
+        "choice": "original_with_presentation_error",
+        "chosen_bytes": 12361
+      },
+      "passed": true
+    }
+  ],
+  "partial_write_calls": 2,
+  "invalid_sources_rejected": 2,
+  "sources": {
+    "presentation_choice_v1.py": "ccf0eb0e2ddc35f00d0d9a3a07fbcc3c529b6b2714ddabf751be13b735c061cf",
+    "probe_presentation_choice_v1.py": "b5a31f3aab2300eac1799501dbbaecdfb5fdee32eb9d55034ce41fda456e3eb4"
+  },
+  "scope": "Archived operation result plus stream fault injection; no new GUI operation or model call."
+}

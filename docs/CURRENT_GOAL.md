@@ -1,3 +1,7 @@
+## Presentation preparation failures retain original results
+
+presentation_choice_v1 falls back before emission with full original data and explicit formatting error; no-benefit cases emit original JSON. Linux controls pass composition, overhead avoidance, exception/mismatch preservation, partial-write propagation and invalid-source rejection. New explicit Inkscape v2 wiring is syntax-checked, not live-tested. See research/live_control/PRESENTATION_CHOICE.md. Output failure never appends a second frame or resends input. Earlier receipt construction/storage failures remain outside this fallback. Next runtime-negative live validation; no default promotion.
+
 ## Composed output used in actual invalid-input correction
 
 Inkscape seed228: not-a-number in X changed visible 50 to 0 despite completed program. Assistant read composed output/screenshots, corrected X86 and saved; independent SVG success preserves Y50/W40/H30. Audit passes 111 events/11 exchanges/26 frames and six exact composed payloads; runtime exit0. See research/live_control/INKSCAPE_COMPOSED_LIVE.md. No live model-token/speed claim. Initial/finish wrappers add overhead; presentation formatting failure currently raises after operation, so next validate fail-safe delivery before adoption. Nonempty held-input/runtime-negative coverage still open.
