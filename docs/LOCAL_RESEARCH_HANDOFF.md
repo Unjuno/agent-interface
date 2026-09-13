@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — request-scoped status queries including concurrent callers
+
+[Status correlation](../research/live_control/STATUS_CORRELATION.md) adds query
+identity in interactive v27 and supports it via boundary v2/cursor v5/socket v11.
+Live evaluator-fault test matches concurrent replies and verifies exact-query
+replay causes no new command. Three exact frames, one submit, release and returned
+prefix slices audited. Four identity controls pass. Task success stays unknown.
+Next implement bounded status fallback: fresh snapshots require new query IDs,
+and final_program must be checked independently from query identity.
+
 ## Latest follow-up — live evaluator exception recovered through retained status
 
 [Failed outcome wait](../research/live_control/FAILED_OUTCOME_WAIT.md) injects an
