@@ -1,5 +1,11 @@
 # Domain Coverage Matrix and Linux feasibility — 2026-09-13
 
+[Mindustry readiness self-use](MINDUSTRY_READINESS.md): the assistant resumed,
+observed unit spawn, moved right and paused using the unchanged OpenTTD backend.
+The initial save has no live player unit; save equality is not input readiness.
+Twelve exact frames and final independent samples support movement, not gameplay
+or resource-flow success. End-to-end tempo remains far from demonstrated parity.
+
 [Mindustry pinned-save follow-up](MINDUSTRY_RESET.md): four fresh GUI reloads of
 one archived save match all 75,000 measured tile rows and initial core copper.
 Reload screenshots also match. Player/input readiness, resource-flow scoring,

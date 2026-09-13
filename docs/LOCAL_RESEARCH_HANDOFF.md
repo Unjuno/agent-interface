@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — Mindustry actual resume/move/pause self-use
+
+[Readiness episode](../research/benchmark_discovery/MINDUSTRY_READINESS.md) uses
+unchanged session_v9/executor_v3: 3 programs, 12 exact frames, independent samples
+show unit spawn then eastward movement and final pause. Initial save has unit=null;
+it is not player-ready. Whole hold-step duration exceeds its requested hold budget,
+but physical key duration is missing and must not be inferred. No construction
+score, common latest-runtime integration, or human-speed claim; next gate is a
+player-ready fixture and resource-flow scoring calibration.
+
 ## Latest follow-up — Mindustry pinned-save reset projection
 
 [Mindustry reset](../research/benchmark_discovery/MINDUSTRY_RESET.md) records four

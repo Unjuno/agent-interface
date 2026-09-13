@@ -1,0 +1,66 @@
+{
+  "scope": "one known readiness episode; no held-out score or speedup",
+  "initial_player_ready": false,
+  "resume_and_movement_observed": true,
+  "oracle_samples": 858,
+  "exact_frames": 12,
+  "programs": [
+    {
+      "id": "resume",
+      "accepted_to_first_capture_ms": 92.173246,
+      "accepted_to_first_emit_ms": 144.143873,
+      "accepted_to_terminal_ms": 472.799666
+    },
+    {
+      "id": "inspect-spawn",
+      "accepted_to_first_capture_ms": 51.950925,
+      "accepted_to_first_emit_ms": 300.663177,
+      "accepted_to_terminal_ms": 323.761047
+    },
+    {
+      "id": "move-right-pause",
+      "accepted_to_first_capture_ms": 91.005408,
+      "accepted_to_first_emit_ms": 339.376897,
+      "accepted_to_terminal_ms": 1942.53357
+    }
+  ],
+  "holds": [
+    {
+      "id": "resume",
+      "step": 0,
+      "requested_hold_ms": 100,
+      "whole_step_ms": 347.898609,
+      "physical_key_down_duration_ms": null
+    },
+    {
+      "id": "move-right-pause",
+      "step": 0,
+      "requested_hold_ms": 800,
+      "whole_step_ms": 1245.866025,
+      "physical_key_down_duration_ms": null
+    },
+    {
+      "id": "move-right-pause",
+      "step": 1,
+      "requested_hold_ms": 100,
+      "whole_step_ms": 571.531942,
+      "physical_key_down_duration_ms": null
+    }
+  ],
+  "unit_dx_world": 202.158447265625,
+  "unit_dy_world": 0.1600341796875,
+  "first_live_sample": 255,
+  "first_live_tick": 95.75085365772247,
+  "initial_tick": 30.582210540771484,
+  "final_tick": 2775.3531160354614,
+  "initial_capture_to_final_terminal_ms": 71836.813521,
+  "between_program_terminal_and_next_admission_ms": [
+    18368.419536,
+    25294.540641
+  ],
+  "model_tokens": null,
+  "model_receipt_ns": null,
+  "task_success": null,
+  "timing_scope": "Python runtime process only; Java oracle sample indices are not wall-clock timestamps",
+  "audit_source_sha256": "b783f775421fef9056b5469143765c6f5a8bb9bb61482716a1e81ce70022402e"
+}
