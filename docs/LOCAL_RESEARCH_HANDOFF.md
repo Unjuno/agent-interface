@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — actual self-use exposes a 22-second outer boundary
+
+[Browser endpoint self-use](../research/live_control/ENDPOINTS_BROWSER_SELF_USE.md)
+uses v6 after actual initial/form image inspection. Correct submission, 13 exact
+frames, release, request lineage and direct-final drain skip pass. Caller main to
+stdout flush is 992/459 ms; form flush to next main is 22003 ms, with model/tool
+components unseparated. No matched speedup or model receipt claim. Next test
+displaying the received image in the same tool result as the send/wait response.
+The corrected initial app-selector launch error is retained separately.
+
 ## Latest follow-up — caller preparation and response processing now have endpoints
 
 [Client endpoints](../research/live_control/CLIENT_ENDPOINTS.md) adds optional
