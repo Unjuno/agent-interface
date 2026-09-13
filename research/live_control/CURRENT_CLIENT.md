@@ -33,6 +33,11 @@ output paths must be new. First acquire an observation and clock with the existi
 socket read command and persist that complete batch. Inspect the referenced image.
 Choose explicit steps; do not infer task success from input acceptance.
 
+For this WSL-hosted setup, the [combined report/image recipe](COMBINED_IMAGE_SELF_USE.md)
+can display the validated referenced image in the same outer tool response as the
+received records. It avoids a display-only model turn without choosing the next
+action automatically. The recipe preserves records and uses original image detail.
+
 prepared_exchange_v4 takes SOCKET, BATCH, RUN_DIRECTORY, PROGRAM_ID, STEPS_FILE,
 --lease-ms, --boundary terminal|outcome and --out NEW_ARTIFACT_DIRECTORY.
 Use terminal when another visual decision is required; outcome reserves the final

@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — combined report/image delivery removes a display-only turn
+
+[Combined image self-use](../research/live_control/COMBINED_IMAGE_SELF_USE.md)
+returns full action records and the referenced original image within one outer
+tool result. Actual assistant form replacement passes independent scoring and
+13-frame/release/lineage checks. The outer form boundary was 17475 ms versus
+22003 ms previously, but one sequential pair and different visible report text
+do not isolate speedup. Runtime/caller remain unchanged. Keep the combined display
+recipe for further self-use; next test larger tasks or new recovery cases.
+
 ## Latest follow-up — actual self-use exposes a 22-second outer boundary
 
 [Browser endpoint self-use](../research/live_control/ENDPOINTS_BROWSER_SELF_USE.md)
