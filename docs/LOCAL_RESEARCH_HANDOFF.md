@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — receipt-selected images used in a live Calc episode
+
+[Actual receipt image self-use](../research/live_control/RECEIPT_IMAGE_SELF_USE.md)
+saves the expected cells with two programs, one clock, no failed image view,
+and twelve exact audited frames. First-capture-to-effect socket return is
+48.495 s versus the prior 61.548 s; modal socket-return-to-admission is 13.540 s.
+These uncontrolled sequential episodes do not establish a causal speedup.
+The modal viewer now consumes the selector result in the same orchestration call.
+Next test a different visible decision/recovery case; avoid overfitting this save.
+
 ## Latest follow-up — select images from received references
 
 [Receipt image selection](../research/live_control/RECEIPT_IMAGE.md) replaces
