@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — accepted request identity persists through completion
+
+[Admitted lineage](../research/live_control/ADMITTED_LINEAGE.md) binds receive
+metadata only on actual executor acceptance in interactive_v26/socket v9. Two
+rejected attempts then a valid attempt reuse one action label; accepted, terminal
+and final score point only to the valid transport request. Saved token, three exact
+frames and owner close audited. Calc early-effect attachment is not yet exercised;
+request-scoped terminal consumption, full causal lineage and bounded retention remain open.
+
 ## Latest follow-up — transport/runtime rejection identity survives concurrent attempts
 
 [Request identity](../research/live_control/REQUEST_IDENTITY.md) connects private
