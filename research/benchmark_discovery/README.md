@@ -1,5 +1,10 @@
 # Domain Coverage Matrix and Linux feasibility — 2026-09-13
 
+[Mindustry flow-score calibration](MINDUSTRY_FLOW.md): six engine-authored GUI
+states distinguish complete, missing, reversed, partial, extra and empty routes.
+The extra route delivers 31 copper yet fails the 112-tile guard. These are scoring
+controls, not agent construction success or formal benchmark adoption.
+
 [Mindustry readiness self-use](MINDUSTRY_READINESS.md): the assistant resumed,
 observed unit spawn, moved right and paused using the unchanged OpenTTD backend.
 The initial save has no live player unit; save equality is not input readiness.

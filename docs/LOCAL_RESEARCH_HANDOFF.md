@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — Mindustry actual engine resource-flow calibration
+
+[Flow calibration](../research/benchmark_discovery/MINDUSTRY_FLOW.md) archives six
+fresh GUI cases and before/constructed/after samples. Complete delivers 32 copper;
+extra delivers 31 but fails the guard; missing/reversed/partial/empty deliver zero.
+Six malformed/open evidence controls remain UNKNOWN. Setup authored these states;
+no agent construction success. Next pilot needs player-ready empty-route setup,
+ordinary shared pointer input, and delivery accounting separate from build cost.
+
 ## Latest follow-up — Mindustry actual resume/move/pause self-use
 
 [Readiness episode](../research/benchmark_discovery/MINDUSTRY_READINESS.md) uses
