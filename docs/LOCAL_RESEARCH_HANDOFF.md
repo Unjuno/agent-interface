@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — serialized journal and actual assistant integration
+
+[Journal integration](../research/live_control/JOURNAL_INTEGRATION.md) resolves
+the probe ordering issue: four real X11 stalls preserve receipt order and release
+input while cancellation notification is blocked. Interactive_v17 uses persistent
+receipts and advertises decision evidence fields. Actual assistant xterm self-use
+passes saved-token scoring; total fifteen exact frames across self-use/stalls.
+No matched task-speedup or complete disk-error/concurrency qualification. Next
+evaluate the integrated entrypoint on matched tasks or an orthogonal domain.
+
 ## Latest follow-up — journal stall integration exposes ordering failure
 
 [Journal stalls](../research/live_control/JOURNAL_STALL.md): initial cohort 01
