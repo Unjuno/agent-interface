@@ -1,5 +1,12 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest prototype: [compact report binding v2](../research/live_control/DECISION_RECEIPT_V2.md).
+Own clock/submit/admission/terminal consistency checked; contradictory top-level
+receipts rejected and nested error paths surfaced. Three recorded cases/eight
+identity/state mutations plus nested error pass. Internal consistency only, not
+provenance, full schema validation or input authority. Next fresh known-fixture
+self-use with original image and explicit escalation to details on attention.
+
 Latest actual-use decision: [paged live result audited](../research/live_control/PAGED_LIVE.md).
 Eight exact frames, 31 events, four socket exchanges; saved SVG task passes.
 Seven pages add six CLI calls: 25.582 s capture-to-terminal, 95.544 s to evaluation;

@@ -1,5 +1,12 @@
 # Local research handoff — 2026-09-13
 
+Latest prototype: [compact report binding v2](../research/live_control/DECISION_RECEIPT_V2.md).
+Own clock/submit/admission/terminal consistency checked; contradictory top-level
+receipts rejected and nested error paths surfaced. Three recorded cases/eight
+identity/state mutations plus nested error pass. Internal consistency only, not
+provenance, full schema validation or input authority. Next fresh known-fixture
+self-use with original image and explicit escalation to details on attention.
+
 Latest prototype: [compact report index](../research/live_control/DECISION_RECEIPT.md).
 Three recorded outcomes indexed; interruption/stale reasons and four injected
 exception classes surface. Lossy index, not full schema validation or input approval.
