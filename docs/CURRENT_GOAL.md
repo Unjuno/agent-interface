@@ -1,3 +1,11 @@
+Latest integration/self-use: [existing servo with cause/wake](../research/live_control/CAUSE_SERVO_INTEGRATION.md).
+Reused session21/patch_servo5 and guided continuation with owner10/executor5. Model-chosen
+patch reaches saved x=66.94915 via one local correction; six socket exchanges/39 events/
+eight frames. Separate real focus fault at blocked yield releases before resume and
+returns focus_changed with no correction; fresh observation has no old cause.
+Receipt over-flags new servo schemas and mislabels numeric tracking.error as exception.
+Next typed compact servo presentation plus preserved failure cases; reuse existing
+robustness cohorts, no new servo policy, speed/token/freeze claim.
 Latest diagnosis: [drag anchor and visual correction](../research/live_control/DRAG_ANCHOR_DIAGNOSIS.md).
 Release-source review and held-phase images support first qualifying motion as anchor:
 physical pointer reaches endpoint but object displacement excludes initial coarse motion.
