@@ -1,3 +1,7 @@
+## Pending submit identity survives caller process loss
+
+Linux durable_submit_v1 commits uncertainty before transport and serializes cooperating callers with flock. Five separate worker invocations verify crash exit17, two new-submit refusals before transport, admission remaining pending and correlated released terminal resolution. Four attribution/release controls and cross-process lock contention pass. Recovery uses injected archived Inkscape replies with rebound identities; no new live GUI/network or power-loss claim. See research/live_control/DURABLE_SUBMIT.md. Next real write/crash/resume on the same live runtime; rejected events currently lack identity and conservatively remain pending.
+
 Actual checkpoint caller recovery: [Inkscape response abandonment](INKSCAPE_LOST_REPLY.md). One edit/save is recovered by reading from prior cursor; no resend. Scripted GUI test, not a general failure supervisor.
 
 Real transport continuation test: [split clock response over private socket](SPLIT_CLOCK_SOCKET.md). One clock request survives old response and pending timeout; synthetic runtime, not GUI/model performance.
