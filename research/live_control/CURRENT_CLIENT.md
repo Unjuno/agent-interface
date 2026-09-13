@@ -1,3 +1,26 @@
+Latest round-trip candidate: effect_checkpoint_v3 accepts one bounded verifier
+wait. Same-seed fresh Chromium A/B saves t000246 in both conditions: caller
+500ms polling needs10 post-UNKNOWN durable calls and5060.458ms; one6000/50ms
+verifier wait needs1 call and4897.769ms. Total calls15->6 and exact frames remain
+10 each. It still performs97 internal filesystem samples, holds the journal's
+single-writer exchange, and has no model calls, CPU/IO measurement or event
+subscription. Fourteen invalid controls and cross-OS audits pass. See
+research/live_control/EFFECT_WAIT.md. Next integrate the opt-in wait at a live
+model boundary or replace polling with application readiness; full goal open.
+
+Latest partial-terminal evidence: two fresh same-seed Chromium sessions expire
+the same six-step program before versus after its Return boundary. Strict v3
+evidence drives Luna-low to submit_once for3/6 and wait_and_check for4/6. Only
+the former receives one new fresh-admitted submission; both independently save
+t000245. The latter has zero post-UNKNOWN input and its first post-model query is
+VERIFIED. Model runners8.143/6.126s, input9803 each, expired admission-to-verified
+15.423/7.602s. The former requires ten polls, exposing missing event-driven
+effect readiness. Two calibration failures retained; Windows/Linux audit passes.
+See research/live_control/PARTIAL_TERMINAL_LIVE.md. Authored absent-title expiry
+and explicit boundary prompt; not organic interruption, reliability distribution
+or human tempo. Next test conflicting evidence or actual pixel redaction; full
+goal remains open.
+
 Latest live overlap evidence: one fresh Chromium session sends one form submission,
 gets explicit UNKNOWN at667.934ms from acceptance, then gives strict v3 evidence
 to one Luna/low call. The model chooses wait/check; its6.494s runner exceeds the

@@ -86,6 +86,14 @@ Luanti remains a feasibility candidate rather than demonstrated agent control.
   delayed effect progressed. Model computation took 6.494 seconds, leaving zero
   additional sleep; one read-only checkpoint then verified the exact value with
   no post-UNKNOWN input. This is overlap evidence from one authored task.
+- Two fresh same-seed partial-terminal cases expired before versus after Return.
+  Strict evidence drove submit-once for the 3/6 prefix and wait/check for 4/6;
+  only the former admitted new input and both independently succeeded. The new
+  submission needed ten effect polls, so event-driven readiness remains missing.
+- A fixed follow-up replaced those ten caller queries with one bounded verifier
+  query. Both fresh tasks succeeded; post-UNKNOWN detection fell from 5,060.458
+  to 4,897.769 ms. The worker still made 97 filesystem samples, so this proves
+  round-trip reduction rather than event-driven readiness or compute savings.
 - Lost-response recovery has been exercised for input outcomes and saved-effect
   queries. The current form episode recovered two queries by identity with zero
   resend and admitted no input after VERIFIED.
@@ -104,10 +112,10 @@ Luanti remains a feasibility candidate rather than demonstrated agent control.
 | Product Hunt / Agent Market demonstration | Research material exists; public demo and product packaging are not ready |
 
 The adversarial boundary rejects nine wrong or missing request/contract cases
-before model delivery, and the corrected delayed-effect series proves that prior
-execution changes wait-versus-submit decisions in one state. The next promotion
-gate covers partial terminals, conflicting evidence and actual redacted
-observations, followed by current-runtime Mindustry/OpenTTD
+before model delivery. Corrected delayed and partial-terminal experiments now
+show that prior execution and the completed prefix change wait-versus-submit
+decisions in three fresh states. The next promotion gate covers conflicting
+evidence and actual redacted observations, followed by current-runtime Mindustry/OpenTTD
 tasks with new geometry and the same recovery semantics. Human baselines and
 model-boundary timestamps must then be collected on identical task allocations.
 Only after those pass should the runtime/API be frozen and packaged.
@@ -119,4 +127,23 @@ Primary evidence: [research index](../RESEARCH.md), [current architecture](archi
 [compact fixed comparison](../research/live_control/COMPACT_PLANNER_EVIDENCE.md), and
 [compact live form](../research/live_control/COMPACT_LIVE_FORM.md), and
 [delayed-effect decision evidence](../research/live_control/DELAYED_EFFECT_DECISION.md), and
-[model-driven delayed-effect live use](../research/live_control/DELAYED_EFFECT_LIVE.md).
+[model-driven delayed-effect live use](../research/live_control/DELAYED_EFFECT_LIVE.md), and
+[partial-terminal live decisions](../research/live_control/PARTIAL_TERMINAL_LIVE.md), and
+[bounded effect wait](../research/live_control/EFFECT_WAIT.md).
+Latest round-trip candidate: a same-seed fresh Chromium A/B compares 500ms caller
+polling with one6000/50ms verifier wait. Both independently save t000246. The
+post-UNKNOWN path changes from10 durable calls/5060.458ms to1/4897.769ms; total
+calls15->6. It retains10 exact frames per episode and passes14 invalid controls
+plus cross-OS audit. The verifier still makes97 filesystem samples and holds the
+single-writer exchange; no event-subscription, CPU/IO, token or model benefit is
+claimed. See research/live_control/EFFECT_WAIT.md.
+
+Latest partial-terminal evidence: two fresh Chromium sessions with the same seed,
+goal and page expire at3/6 before Return versus4/6 after Return. Luna-low chooses
+submit_once versus wait_and_check; only the former gets one fresh-admitted input
+program, and both independently save t000245. Model runners8.143/6.126s,
+input9803 each, expired admission-to-VERIFIED15.423/7.602s. The first path needs
+ten post-decision queries; the second needs one and admits zero new input. Exact
+frames, raw model events, effects and calibration failures audit cross-OS. See
+research/live_control/PARTIAL_TERMINAL_LIVE.md. Authored absent-title expiry and
+explicit boundary prompt; no broad reliability or human-tempo claim.

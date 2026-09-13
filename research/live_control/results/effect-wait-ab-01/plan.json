@@ -1,0 +1,28 @@
+{
+  "seed": 246,
+  "delay_s": 5.0,
+  "conditions": {
+    "poll": {
+      "interval_ms": 500
+    },
+    "wait": {
+      "wait_ms": 6000,
+      "poll_ms": 50
+    }
+  },
+  "scope": "same fresh Chromium task/runtime candidate; caller polling versus one bounded verifier-side wait; no model calls",
+  "sources": {
+    "run_effect_wait_ab_v1.py": "1e00413b3a5cb7bca06a3a5a2122217fb9abf02b4505f2639e79fb65c2e201d0",
+    "delayed_effect_socket_v3.py": "9241181688554318b37806052c5c624288da1c2685e94de38a4463f18d3dce3e",
+    "delayed_effect_browser_entry_v3.py": "973a816dc4a4cd50874ff852a1694c28e2665490f22479a1d9a8d0b9c714cf51",
+    "checkpoint_wait_interactive_v1.py": "31c57c3858176c0241743baad6855286384bad8832f77b0abf1ef89f36e5cd2d",
+    "effect_checkpoint_v3.py": "6a9550430fa371995e19f3832f45428ca7692d6d918be193063ae2716754ae6a",
+    "effect_checkpoint_v2.py": "61dc773804f77e2699974861b5d68a57fa070974baa763228ab3e5a802738100",
+    "effect_checkpoint.py": "5c3224a53272a17c5110fa4da068e12d77c7cecdc83ddab82ca801319c0ef5e1",
+    "checkpoint_contract_v1.py": "265a3d2e5ace33b723e7e4be3aeb9674cf3c258b01b64f3c46918bd60ed8b8bd",
+    "durable_submit_v6.py": "ed00f7b3e9805eea650b261aec537a17c7f2517bba21fc7709b32f52a4e40da3",
+    "append_checkpoint_v1.py": "07e5eff9c704af3cf75e0dcb5e7b4c4d57b82e076e4ffafa320d08ee0af51741",
+    "received_continuation_v1.py": "7890589fbbc808b914cc6fefa43408cf727bb3b29a7fc8962451bb7a90d5027a",
+    "received_exchange_v2.py": "59353e6d405dee5084870caf4d66aa5546c02771014e7c8f09ad1e7a7901c6c3"
+  }
+}

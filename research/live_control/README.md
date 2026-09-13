@@ -1,5 +1,14 @@
 # Asynchronous live control: development evidence
 
+Latest round-trip experiment: [bounded verifier wait](EFFECT_WAIT.md). One
+declared long poll replaces ten caller checkpoint calls in a fixed delayed-effect
+A/B while retaining explicit UNKNOWN/VERIFIED evidence.
+
+Latest measured boundary: [partial-terminal live decisions](PARTIAL_TERMINAL_LIVE.md).
+Two same-seed Chromium programs expire before versus after Return; strict evidence
+drives one fresh submission versus zero-resend waiting and both finish with an
+independent saved-value check.
+
 Latest: [optional compact presentation and actual assistant pair](PRESENTATION.md)
 in `interactive_v10.py`. Full output remains the default.
 

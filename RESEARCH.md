@@ -14,7 +14,7 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Experimental ladder
 
-### Compact planner evidence and caller binding
+### Compact planner evidence, caller binding and partial terminals
 
 Path: [`research/live_control/`](research/live_control/COMPACT_PLANNER_EVIDENCE.md).
 Sixteen fixed-image model calls preserved 8/8 expected decisions in both full and
@@ -29,9 +29,16 @@ fixture then produced one real visually silent delayed effect: same-image model
 calls with execution evidence wait/check 4/4, while checkpoint-only calls submit
 once 4/4. This establishes decision relevance for those fields in one declared
 case. A fresh live follow-up then used one strict model wait/check while the effect
-completed, reaching VERIFIED with no post-UNKNOWN input or extra sleep. None of
-this establishes general reliability, human tempo, privacy-safe redaction or
-default adoption.
+completed, reaching VERIFIED with no post-UNKNOWN input or extra sleep. Two newer
+same-seed sessions expired before versus after Return. The model submitted once
+for the 3/6 prefix and waited for the 4/6 prefix; only the former admitted new
+input, and both reached independent success. The ten queries needed after the new
+submission expose missing event-driven effect readiness. None of this establishes
+general reliability, human tempo, privacy-safe redaction or default adoption.
+A same-seed no-model A/B then moves the bounded effect polling into one verifier
+request: post-UNKNOWN durable calls fall from 10 to 1 and completion detection
+from 5,060.458 to 4,897.769 ms. The verifier still performs 97 filesystem samples,
+so this is round-trip reduction rather than event-driven readiness or CPU savings.
 
 Primary artifacts:
 
@@ -40,6 +47,8 @@ Primary artifacts:
 - [`PLANNER_EVIDENCE_BINDING.md`](research/live_control/PLANNER_EVIDENCE_BINDING.md)
 - [`DELAYED_EFFECT_DECISION.md`](research/live_control/DELAYED_EFFECT_DECISION.md)
 - [`DELAYED_EFFECT_LIVE.md`](research/live_control/DELAYED_EFFECT_LIVE.md)
+- [`PARTIAL_TERMINAL_LIVE.md`](research/live_control/PARTIAL_TERMINAL_LIVE.md)
+- [`EFFECT_WAIT.md`](research/live_control/EFFECT_WAIT.md)
 
 ### First DOOM-engine transfer
 
