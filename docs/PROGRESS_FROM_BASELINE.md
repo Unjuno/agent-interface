@@ -78,6 +78,10 @@ Luanti remains a feasibility candidate rather than demonstrated agent control.
   full and 8/8 compact calls. Reported input fell from 80,564 to 77,880 tokens,
   a 3.33% reduction across the fixed calls. The first fresh live compact-driven
   form action then succeeded with one model call.
+- A same-image delayed-effect comparison exposed a compression limit. Retaining
+  prior execution used 9,759 input tokens/call and produced wait/check 4/4;
+  omitting it used 9,485 but represented a different state and produced
+  submit-once 4/4. Those 274 tokens are necessary semantics in this case.
 - Lost-response recovery has been exercised for input outcomes and saved-effect
   queries. The current form episode recovered two queries by identity with zero
   resend and admitted no input after VERIFIED.
@@ -95,10 +99,11 @@ Luanti remains a feasibility candidate rather than demonstrated agent control.
 | Easy installation and agent-agnostic API | Design intent only; no runnable distribution |
 | Product Hunt / Agent Market demonstration | Research material exists; public demo and product packaging are not ready |
 
-The first adversarial boundary now rejects nine wrong or missing request/contract
-cases before model delivery. The next promotion gate is a corrected model series
-where partial completion, unavailable verification and redacted observations
-genuinely change the next decision, followed by current-runtime Mindustry/OpenTTD
+The adversarial boundary rejects nine wrong or missing request/contract cases
+before model delivery, and the corrected delayed-effect series proves that prior
+execution changes wait-versus-submit decisions in one state. The next promotion
+gate covers partial terminals, conflicting evidence and actual redacted
+observations, followed by current-runtime Mindustry/OpenTTD
 tasks with new geometry and the same recovery semantics. Human baselines and
 model-boundary timestamps must then be collected on identical task allocations.
 Only after those pass should the runtime/API be frozen and packaged.
@@ -108,4 +113,5 @@ Primary evidence: [research index](../RESEARCH.md), [current architecture](archi
 [Mindustry current-runtime self-use](../research/benchmark_discovery/MINDUSTRY_BEND_V2_SELF_USE.md),
 [OpenTTD guarded placement](../research/openttd_task/GUARDED_PLACEMENT.md),
 [compact fixed comparison](../research/live_control/COMPACT_PLANNER_EVIDENCE.md), and
-[compact live form](../research/live_control/COMPACT_LIVE_FORM.md).
+[compact live form](../research/live_control/COMPACT_LIVE_FORM.md), and
+[delayed-effect decision evidence](../research/live_control/DELAYED_EFFECT_DECISION.md).

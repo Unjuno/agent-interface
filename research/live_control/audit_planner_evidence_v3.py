@@ -20,7 +20,12 @@ with tempfile.TemporaryDirectory(prefix='planner-evidence-v3-audit-') as directo
                              text=True, timeout=30)
     assert process.returncode == 0, process.stderr
     replayed = json.loads((Path(directory) / 'result/result.json').read_text(encoding='utf-8'))
-    assert replayed == recorded
+    def normalized(value):
+        value = dict(value)
+        value['sources'] = {name.replace('\\', '/'): digest
+                            for name, digest in value['sources'].items()}
+        return value
+    assert normalized(replayed) == normalized(recorded)
 print(json.dumps({'audit': 'passed', 'controls': len(recorded['adversarial_refusals']),
                   'valid_cases': len(recorded['valid_prior_views_preserved_except_explicit_binding']),
                   'model_calls': 0, 'actions_executed': 0}, indent=2))

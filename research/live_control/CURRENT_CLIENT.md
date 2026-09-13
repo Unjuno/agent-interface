@@ -1,10 +1,22 @@
+Latest decision-relevance evidence: a fetch-based Chromium fixture creates an
+actual completed submission whose artifact remains UNKNOWN for five seconds while
+the page stays visually unchanged. In eight same-image/common-prompt Luna/low
+calls, strict execution evidence yields wait/check4/4; checkpoint-only evidence
+yields submit-once4/4; zero verify on UNKNOWN. Input9759 vs9485/call means the274
+omitted tokens change semantics and are not lossless savings. Three setup failures
+and a loading-UI confound are retained; selected runtime audit verifies one Return,
+UNKNOWN->VERIFIED, exact saved value,10 frames/85 events. See
+research/live_control/DELAYED_EFFECT_DECISION.md. No live model wait or reliability
+bound; full goal open.
+
 Latest adversarial boundary candidate: planner_evidence_v3 requires the caller's
 expected request ID and completion contract, then refuses a valid but unrelated
 checkpoint before model delivery. Four archived real states preserve the v2 view
 plus explicit binding; nine wrong/missing identity/contract controls refuse with
 zero model calls/actions and replay audit passes. A separate eight-call partial-
 evidence comparison is retained as confounded because its common prompt disclosed
-the omitted prior-Save fact; it supports no field-removal claim. See
+the omitted prior-Save fact; it supports no field-removal claim. The corrected
+delayed-effect study above supersedes that comparison design. See
 research/live_control/PLANNER_EVIDENCE_BINDING.md. V3 is not yet live-default.
 
 Latest fixed-context compression evidence: planner_evidence_v2 retains checkpoint status/contract/request identity, scoped actual/digest, UNKNOWN reason, execution terminals, authority, no-retry and raw-evidence availability while omitting duplicated durable continuation. In16 predeclared fixed-image Luna/low calls across Chromium and Calc UNKNOWN/VERIFIED states, full and compact views both make8/8 expected decisions; no extra Save. Input80564->77880 tokens (-2684, -3.33%;335.5/call), with Calc dialog -704/call (-6.60%). Two samples/mode/case, no live latency claim. Measured v1 had a missing-contract UNKNOWN validation hole; frozen. V2 rejects malformed contracts and is byte-identical on all4 valid views. Two cross-OS audit path failures retained; final raw-call audit passes. See research/live_control/COMPACT_PLANNER_EVIDENCE.md. V2 has since driven one fresh live form action; see COMPACT_LIVE_FORM.md. Full goal open.

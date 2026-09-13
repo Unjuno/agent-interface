@@ -24,14 +24,19 @@ lost checkpoint replies recovered without resend. The newer v3 presenter binds
 the checkpoint to the caller's expected request ID and completion contract;
 nine adversarial identity/contract controls refuse before model delivery. A
 partial-evidence model comparison is retained as confounded because its common
-prompt disclosed the fact removed from one condition. None of this establishes
-general reliability, human tempo, privacy-safe redaction or default adoption.
+prompt disclosed the fact removed from one condition. A corrected Chromium
+fixture then produced one real visually silent delayed effect: same-image model
+calls with execution evidence wait/check 4/4, while checkpoint-only calls submit
+once 4/4. This establishes decision relevance for those fields in one declared
+case. None of this establishes general reliability, human tempo, privacy-safe
+redaction or default adoption.
 
 Primary artifacts:
 
 - [`COMPACT_PLANNER_EVIDENCE.md`](research/live_control/COMPACT_PLANNER_EVIDENCE.md)
 - [`COMPACT_LIVE_FORM.md`](research/live_control/COMPACT_LIVE_FORM.md)
 - [`PLANNER_EVIDENCE_BINDING.md`](research/live_control/PLANNER_EVIDENCE_BINDING.md)
+- [`DELAYED_EFFECT_DECISION.md`](research/live_control/DELAYED_EFFECT_DECISION.md)
 
 ### First DOOM-engine transfer
 

@@ -49,13 +49,14 @@ attempted. It therefore reintroduced the omitted action-history fact into both
 conditions. The pilot, calls, tokens and audit are retained, but the comparison
 is frozen as confounded and supports no compression or reliability claim.
 
-A corrected comparison needs a state where the screenshot alone does not reveal
-whether the side effect was submitted, and the common prompt must state only the
-general no-blind-retry policy. Candidate cases include a delayed browser submit
-or a save with no visible modal, paired with an independently known partial
-terminal. Redacted-observation semantics remain a separate experiment: hidden
-pixels must actually be withheld, explicitly marked UNKNOWN, and checked for
-alternate-channel leakage before model evaluation.
+[The corrected delayed-effect comparison](DELAYED_EFFECT_DECISION.md) now uses
+an actual Chromium submission whose saved effect arrives five seconds later
+without changing the page. With the same screenshot and common prompt, all four
+strict calls wait/check and all four checkpoint-only calls submit once. This
+shows that execution history is decision-relevant in that declared state and
+cannot be removed as lossless compression. Redacted-observation semantics remain
+a separate experiment: hidden pixels must actually be withheld, explicitly
+marked UNKNOWN, and checked for alternate-channel leakage before evaluation.
 
 Primary related issues are #34 (verified effects), #38 (redacted observations)
 and #39 (typed negative outcomes).

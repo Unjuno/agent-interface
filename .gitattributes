@@ -32,5 +32,11 @@ research/live_control/results/recovery-pair3-01/B/runtime/openttd.cfg -whitespac
 research/live_control/results/recovery-pair3-01/A/runtime/openttd.cfg -whitespace
 # Preserve measured pair 3 audit source hash, including its final blank line.
 research/live_control/audit_recovery_pair3_v1.py whitespace=-blank-at-eof
+# Preserve delayed-effect measured source hashes, including final blank lines.
+research/live_control/delayed_decision_schema_v1.py whitespace=-blank-at-eof
+research/live_control/delayed_effect_browser_entry_v*.py whitespace=-blank-at-eof
+research/live_control/delayed_effect_socket_v*.py whitespace=-blank-at-eof
+research/live_control/prepare_delayed_effect_v*.py whitespace=-blank-at-eof
+research/live_control/probe_delayed_effect_decisions_v1.py whitespace=-blank-at-eof
 research/live_control/results/recovery-pair4-01/A/runtime/openttd.cfg -whitespace
 research/live_control/results/recovery-pair4-01/B/runtime/openttd.cfg -whitespace
