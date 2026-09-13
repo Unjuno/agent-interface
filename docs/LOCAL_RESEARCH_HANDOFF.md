@@ -1,3 +1,10 @@
+Latest live checkpoint: [actual caller false-goal/effect separation](../research/live_control/EFFECT_CHECKPOINT_LIVE.md).
+Replacement now passes compact program checks yet fails saved task in two fresh
+trials. First effect request rejected before runtime; socket v2 forwards new effect
+operation and second trial returns scored immutable SVG before finish. Both exited
+0; fourteen exact frames and all reply slices audited. Five checkpoint guards and
+offline positive pass. No recovery attempted. Next inverse post-goal tracking-loss
+caller trial and recovery; keep benchmark oracle separate from local controller.
 Latest effect review: [preserved servo contradictions](../research/live_control/SERVO_EFFECT_REVIEW.md).
 Eight historical trials/59 exact frames and saved geometry audited. Completed/local
 goal can fail the saved task; tracking loss can follow a passed geometry score.

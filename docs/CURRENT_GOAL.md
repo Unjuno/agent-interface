@@ -1,3 +1,10 @@
+Latest live checkpoint: [actual caller false-goal/effect separation](../research/live_control/EFFECT_CHECKPOINT_LIVE.md).
+Two fresh replacement trials both return compact completed/local-goal with saved
+x=50 failure. First effect command rejected by transport whitelist; preserved and
+closed. Explicit socket v2 adds effect forwarding; second returns saved-effect
+failure before finish. Fourteen exact frames/raw responses/pins audited, five guard
+negatives and offline positive checked. No automatic retry or live recovery. Next
+fresh inverse post-goal tracking-loss case and recovery; no identity fix/promotion.
 Latest effect review: [preserved servo contradictions](../research/live_control/SERVO_EFFECT_REVIEW.md).
 Eight historical cases/59 exact frames audited, saved geometry independently
 recomputed. Replacement reports completed/local goal but effect fails; blue
