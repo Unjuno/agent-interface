@@ -98,6 +98,12 @@ Before making compact evidence the default, use v2 in a fresh live episode and
 add adversarial cases where conflicting identities, partial programs, unavailable
 verification and redacted observations genuinely change the next decision.
 
+Follow-up: [the fresh live form episode](COMPACT_LIVE_FORM.md) passed with one
+compact-driven model action. [Planner evidence binding](PLANNER_EVIDENCE_BINDING.md)
+adds caller-expected request/contract checks and refuses nine adversarial controls
+before model delivery. Its first partial-evidence model comparison is retained as
+confounded and does not close the partial, unavailable or redacted decision gates.
+
 Relevant artifacts:
 
 - `results/planner-evidence-controls-01/`: measured-v1 valid and malformed

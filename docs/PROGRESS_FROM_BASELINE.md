@@ -95,13 +95,13 @@ Luanti remains a feasibility candidate rather than demonstrated agent control.
 | Easy installation and agent-agnostic API | Design intent only; no runnable distribution |
 | Product Hunt / Agent Market demonstration | Research material exists; public demo and product packaging are not ready |
 
-The next promotion gate is not another success on the same known route. It is a
-fresh, adversarial series where compact evidence must preserve the right decision
-under conflicting identity, partial completion, unavailable verification and
-redacted observations, followed by current-runtime Mindustry/OpenTTD tasks with
-new geometry and the same recovery semantics. Human baselines and model-boundary
-timestamps must then be collected on identical task allocations. Only after those
-pass should the runtime/API be frozen and packaged.
+The first adversarial boundary now rejects nine wrong or missing request/contract
+cases before model delivery. The next promotion gate is a corrected model series
+where partial completion, unavailable verification and redacted observations
+genuinely change the next decision, followed by current-runtime Mindustry/OpenTTD
+tasks with new geometry and the same recovery semantics. Human baselines and
+model-boundary timestamps must then be collected on identical task allocations.
+Only after those pass should the runtime/API be frozen and packaged.
 
 Primary evidence: [research index](../RESEARCH.md), [current architecture](architecture.md),
 [domain feasibility](../research/benchmark_discovery/README.md),

@@ -1,0 +1,27 @@
+{
+  "format": "planner-evidence-v1",
+  "checkpoint": {
+    "format": "planner-checkpoint-v1",
+    "request_id": "b1d7d28669f742efa4b68f9802a847c1",
+    "status": "UNKNOWN",
+    "contract": {
+      "expected": {
+        "A1": 480,
+        "A2": 192
+      },
+      "kind": "saved_cells"
+    },
+    "reason": "sample_mismatch_window_open",
+    "observation_closed": false,
+    "task_completion": "not_scored",
+    "authority": "none",
+    "automatic_retry": "not_authorized",
+    "actual": {
+      "A1": null,
+      "A2": null
+    },
+    "next": "interpret_current_observation_then_require_fresh_admission"
+  },
+  "raw_evidence": "retained_by_caller",
+  "authority": "none"
+}
