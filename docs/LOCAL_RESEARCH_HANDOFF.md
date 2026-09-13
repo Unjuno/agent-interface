@@ -1,3 +1,9 @@
+Latest executed pair: [separate vs bundled GUI](../research/live_control/BUNDLE_PAIR_LIVE.md).
+bundle-pair-01 A thenB seed223/X69.5, identical9steps + initialPNG + finalSVG; both
+strict pass.3->1 programs,9->5 sockets; decision57.178->42.748s, not causal speed.
+16->18 frames,132 events/34 frames verified, exits0. No recovery needed. Next real
+focus/error test for bundled tail, then another desktop domain/layout conditional
+boundary. Keep default/freeze unchanged; no repeated normal-pair tuning.
 Latest attribution: [observation cost and registered bundling pair](../research/live_control/OBSERVATION_COST_PROFILE.md).
 Profile48 archived frames: field-table68.49s end-to-end vs1.91s completed steps /
 1.15s observation brackets. Capture-only optimization cannot remove most elapsed

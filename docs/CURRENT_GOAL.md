@@ -1,3 +1,9 @@
+Latest executed pair: [separate vs bundled GUI](../research/live_control/BUNDLE_PAIR_LIVE.md).
+Registered AB seed223/X69.5 executed once each: identical9steps/initialPNG/finalSVG,
+both strict pass. Programs3->1/socket9->5; GUI decision57.178s->42.748s, exploratory
+not causal speed. Frames16->18, all retained.132 events/34 frames audited, exits0,
+no recovery/fault in pair. Next real focus fault verifies bundled tail stop/release,
+then another domain/layout/conditional boundary; no normal-pair timing fishing.
 Latest attribution: [observation cost and registered bundling pair](../research/live_control/OBSERVATION_COST_PROFILE.md).
 48 existing frames across Inkscape/Calc checked. Field task68.49s includes1.91s in
 completed steps and1.15s observation brackets; most elapsed time is outside those
