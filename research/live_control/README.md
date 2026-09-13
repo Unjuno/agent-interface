@@ -1,5 +1,15 @@
 # Asynchronous live control: development evidence
 
+Latest changed-geometry result: [bounded effect memory on a new L fixture](OPENTTD_EFFECT_MEMORY_GEOMETRY_V3.md).
+The seed991004 task moves the five target tiles and visible position. Two distinct
+drags independently complete it with no surrounding changes or completed-segment
+repeat, but Astra needs five inspection turns to accept the first effect and
+leaves the second uncertain at the12-turn bound. It uses204,114 input tokens,
+195.604s model wait,62 frames and50 durable calls. The controller does not declare
+completion, and a stale result-filename assumption prevents the normal supervisor
+summary. The raw independent success and exit0 audit cross-OS. Hold the candidate
+while completion feedback and packaging are repaired.
+
 Latest unchanged result: [effect-memory replication](OPENTTD_EFFECT_MEMORY_REPLICATION_V2.md).
 The normalized v10 source matches v9 and independently completes the same L task
 on turn9 through the same two inspect/resolve boundaries. V9/v10 are2/2 hard

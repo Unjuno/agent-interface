@@ -63,6 +63,19 @@ uses151,842 input tokens and160.837s; both remain slower than v7. Advance to a
 changed geometry without promotion. See
 [memory replication](research/live_control/OPENTTD_EFFECT_MEMORY_REPLICATION_V2.md).
 
+The first changed-geometry allocation moves the same L objective to a byte-pinned
+seed991004 save and target tiles684,685,686,750,814. Two distinct drags complete
+the task with no forbidden or surrounding changes and no repeated completed
+segment. The first effect needs five inspection turns to become observed; the
+second remains uncertain at the12-turn bound. The independent score succeeds,
+but the controller never requests verification, so this is not hard success and
+semantic completion time is absent. The run uses12 model turns,204,114 input
+tokens,50 durable calls and195.604s model wait. It also exposes a supervisor
+filename assumption after a successful limit score; a typed outcome selector
+passes archived positive, negative and limit artifacts plus five refusal controls
+on Windows/WSL. Hold pending completion feedback and packaging repair. See
+[changed L geometry](research/live_control/OPENTTD_EFFECT_MEMORY_GEOMETRY_V3.md).
+
 ### Retained OpenTTD effect-state diagnosis
 
 The frozen seed991003 v6 run lacks a formal finish evaluation because its driver

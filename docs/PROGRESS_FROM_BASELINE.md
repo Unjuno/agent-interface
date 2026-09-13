@@ -6,13 +6,13 @@ baseline into a Linux/X11 control candidate with durable recovery, scoped local
 execution and independent effect checks. It still does not deliver human-tempo
 general computer use or an installable Agent Market product.
 
-Latest delta: bounded drag-effect memory now retains one unresolved OpenTTD
-mutation across inspection-only turns. Two preregistered fresh seed991003
-five-tile L episodes independently succeed in9 turns, with zero repeated
-completed-segment drags. They use151,853/151,842 input tokens and take
-153.027/160.837 seconds to semantic completion. This advances the candidate to
-changed-geometry testing without promotion. Reliable human-tempo task completion
-remains open.
+Latest delta: bounded drag-effect memory now transfers correct actuation to one
+changed seed991004 L geometry. Two distinct drags complete all five target tiles
+with zero surrounding changes or repeated completed-segment input. The planner
+uses12 turns and204,114 input tokens, however, and does not declare completion
+before the bound. The independent score succeeds after211.632 seconds to the
+second-drag feedback; controller-verified hard success and semantic completion
+timing remain absent. Reliable human-tempo task completion remains open.
 
 ## What changed
 
@@ -98,7 +98,7 @@ the rows must not be averaged into one difficulty score.
 | Desktop apps | Small Calc, Chromium, Inkscape and XTerm tasks; dialogs, focus loss, interruption, saving and independent effect checks | Unknown applications, richer window/scroll/drag workflows and repeated held-out tasks |
 | DOOM | Shared held-key/cancel/expiry readiness and later directional-input repair/assistant gameplay evidence | Stable continuous useful-feedback loop, reaction distribution and public real-time demo |
 | Mindustry | Actual assistant construction of eight directed conveyors on a known route; 112-tile guard and 49-copper post-control delivery; shared caller scripted replay and cancellation | Fresh route planning, multi-object control, event-driven recovery and much shorter decision gaps |
-| OpenTTD | Fixed Astra passes3/3 canonical closed-toolbar,1/1 pre-opened and1/1 seed991002 shifted straight geometry; adaptive1/2 and fixed Luna0/2; bounded effect memory passes2/2 on the seed991003 five-tile L with independent scoring and zero repeated completed-segment drags | L-objective transfer to changed geometry, fewer/slimmer model boundaries, fuller order balancing, matched human control, scroll/window complexity and long-horizon planning |
+| OpenTTD | Fixed Astra passes3/3 canonical closed-toolbar,1/1 pre-opened and1/1 seed991002 shifted straight geometry; adaptive1/2 and fixed Luna0/2; bounded effect memory passes2/2 on seed991003; one seed991004 L run independently completes at the12-turn bound without controller verification | Efficient semantic completion on changed L geometry, multiple held-out geometries, fewer/slimmer model boundaries, fuller order balancing, matched human control, scroll/window complexity and long-horizon planning |
 | Luanti | Current-engine launch, deterministic tiny pad/pose and read-only node/pose feasibility | Normal navigation, camera-mode contract, inventory, interaction and successful construction |
 
 DOOM remains valuable for continuous motor pressure. Mindustry and OpenTTD are

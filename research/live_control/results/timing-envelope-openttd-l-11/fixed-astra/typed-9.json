@@ -1,0 +1,22 @@
+{
+  "kind": "act",
+  "steps": [
+    {
+      "op": "pointer_move",
+      "x": 674,
+      "y": 263
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 1000
+    }
+  ],
+  "rationale": "Inspect the middle tile of the pending A-to-B arm to distinguish continuous road pavement from the field beneath the overlapping signs.",
+  "intent": "inspect",
+  "expected_effect": "The construction outline identifies the middle path tile, allowing its pavement and connection toward both endpoints to be assessed.",
+  "checkpoint": {
+    "prior_turn": 5,
+    "status": "uncertain",
+    "evidence": "The endpoint inspection shows a tile outline near A, but overlapping labels still obscure the middle of the arm and its connection to B; continuous pavement is not yet established."
+  }
+}

@@ -53,6 +53,18 @@ boundaries and independently succeeds on turn9. The live memory candidate is now
 tokens and160.837s, so the speed deficit remains. Advance to changed geometry,
 without promotion. See [memory replication](research/live_control/OPENTTD_EFFECT_MEMORY_REPLICATION_V2.md).
 
+The first changed-geometry allocation uses a new seed991004 save and moves the
+five-tile L contract to tiles684,685,686,750,814. The two distinct drags complete
+the task with zero surrounding changes and zero repeated completed-segment input,
+but Astra needs five inspection turns to accept the first effect and leaves the
+second uncertain at the12-turn bound. The independent engine score succeeds;
+controller-verified hard success does not, and semantic completion time is not
+recorded. The run uses204,114 input tokens,195.604s model wait and50 durable
+calls. A separate selector repairs the discovered result/failure filename
+assumption in offline cross-OS controls. Hold the memory candidate and repair
+completion feedback before another live geometry run. See
+[changed L geometry](research/live_control/OPENTTD_EFFECT_MEMORY_GEOMETRY_V3.md).
+
 Process-scoped timing envelopes now cover fresh Calc and OpenTTD tasks. Calc
 saves 480/192 in 23.976s with 21.334s of wrapper-observed model wait. OpenTTD uses
 batched delayed-hover contact sheets and an adaptive two-Luna/six-Astra route to
