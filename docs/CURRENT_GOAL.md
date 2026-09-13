@@ -1,3 +1,7 @@
+## Early input-stopped boundary verified through actual private socket
+
+Added explicit stopped_scope/cursor/socket candidates: action-scoped input_stopped is now a valid boundary. A real AF_UNIX/subprocess probe with synthetic blocked capture receives early focus_changed, then verifies terminal timeout without restart, busy rejection of new input, and cancellation reply while capture remains blocked. After releasing the gate, one capture completes, terminal retains original cause, and processes exit 0. Seven exchanges/13 events checked against raw history. See research/live_control/STOPPED_TRANSPORT.md. Next: live client representation of input-stopped/capture-pending versus terminal, then actual Calc comparison. No hard capture timeout or default promotion.
+
 ## Optional post-release observation now honors explicit cancellation
 
 Executor v8 skips remaining optional captures after cancel/close. Ten controlled thread-gate runs compare v7/v8: both still wait for blocked capture/output, but v8 does not take another sample after that call returns (or any sample when stopped before collection). A persistent unrelated-focus X11 run also passes physical release, no tail input, passive-only capture and fresh-intent isolation; audit verifies 11 frames. See research/live_control/POST_RELEASE_STOP.md. Next: immediate interruption delivery with a separately represented passive-observation lifecycle and transport backpressure. No hard capture timeout/default promotion claimed.
