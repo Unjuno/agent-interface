@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — live observation wait blocks cancel; bounded concurrency helps
+
+[Socket cancel delay](../research/live_control/SOCKET_CANCEL_DELAY.md) retains
+serial v2 failure: a two-second read delays cancellation response 1988 ms and
+verified key release 1976 ms. Bounded eight-handler v3 yields 49 ms response and
+93 ms release while the read still waits. Actual key admission, release and 22
+exact frames audited; live disconnect/retry clock is not duplicated. First v3
+startup-timeout driver failure retained as cohort 02; corrected same-process
+wait completes cohort 03. Saturation/control reservation and blocked stdin remain
+unverified; no broad latency guarantee or default promotion.
+
 ## Latest follow-up — combined send/wait reduces caller operations in self-use
 
 [Send/wait self-use](../research/live_control/SEND_WAIT_SELF_USE.md) adds private
