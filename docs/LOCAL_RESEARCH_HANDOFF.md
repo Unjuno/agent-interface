@@ -2297,3 +2297,27 @@ transparent state; repeat and unknown-state calls refuse. The cross-OS schema
 probe passes. Next preregister proactive use before the first targeting mutation,
 and measure correctness plus added runtime/model boundaries. Do not generalize
 the fixture's initial view-state knowledge to arbitrary OpenTTD sessions.
+
+## Latest follow-up — pre-action view and sign anchoring (2026-09-14)
+
+V5 applies `openttd.ensure_trees_transparent` before the first model observation
+in428.854ms through two durable calls and zero model boundaries. Fixed Astra uses
+7 turns,115,045 input tokens,106.691s model wait and10.380s feedback time, then
+falsely verifies. Independent scoring rejects it: B-to-C is correct, while
+A-to-B is one row high at tiles912..915. This sampled work reduction does not
+establish correctness or speed.
+
+V6 retains that pre-action and adds only the official general relation that an
+OpenTTD sign annotates a map square. It exposes no calibrated coordinates. Astra
+issues12 actions,199,613 input tokens,211.916s model wait and22.298s feedback
+time without verify or safe stop. At the limit, the driver exits before consuming
+the supervisor abort, so no independent finish evaluation is emitted. Hard
+success is false and final task state is unavailable. All52 exact frames,50
+durable calls, typed proposals and tracebacks are retained without retry; a
+separate posthoc artifact audit passes cross-OS.
+
+Next repair the bounded-limit finish handshake, then test mechanically derived
+annotation-to-action-surface evidence on held-out OpenTTD geometries. More prompt
+text is rejected as the next recovery direction. DOOM remains one continuous-
+control stress domain in the Domain Coverage Matrix, and freeze status is
+unchanged.

@@ -1,0 +1,165 @@
+{
+  "artifact_audit_passed": true,
+  "preregistered": true,
+  "hard_success": false,
+  "independent_task_outcome": "unavailable",
+  "outcome_limit": "the driver raised at its proposal-loop else branch before consuming the supervisor abort, so no independent finish evaluation was emitted",
+  "harness_failure": {
+    "type": "RuntimeError",
+    "detail": "driver exited before failure-evaluation.json",
+    "automatic_retry": false
+  },
+  "negative_control": {
+    "passed": true,
+    "model_calls": 0,
+    "durable_calls": 2,
+    "pointer_steps": 0
+  },
+  "preaction_duration_ms": 416.977423,
+  "model_turns": [
+    {
+      "turn": 1,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16034,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 103,
+        "reasoning_output_tokens": 21
+      }
+    },
+    {
+      "turn": 2,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16528,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 70,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "turn": 3,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16332,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 164,
+        "reasoning_output_tokens": 46
+      }
+    },
+    {
+      "turn": 4,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16820,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 381,
+        "reasoning_output_tokens": 263
+      }
+    },
+    {
+      "turn": 5,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16675,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 252,
+        "reasoning_output_tokens": 118
+      }
+    },
+    {
+      "turn": 6,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16501,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 218,
+        "reasoning_output_tokens": 67
+      }
+    },
+    {
+      "turn": 7,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16758,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 342,
+        "reasoning_output_tokens": 192
+      }
+    },
+    {
+      "turn": 8,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16799,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 290,
+        "reasoning_output_tokens": 128
+      }
+    },
+    {
+      "turn": 9,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16876,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 423,
+        "reasoning_output_tokens": 280
+      }
+    },
+    {
+      "turn": 10,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16655,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 199,
+        "reasoning_output_tokens": 52
+      }
+    },
+    {
+      "turn": 11,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16897,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 332,
+        "reasoning_output_tokens": 168
+      }
+    },
+    {
+      "turn": 12,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16738,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 192,
+        "reasoning_output_tokens": 41
+      }
+    }
+  ],
+  "model_wait_total_ms": 211916.3879,
+  "proposal_to_useful_feedback_total_ms": 22297.5551,
+  "input_tokens_total": 199613,
+  "cached_input_tokens_total": 143616,
+  "runtime_exact_frames": 52,
+  "durable_calls": 50,
+  "checkpoint_pending_at_terminal": 11,
+  "last_frame_sha256": "4ba7dcbd7505fd50513d61a4d3dd7c10f25673f510884e0a05e19006414e88cc",
+  "automatic_retry": false,
+  "interpretation": "the general sign-to-tile instruction did not produce a model verify or safe stop within 12 turns; it increased deliberation versus v5, while task correctness is unscored because of the retained harness failure",
+  "scope": "one candidate episode; no correctness, latency-distribution, human-tempo, or general token claim",
+  "audit_sha256": "c37d1a9ca2053c58f23b820bc4074e2edf56a9c97ef585a81bd26047ee2d55f6"
+}

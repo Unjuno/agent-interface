@@ -6,6 +6,14 @@ baseline into a Linux/X11 control candidate with durable recovery, scoped local
 execution and independent effect checks. It still does not deliver human-tempo
 general computer use or an installable Agent Market product.
 
+Latest delta: the tracked OpenTTD pre-action view transition costs428.854ms
+with no model boundary. It reduces one sampled episode from12 turns/198,746
+input tokens to7/115,045, but independent correctness still fails and the model
+falsely verifies. A prose-only sign-to-tile refinement then reaches12 turns and
+199,613 tokens without verify or safe stop; a retained limit-handshake defect
+prevents an independent final score. Visibility and measurement improved, while
+reliable human-tempo task completion remains open.
+
 ## What changed
 
 | Stage | Initial state | Current evidence | Status |
@@ -90,7 +98,7 @@ the rows must not be averaged into one difficulty score.
 | Desktop apps | Small Calc, Chromium, Inkscape and XTerm tasks; dialogs, focus loss, interruption, saving and independent effect checks | Unknown applications, richer window/scroll/drag workflows and repeated held-out tasks |
 | DOOM | Shared held-key/cancel/expiry readiness and later directional-input repair/assistant gameplay evidence | Stable continuous useful-feedback loop, reaction distribution and public real-time demo |
 | Mindustry | Actual assistant construction of eight directed conveyors on a known route; 112-tile guard and 49-copper post-control delivery; shared caller scripted replay and cancellation | Fresh route planning, multi-object control, event-driven recovery and much shorter decision gaps |
-| OpenTTD | Fixed Astra passes3/3 canonical closed-toolbar,1/1 pre-opened and1/1 seed991002 shifted geometry; adaptive1/2 and fixed Luna0/2; dynamic geometry score, typed failures, TimingEnvelopes and contact sheets | Multiple held-out geometries, changed objectives, fuller order balancing, matched human control, scroll/window complexity and long-horizon planning |
+| OpenTTD | Fixed Astra passes3/3 canonical closed-toolbar,1/1 pre-opened and1/1 seed991002 shifted geometry; adaptive1/2 and fixed Luna0/2; the changed five-tile L remains0 successful with typed/independent failures; dynamic geometry score, TimingEnvelopes and contact sheets | Correct changed-objective grounding, multiple held-out geometries, fuller order balancing, matched human control, scroll/window complexity and long-horizon planning |
 | Luanti | Current-engine launch, deterministic tiny pad/pose and read-only node/pose feasibility | Normal navigation, camera-mode contract, inventory, interaction and successful construction |
 
 DOOM remains valuable for continuous motor pressure. Mindustry and OpenTTD are

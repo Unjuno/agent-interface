@@ -163,3 +163,20 @@ and permits proactive pre-action use as well as uncertain-effect recovery. This
 is schema evidence only. A general provider still needs view-state detection,
 and a fresh model allocation must test whether proactive transparency improves
 correctness enough to justify its cost.
+
+## Pre-action transparency and sign semantics
+
+Allocation v5 applies the tracked opaque-to-transparent transition before the
+first planner observation. It takes428.854ms, adds no model boundary and reaches
+a rejected verify in7 turns/115,045 input tokens, versus v4's12/198,746. B-to-C
+is correct, but A-to-B again occupies tiles912..915 one row above the target.
+
+Allocation v6 changes only the planner instruction to reflect the official
+OpenTTD Sign manual: sign boxes annotate map squares, so construction should
+target the underlying tile surface. It exposes no calibrated coordinates. Astra
+makes12 action proposals and uses199,613 input tokens without verify or safe
+stop. At the limit the driver raises before reading the supervisor abort, so no
+independent evaluation is emitted. All52 exact frames,50 durable calls, typed
+proposals and the traceback are retained; the posthoc artifact audit passes on
+Windows and WSL, and the run was not retried. Fix the finish handshake before
+testing interface-derived annotation/surface evidence on held-out geometries.

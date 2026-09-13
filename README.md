@@ -52,8 +52,16 @@ mutations, but Astra calls the toggle three times and safely stops on turn 12
 after 198,746 input tokens without completing the task. Fresh scripted
 calibration shows five nearby offsets build the intended A-to-B tiles and that
 the tool state survives a 15-second program boundary. The next contract changes
-the toggle into a one-way, state-aware pre-action view method; live efficacy is
-not yet established.
+the toggle into a one-way, state-aware pre-action view method.
+The tracked pre-action OpenTTD view transition now has live evidence. It costs
+428.854ms and adds no model boundary. Astra reaches a rejected verify in7 turns
+and115,045 input tokens, down from v4's12/198,746, but again builds A-to-B one
+row high. A follow-up adding only general sign-to-map-square semantics reaches
+the12-turn limit with199,613 tokens and no verify or safe stop. Its independent
+outcome is unavailable because the driver exits before consuming the limit
+abort. The failure is retained without retry; prose-only anchoring is not
+promoted.
+
 The newest observation-boundary study physically withholds one live Chromium
 region: full input reads the exact value 4/4 and redacted input preserves explicit
 policy UNKNOWN 4/4. The region geometry audits exactly, but metadata adds 112

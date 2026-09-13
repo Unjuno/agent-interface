@@ -218,5 +218,12 @@ Fresh zero-model calibration shows the model's offset-0 drag coordinates can
 build intended tiles 977..979, and the tool state survives a 15-second program
 boundary. `semantic_checkpoint_v4.py` replaces the method with a tracked,
 one-way `openttd.ensure_trees_transparent` candidate and refuses repeat or
-unknown-state use. Its admission probe passes on Windows and WSL; fresh model
-efficacy remains untested.
+unknown-state use. Its admission probe passes on Windows and WSL. Fresh model
+efficacy is now measured: a preregistered v5 allocation applies the transition
+before turn1 in428.854ms with no model boundary. Astra uses7 turns/115,045 input
+tokens, but falsely verifies after placing A-to-B one row high. V6 adds only the
+general sign-to-map-square relation and uses12 turns/199,613 tokens with no
+verify or safe stop. The driver exits at its proposal limit before consuming
+the abort, leaving the task outcome unavailable. The artifact audit passes and
+no retry was made. Repair the finish handshake, then test mechanically derived
+annotation-to-surface evidence on held-out geometries.

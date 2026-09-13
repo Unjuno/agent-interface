@@ -455,3 +455,15 @@ episode's zero effect. `semantic_checkpoint_v4` replaces the toggle-shaped
 method with a tracked `ensure_trees_transparent` transition, permits proactive
 use and refuses repeats or unknown state. Fresh model efficacy and general
 view-state detection remain open.
+
+The proactive transition now has a preregistered live allocation. It changes
+the view in428.854ms with two durable calls and zero added model boundaries.
+Fixed Astra uses7 turns/115,045 input tokens instead of v4's12/198,746, but
+falsely verifies after building A-to-B one row high; B-to-C is correct.
+
+A second preregistered allocation adds only the official, general sign-to-map-
+square relation. It makes12 action proposals, consumes199,613 input tokens and
+never verifies or safely stops. At the turn limit the driver raises before
+consuming the supervisor abort, so no independent evaluation is emitted. The
+run is hard-false but its final task state is unscored. Fix that handshake, then
+test mechanically derived annotation-to-surface evidence on held-out geometry.
