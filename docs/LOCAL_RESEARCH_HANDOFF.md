@@ -1,4 +1,13 @@
-Latest new-geometry evidence: seed991002 produces a different byte-pinned save,
+Latest retained-effect evidence: v6 has no formal finish evaluation, but its263
+continuous source-pinned observer records prove a stable partial A-to-B road from
+record91 through the final172 records. B-to-C stays empty; hard success is false.
+The model repeats the same A-to-B drag on turns5,9,11 and never attempts B-to-C.
+Bounded path crops measure3,628 changed pixels for the first drag and250/451 for
+the repeats; the observer, not pixels, supplies semantic attribution. Windows/WSL
+audits pass. See research/live_control/OPENTTD_EFFECT_POSTHOC_V1.md. Next run the
+candidate live on a changed preregistered case; no speed/token benefit is claimed.
+
+Prior new-geometry evidence: seed991002 produces a different byte-pinned save,
 map and screen position with target tiles465..467, forbidden529..531 and a
 42-tile guard. The geometry-derived scorer preserves old positive/negative
 outcomes and rejects changed geometry, missing/unknown guard records,

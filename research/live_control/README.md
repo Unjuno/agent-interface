@@ -224,9 +224,11 @@ before turn1 in428.854ms with no model boundary. Astra uses7 turns/115,045 input
 tokens, but falsely verifies after placing A-to-B one row high. V6 adds only the
 general sign-to-map-square relation and uses12 turns/199,613 tokens with no
 verify or safe stop. The driver exits at its proposal limit before consuming
-the abort, leaving the task outcome unavailable. The artifact audit passes and
-no retry was made. Repair the finish handshake, then test mechanically derived
-annotation-to-surface evidence on held-out geometries.
+the abort, leaving the formal finish outcome unavailable. A later posthoc audit
+of263 continuous observer records proves partial A-to-B construction and a
+missing B-to-C leg. The model repeats the same A-to-B drag three times. See
+[OPENTTD_EFFECT_POSTHOC_V1.md](OPENTTD_EFFECT_POSTHOC_V1.md). The run remains a
+hard failure and no retry was made.
 
 That finish handshake is repaired in `timing_envelope_openttd_l_driver_v5.py`.
 The model-free limit probe reaches12 observe-only proposals and records the
@@ -241,3 +243,10 @@ exact zero-change stability frame. A fixed Astra A/B/B/A endpoint diagnostic
 then passes2/2 for opaque signs and2/2 for transparent signs, with30,572 input
 tokens per condition. The sign transform has no detected grounding/token benefit
 and is not promoted. Next target live tool/effect-state evidence.
+
+That retained effect-state audit now exists. The final172 observer records keep
+owned road on tiles977..979 while1043/1107 remain empty, with forbidden and
+surrounding checks intact. Automatically derived drag-region sheets measure
+3,628 changed pixels on the first A-to-B drag versus250/451 on its repeats.
+These pixels do not score construction; the independent observer does. Next use
+the evidence builder in a changed preregistered live comparison.

@@ -74,6 +74,16 @@ the L-task failure is more likely in maintaining tool/effect state across live
 actions and judging whether the drag took effect. The next candidate should
 improve action-to-effect evidence rather than add another label-view toggle.
 
+## Retained effect-state follow-up
+
+The subsequent posthoc observer audit resolves part of the v6 uncertainty. Its
+formal finish evaluation is absent, but263 continuous independent records show
+A-to-B tiles977..979 becoming owned road once and staying stable for the final172
+records. B-to-C remains empty and hard success is false. The planner repeats the
+same A-to-B drag three times and never attempts B-to-C. Bounded path crops provide
+before/after presentation evidence; the independent observer remains the semantic
+gate. See `OPENTTD_EFFECT_POSTHOC_V1.md`.
+
 Official sources:
 
 - https://wiki.openttd.org/en/Manual/Transparency%20options

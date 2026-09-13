@@ -57,10 +57,12 @@ The tracked pre-action OpenTTD view transition now has live evidence. It costs
 428.854ms and adds no model boundary. Astra reaches a rejected verify in7 turns
 and115,045 input tokens, down from v4's12/198,746, but again builds A-to-B one
 row high. A follow-up adding only general sign-to-map-square semantics reaches
-the12-turn limit with199,613 tokens and no verify or safe stop. Its independent
+the12-turn limit with199,613 tokens and no verify or safe stop. Its formal finish
 outcome is unavailable because the driver exits before consuming the limit
-abort. The failure is retained without retry; prose-only anchoring is not
-promoted.
+abort. A posthoc audit of263 continuous source-pinned observer records proves a
+stable partial result: A-to-B is built, B-to-C remains empty and the model repeats
+the same A-to-B drag twice. The failure is retained without retry; prose-only
+anchoring is not promoted. See [effect-state diagnosis](research/live_control/OPENTTD_EFFECT_POSTHOC_V1.md).
 
 The v6 limit-path evidence gap is repaired in driver v5: a model-free live probe
 applies12 observe-only proposals, accepts the supervisor stop, emits an

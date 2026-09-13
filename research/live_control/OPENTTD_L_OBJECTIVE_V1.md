@@ -176,10 +176,13 @@ OpenTTD Sign manual: sign boxes annotate map squares, so construction should
 target the underlying tile surface. It exposes no calibrated coordinates. Astra
 makes12 action proposals and uses199,613 input tokens without verify or safe
 stop. At the limit the driver raises before reading the supervisor abort, so no
-independent evaluation is emitted. All52 exact frames,50 durable calls, typed
-proposals and the traceback are retained; the posthoc artifact audit passes on
-Windows and WSL, and the run was not retried. Fix the finish handshake before
-testing interface-derived annotation/surface evidence on held-out geometries.
+formal finish evaluation is emitted. All52 exact frames,50 durable calls, typed
+proposals and the traceback are retained; the run was not retried. A later audit
+of263 continuous source-pinned observer records proves that A-to-B tiles977..979
+were built and stable for the final172 records while B-to-C remained empty. The
+model repeats the identical A-to-B drag on turns5,9,11 and never attempts B-to-C.
+The posthoc artifact/effect audits pass on Windows and WSL. See
+`OPENTTD_EFFECT_POSTHOC_V1.md`.
 
 Driver v5 repairs the exposed limit handshake without modifying frozen v4. A
 zero-model/zero-pointer live probe sends12 observe-only proposals, waits for the

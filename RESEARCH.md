@@ -14,6 +14,19 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Experimental ladder
 
+### Retained OpenTTD effect-state diagnosis
+
+The frozen seed991003 v6 run lacks a formal finish evaluation because its driver
+exits before consuming the supervisor abort. Its continuous independent observer
+log still proves partial state. Across263 records, one transition builds owned
+road on A-to-B tiles977..979; the final172 records preserve it. B-to-C tiles
+1043/1107 remain empty, forbidden and surrounding tiles remain valid, and the
+hard score is false. The model repeats the same A-to-B drag on turns5,9 and11 and
+never attempts the second leg. A bounded path crop measures3,628 changed pixels
+on the first drag versus250/451 on the repeats, but semantic attribution remains
+with the observer. See [effect-state diagnosis](research/live_control/OPENTTD_EFFECT_POSTHOC_V1.md).
+This is one archived diagnostic, not a live interface improvement or speed claim.
+
 ### Process-scoped end-to-end timing envelope
 
 Path: [`research/live_control/TIMING_ENVELOPE_V1.md`](research/live_control/TIMING_ENVELOPE_V1.md).
@@ -464,9 +477,10 @@ falsely verifies after building A-to-B one row high; B-to-C is correct.
 A second preregistered allocation adds only the official, general sign-to-map-
 square relation. It makes12 action proposals, consumes199,613 input tokens and
 never verifies or safely stops. At the turn limit the driver raises before
-consuming the supervisor abort, so no independent evaluation is emitted. The
-run is hard-false but its final task state is unscored. Fix that handshake, then
-test mechanically derived annotation-to-surface evidence on held-out geometry.
+consuming the supervisor abort, so no formal finish evaluation is emitted. The
+continuous observer later proves a stable partial A-to-B result and missing
+B-to-C leg; the run remains hard-false. See the retained effect-state diagnosis
+above.
 
 Driver v5 now closes the limit-path race. A zero-model, zero-pointer live probe
 applies12 observe-only proposals and then obtains a scored

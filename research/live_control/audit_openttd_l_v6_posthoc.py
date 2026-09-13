@@ -2,12 +2,15 @@
 import hashlib
 import json
 from pathlib import Path
+import sys
 
 from semantic_checkpoint_v4 import next_checkpoint_turn, parse
 from timing_envelope_v1 import interval, validate
 
 HERE = Path(__file__).resolve().parent
 BASE = HERE / 'results/timing-envelope-openttd-l-06'
+sys.path.insert(0, str(HERE.parent / 'openttd_task'))
+from guarded_l_score_v1 import score  # noqa: E402
 
 
 def read(path):
@@ -16,6 +19,19 @@ def read(path):
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def observer_records(path):
+    records = []
+    for line in path.read_text(encoding='utf-8').splitlines():
+        marker = line.find('AIT ')
+        if marker >= 0:
+            records.append(json.loads(line[marker + 4:]))
+    return records
+
+
+def observer_signature(record):
+    return tuple((tile['id'], tile['road'], tile['owner']) for tile in record['guard'])
 
 
 def main():
@@ -83,13 +99,69 @@ def main():
     terminals = [e for e in events if e.get('event') == 'terminal']
     assert len(observations) == 52
     assert terminals and all(e['release']['verified'] and not e['release']['keys_down'] and not e['release']['buttons_down'] for e in terminals)
+
+    observer_path = root / 'runtime/game-stderr.txt'
+    observer = observer_records(observer_path)
+    assert len(observer) == 263
+    transitions = [index for index in range(1, len(observer))
+                   if observer_signature(observer[index]) != observer_signature(observer[index - 1])]
+    assert transitions == [91]
+    baseline, final = observer[0], observer[-1]
+    final_score = score(final, baseline)
+    assert not final_score['success']
+    assert final_score['checks'] == {
+        'target_owned_roads': False,
+        'ordered_bidirectional_connections': False,
+        'forbidden_tiles_clear': True,
+        'surrounding_road_owner_unchanged': True,
+    }
+    final_tiles = {tile['id']: tile for tile in final['tiles']}
+    assert all(final_tiles[tile] == {'id': tile, 'road': True, 'owner': 0}
+               for tile in (977, 978, 979))
+    assert all(final_tiles[tile] == {'id': tile, 'road': False, 'owner': -1}
+               for tile in (1043, 1107, 1041, 1042, 1105, 1106))
+    assert final['edges'] == [
+        [977, 978, True, True], [978, 979, True, True],
+        [979, 1043, False, False], [1043, 1107, False, False],
+    ]
+    assert all(observer_signature(row) == observer_signature(final) for row in observer[91:])
+
+    drag_turns = []
+    for turn in range(1, 13):
+        typed = read(root / f'typed-{turn}.json')
+        for step in typed['steps']:
+            if step['op'] == 'pointer_drag':
+                drag_turns.append({'turn': turn, 'points': step['points'],
+                                   'duration_ms': step['duration_ms']})
+    expected_points = [{'x': 705, 'y': 240}, {'x': 673, 'y': 256}, {'x': 641, 'y': 272}]
+    assert [row['turn'] for row in drag_turns] == [5, 9, 11]
+    assert all(row['points'] == expected_points for row in drag_turns)
+    assert not any(step['op'] == 'pointer_drag' and step['points'] != expected_points
+                   for turn in range(1, 13)
+                   for step in read(root / f'typed-{turn}.json')['steps'])
+
     preaction = read(root / 'preaction.json')
     report = {
         'artifact_audit_passed': True,
         'preregistered': True,
         'hard_success': False,
-        'independent_task_outcome': 'unavailable',
-        'outcome_limit': 'the driver raised at its proposal-loop else branch before consuming the supervisor abort, so no independent finish evaluation was emitted',
+        'formal_finish_outcome': 'unavailable',
+        'formal_finish_limit': 'the driver raised at its proposal-loop else branch before consuming the supervisor abort, so no independent finish evaluation was emitted',
+        'continuous_independent_observer_outcome': {
+            'status': 'partial_A_to_B_only',
+            'records': len(observer),
+            'unique_states': 2,
+            'transition_indices': transitions,
+            'stable_final_records': len(observer) - transitions[0],
+            'A_to_B_owned_road_tiles': [977, 978, 979],
+            'B_to_C_missing_tiles': [1043, 1107],
+            'forbidden_tiles_clear': [1041, 1042, 1105, 1106],
+            'score': final_score,
+            'source': observer_path.relative_to(HERE).as_posix(),
+            'source_sha256': sha(observer_path),
+        },
+        'model_drag_attempts': drag_turns,
+        'effect_diagnosis': 'the retained episode contains a stable independent A-to-B construction effect, followed by two repeated drags over the same A-to-B points and no B-to-C drag; full task failure therefore includes missed effect/state progression rather than input-delivery failure alone',
         'harness_failure': error,
         'negative_control': {'passed': True, 'model_calls': 0, 'durable_calls': 2, 'pointer_steps': 0},
         'preaction_duration_ms': preaction['duration_ns'] / 1e6,
@@ -103,8 +175,8 @@ def main():
         'checkpoint_pending_at_terminal': required,
         'last_frame_sha256': sha(root / 'runtime' / '052.png'),
         'automatic_retry': False,
-        'interpretation': 'the general sign-to-tile instruction did not produce a model verify or safe stop within 12 turns; it increased deliberation versus v5, while task correctness is unscored because of the retained harness failure',
-        'scope': 'one candidate episode; no correctness, latency-distribution, human-tempo, or general token claim',
+        'interpretation': 'the general sign-to-tile instruction did not produce a model verify or safe stop within 12 turns. Formal finish evaluation is unavailable, but the continuous source-pinned observer proves stable partial A-to-B construction and missing B-to-C construction',
+        'scope': 'one retained candidate episode; observer evidence proves only its partial tile state, not complete correctness, latency distribution, human tempo, or a general token result',
         'audit_sha256': sha(Path(__file__)),
     }
     (BASE / 'posthoc-audit.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
