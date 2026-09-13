@@ -1,3 +1,5 @@
+Real transport continuation test: [split clock response over private socket](SPLIT_CLOCK_SOCKET.md). One clock request survives old response and pending timeout; synthetic runtime, not GUI/model performance.
+
 Continuation candidate: [retained images, received cursors and request-correlated clocks](RECEIVED_CONTINUATION.md). Archive replay and injected transport tests only; use v2 wrapper for pre-send session validation.
 
 Actual shared-contract desktop use: [Inkscape guarded click and cursor recovery](INKSCAPE_GUARDED_CLICK.md). One saved edit succeeds; rendering mismatch and stale-clock caller failure are retained. Experimental only.

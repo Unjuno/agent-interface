@@ -1,3 +1,7 @@
+## Received continuation now verified over real private socket with split clock
+
+Unchanged stopped socket plus synthetic subprocess gate: first response old clock, next read times out after own echo, same pending request later matches via command-free read. Five real AF_UNIX calls/seven events, one new clock command and two read-only followups; image sequence1 retained while cursor advances7. Process checked live during timeout, final exit0, sockets removed. Audit/source/event slices pass. See research/live_control/SPLIT_CLOCK_SOCKET.md. No GUI/model timing; client socket exceptions and dropped responses remain untested. Next actual caller migration/lost-response recovery, not repeated split-clock passes.
+
 ## Received continuation separates latest cursor from retained image evidence
 
 New session-scoped checkpoint replays actual Inkscape stale-clock failure: cursor25 retains image4/event21; own clock absent, then command-free read obtains correlated current clock instead of old one. Full79-event/JSON/overlap replay and six refusal controls pass. Received exchange v2 injects recorded replies through caller function: one command/one read; cross-session rejected before transport. V1 pre-send identity gap retained/unpromoted. See research/live_control/RECEIVED_CONTINUATION.md. Offline/injected-transport only; next real private socket split-clock/exception verification and caller migration. No live speed claim.
