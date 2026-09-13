@@ -1,3 +1,14 @@
+Latest observation boundary: redacted_observation_v2 physically replaces pixels
+inside an explicitly half-open region and presents typed UNKNOWN semantics. On
+one fresh Chromium source frame, Luna-low reads the exact value4/4 with the full
+image and returns REDACTED_BY_POLICY4/4 with the redacted image; no action follows.
+The declared box matches the changed-pixel bound.100 renders take38.757ms median,
+p95 46.917ms. Input rises9302->9414 tokens/call, so this is not compression.
+Revision1's ambiguous inclusive edge, a fixed-filename measurement failure and
+cross-platform PNG encoding differences are retained. See REDACTED_OBSERVATION.md.
+Promotion is limited to pixel withholding/explicit unknown semantics; action,
+authorized refinement and crop/history/alternate-channel bypass remain open.
+
 Latest live wait integration: planner_evidence_v4 explicitly accepts durable
 v4/v5/v6 and exposes journal provenance. Fresh seed248 partial-terminal sessions
 again produce submit_once at3/6 and wait_and_check at4/6; only the former admits

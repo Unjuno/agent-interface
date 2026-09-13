@@ -14,6 +14,19 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Experimental ladder
 
+### Actual pixel redaction with explicit unknown semantics
+
+Path: [`research/live_control/REDACTED_OBSERVATION.md`](research/live_control/REDACTED_OBSERVATION.md).
+On one fresh Chromium source frame, four full-image Luna/low calls read the exact
+field value and four redacted-image calls returned `UNKNOWN /
+REDACTED_BY_POLICY`; no post-observation action was allowed. V2 declares half-open
+box semantics and its changed-pixel bound matches the policy box. One hundred
+renders measured 38.757 ms median and 46.917 ms p95. Explicit metadata increased
+reported input by 112 tokens/call, so this is not compression evidence. The
+ambiguous v1 geometry, a fixed-filename measurement failure, and platform PNG
+encoding differences are retained. Task action around hidden regions and bypass
+resistance remain open; no broad privacy claim follows.
+
 ### Compact planner evidence, caller binding and partial terminals
 
 Path: [`research/live_control/`](research/live_control/COMPACT_PLANNER_EVIDENCE.md).

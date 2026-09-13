@@ -11,6 +11,7 @@ general computer use or an installable Agent Market product.
 | Stage | Initial state | Current evidence | Status |
 | --- | --- | --- | --- |
 | Observation | Repeated full screenshots around individual actions | Exact unchanged-frame suppression, exact tile transport, changed-region and compact planner views | Proven in scoped fixtures; general visual/token policy remains experimental |
+| Evidence withholding | Missing pixels could be confused with empty or absent content | Actual region pixels withheld with explicit policy UNKNOWN; full 4/4 exact versus redacted 4/4 UNKNOWN | Geometry/readability gate passed in one Chromium frame; action and bypass tests remain |
 | Input | Coordinates and short scripted keyboard/pointer actions | Absolute intent deadlines, focus/surface binding, held input, cancellation/expiry, verified release and tail suppression | Strong scoped Linux/X11 evidence |
 | Execution | One action followed by another model boundary | Bounded multi-step programs, phased submit, passive followups and local continuation | Working in selected desktop/game tasks; semantic replans still need the model |
 | Freshness | Screenshot age was mostly implicit | Observation identity/age, stale refusal, route and binding guards, re-observation after interruption | Mechanism exists; model delay can still age a frame by seconds |
@@ -101,6 +102,10 @@ Luanti remains a feasibility candidate rather than demonstrated agent control.
 - Lost-response recovery has been exercised for input outcomes and saved-effect
   queries. The current form episode recovered two queries by identity with zero
   resend and admitted no input after VERIFIED.
+- Actual pixel redaction now preserves explicit uncertainty in one fresh frame:
+  full input reads the exact value 4/4 and redacted input returns policy UNKNOWN
+  4/4. Rendering is 38.757 ms median, while metadata adds 112 input tokens/call;
+  this improves evidence semantics rather than compression.
 
 ## Distance to the stated goal
 
@@ -118,8 +123,9 @@ Luanti remains a feasibility candidate rather than demonstrated agent control.
 The adversarial boundary rejects nine wrong or missing request/contract cases
 before model delivery. Corrected delayed and partial-terminal experiments now
 show that prior execution and the completed prefix change wait-versus-submit
-decisions in three fresh states. The next promotion gate covers conflicting
-evidence and actual redacted observations, followed by current-runtime Mindustry/OpenTTD
+decisions in three fresh states. Actual redacted-observation geometry and
+readability semantics now pass one scoped gate. The next gate covers conflicting
+evidence plus action/refinement and alternate-channel bypass, followed by current-runtime Mindustry/OpenTTD
 tasks with new geometry and the same recovery semantics. Human baselines and
 model-boundary timestamps must then be collected on identical task allocations.
 Only after those pass should the runtime/API be frozen and packaged.
@@ -135,6 +141,7 @@ Primary evidence: [research index](../RESEARCH.md), [current architecture](archi
 [partial-terminal live decisions](../research/live_control/PARTIAL_TERMINAL_LIVE.md), and
 [bounded effect wait](../research/live_control/EFFECT_WAIT.md), and
 [live partial-terminal wait](../research/live_control/PARTIAL_TERMINAL_WAIT.md).
+Latest observation boundary: [actual pixel redaction](../research/live_control/REDACTED_OBSERVATION.md).
 Latest live integration: seed248 again yields model submit_once for3/6 before
 Return and wait_and_check for4/6 after Return. Only the former admits one new
 submission; both use one bounded effect query and independently save t000248.

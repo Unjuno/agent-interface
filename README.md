@@ -14,6 +14,10 @@ bottlenecks and remaining release gates](docs/PROGRESS_FROM_BASELINE.md).
 Latest research handoff: [measured progress, failures and next steps](docs/LOCAL_RESEARCH_HANDOFF.md).
 
 Current Linux research caller: [components, usage and evidence limits](research/live_control/CURRENT_CLIENT.md).
+The newest observation-boundary study physically withholds one live Chromium
+region: full input reads the exact value 4/4 and redacted input preserves explicit
+policy UNKNOWN 4/4. The region geometry audits exactly, but metadata adds 112
+input tokens/call and task-level action/bypass tests remain open.
 The assistant has used received-image references and bounded programs in Calc
 and browser fixtures. An optional final-result read collected ready Calc early
 and final evidence in one caller invocation, and skipped itself on a browser
