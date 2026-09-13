@@ -1,3 +1,7 @@
+## Optional post-release observation now honors explicit cancellation
+
+Executor v8 skips remaining optional captures after cancel/close. Ten controlled thread-gate runs compare v7/v8: both still wait for blocked capture/output, but v8 does not take another sample after that call returns (or any sample when stopped before collection). A persistent unrelated-focus X11 run also passes physical release, no tail input, passive-only capture and fresh-intent isolation; audit verifies 11 frames. See research/live_control/POST_RELEASE_STOP.md. Next: immediate interruption delivery with a separately represented passive-observation lifecycle and transport backpressure. No hard capture timeout/default promotion claimed.
+
 ## Passive post-release candidate reduces explicit recovery observations in one Calc run
 
 Executor v7 emits input_stopped after verified release, then two passive captures before the unchanged needs_decision terminal. Six synthetic tests and actual Calc seed 225 passed. Same initial image/input steps as prior run; no extra observe program needed (2 to 0), socket exchanges 13 to 9, saved values correct. Collection adds about 336–339ms per interrupted terminal; no hard capture deadline or causal speed/token claim. See research/live_control/POST_RELEASE_OBSERVATION.md and results/calc-table-live-02. Next: unrelated focus, blocked capture/output and cancellation boundaries; consider immediate interruption delivery separately. Defaults unchanged.
