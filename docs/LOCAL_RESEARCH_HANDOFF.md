@@ -1,5 +1,11 @@
 # Local research handoff — 2026-09-13
 
+Latest paired result: [OpenTTD pair 3 complete](../research/live_control/RECOVERY_PAIR3.md).
+Six of eight episodes executed. A/B both pass guard scoring and require one
+recovery call/read; 14 exact frames and 94 events audited. Initial PNG, steps,
+and runtime manifests match. Full times A 64.668 s / B 317.617 s retain B's
+presentation interruption; no causal speed claim. Next pair 4 depth 3 A then B.
+
 Latest execution: [OpenTTD pair 3 B](../research/live_control/RECOVERY_PAIR3.md).
 Five of eight episodes executed; A pending. One recovery read/call, 47 events and
 7 exact frames audited, independent guarded road score passed, cleanup verified.
