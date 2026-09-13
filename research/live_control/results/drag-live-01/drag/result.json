@@ -1,0 +1,309 @@
+{
+  "receipt": {
+    "format": "decision-receipt-v3",
+    "source": {
+      "sha256": "be964c2d6addbfc40dd7e2251fd797579e06c5f6978c61bb3dad13d6a96299b7",
+      "bytes": 45555
+    },
+    "reported_state": "terminal",
+    "reported_reason": null,
+    "program_write_may_have_been_attempted": true,
+    "terminals": [
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          20
+        ],
+        "record": {
+          "event": "terminal",
+          "id": "drag",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 3,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 40479203596,
+            "valid_until_ns": 69236648923
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "terminal_ns": 40479260016,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 40479262968
+        }
+      }
+    ],
+    "image": {
+      "status": "image",
+      "sequence": 11,
+      "capture_ns": 40415738330,
+      "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/drag-live-01/runtime/009.png",
+      "relative_path": "009.png",
+      "sha256": "04c3247af78b977bf59ef45b78408d53e80016282b3134b41b670e8f22f78161",
+      "authority": "none",
+      "freshness": "historical referenced capture; no new observation"
+    },
+    "event_index": {
+      "command": {
+        "count": 2,
+        "paths": [
+          [
+            "exchanges",
+            0,
+            "reply",
+            "records",
+            0
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            0
+          ]
+        ]
+      },
+      "clock": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            0,
+            "reply",
+            "records",
+            1
+          ]
+        ]
+      },
+      "accepted": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            1
+          ]
+        ]
+      },
+      "step_started": {
+        "count": 3,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            2
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            9
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            14
+          ]
+        ]
+      },
+      "pointer_admission": {
+        "count": 4,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            3
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            6
+          ]
+        ]
+      },
+      "observation": {
+        "count": 5,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            7
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            12
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            15
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            16
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            17
+          ]
+        ]
+      },
+      "step_completed": {
+        "count": 3,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            8
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            13
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            19
+          ]
+        ]
+      },
+      "input_admission": {
+        "count": 2,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            10
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            11
+          ]
+        ]
+      },
+      "settle_result": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            18
+          ]
+        ]
+      },
+      "terminal": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            20
+          ]
+        ]
+      }
+    },
+    "attention": [],
+    "detail_review_required": false,
+    "task_success": "unknown; program completion is not independent task scoring",
+    "coverage": "Index of exchange events only; routine payloads and other report fields remain in source. Not full review or schema validation.",
+    "authority": "none; no new input approval, refreshed image, or model receipt",
+    "limits": "Binding checks only recorded consistency, not authenticity or full nested schema semantics. No attention is not approval. Unknown nested fields may need manual review.",
+    "program_binding": {
+      "program_id": "drag",
+      "request_id": "program-f4b1780c2be942ffa4d9353c20d98b9a",
+      "terminal": {
+        "event": "terminal",
+        "id": "drag",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 3,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 40479203596,
+          "valid_until_ns": 69236648923
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "terminal_ns": 40479260016,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 40479262968
+      },
+      "meaning": "internally consistent recorded program binding; not task success, provenance, current lease or input approval"
+    }
+  },
+  "image": {
+    "status": "image",
+    "sequence": 11,
+    "capture_ns": 40415738330,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/drag-live-01/runtime/009.png",
+    "relative_path": "009.png",
+    "sha256": "04c3247af78b977bf59ef45b78408d53e80016282b3134b41b670e8f22f78161",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  }
+}

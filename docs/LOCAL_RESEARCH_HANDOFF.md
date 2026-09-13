@@ -1,3 +1,10 @@
+Latest task-accuracy evidence: [selected-object drag failures](../research/live_control/DRAG_TASK_ACCURACY.md).
+Two reviewed drag/save episodes both saved x=58.474575 against predeclared x=66.95 +/-1.
+Legacy rightward-only evaluator says success; stricter saved-SVG displacement scorer
+correctly fails both. Endpoint dwell candidate did not help and is not adopted.
+Identical initial/selected images and saved SVGs; 89 events/22 exact frames audited.
+Next inspect actual motion/application response before another primitive change.
+Input completion is not displacement success; no speed/token/freeze promotion.
 Latest finite comparison: [actual pointer wake](../research/live_control/POINTER_WAKE_COMPARISON.md).
 Six scripted Inkscape arms, same backend/owner and matching within-pair initial pixels.
 Old interrupted click reproduces completed-with-cause; new returns needs_decision
