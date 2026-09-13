@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — bind modal proposals to explicit observation dependencies
+
+[Bound modal proposal](../research/live_control/BOUND_MODAL.md) associates the
+visual candidate with immutable session/sequence/time/window/focus/geometry and
+image digest. Four frozen image cases and synthetic dependency/age negatives pass.
+Pass means requires_new_admission, no input authority. This is offline consistency,
+not live race prevention; next wire trusted context sampling to ordinary admission
+and preserve the distinction between prepared proposal and authorized execution.
+
 ## Latest follow-up — fresh modal translations preserve focus discrimination
 
 [Modal translation](../research/live_control/MODAL_TRANSLATION.md) tests two
