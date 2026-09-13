@@ -1,3 +1,7 @@
+## Passive post-release candidate reduces explicit recovery observations in one Calc run
+
+Executor v7 emits input_stopped after verified release, then two passive captures before the unchanged needs_decision terminal. Six synthetic tests and actual Calc seed 225 passed. Same initial image/input steps as prior run; no extra observe program needed (2 to 0), socket exchanges 13 to 9, saved values correct. Collection adds about 336–339ms per interrupted terminal; no hard capture deadline or causal speed/token claim. See research/live_control/POST_RELEASE_OBSERVATION.md and results/calc-table-live-02. Next: unrelated focus, blocked capture/output and cancellation boundaries; consider immediate interruption delivery separately. Defaults unchanged.
+
 ## Calc live modal recovery through the candidate socket
 
 Actual seed-225 Calc self-use with executor v6 and full receipt/state table saved A1=816 and A2=345 successfully. Natural dialog open/close each yielded needs_decision/focus_changed with zero completed steps despite useful application effects. Fresh observations recovered without old causes; two partially painted images required extra observe programs. Audit verified 72 events, 13 exchanges, 14 frames and workbook. See research/live_control/CALC_TABLE_LIVE.md. Next candidate: bounded observation-only continuation after interruption, preserving release and requiring a new input decision. No default promotion or speed/token claim.
