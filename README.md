@@ -10,6 +10,13 @@
 
 Latest research handoff: [measured progress, failures and next steps](docs/LOCAL_RESEARCH_HANDOFF.md).
 
+Current Linux research caller: [components, usage and evidence limits](research/live_control/CURRENT_CLIENT.md).
+The assistant has used received-image references and bounded programs in Calc
+and browser fixtures. An optional final-result read collected ready Calc early
+and final evidence in one caller invocation, and skipped itself on a browser
+direct-final result. These are small research episodes, not proof of general
+speedup or human-like tempo; outer decision waits remain measured in seconds.
+
 ## The hypothesis
 
 Most computer-use systems still resemble:

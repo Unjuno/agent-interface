@@ -1,0 +1,42 @@
+{
+  "command": {
+    "op": "submit",
+    "id": "replace_submit",
+    "expected_sequence": 10,
+    "valid_until_ns": 68151760860,
+    "decision_evidence": {
+      "delivery_id": "delivery:14",
+      "observation_sequence": 10,
+      "producer": "assistant"
+    },
+    "steps": [
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "a"
+      },
+      {
+        "op": "text",
+        "text": "t991029"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      }
+    ],
+    "finish_after": true
+  },
+  "image": {
+    "status": "image",
+    "sequence": 10,
+    "capture_ns": 38105987979,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/drain-browser-self-use-01/006.png",
+    "relative_path": "006.png",
+    "sha256": "b9cb258a806fae6ecf27a89c0e26c59082aa38fdc4de228838f918a639235a29",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "source_clock_ns": 38151760860,
+  "lease_ms": 30000,
+  "authority": "none; historical deadline, viewing and runtime admission remain required"
+}

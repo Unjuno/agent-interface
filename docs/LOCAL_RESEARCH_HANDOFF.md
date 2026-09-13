@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — browser final result skips the optional drain
+
+[Browser drain self-use](../research/live_control/DRAIN_BROWSER_SELF_USE.md)
+uses candidate v4 for actual visible draft replacement. Final evaluation returns
+directly, attempted=false, with no drain request. Three socket calls and thirteen
+exact frames audited; total processing endpoint 47.961 s, outer form gap 13.934 s.
+No speedup claim. README now links a [current client guide](../research/live_control/CURRENT_CLIENT.md)
+that consolidates versions, tested paths and missing product/performance evidence.
+
 ## Latest follow-up — optional drain has a shared absolute I/O deadline
 
 [Drain socket deadline](../research/live_control/DRAIN_SOCKET_DEADLINE.md) replaces
