@@ -52,6 +52,16 @@ proposal against version2 refuses with `current_binding_mismatch`. Inputs
 retained. Next test crop/history/alternate-channel bypass and append/partial
 selection refusals; full goal remains open.
 
+Redacted delivery/shape controls: the successful seed254 artifact is accepted
+only as one current full-coverage image with empty history and alternate-channel
+sets. Thirteen crop/raw-image/OCR/UI-tree/clipboard/history/binding/digest/
+authority variants refuse before model delivery with zero calls/actions. Eight
+append/insert/partial-selection/caller-step schema variants also refuse; the
+only emitted action plan remains click, Control+A, exact text, Save, observe.
+Cross-OS audit passes. This is offline enforcement over one archived artifact,
+not OS isolation or provider-retention evidence. Next return to dynamic-domain
+tempo using end-to-end timing envelope Issue #46; full goal remains open.
+
 Latest live wait integration: planner_evidence_v4 explicitly accepts durable
 v4/v5/v6 and exposes journal provenance. Fresh seed248 partial-terminal sessions
 again produce submit_once at3/6 and wait_and_check at4/6; only the former admits

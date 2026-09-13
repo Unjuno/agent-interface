@@ -125,6 +125,10 @@ Luanti remains a feasibility candidate rather than demonstrated agent control.
   The no-authority call stops; a new observation and version permits only exact
   whole replacement and Save, which verifies independently without disclosing
   the old value. Stale replay and eleven altered-authority controls refuse.
+- A bound presentation bundle accepts that current redacted artifact and refuses
+  13 crop/history/raw/OCR/UI-tree/clipboard and identity variants before model
+  delivery. Eight shape controls keep append, partial selection and caller steps
+  outside the whole-replacement capability. These are offline boundary controls.
 
 ## Distance to the stated goal
 
@@ -144,9 +148,9 @@ before model delivery. Corrected delayed and partial-terminal experiments now
 show that prior execution and the completed prefix change wait-versus-submit
 decisions in three fresh states. Actual redacted-observation geometry,
 readability, adjacent action, hidden-target refusal and one post-model policy
-transition and one authorized whole-replacement refinement now pass scoped gates.
-The next gate covers alternate-channel/history bypass plus append/partial-selection refusal, followed
-by current-runtime Mindustry/OpenTTD
+transition, authorized whole replacement, and declared presentation/plan bypass
+controls now pass scoped gates. The next work returns to current-runtime
+Mindustry/OpenTTD
 tasks with new geometry and the same recovery semantics. Human baselines and
 model-boundary timestamps must then be collected on identical task allocations.
 Only after those pass should the runtime/API be frozen and packaged.

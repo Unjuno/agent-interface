@@ -70,6 +70,14 @@ are 9,432/9,529 tokens; 15 frames replay exactly; eleven altered-authority
 controls and Windows/Linux audits pass. This does not authorize append, partial
 selection, inference, alternate-channel access, or general hidden-field control.
 
+Pre-model controls then bind that live artifact into a single-current-view
+bundle. Thirteen crop/history/raw-image/OCR/UI-tree/clipboard/binding/digest/
+authority variants refuse with zero model calls and GUI actions. Eight proposal
+shape variants likewise prevent whole-replacement authority from expressing
+append, insert, partial selection or caller-defined steps. Cross-OS audit passes.
+This is an offline boundary over one archived artifact, not proof of OS isolation,
+provider retention behavior, or every future observation channel.
+
 ### Compact planner evidence, caller binding and partial terminals
 
 Path: [`research/live_control/`](research/live_control/COMPACT_PLANNER_EVIDENCE.md).

@@ -20,6 +20,10 @@ The next seed254 session exercises that refinement: identical redacted pixels
 produce stop without authority, then a new observation/policy permits one exact
 whole replacement and Save. The task independently verifies, the private old
 value is absent from model I/O, and stale replay refuses.
+The follow-up presentation bundle accepts one current full-coverage redacted
+artifact and refuses 13 crop/history/alternate-channel variants before model
+delivery. Eight plan-shape controls exclude append, partial selection and
+caller-supplied steps from whole-replacement authority.
 
 Latest live integration: [bounded effect wait after a partial terminal](PARTIAL_TERMINAL_WAIT.md).
 The model again distinguishes expiry before and after Return; one verifier query

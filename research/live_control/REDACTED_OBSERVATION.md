@@ -163,6 +163,30 @@ This promotes exact whole replacement under current scoped authority; append,
 partial selection, general secret-field interaction, bypass and deployment
 retention remain open.
 
+## Follow-up: pre-model bypass and mutation-shape controls
+
+A presentation bundle now binds one current full-coverage redacted image, its
+observation/policy identity, explicit authority, empty history and an empty
+alternate-channel list before model delivery. The accepted bundle is rebuilt
+from the successful seed-254 artifact. Thirteen altered bundles refuse before
+model delivery: crop-only coverage, raw source image, OCR, UI tree, clipboard,
+bounded history, raw-history access, missing redaction, stale observation or
+policy, changed image digest, and authority changes. These refusals make zero
+model calls and zero GUI actions.
+
+A separate strict-shape control rejects append, insert, caller-supplied steps,
+partial selection, append flags, missing/different text and malformed stop
+proposals. The sole accepted plan is constructed locally as click, Control+A,
+exact authorized text, Save and observe. Eight invalid shapes make zero model
+calls and actions. Both control sets and their source/result bindings audit on
+Windows and Linux.
+
+This promotes a pre-model delivery rule for the declared bundle and confirms
+that whole-replacement authority cannot express the tested narrower edits. The
+controls use one archived live artifact. They do not prove OS isolation,
+provider-side retention, OCR resistance in visible pixels, or coverage of every
+future observation channel.
+
 ## Preserved failures
 
 Revision 1 used Pillow's inclusive rectangle directly while its metadata did not
@@ -192,6 +216,8 @@ Primary results:
 - `results/authorized-redacted-mutation-live-02/audit.json`
 - rejected `results/authorized-redacted-mutation-live-01/`
 - `results/authorized-redacted-mutation-controls-01/`
+- `results/redacted-presentation-bundle-controls-01/audit.json`
+- `results/authorized-redacted-plan-controls-01/`
 - rejected `results/redacted-observation-01/audit.json`
 
 Reproduce the final controls and audits from this directory:

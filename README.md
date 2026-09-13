@@ -28,6 +28,10 @@ bypass cases remain open. A subsequent scoped
 refinement keeps the old value hidden but permits one exact whole replacement:
 the unprivileged model call stops, the newly bound call executes and verifies,
 and replay against the old policy is refused.
+Pre-model bundle controls also refuse 13 crop/history/alternate-channel and
+binding variants, while eight strict proposal controls exclude append, partial
+selection and caller-supplied steps. These are scoped offline controls over the
+live artifact, not a deployed privacy claim.
 The assistant has used received-image references and bounded programs in Calc
 and browser fixtures. An optional final-result read collected ready Calc early
 and final evidence in one caller invocation, and skipped itself on a browser
