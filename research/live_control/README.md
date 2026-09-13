@@ -209,3 +209,14 @@ parser incorrectly rejects that stop, and checkpoint v2 fixes the rule in
 cross-OS probes. A no-model Ctrl+2 recovery probe makes the obstructing trees
 transparent while preserving every scored road/owner field and save bytes.
 Exposing that verified view method to the planner is the next live candidate.
+
+That live candidate now exists. Fixed Astra calls the typed tree-transparency
+method three times, performs no task mutation after its first drag and safely
+stops on turn 12. It consumes 198,746 input tokens and does not complete the
+task. The repeat calls reveal that a toggle is the wrong typed abstraction.
+Fresh zero-model calibration shows the model's offset-0 drag coordinates can
+build intended tiles 977..979, and the tool state survives a 15-second program
+boundary. `semantic_checkpoint_v4.py` replaces the method with a tracked,
+one-way `openttd.ensure_trees_transparent` candidate and refuses repeat or
+unknown-state use. Its admission probe passes on Windows and WSL; fresh model
+efficacy remains untested.

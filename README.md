@@ -47,7 +47,13 @@ A checkpointed allocation prevents the second mutation and false verify, but
 uses 11 turns/182,284 input tokens before an uncertain safe stop; it does not
 complete the task. A model-free Ctrl+2 probe then makes the obstructing trees
 transparent while independently preserving all road, owner and save state.
-This app-specific view optimizer is not yet exposed to the planner.
+Exposing it as a typed method keeps a fresh allocation free of additional road
+mutations, but Astra calls the toggle three times and safely stops on turn 12
+after 198,746 input tokens without completing the task. Fresh scripted
+calibration shows five nearby offsets build the intended A-to-B tiles and that
+the tool state survives a 15-second program boundary. The next contract changes
+the toggle into a one-way, state-aware pre-action view method; live efficacy is
+not yet established.
 The newest observation-boundary study physically withholds one live Chromium
 region: full input reads the exact value 4/4 and redacted input preserves explicit
 policy UNKNOWN 4/4. The region geometry audits exactly, but metadata adds 112

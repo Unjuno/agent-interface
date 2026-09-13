@@ -203,6 +203,14 @@ under the same recovery semantics. Human baselines and
 model-boundary timestamps must then be collected on identical task allocations.
 Only after those pass should the runtime/API be frozen and packaged.
 
+The first typed-view allocation has now run. It prevents another task mutation
+and stops safely, but invokes a toggle three times, consumes 198,746 input tokens
+and leaves the task false. Zero-model calibration shows the chosen drag pixels
+are valid across a five-offset band and that tool selection survives an immediate
+or 15-second program boundary. The next candidate is a one-way, state-aware
+pre-action view transition. These results improve failure isolation rather than
+the human-tempo or broad-correctness assessment above.
+
 Primary evidence: [research index](../RESEARCH.md), [current architecture](architecture.md),
 [domain feasibility](../research/benchmark_discovery/README.md),
 [Mindustry current-runtime self-use](../research/benchmark_discovery/MINDUSTRY_BEND_V2_SELF_USE.md),

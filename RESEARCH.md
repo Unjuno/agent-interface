@@ -436,3 +436,22 @@ shape boundary. A zero-model Ctrl+2 probe verifies a recovery affordance from
 the official OpenTTD manual: trees become transparent while all road, owner,
 guard and save state remains unchanged. Typed planner access and fresh recovery
 efficacy remain untested.
+
+Typed access now has one fresh fixed-Astra allocation. It invokes the tree
+transparency method three times, makes no second task mutation and safely stops
+on turn 12. The independent task remains false, while all target, forbidden and
+surrounding road-owner state is unchanged. This contains the prior off-target
+failure but costs 198,746 input tokens and does not recover correctness. Because
+Ctrl+2 is a toggle, the three calls alternate presentation state and expose a
+missing idempotent postcondition.
+
+Two preregistered zero-model diagnostics narrow the remaining failure. Across
+six fresh restores, the known -16px path reproduces the off-target 912..915
+roads, while offsets -12 through +4 build intended tiles 977..979. Offset 0 is
+the failed model path. With offset 0 fixed, combined selection/drag, an immediate
+program boundary and a 15-second boundary all produce the same intended effect.
+Neither coordinate invalidity nor sampled tool-state delay explains the model
+episode's zero effect. `semantic_checkpoint_v4` replaces the toggle-shaped
+method with a tracked `ensure_trees_transparent` transition, permits proactive
+use and refuses repeats or unknown state. Fresh model efficacy and general
+view-state detection remain open.

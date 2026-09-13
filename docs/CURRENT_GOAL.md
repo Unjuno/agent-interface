@@ -735,3 +735,14 @@ These refinements do not change cross-domain correctness or freeze requirements.
   task correctness、model boundaries、feedback、tokens、repair costを比較する。
   これはOpenTTD固有optimizer候補であり、universal fallback・Domain Coverage
   Matrix・human-tempo最終目標・freeze未達の判定は維持する。
+
+- 2026-09-14 r5: typed tree-transparencyを同一seed/model/taskへ統合。Astraは
+  turn 6/8/10でtoggleを反復し、追加task mutationなしでturn 12にsafe stop。
+  taskは未完了、198,746 input tokensであり効率改善なし。0-model校正では
+  v2のy=-16が912..915へ誤配置する一方、y=-12..+4はすべて977..979へ正しく
+  建設し、tool選択を別programへ分けた即時/15秒境界も同じ効果を保持した。
+  よって次の局所目標を、toggle公開から「既知view stateに基づく一方向の
+  pre-action postcondition」へ更新。`ensure_trees_transparent`を一度だけ許可し、
+  repeat/unknown stateを拒否するschema probeはcross-OSで通過。次は一般的な
+  view-state検出を混同せず、固定fixtureでpre-action適用のcorrectness/costを
+  新規割当比較する。全体目標とfreeze未達は維持する。

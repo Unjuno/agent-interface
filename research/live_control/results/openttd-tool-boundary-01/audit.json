@@ -1,0 +1,43 @@
+{
+  "audit_passed": true,
+  "preregistered": true,
+  "episodes": [
+    {
+      "mode": "combined",
+      "delay_seconds": 0,
+      "target_road_ids": [
+        977,
+        978,
+        979
+      ],
+      "changed_surrounding_tiles": [],
+      "durable_calls": 4
+    },
+    {
+      "mode": "split-immediate",
+      "delay_seconds": 0,
+      "target_road_ids": [
+        977,
+        978,
+        979
+      ],
+      "changed_surrounding_tiles": [],
+      "durable_calls": 8
+    },
+    {
+      "mode": "split-delay-15s",
+      "delay_seconds": 15,
+      "target_road_ids": [
+        977,
+        978,
+        979
+      ],
+      "changed_surrounding_tiles": [],
+      "durable_calls": 8
+    }
+  ],
+  "model_calls": 0,
+  "same_effect": true,
+  "scope": "three scripted episodes; no model judgment, autonomous targeting, human-tempo, token or broad app-state claim",
+  "audit_sha256": "0c48c11bc0a9b69aac029cd1f86e243ff2007c78e1591e541a127f28f469e980"
+}

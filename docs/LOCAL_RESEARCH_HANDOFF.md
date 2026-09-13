@@ -2275,3 +2275,25 @@ remain unchanged. Treat `openttd.transparent_trees` as an app-specific learned
 view optimizer candidate. Next expose it as a typed view method allowed under
 an uncertain checkpoint, expand it locally to the verified chord, and run a
 fresh recovery allocation.
+
+That allocation is complete and negative. Astra uses the typed view method on
+turns 6, 8 and 10, makes no later task mutation, and safely stops on turn 12.
+Independent score remains false with zero changed target, forbidden or guard
+tiles. It uses 198,746 input tokens, 165.558 seconds model wait, 17.935 seconds
+feedback, 45 exact frames and 44 durable calls. The three Ctrl+2 calls alternate
+view state, so the repeatable toggle contract is rejected.
+
+Fresh zero-model calibration reproduces v2's one-row-high placement at y=-16;
+five offsets y=-12..+4 build intended A-to-B tiles 977..979. A matched tool-state
+diagnostic at offset 0 succeeds when selection and drag are combined, split
+immediately or split by 15 seconds. These controls rule out invalid drag pixels
+and the sampled program-boundary delay as sufficient explanations for the v4
+zero effect. The first calibration attempt's unsupported Shift+F8 rejection and
+the first audit's summary/full-shape mismatch are retained.
+
+The next candidate is `openttd.ensure_trees_transparent`: in the fixed fixture,
+known opaque state admits one local Ctrl+2 expansion and transitions to tracked
+transparent state; repeat and unknown-state calls refuse. The cross-OS schema
+probe passes. Next preregister proactive use before the first targeting mutation,
+and measure correctness plus added runtime/model boundaries. Do not generalize
+the fixture's initial view-state knowledge to arbitrary OpenTTD sessions.

@@ -123,3 +123,43 @@ to the planner schema and has not recovered a fresh model task. The next
 candidate should expose a typed `openttd.transparent_trees` view method under an
 uncertain checkpoint, expand it locally to the verified chord and keep the
 universal keyboard/pointer fallback.
+
+## Typed view allocation and calibration
+
+Allocation v4 exposes that method under the uncertain checkpoint. The zero-model
+negative control passes, then fixed Astra uses the typed method on turns 6, 8
+and 10 after its turn-5 A-to-B drag. It starts no later task mutation and safely
+stops on turn 12. Independent evaluation finds no target, forbidden or
+surrounding road-owner change. The method therefore improves failure containment
+over v3's four off-target roads, but task correctness remains false.
+
+The allocation uses 198,746 reported input tokens, including 117,504 cached,
+165.558 seconds of model wait, 17.935 seconds of proposal-to-feedback time, 45
+exact frames, 44 durable calls and five contact sheets. Three calls to a toggle
+alternate transparent, opaque and transparent presentation. This exposes a
+contract error: a typed method should describe a postcondition and track state,
+not publish a repeatable toggle.
+
+A preregistered zero-model drag calibration then isolates six vertical offsets
+on fresh restores. Offset -16, the v2 path, builds surrounding tiles 912..915.
+Offsets -12, -8, -4, 0 and +4 all build the intended A-to-B tiles 977..979 and
+change no surrounding tile. Thus v4's offset-0 coordinates are valid in the
+fixture. A second diagnostic keeps offset 0 fixed and compares selection plus
+drag in one program, an immediate program boundary and a 15-second boundary.
+All three build 977..979. Program separation and the sampled delay do not explain
+v4's zero-effect drag.
+
+The first calibration harness attempted the documented Shift+F8 shortcut, but
+the shared runtime rejected F8 as an unsupported key before the drag. That raw
+failure is retained. The corrected calibration uses the already measured visible
+toolbar coordinates. Its first frozen audit compared a summarized finish event
+with the full evaluation document; the failed audit is retained and a corrected
+cross-OS audit compares their shared fields.
+
+`semantic_checkpoint_v4.py` now represents the method as
+`openttd.ensure_trees_transparent`. In the current fixed fixture it admits a
+known opaque-to-transparent transition once, refuses repeats and unknown state,
+and permits proactive pre-action use as well as uncertain-effect recovery. This
+is schema evidence only. A general provider still needs view-state detection,
+and a fresh model allocation must test whether proactive transparency improves
+correctness enough to justify its cost.
