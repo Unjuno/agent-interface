@@ -1,5 +1,9 @@
 # Actual combined response: successful task, failed presentation
 
+Follow-up: [the live reversible caller](POINTER_VIEW_LIVE.md) completes a new
+actual-use episode with both result/image responses visible together. It preserves
+this truncation failure and does not reinterpret the two runs as a matched pair.
+
 The assistant used the unchanged v9 OpenTTD caller on the known guarded-road
 fixture. Initial observation and first program result were emitted together with
 their referenced original PNG in one orchestration call each. The second program

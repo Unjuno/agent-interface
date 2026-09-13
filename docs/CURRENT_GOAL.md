@@ -1,5 +1,12 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest follow-up: [live reversible report use](../research/live_control/POINTER_VIEW_LIVE.md)
+completed a new known OpenTTD task with both program views and original images in
+their respective single responses, without observed truncation or image-only
+recovery. Six frames/37 records and original-view restoration pass the audit.
+This is one actual-use integration result, not a paired speed/token qualification.
+Next stress the live presentation/reconciliation boundary and another domain.
+
 Latest evidence: [actual combined OpenTTD response](../research/live_control/POINTER_COMBINED.md)
 passed the guarded task, but the second full report was truncated at the model
 presentation boundary. Recovery read the saved result/image without input retry.

@@ -1,5 +1,19 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — live reversible views with original images
+
+[Live report view](../research/live_control/POINTER_VIEW_LIVE.md) adds an explicit
+caller entry that delegates unchanged v1 input/receipt semantics and saves the
+original report before printing the reversible envelope. A new assistant OpenTTD
+episode displayed both full unique-event views and referenced original PNGs in
+their corresponding responses, without visible truncation or image-only recovery.
+Six frames/37 records, predeclared caller hashes, runtime hashes, original-view
+restoration, independent guard score and cleanup pass the audit. Capture-to-final
+terminal was 44.571 seconds; capture-to-evaluation 59.280 seconds. Do not interpret
+the difference from the interrupted prior episode as a measured speedup.
+Next: failure/reconciliation and cross-domain live use; model receipt timestamps,
+actual input tokens/cost and paired performance gates remain outstanding.
+
 ## Latest follow-up — actual combined output and truncation recovery
 
 [Combined OpenTTD self-use](../research/live_control/POINTER_COMBINED.md) completed
