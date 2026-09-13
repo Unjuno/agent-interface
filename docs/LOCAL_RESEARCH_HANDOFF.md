@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — retained event-prefix reads separate early/final results
+
+[Event cursor](../research/live_control/EVENT_CURSOR.md) adds a bounded private
+Condition-based reader returning through a requested event while retaining later
+records. Two live scripted Calc sessions preserve complete stdout prefixes;
+unsaved early return precedes final return by 3010.867 ms. Replay, interruption
+prefix, explicit eviction gap, timeout and close/drain controls pass. This is
+local supervisor evidence, not earlier model wakeup. Next expose a local session
+transport for one bounded caller read and exercise it in actual self-use.
+
 ## Latest follow-up — actual assistant use exposes outer delivery boundary
 
 [Early effect self-use](../research/live_control/EARLY_EFFECT_SELF_USE.md) records
