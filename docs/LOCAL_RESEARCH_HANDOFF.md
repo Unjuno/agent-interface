@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — live delayed outcome continuation without input replay
+
+[Live outcome wait](../research/live_control/LIVE_OUTCOME_WAIT.md) exercises the
+common policy through socket v10 and actual private X11 input. A test evaluator
+gate yields pending in about 101 ms; releasing it returns true for the correct
+token and false for a wrong one (ordinary scorer takes about 3 s on mismatch).
+Both cases have one submit, three exact frames, verified release and complete
+response prefixes. Scripted fault injection, not assistant latency evidence.
+Next cover a finalizer exception where no final outcome event is published.
+
 ## Latest follow-up — common read policy for optional early effects
 
 [Outcome wait policy](../research/live_control/OUTCOME_WAIT.md) waits for either
