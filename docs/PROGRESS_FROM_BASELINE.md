@@ -82,6 +82,10 @@ Luanti remains a feasibility candidate rather than demonstrated agent control.
   prior execution used 9,759 input tokens/call and produced wait/check 4/4;
   omitting it used 9,485 but represented a different state and produced
   submit-once 4/4. Those 274 tokens are necessary semantics in this case.
+- One fresh live follow-up used that evidence to choose wait/check while the
+  delayed effect progressed. Model computation took 6.494 seconds, leaving zero
+  additional sleep; one read-only checkpoint then verified the exact value with
+  no post-UNKNOWN input. This is overlap evidence from one authored task.
 - Lost-response recovery has been exercised for input outcomes and saved-effect
   queries. The current form episode recovered two queries by identity with zero
   resend and admitted no input after VERIFIED.
@@ -114,4 +118,5 @@ Primary evidence: [research index](../RESEARCH.md), [current architecture](archi
 [OpenTTD guarded placement](../research/openttd_task/GUARDED_PLACEMENT.md),
 [compact fixed comparison](../research/live_control/COMPACT_PLANNER_EVIDENCE.md), and
 [compact live form](../research/live_control/COMPACT_LIVE_FORM.md), and
-[delayed-effect decision evidence](../research/live_control/DELAYED_EFFECT_DECISION.md).
+[delayed-effect decision evidence](../research/live_control/DELAYED_EFFECT_DECISION.md), and
+[model-driven delayed-effect live use](../research/live_control/DELAYED_EFFECT_LIVE.md).

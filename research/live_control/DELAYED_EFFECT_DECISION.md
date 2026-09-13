@@ -67,6 +67,11 @@ bound. Runner times and cache counts are archived but do not support latency
 claims. The comparison does not cover partial terminals, conflicting visual
 evidence, privacy redaction or a real model-driven live wait.
 
+Follow-up: [one fresh live episode](DELAYED_EFFECT_LIVE.md) delivered the strict
+UNKNOWN state to the model. It selected wait/check; model computation covered the
+remaining application delay, and a single post-model checkpoint verified the
+effect with no duplicate input.
+
 Artifacts:
 
 - `results/delayed-effect-01` through `-05`: development and selected preparation

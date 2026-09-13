@@ -1,3 +1,12 @@
+Latest live overlap evidence: one fresh Chromium session sends one form submission,
+gets explicit UNKNOWN at667.934ms from acceptance, then gives strict v3 evidence
+to one Luna/low call. The model chooses wait/check; its6.494s runner exceeds the
+remaining five-second app delay, so additional sleep is0 and one post-model query
+is VERIFIED. Independent value t000243 succeeds;10 exact frames/85 events,
+9770 input/74 output/28 reasoning tokens, zero post-UNKNOWN input. See
+research/live_control/DELAYED_EFFECT_LIVE.md. Single authored case; model remains
+slower than the delay and cost is unavailable.
+
 Latest decision-relevance evidence: a fetch-based Chromium fixture creates an
 actual completed submission whose artifact remains UNKNOWN for five seconds while
 the page stays visually unchanged. In eight same-image/common-prompt Luna/low

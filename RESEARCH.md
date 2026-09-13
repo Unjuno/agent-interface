@@ -28,8 +28,10 @@ prompt disclosed the fact removed from one condition. A corrected Chromium
 fixture then produced one real visually silent delayed effect: same-image model
 calls with execution evidence wait/check 4/4, while checkpoint-only calls submit
 once 4/4. This establishes decision relevance for those fields in one declared
-case. None of this establishes general reliability, human tempo, privacy-safe
-redaction or default adoption.
+case. A fresh live follow-up then used one strict model wait/check while the effect
+completed, reaching VERIFIED with no post-UNKNOWN input or extra sleep. None of
+this establishes general reliability, human tempo, privacy-safe redaction or
+default adoption.
 
 Primary artifacts:
 
@@ -37,6 +39,7 @@ Primary artifacts:
 - [`COMPACT_LIVE_FORM.md`](research/live_control/COMPACT_LIVE_FORM.md)
 - [`PLANNER_EVIDENCE_BINDING.md`](research/live_control/PLANNER_EVIDENCE_BINDING.md)
 - [`DELAYED_EFFECT_DECISION.md`](research/live_control/DELAYED_EFFECT_DECISION.md)
+- [`DELAYED_EFFECT_LIVE.md`](research/live_control/DELAYED_EFFECT_LIVE.md)
 
 ### First DOOM-engine transfer
 
