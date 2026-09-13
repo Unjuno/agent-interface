@@ -1,0 +1,122 @@
+{
+  "rows": [
+    {
+      "name": "lost-full",
+      "correct": false,
+      "wrong_fields": {
+        "replay_interrupted_tail": {
+          "expected": false,
+          "actual": true
+        }
+      },
+      "answer": {
+        "terminal_status": "needs_decision",
+        "stop_reason": "focus_changed",
+        "latest_sequence": 3,
+        "observed_target_pointer_binding": false,
+        "replay_interrupted_tail": true,
+        "reuse_old_lease": false,
+        "next_step": "restore_focus_then_reobserve",
+        "record_proves_game_task_success": false
+      },
+      "usage": {
+        "input_tokens": 12574,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 212,
+        "reasoning_output_tokens": 146
+      },
+      "local_run_ms": 9867.2133,
+      "stderr_bytes": 0
+    },
+    {
+      "name": "lost-view",
+      "correct": true,
+      "wrong_fields": {},
+      "answer": {
+        "terminal_status": "needs_decision",
+        "stop_reason": "focus_changed",
+        "latest_sequence": 3,
+        "observed_target_pointer_binding": false,
+        "replay_interrupted_tail": false,
+        "reuse_old_lease": false,
+        "next_step": "restore_focus_then_reobserve",
+        "record_proves_game_task_success": false
+      },
+      "usage": {
+        "input_tokens": 11705,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 165,
+        "reasoning_output_tokens": 99
+      },
+      "local_run_ms": 7270.511,
+      "stderr_bytes": 0
+    },
+    {
+      "name": "restored-view",
+      "correct": false,
+      "wrong_fields": {
+        "next_step": {
+          "expected": "fresh_intent_after_revalidation",
+          "actual": "restore_focus_then_reobserve"
+        }
+      },
+      "answer": {
+        "terminal_status": "needs_decision",
+        "stop_reason": "focus_changed",
+        "latest_sequence": 6,
+        "observed_target_pointer_binding": true,
+        "replay_interrupted_tail": false,
+        "reuse_old_lease": false,
+        "next_step": "restore_focus_then_reobserve",
+        "record_proves_game_task_success": false
+      },
+      "usage": {
+        "input_tokens": 11727,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 161,
+        "reasoning_output_tokens": 95
+      },
+      "local_run_ms": 7465.8341,
+      "stderr_bytes": 0
+    },
+    {
+      "name": "restored-full",
+      "correct": false,
+      "wrong_fields": {
+        "replay_interrupted_tail": {
+          "expected": false,
+          "actual": true
+        },
+        "next_step": {
+          "expected": "fresh_intent_after_revalidation",
+          "actual": "restore_focus_then_reobserve"
+        }
+      },
+      "answer": {
+        "terminal_status": "needs_decision",
+        "stop_reason": "focus_changed",
+        "latest_sequence": 6,
+        "observed_target_pointer_binding": true,
+        "replay_interrupted_tail": true,
+        "reuse_old_lease": false,
+        "next_step": "restore_focus_then_reobserve",
+        "record_proves_game_task_success": false
+      },
+      "usage": {
+        "input_tokens": 13557,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 153,
+        "reasoning_output_tokens": 87
+      },
+      "local_run_ms": 6644.2055,
+      "stderr_bytes": 0
+    }
+  ],
+  "all_answers_correct": false,
+  "scope": "static known text-only pairs; full and view differ in explicit authority cue and omitted information; no isolated compression benefit, cost or live recovery proof",
+  "audit_sha256": "251e7d6574588882d00eb60cb0de1be91265e9fb8ce5163a8600c2a50a0781db"
+}

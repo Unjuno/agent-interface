@@ -1,3 +1,5 @@
+[Actual focus model pair](FOCUS_MODEL_PAIR.md): input reduced, but decision acceptance failed; four outputs retained with rubric/confounding limitations.
+
 [Assistant focus recovery](MINDUSTRY_FOCUS_SELF_USE.md): actual Alt+Tab restores game focus, then a fresh pointer action succeeds; recovery overhead remains72 seconds.
 
 [Socket focus interruption](MINDUSTRY_SOCKET_FOCUS.md): same-action stopped/terminal recovery verified in actual Mindustry; first evaluation timeout retained, corrected fixture run passes.
