@@ -1,3 +1,7 @@
+## Shared contract completes actual Inkscape edit; caller bugs retained and corrected
+
+Assistant seed231 self-use guarded X-field click then separately entered92/saved; SVG independently92,50,40,30 without transform. Audit79 events/12 exact frames/five completed programs/one expired rejection passes; bridge exit0. First exact patch refused228 differing pixels despite visual50.000. Next helper consumed old clock from stale cursor; runtime rejected before admission. V2 separates image source/continuation cursor and correlates own clock echo; same session recovered. See research/live_control/INKSCAPE_GUARDED_CLICK.md. Guarded button ack235.240ms after fresh capture, whole manual episode193.518s; no human-tempo claim. Next reusable image/cursor continuation result, not another repeated edit.
+
 ## Shared sampled-target contract separates app coordinates from guard logic
 
 New application-independent evaluator takes trusted name/box/point/age contract, returns sampled evidence only and relies on existing owner/unique command admission. Replay preserves Mindustry positive point/deadline and both actual mutation refusals. Archived Inkscape frame12→15 X-field stays eligible despite tooltip outside patch, retaining child focus/top-level surface distinction. Nine malformed/change controls refuse. See research/live_control/SAMPLED_TARGET_CONTRACT.md. No new live input/model call or default promotion. Next wire one actual desktop caller and independent effect verification; do not accumulate further offline guard variants.
