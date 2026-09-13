@@ -1,3 +1,7 @@
+## Composed result read correctly on actual interrupted-state records
+
+Four preregistered text-only Luna/low turns compare full/composed actual Calc pending and terminal records. All ten fields match in every answer, including null versus zero, focus cause and historical input authority. Actual input differences 267 (2.02%) and 491 (3.43%); cache/output vary, so no cost/speed claim. Binary stdin bytes and all event arrivals audited; processes exit 0. See research/live_control/MODEL_STATE_PAIR.md. Next explicit live candidate on changed transition and consequential negative state, not repeated easy extraction; no default promotion.
+
 ## Known-field composition retains negative data and round-trips
 
 composed_result_v1 removes only equal known image/terminal duplicates and state values reconstructible from a unique state-table row. Ten archived results round-trip; five changed-evidence controls preserve mismatches/unknown errors and four corrupt encodings reject. Total canonical bytes 95814 -> 79496 (~17%). See research/live_control/COMPOSED_RESULT.md. Offline byte result only, no model-token/accuracy/speed claim or default promotion. Next compare on a task requiring negative state rather than an obvious image; keep full goal active.
