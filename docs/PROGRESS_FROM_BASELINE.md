@@ -32,7 +32,13 @@ detection to semantic completion is23.976 seconds; wrapper-observed model wait
 totals21.334 seconds, while proposal-to-useful-feedback takes1.105 and0.873
 seconds. Missing provider/runtime/OS endpoints remain explicit. The initial
 per-event-fsync recorder proved too costly and was replaced by a buffered candidate;
-OpenTTD and matched comparisons remain before promotion.
+An OpenTTD envelope now follows it. A fixed adaptive route uses two Luna-low and
+six Astra-medium calls to build the guarded road in111.853 seconds, including
+91.781 seconds of model wait and126,420 reported input tokens. Batched hover
+contact sheets preserve three delayed tooltips in one model-visible image. Two
+fresh adaptive tasks independently pass, although the first exposed a packaging
+failure after scoring. Fixed-model, adaptive and human matched comparisons remain
+before promotion.
 
 The newest Chromium episode is the clearest small end-to-end sample. A fresh
 screenshot and a 621-byte strict compact UNKNOWN record drove one real model
@@ -66,7 +72,7 @@ the rows must not be averaged into one difficulty score.
 | Desktop apps | Small Calc, Chromium, Inkscape and XTerm tasks; dialogs, focus loss, interruption, saving and independent effect checks | Unknown applications, richer window/scroll/drag workflows and repeated held-out tasks |
 | DOOM | Shared held-key/cancel/expiry readiness and later directional-input repair/assistant gameplay evidence | Stable continuous useful-feedback loop, reaction distribution and public real-time demo |
 | Mindustry | Actual assistant construction of eight directed conveyors on a known route; 112-tile guard and 49-copper post-control delivery; shared caller scripted replay and cancellation | Fresh route planning, multi-object control, event-driven recovery and much shorter decision gaps |
-| OpenTTD | Actual visual toolbar/drag placement; corrected 42-tile side-effect guard; shared caller scripted replay | Fresh repeated GUI tasks, scroll/window complexity and long-horizon transport planning |
+| OpenTTD | Two fresh adaptive-model visual road tasks pass target, connectivity, forbidden-row and surrounding-tile guards; one complete 111.853s TimingEnvelope; batched tooltip contact sheets | Matched fixed/adaptive/human controls, repeated GUI tasks, scroll/window complexity and long-horizon planning |
 | Luanti | Current-engine launch, deterministic tiny pad/pose and read-only node/pose feasibility | Normal navigation, camera-mode contract, inventory, interaction and successful construction |
 
 DOOM remains valuable for continuous motor pressure. Mindustry and OpenTTD are

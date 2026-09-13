@@ -1,0 +1,12 @@
+You control an isolated OpenTTD road fixture using its current 1024x720 screenshot. Task: Build a straight road connecting only the three ground tiles from A to C. Keep the adjacent row marked X free of roads and preserve surrounding roads/ownership. Use visual GUI controls. Choose the next bounded visual action. Use the road toolbar and straight-road tool when visible. A prior needs_decision/focus_changed or zero steps_completed does not mean the application effect failed: inspect the screenshot and never blindly replay.
+Return ONLY one JSON object of exactly one form:
+{"kind":"act","steps":[...],"rationale":"short explanation"}
+{"kind":"verify","road_visible":BOOLEAN,"rationale":"short explanation"}
+{"kind":"stop","rationale":"why no justified next action is available"}
+Use verify only when the requested A-to-C road is visibly complete; it requests the independent engine guard score. Rationale1..600 characters. Act has1..6 steps. Supported exact step shapes:
+{"op":"pointer_click","x":INTEGER,"y":INTEGER}
+{"op":"pointer_drag","points":[{"x":INTEGER,"y":INTEGER},...],"duration_ms":80..1000}
+{"op":"observe"}
+Pointer bounds x0..1023,y0..719. No extra fields, keys, tools or shell. The harness obtains a fresh observation and checks unchanged focus/binding before input. Propose only actions justified by the current image.
+Current observation sequence: 1.
+Previous proposal and runtime outcome: null

@@ -14,11 +14,14 @@ bottlenecks and remaining release gates](docs/PROGRESS_FROM_BASELINE.md).
 Latest research handoff: [measured progress, failures and next steps](docs/LOCAL_RESEARCH_HANDOFF.md).
 
 Current Linux research caller: [components, usage and evidence limits](research/live_control/CURRENT_CLIENT.md).
-The first process-scoped timing envelope covers one fresh Calc task:23.976s from
-initial observation detection to semantic completion, including21.334s of
-wrapper-observed model wait. A synchronous per-event recorder was measured and
-rejected as intrusive; the buffered candidate records in tens of microseconds.
-OpenTTD and matched strategy comparisons remain before any speed claim.
+Process-scoped timing envelopes now cover fresh Calc and OpenTTD tasks. Calc
+saves480/192 in23.976s with21.334s of wrapper-observed model wait. OpenTTD uses
+batched delayed-hover contact sheets and an adaptive two-Luna/six-Astra route to
+build a guarded three-tile road in111.853s with91.781s of model wait and126,420
+reported input tokens. The OpenTTD task independently succeeds in two fresh
+runs, although the first run exposed a result-schema packaging failure after
+the positive score. Matched routing and human controls remain before any speed
+claim.
 The newest observation-boundary study physically withholds one live Chromium
 region: full input reads the exact value 4/4 and redacted input preserves explicit
 policy UNKNOWN 4/4. The region geometry audits exactly, but metadata adds 112

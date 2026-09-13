@@ -10,14 +10,16 @@ Promotion is limited to pixel withholding/explicit unknown semantics; later
 sections cover scoped action/refinement, while crop/history/alternate-channel
 bypass remains open.
 
-Latest timing envelope: fresh Calc seed238 saves/independently verifies480/192
-in three Luna-low turns. One supervisor clock records22 explicit endpoints:
-initial observation to semantic completion23.976s, model waits21.334s total,
-proposal-to-useful-feedback1.105/0.873s, feedback-to-next-planner7.888/6.638ms.
-Provider receipt/first token, runtime receipt and OS injection remain NOT_RECORDED.
-Synchronous per-event fsync costs5.264/8.702ms median Windows/Linux and is
-rejected; buffered v2 records18.1/14.718us median plus one close sync. See
-TIMING_ENVELOPE_V1.md. Next fresh OpenTTD v2 envelope, then matched strategies;
+Latest timing envelope: fresh OpenTTD v8 builds the guarded three-tile road and
+passes the independent target, connectivity, forbidden-row and surrounding-tile
+checks. One supervisor clock measures111.853s from initial observation to
+semantic completion, including91.781s of wrapper-observed model wait. Seven
+proposal-to-useful-feedback intervals total18.286s. The route uses two Luna-low
+calls and then six Astra-medium calls,126,420 reported input tokens,44 exact
+frames,28 durable calls and57 journal records. Five contact sheets retain
+intermediate delayed tooltips. Provider receipt/first token, runtime receipt and
+OS injection remain NOT_RECORDED. See TIMING_ENVELOPE_OPENTTD_V1.md and the
+earlier Calc TIMING_ENVELOPE_V1.md. Matched routing and human controls remain;
 no speedup or human-tempo claim. Full goal remains open.
 
 Follow-up action gate: six fresh seed251 Chromium sessions prefill the private

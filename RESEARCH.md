@@ -24,8 +24,21 @@ proposal-to-useful-feedback intervals are1.105s and0.873s. Missing provider,
 runtime and OS endpoints remain explicitly unrecorded. Per-event fsync is rejected
 after isolated median record costs of5.264ms Windows/8.702ms Linux. Buffered v2
 reduces record medians to18.1/14.718us plus one close-time sync, with weaker
-crash durability. No speedup follows from this single episode; OpenTTD and matched
-baseline/compact/local-continuation runs remain required.
+crash durability. No speedup follows from this single episode.
+
+The OpenTTD follow-up adds bounded delayed-hover observation, contact sheets
+that preserve multiple intermediate tooltip frames, content-derived action
+timeouts and a fixed adaptive model route. Luna-low alone fails the guarded road
+task after nine turns; two subsequent fresh adaptive runs pass the independent
+target/connectivity/forbidden-row/surrounding checks. The first positive run then
+fails result packaging on an obsolete field name; the corrected fresh v8 run
+completes its envelope in111.853s, including91.781s of wrapper-observed model
+wait across eight calls. It reports126,420 input tokens,44 exact frames and28
+durable calls. Windows and WSL artifact audits pass. This is one corrected
+adaptive episode plus one positive task effect, not a matched speedup or
+human-tempo result. See
+[OpenTTD TimingEnvelope](research/live_control/TIMING_ENVELOPE_OPENTTD_V1.md).
+Matched fixed-Luna, fixed-Astra and adaptive allocations remain required.
 
 ### Actual pixel redaction with explicit unknown semantics
 

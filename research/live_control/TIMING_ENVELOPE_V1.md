@@ -74,6 +74,12 @@ Primary evidence:
 - `results/timing-envelope-v2-cost-linux-01/`
 - `results/timing-envelope-cost-audit-01.json`
 
-Next instrument one fresh OpenTTD task with buffered v2, then run matched
-baseline/compact/local-continuation allocations before any promotion or human-
-tempo claim.
+The next domain envelope is now recorded in
+[OpenTTD adaptive live control](TIMING_ENVELOPE_OPENTTD_V1.md). One fresh v8 run
+passes the independent four-part road guard in 111.853s using two Luna-low then
+six Astra-medium calls. Wrapper-observed model wait is 91.781s. Earlier
+OpenTTD failures remain preserved. This is an adaptive candidate, not a matched
+speed comparison; do not infer cross-domain timings.
+
+Next run matched fixed-Luna, fixed-Astra and adaptive allocations on the same
+OpenTTD task, followed by the corresponding Calc strategy comparison.

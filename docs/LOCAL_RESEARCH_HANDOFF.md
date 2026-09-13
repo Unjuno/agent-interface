@@ -1,3 +1,17 @@
+Latest dynamic-domain evidence: fresh OpenTTD v8 builds the exact three-tile A-C
+road and passes independent target, connectivity, forbidden-row and surrounding
+guard checks. The process-scoped envelope is111.853s, including91.781s of
+wrapper-observed model wait,18.286s across seven proposal-to-feedback intervals,
+126,420 reported input tokens,44 exact frames and28 durable calls. The candidate
+batches up to three delayed tooltip frames into one planner contact sheet and
+routes two Luna-low exploration turns to Astra-medium on unresolved semantics.
+Luna-only, fixed-timeout, lost-intermediate-observation and result-schema failures
+are retained across v1-v7; v7 independently succeeds before its packaging fault,
+and corrected v8 reproduces success. Windows/WSL audit passes. No matched causal
+speedup or human-tempo claim. See research/live_control/TIMING_ENVELOPE_OPENTTD_V1.md.
+Next run identical-task fixed-Luna, fixed-Astra and adaptive allocations plus a
+human baseline. Full goal remains open.
+
 Latest fixed-context compression evidence: planner_evidence_v2 retains checkpoint status/contract/request identity, scoped actual/digest, UNKNOWN reason, execution terminals, authority, no-retry and raw-evidence availability while omitting duplicated durable continuation. In16 predeclared fixed-image Luna/low calls across Chromium and Calc UNKNOWN/VERIFIED states, full and compact views both make8/8 expected decisions; no extra Save. Input80564->77880 tokens (-2684, -3.33%;335.5/call), with Calc dialog -704/call (-6.60%). Two samples/mode/case, no live latency claim. Measured v1 had a missing-contract UNKNOWN validation hole; frozen. V2 rejects malformed contracts and is byte-identical on all4 valid views. Two cross-OS audit path failures retained; final raw-call audit passes. See research/live_control/COMPACT_PLANNER_EVIDENCE.md. Next use v2 in a fresh live episode and adversarial omitted/conflicting evidence; full goal open.
 
 Latest recovery/domain evidence: one actual Chromium form decision saves t000240 through shared phased_submit_v2 (explicit task validator). Both artifact queries deliberately lose their replies; recover_query_once_v1 uses one command-free original-ID read each, with no resend. UNKNOWN permits continued GUI work; VERIFIED ends via declared policy and independent score. Recovery reads12.768/30.032ms; close-to-reconciled34.869/62.942ms; whole12.966s, model9.812s, 9690 input/128 output tokens. Audit119 events/14 frames/31 journal records and controls pass; first harness guard-precedence failure retained. See research/live_control/QUERY_RECOVERY_FORM.md. Opt-in; not organic outage, pixel-only baseline, speed guarantee or full domain coverage. Next measure compact planner evidence on fixed contexts. Full goal stays open.
