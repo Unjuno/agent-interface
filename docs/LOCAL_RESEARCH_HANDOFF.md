@@ -1,3 +1,10 @@
+Latest GUI recovery: [readback and repair before oracle](../research/live_control/GUI_EFFECT_RECOVERY.md).
+gui-effect-live-01 uses visible X50 to decide GUI field edit66.95; decision hashes
+echoed before recovery and before any independent score. Final x66.949997 passes.
+91 events/13 exchanges/19 exact frames audited, exit0. No saved-SVG read before
+evaluation in episode; known fixture, not blind. Next reduce routine field-edit
+observation/review cost using existing machinery and changed target/layout checks;
+retain full evidence and interruptions, no controller/default/freeze promotion.
 Latest recovery decision: [tracking loss after achieved geometry](../research/live_control/EFFECT_LOSS_LIVE.md).
 effect-live-03 seed220 returns lost after one correction, but saved x66.94915 passes.
 Model reads image + benchmark effect, records no-extra-move decision and finishes;

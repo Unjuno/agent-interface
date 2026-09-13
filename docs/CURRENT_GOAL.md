@@ -1,3 +1,10 @@
+Latest GUI recovery: [readback and repair before oracle](../research/live_control/GUI_EFFECT_RECOVERY.md).
+Fresh seed221 replacement: model reads X50 from GUI, commits repair decision, edits
+X via normal click/chord/text/Return, saves, then commits GUI success before first
+independent score. Saved x66.949997 passes. 91 events/13 exchanges/19 exact frames
+audited; normal exit. Familiar fixture, not blinded/general policy. Next existing
+observation/presentation reuse to reduce routine field-edit feedback cost with
+changed target/layout validation; no more identical injection cohorts or speed claim.
 Latest recovery decision: [tracking loss after achieved geometry](../research/live_control/EFFECT_LOSS_LIVE.md).
 Fresh seed220: fixed second-feedback occlusion after one correction yields lost /
 needs_decision; save/effect proves x66.94915 task pass. Model finishes without another
