@@ -1,3 +1,10 @@
+Latest state presentation: [lossless input-state companion](../research/live_control/INPUT_STATE_TABLE.md).
+Six preserved reports/eleven preservation controls round-trip selected state fields.
+Field-edit selected JSON7142B -> full companion3163B, no observations dropped or
+attention cleared. Empty case grows; omit empty companions in future caller. Offline
+table read only, not new live self-use/token/speed evidence. Next optional replacement
+for extra raw-state dump in fresh changed-value/layout field task, retain full receipt
+and image; separately reduce capture cost only with evidence.
 Latest GUI recovery: [readback and repair before oracle](../research/live_control/GUI_EFFECT_RECOVERY.md).
 Fresh seed221 replacement: model reads X50 from GUI, commits repair decision, edits
 X via normal click/chord/text/Return, saves, then commits GUI success before first

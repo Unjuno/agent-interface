@@ -1,3 +1,9 @@
+Latest state presentation: [lossless input-state companion](../research/live_control/INPUT_STATE_TABLE.md).
+input_state_table_v1 factors common samples, preserves all selected JSON values incl
+unknown nested fields and missing/null distinctions. Six historical reports + eleven
+controls pass; repair7142B -> companion3163B. No captures/attention removed. Empty
+wrapper grows; future caller should omit it. Next fresh changed-value/layout self-use
+replacing raw extra state dumps, retaining full receipt/image. No token/speed claim.
 Latest GUI recovery: [readback and repair before oracle](../research/live_control/GUI_EFFECT_RECOVERY.md).
 gui-effect-live-01 uses visible X50 to decide GUI field edit66.95; decision hashes
 echoed before recovery and before any independent score. Final x66.949997 passes.
