@@ -38,7 +38,7 @@ for case in ['timeout','closed','transport_error','conflicting_echo','matched','
    try:run(path,{'command':{'op':'clock'}},forbidden)
    except ValueError:pass
    else:raise AssertionError('new command admitted')
-  
+
   if error is None:
    view=result['recovery'];assert view['status']==('resolved' if case=='matched' else 'unresolved')
    assert view['channel']==('closed' if case=='closed' else 'not_reported_closed')
