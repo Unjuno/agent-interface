@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — actual assistant delivery provenance self-use
+
+[Delivery provenance](../research/live_control/DELIVERY_PROVENANCE.md) adds stdout
+flush receipts and caller-declared source delivery/observation to an experimental
+entrypoint. Two actual xterm self-use tasks pass. V1 source-ID overwrite is retained;
+v2 separates source_delivery_id and own delivery_id. Twelve exact frames and
+negative reference controls pass. Flush is not model receipt/viewing; caller
+provenance is not authority. Additional receipt files are about 12 KB/run. Ready
+schema discovery, memory bounds and matched tracing overhead remain gaps; default
+entrypoints and full qualification are unchanged.
+
 ## Latest follow-up — causal evidence graph from actual recovery
 
 [Offline causal trace](../research/live_control/CAUSAL_TRACE.md) exports 66 nodes
