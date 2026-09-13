@@ -46,6 +46,15 @@ uncertain2/2 to observed2/2 and both choose the same B-to-C continuation; input 
 or correctness claims. Advance only to a fresh live allocation. See
 [effect memory](research/live_control/OPENTTD_EFFECT_MEMORY_V1.md).
 
+The first preregistered fresh live memory episode succeeds. It builds A-to-B on
+turn5, carries the uncertain effect across one inspection, marks it observed and
+builds B-to-C on turn7, then repeats the inspect/observe transition and verifies
+on turn9. The independent engine score passes all four gates; two observer
+transitions change only the five target tiles and the final40/171 records remain
+complete. It uses151,853 input tokens and153.027s, so it is slower than v7. Retain
+for unchanged replication, without promotion. See
+[live effect memory](research/live_control/OPENTTD_EFFECT_MEMORY_LIVE_V1.md).
+
 ### Retained OpenTTD effect-state diagnosis
 
 The frozen seed991003 v6 run lacks a formal finish evaluation because its driver

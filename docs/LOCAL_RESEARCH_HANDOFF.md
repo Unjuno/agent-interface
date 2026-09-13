@@ -1,4 +1,14 @@
-Latest bounded candidate: v8 diagnosis shows that the original drag evidence is
+Latest live result: preregistered v9 retains one unresolved drag across inspection
+and independently completes the unchanged seed991003 L task. It builds A-to-B on
+turn5, inspects once, marks it observed and builds B-to-C on turn7, inspects once
+and verifies on turn9. Two observer transitions change only the five target tiles;
+the final40/171 records remain complete. Zero repeated completed-segment drags,
+34 calls,44 frames and17 released terminals. It uses151,853 input tokens and
+153.027s, slower than v7. Windows/WSL audits pass. Retain for unchanged
+replication; no promotion, causal, geometry, cross-domain or human-tempo claim.
+See research/live_control/OPENTTD_EFFECT_MEMORY_LIVE_V1.md.
+
+Prior bounded candidate: v8 diagnosis shows that the original drag evidence is
 discarded after an inspection-only turn. Effect-memory v1 keeps one unresolved
 drag's original before/after, latest inspection and action difference in a bounded
 row. Frozen turns5..7 retain source turn5 and inspection counts0/1/2; three invalid

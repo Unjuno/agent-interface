@@ -40,6 +40,14 @@ B-to-C continuation. Input rises764 tokens across the two calls. This is a fixed
 context signal for a fresh live test, not promotion or a correctness claim. See
 [bounded effect memory](research/live_control/OPENTTD_EFFECT_MEMORY_V1.md).
 
+The first preregistered fresh live allocation of that memory independently passes
+the five-tile L score. It inspects once after each of two distinct drags, carries
+the matching effect across both inspection boundaries and verifies on turn9.
+There are zero repeated completed-segment drags and all17 terminals release input.
+The episode costs151,853 input tokens and153.027s to semantic completion, slower
+than v7. Retain for unchanged replication; do not promote. See
+[live bounded effect memory](research/live_control/OPENTTD_EFFECT_MEMORY_LIVE_V1.md).
+
 Process-scoped timing envelopes now cover fresh Calc and OpenTTD tasks. Calc
 saves 480/192 in 23.976s with 21.334s of wrapper-observed model wait. OpenTTD uses
 batched delayed-hover contact sheets and an adaptive two-Luna/six-Astra route to

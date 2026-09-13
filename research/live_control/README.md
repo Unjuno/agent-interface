@@ -1,5 +1,12 @@
 # Asynchronous live control: development evidence
 
+Latest live result: [OpenTTD bounded effect memory](OPENTTD_EFFECT_MEMORY_LIVE_V1.md).
+The first preregistered fresh episode carries each of two drag effects across one
+inspection turn and independently completes the five-tile L on turn9. Two
+different drags, zero completed-segment repeats,44 frames and17 released terminals
+audit on Windows/WSL. It uses151,853 input tokens and153.027s, slower than v7, so
+retain for unchanged replication without promotion.
+
 Latest effect-memory candidate: [bounded OpenTTD effect memory](OPENTTD_EFFECT_MEMORY_V1.md).
 One unresolved drag keeps its original before/after evidence beside the latest
 inspection. In two preregistered archived v8 contexts, frozen outputs are
