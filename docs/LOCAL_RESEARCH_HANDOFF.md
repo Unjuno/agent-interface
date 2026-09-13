@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — common read policy for optional early effects
+
+[Outcome wait policy](../research/live_control/OUTCOME_WAIT.md) waits for either
+request-scoped early effect or final evaluation. An early effect retains its
+scope and supplies a final-only continuation; unsupported early effects no
+longer force waiting when final evaluation is present. Twelve replay/control
+cases pass, including delayed completion without command replay and false,
+missing or malformed outcomes. Candidate helper only, no live latency claim.
+Next integrate with a live caller and test delayed/failed finalization.
+
 ## Latest follow-up — actual browser use exposes completion coverage gap
 
 [Browser receipt self-use](../research/live_control/RECEIPT_BROWSER_SELF_USE.md)
