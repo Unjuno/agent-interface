@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — build actual input requests without evidence-field copying
+
+[Prepared self-use](../research/live_control/PREPARED_SELF_USE.md) derives sequence,
+delivery ID and historical deadline from received evidence and explicit steps.
+Three prior commands regenerate exactly; four malformed controls rejected. Actual
+assistant xterm use succeeds with three exact frames and no copied runtime fields.
+Total 36.649 s vs earlier 36.125 s: no speedup evidence. This is a preparation
+component; transport invocation remains separate. Next reduce measured caller
+overhead rather than repeatedly optimizing the already short local program.
+
 ## Latest follow-up — actual visual replacement of pre-existing browser text
 
 [Prefilled self-use](../research/live_control/PREFILLED_SELF_USE.md) introduces a
