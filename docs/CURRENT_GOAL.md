@@ -1,5 +1,12 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest verification: [actual X11 interruption cause](../research/live_control/LEASE_CAUSE_X11.md).
+Control_L physically released on focus transfer; terminal carries per-lease cause
+before shutdown. Focus return cannot revive old lease. Fresh same-deadline intent
+completes without inherited cause; close calls returned. Scripted foundation test,
+not full app/model performance. Next explicit app-fixture/transport/index integration
+with candidate owner/executor; old measured defaults unchanged.
+
 Latest candidate: [per-intent interruption evidence](../research/live_control/LEASE_CAUSE.md).
 New lease_cause_v1/executor_v4/input_owner_v10 retain first owner interruption and
 DecisionRequired text without replacing final release. Synthetic threaded probe
