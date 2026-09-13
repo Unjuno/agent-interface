@@ -1,5 +1,23 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — bounded oracle and Issue #13–#15 intake
+
+[Rectangle oracle](../research/live_control/RECTANGLE_ORACLE.md) independently
+checks saved flat-rectangle fixtures: five historical cases and eleven negative
+controls distinguish missing effects, collateral changes and unsupported input.
+This is development-known scorer validation, with no new live performance claim.
+
+New Issues #13–#15 were read including comments (none at this check). #13 proposes
+dormant speculative futures with fresh ordinary admission; preparation grants no
+authority. #14 proposes retained, prioritized interrupts with ACK distinct from
+resolution; current presentation replay proves neither detection nor delivery
+delay. #15 proposes explicit observation/decision/authority/effect lineage; use an
+existing actual-assistant recovery cohort first, preserving unknown links rather
+than inventing causality from timestamps. These are experiment candidates, not
+implemented ABI guarantees. Next prioritize evidence lineage and event-loss tests
+before promoting speculation or the optional compact projection. Hourly issue
+monitoring remains active and quiet on unchanged state.
+
 ## Latest follow-up — local-review trace projection and Issue #11/#12 intake (2026-09-13)
 
 [Local review projection](../research/live_control/LOCAL_REVIEW_PROJECTION.md) tests

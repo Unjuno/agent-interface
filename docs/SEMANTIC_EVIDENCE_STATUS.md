@@ -38,3 +38,10 @@ gates. Capability-by-domain qualification must identify exercised axes; do not s
 these into a king-benchmark score. No existing pilot is retroactively promoted by
 this document. Next formalize a small task/scorer contract and capability matrix
 using the existing failure corpus before broad benchmark claims or ABI freeze.
+
+Follow-up: [bounded rectangle oracle](../research/live_control/RECTANGLE_ORACLE.md)
+now covers saved fixture geometry, fill, opacity, ordering and viewport collateral,
+with explicit unsupported status and eleven negative controls. Resource budgets,
+unsaved-state checks and a complete cross-domain contract remain gaps. Issues
+#13–#15 add no-authority speculation, event-attention scheduling and causal lineage
+as candidate experiments; none changes current authority or qualification status.
