@@ -1,3 +1,5 @@
+[New runtime cancellation in Mindustry](MINDUSTRY_RUNTIME_CANCEL.md): actual GUI scripted interruption releases input, suppresses tail and supports fresh observation; game task correctly remains unsatisfied.
+
 [Bent-route actual self-use](MINDUSTRY_BEND_SELF_USE.md): the assistant built all eight directional targets; independent post-control delivery46 copper, exact18-frame audit and112-tile guard pass. Known task, older runtime, no speed claim.
 
 [Bent-route calibration](MINDUSTRY_BEND.md): eight direction-specific targets deliver 33 copper in the complete engine-authored case; wrong-turn and empty cases fail. This prepares a changed-geometry pilot, not agent construction success.
