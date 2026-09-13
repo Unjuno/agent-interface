@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — combined send/wait reduces caller operations in self-use
+
+[Send/wait self-use](../research/live_control/SEND_WAIT_SELF_USE.md) adds private
+event_socket_v2 command forwarding and session-local at-most-one write attempts.
+Actual assistant Calc use saves 532/590; repeated confirmation ID does not resend.
+Caller operations through final result fall from 10 to 5, first-capture-to-effect
+read is 57.422 s versus prior 77.053 s (sequential/familiar, not causal A/B).
+Twelve exact frames and complete prefix audited. Unit duplicate/uncertain-write
+controls pass; live disconnect, restart and cancel blocking remain unverified.
+Next test those transport failure boundaries before promotion.
+
 ## Latest follow-up — actual socket reads separate results but add overhead
 
 [Event socket self-use](../research/live_control/EVENT_SOCKET_SELF_USE.md) records
