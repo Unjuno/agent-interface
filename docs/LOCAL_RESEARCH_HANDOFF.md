@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — same-task receipt recovery pilot (2026-09-13)
+
+[Receipt comparison](../research/live_control/RECOVERY_RECEIPT_COMPARISON.md) repeats
+actual assistant recovery with identical normalized task steps and same fixture.
+Both score 24 px; receipts allow direct image lookup and historical clock anchors.
+Clock queries fall 5→1; acceptance-to-score is 97.400 s vs 35.873 s. This is one
+sequential, familiar-task pair with changed workflow, not causal receipt speedup.
+Local programs remain below 0.9 s while decision gaps are 7.7–11.1 s. JSON bytes
+increase; tokens unmeasured. 31 frames/source/step/scoring checks pass. Next repeated
+order-controlled comparisons and boundary telemetry; no global promotion.
+
 ## Latest follow-up — terminal receipt resolves current image without guessing (2026-09-13)
 
 [Review receipt](../research/live_control/REVIEW_RECEIPT.md) adds candidate compact
