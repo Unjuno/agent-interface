@@ -1,3 +1,7 @@
+## Actual full/shared presentation token pairs measured
+
+Four preregistered Luna/low turns on two known browser screenshots all answered correctly. Shared-result v1 lowers reported total input by 135 and 131 tokens (~0.87% each); cache differs on one pair. See research/live_control/MODEL_PRESENTATION_PAIR.md. Audit v1 newline-hash assumption failed and is retained; v2 distinguishes CRLF files from normalized stdin intent and passes, no model reruns. Keep sharing experimental: easy static scenes do not prove reference reasoning, live recovery or cost/speed gains. Next prioritize simpler nonduplicated composition and less obvious evidence, not threshold tuning.
+
 ## Explicit Luna probe suppresses observed MCP startup diagnostics
 
 model_probe_runner_v1 records fixed requested Luna/low arguments, exact stdin and JSONL bytes, local line-arrival timestamps and exit state. Per-run plugin/snapshot/shell feature switches yielded only the stdin notice on stderr. Known unsaved screenshot decision correct; actual usage 12567 input (1792 cached) / 43 output, exit 0 and audit pass. See research/live_control/MODEL_PROBE_RUNNER.md. Different settings from probe-01 forbid a causal comparison. Served model identity and complete instruction/tool isolation remain unproved; next inspect prompt inventory and preregister paired arms.
