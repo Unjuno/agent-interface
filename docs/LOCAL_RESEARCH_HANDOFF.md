@@ -1,3 +1,11 @@
+Latest finite comparison: [actual pointer wake](../research/live_control/POINTER_WAKE_COMPARISON.md).
+Six scripted Inkscape arms, same backend/owner and matching within-pair initial pixels.
+Old interrupted click reproduces completed-with-cause; new returns needs_decision
+with zero completed steps. Release-to-terminal: click 341.32/1.61 ms, drag 997.30/0.87 ms
+(old/new), one pair each, not model latency or population performance. Normal drag
+inputs complete and release, but reviewed image does not establish rectangle movement.
+Next independently score selected-object drag/save and recovery; no task-success
+promotion from admission-only controls or Research Freeze.
 Latest implementation/self-use: [cooperative interruption wake](../research/live_control/INTERRUPT_WAKE.md).
 lease_cause_v2/executor_v5 wake waits and check step/final completion. Nine controlled
 cases pass. Actual single-hold Inkscape interruption: needs_decision, zero completed
