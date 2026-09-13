@@ -1,3 +1,9 @@
+Latest effect review: [preserved servo contradictions](../research/live_control/SERVO_EFFECT_REVIEW.md).
+Eight historical trials/59 exact frames and saved geometry audited. Completed/local
+goal can fail the saved task; tracking loss can follow a passed geometry score.
+Keep the three statuses separate before recovery. Backend-only logs do not verify
+current caller card fallback. Next actual caller effect review with both opposite
+failures, without automatic movement retries; no identity fix or runtime promotion.
 Latest compact self-use: [typed successful-servo card](../research/live_control/SERVO_REVIEW_CARD.md).
 Selected consistency checks permit 1385-byte historical/1388-byte fresh servo card;
 16 consistent-copy negative controls and actual interruption fall back to full receipt.

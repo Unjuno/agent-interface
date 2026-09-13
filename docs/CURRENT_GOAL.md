@@ -1,3 +1,10 @@
+Latest effect review: [preserved servo contradictions](../research/live_control/SERVO_EFFECT_REVIEW.md).
+Eight historical cases/59 exact frames audited, saved geometry independently
+recomputed. Replacement reports completed/local goal but effect fails; blue
+distractor stops with tracking lost after scored geometry already passes. Keep
+program, visual goal and task effect separate; no automatic retry from terminal
+status. Backend-only records do not test current socket-card fallback. Next actual
+caller effect review with these two opposite failures; no identity fix or promotion.
 Latest compact self-use: [typed successful-servo card](../research/live_control/SERVO_REVIEW_CARD.md).
 Selected consistency checks permit 1385-byte historical/1388-byte fresh servo card;
 16 consistent-copy negative controls and actual interruption fall back to full receipt.
