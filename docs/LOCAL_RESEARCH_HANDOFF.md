@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — same-task examples comparison shows no total speedup
+
+[Calc examples comparison](../research/live_control/CALC_EXAMPLES_COMPARISON.md)
+repeats actual self-use with the same seed/goal and accepted steps. Both score
+correctly; 39 frames audited. Rejections 1→0 and submit commands 3→2, but first
+capture→score stays 97.873→97.515 s as other external gaps grow. This sequential,
+familiar pair cannot causally attribute differences to examples. Shift priority
+from local micro-optimization to declared planner-boundary/verification latency,
+using fresh-admission constraints for any speculative preparation experiment.
+
 ## Latest follow-up — Calc self-use and basic-operation discovery
 
 [Calc self-use](../research/live_control/JOURNAL_CALC.md) uses interactive_v17
