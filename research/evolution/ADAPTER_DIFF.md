@@ -112,3 +112,9 @@ and interactive_v13 with source-bound single-step local correction and needs_dec
 mapping for non-goal tracking outcomes. This is explicit core operation/feedback
 churn. Actual assistant use and selected-source failure mapping have narrow evidence;
 cross-domain and fresh distractor gates remain open. No freeze credit.
+
+[Live modal guard](../live_control/LIVE_MODAL_GUARD.md) adds an unpromoted private
+proposal attachment and pre-input pixel/context check around an ordinary Return
+step. This changes candidate control semantics, not a domain adapter alone. Known
+X11 negative cases stop without owner revision change; check/input race and runtime
+incarnation binding remain unresolved. No freeze credit or public ABI promotion.

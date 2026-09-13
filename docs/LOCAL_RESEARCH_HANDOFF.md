@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — actual X11 pre-input modal guard
+
+[Live modal guard](../research/live_control/LIVE_MODAL_GUARD.md) connects a private
+one-shot proposal guard to shared Backend/Executor Return. Normal case saves;
+internal focus, geometry, age and session negatives stop with needs_decision and
+unchanged input revision. V1 copied session identity incorrectly and lacked guard
+images; v2 corrects/retains both cohorts. Eleven public frames/five guard samples
+audited. Check→input is not atomic, display name is not runtime incarnation, and
+no planner boundary is yet removed. Core candidate only; no freeze credit.
+
 ## Latest follow-up — bind modal proposals to explicit observation dependencies
 
 [Bound modal proposal](../research/live_control/BOUND_MODAL.md) associates the
