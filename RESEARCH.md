@@ -467,3 +467,16 @@ never verifies or safely stops. At the turn limit the driver raises before
 consuming the supervisor abort, so no independent evaluation is emitted. The
 run is hard-false but its final task state is unscored. Fix that handshake, then
 test mechanically derived annotation-to-surface evidence on held-out geometry.
+
+Driver v5 now closes the limit-path race. A zero-model, zero-pointer live probe
+applies12 observe-only proposals and then obtains a scored
+`bounded_turn_limit` outcome through50 durable calls;39 observations, release,
+save, task state and exit0 audit cross-OS. The fix preserves failure evidence and
+makes no task-performance claim.
+
+Ctrl+1 sign-transparency feasibility also transfers from the seed991003 L task
+to the held-out seed991002 straight geometry. Both zero-model probes preserve
+independent road/owner state and save bytes while changing custom sign
+presentation. Full-frame deltas include normal simulation progress, so the
+method is not promoted. Next freeze a paused or temporally matched pair before
+testing model targeting and independent task correctness.

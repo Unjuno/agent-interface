@@ -180,3 +180,14 @@ independent evaluation is emitted. All52 exact frames,50 durable calls, typed
 proposals and the traceback are retained; the posthoc artifact audit passes on
 Windows and WSL, and the run was not retried. Fix the finish handshake before
 testing interface-derived annotation/surface evidence on held-out geometries.
+
+Driver v5 repairs the exposed limit handshake without modifying frozen v4. A
+zero-model/zero-pointer live probe sends12 observe-only proposals, waits for the
+supervisor stop and records an independent `bounded_turn_limit` outcome after50
+durable calls. Release, task/save state and exit0 pass Windows/WSL audit.
+
+Two zero-model Ctrl+1 probes change custom sign presentation without task-state
+mutation on this L fixture and the held-out seed991002 straight geometry. The
+raw full-frame deltas include simulation progress, so they do not isolate sign
+pixels or establish better model grounding. The next comparison needs matched
+dynamic state before any model-facing promotion.

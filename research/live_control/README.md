@@ -227,3 +227,11 @@ verify or safe stop. The driver exits at its proposal limit before consuming
 the abort, leaving the task outcome unavailable. The artifact audit passes and
 no retry was made. Repair the finish handshake, then test mechanically derived
 annotation-to-surface evidence on held-out geometries.
+
+That finish handshake is repaired in `timing_envelope_openttd_l_driver_v5.py`.
+The model-free limit probe reaches12 observe-only proposals and records the
+independent bounded failure with50 durable calls,39 observations and exit0.
+Ctrl+1 sign-transparency probes then preserve task/save state while changing
+custom sign presentation on the L fixture and held-out seed991002 geometry.
+Because normal simulation progress is present between frames, treat the paired
+view as feasibility only. See [OPENTTD_VIEW_PAIR_V1.md](OPENTTD_VIEW_PAIR_V1.md).

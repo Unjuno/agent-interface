@@ -2321,3 +2321,25 @@ annotation-to-action-surface evidence on held-out OpenTTD geometries. More promp
 text is rejected as the next recovery direction. DOOM remains one continuous-
 control stress domain in the Domain Coverage Matrix, and freeze status is
 unchanged.
+
+## Latest follow-up — scored limit stop and sign-view transfer (2026-09-14)
+
+`timing_envelope_openttd_l_driver_v5.py` fixes the deterministic v6 limit race
+without editing frozen v4. After12 proposals it waits for the explicit
+supervisor finish message, sends one independent finish and records the typed
+outcome. A frozen live control uses12 observe-only proposals, zero model/pointer
+calls and50 durable calls. It emits `bounded_turn_limit`, preserves all scored
+road/owner/save state, releases inputs and exits0. Its39 observations and source
+hashes audit on Windows and WSL.
+
+Official OpenTTD documentation identifies Ctrl+1 as station-sign transparency.
+Two preregistered zero-model probes apply Ctrl+2 tree transparency followed by
+Ctrl+1 on seed991003 L and held-out seed991002 straight geometry. Both change
+custom sign presentation and preserve independent task/save state. Their
+166,104 and186,377 changed-pixel counts include normal simulation progress and
+are not isolated effect sizes. The first probe's accidental Windows-Python
+`fcntl` import failure occurred before app launch/input and is retained.
+
+Keep the sign view unpromoted. Next pause or temporally match the dynamic state,
+isolate the label delta, then compare actual model targeting and independent
+task correctness. The full goal and Research Freeze status remain unchanged.

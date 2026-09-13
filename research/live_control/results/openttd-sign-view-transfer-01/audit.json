@@ -1,0 +1,46 @@
+{
+  "audit_passed": true,
+  "preregistered": true,
+  "model_calls": 0,
+  "durable_calls": 6,
+  "method": {
+    "id": "openttd.transparent_station_signs",
+    "expanded_step": {
+      "op": "chord",
+      "modifier": "Control_L",
+      "key": "1"
+    },
+    "source_url": "https://wiki.openttd.org/en/Manual/Transparency%20options"
+  },
+  "image": {
+    "dimensions": [
+      1280,
+      800
+    ],
+    "before_sha256": "205dafb1d9fcc769ae64c83d60628c1fe7e7f292317e5c1ed5c979e37c960585",
+    "after_sha256": "5bdb72784417f77446b48faea522b86dcefa87d404c6145d84a49207ce0d5e27",
+    "changed_pixels": 186377,
+    "total_pixels": 1024000,
+    "changed_fraction": 0.1820087890625,
+    "difference_bounds": [
+      129,
+      40,
+      1153,
+      760
+    ]
+  },
+  "task_state": {
+    "independent_success": false,
+    "checks": {
+      "target_owned_roads": false,
+      "bidirectional_connections": false,
+      "forbidden_row_clear": true,
+      "surrounding_road_owner_unchanged": true
+    },
+    "changed_surrounding_tiles": [],
+    "save_unchanged": true
+  },
+  "decision": "retain as a paired sign/surface candidate",
+  "scope": "second-geometry view-transform feasibility only; no model judgment, task success, latency or token claim",
+  "audit_sha256": "d71f8287a49cbc5fe232b35b5b5bf75542b035130ce3d797c126fc95ba290ee5"
+}

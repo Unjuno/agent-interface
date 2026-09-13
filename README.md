@@ -62,6 +62,14 @@ outcome is unavailable because the driver exits before consuming the limit
 abort. The failure is retained without retry; prose-only anchoring is not
 promoted.
 
+The v6 limit-path evidence gap is repaired in driver v5: a model-free live probe
+applies12 observe-only proposals, accepts the supervisor stop, emits an
+independent `bounded_turn_limit` result and exits0. A separate zero-model view
+study finds Ctrl+1 changes custom sign presentation on both seed991003 L and
+held-out seed991002 straight geometry without changing scored task/save state.
+Normal game progress contaminates full-frame difference counts, so this remains
+an unpromoted paired-observation candidate pending a paused matched comparison.
+
 The newest observation-boundary study physically withholds one live Chromium
 region: full input reads the exact value 4/4 and redacted input preserves explicit
 policy UNKNOWN 4/4. The region geometry audits exactly, but metadata adds 112
