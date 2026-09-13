@@ -11,7 +11,7 @@ general computer use or an installable Agent Market product.
 | Stage | Initial state | Current evidence | Status |
 | --- | --- | --- | --- |
 | Observation | Repeated full screenshots around individual actions | Exact unchanged-frame suppression, exact tile transport, changed-region and compact planner views | Proven in scoped fixtures; general visual/token policy remains experimental |
-| Evidence withholding | Missing pixels could be confused with empty or absent content | Actual region pixels withheld with explicit policy UNKNOWN; full 4/4 exact versus redacted 4/4 UNKNOWN; stale policy-bound mutation refused before input | Scoped Chromium geometry, adjacent-action, hidden-target and post-model policy-change gates pass; refinement and bypass remain |
+| Evidence withholding | Missing pixels could be confused with empty or absent content | Actual region pixels withheld with explicit policy UNKNOWN; full 4/4 exact versus redacted 4/4 UNKNOWN; stale policy-bound mutation refused before input | Scoped Chromium geometry, adjacent-action, hidden-target, policy-change and authorized whole-replacement gates pass; bypass remains |
 | Input | Coordinates and short scripted keyboard/pointer actions | Absolute intent deadlines, focus/surface binding, held input, cancellation/expiry, verified release and tail suppression | Strong scoped Linux/X11 evidence |
 | Execution | One action followed by another model boundary | Bounded multi-step programs, phased submit, passive followups and local continuation | Working in selected desktop/game tasks; semantic replans still need the model |
 | Freshness | Screenshot age was mostly implicit | Observation identity/age, stale refusal, route and binding guards, re-observation after interruption | Mechanism exists; model delay can still age a frame by seconds |
@@ -121,6 +121,10 @@ Luanti remains a feasibility candidate rather than demonstrated agent control.
   calls use 9,359 input tokens and 23 frames replay exactly. This closes one stale
   unsafe-proposal case, but the already presented full image means it is not a
   retroactive confidentiality claim.
+- One fresh authorized-refinement sequence keeps the redacted pixels unchanged.
+  The no-authority call stops; a new observation and version permits only exact
+  whole replacement and Save, which verifies independently without disclosing
+  the old value. Stale replay and eleven altered-authority controls refuse.
 
 ## Distance to the stated goal
 
@@ -140,8 +144,9 @@ before model delivery. Corrected delayed and partial-terminal experiments now
 show that prior execution and the completed prefix change wait-versus-submit
 decisions in three fresh states. Actual redacted-observation geometry,
 readability, adjacent action, hidden-target refusal and one post-model policy
-transition now pass scoped gates. The next gate covers authorized refinement and
-alternate-channel/history bypass, followed by current-runtime Mindustry/OpenTTD
+transition and one authorized whole-replacement refinement now pass scoped gates.
+The next gate covers alternate-channel/history bypass plus append/partial-selection refusal, followed
+by current-runtime Mindustry/OpenTTD
 tasks with new geometry and the same recovery semantics. Human baselines and
 model-boundary timestamps must then be collected on identical task allocations.
 Only after those pass should the runtime/API be frozen and packaged.

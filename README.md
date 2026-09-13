@@ -23,8 +23,11 @@ actions. A required-field mutation succeeds only with full evidence; both
 redacted conditions stop with zero live input. A later same-prompt pair binds
 the model proposal to its observation and policy version: a stable policy
 executes and verifies, while a policy tightened after model return rejects the
-model's actual edit proposal before any input. Authorized refinement and
-crop/history/alternate-channel bypass cases remain open.
+model's actual edit proposal before any input. Crop/history/alternate-channel
+bypass cases remain open. A subsequent scoped
+refinement keeps the old value hidden but permits one exact whole replacement:
+the unprivileged model call stops, the newly bound call executes and verifies,
+and replay against the old policy is refused.
 The assistant has used received-image references and bounded programs in Calc
 and browser fixtures. An optional final-result read collected ready Calc early
 and final evidence in one caller invocation, and skipped itself on a browser

@@ -15,7 +15,11 @@ A policy-race follow-up gives two fresh sessions the same full presentation and
 prompt; both model calls propose the edit. The unchanged policy executes and
 verifies, while a policy tightened after model return causes
 `policy_binding_mismatch` and zero input. This proves one actual stale-proposal
-refusal, while authorized refinement and alternate-channel/history bypass remain.
+refusal, while alternate-channel/history bypass remains.
+The next seed254 session exercises that refinement: identical redacted pixels
+produce stop without authority, then a new observation/policy permits one exact
+whole replacement and Save. The task independently verifies, the private old
+value is absent from model I/O, and stale replay refuses.
 
 Latest live integration: [bounded effect wait after a partial terminal](PARTIAL_TERMINAL_WAIT.md).
 The model again distinguishes expiry before and after Return; one verifier query

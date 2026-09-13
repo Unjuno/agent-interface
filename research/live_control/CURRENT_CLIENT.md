@@ -6,8 +6,9 @@ The declared box matches the changed-pixel bound.100 renders take38.757ms median
 p95 46.917ms. Input rises9302->9414 tokens/call, so this is not compression.
 Revision1's ambiguous inclusive edge, a fixed-filename measurement failure and
 cross-platform PNG encoding differences are retained. See REDACTED_OBSERVATION.md.
-Promotion is limited to pixel withholding/explicit unknown semantics; action,
-authorized refinement and crop/history/alternate-channel bypass remain open.
+Promotion is limited to pixel withholding/explicit unknown semantics; later
+sections cover scoped action/refinement, while crop/history/alternate-channel
+bypass remains open.
 
 Follow-up action gate: six fresh seed251 Chromium sessions prefill the private
 value and ask for one adjacent visible Save click. Full, unmarked redaction and
@@ -36,8 +37,20 @@ version1, so the gate returns `policy_binding_mismatch` in0.006ms and submits
 zero post-observation input. Stable gate time is0.035ms; both calls report9359
 input tokens; model runners6.476/7.701s; 23 frames replay exactly. Cross-OS audit
 passes. This is one actual stale-proposal refusal, not retroactive privacy for the
-already disclosed full image. Next test authorized refinement and crop/history/
-alternate-channel bypass; full goal remains open.
+already disclosed full image. The following experiment tests scoped refinement;
+crop/history/alternate-channel bypass remains open. Full goal remains open.
+
+Authorized refinement follow-up: one fresh seed254 session keeps the old field
+value physically redacted. Under version2/no authority Luna-low stops and zero
+task input follows. A new observation identity plus version3 grants only exact
+whole replacement with public t000254 and one Save target; the second call
+proposes it, the five-step action reaches VERIFIED and independent success, and
+the private prior value is absent from both model I/O paths. Replaying the same
+proposal against version2 refuses with `current_binding_mismatch`. Inputs
+9432/9529, runners4.799/5.341s, action761.549ms, gate0.144ms; 15 exact frames,
+11 authority controls and cross-OS audit pass. Initial v1 schema-key failure is
+retained. Next test crop/history/alternate-channel bypass and append/partial
+selection refusals; full goal remains open.
 
 Latest live wait integration: planner_evidence_v4 explicitly accepts durable
 v4/v5/v6 and exposes journal provenance. Fresh seed248 partial-terminal sessions

@@ -57,8 +57,18 @@ Both calls report 9,359 input tokens; 23 frames replay exactly and the Windows
 and Linux audits pass. This establishes refusal of one actual stale model
 proposal before input. Because the full image was already disclosed before the
 policy tightened, it is not evidence that the transition retroactively protects
-confidentiality. Authorized refinement and alternate observation/history bypass
-remain open.
+confidentiality. Alternate observation/history bypass remains open.
+
+An authorized-refinement follow-up keeps the hidden pixels byte-identical while
+changing the policy and observation identity. With no mutation authority the
+first Luna/low call stops and no input follows. Version 3 then authorizes only
+whole replacement by the exact public task value and one Save target. The second
+call proposes that operation; the gate admits five steps, the effect verifies,
+and independent evaluation passes without exposing the prior value to either
+model call. Replaying the proposal against the previous binding refuses. Inputs
+are 9,432/9,529 tokens; 15 frames replay exactly; eleven altered-authority
+controls and Windows/Linux audits pass. This does not authorize append, partial
+selection, inference, alternate-channel access, or general hidden-field control.
 
 ### Compact planner evidence, caller binding and partial terminals
 
