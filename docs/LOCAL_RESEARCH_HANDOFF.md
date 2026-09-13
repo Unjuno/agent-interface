@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — integrated CLI returns early while final evaluation is gated
+
+[Live drain delay](../research/live_control/LIVE_DRAIN_DELAY.md) verifies the full
+CLI returns effect_observed/unknown task success while a real evaluator gate is
+closed, then its continuation receives final success after release. Twelve exact
+frames, saved workbook, source hashes, release and full prefix audited. Candidate
+v3 adds explicit producer attribution for scripted tests. This covers responsive
+socket delay, not blocked I/O or human timing. The drain remains optional.
+
 ## Latest follow-up — early and final Calc results returned in the same caller
 
 [Final drain self-use](../research/live_control/DRAIN_FINAL_SELF_USE.md) adds opt-in
