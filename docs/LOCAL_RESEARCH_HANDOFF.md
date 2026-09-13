@@ -1,3 +1,10 @@
+Latest bundled faults: [physical release/tail stop and reason gap](../research/live_control/BUNDLE_FOCUS_FAULTS.md).
+bundle-focus01 two buttons pass, key trigger never fires (key admissions lack id/
+step). Corrected v2 key injection releases/halts tail but decision_reason null makes
+probe fail despite interruption.record focus_changed. All failures retained,38frames
+audited; both processes exit1, resource closes returned. Only button cases reached
+fresh-intent check. Next new candidate fills missing reason from per-intent cause,
+preserving originals, then cross-domain conditional behavior. No runtime promotion.
 Latest executed pair: [separate vs bundled GUI](../research/live_control/BUNDLE_PAIR_LIVE.md).
 bundle-pair-01 A thenB seed223/X69.5, identical9steps + initialPNG + finalSVG; both
 strict pass.3->1 programs,9->5 sockets; decision57.178->42.748s, not causal speed.

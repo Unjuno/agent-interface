@@ -1,3 +1,10 @@
+Latest bundled faults: [physical release/tail stop and reason gap](../research/live_control/BUNDLE_FOCUS_FAULTS.md).
+Three actual injections (select/field buttons, Ctrl modifier) release during blocked
+output and stop tail at prefix0/2/3.38 frames audited. Preserve v1 key non-injection
+and v2 key assertion failure: per-intent focus_changed exists but decision_reason
+null. Button fresh-observe isolation passes; key branch aborted before that check.
+Next preserve first-cause explanation for parameterless DecisionRequired with new
+candidate, then another desktop domain/conditional boundary. No default promotion.
 Latest executed pair: [separate vs bundled GUI](../research/live_control/BUNDLE_PAIR_LIVE.md).
 Registered AB seed223/X69.5 executed once each: identical9steps/initialPNG/finalSVG,
 both strict pass. Programs3->1/socket9->5; GUI decision57.178s->42.748s, exploratory
