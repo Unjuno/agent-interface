@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — actual assistant use exposes outer delivery boundary
+
+[Early effect self-use](../research/live_control/EARLY_EFFECT_SELF_USE.md) records
+actual image inspection and two assistant Calc programs through interactive_v23.
+Saved 532/590, no rejection; twelve exact frames/artifact hash/receipts audited.
+Runtime final-terminal to early emit is 20.295 ms, but early and final results
+arrive in one tool response. Modal-to-confirm boundary is 15.899 s and total
+first-capture-to-effect is 38.723 s. No causal A/B or human-speed claim. Next
+measure event-aware outer delivery instead of optimizing only runtime emission.
+
 ## Latest follow-up — early saved-effect publication removes scorer wait
 
 [Early saved effect](../research/live_control/EARLY_SAVED_EFFECT.md) connects
