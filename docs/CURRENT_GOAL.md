@@ -1,3 +1,7 @@
+## Fallback retains pending and terminal state across real socket action
+
+New probe injects optional composition failures after input_stopped and terminal receipt using actual private AF_UNIX/subprocess with synthetic blocked capture. Both full original results retained; one submit/accept only, tail never starts, cancel/read continue same action, exit0. Independent audit reconstructs all 11 events/6 replies and both fallback payloads. See research/live_control/STOPPED_PRESENTATION.md. BytesIO output and synthetic backend do not prove actual GUI/model delivery. Inkscape v2 live fallback remains next; no default promotion.
+
 ## Presentation preparation failures retain original results
 
 presentation_choice_v1 falls back before emission with full original data and explicit formatting error; no-benefit cases emit original JSON. Linux controls pass composition, overhead avoidance, exception/mismatch preservation, partial-write propagation and invalid-source rejection. New explicit Inkscape v2 wiring is syntax-checked, not live-tested. See research/live_control/PRESENTATION_CHOICE.md. Output failure never appends a second frame or resends input. Earlier receipt construction/storage failures remain outside this fallback. Next runtime-negative live validation; no default promotion.
