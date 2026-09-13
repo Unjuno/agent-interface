@@ -57,6 +57,14 @@ failure with driver exit0; a normal fixed-Astra run passes in92.377s with6 calls
 and97,729 input tokens. Fixed Astra is now3/3 on this same task, with a descriptive
 95.219s mean. Windows/WSL audit passes; different tasks remain required. See
 [typed finish outcome](research/live_control/OPENTTD_FINISH_V3.md).
+A preregistered follow-up changes one initial-state factor: Road Construction is
+opened before the timed observation while the canonical save, task, prompt,
+fixed-Astra route and engine guard stay fixed. The model independently succeeds
+in89.272s with6 calls,97,696 input tokens,24 exact frames and20 durable calls.
+The prior closed-toolbar episode used6 calls and20 durable calls as well.
+Toolbar discovery disappeared, but targeting confirmation occupied the freed
+boundary. The descriptive3.105s difference is not a causal speedup. See
+[changed initial UI](research/live_control/OPENTTD_INITIAL_STATE_V4.md).
 
 ### Actual pixel redaction with explicit unknown semantics
 

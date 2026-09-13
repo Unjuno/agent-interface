@@ -45,7 +45,12 @@ episodes cannot promote Astra. New tasks, fuller order balancing and a human
 comparison remain. A fresh v3 negative control then turns independent score=false
 into a persisted typed failure with zero model/input calls and driver exit0. A
 third fixed-Astra episode passes in92.377 seconds with6 calls, taking the same-task
-record to3/3; different tasks remain untested.
+record to3/3. A preregistered fourth episode pre-opens Road Construction before
+the timed observation and passes in89.272 seconds with6 calls,97,696 input
+tokens,24 exact frames and20 durable calls. It handles the first changed initial
+UI state, but the same task geometry remains. The removed toolbar-discovery
+boundary is replaced by targeting confirmation, so turns and durable calls do
+not fall and the3.105-second descriptive difference is not a speedup.
 
 The newest Chromium episode is the clearest small end-to-end sample. A fresh
 screenshot and a 621-byte strict compact UNKNOWN record drove one real model
@@ -79,7 +84,7 @@ the rows must not be averaged into one difficulty score.
 | Desktop apps | Small Calc, Chromium, Inkscape and XTerm tasks; dialogs, focus loss, interruption, saving and independent effect checks | Unknown applications, richer window/scroll/drag workflows and repeated held-out tasks |
 | DOOM | Shared held-key/cancel/expiry readiness and later directional-input repair/assistant gameplay evidence | Stable continuous useful-feedback loop, reaction distribution and public real-time demo |
 | Mindustry | Actual assistant construction of eight directed conveyors on a known route; 112-tile guard and 49-copper post-control delivery; shared caller scripted replay and cancellation | Fresh route planning, multi-object control, event-driven recovery and much shorter decision gaps |
-| OpenTTD | Fixed Astra passes the same task3/3, adaptive1/2 and fixed Luna0/2; false visual completion is caught by independent guards and now persists as a typed failure; complete TimingEnvelopes and batched tooltip contact sheets | Different task allocations and initial states, fuller order balancing, matched human control, scroll/window complexity and long-horizon planning |
+| OpenTTD | Fixed Astra passes the canonical task3/3 from a closed toolbar plus1/1 with Road Construction pre-opened; adaptive1/2 and fixed Luna0/2; false visual completion is caught and persisted; complete TimingEnvelopes and contact sheets | New task geometry/objectives, more initial states, fuller order balancing, matched human control, scroll/window complexity and long-horizon planning |
 | Luanti | Current-engine launch, deterministic tiny pad/pose and read-only node/pose feasibility | Normal navigation, camera-mode contract, inventory, interaction and successful construction |
 
 DOOM remains valuable for continuous motor pressure. Mindustry and OpenTTD are
@@ -170,9 +175,10 @@ show that prior execution and the completed prefix change wait-versus-submit
 decisions in three fresh states. Actual redacted-observation geometry,
 readability, adjacent action, hidden-target refusal and one post-model policy
 transition, authorized whole replacement, and declared presentation/plan bypass
-controls now pass scoped gates. The next work returns to current-runtime
-Mindustry/OpenTTD
-tasks with new geometry and the same recovery semantics. Human baselines and
+controls now pass scoped gates. The first OpenTTD initial-state variation passes
+without reducing model boundaries. The next work returns to current-runtime
+Mindustry/OpenTTD tasks with new geometry or objective structure and the same
+recovery semantics. Human baselines and
 model-boundary timestamps must then be collected on identical task allocations.
 Only after those pass should the runtime/API be frozen and packaged.
 

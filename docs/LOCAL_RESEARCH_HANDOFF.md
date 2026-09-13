@@ -1,3 +1,16 @@
+Latest changed-initial-state evidence: a preregistered fixed-Astra OpenTTD
+episode retains the canonical save, guarded A-C task, prompt and independent
+engine score but opens Road Construction before the timed initial observation.
+The initial engine score is false with forbidden row and surroundings preserved;
+the final score passes all four checks. Completion is89.272s +/-50ms with77.012s
+model wait,10.363s proposal-to-feedback total,6 model calls,97,696 input tokens,
+24 exact frames and20 durable calls. Compared descriptively with the prior
+closed-toolbar episode, completion is3.105s shorter, but turns and durable calls
+remain6/20: toolbar discovery disappears and targeting confirmation expands.
+Windows/WSL audit passes. Do not promote a speedup or route; next change geometry
+or objective structure and retain the independent gate. See
+research/live_control/OPENTTD_INITIAL_STATE_V4.md. Full goal stays open.
+
 Latest matched dynamic-domain evidence: two preregistered OpenTTD blocks use the
 same canonical save, task, source, prompt policy and evaluator. Fixed Astra passes
 2/2 in98.351s and94.929s; adaptive passes1/2; fixed Luna passes0/2. The second

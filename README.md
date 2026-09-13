@@ -25,7 +25,12 @@ Luna0/2. A third fixed-Astra episode passes in92.377s with6 calls, taking its
 same-task record to3/3. The second adaptive run falsely declares visual completion
 before the independent score fails. A fresh v3 control now preserves that negative
 score as a typed failure instead of an assertion. Different task allocations and
-a human control remain before any route or speed claim.
+a human control remain before any route or speed claim. A preregistered fourth
+fixed-Astra episode changes the initial UI by pre-opening Road Construction and
+passes in89.272s with6 calls/97,696 input tokens. It removes toolbar discovery
+but still uses the same number of model turns and durable calls because targeting
+confirmation expands. This is one changed UI state, not a speedup or new-geometry
+result.
 The newest observation-boundary study physically withholds one live Chromium
 region: full input reads the exact value 4/4 and redacted input preserves explicit
 policy UNKNOWN 4/4. The region geometry audits exactly, but metadata adds 112

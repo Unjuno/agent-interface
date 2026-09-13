@@ -1,5 +1,12 @@
 # Asynchronous live control: development evidence
 
+Latest changed-state result: [pre-opened OpenTTD road toolbar](OPENTTD_INITIAL_STATE_V4.md).
+One preregistered fixed-Astra episode retains the canonical task and independent
+guard but changes the initial UI. It passes in89.272s with6 calls/97,696 input
+tokens. The route skips main-toolbar discovery but spends the same total model
+turns and durable calls on targeting confirmation. This is one UI-state transfer,
+not a speedup, geometry generalization or human comparison.
+
 Latest timing result: [typed OpenTTD finish outcome](OPENTTD_FINISH_V3.md).
 A fresh zero-input/no-model control preserves independent score=false as a typed
 failure with driver exit0. The same v3 path then completes a third fixed-Astra
