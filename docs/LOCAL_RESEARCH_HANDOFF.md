@@ -1,3 +1,7 @@
+## Real live model call exceeds experimental observation age budget
+
+Live Mindustry observation age115.655ms at prompt preparation became12603.096ms after actual Luna/low call. Guided model proposed target action; post-answer1000ms test guard vetoed input and dispatched observe-only. Capture to new image-ready12753.084ms. Runner11374.012ms separately measured on Windows; usage12048 input/1792 cached/73 output. Audit22 events/7 calls/3 frames, no input admissions, cleanup passes; processes exit0. See research/benchmark_discovery/LIVE_FOCUS_BOUNDARY.md. Paused game and arbitrary experimental age cutoff do not prove semantic invalidity; repeated reasking could starve progress. Next bounded intent plus local fresh target revalidation/progress test, not another static prompt comparison. Full goal active.
+
 ## Equal-policy focus model pair passes explicit rule checks, not live recovery
 
 New view v2 keeps full latest observation/terminal and rejects ambiguous sequence/action order. Three archived cases with synthetic freshness; six Luna/low calls all eight fields exact. Input reduces388/1386/1386 tokens (3.07%/10.22%/10.22%); stale view slower locally. Audit/source/prompt/args/usage passes; no reruns or v1 result replacement. See research/benchmark_discovery/FOCUS_MODEL_PAIR_V2.md. Explicit rule adherence only; target-needs_decision case remains uncovered here. Next live scoped decision boundary with real age and model-output timing, not more static passing cases. Issue #40–51 timestamps rechecked unchanged.
