@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — three-domain pointer timeline partition
+
+[Timeline analysis](../research/evolution/POINTER_TIMELINE.md) compares nine shared
+source hashes and partitions original runtime timestamps exactly. Outside admitted
+execution: Inkscape 98.62%, guarded OpenTTD 97.11%, Mindustry build 95.69%.
+This includes review/transport/recovery, not measured pure model inference.
+Tasks and callers differ; no paired gain or latest-stack qualification. Next
+priority is fixed-backend caller/image-delivery integration readiness before fresh
+counterbalanced pairs; historical generated ledgers remain scoped and unchanged.
+
 ## Latest follow-up — actual Mindustry six-conveyor construction
 
 [Visual build episode](../research/benchmark_discovery/MINDUSTRY_BUILD_SELF_USE.md)

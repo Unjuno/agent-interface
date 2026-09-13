@@ -1,5 +1,11 @@
 # Shared evaluation preparation — not a completed qualification study
 
+Later evidence and next caller comparison: [three-domain pointer timeline](POINTER_TIMELINE.md)
+finds 95.7–98.6% of the three recorded input timelines outside admitted execution.
+Those episodes share v9 backend hashes but not latest runtime/caller adapters.
+The follow-up specifies integration readiness before new matched caller pairs;
+it does not retroactively change or complete the historical reference below.
+
 ## Question and decision
 
 Can one pinned candidate preserve the declared input/observation semantics
