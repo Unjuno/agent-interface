@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — bounded pipe writes expose partial-command uncertainty
+
+[Bounded pipe writer](../research/live_control/BOUNDED_PIPE_WRITER.md) adds an
+unintegrated nonblocking writer. Actual 4096-byte Linux pipe tests retain full
+and partial-write timeouts at ~100 ms, with the latter sending 4096/4234 bytes.
+Both poison the channel so later cancel cannot corrupt a partial JSON record;
+this does not deliver cancel. Unicode and closed-reader controls pass. Initial
+oversize probe failure is preserved separately. Next integrate exclusive
+unbuffered stdin and test shutdown/lease behavior; no default promotion.
+
 ## Latest follow-up — saturation requires separately reserved cancel capacity
 
 [Socket saturation](../research/live_control/SOCKET_SATURATION.md) confirms eight
