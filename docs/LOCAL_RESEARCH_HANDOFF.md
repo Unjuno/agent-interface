@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — persistent receipt file isolates open/close cost
+
+[Receipt journal](../research/live_control/RECEIPT_JOURNAL.md) preserves per-record
+flush while opening once. Twenty matched blocks of 15 identical receipts show
+92.125→7.424 ms median persistence time, persistent faster 20/20; byte equality
+and write/partial-write/flush failure controls pass. These are filesystem-only
+measurements, not live GUI/model speedup. Journal failure is sticky, not rollback.
+Next integrate with teardown and held-input output-stall tests; default runtime
+and authority behavior are unchanged.
+
 ## Latest follow-up — matched delivery cost and bounded reference candidate
 
 [Delivery cost](../research/live_control/DELIVERY_COST.md) compares identical
