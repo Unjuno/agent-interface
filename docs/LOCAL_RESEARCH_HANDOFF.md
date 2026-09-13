@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — final-program scoring removes a benchmark request boundary
+
+[Final scoring](../research/live_control/FINAL_SCORE.md) adds finish_after to
+experimental interactive_v19. Actual same-task Calc passes; final terminal→score
+known is 17.317 ms versus prior explicit-finish 30.650 s. Forty matched-task frames
+audited. Timing is runtime-side and total speedup is confounded. Oracle remains
+post-controller: reservation rejects later programs and closes admission before
+scoring; finish is cleanup only. Invalid reservation/cancelled final task tested,
+with an initial compact-event wait failure retained. Finalizer I/O/error delivery
+and general semantic verification remain unqualified.
+
 ## Latest follow-up — same-task examples comparison shows no total speedup
 
 [Calc examples comparison](../research/live_control/CALC_EXAMPLES_COMPARISON.md)
