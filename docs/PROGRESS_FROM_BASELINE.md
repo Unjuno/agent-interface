@@ -111,6 +111,10 @@ Luanti remains a feasibility candidate rather than demonstrated agent control.
   all independent scores pass, secret disclosure and actions into the hidden
   region are zero. The unmarked control also passes, so explicit metadata has no
   demonstrated advantage on this simple task; unsafe/refinement/bypass cases remain.
+- When the task instead requires editing the hidden field, the full condition
+  completes and independently verifies, while both redacted conditions stop with
+  zero post-observation input and zero private-value disclosure. This is one
+  sample per condition; policy-change and unsafe-proposal rejection remain open.
 
 ## Distance to the stated goal
 

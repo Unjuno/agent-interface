@@ -1,0 +1,46 @@
+[
+  {
+    "case": "redacted-field",
+    "reason": "required_input_target_intersects_redaction"
+  },
+  {
+    "case": "stale",
+    "reason": "observation_identity_mismatch"
+  },
+  {
+    "case": "field-outside",
+    "reason": "field_point_outside_target"
+  },
+  {
+    "case": "save-outside",
+    "reason": "save_point_outside_target"
+  },
+  {
+    "case": "wrong-text",
+    "reason": "replacement_text_mismatch"
+  },
+  {
+    "case": "stop",
+    "reason": "planner_requested_stop"
+  },
+  {
+    "index": 0,
+    "error": "replace_and_save or stop required"
+  },
+  {
+    "index": 1,
+    "error": "bounded stop reason required"
+  },
+  {
+    "index": 2,
+    "error": "replacement text mismatch"
+  },
+  {
+    "index": 3,
+    "error": "exact replace fields required"
+  },
+  {
+    "index": 4,
+    "error": "integer coordinates required"
+  }
+]

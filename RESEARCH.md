@@ -37,6 +37,15 @@ are only two samples/condition, no metadata or latency advantage is claimed.
 Sixty-six frames replay exactly. The live harness omitted gate timestamps; an
 isolated 10,000-call gate measurement is 3.769us median/4.379us p95.
 
+A required-target mutation follow-up uses one fresh episode per condition. Full
+observation admits the model's five-step replace-and-Save program and independently
+succeeds. Unmarked and explicit redaction both make the model stop; the gate
+refuses, no post-observation input is submitted, and the private current value is
+absent from model I/O. Inputs are 9,364/9,329/9,477 and 32 frames replay exactly.
+This promotes the zero-input fail-closed rule only; one sample per condition and
+voluntary model stops do not show an explicit-marker advantage or actual unsafe-
+proposal rejection. An unsupported-uppercase setup failure is retained.
+
 ### Compact planner evidence, caller binding and partial terminals
 
 Path: [`research/live_control/`](research/live_control/COMPACT_PLANNER_EVIDENCE.md).

@@ -18,6 +18,15 @@ The simple unmarked control also passes, so no explicit-metadata advantage is
 shown. Action round trips294.935..333.252ms; isolated gate median3.769us, but the
 live harness omitted gate timestamps. Unsafe/refinement/bypass cases remain.
 
+Required-target follow-up: full/unmarked/explicit seed252 sessions prefill a
+private value and request replacement with public t000252. Full admits one
+five-step mutation, reaches VERIFIED and independent success. Both redacted
+models stop; gate refuses and post-observation input is0, with zero private-value
+disclosure. Inputs9364/9329/9477; model runners6.664/5.605/4.908s; live gate
+0.020/0.015/0.014ms. One sample/condition, no comparative claim. Initial uppercase
+setup is atomically rejected before input/model and retained. Next bind policy
+identity across model latency and reject an actual stale unsafe proposal.
+
 Latest live wait integration: planner_evidence_v4 explicitly accepts durable
 v4/v5/v6 and exposes journal provenance. Fresh seed248 partial-terminal sessions
 again produce submit_once at3/6 and wait_and_check at4/6; only the former admits

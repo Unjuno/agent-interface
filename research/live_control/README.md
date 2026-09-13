@@ -7,6 +7,10 @@ metadata raises input by 112 tokens/call, so this is not compression evidence.
 A follow-up completes the same adjacent visible Save task 2/2 under full,
 unmarked-redaction and explicit-redaction conditions, with zero actions into the
 hidden region and six independent successes.
+A required-field mutation follow-up succeeds in the full condition and produces
+zero post-observation input in both redacted conditions; both model calls stop
+before the local gate. The first unsupported setup string is retained as an
+atomic pre-input refusal.
 
 Latest live integration: [bounded effect wait after a partial terminal](PARTIAL_TERMINAL_WAIT.md).
 The model again distinguishes expiry before and after Return; one verifier query

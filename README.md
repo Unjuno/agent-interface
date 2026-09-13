@@ -19,7 +19,9 @@ region: full input reads the exact value 4/4 and redacted input preserves explic
 policy UNKNOWN 4/4. The region geometry audits exactly, but metadata adds 112
 input tokens/call. A six-episode follow-up completes the adjacent visible Save
 task in all three full/unmarked/explicit conditions with zero hidden-region
-actions; unsafe refinement and bypass cases remain open.
+actions. A required-field mutation succeeds only with full evidence; both
+redacted conditions stop with zero live input. Policy-change, unsafe refinement
+and bypass cases remain open.
 The assistant has used received-image references and bounded programs in Calc
 and browser fixtures. An optional final-result read collected ready Calc early
 and final evidence in one caller invocation, and skipped itself on a browser
