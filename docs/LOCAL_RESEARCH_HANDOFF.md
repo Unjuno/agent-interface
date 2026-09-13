@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — finalization failures separate from task outcome
+
+[Finalization failures](../research/live_control/FINALIZATION_FAILURES.md) adds
+stage-specific status to interactive_v20. Seven callback fault cases distinguish
+unknown evaluation, task false and output failure; computed results survive publisher
+errors. A real X11 scripted cancellation episode records task false with successful
+finalization. Status file/stderr are best effort, not durable guarantees. Blocked
+I/O, live publication-error injection and status-query design remain open.
+
 ## Latest follow-up — final-program scoring removes a benchmark request boundary
 
 [Final scoring](../research/live_control/FINAL_SCORE.md) adds finish_after to
