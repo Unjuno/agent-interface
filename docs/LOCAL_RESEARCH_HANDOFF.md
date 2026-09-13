@@ -1,3 +1,7 @@
+## Actual CLI turn usage obtained; comparison isolation unresolved
+
+A bounded screenshot-only CLI probe returned the correct unsaved decision and actual turn usage: 17477 input / 49 output tokens. Audit of four emitted events passes; exit 0. See research/live_control/MODEL_BOUNDARY_PROBE.md. These are CLI turn totals, not image-only or parent-task tokens. Model identity and receipt/cost remain absent, and MCP startup warnings despite ignore-user-config invalidate an isolation claim. Next fix reproducible model/tool/instruction configuration before paired presentation experiments. No matched speed/token-saving claim.
+
 ## Browser confirmation recovery with measured local output
 
 New explicit emission client was used on the known confirmation fixture with seed 227. Program completion accompanied a visible unsaved warning; the assistant reviewed it, confirmed replacement and independently saved t000227. Audit passes 108 events, nine exchanges, 17 frames and five exact local output payloads; process exit 0. See research/live_control/BROWSER_EMISSION_LIVE.md. Local write/flush is measured; downstream model receipt/tokens/cost and matched speed remain missing. Next prioritize authoritative downstream measurement or a controlled comparison harness, not more similar wall-clock episodes. No default change.
