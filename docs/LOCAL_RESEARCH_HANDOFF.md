@@ -1,5 +1,11 @@
 # Local research handoff — 2026-09-13
 
+Latest prototype: [compact report index](../research/live_control/DECISION_RECEIPT.md).
+Three recorded outcomes indexed; interruption/stale reasons and four injected
+exception classes surface. Lossy index, not full schema validation or input approval.
+Next strengthen contradictory status, own-command identity, nested exceptions and
+missing-terminal interpretation before live use. No speed/token promotion.
+
 Latest actual-use decision: [paged live result audited](../research/live_control/PAGED_LIVE.md).
 Eight exact frames, 31 events, four socket exchanges; saved SVG task passes.
 Seven pages add six CLI calls: 25.582 s capture-to-terminal, 95.544 s to evaluation;
