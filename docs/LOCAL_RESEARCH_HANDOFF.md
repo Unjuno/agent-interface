@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — actual visual replacement of pre-existing browser text
+
+[Prefilled self-use](../research/live_control/PREFILLED_SELF_USE.md) introduces a
+known draft in the local browser fixture. Assistant views it, selects all and
+replaces it; only the requested token is saved. Two programs, twelve exact frames,
+release and complete received prefix audited. Total 52.626 s; form-to-admission
+14.672 s; client wait 184.588 ms. Planned adaptation, not unexpected recovery or
+speedup evidence. Next vary selection/focus without announcing the repair route.
+
 ## Latest follow-up — live pending status advances with a fresh query
 
 [Status transition](../research/live_control/STATUS_TRANSITION.md) tests correct
