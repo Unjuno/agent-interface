@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — Mindustry pinned-save reset projection
+
+[Mindustry reset](../research/benchmark_discovery/MINDUSTRY_RESET.md) records four
+fresh GUI reloads of the same archived save, with exact 75,000-tile projection
+and initial copper equality. Reload screenshot hashes also match; creation UI
+still has landing animation and is not the episode start. Building rotation is
+now sampled from Tile.build, but directional scoring and player readiness still
+need controls. No benchmark adoption, controller success or speed claim.
+
 ## Latest follow-up — checkpoint continuation rejects inconsistent evidence
 
 [Checkpoint continuation](../research/live_control/CHECKPOINT_CONTINUATION.md)

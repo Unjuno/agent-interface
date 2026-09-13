@@ -1,5 +1,10 @@
 # Domain Coverage Matrix and Linux feasibility — 2026-09-13
 
+[Mindustry pinned-save follow-up](MINDUSTRY_RESET.md): four fresh GUI reloads of
+one archived save match all 75,000 measured tile rows and initial core copper.
+Reload screenshots also match. Player/input readiness, resource-flow scoring,
+and resumed trajectories remain unverified; this is not benchmark adoption.
+
 Follow-up: [OpenTTD oracle calibration](../openttd_oracle/README.md) now tests
 actual empty/partial/complete/extra-placement states on two seeds. This is a
 separate narrow scoring study; the discovery results below remain unchanged.
