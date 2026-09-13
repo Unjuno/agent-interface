@@ -1,3 +1,7 @@
+## Exact duplicate-result sharing measured; not selected as default
+
+shared_result_v1 preserves full JSON values via self-contained definitions and explicit reference paths. Nine archived live results round-trip exactly; six value controls and five invalid-input/encoding checks pass. Seven completed results shrink modestly, two pending results grow; aggregate reduction ~5%. See research/live_control/SHARED_RESULT.md. No token/usability benefit measured, so defer adoption and avoid tuning against the same corpus. Next prioritize actual model-facing measurement and simpler result composition retaining negative evidence. No runtime/default changes.
+
 ## Chromium direct-completion self-use verified with v5 receipt
 
 New explicit browser combined client used screenshot-guided local form navigation/submission, token t000226 independently saved. Both normal programs skip optional followup and have verified receipt bindings. Audit checks 84 events/7 exchanges/13 frames and POST data; bridge/runtime exit 0. See research/live_control/BROWSER_COMBINED_LIVE.md. Issues #46/#48 re-read: model-boundary timestamps and readiness classifier experiments remain open. Next deduplicate model-facing payload with references/negative evidence retained, then changed transition/failure validation. No matched speed/token/default-promotion claim.
