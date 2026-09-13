@@ -1,5 +1,12 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest execution: [OpenTTD pair 4 both audited](../research/live_control/RECOVERY_PAIR4.md).
+All eight registered episodes executed. B groups four reads in one call; A needs
+four calls. Both guard scores pass; each has seven exact frames/53 events and
+16 exchanges. Full times A 112.397 s, B 65.583 s retain A's image anomaly and
+extra inspection. Next aggregate four pairs, verify paired invariants, and decide
+helper scope without claiming causal speed, token savings or model qualification.
+
 Latest execution: [OpenTTD pair 4 A audited](../research/live_control/RECOVERY_PAIR4.md).
 Seven of eight episodes executed. Four separate recovery reads/calls; seven exact
 frames and 53 events audited; independent guarded score and cleanup pass.
