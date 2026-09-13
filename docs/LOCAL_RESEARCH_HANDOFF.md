@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — matched delivery cost and bounded reference candidate
+
+[Delivery cost](../research/live_control/DELIVERY_COST.md) compares identical
+48-record output traces across off/v2/v3 in 20 alternating-order blocks. Minimal
+v3 receipts fall from about 30.6 KB to 10.2 KB; retained references fall 48→16,
+with a configurable 128-record cap and eviction/reused-image checks. Timing is
+noisy (v3 faster in 12/20 pairs), so no stable task acceleration claim. Filesystem
+I/O is included, model transport and GUI execution are absent. V3 is unintegrated;
+explicit eviction status and buffered persistence/stall tests are next gaps.
+
 ## Latest follow-up — actual assistant delivery provenance self-use
 
 [Delivery provenance](../research/live_control/DELIVERY_PROVENANCE.md) adds stdout
