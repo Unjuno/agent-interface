@@ -1,4 +1,13 @@
-Latest live result: preregistered v9 retains one unresolved drag across inspection
+Latest unchanged replication: normalized v10 effective source matches v9. It
+repeats A-to-B turn5, inspect turn6, observed+B-to-C turn7, inspect turn8 and
+observed verify turn9. Independent score passes; observer changes only the five
+target tiles and final37/180 records stay complete. All17 terminals release input.
+V10 uses151,842 input tokens and160.837s. V9/v10 are2/2 hard success and2/2 zero
+completed-segment repeats, but remain slower than v7. Advance to changed geometry;
+no promotion or causal/human-tempo claim. See
+research/live_control/OPENTTD_EFFECT_MEMORY_REPLICATION_V2.md.
+
+Prior live result: preregistered v9 retains one unresolved drag across inspection
 and independently completes the unchanged seed991003 L task. It builds A-to-B on
 turn5, inspects once, marks it observed and builds B-to-C on turn7, inspects once
 and verifies on turn9. Two observer transitions change only the five target tiles;

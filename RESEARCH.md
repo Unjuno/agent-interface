@@ -55,6 +55,14 @@ complete. It uses151,853 input tokens and153.027s, so it is slower than v7. Reta
 for unchanged replication, without promotion. See
 [live effect memory](research/live_control/OPENTTD_EFFECT_MEMORY_LIVE_V1.md).
 
+The unchanged preregistered v10 replication also succeeds on turn9 with the same
+checkpoint sequence and two distinct drags. Its observer changes only the five
+target tiles, all17 terminals release input and the final37/180 records remain
+complete. V9/v10 are2/2 hard success and2/2 zero completed-segment repeats. V10
+uses151,842 input tokens and160.837s; both remain slower than v7. Advance to a
+changed geometry without promotion. See
+[memory replication](research/live_control/OPENTTD_EFFECT_MEMORY_REPLICATION_V2.md).
+
 ### Retained OpenTTD effect-state diagnosis
 
 The frozen seed991003 v6 run lacks a formal finish evaluation because its driver

@@ -47,6 +47,11 @@ There are zero repeated completed-segment drags and all17 terminals release inpu
 The episode costs151,853 input tokens and153.027s to semantic completion, slower
 than v7. Retain for unchanged replication; do not promote. See
 [live bounded effect memory](research/live_control/OPENTTD_EFFECT_MEMORY_LIVE_V1.md).
+An unchanged preregistered replication follows the same two inspect/resolve
+boundaries and independently succeeds on turn9. The live memory candidate is now
+2/2 hard success and2/2 zero completed-segment repeats. V10 uses151,842 input
+tokens and160.837s, so the speed deficit remains. Advance to changed geometry,
+without promotion. See [memory replication](research/live_control/OPENTTD_EFFECT_MEMORY_REPLICATION_V2.md).
 
 Process-scoped timing envelopes now cover fresh Calc and OpenTTD tasks. Calc
 saves 480/192 in 23.976s with 21.334s of wrapper-observed model wait. OpenTTD uses

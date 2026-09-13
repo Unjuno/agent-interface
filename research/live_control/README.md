@@ -1,5 +1,11 @@
 # Asynchronous live control: development evidence
 
+Latest unchanged result: [effect-memory replication](OPENTTD_EFFECT_MEMORY_REPLICATION_V2.md).
+The normalized v10 source matches v9 and independently completes the same L task
+on turn9 through the same two inspect/resolve boundaries. V9/v10 are2/2 hard
+success and2/2 zero completed-segment repeats. V10 uses151,842 input tokens and
+160.837s and remains slow; advance to changed geometry without promotion.
+
 Latest live result: [OpenTTD bounded effect memory](OPENTTD_EFFECT_MEMORY_LIVE_V1.md).
 The first preregistered fresh episode carries each of two drag effects across one
 inspection turn and independently completes the five-tile L on turn9. Two
