@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — caller preparation and response processing now have endpoints
+
+[Client endpoints](../research/live_control/CLIENT_ENDPOINTS.md) adds optional
+prepared_exchange_v6 phase marks and a final sidecar after stdout flush. Model
+receipt/generation timestamps remain explicitly null. A scripted gated Calc run
+passes 12-frame, saved effect, release, lineage and early/final checks. Preparation
+and persistence take measurable tens of milliseconds in this WSL run; no causal
+attribution or speed claim. Preserve v5 and the current default candidate. Next
+use the marks in actual self-use and controlled storage comparisons.
+
 ## Latest follow-up — actual reply batching weakens the compression case
 
 [Delivered clock cost](../research/live_control/DELIVERED_CLOCK_COST.md) replays

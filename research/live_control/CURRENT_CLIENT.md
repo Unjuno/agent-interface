@@ -4,6 +4,11 @@ These versioned candidates are research tools used in private Linux/X11 fixtures
 They are not a released desktop product or a promotion of the frozen architecture.
 Keep the older sources/results: versions name measured implementations.
 
+Optional [client endpoint instrumentation](CLIENT_ENDPOINTS.md) in
+prepared_exchange_v6.py separates preparation, persistence, response receipt,
+decoding, image/result processing and stdout completion. It remains a candidate;
+model timestamps and live instrumentation overhead are unmeasured.
+
 | Component | Current candidate | Purpose |
 |---|---|---|
 | Runtime | interactive_v27.py | bounded programs, input ownership/release, observation evidence and retained finalization |
