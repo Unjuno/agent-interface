@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — local-review trace projection and Issue #11/#12 intake (2026-09-13)
+
+[Local review projection](../research/live_control/LOCAL_REVIEW_PROJECTION.md) tests
+presentation_v3 on identical source traces: recovery JSON 35,130→24,785 bytes,
+manual guided output unchanged, terminal receipts/critical recorded events preserved.
+This is development-known replay only, without live timing/token or detection/ACK
+claims. No default entrypoint change. [Semantic/evidence status](SEMANTIC_EVIDENCE_STATUS.md)
+maps new Issue #11/#12 vocabulary and benchmark-contract proposals to real gaps.
+Next live projection/fresh-event tests and an explicit scorer contract; preserve
+orthogonal domain coverage and do not upgrade familiar cases into held-out evidence.
+
 ## Latest follow-up — same-task receipt recovery pilot (2026-09-13)
 
 [Receipt comparison](../research/live_control/RECOVERY_RECEIPT_COMPARISON.md) repeats
