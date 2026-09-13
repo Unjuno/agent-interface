@@ -1,3 +1,9 @@
+Latest companion self-use: [fresh changed-value field task](../research/live_control/INPUT_STATE_TABLE_LIVE.md).
+field-table-live-01 seed222 X73.25 strict pass. Model uses full receipt + table,
+no additional raw-state expansion, GUI decision echoed before score.73 events/nine
+exchanges/18 frames audited; exit0. No live fault/layout generalization or speed
+claim. Edit still eight observations: next existing capture policies plus another
+desktop domain/layout, rather than more state-table byte tuning. Defaults unchanged.
 Latest state presentation: [lossless input-state companion](../research/live_control/INPUT_STATE_TABLE.md).
 input_state_table_v1 factors common samples, preserves all selected JSON values incl
 unknown nested fields and missing/null distinctions. Six historical reports + eleven

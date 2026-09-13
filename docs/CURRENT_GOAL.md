@@ -1,3 +1,10 @@
+Latest companion self-use: [fresh changed-value field task](../research/live_control/INPUT_STATE_TABLE_LIVE.md).
+Seed222 X73.25 task passes strict saved geometry. Full receipts + nonempty tables
+used without extra raw-state dumps; GUI decision committed before independent
+evaluation.73 events/nine exchanges/18 exact frames audited, exit0. Edit selected
+state7139B -> companion3160B; no token/capture/speed claim. Normal familiar layout
+only. Next larger repeated-capture cost using existing observation policies and
+another domain/layout; retain critical evidence, avoid more table microvariants.
 Latest state presentation: [lossless input-state companion](../research/live_control/INPUT_STATE_TABLE.md).
 Six preserved reports/eleven preservation controls round-trip selected state fields.
 Field-edit selected JSON7142B -> full companion3163B, no observations dropped or
