@@ -1,5 +1,12 @@
 # Local research handoff — 2026-09-13
 
+Latest candidate: [per-intent interruption evidence](../research/live_control/LEASE_CAUSE.md).
+New lease_cause_v1/executor_v4/input_owner_v10 retain first owner interruption and
+DecisionRequired text without replacing final release. Synthetic threaded probe
+checks same-deadline intent isolation and no stale cause inheritance. Existing
+fixtures unchanged. Next actual private Xvfb focus-transfer/held-input verification;
+owner v10 has only been compiled, not live-qualified. No speed/model claim.
+
 Latest actual use: [compact live interruption/recovery audited](../research/live_control/COMPACT_LIVE.md).
 Nine exact frames, 42 unique/69 received events, six socket exchanges; final SVG
 passes. Initial index surfaced needs_decision; explicit inspected recovery passed.
