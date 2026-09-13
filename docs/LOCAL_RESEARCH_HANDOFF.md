@@ -1,3 +1,7 @@
+## Live bounded intent rejects changed menu pixels and focus
+
+Two actual X11 mutation cases between prompt preparation/revalidation return target_patch_changed/binding_changed with zero input admissions. Each26 events/8 calls/3 exact frames; audit/cleanup pass, processes exit0. New strict intent gate rejects numeric1 instead of true and preserves archived valid result. First patch attempt retained: consumer JSONDecodeError closed cursor while runtime alive; one cleanup finish, bridge exit1. Fixture display setup moved into diagnostic redirection; later cases pass. See research/benchmark_discovery/LIVE_MENU_MUTATION.md. Fixed guided intent/fixture restoration, not autonomous recovery/general identity. Next reusable contract or cross-domain validation, not more identical menu tests.
+
 ## Bounded live menu intent advances after fresh local validation
 
 One explicit Luna proposal retained while old observation aged6969.839ms. Driver acquired new frame, matched known menu patch/binding and issued one fresh-sequence click with capture+1s deadline. Fresh capture to button ack358.056ms; terminal927.254ms. Assistant viewed selected Conveyor. Audit35 events/9 calls/5 frames and five offline refusals passes; process exit0. See research/benchmark_discovery/LIVE_MENU_INTENT.md. Fixed guided intent, sampled fixture-specific pixels, no autonomous planning/general identity or causal speed claim. Next live changed-target refusal and strict intent-type validation; do not repeat unchanged menu. Old source remains frozen; known bool/int equality limitation documented.
