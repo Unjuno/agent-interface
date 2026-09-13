@@ -17,6 +17,8 @@ and final evidence in one caller invocation, and skipped itself on a browser
 direct-final result. These are small research episodes, not proof of general
 speedup or human-like tempo; outer decision waits remain measured in seconds.
 
+Recent recovery candidate: [bounded followup after input interruption](research/live_control/CALC_COMBINED_LIVE.md). In one actual Calc task, the caller collected short passive followups inside the original operation, avoiding two separate followup invocations while preserving interruption reasons and correct saved values. Socket round trips remained unchanged. This is an optional research path with report-compatibility work outstanding, not a general speed or token-saving claim.
+
 ## The hypothesis
 
 Most computer-use systems still resemble:

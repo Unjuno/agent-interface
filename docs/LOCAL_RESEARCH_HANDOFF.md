@@ -1,3 +1,7 @@
+## Combined bounded followup verified in actual Calc self-use
+
+Same runtime/seed/input sequence as prior early-return run; one outer operation now collects promptly arriving terminal/images after early stop. Save/confirm bounded reads took 254/279ms; terminal-to-reply gaps ~11/13ms instead of prior manual followups ~10s. Separate followup stage calls 2 to 0; socket exchanges remain 11. Independent saved [816,345] pass; audit checks 60 events/14 frames and bindings. See research/live_control/CALC_COMBINED_LIVE.md. No causal speed/default promotion. Next fix receipt compatibility/presentation duplication, then test a different desktop transition; avoid further identical Calc wall-time trials.
+
 ## Bounded followup read tested against delayed capture and silent socket
 
 bounded_followup_v2 performs one command-free terminal read (400ms server wait/650ms socket deadline), keeping early evidence and cursor on I/O failure. Preserved v1 failure: missing synthetic image reference crashed post-terminal report construction; v2 returns image unavailable separately. Actual socket probes return pending at ~401ms and prompt terminal at ~291ms; silent peer exits read at ~668ms including overhead. No new Calc run/default promotion/hard whole-function bound. See research/live_control/BOUNDED_FOLLOWUP.md. Next combine with early exchange in one outer client operation and self-use on Calc; receipt compatibility remains open.
