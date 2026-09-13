@@ -1,3 +1,7 @@
+## Durable journal now recovers actual GUI command across caller process exit
+
+Inkscape seed233: worker sends real AF_UNIX edit/save then os._exit17 before recv; another worker is refused before transport; third worker performs one command-free read and reconciles exact echo/admission/released terminal on same live bridge. Audit49 events, nine exact frames, three worker PIDs, unique edit/save, SVG96,50,40,30/no transform; finish/bridge exit0, sockets removed. Send-to-recovery-worker exit852.547ms, single scripted case including startup and application work, no model/human-speed claim. See research/live_control/DURABLE_INKSCAPE.md. Next attributable rejected outcomes; no automatic resend or timeout-based uncertainty reset.
+
 ## Pending submit identity survives caller process loss
 
 Linux durable_submit_v1 commits uncertainty before transport and serializes cooperating callers with flock. Five separate worker invocations verify crash exit17, two new-submit refusals before transport, admission remaining pending and correlated released terminal resolution. Four attribution/release controls and cross-process lock contention pass. Recovery uses injected archived Inkscape replies with rebound identities; no new live GUI/network or power-loss claim. See research/live_control/DURABLE_SUBMIT.md. Next real write/crash/resume on the same live runtime; rejected events currently lack identity and conservatively remain pending.
