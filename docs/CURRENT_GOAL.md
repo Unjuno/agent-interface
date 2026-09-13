@@ -1,3 +1,7 @@
+## Chromium direct-completion self-use verified with v5 receipt
+
+New explicit browser combined client used screenshot-guided local form navigation/submission, token t000226 independently saved. Both normal programs skip optional followup and have verified receipt bindings. Audit checks 84 events/7 exchanges/13 frames and POST data; bridge/runtime exit 0. See research/live_control/BROWSER_COMBINED_LIVE.md. Issues #46/#48 re-read: model-boundary timestamps and readiness classifier experiments remain open. Next deduplicate model-facing payload with references/negative evidence retained, then changed transition/failure validation. No matched speed/token/default-promotion claim.
+
 ## Lifecycle receipt binding now validates completed early/combined histories
 
 Receipt v5 validates contiguous clock/submit/read history and reconstructed lifecycle before verifying terminal_received. Eight archived live reports: six completed bindings verified, two pending remain unbound. Twelve controls detect eleven inconsistencies and preserve an unknown nested error while retaining valid binding. Only obsolete root-level unresolved/binding warnings removed; interruption/focus/errors/unknown fields remain visible. See research/live_control/RECEIPT_LIFECYCLE.md. Next explicit client on different desktop task using v5; payload duplication/schema still open. No default promotion or new GUI/speed/token claim.
