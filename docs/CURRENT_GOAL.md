@@ -1,3 +1,10 @@
+Latest presentation candidate: [tracking metric classification](../research/live_control/RECEIPT_TRACKING_METRICS.md).
+Receipt v4 distinguishes finite matched servo tracking.error from exceptions and
+includes full feedback records. Saved success attention 15→9; ten negative controls
+pass with duplicate copies synchronized (v2 probe). Actual interruption stays flagged.
+JSON grows 5517→7323 bytes; no compression/token/performance claim. Nine schema-review
+entries remain. Next typed concise servo/input-state presentation and fresh self-use;
+no live entrypoint switched yet and no Research Freeze.
 Latest integration/self-use: [existing servo with cause/wake](../research/live_control/CAUSE_SERVO_INTEGRATION.md).
 Reused session21/patch_servo5 and guided continuation with owner10/executor5. Model-chosen
 patch reaches saved x=66.94915 via one local correction; six socket exchanges/39 events/
