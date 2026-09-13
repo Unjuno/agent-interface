@@ -1,3 +1,7 @@
+## Explicit Luna probe suppresses observed MCP startup diagnostics
+
+model_probe_runner_v1 records fixed requested Luna/low arguments, exact stdin and JSONL bytes, local line-arrival timestamps and exit state. Per-run plugin/snapshot/shell feature switches yielded only the stdin notice on stderr. Known unsaved screenshot decision correct; actual usage 12567 input (1792 cached) / 43 output, exit 0 and audit pass. See research/live_control/MODEL_PROBE_RUNNER.md. Different settings from probe-01 forbid a causal comparison. Served model identity and complete instruction/tool isolation remain unproved; next inspect prompt inventory and preregister paired arms.
+
 ## Actual CLI turn usage obtained; comparison isolation unresolved
 
 A bounded screenshot-only CLI probe returned the correct unsaved decision and actual turn usage: 17477 input / 49 output tokens. Audit of four emitted events passes; exit 0. See research/live_control/MODEL_BOUNDARY_PROBE.md. These are CLI turn totals, not image-only or parent-task tokens. Model identity and receipt/cost remain absent, and MCP startup warnings despite ignore-user-config invalidate an isolation claim. Next fix reproducible model/tool/instruction configuration before paired presentation experiments. No matched speed/token-saving claim.
