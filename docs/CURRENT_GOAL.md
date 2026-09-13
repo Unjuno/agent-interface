@@ -1,3 +1,7 @@
+## Actual Inkscape fallback received and continued without replay
+
+Test-only fallback client injected composer failure after one completed move-save. Assistant received full original result/error, viewed X74/Y50/W40/H30, then issued observe only and independently verified saved SVG. Audit passes 66 events/9 exchanges/15 frames, five output choices and exactly one save input; process exit0. See research/live_control/INKSCAPE_FALLBACK_LIVE.md. No live token/speed claim. Stop repeating this scenario; next address pre-result recovery from saved events or cross-domain runtime gaps. Defaults remain experimental.
+
 ## Fallback retains pending and terminal state across real socket action
 
 New probe injects optional composition failures after input_stopped and terminal receipt using actual private AF_UNIX/subprocess with synthetic blocked capture. Both full original results retained; one submit/accept only, tail never starts, cancel/read continue same action, exit0. Independent audit reconstructs all 11 events/6 replies and both fallback payloads. See research/live_control/STOPPED_PRESENTATION.md. BytesIO output and synthetic backend do not prove actual GUI/model delivery. Inkscape v2 live fallback remains next; no default promotion.
