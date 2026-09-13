@@ -1,5 +1,13 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — select images from received references
+
+[Receipt image selection](../research/live_control/RECEIPT_IMAGE.md) replaces
+filename guessing with explicit observation references. Twelve known batches
+and four negative controls pass; the receipt-clock modal selects `006.png` and
+was visually inspected. Historical replay only: no new live latency claim or
+default architecture promotion. Next apply it at a live caller boundary.
+
 ## Latest follow-up — one less clock call does not yet improve total self-use time
 
 [Receipt clock self-use](../research/live_control/RECEIPT_CLOCK_SELF_USE.md) uses
