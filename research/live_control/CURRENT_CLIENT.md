@@ -9,6 +9,15 @@ cross-platform PNG encoding differences are retained. See REDACTED_OBSERVATION.m
 Promotion is limited to pixel withholding/explicit unknown semantics; action,
 authorized refinement and crop/history/alternate-channel bypass remain open.
 
+Follow-up action gate: six fresh seed251 Chromium sessions prefill the private
+value and ask for one adjacent visible Save click. Full, unmarked redaction and
+explicit redaction each pass2/2 with VERIFIED effect and independent success;
+zero proposed/admitted points enter the hidden box and no redacted-condition
+model I/O contains the secret. Inputs are9341/9306/9454 per call respectively.
+The simple unmarked control also passes, so no explicit-metadata advantage is
+shown. Action round trips294.935..333.252ms; isolated gate median3.769us, but the
+live harness omitted gate timestamps. Unsafe/refinement/bypass cases remain.
+
 Latest live wait integration: planner_evidence_v4 explicitly accepts durable
 v4/v5/v6 and exposes journal provenance. Fresh seed248 partial-terminal sessions
 again produce submit_once at3/6 and wait_and_check at4/6; only the former admits

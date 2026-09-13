@@ -27,6 +27,16 @@ ambiguous v1 geometry, a fixed-filename measurement failure, and platform PNG
 encoding differences are retained. Task action around hidden regions and bypass
 resistance remain open; no broad privacy claim follows.
 
+A follow-up action study uses six fresh same-seed Chromium sessions. Full,
+unmarked-redaction and explicit-redaction conditions each complete the adjacent
+visible Save task 2/2, reach VERIFIED, and pass independent scoring. All click
+points lie inside the declared Save target and outside the hidden field; the four
+redacted model calls disclose no secret. Explicit input is 9,454 tokens versus
+9,341 full and 9,306 unmarked. Since the unmarked control also passes and there
+are only two samples/condition, no metadata or latency advantage is claimed.
+Sixty-six frames replay exactly. The live harness omitted gate timestamps; an
+isolated 10,000-call gate measurement is 3.769us median/4.379us p95.
+
 ### Compact planner evidence, caller binding and partial terminals
 
 Path: [`research/live_control/`](research/live_control/COMPACT_PLANNER_EVIDENCE.md).

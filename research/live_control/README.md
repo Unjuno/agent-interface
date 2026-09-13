@@ -4,6 +4,9 @@ Latest observation-boundary result: [actual pixel redaction](REDACTED_OBSERVATIO
 One fresh Chromium frame yields exact text in 4/4 full calls and explicit policy
 UNKNOWN in 4/4 redacted calls. V2 fixes and audits half-open region geometry;
 metadata raises input by 112 tokens/call, so this is not compression evidence.
+A follow-up completes the same adjacent visible Save task 2/2 under full,
+unmarked-redaction and explicit-redaction conditions, with zero actions into the
+hidden region and six independent successes.
 
 Latest live integration: [bounded effect wait after a partial terminal](PARTIAL_TERMINAL_WAIT.md).
 The model again distinguishes expiry before and after Return; one verifier query

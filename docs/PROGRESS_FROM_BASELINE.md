@@ -106,6 +106,11 @@ Luanti remains a feasibility candidate rather than demonstrated agent control.
   full input reads the exact value 4/4 and redacted input returns policy UNKNOWN
   4/4. Rendering is 38.757 ms median, while metadata adds 112 input tokens/call;
   this improves evidence semantics rather than compression.
+- A six-episode action follow-up completes an adjacent visible Save task 2/2 in
+  full, unmarked-redaction and explicit-redaction conditions. All effects verify,
+  all independent scores pass, secret disclosure and actions into the hidden
+  region are zero. The unmarked control also passes, so explicit metadata has no
+  demonstrated advantage on this simple task; unsafe/refinement/bypass cases remain.
 
 ## Distance to the stated goal
 
