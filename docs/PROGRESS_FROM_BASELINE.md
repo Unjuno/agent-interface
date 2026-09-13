@@ -37,11 +37,12 @@ six Astra-medium calls to build the guarded road in111.853 seconds, including
 91.781 seconds of model wait and126,420 reported input tokens. Batched hover
 contact sheets preserve three delayed tooltips in one model-visible image. Two
 fresh adaptive tasks independently pass, although the first exposed a packaging
-failure after scoring. A preregistered matched block now finds fixed Luna fails,
-fixed Astra passes in98.351 seconds with7 turns/114,186 input tokens, and adaptive
-passes in100.201 seconds with8 turns/126,424 tokens. This is one fixed-order
-episode per arm: it rejects adaptive-route promotion but cannot promote Astra.
-A repeated counterbalanced block and human comparison remain.
+failure after scoring. Two preregistered matched blocks now give fixed Astra2/2,
+adaptive1/2 and fixed Luna0/2. Astra completes in98.351 and94.929 seconds with7
+turns each. The second adaptive run falsely declares visible completion before
+the independent score fails. This rejects adaptive-route promotion but two
+episodes cannot promote Astra. New tasks, fuller order balancing and a human
+comparison remain.
 
 The newest Chromium episode is the clearest small end-to-end sample. A fresh
 screenshot and a 621-byte strict compact UNKNOWN record drove one real model
@@ -75,7 +76,7 @@ the rows must not be averaged into one difficulty score.
 | Desktop apps | Small Calc, Chromium, Inkscape and XTerm tasks; dialogs, focus loss, interruption, saving and independent effect checks | Unknown applications, richer window/scroll/drag workflows and repeated held-out tasks |
 | DOOM | Shared held-key/cancel/expiry readiness and later directional-input repair/assistant gameplay evidence | Stable continuous useful-feedback loop, reaction distribution and public real-time demo |
 | Mindustry | Actual assistant construction of eight directed conveyors on a known route; 112-tile guard and 49-copper post-control delivery; shared caller scripted replay and cancellation | Fresh route planning, multi-object control, event-driven recovery and much shorter decision gaps |
-| OpenTTD | Two fresh adaptive-model visual road tasks and matched fixed-Astra/adaptive arms pass target, connectivity, forbidden-row and surrounding-tile guards; fixed Luna matched arm fails; complete TimingEnvelopes and batched tooltip contact sheets | Repeated counterbalanced model blocks, matched human control, scroll/window complexity and long-horizon planning |
+| OpenTTD | Fixed Astra matched arms pass2/2, adaptive1/2 and fixed Luna0/2; false visual completion is caught by independent guards; complete TimingEnvelopes and batched tooltip contact sheets | Different task allocations, fuller order balancing, fresh validation of typed negative finish, matched human control, scroll/window complexity and long-horizon planning |
 | Luanti | Current-engine launch, deterministic tiny pad/pose and read-only node/pose feasibility | Normal navigation, camera-mode contract, inventory, interaction and successful construction |
 
 DOOM remains valuable for continuous motor pressure. Mindustry and OpenTTD are

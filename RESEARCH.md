@@ -45,7 +45,12 @@ Astra passes in98.351s with7 calls and114,186 reported input tokens; adaptive
 passes in100.201s with8 calls and126,424 tokens. All141 exact frames and88
 durable calls audit across Windows and WSL. This rejects promotion of the authored
 adaptive route, but one episode per arm cannot promote fixed Astra or establish
-a latency distribution. See [matched model routes](research/live_control/OPENTTD_MATCHED_MODELS_V1.md).
+a latency distribution. A reversed-endpoint second block reproduces fixed-Astra
+success and fixed-Luna failure, while adaptive falsely declares visual completion
+and fails the independent score. Cumulative hard results are Astra2/2,
+adaptive1/2 and Luna0/2. The newly exposed driver assertion is replaced by an
+explicit negative finish outcome candidate and a three-path artifact regression.
+See [matched model replication](research/live_control/OPENTTD_MATCHED_MODELS_V2.md).
 
 ### Actual pixel redaction with explicit unknown semantics
 

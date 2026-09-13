@@ -1,12 +1,14 @@
-Latest matched dynamic-domain evidence: one preregistered fixed-order OpenTTD
-block uses the same canonical save, task, source, prompt policy and evaluator.
-Fixed Luna fails after9 turns and changes three surrounding guard tiles. Fixed
-Astra passes in98.351s with7 calls/114,186 reported input tokens; adaptive passes
-in100.201s with8 calls/126,424 tokens. Windows/WSL audits replay88 durable calls
-and141 exact frames. This rejects promotion of the authored two-turn adaptive
-route, but one episode per arm cannot promote Astra or establish a population
-latency result. Next repeat with counterbalanced order and collect the matched
-human control. See research/live_control/OPENTTD_MATCHED_MODELS_V1.md.
+Latest matched dynamic-domain evidence: two preregistered OpenTTD blocks use the
+same canonical save, task, source, prompt policy and evaluator. Fixed Astra passes
+2/2 in98.351s and94.929s; adaptive passes1/2; fixed Luna passes0/2. The second
+adaptive run declares visual completion but fails the independent engine score,
+also exposing an assertion that hid the persisted negative result from the
+supervisor. A v3 candidate writes typed false-visual and bounded failures; its
+three-path artifact regression passes Windows/WSL but awaits fresh live use.
+Across both blocks47 model calls,172 durable calls and270 exact frames are
+retained. Orders reverse the endpoint arms while Astra remains middle, so fuller
+balancing, different tasks and a human control remain. See
+research/live_control/OPENTTD_MATCHED_MODELS_V2.md.
 
 Prior dynamic-domain evidence: fresh OpenTTD v8 builds the exact three-tile A-C
 road and passes independent target, connectivity, forbidden-row and surrounding

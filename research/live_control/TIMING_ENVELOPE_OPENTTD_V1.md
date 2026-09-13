@@ -123,3 +123,6 @@ fixed Astra using fewer turns, reported input tokens, frames and durable calls
 in that one block. The authored adaptive route is therefore not promoted. See
 `OPENTTD_MATCHED_MODELS_V1.md`. Repeated counterbalanced blocks and a matched
 human baseline remain required before a route or human-tempo claim.
+A second reversed-endpoint block later reproduces fixed-Astra success and
+fixed-Luna failure while adaptive fails the independent score after a visual
+completion claim. See `OPENTTD_MATCHED_MODELS_V2.md` for the cumulative decision.

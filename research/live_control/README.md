@@ -1,12 +1,12 @@
 # Asynchronous live control: development evidence
 
-Latest timing result: [matched OpenTTD model routes](OPENTTD_MATCHED_MODELS_V1.md).
-A preregistered same-save/same-task block finds fixed Luna fails after nine
-turns, fixed Astra passes in98.351s with7 calls/114,186 input tokens, and adaptive
-passes in100.201s with8 calls/126,424 tokens. One fixed-order episode per arm
-rejects promotion of the authored adaptive route but cannot promote Astra.
-Windows/WSL audits pass across141 exact frames and88 durable calls. Repeated
-counterbalanced blocks and the human baseline remain.
+Latest timing result: [matched OpenTTD replication](OPENTTD_MATCHED_MODELS_V2.md).
+Across two preregistered blocks, fixed Astra passes2/2 in98.351s and94.929s,
+adaptive passes1/2 and fixed Luna passes0/2. The new adaptive failure is a visual
+completion false positive caught by the engine score. This rejects promotion of
+the authored adaptive route; two episodes cannot promote Astra. Windows/WSL
+audits cover47 model calls,172 durable calls and270 exact frames. New tasks,
+fuller order balancing and the human baseline remain.
 
 Prior timing result: [OpenTTD adaptive live control](TIMING_ENVELOPE_OPENTTD_V1.md).
 One fresh v8 episode builds the guarded three-tile road and independently passes

@@ -48,6 +48,10 @@ counterbalanced blocks and a matched human baseline are required before a route
 or speed claim. Provider receipt, provider first token, runtime receipt and exact
 OS injection endpoints remain explicitly `NOT_RECORDED`.
 
+A later reversed-endpoint block changes the cumulative hard results to fixed
+Astra 2/2, adaptive 1/2 and fixed Luna 0/2. The cumulative analysis supersedes
+the single-block route comparison here; see `OPENTTD_MATCHED_MODELS_V2.md`.
+
 ## Evidence and audit
 
 - Preregistration: `results/timing-envelope-openttd-matched-01/preregistration.json`
