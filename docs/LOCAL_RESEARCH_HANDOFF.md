@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — checkpoint byte snapshots survive source overwrite/cleanup
+
+[Checkpoint archive](../research/live_control/CHECKPOINT_ARCHIVE.md) adds optional
+v30/v15 archiving before parsing. The empty and saved Calc files replay UNKNOWN
+and VERIFIED after the source directory is deleted; their hashes and cell values
+match. Twelve frames and final scoring pass. Samples are 4770/5674 bytes and
+archive-to-parse intervals 28.454/29.626 ms in one scripted run. Missing/corrupt/large
+input controls pass. No retroactive recovery of old evidence or default promotion.
+
 ## Latest follow-up — actual Calc checkpoint use separates displayed and saved cells
 
 [Calc checkpoint self-use](../research/live_control/CHECKPOINT_CALC_SELF_USE.md)

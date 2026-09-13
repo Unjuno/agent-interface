@@ -4,6 +4,11 @@ These versioned candidates are research tools used in private Linux/X11 fixtures
 They are not a released desktop product or a promotion of the frozen architecture.
 Keep the older sources/results: versions name measured implementations.
 
+For checkpoint evidence that must be re-parsed after the source changes, optional
+[runtime v30/socket v15](CHECKPOINT_ARCHIVE.md) archives the sampled bytes. A scripted
+Calc run replays both pre-save and saved states after source cleanup. Archiving
+adds storage/I/O work and has not repeated cancellation tests; it is not a default.
+
 An optional [non-final artifact checkpoint](EFFECT_CHECKPOINT.md) candidate uses
 runtime v29/socket v14. It can sample saved fields while leaving admission open;
 its scoped VERIFIED evidence is separate from task success. Browser integration
