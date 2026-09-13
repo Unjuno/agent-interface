@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — sleeping checkpoint does not prevent live cancellation
+
+[Checkpoint cancellation](../research/live_control/CHECKPOINT_CANCEL.md) gates
+the verifier while a real Chromium hold executes. A second query reports busy;
+cancel returns matched and terminal/release completes before the gate is released.
+The same-process cancel roundtrip is 34.219 ms in one run. Two frames and the
+17-record prefix audit pass. A raw cross-process interval lacks the probe clock
+descriptor and is explicitly rejected by the audit. CPU/GIL/output contention
+and hard cancellation bounds remain unproven; no default promotion.
+
 ## Latest follow-up — non-final checkpoint permits confirmation after UNKNOWN
 
 [Effect checkpoint](../research/live_control/EFFECT_CHECKPOINT.md) adds optional

@@ -7,8 +7,12 @@ Keep the older sources/results: versions name measured implementations.
 An optional [non-final artifact checkpoint](EFFECT_CHECKPOINT.md) candidate uses
 runtime v29/socket v14. It can sample saved fields while leaving admission open;
 its scoped VERIFIED evidence is separate from task success. Browser integration
-is scripted, and slow-verifier/cancellation contention and Calc integration remain
+is scripted, and CPU/output contention during cancellation and Calc integration remain
 untested. It does not replace the default stack below.
+
+A [sleeping-verifier cancellation control](CHECKPOINT_CANCEL.md) now confirms
+matched cancellation and verified release before the verifier gate opens in one
+live run. CPU/GIL and blocked-output contention remain untested.
 
 Optional [client endpoint instrumentation](CLIENT_ENDPOINTS.md) in
 prepared_exchange_v6.py separates preparation, persistence, response receipt,
