@@ -1,3 +1,11 @@
+Latest diagnosis: [drag anchor and visual correction](../research/live_control/DRAG_ANCHOR_DIAGNOSIS.md).
+Release-source review and held-phase images support first qualifying motion as anchor:
+physical pointer reaches endpoint but object displacement excludes initial coarse motion.
+Two diagnostic paths fail; one bounded screenshot-based residual correction saves
+x=66.94915 with y/size preserved. 46 frames audited. Scripted red-sensor diagnostic,
+not model in-flight control or a public primitive. Existing SERVO_INTERFACE/SERVO_TRIM
+already implement broader patch control: next connect cause/wake candidates to that
+work instead of creating another servo. No speed/token/freeze promotion.
 Latest task-accuracy evidence: [selected-object drag failures](../research/live_control/DRAG_TASK_ACCURACY.md).
 Two reviewed drag/save episodes both saved x=58.474575 against predeclared x=66.95 +/-1.
 Legacy rightward-only evaluator says success; stricter saved-SVG displacement scorer
