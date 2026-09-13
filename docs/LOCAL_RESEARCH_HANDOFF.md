@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — causal evidence graph from actual recovery
+
+[Offline causal trace](../research/live_control/CAUSAL_TRACE.md) exports 66 nodes
+and 31 explicit links from unchanged servo-recovery-02. Three automatically derived
+terminal-to-command gaps match the earlier report; five injected inconsistent
+references/deadlines are rejected. Model-viewed-image provenance and complete
+key/release authority lineage remain missing. Preserve observed-before versus
+caused-by distinctions. Next instrument actual delivery/decision boundaries and
+measure overhead before speculative execution or a shared trace ABI promotion.
+
 ## Latest follow-up — bounded oracle and Issue #13–#15 intake
 
 [Rectangle oracle](../research/live_control/RECTANGLE_ORACLE.md) independently
