@@ -1,0 +1,81 @@
+{
+  "scope": "one actual Calc episode with an explicit artifact-evidence completion policy; not a pixel-only baseline",
+  "events": 95,
+  "frames": 16,
+  "exchanges": 17,
+  "models": [
+    {
+      "turn": 1,
+      "usage": {
+        "input_tokens": 9461,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 224,
+        "reasoning_output_tokens": 124
+      },
+      "runner_s": 10.2744801
+    },
+    {
+      "turn": 2,
+      "usage": {
+        "input_tokens": 10624,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 182,
+        "reasoning_output_tokens": 117
+      },
+      "runner_s": 7.7201984
+    }
+  ],
+  "saved_cells": [
+    480,
+    192
+  ],
+  "save_steps_submitted": 1,
+  "checkpoints": [
+    {
+      "call": 8,
+      "status": "UNKNOWN",
+      "actual": {
+        "A1": null,
+        "A2": null
+      },
+      "artifact_sha256": "60ab6109dd6d04fa8af43a05d3a302a8ea530a8e093ca26000186db127bd28b5",
+      "roundtrip_ms": 86.873733,
+      "received_to_emit_ms": 54.584591
+    },
+    {
+      "call": 16,
+      "status": "VERIFIED",
+      "actual": {
+        "A1": 480,
+        "A2": 192
+      },
+      "artifact_sha256": "9977cf40201a1cb82c829b2fa7621bfbc92c7dab11d1e81fe6c9133cc973b3a9",
+      "roundtrip_ms": 117.661946,
+      "received_to_emit_ms": 71.047211
+    }
+  ],
+  "input_after_verified": 0,
+  "terminal_statuses": [
+    "completed",
+    "completed",
+    "completed",
+    "needs_decision",
+    "completed",
+    "completed",
+    "needs_decision"
+  ],
+  "capture_to_evaluation_s": 22.155027939,
+  "handoff_s": [
+    0.217747037
+  ],
+  "decision_sampling": [
+    {
+      "turn": 1,
+      "elapsed_s": 0.32705655,
+      "captures": 1
+    }
+  ],
+  "audit_source_sha256": "2bb8e293cc1b9ae48c2f274dc84a563979e825a4b33555c5e4ec33ebdc8ee2c3"
+}
