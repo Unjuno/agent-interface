@@ -1,3 +1,7 @@
+## Composed output used in actual invalid-input correction
+
+Inkscape seed228: not-a-number in X changed visible 50 to 0 despite completed program. Assistant read composed output/screenshots, corrected X86 and saved; independent SVG success preserves Y50/W40/H30. Audit passes 111 events/11 exchanges/26 frames and six exact composed payloads; runtime exit0. See research/live_control/INKSCAPE_COMPOSED_LIVE.md. No live model-token/speed claim. Initial/finish wrappers add overhead; presentation formatting failure currently raises after operation, so next validate fail-safe delivery before adoption. Nonempty held-input/runtime-negative coverage still open.
+
 ## Composed result read correctly on actual interrupted-state records
 
 Four preregistered text-only Luna/low turns compare full/composed actual Calc pending and terminal records. All ten fields match in every answer, including null versus zero, focus cause and historical input authority. Actual input differences 267 (2.02%) and 491 (3.43%); cache/output vary, so no cost/speed claim. Binary stdin bytes and all event arrivals audited; processes exit 0. See research/live_control/MODEL_STATE_PAIR.md. Next explicit live candidate on changed transition and consequential negative state, not repeated easy extraction; no default promotion.
