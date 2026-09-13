@@ -1,5 +1,13 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest evidence: [actual combined OpenTTD response](../research/live_control/POINTER_COMBINED.md)
+passed the guarded task, but the second full report was truncated at the model
+presentation boundary. Recovery read the saved result/image without input retry.
+All 37 records and six frames are audited. A reversible offline report view removes
+exact duplicate receipts while retaining unique evidence. Next, validate this view
+in actual combined result/image use before paired timing/token qualification.
+The full 358.071-second capture-to-evaluation interval remains in the record.
+
 This document incorporates the user's research convergence proposal. It is the
 current working objective for this task and future handoffs. The app's existing
 active goal remains active: the available tool cannot edit its objective text.

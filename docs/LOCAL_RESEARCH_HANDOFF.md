@@ -1,5 +1,21 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — actual combined output and truncation recovery
+
+[Combined OpenTTD self-use](../research/live_control/POINTER_COMBINED.md) completed
+the guarded road task. The second full caller report exceeded available model
+context; recovery inspected the saved result/image without resending input.
+Six exact frames, 37 full-prefix records, source manifests, score and cleanup are
+audited. Capture-to-terminal was 73.128 seconds and capture-to-evaluation 358.071
+seconds, including interruption/recovery. No matched speed claim.
+
+`pointer_report_view_v1.py` is an offline reversible presentation prototype:
+duplicate receipts become references, unique events/errors stay present, and two
+actual reports round-trip exactly as JSON values. Display JSON is 6,306/8,753 bytes
+versus original 14,629/21,723; bytes are not measured model tokens. Next use this
+view in a live combined image call, then test fixed-condition counterbalanced
+episodes. The original v1 caller and frozen domain cohorts are unchanged.
+
 ## Latest follow-up — game adapters plus live expiry/cancel readiness
 
 [Pointer domains](../research/live_control/POINTER_DOMAINS.md): unchanged caller and
