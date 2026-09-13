@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — scoped three-way saved-effect evidence
+
+[Saved effect](../research/live_control/SAVED_EFFECT.md) introduces a private
+first-sheet cell predicate with VERIFIED / CONTRADICTED / UNKNOWN. Eight frozen
+route artifacts distinguish five saved from three unsaved endpoints; six controls
+cover missing/corrupt evidence, an open window, formulas, collateral B1 change
+and a matching sample. This is artifact replay, not live causal attribution or
+planner acceleration. Next integrate at an explicit finalization boundary with
+program terminal retained separately. No default promotion or freeze credit.
+
 ## Latest follow-up — route-specific focus, movement and occlusion failures
 
 [Modal target routes](../research/live_control/MODAL_TARGET_ROUTES.md) compares
