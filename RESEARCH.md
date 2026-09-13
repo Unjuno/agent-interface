@@ -14,6 +14,20 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Experimental ladder
 
+### First live bounded drag-effect allocation
+
+A preregistered seed991003 replay keeps the v6 model, task, initial state,
+checkpoint policy, turn limit and independent scorer, but appends path-local
+before/after/absolute-difference panels after each drag. Fixed Astra recognizes
+the A-to-B effect on turn6, immediately builds B-to-C and independently verifies
+all five target tiles on turn7. It uses116,879 input tokens,26 durable calls,32
+exact frames and109.034s from initial observation to semantic completion. The
+retained v6 baseline failed after12 turns/199,613 tokens and two repeated A-to-B
+drags; v7 repeats none. See
+[live bounded effect evidence](research/live_control/OPENTTD_EFFECT_LIVE_V1.md).
+The single sequential same-task result is retained for replication and does not
+establish a causal percentage, geometry transfer or human tempo.
+
 ### Retained OpenTTD effect-state diagnosis
 
 The frozen seed991003 v6 run lacks a formal finish evaluation because its driver

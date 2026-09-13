@@ -250,3 +250,12 @@ surrounding checks intact. Automatically derived drag-region sheets measure
 3,628 changed pixels on the first A-to-B drag versus250/451 on its repeats.
 These pixels do not score construction; the independent observer does. Next use
 the evidence builder in a changed preregistered live comparison.
+
+The first such live allocation succeeds. V7 keeps the seed991003 task,
+Astra-medium route, checkpoint rules and engine scorer, then adds the current full
+frame plus bounded drag before/after/difference panels. Turn6 recognizes A-to-B
+and builds B-to-C; turn7 independently verifies the complete L. The run uses7
+turns,116,879 input tokens,26 durable calls,32 frames and109.034s, with zero
+repeated A-to-B drag. Retained v6 failed after12 turns/199,613 tokens and two
+repeats. See [OPENTTD_EFFECT_LIVE_V1.md](OPENTTD_EFFECT_LIVE_V1.md). Retain for
+replication; this one sequential same-task result is not a general speedup.

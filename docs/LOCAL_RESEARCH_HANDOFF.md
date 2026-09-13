@@ -1,4 +1,13 @@
-Latest retained-effect evidence: v6 has no formal finish evaluation, but its263
+Latest live effect evidence: preregistered v7 appends bounded path-local
+before/after/difference panels after each drag while retaining the v6 task/model/
+checkpoint/independent score. Astra recognizes A-to-B, proceeds directly to
+B-to-C and passes all engine gates on turn7. It uses116,879 input tokens,26
+durable calls,32 frames and109.034s. Retained v6 used12 turns/199,613 tokens,
+repeated A-to-B twice and failed. Windows/WSL audits pass. Retain for replication;
+one sequential same-task result is not a causal percentage or human-tempo claim.
+See research/live_control/OPENTTD_EFFECT_LIVE_V1.md.
+
+Prior retained-effect evidence: v6 has no formal finish evaluation, but its263
 continuous source-pinned observer records prove a stable partial A-to-B road from
 record91 through the final172 records. B-to-C stays empty; hard success is false.
 The model repeats the same A-to-B drag on turns5,9,11 and never attempts B-to-C.

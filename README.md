@@ -14,6 +14,15 @@ bottlenecks and remaining release gates](docs/PROGRESS_FROM_BASELINE.md).
 Latest research handoff: [measured progress, failures and next steps](docs/LOCAL_RESEARCH_HANDOFF.md).
 
 Current Linux research caller: [components, usage and evidence limits](research/live_control/CURRENT_CLIENT.md).
+The first preregistered live bounded-effect allocation now completes the OpenTTD
+five-tile L objective. After the first drag, the interface appends path-local
+before/after/difference panels below the current full frame. Fixed Astra recognizes
+A-to-B, proceeds directly to B-to-C and passes the independent guard in7 turns,
+116,879 input tokens and109.034s. The retained v6 baseline used12 turns/199,613
+tokens, repeated A-to-B twice and failed. This is one sequential same-task result;
+retain for replication, with no causal percentage or general speed claim. See
+[live effect evidence](research/live_control/OPENTTD_EFFECT_LIVE_V1.md).
+
 Process-scoped timing envelopes now cover fresh Calc and OpenTTD tasks. Calc
 saves 480/192 in 23.976s with 21.334s of wrapper-observed model wait. OpenTTD uses
 batched delayed-hover contact sheets and an adaptive two-Luna/six-Astra route to
