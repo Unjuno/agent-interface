@@ -1,5 +1,17 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — pair 2 complete, OpenTTD next
+
+[Pair 2](../research/live_control/RECOVERY_PAIR2.md): A executed recover1..4 in
+four separate model calls, B's same four reads took one call. Both moved/saved
+successfully on first program; 18 frames/94 raw records, same initial PNG/steps/
+runtime hashes verified. A total 92.787 s vs B 59.039 s, includes review and A
+commentary; different continuation turns and missing exact model config prevent
+qualified performance claims. Four of eight episodes complete. Next pair 3 is
+OpenTTD depth 1 B then A (seed label 203, same canonical road fixture). Do not
+modify measured pair1/pair2 runners; add a new domain-specific runner. Pair2 A
+and B are archived, both bridge exits zero, no live processes to resume.
+
 ## Latest follow-up — pair 2 B done, A next
 
 [Pair 2](../research/live_control/RECOVERY_PAIR2.md): Inkscape seed 202, registered

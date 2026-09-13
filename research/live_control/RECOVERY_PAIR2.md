@@ -1,8 +1,27 @@
-# Registered pair 2 — helper arm completed, reference arm pending
+# Registered pair 2 — three fewer recovery orchestration calls
 
-Pair 2 follows the registered Inkscape seed-202 B-then-A order. Only B has run so
-far. The measured `recovery_pair2_v1.py` runner is frozen for the subsequent A arm;
-pair 1's measured runner and result were not altered.
+Pair 2 completed the registered Inkscape seed-202 B-then-A order. The measured
+`recovery_pair2_v1.py` runner stayed identical across both arms; pair 1's measured
+runner and result were not altered. Both tasks completed on their first move/save
+program with matching saved results.
+
+| Outcome | A: separate reads | B: helper |
+|---|---:|---:|
+| Recovery orchestration calls | 4 | 1 |
+| Recovery socket reads | 4 | 4 |
+| Total socket exchanges | 14 | 14 |
+| Exact observation frames | 9 | 9 |
+| Capture to evaluation | 92.787 s | 59.039 s |
+
+The observed recovery-call difference is B-minus-A = **-3**, while socket reads
+are unchanged. This meets the registered exploratory call-count threshold for
+this one depth-3 pair. It does not establish a generalized model-performance gain.
+The full elapsed difference is -33.748 s; A includes repeated history/image review
+and a progress commentary between reads 3 and 4. These times are retained rather
+than adjusted. Exact model identity/configuration and receipt timestamps are still
+unavailable, so the plan's model-performance qualification is not met. The two
+arms also ran in different continuation turns; same exact model configuration
+cannot be inferred from the same generic model-family description.
 
 The protocol's depth-3 prose specifies **three additional historical clock
 boundaries before the own clock**. The runner records that literally: after an
@@ -35,20 +54,27 @@ Bridge exit zero and the combined history/image experience are recorded in the
 conversation-derived presentation metadata. As before, this old entry provides
 no structured per-child cleanup artifact. Exact model identity/configuration,
 model receipt times and actual token/cost accounting remain unavailable, so model
-performance qualification is not met. No causal or paired speed/call-count effect
-is reported before A runs. Grouping four network reads into one model call does
-not eliminate those network reads.
+performance qualification is not met. Grouping four network reads into one model
+call does not eliminate those network reads.
 
-## Continue without rerunning B
+## Paired verification and remaining work
 
-Study progress is **3 of 8 episodes**, with five remaining. Next execute pair 2 A
-with this same runner, seed 202 and preparation. Its `recover1`, `recover2`,
-`recover3`, `recover4` stages must be separate model orchestration calls, one read
-each; inspect the returned history each time and do not batch those stages into a
-single tool invocation. Move only after reviewing the own-clock history/image.
-Keep every failure or recovery in A. Do not substitute a scripted loop for these
-model boundaries, and do not rerun B to align with later observations.
+The new paired audit verifies both arms' source hashes, identical initial PNG and
+move steps, all 94 unique raw events and received slices, all 18 AIT/PNG frames,
+every intermediate A assembled history, and own-clock identity at the final read.
+It also checks the assembled batch actually used for move and the independent
+saved SVG fields. A's four recovery stages were separate model tool calls, each
+displaying the current history and original image. Those presentation boundaries
+are conversation evidence; runtime timestamps alone cannot prove model receipt.
+Both bridge handles returned zero and neither arm needed an extra move retry.
+
+Study progress is **4 of 8 episodes**, with four remaining. Next execute pair 3,
+OpenTTD depth 1, B then A. Retain the original B-only audit as historical evidence;
+the paired audit is an additional artifact, not a replacement. Do not rerun either
+arm to improve the observed numbers. Across-domain and completed-study conclusions
+remain pending.
 
 ```sh
 python3 research/live_control/audit_recovery_pair2_b_v1.py
+python3 research/live_control/audit_recovery_pair2_v1.py
 ```

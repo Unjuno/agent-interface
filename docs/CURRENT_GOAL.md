@@ -1,5 +1,12 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest paired result: [pair 2 complete](../research/live_control/RECOVERY_PAIR2.md).
+A needed four separate recovery calls; B grouped the same four socket reads into
+one call. Both tasks passed, same initial PNG/steps/sources, 18 frames/94 events
+audited. Full times A 92.787 s, B 59.039 s include review/commentary; exact model
+configuration missing, no qualified latency/token gain. 4/8 episodes complete;
+next pair 3 OpenTTD depth 1 B then A. Keep all prior failures and frozen results.
+
 Latest execution: [pair 2 B](../research/live_control/RECOVERY_PAIR2.md) traversed
 three additional historical clocks plus its own clock in four reads within one
 model orchestration. Reviewed move/save passed, nine frames/47 events audited.
