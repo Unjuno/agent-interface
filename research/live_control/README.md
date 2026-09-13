@@ -1,5 +1,12 @@
 # Asynchronous live control: development evidence
 
+Latest effect-memory candidate: [bounded OpenTTD effect memory](OPENTTD_EFFECT_MEMORY_V1.md).
+One unresolved drag keeps its original before/after evidence beside the latest
+inspection. In two preregistered archived v8 contexts, frozen outputs are
+uncertain2/2 while new Astra-medium memory-image samples are observed2/2 and
+choose the same B-to-C continuation. Input rises764 tokens total. This advances
+to a fresh live episode; it is not promoted and has no live correctness claim.
+
 Latest geometry result: [seed-991002 OpenTTD transfer](OPENTTD_GEOMETRY_V5.md).
 The dynamic scorer derives target/forbidden/guard tiles from the baseline and
 the new fixture moves the visible target. A preregistered negative control and

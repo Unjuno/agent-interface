@@ -1,4 +1,14 @@
-Latest replication evidence: unchanged preregistered v8 builds A-to-B once but
+Latest bounded candidate: v8 diagnosis shows that the original drag evidence is
+discarded after an inspection-only turn. Effect-memory v1 keeps one unresolved
+drag's original before/after, latest inspection and action difference in a bounded
+row. Frozen turns5..7 retain source turn5 and inspection counts0/1/2; three invalid
+memories reject. Two preregistered archived-context Astra-medium samples change
+the raw uncertain2/2 decisions to observed2/2 and select the same B-to-C drag.
+Input33,655->34,419 (+764), with different cache state. Advance to one fresh live
+episode; no live correctness or causal claim. See
+research/live_control/OPENTTD_EFFECT_MEMORY_V1.md.
+
+Prior replication evidence: unchanged preregistered v8 builds A-to-B once but
 cannot resolve it beneath sign/transient occlusion, performs two observation-only
 inspections and safely stops on turn8. No A-to-B repeat or B-to-C mutation occurs.
 Across v7/v8 the candidate is1/2 hard success and2/2 prevention of the repeated

@@ -31,6 +31,15 @@ completed-segment drag, so it remains HOLD. The run also exposes and repairs a
 finish classifier that mislabeled typed safe stop as a turn limit. See
 [effect replication](research/live_control/OPENTTD_EFFECT_REPLICATION_V2.md).
 
+The diagnosed presentation boundary discarded the original drag evidence after
+each inspection-only turn. A bounded effect-memory candidate now carries one
+unresolved drag as original before/after, latest inspection and action difference.
+In two preregistered archived v8 contexts, the raw outputs are uncertain2/2 while
+new Astra-medium samples with memory classify observed2/2 and choose the same
+B-to-C continuation. Input rises764 tokens across the two calls. This is a fixed-
+context signal for a fresh live test, not promotion or a correctness claim. See
+[bounded effect memory](research/live_control/OPENTTD_EFFECT_MEMORY_V1.md).
+
 Process-scoped timing envelopes now cover fresh Calc and OpenTTD tasks. Calc
 saves 480/192 in 23.976s with 21.334s of wrapper-observed model wait. OpenTTD uses
 batched delayed-hover contact sheets and an adaptive two-Luna/six-Astra route to

@@ -37,6 +37,15 @@ every abort file `bounded_turn_limit`; explicit finish-kind v2 corrects the repl
 to `typed_model_safe_stop` and keeps independent task success separate. See
 [effect replication](research/live_control/OPENTTD_EFFECT_REPLICATION_V2.md).
 
+Post-failure inspection finds that v8 discards the original drag panels after its
+first observation-only turn. A bounded memory candidate retains one unresolved
+drag and adds the latest inspection without accumulating history. Two
+preregistered archived-context Astra-medium calls change checkpoint outcomes from
+uncertain2/2 to observed2/2 and both choose the same B-to-C continuation; input is
+33,655 versus34,419 tokens. Separate samples and no live execution prevent causal
+or correctness claims. Advance only to a fresh live allocation. See
+[effect memory](research/live_control/OPENTTD_EFFECT_MEMORY_V1.md).
+
 ### Retained OpenTTD effect-state diagnosis
 
 The frozen seed991003 v6 run lacks a formal finish evaluation because its driver
