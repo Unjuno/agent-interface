@@ -4,6 +4,12 @@ These versioned candidates are research tools used in private Linux/X11 fixtures
 They are not a released desktop product or a promotion of the frozen architecture.
 Keep the older sources/results: versions name measured implementations.
 
+An optional [non-final artifact checkpoint](EFFECT_CHECKPOINT.md) candidate uses
+runtime v29/socket v14. It can sample saved fields while leaving admission open;
+its scoped VERIFIED evidence is separate from task success. Browser integration
+is scripted, and slow-verifier/cancellation contention and Calc integration remain
+untested. It does not replace the default stack below.
+
 Optional [client endpoint instrumentation](CLIENT_ENDPOINTS.md) in
 prepared_exchange_v6.py separates preparation, persistence, response receipt,
 decoding, image/result processing and stdout completion. It remains a candidate;

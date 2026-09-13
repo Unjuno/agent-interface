@@ -1,5 +1,16 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — non-final checkpoint permits confirmation after UNKNOWN
+
+[Effect checkpoint](../research/live_control/EFFECT_CHECKPOINT.md) adds optional
+runtime v29/socket v14 artifact queries in a single asynchronous worker. A scripted
+browser run samples UNKNOWN before confirmation, admits correction, then samples
+VERIFIED with task_success=null; explicit finish independently succeeds. Twenty-two
+frames, full prefixes, release and retained attempt logs pass. The first transport
+allowlist failure is retained. Missing/mismatch/error/busy and request identity
+controls pass. This is not a full effect contract, universal verifier or default
+promotion; actual self-use, Calc and slow-verifier/cancel interaction are next.
+
 ## Latest follow-up — premature-finalization counterexample reproduced
 
 [Confirmation boundary comparison](../research/live_control/CONFIRMATION_BOUNDARY.md)

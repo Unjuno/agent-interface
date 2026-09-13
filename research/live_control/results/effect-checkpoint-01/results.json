@@ -1,0 +1,142 @@
+{
+  "missing": {
+    "status": "UNKNOWN",
+    "authority": "none",
+    "attribution": "not_established",
+    "task_success": null,
+    "observation_closed": false,
+    "contract": {
+      "kind": "saved_form_value",
+      "expected": "changed"
+    },
+    "started_ns": 77440917014,
+    "reason": "evidence_unavailable",
+    "error": {
+      "type": "FileNotFoundError",
+      "message": "[Errno 2] No such file or directory: '/tmp/tmpo_y6yc_y/saved.txt'"
+    },
+    "finished_ns": 77440954815
+  },
+  "mismatch": {
+    "status": "UNKNOWN",
+    "authority": "none",
+    "attribution": "not_established",
+    "task_success": null,
+    "observation_closed": false,
+    "contract": {
+      "kind": "saved_form_value",
+      "expected": "changed"
+    },
+    "started_ns": 77441013342,
+    "sampled_ns": 77441039175,
+    "artifact_sha256": "8ff10c02fd7a269a0e77f289b1cc4413b73df6fd0ca0632bdf28d28616f41587",
+    "actual": {
+      "value": [
+        "wrong"
+      ]
+    },
+    "scope": "one saved form artifact, exact field mapping",
+    "reason": "sample_mismatch_window_open",
+    "finished_ns": 77441093665
+  },
+  "match": {
+    "status": "VERIFIED",
+    "authority": "none",
+    "attribution": "not_established",
+    "task_success": null,
+    "observation_closed": false,
+    "contract": {
+      "kind": "saved_form_value",
+      "expected": "changed"
+    },
+    "started_ns": 77441140503,
+    "sampled_ns": 77441157907,
+    "artifact_sha256": "881b6baa378ccf4f49dea62e0782e0e0cffc2d437a0dd166331468514fa23983",
+    "actual": {
+      "value": [
+        "right"
+      ]
+    },
+    "scope": "one saved form artifact, exact field mapping",
+    "reason": "sample_matches_declared_value",
+    "finished_ns": 77441167455
+  },
+  "malformed": {
+    "status": "UNKNOWN",
+    "authority": "none",
+    "attribution": "not_established",
+    "task_success": null,
+    "observation_closed": false,
+    "contract": {
+      "kind": "saved_form_value",
+      "expected": "changed"
+    },
+    "started_ns": 77441313450,
+    "sampled_ns": 77441352082,
+    "artifact_sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89",
+    "reason": "evidence_unavailable",
+    "error": {
+      "type": "UnicodeDecodeError",
+      "message": "'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
+    },
+    "finished_ns": 77441369594
+  },
+  "oversized": {
+    "status": "UNKNOWN",
+    "authority": "none",
+    "attribution": "not_established",
+    "task_success": null,
+    "observation_closed": false,
+    "contract": {
+      "kind": "saved_form_value",
+      "expected": "changed"
+    },
+    "started_ns": 77441809545,
+    "reason": "evidence_unavailable",
+    "error": {
+      "type": "ValueError",
+      "message": "artifact exceeds 64 KiB sample limit"
+    },
+    "finished_ns": 77441860628
+  },
+  "busy_and_copy_records": [
+    {
+      "event": "effect_checkpoint",
+      "status": "UNKNOWN",
+      "reason": "verifier_busy",
+      "task_success": null,
+      "authority": "none",
+      "transport_request_id": "second"
+    },
+    {
+      "event": "effect_checkpoint",
+      "evidence": {
+        "status": "UNKNOWN",
+        "contract": {
+          "kind": "saved_form_value",
+          "expected": "right"
+        }
+      },
+      "task_success": null,
+      "authority": "none",
+      "scope": "non-final artifact query; input admission unchanged",
+      "transport_request_id": "first"
+    }
+  ],
+  "verifier_exception": [
+    {
+      "event": "effect_checkpoint",
+      "evidence": {
+        "status": "UNKNOWN",
+        "reason": "verifier_failed",
+        "error": "RuntimeError"
+      },
+      "task_success": null,
+      "authority": "none",
+      "scope": "non-final artifact query; input admission unchanged",
+      "transport_request_id": "failure"
+    }
+  ],
+  "closed_request_rejected": true,
+  "scope": "artifact and worker controls; not wall-time or cancellation deadline proof"
+}

@@ -1,0 +1,46 @@
+{
+  "command": {
+    "op": "submit",
+    "id": "submit",
+    "expected_sequence": 9,
+    "valid_until_ns": 113551405155,
+    "decision_evidence": {
+      "delivery_id": "delivery:14",
+      "observation_sequence": 9,
+      "producer": "scripted"
+    },
+    "steps": [
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "a"
+      },
+      {
+        "op": "text",
+        "text": "t991029"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 150,
+        "timeout_ms": 1500
+      }
+    ]
+  },
+  "image": {
+    "status": "image",
+    "sequence": 9,
+    "capture_ns": 83493652198,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/checkpoint-confirmation-01/review_then_confirm/runtime/006.png",
+    "relative_path": "006.png",
+    "sha256": "69b97352db73d25644bfb90b8c2422f6a4a933e2b38d5abdfbde4772586667eb",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "source_clock_ns": 83551405155,
+  "lease_ms": 30000,
+  "authority": "none; historical deadline, viewing and runtime admission remain required"
+}
