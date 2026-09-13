@@ -1,5 +1,13 @@
 # Current goal — 2026-09-13 revision 3
 
+Latest decision: [eight-episode recovery results](../research/live_control/RECOVERY_RESULTS.md).
+Allocation finished; no reruns. Structural calls B-A [0,-3,0,-3], reads all zero,
+full elapsed median +9.288 s (not causal). All final tasks pass, but pair 4 A's
+black final image defeats complete primary-delivery qualification. Retain explicit
+read-only batching convenience, no speed/token promotion or Research Freeze.
+Next bounded work: offline resumable report pages with exact reconstruction and
+explicit incomplete coverage; image delivery/accounting remain separate open gaps.
+
 Latest execution: [OpenTTD pair 4 both audited](../research/live_control/RECOVERY_PAIR4.md).
 All eight registered episodes executed. B groups four reads in one call; A needs
 four calls. Both guard scores pass; each has seven exact frames/53 events and
