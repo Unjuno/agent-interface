@@ -1,5 +1,15 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — fixed-v9 caller integration, Inkscape first
+
+[Pointer caller](../research/live_control/POINTER_CALLER.md) wraps unchanged v9
+domain entry points with socket11 and combines clock + explicit submit inside
+one caller invocation. Live Inkscape selection/nudge/save passes, 9 exact frames
+and all 39 prefix records audit; 10 recorded-reply controls retain uncertainty
+without automatic input retries. OpenTTD/Mindustry paths are not yet executed.
+Image reference selection works; combined live image display, cancellation/expiry
+and paired speed/token evaluation remain pending. This is optional, not promotion.
+
 ## Latest follow-up — three-domain pointer timeline partition
 
 [Timeline analysis](../research/evolution/POINTER_TIMELINE.md) compares nine shared

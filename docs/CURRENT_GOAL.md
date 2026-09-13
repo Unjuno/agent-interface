@@ -45,6 +45,12 @@ caseの改善であり、未知課題での性能や速度改善の証拠には�
 
 ## 現在のフェーズと直近の目標
 
+caller統合追記: session_v9を変更せずsocket11で包む候補と、時計問い合わせ＋明示操作を
+1回のcaller起動で扱う候補を実装。Inkscape実操作の保存結果・9観測・39記録を監査した。
+10応答制御例も確認。次はOpenTTD/Mindustry接続とlive取消・期限・古い観測の検証を行い、
+画像同時提示を含めて固定する。速度改善やtoken削減の比較は未実施。
+[候補記録](../research/live_control/POINTER_CALLER.md)。
+
 比較優先順位の追記: 同じsession_v9の実操作3領域を時間分解し、最初の撮影から最後の
 操作terminalまでの95.7–98.6%がaccepted→terminalの外側にあると確認した。推論時間とは
 断定できない。次はbackendを固定したcaller・画像提示経路の共通化と境界検証を先行し、
