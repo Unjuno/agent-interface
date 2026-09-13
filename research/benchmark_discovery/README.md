@@ -1,3 +1,5 @@
+[Socket focus interruption](MINDUSTRY_SOCKET_FOCUS.md): same-action stopped/terminal recovery verified in actual Mindustry; first evaluation timeout retained, corrected fixture run passes.
+
 [New runtime actual construction](MINDUSTRY_BEND_V2_SELF_USE.md): assistant builds eight directional targets, independently delivers49 copper; four programs/18-frame audit pass. Known task;85-second episode does not establish human tempo.
 
 [New runtime cancellation in Mindustry](MINDUSTRY_RUNTIME_CANCEL.md): actual GUI scripted interruption releases input, suppresses tail and supports fresh observation; game task correctly remains unsatisfied.

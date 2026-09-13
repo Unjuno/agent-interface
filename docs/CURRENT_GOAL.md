@@ -1,3 +1,7 @@
+## Mindustry socket focus interruption: retained failure, corrected integration pass
+
+Actual private-socket/X11 focus transfer produced input_stopped plus two passive observations and same-action needs_decision terminal. First run evaluation timed out while sink retained focus; driver erroneously attempted a second finish in cleanup, retained. V2 fixture restores focus after observe-only recovery and driver uses command-free wait/poll. Second run exit0; audit verifies7 calls/25 events/4 exact frames, one submission/finish, suppressed tail and cleanup. Empty-route game score correctly false. See research/benchmark_discovery/MINDUSTRY_SOCKET_FOCUS.md. Fixture refocus is not agent recovery; model-boundary timing remains next.
+
 ## Actual Mindustry construction verified on newer shared runtime
 
 Assistant self-use of unchanged bend interactive v2 built eight directional conveyors with cause-servo/executor8. Four programs/18 exact frames; separate600.024-tick window delivered49 copper,112-tile guard and all directions pass. Pre-finish GUI commitment, eight score controls, source pins and cleanup audited; process exit0. See research/benchmark_discovery/MINDUSTRY_BEND_V2_SELF_USE.md.84.967 seconds to final input terminal;18–23-second between-program gaps remain. Runtime first-image-ready235–574ms excludes model receipt/usefulness. Known task, no controlled speed claim. Basic gameplay compatibility now demonstrated; next private socket focus-interruption/same-handle recovery and model-boundary timing, not another identical route repetition.
