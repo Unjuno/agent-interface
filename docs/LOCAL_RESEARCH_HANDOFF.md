@@ -1,5 +1,14 @@
 # Local research handoff — 2026-09-13
 
+## Latest follow-up — live pending status advances with a fresh query
+
+[Status transition](../research/live_control/STATUS_TRANSITION.md) tests correct
+and wrong input with gated ordinary evaluation. Initial fallback returns pending;
+exact old-query replay remains pending without a new command; a fresh query
+returns available with true/false evaluation. One submit, two status commands,
+three exact frames per case and input release audited. Scripted coverage, not
+model latency evidence. Next use the client in an actual visible recovery case.
+
 ## Latest follow-up — bounded outcome CLI used by the assistant
 
 [Outcome client self-use](../research/live_control/OUTCOME_CLIENT_SELF_USE.md)
