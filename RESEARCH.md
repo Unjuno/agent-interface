@@ -1010,3 +1010,14 @@ dependent actions with zero model resumptions. Fifteen test-double scenarios
 pass independent Windows/WSL audit through the #53 caller. Raw evidence retention
 and all live efficiency/correctness claims remain unproved. See
 `research/live_control/COMPILED_GUI_INTERFACE_V1.md`.
+
+The first full Issue #57 comparison now measures the integrated path. Under one
+preregistered six-task sequence, plain, compiled-ephemeral and compiled-persistent
+all score 6/6 exact once. Charging one fresh endpoint-schema call to each arm,
+cumulative input is 63,128/63,779/26,563 and generations are 7/7/3; persistent
+crosses below both references at task 2. It safely refuses the old layout-A
+reference before task-4 input, repairs once, and finishes in 44.131s versus
+56.412s/73.238s. Seventeen actual calls and all releases reconcile in Windows
+and WSL audit. This RETAIN decision applies to the fixed workflow and allocation,
+not broad token savings or human-speed performance. See
+`research/live_control/INTEGRATED_EFFICIENCY_LIVE_V1.md`.

@@ -543,3 +543,14 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md).
 ## License
 
 Apache License 2.0. See [`LICENSE`](LICENSE).
+
+## Latest integrated result
+
+The preregistered Issue #57 desktop comparison retains persistent compiled
+control for this fixed workflow. Plain, ephemeral and persistent each complete
+6/6 exact tasks; persistent refuses the invalid layout-A reference before input,
+repairs once, and reaches measured token break-even at task 2. With fresh schema
+acquisition charged, cumulative input is 63,128/63,779/26,563 and elapsed time is
+56.412/73.238/44.131s. This is one finite allocation, not a general speed or
+reliability claim. See
+[`research/live_control/INTEGRATED_EFFICIENCY_LIVE_V1.md`](research/live_control/INTEGRATED_EFFICIENCY_LIVE_V1.md).

@@ -1,14 +1,14 @@
 # Integrated token-efficiency evaluation plan v1
 
-Status: composition and formal runner selected; live allocation not yet preregistered or run.
+Status: first formal allocation completed with frozen disposition RETAIN.
 
 Implementation checkpoint: `integrated_efficiency_fixture_v1.py` now provides
 the frozen A/A/A/B/B/B task shape, visibly distinct layouts and an append-only
 exact-token oracle.  `integrated_efficiency_runtime_v1.py` and the interactive/
 socket entries connect that fixture to the existing `session_v33` checked-input
 path.  The positive, duplicate and wrong-token oracle controls pass offline.  The
-formal controller and source manifest are implemented.  Preregistration and the
-live run remain open; this checkpoint is not an experimental allocation.
+formal controller and source manifest are implemented.  The preregistered live
+result is reported in `INTEGRATED_EFFICIENCY_LIVE_V1.md`.
 
 An engineering-only X11 smoke starts the adapted Chromium process, emits the
 six declared tasks and an exact initial frame through the existing runtime, then

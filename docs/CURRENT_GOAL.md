@@ -1082,3 +1082,16 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   plain/current-optimized/compiled matched efficiency blockを事前登録する。v5のopaque
   session_scope文字列はseed991024のまま残ったが、case別process/registryでreuseなし。
   凍結sourceは変更せず、次runnerでlabelを修正する。
+
+- 2026-09-14 r24: Issue #57の三方式統合比較を完了。正式前のzero-model composed
+  probe-01は18 GUI taskを実行できたが、submission historyがfinish時に公開されることを
+  task直後と誤認して全件0集計となり失敗保存。finish後task ID照合へ限定修正したprobe-02は
+  plain/ephemeral/persistent各6/6 exact、persistent task-4 old handle `MISSING`、旧target
+  pointer 0、synthetic grounding 14でprotocol RETAIN。これを含む29 source hash、seed991028、
+  arm順、fresh schema cost、no-retryを事前登録後、同一Luna-low/X11でformal live-01を一度実行。
+  3方式とも6/6 exact、release確認、persistent repair成功。preflight込みtask-6 inputは
+  63,128/63,779/26,563、generations 7/7/3、break-even task2。6-task elapsedは
+  56.412/73.238/44.131s、画像model waitは41.318/48.742/15.460s、クリックfeedback medianは
+  99.944/99.299/99.250ms。17 actual callsの総input153,470、全ID一意、Windows/WSL監査合格。
+  この固定1 sequenceではpersistentをRETAINするが、一般的token削減・成功率・人間速度は未証明。
+  次は通常進行を止めないFreedoom MAP01の有限clear attemptを事前登録し実行する。

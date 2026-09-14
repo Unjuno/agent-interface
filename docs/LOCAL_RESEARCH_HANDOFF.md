@@ -2864,3 +2864,17 @@ cancellation-count assertion failure is retained. Raw evidence retention is
 explicitly unverified; there is no live GUI, token, latency or break-even claim.
 Next freeze and run one live desktop mechanics pair before the A/B/C comparison.
 See `research/live_control/COMPILED_GUI_INTERFACE_V1.md`.
+
+## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
+
+Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms
+score 6/6 exact once. Persistent safely refuses layout-A references on task 4,
+admits zero old-target pointer input, repairs once, and reuses layout B. With a
+fresh schema call charged to every arm, task-6 input totals are 63,128 plain,
+63,779 ephemeral and 26,563 persistent; generation totals are 7/7/3 and measured
+break-even is task 2. Six-task elapsed is 56.412/73.238/44.131s and image-model
+wait is 41.318/48.742/15.460s. The local feedback median remains about 99ms in
+all arms. Seventeen actual model calls reconcile with unique IDs and complete
+usage; Windows/WSL audits pass. Preserve the pre-formal history-materialization
+failure and corrected zero-model rerun. Next preregister a continuously running
+Freedoom MAP01 clear attempt; this one sequence is not a general speed claim.
