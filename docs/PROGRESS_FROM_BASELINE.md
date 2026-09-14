@@ -34,6 +34,11 @@ Save after two20px samples;18 exact frames, saved SVG and releases audit on
 Windows/WSL. This advances local task-relative continuation for moved objects.
 Model-authored conditions and placement target/guard semantics remain open.
 
+One fixed-context authorship probe now passes Luna-low2/2 and Astra-medium2/2.
+Every strict model-authored patch accepts retained24px samples and rejects20px
+samples. The prompt fixes most contract fields and performs no live input, so a
+fresh live transfer remains required before integrating this moved-object path.
+
 ## What changed
 
 | Stage | Initial state | Current evidence | Status |

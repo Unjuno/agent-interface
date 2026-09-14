@@ -106,6 +106,15 @@ scripted moved-object condition; model authorship and a placement-specific
 target/guard condition remain. See
 [local displacement postcondition](research/live_control/LOCAL_DISPLACEMENT_POSTCONDITION_V1.md).
 
+A preregistered fixed-context authorship probe then presents one exact source
+frame and a mostly fixed postcondition schema. Luna-low and Astra-medium each
+produce strict JSON2/2; all four authored patches cover the full red target,
+accept both retained24px samples and reject both20px samples. Luna reports25,480
+input tokens and Astra30,812 across two calls each, with no basis for a route
+comparison. No GUI input is issued. Advance only to a fresh live transfer on the
+same moved-object task. See
+[model-authored displacement condition](research/live_control/LOCAL_DISPLACEMENT_AUTHORSHIP_V1.md).
+
 ### Retained OpenTTD effect-state diagnosis
 
 The frozen seed991003 v6 run lacks a formal finish evaluation because its driver

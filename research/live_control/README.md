@@ -1,5 +1,12 @@
 # Asynchronous live control: development evidence
 
+Latest model-authorship result: [local displacement authorship v1](LOCAL_DISPLACEMENT_AUTHORSHIP_V1.md).
+On one fixed initial Inkscape frame, Luna-low and Astra-medium each author strict
+target patches2/2. All four conditions accept retained24px samples and reject
+20px samples. Luna uses25,480 total input tokens and Astra30,812 across two calls;
+the samples do not support a route comparison. Advance to one fresh live transfer
+without promoting or extending the claim to placement.
+
 Latest task-relative condition: [local displacement postcondition v1](LOCAL_DISPLACEMENT_POSTCONDITION_V1.md).
 After one retained HOLD pair corrects a false input-to-screen assumption, a fresh
 X11 target/partial pair distinguishes24px from20px displacement. Two stable
