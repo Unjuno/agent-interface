@@ -1,14 +1,14 @@
-Current direction (r42): v25 event-driven invalidation catches the earliest
-retained changed frame and preserves fail-closed authority.  Official Codex
-app-server exposes the missing planner boundary: turn/start returns IDs,
-turn/interrupt ends in an explicit interrupted completion, and per-turn token
-usage remains observable.  A command-free 0.153.4 probe initialized, listed6
-models and created an ephemeral Luna thread.  Preserve its schema mismatch:
-generated ThreadStartParams' sandbox policy map was rejected with -32600 while
-the legacy read-only string succeeded.  Next preregister one no-tool interrupted
-turn; retain a completion race or failure, require explicit status/usage, and
-never parse interrupted output as an action.  Only after that integrate planner
-cancellation with v25.  No subagent/context handoff; full goal open.
+Current direction (r43): the frozen app-server interruption allocation returns
+an explicit interrupted turn37ms after start, with20.772ms interrupt ack and
+20.983ms completion latency, zero agent messages and no answer eligibility.
+No usage notification appeared, which is unknown rather than numeric zero and
+likely means interruption preceded generation; no token-savings claim.  The
+journal also exposes10 unnecessary MCP startup notifications and about1.8s
+thread setup.  Next build the persistent planner adapter with strict absent-
+usage accounting, test completion/interruption races, suppress unused startup
+capabilities, then integrate it with v25 exact-observation invalidation in a new
+controller.  Interrupted items can never become an action or cover.  No
+subagent/context handoff; full goal open.
 
 Current direction (r37): retained MAP01 failure analysis separates the cover-
 expiry symptom from stale policy semantics.  Fixed cover left 9,770.767 ms of

@@ -3039,6 +3039,16 @@ while the legacy read-only string succeeds.  Freeze one bounded interruption
 turn before integrating this adapter into v25.  See
 `research/live_control/CODEX_APP_SERVER_PLANNER_CANCELLATION_V1.md`.
 
+The first frozen no-tool interruption probe succeeds: one turn/start, matching
+turn/started, one interrupt, `{}` acknowledgment, and interrupted completion in
+37ms with no agent messages or eligible answer.  Interrupt-to-completion is
+21.039ms.  No usage notification exists, so record it as unknown rather than
+zero; this likely pre-generation interruption proves no token saving.  The raw
+journal also exposes10 MCP startup notifications and about1.8s thread setup.
+Build a persistent capability-minimized adapter with completion/interruption
+race tests before integrating cancellation into a controller.  See
+`research/live_control/CODEX_APP_SERVER_INTERRUPT_LIVE_V1.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms
