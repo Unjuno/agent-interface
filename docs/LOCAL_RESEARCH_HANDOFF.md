@@ -1,3 +1,25 @@
+Current handoff r28: new Issue #58 selects a two-track Research Preview.  The
+retained integrated desktop workflow is the reproducible golden demo; normal
+continuously advancing MAP01 is the hero showcase for local reaction during
+frontier-model inference.  Preserve and package the new 95.331 ms contingency
+branch, then measure longer branch precision/recovery and make a separately
+labelled frozen Astra MAP01 attempt when available.  A genuine unfinished clip
+does not block launch and must remain labelled unfinished.  Keep DOOM as one
+coverage axis, preserve failures, and avoid unrelated research until the demo,
+telemetry/video, setup, scoped table and launch-facing README are reconstructable.
+No subagent or context handoff is used.
+
+Current handoff r27: the normal continuously advancing MAP01 controller now
+accepts model-authored `no_visible_effect` contingencies and executes them
+locally.  One live failed `use` branches in 95.331 ms versus the prior 8.683 s median
+path to a new model plan.  A first every-command split costs 18 admissions over 12
+decisions; contingency-boundary grouping cuts this to13, with only the executed
+fallback above the ordinary one-bundle/decision floor.  The audit passes and
+retains schema plus environment-start failures.  Neither run exits MAP01 or
+scores a kill.  Next measure longer branch precision and recovery, then pursue
+an independently scored no-pause MAP01 clear.  Keep DOOM as one coverage axis,
+and use no subagent or context handoff.
+
 Current handoff r26: `integrated_efficiency_client_v1.py` is now the common
 checked-input client for plain, ephemeral and persistent arms.  A retained first
 run finds that `task-1` violates the private alias grammar.  Normalizing and

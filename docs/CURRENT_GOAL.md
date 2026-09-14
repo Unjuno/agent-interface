@@ -1,3 +1,31 @@
+Current direction (r28): Issue #58 makes the near-term Research Preview a
+two-track launch package.  Keep the retained integrated desktop workflow as the
+reproducible correctness/efficiency demo, and use continuously advancing MAP01
+as the hero evidence that local control keeps reacting while frontier inference
+runs.  The new 95.331 ms local contingency branch is retained as the first direct
+mechanism for that story, with no clear or broad speed claim.  Next preserve its
+telemetry/video path, measure longer branch precision and recovery, and run a
+separately labelled frozen Astra attempt if the launch environment supports it.
+An honest unfinished real-time clip must not block the Research Preview; DOOM
+does not define the product and remains one Domain Coverage Matrix axis.  Avoid
+unrelated research branches until the golden demo, scoped benchmark table,
+installation path and launch presentation are reconstructable.  No subagent or
+context handoff is used; full goal open.
+
+Current direction (r27): normal continuously advancing Freedoom 2 MAP01 now
+executes bounded model-authored contingencies locally.  In a 12-decision
+Luna-low run, a `use` command's `no_visible_effect` receipt triggered a
+preplanned backward/strafe fallback in 95.331 ms without another model call.  This
+removes the measured 8.683 s median model-mediated recovery path for that event.
+Grouping primary commands only at contingency boundaries reduces admissions
+18 to 13; the only admission above one bundle per active decision is the fallback
+that actually runs.  Both feasibility runs remain unfinished with zero deaths
+and kills, so completion and false-branch quality are open.  Next run longer
+MAP01 task evidence that measures branch precision/recovery and advances toward
+an independently scored clear while game time never pauses.  DOOM remains one
+Domain Coverage Matrix axis.  No subagent or context handoff is used; full goal
+open.
+
 Current direction (r26): one shared checked-input client now expresses all three
 planned arms.  Its first run preserves an ephemeral task-derived alias grammar
 mismatch after plain succeeds6/6.  Prefix normalization repairs only the adapter;

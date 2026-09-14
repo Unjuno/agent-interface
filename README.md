@@ -554,3 +554,10 @@ acquisition charged, cumulative input is 63,128/63,779/26,563 and elapsed time i
 56.412/73.238/44.131s. This is one finite allocation, not a general speed or
 reliability claim. See
 [`research/live_control/INTEGRATED_EFFICIENCY_LIVE_V1.md`](research/live_control/INTEGRATED_EFFICIENCY_LIVE_V1.md).
+
+The continuously advancing MAP01 showcase now has a bounded local reaction
+path: one live `no_visible_effect` receipt admitted a model-authored fallback in
+95.33 ms without another model call. The 12-decision run did not exit the map,
+so this is mechanism evidence rather than a completion or general speed claim.
+See [the contingency report](research/doom/MAP01_CONTINGENCY_V1.md) and
+[the launch scope in Issue #58](https://github.com/Unjuno/agent-interface/issues/58).

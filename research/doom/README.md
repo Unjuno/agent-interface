@@ -78,6 +78,15 @@ about 47 ms; model-mediated recovery still took about 8.68 seconds. The next
 candidate is a bounded, preplanned local contingency rather than another full
 model round trip.
 
+[Preplanned local contingency feasibility](MAP01_CONTINGENCY_V1.md) now takes
+that next step in the continuously advancing normal game. A real failed `use`
+command triggered a model-authored fallback locally in 95.33 ms, without a new
+model call. Grouping only at contingency boundaries reduced program admissions
+from 18 to 13 over 12 decisions; the sole admission above one primary bundle per
+decision was the fallback that actually ran. Both allocations remained
+unfinished with zero deaths and kills. Retain the mechanism, but do not infer
+completion ability, false-branch reliability or a general speedup.
+
 The assistant has now operated a ViZDoom basic scenario through OS keyboard
 input and X11 screenshots, using the existing async executor and exact image
 transport. This uses the bundled **Freedoom assets**, not original commercial

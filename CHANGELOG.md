@@ -2,6 +2,12 @@
 
 ## Unreleased — 2026-09-13 research update
 
+- Add bounded model-authored MAP01 contingencies that branch locally on a
+  conservative no-visible-effect receipt. One live branch admits its fallback
+  in 95.33 ms without another model call; contingency-boundary grouping reduces
+  12-decision executor admissions from 18 to 13. The run remains unfinished, so
+  no map-clear or general speed claim is made.
+
 - Add a separate asynchronous research executor with whole-program validation,
   early feedback, cancellation and X11 key-release verification. Six fresh
   XTerm/Calc probes pass; retain an actual assistant's missed cancellation and
