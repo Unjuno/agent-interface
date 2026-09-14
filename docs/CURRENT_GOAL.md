@@ -1,6 +1,19 @@
+Current direction (r44): a preregistered six-process command-free comparison
+finds capability-minimized thread creation at94.368ms median with zero startup
+notifications, versus211.395ms and nine notifications for baseline; the
+117.027ms same-host difference is startup-only, with zero model turns and no
+inference/token claim.  Persistent planner adapter v1 now keeps one thread
+identity across turns and fail-closes cancellation races, duplicate interrupt,
+missing usage, multiple/malformed/schema-invalid answers, overlapping turns and
+implicit reset; nine protocol-double tests pass after retaining one test-import
+harness failure.  Next freeze one two-turn live continuity probe through this
+minimal command, then integrate only the verified boundary with v25.  Revisit
+failed ideas by changing one named condition while retaining their original
+failure envelope.  No subagent/context handoff; full goal open.
+
 Current direction (r43): the frozen app-server interruption allocation returns
 an explicit interrupted turn37ms after start, with20.772ms interrupt ack and
-20.983ms completion latency, zero agent messages and no answer eligibility.
+21.039ms completion latency, zero agent messages and no answer eligibility.
 No usage notification appeared, which is unknown rather than numeric zero and
 likely means interruption preceded generation; no token-savings claim.  The
 journal also exposes10 unnecessary MCP startup notifications and about1.8s

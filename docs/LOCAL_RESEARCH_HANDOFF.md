@@ -3049,6 +3049,28 @@ Build a persistent capability-minimized adapter with completion/interruption
 race tests before integrating cancellation into a controller.  See
 `research/live_control/CODEX_APP_SERVER_INTERRUPT_LIVE_V1.md`.
 
+The command-free startup condition is now frozen and independently audited.
+Three fresh baseline processes create ephemeral threads in522.660/176.169/
+211.395ms and emit nine startup notifications each.  Three capability-minimized
+processes take94.368/104.831/85.609ms and emit zero.  The median difference is
+117.027ms on this host; no model turn was started, so this is not an inference
+or token result.  Empty `mcp_servers={}` did not clear configured servers, and
+an incomplete override exposed a misleading plugin/config transport failure;
+both discovery conditions are retained.  See
+`research/live_control/CODEX_APP_SERVER_STARTUP_V1.md`.
+
+`persistent_planner_adapter_v1.py` now defines the controller-side lifecycle
+before live integration.  It retains one thread identity, permits one active
+turn, marks cancellation before the interrupt request, makes every answer after
+that boundary ineligible even when completion wins the wire race, suppresses
+duplicate interrupts, preserves absent usage as unknown, and independently
+validates the structured answer.  Nine protocol-double cases pass.  The first
+package-mode suite invocation failed on a test import and is retained as a
+harness failure.  Next preregister one two-turn live continuity probe using the
+minimal command; do not connect v25 until thread continuity, typed ownership,
+answer eligibility and accounting pass.  See
+`research/live_control/PERSISTENT_PLANNER_ADAPTER_V1.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms
