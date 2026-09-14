@@ -61,6 +61,14 @@ turns at 450 ms and reduced model-external time by 72.134% in an unmatched
 20-turn allocation; it recorded one kill and no death but still did not exit
 the map. See the linked report for the comparison limits.
 
+[Visual-stagnation candidates](MAP01_STAGNATION_V1.md) retain a same-seed,
+40-decision, three-arm test. Blind local recovery and structured planner advice
+both failed to exit MAP01 and produced more repeated-view detections than the
+unaltered controller. They are recorded as failed candidates. A clean-start
+session revision also removes an implicit module-path dependency and surfaces
+child startup errors directly. No full-map clear or general navigation gain is
+claimed.
+
 The assistant has now operated a ViZDoom basic scenario through OS keyboard
 input and X11 screenshots, using the existing async executor and exact image
 transport. This uses the bundled **Freedoom assets**, not original commercial

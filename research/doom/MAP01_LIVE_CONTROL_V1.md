@@ -79,3 +79,11 @@ seed. The run reached a new green-sign/`A` area but spent more than fifteen
 decisions oscillating around walls and a doorway. This does not validate the
 reflex candidate. It identifies the next missing layer as bounded stagnation
 detection and compact topological memory rather than another longer run.
+
+[The first visual-stagnation study](MAP01_STAGNATION_V1.md) tested that next
+layer in a same-seed ordered three-arm allocation. Forced recovery and a later
+planner-only advisory both changed behavior but failed to exit MAP01 and
+increased detected revisits versus the baseline (10 and 18 versus 5). The
+advisory added 6,565 total input tokens versus the baseline in this allocation.
+Neither candidate is promoted. The result redirects the next iteration toward
+per-command visual effect receipts rather than another repeated-view directive.
