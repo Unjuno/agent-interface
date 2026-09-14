@@ -855,3 +855,18 @@ selection20.771s, independent selection oracle23.538s, and model inputs
 9,300+8,115. Six exchanges/15 frames and both raw turns audit Windows/WSL. This
 is fixed-layout selection, not placement, causal speed or human tempo. See
 `research/benchmark_discovery/MINDUSTRY_ANCHOR_FIRST_SELECT_V2.md`.
+
+The next Mindustry step separates palette-control evidence from world-target
+evidence and completes one target outside the earlier route. Four first-allocation
+failures are retained while output contracts are corrected: a schema/validator
+relation mismatch, unsupported candidate and receipt `oneOf`, and a missing
+explicit property type. V5 uses flat typed points arrays, bounded palette binding
+and an animated placement-preview receipt. Luna-low's four calls use34,967 input
+tokens; the run has14 socket exchanges,33 exact frames and exactly two button
+admissions. Independent engine scoring verifies target orientation, one-copper
+cost, unchanged112-tile guard, source/core and paused idle completion. Runtime
+world feedback is457.934ms and placement feedback270.075ms; full completion is
+53.463s with39.023s parent-observed model time. Windows/WSL audit passes. Issue
+#54 tracks endpoint schema preflight. This is one positive fixed-screen case, not
+a reliability, speedup, compression or human-tempo result. See
+`research/benchmark_discovery/MINDUSTRY_SINGLE_TILE_LIVE_V5.md`.

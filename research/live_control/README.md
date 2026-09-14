@@ -448,3 +448,14 @@ the only button-down selects Conveyor. Hover reply is909.187ms, full semantic
 selection20.771s, and inputs are9,300+8,115. Fifteen frames audit Windows/WSL.
 See
 [Mindustry anchor transfer](../benchmark_discovery/MINDUSTRY_ANCHOR_FIRST_SELECT_V2.md).
+
+`bounded_visual_target_contract_v3.py` removes the earlier simultaneous direct
+`point` and candidate `points` fields. One flat, endpoint-compatible object uses
+a single points array: cardinality1 for a direct target,1..3 for probes and0 for
+a coordinate-free bounded stop. Mindustry adds a48px fresh-palette binding gate
+and an independently typed world-receipt result. The positive v5 placement path
+accounts for all four calls; retained v1-v4 failures show why local JSON Schema
+validation alone is insufficient. See
+[Mindustry single-tile placement](../benchmark_discovery/MINDUSTRY_SINGLE_TILE_LIVE_V5.md)
+and Issue #54. Live negative abstention and a consolidated shared caller remain
+open before promotion.

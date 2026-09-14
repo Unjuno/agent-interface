@@ -506,3 +506,17 @@ image is466.619ms after acceptance, caller reply909.187ms, semantic selection
 9,300+8,115 across two calls; six exchanges/15 frames audit Windows/WSL. This is
 selection-only fixed-layout evidence, not placement or human tempo. See
 [Mindustry anchor transfer](../research/benchmark_discovery/MINDUSTRY_ANCHOR_FIRST_SELECT_V2.md).
+
+Mindustry now has one changed-geometry placement with palette and world meaning
+kept in separate receipts. Four preregistered pre-placement failures preserve the
+actual contract-learning path: redundant candidate fields, two unsupported
+`oneOf` schemas and one missing property type. V5 uses endpoint-compatible flat
+typed objects and refuses coarse palette points beyond48px instead of snapping
+unrelated world coordinates. Seven animated preview frames keep one stable change
+mask; Luna-low binds `[368,392]` and admits exactly selection plus placement.
+Independent engine state verifies one north-facing Conveyor, copper -1, a clean
+112-tile guard and paused idle completion. Four calls/34,967 input tokens,14
+socket exchanges,33 exact frames and53.463s total audit on Windows/WSL. Runtime
+preview and placement images arrive in457.934ms and270.075ms; sequential model
+time remains the dominant gap. See
+[single-tile placement](../research/benchmark_discovery/MINDUSTRY_SINGLE_TILE_LIVE_V5.md).

@@ -221,6 +221,12 @@ the [previous source-PNG/presentation discrepancy](../doom/FEEDBACK_PILOT.md).
 - Final selected cohorts: [OpenTTD](results/linux-feasibility-07/openttd/results.json),
   [Mindustry](results/linux-feasibility-05/mindustry/results.json),
   [Luanti](results/linux-feasibility-04/luanti/results.json).
+- [Mindustry changed-geometry single-tile placement](MINDUSTRY_SINGLE_TILE_LIVE_V5.md)
+  keeps palette and world evidence separate. Four retained contract failures lead
+  to a flat typed candidate/receipt path. V5 independently verifies one new
+  north-facing Conveyor, one-copper cost, no collateral guard mutation and paused
+  idle completion across33 exact frames. This is one positive fixed-screen case;
+  live abstention, reliability and human-tempo remain unproven.
 - [Audit summary](audit-summary.json) derives metrics, checks source/plan/image
   hashes, confirms recorded cleanup and verifies partial reset/oracle findings.
 - [Reproduction notes](REPRODUCE.md) explain user-local assets and historical

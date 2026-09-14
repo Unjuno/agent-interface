@@ -2617,3 +2617,29 @@ This is fixed-layout selection only. Next combine separate palette-control and
 world-target evidence for one changed-geometry independently scored placement.
 See research/benchmark_discovery/MINDUSTRY_ANCHOR_FIRST_SELECT_V2.md. Goal/freeze
 remain open.
+
+## Latest follow-up — separate palette/world receipts place one Mindustry tile (2026-09-14)
+
+One new target outside the earlier eight-tile route is now built through the
+shared socket runtime. Four separately preregistered failures are retained: v1
+exposed a schema-valid redundant-point relation that the validator rejected;
+v2/v3 exposed unsupported `oneOf` at candidate and receipt stages; v4 exposed a
+missing explicit property type. None admitted a placement button. V3/v4 safely
+reached the world hover after three model calls and one palette-selection click.
+
+V5 uses flat typed objects, one nonredundant points array, a 48px palette binding
+limit and a separate animated-preview receipt whose seven frames share the same
+1,972-pixel change mask. Luna-low selects `[1007,577]`, proposes world point
+`[368,392]`, binds the relative tile and admits exactly the palette and placement
+button-downs. The engine independently verifies the one north-facing Conveyor,
+one-copper cost, unchanged 111 other guard tiles, source/core and paused idle
+completion. Four calls account for34,967 input tokens with4,864 cached;14 socket
+exchanges,33 frames and6 released terminals audit on Windows/WSL. World useful
+feedback is457.934ms, placement image270.075ms and full independent completion
+53.463s, dominated by39.023s parent-observed model time. No subagent participates.
+
+Issue #54 tracks preflighting output schemas against the actual endpoint subset.
+#52 abstention and #53 branch accounting are only partially covered: the positive
+path has a complete ledger, but live negative branches and one shared caller still
+need a finite matched block. See
+research/benchmark_discovery/MINDUSTRY_SINGLE_TILE_LIVE_V5.md. Goal/freeze remain open.

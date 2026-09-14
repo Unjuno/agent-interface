@@ -885,3 +885,15 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   selection20.771s、oracle23.538s、inputs9,300+8,115、6 exchanges/15 frames。
   Windows/WSL監査。次はpalette意味証拠とworld target証拠を分離したchanged-geometry
   1-tile placement。人間速度・broad reliability・freezeは未達。
+
+- 2026-09-14 r12: Mindustryでpalette controlとworld targetを別receiptとして結び、
+  以前の8-tile route外 `(137,52)` にnorth-facing Conveyorを1個だけ配置。formal
+  v1は冗長point/pointsのschema-validator不一致、v2はcandidate `oneOf`非対応、v3は
+  world receipt `oneOf`非対応、v4はproperty type欠落で停止し、全失敗と0 placementを
+  保存。v5はflat typed schema、48px bounded palette binding、animated previewのstable
+  change-mask receiptを使用。Luna-low4 calls、inputs34,967(cached subset4,864)、14 socket
+  exchanges、33 exact frames、2 button-down。独立scoreはtarget block/team/rotation、
+  copper -1、112-tile guard、source/core、paused idleを検証。world useful feedback
+  457.934ms、placement image270.075ms、semantic bind46.467s、completion53.463s。
+  Windows/WSL監査。Issue #54をschema preflight用に追加。次はpreflight実装後、positive/
+  no-match/ambiguousの有限matched block。人間速度・reliability rate・freezeは未達。
