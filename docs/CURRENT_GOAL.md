@@ -1,3 +1,15 @@
+Current direction (r45): the first frozen capability-minimized live session
+passes two structured Luna-low turns on one thread with distinct turn IDs.  The
+first turn carries a local image and stores a nonce; the second recovers it
+without restatement.  Both answers pass local schema admission, startup emits
+zero MCP notifications, and cumulative usage is15,531 input/6,912 cached/52
+output/18 reasoning tokens.  Turns take2,655.464/2,643.947ms.  Thread creation
+is441.617ms, outside the earlier three-sample minimal range, so startup variance
+remains open and persistence amortizes rather than assumes the 94ms median.
+Next freeze one genuinely in-generation interrupt after an agent-message delta,
+require answer ineligibility and account partial usage, then connect that typed
+boundary to v25.  No subagent/context handoff; full goal open.
+
 Current direction (r44): a preregistered six-process command-free comparison
 finds capability-minimized thread creation at94.368ms median with zero startup
 notifications, versus211.395ms and nine notifications for baseline; the

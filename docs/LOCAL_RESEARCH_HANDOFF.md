@@ -3071,6 +3071,20 @@ minimal command; do not connect v25 until thread continuity, typed ownership,
 answer eligibility and accounting pass.  See
 `research/live_control/PERSISTENT_PLANNER_ADAPTER_V1.md`.
 
+The first frozen live use of that adapter passes.  One capability-minimized
+Luna-low app-server thread accepts two distinct typed turns.  Turn one carries a
+one-pixel local image, stores `cobalt-seven`, and returns `stored`; turn two does
+not repeat the nonce and recalls it exactly.  Both answers have one completed
+agent message and pass local schema admission.  The turns take2,655.464 and
+2,643.947ms.  Cumulative usage is15,531 input/6,912 cached/52 output/18 reasoning
+tokens.  Raw protocol audit finds two matching starts, usage notifications and
+completions, with zero interrupts and zero MCP startup notifications.  Thread
+creation is441.617ms, outside the three-sample minimal startup range, so do not
+treat94ms as a stable cost.  Next freeze an interrupt after actual generation
+evidence, require the stale answer to remain ineligible and report partial usage
+as observed or unknown.  See
+`research/live_control/PERSISTENT_PLANNER_CONTINUITY_LIVE_V1.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms
