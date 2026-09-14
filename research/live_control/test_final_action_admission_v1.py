@@ -9,7 +9,7 @@ REPO = HERE.parents[1]
 sys.path.insert(0, str(HERE))
 from final_action_admission_v1 import (
     decide_final_admission, record_executor_admission,
-    record_post_admission_revocation)
+    record_controller_no_input, record_post_admission_revocation)
 
 
 def turn(status="completed", eligible=True, observed=20):
@@ -54,6 +54,16 @@ class FinalActionAdmissionTests(unittest.TestCase):
         self.assertEqual(revoked["status"], "REVOKED_POLICY_INVALIDATED")
         self.assertFalse(revoked["input_authority_admitted"])
         self.assertEqual(revoked["executor_admission"], admitted["executor_admission"])
+
+    def test_ready_can_close_as_typed_no_input(self):
+        ready = decide_final_admission(turn(observed=10), None, 11)
+        terminal = record_controller_no_input(ready, "terminal_model_state")
+        invalid = record_controller_no_input(ready, "controller_validation_failed")
+        self.assertEqual(terminal["status"], "NO_INPUT_TERMINAL_STATE")
+        self.assertEqual(invalid["status"], "REJECTED_CONTROLLER_VALIDATION")
+        self.assertFalse(terminal["input_authority_admitted"])
+        with self.assertRaises(ValueError):
+            record_controller_no_input(terminal, "terminal_model_state")
 
     def test_ineligible_or_malformed_boundaries_fail_closed(self):
         receipt = decide_final_admission(turn(status="interrupted", eligible=False), None, 21)

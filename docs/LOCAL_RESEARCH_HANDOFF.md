@@ -3378,3 +3378,18 @@ Executor acceptance, and records later revocation without erasing historical
 admission. Six Windows/WSL tests include the retained v31 race. Integrate it into
 all v32 plan and no-plan paths next; no live claim exists. See
 `research/live_control/FINAL_ACTION_ADMISSION_V1.md`.
+
+V32 integrates final-admission receipts after cover monitor/release resolution.
+Policy rejection, planner ineligibility, controller validation failure, terminal
+no-input and active execution now remain distinct. A clean active answer is only
+READY until the first actual primary Executor acceptance binds INPUT_ADMITTED.
+Ineligible/invalid output records zero-plan refusal and continues fresh instead
+of aborting. Windows51/WSL34 tests pass; no live allocation exists. Add an
+offline all-branch receipt-to-program cardinality replay next. See
+`research/doom/MAP01_FINAL_ADMISSION_V32.md`.
+
+The deterministic six-case replay now passes with byte-identical Windows/Linux
+output. Four no-input cases contain zero Executor acceptances, active admission
+contains exactly one, and later revocation keeps that historical acceptance with
+current authority false. Focused shared/v32 tests pass18 per OS. Preregister one
+live v32 receipt/program-cardinality allocation next; no live claim exists.

@@ -90,6 +90,24 @@ def record_executor_admission(receipt, accepted):
     return result
 
 
+def record_controller_no_input(receipt, reason):
+    """Close a READY receipt when controller semantics require no motor input."""
+    if (type(receipt) is not dict or receipt.get("schema") != SCHEMA or
+            receipt.get("status") != "READY_FOR_FRESH_EXECUTOR_ADMISSION" or
+            receipt.get("input_authority_admitted") is not False or
+            receipt.get("executor_admission") is not None or
+            reason not in ("terminal_model_state", "controller_validation_failed")):
+        raise ValueError("exact READY no-input transition required")
+    result = deepcopy(receipt)
+    result.update({
+        "status": ("NO_INPUT_TERMINAL_STATE" if reason == "terminal_model_state"
+                   else "REJECTED_CONTROLLER_VALIDATION"),
+        "reason": reason,
+        "grants_input_authority": False,
+    })
+    return result
+
+
 def record_post_admission_revocation(receipt, policy_invalidation, controller_decided_ns):
     """Record a later revocation without rewriting the historical admission."""
     invalidation = _invalidation(policy_invalidation)

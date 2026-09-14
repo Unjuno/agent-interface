@@ -1,3 +1,22 @@
+Current direction (r72): the deterministic v32 all-path replay passes identically
+on Windows/Linux (SHA256 6c6bb0…). Four rejection/no-input cases have zero
+Executor acceptances; INPUT_ADMITTED has exactly one first acceptance; later
+revocation preserves that historical acceptance while current authority becomes
+false. Combined v32/shared tests cover18 cases per OS. Next preregister at most
+one v32 live allocation with exact receipt↔program cardinality, race disposition,
+release and usage rules; retain first result. No performance claim; no subagent/
+context handoff; full goal open.
+
+Current direction (r71): v32 integrates typed final admission after cover
+monitor/release resolution. Policy, planner-ineligible, controller-invalid,
+terminal-no-input and active paths all retain distinct receipts; clean active
+answers remain READY until the first actual primary Executor acceptance binds
+INPUT_ADMITTED. Planner-ineligible/semantic-invalid output now safely records
+zero-plan refusal and continues fresh instead of aborting. Report status counts
+stay separate from planner eligibility. Windows51/WSL34 tests pass. Next add an
+offline full-path replay proving receipt↔program cardinality before a live run.
+No performance claim; no subagent/context handoff; full goal open.
+
 Current direction (r70): add a shared typed final-action admission state machine
 for the v31 race. Any hard invalidation observed before controller admission
 wins regardless of planner-terminal order; completed/eligible only becomes READY

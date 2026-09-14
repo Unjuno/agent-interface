@@ -115,6 +115,22 @@ retained v31 decision0 race and classify it `REJECTED_POLICY_INVALIDATED` despit
 planner completed/eligible. This is not integrated or live-tested yet. See
 [the final-admission contract](research/live_control/FINAL_ACTION_ADMISSION_V1.md).
 
+V32 now integrates that contract after cover monitoring and release resolution.
+Every policy-rejected, planner-ineligible, controller-invalid, terminal-no-input
+and active path retains a distinct final receipt. A clean active answer stays
+READY until its first actual primary Executor acceptance binds INPUT_ADMITTED;
+planner-ineligible or semantically invalid output is safely retained with zero
+plan and a fresh decision instead of aborting the controller. Windows51 and WSL/
+Linux34 tests pass. No v32 live evidence exists; run an offline full-path
+receipt/program-cardinality replay first. See [the v32 construction](research/doom/MAP01_FINAL_ADMISSION_V32.md).
+
+The six-case final-admission path replay now matches byte-for-byte on Windows
+and Linux. Policy, planner, validation and terminal no-input cases contain zero
+Executor acceptances; INPUT_ADMITTED contains exactly one first acceptance; the
+revoked case retains one historical acceptance while current authority is false.
+The shared/v32 focused set passes18 tests per OS. This closes construction
+cardinality only; freeze live receipt/program rules before one allocation.
+
 The first transfer fixture is now frozen before execution. Session v8 can load
 the hash-bound v1 parent and save one setup-only child while retaining parent
 hash/tic provenance; v7 and frozen results stay untouched. One model-free X11

@@ -22,15 +22,20 @@ future-dated evidence, authority-granting invalidation records, duplicate
 admission, and admission from a rejected receipt fail closed. Receipt builders
 record evidence and do not issue input themselves.
 
-Six tests pass on Windows and WSL/Linux. They cover hard-before-terminal,
+Seven tests pass on Windows and WSL/Linux. They cover hard-before-terminal,
 terminal-before-hard-before-admission, clean completion plus later executor
-acceptance, admission-before-later-hard revocation, malformed evidence, and the
-exact retained v31 decision0 race. In that real trace, planner status is
+acceptance, typed terminal/controller-validation no-input, admission-before-
+later-hard revocation, malformed evidence, and the exact retained v31 decision0 race. In that real trace, planner status is
 completed/eligible and interrupt returns `already_terminal`, but the typed final
 result is `REJECTED_POLICY_INVALIDATED`, matching the controller's zero-plan
 admission.
 
-This is a shared construction and is not yet integrated into a new controller.
-Integration must bind the READY receipt to the actual first accepted plan
-program and retain the rejection receipt on every no-plan path before another
-live allocation.
+V32 now integrates the receipt into its model, controller-validation, terminal,
+policy-rejection and active-plan paths and binds READY to the first accepted
+primary program. Live behavior remains untested; see
+`research/doom/MAP01_FINAL_ADMISSION_V32.md`.
+
+The deterministic six-path record is retained at
+`results/final-action-admission-paths-v1/audit.json`. Windows and Linux produce
+the same bytes and verify zero/one acceptance cardinality plus post-admission
+revocation history.
