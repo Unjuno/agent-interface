@@ -843,3 +843,15 @@ from decision start to evaluation. Windows/WSL audit passes. The separate v1
 preflight path failure remains preserved. This is injected recovery capability,
 not natural error frequency, causal speed or cross-domain evidence. See
 `research/live_control/OPENTTD_WRONG_ANCHOR_RECOVERY_V2.md`.
+
+The anchor-first evidence path now transfers to Mindustry's dense4x4 build
+palette. A retained formal v1 failure shows the OpenTTD compact builder rejecting
+a verified314x100 Conveyor panel at its fixed62px row before semantic decision or
+click. Shared size-aware v2 preserves the small OpenTTD presentation exactly and
+adapts the Mindustry row. In a new fixed allocation, Luna-low `[1004,578]`
+normalizes to screen-derived `[1007,577]`; one click-free receipt is bound and the
+only button-down selects Conveyor. Hover caller reply is909.187ms, semantic
+selection20.771s, independent selection oracle23.538s, and model inputs
+9,300+8,115. Six exchanges/15 frames and both raw turns audit Windows/WSL. This
+is fixed-layout selection, not placement, causal speed or human tempo. See
+`research/benchmark_discovery/MINDUSTRY_ANCHOR_FIRST_SELECT_V2.md`.

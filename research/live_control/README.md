@@ -437,3 +437,14 @@ evaluation is24.956s. Windows/WSL audit passes. This is deterministic fault
 injection, not a natural error-rate or speed sample. The first preregistration's
 cross-OS path failure is retained separately. See
 [OPENTTD_WRONG_ANCHOR_RECOVERY_V2.md](OPENTTD_WRONG_ANCHOR_RECOVERY_V2.md).
+
+The same anchor contract now transfers to Mindustry's lower-right 4x4 build
+palette. That transfer first exposed the OpenTTD compact sheet's fixed62px row:
+a verified314x100 evidence panel was rejected before semantic decision or click.
+`compact_hover_sheet_v2.py` keeps prior small OpenTTD pixels exact and adapts the
+Mindustry row to104px. In the next preregistered run, Luna-low's `[1004,578]`
+normalizes to screen-derived `[1007,577]`; one click-free receipt is accepted and
+the only button-down selects Conveyor. Hover reply is909.187ms, full semantic
+selection20.771s, and inputs are9,300+8,115. Fifteen frames audit Windows/WSL.
+See
+[Mindustry anchor transfer](../benchmark_discovery/MINDUSTRY_ANCHOR_FIRST_SELECT_V2.md).

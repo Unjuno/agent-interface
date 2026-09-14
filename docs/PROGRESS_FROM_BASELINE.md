@@ -493,3 +493,16 @@ durable calls,50 frames and8,107+8,280 input tokens audit on Windows/WSL. The
 24.956s decision-to-evaluation time is descriptive because the injected route
 omits the earlier candidate-model call. See
 [wrong-anchor recovery](../research/live_control/OPENTTD_WRONG_ANCHOR_RECOVERY_V2.md).
+
+Active semantic evidence now transfers from OpenTTD to a different GUI layout:
+Mindustry's lower-right4x4 build palette. The first formal run retains a real
+failure where a verified314x100 receipt exceeded the OpenTTD sheet's fixed62px
+row before any target click. A size-aware shared builder preserves the prior
+OpenTTD pixels and adapts that row to104px. The next fixed allocation normalizes
+Luna-low `[1004,578]` to fresh screen-derived `[1007,577]`, binds one click-free
+Conveyor receipt, and admits the only button-down for selection. Runtime useful
+image is466.619ms after acceptance, caller reply909.187ms, semantic selection
+20.771s and independent visual selection23.538s from decision start. Inputs are
+9,300+8,115 across two calls; six exchanges/15 frames audit Windows/WSL. This is
+selection-only fixed-layout evidence, not placement or human tempo. See
+[Mindustry anchor transfer](../research/benchmark_discovery/MINDUSTRY_ANCHOR_FIRST_SELECT_V2.md).

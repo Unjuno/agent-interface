@@ -874,3 +874,14 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   v1のWindows/WSL path preflight失敗も未上書きで保存。これは自然誤り率や速度
   比較ではない。次の局所目標は、同じ段階取得を別GUI domain/layoutへ移し、
   正答・初回feedback・展開cost・tokensを測ること。人間速度・freezeは未達。
+
+- 2026-09-14 r11: anchor-first evidenceをMindustryの4x4建築paletteへ移植。
+  model-free hoverでConveyor意味panelの永続性を確認後、formal v1はOpenTTD由来の
+  固定62px evidence rowが314x100 cropを拒否し、2nd model/click前に失敗。20 events、
+  0 button-down、cleanupを保存。共有`compact_hover_sheet_v2`は小さいOpenTTD画像を
+  RGB同一に保ち、Mindustryではscale1/row104へ適応。formal v2でLuna-low粗点
+  `[1004,578]`をscreen-derived `[1007,577]`へ正規化し、1 receiptをaccept、唯一の
+  button-downでConveyor選択。hover useful image466.619ms、reply909.187ms、semantic
+  selection20.771s、oracle23.538s、inputs9,300+8,115、6 exchanges/15 frames。
+  Windows/WSL監査。次はpalette意味証拠とworld target証拠を分離したchanged-geometry
+  1-tile placement。人間速度・broad reliability・freezeは未達。

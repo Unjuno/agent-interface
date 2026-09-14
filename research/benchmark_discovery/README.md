@@ -14,6 +14,13 @@
 
 [New runtime actual construction](MINDUSTRY_BEND_V2_SELF_USE.md): assistant builds eight directional targets, independently delivers49 copper; four programs/18-frame audit pass. Known task;85-second episode does not establish human tempo.
 
+[Anchor-first Conveyor selection](MINDUSTRY_ANCHOR_FIRST_SELECT_V2.md): one
+verified click-free Mindustry palette receipt lets Luna-low bind and select
+Conveyor. Hover reply is909.187ms; selection oracle completes23.538s after the
+decision start with9,300+8,115 input tokens. The first fixed-row presentation
+failure is retained; evidence-size-aware v2 passes15-frame Windows/WSL audit.
+Selection-only fixed layout; no placement or human-tempo claim.
+
 [New runtime cancellation in Mindustry](MINDUSTRY_RUNTIME_CANCEL.md): actual GUI scripted interruption releases input, suppresses tail and supports fresh observation; game task correctly remains unsatisfied.
 
 [Bent-route actual self-use](MINDUSTRY_BEND_SELF_USE.md): the assistant built all eight directional targets; independent post-control delivery46 copper, exact18-frame audit and112-tile guard pass. Known task, older runtime, no speed claim.

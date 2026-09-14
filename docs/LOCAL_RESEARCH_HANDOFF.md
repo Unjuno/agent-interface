@@ -2592,3 +2592,28 @@ recovery capability for one injected fault, not natural model error frequency or
 causal speed. Move the staged acquisition contract to a different GUI domain or
 layout next. See
 research/live_control/OPENTTD_WRONG_ANCHOR_RECOVERY_V2.md. Goal/freeze remain open.
+
+## Latest follow-up — anchor evidence transfers to Mindustry (2026-09-14)
+
+A model-free probe first verified that hover plus bounded pixel settling produces
+a persistent Conveyor panel without a click. Formal v1 then exposed an app-
+specific presentation bound: the OpenTTD fixed62px compact row rejected the
+314x100 Mindustry crop after one verified receipt, before second model call or
+button input. Its20 events,9,300-token candidate call, zero button-downs, release
+and cleanup remain retained.
+
+The shared size-aware v2 keeps the old one-receipt OpenTTD sheet pixel-identical
+and emits a640x128 Mindustry sheet at scale1/row104. In the new preregistered
+allocation, Luna-low proposes `[1004,578]`; a fresh screen-derived4x4 palette
+normalizes it to `[1007,577]`. One click-free receipt is evidence-bound, and the
+only button-down selects Conveyor. The hover-only visual oracle is false; the
+post-click title and selected-border crops pass. The local engine guard remains
+unchanged. Useful image ready is466.619ms after hover acceptance, caller reply
+909.187ms, semantic selection20.771s and selection oracle23.538s from decision
+start. Inputs9,300+8,115; six socket exchanges and15 frames audit Windows/WSL.
+No subagent participates.
+
+This is fixed-layout selection only. Next combine separate palette-control and
+world-target evidence for one changed-geometry independently scored placement.
+See research/benchmark_discovery/MINDUSTRY_ANCHOR_FIRST_SELECT_V2.md. Goal/freeze
+remain open.
