@@ -15,6 +15,13 @@ Latest research handoff: [measured progress, failures and next steps](docs/LOCAL
 
 Current Linux research caller: [components, usage and evidence limits](research/live_control/CURRENT_CLIENT.md).
 
+Runnable construction preview: [golden desktop demo](runtime/README.md). The
+one-command WSLg path checks its environment, audits the frozen comparison, or
+runs a fresh persistent six-task workflow. Its first retained fresh run completes
+6/6 exact tasks with cold compilation, warm reuse, stale-reference refusal,
+bounded repair and post-repair reuse; see the scoped
+[v1 report](runtime/GOLDEN_DESKTOP_DEMO_V1.md).
+
 The first fresh compiled-interface GUI pair now crosses two local
 observe/action transitions without a frontier-model resumption.  On a private
 Chromium form, the positive path enters exact `t991025`, selects Submit only

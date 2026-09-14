@@ -2947,6 +2947,42 @@ This is a failed real-time experiment, not a clear claim.  MAP01 clear remains a
 open research target but does not block the Research Preview package.  No
 subagent or context handoff participates.
 
+## Latest follow-up — runnable golden desktop path (2026-09-15)
+
+`runtime/golden-demo.sh` is the first promoted construction entry point. It
+checks WSLg/X11, Chrome, Python dependencies and the Codex bridge; audits the
+frozen comparison without GUI/model activity; or creates a unique fresh run with
+no automatic retry. Seed991030 completes the persistent six-task path 6/6 exact:
+cold/reuse/reuse/repair/reuse/reuse, three generations including schema
+preflight, two model-visible images, 26,531 input tokens, 47.460s task time,
+101.276ms median input-to-next-observation, zero old-layout pointer admission and
+57/57 verified terminal releases. Independent raw audit passes.
+
+Retain `runtime/results/golden-desktop-live-01`: its preflight succeeded but an
+incorrect initialization import stopped before GUI readiness. Live-02 fixes it.
+The site desktop slot uses a 26.75s H.264 2x evidence playback built from 137
+exact retained observations across 47.472s; it explicitly holds the latest frame
+between observations. Next reduce the WSL/Windows Codex path dependency or pin
+that setup, then transfer the promoted entry to a second desktop workflow. Do
+not spend the next allocation on another isolated MAP01 attempt. No subagent or
+context handoff participates; the full goal remains open.
+
+The pinned setup has now been exercised as well: a fresh `runtime/.venv`
+installed four direct and three transitive pinned distributions, then
+passed the same X11/Chrome/Codex doctor. Both local landing-page videos reach
+browser readyState4 with the declared H.264 dimensions and durations.
+
+Issue #59 changes the sequence after this packaging allocation. Publish and
+retain the golden path, then make the unresolved real-time path primary. Audit
+the failed MAP01 trace across latency, renewal gaps, stale-policy repetition,
+threat transitions, damage, ammunition and progress, then preregister one
+bounded v23/schema-v3 threat-exposure run. Preserve a no-threat or failed first
+result. Use its evidence to decide whether the smallest next mechanism is a
+fresh local stop/alter/escalate guard before attempting a separately labelled
+continuously advancing MAP01 run. Native-adapter and second-desktop-workflow
+work are secondary unless they block that experiment. No subagent or context
+handoff participates; the full goal remains open.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms

@@ -1,3 +1,38 @@
+Current direction (r36): Issue #59 ends the current packaging allocation after
+the runnable golden desktop path and its evidence page are published.  Make the
+unresolved real-time control path primary again: diagnose the retained MAP01
+failure across inference latency, cover/renewal boundaries, stale-policy reuse,
+threat changes, damage, ammunition, progress and terminal outcome; then
+preregister one bounded v23/schema-v3 live threat-exposure test.  Retain the
+first result even if it fails or never encounters a threat.  The decisive
+question is whether fresh local evidence can stop, alter or escalate a renewed
+policy when it becomes inappropriate before the model returns.  Implement only
+the smallest general guard exposed by retained evidence, then use a separately
+labelled continuously advancing MAP01 attempt.  Repository presentation,
+native-adapter work and second-workflow transfer are secondary unless they
+directly block that experiment.  No subagent/context handoff; full goal open.
+
+Current direction (r35): the golden entry now also has a tested pinned setup.
+`setup-golden-demo.sh` creates an isolated venv with the pinned WSL dependency
+versions and exits through the same doctor; the clean setup passes.  Both site
+videos reach browser readyState4 with their declared durations and dimensions.
+Next replace the WSL-to-Windows model bridge with a native configurable Codex
+adapter while preserving the same output/accounting contract, then transfer the
+promoted CLI to a second desktop workflow.  No subagent/context handoff; the
+full human-tempo, generality, packaging and cross-platform goal remains open.
+
+Current direction (r34): the first construction entry point is now live.  One
+WSLg command runs doctor, fresh schema preflight, and the persistent six-task
+path with a unique output directory and no retry.  Fresh seed991030 completes
+6/6 exact tasks through cold/reuse/reuse/repair/reuse/reuse, admits zero old-
+layout pointer input, verifies 57/57 terminal releases, and independently audits
+3 unique generations, 2 images, 26,531 input tokens and 101.276 ms median input-
+to-next-observation feedback.  A labelled H.264 evidence playback fills the
+desktop site slot.  Preserve the pre-GUI import failure and renderer portability
+failures.  Next remove the WSL-to-Windows Codex path dependency or package it in
+a deterministic setup, then exercise the same promoted CLI on a second desktop
+workflow before expanding DOOM.  No subagent/context handoff; full goal open.
+
 Current direction (r33): move from isolated mechanism discovery to a construction
 and convergence phase.  Treat v23/schema v3, renewable cover, guarded admission,
 release verification, and the persistent compiled desktop path as the selected

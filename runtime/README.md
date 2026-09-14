@@ -20,3 +20,46 @@ See `../docs/principles.md` for the design constraints.
 ## Planned surface
 
 The eventual runtime is expected to expose a small local library/protocol surface plus a thin CLI for setup, inspection, and demos. High-frequency control should not require spawning a new process or crossing a remote boundary for each action.
+
+## Golden desktop demo
+
+The first promoted entry point packages the retained six-task Chromium workflow.
+It runs under Linux/X11 (the current tested host is WSLg), uses the same checked
+input runtime and independent exact-token scorer, and keeps the frozen comparison
+sources unchanged.
+
+```bash
+./runtime/setup-golden-demo.sh
+./runtime/golden-demo.sh doctor
+./runtime/golden-demo.sh audit-retained
+./runtime/golden-demo.sh run
+./runtime/golden-demo.sh audit-live artifacts-local/golden-desktop-YYYYMMDD-HHMMSS
+```
+
+The setup script creates `runtime/.venv`, installs the seven pinned distributions in
+`requirements-golden.txt`, and runs `doctor`. It does not install Chrome or
+Codex; missing external executables remain explicit doctor failures.
+
+`doctor` checks the display, Python modules, Chromium and the Codex CLI bridge.
+`audit-retained` verifies source hashes and the published fixed comparison without
+making a model call or opening a GUI. `run` creates a new timestamped directory
+under the ignored `artifacts-local/` directory, performs a fresh schema preflight, then runs only the
+persistent A/A/A/B/B/B path: cold compilation, two warm reuses, stale-reference
+refusal and repair, then two post-repair reuses. It never overwrites an earlier
+run and performs no automatic retry.
+`audit-live` recomputes call accounting, exact submissions, the stale-reference
+refusal, repair, and every terminal input release from the retained raw records.
+
+The current model bridge uses the Windows Codex installation from WSL. Unique
+paths are discovered under `/mnt/c/Users`; set these when discovery is ambiguous:
+
+```bash
+export AGENT_INTERFACE_WINDOWS_PYTHON=/mnt/c/Users/you/AppData/Local/Programs/Python/Python312/python.exe
+export AGENT_INTERFACE_WINDOWS_NODE='/mnt/c/Program Files/nodejs/node.exe'
+export AGENT_INTERFACE_WINDOWS_CODEX_JS=/mnt/c/Users/you/AppData/Roaming/npm/node_modules/@openai/codex/bin/codex.js
+export AGENT_INTERFACE_CHROMIUM=/usr/bin/google-chrome
+```
+
+This is a Research Preview path. A fresh persistent-only run checks mechanics and
+correctness; it does not reproduce the three-arm efficiency comparison or prove
+human-level speed and general GUI reliability.

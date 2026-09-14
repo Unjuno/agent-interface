@@ -2,6 +2,18 @@
 
 ## Unreleased — 2026-09-13 research update
 
+- Add the first runnable golden desktop entry point with environment diagnosis,
+  frozen-evidence audit, fresh persistent execution and independent raw-output
+  audit. Retain a pre-GUI import failure, then complete a fresh 6/6 exact run
+  with stale-reference refusal, bounded repair and verified release.
+- Fill the landing page's desktop showcase with a labelled H.264 2x evidence
+  playback from 137 exact retained observations. State that unchanged intervals
+  hold the latest frame and keep the fresh persistent-only scope separate from
+  the frozen three-arm efficiency comparison.
+- Follow Issue #59 after this packaging allocation: return the main research
+  effort to bounded live threat exposure and test whether fresh local evidence
+  can stop, alter, or escalate an inappropriate renewed policy.
+
 - Publish the complete retained Astra-low MAP01 attempt in the Research Preview
   landing page as a web-compatible H.264 video. The page labels it as a failed
   2x run and states the death, no-exit outcome, continuously advancing clock, and
