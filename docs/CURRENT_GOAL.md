@@ -1,3 +1,12 @@
+Current direction (r53): golden desktop v3 closes the exact environment hole
+exposed by the retained v2 allocation without changing task/control semantics.
+Before rebuilding, all13 inherited doctor checks pass while new openpyxl and
+et_xmlfile imports fail; after installing the pinned3.1.2/1.1.0 pair, all15 pass.
+Seven offline tests pass.  Commit this construction first, then freeze exactly
+one new seed991030 allocation with the same6/6 correctness, repair, zero stale
+pointer, release, one-thread/two-turn and usage/timing observations.  Preserve
+v2 failure and never retry its ID.  No subagent/context handoff; full goal open.
+
 Current direction (r52): the first frozen desktop v2 allocation is retained as
 a pre-GUI dependency failure.  Schema preflight completes and one minimized app-
 server thread starts, but grounding turns remain0: the pinned runtime venv lacks

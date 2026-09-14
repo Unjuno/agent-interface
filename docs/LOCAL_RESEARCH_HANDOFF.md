@@ -3170,6 +3170,14 @@ openpyxl3.1.2, import/version-check it in doctor before the preflight call, and
 use a new allocation only after the fixed venv passes.  See
 `runtime/GOLDEN_DESKTOP_DEMO_V2.md`.
 
+Golden v3 repairs that observed environment-closure defect only.  The pinned
+requirements add openpyxl3.1.2 and et_xmlfile1.1.0, and doctor imports/version-
+checks both before model work.  In the unrepaired venv the thirteen inherited
+checks passed while both added checks failed; after rebuilding, all fifteen
+passed.  Seven offline tests pass.  Freeze a new seed991030 allocation against
+this committed construction, run it once, and retain either result.  Do not
+reuse the failed v2 allocation ID.  See `runtime/GOLDEN_DESKTOP_DEMO_V3.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms
