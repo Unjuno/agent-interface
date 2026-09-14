@@ -127,6 +127,75 @@
   },
   "model_wall_seconds": 45.555765625,
   "control_wall_seconds": 51.136665049,
+  "nonmodel_control_wall_seconds": 5.580899424000002,
+  "operation_observation_round_trips": {
+    "controller_commands": 22,
+    "executor_acceptances": 13,
+    "exact_observations": 247,
+    "admitted_plan_programs": 5
+  },
+  "tempo": {
+    "scope": "five admitted primary plans; first exact capture is transport/local feedback, while the last sampled capture is the existing viewport-effect classification endpoint and neither proves semantic task completion",
+    "rows": [
+      {
+        "iteration": 1,
+        "plan_accept_to_first_exact_capture_ms": 71.610064,
+        "plan_accept_to_effect_classification_ms": 415.971588,
+        "effect_classification": "visible_change",
+        "freshest_local_observation_to_plan_accept_ms": 126.540578,
+        "model_image_capture_to_plan_accept_ms": 6994.57757,
+        "model_wait_ms": 6572.03694,
+        "effect_observation_samples": 4
+      },
+      {
+        "iteration": 2,
+        "plan_accept_to_first_exact_capture_ms": 51.20305,
+        "plan_accept_to_effect_classification_ms": 151.190632,
+        "effect_classification": "no_visible_effect",
+        "freshest_local_observation_to_plan_accept_ms": 333.611475,
+        "model_image_capture_to_plan_accept_ms": 5057.260817,
+        "model_wait_ms": 4628.269802,
+        "effect_observation_samples": 2
+      },
+      {
+        "iteration": 3,
+        "plan_accept_to_first_exact_capture_ms": 51.287204,
+        "plan_accept_to_effect_classification_ms": 651.279737,
+        "effect_classification": "visible_change",
+        "freshest_local_observation_to_plan_accept_ms": 115.239249,
+        "model_image_capture_to_plan_accept_ms": 7721.905468,
+        "model_wait_ms": 7245.64417,
+        "effect_observation_samples": 6
+      },
+      {
+        "iteration": 4,
+        "plan_accept_to_first_exact_capture_ms": 62.594004,
+        "plan_accept_to_effect_classification_ms": 404.404692,
+        "effect_classification": "visible_change",
+        "freshest_local_observation_to_plan_accept_ms": 123.288371,
+        "model_image_capture_to_plan_accept_ms": 6644.204194,
+        "model_wait_ms": 6147.500872,
+        "effect_observation_samples": 4
+      },
+      {
+        "iteration": 5,
+        "plan_accept_to_first_exact_capture_ms": 64.528576,
+        "plan_accept_to_effect_classification_ms": 662.188904,
+        "effect_classification": "visible_change",
+        "freshest_local_observation_to_plan_accept_ms": 122.78402,
+        "model_image_capture_to_plan_accept_ms": 7109.823061,
+        "model_wait_ms": 6619.666675,
+        "effect_observation_samples": 6
+      }
+    ],
+    "median_plan_accept_to_first_exact_capture_ms": 62.594004,
+    "median_plan_accept_to_effect_classification_ms": 415.971588,
+    "median_freshest_local_observation_to_plan_accept_ms": 123.288371,
+    "median_model_image_capture_to_plan_accept_ms": 6994.57757,
+    "median_model_wait_ms": 6572.03694,
+    "total_effect_observation_samples": 22,
+    "semantic_completion_observed": false
+  },
   "score": {
     "map_exit": false,
     "episode_finished": false,

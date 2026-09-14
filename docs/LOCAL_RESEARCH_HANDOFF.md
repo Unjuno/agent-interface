@@ -3399,3 +3399,11 @@ source hashes bind exact final-receipt/program cardinality, clock ordering,
 aggregate counts and natural completed-terminal race exposure. Shared weekly
 capacity was94% used with no reset credits at freeze time; preserve the remaining
 headroom and run this exact command when capacity permits.
+
+The retained v31 audit now separates tempo stages. Five admitted plans reach a
+first exact post-input capture in median62.594ms and a viewport-effect endpoint
+in415.972ms; semantic completion is absent. Model-image-to-plan acceptance is
+median6,994.578ms and model wait6,572.037ms. A local frame only123.288ms old
+exists at admission but was not model-visible. This is the next architecture
+gap: current typed revalidation over fast feedback, without another full model
+boundary.

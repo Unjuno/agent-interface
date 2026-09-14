@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import statistics
 import sys
 
 
@@ -157,6 +158,48 @@ def main():
     score = report["score"]
     assert not score["map_exit"] and not score["episode_finished"] and not score["player_dead"]
     assert score["death_count"] == score["kill_count"] == 0
+    admitted = [row for row in decisions if row.get("execution_trace")]
+    assert [row["iteration"] for row in admitted] == [1, 2, 3, 4, 5]
+    tempo_rows = []
+    for decision in admitted:
+        first = decision["execution_trace"][0]["receipt"]
+        tempo_rows.append({
+            "iteration": decision["iteration"],
+            "plan_accept_to_first_exact_capture_ms": first[
+                "plan_accept_to_first_capture_ms"],
+            "plan_accept_to_effect_classification_ms": first[
+                "plan_accept_to_last_capture_ms"],
+            "effect_classification": first["result"],
+            "freshest_local_observation_to_plan_accept_ms": decision[
+                "fresh_observation_to_plan_accept_ns"] / 1e6,
+            "model_image_capture_to_plan_accept_ms": decision[
+                "model_image_to_plan_accept_ns"] / 1e6,
+            "model_wait_ms": decision["model_ns"] / 1e6,
+            "effect_observation_samples": decision["effect_observation_samples"],
+        })
+    tempo = {
+        "scope": "five admitted primary plans; first exact capture is transport/local feedback, while the last sampled capture is the existing viewport-effect classification endpoint and neither proves semantic task completion",
+        "rows": tempo_rows,
+        "median_plan_accept_to_first_exact_capture_ms": statistics.median(
+            row["plan_accept_to_first_exact_capture_ms"] for row in tempo_rows),
+        "median_plan_accept_to_effect_classification_ms": statistics.median(
+            row["plan_accept_to_effect_classification_ms"] for row in tempo_rows),
+        "median_freshest_local_observation_to_plan_accept_ms": statistics.median(
+            row["freshest_local_observation_to_plan_accept_ms"] for row in tempo_rows),
+        "median_model_image_capture_to_plan_accept_ms": statistics.median(
+            row["model_image_capture_to_plan_accept_ms"] for row in tempo_rows),
+        "median_model_wait_ms": statistics.median(
+            row["model_wait_ms"] for row in tempo_rows),
+        "total_effect_observation_samples": sum(
+            row["effect_observation_samples"] for row in tempo_rows),
+        "semantic_completion_observed": False,
+    }
+    assert tempo["median_plan_accept_to_first_exact_capture_ms"] == 62.594004
+    assert tempo["median_plan_accept_to_effect_classification_ms"] == 415.971588
+    assert tempo["median_freshest_local_observation_to_plan_accept_ms"] == 123.288371
+    assert tempo["median_model_image_capture_to_plan_accept_ms"] == 6994.57757
+    assert tempo["median_model_wait_ms"] == 6572.03694
+    assert tempo["total_effect_observation_samples"] == 22
     suspect = re.compile(rb"(?:sk-[A-Za-z0-9_-]{20,}|Authorization:\s*Bearer\s+\S+)", re.I)
     assert not [row["path"] for row in manifest["files"]
                 if suspect.search((ROOT / row["path"]).read_bytes())]
@@ -184,6 +227,15 @@ def main():
         "final_cumulative_usage": final_usage,
         "model_wall_seconds": report["model_wall_seconds"],
         "control_wall_seconds": score["wall_control_ns"] / 1e9,
+        "nonmodel_control_wall_seconds": (score["wall_control_ns"] / 1e9 -
+                                           report["model_wall_seconds"]),
+        "operation_observation_round_trips": {
+            "controller_commands": Counter(row.get("event") for row in events)["command"],
+            "executor_acceptances": len(accepted),
+            "exact_observations": len(observations),
+            "admitted_plan_programs": report["program_admissions"],
+        },
+        "tempo": tempo,
         "score": {key: score[key] for key in
                   ("map_exit", "episode_finished", "player_dead", "death_count", "kill_count")},
         "credential_pattern_matches": 0,

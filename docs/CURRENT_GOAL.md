@@ -1,3 +1,13 @@
+Current direction (r74): recover missing tempo metrics from retained v31 without
+a model call. Five admitted plans have acceptance→first exact capture median
+62.594ms and viewport-effect endpoint median415.972ms; neither proves semantic
+completion. Model-image→plan acceptance median is6,994.578ms and model wait
+6,572.037ms. Freshest local observation at admission is only123.288ms old but
+was not model-visible, exposing the next gap: fast local feedback versus ~7s-old
+planner image except typed invalidation.22 commands/13 accepts/247 observations,
+5 plan programs; nonmodel wall5.581s includes execution/setup. Keep v32 frozen
+and unrun at94% weekly use. No broad claim; no subagent/context handoff.
+
 Current direction (r73): preregister but do not yet execute one v32 Luna-low
 allocation on fixture v2. Six decisions/no retry;12 source hashes freeze exact
 receipt↔accepted-plan cardinality, boundary-clock ordering, aggregate counts and

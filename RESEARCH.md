@@ -137,6 +137,15 @@ aggregate-count and natural completed-terminal race rules. It has not run.
 Shared weekly model capacity is94% used with no reset credits, so the frozen run
 is preserved rather than consuming the remaining6% without diagnostic headroom.
 
+Retained v31 now reports the missing tempo split. Across five admitted plans,
+acceptance-to-first exact capture median is62.594ms and viewport-effect endpoint
+median415.972ms; neither is semantic completion. Median model-image-to-plan
+acceptance is6,994.578ms and model wait6,572.037ms. The freshest local frame at
+admission is only123.288ms old but was not shown to the model. The useful next
+question is therefore how typed local evidence can revalidate an action against
+fast current feedback without another full image/model boundary, rather than
+calling the ~62ms transport path human-tempo task control.
+
 The first transfer fixture is now frozen before execution. Session v8 can load
 the hash-bound v1 parent and save one setup-only child while retaining parent
 hash/tic provenance; v7 and frozen results stay untouched. One model-free X11

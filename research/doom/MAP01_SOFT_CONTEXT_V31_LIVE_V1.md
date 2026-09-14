@@ -50,6 +50,23 @@ reasoning output. This closes the interrupted-usage missingness seen in the v30
 allocation for this run only; it does not establish that future endpoint traces
 will always deliver the same notifications.
 
+For the five admitted plans, acceptance-to-first exact post-input capture is
+51.203–71.610 ms with median62.594 ms. This is local feedback availability, not
+semantic usefulness. The existing viewport-effect classifier reaches its final
+sample in151.191–662.189 ms with median415.972 ms; four first commands classify
+visible change and one classifies no visible effect. Semantic task completion is
+not observed.
+
+Median model-image-capture to plan acceptance is6,994.578 ms and median model
+wait is6,572.037 ms. The freshest continuously collected local observation is
+only123.288 ms old at plan acceptance, but that frame was not presented to the
+model. This distinction identifies the next latency/correctness question: local
+feedback is fast, while high-level action is based on an image roughly seven
+seconds older unless typed local policy evidence invalidates it. The run emits
+22 controller commands,13 Executor acceptances and247 observations; five are
+admitted plan programs. Total control time minus summed model time is5.581 s,
+which includes plan execution and setup rather than pure framework overhead.
+
 ## Newly exposed terminal/invalidation race
 
 Decision0's strict initial floor hard-invalidates at health91 just as the planner
