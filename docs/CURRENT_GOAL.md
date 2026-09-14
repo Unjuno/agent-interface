@@ -1,3 +1,14 @@
+Current direction (r49): v27 adds an opt-in one-shot invalidation after a fixed
+number of exact real-game observations.  Natural visual invalidation always has
+priority; injection is explicitly labelled, claims no semantic change/success,
+grants no input, and uses the same typed planner-interrupt plus cover-cancel path.
+A discarded null action cannot supply the next cover.  Five injector/v27 and
+existing adapter/controller tests pass.  Next freeze exactly two live decisions:
+inject decision0 after four observations, require its interrupt+release+zero
+plan admission, then require a fresh decision1 on the same thread with empty
+inherited cover.  Return to hook-free natural conditions after that one result.
+No subagent/context handoff; full goal open.
+
 Current direction (r48): the first frozen v26 live integration retains one
 app-server/thread across four distinct Luna-low turns; all4 complete and pass
 schema admission, with zero MCP startup notifications.  Four cover plus five

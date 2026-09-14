@@ -3124,6 +3124,17 @@ game and planner advance, verify interrupt/terminal/release/zero plan admission/
 zero next-cover inheritance, then remove that injected condition for benchmark
 work.  See `research/doom/MAP01_PERSISTENT_PLANNER_V26_LIVE_V1.md`.
 
+V27 adds the smallest deterministic construction hook needed by the unexposed
+v26 result.  It can target one iteration and fire once after N exact observations
+from the real game queue.  Natural visual invalidation runs first.  The injected
+record is explicitly non-semantic, grants no input, and enters the identical
+planner-interrupt/cover-cancel/discard path.  A discarded null action cannot
+supply the next cover.  Five injector/v27 tests pass.  Freeze two decisions with
+decision0 firing after four observations and decision1 proving same-thread
+recovery with no inherited cover; after that first result, remove the opt-in
+arguments and resume natural conditions.  See
+`research/doom/MAP01_DETERMINISTIC_INVALIDATION_V27.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms
