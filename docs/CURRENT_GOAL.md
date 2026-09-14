@@ -1,3 +1,14 @@
+Current direction (r46): a frozen Luna-low turn is interrupted after its first
+matching agent-message delta (`{"`).  Delta observation to interrupt send is
+0.137ms, send-to-ack3.035ms and send-to-interrupted-completion3.181ms.  No agent
+message completes and the persistent adapter admits no answer.  Usage remains
+absent/unknown despite started generation, so there is no token-savings claim.
+This closes the standalone cancellation-mechanics gate.  Next create controller
+v26 by coupling v25's exact event-driven observation invalidation to this typed
+turn boundary; keep input release, stale action/cover discard, and model-turn
+completion as independently audited obligations before a live DOOM allocation.
+No subagent/context handoff; full goal open.
+
 Current direction (r45): the first frozen capability-minimized live session
 passes two structured Luna-low turns on one thread with distinct turn IDs.  The
 first turn carries a local image and stores a nonce; the second recovers it

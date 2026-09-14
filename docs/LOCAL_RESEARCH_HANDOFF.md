@@ -3085,6 +3085,18 @@ evidence, require the stale answer to remain ineligible and report partial usage
 as observed or unknown.  See
 `research/live_control/PERSISTENT_PLANNER_CONTINUITY_LIVE_V1.md`.
 
+The separately frozen post-delta interruption also passes.  A deliberately
+long Luna-low structured turn emits its first two answer characters (`{"`);
+the client sends the matching typed interrupt0.137ms later.  Acknowledgment is
+3.035ms after send and interrupted completion is3.181ms after send.  No agent
+message completes and no answer is eligible.  Usage notification is absent
+even after observed generation, so it remains unknown and supports no saved-
+token claim.  The standalone cancellation gate is now strong enough for a new
+controller version: connect v25 invalidation to this boundary while auditing
+planner completion, cover cancellation/release and stale action/cover discard
+separately.  See
+`research/live_control/PERSISTENT_PLANNER_MID_GENERATION_INTERRUPT_LIVE_V1.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms
