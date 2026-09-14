@@ -1,3 +1,14 @@
+Current direction (r59): treat the v28 result as a safety pass and liveness
+failure. Revisit renewable local cover under an explicit typed validity
+envelope: locally verified soft transitions may preserve existing bounded
+authority; hard predicate failure, expiry or binding uncertainty can only cancel
+and interrupt. Do not use fixed debounce or raw changed-pixel counts as semantic
+severity. First replay retained v28 evidence model-free, require fail-closed
+malformed/expired/mismatched cases and newest-event coalescing, then freeze a new
+allocation only if safety invariants hold. Brooks layered control, incremental
+repair and clock-aware/event-filtered planning support the separation, but do
+not prove this implementation. No subagent/context handoff; full goal open.
+
 Current direction (r58): the first fixed-threat v28 allocation naturally
 invalidates5/6 matching planner turns while exact reviewed health falls
 100→97→93→87→81→79→73 and enemies remain visible. All5 typed interrupts end

@@ -14,17 +14,40 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Experimental ladder
 
+### Current real-time gate — natural safety passes, replanning liveness fails
+
+The first fixed-threat v28 allocation starts from a hash-bound real Freedoom
+MAP01 state whose exact initial frame visibly contains an enemy. Five of six
+Luna-low turns are naturally invalidated as reviewed health changes from 100 to
+73. Every matching turn becomes ineligible, one nonempty stale cover is
+cancelled, no discarded plan is admitted or inherited, and all seven admitted
+programs verify empty release. One fresh decision completes on the same
+app-server thread after the first interrupt. Detection-to-interrupt-send is
+0.026–0.324 ms and detection-to-cover-release is 20.435–25.048 ms.
+
+This closes the previously unexposed natural stale-cover safety path and exposes
+the next failure: repeated damage can starve high-level replanning. The selected
+next question is a typed cover-validity envelope that lets a bounded local layer
+absorb explicitly expected observable transitions while hard contract breaches
+still revoke authority. See [the retained v28 result](research/doom/MAP01_FIXED_THREAT_V28_LIVE_V1.md)
+and [replanning liveness design](research/doom/REPLAN_LIVENESS_V1.md). No
+gameplay-quality, survival, token-efficiency, reliability, human-speed, or
+MAP01-clear claim follows from this one allocation.
+
 ### Integrated token-efficiency comparison selected
 
 [Integrated efficiency plan v1](research/live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md)
 closes the preceding isolated-mechanics block and selects one finite end-to-end
-comparison for Issue #57.  A real batched plain visual program, the current
+comparison for Issue #57. A real batched plain visual program, the current
 ephemeral optimized path and a persistent integrated path receive the same six
 cold/warm/layout-change/repair tasks.  Correctness, stale input, complete model
 usage, planner generations, feedback latency and observed break-even are frozen as
-separate measures.  The allocation has not run, so it establishes no efficiency
-result.  A continuously advancing Freedoom `MAP01` clear attempt follows the
-integrated report as a distinct real-time Domain Coverage Matrix gate.
+separate measures. The retained allocation scores 6/6 exact in all three arms.
+At task 6, cumulative input is 63,128 plain, 63,779 ephemeral, and 26,563
+persistent; generation counts are 7/7/3 and measured break-even is task 2.
+Six-task elapsed time is 56.412/73.238/44.131 seconds. This is one sequential
+sequence rather than a general efficiency rate. The real-time MAP01 gate remains
+separate in the Domain Coverage Matrix.
 
 The selected fixture now passes a six-task persistent engineering sequence with
 human-inspected points: exact-once6/6, four mints, A/B reuse, task-4 old-handle
