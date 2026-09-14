@@ -75,6 +75,17 @@ animation/restyling; a stable binary change mask can preserve shape while its
 meaning changes. The OS input race is not removed. A truly unavailable current
 binding and a live resize branch remain unexecuted, so Issue #55 stays open.
 
+The later [v3 follow-up](MINDUSTRY_RECEIPT_REVALIDATION_FOLLOWUP_V3.md)
+executes both remaining branches through the same checked-click operation.
+A real X11 observation with `pointer_binding: null` returns
+`current_evidence_unavailable`; a real Mindustry surface resize returns
+`surface_size_changed`. Both expose no authority or point, admit zero target
+buttons and restore the original binding/geometry. The passing follow-up uses
+four model calls, 34,806 input tokens, 20 exchanges and 15 exact frames. Its two
+earlier setup failures remain preserved. With that follow-up, Issue #55's finite
+engineering acceptance is covered; the non-atomic OS interval and semantic
+limits remain architecture risks rather than missing branches.
+
 ## Evidence
 
 - Frozen preregistration and report: `results/mindustry-receipt-revalidation-01/`

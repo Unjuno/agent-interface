@@ -921,3 +921,12 @@ result remains false because the focus control produced the more specific
 `focus_or_surface_changed` diagnostic rather than preregistered
 `current_evidence_unavailable`, while still returning no authority or point.
 See `research/benchmark_discovery/MINDUSTRY_RECEIPT_REVALIDATION_V1.md`.
+
+The receipt revalidation follow-up now covers the previously missing live
+unavailable-binding and resize branches. An override-redirect InputOnly X11
+focus produces a real `pointer_binding: null`; temporary EWMH unmaximize
+produces a real Mindustry surface-size change. Both return typed no-authority
+outcomes, admit zero target buttons and restore the original binding/geometry.
+The passing block uses four calls, 34,806 input tokens, 20 exchanges and 15
+frames; two setup failures remain visible. See
+`research/benchmark_discovery/MINDUSTRY_RECEIPT_REVALIDATION_FOLLOWUP_V3.md`.

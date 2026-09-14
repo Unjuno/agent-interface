@@ -273,3 +273,10 @@ the focus fault returns the specific `focus_or_surface_changed` diagnostic
 instead of preregistered `current_evidence_unavailable`; authority still refuses
 with a null point and zero target buttons. Issue #55 remains open for a truly
 unavailable binding and live resize evidence.
+
+The [v3 follow-up](MINDUSTRY_RECEIPT_REVALIDATION_FOLLOWUP_V3.md) supplies those
+remaining live controls. An actual null X11 pointer binding and an actual
+Mindustry surface resize both refuse the receipt target before button-down and
+restore the prior state. Four calls use 34,806 input tokens across 20 exchanges
+and 15 exact frames. Windows/WSL audits pass. Two setup failures and three
+fault-control feasibility revisions are retained rather than overwritten.

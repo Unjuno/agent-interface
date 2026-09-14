@@ -957,3 +957,13 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   `NO_TARGET_AUTHORITY`だったが、事前登録`current_evidence_unavailable`に対し実測は
   `focus_or_surface_changed`のためformal falseを保持。次はtruly unavailable bindingと
   live resizeを実行し、OS input raceを狭める。人間速度・一般性・freezeは未達。
+
+- 2026-09-14 r19: #55で残ったlive unavailable bindingとresizeを同じchecked-click
+  pathで実行。X11 InputOnly focusはfresh `pointer_binding:null`、
+  EWMH unmaximize+width変更はfresh `surface_size_changed`を生成し、両条件とも
+  authority/point/button-down 0、focus/geometry復元。formal v3は4 calls、
+  34,806 input、20 exchanges、15 framesでWindows/WSL監査合格。v1 path bug、
+  v2 empty-workspace bug、fault-control v1/v2失敗も保持。#55の有限branch要件は満たした。
+  次は#53の共通callerへcold acquire/warm reuse/invalidate/repairと全attempt accountingを
+  統合し、4逐次model境界と約31-39s model waitを削減候補として比較する。
+  自然fault率・OS atomicity・人間速度・freezeは未達。

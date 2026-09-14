@@ -573,3 +573,12 @@ the focus control returned `focus_or_surface_changed` rather than the
 preregistered unavailable-evidence diagnostic, even though it safely returned
 no authority and admitted no target button. Windows/WSL independent audits
 pass. See [Mindustry receipt revalidation](../research/benchmark_discovery/MINDUSTRY_RECEIPT_REVALIDATION_V1.md).
+
+The follow-up executes the two missing live refusal controls through the same
+receipt checked-click path. A real null X11 pointer binding yields
+`current_evidence_unavailable`; a real Mindustry surface resize yields
+`surface_size_changed`. Both admit zero target buttons and restore the original
+state. Four calls use 34,806 input tokens, with 20 exchanges and 15 frames.
+Independent Windows/WSL audits pass while retaining two setup failures and the
+earlier fault-control failures. See
+[receipt revalidation follow-up](../research/benchmark_discovery/MINDUSTRY_RECEIPT_REVALIDATION_FOLLOWUP_V3.md).

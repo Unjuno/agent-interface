@@ -2767,3 +2767,16 @@ zero target buttons and restored focus. Independent Windows/WSL audit passes.
 Do not rerun or relabel this block. Keep Issue #55 open for truly unavailable
 current evidence and live resize. See
 `research/benchmark_discovery/MINDUSTRY_RECEIPT_REVALIDATION_V1.md`.
+
+Latest receipt follow-up: the missing unavailable-binding and live-resize
+branches now pass through the same checked-click operation. InputOnly X11 focus
+records a fresh null pointer binding; EWMH unmaximize plus width change records
+a changed real Mindustry surface size. Both refuse with typed
+`NO_TARGET_AUTHORITY`, null point and zero target buttons, then restore the
+original binding/geometry. Formal v3 totals four calls, 34,806 input tokens, 20
+exchanges and 15 exact frames. Windows/WSL audit passes. Preserve formal v1
+source-path failure, formal v2 missing-workspace/model-process failure, and the
+three feasibility revisions. Issue #55 can close; the next bounded milestone is
+#53's shared cold/reuse/invalidate/repair caller with complete attempt accounting.
+See
+`research/benchmark_discovery/MINDUSTRY_RECEIPT_REVALIDATION_FOLLOWUP_V3.md`.
