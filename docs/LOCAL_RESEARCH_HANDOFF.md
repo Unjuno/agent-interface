@@ -3191,6 +3191,17 @@ to ordinary desktop work, but remains one sequential observation and supports
 no causal speed, token, generality or human-tempo claim.  Preserve and audit the
 result; do not rerun its allocation ID.  See `runtime/GOLDEN_DESKTOP_DEMO_V3.md`.
 
+The next primary block returns to Issue #59.  Use unchanged v26 on the known
+v23 threat-exposure seed990619 for one bounded12-decision Luna-low allocation.
+V23 supplies prior visible-enemy/stale-cover evidence; v24 supplies natural
+stop-only evidence; v25 supplies event-driven ordering; v26 and injected v27
+supply typed planner-interrupt composition.  The current thirteen boundary
+tests, ViZDoom1.3.0 import and model-free app-server initialize pass.  Require a
+retained exact frame before calling the new run threat-exposed.  If a natural
+guard trigger occurs, require matching turn interruption, cover release, zero
+discarded action/next-cover authority and fresh-decision recovery.  Retain the
+first result even if no threat, no invalidation, death or failure.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms

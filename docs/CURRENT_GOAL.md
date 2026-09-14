@@ -1,3 +1,15 @@
+Current direction (r55): return from desktop packaging to Issue #59's unresolved
+natural threat-control gate.  V23 seed990619 retained visible enemies, damage and
+unsafe stale-cover repetition; v24 proved stop-only natural invalidation, v25
+moved detection into exact dequeue order, and v26/v27 proved persistent typed
+interrupt composition normally and under injection.  Thirteen boundary tests,
+ViZDoom1.3.0 and a zero-turn app-server initialize pass.  Freeze one12-decision
+Luna-low v26 run at seed990619.  Count threat exposure only from a retained exact
+frame, and retain no-threat/no-invalidation/death/failure honestly.  A natural
+trigger must interrupt the matching turn, release cover, admit zero discarded
+action/next-cover input and recover on a fresh decision.  No subagent/context
+handoff; full goal open.
+
 Current direction (r54): the only frozen golden desktop v3 run passes6/6 exact
 with the required cold/reuse/reuse/repair/reuse/reuse route, zero old-target
 pointer admission and57/57 verified releases.  Two distinct grounding turns
