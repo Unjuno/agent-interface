@@ -3178,6 +3178,19 @@ passed.  Seven offline tests pass.  Freeze a new seed991030 allocation against
 this committed construction, run it once, and retain either result.  Do not
 reuse the failed v2 allocation ID.  See `runtime/GOLDEN_DESKTOP_DEMO_V3.md`.
 
+The first and only frozen v3 allocation passes.  The independent scorer sees
+6/6 exact submissions on the required cold/reuse/reuse/repair/reuse/reuse route;
+the repair admits no old-layout pointer input, and all57 programs verify release.
+One minimized app-server thread carries two typed grounding turns with zero MCP
+startup notifications; the separate preflight brings the total to three unique
+model calls.  Usage is27,892 input/7,936 cached/477 output/132 reasoning.  Six-
+task, whole-command and median-feedback times are37.715s,52.181s and99.562ms.
+Relative to retained v1 the descriptive deltas are+1,361 input,+3,072 cached,
+-9.745s task and-6.698s whole-command.  This transfers the persistent boundary
+to ordinary desktop work, but remains one sequential observation and supports
+no causal speed, token, generality or human-tempo claim.  Preserve and audit the
+result; do not rerun its allocation ID.  See `runtime/GOLDEN_DESKTOP_DEMO_V3.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms

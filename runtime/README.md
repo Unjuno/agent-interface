@@ -29,18 +29,18 @@ input runtime and independent exact-token scorer, and keeps the frozen compariso
 sources unchanged.
 
 ```bash
-./runtime/setup-golden-demo.sh
-./runtime/golden-demo.sh doctor
-./runtime/golden-demo.sh audit-retained
-./runtime/golden-demo.sh run
-./runtime/golden-demo.sh audit-live artifacts-local/golden-desktop-YYYYMMDD-HHMMSS
+./runtime/setup-golden-demo-v3.sh
+./runtime/golden-demo-v3.sh doctor
+./runtime/golden-demo-v3.sh audit-retained
+./runtime/golden-demo-v3.sh run
+./runtime/golden-demo-v3.sh audit-live artifacts-local/golden-desktop-YYYYMMDD-HHMMSS
 ```
 
-The setup script creates `runtime/.venv`, installs the seven pinned distributions in
-`requirements-golden.txt`, and runs `doctor`. It does not install Chrome or
+The setup script creates `runtime/.venv`, installs the nine pinned distributions in
+`requirements-golden.txt`, and runs the fifteen-check v3 `doctor`. It does not install Chrome or
 Codex; missing external executables remain explicit doctor failures.
 
-`doctor` checks the display, Python modules, Chromium and the Codex CLI bridge.
+`doctor` checks the display, every direct GUI Python dependency, Chromium and the Codex CLI bridge.
 `audit-retained` verifies source hashes and the published fixed comparison without
 making a model call or opening a GUI. `run` creates a new timestamped directory
 under the ignored `artifacts-local/` directory, performs a fresh schema preflight, then runs only the
@@ -50,7 +50,13 @@ run and performs no automatic retry.
 `audit-live` recomputes call accounting, exact submissions, the stale-reference
 refusal, repair, and every terminal input release from the retained raw records.
 
-The current model bridge uses the Windows Codex installation from WSL. Unique
+The current task-grounding bridge uses two turns on one capability-minimized
+Codex app-server thread.  The schema preflight remains a separate compatibility
+call.  The first frozen v3 run completes 6/6 exact tasks with zero stale pointer
+admission and57/57 verified releases; its single-run evidence and limits are in
+`GOLDEN_DESKTOP_DEMO_V3.md`.
+
+The model bridge uses the Windows Codex installation from WSL. Unique
 paths are discovered under `/mnt/c/Users`; set these when discovery is ambiguous:
 
 ```bash

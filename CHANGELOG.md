@@ -6,6 +6,10 @@
   frozen-evidence audit, fresh persistent execution and independent raw-output
   audit. Retain a pre-GUI import failure, then complete a fresh 6/6 exact run
   with stale-reference refusal, bounded repair and verified release.
+- Transfer desktop image grounding to two typed turns on one minimized app-server
+  thread. Retain the first pinned-environment failure, extend doctor to the actual
+  GUI import closure, then retain a frozen 6/6 run with 57/57 verified releases,
+  zero stale pointer admission and raw protocol/usage reconciliation.
 - Fill the landing page's desktop showcase with a labelled H.264 2x evidence
   playback from 137 exact retained observations. State that unchanged intervals
   hold the latest frame and keep the fresh persistent-only scope separate from

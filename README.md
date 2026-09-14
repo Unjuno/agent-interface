@@ -17,10 +17,11 @@ Current Linux research caller: [components, usage and evidence limits](research/
 
 Runnable construction preview: [golden desktop demo](runtime/README.md). The
 one-command WSLg path checks its environment, audits the frozen comparison, or
-runs a fresh persistent six-task workflow. Its first retained fresh run completes
+runs a fresh persistent six-task workflow. The current v3 path keeps two image-
+grounding turns on one minimized app-server thread. Its first frozen run completes
 6/6 exact tasks with cold compilation, warm reuse, stale-reference refusal,
-bounded repair and post-repair reuse; see the scoped
-[v1 report](runtime/GOLDEN_DESKTOP_DEMO_V1.md).
+bounded repair, post-repair reuse and57/57 verified releases; see the scoped
+[v3 report](runtime/GOLDEN_DESKTOP_DEMO_V3.md).
 
 The first fresh compiled-interface GUI pair now crosses two local
 observe/action transitions without a frontier-model resumption.  On a private

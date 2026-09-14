@@ -1,3 +1,16 @@
+Current direction (r54): the only frozen golden desktop v3 run passes6/6 exact
+with the required cold/reuse/reuse/repair/reuse/reuse route, zero old-target
+pointer admission and57/57 verified releases.  Two distinct grounding turns
+share one minimized app-server thread; with preflight there are3 unique model
+calls and0 MCP startups.  Usage is27,892 input/7,936 cached/477 output/132
+reasoning.  Six tasks take37.715s, whole command52.181s, median feedback99.562ms.
+Versus retained v1 this is descriptively +1,361 input, +3,072 cached, -9.745s
+task and -6.698s whole-command, from sequential single observations only.  The
+persistent typed boundary has now transferred beyond DOOM.  Next isolate the
+remaining preflight/process overhead and extend natural invalidation/repair
+evidence across the domain matrix; do not rerun this allocation.  No subagent/
+context handoff; full goal open.
+
 Current direction (r53): golden desktop v3 closes the exact environment hole
 exposed by the retained v2 allocation without changing task/control semantics.
 Before rebuilding, all13 inherited doctor checks pass while new openpyxl and
