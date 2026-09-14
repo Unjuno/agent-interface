@@ -1,0 +1,81 @@
+{
+  "audit_passed": true,
+  "preregistered_sources_match": true,
+  "same_coordinate_prompt_sha256": "18de13a1b36e60e9be3d882e0f9ca2c8c0d6e60c5680e438644435aa200d833e",
+  "model_configuration": {
+    "requested_model": "gpt-5.6-luna",
+    "requested_effort": "low",
+    "coordinate_image_present": true,
+    "handle_image_present": false,
+    "observed_model_identity": null,
+    "cost": null
+  },
+  "posthoc_contract_review": {
+    "numeric_basis_requested": "absolute screenshot x/y",
+    "transformation_frame_assigned_by_caller": "window_content",
+    "aligned": false,
+    "effect": "the run proves this caller assignment follows one surface move, but does not prove that the model authored or understood the frame"
+  },
+  "reported_input_tokens": {
+    "changed-target": {
+      "coordinate": 9285,
+      "handle": null
+    },
+    "stable": {
+      "coordinate": 9284,
+      "handle": 8012
+    }
+  },
+  "stable": {
+    "model_point": [
+      270,
+      243
+    ],
+    "derived_box": [
+      258,
+      236,
+      24,
+      14
+    ],
+    "derived_offset": [
+      12,
+      7
+    ],
+    "source_and_fresh_patch_exact": true,
+    "binding_translation": [
+      20,
+      8
+    ],
+    "resolved_point": [
+      290,
+      251
+    ],
+    "target_pointer_admissions": 2,
+    "durable_calls": 16,
+    "independent_success": true
+  },
+  "changed_target": {
+    "refusal": "source_patch_changed",
+    "handle_created": false,
+    "source_and_current_patch_differ": true,
+    "target_pointer_admissions": 0,
+    "terminal_status": "needs_decision",
+    "durable_calls": 10,
+    "independent_success": false
+  },
+  "exact_frames": {
+    "changed-target": 19,
+    "stable": 16
+  },
+  "total_exact_frames": 35,
+  "promotion_gate": {
+    "coordinate_grounding_2_of_2": true,
+    "coordinate_input_range_at_most_128": true,
+    "stable_point_mint_and_reuse": true,
+    "changed_patch_refused_before_handle": true,
+    "passed": true
+  },
+  "preregistered_decision": "RETAIN_MODEL_POINT_DERIVED_TARGET_CANDIDATE",
+  "audit_decision": "HOLD_FOR_EXPLICIT_COORDINATE_FRAME_AUTHORSHIP",
+  "scope": "two fresh same-seed Chromium sessions, two coordinate Luna-low calls and one handle Luna-low call; point-derived target plus constructed changed-patch negative; no causal latency, cost, broad token, unknown-app or human-speed claim"
+}

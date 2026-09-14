@@ -72,6 +72,22 @@ after model return; admission yields `MISSING`, zero target-click pointer admiss
 verified release and no submission. All37 frames replay cross-OS. This is one
 known task and a constructed target loss, with no causal latency or broad token claim.
 
+The following seed991014 pair removes the manually transcribed absolute box from
+the same target path. Identical Luna-low coordinate prompts return Save point
+`[270,243]`2/2 at9,285/9,284 reported input tokens. The runtime derives a24x14
+region from that point and retains source observation12. Stable matches a fresh
+patch exactly, mints the unexposed private-ID-backed alias, follows surface delta
+`[20,8]`, and a second no-image model call selects the alias at8,012 tokens. The
+task independently saves exact `t991014`. Changed-target navigates to `about:blank`
+after model return; source/current digests differ, so mint refuses before handle
+creation with zero target pointer admissions. The35 exact frames, patch digests,
+model configuration and outputs audit on Windows/WSL. Post-hoc contract review
+finds that the prompt asks for screenshot-absolute coordinates while the caller
+assigns `window_content` transformation membership. Hold promotion: frame and
+region authorship, one known button and exact-pixel matching leave cross-domain
+identity, token/cost benefit and human-tempo performance open. See
+[model-point target derivation](research/live_control/MODEL_POINT_TARGET_V1.md).
+
 ### First live bounded drag-effect allocation
 
 A preregistered seed991003 replay keeps the v6 model, task, initial state,

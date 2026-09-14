@@ -1,3 +1,17 @@
+Latest target-authorship evidence: preregistered `target_handle_mint_from_point`
+derives a24x14 region from Luna-low's Save point `[270,243]` instead of receiving
+an absolute caller box. Stable exact-patch mint follows surface move `[20,8]`, a
+no-image alias action independently saves `t991014`, and the paired post-model
+`about:blank` change refuses before handle creation with zero target pointer input.
+Reported inputs are9,285/9,284 for coordinate calls and8,012 for the stable handle
+call; cost is unavailable. All35 frames, source hashes and patch digests audit on
+Windows/WSL. Post-hoc review finds screenshot-absolute x/y in the prompt but a
+caller-assigned `window_content` transformation frame. Hold promotion. Next make
+frame authorship explicit or independently derived, then test a different domain
+with independent scoring and a transient/similar-target negative; fixed region
+size, exact-pixel limitations, efficiency and human tempo remain open. See
+research/live_control/MODEL_POINT_TARGET_V1.md. Full goal stays open.
+
 Latest OpenTTD live replication: after normalizing only self/study names, v10 is an unchanged preregistered replication of bounded effect-memory v9. It repeats the same semantic route: A-to-B turn5, observation-only uncertain turn6, observed and distinct B-to-C turn7, observation-only uncertain turn8, observed verify turn9. Independent target/connection/forbidden/surrounding gates pass. Observer transitions103/143 change only977..979 then1043/1107; final37/180 stable. All17 terminals release input. V10 uses9 turns,151,842 input tokens,139.465s model wait,19.491s proposal-to-feedback and160.837s completion. V9/v10 are2/2 hard success and2/2 zero completed-segment repeats, but both are slower than v7. Windows/WSL audits pass. Advance to changed geometry; do not promote. No rate, causal speed/token, geometry, cross-domain or human-tempo claim. See research/live_control/OPENTTD_EFFECT_MEMORY_REPLICATION_V2.md. Full goal stays open.
 
 Prior first live memory: preregistered v9 connects one bounded unresolved-drag memory and explicit finish-kind v2 to the seed991003 five-tile L task. It independently succeeds on turn9 with zero repeated completed-segment drags,34 durable calls,44 frames and17 released terminals. It uses151,853 input tokens and153.027s. See research/live_control/OPENTTD_EFFECT_MEMORY_LIVE_V1.md.

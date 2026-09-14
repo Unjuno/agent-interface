@@ -73,6 +73,21 @@ click receives zero pointer admissions and no submission exists. The pair adds37
 exact cross-OS frames. This is one known form and does not establish broad token
 or latency improvement.
 
+The next preregistered pair removes the caller-authored absolute target box from
+that known form. Luna-low identifies Save at point `[270,243]` in both current
+screens. `target_handle_mint_from_point` derives a24x14 region and mints the
+private-ID-backed alias only after an exact fresh patch check. Stable follows an
+observed `[20,8]` surface move, resolves `[290,251]` and independently saves exact
+`t991014`. In the paired post-model `about:blank` change, the source/current patch
+digests differ, so no handle is created, zero target pointer input is admitted and
+the program stops `needs_decision`. All35 frames and patch digests audit on
+Windows/WSL. Post-hoc review also finds that the prompt requests absolute
+screenshot coordinates while task code assigns the `window_content`
+transformation frame. Region and frame authorship remain caller-controlled and
+the evidence covers one known button, so promotion is held; this is not general
+visual identity or a speed/token claim. See
+[model-point target derivation](research/live_control/MODEL_POINT_TARGET_V1.md).
+
 Frame resolution now runs inside the candidate interface. A fresh1152x720
 OpenTTD pair sends only original1024 coordinates plus explicit frame identity;
 the runtime resolves clicks, drags and condition boxes from the latest pointer

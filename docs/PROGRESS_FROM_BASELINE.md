@@ -68,6 +68,20 @@ model return; fresh admission reports `MISSING`, admits zero target-click pointe
 input, releases safely and creates no submission. The37-frame pair audits cross-OS.
 One known form and constructed fault do not establish broad speed or compression.
 
+The newest target-authorship candidate replaces that form's manually supplied
+absolute box with a bounded region centered on the model point. Both fresh
+seed991014 coordinate calls select `[270,243]`. Stable source/fresh patches match,
+the private alias follows a `[20,8]` surface move, and a no-image handle action
+independently saves `t991014`. A paired post-model page change makes the exact
+patch differ; minting refuses before creating a handle, admits zero target pointer
+input and stops safely. The independent cross-OS audit reconstructs35/35 frames
+and recomputes both patch digests. This removes one human-authored geometry input
+for one known button. The24x14 region size remains human-selected, so unknown-app
+grounding, automatic region proposal and efficiency remain open. A post-hoc
+contract review also separates the prompt's screenshot-absolute numeric basis
+from the caller-assigned `window_content` transformation frame. Promotion is held
+until frame authorship is explicit or independently derived.
+
 Latest delta: bounded drag-effect memory now transfers correct actuation to one
 changed seed991004 L geometry. Two distinct drags complete all five target tiles
 with zero surrounding changes or repeated completed-segment input. The planner

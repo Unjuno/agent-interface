@@ -44,6 +44,18 @@ handle cases. The paired post-model `about:blank` change produces `MISSING`, zer
 target-action pointer admissions, verified release and no submission. All37 frames
 audit cross-OS. Still opt-in: known form, authored box and constructed target loss.
 
+`session_v33` adds an opt-in `target_handle_mint_from_point` operation. It retains
+bounded exact source observations, derives a centered region from a model point,
+captures fresh, and mints the session alias only when the transformed RGB patch is
+exact. In the preregistered seed991014 pair, stable independently saves after a
+`[20,8]` surface move; a post-model page change refuses before handle creation and
+admits zero target pointer input. The35-frame Windows/WSL audit passes. The tested
+24x14 region size and `window_content` membership are caller-authored, while the
+model prompt requests screenshot-absolute x/y. Exact matching is intentionally
+conservative, and this frame-contract gap plus one Chromium button holds promotion
+from the default client. See
+MODEL_POINT_TARGET_V1.md.
+
 Prior coordinate candidate: `executor_v4/session_v26` resolve explicit-frame
 clicks, drags and target/guard boxes from the latest stable pointer binding before
 whole-program validation. Fresh1152x720 OpenTTD receives only original1024
