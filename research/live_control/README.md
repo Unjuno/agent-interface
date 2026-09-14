@@ -482,4 +482,12 @@ observed receipt. Positive decisions return `TARGET_REFERENCE_ONLY`; four
 bounded diagnostics all return `NO_TARGET_AUTHORITY` with no receipt or point.
 Five archived OpenTTD receipts, the three retained Mindustry outcomes and four
 invalid controls pass locally. One fresh no-GUI endpoint check accepts the flat
-schema using7,916 input tokens. Fresh OpenTTD live efficacy remains open.
+schema using 7,916 input tokens. Fresh OpenTTD live efficacy remains open.
+
+That contract now passes a fresh [OpenTTD positive/no-match pair](OPENTTD_EVIDENCE_AUTHORITY_PAIR_V2.md).
+The first allocation is retained failed because its generic anchor prompt omits
+the target noun and accepts the wrong receipt before expansion, with zero button
+input. V2 restores the condition target at both boundaries: Company Finances
+selects receipt5 and passes its independent oracle; Airport construction is
+absent from all five receipts and yields `NO_TARGET_AUTHORITY`, point null and
+zero target buttons. Four calls use 32,992 input tokens; 93 frames audit cross-OS.

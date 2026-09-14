@@ -937,3 +937,14 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   Windows/WSL監査。次は新しいOpenTTD receipt setでpositive/no-matchをfresh live実行し、
   target button 0、task outcome、診断精度、calls/tokens/elapsedを別々に測る。
   live efficacy・token削減・人間速度・freezeは未達。
+
+- 2026-09-14 r17: 新contractをfresh OpenTTD positive/no-match pairへ統合。formal v1は
+  anchor promptからtarget nounを落とした設計ミスでwrong receiptをacceptし、8,112 input/
+  8 calls/29 frames/button 0で停止、保存。v2はtargetを両判断境界へ戻し、同じseed991004、
+  `[21,28]` translation、wrong anchor、5 receipts、Luna-lowで実行。positiveはreceipt5
+  `[506,79]`、1 target button、finance oracle成功、18 calls/52 frames/16,489 input/26.774s。
+  no-match Airportは`NO_TARGET_AUTHORITY/no_match_in_observed_set`、pointなし/button 0、
+  12 calls/41 frames/16,503 input/18.694s。Windows/WSL監査、retry/subagent 0。
+  Issue #52のbranch mechanicsはMindustry candidate/receipt negativesと合わせて満たす。
+  自然誤り率・token削減・人間速度・freezeは未達。次は主要な残存failure taxonomyと
+  Domain Coverage Matrixを再監査し、局所contract追加より高い未解決軸を選ぶ。

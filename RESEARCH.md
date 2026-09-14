@@ -901,5 +901,13 @@ verified-receipt decisions return `TARGET_REFERENCE_ONLY`; no-match, ambiguous,
 unavailable and exhausted results return `NO_TARGET_AUTHORITY` with no receipt
 or coordinates, preserving the diagnostic separately. Retained OpenTTD and
 Mindustry evidence plus four invalid controls pass. A fresh endpoint preflight
-accepts the flat schema with7,916 input tokens; no fresh GUI efficacy is claimed.
+accepts the flat schema with 7,916 input tokens; no fresh GUI efficacy is claimed.
 See `research/live_control/EVIDENCE_TARGET_CONTRACT_V2.md`.
+
+Fresh OpenTTD validates the authority split. V1 first exposes a context-loss
+failure: removing the concrete target noun makes Luna accept the injected wrong
+anchor, though zero buttons are issued. V2 keeps the target at both boundaries;
+Company Finances selects receipt5 and passes its independent oracle, while an
+Airport target absent from all five receipts returns `NO_TARGET_AUTHORITY` and
+zero target buttons. Four calls use 32,992 input tokens and 93 exact frames audit
+cross-OS. See `research/live_control/OPENTTD_EVIDENCE_AUTHORITY_PAIR_V2.md`.

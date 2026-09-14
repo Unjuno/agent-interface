@@ -2730,3 +2730,26 @@ positive/no-match receipt set, keep the same model and input checks, and require
 zero target button input on `NO_TARGET_AUTHORITY`. Report diagnostic precision
 separately from operational safety. See
 research/live_control/EVIDENCE_TARGET_CONTRACT_V2.md. Goal/freeze remain open.
+
+## Latest follow-up — fresh OpenTTD target-authority pair (2026-09-14)
+
+The first preregistered live allocation retains a real caller-context failure:
+its generic anchor prompt omits the condition target noun, so Luna-low accepts
+the injected wrong receipt before expansion. It stops with 8 durable calls, 29
+exact frames, 8,112 input tokens, zero button-downs and clean release. V1 is not
+retried.
+
+V2 changes only that prompt boundary. With the same seed991004, observed
+`[21,28]` translation, wrong anchor, five receipts and Luna-low, Company
+Finances returns `TARGET_REFERENCE_ONLY/matched` at receipt5 `[506,79]`; exact
+rehover, one released click and the independent shifted title oracle pass.
+Airport construction is absent from the same receipts and returns
+`NO_TARGET_AUTHORITY/no_match_in_observed_set`, no point and zero target button.
+Decision-to-evaluation is 26.774s/18.694s; calls 18/12; frames 52/41; inputs
+16,489/16,503. Windows/WSL audits pass. No retry or subagent participates.
+
+Together with the Mindustry candidate-stage and unreadable-receipt branches,
+this satisfies Issue #52's bounded branch mechanics. The fixed pair does not
+establish natural error rate, general reliability, speedup, token saving or
+human tempo. See research/live_control/OPENTTD_EVIDENCE_AUTHORITY_PAIR_V2.md.
+Goal/freeze remain open.

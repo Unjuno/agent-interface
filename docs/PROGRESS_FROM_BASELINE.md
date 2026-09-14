@@ -551,6 +551,14 @@ The next shared authority contract removes OpenTTD's forced receipt selection.
 One verified receipt yields `TARGET_REFERENCE_ONLY`; every coordinate-free
 negative yields `NO_TARGET_AUTHORITY` while preserving its diagnostic. Archived
 OpenTTD/Mindustry evidence and four invalid controls pass. The new flat schema's
-fresh endpoint check uses7,916 input tokens and audits cross-OS. No fresh GUI
+fresh endpoint check uses 7,916 input tokens and audits cross-OS. No fresh GUI
 selection has used it yet. See
 [target authority contract](../research/live_control/EVIDENCE_TARGET_CONTRACT_V2.md).
+
+Fresh OpenTTD now exercises that contract. A retained v1 context regression
+omits the target noun and accepts the wrong anchor without clicking. V2 restores
+the noun at both boundaries: Company Finances selects receipt5 and independently
+opens, while Airport absent from the same five receipts returns
+`NO_TARGET_AUTHORITY` with zero target buttons. The pair uses 32,992 input tokens,
+30 durable calls and 93 frames; Windows/WSL audits pass. See
+[OpenTTD authority pair](../research/live_control/OPENTTD_EVIDENCE_AUTHORITY_PAIR_V2.md).

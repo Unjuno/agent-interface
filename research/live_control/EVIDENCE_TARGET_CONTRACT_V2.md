@@ -44,12 +44,11 @@ tokens. Windows and WSL audits pass; there are no GUI artifacts.
 
 ## Decision
 
-Retain the contract as the next Issue #52 live candidate. It has not yet driven
-a fresh OpenTTD GUI and therefore does not establish positive selection,
-negative abstention quality, task correctness, speed or token saving. Next use a
-new bounded receipt set with one positive and one no-match allocation, require
-zero target button input for `NO_TARGET_AUTHORITY`, and report diagnostic
-precision independently.
+The contract now has one fresh [OpenTTD live pair](OPENTTD_EVIDENCE_AUTHORITY_PAIR_V2.md).
+Positive selects and opens Company Finances; a target absent from the same five
+receipts returns `NO_TARGET_AUTHORITY` and issues zero target buttons. Retain the
+contract. Natural error rate, broad task reliability, causal speed and token
+saving remain unmeasured.
 
 Primary artifacts:
 
