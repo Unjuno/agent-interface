@@ -28,6 +28,12 @@ against a24px requested move because163 pixels changed in the single ROI. The
 later Save step starts, so this condition fails the correctness gate and remains
 advisory only. A continuation barrier needs target-relative visual structure.
 
+A displacement-specific follow-up now passes one fresh scripted X11 target and
+partial pair. It admits a later Save after two24px anchor samples and stops before
+Save after two20px samples;18 exact frames, saved SVG and releases audit on
+Windows/WSL. This advances local task-relative continuation for moved objects.
+Model-authored conditions and placement target/guard semantics remain open.
+
 ## What changed
 
 | Stage | Initial state | Current evidence | Status |

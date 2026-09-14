@@ -96,6 +96,16 @@ authority. The next condition must describe target-relative displacement or
 separate target/guard structure. See
 [local visual continuation barrier](research/live_control/LOCAL_VISUAL_BARRIER_V1.md).
 
+A task-relative displacement condition repairs that specific correctness gap.
+Its first fresh pair safely stops after exposing a wrong pointer-to-screen
+assumption. A separately retained pair then uses settled source-relative anchor
+tracking: a24px final displacement is present in both samples and admits Save;
+a20px partial displacement returns `target_not_reached` and never starts Save.
+The saved SVG,18 exact frames and both releases pass Windows/WSL audit. This is a
+scripted moved-object condition; model authorship and a placement-specific
+target/guard condition remain. See
+[local displacement postcondition](research/live_control/LOCAL_DISPLACEMENT_POSTCONDITION_V1.md).
+
 ### Retained OpenTTD effect-state diagnosis
 
 The frozen seed991003 v6 run lacks a formal finish evaluation because its driver

@@ -80,6 +80,14 @@ Changed-pixel totals remain advisory only; continuation requires a task-relative
 visual condition. See
 [local visual continuation barrier](research/live_control/LOCAL_VISUAL_BARRIER_V1.md).
 
+A target-relative replacement then passes one fresh X11 met/partial pair. After
+bounded settling, two immutable-anchor samples admit Save for an independently
+reconstructed24px move and stop before Save for a20px partial move. The target
+SVG preserves the requested displacement;18 frames and both release terminals
+audit cross-OS. This covers scripted object displacement only; whether a model
+can author the condition remains untested. See
+[local displacement postcondition](research/live_control/LOCAL_DISPLACEMENT_POSTCONDITION_V1.md).
+
 Process-scoped timing envelopes now cover fresh Calc and OpenTTD tasks. Calc
 saves 480/192 in 23.976s with 21.334s of wrapper-observed model wait. OpenTTD uses
 batched delayed-hover contact sheets and an adaptive two-Luna/six-Astra route to

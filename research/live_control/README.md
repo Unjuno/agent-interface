@@ -1,5 +1,13 @@
 # Asynchronous live control: development evidence
 
+Latest task-relative condition: [local displacement postcondition v1](LOCAL_DISPLACEMENT_POSTCONDITION_V1.md).
+After one retained HOLD pair corrects a false input-to-screen assumption, a fresh
+X11 target/partial pair distinguishes24px from20px displacement. Two stable
+anchor samples admit the later Save only for24px;20px returns
+`target_not_reached`. The saved SVG and18 exact frames pass Windows/WSL audit.
+Advance only to fixed-context model authorship; road placement needs a different
+target/guard structure.
+
 Latest local-continuation result: [local visual barrier v1](LOCAL_VISUAL_BARRIER_V1.md).
 A pure persistent-pixel condition passes selected archived first effects9/9 and
 stops selected repeats2/2, but a fresh X11 task-relative check rejects it. A
