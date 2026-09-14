@@ -2,6 +2,14 @@
 
 Status: composition selected; live allocation not yet preregistered or run.
 
+Implementation checkpoint: `integrated_efficiency_fixture_v1.py` now provides
+the frozen A/A/A/B/B/B task shape, visibly distinct layouts and an append-only
+exact-token oracle.  `integrated_efficiency_runtime_v1.py` and the interactive/
+socket entries connect that fixture to the existing `session_v33` checked-input
+path.  The positive, duplicate and wrong-token oracle controls pass offline.  The
+three arm controller, source manifest, preregistration and live run remain open;
+this checkpoint is not an experimental allocation.
+
 This plan is the first deliverable for Issue #57.  The preceding compiled GUI
 mechanics block ended at live v5 with disposition
 `ADVANCE_TO_MATCHED_EFFICIENCY_COMPARISON`.  This work therefore switches from
@@ -162,4 +170,3 @@ be reproducible without redistributing commercial Doom data:
 This future gate keeps DOOM as a real-time motor/reaction benchmark within the
 Domain Coverage Matrix.  It does not replace desktop, Mindustry or OpenTTD
 coverage and no level-clear capability is claimed before the run.
-

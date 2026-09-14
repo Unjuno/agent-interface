@@ -8,6 +8,11 @@ allocation is not yet preregistered or run.  The subsequent DOOM gate is a
 continuously advancing Freedoom `MAP01` clear attempt, not the existing small
 `basic.wad` transport scenario.
 
+Fixture checkpoint: `integrated_efficiency_fixture_v1.py` implements one
+append-only six-task scorer with A/A/A/B/B/B layouts.  Its exact, duplicate and
+wrong-token controls pass, and runtime/socket adapters now expose it through the
+existing `session_v33` checked-input path.  No arm has been run.
+
 Latest target-reference result: [scoped target handles](SCOPED_TARGET_HANDLES_V1.md).
 Exact session-local handles return explicit valid/revalidated/ambiguous/moved/
 missing/stale/scope states. A flat archived region aliases and is retained as a
