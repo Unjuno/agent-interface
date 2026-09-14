@@ -71,3 +71,11 @@ seconds; model-external time was 24.661 versus 88.498 seconds. The scoped total
 and model-external reductions are 29.52% and 72.13%. This is a different-seed
 exploration result, so it motivates a fixed comparison but does not prove a
 causal gameplay improvement. The final health was 7 and the map was not exited.
+
+An extended 30-turn allocation conditionally continued the previous defensive
+intent during model inference. It ended unfinished after 289.861 seconds with
+zero deaths, zero kills, and 100 health. The trigger rarely activated in this
+seed. The run reached a new green-sign/`A` area but spent more than fifteen
+decisions oscillating around walls and a doorway. This does not validate the
+reflex candidate. It identifies the next missing layer as bounded stagnation
+detection and compact topological memory rather than another longer run.
