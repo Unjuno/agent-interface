@@ -1,3 +1,12 @@
+Current direction (r73): preregister but do not yet execute one v32 Luna-low
+allocation on fixture v2. Six decisions/no retry;12 source hashes freeze exact
+receipt↔accepted-plan cardinality, boundary-clock ordering, aggregate counts and
+completed-terminal hard-race exposure. Current shared Codex weekly use is94%
+with6% remaining and no reset credits, so preserve the last allocation rather
+than consume it without headroom. Construction, replay and main are clean; run
+the frozen command when capacity permits. No performance claim; no subagent/
+context handoff; full goal open.
+
 Current direction (r72): the deterministic v32 all-path replay passes identically
 on Windows/Linux (SHA256 6c6bb0…). Four rejection/no-input cases have zero
 Executor acceptances; INPUT_ADMITTED has exactly one first acceptance; later

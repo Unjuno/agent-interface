@@ -131,6 +131,12 @@ revoked case retains one historical acceptance while current authority is false.
 The shared/v32 focused set passes18 tests per OS. This closes construction
 cardinality only; freeze live receipt/program rules before one allocation.
 
+The single v32 live allocation is now preregistered with12 source hashes, six
+Luna-low decisions, exact receipt↔program cardinality, boundary-clock ordering,
+aggregate-count and natural completed-terminal race rules. It has not run.
+Shared weekly model capacity is94% used with no reset credits, so the frozen run
+is preserved rather than consuming the remaining6% without diagnostic headroom.
+
 The first transfer fixture is now frozen before execution. Session v8 can load
 the hash-bound v1 parent and save one setup-only child while retaining parent
 hash/tic provenance; v7 and frozen results stay untouched. One model-free X11

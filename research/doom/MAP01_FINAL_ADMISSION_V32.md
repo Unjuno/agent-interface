@@ -41,3 +41,9 @@ Windows and Linux output the identical SHA-256
 `6c6bb063d3ed22fb9670a52a7a07b2212e9d027df3010170e2a5058964e4b9bc`.
 Freeze a live v32 allocation only after source hashes and receipt/program audit
 rules are committed.
+
+That allocation is now preregistered, but not executed. It uses Luna-low, the
+same v2 fixture as the trace that exposed the race, six decisions and one-run/no-
+retry retention. Twelve source hashes and exact receipt↔program cardinality,
+clock-order, aggregate-count and completed-terminal race criteria are frozen in
+`map01_final_admission_v32_live_v1_prereg.json`.

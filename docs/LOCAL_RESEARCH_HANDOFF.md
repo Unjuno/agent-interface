@@ -3393,3 +3393,9 @@ output. Four no-input cases contain zero Executor acceptances, active admission
 contains exactly one, and later revocation keeps that historical acceptance with
 current authority false. Focused shared/v32 tests pass18 per OS. Preregister one
 live v32 receipt/program-cardinality allocation next; no live claim exists.
+
+One six-decision Luna-low v32 allocation is now preregistered but unrun. Twelve
+source hashes bind exact final-receipt/program cardinality, clock ordering,
+aggregate counts and natural completed-terminal race exposure. Shared weekly
+capacity was94% used with no reset credits at freeze time; preserve the remaining
+headroom and run this exact command when capacity permits.
