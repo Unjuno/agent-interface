@@ -1,3 +1,18 @@
+Current direction (r38): the separately frozen v23/schema-v3 threat exposure
+now supplies the missing live evidence.  The corrected run completed 12 Astra-
+low decisions in 143.345 s, remained alive at 28%, killed 2, and did not exit.
+Decisions3/4 authored the same strafe/fire/strafe cover; decisions4/5 executed
+the exact linked policies.  All16 cover programs compiled to10 s and released;
+4 renewals had a21.259 ms maximum gap.  The stale-policy failure is concrete:
+decision5 began from changed geometry at74% health but repeated decision4's
+policy; lossless HUD samples changed1.623 s after admission and9.802 s before
+the model returned, with the next decision at28%.  This is association, not a
+claim that cover caused damage or cancellation improves survival.  Next add an
+opt-in one-way guard in a new controller: change/unknown cancels current cover
+and discards the concurrently computed stale model action; it cannot infer the
+change, grant fallback input or prove success.  Freeze a new live allocation
+after boundary tests.  No subagent/context handoff; full goal open.
+
 Current direction (r37): retained MAP01 failure analysis separates the cover-
 expiry symptom from stale policy semantics.  Fixed cover left 9,770.767 ms of
 uncovered model tails (3,765.441 ms max), but 84 health points were also lost

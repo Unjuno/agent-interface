@@ -2983,6 +2983,22 @@ continuously advancing MAP01 run. Native-adapter and second-desktop-workflow
 work are secondary unless they block that experiment. No subagent or context
 handoff participates; the full goal remains open.
 
+The first new v23 threat allocation is retained as a pre-GUI environment
+failure because the default WSL Python could not import ViZDoom. A separately
+frozen allocation changed only ID/output/seed and explicitly selected the
+repository `_vizdoom` target. Its first run completed 12 Astra-low decisions,
+stayed alive at28%, killed2 and did not exit. Decisions3/4 authored the same
+strafe/fire/strafe cover and decisions4/5 executed the exact linked policies;
+all16 covers released and four renewal gaps were at most21.259ms. Lossless HUD
+replay isolates the next mechanism: decision5 started from changed geometry and
+74% health but repeated the prior policy; the health ROI changed1.623s after
+admission and9.802s before the model returned, and the next decision frame was
+28%. This does not causally blame cover. Implement an opt-in one-way guard in a
+new controller so change/unknown cancels the cover and discards its concurrently
+computed stale model action. It grants no fallback input and infers no semantic
+direction. Then freeze one new live allocation. See
+`research/doom/MAP01_COVER_THREAT_V23_LIVE_V2.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms
