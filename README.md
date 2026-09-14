@@ -72,6 +72,14 @@ call. No live action is run. The next candidate will use an agent-authored visua
 postcondition as a local in-program barrier, separate from input authority. See
 [persistent visual-effect receipt](research/live_control/PERSISTENT_EFFECT_RECEIPT_V1.md).
 
+The first local in-program form is also rejected by a fresh X11 correctness
+control. It requests a24px Inkscape move but reaches12px; a single-ROI threshold
+still counts163 persistent pixels and starts the later Save step. The paired
+unmet condition correctly stops before Save, and all input releases verify.
+Changed-pixel totals remain advisory only; continuation requires a task-relative
+visual condition. See
+[local visual continuation barrier](research/live_control/LOCAL_VISUAL_BARRIER_V1.md).
+
 Process-scoped timing envelopes now cover fresh Calc and OpenTTD tasks. Calc
 saves 480/192 in 23.976s with 21.334s of wrapper-observed model wait. OpenTTD uses
 batched delayed-hover contact sheets and an adaptive two-Luna/six-Astra route to

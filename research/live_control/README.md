@@ -1,5 +1,13 @@
 # Asynchronous live control: development evidence
 
+Latest local-continuation result: [local visual barrier v1](LOCAL_VISUAL_BARRIER_V1.md).
+A pure persistent-pixel condition passes selected archived first effects9/9 and
+stops selected repeats2/2, but a fresh X11 task-relative check rejects it. A
+requested24px Inkscape move ends at12px; the barrier still sees163 changed pixels
+and starts the later Save step. The matched unmet case stops before Save. Keep
+single-ROI change advisory-only; the next candidate must express target-relative
+displacement or separate placement target/guard regions.
+
 Latest effect-signal result: [persistent visual-effect receipt](PERSISTENT_EFFECT_RECEIPT_V1.md).
 An archived pixel threshold separates selected new road effects9/9 from repeated
 completed-segment drags2/2, but the matched model test is negative. On one frozen

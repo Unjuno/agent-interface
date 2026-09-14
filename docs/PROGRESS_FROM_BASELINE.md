@@ -22,6 +22,12 @@ form is rejected without live input. The next candidate separates an
 agent-authored visual postcondition from action admission and evaluates it as a
 local barrier inside an already bounded program.
 
+That in-program prototype now has a fresh X11 negative result. Its unmet branch
+stops later input, but the nominal branch accepts a12px partial Inkscape move
+against a24px requested move because163 pixels changed in the single ROI. The
+later Save step starts, so this condition fails the correctness gate and remains
+advisory only. A continuation barrier needs target-relative visual structure.
+
 ## What changed
 
 | Stage | Initial state | Current evidence | Status |

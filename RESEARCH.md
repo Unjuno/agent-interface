@@ -86,6 +86,16 @@ tokens per call. No live input is issued. Keep the measurement only as a local
 barrier candidate and separate evidence from action admission before retesting.
 See [persistent visual-effect receipt](research/live_control/PERSISTENT_EFFECT_RECEIPT_V1.md).
 
+Moving the same pixel condition into an already admitted program removes the
+extra model call but fails the correctness gate. A fresh scripted X11 Inkscape
+case requests a24px drag, reaches only12px, yet the163-pixel single-ROI condition
+passes and starts the later Save step. A paired unmet case sees zero pixels and
+correctly stops before Save; all seven frames reconstruct exactly and both
+terminals verify input release. Reject total changed pixels as continuation
+authority. The next condition must describe target-relative displacement or
+separate target/guard structure. See
+[local visual continuation barrier](research/live_control/LOCAL_VISUAL_BARRIER_V1.md).
+
 ### Retained OpenTTD effect-state diagnosis
 
 The frozen seed991003 v6 run lacks a formal finish evaluation because its driver
