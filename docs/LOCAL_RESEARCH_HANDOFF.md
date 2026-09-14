@@ -3275,3 +3275,17 @@ are untested. Next integrate the typed envelope into the controller model-free,
 then freeze a live allocation only if soft preserve and hard cancel/release keep
 the stale-plan invariants. See
 `research/doom/MAP01_COVER_VALIDITY_REPLAY_V1.md`.
+
+## Latest follow-up — planner-authored validity reaches v29 controller (2026-09-15)
+
+V29 adds one typed health floor/lease beside every active `next_cover` and binds
+it to a fresh exact signal at admission. It rejects a prior cover when current
+health already breaches the floor or the envelope could absorb more than the
+20-health construction cap. Soft values coalesce locally; hard, unknown, expired
+or binding-invalid evidence uses the inherited matching-turn interrupt, cover
+cancel, verified empty release and stale-answer discard path. The current checked
+health is passed to the planner as compact state. Relevant Windows32 and WSL/
+Linux15 tests pass, including retained93→87→81→79 replay and cancel/release
+mechanics. No v29 live allocation has run and the cap is not calibrated. Freeze
+one bounded fixed-threat allocation only after committing and auditing this
+construction. See `research/doom/MAP01_TYPED_COVER_VALIDITY_V29.md`.

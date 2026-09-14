@@ -1,3 +1,16 @@
+Current direction (r61): v29 integrates typed health validity into each authored
+next_cover. Schema v4 requires one health floor/lease for active answers; the
+runtime binds it to fresh exact evidence, rejects already-breached or >20-health
+loss envelopes before admitting prior cover commands, coalesces soft values and
+routes hard/unknown/expired evidence through matching turn interrupt, cover
+cancel, verified empty release and stale-answer discard. Checked health is sent
+as compact prompt state. Relevant Windows32 and WSL/Linux15 tests pass. This is
+model-free construction: the20 cap is not calibrated, no v29 model/game run
+exists, and useful floors, completion, survival, latency, tokens and progress
+remain open. Next freeze one bounded fixed-threat allocation only after auditing
+the construction diff and exact acceptance rules. No subagent/context handoff;
+full goal open.
+
 Current direction (r60): deterministic typed cover validity passes development
 replay. A hash-bound Freedoom WAD-glyph reader extracts health from all70 exact
 v28 observations with zero unknowns and matches19 manual review points across

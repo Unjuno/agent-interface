@@ -45,6 +45,16 @@ not run a planner or prove useful progress. The next gate is model-free
 controller integration of typed soft preservation and hard cancel/release. See
 [the replay report](research/doom/MAP01_COVER_VALIDITY_REPLAY_V1.md).
 
+V29 carries this into schema/controller construction. Each active planner answer
+must attach one typed health floor and lease to its next cover. Admission binds
+the condition to fresh exact evidence; already-breached or over-wide envelopes
+admit no prior cover commands. Soft events remain coalesced, while hard/unknown/
+expired evidence uses the inherited planner-interrupt, cover-cancel, verified-
+release and stale-answer discard path. The relevant32-test Windows set and15-
+test WSL/Linux subset pass. No v29 model/game allocation has run; the20-health
+maximum soft-loss cap is a construction bound awaiting a frozen test. See
+[the v29 contract](research/doom/MAP01_TYPED_COVER_VALIDITY_V29.md).
+
 ### Integrated token-efficiency comparison selected
 
 [Integrated efficiency plan v1](research/live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md)

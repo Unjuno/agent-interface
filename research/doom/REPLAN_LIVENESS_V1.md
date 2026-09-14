@@ -106,3 +106,12 @@ the replay and the floor was chosen after seeing the trace. Integrate the typed
 envelope into the controller and verify release/stale-plan invariants model-free
 before freezing another live allocation. See
 [the retained construction replay](MAP01_COVER_VALIDITY_REPLAY_V1.md).
+
+V29 now attaches that condition to `next_cover` in schema v4 and binds it to a
+fresh exact health signal when the cover is admitted. A source already below the
+authored floor or an envelope wider than the current 20-health construction cap
+admits no prior cover commands. Soft samples stay local and coalesce; hard or
+uncertain evidence uses the inherited interrupt, cancel, verified-release and
+stale-answer discard path. Thirty-two relevant Windows tests and the 15-test
+WSL/Linux subset pass. This is still model-free construction; see
+[the v29 contract](MAP01_TYPED_COVER_VALIDITY_V29.md).
