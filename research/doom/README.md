@@ -50,6 +50,14 @@ cover-program interval, and the player remained alive when the run ended. Most
 input cost is therefore outside the discarded black pixels; further compression
 should reuse compiled task semantics and send compact visual change evidence.
 
+[Normal MAP01 live-control development](MAP01_LIVE_CONTROL_V1.md) records the
+subsequent temporal-sheet, explicit-binding, no-input `coast`, persistent Luna
+session, hybrid-session and death-count scorer work. The current best measured
+token mechanism reduces uncached input by 76.446% in an unmatched 12-turn
+comparison, while increasing model wall time by 17.077%. No MAP01 exit is
+claimed; coarse model-authored turn durations remain the dominant control
+failure.
+
 The assistant has now operated a ViZDoom basic scenario through OS keyboard
 input and X11 screenshots, using the existing async executor and exact image
 transport. This uses the bundled **Freedoom assets**, not original commercial
