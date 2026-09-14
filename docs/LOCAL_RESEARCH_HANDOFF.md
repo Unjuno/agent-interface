@@ -3407,3 +3407,18 @@ median6,994.578ms and model wait6,572.037ms. A local frame only123.288ms old
 exists at admission but was not model-visible. This is the next architecture
 gap: current typed revalidation over fast feedback, without another full model
 boundary.
+## Latest follow-up — action validity now checks fresh local evidence before Executor admission (2026-09-15)
+
+Retained v31 data contains a local observation median123.288ms old at historical
+plan acceptance even though the planner image is median6,994.578ms old. Four of
+five completed plans also see health change, so exact state equality would
+counterfactually reject4/5. `action_validity_admission_v1` instead binds an exact
+action and state owner to nonempty typed predicates evaluated on a current
+snapshot. An initial250ms age bound rejects retained iteration2 at333.611ms; a
+500ms bounded-health construction passes5/5, while injected predicate breach and
+required-but-unknown enemy evidence reject. `final_action_admission_v2` inserts
+this mandatory stage before actual Executor acceptance. Windows/Linux tests pass
+and replay bytes match. This is model-free discrimination evidence with
+synthetic contracts, not live efficacy. Do not modify hash-bound v32. Next make
+the planner author the immediate-action contract and add a deterministic
+non-health signal before a v33 integration.

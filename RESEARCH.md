@@ -1174,3 +1174,20 @@ reference before task-4 input, repairs once, and finishes in 44.131s versus
 and WSL audit. This RETAIN decision applies to the fixed workflow and allocation,
 not broad token savings or human-speed performance. See
 `research/live_control/INTEGRATED_EFFICIENCY_LIVE_V1.md`.
+## Latest follow-up — fresh action-validity admission separates stale evidence (2026-09-15)
+
+The retained v31 tempo trace shows why a whole-frame equality gate would fail:
+four of five completed plans have changed health at historical Executor
+acceptance. A typed construction now binds the exact action, source observation,
+focus/surface/geometry, maximum current-snapshot age and nonempty observable
+predicates. An initial250ms age candidate rejects the one333.611ms observation;
+a500ms bounded-health candidate passes all5 historical rows, rejects an injected
+ninth point of health loss and rejects a required-but-unknown enemy signal. The
+generic result never grants authority. Final-admission v2 makes this check
+mandatory before the first Executor acceptance while preserving zero-acceptance
+rejections and later revocation history. Tests pass on Windows/Linux and the
+replay is byte-identical. These contracts are synthetic and health cannot prove
+enemy persistence, aim or action usefulness. Keep v32 hash-frozen; add planner
+authorship and at least one deterministic non-health predicate before v33 live
+integration. See
+`research/live_control/ACTION_VALIDITY_ADMISSION_V1.md`.

@@ -1,3 +1,15 @@
+Current direction (r75): add a mandatory fresh action-validity stage between
+clean planner completion and final Executor admission. The generic no-authority
+contract binds exact action, source, focus/surface/geometry, age and observable
+predicates. Retained v31 replay shows strict unchanged-state rejection would
+stop4/5 historical plans; an initial250ms age bound also rejects the333.611ms
+row. A500ms bounded-health construction passes5/5, rejects an injected ninth
+health point and rejects a required-but-unknown enemy signal. Contracts are
+synthetic, so this is discrimination evidence only. Final-admission v2 requires
+VALID_CURRENT before Executor acceptance. Next define planner authorship and a
+deterministic non-health predicate before v33 integration; keep hash-frozen v32
+unchanged/unrun. No subagent/context handoff; full goal open.
+
 Current direction (r74): recover missing tempo metrics from retained v31 without
 a model call. Five admitted plans have acceptance→first exact capture median
 62.594ms and viewport-effect endpoint median415.972ms; neither proves semantic
