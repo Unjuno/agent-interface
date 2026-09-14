@@ -9,6 +9,31 @@ pause/menu, hold/release and video evidence.  This is planned work; no full-map
 clear is currently claimed.  See
 [`INTEGRATED_EFFICIENCY_PLAN_V1.md`](../live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md).
 
+## Continuously advancing MAP01 feasibility
+
+The integrated efficiency comparison is complete, so three retained pre-formal
+attempts now exercise the packaged Freedoom 2 `MAP01` directly as an ordinary
+game map. The harness uses `ASYNC_SPECTATOR` at 35 tics/second; game time keeps
+advancing during image inspection, reasoning and command dispatch. All gameplay
+input crosses the shared X11 OS-input backend. No pause, save state, action
+vector, automap, object label or sector label is available to the controller.
+
+`map01-smoke-01` establishes that the unmodified map starts and advances at
+34.980 tics/second. `map01-assistant-feasibility-01` retained an interface-label
+failure before any input. `map01-assistant-feasibility-02` then admitted 15
+screen-directed inputs on the default skill but died after long blind movement
+and planner gaps. `map01-assistant-feasibility-03` explicitly fixed skill 1,
+admitted a route through the first combat area, and died after 231.245 seconds
+of continuously advancing wall time. The last run also retained two malformed
+command rejections during live interface use. These are useful usability
+failures, not gameplay successes.
+
+The observed limit is decision cadence: local capture and input acknowledgement
+are fast, while a stop-inspect-decide-submit loop leaves the player exposed for
+tens of seconds. The next controller revision must overlap bounded defensive
+input with fresh visual decisions and measure observation-to-input age. A full
+map clear, human-speed operation and public-demo readiness remain unclaimed.
+
 The assistant has now operated a ViZDoom basic scenario through OS keyboard
 input and X11 screenshots, using the existing async executor and exact image
 transport. This uses the bundled **Freedoom assets**, not original commercial
