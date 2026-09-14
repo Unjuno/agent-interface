@@ -404,3 +404,13 @@ preregistered Luna-low Full/Compact/Compact/Full comparison selects receipt5
 RGB pixels and all raw model records. This is a fixed one-task presentation
 result, not a dynamic or broad-GUI token claim. See
 [OPENTTD_COMPACT_EVIDENCE_ABBA_V1.md](OPENTTD_COMPACT_EVIDENCE_ABBA_V1.md).
+
+Compact evidence also succeeds in one fresh translated-window live allocation.
+The X11 surface moves by `[21,28]`; a position-independent single-pass detector
+finds toolbar row68 and30 slots in154.287ms. Luna-low proposes `[506,79]`, then
+selects the matching compact finance receipt at that point. Exact rehover,
+released click and a title oracle shifted by the observed delta pass. Inputs are
+9,294+8,277 tokens, five hovers take6.199s and decision-to-evaluation is29.639s.
+All50 frames audit Windows/WSL. This covers one translation, not resize/reflow or
+unknown-app transfer. See
+[OPENTTD_TRANSLATED_COMPACT_LIVE_V1.md](OPENTTD_TRANSLATED_COMPACT_LIVE_V1.md).

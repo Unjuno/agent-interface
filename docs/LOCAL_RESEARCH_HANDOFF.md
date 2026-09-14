@@ -2533,3 +2533,22 @@ fixed task does not prove dynamic savings, broad GUI reliability, causal latency
 or human-tempo control. See
 research/live_control/OPENTTD_COMPACT_EVIDENCE_ABBA_V1.md. Full goal and freeze
 status remain open.
+
+## Latest follow-up — translated compact live evidence (2026-09-14)
+
+One fresh allocation moves the actual OpenTTD X11 surface by `[21,28]` before
+the model sees it. A new position-independent slot scan replaces the fixed y=40
+assumption and derives row68/30 slots in154.287ms. The same Luna-low model
+proposes `[506,79]`, receives five exact compact hover receipts, selects receipt3
+at that point, and drives a released click. Exact rehover and the finance-title
+oracle shifted from the observed surface delta pass. Inputs are9,294+8,277;
+hover is6.199s and decision-to-independent-evaluation29.639s. All50 AIT frames,
+raw turns, receipts and sources audit on Windows/WSL. No subagent participates in
+perception, judgment or operation because adding another generative judgment
+path would weaken assurance.
+
+The fixed task and pure translation do not cover resize/reflow or another app.
+The main deterministic delay is now five serial persistent hovers. Next compare
+anchor-first evidence with bounded neighbour expansion, requiring recovery on
+the retained confidently-wrong anchor rather than trusting model confidence.
+See research/live_control/OPENTTD_TRANSLATED_COMPACT_LIVE_V1.md. Goal/freeze open.

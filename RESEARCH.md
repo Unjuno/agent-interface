@@ -812,3 +812,13 @@ runtime receipt and retains ordinary input admission as a separate boundary.
 Windows/WSL audits pass. Scope is one fixed OpenTTD task, with no broad GUI,
 dynamic latency or human-tempo claim. See
 `research/live_control/OPENTTD_COMPACT_EVIDENCE_ABBA_V1.md`.
+
+The compact path then runs in one fresh translated-window episode. The actual
+OpenTTD surface moves `[21,28]`; a screen-wide single-pass detector finds the
+moved toolbar at row68 with30 slots in154.287ms. Luna-low proposes `[506,79]`,
+selects its verified compact finance receipt, rehovers exactly and opens the
+window. The shifted independent RGB oracle passes after29.639s from decision
+start. Inputs are9,294+8,277 and the five persistent hovers take6.199s. All50
+frames and raw turns audit Windows/WSL. This is one position transfer, not
+resize/reflow, unknown-app generality or human tempo. See
+`research/live_control/OPENTTD_TRANSLATED_COMPACT_LIVE_V1.md`.

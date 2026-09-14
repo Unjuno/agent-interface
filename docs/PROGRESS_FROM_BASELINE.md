@@ -461,3 +461,14 @@ or18.64%. Windows/WSL reconstruct the same RGB pixels and all four model records
 This is the first scoped measured token reduction for active semantic evidence,
 not an end-to-end dynamic or cross-domain result. See
 [compact hover evidence](../research/live_control/OPENTTD_COMPACT_EVIDENCE_ABBA_V1.md).
+
+The compact receipt path now transfers through one actual window-position
+change. After a `[21,28]` X11 surface move, the interface derives toolbar row68
+and30 slots from the fresh screen in154.287ms. Luna-low selects the moved finance
+point `[506,79]` through compact evidence; exact rehover, released input and the
+translated independent title oracle pass. The live path takes29.639s from first
+decision to evaluation, including6.199s of persistent hover, and uses
+9,294+8,277 input tokens. Fifty frames audit cross-OS. This removes one fixed
+screen-position assumption but is not resize/reflow, unknown-app or human-tempo
+evidence. See
+[translated compact live evidence](../research/live_control/OPENTTD_TRANSLATED_COMPACT_LIVE_V1.md).
