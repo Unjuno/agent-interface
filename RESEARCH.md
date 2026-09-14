@@ -106,6 +106,15 @@ the answer and admits no plan. Next formalize controller final admission as a
 typed receipt with terminal/invalidation precedence before a long clear. This is
 not a causal speed, token or gameplay result. See [the v31 live result](research/doom/MAP01_SOFT_CONTEXT_V31_LIVE_V1.md).
 
+A shared typed final-admission construction now separates planner eligibility
+from controller authority. Hard invalidation before controller admission wins
+under either terminal/event order; a clean completed answer is only READY until
+a fresh Executor acceptance is observed; a later hard event records revocation
+without erasing the earlier admission. Six Windows/WSL tests include the exact
+retained v31 decision0 race and classify it `REJECTED_POLICY_INVALIDATED` despite
+planner completed/eligible. This is not integrated or live-tested yet. See
+[the final-admission contract](research/live_control/FINAL_ACTION_ADMISSION_V1.md).
+
 The first transfer fixture is now frozen before execution. Session v8 can load
 the hash-bound v1 parent and save one setup-only child while retaining parent
 hash/tic provenance; v7 and frozen results stay untouched. One model-free X11

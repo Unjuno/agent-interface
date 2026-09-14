@@ -3370,3 +3370,11 @@ event race, the interrupt returns `already_terminal`, yet the controller safely
 discards the answer and admits no plan. Separate planner eligibility from a
 typed controller final-admission receipt and freeze event/terminal precedence
 before a long clear. See `research/doom/MAP01_SOFT_CONTEXT_V31_LIVE_V1.md`.
+
+The model-free final-admission state machine now exists. It gives hard policy
+evidence precedence before controller admission under either event/terminal
+order, keeps completed planner output READY with no authority until a fresh
+Executor acceptance, and records later revocation without erasing historical
+admission. Six Windows/WSL tests include the retained v31 race. Integrate it into
+all v32 plan and no-plan paths next; no live claim exists. See
+`research/live_control/FINAL_ACTION_ADMISSION_V1.md`.

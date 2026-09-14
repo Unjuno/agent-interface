@@ -1,3 +1,13 @@
+Current direction (r70): add a shared typed final-action admission state machine
+for the v31 race. Any hard invalidation observed before controller admission
+wins regardless of planner-terminal order; completed/eligible only becomes READY
+with no authority, actual Executor acceptance records INPUT_ADMITTED, and later
+hard evidence records REVOKED without erasing historical acceptance. Windows/
+WSL6 tests cover three orderings, malformed evidence and exact retained decision0
+as REJECTED_POLICY_INVALIDATED. Next integrate receipts into every v32 plan/no-
+plan path and bind actual first acceptance before live work. No performance claim;
+no subagent/context handoff; full goal open.
+
 Current direction (r69): retain the only v31/v2 allocation as a typed soft-
 context transfer pass. Four consecutive next turns receive exact240–241-byte
 summaries of1,313–1,315-byte preceding events through the existing prompt/image
