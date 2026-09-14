@@ -838,3 +838,11 @@ token improvement must come from the same planner model's interface, observation
 and local execution, not shifting context to another agent. Change layout/domain
 next, then reduce serial probe cost without removing evidence. See
 research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
+
+- 2026-09-14 r7: verified hover evidenceのtoken圧縮を、subagentへcontextを移す
+  方法ではなく、同じLuna-lowが読む観測表現として実測。既存source+5 stripsと、
+  tooltip pixels/receipt/pointだけのcompact sheetを同一prompt/schemaでABBA比較し、
+  両条件2/2正答。full10,170対compact8,274 input tokens、平均1,896/18.64%削減。
+  Windows/WSL監査はRGB再構築、4 raw model turns、binding、usageを確認した。
+  次の局所目標は同じreceipt contractをlayout/application変更へ移植し、正答保持を
+  再検証すること。dynamic latency、general GUI、人間速度、freezeは未達のまま。

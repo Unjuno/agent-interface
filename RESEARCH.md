@@ -802,3 +802,13 @@ passes2/2 in both opaque and transparent conditions, with30,572 input tokens per
 condition. The transform yields no measured coordinate or token benefit and is
 not promoted. Direct endpoint grounding is already correct in this isolated
 question; next investigate live tool/effect-state evidence.
+
+Verified active-hover evidence now has a compact presentation result. A frozen
+Luna-low Full/Compact/Compact/Full comparison holds prompt, schema, receipt set
+and target constant. All4 calls bind receipt5 `[485,51]`; full reports10,170
+input tokens twice and compact8,274 twice, reducing the mean by1,896/18.64%.
+The compact builder admits only tooltip crops whose RGB digest matches the
+runtime receipt and retains ordinary input admission as a separate boundary.
+Windows/WSL audits pass. Scope is one fixed OpenTTD task, with no broad GUI,
+dynamic latency or human-tempo claim. See
+`research/live_control/OPENTTD_COMPACT_EVIDENCE_ABBA_V1.md`.

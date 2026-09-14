@@ -394,3 +394,13 @@ on this task, so it remains HOLD pending persistent effect evidence and bounded
 occlusion recovery. V8 also exposes a raw typed-stop/turn-limit classification
 defect; explicit finish-kind v2 corrects future semantics. See
 [OPENTTD_EFFECT_REPLICATION_V2.md](OPENTTD_EFFECT_REPLICATION_V2.md).
+
+The active toolbar evidence path now has a compact presentation diagnostic.
+Instead of repeating the source and five full toolbar strips, it validates and
+packs only the five exact tooltip crops with their receipt/point bindings. A
+preregistered Luna-low Full/Compact/Compact/Full comparison selects receipt5
+`[485,51]` in all4 calls. Full reports10,170 input tokens twice; compact reports
+8,274 twice, an18.64% mean reduction. Cross-OS reconstruction passes on decoded
+RGB pixels and all raw model records. This is a fixed one-task presentation
+result, not a dynamic or broad-GUI token claim. See
+[OPENTTD_COMPACT_EVIDENCE_ABBA_V1.md](OPENTTD_COMPACT_EVIDENCE_ABBA_V1.md).

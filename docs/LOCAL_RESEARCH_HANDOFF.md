@@ -2513,3 +2513,23 @@ v1/v2 frames and source hashes audit Windows/WSL. One task and post-failure radi
 choice prevent broad promotion. No subagent forms part of the evaluated route or
 token accounting. See research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full
 goal remains open.
+
+## Latest follow-up — compact verified evidence (2026-09-14)
+
+The same Luna-low planner now receives a smaller representation of the five
+verified OpenTTD hover receipts. The builder checks each tooltip crop against its
+runtime pixel digest, then emits only exact tooltip pixels plus receipt and
+source-point bindings. It omits the full source and non-tooltip toolbar pixels.
+
+A frozen Full/Compact/Compact/Full comparison keeps the prompt, responder,
+schema, receipt set and target fixed. All4 calls select receipt5 `[485,51]`.
+Full reports10,170 input tokens twice; compact reports8,274 twice, a1,896-token
+or18.64% mean reduction. Windows/WSL reconstruct the RGB presentation and raw
+model bindings. No subagent participates in the operation or accounting.
+
+Retain this presentation candidate. Next change layout or application under the
+same evidence contract before integrating it into another dynamic episode. One
+fixed task does not prove dynamic savings, broad GUI reliability, causal latency
+or human-tempo control. See
+research/live_control/OPENTTD_COMPACT_EVIDENCE_ABBA_V1.md. Full goal and freeze
+status remain open.

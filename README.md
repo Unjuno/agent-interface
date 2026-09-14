@@ -514,7 +514,7 @@ The user-release contract is documented in [`release/README.md`](release/README.
 
 - Cross-platform generality beyond current Linux/X11 evidence.
 - Production-grade automatic method discovery.
-- End-to-end real model/token savings.
+- Broad end-to-end model/token savings beyond the first scoped evidence-presentation result.
 - Stable runtime/API semantics.
 - A finished user-facing runtime distribution.
 

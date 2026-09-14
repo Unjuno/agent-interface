@@ -452,3 +452,12 @@ ten post-decision queries; the second needs one and admits zero new input. Exact
 frames, raw model events, effects and calibration failures audit cross-OS. See
 research/live_control/PARTIAL_TERMINAL_LIVE.md. Authored absent-title expiry and
 explicit boundary prompt; no broad reliability or human-tempo claim.
+
+Latest evidence compression result: exact verified OpenTTD tooltip crops plus
+receipt/point bindings replace a repeated source frame and five full toolbar
+strips. In a preregistered fixed Luna-low ABBA, full and compact presentations
+both pass2/2 at receipt5 `[485,51]`; reported input falls from10,170 to8,274,
+or18.64%. Windows/WSL reconstruct the same RGB pixels and all four model records.
+This is the first scoped measured token reduction for active semantic evidence,
+not an end-to-end dynamic or cross-domain result. See
+[compact hover evidence](../research/live_control/OPENTTD_COMPACT_EVIDENCE_ABBA_V1.md).
