@@ -927,3 +927,13 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   false、再試行なし。Windows/WSLで70 frames、11 turns、28 exchangesを監査。次は同じ
   authorityを持つnegative reasonをoperational classへ畳む案とreason精度指標を分離して
   新しいcaseで評価。token削減・自然誤り率・人間速度・freezeは未達。
+
+- 2026-09-14 r16: Issue #52向けにreceipt意味判断と入力権限を分離するflat contract
+  v2を追加。positiveはverified receipt 1件を`TARGET_REFERENCE_ONLY`として返し、
+  no-match/ambiguous/unavailable/budget-exhaustedはreceipt 0・empty pointsの
+  `NO_TARGET_AUTHORITY`へ正規化しつつdiagnosticを保持。保持済みOpenTTD 5 receipts、
+  Mindustry 3 outcomes、座標混入等4 invalid controlsが通過。新schemaの実endpoint
+  preflightは7,232.759ms、input7,916/output107/reasoning48、GUI artifacts 0。
+  Windows/WSL監査。次は新しいOpenTTD receipt setでpositive/no-matchをfresh live実行し、
+  target button 0、task outcome、診断精度、calls/tokens/elapsedを別々に測る。
+  live efficacy・token削減・人間速度・freezeは未達。

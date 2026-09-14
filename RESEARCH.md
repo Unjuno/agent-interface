@@ -895,3 +895,11 @@ no-match reason. Eleven calls report96,731 input tokens;70 exact frames and28
 socket exchanges audit Windows/WSL. Retain safety evidence and the taxonomy
 failure without retry. See
 `research/benchmark_discovery/MINDUSTRY_SINGLE_TILE_MATCHED_V1.md`.
+
+Evidence selection now has a candidate operational authority split. Positive
+verified-receipt decisions return `TARGET_REFERENCE_ONLY`; no-match, ambiguous,
+unavailable and exhausted results return `NO_TARGET_AUTHORITY` with no receipt
+or coordinates, preserving the diagnostic separately. Retained OpenTTD and
+Mindustry evidence plus four invalid controls pass. A fresh endpoint preflight
+accepts the flat schema with7,916 input tokens; no fresh GUI efficacy is claimed.
+See `research/live_control/EVIDENCE_TARGET_CONTRACT_V2.md`.

@@ -2708,3 +2708,25 @@ Safety holds, but reason taxonomy precision does not. Windows/WSL reconstruct
 do not rerun for a preferred label. Next separate operational authority classes
 from diagnostic reason precision on a new case. See
 research/benchmark_discovery/MINDUSTRY_SINGLE_TILE_MATCHED_V1.md. Goal/freeze remain open.
+
+## Latest follow-up — target authority is separate from diagnostic reason (2026-09-14)
+
+Issue #52 now has a flat endpoint-compatible candidate. A positive decision
+cites one verified receipt and returns `TARGET_REFERENCE_ONLY`; no-match,
+ambiguous, unavailable and exhausted decisions carry receipt0/empty points and
+return `NO_TARGET_AUTHORITY`. The diagnostic remains in the result but cannot
+grant a target button. Eventual task outcome stays separate.
+
+Five retained OpenTTD receipts pass one positive and four negative authority
+cases. Four malformed coordinate/receipt controls refuse. The prior Mindustry
+positive/ambiguous/unreadable outputs map to the expected authority classes
+without changing their original diagnostics or formal failure. One fresh
+no-GUI schema preflight succeeds in7,232.759ms using7,916 input,107 output and48
+reasoning tokens. Windows/WSL audits pass; no GUI artifact exists. No subagent
+participates.
+
+This is archived contract evidence only. Next preregister a fresh OpenTTD
+positive/no-match receipt set, keep the same model and input checks, and require
+zero target button input on `NO_TARGET_AUTHORITY`. Report diagnostic precision
+separately from operational safety. See
+research/live_control/EVIDENCE_TARGET_CONTRACT_V2.md. Goal/freeze remain open.

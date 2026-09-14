@@ -546,3 +546,11 @@ reasons. Across11 calls, input is96,731 tokens;70 exact frames and28 exchanges
 audit cross-OS. This adds live authority evidence and exposes reason-taxonomy
 precision as a separate failure. See
 [Mindustry matched branches](../research/benchmark_discovery/MINDUSTRY_SINGLE_TILE_MATCHED_V1.md).
+
+The next shared authority contract removes OpenTTD's forced receipt selection.
+One verified receipt yields `TARGET_REFERENCE_ONLY`; every coordinate-free
+negative yields `NO_TARGET_AUTHORITY` while preserving its diagnostic. Archived
+OpenTTD/Mindustry evidence and four invalid controls pass. The new flat schema's
+fresh endpoint check uses7,916 input tokens and audits cross-OS. No fresh GUI
+selection has used it yet. See
+[target authority contract](../research/live_control/EVIDENCE_TARGET_CONTRACT_V2.md).

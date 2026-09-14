@@ -475,3 +475,11 @@ production schemas pass from copied hash-pinned cache with zero calls. A new
 Mindustry v6 wrapper places the gate ahead of its GUI continuation; the actual
 cache test observes0 continuation calls after refusal and1 after acceptance.
 The wrapper still needs the planned live positive/no-match/ambiguous block.
+
+[Evidence target authority v2](EVIDENCE_TARGET_CONTRACT_V2.md) now separates
+the ability to cite a verified receipt from the ability to decline every
+observed receipt. Positive decisions return `TARGET_REFERENCE_ONLY`; four
+bounded diagnostics all return `NO_TARGET_AUTHORITY` with no receipt or point.
+Five archived OpenTTD receipts, the three retained Mindustry outcomes and four
+invalid controls pass locally. One fresh no-GUI endpoint check accepts the flat
+schema using7,916 input tokens. Fresh OpenTTD live efficacy remains open.
