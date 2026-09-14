@@ -2,6 +2,11 @@
 
 ## Unreleased — 2026-09-13 research update
 
+- Publish the complete retained Astra-low MAP01 attempt in the Research Preview
+  landing page as a web-compatible H.264 video. The page labels it as a failed
+  2x run and states the death, no-exit outcome, continuously advancing clock, and
+  fixed-cover limitation instead of implying a clear.
+
 - Add bounded model-authored MAP01 contingencies that branch locally on a
   conservative no-visible-effect receipt. One live branch admits its fallback
   in 95.33 ms without another model call; contingency-boundary grouping reduces

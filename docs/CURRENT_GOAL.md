@@ -1,3 +1,15 @@
+Current direction (r33): move from isolated mechanism discovery to a construction
+and convergence phase.  Treat v23/schema v3, renewable cover, guarded admission,
+release verification, and the persistent compiled desktop path as the selected
+integration baseline.  Do not spend the next allocation on another MAP01 threat
+exposure.  First produce one documented entry point and pinned setup that can run
+the six-task desktop workflow end to end, retain its telemetry, and record the
+golden desktop showcase for Issue #58.  The failed Astra MAP01 run is now the
+honest real-time site artifact; MAP01 clear remains open and is not a launch gate.
+Resume narrow experiments only when this integration exposes a concrete blocker,
+then return the fix to the shared runtime.  No subagent or context handoff is
+used; the full human-tempo and generality goal remains open.
+
 Current direction (r32): the first frozen corrected-threat exposure is retained
 as a compiler-contract failure after one completed Astra plan and one completed
 primary input: `coast pulse` expands to 20 steps and the executor safely rejects

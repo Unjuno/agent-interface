@@ -135,6 +135,7 @@
     .placeholder-content p { font: 11px/1.6 var(--mono); }
     .placeholder-content small { display: block; font: 9px/1.6 var(--mono); margin-top: 5px; }
     .media-slot video, .media-slot iframe { display: block; width: 100%; height: 100%; border: 0; border-radius: 4px; }
+    .media-slot video { object-fit: contain; background: #000; }
     .showcase-caption { padding-top: 23px; }
     .showcase-caption h3 { font-size: 22px; }
     .showcase-caption p { margin-top: 10px; color: var(--muted); font-size: 13px; line-height: 1.8; max-width: 490px; }
@@ -361,7 +362,7 @@
         <p class="section-label">02 / The showcases</p>
         <div class="section-heading showcase-heading">
           <h2 id="showcases-title">Two ways to see<br>the interface at work.</h2>
-          <p class="section-intro">A desktop workflow for reuse and recovery. A real-time environment for local control while the model thinks. Recordings will appear here when published.</p>
+          <p class="section-intro">A desktop workflow for reuse and recovery. A retained real-time experiment showing what happened while the model thought. The desktop recording remains in production.</p>
         </div>
         <div class="showcase-grid">
           <figure class="showcase" aria-labelledby="desktop-title">
@@ -381,23 +382,23 @@
             </figcaption>
           </figure>
           <figure class="showcase" aria-labelledby="realtime-title">
-            <div class="showcase-topline"><span class="eyebrow">B / Real-time Freedoom</span><span class="status-label">EXPERIMENTAL</span></div>
+            <div class="showcase-topline"><span class="eyebrow">B / Real-time Freedoom</span><span class="status-label">FAILED RUN · 2×</span></div>
             <!-- MEDIA SLOT B: No simulated gameplay, invented telemetry, or implied MAP01 clear.
                  Add a real recording and its result only after the evidence is retained. -->
             <div class="media-slot media-slot--dark" id="realtime-media">
-              <div class="placeholder-content">
-                <svg class="placeholder-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M3 11V4h7m12 0h7v7m0 10v7h-7m-12 0H3v-7M16 10v12m-6-6h12" stroke="currentColor"/></svg>
-                <p>Recording not published</p><small>Real-time showcase / reserved space</small>
-              </div>
+              <video controls playsinline preload="metadata" aria-label="Full failed Astra MAP01 experiment at two times playback speed">
+                <source src="media/map01-astra-live-01-2x-h264.mp4" type="video/mp4">
+                Your browser does not support embedded video. <a href="media/map01-astra-live-01-2x-h264.mp4">Download the recording.</a>
+              </video>
             </div>
             <figcaption class="showcase-caption">
               <h3 id="realtime-title">The world does not wait.</h3>
-              <p>Planned showcase: the game keeps advancing during model inference, while the local runtime observes and acts. A MAP01 exit remains a research goal.</p>
-              <a class="text-link" href="https://github.com/Unjuno/agent-interface/tree/main/research/doom">Explore the real-time research <span aria-hidden="true">↗</span></a>
+              <p>One frozen Astra-low attempt, shown in full at labelled 2× playback: 149.911 seconds, 13 decisions, one kill, then death without a MAP01 exit. The clock advanced at 35.016 tics/s. Fixed cover expired before seven model returns; later renewal work is measured separately.</p>
+              <a class="text-link" href="https://github.com/Unjuno/agent-interface/blob/main/research/doom/MAP01_ASTRA_ATTEMPT_V1.md">Inspect the run and limitations <span aria-hidden="true">↗</span></a>
             </figcaption>
           </figure>
         </div>
-        <p class="showcase-disclosure">These are intentionally empty media slots, not playable demos. No completion result or live telemetry is represented here.</p>
+        <p class="showcase-disclosure">The desktop media slot is intentionally empty. The Freedoom recording is a retained failed experiment with measured telemetry, not a simulated clear or a claim of human-level play.</p>
       </div>
     </section>
 

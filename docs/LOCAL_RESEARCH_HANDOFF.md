@@ -2929,6 +2929,24 @@ explicitly unverified; there is no live GUI, token, latency or break-even claim.
 Next freeze and run one live desktop mechanics pair before the A/B/C comparison.
 See `research/live_control/COMPILED_GUI_INTERFACE_V1.md`.
 
+## Latest follow-up — construction and convergence phase (2026-09-15)
+
+The selected integration baseline is now the persistent compiled desktop path
+plus guarded admission, effect checks, verified release, and the v23/schema-v3
+renewable real-time cover contract.  Pause additional isolated MAP01 allocations.
+The next deliverable is one pinned, documented runtime entry point that reproduces
+the six-task desktop workflow, emits reviewable telemetry, and supplies the
+golden desktop recording requested by Issue #58.  Use a new experiment only when
+that construction work reveals a specific blocker, and feed its repair back into
+the same shared runtime.
+
+The landing page now embeds the complete retained Astra-low MAP01 attempt as a
+web-compatible H.264 recording.  It is labelled 2x and explicitly reports one
+kill, death, no exit, continuously advancing clock, and the fixed-cover lapse.
+This is a failed real-time experiment, not a clear claim.  MAP01 clear remains an
+open research target but does not block the Research Preview package.  No
+subagent or context handoff participates.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms
