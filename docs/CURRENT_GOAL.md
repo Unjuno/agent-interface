@@ -1,3 +1,15 @@
+Current direction (r57): replace model-dependent navigation luck with the
+promoted `map01-threat-contact-v1` real Freedoom MAP01 start fixture. Seven
+recorded X11/OS-input setup programs and 7/7 verified releases reach exact tic
+1263 with a visible enemy, health 100/ammo 50 and zero model calls. A fresh
+process restores tic 1263 and its first exact frame independently shows the
+enemy. Hash, engine, IWAD, map and skill checks run before load; save is
+setup-only and grants no input authority. ViZDoom silently failed on the
+workspace path containing a space, while a no-space temporary bridge worked in
+all four probed modes. V28 adds only this checked load boundary to v26. Commit
+construction before one bounded natural-invalidation allocation; retain its
+first result. No subagent/context handoff; full goal open.
+
 Current direction (r56): the only natural v26 threat allocation at known v23
 seed990619 is retained unexposed.  Luna authored a different route and stalled
 at the first door: all12 exact decision frames show no enemy, manual health stays

@@ -3228,3 +3228,18 @@ all arms. Seventeen actual model calls reconcile with unique IDs and complete
 usage; Windows/WSL audits pass. Preserve the pre-formal history-materialization
 failure and corrected zero-model rerun. Next preregister a continuously running
 Freedoom MAP01 clear attempt; this one sequence is not a general speed claim.
+
+## Latest follow-up — reproducible real-MAP01 threat contact (2026-09-15)
+
+The promoted `map01-threat-contact-v1` fixture removes model-navigation luck
+from Issue #59's natural invalidation exposure test. Seven recorded X11/OS-input
+setup programs reach real Freedoom MAP01 episode tic 1263 with 7/7 verified
+releases and zero model calls. Both the exact setup frame and a fresh-process
+loaded first frame visibly contain an enemy at health 100/ammo 50; the loaded
+tic matches 1263. Session v7 checks save and source hashes, engine, IWAD, map,
+and skill before load, and disallows saving during measured control. Workspace
+paths containing a space silently failed in ViZDoom's experimental save/load;
+a no-space temporary bridge succeeded in all four model-free probed modes. V28
+adds the checked fixture receipt to unchanged v26 control semantics. Commit this
+construction before one bounded live allocation and retain the first result.
+See `research/doom/MAP01_THREAT_FIXTURE_V1.md`.
