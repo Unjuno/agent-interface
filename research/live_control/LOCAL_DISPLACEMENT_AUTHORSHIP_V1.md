@@ -50,3 +50,7 @@ Primary evidence:
 - `results/local-displacement-authorship-01/preregistration.json`
 - `results/local-displacement-authorship-01/execution.json`
 - `results/local-displacement-authorship-01/audit.json`
+
+Follow-up: the unchanged first Luna condition now passes one separately
+preregistered fresh target/partial transfer after two retained integration
+failures. See `LOCAL_DISPLACEMENT_TRANSFER_V1.md`.

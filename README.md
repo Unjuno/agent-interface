@@ -94,6 +94,13 @@ reject20px samples. The prompt fixes most fields and no GUI input occurs, so thi
 is an authorship signal for a fresh live transfer rather than promotion. See
 [model-authored displacement condition](research/live_control/LOCAL_DISPLACEMENT_AUTHORSHIP_V1.md).
 
+The unchanged first Luna patch now passes one fresh X11 target/partial transfer.
+After two retained integration failures, a corrected allocation admits Save at
+24px and stops before Save at20px. Nineteen exact frames, source hashes, saved
+SVGs and input releases audit cross-OS. Pointer paths are scripted and the model
+call is outside the live episode; require replication. See
+[fresh authored-condition transfer](research/live_control/LOCAL_DISPLACEMENT_TRANSFER_V1.md).
+
 Process-scoped timing envelopes now cover fresh Calc and OpenTTD tasks. Calc
 saves 480/192 in 23.976s with 21.334s of wrapper-observed model wait. OpenTTD uses
 batched delayed-hover contact sheets and an adaptive two-Luna/six-Astra route to

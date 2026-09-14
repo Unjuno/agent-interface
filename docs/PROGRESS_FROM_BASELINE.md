@@ -39,6 +39,12 @@ Every strict model-authored patch accepts retained24px samples and rejects20px
 samples. The prompt fixes most contract fields and performs no live input, so a
 fresh live transfer remains required before integrating this moved-object path.
 
+That unchanged first Luna condition now passes one separately preregistered
+fresh X11 target/partial transfer:24px admits Save and20px stops before Save.
+Two earlier path/focus/packaging failures remain retained. This still uses
+scripted pointer paths and an out-of-episode model call; unchanged replication
+is required before promotion.
+
 ## What changed
 
 | Stage | Initial state | Current evidence | Status |

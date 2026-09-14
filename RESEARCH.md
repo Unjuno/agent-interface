@@ -115,6 +115,16 @@ comparison. No GUI input is issued. Advance only to a fresh live transfer on the
 same moved-object task. See
 [model-authored displacement condition](research/live_control/LOCAL_DISPLACEMENT_AUTHORSHIP_V1.md).
 
+The unchanged first Luna condition then transfers to fresh X11 processes. Two
+preregistered predecessors are retained: one cross-OS path failure before input,
+then a partial pass followed by a safely released target focus interruption and
+packaging assumption. A corrected reversed-order allocation admits Save for two
+fresh24px samples and stops before Save for two20px samples. The19 exact frames,
+authored hash, fresh source hashes, SVGs and releases audit on Windows/WSL.
+Require unchanged replication; pointer paths remain scripted and no model call
+occurs inside the episode. See
+[fresh authored-condition transfer](research/live_control/LOCAL_DISPLACEMENT_TRANSFER_V1.md).
+
 ### Retained OpenTTD effect-state diagnosis
 
 The frozen seed991003 v6 run lacks a formal finish evaluation because its driver
