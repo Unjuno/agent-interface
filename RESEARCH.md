@@ -14,6 +14,20 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Experimental ladder
 
+### First scoped target-handle allocation
+
+A session-local candidate privately binds a named RGB region to focus, surface,
+geometry, frame, observation and expiry. Ten synthetic controls cover valid,
+revalidated, ambiguous, moved, missing, stale and scope-mismatch outcomes. A
+first archive replay fails because its flat patch appears at both transformed
+and untranslated positions; v2 refuses such low-information sources. In one
+fresh same-session OpenTTD run, a textured handle correctly follows the window
+manager's observed `[17,20]` client translation and derives point `[837,71]`
+without caller coordinates. The click completes and releases in280.790ms, but
+the preregistered endpoint expected requested delta `[16,0]` and no independent
+semantic task effect exists. Retain as a negative/HOLD result. See
+[scoped target handles](research/live_control/SCOPED_TARGET_HANDLES_V1.md).
+
 ### First live bounded drag-effect allocation
 
 A preregistered seed991003 replay keeps the v6 model, task, initial state,

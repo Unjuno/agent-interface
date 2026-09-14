@@ -15,6 +15,16 @@ Latest research handoff: [measured progress, failures and next steps](docs/LOCAL
 
 Current Linux research caller: [components, usage and evidence limits](research/live_control/CURRENT_CLIENT.md).
 
+The first scoped target-handle allocation is a retained negative result. A
+runtime-owned textured OpenTTD region survives a same-session X11 surface move:
+fresh binding revalidation observes the window manager's actual `[17,20]`
+translation, derives `[837,71]` from a handle offset, and passes the click through
+ordinary owner admission in280.790ms with verified release. The preregistered
+endpoint incorrectly expected the requested `[16,0]` move, and the run has no
+independent semantic task effect, so the candidate remains on hold. An earlier
+flat-region archive attempt also aliases and is preserved. See
+[scoped target handles](research/live_control/SCOPED_TARGET_HANDLES_V1.md).
+
 Frame resolution now runs inside the candidate interface. A fresh1152x720
 OpenTTD pair sends only original1024 coordinates plus explicit frame identity;
 the runtime resolves clicks, drags and condition boxes from the latest pointer

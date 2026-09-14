@@ -1,4 +1,16 @@
-Latest interface evidence: `executor_v4/session_v26` now resolve explicit-frame
+Latest handle evidence: v1 exact-region controls pass10/10, but an archived flat
+OpenTTD region aliases at translated and untranslated positions; v2 refuses the
+low-information mint. In one preregistered fresh same-session run, the runtime
+mints a textured toolbar handle, observes the window manager realize requested
+`[16,0]` as client `[17,20]`, revalidates the exact region and derives point
+`[837,71]` from offset only. Normal pointer admission completes in280.790ms and
+release verifies over4 exact frames. The fixed preregistered delta endpoint is
+false and independent road score remains false by design, so HOLD. Next use a
+different desktop task, accept only observed binding delta, and require an
+independent semantic effect. See research/live_control/SCOPED_TARGET_HANDLES_V1.md.
+Full goal remains open.
+
+Prior interface evidence: `executor_v4/session_v26` now resolve explicit-frame
 clicks, drags and target/guard boxes from the latest pointer binding before
 whole-program validation. A fresh1152x720 OpenTTD pair sends only original1024
 coordinates and agrees with the engine2/2 over69 exact frames. A separate

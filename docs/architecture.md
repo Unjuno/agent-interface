@@ -188,6 +188,37 @@ Resolution itself grants no authority. Frame identity is still task-declared in
 the current evidence; observed-region identity, internal scrolling, scaling and
 automatic fallback remain research problems.
 
+## Scoped target references
+
+A target handle is an observational reference with a shorter lifetime than the
+task meaning. The current private candidate binds an exact textured region to a
+session, focus, surface, source geometry, coordinate frame, observation sequence,
+expiry and a small set of permitted transformations. Later actions carry the
+runtime handle and a point offset. Revalidation derives geometry from the fresh
+observed binding and returns an explicit status before ordinary input admission:
+
+```text
+handle + point relation + fresh observation
+    |
+    v
+scope / expiry / binding checks
+    |
+    v
+predicted region from observed geometry delta
+    |
+    v
+exact region match and ambiguity check
+    |
+    +-- VALID / REVALIDATED -> resolved point -> ordinary admission
+    +-- AMBIGUOUS / MOVED / MISSING / STALE / SCOPE_MISMATCH -> stop
+```
+
+The first live result shows why requested window movement cannot define the
+transform: a requested `[16,0]` move became observed client delta `[17,20]`.
+The runtime revalidated that actual delta correctly, while the preregistered
+fixed-delta endpoint failed. Handles grant no input authority and are not yet a
+promoted interface feature.
+
 ## Implementation strategy
 
 The current implementation language for experiments is Python because algorithmic semantics are still changing rapidly. A lower-level systems implementation is intentionally deferred until the algorithms, error semantics, and protocol boundaries are substantially frozen.

@@ -1,5 +1,14 @@
 # Asynchronous live control: development evidence
 
+Latest target-reference result: [scoped target handles](SCOPED_TARGET_HANDLES_V1.md).
+Exact session-local handles return explicit valid/revalidated/ambiguous/moved/
+missing/stale/scope states. A flat archived region aliases and is retained as a
+failure; v2 refuses it. One fresh OpenTTD handle follows observed X11 client
+translation `[17,20]` and admits its derived click in280.790ms, but the
+preregistered fixed-delta endpoint is false and no independent semantic effect is
+proved. Candidate remains on hold; next allocation needs a different desktop
+task plus an independent effect oracle.
+
 Latest framed-intent result: [live binding-resolved pointer intents](FRAMED_POINTER_INTENTS_V1.md).
 The runner sends original1024 coordinates while `executor_v4/session_v26`
 resolve frame-bearing clicks, drags and condition boxes from a fresh1152x720

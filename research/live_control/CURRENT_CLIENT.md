@@ -1,4 +1,13 @@
-Latest coordinate candidate: `executor_v4/session_v26` resolve explicit-frame
+Latest target-handle candidate: `session_v28/v29` keep exact textured RGB regions
+private and resolve later clicks from a runtime handle plus relative offset. Ten
+pure controls pass. The first fresh OpenTTD run follows observed binding delta
+`[17,20]`, derives `[837,71]`, completes normal admission in280.790ms and releases
+input. It remains HOLD because the preregistered endpoint fixed requested delta
+`[16,0]`, independent task success is false, and an earlier flat patch aliases.
+See SCOPED_TARGET_HANDLES_V1.md. Next require an independently verified semantic
+effect in another desktop task; this is not the default client.
+
+Prior coordinate candidate: `executor_v4/session_v26` resolve explicit-frame
 clicks, drags and target/guard boxes from the latest stable pointer binding before
 whole-program validation. Fresh1152x720 OpenTTD receives only original1024
 coordinates and passes positive/repeat2/2 against the engine over69 frames. A

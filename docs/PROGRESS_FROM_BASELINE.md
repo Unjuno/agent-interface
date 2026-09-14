@@ -6,6 +6,16 @@ baseline into a Linux/X11 control candidate with durable recovery, scoped local
 execution and independent effect checks. It still does not deliver human-tempo
 general computer use or an installable Agent Market product.
 
+The newest target-reference candidate replaces repeated point/frame declarations
+with a session-local handle plus relative offset. Its first archive attempt
+exposes a low-information patch alias and remains failed. A fresh same-session
+OpenTTD run then revalidates a textured region across the window manager's actual
+`[17,20]` X11 client move and derives/adopts the new point through existing
+admission. The fixed preregistered geometry endpoint is false because the window
+manager did not realize the requested `[16,0]` displacement, and there is no
+independent semantic effect. This is design evidence for observed-binding
+transforms, not promotion.
+
 Latest delta: bounded drag-effect memory now transfers correct actuation to one
 changed seed991004 L geometry. Two distinct drags complete all five target tiles
 with zero surrounding changes or repeated completed-segment input. The planner
