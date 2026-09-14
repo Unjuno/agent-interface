@@ -3243,3 +3243,18 @@ a no-space temporary bridge succeeded in all four model-free probed modes. V28
 adds the checked fixture receipt to unchanged v26 control semantics. Commit this
 construction before one bounded live allocation and retain the first result.
 See `research/doom/MAP01_THREAT_FIXTURE_V1.md`.
+
+## Latest follow-up — natural stale-cover safety passes, liveness fails (2026-09-15)
+
+The first and only fixed-threat v28 allocation exposes five natural damage-
+region invalidations across six Luna-low turns. Every matching turn is typed-
+interrupted and ineligible, dependent plans admit zero input, and all seven
+programs verify empty release. Decision 1 recovers on the same app-server thread
+after the first interrupt and authors a nonempty threat cover; decision 2 starts
+that cover and then safely cancels it on the next natural change, while decision
+3 inherits none. Exact reviewed health drops 100→97→93→87→81→79→73 with visible
+enemies. The safety path therefore passes under a real threat, but repeated
+damage starves five of six high-level decisions. Next distinguish expected
+change that bounded local cover can absorb from policy-assumption failure that
+requires planner interruption. Interrupted-turn usage is unknown. See
+`research/doom/MAP01_FIXED_THREAT_V28_LIVE_V1.md`.

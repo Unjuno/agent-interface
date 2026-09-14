@@ -1,3 +1,16 @@
+Current direction (r58): the first fixed-threat v28 allocation naturally
+invalidates5/6 matching planner turns while exact reviewed health falls
+100→97→93→87→81→79→73 and enemies remain visible. All5 typed interrupts end
+ineligible, admit zero dependent plans, and all7 programs release cleanly.
+Decision1 recovers on the same thread, authors nonempty threat cover, and
+decision2's next natural change cancels that stale cover; decision3 inherits
+none. Detection→interrupt-send is0.026–0.324ms and detection→cover-release
+20.435–25.048ms. This closes natural stale-cover safety exposure but discovers
+replan starvation: repeated damage cancels5/6 high-level turns. Next separate
+locally absorbable expected threat evolution from changes that invalidate the
+high-level policy; interrupted usage remains unknown. No subagent/context
+handoff; full goal open.
+
 Current direction (r57): replace model-dependent navigation luck with the
 promoted `map01-threat-contact-v1` real Freedoom MAP01 start fixture. Seven
 recorded X11/OS-input setup programs and 7/7 verified releases reach exact tic
