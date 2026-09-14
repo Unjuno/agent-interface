@@ -1,3 +1,17 @@
+Current direction (r32): the first frozen corrected-threat exposure is retained
+as a compiler-contract failure after one completed Astra plan and one completed
+primary input: `coast pulse` expands to 20 steps and the executor safely rejects
+cover before input.  V21 bounds coast chunks; schema v2 then fails pre-message
+because the response endpoint disallows `oneOf`.  V23/schema v3 removes explicit
+coast items: empty `next_cover` means coast and every item is an active cover
+action.  A two-decision endpoint run passes with zero rejection.  Exhaustive
+property testing passes all 168,421 schema-permitted policies at exactly 10 s,
+at most 16 steps and coast termination.  The earlier eight-turn pilot remains a no-
+threat-exposure result, though two local contingencies branch at 128.303 ms and
+110.676 ms.  Next freeze one v23 threat-exposure allocation; accept no-exposure
+or failure without rerun.  No subagent or context handoff is used; full goal
+open.
+
 Current direction (r31): Astra now authors a compact `next_cover` policy that
 the shared runtime executes and renews during the following inference interval.
 In v19 it chooses coast for clear views and, only after a visible enemy plus

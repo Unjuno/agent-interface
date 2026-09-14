@@ -38,6 +38,13 @@ four turns, so v19 proves threat-policy handoff while v20 proves the repaired
 compiler and live renewal. A new run is required before attributing gameplay
 benefit to the corrected threat policy.
 
+The subsequent frozen threat-exposure allocation found another compiler edge:
+`coast pulse` expanded to twenty steps and was rejected before cover input. A
+conditional schema repair then failed because the response endpoint disallows
+`oneOf`. [Cover-policy contract v2](MAP01_COVER_CONTRACT_V2.md) retains both
+failures and replaces explicit coast with an empty-array representation whose
+entire permitted policy space passes compiler bounds.
+
 Run the audit with:
 
 ```sh

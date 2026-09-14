@@ -1,3 +1,14 @@
+Current handoff r32: frozen v20 threat exposure fails after its first completed
+model/primary plan because `coast pulse` compiles to 20 steps; executor rejects it
+before cover input and the allocation is not rerun.  V21 fixes coast chunking.
+Schema v2's `oneOf` is then rejected by the actual response endpoint before a
+model message or primary input.  V23/schema v3 uses empty array for coast and
+noncoast-only items; its two-decision endpoint smoke has zero rejection.  All
+168,421 permitted policies property-test to exactly 10 s, at most 16 steps and a coast
+terminal.  The prior eight-turn pilot has no threat exposure but branches two
+no-effect contingencies at 128.303/110.676 ms.  Next freeze one v23 exposure run
+and retain any outcome.  No subagent or context handoff is used.
+
 Current handoff r31: v19 adds model-authored `next_cover`; Astra uses coast on
 clear views and authors strafe/fire/strafe only with a visible enemy and ammo,
 then the next turn executes it.  The first live compiler exhausts 16 steps at

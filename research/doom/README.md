@@ -110,6 +110,13 @@ complete cycles to exactly ten seconds and ends on coast. A corrected four-turn
 live run renewed twice with 20.99–21.51 ms gaps. Corrected threat execution and
 gameplay benefit remain open.
 
+[Cover-policy contract v2](MAP01_COVER_CONTRACT_V2.md) retains a frozen
+`coast pulse` 20-step rejection and an endpoint `oneOf` schema rejection. The
+compatible v3 contract represents coast as an empty array and permits only
+active cover actions as items. Its endpoint smoke passes, and all 168,421
+permitted policies compile to exactly ten seconds within 16 steps and finish on
+coast. Corrected threat exposure is still pending.
+
 The assistant has now operated a ViZDoom basic scenario through OS keyboard
 input and X11 screenshots, using the existing async executor and exact image
 transport. This uses the bundled **Freedoom assets**, not original commercial

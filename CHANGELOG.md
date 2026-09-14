@@ -23,6 +23,11 @@
   complete cycles to exactly ten seconds and a final coast. Corrected live
   renewal stays within 21.52 ms; threat-policy gameplay evidence remains open.
 
+- Retain a frozen 20-step coast rejection and an endpoint-incompatible `oneOf`
+  schema. Replace explicit coast commands with an empty-array representation;
+  the endpoint smoke passes and exhaustive checks cover all 168,421 permitted
+  policies within the executor's duration, step and terminal-coast bounds.
+
 - Add a separate asynchronous research executor with whole-program validation,
   early feedback, cancellation and X11 key-release verification. Six fresh
   XTerm/Calc probes pass; retain an actual assistant's missed cancellation and

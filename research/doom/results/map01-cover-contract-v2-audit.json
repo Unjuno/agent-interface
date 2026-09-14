@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "frozen_exposure_probe": {
+    "disposition": "retained_compiler_contract_failure",
+    "model_calls_completed": 1,
+    "primary_programs_completed": 1,
+    "rejected_cover_steps": 20,
+    "rejected_before_cover_input": true,
+    "rerun": false
+  },
+  "coast_fix": {
+    "all_four_legacy_coast_extents_compile_within_16_steps": true,
+    "two_decision_live_smoke": "passed"
+  },
+  "schema_v2": {
+    "disposition": "retained_endpoint_compatibility_failure",
+    "cause": "oneOf not permitted by response endpoint",
+    "model_messages": 0,
+    "primary_input_programs": 0
+  },
+  "schema_v3": {
+    "empty_array_means_coast": true,
+    "items_are_noncoast_only": true,
+    "endpoint_live_decisions": 2,
+    "rejections": 0
+  },
+  "compiler_property_test": {
+    "allowed_schema_v3_policies": 168421,
+    "all_exactly_10000_ms_with_at_most_16_steps_and_coast_terminal": true
+  },
+  "unexposed_pilot": {
+    "iterations": 8,
+    "threat_policy_exposures": 0,
+    "contingency_branches_taken": 2,
+    "branch_latency_ms": [
+      128.30252,
+      110.676089
+    ]
+  },
+  "decision": "use schema v3/controller v23 for the next bounded threat exposure; preserve the frozen v20 failure and never rerun it"
+}
