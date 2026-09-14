@@ -3097,6 +3097,19 @@ planner completion, cover cancellation/release and stale action/cover discard
 separately.  See
 `research/live_control/PERSISTENT_PLANNER_MID_GENERATION_INTERRUPT_LIVE_V1.md`.
 
+Controller v26 now performs the selected integration without changing frozen
+v25.  One capability-minimized app-server process spans the run, sessions reset
+only at the configured boundary, and every decision owns a typed turn.  The
+event-driven health guard interrupts that turn and separately cancels/releases
+the current cover; a stale or cancelled action and its `next_cover` are never
+admitted.  Adapter v2 fills the concrete MAP01 validation gap for const, string/
+array bounds, uniqueness and numeric ranges.  Nineteen adapter tests, three v26
+boundary tests and four retained invalidation tests pass.  A model-free WSL
+diagnostic initializes the Windows0.153.4 app-server.  Preserve the preceding
+shell-quoting failure and module-path/exit-masking failure as harness evidence.
+No live DOOM claim exists for v26 yet; freeze one four-decision mechanics run.
+See `research/doom/MAP01_PERSISTENT_PLANNER_V26.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms

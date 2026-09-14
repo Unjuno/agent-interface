@@ -1,3 +1,15 @@
+Current direction (r47): controller v26 now composes v25 exact-observation
+invalidation with one persistent capability-minimized app-server process and
+typed per-decision turns.  Invalidation marks the matching turn stale, sends one
+interrupt, independently cancels/releases cover, awaits planner terminal, and
+admits neither action nor next_cover.  Adapter v2 adds MAP01-required const,
+length, count, uniqueness and numeric-bound checks without mutating frozen v1.
+Nineteen adapter plus three integration and four retained monitor/guard tests
+pass; WSL reaches the Windows0.153.4 app-server command-free.  Retain two WSL
+diagnostic harness failures.  Next freeze one four-decision integration run;
+judge typed lifecycle/release/discard mechanics, not gameplay.  No subagent/
+context handoff; full goal open.
+
 Current direction (r46): a frozen Luna-low turn is interrupted after its first
 matching agent-message delta (`{"`).  Delta observation to interrupt send is
 0.137ms, send-to-ack3.035ms and send-to-interrupted-completion3.181ms.  No agent
