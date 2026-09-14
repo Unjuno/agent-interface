@@ -16,6 +16,16 @@ finishes cleanly.  With no task input, the independent oracle reports all six
 tasks missing, zero records and `success:false`, as required.  This smoke makes
 no model call and is not part of the future formal allocation.
 
+`integrated_efficiency_protocol_v1.py` now enforces the exact arm/task/layout/
+route schedule, complete per-call usage, image-backed planner-generation counts,
+exact submissions, releases, and the persistent task-4 old-reference refusal
+before repair.  It independently computes cumulative input tokens, generations,
+observed break-even and the frozen disposition.  Positive, extra-model-call,
+old-target-input, cross-task duplicate-call-ID, wrong-side-effect and no-gain
+controls pass.  The first draft's task-local call-ID check missed cross-task
+duplicates; that failure was found before commit and the validator now rejects
+duplicates across the complete comparison.
+
 This plan is the first deliverable for Issue #57.  The preceding compiled GUI
 mechanics block ended at live v5 with disposition
 `ADVANCE_TO_MATCHED_EFFICIENCY_COMPARISON`.  This work therefore switches from
