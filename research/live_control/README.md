@@ -1,5 +1,12 @@
 # Asynchronous live control: development evidence
 
+Latest model-free boundary: [running action guard v1](RUNNING_ACTION_GUARD_V1.md)
+uses the exact observations already emitted during held input to re-evaluate a
+planner-authored action contract. Retained v31 replay accepts22/22 historical
+primary frames; health-loss and zero-ammo controls require cancel and verified
+empty release. It is not yet wired into a live controller and makes no latency
+or gameplay claim.
+
 Current next block: [integrated token-efficiency evaluation plan v1](INTEGRATED_EFFICIENCY_PLAN_V1.md).
 Issue #57's three-arm comparison retains a batched plain baseline and measures the
 same cold/warm/layout-invalidation/repair sequence against ephemeral and persistent

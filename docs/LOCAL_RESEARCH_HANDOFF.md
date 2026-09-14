@@ -3466,3 +3466,26 @@ latency or gameplay evidence. At freeze time weekly Codex capacity was94% used,
 6% remained and no reset credit was available, so the actual Luna call remains
 unrun. Issue #59 remains the current research-priority tracker; no newer issue
 was present in the open-issue check.
+
+## Latest follow-up — existing held-input observations can enforce validity during execution (2026-09-15)
+
+V33 checks immediate-action health, ammo and binding once before the first
+Executor submission. Its held inputs already emit an exact observation roughly
+every50ms, but the controller previously used those only for posthoc viewport
+effect receipts. `running_action_guard_v1` consumes the same stream without a
+new capture, image, model call or input operation. It preserves active authority
+only while the exact action contract remains valid. During an active program a
+breach requires matching cancellation and a cancelled terminal with independently
+verified empty keys/buttons. Between programs it requires a strictly newer valid
+snapshot before another acceptance.
+
+The retained v31 primary trace supplies22 exact running frames across5 completed
+programs. A counterfactual replay accepts22/22 under the already documented
+health/ammo construction and closes all5 historical terminals with verified
+release. Injected health-loss and zero-ammo controls enter `CANCEL_REQUIRED`,
+then reach `REVOKED_ACTION_NOT_CURRENT` only after matching cancel and empty
+release evidence. Windows/Linux run15 tests and produce identical retained JSON
+SHA-256 `c9f102b6d4f79569910d6da79f67cac5b60d955063d2efc971cdcee7fa2246b5`.
+This does not show a historical cancellation or live latency improvement. Add
+the guard to a new v34 controller without changing v33, then measure an actual
+mid-hold invalidation only after the frozen schema-v6 endpoint gate permits it.

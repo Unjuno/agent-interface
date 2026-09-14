@@ -1,3 +1,15 @@
+Current direction (r80): existing Executor hold observations expose an unfilled
+runtime boundary after v33's one-time pre-admission check. A no-input running
+action guard now re-evaluates the exact planner contract during active input and
+between program segments. Health/ammo/binding/order failure requires cancellation
+while active; only a matching cancel plus verified empty key/button terminal
+closes revocation. Retained v31 replay checks22/22 exact primary frames across5
+programs without false invalidation; injected health/ammo breaches reach verified
+revocation. Windows/Linux15-test sets and replay bytes match SHA c9f102b6…. This
+is counterfactual/model-free; next integrate into a separately versioned v34
+controller and measure actual cancel latency after schema-v6 preflight. No live
+efficacy/model/game claim; no subagent/context handoff; full goal open.
+
 Current direction (r79): freeze one separately labelled schema-v6 endpoint
 preflight before any v33 live allocation. Six source hashes bind the exact
 schema, generic preflight, Luna-low no-image runner, instructions, one-shot
