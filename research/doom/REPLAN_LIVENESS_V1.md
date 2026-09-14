@@ -132,3 +132,12 @@ different quantities. Split them and derive the effective floor as
 `max(critical_health_minimum, source_health - maximum_health_loss)`. Also retain
 monitor receive/extraction/detection clocks; v29 only permits capture-to-send
 measurement. See [the frozen v29 result](MAP01_TYPED_COVER_VALIDITY_V29_LIVE_V1.md).
+
+V30 now separates those quantities. Schema v5 asks for an absolute critical
+floor and a 0-through-20 maximum loss; admission uses the stricter of the
+critical floor and fresh source health minus maximum loss. The retained v29
+84→78 change becomes soft with critical30/loss20, while a retained v28 replay
+with critical30/loss13 preserves87/81 and hard-invalidates79. Those loss values
+are construction inputs, not live model outputs. Monitor v2 also records receive,
+extraction-complete and evaluation clocks. Windows43 and WSL/Linux15 tests pass;
+see [the v30 construction](MAP01_SPLIT_COVER_VALIDITY_V30.md).

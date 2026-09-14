@@ -65,6 +65,15 @@ cannot be attributed to the mechanism. The contract must separate absolute
 critical health from bounded short-horizon loss and retain monitor-stage clocks.
 See [the retained v29 result](research/doom/MAP01_TYPED_COVER_VALIDITY_V29_LIVE_V1.md).
 
+V30 repairs that representation model-free: schema v5 separates absolute
+critical health from a statically bounded0–20 short-horizon loss and derives the
+effective floor as their maximum against fresh source health. V29's retained
+84→78 change is soft under critical30/loss20; v28's93→87→81→79 sequence is
+soft/soft/hard under critical30/loss13. These loss values are construction
+inputs, not model evidence. Monitor v2 adds receive, extraction-complete and
+evaluation clocks. Windows43 and WSL/Linux15 tests pass; no v30 live allocation
+exists. See [the v30 construction](research/doom/MAP01_SPLIT_COVER_VALIDITY_V30.md).
+
 ### Integrated token-efficiency comparison selected
 
 [Integrated efficiency plan v1](research/live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md)

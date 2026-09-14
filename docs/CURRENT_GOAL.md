@@ -1,3 +1,14 @@
+Current direction (r63): v30 splits the v29 overloaded floor into absolute
+critical_health_minimum plus schema-bounded0–20 maximum_health_loss; effective
+floor=max(critical, fresh source-loss). Retained v29 health84→78 is soft under
+critical30/loss20, while v28 health93→87→81→79 is soft/soft/hard under critical30/
+loss13. These losses are model-free construction inputs, not model outputs.
+Monitor v2 retains receive, extraction-complete and outcome clocks without
+mutating hash-frozen v1. Windows43 and WSL/Linux15 tests pass. Next commit this
+construction, then preregister at most one new fixed-threat allocation with
+exact soft/hard exposure and timing rules; no gain is claimed yet. No subagent/
+context handoff; full goal open.
+
 Current direction (r62): retain the only v29 live allocation as threat-exposed
 but soft-unexposed. All109 exact observations read health, four turns hard-
 invalidate, two complete and all8 programs release cleanly. Luna twice authors

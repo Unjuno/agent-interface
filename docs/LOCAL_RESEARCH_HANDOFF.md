@@ -3303,3 +3303,15 @@ absolute critical_health_minimum from schema-bounded maximum_health_loss, derive
 the effective floor as their maximum, and add monitor-stage clocks before another
 allocation. Interrupted usage is partly unknown. See
 `research/doom/MAP01_TYPED_COVER_VALIDITY_V29_LIVE_V1.md`.
+
+## Latest follow-up — v30 separates critical health from bounded loss (2026-09-15)
+
+Schema v5 repairs v29's overloaded absolute floor by adding a separate0–20
+maximum_health_loss. Admission derives effective floor=max(critical floor,
+fresh health-loss). In retained replay, v29's84→78 becomes soft under critical30/
+loss20; v28's93→87→81→79 is soft/soft/hard under critical30/loss13. These loss
+values are construction inputs and not prior model outputs. Monitor v2 retains
+receive, extraction-complete and evaluation clocks while v1 remains hash-frozen.
+Windows43 and WSL/Linux15 tests pass. No v30 live allocation exists; commit the
+construction before freezing one new fixed-threat run. See
+`research/doom/MAP01_SPLIT_COVER_VALIDITY_V30.md`.
