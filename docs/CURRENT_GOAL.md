@@ -1,3 +1,15 @@
+Current direction (r50): the frozen v27 composition passes in a real advancing
+game.  Decision0 injects once at exact sequence5; detection-to-turn-interrupt is
+0.025ms, send-to-ack2.192ms, send-to-interrupted-completion3.279ms, and detection-
+to-cover-release24.057ms.  It admits zero plan and supplies zero next cover.
+Decision1 reuses the same thread, starts with empty/no-source cover, completes a
+fresh typed action, and all3 programs verify empty release.  This closes the
+controller composition gate but is injected, not natural/gameplay/token evidence.
+Stop injection work.  Next transfer the persistent typed boundary to the shared
+desktop acquisition/golden path and compare the same retained tasks for exact
+correctness, model wait, input/cache, round trips and repair.  This tests shared
+interface value beyond FPS control.  No subagent/context handoff; full goal open.
+
 Current direction (r49): v27 adds an opt-in one-shot invalidation after a fixed
 number of exact real-game observations.  Natural visual invalidation always has
 priority; injection is explicitly labelled, claims no semantic change/success,

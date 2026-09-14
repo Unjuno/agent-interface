@@ -3135,6 +3135,20 @@ recovery with no inherited cover; after that first result, remove the opt-in
 arguments and resume natural conditions.  See
 `research/doom/MAP01_DETERMINISTIC_INVALIDATION_V27.md`.
 
+The frozen two-decision v27 construction allocation passes the full composition.
+Decision0 fires the injected event at exact sequence5 after four observations.
+Detection-to-matching-interrupt-send is0.025ms; send-to-ack is2.192ms; send-to-
+interrupted-completion is3.279ms; detection-to-cover-release is24.057ms.  It
+admits no plan and contributes no following cover.  Decision1 uses the same
+thread with a distinct turn, starts from empty/no-source cover, completes a
+fresh schema-valid action, and releases its plan.  All3 admitted programs verify
+empty release.  First-turn usage is unavailable; second-turn usage is9,357 input/
+7,936 cached/282 output/197 reasoning.  This is injected construction evidence,
+not natural/gameplay/token evidence.  End injection work and move the persistent
+typed boundary into the shared desktop acquisition/golden path for matched
+correctness, wait, cache/input, round-trip and repair comparison.  See
+`research/doom/MAP01_DETERMINISTIC_INVALIDATION_V27_LIVE_V1.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms

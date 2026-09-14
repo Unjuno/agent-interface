@@ -1,0 +1,40 @@
+{
+  "schema": "map01-deterministic-invalidation-v27-live-audit-v1",
+  "passed": true,
+  "allocation_id": "map01-deterministic-invalidation-v27-live-01",
+  "disposition": "RETAINED_DETERMINISTIC_COMPOSITION_PASS",
+  "planner_threads": 1,
+  "planner_turn_statuses": [
+    "interrupted",
+    "completed"
+  ],
+  "planner_interrupts": 1,
+  "first_turn_usage": "absent_unknown_not_zero",
+  "second_turn_cumulative_usage": {
+    "totalTokens": 9639,
+    "inputTokens": 9357,
+    "cachedInputTokens": 7936,
+    "cacheWriteInputTokens": 0,
+    "outputTokens": 282,
+    "reasoningOutputTokens": 197
+  },
+  "verified_program_releases": 3,
+  "discarded_action_plan_admissions": 0,
+  "discarded_cover_inheritance": 0,
+  "metrics": {
+    "capture_to_invalidation_detection_ms": 76.228353,
+    "detection_to_interrupt_send_ms": 0.024975,
+    "interrupt_send_to_ack_ms": 2.192292,
+    "interrupt_send_to_completion_ms": 3.278596,
+    "detection_to_cover_release_ms": 24.057146
+  },
+  "score": {
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "death_count": 0,
+    "kill_count": 0
+  },
+  "decision": "the controller-level composition gate passes; remove injection arguments and return to natural multi-domain benchmark and efficiency work",
+  "limits": "one injected construction event, not a natural visual change; no gameplay, latency distribution, token-savings, reliability or MAP01-clear claim"
+}
