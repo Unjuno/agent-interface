@@ -1,3 +1,13 @@
+Current handoff r31: v19 adds model-authored `next_cover`; Astra uses coast on
+clear views and authors strafe/fire/strafe only with a visible enemy and ammo,
+then the next turn executes it.  The first live compiler exhausts 16 steps at
+9.640 s and ends on hold, so it is retained as a defect.  V20 emits complete
+cycles totaling exactly 10 s and ending on coast.  Its four-turn live run renews
+twice at 20.990/21.512 ms and remains alive/unfinished.  Input 49,360 versus 48,661
+renewal-only is a descriptive +699 (+1.436%) across unmatched model outputs.
+Next obtain corrected threat-policy execution and inspect resource/evasion
+effects before preregistering hero v2.  No subagent or context handoff is used.
+
 Current handoff r30: v18 runs model inference on a worker while the main
 controller renews an expired bounded cover program with latest sequence and a
 new deadline.  In a four-decision Astra-low development probe, 2 renewals measure

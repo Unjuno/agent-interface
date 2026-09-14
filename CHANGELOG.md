@@ -18,6 +18,11 @@
   reducing observed uncovered model segments to a 21.44 ms maximum while every
   cover terminal verifies input release. Gameplay benefit remains unproven.
 
+- Add a compact model-authored policy for the following inference interval.
+  Retain a first 16-step truncation that ended on held input, then compile only
+  complete cycles to exactly ten seconds and a final coast. Corrected live
+  renewal stays within 21.52 ms; threat-policy gameplay evidence remains open.
+
 - Add a separate asynchronous research executor with whole-program validation,
   early feedback, cancellation and X11 key-release verification. Six fresh
   XTerm/Calc probes pass; retain an actual assistant's missed cancellation and

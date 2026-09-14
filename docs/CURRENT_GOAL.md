@@ -1,3 +1,16 @@
+Current direction (r31): Astra now authors a compact `next_cover` policy that
+the shared runtime executes and renews during the following inference interval.
+In v19 it chooses coast for clear views and, only after a visible enemy plus
+ammunition, authors strafe-left/fire/strafe-right; the next turn executes that
+exact policy.  Self-use exposes a 16-step compiler defect: the threat sequence
+ends on a hold at 9.640 s.  V20 retains that failure and compiles complete cycles
+to exactly 10 s ending on coast.  A corrected four-turn live run renews twice with
+20.990/21.512 ms gaps and remains alive/unfinished.  Same-seed input is 49,360
+versus 48,661 for renewal-only (+699, +1.436%) in unmatched sequential samples.
+Next require corrected threat-policy execution in a new bounded run and inspect
+ammo/evasion effects before freezing hero v2.  No gameplay or causal token gain
+is established.  No subagent or context handoff is used; full goal open.
+
 Current direction (r30): controller v18 repairs the concrete Astra cover-lifetime
 gap with bounded renewal from fresh sequence evidence while the model future is
 still pending.  A four-decision development probe renews 2 expired cover programs;

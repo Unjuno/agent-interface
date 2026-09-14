@@ -102,6 +102,14 @@ fresh sequence evidence. Release-to-readmit gaps were 20.71–21.44 ms; total
 uncovered model time was 54.19 ms. Gameplay benefit remains unproven, and a
 compact model-authored cover policy is still needed before another hero gate.
 
+[Model-authored renewable cover](MAP01_COVER_POLICY_V1.md) adds that policy
+handoff. Astra chose coast on clear views and authored a bounded strafe/fire/
+strafe policy only after a visible enemy and ammunition appeared. Self-use found
+that v19 exhausted the executor's 16-step cap at 9.64 seconds; v20 compiles only
+complete cycles to exactly ten seconds and ends on coast. A corrected four-turn
+live run renewed twice with 20.99–21.51 ms gaps. Corrected threat execution and
+gameplay benefit remain open.
+
 The assistant has now operated a ViZDoom basic scenario through OS keyboard
 input and X11 screenshots, using the existing async executor and exact image
 transport. This uses the bundled **Freedoom assets**, not original commercial
