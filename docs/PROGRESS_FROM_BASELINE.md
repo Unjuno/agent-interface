@@ -582,3 +582,14 @@ state. Four calls use 34,806 input tokens, with 20 exchanges and 15 frames.
 Independent Windows/WSL audits pass while retaining two setup failures and the
 earlier fault-control failures. See
 [receipt revalidation follow-up](../research/benchmark_discovery/MINDUSTRY_RECEIPT_REVALIDATION_FOLLOWUP_V3.md).
+
+Adaptive acquisition accounting now has one offline shared callable path.
+Cold anchor success, full three-call expansion, injected expansion, no-match,
+exhaustion, stale/association refusal, warm reuse and invalidate/repair all use
+the same state machine. Attempt-before-call journaling, failed-call usage,
+field-level missingness, duplicate IDs, omitted stages and comparison classes
+audit across 15 Windows/WSL scenarios. Retained full-cold accounting is 17,386
+input tokens for two calls and 25,675 for three; the historical injected
+subpath remains separately labelled at 16,387. Reuse numbers are test-double
+mechanics, not measured savings. See
+[adaptive acquisition caller](../research/live_control/ADAPTIVE_ACQUISITION_CALLER_V1.md).

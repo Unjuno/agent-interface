@@ -2780,3 +2780,15 @@ three feasibility revisions. Issue #55 can close; the next bounded milestone is
 #53's shared cold/reuse/invalidate/repair caller with complete attempt accounting.
 See
 `research/benchmark_discovery/MINDUSTRY_RECEIPT_REVALIDATION_FOLLOWUP_V3.md`.
+
+Latest #53 step: `adaptive_acquisition_caller_v1.py` consolidates cold
+acquisition, warm reuse, invalidation and repair behind injected adapters.
+Every model attempt is journaled before invocation; completed calls, missing
+usage fields, cached-input subset, cost availability, duplicate IDs, skipped
+stages and comparison class are reported separately. Fifteen offline
+retained-record/test-double scenarios pass Windows/WSL independent audit.
+Full-cold anchor accounting is 2 calls/17,386 input and full expansion is
+3/25,675; the historical injected subpath remains non-comparable at 2/16,387.
+Warm reuse/repair results are mechanics only. Keep #53 open until a frozen live
+block uses this exact caller and a second GUI layout exercises it. See
+`research/live_control/ADAPTIVE_ACQUISITION_CALLER_V1.md`.

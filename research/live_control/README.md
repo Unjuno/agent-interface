@@ -491,3 +491,13 @@ input. V2 restores the condition target at both boundaries: Company Finances
 selects receipt5 and passes its independent oracle; Airport construction is
 absent from all five receipts and yields `NO_TARGET_AUTHORITY`, point null and
 zero target buttons. Four calls use 32,992 input tokens; 93 frames audit cross-OS.
+
+[Adaptive acquisition caller v1](ADAPTIVE_ACQUISITION_CALLER_V1.md) now gives
+cold acquisition, warm reuse, invalidation and repair one injected-adapter
+state machine. It journals every model attempt before invocation and reports
+completed calls, field-level usage coverage, missing fields, duplicate IDs,
+omitted stages and comparison class independently. Fifteen offline
+retained-record/test-double branches pass Windows/WSL audit. Full-cold anchor
+and expansion account for 2/17,386 and 3/25,675 calls/input tokens; the
+historical injected subpath remains explicitly non-comparable. Live efficacy
+and reuse savings remain untested.

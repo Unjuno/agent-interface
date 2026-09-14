@@ -967,3 +967,13 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   次は#53の共通callerへcold acquire/warm reuse/invalidate/repairと全attempt accountingを
   統合し、4逐次model境界と約31-39s model waitを削減候補として比較する。
   自然fault率・OS atomicity・人間速度・freezeは未達。
+
+- 2026-09-14 r20: #53のoffline-first共通callerを追加。cold acquire、warm reuse、
+  invalidate/repair、no-match/exhaustion、stale/association、model failureを同じ関数で
+  分岐。attemptをmodel adapter前にjournalし、completed calls、field別usage coverage、
+  missing、duplicate ID、omitted stage、comparison classを分離。保持済みOpenTTD usageを
+  用いた15 scenariosはWindows/WSL監査合格。cold anchor 2 calls/17,386 input、
+  full expansion 3/25,675、injected subpath 2/16,387。warm 0とrepair 1/8,280は
+  test-double mechanicsであり削減claimなし。次はこの同一callerを実OpenTTDの有限
+  accepted/expanded/no-match/stale blockへ接続し、その後Mindustry layoutへ移植する。
+  live efficacy・causal latency/token benefit・portability・人間速度・freezeは未達。

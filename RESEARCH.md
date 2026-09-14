@@ -930,3 +930,13 @@ outcomes, admit zero target buttons and restore the original binding/geometry.
 The passing block uses four calls, 34,806 input tokens, 20 exchanges and 15
 frames; two setup failures remain visible. See
 `research/benchmark_discovery/MINDUSTRY_RECEIPT_REVALIDATION_FOLLOWUP_V3.md`.
+
+Adaptive acquisition now has one offline shared caller for cold acquisition,
+warm reuse, invalidation and repair. It records attempts before model adapters,
+keeps completed calls separate, derives field-level usage coverage without
+zero-filling and marks omitted stages/comparison class. Fifteen retained-record
+and test-double branches pass Windows/WSL audit: full cold anchor and expansion,
+injected subpath, no-match/exhaustion, stale/association refusal, reuse/repair,
+missing or partial usage and duplicate IDs. The 0-call reuse and 1-call repair
+are mechanics only, not measured savings. See
+`research/live_control/ADAPTIVE_ACQUISITION_CALLER_V1.md`.
