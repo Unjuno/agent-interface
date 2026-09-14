@@ -1,3 +1,16 @@
+Current direction (r60): deterministic typed cover validity passes development
+replay. A hash-bound Freedoom WAD-glyph reader extracts health from all70 exact
+v28 observations with zero unknowns and matches19 manual review points across
+v28 plus an independent12-frame v23 trace. It distinguishes the hidden97→100
+pickup from damage. With a posthoc development floor80, health87 and81 are two
+coalesced soft transitions and79 is a hard invalidation, 17 exact samples and
+5,240.235886ms after the old first-change stop. The generic guard never grants
+input and fails closed on unknown, expiry, sequence and binding faults. Next
+integrate this envelope into the controller model-free and prove soft preserve,
+hard cancel/release and stale-plan refusal before freezing a live allocation.
+The floor is not preregistered and no planner, survival, token, speed or clear
+gain is established. No subagent/context handoff; full goal open.
+
 Current direction (r59): treat the v28 result as a safety pass and liveness
 failure. Revisit renewable local cover under an explicit typed validity
 envelope: locally verified soft transitions may preserve existing bounded

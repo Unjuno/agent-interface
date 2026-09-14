@@ -14,7 +14,7 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Experimental ladder
 
-### Current real-time gate — natural safety passes, replanning liveness fails
+### Current real-time gate — typed liveness construction passes replay
 
 The first fixed-threat v28 allocation starts from a hash-bound real Freedoom
 MAP01 state whose exact initial frame visibly contains an enemy. Five of six
@@ -33,6 +33,17 @@ still revoke authority. See [the retained v28 result](research/doom/MAP01_FIXED_
 and [replanning liveness design](research/doom/REPLAN_LIVENESS_V1.md). No
 gameplay-quality, survival, token-efficiency, reliability, human-speed, or
 MAP01-clear claim follows from this one allocation.
+
+A model-free typed validity construction now replaces directionless HUD pixel
+change with hash-bound WAD-glyph health extraction. It reads all70 exact v28
+observations with zero unknown signals and matches19 manually reviewed values
+across v28 and an independent v23 allocation. A development-only posthoc health
+floor preserves the existing policy through87 and81, then hard-invalidates at
+79, 17 exact samples and5,240.235886ms after v28's first raw change. This passes
+the extraction, fail-closed, one-way-authority and coalescing checks, but does
+not run a planner or prove useful progress. The next gate is model-free
+controller integration of typed soft preservation and hard cancel/release. See
+[the replay report](research/doom/MAP01_COVER_VALIDITY_REPLAY_V1.md).
 
 ### Integrated token-efficiency comparison selected
 

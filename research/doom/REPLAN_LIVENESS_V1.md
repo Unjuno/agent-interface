@@ -37,6 +37,14 @@ replanning. Its domain and evidence are different, but the event-classification
 boundary matches the failure exposed here:
 <https://arxiv.org/abs/2511.22354>.
 
+Kvarnstrom, Heintz and Doherty attach global and operator-specific monitor
+conditions to plans, preserve those conditions as high-level plans become
+lower-level commands, and subscribe only to state needed by active monitors.
+That supports making `cover_validity` part of the admitted cover contract and
+activating its signal work only while that cover executes. Their UAV system is
+evidence for the architecture pattern, not for this HUD extractor or threshold:
+<https://cdn.aaai.org/ICAPS/2008/ICAPS08-025.pdf>.
+
 ## Candidate contract
 
 The next candidate should keep the existing one-way authority rule and add a
@@ -80,3 +88,21 @@ Only after those invariants pass should a new fixed-threat allocation compare
 completed decisions, interrupt rate, stale input, release latency, damage,
 survival/progress, and attributable token use. V28 remains the baseline. One
 run cannot establish a general rate or survival advantage.
+
+## Construction replay result
+
+The model-free construction now reads a hash-bound HUD health value rather than
+assigning meaning to a raw pixel delta. It reads all 70 exact v28 observations
+without an unknown result and matches 19 manual review points across v28 and an
+independent v23 allocation. The v28 sequence includes a 97-to-100 pickup as well
+as damage, so direction is observable. Missing, malformed, expired and binding-
+mismatched evidence fails closed in the generic guard tests.
+
+With a development-only posthoc floor of 80, the replay preserves existing
+authority through two distinct soft values, 87 and 81, and hard-invalidates at
+79. That is 17 exact samples and 5,240.235886 ms after the old guard's first raw
+change. This does not prove that the extra interval is useful: no planner runs in
+the replay and the floor was chosen after seeing the trace. Integrate the typed
+envelope into the controller and verify release/stale-plan invariants model-free
+before freezing another live allocation. See
+[the retained construction replay](MAP01_COVER_VALIDITY_REPLAY_V1.md).

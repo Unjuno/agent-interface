@@ -3258,3 +3258,20 @@ damage starves five of six high-level decisions. Next distinguish expected
 change that bounded local cover can absorb from policy-assumption failure that
 requires planner interruption. Interrupted-turn usage is unknown. See
 `research/doom/MAP01_FIXED_THREAT_V28_LIVE_V1.md`.
+
+## Latest follow-up — typed cover-validity replay passes construction (2026-09-15)
+
+The model-free construction replaces raw changed-pixel invalidation with a
+hash-bound Freedoom WAD-glyph health signal and a generic one-way validity
+guard. It reads all70 exact v28 observations with zero unknown results and
+matches19 manual review points across v28 and an independent hash-checked
+12-frame v23 trace. The trace includes a97→100 pickup, so semantic direction is
+available. A posthoc development floor80 coalesces87 and81 as soft transitions
+and hard-invalidates at79, 17 exact samples and5,240.235886ms after the old first
+change. Unknown, expiry, binding and sequence failures require a new decision;
+the guard never grants input. This is construction evidence only: the floor was
+selected after the trace, no planner ran, and survival/progress/release timing
+are untested. Next integrate the typed envelope into the controller model-free,
+then freeze a live allocation only if soft preserve and hard cancel/release keep
+the stale-plan invariants. See
+`research/doom/MAP01_COVER_VALIDITY_REPLAY_V1.md`.
