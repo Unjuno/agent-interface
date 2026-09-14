@@ -11,6 +11,22 @@ similar/transient negative. Fixed24x14 region size, automatic identity, cost and
 human tempo remain open. See research/live_control/POINT_TARGET_CONTRACT_V2.md.
 Full goal stays open.
 
+Latest cross-domain contract result: the preregistered seed991004 OpenTTD pair
+correctly authors `source_observation_pixels` and
+`surface_origin_translation`2/2, but direct semantic point grounding is0/2.
+Luna-low selects `[650,51]` and `[432,51]` instead of the independently known
+Road Construction point `[820,51]`. Stable follows the actual `[21,28]` surface
+move, then the local first-road condition stops safely at step4 with12 target/0
+guard changed pixels. The paired negative mints the unchanged unrelated icon
+instead of refusing. Independent success is0/2;62 exact frames audit Windows/WSL.
+Preserve this baseline. The next local objective is a preregistered bounded
+candidate/hover-label presentation that raises target accuracy without weakening
+patch freshness, input admission, independent scoring or recovery. Measure added
+model boundaries, tokens and decision time. Preregister tooltip readiness,
+readability and candidate association; the existing contact sheet alone does not
+prove them. Fixed region size, unseen targets, cost and human tempo remain open. See
+research/live_control/OPENTTD_POINT_CONTRACT_V1.md. Full goal stays open.
+
 Latest target-authorship evidence: preregistered `target_handle_mint_from_point`
 derives a24x14 region from Luna-low's Save point `[270,243]` instead of receiving
 an absolute caller box. Stable exact-patch mint follows surface move `[20,8]`, a
@@ -732,6 +748,13 @@ X11固有部分の分離、入力権限・期限・解放・フォーカス・�
 入力命令体系・planner/runtime境界の安定を要する。
 
 ## Change log
+
+- 2026-09-14 r6: explicit point/motion contractの最初のOpenTTD移植では、frame/
+  motion意味論は2/2正しい一方、密な無記名toolbarのsemantic groundingは0/2。
+  runtimeは誤ったiconを正確に追跡し、local conditionが後続mutationを停止した。
+  失敗pairを固定し、次の局所目標をfull-frame直接指定から、固定候補に対する
+  bounded delayed-hover label evidenceへ更新。Domain Coverage Matrix、独立採点、
+  human-tempo最終目標とfreeze未達は維持する。
 
 - 2026-09-13 r3: ユーザーのDomain Coverage Matrix提案を採用。DOOM中心の
   次段階から、Linuxでの直交benchmark候補のfeasibilityを直近の優先に変更。

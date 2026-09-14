@@ -100,6 +100,19 @@ Windows/WSL. This repairs the prior contract HOLD for the known task; caller-
 authored24x14 size, cross-domain behavior and efficiency remain open. See
 [explicit point and motion contract](research/live_control/POINT_TARGET_CONTRACT_V2.md).
 
+The first explicit-contract transfer to a dense OpenTTD toolbar is a
+preregistered failure. Both Luna-low calls author the correct point space and
+surface-origin motion, but select `[650,51]` and `[432,51]` rather than the prior
+independently successful Road Construction point `[820,51]`. The stable handle
+faithfully tracks its wrong icon through observed binding delta `[21,28]`; the
+first-road local condition then stops at step4 with12 target/0 guard changed
+pixels and verified release. In the paired negative, opening the correct toolbar
+does not alter the model-selected patch, so minting succeeds instead of refusing.
+Independent task success is0/2 and all62 frames replay cross-OS. Preserve the
+direct full-frame baseline; next test a bounded candidate set with delayed hover
+labels and independent scoring. See
+[OpenTTD point-contract transfer](research/live_control/OPENTTD_POINT_CONTRACT_V1.md).
+
 ### First live bounded drag-effect allocation
 
 A preregistered seed991003 replay keeps the v6 model, task, initial state,

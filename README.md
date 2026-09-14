@@ -99,6 +99,18 @@ to independent evaluation, including7.446s in the model call; one episode and a
 scripted final click establish no speedup. The fixed24x14 region and known button
 remain. See [explicit point and motion contract](research/live_control/POINT_TARGET_CONTRACT_V2.md).
 
+The first cross-domain transfer of that contract is a retained OpenTTD failure.
+Two identical Luna-low tasks author the correct source-pixel and surface-motion
+semantics, but choose toolbar points `[650,51]` and `[432,51]` instead of the
+independently known Road Construction target `[820,51]`. The stable wrong-icon
+handle still follows the window manager's actual `[21,28]` delta; a local
+postcondition then stops before later mutation, with0 guard change and verified
+release. The transient negative also mints the unrelated unchanged region rather
+than refusing. All62 frames and patch digests audit on Windows/WSL. Direct
+full-frame semantic grounding is0/2, so the next candidate adds bounded delayed
+hover labels for a fixed icon set. See
+[OpenTTD point-contract transfer](research/live_control/OPENTTD_POINT_CONTRACT_V1.md).
+
 Frame resolution now runs inside the candidate interface. A fresh1152x720
 OpenTTD pair sends only original1024 coordinates plus explicit frame identity;
 the runtime resolves clicks, drags and condition boxes from the latest pointer

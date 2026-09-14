@@ -64,6 +64,17 @@ changed target before handle creation/input. Its36-frame audit passes Windows/WS
 This advances the contract only; v33 remains opt-in and the24x14 region is still
 caller-authored. See POINT_TARGET_CONTRACT_V2.md.
 
+The contract's first model-facing OpenTTD transfer remains opt-in and HOLD.
+Identical Luna-low prompts correctly author source pixel space and
+surface-origin motion2/2, while semantic target grounding is0/2: model points
+`[650,51]` and `[432,51]` miss the known Road Construction target `[820,51]`.
+The stable handle still revalidates across actual surface delta `[21,28]`, then
+the local condition stops the program at step4 before later mutation. The paired
+changed-target expectation also fails because the model-selected unrelated icon
+does not change. All62 frames replay Windows/WSL. Do not retry this frozen pair;
+the next candidate is bounded delayed-hover label evidence over fixed toolbar
+points. See OPENTTD_POINT_CONTRACT_V1.md.
+
 Prior coordinate candidate: `executor_v4/session_v26` resolve explicit-frame
 clicks, drags and target/guard boxes from the latest stable pointer binding before
 whole-program validation. Fresh1152x720 OpenTTD receives only original1024

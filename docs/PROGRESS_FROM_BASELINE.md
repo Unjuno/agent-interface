@@ -91,6 +91,17 @@ audit cross-OS. Stable decision-to-independent-return is8.343s, including7.446s
 of parent-observed model execution. This closes the prior contract ambiguity for
 one known button, while fixed region size, new domains and repeated timing remain.
 
+That cross-domain test has now run and exposes semantic grounding as the next
+bottleneck. In two fresh OpenTTD cases, the model gets point-space and motion
+semantics right2/2 but identifies the known Road Construction icon0/2. The
+runtime faithfully mints and moves the selected wrong regions. Stable tracks the
+actual `[21,28]` surface delta, then a local target/guard condition halts before
+the remaining road steps; independent task success stays false and surrounding
+state is preserved. The paired target-change case cannot test refusal because
+the correct toolbar click leaves the unrelated model patch unchanged. The62-frame
+cross-OS audit passes. The direct full-frame failure is retained, and the next
+comparison will add bounded hover-label evidence rather than tuning the answer.
+
 Latest delta: bounded drag-effect memory now transfers correct actuation to one
 changed seed991004 L geometry. Two distinct drags complete all five target tiles
 with zero surrounding changes or repeated completed-segment input. The planner
