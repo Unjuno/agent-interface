@@ -13,6 +13,11 @@
   time, while audit finds fixed cover expired before seven of 13 model returns.
   Include the complete timeline as a labelled 78-second 2x telemetry video.
 
+- Add bounded cover renewal while model inference is pending. A four-decision
+  development probe renews two expired programs from fresh sequence evidence,
+  reducing observed uncovered model segments to a 21.44 ms maximum while every
+  cover terminal verifies input release. Gameplay benefit remains unproven.
+
 - Add a separate asynchronous research executor with whole-program validation,
   early feedback, cancellation and X11 key-release verification. Six fresh
   XTerm/Calc probes pass; retain an actual assistant's missed cancellation and

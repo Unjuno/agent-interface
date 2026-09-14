@@ -1,3 +1,15 @@
+Current direction (r30): controller v18 repairs the concrete Astra cover-lifetime
+gap with bounded renewal from fresh sequence evidence while the model future is
+still pending.  A four-decision development probe renews 2 expired cover programs;
+release-to-readmit is 20.710/21.436 ms, total uncovered model time 54.187 ms and
+maximum 21.436 ms, versus the failed hero run's 9.771 s total/3.765 s maximum tails.
+Every cover terminal verifies release.  This is mechanism evidence, not gameplay
+gain.  Next replace the repeated heuristic with a compact model-authored cover
+policy that is safe to renew and resource-aware, validate its local contract,
+then freeze a separately versioned hero attempt.  Continue the desktop golden
+demo and launch packaging independently.  No subagent or context handoff is
+used; full goal open.
+
 Current direction (r29): the first frozen Issue #58 Astra hero allocation is a
 retained failure, not a rerun target.  It enters later MAP01 rooms, kills one
 enemy, then dies after 13 decisions/149.911 s without exit.  The game clock stays

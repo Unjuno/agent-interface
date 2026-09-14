@@ -95,6 +95,13 @@ expired before seven of 13 model calls returned. The complete visual timeline
 is committed at labelled 2x playback. This is an honest failed hero attempt and
 does not block the reproducible desktop Research Preview.
 
+[Renewable cover](MAP01_COVER_RENEWAL_V1.md) fixes the concrete lifetime defect
+without changing the failed frozen allocation. In a four-decision development
+probe, two model calls outlived their first cover program and were renewed from
+fresh sequence evidence. Release-to-readmit gaps were 20.71–21.44 ms; total
+uncovered model time was 54.19 ms. Gameplay benefit remains unproven, and a
+compact model-authored cover policy is still needed before another hero gate.
+
 The assistant has now operated a ViZDoom basic scenario through OS keyboard
 input and X11 screenshots, using the existing async executor and exact image
 transport. This uses the bundled **Freedoom assets**, not original commercial

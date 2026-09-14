@@ -1,3 +1,13 @@
+Current handoff r30: v18 runs model inference on a worker while the main
+controller renews an expired bounded cover program with latest sequence and a
+new deadline.  In a four-decision Astra-low development probe, 2 renewals measure
+20.710/21.436 ms release-to-readmit; total uncovered model time is 54.187 ms and
+maximum 21.436 ms.  All cover terminals release cleanly.  This fixes the seconds-
+scale lifetime hole as a shared mechanism but proves no gameplay gain.  Next add
+a compact model-authored renewable cover policy, validate it, then preregister a
+new hero version.  Never rerun failed v1; keep the golden demo/launch track
+independent.  No subagent or context handoff is used.
+
 Current handoff r29: frozen `map01-astra-live-01` is retained on its first
 outcome: later rooms, one kill, death after 13 decisions/149.911 s, no MAP01 exit.
 Clock probe is 35.016 tics/s, but fixed ten-second cover ends before 7/13 model
