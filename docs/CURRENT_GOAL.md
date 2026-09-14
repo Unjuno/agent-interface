@@ -1,15 +1,16 @@
-Current direction (r39): v24 implements the smallest guard justified by the
-retained v23 stale-policy trace.  A configured exact-frame ROI can only cancel
-existing cover and discard the model action computed from its invalidated
-source.  Changed and unknown both require a fresh decision; discarded output
-cannot supply commands or the next cover.  It never classifies the change,
-grants input, or proves success.  Retained cover-5 replay first invalidates at
-sequence250, 1,570.425128ms after source time, and the generic boundary suite
-passes five fail-closed unknown conditions.  Issue #59 remains the controlling
-sequence and has no newer comments.  Next freeze and run exactly one guarded
-live allocation with the tight health-number ROI, retaining failure or no
-invalidation without retry.  Compare mechanics and stale admission, not causal
-survival or MAP01 completion.  No subagent/context handoff; full goal open.
+Current direction (r40): the frozen v24 guarded allocation supplies live
+mechanism evidence.  Four health-ROI changes cancelled four covers with verified
+release, discarded four dependent model actions with zero plan admission, and
+prevented all four discarded cover policies from being inherited.  All24
+admitted programs released.  The unmatched run stayed alive at76%, killed2 and
+did not exit; no causal outcome claim follows.  Timeout polling skipped an
+earlier changed sample twice: earliest capture-to-detection was215.922–544.457ms,
+while detection-to-release was20.423–34.368ms.  All stale model calls still
+completed, consuming four decision slots.  Next split the repair: first make
+invalidation event-driven in a new controller and replay its exact dequeue
+boundary; separately design auditable planner cancellation/partial accounting.
+Do not grant emergency fallback from the ROI or rerun v24.  No subagent/context
+handoff; full goal open.
 
 Current direction (r37): retained MAP01 failure analysis separates the cover-
 expiry symptom from stale policy semantics.  Fixed cover left 9,770.767 ms of

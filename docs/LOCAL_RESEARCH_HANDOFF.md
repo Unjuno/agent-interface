@@ -3008,6 +3008,17 @@ tight health ROI first fires at sequence250 in lossless retained cover-5 replay,
 before making any live claim.  See
 `research/doom/MAP01_POLICY_INVALIDATION_V24.md`.
 
+The separately frozen v24 live allocation fired four times.  Every triggering
+cover ended cancelled with verified release; all four dependent model actions
+had zero plan admissions and zero next-cover inheritance.  The run stayed alive
+at76%, killed2 and did not exit, but the unmatched seed permits no causal
+survival comparison.  Polling skipped the earliest changed sample twice and
+earliest capture-to-detection reached544.457ms, versus20.423–34.368ms from
+detection to release.  The four stale model calls also ran to completion.  Make
+observation handling event-driven first, then treat cancellable planner calls
+and partial accounting as a separate mechanism.  See
+`research/doom/MAP01_POLICY_INVALIDATION_V24_LIVE_V1.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms
