@@ -37,6 +37,13 @@ engine checks true;37 frames audit cross-OS. Both studies are scripted and have 
 model/token calls. Opt-in; next gate is a model boundary plus changed-target or
 matched negative evidence.
 
+That model gate now passes on two fresh seed991013 sessions. Identical controlled
+Luna-low prompts return strict alias actions2/2 at8,013 input tokens. Stable saves
+and independently succeeds with14 calls, compared with16 for prior separate-query
+handle cases. The paired post-model `about:blank` change produces `MISSING`, zero
+target-action pointer admissions, verified release and no submission. All37 frames
+audit cross-OS. Still opt-in: known form, authored box and constructed target loss.
+
 Prior coordinate candidate: `executor_v4/session_v26` resolve explicit-frame
 clicks, drags and target/guard boxes from the latest stable pointer binding before
 whole-program validation. Fresh1152x720 OpenTTD receives only original1024

@@ -71,3 +71,31 @@ This supports retaining the combined operation across two control domains. It do
 promote target handles as a default interface or support a token, general speed or human-tempo
 claim. The next strong test should integrate it at a model boundary on a new task and include
 a changed-target refusal or matched negative allocation.
+
+## Model-boundary and stale-target pair
+
+A second preregistered pair uses two fresh seed991013 Chromium sessions with the same exact
+prompt, no image, Luna-low and controlled empty workspace. Both model calls return the strict
+`save_form` relation and report8,013 input tokens with zero within-pair variance.
+
+The stable arm takes a post-model fresh observation, revalidates `save_form`, admits exactly
+move/button-down, saves exact `t991013`, verifies release and passes independent evaluation.
+It uses14 durable calls, versus16 in each prior separate-query model-handle case.
+
+In the changed-target arm, the same Chromium surface navigates to `about:blank` after the
+model returns. The required post-model observation sees the new page. Admission-time handle
+resolution returns `MISSING/region_pixels_missing`; the proposed target click receives zero
+pointer admissions, the terminal is `needs_decision`, release verifies and no submission file
+exists. Independent evaluation remains false. Across both arms,37 exact frames replay on
+Windows and WSL.
+
+The stable decision-to-independent-return interval is5,998.963ms; changed-target is
+11,435.887ms and includes the deliberate navigation plus failed independent lookup. They are
+not a matched latency comparison. Cost remains unavailable, and the 8,013-token result repeats
+one controlled prompt rather than proving broad compression.
+
+- Model-pair artifacts: `results/chromium-observe-target-model-pair-01`
+- Model-pair audit: `python research/live_control/audit_chromium_observe_target_model_pair_v1.py`
+
+This closes the immediate model-boundary and stale-target gates. The next useful comparison
+should change the task/domain or derive target identity with less human-authored geometry.

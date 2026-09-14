@@ -60,6 +60,14 @@ forbidden-row and surrounding-guard checks. All37 frames audit cross-OS. The
 234.989ms combined boundary and3956.186ms local program are single-episode values;
 development-known geometry and no model call prevent broader claims.
 
+The next live model pair uses identical seed991013 prompts and two Luna-low calls.
+Both return the exact alias action and report8,013 input tokens. Stable saves and
+independently succeeds with14 durable calls, two fewer than prior separate-query
+model-handle cases. In the other arm the surface changes to `about:blank` after
+model return; fresh admission reports `MISSING`, admits zero target-click pointer
+input, releases safely and creates no submission. The37-frame pair audits cross-OS.
+One known form and constructed fault do not establish broad speed or compression.
+
 Latest delta: bounded drag-effect memory now transfers correct actuation to one
 changed seed991004 L geometry. Two distinct drags complete all five target tiles
 with zero surrounding changes or repeated completed-segment input. The planner

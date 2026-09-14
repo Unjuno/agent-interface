@@ -64,6 +64,15 @@ completes the five-tile L; all four independent engine checks pass over37 exact
 frames. This remains scripted, development-known geometry. See
 [combined observe-target](research/live_control/OBSERVE_TARGET_HANDLE_V1.md).
 
+A fresh same-prompt Luna-low pair then integrates the combined operation at the
+model boundary. Both calls return the strict alias action at8,013 input tokens.
+Stable independently saves and uses14 durable calls, versus16 in the prior
+separate-query handle cases. After the other model call, navigating the same
+surface to `about:blank` makes admission return `MISSING`; the proposed target
+click receives zero pointer admissions and no submission exists. The pair adds37
+exact cross-OS frames. This is one known form and does not establish broad token
+or latency improvement.
+
 Frame resolution now runs inside the candidate interface. A fresh1152x720
 OpenTTD pair sends only original1024 coordinates plus explicit frame identity;
 the runtime resolves clicks, drags and condition boxes from the latest pointer

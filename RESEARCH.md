@@ -64,6 +64,14 @@ L with all four engine checks true. Its37 exact frames replay cross-OS. Geometry
 and remaining actions are scripted, so model-boundary and changed-target tests
 remain. See [combined observe-target](research/live_control/OBSERVE_TARGET_HANDLE_V1.md).
 
+The model-boundary gate now passes on a fresh same-prompt seed991013 pair. Luna-low
+returns the strict no-image alias action2/2 at8,013 input tokens. Stable revalidates,
+independently saves and uses14 durable calls rather than the prior separate-query
+handle path's16. In the paired stale case, the same surface changes to `about:blank`
+after model return; admission yields `MISSING`, zero target-click pointer admissions,
+verified release and no submission. All37 frames replay cross-OS. This is one
+known task and a constructed target loss, with no causal latency or broad token claim.
+
 ### First live bounded drag-effect allocation
 
 A preregistered seed991003 replay keeps the v6 model, task, initial state,
