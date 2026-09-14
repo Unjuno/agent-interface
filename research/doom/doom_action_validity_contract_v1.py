@@ -1,5 +1,5 @@
 """Bind a small planner-authored MAP01 validity spec to exact local signals."""
-from research.live_control.action_validity_admission_v1 import (
+from action_validity_admission_v1 import (
     CONTRACT_FORMAT, action_fingerprint)
 
 

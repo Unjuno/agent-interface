@@ -3433,3 +3433,19 @@ historical paths and rejects zero-ammo fire. This avoids hidden game labels and
 adds no model/input call. It still cannot verify enemy presence or aim. Next
 make this immediate-action specification planner-authored and wire it through a
 new v33 controller to final-admission v2, preserving frozen v32 byte-for-byte.
+The v33 all-path replay adds8 deterministic cases. The6 no-input outcomes have
+zero primary acceptance, the valid path has one, and revocation retains one
+historical acceptance with current authority false. Its audit is byte-identical
+on Windows/Linux (`910ee6f6…`), and all12 v32 preregistered source hashes remain
+unchanged. Endpoint schema-v6 preflight is still required before live use.
+
+## Latest follow-up — v33 wires immediate validity to the exact model-image epoch (2026-09-15)
+
+Schema v6 and responder v10 require planner-authored `action_validity` separately
+from `next_cover_validity`. V33 extracts health+ammo from the exact observation
+used as the newest temporal-sheet image, then checks one freshest post-model
+frame and passes the receipt through final-admission v2. This repairs a v32
+source-time ambiguity and guarantees failed/unknown evidence discards the action
+and next cover before primary Executor acceptance. Focused sets pass15 per OS.
+No model/endpoint/game call exists. Preserve v32 and its preregistration; next
+add deterministic v33 receipt/program cardinality replay and schema preflight.

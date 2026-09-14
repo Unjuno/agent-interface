@@ -11,6 +11,7 @@ ROOT = HERE / "results/map01-soft-context-v31-live-01"
 WAD = REPO / "_vizdoom/vizdoom/freedoom2.wad"
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(HERE.parent / "live_control"))
 from doom_action_validity_contract_v1 import FIRE_ACTIONS, build_contract
 from doom_hud_signal_v2 import DoomStatusNumberReader
 from research.live_control.action_validity_admission_v1 import (

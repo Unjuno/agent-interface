@@ -1,3 +1,24 @@
+Current direction (r78): v33 deterministic composition now covers8 receipt
+paths. Policy/planner/controller/terminal plus failed-health and unknown-ammo
+paths have6/6 zero primary Executor acceptances. The valid path binds exactly1;
+later revocation retains that historical acceptance while current authority is
+false. Audit bytes match Windows/Linux SHA910ee6…. All12 frozen v32 source hashes
+still match. Next actual-endpoint schema-v6 preflight only when model capacity
+permits, then freeze a separately labelled v33 allocation; do not repurpose or
+run v32 as v33. No live/model/game/performance claim; no subagent/context
+handoff; full goal open.
+
+Current direction (r77): model-free v33 wires schema-v6 planner-authored
+immediate validity through exact source/current health+ammo and final-admission
+v2. The action source is now the exact observation placed in the newest temporal
+sheet, removing a v32 cover-source/prompt-image timing ambiguity. Active answers
+require action_validity; fire cannot omit ammo, movement cannot add it. Failed or
+unknown current evidence discards action+next cover with zero primary admission;
+only a deterministically recomputed VALID_CURRENT reaches Executor readiness.
+Focused controller/adapter/final tests pass15 per OS. No endpoint/model/game run.
+Next add deterministic v33 all-path cardinality replay and schema preflight;
+keep frozen v32 untouched/unrun. No subagent/context handoff; full goal open.
+
 Current direction (r76): add the first action-specific non-health predicate
 without hidden game state. A hash-bound WAD-glyph ammo reader matches all8
 independent v31 decision transcriptions and reads247/247 exact frames with0

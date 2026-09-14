@@ -1205,3 +1205,25 @@ synthetic contract and signal evidence, not planner authorship, target presence,
 aim, live latency or gameplay efficacy. Next define schema authorship and wire a
 v33 controller model-free through final-admission v2. See
 `research/doom/MAP01_ACTION_VALIDITY_SIGNALS_V1.md`.
+The v33 composition now has an eight-case deterministic path replay. Six
+policy/planner/controller/terminal/current-action rejection paths contain zero
+primary Executor acceptances. A valid path binds exactly one first acceptance;
+later revocation preserves that historical receipt while current authority is
+false. Windows/Linux output is byte-identical (`910ee6f6…`). All12 v32 frozen
+source hashes still match. Actual endpoint schema-v6 compatibility and live
+behavior remain untested.
+
+## Latest follow-up — model-free v33 inserts current action checks before input (2026-09-15)
+
+V33 leaves hash-frozen v32 untouched and requires a separate immediate
+`action_validity` in schema v6. It binds planner semantics to exact health/ammo
+from the observation actually placed in the newest temporal-sheet slot, then
+reads both from one freshest post-model X11 frame. This removes a v32 timing
+ambiguity where cover submission could advance beyond the health source printed
+in the prompt. Final-admission v2 recomputes the full validity receipt against
+the exact commands; failed or unknown current evidence discards the action and
+its next cover before any primary program. Focused controller/adapter/final sets
+pass15 cases on Windows/Linux. This is model-free construction with no endpoint
+schema, planner, game or latency evidence. Add an all-path cardinality replay
+and schema preflight before a separately frozen v33 live allocation. See
+`research/doom/MAP01_FRESH_ACTION_ADMISSION_V33.md`.

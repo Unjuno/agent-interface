@@ -7,6 +7,7 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(HERE.parent / "live_control"))
 from doom_action_validity_contract_v1 import build_contract
 
 
