@@ -34,6 +34,22 @@ tens of seconds. The next controller revision must overlap bounded defensive
 input with fresh visual decisions and measure observation-to-input age. A full
 map clear, human-speed operation and public-demo readiness remain unclaimed.
 
+`map01-overlap-luna-01` implements that overlap with three actual Luna-low
+visual decisions. During 26.764 seconds of model-call wall time, the executor
+kept bounded movement/attack programs active. The player remained alive at 81%
+health after 40.903 continuously advancing seconds and reached another room;
+the run was then deliberately scored unfinished. This is evidence that model
+inference and gameplay can overlap, not evidence of a map clear. Constant fire
+during the cover policy exhausted the starting ammunition.
+
+`map01-overlap-crop-luna-01` removes constant fire from the cover policy and
+crops the stable black desktop surround before the model call. Its one Luna-low
+decision used 8,366 input tokens versus 9,158 for each uncropped call, an 8.65%
+reduction in this allocation. The model interval lies fully inside the accepted
+cover-program interval, and the player remained alive when the run ended. Most
+input cost is therefore outside the discarded black pixels; further compression
+should reuse compiled task semantics and send compact visual change evidence.
+
 The assistant has now operated a ViZDoom basic scenario through OS keyboard
 input and X11 screenshots, using the existing async executor and exact image
 transport. This uses the bundled **Freedoom assets**, not original commercial
