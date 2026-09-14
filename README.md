@@ -25,6 +25,15 @@ independent semantic task effect, so the candidate remains on hold. An earlier
 flat-region archive attempt also aliases and is preserved. See
 [scoped target handles](research/live_control/SCOPED_TARGET_HANDLES_V1.md).
 
+A preregistered matched Chromium follow-up then passes both directions. After a
+real client move, the positive handle derives the Save button from observed
+binding delta and independently submits exact `t991005`; input ack to useful
+frame is60.016ms and to independent semantic completion192.643ms. After the same
+mint and move, navigating the same surface to `about:blank` returns `MISSING`, admits
+zero pointer input and creates no submission. All36 frames audit exactly across
+Windows/WSL. Box/frame authorship and model-boundary savings remain unproven, so
+this advances only to another matched-domain replication.
+
 Frame resolution now runs inside the candidate interface. A fresh1152x720
 OpenTTD pair sends only original1024 coordinates plus explicit frame identity;
 the runtime resolves clicks, drags and condition boxes from the latest pointer

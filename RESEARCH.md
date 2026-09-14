@@ -28,6 +28,15 @@ the preregistered endpoint expected requested delta `[16,0]` and no independent
 semantic task effect exists. Retain as a negative/HOLD result. See
 [scoped target handles](research/live_control/SCOPED_TARGET_HANDLES_V1.md).
 
+A matched private Chromium pair corrects the endpoint design without changing
+the matcher. Both sessions mint the same textured Save region and move the
+client `[20,8]`. Positive revalidation derives `[290,251]` from the observed
+binding and the independent HTTP/file oracle receives exact `t991005`; input ack
+to useful frame/semantic completion is60.016/192.643ms. The changed-target case
+navigates the same surface to `about:blank`, returns `MISSING`, admits zero
+pointer input and creates no file. All36 frames audit exactly. Advance to a
+different matched desktop task; no model, token or general identity claim.
+
 ### First live bounded drag-effect allocation
 
 A preregistered seed991003 replay keeps the v6 model, task, initial state,

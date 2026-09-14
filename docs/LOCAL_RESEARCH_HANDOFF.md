@@ -1,4 +1,15 @@
-Latest handle evidence: v1 exact-region controls pass10/10, but an archived flat
+Latest handle evidence: a matched fresh Chromium pair now passes2/2 after the
+OpenTTD HOLD result. Both cases mint a textured Save-button region, move the
+client from `[10,10]` to `[30,18]`, and later send only handle plus `[20,9]`.
+Positive derives `[290,251]`, independently posts exact `t991005`, and measures
+60.016ms input-ack-to-useful-frame and192.643ms to independent semantic
+completion. Same-surface navigation to `about:blank` returns `MISSING`, admits
+zero pointer input and creates no submission. All36 frames audit Windows/WSL.
+Advance only to a different matched desktop/model-grounding study; box/frame
+authorship, duplicate/restyled targets and token/turn reduction remain open.
+See research/live_control/SCOPED_TARGET_HANDLES_V1.md. Full goal remains open.
+
+Prior handle evidence: v1 exact-region controls pass10/10, but an archived flat
 OpenTTD region aliases at translated and untranslated positions; v2 refuses the
 low-information mint. In one preregistered fresh same-session run, the runtime
 mints a textured toolbar handle, observes the window manager realize requested

@@ -41,6 +41,34 @@ endpoint should derive the point from the observed binding delta without fixing
 the window manager's realized displacement in advance. Add a changed-target
 negative in the same allocation and do not weaken the exact matcher.
 
+That matched follow-up now passes on a fresh private Chromium form. Both cases
+use seed991005, enter `t991005`, mint the same textured Save-button region and
+move the client from `[10,10,1050,780]` to `[30,18,1050,780]`. The caller then
+supplies only the runtime handle and `[20,9]` point relation.
+
+In the positive case, exact revalidation returns `REVALIDATED`, derives
+`[290,251]`, and ordinary owner admission submits exactly
+`value=t991005`. The independent HTTP/file oracle succeeds. Button-down ack to
+the first useful changed-frame capture is60.016ms; ack to independent semantic
+completion is192.643ms; click operation submit-to-return is324.506ms. The whole
+episode uses12 durable calls and15 exact frames.
+
+In the negative case, the same Chromium surface navigates to `about:blank` after
+minting. Revalidation returns `MISSING`; the handle action has zero pointer
+admissions, returns `needs_decision`, creates no submitted file and independently
+scores false. Its click operation submit-to-return is201.229ms. The episode uses
+14 durable calls and21 exact frames. All36 frames and both source sets audit on
+Windows and WSL.
+
+Decision: retain v2 for a matched cross-domain replication, not as the default.
+The result proves one exact textured desktop target across window translation
+and one missing-target refusal. It does not prove semantic identity under
+restyling, scrolling, duplicate widgets or internal object movement. The agent
+still authors the mint box and frame, and this no-model study measures no planner
+boundary or token reduction. Next compare repeated model grounding against a
+handle condition on a different desktop task with fixed model/task/order and an
+independent oracle.
+
 Issue45 proposes runtime-owned target references that survive safe layout changes
 without silently turning into cached coordinates. The first pure candidate stores
 an exact RGB region privately with its session scope, focus, surface, source

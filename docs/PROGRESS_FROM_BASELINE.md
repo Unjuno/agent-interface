@@ -16,6 +16,14 @@ manager did not realize the requested `[16,0]` displacement, and there is no
 independent semantic effect. This is design evidence for observed-binding
 transforms, not promotion.
 
+A preregistered Chromium follow-up supplies the missing independent effect. The
+positive case follows observed client delta `[20,8]`, clicks the relocated Save
+button using only a handle/offset, and independently receives exact `t991005`.
+Input ack to useful frame is60.016ms and to semantic completion192.643ms. A
+same-surface `about:blank` negative returns `MISSING`, admits no pointer input and
+creates no submission. The matched pair passes2/2 over36 exact frames. This is
+one scripted target and still does not measure model grounding or token savings.
+
 Latest delta: bounded drag-effect memory now transfers correct actuation to one
 changed seed991004 L geometry. Two distinct drags complete all five target tiles
 with zero surrounding changes or repeated completed-segment input. The planner

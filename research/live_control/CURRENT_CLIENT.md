@@ -7,6 +7,13 @@ input. It remains HOLD because the preregistered endpoint fixed requested delta
 See SCOPED_TARGET_HANDLES_V1.md. Next require an independently verified semantic
 effect in another desktop task; this is not the default client.
 
+The matched Chromium follow-up passes2/2: relocated Save submits exact `t991005`
+with60.016ms to useful frame and192.643ms to independent semantic completion,
+while a same-surface `about:blank` target change returns `MISSING`, admits no
+pointer input and creates no file. All36 frames audit Windows/WSL. Retain only
+for another fixed comparison; model grounding, box/frame authorship and general
+identity remain unresolved.
+
 Prior coordinate candidate: `executor_v4/session_v26` resolve explicit-frame
 clicks, drags and target/guard boxes from the latest stable pointer binding before
 whole-program validation. Fresh1152x720 OpenTTD receives only original1024

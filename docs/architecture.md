@@ -216,8 +216,10 @@ exact region match and ambiguity check
 The first live result shows why requested window movement cannot define the
 transform: a requested `[16,0]` move became observed client delta `[17,20]`.
 The runtime revalidated that actual delta correctly, while the preregistered
-fixed-delta endpoint failed. Handles grant no input authority and are not yet a
-promoted interface feature.
+fixed-delta endpoint failed. A subsequent Chromium pair uses only observed delta:
+the relocated handle independently submits the required form value, while a
+same-surface navigation removes the target and fails closed before pointer input.
+Handles grant no input authority and are not yet a promoted interface feature.
 
 ## Implementation strategy
 

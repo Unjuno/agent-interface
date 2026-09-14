@@ -9,6 +9,14 @@ preregistered fixed-delta endpoint is false and no independent semantic effect i
 proved. Candidate remains on hold; next allocation needs a different desktop
 task plus an independent effect oracle.
 
+A matched fresh Chromium pair supplies that oracle. Positive follows observed
+client delta `[20,8]`, resolves Save to `[290,251]`, and the HTTP/file scorer
+receives exact `t991005`; input ack to useful frame/semantic completion is
+60.016/192.643ms. Same-surface navigation to `about:blank` returns `MISSING`
+with zero pointer admission and no submission. All36 frames audit cross-OS.
+Retain for a different matched-domain replication; no model/turn/token benefit
+or general semantic identity is established.
+
 Latest framed-intent result: [live binding-resolved pointer intents](FRAMED_POINTER_INTENTS_V1.md).
 The runner sends original1024 coordinates while `executor_v4/session_v26`
 resolve frame-bearing clicks, drags and condition boxes from a fresh1152x720
