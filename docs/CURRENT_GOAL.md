@@ -948,3 +948,12 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   Issue #52のbranch mechanicsはMindustry candidate/receipt negativesと合わせて満たす。
   自然誤り率・token削減・人間速度・freezeは未達。次は主要な残存failure taxonomyと
   Domain Coverage Matrixを再監査し、局所contract追加より高い未解決軸を選ぶ。
+
+- 2026-09-14 r18: Issue #55向けに、model判断後のfresh observationでreceipt依存
+  pixelsを局所再検証してからtarget inputへ進むauthorityを追加。no-GUIでは変更、履歴
+  欠落、clock-only、stale、focus、resizeを拒否。Mindustry formal liveのunchangedは
+  Conveyor 1個を独立成功、palette変更/world変更/focus変更は対象入力を拒否。全体12
+  calls、115,443 input、44 exchanges、75 frames、retry/subagent 0。focus faultは安全に
+  `NO_TARGET_AUTHORITY`だったが、事前登録`current_evidence_unavailable`に対し実測は
+  `focus_or_surface_changed`のためformal falseを保持。次はtruly unavailable bindingと
+  live resizeを実行し、OS input raceを狭める。人間速度・一般性・freezeは未達。

@@ -562,3 +562,14 @@ opens, while Airport absent from the same five receipts returns
 `NO_TARGET_AUTHORITY` with zero target buttons. The pair uses 32,992 input tokens,
 30 durable calls and 93 frames; Windows/WSL audits pass. See
 [OpenTTD authority pair](../research/live_control/OPENTTD_EVIDENCE_AUTHORITY_PAIR_V2.md).
+
+Receipt-bound target input now has a fresh local post-model revalidation in
+Mindustry. The unchanged condition revalidates palette and world pixels and
+independently places one Conveyor. Palette change blocks selection; world
+change permits the already checked selection but blocks placement; focus change
+blocks target input and restores focus. The block totals 12 calls, 115,443
+input tokens, 44 exchanges and 75 exact frames. It is formally false because
+the focus control returned `focus_or_surface_changed` rather than the
+preregistered unavailable-evidence diagnostic, even though it safely returned
+no authority and admitted no target button. Windows/WSL independent audits
+pass. See [Mindustry receipt revalidation](../research/benchmark_discovery/MINDUSTRY_RECEIPT_REVALIDATION_V1.md).

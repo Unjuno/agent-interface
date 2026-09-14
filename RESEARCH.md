@@ -911,3 +911,13 @@ Company Finances selects receipt5 and passes its independent oracle, while an
 Airport target absent from all five receipts returns `NO_TARGET_AUTHORITY` and
 zero target buttons. Four calls use 32,992 input tokens and 93 exact frames audit
 cross-OS. See `research/live_control/OPENTTD_EVIDENCE_AUTHORITY_PAIR_V2.md`.
+
+Mindustry now revalidates receipt-bound pixels from a fresh post-model
+observation before target input. The unchanged condition independently places
+one Conveyor; changed palette, changed world and changed focus refuse the
+affected input. The four-condition block uses 12 model calls, 115,443 input
+tokens, 44 exchanges and 75 exact frames with no retry or subagent. Its formal
+result remains false because the focus control produced the more specific
+`focus_or_surface_changed` diagnostic rather than preregistered
+`current_evidence_unavailable`, while still returning no authority or point.
+See `research/benchmark_discovery/MINDUSTRY_RECEIPT_REVALIDATION_V1.md`.

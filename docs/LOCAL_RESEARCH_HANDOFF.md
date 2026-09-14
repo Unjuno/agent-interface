@@ -2753,3 +2753,17 @@ this satisfies Issue #52's bounded branch mechanics. The fixed pair does not
 establish natural error rate, general reliability, speedup, token saving or
 human tempo. See research/live_control/OPENTTD_EVIDENCE_AUTHORITY_PAIR_V2.md.
 Goal/freeze remain open.
+
+Latest follow-up: Issue #55 adds fresh post-model receipt-target revalidation
+inside the Mindustry session before the existing pointer admission path. A
+model-free checker covers exact patches and stable change masks, with no-GUI
+refusals for changed pixels, missing history, clock-only evidence, staleness,
+focus/surface change and resize. The one-shot four-condition live block has one
+independent positive and three safe input refusals, totaling 12 calls, 115,443
+input tokens, 44 exchanges and 75 frames. Formal `passed` stays false: the focus
+fault returned `focus_or_surface_changed` instead of preregistered
+`current_evidence_unavailable`; it still returned null authority/point, admitted
+zero target buttons and restored focus. Independent Windows/WSL audit passes.
+Do not rerun or relabel this block. Keep Issue #55 open for truly unavailable
+current evidence and live resize. See
+`research/benchmark_discovery/MINDUSTRY_RECEIPT_REVALIDATION_V1.md`.

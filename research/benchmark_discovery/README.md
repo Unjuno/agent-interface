@@ -262,3 +262,14 @@ the viewport-excluded case returns `ambiguous` instead of the preregistered
 `no_candidate/no_match`. Eleven calls use96,731 input tokens and all70 exact
 frames audit Windows/WSL. Retain partial branch evidence; do not retry for a
 preferred reason label.
+
+The next [Mindustry receipt revalidation block](MINDUSTRY_RECEIPT_REVALIDATION_V1.md)
+adds a fresh local post-model pixel check before receipt-bound target input.
+The unchanged condition selects and places one Conveyor; changed palette,
+changed world and changed focus all refuse the affected target input. Across
+four conditions it records 12 calls, 115,443 input tokens, 44 exchanges and 75
+exact frames with no retry or subagent. The formal block remains false because
+the focus fault returns the specific `focus_or_surface_changed` diagnostic
+instead of preregistered `current_evidence_unavailable`; authority still refuses
+with a null point and zero target buttons. Issue #55 remains open for a truly
+unavailable binding and live resize evidence.
