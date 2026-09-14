@@ -55,3 +55,11 @@ observations during cover. Region change may cancel the repeated policy and
 escalate, or switch only to a separately bounded and admitted conservative
 policy. It must not claim to understand whether the value rose or fell. Retain
 the first threat-exposure result, including no exposure, death, or failure.
+
+The first newly frozen v23 allocation (`map01-cover-threat-v23-live-01`) is
+retained as a pre-GUI environment failure. Its command used `/usr/bin/python3`
+without the repository `_vizdoom` target on `PYTHONPATH`, so the child session
+could not import ViZDoom. No model call, GUI-ready event, or input admission
+occurred. A command-free import diagnostic confirms that the default interpreter
+cannot see ViZDoom and that `PYTHONPATH=_vizdoom` exposes the retained 1.3.0
+package. Any corrected execution must use a new allocation ID and output path.
