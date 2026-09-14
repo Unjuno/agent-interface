@@ -95,6 +95,15 @@ pass on Windows and WSL/Linux. No v31 live allocation exists; the next frozen
 test should use a different reproducible threat state or bounded normal-MAP01
 continuation. See [the v31 construction](research/doom/MAP01_SOFT_EVENT_CONTEXT_V31.md).
 
+The first transfer fixture is now frozen before execution. Session v8 can load
+the hash-bound v1 parent and save one setup-only child while retaining parent
+hash/tic provenance; v7 and frozen results stay untouched. One model-free X11
+continuation uses strafe-left, retreat-fire, strafe-right and750ms coast. The
+first outcome must be retained without retry and must show a different tic/frame,
+exact health, visible threat, verified releases and fresh-process reload before
+promotion. Linux14 construction tests pass. No planner or performance evidence
+exists yet. See [the v2 fixture plan](research/doom/MAP01_THREAT_FIXTURE_V2_PLAN.md).
+
 ### Integrated token-efficiency comparison selected
 
 [Integrated efficiency plan v1](research/live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md)

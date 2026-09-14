@@ -1,3 +1,12 @@
+Current direction (r66): freeze one model-free derived MAP01 fixture before the
+first v31 transfer test. Session v8 can load a hash-bound parent and save one
+setup-only child while retaining parent hashes/tics; v7 and frozen runs remain
+unchanged. The one-run prereg chains strafe-left, retreat-fire, strafe-right and
+750ms coast from v1, requires a different tic/frame, exact health, visible threat,
+verified releases and fresh-process reload, and retains failure without retry.
+Linux14 construction tests pass. Next commit, run once and audit before any
+planner allocation. No subagent/context handoff; full goal open.
+
 Current direction (r65): v31 closes the v30 state-transfer gap model-free. It
 validates the immediately preceding typed soft event and compresses retained
 decision4 evidence from1,312 JSON bytes to240 before adding it to the already-
