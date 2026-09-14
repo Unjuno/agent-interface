@@ -104,6 +104,15 @@ exact health, visible threat, verified releases and fresh-process reload before
 promotion. Linux14 construction tests pass. No planner or performance evidence
 exists yet. See [the v2 fixture plan](research/doom/MAP01_THREAT_FIXTURE_V2_PLAN.md).
 
+That one frozen continuation is now promoted as `map01-threat-contact-v2`.
+Model-free X11 setup advances parent tic1263 to1366 with two verified releases
+and zero model calls; its source frame hash differs. Direct and exact-HUD review
+shows a visible enemy at source health100/ammo48. A fresh process restores tic
+1366 and its first continuously advancing frame still shows the enemy at exact
+health97/ammo48. The100→97 load-to-capture change remains explicit. This is a
+different reproducible state for one v31 transfer allocation, not performance
+evidence. See [the retained v2 fixture](research/doom/MAP01_THREAT_FIXTURE_V2.md).
+
 ### Integrated token-efficiency comparison selected
 
 [Integrated efficiency plan v1](research/live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md)

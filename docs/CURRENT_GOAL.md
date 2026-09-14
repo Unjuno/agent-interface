@@ -1,3 +1,12 @@
+Current direction (r67): promote the only frozen derived fixture as
+map01-threat-contact-v2. Model-free X11 setup advances parent tic1263→1366 with
+two programs/2 verified releases/0 model calls; source hash differs. Manual and
+exact HUD review shows a visible enemy, source health100/ammo48. Fresh process
+restores tic1366; its first continuously advancing frame still shows the enemy
+at exact health97/ammo48. Audit passes and retains the100→97 timing difference.
+Next commit the fixture, then preregister one v31 transfer allocation on v2; no
+performance claim. No subagent/context handoff; full goal open.
+
 Current direction (r66): freeze one model-free derived MAP01 fixture before the
 first v31 transfer test. Session v8 can load a hash-bound parent and save one
 setup-only child while retaining parent hashes/tics; v7 and frozen runs remain

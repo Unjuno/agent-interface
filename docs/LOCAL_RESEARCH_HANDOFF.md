@@ -3344,3 +3344,14 @@ inconsistent or authority-granting records fail closed. Windows and WSL/Linux
 each pass9 tests. No live benefit is claimed. Select a different reproducible
 threat state or bounded normal-MAP01 continuation for the first transfer test.
 See `research/doom/MAP01_SOFT_EVENT_CONTEXT_V31.md`.
+
+## Latest follow-up — a distinct v31 transfer fixture is reproducible (2026-09-15)
+
+The only preregistered model-free continuation from v1 is promoted as
+`map01-threat-contact-v2`. Two X11 programs with two verified releases and zero
+model calls advance tic1263→1366; the source frame differs and visibly contains
+an enemy at exact health100/ammo48. A fresh process restores tic1366 and its
+first live frame still contains the enemy at exact health97/ammo48. The real-time
+100→97 load-to-capture damage is retained. This is fixture evidence only. Use it
+for one frozen v31 typed-history transfer allocation. See
+`research/doom/MAP01_THREAT_FIXTURE_V2.md`.
