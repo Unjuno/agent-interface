@@ -138,5 +138,25 @@
       "target_button_down_admissions": 0,
       "aggregation_scope": "allocation_total_nonadditive_across_shared_defects"
     }
+  },
+  {
+    "id": "submission_history_materialized_at_finish",
+    "class": "benchmark_setup_accounting_defect",
+    "discovered_phase": "pre_prereg",
+    "symptom": "The composed runner read the exported submission-history path after each task, but the runtime materializes that artifact only at finish, so all 18 successful submissions were provisionally counted as zero.",
+    "blocking_requirement": "Each task row must reconcile exact independent submissions without assuming an internal fixture path is live during the episode.",
+    "repair": "After the independent finish event, reconcile the exported append-only history back to the already recorded task rows by task ID and preserve the original task timing/source records.",
+    "regression_test": "probe_integrated_efficiency_live_orchestration_v1.py retains probe-01 and requires probe-02 to report all three independent six-task sequences correct through the formal runner.",
+    "accounting_disposition": "engineering_excluded_zero_model",
+    "status": "fixed",
+    "allocation_invalidated": false,
+    "overhead": {
+      "allocation_id": "integrated-efficiency-live-orchestration-probe-01",
+      "model_calls": 0,
+      "input_tokens": 0,
+      "runtime_ns": 69179659874,
+      "target_button_down_admissions": 36,
+      "aggregation_scope": "allocation_total_nonadditive_across_shared_defects"
+    }
   }
 ]

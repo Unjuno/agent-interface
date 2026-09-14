@@ -1,14 +1,14 @@
 # Integrated token-efficiency evaluation plan v1
 
-Status: composition selected; live allocation not yet preregistered or run.
+Status: composition and formal runner selected; live allocation not yet preregistered or run.
 
 Implementation checkpoint: `integrated_efficiency_fixture_v1.py` now provides
 the frozen A/A/A/B/B/B task shape, visibly distinct layouts and an append-only
 exact-token oracle.  `integrated_efficiency_runtime_v1.py` and the interactive/
 socket entries connect that fixture to the existing `session_v33` checked-input
 path.  The positive, duplicate and wrong-token oracle controls pass offline.  The
-three arm controller, source manifest, preregistration and live run remain open;
-this checkpoint is not an experimental allocation.
+formal controller and source manifest are implemented.  Preregistration and the
+live run remain open; this checkpoint is not an experimental allocation.
 
 An engineering-only X11 smoke starts the adapted Chromium process, emits the
 six declared tasks and an exact initial frame through the existing runtime, then
@@ -76,9 +76,20 @@ The authoritative pre-preregistration ledger is
 requirement, smallest repair, composed-path regression, status, allocation
 effect and measured engineering overhead for each discovery.  Allocation totals
 are explicitly non-additive when more than one defect shares a run.  The six
-current discoveries are three interface mismatches and four benchmark/setup/
+current discoveries are three interface mismatches and five benchmark/setup/
 accounting defects; none demonstrates a regression in an established safety
 requirement or a need for a new cross-cutting capability.
+
+The first zero-model composed-runner probe completed all 18 GUI tasks but read
+the exported submission history before it materialized at session finish, so its
+provisional per-task accounting was zero and the protocol rejected the run.  The
+failure is retained as orchestration-probe-01.  The runner now reconciles the
+final append-only history back to its preserved task/source records by task ID.
+Fresh orchestration-probe-02 passes: all three six-task sequences score exact
+once, the task-4 old reference refuses before pointer input, all 14 synthetic
+grounding invocations follow the frozen routes, and the protocol reaches RETAIN
+under synthetic usage.  Both probes make zero actual model calls and remain
+outside the formal comparison.
 
 Only a defect that blocks this selected path, its correctness or its measurement
 may add work here.  Prefer an adapter or shared invariant.  A new reusable

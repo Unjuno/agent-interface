@@ -26,6 +26,7 @@ REQUIRED_DISCOVERY_IDS = {
     "pointer_event_name_mismatch",
     "cross_task_duplicate_call_id_gap",
     "target_alias_prefix_character_mismatch",
+    "submission_history_materialized_at_finish",
 }
 
 
@@ -79,10 +80,14 @@ def validate_task(row: dict, arm: str, index: int) -> dict:
         raise ValueError("boolean correctness fields required")
     if row["typed_outcome"] not in {"completed", "safe_stop", "failed"}:
         raise ValueError("typed task outcome required")
-    for field in ("source_to_completion_ns", "input_feedback_ns"):
-        value = row[field]
-        if value is not None and not _integer(value):
-            raise ValueError("optional timing must be nonnegative integer")
+    value = row["source_to_completion_ns"]
+    if value is not None and not _integer(value):
+        raise ValueError("optional completion timing must be nonnegative integer")
+    feedback = row["input_feedback_ns"]
+    if type(feedback) is not list or len(feedback) != row["pointer_admissions"]:
+        raise ValueError("one feedback timing per pointer admission required")
+    if any(value is not None and not _integer(value) for value in feedback):
+        raise ValueError("feedback timings must be nonnegative integers or unavailable")
     repair = row["repair"]
     if type(repair) is not dict or set(repair) != {
             "required", "old_reference_status", "old_reference_pointer_admissions",
@@ -109,12 +114,15 @@ def validate_task(row: dict, arm: str, index: int) -> dict:
 
 
 def evaluate(trace: dict) -> dict:
-    if type(trace) is not dict or set(trace) != {"schema", "arms", "integration_discoveries"}:
+    if type(trace) is not dict or set(trace) != {
+            "schema", "arms", "preflight_calls", "integration_discoveries"}:
         raise ValueError("exact comparison trace required")
     if trace["schema"] != "integrated_efficiency_trace_v1":
         raise ValueError("unsupported trace schema")
     if type(trace["arms"]) is not dict or tuple(trace["arms"].keys()) != ARMS:
         raise ValueError("arms must be in frozen plain/ephemeral/persistent order")
+    if type(trace["preflight_calls"]) is not dict or tuple(trace["preflight_calls"].keys()) != ARMS:
+        raise ValueError("one ordered preflight allocation per arm required")
     discoveries = trace["integration_discoveries"]
     if type(discoveries) is not list:
         raise ValueError("integration discovery list required")
@@ -163,6 +171,26 @@ def evaluate(trace: dict) -> dict:
     arms = {}
     global_call_ids = set()
     for arm in ARMS:
+        preflight = trace["preflight_calls"][arm]
+        if type(preflight) is not dict or set(preflight) != {
+                "call_id", "stage", "requested_model", "requested_effort", "usage",
+                "model_visible_images"}:
+            raise ValueError("exact preflight call record required")
+        if (any(type(preflight[field]) is not str or not preflight[field] for field in
+                ("call_id", "stage", "requested_model", "requested_effort"))
+                or preflight["stage"] != "schema_preflight"
+                or preflight["model_visible_images"] != 0):
+            raise ValueError("fresh no-image schema preflight required for each arm")
+        usage = preflight["usage"]
+        if type(usage) is not dict or set(usage) != set(USAGE_FIELDS):
+            raise ValueError("complete preflight usage required")
+        if any(not _integer(usage[field]) for field in USAGE_FIELDS):
+            raise ValueError("nonnegative preflight usage required")
+        if usage["cached_input_tokens"] > usage["input_tokens"]:
+            raise ValueError("cached preflight input must be a subset of input")
+        if preflight["call_id"] in global_call_ids:
+            raise ValueError("duplicate model call id across comparison")
+        global_call_ids.add(preflight["call_id"])
         rows = trace["arms"][arm]
         if type(rows) is not list or len(rows) != 6:
             raise ValueError("exact six-task arm required")
@@ -174,13 +202,15 @@ def evaluate(trace: dict) -> dict:
                 global_call_ids.add(call["call_id"])
         cumulative_tokens = []
         cumulative_generations = []
-        token_total = generation_total = 0
+        token_total = preflight["usage"]["input_tokens"]
+        generation_total = 1
         for row in checked:
             token_total += sum(call["usage"]["input_tokens"] for call in row["model_calls"])
             generation_total += row["planner_generations"]
             cumulative_tokens.append(token_total)
             cumulative_generations.append(generation_total)
         arms[arm] = {
+            "preflight_call": copy.deepcopy(preflight),
             "tasks": checked,
             "correct": all(row["typed_outcome"] == "completed"
                            and row["submission_count"] == 1
