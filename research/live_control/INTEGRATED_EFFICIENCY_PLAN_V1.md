@@ -10,6 +10,12 @@ path.  The positive, duplicate and wrong-token oracle controls pass offline.  Th
 three arm controller, source manifest, preregistration and live run remain open;
 this checkpoint is not an experimental allocation.
 
+An engineering-only X11 smoke starts the adapted Chromium process, emits the
+six declared tasks and an exact initial frame through the existing runtime, then
+finishes cleanly.  With no task input, the independent oracle reports all six
+tasks missing, zero records and `success:false`, as required.  This smoke makes
+no model call and is not part of the future formal allocation.
+
 This plan is the first deliverable for Issue #57.  The preceding compiled GUI
 mechanics block ended at live v5 with disposition
 `ADVANCE_TO_MATCHED_EFFICIENCY_COMPARISON`.  This work therefore switches from

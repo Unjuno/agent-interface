@@ -11,7 +11,8 @@ continuously advancing Freedoom `MAP01` clear attempt, not the existing small
 Fixture checkpoint: `integrated_efficiency_fixture_v1.py` implements one
 append-only six-task scorer with A/A/A/B/B/B layouts.  Its exact, duplicate and
 wrong-token controls pass, and runtime/socket adapters now expose it through the
-existing `session_v33` checked-input path.  No arm has been run.
+existing `session_v33` checked-input path.  A no-input X11 smoke returns an exact
+initial frame and correctly scores all six tasks missing.  No arm has been run.
 
 Latest target-reference result: [scoped target handles](SCOPED_TARGET_HANDLES_V1.md).
 Exact session-local handles return explicit valid/revalidated/ambiguous/moved/
