@@ -8,6 +8,11 @@
   12-decision executor admissions from 18 to 13. The run remains unfinished, so
   no map-clear or general speed claim is made.
 
+- Retain the first frozen Astra-low MAP01 hero attempt: one kill, one death and
+  no exit after 149.911 seconds. A clock probe confirms continuously advancing
+  time, while audit finds fixed cover expired before seven of 13 model returns.
+  Include the complete timeline as a labelled 78-second 2x telemetry video.
+
 - Add a separate asynchronous research executor with whole-program validation,
   early feedback, cancellation and X11 key-release verification. Six fresh
   XTerm/Calc probes pass; retain an actual assistant's missed cancellation and

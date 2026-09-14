@@ -87,6 +87,14 @@ decision was the fallback that actually ran. Both allocations remained
 unfinished with zero deaths and kills. Retain the mechanism, but do not infer
 completion ability, false-branch reliability or a general speedup.
 
+[The separately frozen Astra attempt](MAP01_ASTRA_ATTEMPT_V1.md), requested by
+Issue #58, retains its first result without rerun. It reached later rooms and
+killed one enemy, then died after 13 decisions and 149.911 seconds without a map
+exit. The clock probe measured 35.015 tics/second, but fixed ten-second cover
+expired before seven of 13 model calls returned. The complete visual timeline
+is committed at labelled 2x playback. This is an honest failed hero attempt and
+does not block the reproducible desktop Research Preview.
+
 The assistant has now operated a ViZDoom basic scenario through OS keyboard
 input and X11 screenshots, using the existing async executor and exact image
 transport. This uses the bundled **Freedoom assets**, not original commercial

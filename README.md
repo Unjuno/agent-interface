@@ -561,3 +561,9 @@ path: one live `no_visible_effect` receipt admitted a model-authored fallback in
 so this is mechanism evidence rather than a completion or general speed claim.
 See [the contingency report](research/doom/MAP01_CONTINGENCY_V1.md) and
 [the launch scope in Issue #58](https://github.com/Unjuno/agent-interface/issues/58).
+
+The first separately frozen Astra hero attempt is retained without rerun. It
+reached later rooms and killed one enemy, then died after 149.911 seconds and 13
+decisions without exiting MAP01. The world clock measured 35.016 tics/second,
+but fixed ten-second cover expired before seven model calls returned. See the
+[full scoped result and 2x telemetry video](research/doom/MAP01_ASTRA_ATTEMPT_V1.md).

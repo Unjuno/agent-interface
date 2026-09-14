@@ -1,3 +1,17 @@
+Current direction (r29): the first frozen Issue #58 Astra hero allocation is a
+retained failure, not a rerun target.  It enters later MAP01 rooms, kills one
+enemy, then dies after 13 decisions/149.911 s without exit.  The game clock stays
+live at 35.016 tics/s, but the fixed ten-second cover expires before 7/13 model
+calls, leaving 9.771 s total and 3.765 s maximum inference tails without an active
+local program.  This invalidates the stronger continuous-local-control claim
+for the run and identifies the next concrete blocker: renewable bounded cover
+that survives variable frontier latency, then a compact model-authored cover
+policy with resource-aware fire/evasion.  Preserve the full labelled 2x video,
+telemetry, death and no-rerun disposition.  Repair this shared lifetime/renewal
+contract before another frozen hero attempt; keep the desktop golden demo and
+launch cleanup moving independently.  No subagent or context handoff is used;
+full goal open.
+
 Current direction (r28): Issue #58 makes the near-term Research Preview a
 two-track launch package.  Keep the retained integrated desktop workflow as the
 reproducible correctness/efficiency demo, and use continuously advancing MAP01
@@ -1123,3 +1137,4 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   99.944/99.299/99.250ms。17 actual callsの総input153,470、全ID一意、Windows/WSL監査合格。
   この固定1 sequenceではpersistentをRETAINするが、一般的token削減・成功率・人間速度は未証明。
   次は通常進行を止めないFreedoom MAP01の有限clear attemptを事前登録し実行する。
+contract before another frozen hero attempt; keep the desktop golden demo and

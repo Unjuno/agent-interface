@@ -1,3 +1,14 @@
+Current handoff r29: frozen `map01-astra-live-01` is retained on its first
+outcome: later rooms, one kill, death after 13 decisions/149.911 s, no MAP01 exit.
+Clock probe is 35.016 tics/s, but fixed ten-second cover ends before 7/13 model
+returns, with 9.771 s total and 3.765 s maximum uncovered inference tail.  Therefore
+do not claim continuous local control for the whole run.  The committed full
+timeline is 78 s at labelled 2x playback with telemetry and the death outcome.
+Next repair renewable bounded cover across variable model latency, then let the
+model author a compact resource-aware/evasive cover policy before another frozen
+hero attempt.  Do not rerun v1.  Keep the desktop golden demo/launch track
+independent, with no subagent or context handoff.
+
 Current handoff r28: new Issue #58 selects a two-track Research Preview.  The
 retained integrated desktop workflow is the reproducible golden demo; normal
 continuously advancing MAP01 is the hero showcase for local reaction during
