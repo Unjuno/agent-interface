@@ -3449,3 +3449,20 @@ source-time ambiguity and guarantees failed/unknown evidence discards the action
 and next cover before primary Executor acceptance. Focused sets pass15 per OS.
 No model/endpoint/game call exists. Preserve v32 and its preregistration; next
 add deterministic v33 receipt/program cardinality replay and schema preflight.
+
+## Latest follow-up — schema-v6 endpoint boundary is frozen without spending the remaining Luna capacity (2026-09-15)
+
+`map01-schema-v6-preflight-01` is a separate one-request, zero-retry allocation.
+Six SHA-256 entries bind schema v6, the generic preflight, the Luna-low no-image
+runner, responder instructions, the allocation wrapper and its audit. The output
+directory must be absent before execution. A local `--verify-only` pass checks
+all hashes and constraints without creating that directory or calling a model.
+
+The eventual WSL run launches no GUI, supplies no image and grants no input
+authority. It retains `ENDPOINT_COMPATIBLE`, an endpoint refusal, an unexpected
+preflight result or a wrapper exception without retrying. Compatibility permits
+only a later, separately preregistered v33 live allocation; it is not planning,
+latency or gameplay evidence. At freeze time weekly Codex capacity was94% used,
+6% remained and no reset credit was available, so the actual Luna call remains
+unrun. Issue #59 remains the current research-priority tracker; no newer issue
+was present in the open-issue check.

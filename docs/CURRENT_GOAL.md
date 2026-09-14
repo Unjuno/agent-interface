@@ -1,3 +1,13 @@
+Current direction (r79): freeze one separately labelled schema-v6 endpoint
+preflight before any v33 live allocation. Six source hashes bind the exact
+schema, generic preflight, Luna-low no-image runner, instructions, one-shot
+wrapper and audit. The output must be absent; the allocation allows1 fresh
+request and0 retries, and retains compatible, refused or failed outcomes. The
+non-consuming verifier passes and no output/model call exists. Weekly capacity
+was94% used with6% remaining and no reset credits at freeze time, so preserve
+headroom and run only when capacity permits. No GUI/input/model/game/performance
+claim; no subagent/context handoff; full goal open.
+
 Current direction (r78): v33 deterministic composition now covers8 receipt
 paths. Policy/planner/controller/terminal plus failed-health and unknown-ammo
 paths have6/6 zero primary Executor acceptances. The valid path binds exactly1;
