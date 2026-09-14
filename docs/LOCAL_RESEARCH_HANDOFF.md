@@ -3149,6 +3149,17 @@ typed boundary into the shared desktop acquisition/golden path for matched
 correctness, wait, cache/input, round-trip and repair comparison.  See
 `research/doom/MAP01_DETERMINISTIC_INVALIDATION_V27_LIVE_V1.md`.
 
+The persistent typed boundary now has a desktop transfer candidate.  Golden v2
+keeps the v1 GUI runtime, adaptive caller, repair path and independent scorer,
+but cold grounding and layout-B repair use two turn IDs on one minimized app-
+server thread.  Turn IDs satisfy the existing unique call ledger and each call
+uses `tokenUsage.last`; both schema and semantic grounding validators run.  The
+schema preflight remains separate.  Five offline tests and the13-check WSL
+doctor pass.  Freeze seed991030 once against retained v1 reference26,531 input/
+4,864 cached,47.460s task time,58.879s whole command and101.276ms feedback.
+Correctness, route, old-layout refusal and release gates remain primary.  See
+`runtime/GOLDEN_DESKTOP_DEMO_V2.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms

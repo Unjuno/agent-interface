@@ -1,3 +1,14 @@
+Current direction (r51): the shared desktop v2 candidate replaces the two task-
+grounding process launches with one capability-minimized app-server thread while
+preserving the frozen golden GUI runtime, adaptive repair and independent scorer.
+Turn IDs remain unique call IDs; usage maps from each app-server `last` record;
+schema and semantic validators both run.  Five tests and all13 model-free doctor
+checks pass.  Preflight intentionally remains a separate compatibility call.
+Next freeze seed991030 once and require the same6/6 tasks/routes, zero old-layout
+input, verified releases, one thread/two turns; compare to retained v1's26,531
+input/4,864 cached,47.460s tasks,58.879s command and101.276ms feedback without a
+population claim.  No subagent/context handoff; full goal open.
+
 Current direction (r50): the frozen v27 composition passes in a real advancing
 game.  Decision0 injects once at exact sequence5; detection-to-turn-interrupt is
 0.025ms, send-to-ack2.192ms, send-to-interrupted-completion3.279ms, and detection-
