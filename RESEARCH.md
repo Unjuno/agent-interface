@@ -76,6 +76,16 @@ passes archived positive, negative and limit artifacts plus five refusal control
 on Windows/WSL. Hold pending completion feedback and packaging repair. See
 [changed L geometry](research/live_control/OPENTTD_EFFECT_MEMORY_GEOMETRY_V3.md).
 
+A pixel-only follow-up then measures persistent change inside the retained drag
+crop without reading task or engine state. A posthoc threshold separates nine
+selected first effects from two repeated completed-segment drags, but a
+preregistered A/B/B/A model comparison rejects the prompt form. On the frozen
+v11 turn7 context, exact-prompt Astra is `observed`2/2 and proposes progression;
+the receipt condition is `uncertain`2/2, proposes inspection and adds156 input
+tokens per call. No live input is issued. Keep the measurement only as a local
+barrier candidate and separate evidence from action admission before retesting.
+See [persistent visual-effect receipt](research/live_control/PERSISTENT_EFFECT_RECEIPT_V1.md).
+
 ### Retained OpenTTD effect-state diagnosis
 
 The frozen seed991003 v6 run lacks a formal finish evaluation because its driver

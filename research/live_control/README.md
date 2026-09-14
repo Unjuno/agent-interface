@@ -1,5 +1,13 @@
 # Asynchronous live control: development evidence
 
+Latest effect-signal result: [persistent visual-effect receipt](PERSISTENT_EFFECT_RECEIPT_V1.md).
+An archived pixel threshold separates selected new road effects9/9 from repeated
+completed-segment drags2/2, but the matched model test is negative. On one frozen
+v11 context, exact-prompt baseline is `observed`2/2 while the receipt condition is
+`uncertain`2/2 and adds156 input tokens/call. Reject the prompt form and do not run
+it live. The next design separates an agent-authored local postcondition from
+action authority and uses it inside an already bounded program.
+
 Latest changed-geometry result: [bounded effect memory on a new L fixture](OPENTTD_EFFECT_MEMORY_GEOMETRY_V3.md).
 The seed991004 task moves the five target tiles and visible position. Two distinct
 drags independently complete it with no surrounding changes or completed-segment

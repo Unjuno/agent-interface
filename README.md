@@ -65,6 +65,13 @@ assumption in offline cross-OS controls. Hold the memory candidate and repair
 completion feedback before another live geometry run. See
 [changed L geometry](research/live_control/OPENTTD_EFFECT_MEMORY_GEOMETRY_V3.md).
 
+A preregistered fixed-context follow-up rejects the first pixel-only effect
+receipt prompt. Exact-prompt Astra recognizes the retained road effect2/2,
+while the receipt condition remains uncertain2/2 and adds156 input tokens per
+call. No live action is run. The next candidate will use an agent-authored visual
+postcondition as a local in-program barrier, separate from input authority. See
+[persistent visual-effect receipt](research/live_control/PERSISTENT_EFFECT_RECEIPT_V1.md).
+
 Process-scoped timing envelopes now cover fresh Calc and OpenTTD tasks. Calc
 saves 480/192 in 23.976s with 21.334s of wrapper-observed model wait. OpenTTD uses
 batched delayed-hover contact sheets and an adaptive two-Luna/six-Astra route to

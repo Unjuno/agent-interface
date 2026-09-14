@@ -14,6 +14,14 @@ before the bound. The independent score succeeds after211.632 seconds to the
 second-drag feedback; controller-verified hard success and semantic completion
 timing remain absent. Reliable human-tempo task completion remains open.
 
+Latest negative follow-up: a pixel-only persistent-effect receipt separates
+selected archived new and repeated effects, but its preregistered prompt form
+reverses the desired model outcome. Exact-prompt Astra recognizes progression
+2/2; receipt Astra remains uncertain2/2 and adds156 input tokens per call. The
+form is rejected without live input. The next candidate separates an
+agent-authored visual postcondition from action admission and evaluates it as a
+local barrier inside an already bounded program.
+
 ## What changed
 
 | Stage | Initial state | Current evidence | Status |

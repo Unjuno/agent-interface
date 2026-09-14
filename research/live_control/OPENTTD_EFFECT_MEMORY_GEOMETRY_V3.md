@@ -86,6 +86,15 @@ and missing semantic completion. Repair finish packaging and provide a local,
 task-independent completion/effect signal that can end the second checkpoint
 without another full model judgment. Do not repeat v11.
 
+The first pixel-only receipt follow-up is now rejected. Although an archived
+threshold separates nine selected new effects from two repeated completed-segment
+drags, a preregistered A/B/B/A fixed-context comparison reverses the desired
+planner result: raw baseline is `observed`2/2 while receipt is `uncertain`2/2,
+at+156 input tokens/call. The receipt mixes evidence with a no-action-authority
+statement and makes Astra more conservative. Do not run it live. Next separate
+an agent-authored local postcondition from action admission and evaluate it as an
+in-program barrier. See `PERSISTENT_EFFECT_RECEIPT_V1.md`.
+
 Primary evidence:
 
 - `results/timing-envelope-openttd-l-11/preregistration.json`
