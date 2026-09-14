@@ -41,11 +41,26 @@ The exact first Luna patch `[590,367,60,48]` is used without editing.
 The two fresh initial images are byte-identical. Exact frame reconstruction and
 saved SVG checks pass on Windows and WSL.
 
+## Unchanged replication
+
+A second preregistered pair uses the same canonical first Luna output, the same
+allocations and fresh X11 processes. It reverses order to partial then target.
+The20px case again stops before Save and the24px case again admits Save. Across
+both successful pairs, target is2/2, partial is2/2, all38 exact frames reconstruct
+and all four terminals verify release. Initial images are byte-identical across
+all four cases. Sample spans are89.946--101.891ms.
+
+The first replication preregistration attempt is retained before input: a byte
+hash compared a CRLF checkout with an LF generated file even though canonical
+JSON was identical. The corrected allocation binds canonical parsed JSON. The
+first audit invocation also expected the older byte-hash field; only the auditor
+changed, and both Windows and WSL audits now pass.
+
 ## Decision
 
-Retain this first fresh transfer and require an unchanged replication before any
-promotion. This result shows that one previously authored condition can gate a
-new same-task process. It does not show a model call inside the live episode,
+Promote only as a scoped moved-object local postcondition candidate. Two
+opposite-order same-task pairs now show that one previously authored condition
+can gate a new process. This does not show a model call inside the live episode,
 model-planned pointer motion, new geometry, general object identity, speedup or
 token reduction. Placement still requires a different target-and-guard contract.
 
@@ -56,3 +71,7 @@ Primary evidence:
 - `results/local-displacement-transfer-03/preregistration.json`
 - `results/local-displacement-transfer-03/report.json`
 - `results/local-displacement-transfer-03/audit.json`
+- `results/local-displacement-transfer-04/failure.json`
+- `results/local-displacement-transfer-05/preregistration.json`
+- `results/local-displacement-transfer-05/report.json`
+- `results/local-displacement-transfer-05/audit.json`

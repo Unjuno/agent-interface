@@ -39,11 +39,12 @@ Every strict model-authored patch accepts retained24px samples and rejects20px
 samples. The prompt fixes most contract fields and performs no live input, so a
 fresh live transfer remains required before integrating this moved-object path.
 
-That unchanged first Luna condition now passes one separately preregistered
-fresh X11 target/partial transfer:24px admits Save and20px stops before Save.
-Two earlier path/focus/packaging failures remain retained. This still uses
-scripted pointer paths and an out-of-episode model call; unchanged replication
-is required before promotion.
+That unchanged first Luna condition now passes two opposite-order fresh X11
+target/partial pairs:24px admits Save2/2 and20px stops before Save2/2. All38
+frames reconstruct exactly and all four terminals release input. Earlier path,
+focus, packaging and line-ending-sensitive preregistration failures remain
+retained. Promote only as a same-task moved-object local postcondition candidate;
+pointer paths remain scripted and the model call stays outside the episode.
 
 ## What changed
 

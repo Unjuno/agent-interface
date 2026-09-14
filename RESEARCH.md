@@ -116,13 +116,14 @@ same moved-object task. See
 [model-authored displacement condition](research/live_control/LOCAL_DISPLACEMENT_AUTHORSHIP_V1.md).
 
 The unchanged first Luna condition then transfers to fresh X11 processes. Two
-preregistered predecessors are retained: one cross-OS path failure before input,
-then a partial pass followed by a safely released target focus interruption and
-packaging assumption. A corrected reversed-order allocation admits Save for two
-fresh24px samples and stops before Save for two20px samples. The19 exact frames,
-authored hash, fresh source hashes, SVGs and releases audit on Windows/WSL.
-Require unchanged replication; pointer paths remain scripted and no model call
-occurs inside the episode. See
+preregistered predecessors retain a cross-OS path failure, partial pass, safely
+released focus interruption and packaging assumption. Two later opposite-order
+pairs both admit Save at24px and stop before Save at20px. All38 exact frames,
+canonical authored identity, identical fresh sources, SVGs and releases audit on
+Windows/WSL. A line-ending-sensitive preregistration failure is also retained
+before input. Promote only as a same-task moved-object local postcondition
+candidate; pointer paths remain scripted and no model call occurs in an episode.
+See
 [fresh authored-condition transfer](research/live_control/LOCAL_DISPLACEMENT_TRANSFER_V1.md).
 
 ### Retained OpenTTD effect-state diagnosis

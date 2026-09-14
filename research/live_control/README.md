@@ -1,11 +1,11 @@
 # Asynchronous live control: development evidence
 
 Latest authored-condition transfer: [fresh displacement transfer](LOCAL_DISPLACEMENT_TRANSFER_V1.md).
-After retaining an absolute-path failure and a partial-pass/target-focus
-interruption, a corrected reversed-order allocation transfers the unchanged
-first Luna patch to two fresh X11 processes. It admits Save at24px and stops it
-at20px;19 exact frames, source hashes, SVGs and releases audit cross-OS. Require
-unchanged replication before promotion.
+Two opposite-order fresh X11 pairs transfer the unchanged first Luna patch.
+Target24px admits Save2/2 and partial20px stops before Save2/2; all38 exact frames,
+source identity, SVGs and terminal releases audit on Windows/WSL. A line-ending
+sensitive preregistration failure remains retained before input. Promote only as
+a same-task moved-object local postcondition candidate; paths remain scripted.
 
 Latest model-authorship result: [local displacement authorship v1](LOCAL_DISPLACEMENT_AUTHORSHIP_V1.md).
 On one fixed initial Inkscape frame, Luna-low and Astra-medium each author strict

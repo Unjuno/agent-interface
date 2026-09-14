@@ -94,11 +94,12 @@ reject20px samples. The prompt fixes most fields and no GUI input occurs, so thi
 is an authorship signal for a fresh live transfer rather than promotion. See
 [model-authored displacement condition](research/live_control/LOCAL_DISPLACEMENT_AUTHORSHIP_V1.md).
 
-The unchanged first Luna patch now passes one fresh X11 target/partial transfer.
-After two retained integration failures, a corrected allocation admits Save at
-24px and stops before Save at20px. Nineteen exact frames, source hashes, saved
-SVGs and input releases audit cross-OS. Pointer paths are scripted and the model
-call is outside the live episode; require replication. See
+The unchanged first Luna patch now passes two opposite-order fresh X11
+target/partial pairs. Target24px admits Save2/2 and partial20px stops before
+Save2/2. All38 exact frames, canonical authored identity, saved SVGs and input
+releases audit cross-OS. A line-ending-sensitive preregistration failure is
+retained before input. Promote only as a same-task moved-object local condition;
+pointer paths are scripted and the model call is outside the live episode. See
 [fresh authored-condition transfer](research/live_control/LOCAL_DISPLACEMENT_TRANSFER_V1.md).
 
 Process-scoped timing envelopes now cover fresh Calc and OpenTTD tasks. Calc
