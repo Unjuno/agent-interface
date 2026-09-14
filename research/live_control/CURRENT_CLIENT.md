@@ -56,6 +56,14 @@ conservative, and this frame-contract gap plus one Chromium button holds promoti
 from the default client. See
 MODEL_POINT_TARGET_V1.md.
 
+`point_target_contract_v2.py` is the corrected model-facing companion. It keeps
+point coordinates explicitly in `source_observation_pixels` and gives the model a
+separate `surface_origin_translation` or `screen_fixed` choice. A fresh Chromium
+pair authors the former2/2, saves after a `[20,8]` move in stable and refuses the
+changed target before handle creation/input. Its36-frame audit passes Windows/WSL.
+This advances the contract only; v33 remains opt-in and the24x14 region is still
+caller-authored. See POINT_TARGET_CONTRACT_V2.md.
+
 Prior coordinate candidate: `executor_v4/session_v26` resolve explicit-frame
 clicks, drags and target/guard boxes from the latest stable pointer binding before
 whole-program validation. Fresh1152x720 OpenTTD receives only original1024

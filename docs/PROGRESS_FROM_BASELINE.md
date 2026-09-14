@@ -82,6 +82,15 @@ contract review also separates the prompt's screenshot-absolute numeric basis
 from the caller-assigned `window_content` transformation frame. Promotion is held
 until frame authorship is explicit or independently derived.
 
+The immediate repair now gives that transformation choice to the model under a
+separate typed field. In two preregistered seed991015 sessions, Luna-low authors
+the same source-observation pixel point and `surface_origin_translation` motion
+model2/2. Stable follows the observed window-origin delta and independently saves;
+the paired changed target refuses before handle creation and input. All36 frames
+audit cross-OS. Stable decision-to-independent-return is8.343s, including7.446s
+of parent-observed model execution. This closes the prior contract ambiguity for
+one known button, while fixed region size, new domains and repeated timing remain.
+
 Latest delta: bounded drag-effect memory now transfers correct actuation to one
 changed seed991004 L geometry. Two distinct drags complete all five target tiles
 with zero surrounding changes or repeated completed-segment input. The planner

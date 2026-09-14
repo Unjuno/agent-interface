@@ -88,6 +88,17 @@ the evidence covers one known button, so promotion is held; this is not general
 visual identity or a speed/token claim. See
 [model-point target derivation](research/live_control/MODEL_POINT_TARGET_V1.md).
 
+A corrected contract now makes the model author the missing semantics. In two
+fresh seed991015 sessions, Luna-low returns point space
+`source_observation_pixels`, point `[270,243]` and motion model
+`surface_origin_translation`2/2 at9,264/9,265 reported input tokens. Stable
+follows the same `[20,8]` surface move and independently saves `t991015`; the
+post-model changed page again refuses before handle creation with zero target
+pointer input. All36 frames audit cross-OS. Stable takes8.343s from decision start
+to independent evaluation, including7.446s in the model call; one episode and a
+scripted final click establish no speedup. The fixed24x14 region and known button
+remain. See [explicit point and motion contract](research/live_control/POINT_TARGET_CONTRACT_V2.md).
+
 Frame resolution now runs inside the candidate interface. A fresh1152x720
 OpenTTD pair sends only original1024 coordinates plus explicit frame identity;
 the runtime resolves clicks, drags and condition boxes from the latest pointer

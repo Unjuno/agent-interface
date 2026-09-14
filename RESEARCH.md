@@ -88,6 +88,18 @@ region authorship, one known button and exact-pixel matching leave cross-domain
 identity, token/cost benefit and human-tempo performance open. See
 [model-point target derivation](research/live_control/MODEL_POINT_TARGET_V1.md).
 
+The repaired seed991015 allocation asks the model to author numeric space and
+motion separately. Identical controlled Luna-low calls return
+`source_observation_pixels`, point `[270,243]` and
+`surface_origin_translation`2/2, reporting9,264/9,265 input tokens. Stable maps
+that motion to current runtime `window_content`, follows binding delta `[20,8]`
+and independently saves exact `t991015`. Changed-target refuses a different fresh
+patch before handle creation and target input. The audit reconstructs36 frames
+and verifies source, prompt, schema, model contract, patch and output hashes on
+Windows/WSL. This repairs the prior contract HOLD for the known task; caller-
+authored24x14 size, cross-domain behavior and efficiency remain open. See
+[explicit point and motion contract](research/live_control/POINT_TARGET_CONTRACT_V2.md).
+
 ### First live bounded drag-effect allocation
 
 A preregistered seed991003 replay keeps the v6 model, task, initial state,

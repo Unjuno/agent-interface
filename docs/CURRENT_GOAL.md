@@ -1,3 +1,16 @@
+Latest coordinate-contract repair: `point_target_contract_v2` separates absolute
+source-observation pixels from later target motion. In a preregistered seed991015
+pair, identical Luna-low calls author point `[270,243]` plus
+`surface_origin_translation`2/2 at9,264/9,265 input tokens. Stable follows binding
+delta `[20,8]` and independently saves `t991015`; changed-target refuses a new
+patch before handle creation with zero target pointer input. All36 frames and
+source/prompt/schema/patch/output hashes audit Windows/WSL. Stable decision start
+to independent return is8.343s including7.446s model time; no speed claim. Advance
+the explicit contract to a different domain with an independent oracle and a
+similar/transient negative. Fixed24x14 region size, automatic identity, cost and
+human tempo remain open. See research/live_control/POINT_TARGET_CONTRACT_V2.md.
+Full goal stays open.
+
 Latest target-authorship evidence: preregistered `target_handle_mint_from_point`
 derives a24x14 region from Luna-low's Save point `[270,243]` instead of receiving
 an absolute caller box. Stable exact-patch mint follows surface move `[20,8]`, a
