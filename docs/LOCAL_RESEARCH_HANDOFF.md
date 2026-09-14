@@ -1,3 +1,16 @@
+Latest compiled-interface result: a preregistered private Chromium pair now
+performs two fresh-evidence-dependent GUI actions with zero frontier-model
+resumptions. Positive independently submits `t991025`; action-to-feedback is
+773.005/568.488ms and first-action-to-semantic-completion is1.855s. The changed
+case completes only entry, observes missing Submit and safely stops. New adaptive
+caller v2 carries `unknown_state`, completed_actions=1 and confirmed_partial
+through the outer boundary. Two model calls report18,792 input tokens. V1-v3
+failures and v4's reason-collapse defect remain preserved; Windows/WSL audits and
+manual frames pass. Next run a preregistered matched plain/current-optimized/
+compiled efficiency block before any speed, token, break-even or human-tempo
+claim. See research/live_control/COMPILED_GUI_INTERFACE_LIVE_V5.md. Full goal
+stays open.
+
 Newest model-facing handle evidence: a controlled fixed screen reports9,268
 image-coordinate versus8,009 no-image-handle input tokens with4/4 strict
 correctness. A first fresh live attempt exposes and safely refuses a friendly

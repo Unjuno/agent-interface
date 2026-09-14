@@ -15,6 +15,20 @@ Latest research handoff: [measured progress, failures and next steps](docs/LOCAL
 
 Current Linux research caller: [components, usage and evidence limits](research/live_control/CURRENT_CLIENT.md).
 
+The first fresh compiled-interface GUI pair now crosses two local
+observe/action transitions without a frontier-model resumption.  On a private
+Chromium form, the positive path enters exact `t991025`, selects Submit only
+after fresh field-change and target evidence, and passes the independent POST
+scorer.  Its action-to-feedback intervals are773.005ms and568.488ms; first action
+to semantic completion is1.855s.  A paired page-change case completes one action,
+issues no Submit, and carries `unknown_state`, one completed action and confirmed
+partial delivery through adaptive caller v2.  Two Luna-low calls report18,792
+input tokens.  Failed v1-v3 allocations remain preserved; v4 exposed the typed-
+reason loss and v5 repairs it.  One pair supplies mechanics evidence only, with no
+rate, speedup, token-saving or human-tempo claim.  See
+[compiled GUI interface live v5](research/live_control/COMPILED_GUI_INTERFACE_LIVE_V5.md).
+
+
 The newest held-out OpenTTD toolbar study removes the answer coordinate from the
 candidate path. A first preregistered pair is retained failed: Luna-low calls its
 choice visually unambiguous, but its three points omit company finances and the

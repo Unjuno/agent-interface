@@ -1,3 +1,16 @@
+Latest compiled-interface result: a preregistered private Chromium pair now
+performs two fresh-evidence-dependent GUI actions with zero frontier-model
+resumptions. Positive independently submits `t991025`; action-to-feedback is
+773.005/568.488ms and first-action-to-semantic-completion is1.855s. The changed
+case completes only entry, observes missing Submit and safely stops. New adaptive
+caller v2 carries `unknown_state`, completed_actions=1 and confirmed_partial
+through the outer boundary. Two model calls report18,792 input tokens. V1-v3
+failures and v4's reason-collapse defect remain preserved; Windows/WSL audits and
+manual frames pass. Next run a preregistered matched plain/current-optimized/
+compiled efficiency block before any speed, token, break-even or human-tempo
+claim. See research/live_control/COMPILED_GUI_INTERFACE_LIVE_V5.md. Full goal
+stays open.
+
 Latest target-grounding result: bounded persistent hover labels raise the known
 OpenTTD Road Construction selection from the direct full-frame baseline's0/2 to
 3/3 across two preregistered hover studies. The first study is preserved: model
@@ -998,3 +1011,14 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   cancellation count誤りは保持。raw evidence retentionはadapter側未検証であり、GUI/
   model/token/latency/break-even claimなし。次は既存desktop fixtureでpositiveとchanged/
   unknownの有限live mechanics pairを事前登録し、成功後のみA/B/C cold/warm比較へ進む。
+- 2026-09-14 r23: #56 compiled interfaceをprivate Chromiumのfresh positive/changed
+  pairへ統合。v1 batch mint拒否、v2 flat field patch拒否、v3 read-check status mismatch、
+  v4 outer reason collapseを全て保持。v5 seed991025はpositiveで2 actions/3 local
+  observations/frontier resumptions 0、独立POST `t991025`成功。feedback 773.005/
+  568.488ms、first-action→semantic completion 1.855s。changedはenter後about:blankを
+  観測しSubmit 0でSAFE_YIELD。caller v2がunknown_state/completed_actions=1/
+  confirmed_partialを外側へ保持。fresh 2 calls/18,792 input、Windows/WSL監査合格。
+  1 pairのみでrate/速度/token削減/break-even/人間速度claimなし。次は同一条件の
+  plain/current-optimized/compiled matched efficiency blockを事前登録する。v5のopaque
+  session_scope文字列はseed991024のまま残ったが、case別process/registryでreuseなし。
+  凍結sourceは変更せず、次runnerでlabelを修正する。

@@ -6,6 +6,19 @@ baseline into a Linux/X11 control candidate with durable recovery, scoped local
 execution and independent effect checks. It still does not deliver human-tempo
 general computer use or an installable Agent Market product.
 
+The first fresh compiled-interface integration now passes its positive and
+changed mechanics pair.  The positive Chromium case performs two fresh-evidence-
+dependent actions with zero frontier-model resumptions and independently submits
+`t991025`; useful feedback follows the actions in773.005ms and568.488ms.  The
+changed case performs the first action, observes that Submit disappeared and
+stops before target input.  Adaptive caller v2 preserves `unknown_state`, one
+completed action and confirmed partial delivery instead of collapsing the result
+to `failed`.  Two grounding calls report18,792 input tokens; raw frames and source
+hashes audit Windows/WSL.  Retained v1-v3 failures and v4's composition defect
+remain visible.  A matched baseline, repeated rate and cross-domain test remain
+before efficiency or human-tempo claims.
+
+
 The newest held-out target study keeps one planner model on the whole decision
 path. A first formal OpenTTD attempt fails because its three free-form candidates
 omit company finances despite `visually_unambiguous` confidence. A repaired pair

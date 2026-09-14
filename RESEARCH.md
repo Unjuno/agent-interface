@@ -14,6 +14,23 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Experimental ladder
 
+### Compiled GUI interface live mechanics and typed composition
+
+A preregistered Chromium sequence preserves three failed allocations before the
+mechanics pass: batched handle minting, a visually-flat field patch and a
+read-check status mismatch.  V4 then completes the positive two-action method and
+stops the changed page before Submit, while exposing that caller v1 turns nested
+`unknown_state` into generic `failed`.  Caller v2 adds a strict bounded safe-yield
+contract.  Fresh seed991025 v5 independently submits `t991025`; the changed case
+returns `unknown_state`, `completed_actions: 1` and `confirmed_partial` across the
+outer boundary.  Positive feedback arrives in773.005ms and568.488ms, and semantic
+completion in1.855s after the first action.  Two calls report18,792 input tokens.
+Windows/WSL audits and manual frame review pass.  This advances to matched
+efficiency comparison without a speed, token, rate or human-tempo claim.  See
+[compiled GUI interface live v5](research/live_control/COMPILED_GUI_INTERFACE_LIVE_V5.md)
+and [adaptive caller v2](research/live_control/ADAPTIVE_ACQUISITION_CALLER_V2.md).
+
+
 ### Model-proposed active semantic evidence
 
 One held-out OpenTTD toolbar target now tests a single Luna-low planner on both

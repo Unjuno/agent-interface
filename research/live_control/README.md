@@ -511,3 +511,12 @@ fresh admission and verified release. Twelve typed stop/failure branches plus
 cold/warm #53 caller integration bring the block to 15 scenarios; independent
 audits pass on Windows and WSL. This is offline mechanics only. Live correctness,
 token/latency benefit, evidence retention and break-even remain unmeasured.
+
+[Adaptive acquisition caller v2](ADAPTIVE_ACQUISITION_CALLER_V2.md) preserves a
+bounded local executor's typed safe-yield reason and completed-action count. Its
+18 offline scenarios pass Windows/WSL. [Compiled GUI interface live v5](COMPILED_GUI_INTERFACE_LIVE_V5.md)
+then validates the boundary on one fresh positive/changed Chromium pair: exact
+submission succeeds after two local transitions, while the changed page issues no
+Submit and retains `unknown_state / completed_actions=1 / confirmed_partial`.
+The pair advances to matched efficiency comparison; it makes no rate, speed, token
+or human-tempo claim.
