@@ -425,3 +425,15 @@ durable calls16->14 and frames50->39. Decision-to-evaluation is25.964s versus
 29.639s sequentially, so total latency is descriptive. The coded expansion path
 still needs a fresh live wrong-anchor test. See
 [OPENTTD_ANCHOR_FIRST_EVIDENCE_V1.md](OPENTTD_ANCHOR_FIRST_EVIDENCE_V1.md).
+
+The bounded recovery branch now has one preregistered live fault allocation.
+The retained archived wrong point translates to `[457,79]` and normalizes to
+slot `[456,79]`. One verified receipt makes Luna-low return
+`EXPANSION_REQUIRED`; the interface grants no click, collects four neighbours,
+and the same model selects receipt5 `[506,79]`. Exact rehover, the only
+button-down, release, and the shifted finance oracle pass. The path uses18
+durable calls,50 frames and8,107+8,280 model-input tokens; decision start to
+evaluation is24.956s. Windows/WSL audit passes. This is deterministic fault
+injection, not a natural error-rate or speed sample. The first preregistration's
+cross-OS path failure is retained separately. See
+[OPENTTD_WRONG_ANCHOR_RECOVERY_V2.md](OPENTTD_WRONG_ANCHOR_RECOVERY_V2.md).

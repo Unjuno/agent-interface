@@ -2572,3 +2572,23 @@ The expansion route is implemented but not live-proven. Next force no target
 input from a fresh wrong anchor, run bounded neighbour acquisition, and require
 independent task recovery. See
 research/live_control/OPENTTD_ANCHOR_FIRST_EVIDENCE_V1.md. Goal/freeze remain open.
+
+## Latest follow-up — wrong-anchor live recovery (2026-09-14)
+
+The expansion route now has one preregistered deterministic fault allocation.
+The retained archived wrong point `[436,51]` translates with the actual surface
+delta `[21,28]` and normalizes to detected slot `[456,79]`. Its single verified
+receipt makes Luna-low return `EXPANSION_REQUIRED`, which grants no click. Four
+additional radius-two receipts are collected in bounded3+1 batches; the same
+model selects receipt5 `[506,79]`. Exact rehover, the only button-down admission,
+release and the shifted finance oracle pass. The path uses18 durable calls,50
+exact frames and8,107+8,280 input tokens; decision start to evaluation is24.956s.
+Windows/WSL independently reconstruct all evidence. No subagent participates.
+
+The first preregistration is retained as a preflight failure: Windows Python lacked
+`fcntl`, then Windows backslashes failed WSL path resolution before runtime start.
+V2 fixes only portable preregistered paths and is a separate study. This proves
+recovery capability for one injected fault, not natural model error frequency or
+causal speed. Move the staged acquisition contract to a different GUI domain or
+layout next. See
+research/live_control/OPENTTD_WRONG_ANCHOR_RECOVERY_V2.md. Goal/freeze remain open.

@@ -482,3 +482,14 @@ prior29.639s sequential run, so only the deterministic hover reduction is
 attributed to the change. The bounded expansion path is coded but lacks fresh
 live recovery evidence. See
 [anchor-first evidence](../research/live_control/OPENTTD_ANCHOR_FIRST_EVIDENCE_V1.md).
+
+The previously untested expansion branch now recovers one preregistered injected
+wrong anchor. After the actual `[21,28]` surface move, archived `[436,51]`
+normalizes to wrong slot `[456,79]`. Luna-low rejects its one receipt for target
+use, four neighbours are acquired, and Luna selects `[506,79]` from the complete
+five-receipt set. Only the final selected operation emits button-down; exact
+rehover, release and the translated independent finance oracle pass. Eighteen
+durable calls,50 frames and8,107+8,280 input tokens audit on Windows/WSL. The
+24.956s decision-to-evaluation time is descriptive because the injected route
+omits the earlier candidate-model call. See
+[wrong-anchor recovery](../research/live_control/OPENTTD_WRONG_ANCHOR_RECOVERY_V2.md).

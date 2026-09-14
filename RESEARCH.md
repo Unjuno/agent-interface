@@ -832,3 +832,14 @@ durable calls16->14 and frames50->39. Sequential total time is25.964s versus
 29.639s and is not a causal latency estimate. Fixed and live evidence audit
 Windows/WSL. The implemented expansion route remains unproven live. See
 `research/live_control/OPENTTD_ANCHOR_FIRST_EVIDENCE_V1.md`.
+
+The bounded expansion route now recovers one preregistered deterministic wrong
+anchor. Archived `[436,51]` translates and normalizes to `[456,79]`; Luna-low
+returns `EXPANSION_REQUIRED` from its single receipt, receives four additional
+verified neighbours, then selects `[506,79]`. The only button-down occurs after
+selection; exact rehover, release and the shifted finance oracle pass. The run
+uses18 durable calls,50 exact frames and8,107+8,280 input tokens, with24.956s
+from decision start to evaluation. Windows/WSL audit passes. The separate v1
+preflight path failure remains preserved. This is injected recovery capability,
+not natural error frequency, causal speed or cross-domain evidence. See
+`research/live_control/OPENTTD_WRONG_ANCHOR_RECOVERY_V2.md`.

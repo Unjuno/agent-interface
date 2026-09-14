@@ -864,3 +864,13 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   sequential total29.639->25.964sはmodel wait差を含むため因果claimなし。
   次の局所目標は、入力を許可せず誤anchorからlive expansionを実行し、5 receipts
   後に独立完了まで回復すること。人間速度・unknown app・freezeは未達。
+
+- 2026-09-14 r10: 誤anchor回復をpreregistered fault injectionとして実機化。
+  過去の誤点`[436,51]`を観測surface delta`[21,28]`で移し、検出slot
+  `[456,79]`へ正規化。1 receiptで同じLuna-lowが`EXPANSION_REQUIRED`を返し、
+  clickを許可せず4近傍を追加、5 receiptsから`[506,79]`を選択。exact rehover、
+  唯一のbutton-down、release、移動後finance oracleが成功。18 durable calls、
+  50 frames、inputs8,107+8,280、decision-to-evaluation24.956sをWindows/WSL監査。
+  v1のWindows/WSL path preflight失敗も未上書きで保存。これは自然誤り率や速度
+  比較ではない。次の局所目標は、同じ段階取得を別GUI domain/layoutへ移し、
+  正答・初回feedback・展開cost・tokensを測ること。人間速度・freezeは未達。
