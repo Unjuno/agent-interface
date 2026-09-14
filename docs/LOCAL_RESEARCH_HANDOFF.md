@@ -2685,3 +2685,26 @@ This proves ordering but not application efficacy: v6 has not yet launched its
 three-condition live block. Keep Issue #54 open until positive/no-match/ambiguous
 run through this path and the authority/accounting audit passes. See
 research/live_control/SCHEMA_PREFLIGHT_V1.md. Goal/freeze remain open.
+
+## Latest follow-up — schema-gated Mindustry three-condition live block (2026-09-14)
+
+One preregistered ordered block runs three fresh private Linux/X11 sessions with
+the same Luna-low model, fixture, palette route, schema set, authority and
+independent scorer. The pinned schema cache passes before the first GUI with no
+fresh endpoint call. Positive independently completes in51.761s using4 calls,
+35,017 input tokens,14 exchanges and33 frames.
+
+The viewport-excluded condition stops before world hover with no executable
+point or placement. It uses3 calls/26,689 input/6 exchanges/14 frames/31.239s.
+The unreadable-receipt fault uses live verified hover, masks only the presented
+pixels, returns `unreadable_evidence` and emits no placement;4 calls/35,025
+input/8 exchanges/23 frames/42.144s. Both preserve copper and all112 guard
+tiles. No subagent or retry participates.
+
+The formal block is false because the viewport-excluded model reason is
+`ambiguous`, while the preregistered check required `no_candidate/no_match`.
+Safety holds, but reason taxonomy precision does not. Windows/WSL reconstruct
+70 exact frames,11 turns,28 exchanges and all scores. Retain partial evidence;
+do not rerun for a preferred label. Next separate operational authority classes
+from diagnostic reason precision on a new case. See
+research/benchmark_discovery/MINDUSTRY_SINGLE_TILE_MATCHED_V1.md. Goal/freeze remain open.

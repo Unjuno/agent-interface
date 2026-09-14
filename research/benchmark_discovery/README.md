@@ -253,3 +253,12 @@ the [previous source-PNG/presentation discrepancy](../doom/FEEDBACK_PILOT.md).
   and [mod storage](https://docs.luanti.org/for-creators/api/classes/modstorage/)
   support a world-specific fixture/oracle design. The probe used Lua world files,
   not an implemented mod-storage benchmark service.
+
+The first schema-gated [Mindustry three-condition live block](MINDUSTRY_SINGLE_TILE_MATCHED_V1.md)
+runs positive, viewport-excluded and unreadable-receipt sessions with Luna-low.
+Positive independently succeeds; both negatives carry no executable point past
+their stop and admit no placement button. The formal block remains false because
+the viewport-excluded case returns `ambiguous` instead of the preregistered
+`no_candidate/no_match`. Eleven calls use96,731 input tokens and all70 exact
+frames audit Windows/WSL. Retain partial branch evidence; do not retry for a
+preferred reason label.

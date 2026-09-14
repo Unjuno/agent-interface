@@ -537,3 +537,12 @@ cache with zero fresh calls. Mindustry v6 puts this gate before its historical
 GUI continuation; an actual-cache ordering test observes0 continuation calls
 after refusal and1 after acceptance. This establishes the code boundary, while
 the live three-condition task and its latency/correctness evidence remain open.
+
+That live block now runs once without retry. Positive independently succeeds;
+viewport-excluded and unreadable conditions both stop without a world placement
+and preserve the scored state. The formal result is still false because the
+first negative is labelled `ambiguous` instead of the predeclared no-match
+reasons. Across11 calls, input is96,731 tokens;70 exact frames and28 exchanges
+audit cross-OS. This adds live authority evidence and exposes reason-taxonomy
+precision as a separate failure. See
+[Mindustry matched branches](../research/benchmark_discovery/MINDUSTRY_SINGLE_TILE_MATCHED_V1.md).

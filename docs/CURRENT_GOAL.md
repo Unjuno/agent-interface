@@ -916,3 +916,14 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   実cacheの順序テストはrefusal時continuation 0、accept時1を確認。Windows/WSL監査。
   次は同wrapperでpositive/no-match/ambiguousを実GUI実行し、分岐別button admission、
   calls、feedback、tokens、independent scoreを比較する。live efficacy・人間速度・freezeは未達。
+
+- 2026-09-14 r15: schema gateを最初のGUIより前に通し、同一Linux/X11 fixture・
+  Luna-low・palette path・authority/scorerでpositive/no-match/unreadableを順次実行。
+  positiveは4 calls/35,017 input/14 exchanges/33 frames/51.761sで独立成功。
+  viewport外no-matchは3 calls/26,689 input/6 exchanges/14 frames/31.239s、world hover/
+  placementなし。unreadable faultは4 calls/35,025 input/8 exchanges/23 frames/42.144s、
+  `unreadable_evidence`でplacementなし。両negativeはguard/copperを保全。ただしno-match
+  reasonが事前条件`no_candidate/no_match`ではなく`ambiguous`だったためformal blockは
+  false、再試行なし。Windows/WSLで70 frames、11 turns、28 exchangesを監査。次は同じ
+  authorityを持つnegative reasonをoperational classへ畳む案とreason精度指標を分離して
+  新しいcaseで評価。token削減・自然誤り率・人間速度・freezeは未達。

@@ -886,3 +886,12 @@ usage. The corrected three-schema set passes from pinned cache without a fresh
 call. A Mindustry v6 wrapper now places this gate before its GUI continuation;
 the actual-cache ordering test calls that continuation0 times after refusal and1
 after acceptance. Live positive/no-match/ambiguous evidence is still required.
+
+The schema-gated three-condition Mindustry block now supplies that live evidence.
+Positive independently succeeds; viewport-excluded and unreadable cases admit
+no placement and preserve engine state. The block is formally false because the
+first negative returns coordinate-free `ambiguous` rather than the predeclared
+no-match reason. Eleven calls report96,731 input tokens;70 exact frames and28
+socket exchanges audit Windows/WSL. Retain safety evidence and the taxonomy
+failure without retry. See
+`research/benchmark_discovery/MINDUSTRY_SINGLE_TILE_MATCHED_V1.md`.
