@@ -1,3 +1,17 @@
+Current direction (r37): retained MAP01 failure analysis separates the cover-
+expiry symptom from stale policy semantics.  Fixed cover left 9,770.767 ms of
+uncovered model tails (3,765.441 ms max), but 84 health points were also lost
+across decision windows whose inference cover was coast; each window includes
+the following primary program, so this is association rather than causal
+attribution.  Revisit the previously rejected single-ROI changed-pixel idea only
+as one-way invalidation: it may stop an existing policy but never prove success
+or grant input.  A tight health HUD ROI separates all 7 changed and 5 unchanged
+adjacent retained decision frames; an animated face ROI invalidates 12/12,
+showing the selection risk.  Next freeze exactly one v23/schema-v3 threat-
+exposure run before integrating this guard.  Retain no-exposure/failure as-is;
+use live evidence to decide whether a separately admitted stop/switch/escalate
+mechanism is justified.  No subagent/context handoff; full goal open.
+
 Current direction (r36): Issue #59 ends the current packaging allocation after
 the runnable golden desktop path and its evidence page are published.  Make the
 unresolved real-time control path primary again: diagnose the retained MAP01
