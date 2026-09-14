@@ -1,3 +1,16 @@
+Current direction (r82): v35 composes semantic planner commands, deterministic
+compiled steps, exact submit bytes and matching Executor v10 program attestation under one
+root current-authority receipt. Fallback admission additionally binds the latest
+completed primary ID/terminal, command index, semantic command and full retained
+no-visible-effect receipt. Deterministic replay covers5 paths/7 program bindings;
+all close with current authority false and verified release, with byte-identical
+Windows/Linux output. A research revisit ledger now separates failed conditions
+from mechanisms and requires one justified changed condition before reallocation.
+Next reconcile early in-memory HUD extraction to the exact retained frame, then
+measure the 128.488ms capture-to-decision portion without weakening v35. No
+endpoint/model/game/task/human-tempo claim; no subagent/context handoff; full
+goal open.
+
 Current direction (r81): v34 wires the running action guard into active primary
 and fallback programs, with fresh passive recheck between segments. The first
 frozen live probe correctly failed pre-input: post-capture WAD-reader setup made

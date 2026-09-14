@@ -3520,3 +3520,29 @@ and its action fingerprint binds the primary list rather than each fallback moto
 payload. V35 must compose one current-authority receipt and bind every admitted
 segment. After that, emit typed HUD state from the captured frame before artifact
 encoding and reconcile it with the retained exact frame.
+
+## Latest follow-up — v35 binds every admitted program under one current authority (2026-09-15)
+
+V35 retains final-action-admission-v2 as history but makes the root running-action
+receipt authoritative after guard creation. Every primary/fallback program now
+binds the validated action, exact semantic slice, deterministic recompilation,
+submitted steps and matching Executor v10 SHA-256 attestation. Matching ID/count
+alone is rejected. Fallback additionally requires
+the latest completed primary ID/terminal and its full retained no-visible-effect
+receipt; a caller-supplied branch label cannot substitute for that evidence.
+
+The model-free replay covers one bundled primary, two segmented primaries, a
+fallback, active cancel/release and inter-segment refusal: five paths, seven
+program bindings, zero terminal current-authority states and verified release in
+all paths. Windows/WSL output is byte-identical. No schema-v6 endpoint call or
+planner/game allocation was made. Next move typed HUD extraction before artifact
+encoding and reconcile it to the exact retained frame before measuring latency.
+
+Executor v10 hashes the deep-copied, validated immutable program before its worker
+starts and returns that digest in `accepted`. MAP01 session v9 adopts it without
+changing the frozen v7/v8 or Executor v3/v4 sources used by earlier evidence.
+
+`research/REVISIT_LEDGER.md` now keeps failed mechanisms eligible for controlled
+re-evaluation. A revisit must name the retained failure, preserve its safety
+lesson, change one justified condition and freeze acceptance before consuming a
+new allocation. The old failure remains part of the evidence.
