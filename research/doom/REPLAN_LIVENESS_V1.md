@@ -115,3 +115,20 @@ uncertain evidence uses the inherited interrupt, cancel, verified-release and
 stale-answer discard path. Thirty-two relevant Windows tests and the 15-test
 WSL/Linux subset pass. This is still model-free construction; see
 [the v29 contract](MAP01_TYPED_COVER_VALIDITY_V29.md).
+
+## First v29 live result
+
+The only preregistered v29 allocation is threat-exposed but soft-unexposed.
+Luna completes two of six turns and twice authors absolute health floor 30. At
+fresh source health84, that floor would absorb54 damage and violates the frozen
+maximum20-loss construction bound. The runtime therefore rejects all three
+prior cover commands and uses input-free coast. Four other turns hard-invalidate
+and all eight programs verify empty release. All109 exact observations yield
+health signals, with zero unknowns.
+
+This isolates a representation error rather than evidence against typed
+validity itself: absolute critical health and allowable short-horizon loss are
+different quantities. Split them and derive the effective floor as
+`max(critical_health_minimum, source_health - maximum_health_loss)`. Also retain
+monitor receive/extraction/detection clocks; v29 only permits capture-to-send
+measurement. See [the frozen v29 result](MAP01_TYPED_COVER_VALIDITY_V29_LIVE_V1.md).

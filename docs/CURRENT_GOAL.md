@@ -1,3 +1,14 @@
+Current direction (r62): retain the only v29 live allocation as threat-exposed
+but soft-unexposed. All109 exact observations read health, four turns hard-
+invalidate, two complete and all8 programs release cleanly. Luna twice authors
+absolute floor30; at source health84 it would permit54 loss, so the frozen20-
+loss cap correctly rejects all3 prior cover commands and runs input-free coast.
+Soft events are0, so2/6 completion versus v28's1/6 is not an envelope gain.
+Next split critical_health_minimum from schema-bounded maximum_health_loss,
+derive effective floor=max(critical, source-loss), and retain monitor receive/
+extraction/detection clocks before another allocation. Interrupted usage remains
+partly unknown. No subagent/context handoff; full goal open.
+
 Current direction (r61): v29 integrates typed health validity into each authored
 next_cover. Schema v4 requires one health floor/lease for active answers; the
 runtime binds it to fresh exact evidence, rejects already-breached or >20-health

@@ -55,6 +55,16 @@ test WSL/Linux subset pass. No v29 model/game allocation has run; the20-health
 maximum soft-loss cap is a construction bound awaiting a frozen test. See
 [the v29 contract](research/doom/MAP01_TYPED_COVER_VALIDITY_V29.md).
 
+The first preregistered v29 live allocation is retained soft-unexposed. All109
+exact frames yield health with zero unknowns, four turns hard-invalidate, two
+complete, and all eight programs verify empty release. Luna twice authors floor
+30. At source health84 this exceeds the frozen maximum20-loss envelope, so the
+runtime correctly rejects all three prior cover commands and uses input-free
+coast. Soft events remain0; the change from v28's1 completed turn to v29's2
+cannot be attributed to the mechanism. The contract must separate absolute
+critical health from bounded short-horizon loss and retain monitor-stage clocks.
+See [the retained v29 result](research/doom/MAP01_TYPED_COVER_VALIDITY_V29_LIVE_V1.md).
+
 ### Integrated token-efficiency comparison selected
 
 [Integrated efficiency plan v1](research/live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md)

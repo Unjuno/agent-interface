@@ -3289,3 +3289,17 @@ Linux15 tests pass, including retained93→87→81→79 replay and cancel/releas
 mechanics. No v29 live allocation has run and the cap is not calibrated. Freeze
 one bounded fixed-threat allocation only after committing and auditing this
 construction. See `research/doom/MAP01_TYPED_COVER_VALIDITY_V29.md`.
+
+## Latest follow-up — v29 live exposes a validity representation mismatch (2026-09-15)
+
+The first and only v29 allocation is retained threat-exposed but soft-unexposed.
+All109 exact observations produce health, four turns hard-invalidate, two
+complete and all8 programs verify empty release. Luna twice authors absolute
+health floor30. At fresh source health84, that would allow54 loss and conflicts
+with the frozen maximum20-loss construction bound; the runtime correctly rejects
+all3 prior cover commands and uses input-free coast. Soft events are0, so the
+2/6 versus v28's1/6 completed-turn difference is not attributable. Separate
+absolute critical_health_minimum from schema-bounded maximum_health_loss, derive
+the effective floor as their maximum, and add monitor-stage clocks before another
+allocation. Interrupted usage is partly unknown. See
+`research/doom/MAP01_TYPED_COVER_VALIDITY_V29_LIVE_V1.md`.
