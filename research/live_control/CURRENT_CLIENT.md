@@ -1,4 +1,17 @@
-Latest target-handle candidate: `session_v28/v29` keep exact textured RGB regions
+Latest OpenTTD target-grounding candidate: `session_v34` adds bounded
+`dwell_observe`; `openttd_hover_evidence_v1` binds three fixed points to exact
+persistent tooltip templates; `hover_target_contract_v1` requires the model to
+return candidate, source-pixel point, and motion semantics; and
+`openttd_target_rebase_v1` proves the non-hover source patch is restored before
+mint. Across the retained failure and corrected pair, Luna-low selects Road
+Construction3/3. Corrected stable follows surface delta `[21,28]`, resolves the
+handle at `[841,79]`, and passes the independent guarded-L score; the rehover
+negative refuses before target click. Input rises roughly636--640 tokens over
+the failed direct baseline and the fixed hover program adds about3.6s. Keep this
+as an opt-in candidate. Next test uncertainty-triggered probing on a held-out
+target or changed candidate layout. See OPENTTD_HOVER_TARGET_REBASE_V1.md.
+
+Prior target-handle candidate: `session_v28/v29` keep exact textured RGB regions
 private and resolve later clicks from a runtime handle plus relative offset. Ten
 pure controls pass. The first fresh OpenTTD run follows observed binding delta
 `[17,20]`, derives `[837,71]`, completes normal admission in280.790ms and releases

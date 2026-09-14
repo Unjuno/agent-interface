@@ -102,6 +102,18 @@ the correct toolbar click leaves the unrelated model patch unchanged. The62-fram
 cross-OS audit passes. The direct full-frame failure is retained, and the next
 comparison will add bounded hover-label evidence rather than tuning the answer.
 
+That hover candidate has now completed two preregistered studies. Luna-low
+selects the correct Road Construction candidate3/3 from exact delayed tooltip
+evidence. The first attempt retains a transient-identity failure: a hovered
+24x14 source patch changes when hover clears, so the interface safely stops with
+zero target clicks. The corrected pair first restores the exact pre-hover patch.
+Its rehover negative again stops before target input, while stable tracks an
+actual `[21,28]` surface move, resolves `[841,79]`, completes the guarded L and
+passes all independent engine checks. The corrected81 frames audit on Windows
+and WSL. Reported input is9,935--9,936 versus9,296 for the failed direct stable
+baseline, and active hover takes about3.6s. Accuracy and recovery improve at
+extra cost; human tempo, automatic discovery, and held-out transfer remain open.
+
 Latest delta: bounded drag-effect memory now transfers correct actuation to one
 changed seed991004 L geometry. Two distinct drags complete all five target tiles
 with zero surrounding changes or repeated completed-segment input. The planner

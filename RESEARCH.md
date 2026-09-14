@@ -113,6 +113,21 @@ direct full-frame baseline; next test a bounded candidate set with delayed hover
 labels and independent scoring. See
 [OpenTTD point-contract transfer](research/live_control/OPENTTD_POINT_CONTRACT_V1.md).
 
+The bounded hover-label follow-up separates semantic evidence from persistent
+target identity. The first preregistered study proves the model selects the
+correct Road Construction candidate but retains a failure: minting the hovered
+patch includes 35 transient highlight pixels, so revalidation safely stops when
+the highlight disappears. In the corrected pair, the pointer is cleared and
+the original pre-hover patch must return exactly before mint. Rehover then
+produces `MISSING` with zero target clicks, while stable follows surface delta
+`[21,28]`, resolves `[841,79]`, completes all eight steps, and passes every
+independent engine check. Tooltip semantics are3/3 across hover studies; the
+corrected81 frames audit cross-OS. Reported input increases roughly636--640
+tokens over the failed direct baseline and hover costs about3.6s. Retain the
+candidate without a speed or generalization claim; next gate is uncertainty-
+triggered probing on a held-out target or changed candidate layout. See
+[OpenTTD hover target rebase](research/live_control/OPENTTD_HOVER_TARGET_REBASE_V1.md).
+
 ### First live bounded drag-effect allocation
 
 A preregistered seed991003 replay keeps the v6 model, task, initial state,

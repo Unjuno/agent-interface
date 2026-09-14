@@ -1,4 +1,19 @@
-Latest coordinate-contract repair: `point_target_contract_v2` separates absolute
+Latest target-grounding result: bounded persistent hover labels raise the known
+OpenTTD Road Construction selection from the direct full-frame baseline's0/2 to
+3/3 across two preregistered hover studies. The first study is preserved: model
+semantics are correct, but minting a hover-conditioned patch makes the later
+handle disappear and safely stops before target input. The corrected pair clears
+hover, requires the retained pre-hover patch to return exactly, then mints. Its
+rehover negative returns `MISSING` before target click; stable follows actual
+surface delta `[21,28]`, resolves `[841,79]`, completes the guarded L and passes
+all four independent engine checks. Corrected input is9,936/9,935 versus9,296
+for the failed direct stable baseline; active hover adds about3.6s. This is not a
+speedup. Next allocate uncertainty-triggered probing to a held-out target or
+changed candidate layout. Automatic discovery, broad compression, cost and human
+tempo remain open. See research/live_control/OPENTTD_HOVER_TARGET_REBASE_V1.md.
+Full goal stays open.
+
+Prior coordinate-contract repair: `point_target_contract_v2` separates absolute
 source-observation pixels from later target motion. In a preregistered seed991015
 pair, identical Luna-low calls author point `[270,243]` plus
 `surface_origin_translation`2/2 at9,264/9,265 input tokens. Stable follows binding
@@ -11,7 +26,7 @@ similar/transient negative. Fixed24x14 region size, automatic identity, cost and
 human tempo remain open. See research/live_control/POINT_TARGET_CONTRACT_V2.md.
 Full goal stays open.
 
-Latest cross-domain contract result: the preregistered seed991004 OpenTTD pair
+Prior cross-domain contract result: the preregistered seed991004 OpenTTD pair
 correctly authors `source_observation_pixels` and
 `surface_origin_translation`2/2, but direct semantic point grounding is0/2.
 Luna-low selects `[650,51]` and `[432,51]` instead of the independently known
@@ -19,12 +34,8 @@ Road Construction point `[820,51]`. Stable follows the actual `[21,28]` surface
 move, then the local first-road condition stops safely at step4 with12 target/0
 guard changed pixels. The paired negative mints the unchanged unrelated icon
 instead of refusing. Independent success is0/2;62 exact frames audit Windows/WSL.
-Preserve this baseline. The next local objective is a preregistered bounded
-candidate/hover-label presentation that raises target accuracy without weakening
-patch freshness, input admission, independent scoring or recovery. Measure added
-model boundaries, tokens and decision time. Preregister tooltip readiness,
-readability and candidate association; the existing contact sheet alone does not
-prove them. Fixed region size, unseen targets, cost and human tempo remain open. See
+Preserve this baseline. Its bounded hover-label follow-up is reported above.
+Fixed region size, unseen targets, cost and human tempo remain open. See
 research/live_control/OPENTTD_POINT_CONTRACT_V1.md. Full goal stays open.
 
 Latest target-authorship evidence: preregistered `target_handle_mint_from_point`

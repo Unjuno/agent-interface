@@ -111,6 +111,21 @@ full-frame semantic grounding is0/2, so the next candidate adds bounded delayed
 hover labels for a fixed icon set. See
 [OpenTTD point-contract transfer](research/live_control/OPENTTD_POINT_CONTRACT_V1.md).
 
+Bounded active hover evidence repairs that known semantic target in a
+preregistered follow-up. Exact persistent tooltip observations identify three
+fixed toolbar candidates; Luna-low selects Road Construction at `[820,51]` in
+all three hover-enabled calls. The first run is preserved because it mistakenly
+made the hover highlight part of target identity and safely stopped after the
+highlight disappeared. The corrected pair clears hover, proves the original
+24x14 patch is restored, and mints from that persistent source. Its negative
+rehover case returns `MISSING` before any target click; its stable case follows
+an actual `[21,28]` surface move, resolves `[841,79]`, completes the guarded L,
+and passes all four independent engine checks. The 81 corrected frames audit on
+Windows/WSL. Input rises from the failed direct baseline's 9,296 to
+9,935--9,936 tokens and active hover adds about 3.6s, so this is an accuracy and
+recovery result rather than a speedup. Candidates remain development-known. See
+[OpenTTD hover target rebase](research/live_control/OPENTTD_HOVER_TARGET_REBASE_V1.md).
+
 Frame resolution now runs inside the candidate interface. A fresh1152x720
 OpenTTD pair sends only original1024 coordinates plus explicit frame identity;
 the runtime resolves clicks, drags and condition boxes from the latest pointer
