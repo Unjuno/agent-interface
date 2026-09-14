@@ -14,6 +14,18 @@ pointer input and creates no file. All36 frames audit Windows/WSL. Retain only
 for another fixed comparison; model grounding, box/frame authorship and general
 identity remain unresolved.
 
+Newest model-facing handle evidence: controlled-context fixed screen4/4 reports
+9,268 image-coordinate versus8,009 no-image handle input tokens. A fresh live
+allocation then safely rejects both handle actions because model name and private
+random ID differ. scoped_target_handle_v3/session_v31 add a bounded unique
+session alias backed by the unexposed random ID. On two new seeds, coordinate and
+alias-handle arms both independently save2/2; reported input is9,280 versus8,013,
+query and post-model admission revalidate2/2, releases are4/4 and62 frames audit
+Windows/WSL. Mean decision-to-evaluation return is7.121s coordinate and6.298s
+handle descriptively, while handle uses16 durable calls versus14. See
+TARGET_HANDLE_MODEL_LIVE_ABBA_V1.md. Opt-in; next cross-domain replication should
+reduce or batch the extra read-only query rather than claiming causal speedup.
+
 Prior coordinate candidate: `executor_v4/session_v26` resolve explicit-frame
 clicks, drags and target/guard boxes from the latest stable pointer binding before
 whole-program validation. Fresh1152x720 OpenTTD receives only original1024

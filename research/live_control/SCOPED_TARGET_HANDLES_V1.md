@@ -76,8 +76,20 @@ typed handle and relation. The preregistered token gate fails. Coordinate calls
 report12,583 input tokens each; handle calls report11,332 and54,244, the latter
 including42,240 cached tokens. Mean reported input is therefore12,583 versus
 32,788. The identical handle prompt variance prevents attribution to the omitted
-image, so no live A/B or token claim follows. See
+image, so that screen alone supports no live A/B or token claim. See
 [the retained model screen](TARGET_HANDLE_MODEL_SCREEN_V1.md).
+
+The controlled-context and fresh-live sequence now resolves that measurement
+boundary. A fixed screen is4/4 correct with9,268 reported input tokens for image
+coordinates and8,009 for the no-image handle. The first live allocation exposes
+an interface error: the runtime's random private ID and the model's friendly
+h_save_form are different, so both handle actions safely stop before input.
+V3 maps unique bounded alias save_form to a private random ID. New-seed live
+coordinate and alias-handle arms then independently submit2/2 each; input is
+9,280 versus8,013, query and admission revalidate2/2, and62 exact frames audit.
+The alias does not grant authority and the private ID is not emitted. Handle
+adds two durable calls and remains opt-in pending a cross-domain replication.
+See [the model/live ABBA](TARGET_HANDLE_MODEL_LIVE_ABBA_V1.md).
 
 Issue45 proposes runtime-owned target references that survive safe layout changes
 without silently turning into cached coordinates. The first pure candidate stores

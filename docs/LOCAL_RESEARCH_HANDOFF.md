@@ -1,4 +1,16 @@
-Latest handle evidence: a matched fresh Chromium pair now passes2/2 after the
+Newest model-facing handle evidence: a controlled fixed screen reports9,268
+image-coordinate versus8,009 no-image-handle input tokens with4/4 strict
+correctness. A first fresh live attempt exposes and safely refuses a friendly
+name/private-ID mismatch2/2. A bounded unique session alias backed by an
+unexposed random ID repairs it. On new seeds, coordinate and alias-handle arms
+independently save2/2 each; reported input is9,280 versus8,013, query and
+post-model admission revalidate2/2, releases are4/4 and62 exact frames audit
+Windows/WSL. Handle uses16 durable calls versus14. The descriptive7.121s versus
+6.298s decision-to-evaluation means are two samples/arm and not a causal speedup.
+See research/live_control/TARGET_HANDLE_MODEL_LIVE_ABBA_V1.md. Next perform a
+cross-domain replication and reduce or batch the extra read-only query.
+
+Earlier handle evidence: a matched fresh Chromium pair now passes2/2 after the
 OpenTTD HOLD result. Both cases mint a textured Save-button region, move the
 client from `[10,10]` to `[30,18]`, and later send only handle plus `[20,9]`.
 Positive derives `[290,251]`, independently posts exact `t991005`, and measures

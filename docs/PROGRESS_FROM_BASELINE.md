@@ -29,8 +29,20 @@ The first preregistered model-facing ABBA screen then returns valid strict actio
 handle calls emit the exact typed relation. Its token promotion gate fails:
 coordinate calls report12,583 input tokens each, while handle calls report11,332
 and54,244, including42,240 cached tokens in the second identical handle call.
-This exposes uncontrolled caller-context variance; it does not establish handle
-token reduction and does not advance to fresh live A/B yet.
+This exposes uncontrolled caller-context variance; by itself it establishes no
+handle token reduction and did not qualify for fresh live A/B.
+
+The corrected context path now uses one structured action envelope, a short
+responder contract, zero project-document budget and an empty workspace. A fixed
+screen passes4/4 with9,268 coordinate versus8,009 handle input tokens. In four
+new live Chromium sessions over two seeds, coordinate and no-image handle arms
+both independently submit2/2. Reported input is9,280 versus8,013 per call; all
+62 frames replay exactly. The first live handle allocation safely failed2/2
+because a model-facing friendly name did not equal the private random registry
+ID. A unique short session alias repairs that fault, remains private-ID-backed,
+and revalidates both at read-only query and after model wait before admission.
+This is one repeated form with two cases/arm; handle also adds two durable calls,
+so no general token, cost or causal latency claim follows.
 
 Latest delta: bounded drag-effect memory now transfers correct actuation to one
 changed seed991004 L geometry. Two distinct drags complete all five target tiles

@@ -1,0 +1,93 @@
+{
+  "status": "preregistered_before_fresh_live_execution",
+  "study": "chromium-target-handle-model-abba-02",
+  "predecessor": {
+    "study": "chromium-target-handle-model-abba-01",
+    "outcome": "Windows driver failed before GUI/model because fcntl was unavailable",
+    "change": "run journal, GUI and X11 driver under WSL; invoke only the fixed Codex model runner through Windows Python; use new seeds"
+  },
+  "execution_order": [
+    {
+      "mode": "coordinate",
+      "seed": 991008
+    },
+    {
+      "mode": "handle",
+      "seed": 991008
+    },
+    {
+      "mode": "handle",
+      "seed": 991009
+    },
+    {
+      "mode": "coordinate",
+      "seed": 991009
+    }
+  ],
+  "common": {
+    "runtime": "same Chromium private form, session_v30 and executor_v4",
+    "setup": "navigate, type exact token, mint Save region, move surface [20,8], observe; after model return observe again before action admission",
+    "model": "gpt-5.6-luna low, Fast disabled",
+    "model_context": "same short instructions, single action envelope, empty workspace, project_doc_max_bytes=0, user config/rules/tools disabled",
+    "host_boundary": "WSL Python owns fcntl journal and X11; Windows Python owns Codex CLI; model runner timings stay Windows-local and decision return timings stay WSL-local",
+    "independent_oracle": "exact generated token in HTTP POST/file"
+  },
+  "coordinate_arm": "attach current post-move frame; model chooses absolute point; normal admission",
+  "handle_arm": "read-only query; no image to model; model returns relation; admission revalidates again on the post-model observation",
+  "promotion": {
+    "fresh_independent_success": "4/4",
+    "strict_model_outputs": "4/4",
+    "handle_query_and_admission_status": "REVALIDATED for both handle cases",
+    "within_arm_input_range_max": 128,
+    "handle_input_mean_lower": true
+  },
+  "failure_policy": "retain first four sessions; no rerun, prompt, coordinate, box or order repair",
+  "codex_cli": "codex-cli 0.153.4",
+  "predecessor_plan_sha256": "9752558578045cde64b0bf36de978f97c43165e29ff87a3233308b3d8ab52e6a",
+  "sources": {
+    "preregister_chromium_target_handle_model_abba_v2.py": "c9f4d8403e033b2962a85f7aaeb39342ce18be807942df466fb9da627fff2da0",
+    "run_chromium_target_handle_model_abba_v2.py": "99bc5de17152940ab7bb9fbd16d791b837ff6625ded57e642388c69c7bd864a1",
+    "run_chromium_target_handle_model_abba_v1.py": "556475a71862b54fb3cea7c9eba2443e2bc9ddb7bf9882596a3a01679b4dca9a",
+    "target_handle_model_runner_v2.py": "db7f28c611fe12d648edab3e9fbd54afa89f6764c80b2be9f2642063b31baaf2",
+    "gui_action_responder_v1.txt": "3b17f47265d74237110a07eaa12ff56d49f533b82430192f667455e6cff68668",
+    "target_action_envelope_schema_v1.json": "99a7e6b164b1be453d5e03f86b51903a0055bcbd0c9cf4b08337eb751504de34",
+    "target_handle_chromium_socket_v2.py": "03a4407a0d7608b064b0a061666a73365489ee4ed46335315dd22fd173c25360",
+    "interactive_target_handle_chromium_v2.py": "2cd088b596ad454c71b77588515a72be6902ff2d808de56a272d006627af2917",
+    "session_v30.py": "0e14fb65a86dbf29a17672a259c260dfd9c6b4d9487f7f7fc6fa53ecec38a63f",
+    "session_v29.py": "5ba53dbb56a46a8b2f45b115baf4f24d8df2178e5d8bb1d607e9135e17f1a231",
+    "session_v28.py": "719dfe24da98443413cbc4b7535ce8b7a5e7a59d3cd282b7e7d16afd009b849a",
+    "scoped_target_handle_v2.py": "7c17069cde410098947719c604bb8e7d85144eacc854bd06c21d8db1a92f6646",
+    "scoped_target_handle_v1.py": "550d377f145abbb16f8466dc91b5bb84ca25fccadf71e4d24b2f426550f5a19f",
+    "coordinate_frame_transform_v1.py": "cb6aefeaa4e9a41b4f4b9ca532e24106025247e39e7c7ee026ddc242a7cbb05b",
+    "session_v26.py": "b1530a4872766edbb205db3fa944d7957ff56e82ad2e422dc751a0e407543be7",
+    "session_v25.py": "3f6c0a6c973bc66c69681456bfedce9362f563d9460000e78217b63148bab057",
+    "session_v24.py": "193c389b053f90dcc07b869c29cfcb77c4272525eb873239112cb2d696037ae1",
+    "session_v23.py": "25bbd068829bba9849fbc4cf540ec265b0b2296dc4cf6c54c77da794e56a760c",
+    "session_v22.py": "a6b59b442f4d96e2e502c0955ebffb2c929399303759d5d53ea456ba92b44a05",
+    "session_v21.py": "5cfe02fb5531c1a3607dd7221f7e7d5f720ee283454c28e5cc7b6c4a5960c3b8",
+    "session_v20.py": "db1ae660b795c4bc103d83a89e15501ce37cc897a6983cdeb1d18b9b3ccb4c1f",
+    "session_v19.py": "fcab83eedc51d470d07a9e3badf6f41256625061b6e3d9d30c610df1b5cd5182",
+    "session_v18.py": "39b32667afb86964ee7baa00604114d32d9b0c9275fb2cdf269cbf41df107835",
+    "session_v17.py": "1ff934d6cced82070bff680485251432bb1ee2defa4d494fb1eecb78ac3e7a14",
+    "session_v16.py": "7d53912c86793df95a11f5a1d22aa05c4c539153fdea31c04a870f7bcc2b6afa",
+    "session_v15.py": "cc66baf54f6236d822ee13d50f093a8e4cac2787ba74673617f91ec946cb9b8f",
+    "session_v14.py": "3237bbe8860b9a46e7f7a9555cd5c159a7ce8fedb8749437a2bcac9333bd3b61",
+    "session_v13.py": "71b406bc6acbcd05b51196c9eaa5623a5cdfc78cce9c7edf6378529bdd3e997d",
+    "session_v12.py": "52c81ce7afb2fc4d945ef76919a235245b2741f845cf0883ad5109d6f6c31563",
+    "session_v11.py": "59cf664e8fb8a9b735a0cdbbc2cb5969916eff57326d2154b365a16550f896a3",
+    "session_v10.py": "a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d",
+    "session_v9.py": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0",
+    "executor_v4.py": "a0e4edf33a4faca8a388ce99594d3c42e2a32f6f800ea0f4905bb5465c1e9395",
+    "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "cause_servo_interactive_v4.py": "c5b79d3db05687975d1790f2864344e6346d96e585c84cc7bac9c5ed15594c5c",
+    "cause_servo_session_v1.py": "ca0a492e5a3c6c3245996ff4cb89d8a0e74d17e8a0b901c5fbe7bb44afaac79d",
+    "cause_session_v1.py": "7a4377c568c9755f3d980575a6a936b3ccae074bf916db3867b7cf634ef9399b",
+    "event_socket_v11.py": "e6988e4f586b1554c40a4969fbb428143cc7e10213bf303cf800d679f9e7e96c",
+    "durable_submit_v4.py": "a73db793a3238fb5ec6d3e9ecfbe61284ad44d3ebfea769bc531b99d61b1a22b",
+    "append_checkpoint_v1.py": "07e5eff9c704af3cf75e0dcb5e7b4c4d57b82e076e4ffafa320d08ee0af51741",
+    "received_continuation_v1.py": "7890589fbbc808b914cc6fefa43408cf727bb3b29a7fc8962451bb7a90d5027a",
+    "received_exchange_v2.py": "59353e6d405dee5084870caf4d66aa5546c02771014e7c8f09ad1e7a7901c6c3",
+    "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+  },
+  "scope": "four fresh private Chromium X11 sessions over two new seeds; one final model choice per session; no causal latency, monetary cost, human-speed, cross-domain or default-promotion claim"
+}

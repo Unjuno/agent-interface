@@ -38,9 +38,20 @@ The first Luna-low model-facing screen preserves strict action correctness4/4,
 but fails its preregistered token gate. Two coordinate calls report12,583 input
 tokens each; two no-image handle calls report11,332 and54,244, with42,240 cached
 in the latter. The identical-prompt variance means the current CLI context is not
-controlled enough to claim image/token savings. The result is retained without
-retry; a fresh live A/B waits for a tighter caller. See
+controlled enough to claim image/token savings. That result is retained without
+retry and required the tighter caller tested below. See
 [target-handle model screen](research/live_control/TARGET_HANDLE_MODEL_SCREEN_V1.md).
+
+A controlled-context follow-up repairs the measurement path and then executes
+four fresh Chromium sessions. Image-coordinate and no-image alias-handle arms
+both independently save2/2. Reported input is9,280 per coordinate call and8,013
+per handle call, a1,267-token descriptive reduction with zero within-arm
+variance. The handle arm queries current status read-only, revalidates again
+after model wait, and releases all input;62 exact frames audit cross-OS. Its
+session alias repairs a retained2/2 unknown-handle failure caused by exposing
+opaque random registry IDs. Handle adds two durable calls, only two cases/arm
+exist, and the0.823s mean timing difference is not a causal speedup. See
+[target-handle live ABBA](research/live_control/TARGET_HANDLE_MODEL_LIVE_ABBA_V1.md).
 
 Frame resolution now runs inside the candidate interface. A fresh1152x720
 OpenTTD pair sends only original1024 coordinates plus explicit frame identity;

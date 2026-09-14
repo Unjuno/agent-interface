@@ -37,6 +37,20 @@ navigates the same surface to `about:blank`, returns `MISSING`, admits zero
 pointer input and creates no file. All36 frames audit exactly. Advance to a
 different matched desktop task; no model, token or general identity claim.
 
+A model-facing follow-up first exposes uncontrolled CLI usage and two
+pre-model structured-schema failures, all retained. With a single action
+envelope, short responder instructions, empty workspace and project-document
+loading disabled, the fixed screen is4/4 correct and reports9,268 input tokens
+for image coordinates versus8,009 for a no-image handle. The first fresh live
+handle attempt then safely fails2/2 because the model returns a friendly name
+while the registry requires a random private ID. A unique short session alias
+repairs that interface fault. On new seeds, coordinate and alias-handle arms
+independently submit2/2 each; model input is9,280 versus8,013 per call, both
+handle query/admission checks are REVALIDATED, and62 frames audit exactly.
+Handle needs16 durable calls versus14, and two cases/arm cannot establish causal
+latency or broad compression. See
+[target-handle live ABBA](research/live_control/TARGET_HANDLE_MODEL_LIVE_ABBA_V1.md).
+
 ### First live bounded drag-effect allocation
 
 A preregistered seed991003 replay keeps the v6 model, task, initial state,
