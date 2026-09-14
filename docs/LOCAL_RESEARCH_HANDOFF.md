@@ -3110,6 +3110,20 @@ shell-quoting failure and module-path/exit-masking failure as harness evidence.
 No live DOOM claim exists for v26 yet; freeze one four-decision mechanics run.
 See `research/doom/MAP01_PERSISTENT_PLANNER_V26.md`.
 
+The first frozen v26 live allocation validates the normal integrated path but
+does not expose invalidation.  Four Luna-low turns share one app-server thread,
+use distinct turn IDs, complete with eligible schema-checked answers, and emit
+four usage notifications with zero MCP startup notifications.  Four cover and
+five plan programs all terminate with verified empty release.  One local
+fallback branches in78.597ms.  Model time totals20.655s; cumulative usage is
+39,154 input/26,112 cached/707 output/373 reasoning.  The game remains alive and
+unfinished with no kills.  Health-ROI invalidations and planner interrupts are
+both zero, so retain the run as live-unexposed and make no gameplay, speed or
+token claim.  Next inject one deterministic one-way invalidation while the real
+game and planner advance, verify interrupt/terminal/release/zero plan admission/
+zero next-cover inheritance, then remove that injected condition for benchmark
+work.  See `research/doom/MAP01_PERSISTENT_PLANNER_V26_LIVE_V1.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms

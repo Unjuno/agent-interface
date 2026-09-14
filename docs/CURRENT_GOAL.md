@@ -1,3 +1,15 @@
+Current direction (r48): the first frozen v26 live integration retains one
+app-server/thread across four distinct Luna-low turns; all4 complete and pass
+schema admission, with zero MCP startup notifications.  Four cover plus five
+plan programs all verify empty release; one local contingency fires in78.597ms.
+Model intervals total20.655s and cumulative usage is39,154 input/26,112 cached/
+707 output/373 reasoning.  The run is alive/unfinished with no kills, and its
+health ROI never invalidates, so controller-level planner cancellation remains
+live-unexposed and there is no gameplay/token/speed claim.  Next add exactly one
+deterministic one-way invalidation trigger during a real running game+planner,
+verify interrupt/terminal/release/zero-plan/zero-inheritance, then return to
+natural benchmark conditions.  No subagent/context handoff; full goal open.
+
 Current direction (r47): controller v26 now composes v25 exact-observation
 invalidation with one persistent capability-minimized app-server process and
 typed per-decision turns.  Invalidation marks the matching turn stale, sends one
