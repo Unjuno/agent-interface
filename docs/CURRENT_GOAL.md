@@ -1,3 +1,15 @@
+Current direction (r56): the only natural v26 threat allocation at known v23
+seed990619 is retained unexposed.  Luna authored a different route and stalled
+at the first door: all12 exact decision frames show no enemy, manual health stays
+100/ammo50, and score is alive/unfinished with0 kills/deaths/exit after66.636s.
+Natural invalidations, interrupts, cover renewals and nonempty covers are0.  The
+normal path has12/12 typed completions,29/29 releases,0 MCP startups,53.864s
+model time and117,225 input/77,184 cached.  Seed alone cannot fix a model-reached
+threat state.  Official ViZDoom save/load supports a hash-bound real-MAP01 start
+fixture.  Next build it through recorded OS-input setup, load before measured
+control, and require the initial exact frame itself to show a real enemy.  Do
+not retry the unexposed allocation.  No subagent/context handoff; full goal open.
+
 Current direction (r55): return from desktop packaging to Issue #59's unresolved
 natural threat-control gate.  V23 seed990619 retained visible enemies, damage and
 unsafe stale-cover repetition; v24 proved stop-only natural invalidation, v25

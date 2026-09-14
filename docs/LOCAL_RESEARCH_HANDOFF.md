@@ -3202,6 +3202,19 @@ guard trigger occurs, require matching turn interruption, cover release, zero
 discarded action/next-cover authority and fresh-decision recovery.  Retain the
 first result even if no threat, no invalidation, death or failure.
 
+That only frozen run is retained unexposed.  All twelve exact decision frames
+show no visible enemy; manual health remains100 and ammo50.  Luna takes a route
+different from the Astra v23 run and stalls at the first door, finishing alive
+and unfinished after66.636s with no kill, death or exit.  Natural invalidations,
+interrupts, renewals and nonempty covers are all zero.  The normal persistent
+path completes12/12 typed turns and29/29 verified releases with zero MCP startup
+notifications; usage is117,225 input/77,184 cached/1,717 output/560 reasoning.
+This proves that seed alone does not reproduce a model-reached threat state.
+Official ViZDoom save/load can restore real engine state.  Build a hash-bound
+Freedoom MAP01 checkpoint through recorded OS-input setup, load it before the
+measured interval, and require an exact initial enemy frame.  Do not retry this
+allocation.  See `research/doom/MAP01_PERSISTENT_THREAT_V26_LIVE_V2.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms
