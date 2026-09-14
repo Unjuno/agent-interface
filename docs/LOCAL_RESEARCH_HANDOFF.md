@@ -3315,3 +3315,20 @@ receive, extraction-complete and evaluation clocks while v1 remains hash-frozen.
 Windows43 and WSL/Linux15 tests pass. No v30 live allocation exists; commit the
 construction before freezing one new fixed-threat run. See
 `research/doom/MAP01_SPLIT_COVER_VALIDITY_V30.md`.
+
+## Latest follow-up — v30 live preserves bounded cover through soft damage (2026-09-15)
+
+The first and only preregistered v30 fixed-threat allocation is retained. Its
+154 exact observations all yield health. One nonempty cover admitted at health84
+uses effective floor74, treats exact health78 as soft, continues nine later
+steps including seven input holds, and lets the same Luna turn complete. Three
+hard changes still interrupt matching turns and every one of nine programs has
+a verified empty release. Two additional soft values occur under an empty cover.
+
+This is evidence for the split-validity mechanism, not a general performance
+claim. The single-allocation completion counts v28/v29/v30 = 1/2/3 are
+descriptive, interrupted-turn token use remains unknown, and there is no map
+clear. Preserve the run. Next add the newest typed soft-event summary to the
+following planner prompt without another image/model boundary, and test a state
+outside the fixed threat fixture before a full MAP01 clear attempt. See
+`research/doom/MAP01_SPLIT_COVER_VALIDITY_V30_LIVE_V1.md`.

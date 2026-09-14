@@ -72,7 +72,18 @@ effective floor as their maximum against fresh source health. V29's retained
 soft/soft/hard under critical30/loss13. These loss values are construction
 inputs, not model evidence. Monitor v2 adds receive, extraction-complete and
 evaluation clocks. Windows43 and WSL/Linux15 tests pass; no v30 live allocation
-exists. See [the v30 construction](research/doom/MAP01_SPLIT_COVER_VALIDITY_V30.md).
+had run at the construction freeze. See [the v30 construction](research/doom/MAP01_SPLIT_COVER_VALIDITY_V30.md).
+
+The first and only preregistered v30 allocation now exposes the intended live
+soft path. All154 exact observations yield health. A nonempty cover admitted at
+health84 derives effective floor74; exact health78 is soft, nine later cover
+steps begin, seven hold real input, and the same Luna turn completes. Three hard
+events still interrupt matching turns, and all9 programs verify empty release.
+Two more soft values occur under empty cover. The 3/6 completed turns beside v29
+2/6 and v28 1/6 are descriptive single allocations, not evidence of causal
+speed or gameplay gain. Next pass the newest typed soft summary into the next
+planner prompt without another image/model boundary, then test transfer outside
+the fixed fixture. See [the retained v30 live result](research/doom/MAP01_SPLIT_COVER_VALIDITY_V30_LIVE_V1.md).
 
 ### Integrated token-efficiency comparison selected
 

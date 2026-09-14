@@ -2,7 +2,8 @@
 
 V30 is the smallest construction repair for the representation mismatch exposed
 by the only v29 live allocation. It leaves v29 and its retained result unchanged.
-No live model or game allocation has run on v30.
+At construction freeze, no live model or game allocation had run on v30. The
+subsequent one-allocation result is linked below without changing this contract.
 
 ## Schema and effective predicate
 
@@ -58,9 +59,12 @@ under WSL/Linux, and the v30 CLI reaches argument parsing without model work.
 
 ## Remaining gate
 
-This resolves the discovered representation conflict in construction. It does
-not show what `maximum_health_loss` Luna will author, that a soft event will occur
-during its following live interval, or that preserving a cover improves decision
-completion, survival, progress, latency or token use. Freeze one new allocation
-only after source hashes, cap, model, fixture, exposure definitions and clock
-interpretation are committed. Preserve its first outcome without retry.
+This resolved the discovered representation conflict in construction. It did
+not yet show what `maximum_health_loss` Luna would author, whether a soft event
+would occur during its following live interval, or whether preserving a cover
+would improve decision completion, survival, progress, latency or token use.
+The subsequent frozen allocation ran once: one admitted nonempty cover absorbed
+exact health84→78 as soft, continued seven later input-hold steps, and the same
+planner turn completed while the hard cancel/release path remained intact. See
+[the retained v30 live result](MAP01_SPLIT_COVER_VALIDITY_V30_LIVE_V1.md). This
+single pass does not establish a causal speed, token, survival, or gameplay gain.

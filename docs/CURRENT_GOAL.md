@@ -1,3 +1,14 @@
+Current direction (r64): retain the only preregistered v30 live allocation as
+a split-validity soft-exposure pass. All154 exact observations yield health.
+One admitted nonempty cover treats health84→78 against effective floor74 as
+soft, continues nine later steps including seven input holds, and the same Luna
+turn completes. Three hard events still interrupt matching turns; all9 programs
+verify empty release. Three of six turns complete, but the v28/v29/v30 1/2/3
+counts are descriptive single allocations, not a causal speed or gameplay gain.
+Next pass the newest typed soft-event summary into the next planner turn without
+another image/model boundary, then test transfer outside the fixed fixture. No
+subagent/context handoff; full goal open.
+
 Current direction (r63): v30 splits the v29 overloaded floor into absolute
 critical_health_minimum plus schema-bounded0–20 maximum_health_loss; effective
 floor=max(critical, fresh source-loss). Retained v29 health84→78 is soft under

@@ -141,3 +141,20 @@ with critical30/loss13 preserves87/81 and hard-invalidates79. Those loss values
 are construction inputs, not live model outputs. Monitor v2 also records receive,
 extraction-complete and evaluation clocks. Windows43 and WSL/Linux15 tests pass;
 see [the v30 construction](MAP01_SPLIT_COVER_VALIDITY_V30.md).
+
+## First v30 live result
+
+The single preregistered v30 allocation reaches the missing soft-exposure path.
+At source health84, an admitted nonempty cover with effective floor74 observes
+exact health78 as soft. It continues nine later steps, seven of them input holds,
+and the same planner turn completes. Three hard events still interrupt matching
+turns and all9 programs release empty. Two later soft values occur under an empty
+cover. All154 observations yield exact health and manual review confirms an enemy
+in every decision frame.
+
+This passes the mechanism gate, not an efficiency or gameplay comparison. The
+3/6 completed-turn count beside v29's2/6 and v28's1/6 is descriptive across
+single nondeterministic allocations. Preserve the result and carry the newest
+typed soft event into the next planner prompt without another image/model call;
+then test transfer outside the exact fixed-threat state. See
+[the retained v30 live result](MAP01_SPLIT_COVER_VALIDITY_V30_LIVE_V1.md).
