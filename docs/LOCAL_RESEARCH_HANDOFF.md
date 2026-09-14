@@ -1,4 +1,15 @@
-Latest local-continuation evidence: target/guard boxes can now be derived from
+Latest transfer evidence: two preregistered global transforms fail and show that
+centered OpenTTD toolbar chrome and window-relative map content require separate
+coordinate frames. Using `screen_chrome dx=0` and binding-origin-derived
+`window_content dx=-128` passes target/repeat2/2 at1280x720. The same rule
+predicts `dx=-64` before a fresh1152x720 reverse-order replication and passes
+again. Corrected results are4/4 over135 frames; all265 frames including failures
+audit exactly on Windows/WSL. Local feedback remains2.46–2.60s, and one known
+save/path is reused. Next integrate frame identity and live target bindings into
+pointer intent, then transfer to a new save or viewport state. See
+research/live_control/OPENTTD_COORDINATE_FRAMES_V1.md. Full goal remains open.
+
+Prior local-continuation evidence: target/guard boxes can now be derived from
 an admitted two-segment pointer path. Frozen seed991004 calibration classifies
 unchanged/first/later states3/3. A fresh `-16px` negative aliases to the correct
 tiles under OpenTTD snapping and is retained as a failed control; both local and

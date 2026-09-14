@@ -15,6 +15,17 @@ Latest research handoff: [measured progress, failures and next steps](docs/LOCAL
 
 Current Linux research caller: [components, usage and evidence limits](research/live_control/CURRENT_CLIENT.md).
 
+OpenTTD resolution transfer now exposes and repairs a coordinate-frame error.
+Two preregistered global translations fail and remain preserved: application
+chrome and saved map content do not share one transform. Separating screen-fixed
+toolbar controls from window-relative viewport paths then passes target/repeat
+pairs at1280x720 and an unobserved1152x720 replication4/4. The path-derived
+conditions agree with the independent engine score, and all265 frames across
+failures and corrected studies replay exactly on Windows/WSL. A strict pure
+coordinate-frame API records the distinction. The task still uses one known save
+and scripted paths, with2.46–2.60s local feedback. See
+[OpenTTD coordinate frames](research/live_control/OPENTTD_COORDINATE_FRAMES_V1.md).
+
 The newest OpenTTD study removes one manual condition-authoring step: disjoint
 target and guard boxes are derived directly from the already admitted two-segment
 pointer path. Frozen-frame calibration classifies unchanged, first-segment and

@@ -163,6 +163,16 @@ removes manual box transcription but uses a development-known path and does not
 establish held-out geometry, model, token or human-tempo performance. See
 [path-derived target/guard geometry](research/live_control/OPENTTD_TARGET_GUARD_DERIVED_GEOMETRY_V1.md).
 
+Resolution transfer then rejects the assumption that one global translation can
+move every pointer intent. At1280x720, `dx=+128` misses the map and `dx=-128`
+moves map intent correctly but misplaces centered toolbar controls; both frozen
+studies fail. Separating `screen_chrome dx=0` from window-origin-derived
+`window_content dx=-128` passes a positive/repeat pair. Before observing a new
+1152x720 run, the same rule predicts `dx=-64` and passes the reverse-order pair.
+Corrected classifications are4/4 over135 frames; including failures,265 frames
+audit exactly cross-OS. Local feedback remains2.46–2.60s and one seed/path is
+reused. See [coordinate-frame resolution transfer](research/live_control/OPENTTD_COORDINATE_FRAMES_V1.md).
+
 ### Retained OpenTTD effect-state diagnosis
 
 The frozen seed991003 v6 run lacks a formal finish evaluation because its driver

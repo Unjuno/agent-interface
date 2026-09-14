@@ -23,6 +23,14 @@ before continuation and independently remains incomplete. The106 fresh exact
 frames audit cross-OS. This is development-known path transfer, not held-out
 visual geometry; feedback still arrives about2.5 seconds after the drag.
 
+The first held-out resolution transfer reveals that coordinates also need an
+explicit frame. Two preregistered global translations fail because centered
+toolbar chrome and window-relative map content move differently. Frame-specific
+transforms then classify positive/repeat pairs4/4 at1280x720 and a predicted
+1152x720 replication, agreeing with the independent engine score. All265 frames,
+including both failures, replay exactly cross-OS. This is resolution transfer on
+one save/path; it does not establish unseen-task grounding or faster feedback.
+
 Latest negative follow-up: a pixel-only persistent-effect receipt separates
 selected archived new and repeated effects, but its preregistered prompt form
 reverses the desired model outcome. Exact-prompt Astra recognizes progression
@@ -73,7 +81,7 @@ condition prevent a general or human-tempo claim.
 | --- | --- | --- | --- |
 | Observation | Repeated full screenshots around individual actions | Exact unchanged-frame suppression, exact tile transport, changed-region and compact planner views | Proven in scoped fixtures; general visual/token policy remains experimental |
 | Evidence withholding | Missing pixels could be confused with empty or absent content | Actual region pixels withheld with explicit policy UNKNOWN; full 4/4 exact versus redacted 4/4 UNKNOWN; stale policy-bound mutation refused before input | Scoped Chromium geometry, adjacent-action, hidden-target, policy-change and authorized whole-replacement gates pass; bypass remains |
-| Input | Coordinates and short scripted keyboard/pointer actions | Absolute intent deadlines, focus/surface binding, held input, cancellation/expiry, verified release and tail suppression | Strong scoped Linux/X11 evidence |
+| Input | Coordinates and short scripted keyboard/pointer actions | Absolute intent deadlines, focus/surface binding, explicit screen-chrome/window-content transforms, held input, cancellation/expiry, verified release and tail suppression | Strong scoped Linux/X11 evidence; frame selection is still task-declared |
 | Execution | One action followed by another model boundary | Bounded multi-step programs, phased submit, passive followups and local continuation | Working in selected desktop/game tasks; semantic replans still need the model |
 | Freshness | Screenshot age was mostly implicit | Observation identity/age, stale refusal, route and binding guards, re-observation after interruption | Mechanism exists; model delay can still age a frame by seconds |
 | Recovery | Transport uncertainty risked repeated work | Durable journal, request IDs, read-only outcome recovery and lost-query reconciliation without resend | Live input and saved-effect recovery demonstrated |

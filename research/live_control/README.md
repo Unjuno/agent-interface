@@ -1,5 +1,13 @@
 # Asynchronous live control: development evidence
 
+Latest resolution-transfer result: [OpenTTD coordinate frames](OPENTTD_COORDINATE_FRAMES_V1.md).
+Two retained global-transform failures reveal that centered toolbar chrome and
+window-relative map content move differently. Explicit frame transforms then
+pass positive/repeat pairs4/4 across1280x720 and a preregistered1152x720
+replication. Corrected evidence covers135 frames; all265 frames including
+failures replay exactly cross-OS. One known save/path and2.46–2.60s local
+feedback remain material limits.
+
 Latest derived-condition result: [OpenTTD path-derived target/guard geometry](OPENTTD_TARGET_GUARD_DERIVED_GEOMETRY_V1.md).
 The boxes now come from the admitted pointer path. Frozen calibration passes3/3;
 a fresh wrong-row assumption is retained as an aliased positive under tile
