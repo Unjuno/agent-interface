@@ -879,3 +879,10 @@ artifacts. This is client/model compatibility evidence only: the server revision
 is not exposed, the first checks are token-expensive, and live input authority
 is not gated yet. See
 `research/live_control/SCHEMA_PREFLIGHT_V1.md`.
+
+The follow-up schema-authority block covers the remaining Mindustry receipt
+`oneOf`: the actual endpoint refuses it in3,625.993ms with no completed turn or
+usage. The corrected three-schema set passes from pinned cache without a fresh
+call. A Mindustry v6 wrapper now places this gate before its GUI continuation;
+the actual-cache ordering test calls that continuation0 times after refusal and1
+after acceptance. Live positive/no-match/ambiguous evidence is still required.

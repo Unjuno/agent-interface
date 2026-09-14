@@ -530,3 +530,10 @@ and all usage/cache records. The server revision is unavailable and no live
 runner is gated yet, so this is retained preflight evidence rather than a token,
 latency or reliability improvement. See
 [schema preflight](../research/live_control/SCHEMA_PREFLIGHT_V1.md).
+
+The remaining world-receipt `oneOf` is now independently refused in3,625.993ms
+with no completed turn or usage. The production three-schema gate reuses pinned
+cache with zero fresh calls. Mindustry v6 puts this gate before its historical
+GUI continuation; an actual-cache ordering test observes0 continuation calls
+after refusal and1 after acceptance. This establishes the code boundary, while
+the live three-condition task and its latency/correctness evidence remain open.

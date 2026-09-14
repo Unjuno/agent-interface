@@ -2665,3 +2665,23 @@ Issue #54 remains open because a live runner has not yet made this gate a hard
 prerequisite before input authority. Connect it in a new versioned runner, then
 run the finite matched Mindustry positive/no-match/ambiguous block. See
 research/live_control/SCHEMA_PREFLIGHT_V1.md. Goal/freeze remain open.
+
+## Latest follow-up — schema authority is upstream of the v6 GUI continuation (2026-09-14)
+
+The remaining retained Mindustry world-receipt `oneOf` now has a separate
+preregistered endpoint refusal. It takes3,625.993ms, completes no turn and has no
+usage. The corrected candidate, anchor and world schemas then pass from a copied
+five-record seed cache; the new block adds the refusal as a sixth record. No
+fresh positive call or GUI artifact occurs. Windows/WSL audits pass.
+
+`schema_preflight_gate_v1` checks all named schemas and raises before returning
+unless every endpoint status is compatible. `run_mindustry_single_tile_live_v6`
+puts that call before invoking the unchanged historical v5 live continuation.
+An actual-cache WSL test records zero continuation calls for the incompatible
+schema and one for the accepted production set, with zero fresh endpoint calls.
+No subagent participates.
+
+This proves ordering but not application efficacy: v6 has not yet launched its
+three-condition live block. Keep Issue #54 open until positive/no-match/ambiguous
+run through this path and the authority/accounting audit passes. See
+research/live_control/SCHEMA_PREFLIGHT_V1.md. Goal/freeze remain open.

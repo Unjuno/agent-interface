@@ -52,6 +52,22 @@ runner should be evaluated in the planned finite matched Mindustry block with a
 positive placement, a no-match abstention and an ambiguous-evidence abstention.
 The historical v1-v5 runners and their failures remain unchanged.
 
+## Follow-up authority gate
+
+`schema_preflight_gate_v1.py` now requires every named schema to report
+`ENDPOINT_COMPATIBLE` before returning to its caller. A second preregistered
+no-GUI block covers the previously missing world-receipt `oneOf`: the endpoint
+refuses it in 3,625.993ms with no completed turn or usage. The three production
+schemas then pass entirely from copied, hash-pinned cache with zero fresh calls.
+Windows and WSL audits pass.
+
+`run_mindustry_single_tile_live_v6.py` places the complete gate before the
+historical v5 continuation. A deterministic WSL test uses the actual six-entry
+cache: an incompatible schema invokes the continuation zero times, while the
+three compatible production schemas invoke it once with zero endpoint calls.
+This proves caller ordering. The v6 path has not yet run the application, so it
+does not establish live task correctness or latency.
+
 Primary artifacts:
 
 - `results/schema-preflight-01/preregistration.json`
@@ -60,3 +76,5 @@ Primary artifacts:
 - `schema_preflight_v1.py`
 - `run_schema_preflight_block_v1.py`
 - `audit_schema_preflight_block_v1.py`
+- `results/schema-preflight-gate-01/audit.json`
+- `schema_preflight_gate_v1.py`

@@ -468,3 +468,10 @@ identical recorded schema/model/runner/CLI identity reuses the cache with no new
 endpoint call or fresh usage. Windows/WSL audits pass. The endpoint server
 revision is not independently identified, and no live runner invokes this gate
 yet, so Issue #54 remains open.
+
+The follow-up gate adds the remaining Mindustry world-receipt `oneOf` refusal:
+one fresh 3,625.993ms endpoint request has no completed turn or usage. Three
+production schemas pass from copied hash-pinned cache with zero calls. A new
+Mindustry v6 wrapper places the gate ahead of its GUI continuation; the actual
+cache test observes0 continuation calls after refusal and1 after acceptance.
+The wrapper still needs the planned live positive/no-match/ambiguous block.

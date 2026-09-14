@@ -907,3 +907,12 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   authority-before-acquisition統合も未完了なのでIssue #54は継続。次はこのgateを新しい
   Mindustry runnerへ接続し、positive/no-match/ambiguousの有限matched blockを行う。
   token削減・endpoint恒久互換・人間速度・freezeは未達。
+
+- 2026-09-14 r14: 未検査だったMindustry world-receipt v1の`oneOf`も別の
+  preregistered no-GUI blockで実endpoint拒否を確認。3,625.993ms、completed turn 0、
+  usageなし。修正版candidate/anchor/worldの3 schemaはhash固定cacheから全件通過し、
+  fresh call 0。`schema_preflight_gate_v1`は全件`ENDPOINT_COMPATIBLE`以外ではcallerへ
+  戻らず、Mindustry v6 wrapperはこのgateを履歴v5 GUI continuationの前に配置。
+  実cacheの順序テストはrefusal時continuation 0、accept時1を確認。Windows/WSL監査。
+  次は同wrapperでpositive/no-match/ambiguousを実GUI実行し、分岐別button admission、
+  calls、feedback、tokens、independent scoreを比較する。live efficacy・人間速度・freezeは未達。
