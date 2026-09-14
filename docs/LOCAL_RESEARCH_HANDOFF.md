@@ -2999,6 +2999,15 @@ computed stale model action. It grants no fallback input and infers no semantic
 direction. Then freeze one new live allocation. See
 `research/doom/MAP01_COVER_THREAT_V23_LIVE_V2.md`.
 
+Controller v24 now implements that one-way guard.  A configured ROI change or
+unknown result cancels only the active cover, waits for terminal release, and
+discards the concurrently computed action; the next iteration cannot inherit
+its `next_cover`.  It infers no semantic direction and grants no input.  The
+tight health ROI first fires at sequence250 in lossless retained cover-5 replay,
+1,570.425128ms after the source time.  Freeze one new guarded live allocation
+before making any live claim.  See
+`research/doom/MAP01_POLICY_INVALIDATION_V24.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms

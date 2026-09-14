@@ -1,17 +1,15 @@
-Current direction (r38): the separately frozen v23/schema-v3 threat exposure
-now supplies the missing live evidence.  The corrected run completed 12 Astra-
-low decisions in 143.345 s, remained alive at 28%, killed 2, and did not exit.
-Decisions3/4 authored the same strafe/fire/strafe cover; decisions4/5 executed
-the exact linked policies.  All16 cover programs compiled to10 s and released;
-4 renewals had a21.259 ms maximum gap.  The stale-policy failure is concrete:
-decision5 began from changed geometry at74% health but repeated decision4's
-policy; lossless HUD samples changed1.623 s after admission and9.802 s before
-the model returned, with the next decision at28%.  This is association, not a
-claim that cover caused damage or cancellation improves survival.  Next add an
-opt-in one-way guard in a new controller: change/unknown cancels current cover
-and discards the concurrently computed stale model action; it cannot infer the
-change, grant fallback input or prove success.  Freeze a new live allocation
-after boundary tests.  No subagent/context handoff; full goal open.
+Current direction (r39): v24 implements the smallest guard justified by the
+retained v23 stale-policy trace.  A configured exact-frame ROI can only cancel
+existing cover and discard the model action computed from its invalidated
+source.  Changed and unknown both require a fresh decision; discarded output
+cannot supply commands or the next cover.  It never classifies the change,
+grants input, or proves success.  Retained cover-5 replay first invalidates at
+sequence250, 1,570.425128ms after source time, and the generic boundary suite
+passes five fail-closed unknown conditions.  Issue #59 remains the controlling
+sequence and has no newer comments.  Next freeze and run exactly one guarded
+live allocation with the tight health-number ROI, retaining failure or no
+invalidation without retry.  Compare mechanics and stale admission, not causal
+survival or MAP01 completion.  No subagent/context handoff; full goal open.
 
 Current direction (r37): retained MAP01 failure analysis separates the cover-
 expiry symptom from stale policy semantics.  Fixed cover left 9,770.767 ms of
