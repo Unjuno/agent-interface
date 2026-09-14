@@ -48,6 +48,10 @@ A future live schema must have the planner author action-specific predicates,
 and the runtime needs extractors for every required predicate it agrees to
 evaluate.
 
+The first action-specific extension now supplies exact screen-derived ammo for
+fire-bearing MAP01 commands. See
+[`MAP01_ACTION_VALIDITY_SIGNALS_V1.md`](../doom/MAP01_ACTION_VALIDITY_SIGNALS_V1.md).
+
 The contract values are synthetic construction inputs. They were not authored
 in the retained v31 run and the replay performs no model call or input. It proves
 state-machine discrimination only, with no speed, safety, gameplay or task-

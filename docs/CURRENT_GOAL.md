@@ -1,3 +1,15 @@
+Current direction (r76): add the first action-specific non-health predicate
+without hidden game state. A hash-bound WAD-glyph ammo reader matches all8
+independent v31 decision transcriptions and reads247/247 exact frames with0
+unknown; transitions are48→47→46→45. The semantic adapter requires fire-bearing
+commands to bind positive ammo from the same observation epoch and forbids an
+unrelated ammo dependency on movement-only commands. Exact-frame replay gives3
+fire health+ammo and2 movement health-only VALID_CURRENT paths; a zero-ammo fire
+control rejects. Values remain synthetic and target presence/aim remain unknown.
+Next add planner-authored schema semantics and model-free v33 wiring through
+final-admission v2; keep frozen v32 unchanged/unrun. No subagent/context handoff;
+full goal open.
+
 Current direction (r75): add a mandatory fresh action-validity stage between
 clean planner completion and final Executor admission. The generic no-authority
 contract binds exact action, source, focus/surface/geometry, age and observable

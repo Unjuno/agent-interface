@@ -1191,3 +1191,17 @@ enemy persistence, aim or action usefulness. Keep v32 hash-frozen; add planner
 authorship and at least one deterministic non-health predicate before v33 live
 integration. See
 `research/live_control/ACTION_VALIDITY_ADMISSION_V1.md`.
+## Latest follow-up — exact ammo becomes an action-specific current predicate (2026-09-15)
+
+The health-only construction now has one deterministic non-health signal. A v2
+WAD-glyph reader extracts screen-visible ammo from247/247 retained v31 frames
+with0 unknown and exactly matches the8 manual decision values
+`48,48,47,47,46,45,45,45`. Its transitions are48→47→46→45. A semantic adapter
+requires fire-bearing commands to bind positive ammo from the same exact source
+epoch; movement-only commands cannot add that unrelated dependency. In a
+model-free exact-frame replay,3 fire health+ammo and2 movement health-only
+contracts remain VALID_CURRENT, while a zero-ammo fire control rejects. This is
+synthetic contract and signal evidence, not planner authorship, target presence,
+aim, live latency or gameplay efficacy. Next define schema authorship and wire a
+v33 controller model-free through final-admission v2. See
+`research/doom/MAP01_ACTION_VALIDITY_SIGNALS_V1.md`.

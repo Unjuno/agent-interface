@@ -3422,3 +3422,14 @@ and replay bytes match. This is model-free discrimination evidence with
 synthetic contracts, not live efficacy. Do not modify hash-bound v32. Next make
 the planner author the immediate-action contract and add a deterministic
 non-health signal before a v33 integration.
+## Latest follow-up — exact ammo is the first action-specific non-health predicate (2026-09-15)
+
+`doom_hud_signal_v2` extends the retained hash-bound health glyph reader to the
+adjacent screen-visible ammo number. It reads247/247 v31 frames with0 unknown,
+matches all8 manual decision values and observes48→47→46→45. The semantic
+adapter requires health+ammo from one source epoch for fire-bearing commands and
+health only for movement. A synthetic exact-frame replay passes the five
+historical paths and rejects zero-ammo fire. This avoids hidden game labels and
+adds no model/input call. It still cannot verify enemy presence or aim. Next
+make this immediate-action specification planner-authored and wire it through a
+new v33 controller to final-admission v2, preserving frozen v32 byte-for-byte.
