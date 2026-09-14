@@ -855,3 +855,12 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   6.199s、decision-to-evaluation29.639s。次はanchor 1件を先に検証し、意味不一致
   の場合だけ近傍展開する段階取得を、過去のconfidently-wrong anchorを含めて比較。
   resize/reflow、未知app、人間速度、freezeは未達。
+
+- 2026-09-14 r9: anchor-first persistent evidenceを追加。固定ABBAで、finance
+  anchorは`target_reference` 2/2、過去の`visually_unambiguous`誤anchorは
+  `expand_search` 2/2。fresh translated liveではmodel `[505,79]`をslot
+  `[506,79]`へ正規化し、1 receiptだけでexact rehover/click/oracle成功。
+  initial hover6,198.997->1,283.273ms、durable calls16->14、frames50->39。
+  sequential total29.639->25.964sはmodel wait差を含むため因果claimなし。
+  次の局所目標は、入力を許可せず誤anchorからlive expansionを実行し、5 receipts
+  後に独立完了まで回復すること。人間速度・unknown app・freezeは未達。

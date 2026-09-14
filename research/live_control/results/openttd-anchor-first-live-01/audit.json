@@ -1,0 +1,37 @@
+{
+  "audit_passed": true,
+  "preregistered_sources_match": true,
+  "exact_frames": 39,
+  "all_releases_verified": true,
+  "branch": "anchor-accepted",
+  "anchor_point": [
+    506,
+    79
+  ],
+  "independent_finance_oracle": true,
+  "reported_input_tokens": {
+    "candidate": 9288,
+    "anchor_evidence": 8098
+  },
+  "comparison": {
+    "prior_five_hover_ms": 6198.996787,
+    "anchor_hover_ms": 1283.273051,
+    "hover_stage_reduction_ms": 4915.723736,
+    "prior_durable_calls": 16,
+    "anchor_first_durable_calls": 14,
+    "prior_exact_frames": 50
+  },
+  "timing_ms": {
+    "slot_detection": 152.749943,
+    "anchor_hover_submit_to_return": 1283.273051,
+    "decision_start_to_anchor_receipt_ready": 14197.623203,
+    "decision_start_to_semantic_selection": 21090.22286,
+    "decision_start_to_evaluation_return": 25963.984518
+  },
+  "same_single_model": "gpt-5.6-luna low",
+  "subagents": 0,
+  "observed_model_identity": null,
+  "reported_cost": null,
+  "decision": "RETAIN_ANCHOR_FIRST_LIVE_CANDIDATE",
+  "limits": "one fresh fixed-seed translated OpenTTD task after fixed archived branch evidence; same Luna-low model, no subagents; no order-balanced total-latency claim, live wrong-anchor expansion efficacy, resize/reflow, unknown-app or human-tempo claim"
+}

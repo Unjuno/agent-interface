@@ -822,3 +822,13 @@ start. Inputs are9,294+8,277 and the five persistent hovers take6.199s. All50
 frames and raw turns audit Windows/WSL. This is one position transfer, not
 resize/reflow, unknown-app generality or human tempo. See
 `research/live_control/OPENTTD_TRANSLATED_COMPACT_LIVE_V1.md`.
+
+Anchor-first evidence next tests one receipt before five-slot acquisition. A
+frozen Luna-low Correct/Wrong/Wrong/Correct study accepts the finance anchor2/2
+and requests expansion on the retained confidently-wrong anchor2/2. Fresh live
+use normalizes `[505,79]` to `[506,79]`, accepts its verified tooltip, rehovers
+and passes the shifted oracle. Initial hover falls6,198.997->1,283.273ms,
+durable calls16->14 and frames50->39. Sequential total time is25.964s versus
+29.639s and is not a causal latency estimate. Fixed and live evidence audit
+Windows/WSL. The implemented expansion route remains unproven live. See
+`research/live_control/OPENTTD_ANCHOR_FIRST_EVIDENCE_V1.md`.

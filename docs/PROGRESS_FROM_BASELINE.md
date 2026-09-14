@@ -472,3 +472,13 @@ decision to evaluation, including6.199s of persistent hover, and uses
 screen-position assumption but is not resize/reflow, unknown-app or human-tempo
 evidence. See
 [translated compact live evidence](../research/live_control/OPENTTD_TRANSLATED_COMPACT_LIVE_V1.md).
+
+Anchor-first acquisition now distinguishes a valid finance tooltip from the
+retained confidently-wrong anchor2/2 each in a fixed ABBA. One fresh translated
+live task accepts the normalized `[506,79]` receipt, rehovers and independently
+opens finances. Initial persistent-hover time falls from6,198.997 to1,283.273ms,
+calls16->14 and frames50->39. Whole decision-to-evaluation is25.964s versus the
+prior29.639s sequential run, so only the deterministic hover reduction is
+attributed to the change. The bounded expansion path is coded but lacks fresh
+live recovery evidence. See
+[anchor-first evidence](../research/live_control/OPENTTD_ANCHOR_FIRST_EVIDENCE_V1.md).

@@ -2552,3 +2552,23 @@ The main deterministic delay is now five serial persistent hovers. Next compare
 anchor-first evidence with bounded neighbour expansion, requiring recovery on
 the retained confidently-wrong anchor rather than trusting model confidence.
 See research/live_control/OPENTTD_TRANSLATED_COMPACT_LIVE_V1.md. Goal/freeze open.
+
+## Latest follow-up — anchor-first evidence (2026-09-14)
+
+A strict one-receipt contract lets Luna accept a tooltip that matches the task or
+request neighbour expansion. Fixed Correct/Wrong/Wrong/Correct calls accept the
+translated finance anchor2/2 and expand the retained confidently-wrong anchor
+2/2. Both outcomes cite exact receipt pixels/point; expansion grants no input.
+
+The first fresh live use normalizes Luna's `[505,79]` to slot `[506,79]`, hovers
+only that anchor, receives `target_reference`, rehovers exactly and opens the
+finance window. The shifted oracle passes. Initial hover submit-to-return drops
+6,198.997->1,283.273ms, durable calls16->14 and exact frames50->39. The sequential
+whole path is25.964s versus29.639s, without an order-balanced causal claim.
+Inputs are9,288+8,098. Windows/WSL audit all fixed calls and39 live frames. No
+subagent participates in perception, judgment or operation.
+
+The expansion route is implemented but not live-proven. Next force no target
+input from a fresh wrong anchor, run bounded neighbour acquisition, and require
+independent task recovery. See
+research/live_control/OPENTTD_ANCHOR_FIRST_EVIDENCE_V1.md. Goal/freeze remain open.

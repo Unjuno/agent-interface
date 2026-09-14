@@ -414,3 +414,14 @@ released click and a title oracle shifted by the observed delta pass. Inputs are
 All50 frames audit Windows/WSL. This covers one translation, not resize/reflow or
 unknown-app transfer. See
 [OPENTTD_TRANSLATED_COMPACT_LIVE_V1.md](OPENTTD_TRANSLATED_COMPACT_LIVE_V1.md).
+
+Anchor-first evidence now removes four unnecessary initial hovers on one fresh
+translated task. A fixed Correct/Wrong/Wrong/Correct Luna-low allocation accepts
+the finance receipt2/2 and requests bounded expansion for the retained
+confidently-wrong receipt2/2. In live use, `[505,79]` normalizes to slot
+`[506,79]`; one persistent receipt is accepted, exactly rehovered and clicked,
+and the shifted oracle passes. Initial hover falls6,198.997->1,283.273ms,
+durable calls16->14 and frames50->39. Decision-to-evaluation is25.964s versus
+29.639s sequentially, so total latency is descriptive. The coded expansion path
+still needs a fresh live wrong-anchor test. See
+[OPENTTD_ANCHOR_FIRST_EVIDENCE_V1.md](OPENTTD_ANCHOR_FIRST_EVIDENCE_V1.md).
