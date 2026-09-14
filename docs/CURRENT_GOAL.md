@@ -1,3 +1,18 @@
+Current direction (r24): Issue #57's start condition is satisfied because the
+compiled GUI mechanics block ended at live v5.  Stop isolated primitive studies
+and build the finite plain/current-optimized/integrated persistence comparison
+specified in `research/live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md`.  The
+selected integrated path combines schema preflight, Luna-low cold grounding,
+compiled local continuation, scoped target handles, adaptive caller v2 accounting
+and an append-only independent scorer.  Freeze the six-task cold/warm/layout-
+invalidation/repair allocation before any live call and publish a
+RETAIN/HOLD/REJECT result without reruns.  After that report, run a continuously
+advancing Freedoom `MAP01` clear attempt as the DOOM motor/reaction gate: visible
+screen/audio decisions, OS input, no pause or save-state stepping, and independent
+exit/death/timeout scoring.  DOOM remains one Domain Coverage Matrix axis.  No
+integrated efficiency or full-map-clear result exists yet; the full goal stays
+open.
+
 Latest compiled-interface result: a preregistered private Chromium pair now
 performs two fresh-evidence-dependent GUI actions with zero frontier-model
 resumptions. Positive independently submits `t991025`; action-to-feedback is
@@ -25,6 +40,15 @@ speedup. Next allocate uncertainty-triggered probing to a held-out target or
 changed candidate layout. Automatic discovery, broad compression, cost and human
 tempo remain open. See research/live_control/OPENTTD_HOVER_TARGET_REBASE_V1.md.
 Full goal stays open.
+
+- 2026-09-14 r24: Issue #57を確認し、v5で現mechanics blockが終了したため、孤立した
+  primitive追加を停止して統合効率評価へ移行。`INTEGRATED_EFFICIENCY_PLAN_V1.md`に
+  plain visual program / current optimized ephemeral / integrated persistentの3 arm、同一の
+  cold/warm/layout invalidation/repair 6 task、全call/token/image/latency/accounting、
+  independent append-only scorer、事前固定するRETAIN/HOLD/REJECT基準を選定。plain armの
+  実バッチ能力は保持し、今回の主検証をpersistence amortizationとして限定。live allocationは
+  未実行。統合report後に、ゲーム時間を止めないFreedoom `MAP01`通常map clear attemptを
+  実施するgateも固定。DOOMはDomain Coverage Matrixの一軸で、clear能力は未主張。
 
 Prior coordinate-contract repair: `point_target_contract_v2` separates absolute
 source-observation pixels from later target motion. In a preregistered seed991015

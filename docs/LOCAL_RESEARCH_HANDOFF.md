@@ -1,3 +1,14 @@
+Current handoff: Issue #57 now governs the next block.  The compiled GUI live v5
+result ended the preceding mechanics work, so do not start another isolated
+primitive study.  Implement and preregister the three-arm, six-task comparison in
+`research/live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md`, then publish its finite
+RETAIN/HOLD/REJECT disposition.  The arms preserve a genuinely batched plain
+visual baseline and isolate persistence across cold, warm, layout invalidation,
+repair and post-repair reuse.  No live allocation has run.  Only after that report,
+attempt continuously running Freedoom `MAP01` with visible evidence and OS input;
+score map exit separately from death/timeout and never pause game time during
+model waits.  No subagent or context handoff is part of this path.
+
 Latest compiled-interface result: a preregistered private Chromium pair now
 performs two fresh-evidence-dependent GUI actions with zero frontier-model
 resumptions. Positive independently submits `t991025`; action-to-feedback is

@@ -1,5 +1,14 @@
 # First DOOM-engine transfer: visual input through X11
 
+Planned next DOOM gate (after the integrated efficiency report): run packaged
+Freedoom `MAP01` as an ordinary continuously advancing map, with asynchronous
+35-tic game time continuing through model waits.  The controller may use visible
+screen/audio evidence and OS keyboard/mouse input only.  An isolated scorer will
+distinguish actual map exit from death or timeout and retain game-tic, wall-time,
+pause/menu, hold/release and video evidence.  This is planned work; no full-map
+clear is currently claimed.  See
+[`INTEGRATED_EFFICIENCY_PLAN_V1.md`](../live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md).
+
 The assistant has now operated a ViZDoom basic scenario through OS keyboard
 input and X11 screenshots, using the existing async executor and exact image
 transport. This uses the bundled **Freedoom assets**, not original commercial

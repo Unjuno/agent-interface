@@ -14,6 +14,18 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Experimental ladder
 
+### Integrated token-efficiency comparison selected
+
+[Integrated efficiency plan v1](research/live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md)
+closes the preceding isolated-mechanics block and selects one finite end-to-end
+comparison for Issue #57.  A real batched plain visual program, the current
+ephemeral optimized path and a persistent integrated path receive the same six
+cold/warm/layout-change/repair tasks.  Correctness, stale input, complete model
+usage, planner generations, feedback latency and observed break-even are frozen as
+separate measures.  The allocation has not run, so it establishes no efficiency
+result.  A continuously advancing Freedoom `MAP01` clear attempt follows the
+integrated report as a distinct real-time Domain Coverage Matrix gate.
+
 ### Compiled GUI interface live mechanics and typed composition
 
 A preregistered Chromium sequence preserves three failed allocations before the

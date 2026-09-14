@@ -1,5 +1,13 @@
 # Asynchronous live control: development evidence
 
+Current next block: [integrated token-efficiency evaluation plan v1](INTEGRATED_EFFICIENCY_PLAN_V1.md).
+Issue #57's three-arm comparison retains a batched plain baseline and measures the
+same cold/warm/layout-invalidation/repair sequence against ephemeral and persistent
+compiled paths.  The composition and requirement matrix are selected; the live
+allocation is not yet preregistered or run.  The subsequent DOOM gate is a
+continuously advancing Freedoom `MAP01` clear attempt, not the existing small
+`basic.wad` transport scenario.
+
 Latest target-reference result: [scoped target handles](SCOPED_TARGET_HANDLES_V1.md).
 Exact session-local handles return explicit valid/revalidated/ambiguous/moved/
 missing/stale/scope states. A flat archived region aliases and is retained as a
