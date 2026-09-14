@@ -1,5 +1,11 @@
 # First DOOM-engine transfer: visual input through X11
 
+Latest running-control evidence: [MAP01 running-action cancellation v2](MAP01_RUNNING_ACTION_CANCEL_LIVE_V2.md)
+uses an existing held-input observation to detect real screen ammo48→47, request
+the matching cancel in136.780ms from capture and verify empty release in138.694ms.
+The first allocation's pre-input stale-source failure is retained. This is a
+single controller-authored no-model safety probe, not gameplay or general speed.
+
 Planned next DOOM gate (after the integrated efficiency report): run packaged
 Freedoom `MAP01` as an ordinary continuously advancing map, with asynchronous
 35-tic game time continuing through model waits.  The controller may use visible

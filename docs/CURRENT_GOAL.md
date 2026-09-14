@@ -1,3 +1,18 @@
+Current direction (r81): v34 wires the running action guard into active primary
+and fallback programs, with fresh passive recheck between segments. The first
+frozen live probe correctly failed pre-input: post-capture WAD-reader setup made
+the source926.873ms old against500ms; no command/input, incomplete cleanup
+evidence retained. Separately frozen v2 moves setup before capture. Real X11
+held fire changes screen ammo48→47, then one matching cancel and verified empty
+release; no later input. Capture→cancel136.780ms and →release138.694ms pass
+predeclared150/200ms thresholds; decision→release is10.206ms. The remaining
+128.488ms before decision is image publish/reopen overhead. Before planner live,
+v35 must bind each primary/fallback program payload and compose historical final
+admission with one current running-authority state; then move typed HUD extraction
+ahead of full artifact publication and reconcile it to the exact frame. One
+probe, controller-authored contract, zero model calls; no task/game/
+general human-speed claim; no subagent/context handoff; full goal open.
+
 Current direction (r80): existing Executor hold observations expose an unfilled
 runtime boundary after v33's one-time pre-admission check. A no-input running
 action guard now re-evaluates the exact planner contract during active input and

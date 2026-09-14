@@ -123,6 +123,15 @@ class RunningActionGuardTests(unittest.TestCase):
         self.assertFalse(receipt["current_input_authority"])
         self.assertEqual(len(receipt["program_terminals"]), 1)
 
+    def test_action_can_close_after_branch_decision(self):
+        value = guard(); value.admit_program(accepted())
+        value.check_current(snapshot(3, 300), 301)
+        value.record_completed_terminal(terminal("p1", "completed", 310), final=False)
+        receipt = value.record_action_complete()
+        self.assertEqual(receipt["state"], COMPLETED)
+        with self.assertRaises(ValueError):
+            value.record_action_complete()
+
     def test_mismatched_cancel_and_unverified_release_are_rejected(self):
         value = guard(); value.admit_program(accepted())
         value.check_current(snapshot(3, 300, health=81), 301)

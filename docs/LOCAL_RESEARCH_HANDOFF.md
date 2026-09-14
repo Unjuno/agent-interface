@@ -3489,3 +3489,34 @@ SHA-256 `c9f102b6d4f79569910d6da79f67cac5b60d955063d2efc971cdcee7fa2246b5`.
 This does not show a historical cancellation or live latency improvement. Add
 the guard to a new v34 controller without changing v33, then measure an actual
 mid-hold invalidation only after the frozen schema-v6 endpoint gate permits it.
+
+## Latest follow-up — real held input cancels from a visible ammo change (2026-09-15)
+
+V34 preserves v33 and feeds existing active-program observations through the
+running action guard. It cancels an invalidated primary/fallback program, requires
+verified empty release, discards the remaining action, and requires a fresh
+passive observation before another segment.
+
+The first frozen no-model live allocation failed correctly before input. The
+probe constructed WAD readers after its source capture, so the exact action check
+arrived926.873ms after capture and rejected the500ms freshness bound. Only clock,
+ready and one observation were emitted; command/input count is0. Owner-close,
+post-score and wrapper exit evidence were not retained, so they remain explicitly
+unknown. The failure and raw artifacts are preserved.
+
+V2 initializes the readers before launching the separately hashed episode. One
+real X11 held-fire program changed screen-visible ammo48→47. The guard rejected
+`ammo_minimum`, issued one matching cancel, admitted no later input and received
+a cancelled terminal with empty verified keys/buttons. Capture→cancel request is
+136.780ms and capture→release138.694ms, under preregistered150/200ms thresholds.
+Guard decision→cancel is8.291ms and →release10.206ms. Independent Windows/WSL
+audits pass14 checks; raw output21 files/1,306,799 bytes is hash-manifested.
+
+This is one controller-authored safety probe with zero model calls, not planner,
+gameplay or broad human-tempo evidence. Capture→guard decision still costs
+128.488ms because signal extraction waits for full image publication and reopens
+the PNG. V34 also exposes final-admission-v2 and running-guard receipts separately,
+and its action fingerprint binds the primary list rather than each fallback motor
+payload. V35 must compose one current-authority receipt and bind every admitted
+segment. After that, emit typed HUD state from the captured frame before artifact
+encoding and reconcile it with the retained exact frame.

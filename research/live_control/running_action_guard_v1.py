@@ -174,3 +174,10 @@ class RunningActionGuard:
         self.active_program = None
         self.state = COMPLETED if final else BETWEEN
         return self.receipt()
+
+    def record_action_complete(self):
+        """Close an action after its last completed program and branch decision."""
+        if self.state != BETWEEN or self.active_program is not None:
+            raise ValueError("completed program boundary required")
+        self.state = COMPLETED
+        return self.receipt()
