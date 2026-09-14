@@ -1,3 +1,12 @@
+Current direction (r68): preregister one v31 Luna-low transfer allocation on
+distinct fixture v2: one process/thread,8 decisions, no retry. Exposure requires
+a completed decision's validated soft event to reconcile exactly with the next
+decision record and saved compact prompt; null history, no-authority, release,
+hard interruption, monitor clocks, images/calls and usage remain explicit.
+V30 is historical evidence only because fixture and length differ. All11 source
+hashes match before commit. Next run once and retain failure/unexposed/pass
+without falling back to v1. No subagent/context handoff; full goal open.
+
 Current direction (r67): promote the only frozen derived fixture as
 map01-threat-contact-v2. Model-free X11 setup advances parent tic1263→1366 with
 two programs/2 verified releases/0 model calls; source hash differs. Manual and
