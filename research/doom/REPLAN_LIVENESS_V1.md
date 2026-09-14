@@ -158,3 +158,11 @@ single nondeterministic allocations. Preserve the result and carry the newest
 typed soft event into the next planner prompt without another image/model call;
 then test transfer outside the exact fixed-threat state. See
 [the retained v30 live result](MAP01_SPLIT_COVER_VALIDITY_V30_LIVE_V1.md).
+
+V31 carries that event into the following existing planner boundary. The
+retained decision4 record shrinks from1,312 compact-JSON bytes to a240-byte typed
+summary after validation. It adds no image, model call, resumption, mid-turn
+boundary or input authority. Missing history is null; malformed or authority-
+granting history fails closed. Windows and WSL/Linux each pass9 controller tests.
+This is model-free construction; see
+[the v31 contract](MAP01_SOFT_EVENT_CONTEXT_V31.md).

@@ -85,6 +85,16 @@ speed or gameplay gain. Next pass the newest typed soft summary into the next
 planner prompt without another image/model boundary, then test transfer outside
 the fixed fixture. See [the retained v30 live result](research/doom/MAP01_SPLIT_COVER_VALIDITY_V30_LIVE_V1.md).
 
+V31 now implements that transfer model-free. It validates the immediately
+preceding typed soft event, strips glyph/binding/timestamp detail, and compresses
+the retained v30 decision4 event from1,312 compact-JSON bytes to240. The bounded
+summary is added to the next planner turn that already occurs, with zero extra
+image, call, resumption, mid-turn boundary, or input authority. Missing evidence
+is null; inconsistent or authority-granting evidence fails closed. Nine tests
+pass on Windows and WSL/Linux. No v31 live allocation exists; the next frozen
+test should use a different reproducible threat state or bounded normal-MAP01
+continuation. See [the v31 construction](research/doom/MAP01_SOFT_EVENT_CONTEXT_V31.md).
+
 ### Integrated token-efficiency comparison selected
 
 [Integrated efficiency plan v1](research/live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md)

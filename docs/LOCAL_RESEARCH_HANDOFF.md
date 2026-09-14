@@ -3332,3 +3332,15 @@ clear. Preserve the run. Next add the newest typed soft-event summary to the
 following planner prompt without another image/model boundary, and test a state
 outside the fixed threat fixture before a full MAP01 clear attempt. See
 `research/doom/MAP01_SPLIT_COVER_VALIDITY_V30_LIVE_V1.md`.
+
+## Latest follow-up — v31 transfers compressed typed soft history (2026-09-15)
+
+V31 validates the immediately preceding soft event and exposes only a bounded
+typed summary in the next planner prompt. Retained v30 decision4 shrinks from
+1,312 compact-JSON bytes to240 while keeping source/current/floor, count,
+sequence, interval/source iterations and the explicit no-authority bit. It adds
+no image, model call, resumption or mid-turn boundary. Missing history is null;
+inconsistent or authority-granting records fail closed. Windows and WSL/Linux
+each pass9 tests. No live benefit is claimed. Select a different reproducible
+threat state or bounded normal-MAP01 continuation for the first transfer test.
+See `research/doom/MAP01_SOFT_EVENT_CONTEXT_V31.md`.

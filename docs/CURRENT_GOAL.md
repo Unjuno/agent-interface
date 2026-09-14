@@ -1,3 +1,13 @@
+Current direction (r65): v31 closes the v30 state-transfer gap model-free. It
+validates the immediately preceding typed soft event and compresses retained
+decision4 evidence from1,312 JSON bytes to240 before adding it to the already-
+required next planner prompt. It adds no image, call, resumption, mid-turn
+boundary or input authority; missing evidence is null and inconsistent or
+authority-granting records fail closed. Windows/WSL9 tests pass. No live claim.
+Next freeze transfer criteria on a different reproducible threat state or a
+bounded normal-MAP01 continuation rather than retrying the fixed v30 fixture.
+No subagent/context handoff; full goal open.
+
 Current direction (r64): retain the only preregistered v30 live allocation as
 a split-validity soft-exposure pass. All154 exact observations yield health.
 One admitted nonempty cover treats health84→78 against effective floor74 as
