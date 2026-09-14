@@ -6,6 +6,18 @@ baseline into a Linux/X11 control candidate with durable recovery, scoped local
 execution and independent effect checks. It still does not deliver human-tempo
 general computer use or an installable Agent Market product.
 
+The newest held-out target study keeps one planner model on the whole decision
+path. A first formal OpenTTD attempt fails because its three free-form candidates
+omit company finances despite `visually_unambiguous` confidence. A repaired pair
+uses the model point as a coarse anchor, derives five nearby repeated toolbar
+slots from the source image, gathers persistent hover receipts in bounded batches
+and returns them to the same model. The negative association fault has zero
+target input; stable independently opens finances in33.920s with9,296+10,178
+reported input tokens. Windows/WSL reconstruct126 retained frames. This advances
+active semantic grounding but adds6.400s of hover work and establishes no speed
+or token reduction. Token accounting does not treat subagent context shifting as
+an interface improvement.
+
 The newest target-reference candidate replaces repeated point/frame declarations
 with a session-local handle plus relative offset. Its first archive attempt
 exposes a low-information patch alias and remains failed. A fresh same-session

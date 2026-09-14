@@ -15,6 +15,20 @@ Latest research handoff: [measured progress, failures and next steps](docs/LOCAL
 
 Current Linux research caller: [components, usage and evidence limits](research/live_control/CURRENT_CLIENT.md).
 
+The newest held-out OpenTTD toolbar study removes the answer coordinate from the
+candidate path. A first preregistered pair is retained failed: Luna-low calls its
+choice visually unambiguous, but its three points omit company finances and the
+independent window oracle stays false. V2 uses the same model point only as a
+coarse anchor, detects30 repeated toolbar slots from source pixels and probes a
+fixed five-slot neighborhood in bounded3+2 batches. Its association fault stops
+before the second model call and target input; stable binds receipt5 at `[485,51]`,
+rehovers the same tooltip, clicks through ordinary admission and independently
+opens finances. The v2 calls report9,296+10,178 input tokens and take33.920s to
+independent evaluation; the hover batches alone take6.400s. All126 v1/v2 frames
+audit exactly on Windows/WSL. This is an accuracy/recovery candidate for one
+OpenTTD toolbar, with no general grounding, token or speed claim. See
+[model-proposed active evidence](research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md).
+
 The first scoped target-handle allocation is a retained negative result. A
 runtime-owned textured OpenTTD region survives a same-session X11 surface move:
 fresh binding revalidation observes the window manager's actual `[17,20]`

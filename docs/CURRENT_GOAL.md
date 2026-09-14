@@ -823,3 +823,18 @@ These refinements do not change cross-domain correctness or freeze requirements.
   repeat/unknown stateを拒否するschema probeはcross-OSで通過。次は一般的な
   view-state検出を混同せず、固定fixtureでpre-action適用のcorrectness/costを
   新規割当比較する。全体目標とfreeze未達は維持する。
+Latest active-grounding result: one Luna-low planner proposes a coarse OpenTTD
+toolbar target, receives live persistent hover evidence through Agent Interface,
+and selects the evidence-bound point itself. The first preregistered three-point
+pair is retained failed: self-reported `visually_unambiguous` confidence omits
+company finances and the independent oracle remains false. V2 detects30 repeated
+toolbar slots from source pixels, takes a fixed five-slot neighborhood around the
+model anchor, and probes it in bounded3+2 batches. Its association fault refuses
+before the second model call and target input; stable selects/rehovers `[485,51]`,
+opens finances and passes the independent exact-title oracle. Inputs are9,296 and
+10,178 tokens, hover batches6.400s, and decision-to-evaluation33.920s. The126
+v1/v2 frames audit Windows/WSL. Subagents are outside the evaluated operation:
+token improvement must come from the same planner model's interface, observation
+and local execution, not shifting context to another agent. Change layout/domain
+next, then reduce serial probe cost without removing evidence. See
+research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.

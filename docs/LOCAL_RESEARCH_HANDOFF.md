@@ -2500,3 +2500,16 @@ are not isolated effect sizes. The first probe's accidental Windows-Python
 Keep the sign view unpromoted. Next pause or temporally match the dynamic state,
 isolate the label delta, then compare actual model targeting and independent
 task correctness. The full goal and Research Freeze status remain unchanged.
+Newest active semantic evidence: a retained OpenTTD v1 pair proves that model
+confidence and three free-form candidates are insufficient. Luna-low declares
+`[436,51]` visually unambiguous, then selects `[460,51]`; company finances does
+not open. Screen-derived v2 detects30 repeated toolbar slots, probes five around
+the same model's coarse anchor in bounded3+2 batches, and returns numbered live
+tooltip receipts to that model. The association fault refuses before the second
+call and target input. Stable selects receipt5 `[485,51]`, exact rehover matches,
+ordinary admission releases, and the independent finance-title oracle succeeds.
+Inputs9,296+10,178; hover6.400s; decision-to-evaluation33.920s. All126 retained
+v1/v2 frames and source hashes audit Windows/WSL. One task and post-failure radius
+choice prevent broad promotion. No subagent forms part of the evaluated route or
+token accounting. See research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full
+goal remains open.

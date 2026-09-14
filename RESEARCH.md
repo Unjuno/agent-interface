@@ -14,6 +14,23 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Experimental ladder
 
+### Model-proposed active semantic evidence
+
+One held-out OpenTTD toolbar target now tests a single Luna-low planner on both
+coarse proposal and semantic evidence selection. The first preregistered pair is
+retained failed: its self-reported unambiguous three-point set omits company
+finances and the independent oracle remains false. V2 detects30 repeated toolbar
+slots from source pixels and probes the five-slot neighborhood around the coarse
+model anchor in two runtime-bounded batches. A corrupted point/receipt association
+refuses before the second model call and target input. Stable selects receipt5 at
+`[485,51]`, exact rehover persists, and the independent finance-window oracle
+passes. The two calls report9,296 and10,178 input tokens; hover batches take
+6.400s and full decision-to-evaluation33.920s. All126 v1/v2 frames and frozen
+sources audit Windows/WSL. Retain as one accuracy/recovery candidate; layout/domain
+transfer, token reduction and human tempo remain open. Subagent delegation is not
+part of the evaluated path. See
+[model-proposed active evidence](research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md).
+
 ### First scoped target-handle allocation
 
 A session-local candidate privately binds a named RGB region to focus, surface,
