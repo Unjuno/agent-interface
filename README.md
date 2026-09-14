@@ -34,6 +34,14 @@ zero pointer input and creates no submission. All36 frames audit exactly across
 Windows/WSL. Box/frame authorship and model-boundary savings remain unproven, so
 this advances only to another matched-domain replication.
 
+The first Luna-low model-facing screen preserves strict action correctness4/4,
+but fails its preregistered token gate. Two coordinate calls report12,583 input
+tokens each; two no-image handle calls report11,332 and54,244, with42,240 cached
+in the latter. The identical-prompt variance means the current CLI context is not
+controlled enough to claim image/token savings. The result is retained without
+retry; a fresh live A/B waits for a tighter caller. See
+[target-handle model screen](research/live_control/TARGET_HANDLE_MODEL_SCREEN_V1.md).
+
 Frame resolution now runs inside the candidate interface. A fresh1152x720
 OpenTTD pair sends only original1024 coordinates plus explicit frame identity;
 the runtime resolves clicks, drags and condition boxes from the latest pointer

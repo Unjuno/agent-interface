@@ -69,6 +69,16 @@ boundary or token reduction. Next compare repeated model grounding against a
 handle condition on a different desktop task with fixed model/task/order and an
 independent oracle.
 
+A subsequent fixed-state ABBA screen tests the immediate model-facing boundary.
+Luna-low returns correct strict actions4/4: both image-coordinate calls land
+inside the frozen Save region, and both no-image handle calls emit the exact
+typed handle and relation. The preregistered token gate fails. Coordinate calls
+report12,583 input tokens each; handle calls report11,332 and54,244, the latter
+including42,240 cached tokens. Mean reported input is therefore12,583 versus
+32,788. The identical handle prompt variance prevents attribution to the omitted
+image, so no live A/B or token claim follows. See
+[the retained model screen](TARGET_HANDLE_MODEL_SCREEN_V1.md).
+
 Issue45 proposes runtime-owned target references that survive safe layout changes
 without silently turning into cached coordinates. The first pure candidate stores
 an exact RGB region privately with its session scope, focus, surface, source

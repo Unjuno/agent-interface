@@ -24,6 +24,14 @@ same-surface `about:blank` negative returns `MISSING`, admits no pointer input a
 creates no submission. The matched pair passes2/2 over36 exact frames. This is
 one scripted target and still does not measure model grounding or token savings.
 
+The first preregistered model-facing ABBA screen then returns valid strict actions
+4/4 with Luna-low. Both image-coordinate calls identify Save and both no-image
+handle calls emit the exact typed relation. Its token promotion gate fails:
+coordinate calls report12,583 input tokens each, while handle calls report11,332
+and54,244, including42,240 cached tokens in the second identical handle call.
+This exposes uncontrolled caller-context variance; it does not establish handle
+token reduction and does not advance to fresh live A/B yet.
+
 Latest delta: bounded drag-effect memory now transfers correct actuation to one
 changed seed991004 L geometry. Two distinct drags complete all five target tiles
 with zero surrounding changes or repeated completed-segment input. The planner
