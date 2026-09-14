@@ -49,6 +49,17 @@ zero old-target pointer admission, 12 intended button-down admissions and 41/41
 verified releases.  Windows/WSL audits pass.  These human-point runs validate
 mechanics only and do not enter the three-arm efficiency comparison.
 
+The first common-client three-arm mechanics run independently completes plain
+6/6, then rejects ephemeral's hyphenated task-derived alias before target input;
+persistent is not started.  This seventh pre-prereg discovery is an interface
+mismatch.  The registry grammar remains strict; the client now normalizes and
+bounds private alias prefixes.  Fresh v2 completes all 18 tasks exactly once.
+Plain uses 0 mints/18 programs/36 durable calls, ephemeral 12/48/96, and
+persistent 4/41/82.  Each arm records 12 intended button downs, every terminal
+has empty verified release, and persistent's task-4 old handle is `MISSING` with
+zero pointer admission.  The human-point, zero-model result validates that one
+common client can express all arms; it is excluded from formal efficiency.
+
 ## Bounded integration-gap loop
 
 Issue #57's 2026-09-14 follow-up makes integration-induced requirements part of
@@ -65,7 +76,7 @@ The authoritative pre-preregistration ledger is
 requirement, smallest repair, composed-path regression, status, allocation
 effect and measured engineering overhead for each discovery.  Allocation totals
 are explicitly non-additive when more than one defect shares a run.  The six
-current discoveries are two interface mismatches and four benchmark/setup/
+current discoveries are three interface mismatches and four benchmark/setup/
 accounting defects; none demonstrates a regression in an established safety
 requirement or a need for a new cross-cutting capability.
 

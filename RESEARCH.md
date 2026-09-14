@@ -37,6 +37,15 @@ The composed trace validator requires their provenance and forces HOLD for an
 allocation-invalidating formal discovery.  These zero-model engineering runs do
 not establish the pending token/latency comparison.
 
+A new common client then completes a fresh human-point mechanics pass across all
+three arms,18/18 exact tasks.  Plain, ephemeral and persistent use0/12/4 mints,
+18/48/41 programs and36/96/82 durable calls with36 total intended button downs
+and verified release at every terminal.  The first run's invalid task-derived
+alias is retained and added as a third interface mismatch.  The genuine batched
+plain arm now has a strict two-point-only model schema, while B/C retain the
+compiled method schema; a shared Luna-low adapter supports both.  No fresh model
+call or efficiency measurement is included in this engineering pass.
+
 ### Compiled GUI interface live mechanics and typed composition
 
 A preregistered Chromium sequence preserves three failed allocations before the

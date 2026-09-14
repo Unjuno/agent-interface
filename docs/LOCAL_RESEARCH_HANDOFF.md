@@ -1,3 +1,14 @@
+Current handoff r26: `integrated_efficiency_client_v1.py` is now the common
+checked-input client for plain, ephemeral and persistent arms.  A retained first
+run finds that `task-1` violates the private alias grammar.  Normalizing and
+bounding only the alias prefix yields a fresh18/18 human-point mechanics pass with
+mint/program/durable-call counts0/18/36,12/48/96 and4/41/82 respectively.  All36
+target button downs are present and all terminals release.  Plain now has its own
+strict two-point output schema; B/C keep the compiled method schema, avoiding an
+unfair representation charge to the batched baseline.  The shared model adapter
+parses the retained Luna-low call.  No fresh model comparison call has run.  Next
+wire adaptive caller v2 and timing/usage trace generation, then preregister hashes.
+
 Current handoff r25: the integrated Chromium fixture and protocol are ready for
 the live arm controller.  Persistent engineering mechanics reaches six exact-once
 submissions with A and B handle reuse, a task-4 old-handle `MISSING` before any

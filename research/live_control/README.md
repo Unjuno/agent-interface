@@ -28,11 +28,16 @@ repairs by minting B handles, records 12 intended button-down admissions and
 verifies release on all 41 programs.  Human-inspected points and zero model calls
 exclude this evidence from the formal efficiency result.
 Issue #57's integration-gap follow-up is now represented by
-`integrated_efficiency_discoveries_v1.json`: two interface mismatches and four
+`integrated_efficiency_discoveries_v1.json`: three interface mismatches and four
 benchmark/setup/accounting defects, each tied to its retained allocation,
 smallest repair, regression and non-additive overhead.  The protocol rejects
 missing provenance and silent post-start repair, and returns HOLD when a formal
 discovery invalidates the allocation.
+The first common-client three-arm run then exposes and retains an invalid
+hyphenated ephemeral alias after plain succeeds6/6.  Prefix normalization fixes
+the adapter without weakening the registry.  Fresh v2 completes18/18 exact
+tasks: mint counts0/12/4 and durable calls36/96/82 for plain/ephemeral/persistent,
+with36 intended button downs and empty verified release on every terminal.
 
 Latest target-reference result: [scoped target handles](SCOPED_TARGET_HANDLES_V1.md).
 Exact session-local handles return explicit valid/revalidated/ambiguous/moved/

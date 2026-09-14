@@ -118,5 +118,25 @@
       "target_button_down_admissions": 0,
       "aggregation_scope": "allocation_total_nonadditive_across_shared_defects"
     }
+  },
+  {
+    "id": "target_alias_prefix_character_mismatch",
+    "class": "interface_mismatch",
+    "discovered_phase": "pre_prereg",
+    "symptom": "The ephemeral arm composed task-1 into a target alias, but the handle registry permits only lowercase letters, digits and underscores.",
+    "blocking_requirement": "Every arm must derive bounded private aliases without weakening the registry grammar.",
+    "repair": "Normalize non-alphanumeric prefix characters to underscores, require a leading letter and cap the prefix before adding the field/submit suffix.",
+    "regression_test": "probe_integrated_efficiency_three_arm_mechanics_v1.py retains mechanics-01 and reruns all three arms with normalized aliases.",
+    "accounting_disposition": "engineering_excluded_zero_model",
+    "status": "fixed",
+    "allocation_invalidated": false,
+    "overhead": {
+      "allocation_id": "integrated-efficiency-three-arm-mechanics-01-ephemeral",
+      "model_calls": 0,
+      "input_tokens": 0,
+      "runtime_ns": 1683413028,
+      "target_button_down_admissions": 0,
+      "aggregation_scope": "allocation_total_nonadditive_across_shared_defects"
+    }
   }
 ]

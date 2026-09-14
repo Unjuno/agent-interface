@@ -1,3 +1,16 @@
+Current direction (r26): one shared checked-input client now expresses all three
+planned arms.  Its first run preserves an ephemeral task-derived alias grammar
+mismatch after plain succeeds6/6.  Prefix normalization repairs only the adapter;
+fresh human-point v2 independently completes18/18 tasks.  Plain/ephemeral/
+persistent use0/12/4 mints,18/48/41 programs and36/96/82 durable calls; each arm
+has12 intended button downs and every terminal releases cleanly.  A dedicated
+plain two-point schema avoids charging the baseline for an unused compiled method,
+while the compiled schema remains B/C-only.  The shared Luna-low adapter parses
+retained model evidence and both schemas have strict validators.  This remains a
+zero-model engineering result.  Next integrate these paths through adaptive caller
+v2, add task timing/usage reconciliation, then freeze source hashes and run the
+formal allocation.  No efficiency or human-tempo claim; full goal open.
+
 Current direction (r25): the selected Issue #57 path now has a real six-task
 persistent mechanics pass before formal model allocation.  Human-inspected points
 submit all six tokens exactly once, reuse layout-A and layout-B handles, refuse the

@@ -25,6 +25,7 @@ REQUIRED_DISCOVERY_IDS = {
     "restyled_field_flat_center_patch",
     "pointer_event_name_mismatch",
     "cross_task_duplicate_call_id_gap",
+    "target_alias_prefix_character_mismatch",
 }
 
 
