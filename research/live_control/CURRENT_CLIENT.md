@@ -31,8 +31,11 @@ Chromium pair saves2/2 independently; combined observe/check uses12 durable call
 and14 frames versus14 calls and15 frames for separate observe/query. The combined
 check names the exact returned observation sequence/capture time, and the later
 input path still revalidates. All29 frames audit cross-OS. See
-OBSERVE_TARGET_HANDLE_V1.md. Opt-in; one scripted case per arm with no model/token
-calls, so the next gate is a different-domain independent semantic task.
+OBSERVE_TARGET_HANDLE_V1.md. A fresh OpenTTD integration then uses it to open Road
+Construction and independently completes the guarded five-tile L with all four
+engine checks true;37 frames audit cross-OS. Both studies are scripted and have no
+model/token calls. Opt-in; next gate is a model boundary plus changed-target or
+matched negative evidence.
 
 Prior coordinate candidate: `executor_v4/session_v26` resolve explicit-frame
 clicks, drags and target/guard boxes from the latest stable pointer binding before

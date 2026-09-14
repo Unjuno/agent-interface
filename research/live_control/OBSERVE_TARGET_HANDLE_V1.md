@@ -1,6 +1,6 @@
 # Combined fresh observation and target-handle check
 
-Status: advance to cross-domain replication; opt-in candidate.
+Status: cross-domain scripted replication passed; opt-in candidate.
 
 `session_v32.py` adds one bounded read-only operation:
 
@@ -49,6 +49,25 @@ both pass on Windows and WSL.
 - Audit: `python research/live_control/audit_chromium_observe_target_pair_v1.py`
 - Pure controls: `python research/live_control/probe_observe_target_handle_v1.py`
 
-This advances the combined operation to a task with different control semantics and an
-independent semantic endpoint. It does not promote target handles as a default interface or
-support a token, general speed, human-tempo or cross-domain claim.
+## OpenTTD cross-domain replication
+
+A preregistered fresh seed991004 episode uses the same combined operation for the Road
+Construction toolbar, then executes the existing two-drag L task. The combined result is
+bound to observation sequence17/capture time, resolves `[820,51]`, and is resolved again at
+input admission. The first-segment local condition sees160 changed target pixels and zero
+guard pixels, so the continuation runs. The independent game oracle then passes owned target
+roads, all ordered bidirectional connections, the forbidden row and unchanged surrounding
+guard tiles. The terminal releases all input, the immutable save remains unchanged, all
+processes exit, and37 exact frames replay on Windows and WSL.
+
+The combined observe/check returns in234.989ms and the complete eight-step local program in
+3956.186ms. These are one scripted episode with development-known geometry, no model call and
+no matched separate-query arm. They do not establish a speed or generalization effect.
+
+- OpenTTD artifacts: `results/openttd-observe-target-live-01`
+- OpenTTD audit: `python research/live_control/audit_openttd_observe_target_live_v1.py`
+
+This supports retaining the combined operation across two control domains. It does not
+promote target handles as a default interface or support a token, general speed or human-tempo
+claim. The next strong test should integrate it at a model boundary on a new task and include
+a changed-target refusal or matched negative allocation.

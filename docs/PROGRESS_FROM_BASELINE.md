@@ -52,6 +52,14 @@ calls and15 frames for separate observe/query. The handle check is bound to the
 exact returned observation identity. Single-pair202.583/365.441ms values are
 descriptive only; there are no model calls or cross-domain evidence yet.
 
+Cross-domain scripted replication now passes on OpenTTD seed991004. The combined
+operation resolves Road Construction on exact observation17, admission revalidates,
+the first-segment condition sees160 target/0 guard changed pixels, and the second
+segment runs. The independent engine passes owned target roads, ordered connections,
+forbidden-row and surrounding-guard checks. All37 frames audit cross-OS. The
+234.989ms combined boundary and3956.186ms local program are single-episode values;
+development-known geometry and no model call prevent broader claims.
+
 Latest delta: bounded drag-effect memory now transfers correct actuation to one
 changed seed991004 L geometry. Two distinct drags complete all five target tiles
 with zero surrounding changes or repeated completed-segment input. The planner

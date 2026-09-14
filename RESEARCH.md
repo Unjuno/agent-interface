@@ -57,8 +57,12 @@ same observation. A preregistered fresh Chromium pair saves2/2 independently;
 combined versus separate observe/query uses12 versus14 durable calls and14 versus
 15 exact frames. The combined check records the returned sequence/capture identity,
 and admission revalidates again before input. All29 frames replay cross-OS. One
-case per arm, no model calls and no causal timing claim; advance to a different
-domain. See [combined observe-target](research/live_control/OBSERVE_TARGET_HANDLE_V1.md).
+case per arm and no model calls establish no causal timing claim. A preregistered
+OpenTTD transfer then uses the combined operation for Road Construction, passes
+the local first-segment condition and independently completes the guarded five-tile
+L with all four engine checks true. Its37 exact frames replay cross-OS. Geometry
+and remaining actions are scripted, so model-boundary and changed-target tests
+remain. See [combined observe-target](research/live_control/OBSERVE_TARGET_HANDLE_V1.md).
 
 ### First live bounded drag-effect allocation
 

@@ -58,8 +58,11 @@ operation. A preregistered scripted Chromium pair independently saves2/2 while
 `observe_target_handle` binds its result to the exact returned observation and
 reduces durable calls from14 to12 versus separate observe/query. All29 frames
 replay cross-OS. The202.583/365.441ms workflow values are one sample per arm and
-do not establish causal latency; no model or token call occurs here. Advance only
-to cross-domain replication. See [combined observe-target](research/live_control/OBSERVE_TARGET_HANDLE_V1.md).
+do not establish causal latency; no model or token call occurs here. A fresh
+OpenTTD transfer then resolves Road Construction through the same operation and
+completes the five-tile L; all four independent engine checks pass over37 exact
+frames. This remains scripted, development-known geometry. See
+[combined observe-target](research/live_control/OBSERVE_TARGET_HANDLE_V1.md).
 
 Frame resolution now runs inside the candidate interface. A fresh1152x720
 OpenTTD pair sends only original1024 coordinates plus explicit frame identity;
