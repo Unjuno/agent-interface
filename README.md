@@ -15,6 +15,16 @@ Latest research handoff: [measured progress, failures and next steps](docs/LOCAL
 
 Current Linux research caller: [components, usage and evidence limits](research/live_control/CURRENT_CLIENT.md).
 
+Frame resolution now runs inside the candidate interface. A fresh1152x720
+OpenTTD pair sends only original1024 coordinates plus explicit frame identity;
+the runtime resolves clicks, drags and condition boxes from the latest pointer
+binding. Repeat stops and target completes2/2 against the independent engine
+score over69 exact frames. A separate post-admission X11 move changes geometry
+before the first click; InputOwner refuses it with zero pointer admissions in
+105.333ms submit-to-terminal time. This is a scoped correctness and recovery
+boundary, with no speed or automatic-frame claim. See
+[live framed pointer intents](research/live_control/FRAMED_POINTER_INTENTS_V1.md).
+
 OpenTTD resolution transfer now exposes and repairs a coordinate-frame error.
 Two preregistered global translations fail and remain preserved: application
 chrome and saved map content do not share one transform. Separating screen-fixed

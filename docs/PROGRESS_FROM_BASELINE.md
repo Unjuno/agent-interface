@@ -31,6 +31,13 @@ transforms then classify positive/repeat pairs4/4 at1280x720 and a predicted
 including both failures, replay exactly cross-OS. This is resolution transfer on
 one save/path; it does not establish unseen-task grounding or faster feedback.
 
+That transform now executes inside the candidate interface. One fresh1152x720
+pair sends only original1024 coordinates plus frame identity; runtime binding
+resolution covers clicks, drags and condition boxes, and engine outcomes agree
+2/2 over69 frames. A post-admission geometry fault then returns
+`needs_decision` with zero pointer admissions in105.333ms. This closes a scoped
+resize/move race before input, while frame identity remains task-declared.
+
 Latest negative follow-up: a pixel-only persistent-effect receipt separates
 selected archived new and repeated effects, but its preregistered prompt form
 reverses the desired model outcome. Exact-prompt Astra recognizes progression

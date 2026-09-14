@@ -173,6 +173,16 @@ Corrected classifications are4/4 over135 frames; including failures,265 frames
 audit exactly cross-OS. Local feedback remains2.46–2.60s and one seed/path is
 reused. See [coordinate-frame resolution transfer](research/live_control/OPENTTD_COORDINATE_FRAMES_V1.md).
 
+The next version moves that transform from the experiment runner into admission.
+At1152x720, the runner sends original1024 coordinates with explicit frame IDs;
+`executor_v4/session_v26` resolve clicks, drags and target/guard boxes from the
+fresh binding, validate the raw program and emit resolution records before
+execution. Fresh positive/repeat results agree with the engine2/2 over69 frames.
+A separate post-admission surface move changes geometry before the first click;
+the runtime returns `needs_decision` with zero pointer admissions,28.435ms after
+the move and105.333ms after submit. See
+[live binding-resolved framed intents](research/live_control/FRAMED_POINTER_INTENTS_V1.md).
+
 ### Retained OpenTTD effect-state diagnosis
 
 The frozen seed991003 v6 run lacks a formal finish evaluation because its driver

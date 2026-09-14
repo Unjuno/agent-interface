@@ -154,6 +154,40 @@ Sending an OS event is not equivalent to the application consuming it or complet
 
 Backend-specific pacing/barrier values must remain backend policy rather than leaking into semantic methods.
 
+## Coordinate frames and binding resolution
+
+An absolute screen point is incomplete when a program can move between window
+geometries. Application chrome and window content may follow different
+transforms. A pointer intent should therefore declare the coordinate frame and
+the source binding on which its points were authored.
+
+The current research candidate resolves the complete program against the latest
+stable target binding before validation:
+
+```text
+source point + explicit frame + source geometry
+    |
+    v
+latest target focus / surface / geometry
+    |
+    v
+frame-specific translation
+    |
+    v
+whole-program validation
+    |
+    v
+runtime focus / surface / geometry / hit checks
+    |
+    +-- mismatch -> needs_decision before pointer admission
+    v
+input
+```
+
+Resolution itself grants no authority. Frame identity is still task-declared in
+the current evidence; observed-region identity, internal scrolling, scaling and
+automatic fallback remain research problems.
+
 ## Implementation strategy
 
 The current implementation language for experiments is Python because algorithmic semantics are still changing rapidly. A lower-level systems implementation is intentionally deferred until the algorithms, error semantics, and protocol boundaries are substantially frozen.

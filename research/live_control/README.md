@@ -1,5 +1,12 @@
 # Asynchronous live control: development evidence
 
+Latest framed-intent result: [live binding-resolved pointer intents](FRAMED_POINTER_INTENTS_V1.md).
+The runner sends original1024 coordinates while `executor_v4/session_v26`
+resolve frame-bearing clicks, drags and condition boxes from a fresh1152x720
+binding. Positive/repeat agree with the engine2/2 over69 frames. A separate
+post-admission surface move is refused before any pointer admission in105.333ms.
+Frame identity remains task-declared and local effect feedback remains about2.5s.
+
 Latest resolution-transfer result: [OpenTTD coordinate frames](OPENTTD_COORDINATE_FRAMES_V1.md).
 Two retained global-transform failures reveal that centered toolbar chrome and
 window-relative map content move differently. Explicit frame transforms then

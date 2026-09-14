@@ -1,4 +1,15 @@
-Latest transfer evidence: two preregistered global transforms fail and show that
+Latest interface evidence: `executor_v4/session_v26` now resolve explicit-frame
+clicks, drags and target/guard boxes from the latest pointer binding before
+whole-program validation. A fresh1152x720 OpenTTD pair sends only original1024
+coordinates and agrees with the engine2/2 over69 exact frames. A separate
+post-admission surface move changes geometry before the first click; InputOwner
+returns `needs_decision` with zero pointer admissions,28.435ms after the move
+and105.333ms submit-to-terminal. Both audits pass Windows/WSL. Next replace
+task-declared frame identity with named observed regions or affordances and test
+a new save/internal viewport move. See
+research/live_control/FRAMED_POINTER_INTENTS_V1.md. Full goal remains open.
+
+Prior transfer evidence: two preregistered global transforms fail and show that
 centered OpenTTD toolbar chrome and window-relative map content require separate
 coordinate frames. Using `screen_chrome dx=0` and binding-origin-derived
 `window_content dx=-128` passes target/repeat2/2 at1280x720. The same rule

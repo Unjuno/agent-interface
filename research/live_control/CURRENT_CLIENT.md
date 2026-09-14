@@ -1,4 +1,13 @@
-Latest observation boundary: redacted_observation_v2 physically replaces pixels
+Latest coordinate candidate: `executor_v4/session_v26` resolve explicit-frame
+clicks, drags and target/guard boxes from the latest stable pointer binding before
+whole-program validation. Fresh1152x720 OpenTTD receives only original1024
+coordinates and passes positive/repeat2/2 against the engine over69 frames. A
+separate post-admission X11 geometry change yields zero pointer admissions and
+`needs_decision` in105.333ms submit-to-terminal. See FRAMED_POINTER_INTENTS_V1.md.
+This is opt-in; automatic frame selection, internal viewport identity and faster
+effect feedback remain open.
+
+Prior observation boundary: redacted_observation_v2 physically replaces pixels
 inside an explicitly half-open region and presents typed UNKNOWN semantics. On
 one fresh Chromium source frame, Luna-low reads the exact value4/4 with the full
 image and returns REDACTED_BY_POLICY4/4 with the redacted image; no action follows.
