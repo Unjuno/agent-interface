@@ -21,6 +21,18 @@ The two-layout socket probe initially rejected query-string URL text before any
 task input.  The preserved failure motivated path-only fixture URLs; the fresh
 probe then observes distinct exact A/B frames and four verified releases through
 the shared runtime.  It deliberately performs no model call or form submission.
+Persistent mechanics then pass after four preserved failures: the final
+engineering run submits all six expected tokens exactly once, reuses A and B
+handles, refuses the old A handle as `MISSING` at task 4 with zero stale input,
+repairs by minting B handles, records 12 intended button-down admissions and
+verifies release on all 41 programs.  Human-inspected points and zero model calls
+exclude this evidence from the formal efficiency result.
+Issue #57's integration-gap follow-up is now represented by
+`integrated_efficiency_discoveries_v1.json`: two interface mismatches and four
+benchmark/setup/accounting defects, each tied to its retained allocation,
+smallest repair, regression and non-additive overhead.  The protocol rejects
+missing provenance and silent post-start repair, and returns HOLD when a formal
+discovery invalidates the allocation.
 
 Latest target-reference result: [scoped target handles](SCOPED_TARGET_HANDLES_V1.md).
 Exact session-local handles return explicit valid/revalidated/ambiguous/moved/

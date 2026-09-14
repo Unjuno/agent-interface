@@ -35,6 +35,10 @@ REQUIRED = {
         "No failed side effect is retried",
     ),
     "decision": ("RETAIN requires", "HOLD applies", "REJECT applies"),
+    "integration_gap": ("existing_requirement_regression", "interface_mismatch",
+                        "integration_capability_gap", "benchmark_setup_accounting_defect",
+                        "integrated_efficiency_discoveries_v1.json",
+                        "preregister a new finite block"),
     "doom_realtime": (
         "freedoom2.wad",
         "MAP01",

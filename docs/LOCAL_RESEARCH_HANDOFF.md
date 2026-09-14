@@ -1,3 +1,17 @@
+Current handoff r25: the integrated Chromium fixture and protocol are ready for
+the live arm controller.  Persistent engineering mechanics reaches six exact-once
+submissions with A and B handle reuse, a task-4 old-handle `MISSING` before any
+stale target input, four mints, 12 intended button-down admissions and 41 verified
+releases.  Five allocations are retained because point-frame, refusal packaging,
+field-patch and pointer-accounting defects appeared and were fixed.  Along with
+the prior URL and duplicate-call-ID defects, the Issue #57 integration-discovery
+ledger classifies two interface mismatches and four benchmark/setup/accounting
+defects.  The trace protocol requires this provenance and returns HOLD if a new
+formal discovery invalidates the allocation.  Do not use the human points as
+formal grounding.  Next implement the plain/ephemeral/persistent controller with
+Luna-low calls, complete usage ledger and source manifest, then preregister before
+any comparison call.  No subagent or context handoff is used.
+
 Current handoff: Issue #57 now governs the next block.  The compiled GUI live v5
 result ended the preceding mechanics work, so do not start another isolated
 primitive study.  Implement and preregister the three-arm, six-task comparison in

@@ -2,8 +2,12 @@
 
 import copy
 import json
+from pathlib import Path
 
 from integrated_efficiency_protocol_v1 import ARMS, EXPECTED_MODEL_CALLS, EXPECTED_ROUTES, LAYOUTS, TASKS, evaluate
+
+
+HERE = Path(__file__).resolve().parent
 
 
 def repair(required=False):
@@ -37,7 +41,10 @@ def trace():
                          "input_feedback_ns": 80_000_000,
                          "repair": repair(arm == "persistent" and index == 3)})
         arms[arm] = rows
-    return {"schema": "integrated_efficiency_trace_v1", "arms": arms}
+    discoveries = json.loads((HERE / "integrated_efficiency_discoveries_v1.json").read_text(
+        encoding="utf-8"))
+    return {"schema": "integrated_efficiency_trace_v1", "arms": arms,
+            "integration_discoveries": discoveries}
 
 
 def must_reject(value, expected):
@@ -74,8 +81,20 @@ def main():
         for call in row["model_calls"]:
             call["usage"]["input_tokens"] = 30_000
     assert evaluate(no_gain)["disposition"] == "REJECT"
+    missing_discovery = copy.deepcopy(valid)
+    missing_discovery["integration_discoveries"].pop()
+    must_reject(missing_discovery, "known pre-prereg")
+    silent_formal_repair = copy.deepcopy(valid)
+    silent_formal_repair["integration_discoveries"][0]["discovered_phase"] = "formal"
+    must_reject(silent_formal_repair, "silently continue")
+    invalidated = copy.deepcopy(valid)
+    invalidated["integration_discoveries"][0].update(
+        discovered_phase="formal", status="open", allocation_invalidated=True,
+        accounting_disposition="formal_included")
+    held = evaluate(invalidated)
+    assert held["disposition"] == "HOLD"
     print(json.dumps({"passed": True, "positive": result["disposition"],
-                      "controls": 5}, indent=2))
+                      "controls": 8}, indent=2))
 
 
 if __name__ == "__main__":

@@ -35,6 +35,48 @@ exact frames, verifies four clean input releases, makes zero model/task-input
 calls, and independently reports the deliberately absent six submissions.  Its
 audit passes on Windows and WSL.
 
+The engineering persistent-mechanics sequence required five preserved
+allocations.  V1 used a vertically wrong human-inspected A point and its flat
+patch refused before task input.  V2 reused A handles through three exact tasks
+and reached the required task-4 `MISSING`, then the probe assumed a missing
+record carried `sequence`.  V3 fixed that packaging error but the restyled B
+field's taller interior made a 24x22 center patch flat.  V4 widened the fixed
+field patch to 24x38 and independently completed all six tasks, but its report
+looked for the wrong pointer event name and incorrectly counted admissions as
+zero.  V5 fixes only that measurement: six exact-once submissions, four total
+mints, A reuse on tasks 2/3, B reuse on tasks 5/6, task-4 old handle `MISSING`,
+zero old-target pointer admission, 12 intended button-down admissions and 41/41
+verified releases.  Windows/WSL audits pass.  These human-point runs validate
+mechanics only and do not enter the three-arm efficiency comparison.
+
+## Bounded integration-gap loop
+
+Issue #57's 2026-09-14 follow-up makes integration-induced requirements part of
+this milestone.  A failure on the composed path must be classified as one of:
+
+- `existing_requirement_regression`;
+- `interface_mismatch`;
+- `integration_capability_gap` required for composed correctness, observability
+  or bounded recovery;
+- `benchmark_setup_accounting_defect`.
+
+The authoritative pre-preregistration ledger is
+`integrated_efficiency_discoveries_v1.json`.  It records the blocking
+requirement, smallest repair, composed-path regression, status, allocation
+effect and measured engineering overhead for each discovery.  Allocation totals
+are explicitly non-additive when more than one defect shares a run.  The six
+current discoveries are two interface mismatches and four benchmark/setup/
+accounting defects; none demonstrates a regression in an established safety
+requirement or a need for a new cross-cutting capability.
+
+Only a defect that blocks this selected path, its correctness or its measurement
+may add work here.  Prefer an adapter or shared invariant.  A new reusable
+capability requires a falsifiable composed-path regression and must include its
+own model/token/latency/runtime overhead.  If such a defect is discovered after
+formal allocation begins and invalidates the experiment, the protocol returns
+HOLD; repair/version the candidate and preregister a new finite block.  It may
+not silently continue the same allocation or change its question or thresholds.
+
 This plan is the first deliverable for Issue #57.  The preceding compiled GUI
 mechanics block ended at live v5 with disposition
 `ADVANCE_TO_MATCHED_EFFICIENCY_COMPARISON`.  This work therefore switches from
@@ -147,6 +189,7 @@ unobserved break-even as a measured result.
 | Effect/evidence | Program completion is not task success; completed prefix and raw evidence remain | Local predicate check, append-only independent HTTP scorer, raw event/frame hashes | Exact expected token once, no unexpected/duplicate token, raw artifact reconstruction |
 | #12 / #46 | Comparison capabilities, endpoints and assistance must be explicit | Same fixture, model/settings, scorer, display, checked input and clocks | Plain batching retained; mismatches listed; complete per-phase timing and environment record |
 | #56 | Intermediate local evidence must affect a later authorized action | Compiled method observes field effect and current Submit dependency before branch/action | B/C mechanics audit plus C live transitions with zero frontier-model resumption |
+| #57 integration gaps | Composition failures need explicit provenance, smallest repair, regression and overhead; a formal-invalidating repair cannot continue silently | `integrated_efficiency_discoveries_v1.json` plus protocol-wide discovery validation | Six retained pre-prereg discoveries; missing provenance and silent formal-repair controls; invalidated formal trace returns HOLD |
 
 ## Frozen decision rule to place in preregistration
 

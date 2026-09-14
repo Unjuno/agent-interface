@@ -1,3 +1,17 @@
+Current direction (r25): the selected Issue #57 path now has a real six-task
+persistent mechanics pass before formal model allocation.  Human-inspected points
+submit all six tokens exactly once, reuse layout-A and layout-B handles, refuse the
+old A handle as `MISSING` at task 4 with zero stale pointer admission, repair B,
+record 12 intended button-down admissions and verify all 41 releases.  Four prior
+failures remain: source-frame point scaling, nullable missing-handle packaging,
+flat restyled-field patch size and wrong pointer event accounting.  Together with
+the earlier URL mismatch and protocol duplicate-ID gap, Issue #57's new bounded
+integration-gap rule is now enforced as two interface mismatches and four
+benchmark/setup/accounting defects with measured non-additive overhead.  A
+formal-invalidating discovery forces HOLD and a new preregistration.  Next finish
+the same-model three-arm live controller and freeze its manifest; no efficiency,
+break-even, full DOOM map clear or human-tempo claim exists yet.  Full goal open.
+
 Current direction (r24): Issue #57's start condition is satisfied because the
 compiled GUI mechanics block ended at live v5.  Stop isolated primitive studies
 and build the finite plain/current-optimized/integrated persistence comparison
@@ -49,6 +63,15 @@ Full goal stays open.
   実バッチ能力は保持し、今回の主検証をpersistence amortizationとして限定。live allocationは
   未実行。統合report後に、ゲーム時間を止めないFreedoom `MAP01`通常map clear attemptを
   実施するgateも固定。DOOMはDomain Coverage Matrixの一軸で、clear能力は未主張。
+
+- 2026-09-14 r25: 統合fixtureをsame runtimeで自己利用。query URL文字制約、source-frame
+  手動point誤り、MISSING recordのnullable field、restyled B fieldのflat patch、pointer
+  event名集計、cross-task call-ID検査の6 gapを保存・修正。#57追記に従い2 interface
+  mismatch / 4 benchmark-setup-accounting defectとしてprovenance・repair・regression・
+  非加算overheadを記録。最終human-point mechanicsは6/6 exact-once、A/B reuse、task4
+  old handle MISSING、stale pointer 0、target button-down 12、release 41/41でWindows/WSL
+  audit合格。これはmodel/token比較ではない。formal中のinvalidating discoveryはHOLDと
+  新規preregを要求するprotocol 8 controlsも合格。次は3 arm live controllerとmanifest。
 
 Prior coordinate-contract repair: `point_target_contract_v2` separates absolute
 source-observation pixels from later target motion. In a preregistered seed991015

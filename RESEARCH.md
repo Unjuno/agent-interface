@@ -26,6 +26,17 @@ separate measures.  The allocation has not run, so it establishes no efficiency
 result.  A continuously advancing Freedoom `MAP01` clear attempt follows the
 integrated report as a distinct real-time Domain Coverage Matrix gate.
 
+The selected fixture now passes a six-task persistent engineering sequence with
+human-inspected points: exact-once6/6, four mints, A/B reuse, task-4 old-handle
+`MISSING`, zero old-target input, 12 intended button downs and41/41 releases.
+Five retained allocations expose point-frame, nullable-refusal, patch-size and
+pointer-accounting failures before that pass.  With the earlier URL and global
+call-ID defects, [the integration discovery ledger](research/live_control/integrated_efficiency_discoveries_v1.json)
+classifies two interface mismatches and four benchmark/setup/accounting defects.
+The composed trace validator requires their provenance and forces HOLD for an
+allocation-invalidating formal discovery.  These zero-model engineering runs do
+not establish the pending token/latency comparison.
+
 ### Compiled GUI interface live mechanics and typed composition
 
 A preregistered Chromium sequence preserves three failed allocations before the

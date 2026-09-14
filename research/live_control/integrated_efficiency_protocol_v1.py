@@ -16,6 +16,16 @@ EXPECTED_ROUTES = {"plain": ("cold",) * 6,
                    "persistent": ("cold", "reuse", "reuse", "repair", "reuse", "reuse")}
 USAGE_FIELDS = ("input_tokens", "cached_input_tokens", "cache_write_input_tokens",
                 "output_tokens", "reasoning_output_tokens")
+DISCOVERY_CLASSES = {"existing_requirement_regression", "interface_mismatch",
+                     "integration_capability_gap", "benchmark_setup_accounting_defect"}
+REQUIRED_DISCOVERY_IDS = {
+    "query_url_outside_runtime_text_alphabet",
+    "human_point_vertical_misread",
+    "missing_handle_record_sequence_assumption",
+    "restyled_field_flat_center_patch",
+    "pointer_event_name_mismatch",
+    "cross_task_duplicate_call_id_gap",
+}
 
 
 def _integer(value) -> bool:
@@ -98,12 +108,57 @@ def validate_task(row: dict, arm: str, index: int) -> dict:
 
 
 def evaluate(trace: dict) -> dict:
-    if type(trace) is not dict or set(trace) != {"schema", "arms"}:
+    if type(trace) is not dict or set(trace) != {"schema", "arms", "integration_discoveries"}:
         raise ValueError("exact comparison trace required")
     if trace["schema"] != "integrated_efficiency_trace_v1":
         raise ValueError("unsupported trace schema")
     if type(trace["arms"]) is not dict or tuple(trace["arms"].keys()) != ARMS:
         raise ValueError("arms must be in frozen plain/ephemeral/persistent order")
+    discoveries = trace["integration_discoveries"]
+    if type(discoveries) is not list:
+        raise ValueError("integration discovery list required")
+    discovery_ids = set()
+    checked_discoveries = []
+    for row in discoveries:
+        if type(row) is not dict or set(row) != {
+                "id", "class", "discovered_phase", "symptom", "blocking_requirement",
+                "repair", "regression_test", "accounting_disposition", "status",
+                "allocation_invalidated", "overhead"}:
+            raise ValueError("exact integration discovery fields required")
+        if type(row["id"]) is not str or not row["id"] or row["id"] in discovery_ids:
+            raise ValueError("unique integration discovery id required")
+        discovery_ids.add(row["id"])
+        if row["class"] not in DISCOVERY_CLASSES:
+            raise ValueError("recognized integration discovery class required")
+        if row["discovered_phase"] not in {"pre_prereg", "formal"}:
+            raise ValueError("integration discovery phase required")
+        if any(type(row[field]) is not str or not row[field] for field in
+               ("symptom", "blocking_requirement", "repair", "regression_test")):
+            raise ValueError("bounded integration discovery explanation required")
+        if row["accounting_disposition"] not in {
+                "formal_included", "engineering_excluded_zero_model", "unavailable"}:
+            raise ValueError("integration discovery accounting disposition required")
+        if row["status"] not in {"fixed", "retained", "open"}:
+            raise ValueError("integration discovery status required")
+        if type(row["allocation_invalidated"]) is not bool:
+            raise ValueError("boolean allocation invalidation required")
+        overhead = row["overhead"]
+        if type(overhead) is not dict or set(overhead) != {
+                "allocation_id", "model_calls", "input_tokens", "runtime_ns",
+                "target_button_down_admissions", "aggregation_scope"}:
+            raise ValueError("exact integration discovery overhead required")
+        if any(not _integer(overhead[field]) for field in
+               ("model_calls", "input_tokens", "target_button_down_admissions")):
+            raise ValueError("nonnegative integration discovery overhead required")
+        if overhead["runtime_ns"] is not None and not _integer(overhead["runtime_ns"]):
+            raise ValueError("runtime overhead must be nonnegative or unavailable")
+        if overhead["aggregation_scope"] != "allocation_total_nonadditive_across_shared_defects":
+            raise ValueError("integration discovery overhead aggregation scope required")
+        if row["discovered_phase"] == "formal" and row["status"] == "fixed" and not row["allocation_invalidated"]:
+            raise ValueError("formal repair cannot silently continue the same allocation")
+        checked_discoveries.append(copy.deepcopy(row))
+    if not REQUIRED_DISCOVERY_IDS <= discovery_ids:
+        raise ValueError("known pre-prereg integration discoveries missing")
     arms = {}
     global_call_ids = set()
     for arm in ARMS:
@@ -154,7 +209,11 @@ def evaluate(trace: dict) -> dict:
     beats_generations = all(persistent["cumulative_planner_generations"][-1]
                             < arms[arm]["cumulative_planner_generations"][-1]
                             for arm in ("plain", "ephemeral"))
-    if not safety:
+    invalidated = any(row["allocation_invalidated"] for row in checked_discoveries)
+    if invalidated:
+        disposition = "HOLD"
+        reason = "formal_allocation_invalidated_by_integration_discovery"
+    elif not safety:
         disposition = "REJECT"
         reason = "persistent_correctness_repair_or_old_target_gate_failed"
     elif not all(arms[arm]["correct"] for arm in ARMS):
@@ -177,4 +236,5 @@ def evaluate(trace: dict) -> dict:
             for arm in ("plain", "ephemeral")),
         "disposition": disposition,
         "reason": reason,
+        "integration_discoveries": checked_discoveries,
     }
