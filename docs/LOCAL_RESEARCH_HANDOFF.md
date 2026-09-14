@@ -3019,6 +3019,26 @@ observation handling event-driven first, then treat cancellable planner calls
 and partial accounting as a separate mechanism.  See
 `research/doom/MAP01_POLICY_INVALIDATION_V24_LIVE_V1.md`.
 
+V25 removes the polling tail without changing v24 evidence.  The shared event-
+driven monitor evaluates every exact observation as it leaves the queue and
+also remains active through the final cover-cancellation wait.  Retained replay
+selects sequence200, the earliest cover-4 change, while duplicate sequence
+fails closed.  Full-PNG decode plus ROI comparison was8.231ms median/9.918ms
+p95 in a local non-retained diagnostic; bound ROI transport can remove that
+later.  Do not run v25 live until planner cancellation and partial accounting
+have an explicit disposition.  See
+`research/doom/MAP01_EVENT_DRIVEN_INVALIDATION_V25.md`.
+
+Official Codex app-server is the selected planner-cancellation boundary.  It
+provides turn IDs, `turn/interrupt`, explicit interrupted completion and token-
+usage notifications while retaining image and output-schema inputs.  A local
+0.153.4 command-free probe initializes, lists6 models and creates an ephemeral
+Luna thread with zero model turns.  Preserve the discovered generated-schema
+mismatch: a typed sandbox policy map is rejected with -32600 at thread/start,
+while the legacy read-only string succeeds.  Freeze one bounded interruption
+turn before integrating this adapter into v25.  See
+`research/live_control/CODEX_APP_SERVER_PLANNER_CANCELLATION_V1.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms

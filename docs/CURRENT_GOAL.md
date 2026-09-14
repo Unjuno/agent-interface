@@ -1,16 +1,14 @@
-Current direction (r40): the frozen v24 guarded allocation supplies live
-mechanism evidence.  Four health-ROI changes cancelled four covers with verified
-release, discarded four dependent model actions with zero plan admission, and
-prevented all four discarded cover policies from being inherited.  All24
-admitted programs released.  The unmatched run stayed alive at76%, killed2 and
-did not exit; no causal outcome claim follows.  Timeout polling skipped an
-earlier changed sample twice: earliest capture-to-detection was215.922–544.457ms,
-while detection-to-release was20.423–34.368ms.  All stale model calls still
-completed, consuming four decision slots.  Next split the repair: first make
-invalidation event-driven in a new controller and replay its exact dequeue
-boundary; separately design auditable planner cancellation/partial accounting.
-Do not grant emergency fallback from the ROI or rerun v24.  No subagent/context
-handoff; full goal open.
+Current direction (r42): v25 event-driven invalidation catches the earliest
+retained changed frame and preserves fail-closed authority.  Official Codex
+app-server exposes the missing planner boundary: turn/start returns IDs,
+turn/interrupt ends in an explicit interrupted completion, and per-turn token
+usage remains observable.  A command-free 0.153.4 probe initialized, listed6
+models and created an ephemeral Luna thread.  Preserve its schema mismatch:
+generated ThreadStartParams' sandbox policy map was rejected with -32600 while
+the legacy read-only string succeeded.  Next preregister one no-tool interrupted
+turn; retain a completion race or failure, require explicit status/usage, and
+never parse interrupted output as an action.  Only after that integrate planner
+cancellation with v25.  No subagent/context handoff; full goal open.
 
 Current direction (r37): retained MAP01 failure analysis separates the cover-
 expiry symptom from stale policy semantics.  Fixed cover left 9,770.767 ms of
