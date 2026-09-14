@@ -501,3 +501,13 @@ retained-record/test-double branches pass Windows/WSL audit. Full-cold anchor
 and expansion account for 2/17,386 and 3/25,675 calls/input tokens; the
 historical injected subpath remains explicitly non-comparable. Live efficacy
 and reuse savings remain untested.
+
+[Compiled GUI interface v1](COMPILED_GUI_INTERFACE_V1.md) adds the deterministic
+local continuation boundary requested by Issue #56. A strict symbol/predicate/
+action state graph performs two observe/action transitions in a Calc-shaped
+test double, with the second action selected from fresh intermediate evidence
+and zero frontier-model resumptions. Every action still requires separate
+fresh admission and verified release. Twelve typed stop/failure branches plus
+cold/warm #53 caller integration bring the block to 15 scenarios; independent
+audits pass on Windows and WSL. This is offline mechanics only. Live correctness,
+token/latency benefit, evidence retention and break-even remain unmeasured.

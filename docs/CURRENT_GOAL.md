@@ -988,3 +988,13 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   settings/callerで有限比較し、全attempt tokens、planner boundaries、images、wall/local time、
   correctness、fallbackを記録。その後Mindustryで別domainを確認する。#53はこのlive会計と
   cross-domain完了まで継続。効率利得、break-even、人間速度・freezeは未測定・未達。
+
+- 2026-09-14 r22: #56のdeterministic local continuation境界を実装。bounded symbol/
+  predicate/action/state graphが各action前にfresh admissionを要求し、explicit effectを
+  次の観測で照合。Calc-shaped positiveはSave後のfresh dialog evidenceでConfirmを選び、
+  2 observe/action transitions、3 observations、frontier-model再開0、release 2/2。
+  unknown/ambiguous/stale/association/no-progress/effect/cancel/budget/delivery/release等12
+  controlと#53 cold/warm統合を含む15 scenariosがWindows/WSL監査合格。初回auditの
+  cancellation count誤りは保持。raw evidence retentionはadapter側未検証であり、GUI/
+  model/token/latency/break-even claimなし。次は既存desktop fixtureでpositiveとchanged/
+  unknownの有限live mechanics pairを事前登録し、成功後のみA/B/C cold/warm比較へ進む。

@@ -951,3 +951,13 @@ The first finite live comparison should use an existing independently scored
 desktop fixture and report plain, current-optimized and compiled cold/warm/
 invalidation/repair costs through the same caller; a Mindustry layout follows
 as the different-domain check. No efficiency or break-even claim exists yet.
+
+The deterministic compiled-interface boundary now exists. It validates bounded
+symbols, explicit predicate effects and method branches; obtains new admission
+for every action; and yields on unknown/ambiguous state, stale evidence/symbol,
+association change, no progress, failed effect, cancellation, budget, uncertain
+delivery or release failure. A Calc-shaped positive performs two fresh-evidence-
+dependent actions with zero model resumptions. Fifteen test-double scenarios
+pass independent Windows/WSL audit through the #53 caller. Raw evidence retention
+and all live efficiency/correctness claims remain unproved. See
+`research/live_control/COMPILED_GUI_INTERFACE_V1.md`.

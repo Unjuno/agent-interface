@@ -593,3 +593,14 @@ input tokens for two calls and 25,675 for three; the historical injected
 subpath remains separately labelled at 16,387. Reuse numbers are test-double
 mechanics, not measured savings. See
 [adaptive acquisition caller](../research/live_control/ADAPTIVE_ACQUISITION_CALLER_V1.md).
+
+The first Issue #56 mechanics boundary now executes a planner-shaped bounded
+state graph locally. Its positive Calc-shaped path observes, requests Save,
+observes a confirmation state, chooses Confirm from that fresh evidence, then
+observes and completes. It records two dependent observe/action transitions,
+two separate admissions/releases and zero frontier-model resumptions. Unknown,
+ambiguous, stale, changed-association, no-progress, failed/unavailable effect,
+cancellation, budget, uncertain delivery and release controls prevent later
+input. Fifteen offline scenarios, including cold/warm #53 caller integration,
+audit on Windows and WSL. No GUI, model, token or latency result exists yet. See
+[compiled GUI interface v1](../research/live_control/COMPILED_GUI_INTERFACE_V1.md).

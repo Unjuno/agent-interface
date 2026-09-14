@@ -2803,3 +2803,15 @@ two observe/action transitions without another frontier-model generation.
 Symbols never grant authority; fresh admission, release and effect checks stay
 in force. Run a finite preregistered desktop block first, then a Mindustry
 layout. This is the next integrated goal, not evidence of a speed or token gain.
+
+Latest #56 mechanics: `compiled_gui_interface_v1.py` implements that bounded
+state graph without a model adapter inside the runtime. The positive Calc-shaped
+test double uses a fresh post-Save dialog predicate to authorize the distinct
+Confirm branch, then verifies the final predicates: two actions, three
+observations, zero frontier-model resumptions. Separate admission/release applies
+to each action. Twelve typed stop/failure cases and cold/warm #53 integration
+produce 15 passing Windows/WSL scenarios. The initial independent audit's 8-vs-7
+cancellation-count assertion failure is retained. Raw evidence retention is
+explicitly unverified; there is no live GUI, token, latency or break-even claim.
+Next freeze and run one live desktop mechanics pair before the A/B/C comparison.
+See `research/live_control/COMPILED_GUI_INTERFACE_V1.md`.
