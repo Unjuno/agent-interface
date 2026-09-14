@@ -17,6 +17,10 @@ The new `integrated_efficiency_protocol_v1.py` also fixes the arm schedule and
 scores the frozen decision rule.  Five fail-closed controls pass after repairing
 an initial cross-task duplicate-call-ID validation hole.  The live controller
 and preregistration remain open.
+The two-layout socket probe initially rejected query-string URL text before any
+task input.  The preserved failure motivated path-only fixture URLs; the fresh
+probe then observes distinct exact A/B frames and four verified releases through
+the shared runtime.  It deliberately performs no model call or form submission.
 
 Latest target-reference result: [scoped target handles](SCOPED_TARGET_HANDLES_V1.md).
 Exact session-local handles return explicit valid/revalidated/ambiguous/moved/

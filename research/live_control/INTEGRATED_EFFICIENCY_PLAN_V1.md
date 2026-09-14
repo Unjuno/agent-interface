@@ -26,6 +26,15 @@ controls pass.  The first draft's task-local call-ID check missed cross-task
 duplicates; that failure was found before commit and the validator now rejects
 duplicates across the complete comparison.
 
+The first two-layout socket probe exposed a pre-input constraint: query-string
+characters in the task URL are outside the runtime's bounded text alphabet, so
+the whole navigation program was rejected with zero button input.  That result is
+retained as `integrated-efficiency-runtime-probe-01`.  The fixture now uses path
+segments (`/task/1`); fresh probe-02 navigates layout A and B, captures distinct
+exact frames, verifies four clean input releases, makes zero model/task-input
+calls, and independently reports the deliberately absent six submissions.  Its
+audit passes on Windows and WSL.
+
 This plan is the first deliverable for Issue #57.  The preceding compiled GUI
 mechanics block ended at live v5 with disposition
 `ADVANCE_TO_MATCHED_EFFICIENCY_COMPARISON`.  This work therefore switches from

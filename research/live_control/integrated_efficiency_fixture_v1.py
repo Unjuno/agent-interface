@@ -52,10 +52,10 @@ class Fixture:
 
             def do_GET(self):
                 parsed = urllib.parse.urlparse(self.path)
-                query = urllib.parse.parse_qs(parsed.query)
-                task_id = query.get("task", [""])[0]
+                parts = parsed.path.strip("/").split("/")
+                task_id = f"task-{parts[1]}" if len(parts) == 2 and parts[0] == "task" else ""
                 task = fixture.by_id.get(task_id)
-                if parsed.path != "/task" or task is None:
+                if task is None:
                     self._reply(404, b"<!doctype html><title>NOT FOUND</title>", "NOT FOUND")
                     return
                 if task["layout"] == "A":
@@ -64,7 +64,7 @@ class Fixture:
                     style = ("body{background:#eef2f7}main{margin:330px 0 0 430px}"
                              "label{display:block;font-weight:bold}input{width:300px;height:30px}"
                              "button{display:block;margin:35px 0 0 190px;padding:12px 30px}")
-                action = "/submit?task=" + urllib.parse.quote(task_id)
+                action = "/submit/" + task_id.removeprefix("task-")
                 body = (
                     "<!doctype html><meta charset=utf-8>"
                     f"<title>AI INTEGRATED {html.escape(task_id)} READY</title>"
@@ -77,7 +77,8 @@ class Fixture:
 
             def do_POST(self):
                 parsed = urllib.parse.urlparse(self.path)
-                task_id = urllib.parse.parse_qs(parsed.query).get("task", [""])[0]
+                parts = parsed.path.strip("/").split("/")
+                task_id = f"task-{parts[1]}" if len(parts) == 2 and parts[0] == "submit" else ""
                 task = fixture.by_id.get(task_id)
                 length = int(self.headers.get("Content-Length", "0"))
                 raw = self.rfile.read(length)
@@ -105,7 +106,8 @@ class Fixture:
 
     def goals(self) -> list[dict]:
         base = f"http://127.0.0.1:{self.server.server_port}"
-        return [dict(row, url=f"{base}/task?task={row['task_id']}") for row in self.tasks]
+        return [dict(row, url=f"{base}/task/{row['task_id'].removeprefix('task-')}")
+                for row in self.tasks]
 
     def records(self) -> list[dict]:
         if not self.history.exists():

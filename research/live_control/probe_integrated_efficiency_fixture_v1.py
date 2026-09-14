@@ -12,7 +12,7 @@ from integrated_efficiency_fixture_v1 import Fixture
 
 def post(url: str, token: str) -> None:
     request = urllib.request.Request(
-        url.replace("/task?", "/submit?"),
+        url.replace("/task/", "/submit/"),
         data=urllib.parse.urlencode({"value": token}).encode(),
         method="POST",
     )
