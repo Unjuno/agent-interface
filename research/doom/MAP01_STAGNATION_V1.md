@@ -37,6 +37,14 @@ Those receipts must remain visual observations rather than claims about hidden
 position or door state. Their capture overhead, added round trips, prompt tokens,
 and gameplay effect need direct measurement.
 
+[The command-effect receipt study](MAP01_EFFECT_RECEIPT_V1.md) performs that
+measurement. Existing in-hold samples provide first visual feedback around
+45--47 ms after command issue with zero added executor steps. Compact no-effect
+projection changed the planner's immediate action, but a 40-decision matched
+pair still failed to exit MAP01 and did not reduce revisits. The next measured
+gap is the 8,682.54 ms median from no-effect observation to the next admitted
+model plan.
+
 The work also exposed two clean-start dependencies. `session_map01_v5.py`
 implicitly relied on an external `PYTHONPATH` to locate `gui_suite`, and the first
 controller invocation used the WSL system Python rather than the pinned ViZDoom

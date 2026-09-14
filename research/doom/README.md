@@ -69,6 +69,15 @@ session revision also removes an implicit module-path dependency and surfaces
 child startup errors directly. No full-map clear or general navigation gain is
 claimed.
 
+[Command-effect receipt feasibility](MAP01_EFFECT_RECEIPT_V1.md) reuses the
+exact samples already captured during every semantic key hold. It adds no
+executor steps and exposes a compact no-visible-effect signal to the planner.
+The signal changed immediate choices, but did not improve MAP01 completion or
+revisit count in a 40-decision matched pair. First visual feedback arrived in
+about 47 ms; model-mediated recovery still took about 8.68 seconds. The next
+candidate is a bounded, preplanned local contingency rather than another full
+model round trip.
+
 The assistant has now operated a ViZDoom basic scenario through OS keyboard
 input and X11 screenshots, using the existing async executor and exact image
 transport. This uses the bundled **Freedoom assets**, not original commercial

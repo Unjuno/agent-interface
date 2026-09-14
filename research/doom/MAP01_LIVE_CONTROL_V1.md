@@ -87,3 +87,11 @@ increased detected revisits versus the baseline (10 and 18 versus 5). The
 advisory added 6,565 total input tokens versus the baseline in this allocation.
 Neither candidate is promoted. The result redirects the next iteration toward
 per-command visual effect receipts rather than another repeated-view directive.
+
+[Command-effect receipts](MAP01_EFFECT_RECEIPT_V1.md) now reuse observations
+already emitted during each hold. A compact projection sends only action names
+with no visible effect and adds no executor steps. A 40-decision same-seed pair
+remained unfinished in both arms, with 8 baseline versus 9 candidate revisits.
+The candidate's first visual feedback median was 47.17 ms, but the next
+model-authored plan was admitted 8,682.54 ms after a no-effect observation.
+This motivates preplanned local contingencies; no gameplay gain is claimed.
