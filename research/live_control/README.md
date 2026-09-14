@@ -1,5 +1,12 @@
 # Asynchronous live control: development evidence
 
+Latest derived-condition result: [OpenTTD path-derived target/guard geometry](OPENTTD_TARGET_GUARD_DERIVED_GEOMETRY_V1.md).
+The boxes now come from the admitted pointer path. Frozen calibration passes3/3;
+a fresh wrong-row assumption is retained as an aliased positive under tile
+snapping, and a separate completed-segment repeat is correctly stopped before
+continuation. All106 fresh frames audit cross-OS. The path is development-known,
+and roughly2.5s drag-to-condition timing remains.
+
 Latest fresh placement result: [OpenTTD target/guard continuation](OPENTTD_TARGET_GUARD_LIVE_V1.md).
 The first preregistered pair retains a driver failure: it omits the Road
 Construction opener, so neither allocation builds A-to-B; both safely stop and

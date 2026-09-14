@@ -1,4 +1,16 @@
-Latest local-continuation evidence: fresh OpenTTD target/guard transfer first
+Latest local-continuation evidence: target/guard boxes can now be derived from
+an admitted two-segment pointer path. Frozen seed991004 calibration classifies
+unchanged/first/later states3/3. A fresh `-16px` negative aliases to the correct
+tiles under OpenTTD snapping and is retained as a failed control; both local and
+engine checks correctly succeed. A separate completed-segment repeat returns
+`target_not_reached`, suppresses B-to-C and independently stays incomplete.
+All106 fresh frames and lifecycle checks audit on Windows/WSL. The path remains
+development-known and feedback remains about2.5s. Next require a held-out screen
+transform or new path with boxes derived without manual edits. See
+research/live_control/OPENTTD_TARGET_GUARD_DERIVED_GEOMETRY_V1.md. Full goal
+remains open.
+
+Prior local-continuation evidence: fresh OpenTTD target/guard transfer first
 retains a missing-toolbar-opener driver failure. A separately preregistered
 one-click correction and unchanged reverse-order replication then classify all
 four allocations as expected. Target admits B-to-C and independently completes

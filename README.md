@@ -15,6 +15,18 @@ Latest research handoff: [measured progress, failures and next steps](docs/LOCAL
 
 Current Linux research caller: [components, usage and evidence limits](research/live_control/CURRENT_CLIENT.md).
 
+The newest OpenTTD study removes one manual condition-authoring step: disjoint
+target and guard boxes are derived directly from the already admitted two-segment
+pointer path. Frozen-frame calibration classifies unchanged, first-segment and
+later-segment states3/3. On fresh seed991004, a preregistered `-16px` negative
+fails as an experimental control because OpenTTD snaps it onto the same correct
+tiles; the local condition and independent engine scorer both report success.
+A separately preregistered completed-segment repeat is correctly stopped before
+the second drag, with zero target change and independent score false. All106
+fresh frames and lifecycle checks audit cross-OS. The path remains development-
+known and condition feedback takes about2.5s, so held-out geometry and human
+tempo remain open. See [path-derived OpenTTD geometry](research/live_control/OPENTTD_TARGET_GUARD_DERIVED_GEOMETRY_V1.md).
+
 A fresh OpenTTD transfer now tests the placement target/guard condition against
 the independent engine scorer. The first preregistered pair retains a missing-
 toolbar-opener driver failure and safely stops both allocations. Adding only that

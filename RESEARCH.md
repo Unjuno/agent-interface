@@ -152,6 +152,17 @@ same-seed scripted local-continuation candidate; boxes remain human-authored and
 no model, token, human-speed or geometry-generalization claim follows. See
 [fresh OpenTTD target/guard continuation](research/live_control/OPENTTD_TARGET_GUARD_LIVE_V1.md).
 
+The next candidate derives those boxes from the admitted two-segment pointer
+path. Frozen seed991004 frames classify unchanged, first-segment and later-
+segment states3/3. The first fresh preregistered negative is intentionally
+retained as a failed control: a16px screen offset snaps to the same OpenTTD tiles,
+so local and engine checks both correctly report task success. A separate
+completed-segment repeat then returns `target_not_reached`, suppresses B-to-C and
+keeps the independent score false. All106 fresh frames audit cross-OS. This
+removes manual box transcription but uses a development-known path and does not
+establish held-out geometry, model, token or human-tempo performance. See
+[path-derived target/guard geometry](research/live_control/OPENTTD_TARGET_GUARD_DERIVED_GEOMETRY_V1.md).
+
 ### Retained OpenTTD effect-state diagnosis
 
 The frozen seed991003 v6 run lacks a formal finish evaluation because its driver

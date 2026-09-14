@@ -14,6 +14,15 @@ before the bound. The independent score succeeds after211.632 seconds to the
 second-drag feedback; controller-verified hard success and semantic completion
 timing remain absent. Reliable human-tempo task completion remains open.
 
+Newer local-continuation evidence derives target/guard boxes from the admitted
+pointer path instead of transcribing them manually. Frozen calibration is3/3.
+On fresh seed991004, a nominal wrong-row control aliases to the positive because
+of tile snapping and is retained as a failed experimental design; local and
+independent engine results agree. A separate completed-segment repeat is stopped
+before continuation and independently remains incomplete. The106 fresh exact
+frames audit cross-OS. This is development-known path transfer, not held-out
+visual geometry; feedback still arrives about2.5 seconds after the drag.
+
 Latest negative follow-up: a pixel-only persistent-effect receipt separates
 selected archived new and repeated effects, but its preregistered prompt form
 reverses the desired model outcome. Exact-prompt Astra recognizes progression
@@ -142,7 +151,7 @@ the rows must not be averaged into one difficulty score.
 | Desktop apps | Small Calc, Chromium, Inkscape and XTerm tasks; dialogs, focus loss, interruption, saving and independent effect checks | Unknown applications, richer window/scroll/drag workflows and repeated held-out tasks |
 | DOOM | Shared held-key/cancel/expiry readiness and later directional-input repair/assistant gameplay evidence | Stable continuous useful-feedback loop, reaction distribution and public real-time demo |
 | Mindustry | Actual assistant construction of eight directed conveyors on a known route; 112-tile guard and 49-copper post-control delivery; shared caller scripted replay and cancellation | Fresh route planning, multi-object control, event-driven recovery and much shorter decision gaps |
-| OpenTTD | Fixed Astra passes3/3 canonical closed-toolbar,1/1 pre-opened and1/1 seed991002 shifted straight geometry; adaptive1/2 and fixed Luna0/2; bounded effect memory passes2/2 on seed991003; one seed991004 L run independently completes at the12-turn bound without controller verification; a same-seed scripted target/guard condition admits/stops the second L segment4/4 across two opposite-order pairs after one retained driver failure | Efficient semantic completion on changed L geometry, derived or model-authored local conditions, multiple held-out geometries, fewer/slimmer model boundaries, fuller order balancing, matched human control, scroll/window complexity and long-horizon planning |
+| OpenTTD | Fixed Astra passes3/3 canonical closed-toolbar,1/1 pre-opened and1/1 seed991002 shifted straight geometry; adaptive1/2 and fixed Luna0/2; bounded effect memory passes2/2 on seed991003; one seed991004 L run independently completes at the12-turn bound without controller verification; a same-seed scripted target/guard condition admits/stops the second L segment4/4; boxes can now be derived from a known path, with one aliased negative retained and one repeat correctly suppressed | Efficient semantic completion on changed L geometry, held-out path-derived conditions, multiple held-out geometries, fewer/slimmer model boundaries, fuller order balancing, matched human control, scroll/window complexity and long-horizon planning |
 | Luanti | Current-engine launch, deterministic tiny pad/pose and read-only node/pose feasibility | Normal navigation, camera-mode contract, inventory, interaction and successful construction |
 
 DOOM remains valuable for continuous motor pressure. Mindustry and OpenTTD are
