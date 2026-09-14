@@ -51,6 +51,15 @@ Handle needs16 durable calls versus14, and two cases/arm cannot establish causal
 latency or broad compression. See
 [target-handle live ABBA](research/live_control/TARGET_HANDLE_MODEL_LIVE_ABBA_V1.md).
 
+The next candidate removes that handle-only round trip without weakening later
+admission. `observe_target_handle` captures first and resolves the alias on the
+same observation. A preregistered fresh Chromium pair saves2/2 independently;
+combined versus separate observe/query uses12 versus14 durable calls and14 versus
+15 exact frames. The combined check records the returned sequence/capture identity,
+and admission revalidates again before input. All29 frames replay cross-OS. One
+case per arm, no model calls and no causal timing claim; advance to a different
+domain. See [combined observe-target](research/live_control/OBSERVE_TARGET_HANDLE_V1.md).
+
 ### First live bounded drag-effect allocation
 
 A preregistered seed991003 replay keeps the v6 model, task, initial state,

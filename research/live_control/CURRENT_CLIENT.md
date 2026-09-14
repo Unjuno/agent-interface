@@ -26,6 +26,14 @@ handle descriptively, while handle uses16 durable calls versus14. See
 TARGET_HANDLE_MODEL_LIVE_ABBA_V1.md. Opt-in; next cross-domain replication should
 reduce or batch the extra read-only query rather than claiming causal speedup.
 
+`session_v32` now batches that read-only step with fresh capture. One preregistered
+Chromium pair saves2/2 independently; combined observe/check uses12 durable calls
+and14 frames versus14 calls and15 frames for separate observe/query. The combined
+check names the exact returned observation sequence/capture time, and the later
+input path still revalidates. All29 frames audit cross-OS. See
+OBSERVE_TARGET_HANDLE_V1.md. Opt-in; one scripted case per arm with no model/token
+calls, so the next gate is a different-domain independent semantic task.
+
 Prior coordinate candidate: `executor_v4/session_v26` resolve explicit-frame
 clicks, drags and target/guard boxes from the latest stable pointer binding before
 whole-program validation. Fresh1152x720 OpenTTD receives only original1024

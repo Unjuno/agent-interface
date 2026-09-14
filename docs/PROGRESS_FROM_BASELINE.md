@@ -44,6 +44,14 @@ and revalidates both at read-only query and after model wait before admission.
 This is one repeated form with two cases/arm; handle also adds two durable calls,
 so no general token, cost or causal latency claim follows.
 
+The first round-trip repair now combines fresh capture and read-only alias checking
+without granting input authority. In a preregistered seed991012 Chromium pair,
+combined and separate paths both independently save1/1; admission revalidates and
+release verifies2/2. Combined uses12 durable calls and14 exact frames versus14
+calls and15 frames for separate observe/query. The handle check is bound to the
+exact returned observation identity. Single-pair202.583/365.441ms values are
+descriptive only; there are no model calls or cross-domain evidence yet.
+
 Latest delta: bounded drag-effect memory now transfers correct actuation to one
 changed seed991004 L geometry. Two distinct drags complete all five target tiles
 with zero surrounding changes or repeated completed-segment input. The planner

@@ -53,6 +53,14 @@ opaque random registry IDs. Handle adds two durable calls, only two cases/arm
 exist, and the0.823s mean timing difference is not a causal speedup. See
 [target-handle live ABBA](research/live_control/TARGET_HANDLE_MODEL_LIVE_ABBA_V1.md).
 
+The extra read-only handle query is now combined with fresh capture in one bounded
+operation. A preregistered scripted Chromium pair independently saves2/2 while
+`observe_target_handle` binds its result to the exact returned observation and
+reduces durable calls from14 to12 versus separate observe/query. All29 frames
+replay cross-OS. The202.583/365.441ms workflow values are one sample per arm and
+do not establish causal latency; no model or token call occurs here. Advance only
+to cross-domain replication. See [combined observe-target](research/live_control/OBSERVE_TARGET_HANDLE_V1.md).
+
 Frame resolution now runs inside the candidate interface. A fresh1152x720
 OpenTTD pair sends only original1024 coordinates plus explicit frame identity;
 the runtime resolves clicks, drags and condition boxes from the latest pointer
