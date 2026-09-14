@@ -459,3 +459,12 @@ validation alone is insufficient. See
 [Mindustry single-tile placement](../benchmark_discovery/MINDUSTRY_SINGLE_TILE_LIVE_V5.md)
 and Issue #54. Live negative abstention and a consolidated shared caller remain
 open before promotion.
+
+The first [output-schema endpoint preflight](SCHEMA_PREFLIGHT_V1.md) now catches
+the two retained incompatible schemas before any GUI or input session starts.
+Three corrected production schemas complete through the actual no-image CLI
+response-format path; their fresh checks use23,674 input tokens in total. An
+identical recorded schema/model/runner/CLI identity reuses the cache with no new
+endpoint call or fresh usage. Windows/WSL audits pass. The endpoint server
+revision is not independently identified, and no live runner invokes this gate
+yet, so Issue #54 remains open.

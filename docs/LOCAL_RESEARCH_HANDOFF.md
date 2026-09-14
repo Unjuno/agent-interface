@@ -2643,3 +2643,25 @@ Issue #54 tracks preflighting output schemas against the actual endpoint subset.
 path has a complete ledger, but live negative branches and one shared caller still
 need a finite matched block. See
 research/benchmark_discovery/MINDUSTRY_SINGLE_TILE_LIVE_V5.md. Goal/freeze remain open.
+
+## Latest follow-up — endpoint schema preflight before GUI authority (2026-09-14)
+
+`schema_preflight_v1.py` now exercises an output schema through the same
+no-image Codex CLI response-format path as the handle runner before an
+application or input session is acquired. The preregistered five-request block
+rejects the retained candidate `oneOf` and missing-property-type schemas without
+a completed turn or reported usage, while three corrected schemas complete.
+Those three calls report23,674 input,240 output and81 reasoning tokens. One
+identical-key reuse has no endpoint call and no fresh usage.
+
+The cache key covers schema/model/effort, runner/instruction/CLI-entry hashes,
+CLI/Node versions and request shape. Windows/WSL audits pass and find zero GUI
+artifacts. The endpoint's server revision is not independently identified, so
+this is recorded-client compatibility rather than a permanent guarantee. The
+first checks also cost substantial model input; no general token saving is
+claimed. No subagent participates.
+
+Issue #54 remains open because a live runner has not yet made this gate a hard
+prerequisite before input authority. Connect it in a new versioned runner, then
+run the finite matched Mindustry positive/no-match/ambiguous block. See
+research/live_control/SCHEMA_PREFLIGHT_V1.md. Goal/freeze remain open.

@@ -520,3 +520,13 @@ socket exchanges,33 exact frames and53.463s total audit on Windows/WSL. Runtime
 preview and placement images arrive in457.934ms and270.075ms; sequential model
 time remains the dominant gap. See
 [single-tile placement](../research/benchmark_discovery/MINDUSTRY_SINGLE_TILE_LIVE_V5.md).
+
+The next failure-boundary candidate checks output-schema compatibility against
+the actual endpoint before GUI authority. Two retained invalid schemas are
+refused before a completed turn, while three corrected schemas complete with a
+combined23,674 reported input tokens. Reusing the same recorded compatibility
+identity performs no endpoint call. Windows/WSL audits verify zero GUI artifacts
+and all usage/cache records. The server revision is unavailable and no live
+runner is gated yet, so this is retained preflight evidence rather than a token,
+latency or reliability improvement. See
+[schema preflight](../research/live_control/SCHEMA_PREFLIGHT_V1.md).

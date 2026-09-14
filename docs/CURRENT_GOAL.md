@@ -897,3 +897,13 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   457.934ms、placement image270.075ms、semantic bind46.467s、completion53.463s。
   Windows/WSL監査。Issue #54をschema preflight用に追加。次はpreflight実装後、positive/
   no-match/ambiguousの有限matched block。人間速度・reliability rate・freezeは未達。
+
+- 2026-09-14 r13: 実endpointと同じCLI output-schema経路をGUI開始前に呼ぶ
+  `schema_preflight_v1`を実装し、5 fresh requests+1 cache reuseをpreregistered実測。
+  保持済みのcandidate `oneOf`とproperty type欠落をcompleted turn/usageなしで拒否し、
+  修正版3 schemaは成功。fresh compatible callsはinputs23,674/output240/reasoning81。
+  同一schema/model/runner/instructions/CLI/Node/request-shape keyの再利用はmodel callなし。
+  Windows/WSL監査、GUI artifact 0。server revisionは独立識別できず、live runnerへの
+  authority-before-acquisition統合も未完了なのでIssue #54は継続。次はこのgateを新しい
+  Mindustry runnerへ接続し、positive/no-match/ambiguousの有限matched blockを行う。
+  token削減・endpoint恒久互換・人間速度・freezeは未達。

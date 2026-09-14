@@ -870,3 +870,12 @@ world feedback is457.934ms and placement feedback270.075ms; full completion is
 #54 tracks endpoint schema preflight. This is one positive fixed-screen case, not
 a reliability, speedup, compression or human-tempo result. See
 `research/benchmark_discovery/MINDUSTRY_SINGLE_TILE_LIVE_V5.md`.
+
+The output-schema boundary now has a preregistered actual-endpoint preflight.
+Two retained invalid schemas are refused before any completed turn; three
+corrected schemas complete and use23,674 input tokens in total. Same-identity
+cache reuse makes no fresh call, and Windows/WSL audits confirm zero GUI
+artifacts. This is client/model compatibility evidence only: the server revision
+is not exposed, the first checks are token-expensive, and live input authority
+is not gated yet. See
+`research/live_control/SCHEMA_PREFLIGHT_V1.md`.
