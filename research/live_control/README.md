@@ -1,5 +1,13 @@
 # Asynchronous live control: development evidence
 
+Latest placement-condition result: [local target-and-guard postcondition v1](LOCAL_TARGET_GUARD_POSTCONDITION_V1.md).
+A target/guard operator first fails two archived positives because it samples
+before the road effect settles. The runtime now requires bounded settle. Without
+changing boxes or thresholds, six archived OpenTTD effects classify6/6 and a
+fresh Inkscape target/partial/guard allocation passes3/3 after one retained focus
+interruption. The28 exact frames, SVGs and releases audit cross-OS. Transfer only
+to fresh OpenTTD with its independent scorer; boxes remain human-authored.
+
 Latest authored-condition transfer: [fresh displacement transfer](LOCAL_DISPLACEMENT_TRANSFER_V1.md).
 Two opposite-order fresh X11 pairs transfer the unchanged first Luna patch.
 Target24px admits Save2/2 and partial20px stops before Save2/2; all38 exact frames,

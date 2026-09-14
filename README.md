@@ -102,6 +102,17 @@ retained before input. Promote only as a same-task moved-object local condition;
 pointer paths are scripted and the model call is outside the live episode. See
 [fresh authored-condition transfer](research/live_control/LOCAL_DISPLACEMENT_TRANSFER_V1.md).
 
+A placement-specific target/guard operator now separates required change from
+forbidden change inside a bounded program. Its first archived allocation exposes
+two false stops caused by pre-effect sampling, so the runtime now requires a
+bounded settle immediately before evaluation. The unchanged boxes and thresholds
+then classify six engine-diagnosed OpenTTD effects6/6: three first segments, two
+completed-segment repeats and one guard mutation. A fresh scripted Inkscape
+target/partial/guard allocation passes3/3 after one retained focus interruption;
+28 exact frames, SVG state and releases audit cross-OS. Fresh OpenTTD transfer
+with the independent scorer remains required. See
+[local target-and-guard postcondition](research/live_control/LOCAL_TARGET_GUARD_POSTCONDITION_V1.md).
+
 Process-scoped timing envelopes now cover fresh Calc and OpenTTD tasks. Calc
 saves 480/192 in 23.976s with 21.334s of wrapper-observed model wait. OpenTTD uses
 batched delayed-hover contact sheets and an adaptive two-Luna/six-Astra route to

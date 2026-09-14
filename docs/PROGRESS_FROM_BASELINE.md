@@ -32,7 +32,6 @@ A displacement-specific follow-up now passes one fresh scripted X11 target and
 partial pair. It admits a later Save after two24px anchor samples and stops before
 Save after two20px samples;18 exact frames, saved SVG and releases audit on
 Windows/WSL. This advances local task-relative continuation for moved objects.
-Model-authored conditions and placement target/guard semantics remain open.
 
 One fixed-context authorship probe now passes Luna-low2/2 and Astra-medium2/2.
 Every strict model-authored patch accepts retained24px samples and rejects20px
@@ -45,6 +44,14 @@ frames reconstruct exactly and all four terminals release input. Earlier path,
 focus, packaging and line-ending-sensitive preregistration failures remain
 retained. Promote only as a same-task moved-object local postcondition candidate;
 pointer paths remain scripted and the model call stays outside the episode.
+
+A separate placement target/guard operator exposes two archived false stops when
+sampling begins before the visual effect settles. Runtime validation now requires
+bounded settle immediately before the condition. With unchanged boxes and
+thresholds, six engine-diagnosed OpenTTD archive cases classify6/6. One fresh
+scripted Inkscape allocation then admits Save only for the target case and stops
+both partial and guard cases;28 exact frames and all releases audit cross-OS.
+Human-authored boxes and lack of fresh OpenTTD execution prevent promotion.
 
 ## What changed
 

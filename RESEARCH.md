@@ -126,6 +126,20 @@ candidate; pointer paths remain scripted and no model call occurs in an episode.
 See
 [fresh authored-condition transfer](research/live_control/LOCAL_DISPLACEMENT_TRANSFER_V1.md).
 
+A placement-specific condition then compares disjoint target and guard boxes.
+The first preregistered archived allocation retains two false stops: samples
+preceding the persistent road effect count against the condition. Requiring a
+bounded settle immediately before evaluation repairs that contract without
+changing boxes or thresholds. A separately preregistered v6/v7/v8 archive then
+classifies all six engine-diagnosed effects: three first road segments are met,
+two repeated completed-segment drags are target-not-reached and a later segment
+inside the first condition's guard is guard-changed. Fresh X11 integration
+separates target24px, partial20px and upward guard intrusion3/3 after one retained
+focus interruption;28 frames, SVGs and releases audit on Windows/WSL. Retain for
+fresh OpenTTD transfer with its independent scorer. Boxes remain human-authored
+and no semantic success or speed claim follows. See
+[local target-and-guard postcondition](research/live_control/LOCAL_TARGET_GUARD_POSTCONDITION_V1.md).
+
 ### Retained OpenTTD effect-state diagnosis
 
 The frozen seed991003 v6 run lacks a formal finish evaluation because its driver
