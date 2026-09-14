@@ -2792,3 +2792,14 @@ Full-cold anchor accounting is 2 calls/17,386 input and full expansion is
 Warm reuse/repair results are mechanics only. Keep #53 open until a frozen live
 block uses this exact caller and a second GUI layout exercises it. See
 `research/live_control/ADAPTIVE_ACQUISITION_CALLER_V1.md`.
+
+Goal revision after periodic issue review: new Issue #56 identifies the missing
+central composition test. Use #53's shared accounting caller to ground one
+independently scored desktop workflow, compile bounded symbols/predicates/
+guarded actions/invalidation rules, and measure plain/current-optimized/compiled
+cold, warm, invalidation and repair phases. The local continuation must make a
+later authorized action depend on fresh intermediate evidence across at least
+two observe/action transitions without another frontier-model generation.
+Symbols never grant authority; fresh admission, release and effect checks stay
+in force. Run a finite preregistered desktop block first, then a Mindustry
+layout. This is the next integrated goal, not evidence of a speed or token gain.

@@ -977,3 +977,14 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   test-double mechanicsであり削減claimなし。次はこの同一callerを実OpenTTDの有限
   accepted/expanded/no-match/stale blockへ接続し、その後Mindustry layoutへ移植する。
   live efficacy・causal latency/token benefit・portability・人間速度・freezeは未達。
+
+- 2026-09-14 r21: 新規Issue #56を確認し、次の中心課題を#53のlive分岐単体から
+  shared callerを用いたcompiled GUI interface統合実験へ更新。一度groundしたtarget、
+  state predicate、guarded action、effect/invalidation ruleをbounded symbol tableとして保持し、
+  fresh local observationに応じた最低2回のobserve/action遷移をfrontier-model再開なしで
+  実行できるかを検証する。symbolはauthorityを持たず、各side effectは#55のfreshness/
+  target admissionと独立effect verificationを通す。まず既存の独立score可能なdesktop
+  fixtureでplain/current-optimized/compiledのcold、warm、invalidation、repairを同じmodel/
+  settings/callerで有限比較し、全attempt tokens、planner boundaries、images、wall/local time、
+  correctness、fallbackを記録。その後Mindustryで別domainを確認する。#53はこのlive会計と
+  cross-domain完了まで継続。効率利得、break-even、人間速度・freezeは未測定・未達。

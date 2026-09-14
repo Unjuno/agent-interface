@@ -940,3 +940,14 @@ injected subpath, no-match/exhaustion, stale/association refusal, reuse/repair,
 missing or partial usage and duplicate IDs. The 0-call reuse and 1-call repair
 are mechanics only, not measured savings. See
 `research/live_control/ADAPTIVE_ACQUISITION_CALLER_V1.md`.
+
+Issue #56 now supplies the next integration target. The #53 caller should
+measure a compiled GUI interface that retains bounded symbols, predicates,
+guarded actions and invalidation rules after grounding. A decisive mechanics
+case needs at least two observe/action transitions where fresh intermediate
+local evidence changes the next authorized action without another frontier
+model generation. Symbols remain evidence references, never input authority.
+The first finite live comparison should use an existing independently scored
+desktop fixture and report plain, current-optimized and compiled cold/warm/
+invalidation/repair costs through the same caller; a Mindustry layout follows
+as the different-domain check. No efficiency or break-even claim exists yet.
