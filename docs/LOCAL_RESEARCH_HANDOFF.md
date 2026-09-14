@@ -3355,3 +3355,18 @@ first live frame still contains the enemy at exact health97/ammo48. The real-tim
 100→97 load-to-capture damage is retained. This is fixture evidence only. Use it
 for one frozen v31 typed-history transfer allocation. See
 `research/doom/MAP01_THREAT_FIXTURE_V2.md`.
+
+## Latest follow-up — v31 transfers typed soft history four times (2026-09-15)
+
+The only frozen Luna-low allocation on fixture v2 retains four consecutive
+typed-history transfers. Each1,313–1,315-byte preceding event becomes an exact
+240–241-byte no-authority summary in the next saved prompt with zero extra image
+or model turn. Three receiving turns complete; the fourth is later hard-
+interrupted. All247 health observations decode exactly, five soft and three hard
+events occur, all13 programs release empty, and all8 turns provide usage.
+
+Decision0 exposes the next construction target: planner completion and a hard
+event race, the interrupt returns `already_terminal`, yet the controller safely
+discards the answer and admits no plan. Separate planner eligibility from a
+typed controller final-admission receipt and freeze event/terminal precedence
+before a long clear. See `research/doom/MAP01_SOFT_CONTEXT_V31_LIVE_V1.md`.

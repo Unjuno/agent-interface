@@ -95,6 +95,17 @@ pass on Windows and WSL/Linux. No v31 live allocation exists; the next frozen
 test should use a different reproducible threat state or bounded normal-MAP01
 continuation. See [the v31 construction](research/doom/MAP01_SOFT_EVENT_CONTEXT_V31.md).
 
+The single v31/v2 allocation now passes typed transfer exposure four times.
+Each preceding1,313–1,315-byte event reconciles with a240–241-byte summary in the
+next decision record and exact saved prompt, with zero extra image or model turn.
+Three receiving turns complete; the fourth is later hard-interrupted. All247
+health signals are exact, five soft and three hard events occur, all13 programs
+release empty, and all8 turns report usage. A new race is retained: decision0
+planner-completes just before hard handling, but the controller still discards
+the answer and admits no plan. Next formalize controller final admission as a
+typed receipt with terminal/invalidation precedence before a long clear. This is
+not a causal speed, token or gameplay result. See [the v31 live result](research/doom/MAP01_SOFT_CONTEXT_V31_LIVE_V1.md).
+
 The first transfer fixture is now frozen before execution. Session v8 can load
 the hash-bound v1 parent and save one setup-only child while retaining parent
 hash/tic provenance; v7 and frozen results stay untouched. One model-free X11

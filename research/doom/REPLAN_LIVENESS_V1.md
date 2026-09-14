@@ -166,3 +166,13 @@ boundary or input authority. Missing history is null; malformed or authority-
 granting history fails closed. Windows and WSL/Linux each pass9 controller tests.
 This is model-free construction; see
 [the v31 contract](MAP01_SOFT_EVENT_CONTEXT_V31.md).
+
+The only frozen v31 allocation on distinct fixture v2 exposes four exact
+soft-history transfers. Full events of1,313–1,315 bytes become240–241-byte
+no-authority summaries in the following saved prompt without another image or
+turn. Three receiving turns complete and one is later hard-interrupted. All247
+health observations decode exactly and all13 programs release empty. The run
+also exposes a terminal/invalidation race: planner completion can precede hard-
+event handling while controller admission must still refuse the answer. Add a
+typed final-admission receipt and model-free precedence tests next. See
+[the retained v31 result](MAP01_SOFT_CONTEXT_V31_LIVE_V1.md).

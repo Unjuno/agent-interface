@@ -1,3 +1,13 @@
+Current direction (r69): retain the only v31/v2 allocation as a typed soft-
+context transfer pass. Four consecutive next turns receive exact240–241-byte
+summaries of1,313–1,315-byte preceding events through the existing prompt/image
+boundary;3 complete and the4th is later hard-interrupted. All247 health signals
+are exact,5 soft/3 hard events occur, and13/13 programs release empty. Usage is
+complete for all8 turns. A new race appears: decision0 planner-completes just
+before hard handling, but controller safely discards it. Next add a typed final-
+admission receipt and test terminal/invalidation ordering model-free before a
+long clear. No causal speed/token/gameplay claim; no subagent/context handoff.
+
 Current direction (r68): preregister one v31 Luna-low transfer allocation on
 distinct fixture v2: one process/thread,8 decisions, no retry. Exposure requires
 a completed decision's validated soft event to reconcile exactly with the next
