@@ -3160,6 +3160,16 @@ doctor pass.  Freeze seed991030 once against retained v1 reference26,531 input/
 Correctness, route, old-layout refusal and release gates remain primary.  See
 `runtime/GOLDEN_DESKTOP_DEMO_V2.md`.
 
+The first frozen v2 allocation stops before GUI readiness.  Its schema preflight
+succeeds and the minimized app-server creates one thread, but zero grounding
+turns start.  `runtime/.venv` lacks `openpyxl` although the GUI suite imports it;
+the runtime traceback records that ModuleNotFoundError and the wrapper reports
+StopIteration.  The old doctor checks four modules and therefore falsely passes.
+Retain this output with no task/performance claim and no retry.  V3 must pin
+openpyxl3.1.2, import/version-check it in doctor before the preflight call, and
+use a new allocation only after the fixed venv passes.  See
+`runtime/GOLDEN_DESKTOP_DEMO_V2.md`.
+
 ## Latest follow-up — integrated persistence reaches measured break-even (2026-09-14)
 
 Issue #57's preregistered three-arm desktop allocation returns RETAIN. All arms

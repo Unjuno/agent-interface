@@ -1,3 +1,13 @@
+Current direction (r52): the first frozen desktop v2 allocation is retained as
+a pre-GUI dependency failure.  Schema preflight completes and one minimized app-
+server thread starts, but grounding turns remain0: the pinned runtime venv lacks
+`openpyxl`, imported by the GUI suite.  Existing doctor omits it and falsely
+passes; runtime then exits before ready and surfaces StopIteration.  No task,
+latency or token comparison exists.  Next pin the observed system version3.1.2,
+add an actual doctor import/version check in v3, rebuild/check the venv, then use
+a separately frozen allocation.  Preserve v2 output and do not retry its ID.
+No subagent/context handoff; full goal open.
+
 Current direction (r51): the shared desktop v2 candidate replaces the two task-
 grounding process launches with one capability-minimized app-server thread while
 preserving the frozen golden GUI runtime, adaptive repair and independent scorer.

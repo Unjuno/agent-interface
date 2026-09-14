@@ -28,3 +28,15 @@ cold/reuse/reuse/repair/reuse/reuse route, zero old-layout pointer admission,
 verified release, one grounding thread and two distinct grounding turns.  Treat
 v1 timings and usage as a sequential same-host reference, not a randomized
 population comparison.
+
+## First frozen allocation
+
+`golden-desktop-app-server-v2-live-01` is retained as a dependency failure.  Its
+fresh schema preflight completed and the minimized app-server created one
+grounding thread, but no grounding turn or GUI task began.  The pinned
+`runtime/.venv` lacked `openpyxl`, which the GUI suite imports; the process
+exited before publishing readiness and the wrapper surfaced `StopIteration`.
+
+The existing doctor checked PIL, NumPy, Xlib, and jsonschema but not openpyxl,
+so it incorrectly passed this environment.  Do not retry this allocation.  A
+new version must pin openpyxl and make doctor import it before any model call.
