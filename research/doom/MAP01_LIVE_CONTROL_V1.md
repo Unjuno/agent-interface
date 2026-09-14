@@ -61,3 +61,13 @@ turn duration: model-authored turns around 1.2--1.7 seconds repeatedly
 overshoot into another wall. The next candidate should compile semantic motor
 commands into short calibrated turns and movement pulses, then compare it with
 the raw-duration contract under a fixed protocol.
+
+The first semantic-motor allocation replaces raw keys and durations with ten
+named actions and four extents. The local compiler caps turns at 450 ms and
+movement at 900 ms. Over 20 decisions it ended unfinished with zero recorded
+deaths, one kill, and 181.263 seconds of control time. The raw-duration hybrid
+used 257.179 seconds for 20 decisions. Model time was 156.602 versus 168.681
+seconds; model-external time was 24.661 versus 88.498 seconds. The scoped total
+and model-external reductions are 29.52% and 72.13%. This is a different-seed
+exploration result, so it motivates a fixed comparison but does not prove a
+causal gameplay improvement. The final health was 7 and the map was not exited.

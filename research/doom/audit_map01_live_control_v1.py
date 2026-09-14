@@ -11,6 +11,7 @@ def arm(name):
          "uncached_input_tokens":total-cached,"model_seconds":sum(times),
          "model_seconds_median":statistics.median(times),"score":r["score"]}
 ephemeral=arm("map01-overlap-contract-luna-01");persistent=arm("map01-overlap-persistent-luna-01");hybrid=arm("map01-overlap-hybrid-luna-01")
+motor=arm("map01-motor-live-01")
 probe=read(RESULTS/"map01-persistent-model-probe-01/report.json");assert probe["same_model_session"]
 assert probe["calls"][0]["thread_id"]==probe["calls"][1]["thread_id"]
 coast=read(RESULTS/"map01-coast-probe-03/report.json");assert coast["passed"] and coast["input_admissions"]==0
@@ -26,15 +27,18 @@ for name in ("map01-overlap-persistent-luna-01","map01-overlap-hybrid-luna-01"):
   total+=d["controller_model_ended_ns"]-d["controller_model_started_ns"]
   covered+=max(0,min(t["terminal_ns"],d["controller_model_ended_ns"])-d["controller_model_started_ns"])
  overlap[name]=covered/total
-sources=read(RESULTS/"map01-overlap-hybrid-luna-01/runtime/sources.json")
-for relative,expected in sources.items():
- path=REPO/"research"/relative;assert hashlib.sha256(path.read_bytes()).hexdigest()==expected,relative
+for result_name in ("map01-overlap-hybrid-luna-01","map01-motor-live-01"):
+ sources=read(RESULTS/result_name/"runtime/sources.json")
+ for relative,expected in sources.items():
+  path=REPO/"research"/relative;assert hashlib.sha256(path.read_bytes()).hexdigest()==expected,(result_name,relative)
 bad=read(RESULTS/"map01-overlap-temporal-luna-01/report.json")
 assert all(x["observation_to_plan_accept_ns"]<0 for x in bad["decisions"])
 summary={"audit_passed":True,"scope":"pre-formal normal MAP01; no clear claim",
- "ephemeral_12":ephemeral,"persistent_12":persistent,"hybrid_20":hybrid,
+ "ephemeral_12":ephemeral,"persistent_12":persistent,"hybrid_20":hybrid,"semantic_motor_20":motor,
  "persistent_uncached_reduction_vs_ephemeral_percent":round((1-persistent["uncached_input_tokens"]/ephemeral["uncached_input_tokens"])*100,3),
  "persistent_model_time_change_vs_ephemeral_percent":round((persistent["model_seconds"]/ephemeral["model_seconds"]-1)*100,3),
+ "semantic_motor_wall_reduction_vs_hybrid_percent":round((1-motor["score"]["wall_control_ns"]/hybrid["score"]["wall_control_ns"])*100,3),
+ "semantic_motor_nonmodel_reduction_vs_hybrid_percent":round((1-(motor["score"]["wall_control_ns"]/1e9-motor["model_seconds"])/(hybrid["score"]["wall_control_ns"]/1e9-hybrid["model_seconds"]))*100,3),
  "coast_composed_over_existing_pointer_drag_backend":True,"deathcount_calibrated_on_terminal_death":True,
  "model_time_covered_by_bounded_program_percent":{k:round(v*100,3) for k,v in overlap.items()},
  "invalid_metric_retained":"map01-overlap-temporal-luna-01 observation_to_plan_accept_ns is negative and unusable",

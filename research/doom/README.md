@@ -56,7 +56,10 @@ session, hybrid-session and death-count scorer work. The current best measured
 token mechanism reduces uncached input by 76.446% in an unmatched 12-turn
 comparison, while increasing model wall time by 17.077%. No MAP01 exit is
 claimed; coarse model-authored turn durations remain the dominant control
-failure.
+failure in the raw-duration controller. A first semantic-motor compiler capped
+turns at 450 ms and reduced model-external time by 72.134% in an unmatched
+20-turn allocation; it recorded one kill and no death but still did not exit
+the map. See the linked report for the comparison limits.
 
 The assistant has now operated a ViZDoom basic scenario through OS keyboard
 input and X11 screenshots, using the existing async executor and exact image
