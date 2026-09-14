@@ -14,6 +14,17 @@ bottlenecks and remaining release gates](docs/PROGRESS_FROM_BASELINE.md).
 Latest research handoff: [measured progress, failures and next steps](docs/LOCAL_RESEARCH_HANDOFF.md).
 
 Current Linux research caller: [components, usage and evidence limits](research/live_control/CURRENT_CLIENT.md).
+
+A fresh OpenTTD transfer now tests the placement target/guard condition against
+the independent engine scorer. The first preregistered pair retains a missing-
+toolbar-opener driver failure and safely stops both allocations. Adding only that
+one click passes a wrong-row/target pair; an unchanged reverse-order replication
+passes again. Target admits the second L segment and independently completes2/2;
+wrong-row stops before it2/2. All119 corrected exact frames and lifecycle checks
+audit cross-OS. This is a same-seed scripted candidate with human-authored boxes,
+about2.5s to the local condition and no model/token/human-speed claim. See
+[fresh OpenTTD target/guard continuation](research/live_control/OPENTTD_TARGET_GUARD_LIVE_V1.md).
+
 The first preregistered live bounded-effect allocation now completes the OpenTTD
 five-tile L objective. After the first drag, the interface appends path-local
 before/after/difference panels below the current full frame. Fixed Astra recognizes
@@ -110,7 +121,7 @@ then classify six engine-diagnosed OpenTTD effects6/6: three first segments, two
 completed-segment repeats and one guard mutation. A fresh scripted Inkscape
 target/partial/guard allocation passes3/3 after one retained focus interruption;
 28 exact frames, SVG state and releases audit cross-OS. Fresh OpenTTD transfer
-with the independent scorer remains required. See
+and reverse-order replication are recorded above. See
 [local target-and-guard postcondition](research/live_control/LOCAL_TARGET_GUARD_POSTCONDITION_V1.md).
 
 Process-scoped timing envelopes now cover fresh Calc and OpenTTD tasks. Calc

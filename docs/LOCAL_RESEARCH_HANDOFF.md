@@ -1,3 +1,14 @@
+Latest local-continuation evidence: fresh OpenTTD target/guard transfer first
+retains a missing-toolbar-opener driver failure. A separately preregistered
+one-click correction and unchanged reverse-order replication then classify all
+four allocations as expected. Target admits B-to-C and independently completes
+the guarded L2/2; wrong-row stops before B-to-C2/2. All119 corrected exact frames,
+releases, process exits and save checks audit on Windows/WSL. First drag to local
+condition remains about2.5s. Promote only as a same-seed scripted candidate with
+human-authored boxes; next change geometry and derive or model-author the
+condition. See research/live_control/OPENTTD_TARGET_GUARD_LIVE_V1.md. Full goal
+remains open.
+
 Latest unchanged replication: normalized v10 effective source matches v9. It
 repeats A-to-B turn5, inspect turn6, observed+B-to-C turn7, inspect turn8 and
 observed verify turn9. Independent score passes; observer changes only the five

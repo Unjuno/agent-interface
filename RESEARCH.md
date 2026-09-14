@@ -140,6 +140,18 @@ fresh OpenTTD transfer with its independent scorer. Boxes remain human-authored
 and no semantic success or speed claim follows. See
 [local target-and-guard postcondition](research/live_control/LOCAL_TARGET_GUARD_POSTCONDITION_V1.md).
 
+Fresh OpenTTD transfer first retains a driver-boundary failure: the program
+omits the Road Construction opener, so both ordered allocations safely stop
+without constructing A-to-B. A separately preregistered one-click correction
+then passes its wrong-row/target pair, and an unchanged reverse-order replication
+passes again. Across the corrected studies, target admits B-to-C and independently
+completes the guarded L2/2; wrong-row stops before B-to-C2/2. All119 exact frames,
+releases, process exits and save integrity audit on Windows/WSL. The condition
+arrives about2.5s after the first drag in all four cases. Promote only as a
+same-seed scripted local-continuation candidate; boxes remain human-authored and
+no model, token, human-speed or geometry-generalization claim follows. See
+[fresh OpenTTD target/guard continuation](research/live_control/OPENTTD_TARGET_GUARD_LIVE_V1.md).
+
 ### Retained OpenTTD effect-state diagnosis
 
 The frozen seed991003 v6 run lacks a formal finish evaluation because its driver

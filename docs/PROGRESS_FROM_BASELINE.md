@@ -51,7 +51,12 @@ bounded settle immediately before the condition. With unchanged boxes and
 thresholds, six engine-diagnosed OpenTTD archive cases classify6/6. One fresh
 scripted Inkscape allocation then admits Save only for the target case and stops
 both partial and guard cases;28 exact frames and all releases audit cross-OS.
-Human-authored boxes and lack of fresh OpenTTD execution prevent promotion.
+The first fresh OpenTTD pair retains a driver failure caused by a missing toolbar
+opener. Adding that one click and repeating in opposite order produces two
+corrected pairs: target admits the second segment and independently completes the
+L2/2; wrong-row stops before the second segment2/2. All119 corrected frames audit
+cross-OS. Human-authored boxes, one seed and about2.5s from first drag to local
+condition prevent a general or human-tempo claim.
 
 ## What changed
 
@@ -137,7 +142,7 @@ the rows must not be averaged into one difficulty score.
 | Desktop apps | Small Calc, Chromium, Inkscape and XTerm tasks; dialogs, focus loss, interruption, saving and independent effect checks | Unknown applications, richer window/scroll/drag workflows and repeated held-out tasks |
 | DOOM | Shared held-key/cancel/expiry readiness and later directional-input repair/assistant gameplay evidence | Stable continuous useful-feedback loop, reaction distribution and public real-time demo |
 | Mindustry | Actual assistant construction of eight directed conveyors on a known route; 112-tile guard and 49-copper post-control delivery; shared caller scripted replay and cancellation | Fresh route planning, multi-object control, event-driven recovery and much shorter decision gaps |
-| OpenTTD | Fixed Astra passes3/3 canonical closed-toolbar,1/1 pre-opened and1/1 seed991002 shifted straight geometry; adaptive1/2 and fixed Luna0/2; bounded effect memory passes2/2 on seed991003; one seed991004 L run independently completes at the12-turn bound without controller verification | Efficient semantic completion on changed L geometry, multiple held-out geometries, fewer/slimmer model boundaries, fuller order balancing, matched human control, scroll/window complexity and long-horizon planning |
+| OpenTTD | Fixed Astra passes3/3 canonical closed-toolbar,1/1 pre-opened and1/1 seed991002 shifted straight geometry; adaptive1/2 and fixed Luna0/2; bounded effect memory passes2/2 on seed991003; one seed991004 L run independently completes at the12-turn bound without controller verification; a same-seed scripted target/guard condition admits/stops the second L segment4/4 across two opposite-order pairs after one retained driver failure | Efficient semantic completion on changed L geometry, derived or model-authored local conditions, multiple held-out geometries, fewer/slimmer model boundaries, fuller order balancing, matched human control, scroll/window complexity and long-horizon planning |
 | Luanti | Current-engine launch, deterministic tiny pad/pose and read-only node/pose feasibility | Normal navigation, camera-mode contract, inventory, interaction and successful construction |
 
 DOOM remains valuable for continuous motor pressure. Mindustry and OpenTTD are

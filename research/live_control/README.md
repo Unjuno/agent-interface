@@ -1,12 +1,24 @@
 # Asynchronous live control: development evidence
 
+Latest fresh placement result: [OpenTTD target/guard continuation](OPENTTD_TARGET_GUARD_LIVE_V1.md).
+The first preregistered pair retains a driver failure: it omits the Road
+Construction opener, so neither allocation builds A-to-B; both safely stop and
+fail the independent score. Adding only the missing `(820,51)` click produces a
+corrected pair, and an unchanged reverse-order replication reproduces it.
+Across the corrected studies, target admits B-to-C and independently completes
+the L2/2, while wrong-row stops before B-to-C2/2. All119 exact frames, releases,
+process exits and save checks audit on Windows/WSL. Promote only as a same-seed
+scripted candidate; boxes remain human-authored and first-drag-to-condition is
+about2.5s.
+
 Latest placement-condition result: [local target-and-guard postcondition v1](LOCAL_TARGET_GUARD_POSTCONDITION_V1.md).
 A target/guard operator first fails two archived positives because it samples
 before the road effect settles. The runtime now requires bounded settle. Without
 changing boxes or thresholds, six archived OpenTTD effects classify6/6 and a
 fresh Inkscape target/partial/guard allocation passes3/3 after one retained focus
-interruption. The28 exact frames, SVGs and releases audit cross-OS. Transfer only
-to fresh OpenTTD with its independent scorer; boxes remain human-authored.
+interruption. The28 exact frames, SVGs and releases audit cross-OS. The fresh
+OpenTTD transfer and reverse-order replication are recorded above; boxes remain
+human-authored.
 
 Latest authored-condition transfer: [fresh displacement transfer](LOCAL_DISPLACEMENT_TRANSFER_V1.md).
 Two opposite-order fresh X11 pairs transfer the unchanged first Luna patch.
