@@ -347,3 +347,16 @@ resumption. The repaired task completed and delivered useful semantics in
 271.178ms. This relation is calibrated; compare it against same-model
 reacquisition before claiming token or latency savings. See
 `TARGET_HANDLE_SEMANTIC_REPAIR_V1.md`.
+
+
+## Matched repair comparison: upstream capacity failure
+
+The first frozen local/model comparison did not reach either repair branch.
+After arm1 completed form navigation and token entry, the required initial
+Luna-low grounding turn was refused because the model was at capacity. No turn
+completed and no usage record, handle, resize, semantic probe or Submit exists.
+Cleanup released empty input. The34-file/469,683-byte first outcome passes
+independent Windows/WSL failure audits and remains failed without retry. The next
+version must type upstream invocation failures and establish an explicit
+service-admission/defer boundary before task input. See
+`MATCHED_SEMANTIC_REPAIR_V1.md`.

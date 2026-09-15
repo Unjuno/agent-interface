@@ -48,6 +48,15 @@ the separately frozen repair changes only that health bound. This is one scripte
 Inkscape predicate with no model, token, broad speed or human-tempo claim. See
 [release-aware preparation](research/live_control/RELEASE_AWARE_PREPARATION_V1.md).
 
+The first frozen comparison of cached semantic repair against Luna-low visual
+reacquisition is retained as an infrastructure failure. Its first required model
+turn was refused because Luna was at capacity after Chromium navigation and form
+entry; zero model turns completed, and no handle, resize, probe or submission
+followed. GUI cleanup verified empty input. The preserved outcome supplies no
+token or recovery comparison, but makes model-service admission a concrete
+interface boundary. See the
+[matched semantic repair report](research/live_control/MATCHED_SEMANTIC_REPAIR_V1.md).
+
 
 The newest held-out OpenTTD toolbar study removes the answer coordinate from the
 candidate path. A first preregistered pair is retained failed: Luna-low calls its
