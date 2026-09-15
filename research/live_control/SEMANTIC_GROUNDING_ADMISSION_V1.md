@@ -26,3 +26,10 @@ mutation. A completed receipt may supply the validated target reference, after
 which current pixel revalidation and ordinary input admission remain mandatory.
 Availability can still disappear later; any such reacquisition refusal remains a
 typed deferred outcome and cannot be counted as a comparison sample.
+
+The frozen v2 live allocation confirmed the initial boundary under available
+service, then exposed a separate freshness rule. A post-resize model call took
+8,262.886ms against a3,000ms source freshness limit. Although Luna returned the
+correct Save point, the handle correctly refused `STALE` before target input.
+The next caller must refresh and revalidate after completed model inference; a
+successful model result does not refresh its source observation.

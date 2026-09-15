@@ -49,12 +49,13 @@ Inkscape predicate with no model, token, broad speed or human-tempo claim. See
 [release-aware preparation](research/live_control/RELEASE_AWARE_PREPARATION_V1.md).
 
 The first frozen comparison of cached semantic repair against Luna-low visual
-reacquisition is retained as an infrastructure failure. Its first required model
-turn was refused because Luna was at capacity after Chromium navigation and form
-entry; zero model turns completed, and no handle, resize, probe or submission
-followed. GUI cleanup verified empty input. The preserved outcome supplies no
-token or recovery comparison, but makes model-service admission a concrete
-interface boundary. See the
+reacquisition stopped on upstream capacity and is retained. Capacity-aware v2
+then completed one correct local arm. Its model arm reacquired the correct Save
+point after8.263s, beyond the source frame's3s freshness, so exact handle
+resolution refused `STALE` before Submit. The identical retained patch resolves
+when fresh. Three calls report28,053 input tokens, but the four-arm comparison
+remains unobserved. This makes both model-service admission and post-inference
+fresh revalidation concrete interface boundaries. See the
 [matched semantic repair report](research/live_control/MATCHED_SEMANTIC_REPAIR_V1.md).
 
 

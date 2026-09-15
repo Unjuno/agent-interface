@@ -371,3 +371,15 @@ bypass ordinary Executor admission. Other process failure and invalid exit0
 output remain separate blocked states. Seven Windows/WSL replay and negative
 controls pass without a new model or GUI call. See
 `SEMANTIC_GROUNDING_ADMISSION_V1.md`.
+
+
+## Matched repair v2: model result outlives source freshness
+
+Capacity-aware v2 reached the actual comparison path. Local arm1 completed with
+correct independent output and release. Model arm2 reacquired the correct Save
+point after8,262.886ms, but the source frame allowed3,000ms freshness. Exact
+handle resolution therefore refused `STALE` before contract or Submit. A
+model-free retained-frame control resolves the identical patch fresh and refuses
+it after the observed wait. Three calls report28,053 input tokens; no balanced
+comparison was computed. The next version must take one passive post-model exact
+observation and revalidate the patch there.

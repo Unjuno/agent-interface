@@ -38,3 +38,26 @@ admission layer converts it to `TASK_DEFERRED` with no grounding reference,
 usage or authority. A retained completed Luna trace becomes task-mutation
 eligible but still requires ordinary Executor admission. See
 `SEMANTIC_GROUNDING_ADMISSION_V1.md`.
+
+## Capacity-aware v2 result
+
+V2 moved initial grounding before form-value entry and integrated typed deferral.
+Capacity was available. Arm1 completed the local path correctly: one9,351-input-
+token model call, local repair122.670ms after resized capture, useful feedback
+263.130ms after Submit admission,3.460ms probe compute, exact saved `t000214` and
+empty release.
+
+Arm2 completed both Luna-low calls. The second returned the correct unchanged
+Save point `[270,243]` after8,262.886ms. The source observation's freshness limit
+was3,000ms, so constructing and immediately resolving a handle against that old
+observation refused `STALE` before contract derivation or Submit. A deterministic
+retained-image reconstruction holds point, pixels and binding constant: the same
+patch resolves when evaluated at capture+1ms and refuses after the model-wait
+interval. This is a freshness failure rather than coordinate error.
+
+The frozen allocation stopped after arm2; arms3-4 never started. Across the two
+started arms, three successful Luna calls report28,053 input tokens. Ninety
+files/1,415,626 bytes before retention receipt pass all11 Windows/WSL audit
+checks. No balanced comparison exists. V3 may change one condition: after model
+reacquisition, take one passive current exact observation and require the
+model-derived patch to revalidate there before contract derivation or input.
