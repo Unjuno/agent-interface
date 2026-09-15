@@ -1,3 +1,13 @@
+Current direction (r99): executed prepared-selection v1 ran once and is retained
+failed. The fault click itself selected the target, so restored-focus003.png was
+already semantically selected before candidate admission. Candidate click still
+completed, but selection overlay changed red support1645→1439 and frozen strict
+scorer raised solid-rectangle ValueError; cleanup cancelled observe, terminal
+1-step cancelled with empty release.18 files/503,386 bytes pass Windows/WSL
+failure audit. Next use neutral-canvas fault and versioned tolerant identity:
+bounded red-support shift/coverage plus selection handles; freeze distinct seed.
+No rerun/model/token/general claim; no subagent/context handoff; full goal open.
+
 Current direction (r98): freeze executed prepared selection. Seed208 restores
 focus after interruption, captures/revalidates exact candidate, binds click+
 observe to one new Executor acceptance, client-detects first feedback, and

@@ -62,3 +62,17 @@ and verified empty release are retained. Bounds are500ms fault-to-semantic-score
 model or explicit cancel,35 source hashes and absent output are fixed. Twelve
 related tests and freeze verification pass on Windows/WSL. Run once and preserve
 any outcome.
+
+The allocation ran once and is retained failed. The fault click itself targeted
+the red rectangle, so the restored-focus `003.png` already showed four-sided
+selection handles before prepared-candidate admission. The later click completed
+and produced exact feedback, but Inkscape selection overlays changed the red
+support from1645 solid pixels to1439 pixels. The frozen v1 scorer raised
+`red target must be one solid rectangle`. Cleanup then cancelled the second
+observe step, leaving a one-step cancelled terminal with verified empty release.
+
+This is `selected_precondition_and_strict_overlay_identity_rejection`, not a
+passing semantic-completion result. Eighteen files/503,386 bytes before receipt
+are retained and audit on Windows/WSL. Do not rerun v1. The next allocation must
+place the interruption click on neutral canvas and version the scorer to tolerate
+bounded selection overlays while preserving target identity.

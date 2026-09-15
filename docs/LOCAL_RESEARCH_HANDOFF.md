@@ -1,3 +1,11 @@
+Current handoff r99: seed208 v1 ran once and is retained failed. The fault click
+already selected the red object before prepared admission. A later exact candidate
+click completed, but Inkscape overlays changed solid red support and frozen scorer
+raised; harness cleanup cancelled observe, with final verified empty release.
+Eighteen files/503,386 bytes pass Windows/WSL failure audits. Do not rerun. V2
+must fault on neutral canvas and accept bounded overlay support while separately
+requiring visible selection handles. No broader claim or subagent/context handoff.
+
 Current handoff r98: seed208 executed prepared-selection allocation is frozen.
 After release preparation and exact terminal, restore focus, capture/revalidate,
 bind the exact click+observe to one new acceptance, detect first feedback, and
