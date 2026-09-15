@@ -1,3 +1,11 @@
+Current handoff r100: prepared-selection v2 is a distinct frozen repair. Neutral
+fault[730,500] avoids preselecting the target. Scorer v2 requires target edges
+within1px,≥80% red support and≥10 dark handle pixels on all four sides; retained
+rectangle/selector styles pass and unselected fails. Seed207 keeps exact execution,
+empty release, one run/no retry/model/cancel and500/200/300ms limits. All35 hashes,
+absent output and12 tests pass Windows/WSL. Commit before one run/audit; retain any
+outcome. V1 stays failed; no broader claim or subagent/context handoff.
+
 Current handoff r99: seed208 v1 ran once and is retained failed. The fault click
 already selected the red object before prepared admission. A later exact candidate
 click completed, but Inkscape overlays changed solid red support and frozen scorer

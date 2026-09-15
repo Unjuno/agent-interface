@@ -76,3 +76,13 @@ passing semantic-completion result. Eighteen files/503,386 bytes before receipt
 are retained and audit on Windows/WSL. Do not rerun v1. The next allocation must
 place the interruption click on neutral canvas and version the scorer to tolerate
 bounded selection overlays while preserving target identity.
+
+V2 freezes that changed condition separately. Its fault click is neutral canvas
+[730,500], outside the red target. Selection scorer v2 allows at most1px edge
+shift and requires at least80% of source red support, then independently requires
+at least10 dark handle pixels on every side. It passes the retained rectangle-
+tool and selector overlays and rejects the retained unselected image.
+
+Seed207 keeps the prior500/200/300ms semantic bounds, one run/no retry/model/
+cancel and exact execution/release rules. All35 hashes, absent output and12 tests
+verify on Windows/WSL. Run once and retain any outcome; v1 remains failed.

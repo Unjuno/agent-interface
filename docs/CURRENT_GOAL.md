@@ -1,3 +1,12 @@
+Current direction (r100): v2 changes only invalid v1 conditions. Fault point
+[730,500] is neutral/outside target. Scorer v2 preserves identity with≤1px edge
+shift and≥80% red support, separately requiring≥10 dark handle pixels each side;
+it passes both retained Inkscape selection styles and rejects unselected. Seed207
+keeps exact prepared click+observe, fresh validation,2-step empty release and
+500/200/300ms bounds. One run/no retry/model/cancel,35 hashes/output absent and
+12 tests verify Windows/WSL. Next commit then run/audit once and retain any result;
+v1 stays failed. No model/token/general claim; no subagent/context handoff; goal open.
+
 Current direction (r99): executed prepared-selection v1 ran once and is retained
 failed. The fault click itself selected the target, so restored-focus003.png was
 already semantically selected before candidate admission. Candidate click still
