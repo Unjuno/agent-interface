@@ -102,6 +102,12 @@ This is an attribution/harness repair, not a mechanism change.
 
 The local audit passes.
 
+## Evidence retention boundary
+
+The valid arm retains a full compressed text bundle on GitHub containing the original `events.jsonl`, owner/scorer receipts, environment/source manifests and harness stderr with per-file SHA-256 values. The stale arm full raw bundle remains local only: two remote upload attempts produced byte counts that did not match the frozen local base64 file, so those malformed GitHub copies were deleted rather than called retained. GitHub instead retains an exact compact stale-arm extraction containing the first terminal/expired release/post-authority evidence, the empty post-release input set, the empty `second`-ID event set, terminal score/direct-final scorer sample and hashes of the original raw sources. `audit_retained_compact.py` audits the report's release/admission/scorer claims using GitHub-retained evidence only.
+
+PNG/AIT/setup-screen binaries remain local-only and are not needed for these claims.
+
 ## H / T / D / C / U
 
 **H.** A sequence-bound one-use replan gate can separate two *live* input-authority epochs: ending the first authority does not authorize a second physical action; only later fresh evidence and new admission do.
