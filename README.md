@@ -87,6 +87,15 @@ revalidation and fresh input admission. This retrospective construction made no
 new model calls and does not show a memory benefit; it prepares the held-out
 crop/full-frame/no-memory comparison. See [action-grounded visual memory v1](research/live_control/ACTION_GROUNDED_VISUAL_MEMORY_V1.md).
 
+That frozen comparison has now run once on three actual Chromium target/decoy
+states. No-memory, prior-full-frame and action-crop arms each complete3/3 exact
+submissions with zero wrong target and verified release. Actual input is28,035,
+31,791 and28,188 tokens respectively: crop uses3,603 fewer tokens than full
+history at equal correctness, while no-memory is still153 tokens lower and also
+perfect. The crop arm rejects its old appearance as misleading in the trap case.
+This makes crop eligible as a conditional replacement for full history, while
+current-only remains the default when sufficient. See the [live memory ablation](research/live_control/ACTION_GROUNDED_MEMORY_ABLATION_LIVE_V1.md).
+
 
 The newest held-out OpenTTD toolbar study removes the answer coordinate from the
 candidate path. A first preregistered pair is retained failed: Luna-low calls its

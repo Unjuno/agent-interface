@@ -533,3 +533,13 @@ fresh input admission remain mandatory. Two real receipts, ten tests and the
 retained audit pass without new model or GUI work. This enables, but does not
 answer, the held-out crop/full/no-memory comparison. See
 `ACTION_GROUNDED_VISUAL_MEMORY_V1.md`.
+
+The frozen three-arm live ablation has now completed. In three actual Chromium
+target/decoy states, no-memory, prior-full-frame and action-crop each produce3/3
+independently exact submissions, zero wrong-target/no-effect outcomes and empty
+release. Inputs are28,035/31,791/28,188 with3/6/6 images. Crop is11.33% lower
+than full history but0.55% above the also-perfect no-memory arm; its trap result
+explicitly rejects the old appearance as misleading. Keep current-only as the
+default and use crop only when history is needed. The initial audit KeyError is
+retained and a raw-call v2 audit passes both OSes without rerun. See
+`ACTION_GROUNDED_MEMORY_ABLATION_LIVE_V1.md`.

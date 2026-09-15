@@ -6,6 +6,10 @@
   memory, prior full frame and action-grounded crop across shifted, duplicate and
   deliberately misleading target appearances. The private scorer distinguishes
   correct, decoy and no-effect actions; formal output is absent before commit.
+- Retain its first no-retry outcome: all three arms complete3/3 exact with zero
+  wrong target; crop uses11.33% fewer input tokens than full history but0.55%
+  more than a perfect no-memory control. Preserve the initial audit field failure
+  and verify all raw Luna-low calls with a separate Windows/WSL audit.
 - Add a strict action-grounded visual-memory receipt that binds exact target
   crops to their admitted action, verified release, independently scored effect
   and local/model recovery trace. Retain two retrospective v2 receipts and a

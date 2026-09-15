@@ -46,7 +46,40 @@ correct than both controls, and uses fewer actual input tokens than full-frame
 memory. If no-memory is already perfect, this study does not establish a benefit
 over omitting history.
 
-The first outcome is retained without retry. This finite block cannot establish
-general memory utility, token savings, latency improvement or human-tempo control.
-The source and schedule are hash-frozen in
-`action_grounded_memory_ablation_live_v1_prereg.json`; formal output is absent.
+## First outcome
+
+The schema preflight and all nine arms completed on the first allocation. Each
+scenario's three current PNGs are byte-identical. Every model target was executed
+through the fresh observation and Executor boundary; all nine server records are
+exact real submissions, with zero decoy/no-effect result and empty verified
+release for every program.
+
+| Arm | Correct | Wrong target | Input tokens | Images |
+|---|---:|---:|---:|---:|
+| no prior visual memory | 3/3 | 0 | 28,035 | 3 |
+| prior full frame | 3/3 | 0 | 31,791 | 6 |
+| action-grounded crop | 3/3 | 0 | 28,188 | 6 |
+
+Against full-frame history, crop retained correctness and used3,603 fewer input
+tokens (11.33%). Against no visual memory, it added153 tokens (0.55%) and did not
+improve correctness. In the deliberately misleading condition, the crop arm
+explicitly returned `rejected_as_stale_or_misleading` and selected the current
+real target. Under the frozen rule, crop is eligible for a different-domain
+transfer as a replacement for full-frame history; no-memory remains the simpler
+default on this fixture.
+
+The original audit stopped with `KeyError: requested_model`: the machine prereg
+omitted that redundant display field. This is retained. The hash-frozen runner
+hard-coded Luna-low before allocation, and all ten raw call plans independently
+record Luna-low. A separately versioned retained audit verifies raw prompts,
+images, usage, call IDs, current-frame identity, model points, Executor programs,
+server records and releases on Windows/WSL without rewriting or rerunning output.
+The retained receipt covers303 files / 5,497,337 bytes, including the original
+audit traceback, diagnosis, raw CLI events, exact screenshots, Executor events,
+HTTP oracle records and both successful audits.
+
+This finite three-task-per-arm block does not establish general memory utility,
+latency improvement or human-tempo control. Model-wait totals varied in an
+uncontrolled service order and are descriptive only. The next step is transfer
+to an OpenTTD or Mindustry transition where prior visual evidence is actually
+needed; retaining a crop should remain conditional rather than become default.

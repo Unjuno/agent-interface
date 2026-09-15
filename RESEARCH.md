@@ -1288,3 +1288,14 @@ empty release are mandatory. Crop transfer needs3/3 correct, zero wrong target,
 no worse correctness than both controls and fewer actual input tokens than full
 frame. Five construction tests pass Windows/WSL and formal output is absent. See
 `research/live_control/ACTION_GROUNDED_MEMORY_ABLATION_LIVE_V1.md`.
+
+The first frozen allocation completed all10 calls and9 actual submissions with
+no retry. All three arms scored3/3 with zero decoy/no-effect and empty release.
+No-memory/full/crop input was28,035/31,791/28,188 tokens with3/6/6 images. Crop
+therefore saved3,603 tokens (11.33%) versus full history, but added153 versus a
+perfect no-memory control. Its trap decision explicitly rejected the archived
+appearance as stale/misleading. The original audit's missing prereg
+`requested_model` lookup remains retained failed; the precommitted runner and all
+ten raw call plans record Luna-low, and a v2 retained audit passes Windows/WSL
+without rerun. Crop advances only as a conditional full-history replacement for
+a history-needed OpenTTD/Mindustry test; it is not promoted over current-only.
