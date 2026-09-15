@@ -1,3 +1,15 @@
+Current direction (r86): the distinct early-typed v2 allocation ran once and is
+retained failed without retry. Decision36.248ms and cancel60.373ms pass the
+frozen60/75ms bounds; program attestation, cancelled terminal, no later input,
+three typed/full reconciliations and process exit all pass. The frozen terminal
+release metric is131.094ms, missing125ms by6.094ms. The independent X11 owner
+had already verified empty input at63.484ms, exposing a state-publication gap:
+physical authority ended before artifact-bound program finalization could report
+it. Windows/WSL retention audits pass. Next version an identifier-bound early
+owner-release receipt and a two-phase guard state; keep later terminal closure
+mandatory and do not reinterpret this failure. No model/planner/task/general
+human-tempo claim; no subagent/context handoff; full goal open.
+
 Current direction (r85): Executor v11 now inherits v3 execution/cancellation and
 exception identities, overriding only admission to add validated-program SHA.
 The exact v1 backend exception reaches cancelled rather than failed in a direct

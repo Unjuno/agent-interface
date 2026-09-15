@@ -3596,3 +3596,23 @@ It retains the same fixture, action, zero model calls and60/75/125ms thresholds.
 All22 source hashes and output absence verify; focused construction passes13
 Windows and18 WSL tests. Run once and retain the first outcome without modifying
 v1 or Executor v10.
+A distinct `map01-early-typed-cancel-live-02` allocation has now run exactly once
+and remains a failure without retry. The persisted typed guard decision arrived
+36.248ms after capture and matching cancel at60.373ms, inside the frozen60/75ms
+limits and well ahead of the exact PNG. Executor v11 reports `cancelled`;
+attestation, no-later-input, all three reconciliations, empty cleanup and child
+exit zero pass.
+
+The frozen third condition fails: terminal release is131.094ms versus125ms.
+Independent owner records show actual cancellation release was already empty at
+63.484ms. The remaining67.610ms is lifecycle serialization behind the in-flight
+artifact. This owner record does not change the allocation result. The raw run,
+report, original failed audit, preregistration and posthoc analysis are retained
+with a hash manifest; independent Windows/WSL retention audits pass.
+
+The next shared-interface question is two-phase revocation. An exact lease-bound
+owner receipt should let the guard report `input released, terminal pending`
+while artifact publication continues. It must not grant fresh input, imply task
+success or remove the later terminal requirement. Existing input_owner_v10 and
+lease_cause_v2 already preserve per-lease release cause, so reuse and compose that
+tested mechanism under a new version rather than changing frozen v11/v37 files.
