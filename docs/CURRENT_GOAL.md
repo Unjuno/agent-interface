@@ -1,3 +1,14 @@
+Current direction (r91): test client-visible benefit of two-phase release. A
+bounded Unix cursor exposes input_released/terminal with action identity; a client
+tracker binds accepted token, verified empty release and later exact terminal,
+failing closed on conflicts. One actual passive screenshot/encode/PNG runs after
+release and before terminal. A frozen same-stream pair registers early-release
+and terminal-only clients before one Inkscape held-click focus fault; early uses
+two exchanges, terminal-only one. Bounds are40ms early return, at least40ms wait
+advantage and300ms terminal; response bytes and round trips retained. All31 hashes
+and absent output verify Windows/WSL. Next commit then run once/no retry. No model,
+token/task/general human-tempo claim; no subagent/context handoff; full goal open.
+
 Current direction (r90): the first pointer transfer ran once and passed. Actual
 Inkscape Button1 down followed by private focus transfer produced physical release
 at1.961ms, input_released publication2.095ms and needs-decision terminal2.634ms.

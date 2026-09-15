@@ -3674,3 +3674,16 @@ release state semantics, though not yet evidence that a planner-facing client
 benefits from receiving it. The next boundary should deliver the event through
 the actual client presentation path and measure waiting/recovery behavior while
 keeping the later terminal distinct.
+The client-delivery comparison is frozen. A new bounded private Unix cursor lets
+two non-consuming readers observe one action stream. Both reads register before
+the same held-click focus fault. The early reader returns at verified
+`input_released`, then uses a second exchange for terminal; the baseline uses one
+exchange and waits for terminal. Accepted token, release and terminal must match.
+
+The backend performs one real passive screenshot/encode/PNG after release, so
+recovery evidence may continue without delaying the safety state. The experiment
+measures focus→client return, early wait advantage, final return,2-vs-1 exchanges
+and response bytes. Limits are40ms early,≥40ms advantage and≤300ms terminal.
+Seed211, one run/no retry/model/cancel,31 source hashes and absent output are
+fixed and verify on Windows/WSL. Consume once and preserve failure if scheduling
+or delivery misses the rule.
