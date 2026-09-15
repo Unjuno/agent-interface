@@ -491,3 +491,21 @@ remove a caller boundary, but matched causal speedup, actual model tokens/cost,
 human comparison, complete clock envelopes and cross-domain freeze criteria are
 not established. No Windows/macOS product support is implied. DOOM remains one
 orthogonal motor stress benchmark, not the definition of interface success.
+
+
+## Local-first semantic repair candidate
+
+A separately versioned Chromium study now supports one local-first route after
+known geometry change. A cached exact target handle may regenerate a calibrated
+semantic region only after a current coherent observation and exact patch match.
+If that evidence is unavailable, changed or ambiguous, the caller must use typed
+model reacquisition. Completed reacquisition still requires one passive current
+observation and a `post-model-target-revalidation-v1` receipt before contract or
+input; model completion alone does not refresh evidence.
+
+In the first matched seed215 allocation, local recovery median was109.966ms and
+9,351 input tokens versus8,115.268ms and18,702 for Luna-low reacquisition. All
+four tasks, exact-frame reconciliation and releases passed. This candidate is not
+yet part of the default caller: missing/ambiguous/changed fallback branches and
+cross-domain behavior remain to be integrated and measured. See
+`MATCHED_SEMANTIC_REPAIR_V1.md`.

@@ -383,3 +383,14 @@ model-free retained-frame control resolves the identical patch fresh and refuses
 it after the observed wait. Three calls report28,053 input tokens; no balanced
 comparison was computed. The next version must take one passive post-model exact
 observation and revalidate the patch there.
+
+
+## Matched repair v3 passes
+
+One post-model passive exact observation and a source/current patch receipt repair
+the v2 freshness failure. All four seed215 sessions save the exact token and
+release. Local recovery median109.966ms/input9,351 versus Luna reacquisition
+8,115.268ms/input18,702; bounded differences8,005.302ms and9,351 tokens. The two
+model arms refresh in75.592/66.802ms and revalidate in0.071/0.066ms. Six calls and
+189 files audit cross-platform. This retains a calibrated local-first route, not a
+general saving claim; next integrate typed fallback branches in the shared caller.

@@ -61,3 +61,36 @@ files/1,415,626 bytes before retention receipt pass all11 Windows/WSL audit
 checks. No balanced comparison exists. V3 may change one condition: after model
 reacquisition, take one passive current exact observation and require the
 model-derived patch to revalidate there before contract derivation or input.
+
+
+## Matched v3 result
+
+V3 changed only that freshness boundary and passed its first frozen allocation.
+After each model reacquisition it retained the model-visible Save patch, captured
+one passive exact current observation and emitted a no-authority receipt binding
+source/current sequence, capture clocks, model call ID, current point and exact
+patch hash. Both model arms revalidated current pixels before contract derivation
+or Submit.
+
+All four fresh seed215 sessions independently saved `t000215`, reconciled useful
+semantics to exact PNGs and released empty input. The fixed order and results were:
+
+| Arm | Route | Input tokens | Resize capture→recovery | Post-model refresh | Patch revalidation | Useful feedback |
+|---:|---|---:|---:|---:|---:|---:|
+| 1 | local | 9,351 | 106.618ms | — | — | 254.617ms |
+| 2 | model | 18,702 | 8,015.380ms | 75.592ms | 0.071ms | 263.617ms |
+| 3 | model | 18,702 | 8,215.156ms | 66.802ms | 0.066ms | 244.828ms |
+| 4 | local | 9,351 | 113.315ms | — | — | 246.416ms |
+
+Local recovery median was109.966ms versus8,115.268ms for model reacquisition, an
+8,005.302ms difference. Input medians were9,351 versus18,702, a9,351-token
+difference. Six unique Luna-low calls and visible images are fully accounted;
+preflight was a cache hit with zero fresh calls. The189-file/3,622,385-byte
+pre-receipt record passes formal and retained audits on Windows and WSL.
+
+This supports retaining cached local repair for this calibrated unchanged-target
+resize case. It does not establish general token savings, unknown-layout recovery,
+reliability, other operating systems or human-tempo performance. The next step is
+to put this route decision into the shared caller: try fresh local revalidation
+first, fall back to typed model reacquisition only when local evidence is missing,
+ambiguous or changed, and account for every branch.

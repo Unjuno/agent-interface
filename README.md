@@ -48,14 +48,15 @@ the separately frozen repair changes only that health bound. This is one scripte
 Inkscape predicate with no model, token, broad speed or human-tempo claim. See
 [release-aware preparation](research/live_control/RELEASE_AWARE_PREPARATION_V1.md).
 
-The first frozen comparison of cached semantic repair against Luna-low visual
-reacquisition stopped on upstream capacity and is retained. Capacity-aware v2
-then completed one correct local arm. Its model arm reacquired the correct Save
-point after8.263s, beyond the source frame's3s freshness, so exact handle
-resolution refused `STALE` before Submit. The identical retained patch resolves
-when fresh. Three calls report28,053 input tokens, but the four-arm comparison
-remains unobserved. This makes both model-service admission and post-inference
-fresh revalidation concrete interface boundaries. See the
+The matched semantic-repair sequence retains an upstream-capacity v1 failure and
+a v2 stale-source refusal. V3 adds one post-model passive exact observation and
+current patch revalidation. All four fresh Chromium arms then independently save
+the exact token and release input. Cached local repair reaches recovery in a
+109.966ms median with9,351 input tokens, versus8,115.268ms and18,702 tokens for
+Luna-low visual reacquisition: differences of8,005.302ms and9,351 tokens on this
+calibrated resize fixture. Six calls are fully accounted and189 files audit on
+Windows/WSL. This is bounded same-task evidence, not a general speed or token
+claim. See the
 [matched semantic repair report](research/live_control/MATCHED_SEMANTIC_REPAIR_V1.md).
 
 
