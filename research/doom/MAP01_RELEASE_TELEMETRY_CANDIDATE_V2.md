@@ -51,7 +51,7 @@ This prevents known cancel/expiry/focus-invalid cleanup releases from being sile
 
 The adapter buffers release receipts in the executor-step thread. While any backend-held key remains, it performs no state query and emits nothing.
 
-After the final backend-held key release returns, it performs exactly one `input_state` sample, verifies aggregate owner bookkeeping, annotates all buffered receipts, then publishes them. Existing direct analyzer v1 can still consume the per-key `input_release_transition` records because their event/token/key/release-clock contract is retained.
+After the final backend-held key release returns, it performs exactly one `input_state` sample, verifies aggregate owner bookkeeping, sample ordering and owner identity, annotates all buffered receipts, then publishes them. Existing direct analyzer v1 can still consume the per-key `input_release_transition` records because their event/token/key/release-clock contract is retained.
 
 The crucial two-key operation order is therefore:
 
@@ -71,20 +71,22 @@ input_state
 up key 2
 ```
 
+The executor-step wrapper also removes its thread-local telemetry context after the step returns; an incomplete/raising release path cannot leak a partial receipt batch into the next step.
+
 ## Remaining measurement scope
 
 V2 still does **not** claim an exact internal InputOwner `d.sync()` timestamp. `release_call_returned_ns` is a conservative post-sync caller timestamp and includes possible worker/caller scheduling wakeup latency.
 
 The one post-batch `input_state` verifies owner bookkeeping, focus/pointer state and timing from InputOwner v10. It does not continuously query physical keyboard state and must not be described as hardware occupancy or application semantic effect.
 
-The project still needs an independent timestamped useful-progress/effect oracle before a recovery-policy efficacy claim.
+A concurrent, disjoint line landed after this branch BASE on main at `64b286722adaf4daae8936cc373d44c559bd86da`: `O3-G2-INDEPENDENT-PROGRESS-CLOCK-001` retains a scorer-only independent-progress event contract with 14/14 contract tests. That closes the **event vocabulary** gap but explicitly leaves ViZDoom/session isolation and polling integration unproven. This v2 task does not touch that lane.
 
 ## Offline validation
 
 Two deterministic suites are added:
 
 - `research/live_control/test_input_transition_owner_v2.py` — 5 cases;
-- `research/doom/test_doom_retained_input_backend_v2.py` — 6 cases.
+- `research/doom/test_doom_retained_input_backend_v2.py` — 8 cases.
 
 The authoring Python environment exercised equivalent deterministic logic for the wrapper and two-key batch path successfully. The committed suites themselves were not executed from a fresh repository checkout in this session because the available container previously failed GitHub DNS resolution.
 
@@ -95,6 +97,8 @@ The tests require, among other cases:
 - two-key release has no sample or emit between key-ups;
 - one aggregate sample verifies the whole batch;
 - nonempty owner state fails closed;
+- post-batch sample ordered before the final release return fails closed;
+- owner-identity mismatch fails closed;
 - backend-unowned release fails closed;
 - key-down admission behavior remains preserved.
 
@@ -136,7 +140,7 @@ Passing these gates still does not authorize recovery-vs-coast efficacy testing.
 
 ### U — uncertainty
 
-Primary remaining uncertainty is development/runtime integration under real X11 capture load, post-batch sample overhead, and independent useful-effect timing. No population or hard real-time guarantee is claimed.
+Primary remaining uncertainty is development/runtime integration under real X11 capture load, post-batch sample overhead, progress-clock session integration, and independent useful-effect timing/cadence. No population or hard real-time guarantee is claimed.
 
 ## Product Hunt consequence
 
@@ -151,4 +155,4 @@ planner still thinking
 └─ independent useful effect observed
 ```
 
-V2 addresses the release-observability line only. The independent-effect line remains the next measurement requirement.
+V2 addresses the release-observability line. The independent progress **contract** now exists on main, but safe scorer/session integration remains a separate gate before the final synchronized demo can make that last line a live claim.
