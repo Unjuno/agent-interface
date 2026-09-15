@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import argparse, hashlib, json, os, re, subprocess, sys, time
+import argparse, hashlib, json, os, re, signal, subprocess, sys, time
 from pathlib import Path
 HERE=Path(__file__).resolve().parent
 
@@ -30,7 +30,7 @@ def stop(p):
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--controller',type=Path,required=True);ap.add_argument('--pacing-ms',type=int,choices=[1,12],required=True);ap.add_argument('--display-num',type=int,required=True);ap.add_argument('--out',type=Path,required=True);a=ap.parse_args()
     a.out.mkdir(parents=True,exist_ok=False); display=f':{a.display_num}'; env={**os.environ,'DISPLAY':display}
-    task=a.out/'task.xlsx'; profile=a.out/'profile';profile.mkdir()
+    task=a.out/'task.xlsx'; profile=a.out/'profile';profile.mkdir();
     seed=run([sys.executable,str(HERE/'seed_workbook.py'),'--out',str(task)],capture_output=True);(a.out/'seed.stdout').write_text(seed.stdout);(a.out/'seed.stderr').write_text(seed.stderr)
     if seed.returncode: raise SystemExit('seed failed')
     lock=Path(f'/tmp/.X{a.display_num}-lock'); sock=Path(f'/tmp/.X11-unix/X{a.display_num}'); lock.unlink(missing_ok=True);sock.unlink(missing_ok=True)
@@ -40,8 +40,7 @@ def main():
     try:
         if not wait_display(display): raise RuntimeError('Xorg not ready')
         xd=run(['xdpyinfo','-display',display],capture_output=True,check=True).stdout
-        xv=run(['Xorg','-version'],capture_output=True)
-        server={'display':display,'vendor':re.search(r'vendor string:\s*(.+)',xd).group(1).strip(),'release':int(re.search(r'vendor release number:\s*(\d+)',xd).group(1)),'xorg_version':(xv.stderr.strip() or xv.stdout.strip()),'xtest':'XTEST' in run(['xdpyinfo','-display',display,'-queryExtensions'],capture_output=True).stdout,'dimensions':re.search(r'dimensions:\s*([^\n]+)',xd).group(1).strip()}
+        server={'display':display,'vendor':re.search(r'vendor string:\s*(.+)',xd).group(1).strip(),'release':int(re.search(r'vendor release number:\s*(\d+)',xd).group(1)),'xorg_version':run(['Xorg','-version'],capture_output=True).stderr.strip() or run(['Xorg','-version'],capture_output=True).stdout.strip(),'xtest':'XTEST' in run(['xdpyinfo','-display',display,'-queryExtensions'],capture_output=True).stdout,'dimensions':re.search(r'dimensions:\s*([^\n]+)',xd).group(1).strip()}
         (a.out/'server.json').write_text(json.dumps(server,indent=2)+'\n')
         if not server['xtest']: raise RuntimeError('XTEST absent')
         ob=subprocess.Popen(['openbox'],env=env,stdout=(a.out/'openbox.stdout').open('w'),stderr=(a.out/'openbox.stderr').open('w'),text=True);time.sleep(.5)
