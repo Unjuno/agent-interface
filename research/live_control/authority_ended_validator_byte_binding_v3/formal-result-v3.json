@@ -1,0 +1,37 @@
+{
+  "base_research_head": "6eca918728e43c4bbf787ccdf8ccd848c681c537",
+  "decision": "RETAIN_BYTE_BOUND_VALIDATOR_V3",
+  "dependency_sha256": {
+    "authority_ended_bridge_v1.py": "2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e",
+    "durable_token_state_v2.py": "72a3481653cf9c41ec1a03f4c7a7bf1c482ff69468b5d92986bad8cf814950b4",
+    "validator_source_pinned_ledger_v2.py": "189bd81dd884b7840b31ef01e453e62a6d850f5c14dbe925bce8fb4b016558d2"
+  },
+  "formal_retries": 0,
+  "hard_gate_pass": true,
+  "result_id": "authority-ended-validator-byte-binding-v3-20260916-02",
+  "rows": [
+    {"case":"v2_hash_to_load_toctou_reproduced","detail":{"A_sha":"573486797e1e8924cecf5e38c36744d7fcbc49c175b807e846d4b0a9a7105d63","B_sha":"8d6762f8430be44b3b2adc1790356d07c65889fe61dcb0da5614ee744bc6e746","final_file_sha":"8d6762f8430be44b3b2adc1790356d07c65889fe61dcb0da5614ee744bc6e746","outcome":{"status":"ISSUED"},"pin_sha":"573486797e1e8924cecf5e38c36744d7fcbc49c175b807e846d4b0a9a7105d63"},"pass":true},
+    {"case":"v3_executes_exact_hashed_bytes_under_same_replacement","detail":{"A_sha":"573486797e1e8924cecf5e38c36744d7fcbc49c175b807e846d4b0a9a7105d63","B_sha":"8d6762f8430be44b3b2adc1790356d07c65889fe61dcb0da5614ee744bc6e746","final_file_sha":"8d6762f8430be44b3b2adc1790356d07c65889fe61dcb0da5614ee744bc6e746","outcome":{"error":"A rejects","status":"REJECTED","type":"ValueError"},"pin_sha":"573486797e1e8924cecf5e38c36744d7fcbc49c175b807e846d4b0a9a7105d63"},"pass":true},
+    {"case":"v3_v2_source_issues_two_capture","detail":{"id":"two-epoch","seq":11,"sha":"f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9"},"pass":true},
+    {"case":"token_state_shape_unchanged","detail":{"entries":{"two-epoch":{"post_sequence":11,"status":"pending"}},"schema":"authority-ended-durable-token-state-v2"},"pass":true},
+    {"case":"v3_sidecar_binds_actual_hash_and_function","detail":{"function_name":"to_caller_execution_decision","schema":"authority-ended-validator-byte-pin-v3","validator_id":"bridge-v2-two-capture","validator_sha256":"f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9"},"pass":true},
+    {"case":"v3_matching_restart_recovers_pending","detail":{"id":"two-epoch","seq":11},"pass":true},
+    {"case":"v3_duplicate_rejected","detail":{"error":"authority_end_id already exists","status":"REJECTED","type":"DuplicateReceipt"},"pass":true},
+    {"case":"v3_consume_restart_remains_consumed","detail":{"entry":{"post_sequence":11,"status":"consumed"},"reject":{"error":"authority_end_id already consumed","status":"REJECTED","type":"TokenConsumed"}},"pass":true},
+    {"case":"v3_changed_source_reopen_rejected","detail":{"error":"validator pin mismatch","status":"REJECTED","type":"ValidatorPinError"},"pass":true},
+    {"case":"v3_wrong_function_rejected","detail":{"error":"validator pin mismatch","status":"REJECTED","type":"ValidatorPinError"},"pass":true},
+    {"case":"v3_syntax_error_rejected","detail":{"error":"validator source execution failed","status":"REJECTED","type":"ValidatorPinError"},"pass":true},
+    {"case":"v3_missing_function_rejected","detail":{"error":"validator callable missing","status":"REJECTED","type":"ValidatorPinError"},"pass":true},
+    {"case":"v3_state_without_sidecar_rejected","detail":{"error":"existing token state missing validator pin","status":"REJECTED","type":"ValidatorPinError"},"pass":true},
+    {"case":"v3_corrupt_sidecar_rejected","detail":{"error":"unreadable validator pin","status":"REJECTED","type":"ValidatorPinError"},"pass":true},
+    {"case":"v3_sidecar_only_crash_same_bytes_only","detail":{"crash":{"error":"after_sidecar","status":"REJECTED","type":"InjectedInitCrash"},"mismatch":{"error":"validator pin mismatch","status":"REJECTED","type":"ValidatorPinError"},"state_exists":true},"pass":true},
+    {"case":"v3_v1_source_issues_one_capture","detail":{"id":"one-epoch","seq":2,"sha":"2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e"},"pass":true},
+    {"case":"v3_v1_to_v2_reopen_rejected","detail":{"error":"validator pin mismatch","status":"REJECTED","type":"ValidatorPinError"},"pass":true}
+  ],
+  "schema": "authority-ended-validator-byte-binding-v3-formal",
+  "source_sha256": {
+    "bridge_v2_semantic_snapshot.py": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9",
+    "formal_runner_v3_02.py": "91f1bb7f973b4bbb2c9967d8dbfaba82ccf272e6eedf13ebcf3e813fa7f140bb",
+    "validator_byte_pinned_ledger_v3.py": "a0744260a48b3575a451c63139fdb2fde898e0493317d1edd1d731ce3d227be5"
+  }
+}
