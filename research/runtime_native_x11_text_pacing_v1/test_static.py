@@ -13,5 +13,5 @@ class Static(unittest.TestCase):
     def test_stale_receipt_is_explicit(self):
         s=(HERE/'run_arm.py').read_text()
         self.assertIn("injected_events')==0",s)
-        self.assertIn('STALE_OBSERVATION',s)
+        self.assertIn("STALE_OBSERVATION",s)
 if __name__=='__main__': unittest.main()
