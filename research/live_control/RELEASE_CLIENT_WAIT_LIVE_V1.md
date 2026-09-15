@@ -46,3 +46,18 @@ result is retained as `server_request_registration_receipt_not_serialized` with
 The repair is narrow: persist the exact request receipt list before focus, bind
 both request IDs, and make the independent audit consume that file. Freeze a new
 allocation; do not reinterpret or rerun this one.
+
+## V2 repair allocation
+
+V2 adds only the missing evidence boundary. After both server handlers register,
+the runner copies their exact request IDs, requests and receipt clocks, writes an
+fsync-complete `server-request-registration-v1` artifact, hashes it, and only then
+requests focus transfer. The independent audit reads that artifact and requires
+exactly `early-release` and `terminal-only`, both received before its snapshot,
+with the snapshot before the fault. Client start clocks and the old boolean are
+not accepted as substitutes.
+
+A distinct seed210 allocation retains the same40/40/300ms timing thresholds,
+same-stream comparison, passive recovery artifact,2-vs-1 exchange accounting and
+zero model/cancel/retry rule. All32 source hashes and output absence verify on
+Windows/WSL. Run once and retain its first outcome without modifying v1.

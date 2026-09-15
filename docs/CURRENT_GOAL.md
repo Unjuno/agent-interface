@@ -1,3 +1,14 @@
+Current direction (r93): v2 repairs only the missing registration evidence. It
+copies exact server-side request ID/request/received_ns records after both handlers
+register, writes/fsyncs a schema artifact, retains its SHA, then requests focus.
+Audit requires exactly early-release+terminal-only receipts before snapshot and
+snapshot before fault; client clocks/boolean cannot substitute. Distinct seed210
+keeps same-stream clients, real passive artifact,2-vs-1 exchanges,40ms early,
+≥40ms advantage,≤300ms terminal and zero model/cancel/retry. All32 hashes and
+output absence verify Windows/WSL. Next commit, run once, retain first result;
+v1 remains failed. No token/task/general human-tempo claim; no subagent/context
+handoff; full goal open.
+
 Current direction (r92): first same-stream client allocation is retained failed
 without retry. Runtime showed early client2.672ms versus terminal-only113.116ms
 (110.444ms descriptive wait difference), one passive artifact, exact release/

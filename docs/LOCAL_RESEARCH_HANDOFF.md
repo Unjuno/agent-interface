@@ -3703,3 +3703,13 @@ Repair only the evidence boundary in a new version: serialize the exact server
 request list before focus, require early-release and terminal-only IDs exactly
 once with both receipt clocks before the fault, and audit that artifact. Keep the
 same-stream comparison and do not rerun the failed allocation.
+V2 of the client comparison is frozen with an evidence-only repair. The server
+provides a copied request receipt list. Once both expected handlers register, the
+runner writes and fsyncs a `server-request-registration-v1` JSON, retains its SHA,
+and only then transfers focus. Audit binds exactly the early-release and
+terminal-only IDs and checks both received clocks before artifact snapshot and
+snapshot before focus request.
+
+The distinct seed210 allocation keeps the same timing, passive observation,
+same-stream and2-vs-1 exchange rules. All32 hashes and output absence verify.
+Run once/no retry; v1's missing-evidence failure stays unchanged.
