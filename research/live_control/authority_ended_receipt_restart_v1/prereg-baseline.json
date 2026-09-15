@@ -1,0 +1,10 @@
+{
+  "task": "authority-ended-receipt-ledger-restart-baseline-v1",
+  "base_commit": "a1ea4cbfac735eafb1f8901dd6c32a890bed015c",
+  "scope": "offline process-restart counterexample using exact retained receipt fixture; no GUI/model/input",
+  "H": "The in-memory ReplanReceiptLedger will remint a token for the exact same authority_end_id after process restart because issued_ids is not persisted.",
+  "T": "One first-outcome two-process test. Process A issues and consumes the exact retained receipt. Process B starts with a fresh empty ledger and replays the byte-identical receipt. No retries.",
+  "D": "FAIL_CURRENT_CANDIDATE if process B successfully issues a fresh token for the same authority_end_id; PASS_CURRENT_CANDIDATE only if replay is rejected without extra external state.",
+  "C": "A hidden persistent store or receipt mutation could explain rejection; both are excluded by using only the exact upstream Python files and fixture and a new Python interpreter.",
+  "U": "This proves only process-memory restart replay, not machine reboot, filesystem durability, transport duplication, or live input consequences."
+}
