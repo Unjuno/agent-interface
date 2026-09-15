@@ -3,7 +3,8 @@
     "initial 30 s smoke invalid because loaded fixture tic 1366 exceeded 1050-tic timeout; discarded as setup error, rerun with 60 s timeout",
     "first left/right fixture builder audit asserted wrong release field names keys/buttons instead of keys_down/buttons_down; both underlying terminal releases were verified empty; no fixture save occurred in those attempts",
     "corrected builder then produced one left and one right 300 ms X11 strafe-derived save from retained original fixture; no policy efficacy measurement used for selection",
-    "before formal measurement, derived source-frame PNGs were losslessly repacked as WebP and absolute setup-only paths were normalized; RGB pixel SHA-256 remained identical and gameplay save bytes remained byte-identical"
+    "before formal measurement, derived source-frame PNGs were losslessly repacked as WebP and absolute setup-only paths were normalized; RGB pixel SHA-256 remained identical and gameplay save bytes remained byte-identical",
+    "premeasurement simplification: exact derived-save transport was abandoned before any efficacy case because v13 requires source-frame bytes and GitHub text transport would add a large non-scientific bundle; formal v2 now recreates left/right conditions online from the retained original fixture using the same X11 300 ms setup holds with verified-empty release"
   ],
   "fixture_construction": {
     "left": {
@@ -44,8 +45,18 @@
       "source_rgb_sha256": "fa368b5ec25967f68de40ecac6735ee8ee12cf62071221e2724b707a123173b9"
     }
   },
+  "formal_design_revision": {
+    "discarded_artifacts": "constructed left/right saved fixtures remain construction evidence only and are not formal dependencies",
+    "measured_cases_executed_before_revision": 0,
+    "reason": "remove derived binary-fixture transport from the formal dependency graph without changing the directional perturbation variable",
+    "state_conditions": {
+      "left": "load retained original fixture; X11 hold a 300 ms; require setup completed and verified empty; then measured action",
+      "original": "load retained original fixture; no setup hold",
+      "right": "load retained original fixture; X11 hold d 300 ms; require setup completed and verified empty; then measured action"
+    }
+  },
   "runtime_bundle_sha256": "522763418610ea10e57e55615fa71e76445200b9f86d208820ea97c77c234f0b",
   "schema": "map01-direction-v2-construction-receipt",
   "scientific_measurement_started": false,
-  "unit_tests": "5/5 PASS before formal freeze"
+  "unit_tests": "5/5 PASS after online-perturbation redesign and before formal freeze"
 }
