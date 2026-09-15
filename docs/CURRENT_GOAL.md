@@ -1,3 +1,13 @@
+Current direction (r113): repaired matched v2 ran once and passed. Same-seed
+path semantic-ready samples316.836/275.926/283.566/291.948ms; frame237.654/
+234.144/259.626/238.422ms. Medians287.757 vs238.038ms:49.718ms reduction,
+0.8272 ratio. All8 arms share exact candidate/program, false→true in2 client
+exchanges, independent selection,2-step completion and empty release; all frame
+digests reconcile. Mode-specific health bounds pass.99 files/3,130,105 bytes
+retained/audited both OSes. This proves one scripted Inkscape boundary only.
+Next transfer the no-authority probe contract to a distinct GUI/dynamic predicate;
+no model/token/general/human-tempo claim or subagent/context handoff; goal open.
+
 Current direction (r112): matched v2 changes only v1's incompatible health bound.
 Frame first-feedback stays≤200ms; path baseline gets≤260ms versus v1 observed
 216.580–222.920ms and separate semantic≤400ms. Same-seed identity/program,

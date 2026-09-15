@@ -1,0 +1,40 @@
+{
+  "passed": true,
+  "checks": {
+    "manifest": true,
+    "frozen_sources": true,
+    "first_pass": true,
+    "all_arms": true,
+    "matched_identity": true,
+    "mode_bounds": true,
+    "metrics": true,
+    "causal_allocation_limits": true,
+    "all_release_and_correct": true,
+    "frame_artifacts": true,
+    "zero_model": true
+  },
+  "allocation_passed": true,
+  "metrics_ms": {
+    "path_semantic_ready_median_ms": 287.7566465,
+    "frame_semantic_ready_median_ms": 238.038354,
+    "median_advantage_ms": 49.71829249999999,
+    "median_ratio": 0.8272210456136241,
+    "samples_ms": {
+      "path": [
+        316.836305,
+        275.925732,
+        283.565763,
+        291.94753
+      ],
+      "frame": [
+        237.65442,
+        234.143798,
+        259.626313,
+        238.422288
+      ]
+    }
+  },
+  "files_in_manifest": 99,
+  "bytes_before_receipt": 3130105,
+  "scope": "eight fresh private-Xvfb Inkscape sessions with identical seed/task/candidate/program in frozen ABBA/BAAB order; ordinary observation plus PNG path scoring versus action-scoped pre-artifact exact-frame semantic probe; mode-specific baseline/candidate first-feedback health bounds, client-visible semantic-ready, correctness, two exchanges and release measured; no model, token, general performance or human-tempo claim"
+}

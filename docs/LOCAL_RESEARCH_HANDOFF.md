@@ -1,3 +1,11 @@
+Current handoff r113: matched v2 passed once. Same-seed P samples316.836/275.926/
+283.566/291.948ms vs F237.654/234.144/259.626/238.422ms; medians287.757 vs
+238.038ms,49.718ms reduction/0.8272 ratio. All8 exact candidate/program arms pass
+false→true2 exchanges, independent selection,2-step empty release; frame digests
+reconcile and mode bounds pass.99 files/3,130,105 bytes audit Windows/WSL. Claim
+is one scripted Inkscape semantic path. Next distinct-domain/predicate transfer;
+no model/token/general/human-tempo claim or subagent/context handoff.
+
 Current handoff r112: matched v2 repairs only the health-bound mismatch. Frame
 first≤200ms remains; path gets≤260ms, above v1's216.580–222.920 but below its
 semantic≤400ms. All identity/program/correctness/2-exchange/reconciliation/

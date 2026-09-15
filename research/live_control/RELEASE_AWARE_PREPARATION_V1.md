@@ -67,6 +67,25 @@ focused tests pass; Windows passes11 with the expected Unix-socket skip. Freeze
 verification passes on both. Commit, run exactly once, audit and retain any
 outcome; v1 remains formally failed.
 
+Matched v2 ran exactly once and passed. Path semantic-ready samples were316.836,
+275.926,283.566 and291.948ms; frame samples were237.654,234.144,259.626 and
+238.422ms. The medians are287.757ms versus238.038ms, a49.718ms reduction and
+0.8272 ratio for client-visible admission-to-useful-semantics under the frozen
+same-seed comparison.
+
+All eight arms used the same target candidate and canonical click+observe program,
+retained first false then useful true in exactly two client exchanges, passed an
+independent path score, completed two steps and released to empty input. All four
+frame arms stayed within probe bounds and reconciled their exact-frame results to
+the ordinary PNG artifacts. Mode-specific first-feedback health bounds pass.
+
+Ninety-nine files/3,130,105 bytes before retention receipt pass independent
+Windows/WSL audits. This is causal evidence for a49.718ms median reduction in one
+scripted Inkscape semantic-feedback path. It does not establish model reasoning,
+token reduction, cross-domain performance or human-tempo operation. The next
+promotion test should transfer the same no-authority probe contract to a distinct
+GUI predicate or dynamic domain without reusing Inkscape selection semantics.
+
 The allocation ran once and passed its frozen audit. Release was verified at
 17.787ms and the early client returned at26.378ms. Early candidate preparation
 completed77.638ms after focus request, before terminal at approximately110.755ms;

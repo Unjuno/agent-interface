@@ -36,6 +36,18 @@ reason loss and v5 repairs it.  One pair supplies mechanics evidence only, with 
 rate, speedup, token-saving or human-tempo claim.  See
 [compiled GUI interface live v5](research/live_control/COMPILED_GUI_INTERFACE_LIVE_V5.md).
 
+A matched live Inkscape study now measures when a client can understand useful
+post-action feedback. Across eight fresh same-seed sessions in balanced order,
+the ordinary exact-PNG path reaches semantic readiness at a287.757ms median;
+an action-scoped no-authority probe over the already reconstructed frame reaches
+238.038ms, a49.718ms reduction. All8 selections independently pass, use the same
+click+observe program and two client exchanges, and finish with empty input.
+Frame results later reconcile exactly to durable PNGs. The first allocation is
+retained failed for applying the candidate's first-feedback bound to the baseline;
+the separately frozen repair changes only that health bound. This is one scripted
+Inkscape predicate with no model, token, broad speed or human-tempo claim. See
+[release-aware preparation](research/live_control/RELEASE_AWARE_PREPARATION_V1.md).
+
 
 The newest held-out OpenTTD toolbar study removes the answer coordinate from the
 candidate path. A first preregistered pair is retained failed: Luna-low calls its
