@@ -18,32 +18,66 @@
   "rows": [
     {
       "case": "direct_ledger_persists_forged_nonempty_id",
-      "detail": {"entry": {"post_sequence": 11, "status": "pending"}, "token": "caller-forged-id"},
+      "detail": {
+        "entry": {
+          "post_sequence": 11,
+          "status": "pending"
+        },
+        "token": "caller-forged-id"
+      },
       "pass": true
     },
     {
       "case": "prebind_rejects_forged_id",
-      "detail": {"error": "caller authority_end_id mismatch", "status": "REJECTED", "type": "IdentityBindingError"},
+      "detail": {
+        "error": "caller authority_end_id mismatch",
+        "status": "REJECTED",
+        "type": "IdentityBindingError"
+      },
       "pass": true
     },
     {
       "case": "prebind_missing_id_uses_runtime_token",
-      "detail": {"bound_id": "runtime-intent-token", "seq": 11, "token_id": "runtime-intent-token"},
+      "detail": {
+        "bound_id": "runtime-intent-token",
+        "seq": 11,
+        "token_id": "runtime-intent-token"
+      },
       "pass": true
     },
     {
       "case": "restart_recovers_prebound_runtime_token",
-      "detail": {"id": "runtime-intent-token", "seq": 11},
+      "detail": {
+        "id": "runtime-intent-token",
+        "seq": 11
+      },
       "pass": true
     },
     {
       "case": "post_issue_binding_is_too_late",
-      "detail": {"binder": {"error": "caller authority_end_id mismatch", "status": "REJECTED", "type": "IdentityBindingError"}, "persisted": {"post_sequence": 11, "status": "pending"}},
+      "detail": {
+        "binder": {
+          "error": "caller authority_end_id mismatch",
+          "status": "REJECTED",
+          "type": "IdentityBindingError"
+        },
+        "persisted": {
+          "post_sequence": 11,
+          "status": "pending"
+        }
+      },
       "pass": true
     },
     {
       "case": "prebind_release_interruption_mismatch_rejects_before_state",
-      "detail": {"binder": {"error": "release/interruption intent_token mismatch", "status": "REJECTED", "type": "IdentityBindingError"}, "state_exists": false},
+      "detail": {
+        "binder": {
+          "error": "release/interruption intent_token mismatch",
+          "status": "REJECTED",
+          "type": "IdentityBindingError"
+        },
+        "state_exists": false
+      },
       "pass": true
     }
   ],
