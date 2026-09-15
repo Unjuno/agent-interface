@@ -1262,7 +1262,27 @@ inputs9,348/18,696 and mutation-to-return651.634/7,871.585ms are descriptive
 because mutations differ. See
 `research/live_control/ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md`.
 
-## Latest follow-up — v38 integrated MAP01 path exposed, policy liveness remains weak (2026-09-15)
+## Latest follow-up — v39 coast liveness and active revocation exposed (2026-09-15)
+
+V38's interrupted-tail loop came from an unauthored, empty-coast fallback
+with runtime zero-loss guard, not from model-authored overstrict policy. V39
+suppresses that redundant policy interrupt only for unauthored coast; exact
+observation and fresh returned-action validity remain. The separately frozen
+six-turn enemy-visible run completed three coast-mode decisions, at least one
+through health loss, and admitted three model plans. One running `retreat_fire`
+program was revoked when typed health fell73→65 against a six-point authored
+loss predicate; the matched lease released physical input before terminal
+closure, and both release and cancelled terminal verified empty. Independent
+score: one kill, no death/exit after50.371s control/43.318s model-wall.
+
+Original frozen audit fails only on one unchanged exact image reused via AIT,
+where218 observations correspond to217 PNGs. Retain that failure and pass
+v2 audit verifying every AIT, decoded PNG RGB hash, controller receipt,
+running-program SHA/intent token, release and score. Windows/WSL manifest
+audit passes464 files/63,880,177 bytes. No causal v38/v39 speed or MAP01-clear
+claim. See `research/doom/MAP01_V39_COAST_LIVENESS_LIVE_V1.md`.
+
+## Previous follow-up — v38 integrated MAP01 path exposed, policy liveness remains weak (2026-09-15)
 
 The preregistered, no-retry v38 live allocation completed six Luna-low decisions
 with the game continuously advancing. One active schema-v6 plan was accepted

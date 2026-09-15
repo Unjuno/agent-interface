@@ -633,6 +633,16 @@ acquisition charged, cumulative input is 63,128/63,779/26,563 and elapsed time i
 reliability claim. See
 [`research/live_control/INTEGRATED_EFFICIENCY_LIVE_V1.md`](research/live_control/INTEGRATED_EFFICIENCY_LIVE_V1.md).
 
+The frozen v39 MAP01 run repaired the unauthored empty-coast interruption loop:
+at least one coast model answer completed despite health loss, while returned
+actions still faced fresh immediate validity. Three of six model plans were
+admitted. One active model plan was revoked after typed health dropped below
+its six-point loss predicate; the matching input lease released keys/buttons
+early and then closed at an empty terminal. Independent score was one kill,
+zero deaths and no map exit. The first audit's PNG-count assumption failed on
+one exact unchanged AIT reuse; a versioned pixel audit passes on Windows/WSL.
+See [v39 coast liveness result](research/doom/MAP01_V39_COAST_LIVENESS_LIVE_V1.md).
+
 The frozen v38 integrated MAP01 run admitted one schema-v6 model plan with an
 exact `running-action-v3` program/lease binding. Four of six pending answers
 were interrupted when health fell below unauthored empty-cover hard minima; one other active

@@ -2,6 +2,13 @@
 
 ## Unreleased — 2026-09-13 research update
 
+- Repair the v38 unauthored empty-coast interrupt loop in v39, freeze and run
+  one same-fixture six-turn episode. Three coast decisions can retain pending
+  model answers through damage; 3/6 plans are admitted, and one running plan
+  is revoked from typed health evidence with verified early physical release.
+  First audit fails on one permitted unchanged-frame AIT/PNG reuse; retain it
+  and pass a separately versioned pixel/hash audit on Windows/WSL. Independent
+  outcome one kill, no death/exit; do not infer paired speed or clear.
 - Execute the frozen v38 integrated MAP01 allocation once. Schema-v6 model
   input and exact running-program binding work under live threat; 1/6 plans is
   admitted, four runtime zero-loss coast floors invalidate pending answers, and one
