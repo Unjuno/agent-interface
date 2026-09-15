@@ -322,3 +322,16 @@ and156.657ms before terminal. Treat this as one Chromium predicate transfer.
 Next make the crop target-relative and test surface translation/resize against
 existing freshness and target-handle boundaries. See
 `CHROMIUM_SEMANTIC_PROBE_TRANSFER_V1.md`.
+
+
+## Target-relative semantic geometry
+
+The Chromium crop is now stored in `window_content` coordinates and evaluated
+against a coherent current surface binding. V1 moved the real surface `[21,28]`
+but the executor safely refused before input because its last observation still
+described the old geometry. V2 added one passive post-move snapshot and passed:
+the relative predicate followed the move, the fixed crop failed on the same
+frame, and a later width change refused before crop hashing. Useful feedback was
+275.781ms after admission,23.828ms before PNG and134.919ms before terminal. The
+next boundary should derive this region from a verified target handle and perform
+bounded local repair after resize. See `TARGET_RELATIVE_SEMANTIC_PROBE_V1.md`.

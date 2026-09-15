@@ -595,3 +595,10 @@ submission feedback in286.471ms,24.767ms before its PNG and156.657ms before
 terminal; the independent saved token and empty release matched. The first
 allocation's checker failure remains retained. See
 [`research/live_control/CHROMIUM_SEMANTIC_PROBE_TRANSFER_V1.md`](research/live_control/CHROMIUM_SEMANTIC_PROBE_TRANSFER_V1.md).
+
+The Chromium semantic predicate now follows an actual same-surface window
+translation. A fixed-screen control rejected the moved frame, while the
+window-content predicate delivered useful feedback in275.781ms and refused a
+later resize before reading stale crop pixels. The first stale-binding refusal
+remains retained. See
+[`research/live_control/TARGET_RELATIVE_SEMANTIC_PROBE_V1.md`](research/live_control/TARGET_RELATIVE_SEMANTIC_PROBE_V1.md).
