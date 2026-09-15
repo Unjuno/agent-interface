@@ -1,0 +1,73 @@
+{
+  "base_commit": "7356970b15406c74bd2b404327f39c2e6b546022",
+  "canonical_upstream_sha256": {
+    "research/doom/analyze_map01_direct_retained_input_v1.py": "163a32ce20516bdfc034eb4c6659141e53e3ef11b8526372042fb5e9d509e63a",
+    "research/doom/doom_retained_input_backend_v3.py": "cad7de4769e574f78663e8351a8c2f8c714d51dfa7f9c41bcfb9716f06bef309",
+    "research/doom/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "research/doom/main_thread_scorer_polling_v1.py": "0a82819748603b77726d3d7053da7f6cba5cf0a0d5bcd9a79f4272554cf6af0a",
+    "research/doom/map01_telemetry_session_v1.py": "0234712e1f2d4972b8cbcf4934b10b5b9581b2625e0a3bc4e2845f1e74897ef2",
+    "research/doom/session_map01_v12.py": "92658baccea4c412196ecfa613a5f8ef8e6d0fb674762bcde5968222c31aba7f",
+    "research/live_control/input_transition_owner_v3.py": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6"
+  },
+  "decision": "RETAIN_INTEGRATION; FREEZE_ONE_NO_MODEL_LIVE_VALIDATION; DO_NOT_RUN_RECOVERY_VS_COAST_YET",
+  "design": {
+    "audit": "all runtime source hashes verified; direct analyzer measurement-ready; batch provenance complete; terminal empty input; zero scorer leakage; zero missed scorer periods",
+    "coherence": "bounded 3-attempt same-episode-tic bracketing; fail closed if no one-tic sample",
+    "isolation": "scorer samples/events only scorer-* files; v12 events/delivered unchanged",
+    "progress_clock": "terminal-locked v2",
+    "release": "retained v3 per-key direct transition; no sample/publication between key releases",
+    "scorer": "35 Hz readiness-driven same-main-thread sampling through stdin adapter",
+    "session": "session_map01_v13 wraps unchanged v12"
+  },
+  "environment_block": {
+    "local_vizdoom_or_freedoom_artifact": "not found",
+    "meaning": "no real MAP01 v13 outcome is claimed from this container",
+    "pip_install_vizdoom_1_3_0": "failed DNS resolution",
+    "vizdoom_import": "ModuleNotFoundError"
+  },
+  "next_allocation": "map01-measurement-integration-live-02; one run/no retry/no model in repo-backed Linux/WSL with ViZDoom 1.3.0",
+  "schema": "map01-measurement-session-integration-construction-v2",
+  "sink_benchmark": {
+    "environment": {
+      "cpu_affinity": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "kernel": "6.18.44",
+      "python": "3.13.5"
+    },
+    "per_sample_us": {
+      "max": 26.832069999999998,
+      "median": 22.241949,
+      "min": 21.102541000000002
+    },
+    "repetitions": 15,
+    "samples_per_rep": 1000,
+    "scope": "API-compatible ProgressClock v2 + scorer sample JSONL development benchmark only; excludes ViZDoom/X11/model and is not a live cadence guarantee"
+  },
+  "source_sha256": {
+    "research/doom/audit_map01_measurement_integration_v1.py": "b2bf315d202bdb99423527de2c775b2c81d4b425b5d16e9eb00887ca4fe47ded",
+    "research/doom/map01_scorer_stdio_adapter_v1.py": "0ba57b240b37d04042915d243d149a1bb65ac689732dfc8e48fb60e880f0198a",
+    "research/doom/probe_map01_measurement_integration_v1.py": "ad9178a8998d20629126389d1232f900864ef50d1b3c6de890f814449403b47f",
+    "research/doom/session_map01_v13.py": "1a6da676db9c6b2aa61ccf0f600a1565395e906736bb07a50b2006e100d7ca98",
+    "research/doom/test_audit_map01_measurement_integration_v1.py": "3c2aa20089ff1147c2f3ac5d7133bfa79f4246aa331108b705b944379e80373d",
+    "research/doom/test_map01_scorer_stdio_adapter_v1.py": "4b91297b9693752e605aa36bdbc641ea93154417e6e4b66285b990dce4849e3b",
+    "research/doom/test_session_map01_v13.py": "d9e550e5d6e2bcf3f93c603138cecf66b8bbba1dca7593dcc420f984d37f413a"
+  },
+  "status": {
+    "container_tests": "PASS_16_OF_16",
+    "integration_construction": "PASS",
+    "py_compile": "PASS",
+    "real_map01_episode": "NOT_RUN_ENVIRONMENT_BLOCK",
+    "recovery_policy_allocation": "NOT_AUTHORIZED"
+  },
+  "upstream_evidence": {
+    "main_thread_polling_commit": "2786cd73bac40c87f2d779149a2dfe5e9b29fc2a",
+    "progress_clock_v2_commit": "a0abe6cf31bd68a416c02fa417baab3704533bfc",
+    "release_telemetry_v3_commit": "ceda6ab15beca499918abd42ca78e86df317cd57",
+    "synthetic_session_commit": "7356970b15406c74bd2b404327f39c2e6b546022"
+  }
+}
