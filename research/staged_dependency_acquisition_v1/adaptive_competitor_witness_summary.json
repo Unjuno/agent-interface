@@ -1,0 +1,33 @@
+{
+  "schema": "adaptive-competitor-witness-v1",
+  "seed": 20260916,
+  "attempts": 100000,
+  "scored": 99805,
+  "skipped_no_unique_plan": 195,
+  "mutation_model": "each predicate stays at plan value with probability 0.8; otherwise changes uniformly to another ternary value",
+  "full_union_distinct_predicates": {"mean": 4.3033214768799155, "median": 5},
+  "modes": {
+    "selected_only": {
+      "correct": 96849,
+      "stale_accept": 2956,
+      "false_reject": 0,
+      "mean_distinct_predicates_checked": 1.9287410450378237,
+      "median_distinct_predicates_checked": 2
+    },
+    "frozen_witness": {
+      "correct": 94955,
+      "stale_accept": 0,
+      "false_reject": 4850,
+      "mean_distinct_predicates_checked": 2.654125544812384,
+      "median_distinct_predicates_checked": 3
+    },
+    "adaptive_witness": {
+      "correct": 99805,
+      "stale_accept": 0,
+      "false_reject": 0,
+      "mean_distinct_predicates_checked": 2.7181503932668702,
+      "median_distinct_predicates_checked": 3
+    }
+  },
+  "decision": "RETAIN adaptive false-witness fast path as a semantic evaluation strategy for uncertified branch sets. Frozen witness alone is sound but over-rejects; selected-only is incomplete. Physical latency is unmeasured."
+}
