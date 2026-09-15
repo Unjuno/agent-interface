@@ -31,3 +31,10 @@ remains failed and will not be rerun.
 
 There is no token advantage, recovery-time advantage, semantic completion,
 general reliability, portability or human-tempo claim from this allocation.
+
+The first repair is now implemented without another model call. The v2 invocation
+adapter classifies the retained capacity trace as `DEFERRED_UPSTREAM`; the
+admission layer converts it to `TASK_DEFERRED` with no grounding reference,
+usage or authority. A retained completed Luna trace becomes task-mutation
+eligible but still requires ordinary Executor admission. See
+`SEMANTIC_GROUNDING_ADMISSION_V1.md`.

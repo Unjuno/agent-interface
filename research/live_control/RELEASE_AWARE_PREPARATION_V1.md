@@ -360,3 +360,14 @@ independent Windows/WSL failure audits and remains failed without retry. The nex
 version must type upstream invocation failures and establish an explicit
 service-admission/defer boundary before task input. See
 `MATCHED_SEMANTIC_REPAIR_V1.md`.
+
+
+## Typed model-service admission
+
+The retained capacity result now maps to `DEFERRED_UPSTREAM` and then
+`TASK_DEFERRED`, with no grounding reference, usage, semantic authority or input
+authority. Validated completion alone is task-mutation eligible and still cannot
+bypass ordinary Executor admission. Other process failure and invalid exit0
+output remain separate blocked states. Seven Windows/WSL replay and negative
+controls pass without a new model or GUI call. See
+`SEMANTIC_GROUNDING_ADMISSION_V1.md`.
