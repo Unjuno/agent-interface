@@ -39,10 +39,11 @@ combat transition.
 
 The liveness result remains weak. Decisions0,1,2,5 invalidated on
 `below_hard_minimum`; decision4 invalidated on source expiry; only decision3
-admitted an action. Cover-validity soft events were0. The first completed
-planner answer had an authored cover policy, but its source lease expired
-during the approximately11.78s model interval, so it was discarded before
-new input. The remaining four interrupted-turn usage records are unavailable
+admitted an action. Cover-validity soft events were0. Decision3 completed
+and authored the next cover. During decision4's approximately11.78s model
+interval, that prior cover's source lease expired, so decision4's returned
+answer was discarded before new input. The remaining four interrupted-turn
+usage records are unavailable
 and may contain repeated cumulative notifications; do not sum them as zero or
 infer a six-turn total from the two complete receipts. The preflight usage is
 separate from gameplay usage.
