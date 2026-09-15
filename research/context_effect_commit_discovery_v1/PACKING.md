@@ -6,9 +6,9 @@ Whole archive SHA-256:
 
 `4e55729ae7a28464d98d81601072f1951404c4624d6210e2911002b51501e039`
 
-The archive contains all four run directories, raw JSONL, effect/rejection receipts, Xvfb logs, frames, manifests, runner sources, per-rung audits, cross-run audit v2, corruption tests, imported source snapshots, `AGGREGATE.json`, and `REPORT.md`.
+The archive contains all four run directories, raw JSONL, effect/rejection receipts, Xvfb logs, frames, manifests, exact runner sources, per-rung audits, cross-run audit v2, corruption tests, imported source snapshots, `AGGREGATE.json`, and `REPORT.md`.
 
-The GitHub research branch intentionally retains the readable runners, aggregate, report, and independent audits. **The binary raw-evidence archive is not stored in GitHub by this commit.** Do not treat the branch as byte-complete raw retention. The local/archive artifact must be retained separately if the row-level raw evidence is required.
+The GitHub research branch retains the report, compact summary, independent cross-run auditor, and corruption controls. **It does not retain the binary raw-evidence archive or the exact runner files.** Their SHA-256 values are listed in `SUMMARY.json`. Therefore this branch is not byte-complete raw retention and must not be described as independently rerunnable without the separately retained archive.
 
 Offline validation of an extracted complete archive:
 
