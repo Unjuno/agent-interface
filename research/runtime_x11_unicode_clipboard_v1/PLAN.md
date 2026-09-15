@@ -8,7 +8,7 @@ Fixed formal order: **Writer, then Calc**. Each arm uses a fresh private Xvfb/Op
 
 A separate clipboard-owner process first owns UTF-8 text `PREVIOUS-αβ`. Before fresh execution, a stale-observation program must be refused with no owner/text change. Fresh execution acquires the editable surface, leases CLIPBOARD, pastes the payload, restores the previous UTF-8 text while the lease remains alive, saves, verifies empty physical input, and records the X keymap before/after. Calc additionally accepts the deterministic Text Import and XLSX-format dialogs. Durable artifacts are scored only after executor completion by a separate ODT/XLSX scorer.
 
-Formal result ID: `x11-unicode-clipboard-v1-20260916-01`. Each arm runs once; no failure-driven replacement or rerun.
+Successor formal result ID after the retained harness failure: `x11-unicode-clipboard-v1-20260916-02`. The prior `-01` result is immutable and must not be rerun. The successor matrix invocation MUST pass an absolute `--out` path so LibreOffice profile `file://` URIs are absolute. Each arm runs once; no failure-driven replacement or rerun.
 
 ## D
 `SCOPED_UNICODE_PASS` requires both apps exact, stale refusal before clipboard/input mutation, previous UTF-8 content restored while lease alive, unchanged keyboard map, and empty terminal physical input.
