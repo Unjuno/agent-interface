@@ -1,0 +1,25 @@
+{
+  "all_release_verified": true,
+  "death_count": 3,
+  "death_wall_ms": {"max": 3105.932883, "median": 3102.498093, "min": 3101.972372},
+  "exit_count": 3,
+  "exit_wall_ms": {"max": 1047.031718, "median": 1046.990746, "min": 1037.563426},
+  "live_mechanism_result": "PASS_6_OF_6",
+  "measured_cases": [
+    {"death_count":0,"id":"r1-exit","kind":"exit","map_exit":true,"outcome_source_tic":0,"player_dead":false,"release_verified":true,"scorer_missed_periods":0,"terminal_status":"completed","termination_kind":"MAP_EXIT","wall_control_ms":1046.990746},
+    {"death_count":1,"id":"r1-death","kind":"death","map_exit":false,"outcome_source_tic":145,"player_dead":true,"release_verified":true,"scorer_missed_periods":0,"terminal_status":"expired","termination_kind":"DEAD","wall_control_ms":3102.498093},
+    {"death_count":1,"id":"r2-death","kind":"death","map_exit":false,"outcome_source_tic":147,"player_dead":true,"release_verified":true,"scorer_missed_periods":0,"terminal_status":"expired","termination_kind":"DEAD","wall_control_ms":3105.932883},
+    {"death_count":0,"id":"r2-exit","kind":"exit","map_exit":true,"outcome_source_tic":0,"player_dead":false,"release_verified":true,"scorer_missed_periods":0,"terminal_status":"completed","termination_kind":"MAP_EXIT","wall_control_ms":1047.031718},
+    {"death_count":0,"id":"r3-exit","kind":"exit","map_exit":true,"outcome_source_tic":0,"player_dead":false,"release_verified":true,"scorer_missed_periods":0,"terminal_status":"completed","termination_kind":"MAP_EXIT","wall_control_ms":1037.563426},
+    {"death_count":1,"id":"r3-death","kind":"death","map_exit":false,"outcome_source_tic":147,"player_dead":true,"release_verified":true,"scorer_missed_periods":0,"terminal_status":"expired","termination_kind":"DEAD","wall_control_ms":3101.972372}
+  ],
+  "posthoc_semantic_audit": "PASS_6_OF_6",
+  "prefreeze_github_commit": "c5b996b4e0f02471f97d744e32916251e37a3036",
+  "prefrozen_audit_result": "FAIL_0_OF_6_AUDIT_TOOLING_EMIT_NS",
+  "prefrozen_audit_unique_failure": ["driver score diverges from first score.json"],
+  "publication_base": "d7d46bbababe186853da2e338f69382fa1070259",
+  "runtime_base": "9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+  "schema": "runtime-outcome-fullsession-result-v1",
+  "scope": "tiny authored PWADs through full session/Executor/InputOwner; confirms classifier integration, not normal Freedoom MAP01 completion or production rollout",
+  "scorer_missed_periods_total": 0
+}
