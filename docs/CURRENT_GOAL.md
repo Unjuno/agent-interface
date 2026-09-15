@@ -1,3 +1,14 @@
+Current direction (r97): the first actual planner-overlap allocation ran once and
+passed. Same Inkscape PNG yielded exact bbox[596,373,643,408]/center[619,390].
+Early candidate completed77.638ms before terminal-first139.137ms. After terminal
+reconciliation and identical fresh-PNG validation, useful-ready was136.273ms vs
+164.592ms, a28.319ms advantage; prepared candidate input stayed zero. Release was
+17.787ms, early client26.378ms, terminal client111.557ms. Twelve files/266,171
+bytes are retained; Windows/WSL audits pass. Next bind one freshly revalidated
+candidate to a new Executor acceptance and independently score visible selection
+effect/release, then compare end-to-end semantic completion. No model/token/
+general human-tempo claim; no subagent/context handoff; full goal open.
+
 Current direction (r96): freeze the first actual planner-overlap comparison.
 Same-stream early-release and terminal-first clients scan the identical Inkscape
 initial PNG for one exact red rectangle, prepare the same click candidate, then
