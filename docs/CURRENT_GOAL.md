@@ -1,3 +1,13 @@
+Current direction (r106): freeze an exact-frame semantic probe comparison. The
+candidate scores the already reconstructed RGB frame with bounded NumPy ROI
+slices, emits a frame digest/no authority, then separately reconciles the durable
+PNG to that digest. Retained v4 false004/true005 frames run16 ABBA cycles,64
+samples/mode against the old path/Pillow loop. All semantic fields and both exact
+frames must reconcile; frame median≤5ms and≤25% of path median. One run/no retry/
+model, exact hashes/output absent;6 tests and freeze checks pass Windows/WSL.
+Next commit, run/audit once and retain any result. This is scorer compute only,
+not yet live latency/model/token/general performance; no subagent/context handoff.
+
 Current direction (r105): prepared-selection v4 ran exactly once and passed.
 Early client3.115ms vs terminal83.150ms; early useful readiness105.835ms vs
 terminal-first133.249ms, a27.413ms advantage. The new selection was accepted at

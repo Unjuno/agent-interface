@@ -156,3 +156,21 @@ model, retry or cancellation. It establishes neither token reduction, general
 speedup nor human-tempo operation. The next comparison should reduce recognition
 time with an incremental or in-memory scorer while reconciling its result to the
 exact retained frame.
+
+## Frozen exact-frame probe comparison
+
+The first recognition refinement moves the same selection predicate onto the
+already reconstructed exact RGB frame. It computes red support and four handle
+zones with bounded NumPy slices, emits a dimensions-and-pixels frame digest and
+grants no input authority. A separate reconciliation reopens the durable PNG and
+requires the same exact-frame digest, retaining artifact SHA separately.
+
+The offline seed-free allocation compares the old path/Pillow pixel-loop scorer
+with the frame probe on retained v4 `004.png` (first feedback, false) and
+`005.png` (first useful feedback, true). Sixteen ABBA cycles produce64 samples
+per mode. Every semantic field must match, both artifacts must reconcile, frame
+median must be at most5ms and at most25% of path median. One run/no retry/model,
+exact source hashes and absent output are frozen. Six equivalence tests and
+freeze verification pass on Windows/WSL. Run once under WSL, audit and retain the
+first outcome. This isolates scorer compute only; it cannot claim a live latency
+gain until integrated before artifact publication.

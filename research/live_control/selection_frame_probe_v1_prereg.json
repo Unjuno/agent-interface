@@ -1,0 +1,41 @@
+{
+  "schema": "selection-frame-probe-preregistration-v1",
+  "allocation_id": "selection-frame-probe-01",
+  "episodes": 1,
+  "retry_limit": 0,
+  "model_calls": 0,
+  "source_image": "research/live_control/results/release-prepared-selection-live-04/001.png",
+  "images": [
+    "research/live_control/results/release-prepared-selection-live-04/004.png",
+    "research/live_control/results/release-prepared-selection-live-04/005.png"
+  ],
+  "roi": [
+    520,
+    330,
+    720,
+    470
+  ],
+  "cycles": 16,
+  "order": [
+    "path",
+    "frame",
+    "frame",
+    "path"
+  ],
+  "thresholds": {
+    "frame_median_lte_ms": 5.0,
+    "ratio_lte": 0.25
+  },
+  "output": "results-local/live_control/selection-frame-probe-01",
+  "source_sha256": {
+    "research/live_control/benchmark_selection_frame_probe_v1.py": "44da27428fb90e8fea98d89e293a7253837c1279708a04907e0dfa619fa53e08",
+    "research/live_control/audit_selection_frame_probe_v1.py": "9b59a845179f2fcc993bc0356e0f131212c3496ecba69a9e9c643381cd44f50e",
+    "research/live_control/inkscape_selection_frame_probe_v1.py": "b7d21eb76741b84120730334f21ef0692c13f10b2a49064ca7386ae4d877ab42",
+    "research/live_control/inkscape_selection_scorer_v2.py": "a2ae1fa54b1ecc8e06bf0335c5a3f0b03c1634ef3edb3312ef03806c57fe2f5f",
+    "research/live_control/inkscape_red_target_planner_v1.py": "9499ac208d7534acd416c83024b64a735d06a04145ae94c0a85949226e9492d5",
+    "research/live_control/results/release-prepared-selection-live-04/001.png": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "research/live_control/results/release-prepared-selection-live-04/004.png": "d8b1e79f0e6c02b1641db9d8e5183291686a1bedb61f6032701bf93dc6924d7b",
+    "research/live_control/results/release-prepared-selection-live-04/005.png": "eae5e73e7eff311524b4a0539e56cf7519a4852b277dbe14e7cdf66d16b5669f"
+  },
+  "scope": "offline matched timing on two retained exact Inkscape feedback frames; existing path/Pillow pixel-loop scorer versus already-reconstructed frame/numpy ROI probe; semantic equivalence and exact-frame artifact reconciliation required; no live input, model, token, task-success, general speedup or human-tempo claim"
+}

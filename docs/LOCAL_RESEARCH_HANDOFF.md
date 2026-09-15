@@ -1,3 +1,12 @@
+Current handoff r106: exact-frame semantic probe comparison is frozen. It scores
+the already reconstructed RGB frame with NumPy ROI slices and later reconciles
+its dimensions-and-pixels digest to the durable PNG. Retained v4 false004 and
+true005 run16 ABBA cycles,64 samples/mode versus old path/Pillow pixel loops.
+Semantic fields and both frames must match; candidate median≤5ms and≤25% baseline.
+One run/no retry/model, exact hashes/output absent;6 tests/freeze checks pass both
+OSes. Commit before one WSL run, audit and retain any outcome. Offline compute
+only; no live/model/token/general claim or subagent/context handoff.
+
 Current handoff r105: seed205 prepared-selection v4 ran exactly once and passed.
 Early client3.115ms vs terminal83.150ms; prepared useful readiness105.835ms vs
 133.249ms. New action acceptance was252.015ms after focus. First feedback capture
