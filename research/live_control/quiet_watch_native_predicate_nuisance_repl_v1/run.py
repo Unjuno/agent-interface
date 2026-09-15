@@ -82,7 +82,8 @@ def summarize(records):
         pm,nm=metrics(p),metrics(n)
         rows.append({'pair_id':pid,'python':pm,'native':nm,'cpu_ratio':nm['cpu_ms']/pm['cpu_ms'],'wall_ratio':nm['wall_ms']/pm['wall_ms'],'max_gap_ratio':nm['max_gap_ms']/pm['max_gap_ms']})
     cpu=[x['cpu_ratio'] for x in rows]; wall=[x['wall_ratio'] for x in rows]; gap=[x['max_gap_ratio'] for x in rows]
-    stable=sum(x<=1.10 for x in gap); safety=all(integrity(r) for r in records)
+    stable=sum(x<=1.10 for x in gap)
+    safety=all(integrity(r) for r in records)
     decision='REPLICATE_STABLE_SCOPED' if safety and statistics.median(cpu)<=0.80 and statistics.median(wall)<=0.90 and statistics.median(gap)<=1.10 and stable>=8 else ('FAIL_SAFETY_OR_SEMANTICS' if not safety else 'HOLD_GAP_STABILITY')
     return {'pairs':rows,'median_cpu_ratio':statistics.median(cpu),'median_wall_ratio':statistics.median(wall),'median_max_gap_ratio':statistics.median(gap),'pairs_gap_ratio_le_1_10':stable,'pair_count':len(rows),'safety_integrity_all':safety,'decision':decision}
 
