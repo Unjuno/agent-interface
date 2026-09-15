@@ -1,3 +1,11 @@
+Current handoff r112: matched v2 repairs only the health-bound mismatch. Frame
+first≤200ms remains; path gets≤260ms, above v1's216.580–222.920 but below its
+semantic≤400ms. All identity/program/correctness/2-exchange/reconciliation/
+2-step-empty-release requirements and semantic median advantage≥25ms remain.
+Seed202, same balanced8-arm order, one allocation/no retry/model/cancel,40 hashes,
+output absent; tests/freeze pass both OSes. Commit, run/audit once, retain any
+result. V1 remains failed; no broader claim/subagent/context handoff.
+
 Current handoff r111: matched v1 ran once and is retained failed. Four frame arms
 passed. Four path arms had correct identical task/program, false→true, selection,
 2 exchanges,2-step empty release, but common first≤200ms failed at216.580–222.920.

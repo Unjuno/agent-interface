@@ -54,6 +54,19 @@ candidate and baseline first-feedback health bounds while preserving every
 identity, correctness, release, exchange and aggregate threshold. V1 must not be
 rerun or reclassified.
 
+Matched v2 changes only the incompatible health bound. Frame first feedback
+remains limited to200ms; the path baseline receives a separate260ms ceiling,
+above v1's observed216.580–222.920ms range but below its400ms semantic-ready
+ceiling. The≥25ms median advantage, per-mode semantic-ready limits, same
+candidate/program, false-then-true semantics, two exchanges, independent score,
+exact reconciliation and empty release remain unchanged.
+
+Seed202 provides eight new sessions in the same balanced order. One allocation/
+no retry/model/cancel,40 source hashes and absent output are frozen. WSL's12
+focused tests pass; Windows passes11 with the expected Unix-socket skip. Freeze
+verification passes on both. Commit, run exactly once, audit and retain any
+outcome; v1 remains formally failed.
+
 The allocation ran once and passed its frozen audit. Release was verified at
 17.787ms and the early client returned at26.378ms. Early candidate preparation
 completed77.638ms after focus request, before terminal at approximately110.755ms;

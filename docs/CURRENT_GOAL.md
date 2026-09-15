@@ -1,3 +1,12 @@
+Current direction (r112): matched v2 changes only v1's incompatible health bound.
+Frame first-feedback stays≤200ms; path baseline gets≤260ms versus v1 observed
+216.580–222.920ms and separate semantic≤400ms. Same-seed identity/program,
+false→true,2 exchanges, independent selection, frame reconciliation,2-step empty
+release, frame/path semantic medians≤260/400ms and advantage≥25ms remain. Seed202,
+same balanced8-arm order, one allocation/no retry/model/cancel,40 hashes/output
+absent. Tests/freeze pass WSL and Windows (one expected Unix skip). Commit then
+run/audit once and retain any outcome; v1 stays failed; no broader claim/handoff.
+
 Current direction (r111): matched live v1 ran once and is retained failed. All4
 frame arms passed. All4 path arms passed identity/program/false→true/independent
 selection/2 exchanges/2-step empty release but missed a common candidate-oriented
