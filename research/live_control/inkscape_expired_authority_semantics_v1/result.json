@@ -1,0 +1,91 @@
+{
+  "base_commit": "0bf4103e69e4108f92a153e38a5ea1f7253f1f93",
+  "decision": "FAIL_DIRECT_UPGRADE_RETAIN_SEMANTIC_MISMATCH",
+  "diagnostic_counterfactual_relabel_and_single_capture": {
+    "accepted": false,
+    "error": "post-authority observation outside lifecycle deadline"
+  },
+  "diagnostic_counterfactual_relabel_only": {
+    "accepted": false,
+    "error": "exactly one passive post-authority capture required"
+  },
+  "environment": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5"
+  },
+  "evidence_only_receipt": {
+    "buttons_down": [],
+    "keys_down": [],
+    "post_authority": {
+      "captures": 2,
+      "error": null,
+      "grants_input_authority": false,
+      "sequence_advanced": true,
+      "tail_program_steps_resumed": 0
+    },
+    "post_release_input_admissions": 0,
+    "release_verified": true,
+    "steps_completed": 0,
+    "terminal_status": "expired"
+  },
+  "hard_gate_pass": true,
+  "limits": [
+    "retained artifact/source audit only",
+    "no live GUI",
+    "no model",
+    "no OS input",
+    "no network side effects"
+  ],
+  "provenance": {
+    "buttons_down": {"required": [], "source": "terminal.release.buttons_down", "status": "DIRECT", "value": []},
+    "keys_down": {"required": [], "source": "terminal.release.keys_down", "status": "DIRECT", "value": []},
+    "post_authority.captures": {"required": 1, "source": "terminal.post_release_observation.captures", "status": "CONTRADICTORY", "value": 2},
+    "post_authority.error": {"required": null, "source": "terminal.post_release_observation.error", "status": "DIRECT", "value": null},
+    "post_authority.grants_input_authority": {"required": false, "source": "terminal.post_release_observation.authority == \"none; no input or lease renewal\"", "status": "DERIVED", "value": false},
+    "post_authority.lifecycle_deadline_ns": {"required": "int", "source": "only old command valid_until_ns exists; it expired before release and both post-release captures", "status": "UNAVAILABLE", "value": null},
+    "post_authority.sequence": {"required": "one positive int for exactly one capture", "source": "terminal.post_release_observation.sequences; legacy contract retains two captures and no canonical selection rule", "status": "AMBIGUOUS", "value": [7, 8]},
+    "post_authority.sequence_advanced": {"required": true, "source": "min(post sequences) > last pre-release observation sequence", "status": "DERIVED", "value": true},
+    "post_authority.snapshot_finished_ns": {"required": "int", "source": "legacy observations expose capture_ns/image_ready_ns/input-state sampling times, but no field with the newer snapshot_finished_ns contract", "status": "UNAVAILABLE", "value": null},
+    "post_authority.tail_program_steps_resumed": {"required": 0, "source": "no program-step/input events after input_stopped; retained followup says no further program steps", "status": "DERIVED", "value": 0},
+    "post_authority.within_lifecycle_deadline": {"required": true, "source": "no retained post-authority lifecycle-deadline assertion/field", "status": "UNAVAILABLE", "value": null},
+    "post_release_input_admissions": {"required": 0, "source": "count(events after release before terminal where event=input_admission)", "status": "DERIVED", "value": 0},
+    "release_verified": {"required": true, "source": "terminal.release.verified", "status": "DIRECT", "value": true},
+    "steps_completed": {"required": "nonnegative int", "source": "terminal.steps_completed", "status": "DIRECT", "value": 0},
+    "terminal_status": {"required": "authority_ended", "source": "terminal.status", "status": "CONTRADICTORY", "value": "expired"}
+  },
+  "schema": "inkscape-expired-authority-semantics-v1-result",
+  "source_identities": {
+    "bridge_git_blob_sha1": "9fcfdce5229cb58b3d1a17aacbcef0cb44bd10f1",
+    "bridge_sha256": "2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e",
+    "collector_git_blob_sha1": "83b7ebda20cc2aa499ca3e9f7ee18ce8bb291e07",
+    "collector_sha256": "d53cf8ca86d4a932467313da8ac7400748511792c7da60b1d365caf246b01be7",
+    "probe_git_blob_sha1": "3c6e3ad67199ad530a1ae9ef64c34cd543022790",
+    "probe_sha256": "3bb2f3f5255c08dd7dd04e2b212b6ed9444bc9fcdc34e02a874066518ddac045",
+    "source_git_blob_sha1": "aae6d81013e479d2ad1f2f068ccc4c8ad5c8c653",
+    "source_path": "research/live_control/results/expiry-observation-01/runtime/events.jsonl"
+  },
+  "timing": {
+    "first_capture_minus_old_deadline_ns": 95018835,
+    "first_image_ready_minus_old_deadline_ns": 106308401,
+    "first_image_ready_ns": 6761944948,
+    "first_post_capture_ns": 6750655382,
+    "old_command_valid_until_ns": 6655636547,
+    "old_deadline_reusable_for_post_authority": false,
+    "release_minus_old_deadline_ns": 1344937,
+    "release_verified_ns": 6656981484,
+    "second_capture_minus_old_deadline_ns": 206594770,
+    "second_post_capture_ns": 6862231317
+  },
+  "unchanged_bridge_first_result": {
+    "accepted": false,
+    "error": "scheduled authority_ended status required"
+  },
+  "unsupported_or_contradictory_fields": [
+    "terminal_status",
+    "post_authority.captures",
+    "post_authority.sequence",
+    "post_authority.within_lifecycle_deadline",
+    "post_authority.snapshot_finished_ns",
+    "post_authority.lifecycle_deadline_ns"
+  ]
+}
