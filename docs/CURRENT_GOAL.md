@@ -1,3 +1,12 @@
+Current direction (r107): exact-frame semantic probe comparison ran once and
+passed.64 samples/mode: old path scorer median34.696ms/p95 42.365ms; reconstructed-
+frame probe median2.320ms/p95 2.630ms,32.376ms median advantage and0.0669 ratio.
+False004/true005 semantic fields match and both frame digests reconcile to exact
+PNG artifacts.3 files/197,729 bytes retained; independent audits pass Windows/
+WSL. Next integrate the no-authority probe before PNG publication in one distinct
+live allocation and reconcile afterward. No event-detection/live/model/token/
+general gain yet; no subagent/context handoff; full goal open.
+
 Current direction (r106): freeze an exact-frame semantic probe comparison. The
 candidate scores the already reconstructed RGB frame with bounded NumPy ROI
 slices, emits a frame digest/no authority, then separately reconciles the durable

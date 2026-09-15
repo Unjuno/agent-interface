@@ -174,3 +174,16 @@ exact source hashes and absent output are frozen. Six equivalence tests and
 freeze verification pass on Windows/WSL. Run once under WSL, audit and retain the
 first outcome. This isolates scorer compute only; it cannot claim a live latency
 gain until integrated before artifact publication.
+
+The allocation ran once and passed. Across64 samples per mode, the old path
+scorer median was34.696ms and p95 was42.365ms. The exact-frame probe median was
+2.320ms and p95 was2.630ms: a32.376ms median compute advantage and a0.0669 ratio.
+The false/true result pair and every retained semantic field matched, and both
+frame digests reconciled to their exact PNG artifacts.
+
+Three files/197,729 bytes before retention receipt pass independent Windows/WSL
+audits. This supports replacing the scorer's PNG-open/Python-pixel-loop compute
+once the exact frame already exists. It does not measure event detection, PNG
+publication or integrated live completion. The next live allocation must run the
+probe on the reconstructed frame before artifact publication, retain its result,
+then reconcile it to the published PNG without using the probe as input authority.

@@ -1,3 +1,11 @@
+Current handoff r107: frozen exact-frame probe comparison ran once and passed.
+Old path median34.696ms/p95 42.365ms; reconstructed-frame median2.320ms/p95
+2.630ms across64 samples/mode,32.376ms median advantage/0.0669 ratio. False004
+and true005 semantics match exactly; both frame digests reconcile to durable PNG.
+Three files/197,729 bytes retained and audit both OSes. Next distinct live run
+must probe before PNG publication and reconcile afterward, with no input authority.
+No live/model/token/general claim or subagent/context handoff; full goal open.
+
 Current handoff r106: exact-frame semantic probe comparison is frozen. It scores
 the already reconstructed RGB frame with NumPy ROI slices and later reconciles
 its dimensions-and-pixels digest to the durable PNG. Retained v4 false004 and
