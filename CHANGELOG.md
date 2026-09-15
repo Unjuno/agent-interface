@@ -2,6 +2,15 @@
 
 ## Unreleased — 2026-09-13 research update
 
+- Retain the previously frozen schema-v6 MAP01 endpoint preflight as compatible
+  after one Luna-low/no-image call;8,125 input and43 output tokens are separate
+  from gameplay.
+- Run the frozen v32 real-time final-admission episode once. Five of six model
+  decisions are invalidated before plan input; one plan is accepted. A
+  completed/eligible planner answer loses to a12.214s expired cover source
+  before input. All ten accepted programs release; one kill, no death or map
+  exit. Retain raw traces and Windows/WSL audits without promoting completion.
+
 - Preregister and retain a two-context OpenTTD transfer of current-only,
   full pre/post frames and bounded action-effect crop. Independent engine
   transitions establish both road effects. Current-only/full were2/2, while

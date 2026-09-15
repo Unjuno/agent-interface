@@ -1264,6 +1264,24 @@ because mutations differ. See
 
 ## Latest follow-up — action-grounded crop provenance is retained (2026-09-15)
 
+The frozen MAP01 schema-v6 endpoint preflight has now returned compatible
+after one Luna-low no-image request (8,125 input/43 output); this establishes
+format compatibility only. The separately frozen v32 final-admission test
+ran six Luna-low turns in continuously advancing, enemy-visible Freedoom.
+One primary plan reached Executor acceptance, while five model decisions were
+rejected after observed policy invalidation. Decision4 specifically completed
+and was answer-eligible, but an exact monitor evaluation found its cover source
+expired at12,214.235ms before controller admission; interrupt reported
+`already_terminal`, final receipt rejected, and no plan-4 input began. Ten
+accepted cover/plan programs all released empty. Independent score: one kill,
+zero deaths, no MAP01 exit after59.752s control/57.150s model-wall. The live
+race gate passes, but useful planning continuity remains weak (0 soft events,
+1/6 plan admissions). Retained hashes and raw audits pass both OSes. Next test
+the existing v38 integrated schema-v6/typed running-guard/two-phase-release
+path under a separately frozen live threat exposure; no lease is extended from
+unchanged health alone. See `research/doom/MAP01_V32_FINAL_ADMISSION_LIVE_V1.md`.
+
+
 The cross-domain OpenTTD transfer has now run once on two archived, independently
 engine-verified road effects. Exact current screens and prompts were shared
 within each context; current-only, full pre/post frames and bounded action

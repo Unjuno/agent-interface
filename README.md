@@ -633,6 +633,16 @@ acquisition charged, cumulative input is 63,128/63,779/26,563 and elapsed time i
 reliability claim. See
 [`research/live_control/INTEGRATED_EFFICIENCY_LIVE_V1.md`](research/live_control/INTEGRATED_EFFICIENCY_LIVE_V1.md).
 
+The frozen MAP01 schema-v6 endpoint preflight completed one real Luna-low
+no-image request and accepted the response format. A separate six-decision
+v32 live episode then exposed the final-admission race: five returned plans
+were refused after policy invalidation, including one completed/eligible
+answer whose cover source expired before input; one plan was accepted. All ten
+cover/plan programs released empty, and independent scoring recorded one kill,
+no death and no MAP01 exit after59.752s of advancing control. The result proves
+the refusal boundary under this threat state while leaving useful live control
+and MAP01 completion open. See [v32 live and schema-v6 preflight](research/doom/MAP01_V32_FINAL_ADMISSION_LIVE_V1.md).
+
 The continuously advancing MAP01 showcase now has a bounded local reaction
 path: one live `no_visible_effect` receipt admitted a model-authored fallback in
 95.33 ms without another model call. The 12-decision run did not exit the map,
