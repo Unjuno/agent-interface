@@ -1,3 +1,15 @@
+Current direction (r87): Executor v12 reuses InputOwner v10's per-lease cause and
+publishes an exact intent-token-bound empty physical release asynchronously while
+artifact/finalization remains active. Guard v3 exposes
+REVOKED_INPUT_RELEASED_AWAITING_TERMINAL with authority false, physical release
+true and lifecycle pending; later cancelled terminal is still mandatory. Wrong
+token/unverified/early/duplicate/time-reversed evidence fails closed.37 focused
+tests plus v38 controller integration pass on Windows/WSL. A distinct same-fixture,
+same-seed, no-model/no-retry live allocation is frozen at60ms decision,75ms cancel,
+90ms physical release and200ms terminal closure; all32 hashes and output absence
+verify. Run once and retain first outcome. No task/game/cross-domain/general
+human-tempo claim; no subagent/context handoff; full goal open.
+
 Current direction (r86): the distinct early-typed v2 allocation ran once and is
 retained failed without retry. Decision36.248ms and cancel60.373ms pass the
 frozen60/75ms bounds; program attestation, cancelled terminal, no later input,

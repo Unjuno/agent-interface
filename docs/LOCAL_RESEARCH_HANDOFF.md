@@ -3616,3 +3616,21 @@ while artifact publication continues. It must not grant fresh input, imply task
 success or remove the later terminal requirement. Existing input_owner_v10 and
 lease_cause_v2 already preserve per-lease release cause, so reuse and compose that
 tested mechanism under a new version rather than changing frozen v11/v37 files.
+A new version now composes the already tested per-lease cause path instead of
+inventing a second owner. Executor v12 accepts with a unique intent token and
+starts a bounded release watcher on matched cancel. InputOwner v10 records the
+independently verified owner release into that exact lease. The executor can then
+emit `input_released` while its artifact-producing worker remains active.
+
+RunningActionGuard v3 treats this as a separate intermediate state:
+`REVOKED_INPUT_RELEASED_AWAITING_TERMINAL`. Input authority is false and physical
+release is verified, but terminal remains pending and the event grants no new
+authority. The ordinary cancelled terminal must later verify cleanup and close
+the lifecycle. Synthetic blocked-finalization and controller tests pass on both
+OS paths; wrong identity or release evidence is rejected.
+
+`map01-early-release-live-01` freezes one same-seed, same-fixture, controller-only
+episode with zero retries/model calls. Its60/75/90/200ms bounds separately cover
+decision, cancel, physical release and terminal closure. It also requires release
+before artifact and terminal plus exact token/program/reconciliation evidence.
+All32 hashes verify and output is absent. Consume it exactly once.
