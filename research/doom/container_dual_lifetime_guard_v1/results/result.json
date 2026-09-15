@@ -1,0 +1,60 @@
+{
+  "claim_scope": "two separately frozen one-pair zero-model ViZDoom/X11 development allocations; not population gameplay efficacy, general safety, hard real-time, or MAP01 clear",
+  "death_regressions": 0,
+  "decision": "RETAIN_DUAL_LIFETIME_GUARD_PLUS_DEADLINE_AS_DEVELOPMENT_CANDIDATE",
+  "history": {
+    "v1": "INCOMPLETE_OUTER_TIMEOUT; 3/6 arms completed; separate async prelude also produced source-state mismatch",
+    "v2": "INCOMPLETE_OUTER_TIMEOUT; one complete pair plus one guard arm retained; source-state repair worked",
+    "v3": "complete but original classifier order-sensitive because it compared cross-session absolute monotonic timestamps",
+    "v4": "complete; reverse order exposed same classifier bug as false HOLD",
+    "v5": "first valid repaired allocation; PASS_SINGLE_PAIR_CANDIDATE",
+    "v6": "reverse-order repaired replication; PASS_SINGLE_PAIR_CANDIDATE"
+  },
+  "kill_preserved_pairs": 2,
+  "median_damage_capture_to_empty_ms": 13.1426345,
+  "median_guard_minus_deadline_ms": -344.31437749999986,
+  "median_typed_emit_to_empty_ms": 2.7908045,
+  "runtime_source_base": "9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+  "schema": "container-map01-dual-lifetime-guard-tradeoff-publication-v1",
+  "valid_allocation_count": 2,
+  "valid_allocations": [
+    {
+      "deadline_authority_end_ms": 4528.307425,
+      "deadline_deaths": 0,
+      "deadline_kills": 1,
+      "decision": "PASS_SINGLE_PAIR_CANDIDATE",
+      "guard_authority_end_ms": 4217.274883,
+      "guard_damage_capture_to_empty_ms": 12.334208,
+      "guard_deaths": 0,
+      "guard_empty_to_kill_observed_ms": 300.982142,
+      "guard_kills": 1,
+      "guard_minus_deadline_ms": -311.0325419999999,
+      "guard_typed_emit_to_empty_ms": 2.702086,
+      "seed": 993303,
+      "source_health_deadline": 97,
+      "source_health_guard": 97,
+      "terminal_audit_deadline": 0,
+      "terminal_audit_guard": 0,
+      "version": "v5"
+    },
+    {
+      "deadline_authority_end_ms": 4528.708815,
+      "deadline_deaths": 0,
+      "deadline_kills": 1,
+      "decision": "PASS_SINGLE_PAIR_CANDIDATE",
+      "guard_authority_end_ms": 4151.112602,
+      "guard_damage_capture_to_empty_ms": 13.951061,
+      "guard_deaths": 0,
+      "guard_empty_to_kill_observed_ms": 374.809732,
+      "guard_kills": 1,
+      "guard_minus_deadline_ms": -377.5962129999998,
+      "guard_typed_emit_to_empty_ms": 2.879523,
+      "seed": 993304,
+      "source_health_deadline": 97,
+      "source_health_guard": 97,
+      "terminal_audit_deadline": 0,
+      "terminal_audit_guard": 0,
+      "version": "v6"
+    }
+  ]
+}
