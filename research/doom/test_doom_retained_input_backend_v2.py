@@ -20,21 +20,32 @@ spec.loader.exec_module(candidate)
 
 
 class Owner:
-    def __init__(self, log, owned_after=None, ordinary=True):
+    def __init__(self, log, owned_after=None, ordinary=True,
+                 sample_started_ns=100, owner_id="owner-1"):
         self.log = log
         self.owned_after = [] if owned_after is None else list(owned_after)
         self.ordinary = ordinary
+        self.sample_started_ns = sample_started_ns
+        self.owner_id = owner_id
+        self.release_index = 0
     def call(self, op, lease=None, key=None):
         self.log.append((op, key))
         if op == "down":
             return {"event": "input_admission", "key": key}
         if op == "up":
+            self.release_index += 1
+            returned = self.release_index * 10
             return {"event": "input_release_transition", "operation": "up", "key": key,
+                    "owner_id": self.owner_id,
+                    "release_call_started_ns": returned - 5,
+                    "release_call_returned_ns": returned,
                     "ordinary_release_candidate": self.ordinary,
                     "owner_transition_verified": None}
         if op == "input_state":
-            return {"owned_keycodes": list(self.owned_after),
-                    "sample_started_ns": 100, "sample_finished_ns": 110}
+            return {"owner_id": self.owner_id,
+                    "owned_keycodes": list(self.owned_after),
+                    "sample_started_ns": self.sample_started_ns,
+                    "sample_finished_ns": self.sample_started_ns + 10}
         raise AssertionError(op)
 
 
@@ -65,6 +76,8 @@ class Tests(unittest.TestCase):
         obj.raw("a", False); obj.raw("space", False)
         self.assertEqual(len(rows), 2)
         self.assertTrue(all(row["owner_transition_verified"] for row in rows))
+        self.assertTrue(all(row["owner_sample_ordered_after_batch"] for row in rows))
+        self.assertTrue(all(row["owner_identity_matches_after_batch"] for row in rows))
         self.assertEqual([row["release_batch_position"] for row in rows], [0, 1])
         self.assertTrue(all(row["release_batch_size"] == 2 for row in rows))
 
@@ -80,6 +93,26 @@ class Tests(unittest.TestCase):
         obj.raw("a", False)
         self.assertFalse(rows[0]["owner_transition_verified"])
         self.assertEqual(rows[0]["owned_keycodes_after_batch"], [38])
+
+    def test_sample_before_release_return_fails_closed(self):
+        log = []; owner = Owner(log, sample_started_ns=9); obj = make_backend({"a"}, owner); rows = []
+        obj.emit = rows.append
+        obj.raw("a", False)
+        self.assertFalse(rows[0]["owner_sample_ordered_after_batch"])
+        self.assertFalse(rows[0]["owner_transition_verified"])
+
+    def test_owner_identity_mismatch_fails_closed(self):
+        log = []; owner = Owner(log); obj = make_backend({"a"}, owner); rows = []
+        original = owner.call
+        def call(op, lease=None, key=None):
+            result = original(op, lease, key)
+            if op == "input_state": result["owner_id"] = "other-owner"
+            return result
+        owner.call = call
+        obj.emit = rows.append
+        obj.raw("a", False)
+        self.assertFalse(rows[0]["owner_identity_matches_after_batch"])
+        self.assertFalse(rows[0]["owner_transition_verified"])
 
     def test_unowned_backend_release_fails_closed(self):
         log = []; owner = Owner(log); obj = make_backend(set(), owner); rows = []
