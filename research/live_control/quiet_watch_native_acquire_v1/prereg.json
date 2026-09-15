@@ -1,0 +1,33 @@
+{
+  "base": "821d214b13500db52e6b34ff57b6ece59a76142f",
+  "binary_sha256": "e0fa1d64111776414f4106761533ba981ced5024d2f58f2047558fb49aa9837f",
+  "build": "gcc -O2 -fPIC -shared -Wall -Wextra -Werror native.c -lX11 -o native.so",
+  "cases": 38,
+  "cue_ms": 5,
+  "deadline_ms": 600,
+  "decision": "FAIL on integrity/source/raw audit failure. HOLD if any nuisance count outside 270..330, native detects fewer than all 15 targets, or either median paired nuisance total acquisition-wall ratio or per-sample ratio exceeds 0.8. Otherwise PASS_COST_SCOPED. Cue-width change is descriptive only; no latency gate.",
+  "issue": 236,
+  "nuisance_per_arm": 4,
+  "period_ms": 2,
+  "roi": [
+    48,
+    48,
+    32,
+    32
+  ],
+  "schedule_rule": "Shuffle 15 target pairs (5 offsets x 3 repeats) plus 4 nuisance pairs once with Python Random(seed); alternate Python/native and native/Python within each kind; run.py schedule() is authoritative.",
+  "schedule_sha256": "d8ba625e8b84dd0ef0030d962deae81ca940a913a99aaa0ab9846fe0f80a6c17",
+  "seed": 23620260916,
+  "setup": "Metadata lookup python-xlib failed before GUI. Fixed to observed python3-xlib 0.15 metadata. Seven static RGB-byte/threshold checks + two invalid-argument guards and four excluded live preflight cases passed. No performance threshold tuned.",
+  "sources": {
+    "audit.py": "89e51f3863442a8ab74128336170de0648657cfbbf17efc7ff4c819dda59b205",
+    "native.c": "682742c79ee86f50e1052826bdb7754c80013a9f38c7cc400a26219dd7db7751",
+    "run.py": "33601a5d970e82810eb39935f1f0bcfe7f5e02a8958aadff7a6fb07be0c6ca77",
+    "run_quiet_watch_poll_period_v1.py": "d50233d9584876f119e78251728ccbf682a4b46b5485197ae60229970d9d520d"
+  },
+  "stopping": "One fixed 38-case serial block; stop on first harness, input-release or false-nuisance failure. Missed target retained, not retried. No replacements or extensions.",
+  "target_per_arm": 15,
+  "task": "QUIET-WATCH-NATIVE-ACQUIRE-20260916-001",
+  "threshold_pixels": 512,
+  "timing": "Same wrapper in both arms brackets getter including bytes copy; per-thread CPU counter includes clock overhead. Original predicate/scheduler/fixture reused. Final capture excluded from cost. No total process/server CPU claim."
+}
