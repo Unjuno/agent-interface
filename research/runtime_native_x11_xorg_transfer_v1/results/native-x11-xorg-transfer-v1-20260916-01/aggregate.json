@@ -1,0 +1,29 @@
+{
+  "schema": "agent-interface/native-x11-xorg-transfer-aggregate-v1",
+  "formal_order": [1, 12],
+  "complete": true,
+  "controls_passed": true,
+  "exact_both": true,
+  "disposition": "ENVIRONMENT_TRANSFER_PASS_1MS",
+  "arms": [
+    {
+      "pacing_ms": 1,
+      "exact_count": 16,
+      "edit_elapsed_ns": 207954959,
+      "median_char_start_interval_ns": 1176324,
+      "xlsx_sha256": "9212b3e0adfd782bd0f4d20dc17f9d7452a8654db2bbc75cf06b59e8efd3ed3e",
+      "server": {"display": ":96", "vendor": "The X.Org Foundation", "release": 12101016, "xtest": true, "dimensions": "1280x800 pixels (338x211 millimeters)"}
+    },
+    {
+      "pacing_ms": 12,
+      "exact_count": 16,
+      "edit_elapsed_ns": 1822327101,
+      "median_char_start_interval_ns": 12308731,
+      "xlsx_sha256": "f74245c524b68d9e9a5c4de2c9e02e178f3bd954ab104394a88f451fcebbfe18",
+      "server": {"display": ":95", "vendor": "The X.Org Foundation", "release": 12101016, "xtest": true, "dimensions": "1280x800 pixels (338x211 millimeters)"}
+    }
+  ],
+  "one_vs_twelve_delta_ns": 1614372142,
+  "one_vs_twelve_reduction_pct": 88.58849440992866,
+  "formal_pass": true
+}
