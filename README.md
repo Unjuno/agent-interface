@@ -68,6 +68,15 @@ retained audit pass on Windows/WSL with no fresh GUI or model call. This is
 integration mechanics; its first natural live caller run is still pending. See
 [adaptive caller v3](research/live_control/ADAPTIVE_ACQUISITION_CALLER_V3.md).
 
+That shared route now passes its first real two-case integration. A -120px
+Chromium resize takes the zero-repair-call local path; a real Save hover changes
+the patch, produces local `missing`, invokes one Luna-low fallback, and requires a
+later call-bound target match before input. Both seed217 cases save the exact
+token, reach useful feedback about248–249ms after Submit admission and release
+all input. Total inputs are9,348 and18,696 tokens, but the mutations differ, so
+these are not comparative savings. V1's safe pre-action gate failure remains
+retained. See [adaptive semantic repair live v2](research/live_control/ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md).
+
 
 The newest held-out OpenTTD toolbar study removes the answer coordinate from the
 candidate path. A first preregistered pair is retained failed: Luna-low calls its

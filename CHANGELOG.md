@@ -12,6 +12,9 @@
 - Retain the first live integration's safe pre-action refusal after a postcondition
   was checked too early. Freeze v2 with a false-versus-unavailable semantic gate;
   current handle resolution and independent post-action scoring remain required.
+- Retain the passing v2 live integration: real resize uses zero-call local repair,
+  real Save hover yields local missing and one current-revalidated Luna fallback;
+  both exact effects, semantic feedback and releases pass.
 - Add the first runnable golden desktop entry point with environment diagnosis,
   frozen-evidence audit, fresh persistent execution and independent raw-output
   audit. Retain a pre-GUI import failure, then complete a fresh 6/6 exact run

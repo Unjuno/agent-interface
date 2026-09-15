@@ -515,3 +515,10 @@ The current literature mapping favors action-grounded ROI evidence over blind
 full-frame history, and typed conditional escalation over unconditional model
 reuse. These are candidate directions until matched local tests establish their
 effect here. See `CONDITIONAL_REUSE_RESEARCH_V1.md`.
+
+Adaptive caller v3 now also has one real two-case integration. Window resize
+uses local semantic repair with zero repair calls. A Save hover changes the exact
+patch, yields local `missing`, uses one Luna-low fallback, captures a later exact
+observation and revalidates before input. Both independent submissions and
+releases pass. The two mutations are not a matched efficiency comparison; see
+`ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md`.

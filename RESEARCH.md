@@ -1251,3 +1251,13 @@ against full-frame and no-memory controls, preserve typed evidence rather than a
 free confidence score, and test selective invalidation before adding a learned
 memory controller or multi-model router. See
 `research/live_control/CONDITIONAL_REUSE_RESEARCH_V1.md`.
+
+The first shared-caller live integration retained a safe harness failure: local
+resize repair succeeded but a postcondition was required before Submit. V2
+changed only false-versus-unavailable semantic admission. Its first frozen
+seed217 allocation passes both cases. Resize uses zero repair calls; actual Save
+hover yields local `missing`, one Luna-low fallback and a later current-patch
+match. Both exact `t000217` effects, useful semantics and releases pass. Total
+inputs9,348/18,696 and mutation-to-return651.634/7,871.585ms are descriptive
+because mutations differ. See
+`research/live_control/ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md`.
