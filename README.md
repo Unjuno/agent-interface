@@ -59,6 +59,15 @@ Windows/WSL. This is bounded same-task evidence, not a general speed or token
 claim. See the
 [matched semantic repair report](research/live_control/MATCHED_SEMANTIC_REPAIR_V1.md).
 
+Adaptive acquisition caller v3 now expresses that measured local-first policy in
+one shared route. It can try one no-authority zero-model repair and sends only
+configured missing, ambiguous or changed evidence to an accounted model fallback.
+After fallback inference it requires a later exact observation tied to the model
+call before ordinary input admission. Ten direct tests and a seven-scenario
+retained audit pass on Windows/WSL with no fresh GUI or model call. This is
+integration mechanics; its first natural live caller run is still pending. See
+[adaptive caller v3](research/live_control/ADAPTIVE_ACQUISITION_CALLER_V3.md).
+
 
 The newest held-out OpenTTD toolbar study removes the answer coordinate from the
 candidate path. A first preregistered pair is retained failed: Luna-low calls its

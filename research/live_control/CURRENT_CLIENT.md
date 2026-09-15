@@ -505,7 +505,8 @@ input; model completion alone does not refresh evidence.
 
 In the first matched seed215 allocation, local recovery median was109.966ms and
 9,351 input tokens versus8,115.268ms and18,702 for Luna-low reacquisition. All
-four tasks, exact-frame reconciliation and releases passed. This candidate is not
-yet part of the default caller: missing/ambiguous/changed fallback branches and
-cross-domain behavior remain to be integrated and measured. See
-`MATCHED_SEMANTIC_REPAIR_V1.md`.
+four tasks, exact-frame reconciliation and releases passed. Adaptive caller v3
+now implements the local-first and typed fallback branches, requires a later
+exact post-model receipt, and accounts images and model wait. Its branch evidence
+is offline; a natural live run and cross-domain behavior remain to be measured.
+See `ADAPTIVE_ACQUISITION_CALLER_V3.md` and `MATCHED_SEMANTIC_REPAIR_V1.md`.

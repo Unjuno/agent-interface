@@ -2,6 +2,10 @@
 
 ## Unreleased — 2026-09-13 research update
 
+- Add adaptive acquisition caller v3 with a local-first semantic repair branch,
+  typed model fallback, mandatory post-model current-observation receipt, and
+  explicit model-visible image/wait coverage. Ten offline tests plus an
+  independently audited retained branch report pass on Windows and WSL.
 - Add the first runnable golden desktop entry point with environment diagnosis,
   frozen-evidence audit, fresh persistent execution and independent raw-output
   audit. Retain a pre-GUI import failure, then complete a fresh 6/6 exact run

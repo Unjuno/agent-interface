@@ -1227,3 +1227,18 @@ pass15 cases on Windows/Linux. This is model-free construction with no endpoint
 schema, planner, game or latency evidence. Add an all-path cardinality replay
 and schema preflight before a separately frozen v33 live allocation. See
 `research/doom/MAP01_FRESH_ACTION_ADMISSION_V33.md`.
+
+## Latest follow-up — local semantic repair enters the shared caller (2026-09-15)
+
+Adaptive acquisition caller v3 now represents the matched Chromium repair as a
+shared local-first route. Warm reuse may try one exact no-authority repair; only
+configured missing, ambiguous or changed evidence can reach one accounted model
+fallback. A completed fallback must be followed by a passive exact observation
+whose sequence, capture clock and pointer binding match a no-authority receipt
+bound to that call ID before final revalidation or input. Attempt accounting adds
+model-visible images and model wait with explicit missingness. Ten direct tests
+and an independently audited seven-scenario retained report pass on Windows and
+WSL without fresh GUI or model calls. This establishes composition mechanics,
+not another efficacy sample. Next run a finite natural local-repair and
+changed-evidence fallback through the exact caller. See
+`research/live_control/ADAPTIVE_ACQUISITION_CALLER_V3.md`.
