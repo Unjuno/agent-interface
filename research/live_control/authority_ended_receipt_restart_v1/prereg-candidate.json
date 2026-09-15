@@ -1,0 +1,11 @@
+{
+  "task": "authority-ended-receipt-restart-journal-v1",
+  "base_commit": "a1ea4cbfac735eafb1f8901dd6c32a890bed015c",
+  "scope": "offline single-writer process-restart journal candidate using exact retained receipt fixture; no GUI/model/input",
+  "candidate_change": "Persist authority_end_id as strict append-only JSONL and fsync it before returning a ReplanToken; rehydrate issued_ids on construction.",
+  "H": "A strict fsync-backed issued-ID journal will reject the exact same authority-ended receipt after a clean process restart while still allowing one distinct new authority_end_id.",
+  "T": "One fixed first-outcome matrix: first issue; clean restart duplicate; distinct identity; second restart duplicate; pre-persist failure; crash-after-persist-before-token-return; malformed/truncated journal. One Python interpreter process per restart boundary where applicable. No retries or tuning after measurement.",
+  "D": "PASS_RESTART_SAFETY if duplicate receipts are rejected after restart, distinct identity issues once, pre-persist failure leaves no mark, and malformed/truncated journals fail closed. HOLD_LIVENESS if crash-after-persist can leave a durable issued mark although no token returned to the caller.",
+  "C": "The candidate may only shift the problem: persistence-before-return closes replay safety but creates an at-most-once liveness gap across a crash window. Concurrent writers and power-loss filesystem semantics are outside this matrix.",
+  "U": "Single host/filesystem, single writer, offline fixture, no live transport/input consequence, no machine reboot. fsync completion is observed but storage hardware durability is not independently verified."
+}
