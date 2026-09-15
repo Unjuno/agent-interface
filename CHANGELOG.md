@@ -2,6 +2,13 @@
 
 ## Unreleased — 2026-09-13 research update
 
+- Reconstruct v38/v39 model-wait cover envelopes from retained SHA-bound raw
+  logs without new model/GUI calls. V39 completed5/6 answers but21.484s of
+  its43.318s model wait remained inside input-free coast; two coast waits lost
+  12 and5 health. One typed revocation reached physical empty release26.090ms
+  after typed event emission. Windows/WSL posthoc audit agrees byte-for-byte;
+  these are program envelopes and one reaction sample, not task-useful input
+  occupancy or a causal v38/v39 speed comparison.
 - Repair the v38 unauthored empty-coast interrupt loop in v39, freeze and run
   one same-fixture six-turn episode. Three coast decisions can retain pending
   model answers through damage; 3/6 plans are admitted, and one running plan

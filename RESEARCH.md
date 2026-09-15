@@ -1262,7 +1262,24 @@ inputs9,348/18,696 and mutation-to-return651.634/7,871.585ms are descriptive
 because mutations differ. See
 `research/live_control/ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md`.
 
-## Latest follow-up — v39 coast liveness and active revocation exposed (2026-09-15)
+## Latest follow-up — cover continuity is still not useful-control continuity (2026-09-15)
+
+Posthoc SHA-bound reconstruction of the retained v38/v39 raw event streams
+separates motor-capable cover programs, coast programs and no-program tails
+during each model wait. V39 completed5/6 answers and admitted3/6 plans, but
+21.484s of its43.318s model wait was inside input-free coast. In the two
+post-rejection coast waits, typed health fell85→73 and73→68 while answers
+completed; one returned plan still failed fresh validity. The v39 active
+revocation reached verified physical empty release26.090ms after typed event
+emission and52.961ms before terminal closure. First exact plan frames arrive
+about51–78ms after admission, but independently useful task feedback is not
+identified from viewport pixel-change receipts. Windows/WSL recomputation
+agrees on the same analysis SHA. Next instrument actual held-input intervals,
+independent first useful outcome and explicit bounded recovery coverage under
+a matched condition, with cross-domain transfer before general promotion.
+See `research/doom/MAP01_V38_V39_CONTROL_TEMPO_POSTHOC_V1.md`.
+
+## Previous follow-up — v39 coast liveness and active revocation exposed (2026-09-15)
 
 V38's interrupted-tail loop came from an unauthored, empty-coast fallback
 with runtime zero-loss guard, not from model-authored overstrict policy. V39
