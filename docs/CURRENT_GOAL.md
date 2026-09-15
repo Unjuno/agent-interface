@@ -1,3 +1,15 @@
+Current direction (r83): v36 moves typed health/ammo feedback ahead of transport
+and PNG publication while retaining the same exact frame. Reader v3 matches the
+retained PNG path on all247 v31 frames for both signals. The early event binds
+epoch, focus/surface/geometry and RGB SHA-256, grants no authority, and its action
+snapshot path never reopens PNG; later audit must reconcile every artifact and
+signal. One no-model/no-retry live allocation is frozen against the retained v2
+128.488/136.780/138.694ms capture→decision/cancel/release baseline, with60/75/
+125ms thresholds and Executor attestation. Output is absent and21 source hashes
+verify. Next commit the frozen construction, then run exactly once and retain
+pass or failure. No planner/task/game/general human-tempo claim; no subagent or
+context handoff; full goal open.
+
 Current direction (r82): v35 composes semantic planner commands, deterministic
 compiled steps, exact submit bytes and matching Executor v10 program attestation under one
 root current-authority receipt. Fallback admission additionally binds the latest

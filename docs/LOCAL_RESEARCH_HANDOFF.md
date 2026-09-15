@@ -3546,3 +3546,22 @@ changing the frozen v7/v8 or Executor v3/v4 sources used by earlier evidence.
 re-evaluation. A revisit must name the retained failure, preserve its safety
 lesson, change one justified condition and freeze acceptance before consuming a
 new allocation. The old failure remains part of the evidence.
+
+## Latest follow-up — pre-artifact typed feedback is frozen for one live comparison (2026-09-15)
+
+The prior 128.488 ms capture-to-guard-decision interval includes exact tile
+encoding, reconstruction, PNG publication and a second PNG open before HUD
+extraction. V36 adds a separate no-authority `doom-typed-observation-v1` event.
+Health, ammo and an RGB SHA-256 are extracted from the in-memory captured frame
+and emitted first; the exact full observation is still retained afterward.
+
+Reader v3 produces results identical to the old retained-file path for health
+and ammo across all247 v31 frames. A pure reconciliation contract verifies epoch,
+binding, RGB hash and both signals against the later PNG. Controller tests prove
+the running monitor consumes the typed event without invoking its PNG readers.
+
+One real X11 allocation is preregistered but unrun. It keeps the v2 fixture,
+seed, held-fire validity construction, no-model status and zero retries. Frozen
+capture-to-decision/cancel/release thresholds are60/75/125ms versus the retained
+128.488/136.780/138.694ms baseline. Every typed/full pair, Executor attestation,
+cancel/release and process exit must pass; otherwise retain the first failure.
