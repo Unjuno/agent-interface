@@ -187,6 +187,9 @@ def validate_program(program: dict[str, Any]) -> dict[str, Any]:
 
     ops = program.get("ops")
     _need(isinstance(ops, list) and 1 <= len(ops) <= 128, "ops length out of range")
+    _need(ops[-1].get("op") == "release_all", "release_all must be final operation")
+    _need(sum(op.get("op") == "release_all" for op in ops if isinstance(op, dict)) == 1,
+          "release_all must appear exactly once")
 
     held_keys: set[str] = set()
     held_buttons: set[str] = set()
