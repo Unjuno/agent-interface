@@ -1,5 +1,7 @@
 """Typed no-authority outcomes for the controlled semantic grounding call."""
 import json
+import subprocess
+import time
 from pathlib import Path
 
 try:
@@ -35,6 +37,7 @@ def classify(output):
     base = {"schema": SCHEMA, "requested_model": process.get("requested_model"),
             "requested_effort": process.get("requested_effort"),
             "process_exit_code": process.get("exit_code"),
+            "runner_elapsed_ms": (process["exited_ns"] - process["started_ns"]) / 1e6,
             "model_threads_started": sum(row.get("type") == "thread.started" for row in events),
             "completed_turns": len(completed), "completed_messages": len(messages),
             "grants_semantic_authority": False, "grants_input_authority": False}
@@ -59,8 +62,22 @@ def classify(output):
 
 def invoke(output, prompt, image, workspace):
     """Run exactly once and return a typed outcome; this function never retries."""
+    started = time.perf_counter_ns()
     try:
         v1.call(output, prompt, image, workspace)
+    except (subprocess.TimeoutExpired, OSError) as error:
+        outcome = {"schema": SCHEMA, "requested_model": "gpt-5.6-luna",
+            "requested_effort": "low", "process_exit_code": None,
+            "runner_elapsed_ms": None, "model_threads_started": 0,
+            "completed_turns": 0, "completed_messages": 0,
+            "grants_semantic_authority": False, "grants_input_authority": False,
+            "status": "FAILED_UPSTREAM", "reason": "model_process_failed",
+            "usage": None, "result": None,
+            "errors": [f"{type(error).__name__}: {error}"]}
     except (RuntimeError, ValueError):
-        pass
-    return classify(output)
+        outcome = classify(output)
+    else:
+        outcome = classify(output)
+    outcome["caller_elapsed_ms"] = (time.perf_counter_ns() - started) / 1e6
+    outcome["visible_images_submitted"] = 1
+    return outcome
