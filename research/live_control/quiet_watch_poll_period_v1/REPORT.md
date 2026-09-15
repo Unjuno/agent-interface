@@ -50,9 +50,11 @@ The requested cue width was 5 ms, but software scheduling/rendering changed actu
 
 ## Audit and retention
 
-`audit.py` is independent of the live runner. It verifies exact frozen schedule/count, source hash, all stored ROI SHA-256 values and pixel reclassification, derived detections, one press/release, verified physical empty state, final clear ROI, cost medians and the frozen decision. `audit_result.json` reports `formal_pass=true`.
+`audit.py` was run against the full formal raw JSON in the measurement container before publication. It verified the frozen schedule/count, source hash, stored ROI SHA-256 values and pixel reclassification, derived detections, one press/release, verified physical empty state, final clear ROI, cost medians and the frozen decision; `audit_result.json` retains that audit outcome (`formal_pass=true`) and the formal raw SHA-256.
 
-The full raw first outcome is retained as four byte-exact `measured.json.xz.partXX` chunks; `reconstruct.py` concatenates/decompresses them and checks part, archive and raw SHA-256 values against `evidence_manifest.json`. No live input is needed for reconstruction/audit.
+**Retention limitation:** the GitHub MCP available in this session has no local-file upload action. A manual Base64 blob transfer produced a Git blob hash mismatch, so that blob was deliberately not linked into the branch. Therefore the 1,045,532-byte `measured.json` itself is **not** retained in GitHub in this publication step. Its SHA-256 is retained as `7d8756168e1aff11cc1ee1a82cb8552876c409e3ec9c69460f0ed56cda0d3aea`.
+
+To keep the frozen decision independently recomputable from GitHub, `retained_evidence.json` stores all 38 case-level fields needed for schedule identity, safety/integrity gates, target detection counts, nuisance acquisition-wall medians and the six 10 ms miss-gap checks. `audit_retained.py` recomputes those gates from retained evidence plus the committed preregistration/source; `retained_audit_result.json` reports `pass=true` and the same `PROMOTE_2MS_SCOPED` decision. Raw ROI-byte reclassification itself cannot be rerun from GitHub alone without the omitted full raw JSON.
 
 ## Next single question
 
