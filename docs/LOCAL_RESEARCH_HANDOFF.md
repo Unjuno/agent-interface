@@ -3650,3 +3650,15 @@ Treat this as proof of one shared keyboard cancellation publication mechanism,
 not a MAP01 performance result. Do not rerun the same fixture. The useful next
 transfer is an actual pointer/desktop interruption or bounded planner episode
 that consumes the early state, while keeping later terminal closure mandatory.
+The next transfer candidate is now frozen. Executor v13 generalizes the accepted
+lease watcher from explicit cancel to owner-recorded focus, surface and expiry
+release. It preserves the same token-bound `input_released` format and ensures
+that event is emitted before the corresponding terminal; normal completion has
+no interruption event.
+
+`pointer-release-transfer-live-01` uses an actual private-Xvfb Inkscape Button1
+drag. It transfers focus after physical down, requires one empty owner
+`focus_changed` release, no explicit cancel, no second drag point, a matching
+needs-decision terminal and50/75/150ms release/publication/terminal limits. Seed,
+coordinates, one allocation/no retry and25 source hashes are fixed. Output is
+absent and both OS verification paths pass. Run it once and preserve the result.

@@ -1,3 +1,15 @@
+Current direction (r89): transfer two-phase release beyond DOOM keyboard input.
+Executor v13 watches every accepted lease and publishes owner-verified focus,
+surface or expiry release with the accepted token; normal completion emits none.
+The worker enforces release-event-before-terminal ordering under watcher races.
+Synthetic focus/surface/expiry/normal controls pass Windows/WSL. One actual
+private-Xvfb Inkscape Button1 drag/focus-transfer allocation is frozen: seed212,
+one run, no retry/model/cancel,50ms physical release,75ms publication,150ms
+terminal bounds, exact token/cause/empty-release and no-tail requirements. All25
+hashes and output absence verify. Next commit then run once and retain first
+outcome. No task success/cross-platform/general speed or human-tempo claim; no
+subagent/context handoff; full goal open.
+
 Current direction (r88): the first frozen two-phase release allocation ran once
 and passed all conditions. Visible ammo48→47 caused typed decision31.857ms,
 cancel54.578ms, independent empty X11 release57.660ms and release publication
