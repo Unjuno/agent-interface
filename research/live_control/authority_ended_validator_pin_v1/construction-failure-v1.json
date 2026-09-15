@@ -1,0 +1,9 @@
+{
+  "schema": "authority-ended-validator-pin-construction-failure-v1",
+  "status": "REJECTED_BEFORE_FORMAL_FREEZE",
+  "candidate": "caller supplies validator_id + claimed validator_sha256 + independent callable",
+  "counterexample": "Initialize a ledger with the correct bridge-v2 validator_id and correct claimed bridge-v2 SHA-256, then reopen using the same validator_id and same claimed SHA-256 but the bridge-v1 callable. The sidecar comparison succeeds because it authenticates caller claims rather than callable bytes, and a one-capture receipt can issue under the supposedly v2-pinned ledger.",
+  "consequence": "Do not retain ID+claimed-hash+callable as a validator contract. The successor must compute the hash internally from source bytes and load the callable from those exact bytes.",
+  "formal_result_id_consumed": false,
+  "replacement": "validator_source_pinned_ledger_v2.py"
+}
