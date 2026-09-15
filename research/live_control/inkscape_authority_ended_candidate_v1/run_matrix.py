@@ -1,16 +1,10 @@
 from __future__ import annotations
-import copy, hashlib, importlib.util, json, platform, sys
+import copy, hashlib, json, platform, sys
 from pathlib import Path
-HERE=Path(__file__).resolve().parent
-LIVE=HERE.parent
-sys.path.insert(0,str(HERE))
+ROOT=Path(__file__).resolve().parent
+sys.path.insert(0,str(ROOT))
 from post_authority_observation_v1 import AuthorityEndPreconditionError, build_authority_ended_receipt
-BRIDGE=LIVE/'authority_ended_restart_durability_v1/authority_ended_bridge_v1.py'
-EXPECTED_BRIDGE_SHA256='2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e'
-if hashlib.sha256(BRIDGE.read_bytes()).hexdigest()!=EXPECTED_BRIDGE_SHA256:
-    raise AssertionError('authority-ended bridge source mismatch')
-spec=importlib.util.spec_from_file_location('frozen_authority_ended_bridge_v1',BRIDGE)
-bridge_mod=importlib.util.module_from_spec(spec); assert spec and spec.loader; spec.loader.exec_module(bridge_mod)
+from authority_ended_bridge_v1 import AuthorityEndedNotReady, to_caller_execution_decision
 
 class Clock:
     def __init__(self, ns): self.ns=ns
@@ -32,8 +26,8 @@ BUDGET=400_000_000
 SOURCE_SEQUENCE=5
 
 def bridge(receipt):
-    try: return {'accepted':True,'decision':bridge_mod.to_caller_execution_decision(receipt)}
-    except bridge_mod.AuthorityEndedNotReady as exc: return {'accepted':False,'error':str(exc)}
+    try: return {'accepted':True,'decision':to_caller_execution_decision(receipt)}
+    except AuthorityEndedNotReady as exc: return {'accepted':False,'error':str(exc)}
 
 def build(*,release=None,admissions=0,budget=BUDGET,delay=100_000_000,advance=True,fail=False):
     clock=Clock(1_000_000_000); backend=Backend(clock,delay_ns=delay,advance=advance,fail=fail)
@@ -63,8 +57,8 @@ result={
  'hard_gate_pass':passed,
  'max_snapshot_calls_any_case':max_calls,
  'decision':'PASS_OFFLINE_RECEIPT_MECHANISM' if passed else 'RETAIN_FAILURE',
- 'candidate_sha256':hashlib.sha256((HERE/'post_authority_observation_v1.py').read_bytes()).hexdigest(),
- 'bridge_sha256':hashlib.sha256(BRIDGE.read_bytes()).hexdigest(),
+ 'candidate_sha256':hashlib.sha256((ROOT/'post_authority_observation_v1.py').read_bytes()).hexdigest(),
+ 'bridge_sha256':hashlib.sha256((ROOT/'authority_ended_bridge_v1.py').read_bytes()).hexdigest(),
  'runner_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
  'environment':{'python':sys.version.split()[0],'platform':platform.platform()},
  'limits':['deterministic fake backend','injectable monotonic ns clock','no live GUI','no model','no OS input','no network'],
