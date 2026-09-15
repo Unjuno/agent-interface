@@ -12,7 +12,7 @@ BRIDGE2=ABI/'authority_ended_bridge_v2.py'
 EXPECTED={
  TOKEN:'72a3481653cf9c41ec1a03f4c7a7bf1c482ff69468b5d92986bad8cf814950b4',
  BRIDGE1:'2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e',
- BRIDGE2:'37e6551baedaddad50ca8ef64677e3c387f742875ad3e28fa6ea630e58ad7d51',
+ BRIDGE2:'37e544086fe70087c0a2e6c03ce8c42c1c5dd71989f7fe541eb9055b3551eb52',
 }
 for p,h in EXPECTED.items():
     got=hashlib.sha256(p.read_bytes()).hexdigest()
@@ -52,7 +52,7 @@ with tempfile.TemporaryDirectory(prefix='abi-token-current-') as td:
     try: ledger.issue(copy.deepcopy(receipt)); a='UNEXPECTED_ISSUE'
     except Exception as e: a={'type':type(e).__name__,'error':str(e)}
     add('current_v2_ledger_rejects_truthful_two_capture_receipt',a=={'type':'AuthorityEndedNotReady','error':'exactly one passive post-authority capture required'},a)
-# B-E: same token state machine, only its imported decision function is swapped in-memory to exact bridge-v2.
+# B-E: same token state machine, only its imported decision function is swapped in-memory to exact current bridge-v2.
 m=load_token(); b2=load_bridge2(); m.to_caller_execution_decision=b2.to_caller_execution_decision
 with tempfile.TemporaryDirectory(prefix='abi-token-bridge2-') as td:
     path=Path(td)/'token.json'; ledger=m.DurableTokenLedger(path,initialize=True)
