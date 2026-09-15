@@ -1262,7 +1262,24 @@ inputs9,348/18,696 and mutation-to-return651.634/7,871.585ms are descriptive
 because mutations differ. See
 `research/live_control/ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md`.
 
-## Latest follow-up — action-grounded crop provenance is retained (2026-09-15)
+## Latest follow-up — v38 integrated MAP01 path exposed, policy liveness remains weak (2026-09-15)
+
+The preregistered, no-retry v38 live allocation completed six Luna-low decisions
+with the game continuously advancing. One active schema-v6 plan was accepted
+and its semantic steps, program SHA and intent token bound to the retained
+running-action-v3 receipt. A second eligible active answer failed immediate
+fresh action validity. Four pending turns were interrupted as health fell below
+model-authored hard minima, which were set equal to source health in the later
+policies. Six cover programs and one plan all released empty; 119 early typed
+health/ammo captures match their exact artifacts. Independent result: zero
+kills/deaths, no map exit after31.731s control/27.489s model-wall. No natural
+mid-action revocation occurred, so early physical release still needs separate
+live exposure. Retained file hashes and mechanics audit pass Windows/WSL.
+Next freeze a distinct bounded policy-liveness condition and test it without
+silently extending any authored lease. See
+`research/doom/MAP01_V38_INTEGRATED_LIVE_V1.md`.
+
+## Previous follow-up — action-grounded crop provenance is retained (2026-09-15)
 
 The frozen MAP01 schema-v6 endpoint preflight has now returned compatible
 after one Luna-low no-image request (8,125 input/43 output); this establishes

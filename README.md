@@ -633,6 +633,15 @@ acquisition charged, cumulative input is 63,128/63,779/26,563 and elapsed time i
 reliability claim. See
 [`research/live_control/INTEGRATED_EFFICIENCY_LIVE_V1.md`](research/live_control/INTEGRATED_EFFICIENCY_LIVE_V1.md).
 
+The frozen v38 integrated MAP01 run admitted one schema-v6 model plan with an
+exact `running-action-v3` program/lease binding. Four of six pending answers
+were interrupted when health fell below authored hard minima; one other active
+answer failed fresh action validity before input. All seven accepted programs
+released empty, and 119 early typed health/ammo observations reconciled with
+the exact frames. The score was no kills, no deaths and no map exit. This
+exposes the integrated interface path but leaves policy renewal and useful
+control continuity open. See [v38 integrated live result](research/doom/MAP01_V38_INTEGRATED_LIVE_V1.md).
+
 The frozen MAP01 schema-v6 endpoint preflight completed one real Luna-low
 no-image request and accepted the response format. A separate six-decision
 v32 live episode then exposed the final-admission race: five returned plans

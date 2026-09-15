@@ -2,6 +2,13 @@
 
 ## Unreleased — 2026-09-13 research update
 
+- Execute the frozen v38 integrated MAP01 allocation once. Schema-v6 model
+  input and exact running-program binding work under live threat; 1/6 plans is
+  admitted, four authored health floors invalidate pending answers, and one
+  fresh action predicate rejects before input. All seven programs release,
+  119 typed/exact frames reconcile, and no mid-action revocation is exposed.
+  Retain 265 files/41,480,362 bytes and Windows/WSL audit. The next focus is
+  policy liveness under a separately frozen condition, not a clear claim.
 - Retain the previously frozen schema-v6 MAP01 endpoint preflight as compatible
   after one Luna-low/no-image call;8,125 input and43 output tokens are separate
   from gameplay.
