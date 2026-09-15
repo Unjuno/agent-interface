@@ -1,69 +1,71 @@
-# Durable `authority_ended` token + `durable_submit_v6` composition v1
+# Durable authority token × durable submit composition v1
 
-Status: **RETAIN_COMPOSITION_CANDIDATE** in offline fault-injected transport. This closes the *untracked* consume-before-submit gap by converting it into the repository's existing explicit unresolved-delivery state; it does not establish exactly-once external effects or live-GUI composition.
+Status: **RETAIN_COMPOSITION_BOUNDARY / HOLD_ATOMIC_EXACTLY_ONCE**.
 
-## Question
+Base: `d21482d1a3cc16b54447d14d0a2d93aa70409162`. Tracks Issue #156. This is an additive offline mechanism-isolation experiment: no model, GUI, OS input, network, runtime mutation, or production promotion.
 
-The retained restart-durable authority-ended token state persists `pending -> consumed` before a new physical action is submitted. A crash after durable consume but before OS submit is safe from replay but can silently lose liveness.
+## Why this experiment exists
 
-`durable_submit_v6` already persists a command as `pending / may_have_been_sent` **before** invoking its transport callback. This experiment tests one ordering only:
+The retained `authority_ended_restart_durability_v1` result closes caller-process replay for a runtime-owned authority-end token by durably storing `pending | consumed`. It explicitly leaves one gap: a crash after durable `consumed` but before OS submit can lose liveness. The repository already has a separate `durable_submit` family that persists `may_have_been_sent` before transport and recovers unresolved delivery read-only. The question here is whether simply composing those two existing mechanisms closes the remaining gap.
 
-```text
-durable_submit precommit pending
--> transport callback begins
--> durable authority token consume
--> actual transport
-```
+It does not make the two journals atomic. It does, however, sharply localize the uncertainty boundary.
 
-If caller death occurs after the token is consumed, the command must already exist in the durable-submit journal. Restart must block any new command and allow only read-only reconciliation.
+## Frozen executable sources
 
-## Frozen fault matrix
+The runner aborts unless the following Git blob identities match the base repository:
 
-Input token: the retained runtime-owned authority-ended receipt fixture. Components: unchanged `durable_submit_v6` plus unchanged retained durable pending/consumed token state.
+- `authority_ended_restart_durability_v1/durable_token_state_v2.py`: `e48f4e2c1949ffd494a7e4e61510e9d3148aa646`;
+- `authority_ended_restart_durability_v1/authority_ended_bridge_v1.py`: `9fcfdce5229cb58b3d1a17aacbcef0cb44bd10f1`;
+- `durable_submit_v1.py`: `aaee9d460bcf114dbe1603056c79e6ecc65403e2`;
+- `received_continuation_v1.py`: `b27d922799cfcfc66ad092c8edb8b7134e1889e5`;
+- `unix_json_deadline.py`: `267b5ccce24ca43b8a6e9b36219d50342888aa27`;
+- retained receipt fixture: `4070fd206c859357125a2cb327affa5aec6de8b8`.
 
-Four separate-process cases:
+The executable uses `durable_submit_v1` because it is the minimal submit-only form of the existing contract. Current `durable_submit_v6.py` at the base (`953e1f1ef5816f7364e5d2c1de89ce0e69193d72`) retains the same relevant ordering for submit: construct `pending` → persist journal → invoke transport. Its additional clock/effect-checkpoint paths are irrelevant to this crash-cut question.
 
-1. **normal** — precommit -> consume -> transport returns exact command echo + accepted + verified terminal;
-2. **crash before consume** — process exits inside transport callback before token consume;
-3. **crash after consume, before send** — token is durably consumed, then process exits before simulated server receipt;
-4. **crash after send/server receipt, before caller response** — token consumed and exact server records are persisted, then caller exits before receiving them.
+Frozen preregistration SHA-256: `132620fa8c54f6560cc6fae2aceec29f142be8da653caeca6ffe7f14c969b007`.
 
-Every crash case must retain durable-submit `pending.write_state = may_have_been_sent`. While pending exists, a new command must be rejected before the transport callback is invoked.
+Frozen runner SHA-256: `433ebe483cf7750ea441a0ece323d721b82aa3961af86952583b8bf811005212`.
 
-## First outcome
+## First-outcome matrix
 
-**4/4 PASS. Decision: `RETAIN_COMPOSITION_CANDIDATE`.**
+One frozen matrix, zero tuning or rerun after outcome. Six of six gates passed.
 
-| Case | token state after crash | durable-submit state | new command | read-only reconciliation |
-|---|---|---|---|---|
-| normal | consumed | terminal resolved, pending cleared | n/a | terminal already known |
-| crash before consume | pending | unresolved pending | **blocked before transport** | no evidence -> remains unresolved |
-| crash after consume before send | consumed | unresolved pending | **blocked before transport** | no evidence -> remains unresolved |
-| crash after simulated server receipt | consumed | unresolved pending | **blocked before transport** | exact echo+accepted+verified terminal -> resolves |
+| Cut/control | Retained outcome |
+|---|---|
+| Pending authority token, no submit | `TOKEN_PENDING_NO_SUBMIT` |
+| Crash immediately after durable token consume, before `durable_submit.run` | `CONSUMED_WITHOUT_SUBMIT_RECORD` |
+| Crash inside injected transport after durable-submit pre-transport persist | `PENDING_OR_UNKNOWN_DELIVERY`; `write_state=may_have_been_sent` |
+| Restart attempts a new command while that submit is pending | rejected as `unresolved command; read only`; transport not called |
+| Restart performs one command-free timeout read | same pending request identity survives; no command in request |
+| Reverse order: call durable submit before token consume | transport callback is reached while token status is still `pending` |
 
-No crash path performs automatic retry/replay. The no-evidence cases remain explicitly unresolved rather than being guessed `not sent`.
+The crash exits are deterministic harness cuts: 81 between the two journals, 82 after durable-submit persistence at transport entry, and 83 for the reverse-order control. They are not runtime error codes.
 
-## Architecture implication
+## Interpretation
 
-The retained token ledger and durable-submit journal solve different problems and should not be collapsed:
+There are three distinct states, and collapsing them would be a correctness error:
 
-- **token state**: has this authority-ending semantic transition already authorized/consumed one replan execution?
-- **durable-submit state**: may a concrete transport request already have crossed the process boundary, and what exact server evidence resolves it?
+1. **Token pending / no submit record.** Replan authority can still be recovered under the retained durable-token contract.
+2. **Token consumed / no submit record.** This is the inter-journal gap. The old token is no longer recoverable, but there is no durable request/action identity to reconcile. Existing `durable_submit` cannot infer delivery because it was never entered. A safe supervisor must fail closed and reacquire fresh authority/evidence; it must not pretend this is exactly-once continuation.
+3. **Token consumed / durable submit pending.** Delivery is explicitly uncertain. The existing durable-submit contract already prevents blind replay and permits only read-only reconciliation until the exact request resolves.
 
-Precommitting the second state before consuming the first turns the previous untracked crash gap into the already-defined `PENDING/UNKNOWN` delivery contract. It preserves safety but cannot guarantee liveness when no independent server evidence ever appears.
+Reversing the calls is not a fix: `durable_submit.run` persists and immediately enters transport, so submit-before-consume can reach transport while the authority token remains pending. There is no prepare-only handoff in this existing call path.
+
+Therefore the repository already has the right mechanism for **post-submit-journal uncertainty containment**, but not an atomic bridge between durable authority consumption and durable request preparation.
 
 ## H / T / D / C / U
 
-**H.** Existing `durable_submit_v6` precommit can cover the authority-token consume-to-transport crash interval without a new transaction protocol.
+**H.** Naive `token.consume() -> durable_submit.run()` leaves an inter-journal crash cut; after durable-submit persistence, its existing journal preserves explicit uncertainty and blocks blind replay.
 
-**T.** Four frozen separate-process cases with injected crash positions; fake server evidence is exact and only present in the send-before-crash case. No GUI/model/live socket.
+**T.** Separate Python subprocesses over byte-identified retained sources; injected transport only. Minimum crash cuts plus reverse-order control. One first-outcome matrix.
 
-**D.** **RETAIN_COMPOSITION_CANDIDATE**: all crash cases remain pending, every new command is blocked before transport while pending, and only exact read-only evidence resolves the sent case.
+**D.** **RETAIN_COMPOSITION_BOUNDARY / HOLD_ATOMIC_EXACTLY_ONCE.** All six frozen gates pass. Only the post-submit-journal region is covered by durable delivery uncertainty.
 
-**C.** A crash before any actual transport still leaves conservative `may_have_been_sent`, so liveness can be lost. The experiment injects transport/server evidence rather than exercising a real AF_UNIX socket.
+**C.** A prepare-only boundary that durably reserves the request identity before consuming the authority token, or an effect/action owner that makes request identity idempotent, could close the inter-journal ambiguity. Neither is introduced here.
 
-**U.** No live GUI/server, no cross-domain authority semantics, no malicious/torn state beyond each component's existing tests.
+**U.** CPython 3.13.5, Linux 6.18.44 x86_64, 5 visible CPUs, local container filesystem, single writer. No power-loss, runtime crash, hostile-state, network, GUI, model, or real input claim.
 
-## Next smallest experiment
+## Next smallest discriminator
 
-Do not immediately run a cross-domain live edit. The existing Inkscape expiry-observation path uses legacy terminal `expired` and lacks the independent observation-lifecycle deadline required by the newer `authority_ended` gate. First test that semantic mismatch explicitly. If the old receipt cannot be upgraded without inventing evidence, add only the missing lifecycle evidence/status in a versioned Inkscape candidate; then compose with live durable-submit.
+Before adding a new prepare phase, search and test whether the runtime/action owner already has a request/action identity replay rule strong enough to make a repeated identified submission return the prior admission/terminal outcome without a second physical admission. If such owner-side idempotency exists, compose with it. If not, the honest boundary is fail-closed reacquisition after `CONSUMED_WITHOUT_SUBMIT_RECORD`; adding a client-side transaction protocol should then be a separate, explicitly justified research generation.

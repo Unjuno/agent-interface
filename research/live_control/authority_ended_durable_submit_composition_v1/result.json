@@ -1,35 +1,139 @@
 {
-  "cases": {
-    "crash_after_consume": {
-      "blocked": {"error":"unresolved command; read only","transport_called":false},
-      "last_resolution_after_read": null,
-      "pending_after_read": {"accepted":false,"conflict":false,"echo_seen":false,"request":{"action_id":"durable-40be3de6e2a64cb7b4fb5d7970010a4a","after":0,"command":{"expected_sequence":3,"id":"durable-40be3de6e2a64cb7b4fb5d7970010a4a","op":"submit","steps":[{"op":"observe"}],"valid_until_ns":9999999999999},"events":["terminal"],"request_id":"31512e00b13647ffaf0db8f86a44b426","timeout":0},"write_state":"may_have_been_sent"},
-      "resolution":"unresolved",
-      "token_entries":{"9d0d4d9bad194302866da5edbaabcf61":{"post_sequence":2,"status":"consumed"}}
-    },
-    "crash_after_send": {
-      "blocked": {"error":"unresolved command; read only","transport_called":false},
-      "last_resolution_after_read": {"authority":"none","request_id":"6f656a7f468a4f348e4ec4624f2de3eb","terminal":{"event":"terminal","id":"durable-090c3b4ce31f4b1bb2fff20ccc9293df","release":{"buttons_down":[],"keys_down":[],"verified":true},"status":"completed","steps_completed":1}},
-      "pending_after_read": null,
-      "pending_before_read": {"accepted":false,"conflict":false,"echo_seen":false,"request":{"action_id":"durable-090c3b4ce31f4b1bb2fff20ccc9293df","after":0,"command":{"expected_sequence":3,"id":"durable-090c3b4ce31f4b1bb2fff20ccc9293df","op":"submit","steps":[{"op":"observe"}],"valid_until_ns":9999999999999},"events":["terminal"],"request_id":"6f656a7f468a4f348e4ec4624f2de3eb","timeout":0},"write_state":"may_have_been_sent"},
-      "resolution":"terminal",
-      "token_entries":{"9d0d4d9bad194302866da5edbaabcf61":{"post_sequence":2,"status":"consumed"}}
-    },
-    "crash_before_consume": {
-      "blocked": {"error":"unresolved command; read only","transport_called":false},
-      "last_resolution_after_read": null,
-      "pending_after_read": {"accepted":false,"conflict":false,"echo_seen":false,"request":{"action_id":"durable-eb8d36de37214d06a962371c5c1c194a","after":0,"command":{"expected_sequence":3,"id":"durable-eb8d36de37214d06a962371c5c1c194a","op":"submit","steps":[{"op":"observe"}],"valid_until_ns":9999999999999},"events":["terminal"],"request_id":"21cf24489c014e4284afa6429e51688a","timeout":0},"write_state":"may_have_been_sent"},
-      "resolution":"unresolved",
-      "token_entries":{"9d0d4d9bad194302866da5edbaabcf61":{"post_sequence":2,"status":"pending"}}
-    },
-    "normal": {
-      "last_resolution":{"authority":"none","request_id":"3e85ad1dd0a44389a89a093eda8231c4","terminal":{"event":"terminal","id":"durable-ce75c1aaa5a449ff962fafdc01a94597","release":{"buttons_down":[],"keys_down":[],"verified":true},"status":"completed","steps_completed":1}},
-      "pending":null,
-      "token_entries":{"9d0d4d9bad194302866da5edbaabcf61":{"post_sequence":2,"status":"consumed"}}
-    }
+  "base_commit": "d21482d1a3cc16b54447d14d0a2d93aa70409162",
+  "decision": "RETAIN_COMPOSITION_BOUNDARY_HOLD_ATOMIC_EXACTLY_ONCE",
+  "environment": {
+    "cpu_count": 5,
+    "machine": "x86_64",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5"
   },
-  "decision":"RETAIN_COMPOSITION_CANDIDATE",
-  "full_local_result_sha256":"532452d7bed88c7d20f6c270455dbb5ce96f3855bb4f0727095f539347acdf2f",
-  "hard_gate_pass":true,
-  "schema":"authority-ended-durable-submit-composition-retained-v1"
+  "hard_gate_pass": true,
+  "limits": [
+    "injected transport only",
+    "single writer",
+    "process crash only",
+    "no power-loss claim",
+    "no live GUI/OS input/network/model"
+  ],
+  "prereg_sha256": "132620fa8c54f6560cc6fae2aceec29f142be8da653caeca6ffe7f14c969b007",
+  "rows": [
+    {
+      "case": "pending_token_without_submit_is_recoverable_precondition",
+      "detail": {
+        "classification": "TOKEN_PENDING_NO_SUBMIT"
+      },
+      "pass": true
+    },
+    {
+      "case": "consume_before_submit_crash_leaves_no_submit_identity",
+      "detail": {
+        "classification": "CONSUMED_WITHOUT_SUBMIT_RECORD",
+        "process": {
+          "mode": "consume_crash",
+          "returncode": 81,
+          "stderr": "",
+          "stdout": ""
+        },
+        "token_recovery": "authority_end_id already consumed"
+      },
+      "pass": true
+    },
+    {
+      "case": "transport_crash_after_submit_persist_is_explicit_unknown",
+      "detail": {
+        "classification": "PENDING_OR_UNKNOWN_DELIVERY",
+        "process": {
+          "mode": "transport_crash",
+          "returncode": 82,
+          "stderr": "",
+          "stdout": ""
+        },
+        "write_state": "may_have_been_sent"
+      },
+      "pass": true
+    },
+    {
+      "case": "restart_refuses_blind_new_command_before_transport",
+      "detail": {
+        "process": {
+          "mode": "blocked_new_command",
+          "returncode": 0,
+          "stderr": "",
+          "stdout": ""
+        },
+        "result": {
+          "error": "unresolved command; read only",
+          "transport_reached": false
+        }
+      },
+      "pass": true
+    },
+    {
+      "case": "read_only_timeout_preserves_pending_identity_without_command",
+      "detail": {
+        "process": {
+          "mode": "read_only_timeout",
+          "returncode": 0,
+          "stderr": "",
+          "stdout": ""
+        },
+        "request": {
+          "action_id": "durable-d3d4967c1eb84373ba293c3bb3173c4a",
+          "after": 0,
+          "events": [
+            "terminal"
+          ],
+          "timeout": 0
+        },
+        "request_id_after": "66e4b97bcf504c75ba6303ebc2963f94",
+        "request_id_before": "66e4b97bcf504c75ba6303ebc2963f94"
+      },
+      "pass": true
+    },
+    {
+      "case": "submit_before_consume_reaches_transport_with_token_still_pending",
+      "detail": {
+        "classification": "SUBMIT_PENDING_BEFORE_TOKEN_CONSUME",
+        "process": {
+          "mode": "reverse_transport_crash",
+          "returncode": 83,
+          "stderr": "",
+          "stdout": ""
+        },
+        "transport_marker": {
+          "request_has_command": true,
+          "token_status_at_transport": "pending"
+        }
+      },
+      "pass": true
+    }
+  ],
+  "runner_sha256": null,
+  "schema": "authority-ended-durable-submit-composition-v1-result",
+  "source_identities": {
+    "authority_ended_receipt_ledger_v1/receipt-fixture.json": {
+      "git_blob_sha1": "4070fd206c859357125a2cb327affa5aec6de8b8",
+      "sha256": "fb5031a9aeb6b5ecd17d3cd65c5d6fd82b032abd848fc8f2548f14caafffc283"
+    },
+    "authority_ended_restart_durability_v1/authority_ended_bridge_v1.py": {
+      "git_blob_sha1": "9fcfdce5229cb58b3d1a17aacbcef0cb44bd10f1",
+      "sha256": "2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e"
+    },
+    "authority_ended_restart_durability_v1/durable_token_state_v2.py": {
+      "git_blob_sha1": "e48f4e2c1949ffd494a7e4e61510e9d3148aa646",
+      "sha256": "72a3481653cf9c41ec1a03f4c7a7bf1c482ff69468b5d92986bad8cf814950b4"
+    },
+    "durable_submit_v1.py": {
+      "git_blob_sha1": "aaee9d460bcf114dbe1603056c79e6ecc65403e2",
+      "sha256": "415e25df684d01cb4eb6670a4782cc163fab2cf8fea1bb6b6113f98ef00824ab"
+    },
+    "received_continuation_v1.py": {
+      "git_blob_sha1": "b27d922799cfcfc66ad092c8edb8b7134e1889e5",
+      "sha256": "7890589fbbc808b914cc6fefa43408cf727bb3b29a7fc8962451bb7a90d5027a"
+    },
+    "unix_json_deadline.py": {
+      "git_blob_sha1": "267b5ccce24ca43b8a6e9b36219d50342888aa27",
+      "sha256": "decb19099c686ee494fe307c3bf411e61c59e05470319ab80159147d2bd73de3"
+    }
+  }
 }
