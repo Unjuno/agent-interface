@@ -92,6 +92,23 @@ python3 container_x11_bounded_recovery_v3.py \
 
 The script exited 0 with `formal_mechanics_pass=true`.
 
+## Publication-integrity check
+
+The first complete v3 raw result contains controller events, app-observed input events and independent scorer samples. Its uncompressed concatenated JSONL is **236,588 bytes / 1,387 nonempty lines** with SHA-256:
+
+`9037fe0f3393e8cefa50225362ee2caec661a34dc64381cdaabd0b4fd2194cd3`
+
+A first attempt to publish the 46,208-byte gzip+base64 payload as one GitHub connector write was detected after publication as truncated. That artifact was deleted rather than accepted as evidence. The payload was then divided into small ordered parts with a manifest. No raw experimental bytes or scientific result were changed.
+
+For the final retained form:
+
+- the ordered packed base64 stream is 46,208 bytes with SHA-256 `bea4e69eb6bf67ea4f568de95dc548e7240664b1c9a9e3fb5c9f6c02f55a7f5b`;
+- each retained part has its own size and SHA-256 in `raw-manifest.json`;
+- local Git blob SHA-1 was recomputed from the original experiment bytes for every final part and matched the corresponding GitHub blob SHA for **9/9 parts**;
+- `verify_container_x11_raw_v3.py` was compiled and run in the container against the retained layout, reconstructing the same 236,588-byte / 1,387-line JSONL with the original SHA-256.
+
+This post-write verification is part of the evidence chain because a successful connector response alone did not prove the original large artifact was complete.
+
 ## H / T / D / C / U
 
 ### H — falsifiable hypothesis
@@ -140,6 +157,6 @@ The next high-information step is not another synthetic refinement. Compose this
 
 - `container_x11_bounded_recovery_v3.py`: complete executable experiment/auditor;
 - `results/container-x11-bounded-recovery-v3/summary.json`: formal result and per-stream SHA-256 hashes;
-- `results/container-x11-bounded-recovery-v3/raw-first-result.jsonl.gz.b64`: gzip+base64 packed raw controller, app-input and scorer rows from the first complete v3 result.
-
-Uncompressed packed raw JSONL SHA-256: `9037fe0f3393e8cefa50225362ee2caec661a34dc64381cdaabd0b4fd2194cd3`.
+- `results/container-x11-bounded-recovery-v3/raw-manifest.json`: exact part order, part SHA-256 values, packed/raw hashes, sizes and reconstruction command;
+- ordered `raw-first-result.part*.b64` files: gzip+base64 packed controller, app-input and scorer rows from the first complete v3 result;
+- `verify_container_x11_raw_v3.py`: fail-closed retained-artifact verifier/reconstructor.
