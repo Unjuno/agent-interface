@@ -635,7 +635,7 @@ reliability claim. See
 
 The frozen v38 integrated MAP01 run admitted one schema-v6 model plan with an
 exact `running-action-v3` program/lease binding. Four of six pending answers
-were interrupted when health fell below authored hard minima; one other active
+were interrupted when health fell below unauthored empty-cover hard minima; one other active
 answer failed fresh action validity before input. All seven accepted programs
 released empty, and 119 early typed health/ammo observations reconciled with
 the exact frames. The score was no kills, no deaths and no map exit. This

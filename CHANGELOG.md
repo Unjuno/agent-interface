@@ -4,7 +4,7 @@
 
 - Execute the frozen v38 integrated MAP01 allocation once. Schema-v6 model
   input and exact running-program binding work under live threat; 1/6 plans is
-  admitted, four authored health floors invalidate pending answers, and one
+  admitted, four runtime zero-loss coast floors invalidate pending answers, and one
   fresh action predicate rejects before input. All seven programs release,
   119 typed/exact frames reconcile, and no mid-action revocation is exposed.
   Retain 265 files/41,480,362 bytes and Windows/WSL audit. The next focus is

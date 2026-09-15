@@ -26,20 +26,24 @@ that a real running action was cancelled under threat.
 
 Decision0 accepted one schema-v6 model plan. Decision1 returned an eligible
 active answer, but immediate fresh action validity rejected its predicate
-before Executor input. Decisions2–5 interrupted because health fell below
-their model-authored hard minima while the game continued. The later policies
-set hard minima equal to the source health (85, 79, 78, 74); even one point of
-loss invalidated them. Six cover programs were accepted, but there were zero
-cover renewals and only one of six model plans ran. This changed-condition
-retest shows that the previously construction-tested integrated path works,
-while policy authoring and renewal remain the practical liveness bottleneck.
+before Executor input. After that rejection, `reusable_cover()` dropped the
+model-authored cover. Decisions2–5 had an empty, unauthored coast cover;
+their runtime default `maximum_health_loss=0` set each hard minimum to its
+current source health (85, 79, 78, 74). Even one point of loss invalidated
+this empty cover and interrupted the pending model answer. Six cover programs
+were accepted, but there were zero cover renewals and only one of six model
+plans ran. This changed-condition retest shows that the construction-tested
+integrated path works, while the empty-cover default guard and renewal are
+the practical liveness bottleneck.
 
 The next architecture experiment should isolate that bottleneck without
-loosening an authored lease from unchanged health. Freeze a distinct policy
-condition before model calls: require a bounded nonzero health-loss envelope
-or a short model-free recovery cover chosen by an explicit task/safety rule,
-then measure accepted-action fraction, invalidation correctness, time without
-useful control and independent score against the retained v38 baseline.
+loosening an authored lease from unchanged health. Freeze a distinct
+empty-cover condition before model calls: do not treat damage to unauthored
+coast as invalidation of a model-authored policy. Preserve health/ammo
+observation and fresh immediate action validity, then measure answer
+completion, admitted-action fraction, time without useful control and
+independent score against the retained v38 baseline. An explicit short
+recovery cover can be tested later under its own condition.
 Interruption and release tests should be separately designed to expose a
 running active program to typed health/ammo changes; absence of a natural
 revocation here is a coverage gap. A cross-domain benchmark remains necessary
