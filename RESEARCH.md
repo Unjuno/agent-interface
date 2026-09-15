@@ -1277,3 +1277,14 @@ performance comparison or demonstrated memory benefit. Next preregister the
 same-model/task/environment action-crop versus prior-full-frame versus no-prior-
 memory comparison. See
 `research/live_control/ACTION_GROUNDED_VISUAL_MEMORY_V1.md`.
+
+The resulting three-arm live ablation is now implemented and frozen before any
+formal call. One schema preflight precedes nine fresh Chromium/Luna-low arms in a
+Latin schedule. No-memory, prior-full-frame and action-crop conditions share the
+same current frame, prompt, schema and server-side scorer within each shifted,
+duplicate-label and restyled-target/old-looking-decoy scenario. Correct Submit,
+decoy Submit and no effect remain distinct; a fresh post-model observation and
+empty release are mandatory. Crop transfer needs3/3 correct, zero wrong target,
+no worse correctness than both controls and fewer actual input tokens than full
+frame. Five construction tests pass Windows/WSL and formal output is absent. See
+`research/live_control/ACTION_GROUNDED_MEMORY_ABLATION_LIVE_V1.md`.

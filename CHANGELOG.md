@@ -2,6 +2,10 @@
 
 ## Unreleased — 2026-09-13 research update
 
+- Freeze a same-model, same-current-state Chromium comparison of no prior visual
+  memory, prior full frame and action-grounded crop across shifted, duplicate and
+  deliberately misleading target appearances. The private scorer distinguishes
+  correct, decoy and no-effect actions; formal output is absent before commit.
 - Add a strict action-grounded visual-memory receipt that binds exact target
   crops to their admitted action, verified release, independently scored effect
   and local/model recovery trace. Retain two retrospective v2 receipts and a
