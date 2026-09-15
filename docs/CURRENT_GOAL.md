@@ -1,3 +1,15 @@
+Current direction (r90): the first pointer transfer ran once and passed. Actual
+Inkscape Button1 down followed by private focus transfer produced physical release
+at1.961ms, input_released publication2.095ms and needs-decision terminal2.634ms.
+The accepted lease token and exact focus_changed owner cause match across release/
+terminal; only initial point admitted, drag tail zero, explicit cancel/model/retry
+zero. Nine files/151,311 bytes manifest-retained; Windows/WSL audits pass. Thus
+the two-phase release meaning transfers from explicit-cancel DOOM keyboard input
+to autonomous desktop pointer invalidation. Next integrate the event into the
+planner/client delivery boundary and measure whether it reduces agent wait or
+recovery round trips; retain terminal separately. No task success, matched speedup,
+non-X11/general human-tempo claim; no subagent/context handoff; full goal open.
+
 Current direction (r89): transfer two-phase release beyond DOOM keyboard input.
 Executor v13 watches every accepted lease and publishes owner-verified focus,
 surface or expiry release with the accepted token; normal completion emits none.

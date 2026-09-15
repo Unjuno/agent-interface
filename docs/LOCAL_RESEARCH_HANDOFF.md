@@ -3662,3 +3662,15 @@ drag. It transfers focus after physical down, requires one empty owner
 needs-decision terminal and50/75/150ms release/publication/terminal limits. Seed,
 coordinates, one allocation/no retry and25 source hashes are fixed. Output is
 absent and both OS verification paths pass. Run it once and preserve the result.
+The pointer transfer has run exactly once and passed. In the actual private-Xvfb
+Inkscape drag, focus request→physical Button1 release was1.961ms,
+→`input_released`2.095ms and→needs-decision terminal2.634ms. The release event
+led terminal by0.539ms. Accepted token, owner focus_changed record and terminal
+interruption match exactly; no second drag point or explicit cancel occurred.
+
+The first result is retained with nine-file/151,311-byte pre-receipt manifest and
+passes independent Windows/WSL audit. This is cross-input/domain evidence for the
+release state semantics, though not yet evidence that a planner-facing client
+benefits from receiving it. The next boundary should deliver the event through
+the actual client presentation path and measure waiting/recovery behavior while
+keeping the later terminal distinct.

@@ -18,5 +18,18 @@ requires observed physical Button1 down, a verified empty `focus_changed` owner
 release, exact accepted lease token, release event before a matching
 `needs_decision` terminal, only the first drag point admitted and no explicit
 cancel. Frozen limits are50ms focus-request→physical-release,75ms to release
-publication and150ms to terminal. All25 source hashes and output absence verify
-on Windows/WSL. Run once; retain the first failure without retry.
+publication and150ms to terminal. All25 source hashes and output absence verified
+on Windows/WSL before execution.
+
+The allocation ran once and passed every condition. Focus request to physical
+Button1 release was1.961ms, release publication2.095ms and terminal2.634ms.
+Publication followed owner verification by0.135ms and led terminal by0.539ms.
+The exact owner record and accepted lease token appear in both release and
+terminal. Only the initial(618,391) move was admitted; the(638,391) tail never
+executed. No explicit cancel, model call or retry occurred.
+
+Nine pre-retention files total151,311 bytes and are hash-manifested. Independent
+Windows/WSL retained audits pass. This transfers the two-phase physical release
+contract from an explicit-cancel keyboard case to an autonomous focus-invalidated
+pointer hold. It does not establish Inkscape task success, all pointer faults,
+non-X11 portability, a speedup against another interface or human-tempo control.
