@@ -35,24 +35,258 @@
     "right": "setup-only 300 ms X11 strafe-right from original then exact save"
   },
   "cases": [
-    {"case_id":"p01-original-a1-attack_only","pair_id":"p01-original","state":"original","repeat":1,"seed":997211,"policy":"attack_only","keys":["space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p01-original-a2-back_left_attack","pair_id":"p01-original","state":"original","repeat":1,"seed":997211,"policy":"back_left_attack","keys":["s","a","space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p02-left-a1-back_left_attack","pair_id":"p02-left","state":"left","repeat":1,"seed":997212,"policy":"back_left_attack","keys":["s","a","space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p02-left-a2-attack_only","pair_id":"p02-left","state":"left","repeat":1,"seed":997212,"policy":"attack_only","keys":["space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p03-right-a1-attack_only","pair_id":"p03-right","state":"right","repeat":1,"seed":997213,"policy":"attack_only","keys":["space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p03-right-a2-back_left_attack","pair_id":"p03-right","state":"right","repeat":1,"seed":997213,"policy":"back_left_attack","keys":["s","a","space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p04-right-a1-back_left_attack","pair_id":"p04-right","state":"right","repeat":2,"seed":997214,"policy":"back_left_attack","keys":["s","a","space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p04-right-a2-attack_only","pair_id":"p04-right","state":"right","repeat":2,"seed":997214,"policy":"attack_only","keys":["space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p05-original-a1-attack_only","pair_id":"p05-original","state":"original","repeat":2,"seed":997215,"policy":"attack_only","keys":["space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p05-original-a2-back_left_attack","pair_id":"p05-original","state":"original","repeat":2,"seed":997215,"policy":"back_left_attack","keys":["s","a","space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p06-left-a1-back_left_attack","pair_id":"p06-left","state":"left","repeat":2,"seed":997216,"policy":"back_left_attack","keys":["s","a","space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p06-left-a2-attack_only","pair_id":"p06-left","state":"left","repeat":2,"seed":997216,"policy":"attack_only","keys":["space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p07-left-a1-attack_only","pair_id":"p07-left","state":"left","repeat":3,"seed":997217,"policy":"attack_only","keys":["space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p07-left-a2-back_left_attack","pair_id":"p07-left","state":"left","repeat":3,"seed":997217,"policy":"back_left_attack","keys":["s","a","space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p08-right-a1-back_left_attack","pair_id":"p08-right","state":"right","repeat":3,"seed":997218,"policy":"back_left_attack","keys":["s","a","space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p08-right-a2-attack_only","pair_id":"p08-right","state":"right","repeat":3,"seed":997218,"policy":"attack_only","keys":["space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p09-original-a1-attack_only","pair_id":"p09-original","state":"original","repeat":3,"seed":997219,"policy":"attack_only","keys":["space"],"deadline_ms":3075,"requested_hold_ms":5000},
-    {"case_id":"p09-original-a2-back_left_attack","pair_id":"p09-original","state":"original","repeat":3,"seed":997219,"policy":"back_left_attack","keys":["s","a","space"],"deadline_ms":3075,"requested_hold_ms":5000}
+    {
+      "case_id": "p01-original-a1-attack_only",
+      "pair_id": "p01-original",
+      "state": "original",
+      "repeat": 1,
+      "seed": 997211,
+      "policy": "attack_only",
+      "keys": [
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p01-original-a2-back_left_attack",
+      "pair_id": "p01-original",
+      "state": "original",
+      "repeat": 1,
+      "seed": 997211,
+      "policy": "back_left_attack",
+      "keys": [
+        "s",
+        "a",
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p02-left-a1-back_left_attack",
+      "pair_id": "p02-left",
+      "state": "left",
+      "repeat": 1,
+      "seed": 997212,
+      "policy": "back_left_attack",
+      "keys": [
+        "s",
+        "a",
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p02-left-a2-attack_only",
+      "pair_id": "p02-left",
+      "state": "left",
+      "repeat": 1,
+      "seed": 997212,
+      "policy": "attack_only",
+      "keys": [
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p03-right-a1-attack_only",
+      "pair_id": "p03-right",
+      "state": "right",
+      "repeat": 1,
+      "seed": 997213,
+      "policy": "attack_only",
+      "keys": [
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p03-right-a2-back_left_attack",
+      "pair_id": "p03-right",
+      "state": "right",
+      "repeat": 1,
+      "seed": 997213,
+      "policy": "back_left_attack",
+      "keys": [
+        "s",
+        "a",
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p04-right-a1-back_left_attack",
+      "pair_id": "p04-right",
+      "state": "right",
+      "repeat": 2,
+      "seed": 997214,
+      "policy": "back_left_attack",
+      "keys": [
+        "s",
+        "a",
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p04-right-a2-attack_only",
+      "pair_id": "p04-right",
+      "state": "right",
+      "repeat": 2,
+      "seed": 997214,
+      "policy": "attack_only",
+      "keys": [
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p05-original-a1-attack_only",
+      "pair_id": "p05-original",
+      "state": "original",
+      "repeat": 2,
+      "seed": 997215,
+      "policy": "attack_only",
+      "keys": [
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p05-original-a2-back_left_attack",
+      "pair_id": "p05-original",
+      "state": "original",
+      "repeat": 2,
+      "seed": 997215,
+      "policy": "back_left_attack",
+      "keys": [
+        "s",
+        "a",
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p06-left-a1-back_left_attack",
+      "pair_id": "p06-left",
+      "state": "left",
+      "repeat": 2,
+      "seed": 997216,
+      "policy": "back_left_attack",
+      "keys": [
+        "s",
+        "a",
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p06-left-a2-attack_only",
+      "pair_id": "p06-left",
+      "state": "left",
+      "repeat": 2,
+      "seed": 997216,
+      "policy": "attack_only",
+      "keys": [
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p07-left-a1-attack_only",
+      "pair_id": "p07-left",
+      "state": "left",
+      "repeat": 3,
+      "seed": 997217,
+      "policy": "attack_only",
+      "keys": [
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p07-left-a2-back_left_attack",
+      "pair_id": "p07-left",
+      "state": "left",
+      "repeat": 3,
+      "seed": 997217,
+      "policy": "back_left_attack",
+      "keys": [
+        "s",
+        "a",
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p08-right-a1-back_left_attack",
+      "pair_id": "p08-right",
+      "state": "right",
+      "repeat": 3,
+      "seed": 997218,
+      "policy": "back_left_attack",
+      "keys": [
+        "s",
+        "a",
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p08-right-a2-attack_only",
+      "pair_id": "p08-right",
+      "state": "right",
+      "repeat": 3,
+      "seed": 997218,
+      "policy": "attack_only",
+      "keys": [
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p09-original-a1-attack_only",
+      "pair_id": "p09-original",
+      "state": "original",
+      "repeat": 3,
+      "seed": 997219,
+      "policy": "attack_only",
+      "keys": [
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    },
+    {
+      "case_id": "p09-original-a2-back_left_attack",
+      "pair_id": "p09-original",
+      "state": "original",
+      "repeat": 3,
+      "seed": 997219,
+      "policy": "back_left_attack",
+      "keys": [
+        "s",
+        "a",
+        "space"
+      ],
+      "deadline_ms": 3075,
+      "requested_hold_ms": 5000
+    }
   ],
   "retry": false
 }
