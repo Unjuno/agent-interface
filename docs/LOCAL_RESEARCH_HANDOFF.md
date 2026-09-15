@@ -1,3 +1,5 @@
+Current handoff r114: Chromium semantic transfer v1 is retained formally failed despite correct task behavior: the frozen checker required generated reconciliation count to equal client consumption after the client stopped at success (4 vs3). Repaired v2 changed only that rule and fresh seed207 passed all15 checks. Blank reject42.098ms; submit first/useful feedback146.995/286.471ms; useful probe2.608ms,24.767ms before PNG and156.657ms before terminal; saved `t000207`, exact reconciliation and empty release pass.29 files/675,988 bytes audit Windows/WSL. No model/subagent/retry. Next version the predicate around target-relative current geometry and test translation/resize refusal/recovery. Preserve both allocations and do not claim general GUI speed, reliability, token gain or human tempo.
+
 Current handoff r113: matched v2 passed once. Same-seed P samples316.836/275.926/
 283.566/291.948ms vs F237.654/234.144/259.626/238.422ms; medians287.757 vs
 238.038ms,49.718ms reduction/0.8272 ratio. All8 exact candidate/program arms pass

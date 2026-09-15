@@ -587,3 +587,11 @@ reached later rooms and killed one enemy, then died after 149.911 seconds and 13
 decisions without exiting MAP01. The world clock measured 35.016 tics/second,
 but fixed ten-second cover expired before seven model calls returned. See the
 [full scoped result and 2x telemetry video](research/doom/MAP01_ASTRA_ATTEMPT_V1.md).
+
+The pre-artifact semantic feedback boundary has also transferred from Inkscape
+selection to one deterministic Chromium completion predicate. The repaired
+seed207 allocation rejected a blank frame in42.098ms and delivered exact useful
+submission feedback in286.471ms,24.767ms before its PNG and156.657ms before
+terminal; the independent saved token and empty release matched. The first
+allocation's checker failure remains retained. See
+[`research/live_control/CHROMIUM_SEMANTIC_PROBE_TRANSFER_V1.md`](research/live_control/CHROMIUM_SEMANTIC_PROBE_TRANSFER_V1.md).

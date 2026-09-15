@@ -303,3 +303,22 @@ allocation/no retry/model/cancel,40 source hashes and absent output are frozen.
 Twelve related tests pass on WSL; eleven plus one expected Unix-only skip pass on
 Windows. Freeze verification passes on both. Commit, execute exactly once, audit
 and retain the first outcome.
+
+
+## Cross-domain semantic-probe transfer
+
+The typed no-authority registry now supports an exact bounded RGB crop predicate
+as well as the Inkscape selection predicate. Historical calibration accepted
+four Chromium success frames and rejected unsubmitted and blank controls. The
+first frozen live transfer remains formally failed because its checker equated
+all generated reconciliations with the smaller set consumed before the client
+stopped at success.
+
+A fresh v2 allocation changed only that collection-cardinality rule and passed.
+It rejected the blank negative, detected `Submission received`, independently
+saved `t000207`, reconciled every exact frame and ended every program released.
+Useful feedback arrived286.471ms after submit admission,24.767ms before its PNG
+and156.657ms before terminal. Treat this as one Chromium predicate transfer.
+Next make the crop target-relative and test surface translation/resize against
+existing freshness and target-handle boundaries. See
+`CHROMIUM_SEMANTIC_PROBE_TRANSFER_V1.md`.
