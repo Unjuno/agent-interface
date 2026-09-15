@@ -2,6 +2,13 @@
 
 ## Unreleased — 2026-09-13 research update
 
+- Preregister and retain a two-context OpenTTD transfer of current-only,
+  full pre/post frames and bounded action-effect crop. Independent engine
+  transitions establish both road effects. Current-only/full were2/2, while
+  crop was1/2 and falsely contradicted A→B. Actual input18,736/23,748/19,424
+  tokens; crop saves18.21% versus full but loses correctness. Frozen decision
+  `DO_NOT_TRANSFER_CROP`; retain all seven raw Luna-low calls and audits.
+
 - Freeze a same-model, same-current-state Chromium comparison of no prior visual
   memory, prior full frame and action-grounded crop across shifted, duplicate and
   deliberately misleading target appearances. The private scorer distinguishes

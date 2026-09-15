@@ -1,3 +1,5 @@
+Latest visual-memory transfer: two archived OpenTTD engine-verified road effects were classified under current-only, full pre/post history and bounded drag crop with fixed Luna-low/current frame/prompt. Current-only/full2/2; crop1/2 and falsely contradicted A-to-B despite lower input versus full (19,424 vs23,748). Current-only18,736 and perfect. DO_NOT_TRANSFER_CROP; raw audit passes. Find a truly current-insufficient state before revisiting occlusion-cleared or landmark-preserving evidence. See OPENTTD_EFFECT_MEMORY_ABLATION_V1.md.
+
 Latest OpenTTD target-grounding candidate: `session_v34` adds bounded
 `dwell_observe`; `openttd_hover_evidence_v1` binds three fixed points to exact
 persistent tooltip templates; `hover_target_contract_v1` requires the model to

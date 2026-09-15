@@ -1264,6 +1264,22 @@ because mutations differ. See
 
 ## Latest follow-up — action-grounded crop provenance is retained (2026-09-15)
 
+The cross-domain OpenTTD transfer has now run once on two archived, independently
+engine-verified road effects. Exact current screens and prompts were shared
+within each context; current-only, full pre/post frames and bounded action
+crop used Luna-low with six frozen decision calls plus one schema preflight.
+Current-only/full each classified both observed effects2/2, while crop classified
+only B→C1/2 and falsely contradicted A→B despite its engine transition.
+Actual input18,736/23,748/19,424 and images2/6/4. The crop saved4,324
+tokens against full but lost correctness and added688 versus current-only.
+The frozen rule rejects this crop presentation for transfer. It may be
+revisited with a genuinely current-insufficient state and changed evidence
+that clears cost/pointer/sign occlusion or preserves landmarks, in a new
+precommitted controlled comparison. No new OpenTTD input, live transfer,
+general-memory or causal latency claim follows. The raw-call retention audit
+passes. See `research/live_control/OPENTTD_EFFECT_MEMORY_ABLATION_V1.md`.
+
+
 The two frozen adaptive-repair v2 target patches now use one strict visual-memory
 receipt. It binds task/environment/session/surface and exact source frame, target
 handle/point/crop/hash, admitted action/program and empty verified release, first

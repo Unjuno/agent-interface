@@ -97,6 +97,16 @@ This makes crop eligible as a conditional replacement for full history, while
 current-only remains the default when sufficient. See the [live memory ablation](research/live_control/ACTION_GROUNDED_MEMORY_ABLATION_LIVE_V1.md).
 
 
+An archived OpenTTD cross-domain test changes the crop decision: two road
+effects were independently verified from the game engine, then classified
+using the same exact current screens under no memory, full pre/post frames and
+bounded action-effect crops. Current-only/full each got2/2; the crop got1/2,
+falsely contradicting A→B. Input was18,736/23,748/19,424 tokens respectively.
+The crop costs less than full history, but its correctness regression means it
+does not transfer into the shared client. The failed condition and all raw
+calls are retained for a later history-needed, occlusion-cleared revisit. See
+the [OpenTTD effect memory ablation](research/live_control/OPENTTD_EFFECT_MEMORY_ABLATION_V1.md).
+
 The newest held-out OpenTTD toolbar study removes the answer coordinate from the
 candidate path. A first preregistered pair is retained failed: Luna-low calls its
 choice visually unambiguous, but its three points omit company finances and the
