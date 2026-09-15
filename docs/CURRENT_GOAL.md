@@ -1,3 +1,12 @@
+Current direction (r102): v3 combines two shared repairs. Pointer readiness
+requires before==after==published non-null focus/surface/geometry; up to3 passive
+captures10ms apart, no submit before READY. First-action boundary resolves
+observation|terminal, eliminating v2's3s observation-only miss on early rejection.
+Seed206 keeps neutral fault, scorer v2, exact click+observe and empty release;
+600/200/300ms bounds, one run/no retry/model/cancel,37 hashes/output absent.
+Twelve tests/freeze checks pass Windows/WSL. Next commit, run/audit once, retain
+any result. No model/token/general claim; no subagent/context handoff; goal open.
+
 Current direction (r101): prepared-selection v2 ran once and is retained failed.
 Neutral fault and exact unselected visual precondition passed, but restored-focus
 snapshot straddled WM activation: before surface null, after valid, coherent

@@ -98,3 +98,15 @@ The client waited only for observation, missed that terminal and spent its full
 three-second timeout. Fourteen files/326,224 bytes before receipt pass Windows/WSL
 failure audits. V3 must require coherent binding before acceptance and wait for
 `observation|terminal`, preserving the neutral fault and scorer v2.
+
+V3 constructs both shared repairs. A no-authority pointer-binding readiness
+receipt requires capture-before, capture-after and published binding to contain
+the same non-null focus, surface and geometry. After focus restoration the runner
+takes at most three passive observations10ms apart and submits nothing until READY.
+After acceptance a first-boundary reader resolves observation or terminal, so a
+pre-input refusal cannot consume the old three-second observation timeout.
+
+Seed206 retains neutral fault, scorer v2, exact candidate execution and empty
+release. Bounds are600ms fault-to-score and200/300ms acceptance-to-feedback/score.
+One run/no retry/model/cancel,37 hashes and absent output verify;12 focused tests
+pass on Windows/WSL. Commit, run once and retain any result.

@@ -1,3 +1,11 @@
+Current handoff r102: prepared-selection v3 adds shared coherent binding readiness
+and observation|terminal first-boundary handling. Up to3 passive captures10ms
+apart; no submit until before/after/published focus+surface+geometry match. Immediate
+terminal rejection no longer waits3s for absent observation. Seed206 preserves
+neutral fault/scorer v2/exact execution with600/200/300ms limits, one run/no retry/
+model/cancel and37 hashes. Twelve tests/freeze checks pass both OSes. Commit then
+run/audit once and retain any outcome. No broader claim/subagent/context handoff.
+
 Current handoff r101: seed207 v2 ran once and is retained failed. Neutral/unselected
 visual state passed, but first focus-restored capture crossed surface activation,
 yielding null coherent pointer binding. Visual-only submit was accepted then
