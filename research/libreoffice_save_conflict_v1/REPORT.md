@@ -63,3 +63,28 @@ Independent audit does not import the GUI controller. It checks frozen runner/sc
 **C.** Conflict detection may depend on file timestamp/inode/locking policy rather than semantic document identity. `os.replace` changes the inode, so the next one-factor follow-up should mutate the XLSX contents in-place while retaining the same inode.
 
 **U.** One LibreOffice version/filesystem/profile; no collaborative/remote edit, power loss, network share, symbolic-link swap, repeated trial rate, or prompt-action semantics. The experiment does not identify LibreOffice's internal conflict-detection implementation.
+
+## Same-inode follow-up — c254-pair-03
+
+One factor changed: instead of `os.replace`, the external workbook bytes were written through `r+b` into the existing task file followed by truncate/flush/fsync. The runner asserted the inode was unchanged before save.
+
+Frozen order: stable then inplace; one arm each. Runner SHA-256 `b88c328f5567bc7f83e6fb014fe19c1644da798b62eb17f226c8314511ca2cb1`.
+
+| Arm | Durable outcome | Inode mutation | Modal after known format confirmation | Release |
+|---|---|---|---|---|
+| stable | `office / preview` saved | Calc later saved via its own new inode | none | empty/verified |
+| inplace | external workbook preserved | **same inode before/after external rewrite** | `Document Has Been Changed by Others` | empty/verified |
+
+Inplace arm:
+- precheck inode `1314421`, SHA-256 `02c9f27e...`;
+- after external in-place rewrite: **same inode `1314421`**, SHA-256 `f6df9f69...`;
+- after save attempt/conflict prompt: same inode/hash remained;
+- independent scorer recovered exactly `external / replacement / external-marker / writer`.
+
+`c254-pair-03/AUDIT.json` reports zero errors and rejects four deliberate corruptions (changed inode evidence, erased conflict prompt, wrong cells, bad release).
+
+### Updated decision
+
+The retained conflict evidence is **not explained by inode replacement alone**. LibreOffice also refused/prompted when the same inode's XLSX content changed between precheck and save. The experiment still does not identify the internal detector: mtime/ctime, file metadata/content checks, locking, or another policy remain plausible.
+
+A next discriminating rung, if needed, should change file content while preserving selected metadata or manipulate timestamp-only signals one at a time. Do not infer semantic document-incarnation tracking from these two pairs alone.
