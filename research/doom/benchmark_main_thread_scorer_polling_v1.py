@@ -84,7 +84,7 @@ def one_run(duration_s=1.0, sample_hz=35.0, command_hz=50.0):
     sample_duration_ns = [row['sample_finished_ns'] - row['sample_started_ns'] for row in sample_receipts]
     return {
         'samples': stats.samples,
-        'commands': stats.commands - 1,
+        'commands': stats.commands - 1,  # exclude STOP
         'missed_sample_periods': stats.missed_sample_periods,
         'sample_lateness_ns': lateness_ns,
         'sample_duration_ns': sample_duration_ns,
