@@ -48,17 +48,11 @@ def verify_freeze(exp_root:Path, fixtures:dict):
     for name,want in fr['source_sha256'].items():
         got=sha256(exp_root/name)
         if got!=want: raise RuntimeError(f'frozen source mismatch {name}: {got} != {want}')
-    for state,meta in fr['fixtures'].items():
-        if state=='original':
-            m=fixtures[state]
-            for name,want in (('manifest',meta['manifest_sha256']),('save',meta['save_sha256']),('source',meta['source_frame_sha256'])):
-                got=sha256(m[name])
-                if got!=want: raise RuntimeError(f'frozen original fixture mismatch {name}')
-        else:
-            m=fixtures[state]
-            for name,want in (('manifest',meta['manifest_sha256']),('save',meta['save_sha256']),('source',meta['source_frame_sha256'])):
-                got=sha256(m[name])
-                if got!=want: raise RuntimeError(f'frozen {state} fixture mismatch {name}')
+    meta=fr['fixture']
+    m=fixtures['original']
+    for name,want in (('manifest',meta['manifest_sha256']),('save',meta['save_sha256']),('source',meta['source_frame_sha256'])):
+        got=sha256(m[name])
+        if got!=want: raise RuntimeError(f'frozen original fixture mismatch {name}')
     return fr
 
 def _send(p,row):
@@ -134,6 +128,26 @@ def scorer_metrics(session_out:Path,accepted_ns:int,deadline_ns:int,score:dict):
       'missed_sample_periods':summary.get('scheduler',{}).get('missed_sample_periods'),
       'controller_visible':summary.get('controller_visible')}
 
+def setup_state(p,case,transcript):
+    state=case['state']
+    if state=='original': return {'state':'original','applied':False}
+    key={'left':'a','right':'d'}[state]
+    _send(p,{'op':'clock'}); clk=_until(p,'clock',timeout_s=5,transcript=transcript)
+    sid='setup-'+case['case_id']
+    valid_until=int(clk['runtime_ns'])+1_500_000_000
+    command={'op':'submit','id':sid,'expected_sequence':clk['sequence'],'valid_until_ns':valid_until,
+             'steps':[{'op':'hold','keys':[key],'duration_ms':300}]}
+    _send(p,command)
+    accepted=_until(p,'accepted',lambda r:r.get('id')==sid,timeout_s=10,transcript=transcript)
+    term=_until(p,'terminal',lambda r:r.get('id')==sid,timeout_s=10,transcript=transcript)
+    release=term.get('release') or {}
+    hard={'completed':term.get('status')=='completed','release_verified':release.get('verified') is True,
+          'release_empty':release.get('keys_down')==[] and release.get('buttons_down')==[]}
+    if not all(hard.values()): raise RuntimeError('setup state integrity failure '+json.dumps({'case':case['case_id'],'hard':hard,'terminal':term}))
+    return {'state':state,'applied':True,'key':key,'hold_ms':300,'accepted_ns':accepted.get('accepted_ns'),
+            'terminal_status':term.get('status'),'release_verified':release.get('verified'),'release_keys_down':release.get('keys_down'),
+            'release_buttons_down':release.get('buttons_down')}
+
 def run_case(runtime_root:Path, manifest:dict, fixture_manifest:Path, case:dict, out_dir:Path, timeout_seconds=60):
     if out_dir.exists(): raise RuntimeError(f'case output already exists: {out_dir}')
     out_dir.mkdir(parents=True)
@@ -144,6 +158,7 @@ def run_case(runtime_root:Path, manifest:dict, fixture_manifest:Path, case:dict,
     try:
         _until(p,'ready',timeout_s=20,transcript=transcript)
         _until(p,'observation',lambda r:r.get('id')=='initial',timeout_s=20,transcript=transcript)
+        setup=setup_state(p,case,transcript)
         _send(p,{'op':'clock'});clk=_until(p,'clock',timeout_s=5,transcript=transcript)
         valid_until=int(clk['runtime_ns'])+int(case['deadline_ms']*1_000_000)
         command={'op':'submit','id':case['case_id'],'expected_sequence':clk['sequence'],'valid_until_ns':valid_until,'steps':[{'op':'hold','keys':case['keys'],'duration_ms':case['requested_hold_ms']},{'op':'observe'}]}
@@ -181,7 +196,7 @@ def run_case(runtime_root:Path, manifest:dict, fixture_manifest:Path, case:dict,
     t0=initial_typed(events);t1=latest_typed_before(events,case['case_id'],valid_until)
     deadline_late_ms=(interruption.get('verified_ns')-valid_until)/1e6 if isinstance(interruption.get('verified_ns'),int) else None
     result={
-      'schema':SCHEMA+'-case','case':case,'returncode':rc,'accepted_ns':accepted['accepted_ns'],'valid_until_ns':valid_until,
+      'schema':SCHEMA+'-case','case':case,'setup_state':setup,'returncode':rc,'accepted_ns':accepted['accepted_ns'],'valid_until_ns':valid_until,
       'terminal_status':term.get('status'),'hard_gates':hard,'hard_pass':all(hard.values()),'source_closure':src,
       'owner_deadline_to_verified_empty_ms':deadline_late_ms,'scorer':sm,'score':score,
       'typed_initial':t0,'typed_latest_predeadline':t1,
@@ -213,10 +228,7 @@ def decide(results:list[dict]):
 
 def fixture_paths(runtime_root:Path, exp_root:Path):
     orig=runtime_root/'research/doom/fixtures/map01-threat-contact-v2'
-    return {
-      'original':{'manifest':orig/'fixture.json','save':orig/'save.png','source':orig/'source.png'},
-      'left':{'manifest':exp_root/'fixtures/left/save.json','save':exp_root/'fixtures/left/save.png','source':exp_root/'fixtures/left/save.source.webp'},
-      'right':{'manifest':exp_root/'fixtures/right/save.json','save':exp_root/'fixtures/right/save.png','source':exp_root/'fixtures/right/save.source.webp'}}
+    return {'original':{'manifest':orig/'fixture.json','save':orig/'save.png','source':orig/'source.png'}}
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--runtime-root',type=Path,required=True);ap.add_argument('--bundle-manifest',type=Path,required=True);ap.add_argument('--out',type=Path,required=True);ap.add_argument('--full-runtime-verify',action='store_true');a=ap.parse_args()
@@ -226,7 +238,7 @@ def main():
     a.out.mkdir(parents=True);(a.out/'preflight.json').write_text(json.dumps({'schema':SCHEMA+'-preflight','runtime':rv,'freeze':freeze,'started_ns':time.perf_counter_ns()},indent=2,sort_keys=True)+'\n')
     results=[]
     for case in plan['cases']:
-        r=run_case(a.runtime_root,manifest,fixtures[case['state']]['manifest'],case,a.out/'cases'/case['case_id'],timeout_seconds=plan['timeout_seconds']);results.append(r)
+        r=run_case(a.runtime_root,manifest,fixtures['original']['manifest'],case,a.out/'cases'/case['case_id'],timeout_seconds=plan['timeout_seconds']);results.append(r)
         if not r['hard_pass']:
             summary={'schema':SCHEMA+'-summary','decision':'FAIL_MEASUREMENT_INTEGRITY_STOPPED','completed_cases':len(results),'results':results,'decision_detail':decide(results)}
             (a.out/'summary.json').write_text(json.dumps(summary,indent=2,sort_keys=True)+'\n');print(json.dumps(summary['decision_detail'],indent=2));return 2
