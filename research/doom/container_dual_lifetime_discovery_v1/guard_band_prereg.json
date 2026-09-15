@@ -1,0 +1,14 @@
+{
+  "schema":"dual-lifetime-guard-band-development-prereg-v1",
+  "task_id":"container-dual-lifetime-guard-band-20260915-v1",
+  "runtime_source_base":"9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+  "upstream_result":"container-dual-lifetime-quiet-hold-20260915-v1",
+  "guard_band_ms":100,
+  "guard_selection":"fixed before this experiment from prior capture-hold artifact pipeline: max observed capture_to_artifact_ready 79.212 ms; rounded upward to 100 ms, no sweep",
+  "question":"Can a 100 ms no-new-capture guard band before authority expiry retain intermediate observations while removing the release-to-fresh-state delay of capture-coupled hold?",
+  "arms":{"capture_hold":"unchanged periodic capture during hold","guard_hold":"same hold, owner deadline and dual lifecycle; only suppress new snapshots when <=100 ms authority remains"},
+  "conditions":{"seeds":[993300,993301,993302],"matched_pairs":3,"order":["capture_hold,guard_hold","guard_hold,capture_hold","capture_hold,guard_hold"],"authority_deadline_after_runtime_clock_ms":600,"action":{"op":"hold","keys":["Shift_L"],"duration_ms":2000},"episode_timeout_seconds":60},
+  "hard_gates":["verified empty release all sessions","zero post-release input admissions","one post-authority observation within 400 ms lifecycle budget","authority_ended/expired cause preserved","five-field final scorer agreement all sessions","guard arm retains >=1 in-hold observation per session"],
+  "decision":{"PROMOTE_GUARD_BAND":"all hard gates pass; paired median release-to-fresh improvement >=10 ms; median deadline-to-empty regression <=2 ms","HOLD":"gates pass but threshold not met","REJECT":"any hard gate fails"},
+  "stop_rule":"one smoke pair then exactly three fresh matched pairs; no guard sweep and no favorable retries"
+}
