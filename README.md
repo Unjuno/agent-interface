@@ -602,3 +602,9 @@ window-content predicate delivered useful feedback in275.781ms and refused a
 later resize before reading stale crop pixels. The first stale-binding refusal
 remains retained. See
 [`research/live_control/TARGET_RELATIVE_SEMANTIC_PROBE_V1.md`](research/live_control/TARGET_RELATIVE_SEMANTIC_PROBE_V1.md).
+
+A verified Save-button target handle can now regenerate the no-authority
+completion predicate after a same-surface resize. Handle resolution and contract
+repair took0.091ms and0.145ms; the task then completed with no frontier-model
+resumption. The relation is fixture-calibrated. See
+[`research/live_control/TARGET_HANDLE_SEMANTIC_REPAIR_V1.md`](research/live_control/TARGET_HANDLE_SEMANTIC_REPAIR_V1.md).

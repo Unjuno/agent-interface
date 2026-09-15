@@ -335,3 +335,15 @@ frame, and a later width change refused before crop hashing. Useful feedback was
 275.781ms after admission,23.828ms before PNG and134.919ms before terminal. The
 next boundary should derive this region from a verified target handle and perform
 bounded local repair after resize. See `TARGET_RELATIVE_SEMANTIC_PROBE_V1.md`.
+
+
+## Target-handle semantic repair
+
+The completion region can now be derived from a verified Save target handle plus
+a bounded cached relation. After a live width resize, the old predicate refused
+before crop hashing. The same handle's current exact pixels revalidated in
+0.091ms and generated a current-geometry predicate in0.145ms, with no frontier
+resumption. The repaired task completed and delivered useful semantics in
+271.178ms. This relation is calibrated; compare it against same-model
+reacquisition before claiming token or latency savings. See
+`TARGET_HANDLE_SEMANTIC_REPAIR_V1.md`.
