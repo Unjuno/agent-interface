@@ -28,6 +28,8 @@ def run(n: int) -> tuple[int, int]:
     kills = 0
     deaths = 0
     for index in range(1, n + 1):
+        # Sparse deterministic events: positive kill every 25k samples;
+        # negative death every 40k. No episode terminal in the compute loop.
         if index % 25_000 == 0:
             kills += 1
         if index % 40_000 == 0:
