@@ -86,3 +86,15 @@ tool and selector overlays and rejects the retained unselected image.
 Seed207 keeps the prior500/200/300ms semantic bounds, one run/no retry/model/
 cancel and exact execution/release rules. All35 hashes, absent output and12 tests
 verify on Windows/WSL. Run once and retain any outcome; v1 remains failed.
+
+V2 also ran once and is retained failed for a different reason. Neutral fault and
+unselected target checks passed exactly. The first restored-focus snapshot straddled
+window-manager activation: pointer context had no surface before capture and a
+valid surface after capture, so its coherent `pointer_binding` was null. Visual
+validation alone admitted a doomed program; Executor accepted it, then refused
+before pointer input with a zero-step `needs_decision` terminal and empty release.
+
+The client waited only for observation, missed that terminal and spent its full
+three-second timeout. Fourteen files/326,224 bytes before receipt pass Windows/WSL
+failure audits. V3 must require coherent binding before acceptance and wait for
+`observation|terminal`, preserving the neutral fault and scorer v2.

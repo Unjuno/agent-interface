@@ -1,3 +1,11 @@
+Current handoff r101: seed207 v2 ran once and is retained failed. Neutral/unselected
+visual state passed, but first focus-restored capture crossed surface activation,
+yielding null coherent pointer binding. Visual-only submit was accepted then
+needs-decision before any pointer admission; release was empty. Observation-only
+wait ignored the immediate terminal and cost3s. Fourteen files/326,224 bytes pass
+Windows/WSL failure audits. V3 must await coherent binding before acceptance and
+race observation against terminal. No rerun/broader claim/subagent/context handoff.
+
 Current handoff r100: prepared-selection v2 is a distinct frozen repair. Neutral
 fault[730,500] avoids preselecting the target. Scorer v2 requires target edges
 within1px,≥80% red support and≥10 dark handle pixels on all four sides; retained

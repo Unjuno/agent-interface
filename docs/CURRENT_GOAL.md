@@ -1,3 +1,13 @@
+Current direction (r101): prepared-selection v2 ran once and is retained failed.
+Neutral fault and exact unselected visual precondition passed, but restored-focus
+snapshot straddled WM activation: before surface null, after valid, coherent
+pointer_binding null. Visual-only admission accepted then safely needs-decision
+before pointer input (0 admissions,0 steps, empty release). Client ignored terminal
+while waiting observation and wasted3s.14 files/326,224 bytes pass Windows/WSL
+failure audit. Next gate admission on coherent binding and wait observation|terminal
+first; keep neutral fault/scorer v2 in distinct v3. No rerun/model/token/general
+claim; no subagent/context handoff; full goal open.
+
 Current direction (r100): v2 changes only invalid v1 conditions. Fault point
 [730,500] is neutral/outside target. Scorer v2 preserves identity with≤1px edge
 shift and≥80% red support, separately requiring≥10 dark handle pixels each side;
