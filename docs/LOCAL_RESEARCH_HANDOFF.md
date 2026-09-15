@@ -1,3 +1,13 @@
+Current handoff r95: release-aware preparation v1 turns the observed release-to-
+terminal gap into a no-authority planner boundary. It can begin only after exact
+verified release, copies and hashes one candidate, and remains unable to submit
+input. Matching terminal advances only to fresh-action-validity required; wrong
+terminal fails closed. Seven related tests pass on Windows/WSL after the first
+test invocation exposed and repaired a package import defect. Next compare one
+actual preparation workload with a terminal-first arm on the same event stream,
+then require current validity and fresh Executor acceptance. No planner/model/
+token/task/human-tempo benefit is established; no subagent/context handoff.
+
 Current handoff r94: client-wait v2 is retained after one frozen run. The same
 Inkscape interruption returned verified release to the early client at22.369ms
 and terminal to the baseline at102.693ms, an80.324ms wait advantage. Exact two

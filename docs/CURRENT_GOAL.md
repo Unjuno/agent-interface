@@ -1,3 +1,15 @@
+Current direction (r95): release-aware preparation v1 consumes the newly proven
+gap without granting authority. After exact token-bound empty release, it may
+prepare/copy/hash one candidate while terminal remains pending. A matching
+terminal yields PREPARED_REQUIRES_FRESH_ACTION_VALIDITY; only the existing fresh
+validity+Executor boundary may later admit input. Wrong terminal fails closed.
+Seven related tests pass Windows/WSL. The first test invocation exposed a package
+import defect before logic ran; dual import was added. Next measure an actual
+planner preparation against a sequential terminal-first arm on the same stream,
+including useful-action readiness, terminal reconciliation and round-trip cost.
+No actual planner/model/token/task/human-tempo gain yet; no subagent/context
+handoff; full goal open.
+
 Current direction (r94): client-wait v2 ran exactly once and passed frozen audit.
 Physical release was20.519ms after focus; early client returned22.369ms versus
 terminal-only102.693ms, an80.324ms same-stream advantage. Exact early-release and
