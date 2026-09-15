@@ -133,3 +133,26 @@ the first selection success or terminal.
 Seed205 keeps coherent binding, neutral fault, scorer v2 and600/200/300ms limits.
 One run/no retry/model/cancel,37 hashes and absent output verify;12 focused tests
 pass Windows/WSL. Run once and retain any result; v3 remains failed.
+
+V4 ran exactly once and passed the frozen allocation and independent retained
+audit. Runtime release reached the early client at3.115ms after focus request,
+while the terminal client returned at83.150ms, an80.035ms wait advantage. Early
+preparation produced fresh useful readiness at105.835ms versus133.249ms for the
+terminal-first arm, a27.413ms advantage. The newly bound selection was accepted
+at252.015ms after focus request, completed two steps and ended with verified
+empty input.
+
+The first feedback frame was captured89.364ms after acceptance and received at
+157.062ms, but correctly scored unselected. The first useful frame was captured
+at162.540ms; semantic scoring completed at279.520ms after acceptance, or531.536ms
+after focus request. The execution terminal completed37.876ms before semantic
+scoring did. This separates frame availability, recognized semantic completion
+and program lifecycle closure instead of treating the first observation or the
+terminal as task completion.
+
+Eighteen files/540,548 bytes before retention receipt pass independent
+Windows/WSL audits. The result covers one private-Xvfb Inkscape fixture with no
+model, retry or cancellation. It establishes neither token reduction, general
+speedup nor human-tempo operation. The next comparison should reduce recognition
+time with an incremental or in-memory scorer while reconciling its result to the
+exact retained frame.

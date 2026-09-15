@@ -1,3 +1,14 @@
+Current direction (r105): prepared-selection v4 ran exactly once and passed.
+Early client3.115ms vs terminal83.150ms; early useful readiness105.835ms vs
+terminal-first133.249ms, a27.413ms advantage. The new selection was accepted at
+252.015ms after focus. First feedback capture89.364ms after acceptance was
+semantically false; first useful capture was162.540ms and live score completed
+at279.520ms. The completed2-step/empty-release terminal preceded recognition by
+37.876ms. Exact program SHA/count, coherent binding and independent selected-
+handle score all audit.18 files/540,548 bytes retained. Next isolate and reduce
+semantic recognition latency with exact-frame reconciliation; no model/token/
+general claim, no subagent/context handoff; full goal open.
+
 Current direction (r104): v4 repairs v3 evidence. Acceptance binds steps count2
 and canonical SHA of exact click+observe. Each exact observation retains capture,
 detection, score and score-complete clocks; first false feedback remains explicit,

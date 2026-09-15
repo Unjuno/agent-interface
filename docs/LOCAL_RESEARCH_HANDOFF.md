@@ -1,3 +1,13 @@
+Current handoff r105: seed205 prepared-selection v4 ran exactly once and passed.
+Early client3.115ms vs terminal83.150ms; prepared useful readiness105.835ms vs
+133.249ms. New action acceptance was252.015ms after focus. First feedback capture
+at+89.364ms was unselected; first useful capture was+162.540ms and semantic score
+completed at+279.520ms. The2-step empty-release terminal arrived37.876ms before
+recognition completed. Program SHA/count, coherent binding and independent score
+audit;18 files/540,548 bytes retained. Next reduce scorer latency while binding
+any faster path back to the exact retained frame. No broader claim/subagent/
+context handoff; full goal remains open.
+
 Current handoff r104: v4 binds accepted count2 plus canonical program SHA and
 scores observations in event order, retaining first feedback separately until
 first semantic success or terminal. Every score has live detection/completion
