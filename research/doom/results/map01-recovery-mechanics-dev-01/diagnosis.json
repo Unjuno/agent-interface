@@ -1,0 +1,40 @@
+{
+  "schema": "map01-recovery-mechanics-dev-01-diagnosis-v1",
+  "allocation_id": "map01-recovery-mechanics-dev-01",
+  "workflow_run_id": 34971740475,
+  "workflow_head_sha": "f34cd44f4c4c833638dbf2ae5911e322acfacd96",
+  "artifact_id": 10397389058,
+  "artifact_sha256": "f8315eeffbd7d9334e7ed4cd5c0fd47e3c40246e9173a7a801b091afc22919fb",
+  "artifact_size_bytes": 3058618,
+  "formal_disposition": "RETAINED_DEVELOPMENT_FAILURE_ANALYZER_BINDING_BUG",
+  "first_outcome": {
+    "workflow_conclusion": "failure",
+    "coast_input_admissions_reported": 0,
+    "recovery_input_admissions_reported": 0,
+    "hard_safety_pass": true,
+    "terminal_score_audits_not_run_due_prior_step_failure": true
+  },
+  "root_cause": "The development direct_bounds helper filtered input_admission by program id, but v13 input_admission rows carry intent_token rather than id. The recovery hold executed; the analyzer discarded its admission.",
+  "retained_raw_recovery_evidence": {
+    "program_id": "wait-recovery",
+    "intent_token": "2520395d25be4e08ae711bdd07f28854",
+    "key": "a",
+    "input_admitted_ns": 182584497048,
+    "input_ack_ns": 182584752580,
+    "release_call_started_ns": 182855234543,
+    "release_call_returned_ns": 182855497477,
+    "release_batch_identifier": "wait-recovery",
+    "terminal_status": "completed",
+    "terminal_release_verified_empty": true
+  },
+  "posthoc_diagnostic_only": {
+    "retained_input_lower_ms": 270.481963,
+    "retained_input_upper_ms": 271.000429,
+    "censor_width_ms": 0.518466,
+    "coast_no_input_upper_ms": 600.0,
+    "recovery_no_input_lower_ms": 328.999571,
+    "recovery_no_input_upper_ms": 329.518037,
+    "interpretation": "These values diagnose the evidence-binding bug; they do not retroactively convert dev-01 to PASS."
+  },
+  "repair_constraint": "dev-02 may change only analyzer binding from program-id filtering to accepted.id -> intent_token -> input_admission/input_release_transition joining; no threshold, recovery policy, lease, or wait-window change"
+}
