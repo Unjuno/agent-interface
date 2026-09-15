@@ -1,0 +1,30 @@
+{
+  "decision": "PASS_STAGED_BRANCH_REVALIDATION_ON_EXISTING_COMPILED_SPEC_SHAPE",
+  "environment": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5"
+  },
+  "methods": {
+    "staged_no_branch_revalidate": {
+      "correct_execute": 8,
+      "correct_reject": 48,
+      "false_reject": 0,
+      "stale_execute": 40
+    },
+    "staged_revalidate": {
+      "correct_execute": 8,
+      "correct_reject": 88,
+      "false_reject": 0,
+      "stale_execute": 0
+    },
+    "state_union": {
+      "correct_execute": 4,
+      "correct_reject": 88,
+      "false_reject": 4,
+      "stale_execute": 0
+    }
+  },
+  "schema": "compiled-staged-integration-v1",
+  "source_shape": "compiled_runtime_cross_domain_compat_v1 continuous-control",
+  "states": 96
+}
