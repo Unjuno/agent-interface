@@ -1,0 +1,101 @@
+{
+  "schema": "map01-recovery-cover-mechanism-v4-prereg",
+  "allocation_id": "map01-recovery-cover-mechanism-live-v4-01",
+  "base_commit": "aa4be696dbf9096acd2e9b55576d965cbdf98cbf",
+  "status": "FROZEN_CONSTRUCTION_BEFORE_FORMAL_WORKFLOW",
+  "question": "Does explicitly admitted, source-guarded reuse of the immediately preceding motor intent reduce measured input-free planner-wait time in the fixed real MAP01 threat fixture without hard release, scorer-isolation, terminal-score, or negative-outcome failure?",
+  "claim_scope": "causal bounded-recovery mechanism under a fixed simulated 600 ms planner delay; zero model calls; not frontier-model efficacy",
+  "supersedes": {
+    "allocation_id": "map01-recovery-cover-mechanism-live-v3-01",
+    "workflow_run_id": 34974265196,
+    "disposition": "CONSTRUCTION_PREFLIGHT_FAILURE_NO_FORMAL_STEP_EXECUTED",
+    "reason": "v3 preregistration self-hash disagreed with its audit source before the formal experiment step; v4 also adopts the subsequently retained fail-closed windowed union occupancy definition"
+  },
+  "dependencies": {
+    "protocol_valid_measurement_live04_commit": "1cceae7c23dbb41da815add53c4303042936c1f8",
+    "real_map01_recovery_dev02_result_commit": "9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+    "source_only_matched_runner_commit": "120a1b8de6d515d75c2200ca3acc310a124fb373",
+    "workflow_path_global_owner_commit": "fdfdd282ea85dd38caea86379e5cf9ac906593fd",
+    "windowed_union_occupancy_commit": "a74c5cb704c17bc63e6d73aa98a4bac62d738c47"
+  },
+  "fixed_condition": {
+    "fixture_id": "map01-threat-contact-v2",
+    "fixture_seed": 990619,
+    "vizdoom": "1.3.0",
+    "pairs": 3,
+    "pair_order": [
+      ["COAST_CONTROL", "BOUNDED_RECOVERY"],
+      ["BOUNDED_RECOVERY", "COAST_CONTROL"],
+      ["COAST_CONTROL", "BOUNDED_RECOVERY"]
+    ],
+    "common_prelude": {"keys": ["d"], "duration_ms": 180},
+    "planner_provider": "frozen-delay-provider-v1",
+    "planner_wait_ms": 600,
+    "model_calls": 0,
+    "recovery": {
+      "keys": ["d"],
+      "pulse_ms": 50,
+      "pulses": 5,
+      "authority_lease_ms": 400,
+      "source_max_age_ms": 1000,
+      "guard": "fresh typed health required; cancel on health loss, unavailable health, or non-fresh sequence"
+    }
+  },
+  "measurement": {
+    "schema": "windowed-any-key-occupancy-v1",
+    "window": "runtime planner-start clock to runtime planner-return clock",
+    "normal_retained_lower": "union of input_ack_ns to release_call_started_ns intersected with planner window",
+    "normal_retained_upper": "union of admitted_ns to release_call_returned_ns intersected with planner window",
+    "interrupted_retained": "censored interval ending no later than independently verified empty-input boundary; no fabricated positive lower duration",
+    "simultaneous_keys": "union once rather than sum per key",
+    "missing_completed_release": "invalid measurement evidence; never zero occupancy",
+    "no_retained_input": "planner-window complement of retained-input interval bounds",
+    "independent_outcome": "scorer-only progress events plus final independent score, never controller-visible"
+  },
+  "hard_gates": {
+    "launch_owner_result": "PASS_CANONICAL_GLOBAL_OWNER",
+    "matching_workflow_runs": 1,
+    "formal_run_attempt": 1,
+    "model_calls": 0,
+    "pair_count": 3,
+    "coast_input_admissions_each_pair": 0,
+    "bounded_recovery_admissions_each_pair_min": 1,
+    "valid_input_bounds_all_six_arms": true,
+    "recovery_negative_event_count": 0,
+    "terminal_score_agreement_all_six_arms": true,
+    "verified_terminal_release_all_six_arms": true,
+    "controller_scorer_leak_count_all_six_arms": 0
+  },
+  "descriptive_not_hard_gate": {
+    "scorer_missed_sample_periods": "retain per arm; missed cadence reduces event-time precision but persistent kill/death/terminal state is independently terminal-audited"
+  },
+  "promotion_gate": {
+    "all_three_pairs_continuity_improved": true,
+    "paired_median_no_input_upper_reduction_fraction_min": 0.10
+  },
+  "decision": {
+    "PASS_MECHANISM_ONLY": "all hard gates and promotion gates pass",
+    "HOLD": "hard gates pass but continuity does not improve in all three pairs or paired median reduction is below 10 percent",
+    "FAIL": "any hard measurement, launch, release, scorer isolation, terminal agreement, exposure, or negative-outcome gate fails"
+  },
+  "freeze_protocol": {
+    "construction_commit_separate_from_workflow_commit": true,
+    "workflow_asserts_zero_diff_from_construction_for_experiment_sources": true,
+    "no_self_hash_of_same_commit_source": true,
+    "one_run_per_allocation": true,
+    "no_retry_after_formal_step": true,
+    "retain_first_outcome": true,
+    "do_not_reuse_v3_allocation": true
+  },
+  "prohibited": [
+    "frontier model call",
+    "claiming frontier-model efficacy",
+    "changing fixture, pair order, wait window, recovery pulse schedule, lease, source-age bound, guard, measurement semantics, or thresholds after viewing the result",
+    "retrying this allocation after a formal experiment step",
+    "controller access to scorer-only state",
+    "treating missing release evidence as zero occupancy",
+    "summing simultaneous-key occupancy more than once"
+  ],
+  "next_if_pass": "mechanism causal block is closed; model-integrated efficacy remains a separately frozen allocation only if a model-capable execution environment and useful-effect scoring are available",
+  "next_if_hold_or_fail": "retain the first valid outcome and isolate the concrete mechanism or measurement failure before any new allocation"
+}
