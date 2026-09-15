@@ -3634,3 +3634,19 @@ episode with zero retries/model calls. Its60/75/90/200ms bounds separately cover
 decision, cancel, physical release and terminal closure. It also requires release
 before artifact and terminal plus exact token/program/reconciliation evidence.
 All32 hashes verify and output is absent. Consume it exactly once.
+The first `map01-early-release-live-01` allocation has now run and passed without
+retry. Its screen-visible ammo decrement produced a guard decision at31.857ms,
+cancel at54.578ms, physical owner release at57.660ms and published release receipt
+at66.980ms after capture. Exact artifact publication and terminal followed later;
+terminal closure was133.698ms,76.039ms after physical release.
+
+The accepted program SHA and intent token bind through cancel/release. The guard's
+intermediate receipt has no current input authority, verified physical release
+and terminal pending; the later cancelled terminal closes it. Three typed/full
+frames reconcile, no input follows invalidation and the process exits zero. The
+raw first pass is manifest-retained and cross-platform audits pass.
+
+Treat this as proof of one shared keyboard cancellation publication mechanism,
+not a MAP01 performance result. Do not rerun the same fixture. The useful next
+transfer is an actual pointer/desktop interruption or bounded planner episode
+that consumes the early state, while keeping later terminal closure mandatory.

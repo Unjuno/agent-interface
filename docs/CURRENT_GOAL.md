@@ -1,3 +1,16 @@
+Current direction (r88): the first frozen two-phase release allocation ran once
+and passed all conditions. Visible ammo48→47 caused typed decision31.857ms,
+cancel54.578ms, independent empty X11 release57.660ms and release publication
+66.980ms after capture; publication preceded artifact and terminal. Guard v3
+exposed no authority/physical release true/terminal pending, then cancelled
+terminal closed at133.698ms. All3 typed/full pairs reconcile, no later input,
+process zero.22 files/1,251,326 bytes are manifest-retained; Windows/WSL audits
+pass. This proves one real keyboard cancellation publication path only. Next
+transfer the two-phase event to pointer/desktop interruption or one bounded
+planner integration; do not repeat this fixture or switch to packaging. No
+gameplay/cross-domain/general human-tempo claim; no subagent/context handoff;
+full goal open.
+
 Current direction (r87): Executor v12 reuses InputOwner v10's per-lease cause and
 publishes an exact intent-token-bound empty physical release asynchronously while
 artifact/finalization remains active. Guard v3 exposes

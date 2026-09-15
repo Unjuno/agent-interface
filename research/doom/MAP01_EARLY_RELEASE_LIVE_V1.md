@@ -26,5 +26,27 @@ visible ammo invalidation, one episode, no retry and no model call. Bounds are
 terminal closure. It additionally requires release before artifact and terminal,
 exact SHA/token binding, a no-authority pending state, later lifecycle closure,
 all typed/full reconciliations, no later input and process exit zero. The output
-is absent and all32 source/fixture hashes verify. Run once and retain its first
-result unchanged.
+was absent and all32 source/fixture hashes verified before execution.
+
+The allocation then ran exactly once and passed every frozen check:
+
+- invalidating capture to typed guard decision:31.857ms;
+- capture to matching cancel request:54.578ms;
+- capture to independently verified empty physical release:57.660ms;
+- owner verification to `input_released` publication:9.321ms;
+- capture to later terminal closure:133.698ms;
+- physical release led terminal closure by76.039ms.
+
+The lease token matched acceptance and release. Physical release was published
+before both the full artifact and terminal. The guard exposed the pending state
+with no current authority, then the cancelled terminal closed it. Screen ammo
+changed48→47, no input followed invalidation, all three typed/full artifacts
+reconciled, and the child exited zero. The22 pre-retention files total1,251,326
+bytes and are hash-manifested. Independent retained audits pass on Windows/WSL.
+
+This establishes one concrete shared runtime behavior under real X11 held input:
+an agent can learn that physical input stopped without waiting for image artifact
+or program lifecycle completion. It does not establish gameplay improvement,
+cross-domain portability, model-use benefit or general human-tempo control. The
+next test should transfer the same release event to a pointer/desktop interruption
+or integrate it into a bounded planner episode, rather than repeat this fixture.
