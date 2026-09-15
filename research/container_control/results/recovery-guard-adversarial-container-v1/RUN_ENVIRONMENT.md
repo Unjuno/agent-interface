@@ -1,0 +1,1 @@
+Execution used the disposable Linux container available to the research session on 2026-09-15. The scripts require only Python standard library and intentionally avoid network/model/GUI dependencies. The scientific quantities are simulation outputs; measured script runtime is not a benchmark and is excluded from any architectural claim.
