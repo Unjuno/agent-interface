@@ -1,3 +1,13 @@
+Current direction (r103): v3 ran once and is retained failed at report check.
+Coherent readiness succeeded;2 pointer admissions,2 observations,2-step completed
+terminal and empty release occurred. Runner misread accepted.steps integer2 as
+program list; exact program is attested by SHA. Posthoc: first frame unselected,
+second frame selected, so first feedback≠first useful feedback. Live semantic
+clock/report were lost and cannot pass.18 files/496,823 bytes audit Windows/WSL.
+Next v4 bind canonical program SHA+count and consume each observation until first
+semantic success or terminal, retaining both clocks. No rerun/model/token/general
+claim; no subagent/context handoff; full goal open.
+
 Current direction (r102): v3 combines two shared repairs. Pointer readiness
 requires before==after==published non-null focus/surface/geometry; up to3 passive
 captures10ms apart, no submit before READY. First-action boundary resolves

@@ -110,3 +110,16 @@ Seed206 retains neutral fault, scorer v2, exact candidate execution and empty
 release. Bounds are600ms fault-to-score and200/300ms acceptance-to-feedback/score.
 One run/no retry/model/cancel,37 hashes and absent output verify;12 focused tests
 pass on Windows/WSL. Commit, run once and retain any result.
+
+V3 ran once and is retained failed at report construction. Binding readiness was
+READY; two pointer admissions, two exact observations, a completed two-step
+terminal and empty release all occurred. But the runner indexed `accepted.steps`
+as a list although the Executor contract stores integer count2 plus canonical
+`program_sha256`, raising TypeError before report serialization.
+
+Posthoc scoring also shows the first observation remained unselected and only the
+second observation displayed selection handles. Thus first feedback was not the
+first useful feedback. Live scorer-completion clock was lost and cannot be
+reconstructed. Eighteen files/496,823 bytes before receipt pass Windows/WSL
+failure audits. V4 must bind SHA/count correctly and consume observations until
+semantic success or terminal, retaining both feedback clocks.

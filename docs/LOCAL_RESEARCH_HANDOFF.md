@@ -1,3 +1,11 @@
+Current handoff r103: seed206 v3 ran once and is retained failed. Readiness and
+execution mechanics completed cleanly, but runner indexed accepted.steps integer2
+as a list instead of checking canonical program SHA/count. Exact frames show first
+feedback unselected and second selected, so semantic success is later than first
+feedback. Missing live score clock prevents promotion.18 files/496,823 bytes pass
+Windows/WSL failure audit. V4 must bind SHA/count and wait bounded observations
+until semantic success or terminal. No rerun/broader claim/subagent/context handoff.
+
 Current handoff r102: prepared-selection v3 adds shared coherent binding readiness
 and observation|terminal first-boundary handling. Up to3 passive captures10ms
 apart; no submit until before/after/published focus+surface+geometry match. Immediate
