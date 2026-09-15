@@ -1,0 +1,23 @@
+{
+  "schema": "capture-write-boundary-development-prereg-v1",
+  "task_id": "container-capture-write-boundary-20260915-v1",
+  "base_commit": "3c3dbe5ca3491694a544c0645018cf133a0c0ba9",
+  "source_sha256": "efe20061ec1de8f7dffdbe2116569684dca3117bda27c8b264da598e58ac6797",
+  "question": "At a fixed 250 ms X11 hold deadline, how much application-observed hold extension remains when the pre-release retained-observation pipeline stops after capture + PNG save + fsync and omits PNG reopen/load?",
+  "fixture": "Xvfb 1024x768x24 + Openbox + rendered Tk checkerboard + XTEST w key",
+  "pipeline": "full-frame Pillow ImageGrab -> PNG save -> fsync; no reopen/load",
+  "conditions": {
+    "release_first": "at deadline send KeyRelease+sync, then execute capture+PNG save+fsync",
+    "pipeline_first": "at deadline execute capture+PNG save+fsync, then send KeyRelease+sync"
+  },
+  "pairs": 12,
+  "order": "balanced alternating within pair",
+  "primary_metric": "paired pipeline_first-minus-release_first application-observed press-to-release duration in ms",
+  "decision": {
+    "write_boundary_cost_candidate": "median paired delta >= 10 ms OR p95 paired delta >= 20 ms",
+    "reject_as_tens_ms_explanation": "median paired delta < 10 ms AND p95 paired delta < 20 ms"
+  },
+  "retry": false,
+  "construction_smoke": "2 pairs, excluded; observed median paired delta 16.734758 ms before schema-label-only cleanup",
+  "scope": "development mechanism isolation only; no ViZDoom, gameplay efficacy, model, planner, renewal, or shared-runtime claim"
+}
