@@ -3565,3 +3565,22 @@ seed, held-fire validity construction, no-model status and zero retries. Frozen
 capture-to-decision/cancel/release thresholds are60/75/125ms versus the retained
 128.488/136.780/138.694ms baseline. Every typed/full pair, Executor attestation,
 cancel/release and process exit must pass; otherwise retain the first failure.
+
+The allocation has now run once and is retained failed without retry. Typed
+readiness was15.844ms after capture and cancel request47.529ms; artifact readiness
+was119.167ms, so the useful cancellation request preceded it by71.637ms. All3
+typed/full pairs reconcile, the accepted program hash matches, no later input was
+admitted and the owner verified empty release at50.100ms.
+
+The terminal is nevertheless `failed / Cancelled()` because the typed coast
+backend raises `executor_v3.Cancelled` while Executor v10 catches a separately
+defined copied class. Terminal release128.856ms also misses the frozen125ms bound.
+The wrapper exits1 before serializing exact guard-decision and child-exit values;
+both remain explicitly unknown. The post-control score and owner close are
+retained. Independent failure audit is byte-identical on Windows/WSL at SHA-256
+`fa0fec160f0676fd80420578dbe85c848bae8608fc509028e3345d2570ce07fd`.
+
+Repair in a new Executor version by importing the established v3 cancellation
+and decision exception identities while retaining attestation. Also persist the
+guard decision before terminal validation. Freeze a distinct allocation; do not
+reuse or alter this failed run.

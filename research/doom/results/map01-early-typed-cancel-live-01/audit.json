@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "checks": {
+    "retained_manifest": true,
+    "frozen_sources": true,
+    "first_failure_retained": true,
+    "root_cause_exposed": true,
+    "typed_path_preceded_artifact": true,
+    "typed_artifacts_reconciled": true,
+    "input_released": true,
+    "no_input_after_cancel": true,
+    "score_and_close": true,
+    "zero_model_calls": true
+  },
+  "allocation_passed": false,
+  "failure_class": "executor_exception_identity_mismatch",
+  "metrics_ms": {
+    "capture_to_typed_ready_ms": 15.843639,
+    "capture_to_typed_emit_ms": 20.856376,
+    "typed_emit_to_cancel_requested_ms": 26.672838,
+    "capture_to_cancel_requested_ms": 47.529214,
+    "capture_to_owner_cancel_release_ms": 50.100178,
+    "capture_to_terminal_release_ms": 128.856297,
+    "capture_to_artifact_ready_ms": 119.166684,
+    "cancel_requested_before_artifact_ms": 71.63747
+  },
+  "files_in_retention_manifest": 19,
+  "retained_bytes_before_retention_receipt": 1162290,
+  "limits": "posthoc recovery from retained raw events; exact guard-decision timestamp and child exit code were not serialized"
+}

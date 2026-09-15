@@ -1,4 +1,4 @@
-"""Promote the first audited early-typed cancellation allocation unchanged."""
+"""Retain the first frozen early-typed allocation failure unchanged."""
 import hashlib
 import json
 from pathlib import Path
@@ -19,9 +19,11 @@ def sha(path):
 def main():
     if TARGET.exists():
         raise FileExistsError(TARGET)
-    audit = json.loads((SOURCE / "audit.json").read_text(encoding="utf-8"))
-    if audit.get("passed") is not True:
-        raise RuntimeError("source audit did not pass")
+    failure = json.loads((SOURCE / "failure.json").read_text(encoding="utf-8"))
+    if (failure.get("allocation_passed") is not False or
+            failure.get("wrapper_exit_code") != 1 or
+            not all(failure.get("evidence", {}).values())):
+        raise RuntimeError("complete audited first failure required")
     shutil.copytree(SOURCE, TARGET)
     shutil.copy2(PREREG, TARGET / "preregistration.json")
     files = sorted(path for path in TARGET.rglob("*") if path.is_file())
@@ -29,17 +31,20 @@ def main():
                 for path in files}
     retention = {
         "passed": True,
-        "decision": "RETAIN_MAP01_EARLY_TYPED_CANCEL_LIVE_V1",
+        "decision": "RETAIN_FIRST_FAILURE_NO_RETRY",
+        "allocation_passed": False,
+        "failure_class": failure["failure_class"],
         "files": len(files),
         "bytes": sum(path.stat().st_size for path in files),
-        "source_audit_sha256": sha(SOURCE / "audit.json"),
+        "source_failure_sha256": sha(SOURCE / "failure.json"),
         "manifest": manifest,
-        "limits": "one controller-authored held-fire probe; no planner/model, task completion, gameplay gain or general human-tempo claim",
+        "limits": failure["limits"],
     }
     (TARGET / "retention.json").write_text(
         json.dumps(retention, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({key: retention[key] for key in
-                      ("passed", "decision", "files", "bytes")}, indent=2))
+                      ("passed", "decision", "allocation_passed",
+                       "failure_class", "files", "bytes")}, indent=2))
 
 
 if __name__ == "__main__":

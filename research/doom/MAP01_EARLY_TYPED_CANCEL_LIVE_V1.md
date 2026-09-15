@@ -21,7 +21,23 @@ decision must also precede full-artifact readiness. Executor v10 attestation,
 one matching cancellation, no later input admission, empty release and clean
 process exit remain mandatory.
 
-Construction tests pass, and the preregistration currently verifies with all 21
-source hashes and output absence. The live allocation is unrun. A pass would
-establish one real reduction in this cancellation path only; it would not prove
-planner latency, task completion, gameplay gain or general human-tempo control.
+The single frozen allocation was run once and failed; it was not retried. The
+typed path itself became useful early: typed readiness was15.844ms after capture,
+cancel was requested at47.529ms, and the exact artifact became ready at119.167ms.
+Thus cancel preceded artifact readiness by71.637ms. All three typed/full pairs
+reconcile exactly, the program attestation matches, and the owner verified empty
+input at50.100ms.
+
+The terminal nevertheless reports `failed / Cancelled()` instead of `cancelled`.
+The typed coast backend raises the frozen `executor_v3.Cancelled` class, while
+Executor v10 copied and catches a distinct local class with the same name. Its
+generic exception path therefore records failure. Terminal release arrived at
+128.856ms, exceeding the frozen125ms bound; the exact guard-decision timestamp
+and child exit code were not serialized after the wrapper exception. Wrapper
+exit is1. Raw evidence, post-control score, owner close, source hashes and the
+failed threshold are retained; independent Windows/WSL audit bytes match SHA-256
+`fa0fec160f0676fd80420578dbe85c848bae8608fc509028e3345d2570ce07fd`.
+
+This rejects the frozen allocation. A separately versioned repair may reuse the
+v3 exception identities while preserving attestation, then freeze a new output
+and acceptance rule. It must not modify Executor v10 or retry this allocation.

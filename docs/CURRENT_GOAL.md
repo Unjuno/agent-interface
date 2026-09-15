@@ -1,3 +1,16 @@
+Current direction (r84): the only frozen early-typed allocation is retained
+failed without retry. Typed HUD was ready15.844ms after capture; cancel request
+at47.529ms preceded exact artifact readiness119.167ms by71.637ms. All3 typed/full
+pairs reconcile, Executor attestation matches, and owner empty release occurred
+at50.100ms. But the backend raises executor_v3.Cancelled while copied Executor
+v10 catches a distinct local class, so terminal is failed/Cancelled() and its
+release at128.856ms misses the125ms bound. Wrapper exit1; exact guard-decision
+and child exit were not serialized. Independent failure audit matches across OS
+SHA fa0fec16…. Next version must reuse established exception identities and
+persist the decision receipt before terminal validation, then freeze a distinct
+allocation. No retry/model/planner/task/general claim; no subagent/context
+handoff; full goal open.
+
 Current direction (r83): v36 moves typed health/ammo feedback ahead of transport
 and PNG publication while retaining the same exact frame. Reader v3 matches the
 retained PNG path on all247 v31 frames for both signals. The early event binds
