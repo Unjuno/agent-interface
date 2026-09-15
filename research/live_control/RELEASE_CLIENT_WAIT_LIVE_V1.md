@@ -61,3 +61,17 @@ A distinct seed210 allocation retains the same40/40/300ms timing thresholds,
 same-stream comparison, passive recovery artifact,2-vs-1 exchange accounting and
 zero model/cancel/retry rule. All32 source hashes and output absence verify on
 Windows/WSL. Run once and retain its first outcome without modifying v1.
+
+The allocation ran once and passed its frozen independent audit. Physical release
+was verified20.519ms after focus request. The early client returned at22.369ms;
+the terminal-only client returned at102.693ms, giving an80.324ms same-stream wait
+advantage. The early client's second terminal exchange completed at103.641ms.
+The exact two server receipts were fsynced before focus and bind to the retained
+report by SHA. Twelve files/259,118 bytes before the retention receipt pass the
+cross-platform retained audit.
+
+This establishes one bounded client-visible safety-feedback benefit, together
+with its2-vs-1 exchange cost. It does not establish task completion, model-token
+savings, a general speedup or human-tempo control. The post-retention audit script
+first failed because its author used wrong threshold key names; that script was
+corrected and rerun on Windows/WSL. The live allocation was not rerun.

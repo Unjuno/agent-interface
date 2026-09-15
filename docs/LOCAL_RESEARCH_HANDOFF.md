@@ -1,3 +1,14 @@
+Current handoff r94: client-wait v2 is retained after one frozen run. The same
+Inkscape interruption returned verified release to the early client at22.369ms
+and terminal to the baseline at102.693ms, an80.324ms wait advantage. Exact two
+server request receipts were fsynced before focus and independently audited.
+The early path pays a second exchange and reconciles terminal at103.641ms.
+Twelve files/259,118 bytes pass Windows/WSL retention audits. A posthoc checker
+key-name defect was corrected without rerunning live. Next consume the early
+state in one real planner decision/resume path and measure useful-action latency
+and round trips. Do not generalize to task/model/token/human-tempo performance;
+no subagent or context handoff is used.
+
 Current handoff r32: frozen v20 threat exposure fails after its first completed
 model/primary plan because `coast pulse` compiles to 20 steps; executor rejects it
 before cover input and the allocation is not rerun.  V21 fixes coast chunking.

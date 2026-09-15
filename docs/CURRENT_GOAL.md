@@ -1,3 +1,15 @@
+Current direction (r94): client-wait v2 ran exactly once and passed frozen audit.
+Physical release was20.519ms after focus; early client returned22.369ms versus
+terminal-only102.693ms, an80.324ms same-stream advantage. Exact early-release and
+terminal-only server receipts were fsynced before fault and independently bind
+to report/artifact SHA. Early terminal reconciliation completed103.641ms, making
+the cost explicit:2 exchanges vs1. Twelve files/259,118 bytes are retained and
+Windows/WSL audits pass. A posthoc retention checker first used wrong threshold
+key names, was corrected, and live was not rerun. Next integrate this state into
+one actual planner decision/resume path and measure useful-action latency and
+round trips; preserve terminal reconciliation. No model/token/task/general
+human-tempo claim; no subagent/context handoff; full goal open.
+
 Current direction (r93): v2 repairs only the missing registration evidence. It
 copies exact server-side request ID/request/received_ns records after both handlers
 register, writes/fsyncs a schema artifact, retains its SHA, then requests focus.
