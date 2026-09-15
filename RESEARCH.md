@@ -1242,3 +1242,12 @@ WSL without fresh GUI or model calls. This establishes composition mechanics,
 not another efficacy sample. Next run a finite natural local-repair and
 changed-evidence fallback through the exact caller. See
 `research/live_control/ADAPTIVE_ACQUISITION_CALLER_V3.md`.
+
+Recent primary research converges on selective ROI-level memory, action-grounded
+visual evidence, conditional escalation, hierarchical reusable skills and
+execution-based evaluation. A new mapping keeps these as falsifiable local
+hypotheses: store crops with action/effect/recovery provenance, compare them
+against full-frame and no-memory controls, preserve typed evidence rather than a
+free confidence score, and test selective invalidation before adding a learned
+memory controller or multi-model router. See
+`research/live_control/CONDITIONAL_REUSE_RESEARCH_V1.md`.

@@ -510,3 +510,8 @@ now implements the local-first and typed fallback branches, requires a later
 exact post-model receipt, and accounts images and model wait. Its branch evidence
 is offline; a natural live run and cross-domain behavior remain to be measured.
 See `ADAPTIVE_ACQUISITION_CALLER_V3.md` and `MATCHED_SEMANTIC_REPAIR_V1.md`.
+
+The current literature mapping favors action-grounded ROI evidence over blind
+full-frame history, and typed conditional escalation over unconditional model
+reuse. These are candidate directions until matched local tests establish their
+effect here. See `CONDITIONAL_REUSE_RESEARCH_V1.md`.
