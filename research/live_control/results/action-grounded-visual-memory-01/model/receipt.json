@@ -1,0 +1,105 @@
+{
+  "schema": "action-grounded-visual-memory-v1",
+  "memory_id": "adaptive-v2-model-submit-target",
+  "task": {
+    "task_id": "save-exact-token",
+    "environment_id": "chromium-x11-seed-217"
+  },
+  "source": {
+    "session_id": "adaptive-v2-case-2",
+    "sequence": 19,
+    "capture_ns": 50842094347199,
+    "exact": true,
+    "surface": 6291459,
+    "geometry": [
+      10,
+      10,
+      1050,
+      780
+    ],
+    "frame_size": [
+      1280,
+      800
+    ],
+    "image_name": "019.png",
+    "image_sha256": "5a7bd59df7030b0ea9868ef7bc1d8e5f5b03623fae84df4b5ad96dc69c5a5532",
+    "rgb_sha256": "e4b7dd52841c81bf1cb712c6d34e7c40aac999bea46550c589f0c6d3ef5ca06d"
+  },
+  "target": {
+    "name": "save_form",
+    "handle": "reacquired-save-2",
+    "point": [
+      270,
+      243
+    ],
+    "crop_box": [
+      250,
+      234,
+      292,
+      252
+    ],
+    "patch_sha256": "50c0c3cc5535241e3029db72b6e4bcc5a9c343be86d2afcf068f55cb9d2add2d"
+  },
+  "action": {
+    "id": "adaptive-submit-2-model",
+    "program_sha256": "18a198f5b9de317f6dc302e35b6a9b57769714469d197e86756f17da672f8ff7",
+    "accepted_ns": 50842210393872,
+    "terminal_ns": 50842605433264,
+    "status": "completed",
+    "release_verified": true,
+    "keys_down": [],
+    "buttons_down": []
+  },
+  "effect": {
+    "predicate_id": "adaptive_completion_2",
+    "sequence": 21,
+    "capture_ns": 50842431631400,
+    "success": true,
+    "reason": "submission_title_exactly_visible",
+    "frame_sha256": "42127b97b65890fc88500b7b56fd0375f235de0a91824ff85fcfd355483e86b5",
+    "artifact_sha256": "0e546fddc466fcaa005bebdcc5721a857589e34c9ee5a577742b1130cb7bdf7d",
+    "reconciled_exact": true,
+    "independent_output_sha256": "3501a6e2ba077ce4b0a50afeb189fda1f296b96f6bb02b113b7dbb94a6d005c3"
+  },
+  "recovery": {
+    "path": "model_reacquisition",
+    "route": "reuse",
+    "trace": [
+      {
+        "stage": "reuse_revalidate",
+        "status": "association_changed"
+      },
+      {
+        "stage": "local_repair",
+        "status": "missing"
+      },
+      {
+        "stage": "model_reacquisition",
+        "status": "target_reference"
+      },
+      {
+        "stage": "post_model_revalidate",
+        "status": "current_patch_match"
+      }
+    ],
+    "model_call_ids": [
+      "01a0a341-b32c-7a83-a706-ddf66e88ddc2"
+    ],
+    "attempted_model_calls": 1,
+    "completed_model_calls": 1,
+    "model_wait_ns": 7197203241
+  },
+  "artifact": {
+    "path": "model/target.png",
+    "width": 42,
+    "height": 18,
+    "png_sha256": "c16b816f333064e898c90852335d5ec671e7a1435b7ccf552ceec6a61cd85a62",
+    "rgb_sha256": "50c0c3cc5535241e3029db72b6e4bcc5a9c343be86d2afcf068f55cb9d2add2d"
+  },
+  "retention": {
+    "class": "conditional_visual_reference",
+    "requires_current_observation": true,
+    "requires_fresh_input_admission": true
+  },
+  "authority": "none"
+}

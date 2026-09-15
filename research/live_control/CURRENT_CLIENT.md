@@ -507,8 +507,9 @@ In the first matched seed215 allocation, local recovery median was109.966ms and
 9,351 input tokens versus8,115.268ms and18,702 for Luna-low reacquisition. All
 four tasks, exact-frame reconciliation and releases passed. Adaptive caller v3
 now implements the local-first and typed fallback branches, requires a later
-exact post-model receipt, and accounts images and model wait. Its branch evidence
-is offline; a natural live run and cross-domain behavior remain to be measured.
+exact post-model receipt, and accounts images and model wait. Its offline branch
+evidence is now supplemented by the first real two-case v2 integration;
+cross-domain behavior remains to be measured.
 See `ADAPTIVE_ACQUISITION_CALLER_V3.md` and `MATCHED_SEMANTIC_REPAIR_V1.md`.
 
 The current literature mapping favors action-grounded ROI evidence over blind
@@ -522,3 +523,13 @@ patch, yields local `missing`, uses one Luna-low fallback, captures a later exac
 observation and revalidates before input. Both independent submissions and
 releases pass. The two mutations are not a matched efficiency comparison; see
 `ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md`.
+
+The retained v2 patches now use `action_grounded_visual_memory_v1.py`. One exact
+receipt joins source/target bytes, admitted action and release, independently
+scored effect and the complete recovery path. `retrieve()` returns only a
+conditional visual reference for matching task/environment/session/surface/
+target context and current exact observation; current target revalidation and
+fresh input admission remain mandatory. Two real receipts, ten tests and the
+retained audit pass without new model or GUI work. This enables, but does not
+answer, the held-out crop/full/no-memory comparison. See
+`ACTION_GROUNDED_VISUAL_MEMORY_V1.md`.

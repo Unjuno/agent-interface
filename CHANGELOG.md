@@ -2,6 +2,10 @@
 
 ## Unreleased — 2026-09-13 research update
 
+- Add a strict action-grounded visual-memory receipt that binds exact target
+  crops to their admitted action, verified release, independently scored effect
+  and local/model recovery trace. Retain two retrospective v2 receipts and a
+  fail-closed retrieval audit without claiming a memory-performance benefit.
 - Add adaptive acquisition caller v3 with a local-first semantic repair branch,
   typed model fallback, mandatory post-model current-observation receipt, and
   explicit model-visible image/wait coverage. Ten offline tests plus an

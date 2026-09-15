@@ -1261,3 +1261,19 @@ match. Both exact `t000217` effects, useful semantics and releases pass. Total
 inputs9,348/18,696 and mutation-to-return651.634/7,871.585ms are descriptive
 because mutations differ. See
 `research/live_control/ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md`.
+
+## Latest follow-up — action-grounded crop provenance is retained (2026-09-15)
+
+The two frozen adaptive-repair v2 target patches now use one strict visual-memory
+receipt. It binds task/environment/session/surface and exact source frame, target
+handle/point/crop/hash, admitted action/program and empty verified release, first
+successful reconciled semantic effect and independent output, plus the complete
+local/model recovery trace and model wait. The derived local and fallback crops
+are each42x18 and preserve their distinct actual patch hashes. Retrieval fails
+closed on context mismatch and, when eligible, still requires current target
+revalidation and fresh input admission. Ten tests and a retained audit pass.
+This is retrospective provenance from one existing run: no new model call,
+performance comparison or demonstrated memory benefit. Next preregister the
+same-model/task/environment action-crop versus prior-full-frame versus no-prior-
+memory comparison. See
+`research/live_control/ACTION_GROUNDED_VISUAL_MEMORY_V1.md`.

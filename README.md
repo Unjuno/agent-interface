@@ -65,7 +65,8 @@ configured missing, ambiguous or changed evidence to an accounted model fallback
 After fallback inference it requires a later exact observation tied to the model
 call before ordinary input admission. Ten direct tests and a seven-scenario
 retained audit pass on Windows/WSL with no fresh GUI or model call. This is
-integration mechanics; its first natural live caller run is still pending. See
+integration mechanics; the following v2 study supplies its first natural live
+caller run. See
 [adaptive caller v3](research/live_control/ADAPTIVE_ACQUISITION_CALLER_V3.md).
 
 That shared route now passes its first real two-case integration. A -120px
@@ -76,6 +77,15 @@ token, reach useful feedback about248–249ms after Submit admission and release
 all input. Total inputs are9,348 and18,696 tokens, but the mutations differ, so
 these are not comparative savings. V1's safe pre-action gate failure remains
 retained. See [adaptive semantic repair live v2](research/live_control/ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md).
+
+The two resulting target crops now have a common action-grounded memory receipt.
+Each 42x18 artifact is bound to its exact source observation and target hash,
+the admitted Submit program and verified empty release, the first reconciled
+successful effect and independent output, and its full local/model recovery
+trace. Matching retrieval still requires a current exact observation, target
+revalidation and fresh input admission. This retrospective construction made no
+new model calls and does not show a memory benefit; it prepares the held-out
+crop/full-frame/no-memory comparison. See [action-grounded visual memory v1](research/live_control/ACTION_GROUNDED_VISUAL_MEMORY_V1.md).
 
 
 The newest held-out OpenTTD toolbar study removes the answer coordinate from the
