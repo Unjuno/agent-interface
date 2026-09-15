@@ -57,6 +57,7 @@ def main():
     lower=(rel['release_call_started_ns']-ad['input_ack_ns'])/1e6
     boundaries=[r for r in ev if r.get('event')=='two_phase_observation_boundary' and r.get('id')==pid]
     obs=[r for r in ev if r.get('event')=='observation' and r.get('id')==pid]
+    # closest observation artifact before normal release (baseline) or any split evidence (candidate)
     prev=[o for o in obs if isinstance(o.get('artifact_ready_ns'),int) and o['artifact_ready_ns']<=rel['release_call_started_ns']]
     nearest=max(prev,key=lambda o:o['artifact_ready_ns']) if prev else None
     score=json.loads((runtime/'score.json').read_text())
