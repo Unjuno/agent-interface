@@ -210,3 +210,25 @@ and reconcile exactly. Client bounds are200ms to first feedback and250ms to
 semantic success; prior600/300ms internal bounds remain. Twelve focused tests
 pass on WSL; eleven pass and the Unix-socket-only test skips on Windows. Freeze
 verification passes on both. Commit, run exactly once and retain any outcome.
+
+V5 ran exactly once and passed the frozen allocation and retained audit. The
+first false probe computed in3.171ms and reached the scoped client122.424ms after
+selection acceptance. The useful probe computed in2.623ms, completed223.959ms
+after acceptance and reached the client at224.724ms. Its PNG became ready29.623ms
+after probe completion, so the client received the useful semantic result about
+28.858ms before the durable PNG was ready. The completed two-step terminal
+followed the client result by68.647ms, with verified empty input.
+
+For descriptive context, v4 recognized its useful frame279.520ms after admission
+and37.876ms after terminal. V5's useful frame itself arrived later than v4's
+(195.293ms versus162.540ms after admission), yet its meaning reached the client
+earlier and before terminal. Different seeds prevent a matched causal speedup
+claim, but the changed boundary behaved as intended under worse visual-arrival
+timing.
+
+Eighteen files/577,889 bytes before retention receipt pass independent Windows/
+WSL audits. Both provisional frame scores exactly match the independent path
+scorer and reconcile to their durable PNGs. The remaining measured delay is now
+mostly capture/context/wire reconstruction before the2–3ms probe, rather than
+post-observation pixel scoring. A matched live control should isolate the causal
+gain before promoting this boundary beyond the fixture.

@@ -1,3 +1,11 @@
+Current handoff r109: seed204 live semantic v5 ran once and passed. False/useful
+probe compute3.171/2.623ms; useful completed+223.959ms and scoped client received
+at+224.724ms after selection admission. It led durable PNG readiness≈28.858ms and
+the completed2-step empty-release terminal by68.647ms. Useful capture was later
+than v4 but recognition was earlier, showing the intended pipeline ordering;
+different seeds forbid causal speedup.18 files/577,889 bytes retained/audited on
+Windows/WSL. Next matched live control; no broader claim/subagent/context handoff.
+
 Current handoff r108: live semantic v5 is frozen. A backend-independent registry
 scores reconstructed exact RGB frames; a versioned backend emits no-authority,
 action-scoped probes before PNG preparation, then exact reconciliation and the

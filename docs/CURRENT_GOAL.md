@@ -1,3 +1,13 @@
+Current direction (r109): live pre-artifact semantic v5 ran once and passed.
+False/useful probe compute3.171/2.623ms; first reached client+122.424ms after
+admission, useful completed+223.959ms and reached client+224.724ms. Durable PNG
+became ready29.623ms after useful probe completion, so client led it≈28.858ms;
+completed2-step empty-release terminal followed client by68.647ms. Useful capture
+was slower than v4 (195.293 vs162.540ms) but recognized earlier (v4 score279.520ms)
+and before terminal. Cross-seed only, no causal speedup claim.18 files/577,889
+bytes retained; audits pass both OSes. Next freeze matched live control to isolate
+boundary gain; no model/token/general claim or subagent/context handoff.
+
 Current direction (r108): freeze live pre-artifact semantic feedback v5. A
 backend-independent no-authority registry scores each losslessly reconstructed
 RGB frame; the versioned backend emits an action-scoped provisional probe before
