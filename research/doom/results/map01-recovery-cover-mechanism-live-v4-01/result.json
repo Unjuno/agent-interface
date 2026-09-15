@@ -1,0 +1,25 @@
+{
+  "schema": "map01-recovery-cover-mechanism-v4-first-outcome-v1",
+  "allocation_id": "map01-recovery-cover-mechanism-live-v4-01",
+  "workflow_run_id": 34980663904,
+  "workflow_head_sha": "a3ee6b2fd0cab11c39b6be874fef19ed27dad785",
+  "artifact_id": 10401346498,
+  "artifact_sha256": "28ca4677a920e59e393f878e9c1c6d7a031650e2d191663812f630a4298c34f8",
+  "preflight": {
+    "frozen_sources_unchanged": true,
+    "launch_owner_result": "PASS_CANONICAL_GLOBAL_OWNER",
+    "construction_regressions": "PASS"
+  },
+  "formal_step_entered": true,
+  "scientific_decision": null,
+  "disposition": "FORMAL_RUN_CONSUMED_HARNESS_FAILURE_NO_SCIENTIFIC_DECISION",
+  "failure": {
+    "class": "DESTRUCTIVE_EVENT_WAIT",
+    "exception": "TimeoutError: session event timeout",
+    "location": "map01_recovery_cover_matched_v2_runner._run_arm",
+    "evidence": "retained pair-01 coast trace contains the fallback terminal; an optional input_released wait consumed that unmatched terminal before the subsequent terminal predicate",
+    "runtime_semantics_implicated": false
+  },
+  "retry_same_allocation": false,
+  "next": "freeze a new allocation that preserves unmatched JsonSession events while leaving the v4 scientific condition and thresholds unchanged"
+}
