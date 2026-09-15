@@ -1,0 +1,23 @@
+{
+  "schema": "inkscape-authority-ended-abi-offline-v2",
+  "decision": "OFFLINE_PASS",
+  "hard_gate_pass": true,
+  "rows": [
+    {"case":"bridge_existing_single_capture_doom","pass":true,"detail":"safe_yield/authority_unavailable"},
+    {"case":"bridge_two_capture_latest_pass","pass":true,"detail":"safe_yield/authority_unavailable"},
+    {"case":"bridge_two_capture_missing_sequences","pass":true,"detail":"multi-capture sequence evidence required"},
+    {"case":"bridge_two_capture_nonlatest","pass":true,"detail":"multi-capture evidence must select latest sequence"},
+    {"case":"bridge_two_capture_count_mismatch","pass":true,"detail":"multi-capture sequence evidence required"},
+    {"case":"bridge_unproven_three_capture","pass":true,"detail":"one or two bounded post-authority captures required"},
+    {"case":"bridge_late_observation","pass":true,"detail":"post-authority observation outside lifecycle deadline"},
+    {"case":"bridge_legacy_expired_rejected","pass":true,"detail":"scheduled authority_ended status required"},
+    {"case":"executor_expiry_honest_two_capture","pass":true,"detail":"status authority_ended; legacy expired; two actual captures; tail not executed"},
+    {"case":"executor_expiry_bridge_v2_pass","pass":true,"detail":"safe_yield/authority_unavailable"},
+    {"case":"executor_release_failure_no_upgrade","pass":true,"detail":"release verification failure remains failed; no post-authority evidence"},
+    {"case":"executor_focus_path_not_relabelled","pass":true,"detail":"focus_changed remains needs_decision; legacy two-capture followup only"},
+    {"case":"executor_cancel_path_not_relabelled","pass":true,"detail":"cancelled remains cancelled; no post-authority evidence"},
+    {"case":"executor_slow_expiry_marks_late","pass":true,"detail":"two captures retained but within_lifecycle_deadline=false"},
+    {"case":"executor_slow_expiry_bridge_rejects","pass":true,"detail":"post-authority observation outside lifecycle deadline"}
+  ],
+  "full_local_result_sha256":"4090af1e9e050db119c09534af5cc31ce0f2ba2b635773318819813682496840"
+}
