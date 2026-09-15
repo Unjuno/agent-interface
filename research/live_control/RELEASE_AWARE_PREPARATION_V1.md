@@ -232,3 +232,22 @@ scorer and reconcile to their durable PNGs. The remaining measured delay is now
 mostly capture/context/wire reconstruction before the2–3ms probe, rather than
 post-observation pixel scoring. A matched live control should isolate the causal
 gain before promoting this boundary beyond the fixture.
+
+## Frozen matched live semantic delivery
+
+The causal comparison uses eight fresh private-Xvfb Inkscape sessions with the
+same seed203 task, candidate and exact click+observe program. The fixed
+path/frame/frame/path/frame/path/path/frame order balances first/last and adjacent
+runtime effects. The path client waits for an exact observation and then runs the
+existing PNG scorer. The frame client waits for the pre-artifact probe. Both use
+the same action-scoped socket, retain first false then useful true feedback in two
+exchanges, and preserve normal observations and terminal evidence.
+
+Every arm must independently verify selection, complete two steps and release to
+empty input. Frame probes must remain within5ms and reconcile to their PNGs.
+Frozen aggregate limits require frame semantic-ready median at most260ms, path
+median at most400ms and a frame advantage of at least25ms. Seed203, one eight-arm
+allocation/no retry/model/cancel,40 source hashes and absent output are frozen.
+Twelve related tests pass on WSL; eleven plus one expected Unix-only skip pass on
+Windows. Freeze verification passes on both. Commit, execute exactly once, audit
+and retain the first outcome.

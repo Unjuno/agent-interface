@@ -1,3 +1,12 @@
+Current handoff r110: matched live semantic allocation is frozen. Eight fresh
+same-seed203 Inkscape sessions use fixed P/F/F/P/F/P/P/F order, identical candidate
+and click+observe. Each scoped client gets false→true in2 exchanges; independent
+selection,2-step completion and empty release required. Path waits PNG+scores;
+frame waits pre-artifact probe+reconciles. Medians frame≤260ms,path≤400ms,
+advantage≥25ms; probe≤5ms/first≤200ms. One allocation/no retry/model/cancel,
+40 hashes/output absent; tests/freeze pass both OSes. Commit then run/audit once;
+retain any outcome. No broader claim/subagent/context handoff.
+
 Current handoff r109: seed204 live semantic v5 ran once and passed. False/useful
 probe compute3.171/2.623ms; useful completed+223.959ms and scoped client received
 at+224.724ms after selection admission. It led durable PNG readiness≈28.858ms and

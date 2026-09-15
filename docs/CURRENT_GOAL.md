@@ -1,3 +1,13 @@
+Current direction (r110): freeze the matched live causal comparison. Eight fresh
+seed203 Inkscape sessions run fixed path/frame/frame/path/frame/path/path/frame.
+Every arm uses identical candidate and click+observe, pre-registers its scoped
+client, retains false→true in2 exchanges, independently verifies selection and
+completes2 steps with empty release. Path waits exact PNG then scores; frame waits
+pre-artifact probe and reconciles PNG. Aggregate limits: frame median≤260ms,
+path≤400ms, advantage≥25ms; probe≤5ms/first≤200ms. One allocation/no retry/model/
+cancel,40 hashes/output absent;12 WSL tests,11+Unix skip Windows and freeze checks
+pass. Commit, run/audit once, retain any result; no broader claim/handoff.
+
 Current direction (r109): live pre-artifact semantic v5 ran once and passed.
 False/useful probe compute3.171/2.623ms; first reached client+122.424ms after
 admission, useful completed+223.959ms and reached client+224.724ms. Durable PNG
