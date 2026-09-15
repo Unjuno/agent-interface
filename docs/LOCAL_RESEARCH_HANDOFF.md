@@ -3687,3 +3687,19 @@ and response bytes. Limits are40ms early,≥40ms advantage and≤300ms terminal.
 Seed211, one run/no retry/model/cancel,31 source hashes and absent output are
 fixed and verify on Windows/WSL. Consume once and preserve failure if scheduling
 or delivery misses the rule.
+The first client-wait allocation must be treated as failed. Its actual same-stream
+timings were early client2.672ms and terminal-only113.116ms, with110.444ms
+descriptive difference; early terminal reconciliation ended113.895ms. Release,
+terminal, passive artifact and exchange/byte records otherwise agree.
+
+The missing evidence is server registration ordering. The runner waited until
+both request handlers had appended request receipts before focus, then retained
+only the resulting boolean. It did not save the receipts or `received_ns` fields.
+The frozen audit consequently crashes on that absent field. Do not infer server
+receipt from client start time or promote the timing result. Raw output, audit
+trace and first failure are retained and cross-platform retention audits pass.
+
+Repair only the evidence boundary in a new version: serialize the exact server
+request list before focus, require early-release and terminal-only IDs exactly
+once with both receipt clocks before the fault, and audit that artifact. Keep the
+same-stream comparison and do not rerun the failed allocation.

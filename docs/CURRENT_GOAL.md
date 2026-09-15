@@ -1,3 +1,15 @@
+Current direction (r92): first same-stream client allocation is retained failed
+without retry. Runtime showed early client2.672ms versus terminal-only113.116ms
+(110.444ms descriptive wait difference), one passive artifact, exact release/
+terminal, smaller early reply and2-vs-1 exchanges. But the both-reads-before-focus
+condition used an in-memory server list and serialized only a boolean; frozen
+audit crashed on missing received_ns. Client starts cannot prove server receipt.
+14 files/253,759 bytes and audit failure are manifest-retained; Windows/WSL
+failure audit passes. Next version persist exact server request receipts before
+focus, bind both request IDs and freeze a distinct allocation. Do not rerun or
+promote the observed difference. No model/token/task/general human-tempo claim;
+no subagent/context handoff; full goal open.
+
 Current direction (r91): test client-visible benefit of two-phase release. A
 bounded Unix cursor exposes input_released/terminal with action identity; a client
 tracker binds accepted token, verified empty release and later exact terminal,

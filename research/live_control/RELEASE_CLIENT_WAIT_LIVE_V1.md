@@ -26,5 +26,23 @@ One seed211 held-click allocation is frozen with both reads waiting before focus
 transfer, zero model/cancel/retry, one passive recovery observation, exact shared
 boundaries and response-byte accounting. Frozen limits require the early client
 within40ms, at least40ms before the terminal client, with terminal delivery within
-300ms. All31 source hashes and output absence verify on Windows/WSL. Run once and
-retain its first result without retry.
+300ms. All31 source hashes and output absence verified on Windows/WSL before the
+allocation ran once.
+
+The runtime result is descriptive but the formal allocation fails. The early
+client returned2.672ms after focus request; terminal-only returned113.116ms, a
+110.444ms difference. Early terminal reconciliation completed113.895ms after
+focus. The same release/terminal records, one real post-release observation,
+smaller early response and2-vs-1 exchanges were retained.
+
+However, the runner checked both server reads were registered before focus using
+an in-memory request list and saved only the boolean outcome. It did not serialize
+the server request receipts or their `received_ns`. The frozen independent audit
+therefore raises `KeyError: 'received_ns'` and cannot reproduce that preregistered
+ordering. Client start times cannot substitute for server acceptance. The first
+result is retained as `server_request_registration_receipt_not_serialized` with
+14 files/253,759 bytes and no retry. Cross-platform failure-retention audits pass.
+
+The repair is narrow: persist the exact request receipt list before focus, bind
+both request IDs, and make the independent audit consume that file. Freeze a new
+allocation; do not reinterpret or rerun this one.
