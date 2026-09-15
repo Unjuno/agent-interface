@@ -31,12 +31,17 @@ LOCAL_EXECUTION_YIELD_REASONS = {
 
 class ModelFailure(RuntimeError):
     def __init__(self, message, *, call_id=None, usage=None,
-                 visible_images_submitted=None, wait_ns=None):
+                 visible_images_submitted=None, wait_ns=None,
+                 typed_status="FAILED_UPSTREAM"):
         super().__init__(message)
+        if typed_status not in {"DEFERRED_UPSTREAM", "FAILED_UPSTREAM",
+                                "FAILED_OUTPUT"}:
+            raise ValueError("known typed model failure status required")
         self.call_id = call_id
         self.usage = usage
         self.visible_images_submitted = visible_images_submitted
         self.wait_ns = wait_ns
+        self.typed_status = typed_status
 
 
 def _require_callable(adapters, name):
@@ -205,6 +210,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
     stages = {name: {"status": "not_reached", "reason": None} for name in ALL_STAGES}
     attempts, model_calls, phases = [], [], []
     selected = cache_update = repair_path = None
+    repair_trace = []
 
     def emit(event): journal(copy.deepcopy(event))
 
@@ -292,6 +298,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                   "delivery": delivery, "execution_progress": copy.deepcopy(execution_progress),
                   "selected_target": copy.deepcopy(selected), "cache_update": copy.deepcopy(cache_update),
                   "repair_path": repair_path, "route": spec["route"],
+                  "repair_trace": copy.deepcopy(repair_trace),
                   "coarse_origin": spec["coarse_origin"], "comparison": comparison,
                   "stages": stages, "attempt_ledger": attempts,
                   "model_call_ledger": model_calls,
@@ -325,6 +332,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         expanded = local("acquire_expansion", {"invalid": invalid, "target": selected})
         model_result = model("expanded_model", expanded)
         repaired = _decision(model_result["output"], {"target_reference"} | STOP_REASONS)
+        repair_trace.append({"stage": "model_reacquisition", "status": repaired["status"]})
         if repaired["status"] != "target_reference": return stop(repaired)
         candidate = repaired["target"]
         current = local("post_model_observe", {"target": candidate,
@@ -332,6 +340,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         checked = _post_model_decision(local("post_model_revalidate", {
             "target": candidate, "current_observation": current,
             "model_call_id": model_result["call_id"]}), model_result["call_id"], current)
+        repair_trace.append({"stage": "post_model_revalidate", "status": checked["status"]})
         if checked["status"] != "current_patch_match": return stop(checked)
         selected = checked["target"]; cache_update = selected; repair_path = "model_reacquisition"
         return None
@@ -360,6 +369,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         else:
             selected = copy.deepcopy(spec["cached_target"])
             reuse = _decision(local("reuse_revalidate", selected), {"revalidated"} | STOP_REASONS)
+            repair_trace.append({"stage": "reuse_revalidate", "status": reuse["status"]})
             if reuse["status"] == "revalidated":
                 cache_update = selected; repair_path = "none"
             else:
@@ -368,6 +378,8 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                 if fallback_reason in spec["local_repair_on"]:
                     local_decision = _local_repair_decision(local("local_repair", {
                         "invalid": reuse, "target": selected}))
+                    repair_trace.append({"stage": "local_repair",
+                                         "status": local_decision["status"]})
                     if local_decision["status"] == "repaired":
                         selected = local_decision["target"]; cache_update = selected
                         repair_path = "local"
@@ -379,6 +391,11 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                     if stopped is not None: return stopped
         revalidation = _decision(local("final_revalidate", selected), {"revalidated"} | STOP_REASONS)
         if revalidation["status"] != "revalidated": return stop(revalidation)
+        if "target" in revalidation:
+            if revalidation["target"] is None:
+                raise ValueError("revalidated target cannot be null")
+            selected = copy.deepcopy(revalidation["target"])
+            cache_update = copy.deepcopy(selected)
         execution = _execution_decision(local("execute", {"target": selected, "check": revalidation}))
         if execution["status"] == "safe_yield":
             return finish("EXECUTION_INCOMPLETE", execution["reason"],
@@ -393,5 +410,8 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                           delivery="confirmed")
         return finish("TASK_SUCCEEDED", "verified_effect", task_effect="succeeded",
                       delivery="confirmed", execution_progress=execution)
+    except ModelFailure as error:
+        return finish("TASK_DEFERRED" if error.typed_status == "DEFERRED_UPSTREAM"
+                      else "CALLER_FAILED", error.typed_status.lower())
     except Exception as error:
         return finish("CALLER_FAILED", repr(error))

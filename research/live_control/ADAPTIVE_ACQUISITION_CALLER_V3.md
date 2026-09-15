@@ -25,15 +25,25 @@ changed or malformed receipt stops before ordinary final revalidation and
 execution. Neither local repair nor this receipt grants semantic or input
 authority.
 
-The attempt ledger now records provider usage, visible images submitted and
+An optional target returned by successful final revalidation is promoted as the
+selected target and cache update before execution. This removes the prior need
+for live adapters to smuggle newly minted handles through an external variable.
+Stop results cannot expose a target, and a null revalidated target fails closed.
+The result retains the ordered statuses from reuse, local repair, model
+reacquisition and post-model revalidation so a later success cannot erase why
+the fallback was entered.
+
+The attempt ledger records provider usage, visible images submitted and
 model wait for completed and failed attempts when available. Coverage is
 reported independently; missing values remain unavailable rather than becoming
-zero. V2's typed partial execution, comparison classes, duplicate call IDs and
+zero. A typed upstream capacity refusal becomes `TASK_DEFERRED` rather than a
+generic caller failure, while failed upstream and malformed output remain
+`CALLER_FAILED`. V2's typed partial execution, comparison classes, duplicate call IDs and
 input-consumption semantics remain.
 
 ## Offline evidence
 
-Ten direct tests and a separately audited retained report cover cold accounting,
+Twelve direct tests and a separately audited retained report cover cold accounting,
 unchanged reuse, zero-call local repair, `missing`/`ambiguous`/changed-evidence model
 fallback, unconfigured refusal, changed post-model evidence, same-frame receipt
 rejection, authority escalation, failed-call accounting and typed partial

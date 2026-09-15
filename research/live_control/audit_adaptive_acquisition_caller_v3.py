@@ -67,6 +67,10 @@ def main():
     assert local["accounting"]["attempted_calls"] == 0
     assert "expanded_model" not in traces["local-repair"]
 
+    promoted = scenarios["final-revalidation-cache-promotion"]
+    assert promoted["selected_target"] == promoted["cache_update"] == {
+        "handle": "save-current", "point": [271, 243]}
+
     for reason in ("missing", "ambiguous", "association_changed"):
         name = "model-fallback-" + reason
         result, trace = scenarios[name], traces[name]
@@ -89,6 +93,13 @@ def main():
     assert failed["accounting"]["completed_calls"] == 0
     assert failed["accounting"]["visible_images_submitted"] == 1
     assert failed["accounting"]["model_wait_ns"] == 2_000_000
+
+    deferred = scenarios["capacity-deferred"]
+    assert (deferred["outcome"], deferred["reason"]) == (
+        "TASK_DEFERRED", "deferred_upstream")
+    assert deferred["accounting"]["attempted_calls"] == 1
+    assert deferred["accounting"]["completed_calls"] == 0
+    assert deferred["input_authority"] == "none"
     print("adaptive_acquisition_caller_v3_audit_passed")
 
 

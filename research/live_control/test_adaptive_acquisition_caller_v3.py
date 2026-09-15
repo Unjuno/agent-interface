@@ -124,9 +124,26 @@ class CallerV3Test(unittest.TestCase):
                                adapters(calls=calls))
         self.assertEqual(result["outcome"], "TASK_SUCCEEDED")
         self.assertEqual(result["repair_path"], "local")
+        self.assertEqual(result["repair_trace"], [
+            {"stage": "reuse_revalidate", "status": "association_changed"},
+            {"stage": "local_repair", "status": "repaired"}])
         self.assertEqual(result["selected_target"], REPAIRED)
         self.assertEqual(result["accounting"]["attempted_calls"], 0)
         self.assertNotIn("expanded_model", calls)
+
+    def test_final_revalidation_promotes_refreshed_cache_atomically(self):
+        refreshed = {"handle": "save-current", "point": [271, 243]}
+        mapping = adapters(reuse="revalidated")
+        mapping["final_revalidate"] = lambda payload: {
+            "status": "revalidated", "target": refreshed}
+        observed = []
+        mapping["execute"] = lambda payload: (
+            observed.append(payload["target"]) or {"status": "completed"})
+        result = self.run_case(spec(), mapping)
+        self.assertEqual(result["outcome"], "TASK_SUCCEEDED")
+        self.assertEqual(result["selected_target"], refreshed)
+        self.assertEqual(result["cache_update"], refreshed)
+        self.assertEqual(observed, [refreshed])
 
     def test_missing_ambiguous_and_changed_fall_back_once(self):
         for fallback in ("missing", "ambiguous", "association_changed"):
@@ -138,6 +155,11 @@ class CallerV3Test(unittest.TestCase):
                     adapters(local={"status": fallback}, calls=calls), ids=[fallback])
                 self.assertEqual(result["outcome"], "TASK_SUCCEEDED")
                 self.assertEqual(result["repair_path"], "model_reacquisition")
+                self.assertEqual(result["repair_trace"], [
+                    {"stage": "reuse_revalidate", "status": "association_changed"},
+                    {"stage": "local_repair", "status": fallback},
+                    {"stage": "model_reacquisition", "status": "target_reference"},
+                    {"stage": "post_model_revalidate", "status": "current_patch_match"}])
                 self.assertEqual(result["accounting"]["attempted_calls"], 1)
                 self.assertEqual(result["accounting"]["completed_calls"], 1)
                 self.assertEqual(result["accounting"]["usage_totals"], USAGE)
@@ -203,6 +225,22 @@ class CallerV3Test(unittest.TestCase):
         self.assertEqual(result["accounting"]["usage_totals"], USAGE)
         self.assertEqual(result["accounting"]["visible_images_submitted"], 1)
         self.assertEqual(result["accounting"]["model_wait_ns"], 2_000_000)
+
+    def test_capacity_deferral_is_not_generic_failure(self):
+        def defer(payload):
+            raise ModelFailure("capacity", visible_images_submitted=1,
+                               wait_ns=3_000_000,
+                               typed_status="DEFERRED_UPSTREAM")
+        result = self.run_case(
+            spec(local_on=["association_changed"], model_on=["missing"]),
+            adapters(local={"status": "missing"}, model=defer),
+            ids=["deferred-attempt"])
+        self.assertEqual((result["outcome"], result["reason"]),
+                         ("TASK_DEFERRED", "deferred_upstream"))
+        self.assertEqual(result["accounting"]["attempted_calls"], 1)
+        self.assertEqual(result["accounting"]["completed_calls"], 0)
+        self.assertEqual(result["accounting"]["visible_images_submitted"], 1)
+        self.assertEqual(result["input_authority"], "none")
 
     def test_partial_execution_reason_survives(self):
         result = self.run_case(spec(), adapters(

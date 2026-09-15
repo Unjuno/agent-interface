@@ -6,6 +6,9 @@
   typed model fallback, mandatory post-model current-observation receipt, and
   explicit model-visible image/wait coverage. Ten offline tests plus an
   independently audited retained branch report pass on Windows and WSL.
+- Let successful final revalidation atomically promote its refreshed cache and
+  preserve typed capacity deferral across the shared caller. Freeze a two-case,
+  no-retry live integration for resize-local repair and hover-patch fallback.
 - Add the first runnable golden desktop entry point with environment diagnosis,
   frozen-evidence audit, fresh persistent execution and independent raw-output
   audit. Retain a pre-GUI import failure, then complete a fresh 6/6 exact run
