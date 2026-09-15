@@ -15,11 +15,12 @@ def audit_case(d:Path):
     final=sh(repo,'git','rev-parse','refs/heads/target')
     other=sh(repo,'git','rev-parse','refs/heads/unrelated')
     assert final==r['final_target']; assert other==r['final_other']
-    expected=r['C'] if r['schedule']=='target_changed' else r['B']
+    ground=r['C'] if r['schedule']=='target_changed' else r['B']
     expected_nonzero=(r['policy']=='cas' and r['schedule']=='target_changed')
-    assert r['expected_final']==expected
-    assert final==expected
+    assert r['expected_final']==ground
     assert ((r['returncode']!=0)==expected_nonzero)
+    observed_correct=(final==ground and ((r['returncode']!=0)==expected_nonzero))
+    assert r['correct']==observed_correct
     if expected_nonzero:
         assert 'expected' in r['stderr'] and r['A'] in r['stderr'] and r['C'] in r['stderr']
     else:
@@ -36,8 +37,8 @@ def main():
     rows=[audit_case(d) for d in ds]
     by={}
     for r in rows:
-        k=f"{r['policy']}:{r['schedule']}"; s=by.setdefault(k,{'n':0,'correct':0,'writes_B':0,'preserves_C':0,'rejects':0})
-        s['n']+=1; s['correct']+=int(r['final_target']==r['expected_final']); s['writes_B']+=int(r['final_target']==r['B']); s['preserves_C']+=int(r['final_target']==r['C']); s['rejects']+=int(r['returncode']!=0)
-    out={'schema':'git-ref-cas-audit-v1','cases':len(rows),'all_pass':len(rows)>0,'by_cell':by}
+        k=f"{r['policy']}:{r['schedule']}"; s=by.setdefault(k,{'n':0,'ground_truth_correct':0,'writes_B':0,'preserves_C':0,'rejects':0})
+        s['n']+=1; s['ground_truth_correct']+=int(r['correct']); s['writes_B']+=int(r['final_target']==r['B']); s['preserves_C']+=int(r['final_target']==r['C']); s['rejects']+=int(r['returncode']!=0)
+    out={'schema':'git-ref-cas-audit-v2','cases':len(rows),'integrity_pass':True,'by_cell':by}
     a.out.write_text(json.dumps(out,indent=2,sort_keys=True)+'\n'); print(json.dumps(out,indent=2,sort_keys=True))
 if __name__=='__main__': main()
