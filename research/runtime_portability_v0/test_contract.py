@@ -118,6 +118,18 @@ class ContractTests(unittest.TestCase):
         with self.assertRaises(ContractError):
             validate_program(program)
 
+    def test_release_all_must_be_final(self):
+        program = sample_program()
+        program["ops"] = [{"op": "release_all"}, {"op": "focus", "target": "editor"}]
+        with self.assertRaises(ContractError):
+            validate_program(program)
+
+    def test_release_all_must_be_unique(self):
+        program = sample_program()
+        program["ops"].insert(-1, {"op": "release_all"})
+        with self.assertRaises(ContractError):
+            validate_program(program)
+
     def test_required_capabilities_explicit(self):
         required = set(required_capabilities(sample_program()))
         self.assertTrue({"window.focus", "input.keyboard", "event.feedback", "clock.monotonic", "input.release_all"} <= required)
