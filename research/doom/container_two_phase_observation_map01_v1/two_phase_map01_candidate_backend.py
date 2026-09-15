@@ -70,6 +70,7 @@ class Backend(Previous):
                 checkpoint(); now=time.perf_counter_ns(); remaining=deadline_ns-now
                 if remaining<=0: break
                 if remaining<=sample_ns:
+                    # Capture the final pre-release frame, but keep durable publication outside authority.
                     parts=self._capture_typed(identifier,index)
                     while True:
                         checkpoint(); remaining=deadline_ns-time.perf_counter_ns()
@@ -96,6 +97,7 @@ class Backend(Previous):
                 except AttributeError: pass
             else:self._release_batch.context=previous
         checkpoint()
+        # Preserve ordinary post-release observation.
         self.snapshot(identifier,index)
         self.emit({'event':'two_phase_hold_result','id':identifier,'step':index,
                    'split_used':split_used,'semantic_completion':'unknown'})
