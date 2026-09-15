@@ -1,0 +1,23 @@
+{
+  "archive_sha256": "4e55729ae7a28464d98d81601072f1951404c4624d6210e2911002b51501e039",
+  "audit_v2": {"corruption_tests_rejected": 2, "passed_rows": 840},
+  "base": "21fb50be01e99816eb3a555e2ae131e679723f48",
+  "capture_median_ms": {"rung1": 0.3995715, "rung2": 0.4076385, "rung3": 0.405382, "rung4": 0.336736},
+  "rung1": {"cas_check_median_us": 2.0855, "cas_correct_valid": 60, "cas_input_terminal_median_ms": 0.743955, "cas_reject_relevant_races": 60, "client_check_median_us": 0.2435, "client_correct_valid": 60, "client_input_terminal_median_ms": 0.6021635, "client_wrong_relevant_races": 60, "rows": 240},
+  "rung2": {"global_check_median_us": 2.748, "global_correct_stable": 20, "global_false_reject_valid": 40, "global_reject_all_changes": 100, "relevant_check_median_us": 2.3295, "relevant_correct_valid": 60, "relevant_reject_invalid": 60, "rows": 240},
+  "rung3": {"atomic_correct_races": 60, "atomic_effect_before_competitor": 60, "nonatomic_competitor_before_effect": 60, "nonatomic_wrong_races": 60, "rows": 180, "stable_correct_each_arm": 30},
+  "rung4": {"plan_bound_reject_changed": 60, "refreshed_wrong_changed": 60, "rows": 180, "stable_correct_each_arm": 30},
+  "sources": {
+    "audit.py": "ea6eb9d5d2698a306ae510ad9eadb83f267e29ed410deb72071b6dc4b29d7422",
+    "audit_all_v2.py": "a4fa964e07a004321d6155ee16cae656cd64acd34f6eb113092859dd6c9b2ec7",
+    "audit_r2.py": "67fc88368ae3d7ea936ad3412331d5aabd32ee880b7e76153038006f270e0d73",
+    "audit_r3.py": "87a3c8f2abbcc5fc3c307e7e5878657f2e13543b41bb6e4372d65493953634cf",
+    "audit_r4.py": "d70bad1b1e3ed466c89ca8d473a2a660a2ce3efb10f4c681e69ac0cadf258d46",
+    "corruption_check.py": "b9cf07261486eac8b9246c035fc71b15c9fc138e7cb2ef880758c1b2eaf9960a",
+    "experiment.py": "aa5e1bc3a7b18dcc3428056562c35982a0d308946d1795161572237245da4fb2",
+    "experiment_r2.py": "5bc6ddc1fa18d79879aae26bbf856c3f780ff385188771f49ff30d86d0e27d73",
+    "experiment_r3.py": "05389a8d972f8514004a5a9a35ff701520cf72d255e9bf2369a9e30f11524cff",
+    "experiment_r4.py": "5cbc26ed85bf498e103cc0d7dd18337e9a4aef98a9e22764952d13d5dd02e6c3"
+  },
+  "total_rows": 840
+}
