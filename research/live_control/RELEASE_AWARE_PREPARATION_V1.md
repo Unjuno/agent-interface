@@ -34,6 +34,26 @@ The exact expected target is bbox[596,373,643,408],1645 red pixels and center
 [619,390]. Windows/WSL freeze verification and10 related tests pass. Run once
 and retain the first outcome.
 
+The matched v1 allocation ran once and is retained failed. All four frame arms
+passed. All four path arms preserved identical candidate/program, false-then-true
+semantics, independent final selection, two exchanges, completed two-step
+terminal and empty release, but missed the common200ms first-feedback limit at
+216.580–222.920ms. Thus aggregate `all_arms_pass` failed even though every
+comparison-mechanics audit passed.
+
+Descriptively, path semantic-ready samples were270.925,297.147,276.620 and
+284.453ms; frame samples were236.564,233.990,241.897 and242.707ms. Medians were
+280.536 versus239.230ms, a41.306ms advantage and0.8528 ratio, satisfying the
+frozen aggregate comparison. These numbers cannot promote the mechanism because
+the allocation failed its predeclared baseline health bound.
+
+Ninety-nine files/3,129,166 bytes before retention receipt pass independent
+Windows/WSL failure audits. The failure class is
+`baseline_first_feedback_bound_incompatible_with_comparison`. V2 may separate
+candidate and baseline first-feedback health bounds while preserving every
+identity, correctness, release, exchange and aggregate threshold. V1 must not be
+rerun or reclassified.
+
 The allocation ran once and passed its frozen audit. Release was verified at
 17.787ms and the early client returned at26.378ms. Early candidate preparation
 completed77.638ms after focus request, before terminal at approximately110.755ms;

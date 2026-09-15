@@ -1,3 +1,11 @@
+Current handoff r111: matched v1 ran once and is retained failed. Four frame arms
+passed. Four path arms had correct identical task/program, false→true, selection,
+2 exchanges,2-step empty release, but common first≤200ms failed at216.580–222.920.
+Medians path280.536 vs frame239.230ms, descriptive advantage41.306ms, but no
+promotion. Failure class baseline bound incompatible with comparison;99 files/
+3,129,166 bytes audit both OSes. V2 can split path≤260/frame≤200 while preserving
+all mechanics and aggregate≥25ms. Never rerun/reclassify v1; no broader claim.
+
 Current handoff r110: matched live semantic allocation is frozen. Eight fresh
 same-seed203 Inkscape sessions use fixed P/F/F/P/F/P/P/F order, identical candidate
 and click+observe. Each scoped client gets false→true in2 exchanges; independent

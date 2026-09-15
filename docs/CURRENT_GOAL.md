@@ -1,3 +1,13 @@
+Current direction (r111): matched live v1 ran once and is retained failed. All4
+frame arms passed. All4 path arms passed identity/program/false→true/independent
+selection/2 exchanges/2-step empty release but missed a common candidate-oriented
+first-feedback≤200ms bound at216.580–222.920ms. Aggregate medians still passed:
+path280.536ms vs frame239.230ms,41.306ms advantage/0.8528 ratio. Formal class
+`baseline_first_feedback_bound_incompatible_with_comparison`;99 files/3,129,166
+bytes retained/audited both OSes. V2 must use distinct baseline/candidate health
+bounds while preserving aggregate≥25ms and all mechanics. No rerun/promotion/
+model/token/general claim; no subagent/context handoff; full goal open.
+
 Current direction (r110): freeze the matched live causal comparison. Eight fresh
 seed203 Inkscape sessions run fixed path/frame/frame/path/frame/path/path/frame.
 Every arm uses identical candidate and click+observe, pre-registers its scoped
