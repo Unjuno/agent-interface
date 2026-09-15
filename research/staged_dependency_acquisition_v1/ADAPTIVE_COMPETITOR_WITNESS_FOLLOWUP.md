@@ -49,6 +49,22 @@ Therefore the algorithm accepts iff the selected branch matches and every compet
 
 The frozen-witness variant is sound but incomplete: a chosen witness can stop blocking while another condition still keeps the competitor false, creating the 4,850 observed false rejects.
 
+## Adversarial witness invalidation
+
+A second block targets the fast path directly. For each generated unique-plan case, every retained witness is changed to the value expected by its competitor. Cases are scored only when those witness changes can be applied consistently and the originally selected branch still matches, so the block isolates competitor handling rather than selected-side failure.
+
+From 100,000 attempts, **39,469** cases satisfied those scoring conditions.
+
+| method | stale accepts | false rejects |
+|---|---:|---:|
+| selected only | **18,259** | 0 |
+| frozen witness | 0 | **21,210** |
+| **adaptive witness** | **0** | **0** |
+
+Adaptive evaluation checked mean **3.640** distinct predicates versus full-union mean **4.159** in this adversarial subset and fully reevaluated a median of one competitor. Logical predicate count is not a latency claim.
+
+This block demonstrates the intended degradation path: when every retained witness is deliberately invalidated, the algorithm falls back to exact competitor evaluation rather than turning a fast-path miss into either stale execution or immediate false rejection.
+
 ## Architecture consequence
 
 The semantic token remains:
@@ -67,14 +83,14 @@ These tiers must produce the same semantic branch-selection verdict. Backend bat
 
 **H.** Plan-time false witnesses can short-circuit exact branch-selection revalidation without introducing stale accepts or frozen-witness false stops.
 
-**T.** 100,000 seeded generated attempts; 99,805 scored unique-plan cases; five ternary predicates; 2–4 conjunction branches; one fixed mutation model.
+**T.** Primary block: 100,000 attempts / 99,805 scored unique-plan cases under one fixed mutation model. Adversarial block: 100,000 attempts / 39,469 scored cases where all retained witnesses are deliberately invalidated while the selected branch remains true.
 
-**D.** RETAIN adaptive witness: 99,805/99,805 correct. FAIL selected-only as incomplete (2,956 stale). HOLD frozen witness as overly conservative (4,850 false rejects). Distinct predicate counts suggest less semantic acquisition than full union in this fixture, but no wall-time claim.
+**D.** RETAIN adaptive witness: 99,805/99,805 correct in the primary block and 39,469/39,469 correct under targeted witness invalidation. FAIL selected-only as incomplete. HOLD frozen witness as overly conservative. Distinct predicate counts are semantic-acquisition counts only.
 
 **C.** A different witness-selection policy could reduce checks further; conversely, physical acquisition may be batched such that fewer logical predicates do not reduce latency. Witness and fallback reads must belong to one coherent final-admission state or be protected by equivalent version/transaction semantics.
 
-**U.** Generated known-ground-truth branches; no exact runtime execution; no network/GUI producer; mutation distribution synthetic; no solver or cost-aware witness choice.
+**U.** Generated known-ground-truth branches; no exact runtime execution; no network/GUI producer; mutation distributions synthetic; no solver or cost-aware witness choice.
 
 ## Next smallest experiment
 
-Do not optimize witness choice yet. First test the three-tier evaluator (certificate -> adaptive witness -> full fallback) on one fixed collection of branch maps with adversarial mutations that specifically target the retained witnesses, verifying that fallback preserves exact unique-selection semantics when every fast-path witness is invalidated.
+Do not optimize witness selection yet. The next correctness question is **coherence**: can witness checks and fallback competitor reads observe a fractured state if they are acquired at different times? Test sequential versus snapshot/transactional final-admission reads before any runtime integration of the fast path.
