@@ -1,0 +1,19 @@
+{
+  "schema": "git-ref-cas-freeze-v1",
+  "task": "O3-GIT-REF-CAS-20260916-001",
+  "publication_base": "3c6f07f0660aee854d6b2d2d0f525fd9f451de68",
+  "freeze_parent_commit": "ca07558c59877810f12ee46b493d34e5883e64e3",
+  "case_count": 60,
+  "repetitions_per_cell": 10,
+  "policies": ["naive", "cas"],
+  "schedules": ["stable", "target_changed", "unrelated_changed"],
+  "local_plan_sha256": "94105b6e915dfdea2c4f4e84d743432fa10a5f0b4fadf950e75f5eab0f660d1d",
+  "execution_source_sha256": {
+    "experiment.py": "f31390e2c6468be7798edfe2b9674a84e59651daa5348ed0765e8afe35140192",
+    "audit.py": "bbc5f9cd26e27b861087ee845ac2bdefe3e1068655618d4bd9ba44ea1cbea104",
+    "test_audit.py": "f0fc222e7454e0eea6608d8c9421e907d0691ba4c4d26614daa69de7a6da3556"
+  },
+  "prefreeze_tests": {"passed": 5, "failed": 0},
+  "environment": {"git": "2.47.3", "python": "3.13.5"},
+  "rule": "Each measured case ID runs once. Candidate failure or integrity failure stops the allocation; naive stale overwrites are retained outcomes, not harness failures."
+}
