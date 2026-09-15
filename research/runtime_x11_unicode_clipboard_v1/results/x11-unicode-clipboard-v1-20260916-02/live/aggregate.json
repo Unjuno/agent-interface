@@ -1,0 +1,39 @@
+{
+  "schema": "agent-interface/x11-unicode-clipboard-matrix-v1",
+  "arms": [
+    {
+      "schema": "agent-interface/x11-unicode-clipboard-arm-v1",
+      "app": "writer",
+      "owner_before": 4194307,
+      "input_sha256": "3f8b64c8fd6a0971c431e81f53bd9e183d801f05467a28094f209cce514e3399",
+      "output_sha256": "90ca29416407d6d668db840bf05c3d9ae0d5e4e4a5a1205bcb8e54456256d8f9",
+      "executor_exitcode": 0,
+      "scorer_exitcode": 0,
+      "semantic_exact": true,
+      "transport_pass": true,
+      "owner_identity_restored": false,
+      "owner_reclaimed_after_close": false,
+      "passed_scoped": true,
+      "runner_exitcode": 0
+    },
+    {
+      "schema": "agent-interface/x11-unicode-clipboard-arm-v1",
+      "app": "calc",
+      "owner_before": 4194307,
+      "input_sha256": "f79d5bbf2a097915e34a9921f80c883d034805a185ae40dfb7dc12c75ea3868c",
+      "output_sha256": "03f8e28c6a183b80fed270b539cf2ad4574f5c0257bd122b7c4253d09339cec1",
+      "executor_exitcode": 0,
+      "scorer_exitcode": 0,
+      "semantic_exact": true,
+      "transport_pass": true,
+      "owner_identity_restored": false,
+      "owner_reclaimed_after_close": false,
+      "passed_scoped": true,
+      "runner_exitcode": 0
+    }
+  ],
+  "both_scoped_pass": true,
+  "owner_identity_restored_all": false,
+  "owner_reclaimed_after_close_all": false,
+  "disposition": "PASS_SCOPED_REQUIRES_EXPLICIT_CLIPBOARD_SIDE_EFFECT_CAPABILITY"
+}
