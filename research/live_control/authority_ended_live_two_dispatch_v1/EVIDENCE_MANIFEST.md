@@ -12,11 +12,16 @@ This namespace retains:
 - `formal-result.json`
 - `formal-valid.json`
 - `formal-stale.json`
-- `audit_live_two_dispatch_v1.py`
-- `formal-valid-raw-text.json.gz.b64`
-- `formal-stale-raw-text.json.gz.b64`
+- `audit_live_two_dispatch_v1.py` — local/raw-directory audit source
+- `audit_retained_compact.py` — audit runnable from retained GitHub evidence only
+- `formal-valid-raw-text.json.gz.b64` — full valid-arm text evidence bundle
+- `formal-stale-compact-evidence.json` — exact claim-relevant stale-arm extraction plus hashes of its original raw sources
 
-The two compressed text bundles contain the original UTF-8 contents plus SHA-256 for `events.jsonl`, `owner-events.json`, `score.json`, `scorer-samples.jsonl`, `scorer-summary.json`, `environment.json`, `sources.json`, and `harness-stderr.txt` for each formal arm.
+### Important retention boundary
+
+The full stale-arm text bundle exists only in the disposable experiment container. Two GitHub uploads of that base64/gzip payload had remote byte counts that did not match the local frozen file. Those malformed uploads were deleted. Therefore **the full stale-arm raw bundle is not claimed retained on GitHub**.
+
+Instead, `formal-stale-compact-evidence.json` retains the exact first terminal/expired owner-release/post-authority fields, all post-release input admissions (empty), all `second`-ID events (empty), terminal score, direct-final independent scorer sample, and SHA-256 identities for the original stale `events.jsonl`, `owner-events.json`, `score.json`, and `scorer-samples.jsonl`. This is sufficient to audit the stale-arm claims made in the report, but is not equivalent to retaining every raw stale text file.
 
 ## Executed local source/result identities
 
@@ -29,33 +34,35 @@ b6d438e4eb24e17bda76321db453e24b160e3e7a394191b62646e936914c88ce  formal-stale.j
 2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e  authority_ended_bridge_v1.py
 dc179545ced6790c55b348d6553047188eed83cbb2129cb576a83fa406dc1c87  two_dispatch_gate_v1.py
 5dd8158a9e2c7041f080736130183cfca51482570e7f6736c02d5b81eb739e7c  audit_live_two_dispatch_v1.py
+56d48d70f758451dea76971944cdc61f42ba2384589303637fb7a3c3bfd16005  audit_retained_compact.py
+051aa1053c7d802a42619e7ff3d930a34721f65c97cd38ef1f3bee9f7beaece4  formal-stale-compact-evidence.json
 ```
 
-## Raw evidence bundle identities
+The published source filenames differ slightly from the disposable-container filenames (`prereg.json` vs `prereg-live.json`, `runner.py` vs `run_live_two_dispatch_v1.py`, and `*_executed.py` vs local candidate names). The hashes above identify the exact local executed bytes; Git blob hashes separately identify the published files. Do not substitute one hash namespace for the other.
 
-Uncompressed JSON bundles:
+## Valid-arm full raw evidence
+
+Uncompressed frozen bundle:
 
 ```text
 af07c99f46ac0c24bfa98d9c717f16c27f1ff6ba9ec56b7fea5c29c5cac06c1c  formal-valid-raw-text.json
-d14ec7a8d58930b0d9f562d2a395c1df43d934a5c90e5b5d948fc412a9cd49f0  formal-stale-raw-text.json
 ```
 
-GitHub-retained base64 files (gzip uses `mtime=0`):
+GitHub-retained base64/gzip text file (gzip used `mtime=0`):
 
 ```text
 834eb5844c218651afa3111145abfe753bbd67b6464cbb7c0fde0e96b9c38d4c  formal-valid-raw-text.json.gz.b64
-7728ca18da21cb249bb57a37ad528fb95f0cd5940dc54682c25b55880e7df857  formal-stale-raw-text.json.gz.b64
 ```
 
-Reconstruct one raw JSON bundle with:
+Reconstruct with:
 
 ```bash
 base64 -d formal-valid-raw-text.json.gz.b64 | gzip -dc > formal-valid-raw-text.json
 ```
 
-Then restore each original text file from the `files.<name>.utf8` field and verify it against the corresponding `files.<name>.sha256` value before auditing.
+Then restore each original text file from `files.<name>.utf8` and verify it against `files.<name>.sha256`. `audit_retained_compact.py` performs these checks directly from the retained base64 bundle.
 
-## Per-file raw hashes
+## Original per-file raw hashes
 
 ```text
 d2cf84449f6720598ca047611619b7f3566ca6f1ca3cee0a6e85843c84c0b8e9  formal-valid/events.jsonl
@@ -66,6 +73,7 @@ ee6c9be57c1ab9234d0d33ca5a26bb96e29c46f2c300a90583d271b4a8ac5b31  formal-valid/s
 4f4188ca125652caea60ab1c4b114539422af41bc92fe04549e65056057977a3  formal-valid/environment.json
 01f35ffcc32595145dea3da60ac2d52030199413a981af69080130198b439d76  formal-valid/sources.json
 d698de161eafc53637415742780c5b773c3ca48d7535ef82f9158e1ce36bf23e  formal-valid/harness-stderr.txt
+
 d3186958dab266d1487caeeab63db5c6004942925136586d6aa192aad3fe10d4  formal-stale/events.jsonl
 c3e4641cf602439067bcb01440a2b694d68b322d08eb5bcfd1c791da0aef740e  formal-stale/owner-events.json
 f0e696438b0841855e2adc7fcaaa35c85ccf5d39fa73ea63c34f7b0610c3c1f4  formal-stale/score.json
