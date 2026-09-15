@@ -30,6 +30,12 @@ class Backend(Previous):
             self._input_event_context = None
 
     def raw(self, key, down):
+        context = self._input_event_context
+        if context is None:
+            # Reject before touching the owner. A measurement build must never
+            # create an OS-input edge that cannot be attributed to a program step.
+            raise RuntimeError("keyboard input outside program/step telemetry context")
+
         operation = "down" if down else "up"
         record = self.owner.call(operation, self.lease, key)
         if down:
@@ -40,11 +46,6 @@ class Backend(Previous):
             return
 
         row = dict(record)
-        context = self._input_event_context
-        if context is None:
-            # Input without executor step provenance is a measurement contract
-            # violation in this version; do not silently publish an unbound edge.
-            raise RuntimeError("keyboard input outside program/step telemetry context")
         row["id"], row["step"] = context
         row.setdefault("owner_id", self.owner.owner_id)
         row.setdefault("intent_token", getattr(self.lease, "intent_token", None))
