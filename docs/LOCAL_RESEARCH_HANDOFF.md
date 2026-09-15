@@ -3584,3 +3584,15 @@ Repair in a new Executor version by importing the established v3 cancellation
 and decision exception identities while retaining attestation. Also persist the
 guard decision before terminal validation. Freeze a distinct allocation; do not
 reuse or alter this failed run.
+
+Executor v11 implements that repair by subclassing v3 and overriding only
+admission to add the canonical program hash. A backend control that raises the
+exact v3 cancellation class now reaches `cancelled` with verified release.
+Controller v37 writes the typed invalidation receipt before cancel and terminal
+handling.
+
+A distinct `map01-early-typed-cancel-live-02` allocation is frozen and unrun.
+It retains the same fixture, action, zero model calls and60/75/125ms thresholds.
+All22 source hashes and output absence verify; focused construction passes13
+Windows and18 WSL tests. Run once and retain the first outcome without modifying
+v1 or Executor v10.

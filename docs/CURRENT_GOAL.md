@@ -1,3 +1,14 @@
+Current direction (r85): Executor v11 now inherits v3 execution/cancellation and
+exception identities, overriding only admission to add validated-program SHA.
+The exact v1 backend exception reaches cancelled rather than failed in a direct
+control. Controller v37 persists typed invalidation, including capture and
+decision clocks, before cancel/terminal validation. A distinct v2 live allocation
+keeps fixture/action/no-model and60/75/125ms thresholds;22 source hashes verify
+and output is absent. Windows13/WSL18 focused tests pass. Next commit the frozen
+repair, run exactly once, and retain pass or failure without changing v1/v10.
+No planner/task/game/general human-tempo claim; no subagent/context handoff; full
+goal open.
+
 Current direction (r84): the only frozen early-typed allocation is retained
 failed without retry. Typed HUD was ready15.844ms after capture; cancel request
 at47.529ms preceded exact artifact readiness119.167ms by71.637ms. All3 typed/full

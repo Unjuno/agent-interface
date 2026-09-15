@@ -1,0 +1,53 @@
+{
+  "allocation_id": "map01-early-typed-cancel-live-02",
+  "frozen_at": "2026-09-15",
+  "output": "results-local/doom/map01-early-typed-cancel-live-02",
+  "fixture_manifest": "research/doom/fixtures/map01-threat-contact-v2/fixture.json",
+  "seed": 990619,
+  "episodes": 1,
+  "retry_limit": 0,
+  "model_calls": 0,
+  "v1_failure_repair": "Executor v11 inherits executor_v3 lifecycle and exception identities while adding program attestation; controller v37 persists the exact typed invalidation receipt before terminal validation",
+  "comparison_baseline_ms": {
+    "allocation": "map01-running-action-cancel-live-02",
+    "v2_capture_to_guard_decision": 128.488378
+  },
+  "comparison_reference_ms": {
+    "failed_allocation": "map01-early-typed-cancel-live-01",
+    "capture_to_typed_ready": 15.843639,
+    "capture_to_cancel_requested": 47.529214,
+    "capture_to_owner_cancel_release": 50.100178,
+    "capture_to_artifact_ready": 119.166684
+  },
+  "thresholds_ms": {
+    "capture_to_guard_decision_lte": 60,
+    "capture_to_cancel_requested_lte": 75,
+    "capture_to_release_verified_lte": 125
+  },
+  "decision": "PASS only if the persisted pre-artifact typed receipt records a natural visible ammo decrement and exact guard decision before terminal validation; guard decision precedes artifact readiness; exact Executor program attestation, matching cancel, cancelled terminal, empty release and no later input; every typed event reconciles to its retained exact PNG by epoch, binding, RGB SHA-256 and health/ammo; all thresholds and process exit pass. Retain the first failure without retry otherwise.",
+  "source_sha256": {
+    "research/doom/map01_early_typed_cancel_live_v2.py": "b1701fe2c32b0d1279d6a214220115378e9ede6f86ed658c54c0d46298147e1d",
+    "research/doom/audit_map01_early_typed_cancel_live_v2.py": "bba3ef67c03a52e5d3cd864cedfac1720bbd3f1ada67b133d270b81d96c78c50",
+    "research/doom/map01_overlap_controller_v37.py": "3cba4f1133ec0a08703321aa28ee84f5c41961828389ad3131e9ccec33e75fff",
+    "research/doom/session_map01_v11.py": "aa7f1dc9a636b1bf36f1ada6a23c8cf3bab414b27d5c7dfe078723bfdc2742ce",
+    "research/doom/doom_typed_coast_backend_v1.py": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+    "research/doom/doom_typed_observation_v1.py": "7268d2ccd291096f2372fe5d624165a55205ebaf7085ccc0daff7870579b30d8",
+    "research/doom/doom_hud_signal_v3.py": "9bd6b7462adfa6c07f1ab0a0820280768ccb9eff14aca32956a14538c0acb6d7",
+    "research/doom/doom_hud_signal_v2.py": "c4d5269d258e57b3e04d024f8a3d8948c7bfb73f309f0ca6fe3cd6a44cc755ff",
+    "research/doom/doom_hud_signal_v1.py": "eecb889ad76fd3d23dfc32ae8c804ecbb32efc7b4d9ac5174ce4aefa7c70514c",
+    "research/doom/doom_action_snapshot_v1.py": "69713831fb6fecb285fc6bde7b50d6fabaeb7cc0ddf5b24ae347d1f2c47614f0",
+    "research/doom/doom_action_validity_contract_v1.py": "8ce48e00689eb79b50ace84759381d61781b54d29b2cb8c19c5319226a937982",
+    "research/live_control/running_action_guard_v2.py": "908ab4117f007c2592d96a50370c7e29a5c048cfee2d6c70d1bb66fc1b4e11e2",
+    "research/live_control/running_action_guard_v1.py": "2d5feb69efd59fdca22e0db9e561923411490eb758eab9e2b8379714e20e5c62",
+    "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/action_validity_admission_v1.py": "f102cbde4f0e46c9f8e974e9f0a7d1c47f3fc662d7c8ba32699d16799d3db98a",
+    "research/live_control/final_action_admission_v2.py": "16f785d2542335a857163b9afa6c6e84b776b77d62ce36345fc28987a5ca897b",
+    "research/live_control/final_action_admission_v1.py": "7a6ee78d241a79aabd803cb92e0f57e20ec784df1be877012b3efc187012746d",
+    "research/live_control/coast_backend_v1.py": "fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009",
+    "research/doom/fixtures/map01-threat-contact-v2/fixture.json": "e57e21fd6d85d4b0720b3b3d5a52ad538fde45c50c58651ff754638f93f182e4",
+    "research/doom/fixtures/map01-threat-contact-v2/save.png": "cc5302aa9cda3960248733caa96da1b53adcc4b6a1a2dcfb80675650c9350401",
+    "research/doom/fixtures/map01-threat-contact-v2/source.png": "70723e24d671fd656fa3ba40294b4cd28272493a9ffcacf93843cd86f13ab16d"
+  },
+  "scope": "one real continuously advancing Freedoom/X11 held-input cancellation episode repairing the retained v1 exception-identity failure; controller-authored threshold, no planner/model call, no task-completion, gameplay-gain or general human-speed claim"
+}
