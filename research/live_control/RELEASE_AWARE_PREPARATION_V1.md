@@ -187,3 +187,26 @@ once the exact frame already exists. It does not measure event detection, PNG
 publication or integrated live completion. The next live allocation must run the
 probe on the reconstructed frame before artifact publication, retain its result,
 then reconcile it to the published PNG without using the probe as input authority.
+
+## Frozen live pre-artifact semantic probe
+
+V5 versions the live observation path instead of changing any retained source.
+A backend-independent registry copies one no-authority predicate for the new
+action. After lossless wire reconstruction, the versioned backend scores the
+exact RGB frame, emits an action-scoped `semantic_probe`, then prepares the PNG.
+It subsequently emits a digest reconciliation and the ordinary exact observation.
+The provisional event grants no input authority and cannot substitute for later
+artifact evidence.
+
+The event cursor and Unix socket are separately versioned to admit
+`semantic_probe|terminal` under the same bounded action-id rules. A client read
+is registered before selection submission, consumes the first false probe, then
+resumes from its cursor to the first true probe. The click+observe program,
+coherent admission, exact terminal and empty release remain unchanged.
+
+Seed204, one run/no retry/model/cancel,43 source hashes and absent output are
+frozen. Both probes must compute within5ms, complete before their PNG-ready clocks
+and reconcile exactly. Client bounds are200ms to first feedback and250ms to
+semantic success; prior600/300ms internal bounds remain. Twelve focused tests
+pass on WSL; eleven pass and the Unix-socket-only test skips on Windows. Freeze
+verification passes on both. Commit, run exactly once and retain any outcome.

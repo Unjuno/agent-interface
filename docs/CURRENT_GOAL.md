@@ -1,3 +1,14 @@
+Current direction (r108): freeze live pre-artifact semantic feedback v5. A
+backend-independent no-authority registry scores each losslessly reconstructed
+RGB frame; the versioned backend emits an action-scoped provisional probe before
+PNG preparation, then emits exact digest reconciliation and normal observation.
+A socket client registers before submit and cursor-resumes false→true probes.
+Seed204 keeps coherent prepared click+observe, completed2-step empty release,
+one run/no retry/model/cancel,43 hashes/output absent. Bounds: probe≤5ms,
+client first≤200ms/useful≤250ms, internal300/600ms.12 WSL tests;11 Windows plus
+one expected Unix-socket skip; freeze checks pass both. Commit then run/audit once
+and retain any result. No model/token/general claim or subagent/context handoff.
+
 Current direction (r107): exact-frame semantic probe comparison ran once and
 passed.64 samples/mode: old path scorer median34.696ms/p95 42.365ms; reconstructed-
 frame probe median2.320ms/p95 2.630ms,32.376ms median advantage and0.0669 ratio.

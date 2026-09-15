@@ -1,3 +1,12 @@
+Current handoff r108: live semantic v5 is frozen. A backend-independent registry
+scores reconstructed exact RGB frames; a versioned backend emits no-authority,
+action-scoped probes before PNG preparation, then exact reconciliation and the
+normal observation. A pre-registered socket client cursor-resumes false→true.
+Seed204 retains coherent prepared click+observe and2-step empty release; one run/
+no retry/model/cancel,43 hashes/output absent. Probe≤5ms, client first≤200ms and
+useful≤250ms;300/600ms internal bounds.12 tests WSL;11+Unix skip Windows; freeze
+checks pass. Commit, run/audit once, retain any result; no broader claim/handoff.
+
 Current handoff r107: frozen exact-frame probe comparison ran once and passed.
 Old path median34.696ms/p95 42.365ms; reconstructed-frame median2.320ms/p95
 2.630ms across64 samples/mode,32.376ms median advantage/0.0669 ratio. False004
