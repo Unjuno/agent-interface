@@ -1,0 +1,62 @@
+{
+  "schema": "capture-artifact-boundary-development-decision-v1",
+  "task_id": "container-capture-artifact-boundary-20260915-v1",
+  "environment": {
+    "python": "3.13.5",
+    "kernel": "6.18.44",
+    "machine": "x86_64"
+  },
+  "result": {
+    "schema": "capture-artifact-boundary-development-v1",
+    "pairs": 12,
+    "summary": {
+      "release_first": {
+        "n": 12,
+        "app_hold_median_ms": 250.082511,
+        "app_hold_p95_ms": 250.9414698,
+        "send_hold_median_ms": 250.12613349999998,
+        "deadline_to_up_median_ms": 0.1261335,
+        "pipeline_total_median_ms": 22.228851499999998,
+        "capture_median_ms": 2.959994,
+        "png_write_fsync_median_ms": 11.9557245,
+        "reopen_load_median_ms": 7.2077305,
+        "send_up_to_app_release_median_ms": 0.6166515
+      },
+      "pipeline_first": {
+        "n": 12,
+        "app_hold_median_ms": 272.9883315,
+        "app_hold_p95_ms": 303.5013596499999,
+        "send_hold_median_ms": 273.253667,
+        "deadline_to_up_median_ms": 23.253667,
+        "pipeline_total_median_ms": 22.5977735,
+        "capture_median_ms": 2.9502875,
+        "png_write_fsync_median_ms": 12.952449999999999,
+        "reopen_load_median_ms": 6.586087,
+        "send_up_to_app_release_median_ms": 0.536613
+      }
+    },
+    "paired_pipeline_first_minus_release_first_app_hold_ms": {
+      "median": 22.93479450000001,
+      "p95": 52.44890319999996,
+      "min": 20.573388000000023,
+      "max": 79.95545699999997
+    },
+    "pipeline_first_total_ms": {
+      "median": 22.5977735,
+      "p95": 53.15004499999996
+    }
+  },
+  "decision": "RETAINED_ARTIFACT_BOUNDARY_COST_CANDIDATE",
+  "thresholds": {
+    "median_ms": 10.0,
+    "p95_ms": 20.0
+  },
+  "first_outcome_retained": true,
+  "retry_count": 0,
+  "source_sha256": "be23884611248a2340864bed14af6647013956be85fd86c4d99a7f85950b43fc",
+  "preregistration_sha256": "22f7afc1865db7c0fea462d303215ce80118f660ec02038a996f1c5c768acba3",
+  "result_sha256": "931e1d191cb02dcdd4d8ffbd440b7adee78d8fde2111f4bd7022fa41b9690e53",
+  "raw_case_count": 24,
+  "next": "Remove only Image.open/load from the pre-release pipeline while keeping capture + PNG write + fsync, then repeat the boundary ordering comparison.",
+  "claim_boundary": "Rendered Xvfb/Tk/XTEST development fixture only."
+}
