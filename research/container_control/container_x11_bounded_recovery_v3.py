@@ -62,6 +62,7 @@ class TaskApp:
 
     @staticmethod
     def drift(t_s: float) -> float:
+        # A deterministic exogenous disturbance independent of controller arm.
         if t_s < 0.85:
             return 0.34
         if t_s < 1.55:
@@ -114,6 +115,7 @@ def capture_marker(d, win) -> tuple[float | None, int]:
         return None, time.monotonic_ns()
     data = raw.data
     xs: list[int] = []
+    # Xvfb 24/32 is B,G,R,pad in this container. Scan only the task band.
     for y in range(100, 181, 3):
         for x in range(TRACK_L, TRACK_R + 1, 2):
             i = (y * g.width + x) * 4
@@ -210,6 +212,7 @@ def controller(out: Path, mode: str, decisions: int, planner_wait_s: float, cove
                 if held:
                     release_all(d, held, log, "cover_budget")
 
+        # Complete the fixed planner wait from decision-start, independent of arm.
         remaining = planner_wait_s - (time.monotonic_ns() - decision_start_ns) / 1e9
         if remaining > 0:
             time.sleep(remaining)
@@ -232,6 +235,7 @@ def controller(out: Path, mode: str, decisions: int, planner_wait_s: float, cove
             "ns": time.monotonic_ns(),
         })
 
+        # Identical post-planner pulse in both arms.
         if policy:
             send_key(d, policy, True, log)
             held.add(policy)
@@ -265,6 +269,7 @@ def audit_arm(out: Path) -> dict:
     unsafe_ns = sum(b["ns"] - a["ns"] for a, b in zip(scoped, scoped[1:]) if not a["safe"])
     center_ns = sum(b["ns"] - a["ns"] for a, b in zip(scoped, scoped[1:]) if a["center"])
 
+    # Physical app-side key events must balance and end empty.
     state = {"left": False, "right": False}
     for r in inp:
         state[r["key"]] = r["down"]
@@ -272,6 +277,7 @@ def audit_arm(out: Path) -> dict:
     press_count = sum(1 for r in inp if r["down"])
     release_count = sum(1 for r in inp if not r["down"])
 
+    # After guard invalidation there must be no new key-down before the planner return.
     stale_repress = 0
     release_latencies_ms: list[float] = []
     for g in [r for r in ctrl if r["kind"] == "guard_invalid"]:
@@ -283,6 +289,7 @@ def audit_arm(out: Path) -> dict:
         if releases:
             release_latencies_ms.append((releases[0]["ns"] - g["ns"]) / 1e6)
 
+    # Posthoc visual decoder error against nearest scorer sample. This does not feed controller.
     visual_errors: list[float] = []
     for r in ctrl:
         if r["kind"] not in {"decision_start", "planner_return", "guard_invalid"}:
@@ -325,6 +332,7 @@ def run_arm(root: Path, pair: int, mode: str, order_index: int, decisions: int, 
     env["DISPLAY"] = disp
     env["XAUTHORITY"] = str(root / "empty.Xauthority")
     (root / "empty.Xauthority").touch(exist_ok=True)
+    # App must outlive controller; controller runtime is bounded by fixed decisions.
     app_duration = decisions * (planner_wait_s + 0.085 + 0.04) + 0.9 + APP_TAIL_S
     try:
         time.sleep(0.10)
@@ -397,6 +405,7 @@ def run_experiment(root: Path, pairs: int, decisions: int, planner_wait_s: float
         and summary["safety"]["visual_decoder_error_max"] < 0.03
         and all(d < 0 for d in unsafe_delta)
     )
+    # Hash raw streams to bind the summarized first result.
     summary["raw_sha256"] = {
         str(p.relative_to(root)): sha256_file(p)
         for p in sorted(root.rglob("*.jsonl"))
