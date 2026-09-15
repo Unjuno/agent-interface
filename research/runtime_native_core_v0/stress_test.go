@@ -28,9 +28,15 @@ func TestDeterministicTenThousandProgramC1Roundtrip(t *testing.T) {
 		ops = append(ops, Op{Op: "release_all"})
 		p := Program{Schema: SchemaProgram, ProgramID: fmt.Sprintf("p%d", i), Source: Source{int64(i), 1}, Authority: Authority{"stress-lease", 999999999999}, Ops: ops, Terminal: Terminal{true}}
 		wire, err := EncodeC1(p)
-		if err != nil { t.Fatalf("encode %d: %v", i, err) }
+		if err != nil {
+			t.Fatalf("encode %d: %v", i, err)
+		}
 		got, err := DecodeC1(wire)
-		if err != nil { t.Fatalf("decode %d: %v", i, err) }
-		if !reflect.DeepEqual(p, got) { t.Fatalf("roundtrip %d mismatch", i) }
+		if err != nil {
+			t.Fatalf("decode %d: %v", i, err)
+		}
+		if !reflect.DeepEqual(p, got) {
+			t.Fatalf("roundtrip %d mismatch", i)
+		}
 	}
 }
