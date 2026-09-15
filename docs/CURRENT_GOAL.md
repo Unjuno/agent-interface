@@ -1,3 +1,12 @@
+Current direction (r104): v4 repairs v3 evidence. Acceptance binds steps count2
+and canonical SHA of exact click+observe. Each exact observation retains capture,
+detection, score and score-complete clocks; first false feedback remains explicit,
+then bounded consumption stops on first semantic true or terminal. Seed205 keeps
+neutral fault/coherent binding/scorer v2 and600/200/300ms bounds. One run/no retry/
+model/cancel,37 hashes/output absent;12 tests/freeze checks pass Windows/WSL.
+Next commit, run/audit once, retain any result. V3 stays failed; no model/token/
+general claim or subagent/context handoff; full goal open.
+
 Current direction (r103): v3 ran once and is retained failed at report check.
 Coherent readiness succeeded;2 pointer admissions,2 observations,2-step completed
 terminal and empty release occurred. Runner misread accepted.steps integer2 as

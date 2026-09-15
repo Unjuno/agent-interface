@@ -1,3 +1,11 @@
+Current handoff r104: v4 binds accepted count2 plus canonical program SHA and
+scores observations in event order, retaining first feedback separately until
+first semantic success or terminal. Every score has live detection/completion
+clocks. Seed205 keeps neutral/coherent/scorer-v2 path and600/200/300ms limits,
+one run/no retry/model/cancel and37 hashes. Twelve tests/freeze checks pass both
+OSes. Commit then run/audit once and retain any outcome. V3 stays failed; no
+broader claim/subagent/context handoff.
+
 Current handoff r103: seed206 v3 ran once and is retained failed. Readiness and
 execution mechanics completed cleanly, but runner indexed accepted.steps integer2
 as a list instead of checking canonical program SHA/count. Exact frames show first

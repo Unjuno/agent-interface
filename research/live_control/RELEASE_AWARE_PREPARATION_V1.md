@@ -123,3 +123,13 @@ first useful feedback. Live scorer-completion clock was lost and cannot be
 reconstructed. Eighteen files/496,823 bytes before receipt pass Windows/WSL
 failure audits. V4 must bind SHA/count correctly and consume observations until
 semantic success or terminal, retaining both feedback clocks.
+
+V4 is frozen with that evidence repair. It checks accepted step count2 and the
+canonical SHA-256 of the exact click+observe program. Every new exact observation
+is scored in event order with detection and completion clocks. The first feedback
+remains separately retained even when semantically false; consumption stops at
+the first selection success or terminal.
+
+Seed205 keeps coherent binding, neutral fault, scorer v2 and600/200/300ms limits.
+One run/no retry/model/cancel,37 hashes and absent output verify;12 focused tests
+pass Windows/WSL. Run once and retain any result; v3 remains failed.
