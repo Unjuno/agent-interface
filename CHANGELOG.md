@@ -9,6 +9,9 @@
 - Let successful final revalidation atomically promote its refreshed cache and
   preserve typed capacity deferral across the shared caller. Freeze a two-case,
   no-retry live integration for resize-local repair and hover-patch fallback.
+- Retain the first live integration's safe pre-action refusal after a postcondition
+  was checked too early. Freeze v2 with a false-versus-unavailable semantic gate;
+  current handle resolution and independent post-action scoring remain required.
 - Add the first runnable golden desktop entry point with environment diagnosis,
   frozen-evidence audit, fresh persistent execution and independent raw-output
   audit. Retain a pre-GUI import failure, then complete a fresh 6/6 exact run
