@@ -1,6 +1,6 @@
 # Staged dependency acquisition v1
 
-Status: **RETAIN staged dependency acquisition only with plan-bound branch revalidation at the selected-action boundary; RETAIN direct paired plan calibration as a scheduling candidate; HOLD runtime ABI and live promotion.**
+Status: **RETAIN staged dependency acquisition only with plan-bound branch-selection validity at the selected-action boundary; RETAIN proof-backed v1 mutual-exclusion simplification and direct paired batching calibration; HOLD runtime ABI and live promotion.**
 
 Immutable research base: `e94af964f85da1cbd4e2db0fd7840bfd8362c3ba`.
 
@@ -10,7 +10,7 @@ This is a bottom-up successor to Issues #104/#165 and draft PR #182. The exact C
 
 If one compiled state has multiple possible action branches, should the runtime acquire the union of every branch's semantic/admission dependencies before branch selection, or acquire branch-selection dependencies first and only then obtain dependencies of the selected action?
 
-The dependency vocabulary and fail-closed rules from prior blocks are unchanged. This block changes only **when** already-required dependencies are acquired and revalidated.
+The dependency vocabulary and fail-closed rules from prior blocks are unchanged. This block changes only when already-required dependencies are acquired and what semantic control condition must remain valid at final admission.
 
 ## Rung 1 — dependency membership and inactive-branch precision
 
@@ -28,7 +28,7 @@ Compared:
 | staged | 0 | 0 | 6 |
 | planner_only | **14,147** | 0 | 4 |
 
-This first block established that inactive-branch union can be over-broad and interface-only scoping is incomplete. It did **not** yet model a state change between branch selection and selected-action acquisition; Rung 6 corrects that assumption.
+This first block established that inactive-branch union can be over-broad and interface-only scoping is incomplete. It did **not** yet model a state change between branch selection and selected-action acquisition; later rungs correct that assumption.
 
 ## Rung 2 — batching cost is separate from semantic correctness
 
@@ -95,7 +95,7 @@ The first staged block assumed the branch remained valid between phase 1 and pha
 | staged_no_branch_revalidate | **19,926** | 0 | 1 |
 | staged_revalidate | **0** | **0** | 2 |
 
-**Correction to Rung 1:** plain staging is unsafe across an inter-phase state change. Branch selection is itself plan-bound evidence. The predicate that selected the action must still hold at final selected-action admission, or be protected by an equivalent snapshot/version capability.
+**Correction to Rung 1:** plain staging is unsafe across an inter-phase state change. Branch selection is plan-bound evidence.
 
 ## Rung 7 — SQLite atomic check+effect confirms the boundary
 
@@ -107,32 +107,103 @@ A file-backed SQLite fixture uses a state table and effect table. Phase 1 reads 
 
 Descriptive phase-2 medians: union 20.184 us, staged+revalidation 21.440 us, naive staged 22.940 us. These are not product latency claims.
 
+## Rung 8 — existing compiled-method shape integration
+
+The mechanism was checked against the state-machine shape already used by `compiled_runtime_cross_domain_compat_v1` continuous control. Plan-time LEFT/RIGHT selects one movement action; current zone/surface/left-guard/right-guard/nuisance combinations were exhaustively enumerated: **96 states**.
+
+- state union: stale 0, false reject **4**;
+- staged without branch revalidation: stale **40**, false reject 0;
+- staged + branch revalidation: **stale 0 / false reject 0**.
+
+This is an existing compiled-method shape, not execution of the exact runtime module.
+
+## Rung 9 — semantic predicate truth beats exact raw equality
+
+For a single selected branch condition `x >= 0`, initial `x=-3..3`, current `x=-5..5`, guard false/true: **154 states**.
+
+- no branch revalidation: **38 stale executes**;
+- exact raw `x` equality: 0 stale but **32 false rejects**;
+- predicate-truth equality: **stale 0 / false reject 0**.
+
+Thus branch validity should preserve the authored semantic condition rather than exact raw state unless exact identity/version is itself part of the contract.
+
+## Rung 10 — selected-predicate truth is not enough when another branch can become true
+
+The previous rung considered one selected branch in isolation. The runtime, however, requires exactly one matching branch.
+
+### Independent branch predicates
+
+A:`x >= 0`, B:`y >= 0`; initial states contain exactly one match. Initial `x,y in [-3,3]`, final `x,y in [-5,5]`: **2,904 transitions**.
+
+| revalidation | stale accepts | false rejects | correct |
+|---|---:|---:|---:|
+| selected branch predicate remains true | **864** | 0 | 2,040 |
+| exact raw `x,y` equality | 0 | **696** | 2,208 |
+| **same branch remains unique match** | **0** | **0** | **2,904** |
+
+The 864 stale cases arise when the selected branch stays true but the competing branch becomes newly true; a fresh runtime selection would be ambiguous and must not execute.
+
+### Overlapping conditions on one variable
+
+A:`x >= 0`, B:`x <= 2`, 66 transitions from initially unique states:
+
+- selected-truth: **18 stale accepts**;
+- exact raw equality: **18 false rejects**;
+- unique-selection: **66/66 exact**.
+
+Therefore the general plan-bound control dependency is semantic branch-selection identity:
+
+`BRANCH_SELECTION(state, selected_branch, unique=true)`.
+
+## Rung 11 — v1 equality branches admit an exact mutual-exclusion certificate
+
+`compiled-gui-interface-v1` branch `when` clauses are conjunctions of scalar equalities represented as partial maps. Two branches are mutually exclusive iff some shared predicate is assigned different expected values.
+
+**Proof.** A conflicting shared equality makes joint satisfaction impossible. Conversely, without any conflict the union of both partial maps is consistent; assigning every mentioned predicate its demanded value satisfies both branches. Therefore the criterion is necessary and sufficient for the v1 branch language.
+
+Implementation audit: 100,000 generated branch pairs over four ternary predicates compared to exhaustive assignment enumeration:
+
+- mismatches: **0 / 100,000**;
+- certified mutually exclusive: 68,750;
+- overlapping: 31,250.
+
+Retained compiled fixture shapes checked:
+
+- XTerm v4: 5/5 branch pairs certified;
+- MAP01 composition: 3/3;
+- continuous control: 6/6;
+- desktop two-step: 5/5;
+- Chromium v5: one branch/state, so no competing pair.
+
+Thus v1 can lower the general `BRANCH_SELECTION` dependency to the selected branch's complete `when` condition **only when all competing branches are independently certified mutually exclusive**. Richer predicate languages require a different proof system or full unique-selection recomputation.
+
 ## Architecture consequence
 
-Separate four questions:
+Separate five questions:
 
 1. **Dependency correctness:** what evidence is semantically required? Typed and fail-closed.
-2. **Plan-bound branch evidence:** the branch predicate used to select an action must be revalidated at the selected-action admission boundary.
-3. **Acquisition staging:** after branch selection, acquire only selected-action dependencies rather than inactive-branch dependencies.
-4. **Batching policy:** whether branch+action dependencies are physically fetched in one request or multiple requests is backend-specific and must not change semantic membership/revalidation.
+2. **Plan-bound decision validity:** by default preserve unique branch-selection identity; proof-backed mutually exclusive v1 states may revalidate only the selected `when` condition.
+3. **Selected-action acquisition staging:** after branch selection, acquire only selected-action dependencies rather than inactive-branch dependencies.
+4. **Final admission boundary:** validate branch-selection/selected action evidence coherently with effect authority.
+5. **Physical batching:** one union request versus multiple staged requests is backend-specific and must not alter semantic membership.
 
 Candidate boundary:
 
-`branch/pending observation -> choose candidate action -> acquire selected action dependencies -> atomically/freshly revalidate branch predicate + selected action dependencies -> admit/execute`
+`branch/pending observation -> choose candidate action -> acquire selected action dependencies -> revalidate BRANCH_SELECTION (or proof-backed selected when) + selected action dependencies -> admit/execute`
 
-Hidden admission/verifier dependencies remain mandatory. Inactive branch dependencies are not.
+Hidden admission/verifier dependencies remain mandatory. Inactive branch action dependencies are not.
 
 ## H / T / D / C / U
 
-**H.** Staging can remove inactive-branch false stops only if the plan-bound branch predicate is revalidated together with selected-action dependencies at final admission; batching can then be optimized independently.
+**H.** Staging can remove inactive-branch false stops only if final admission preserves the plan-bound decision result and selected-action dependencies; v1 equality states with a retained mutual-exclusion certificate can safely use a cheaper selected-branch recheck.
 
-**T.** 100,000 dependency-membership trials; normalized cost sweep; heavy-hash and SQLite microbenchmarks; retained failed linear calibration; direct paired calibration with 5,000-repetition holdouts; 100,000 inter-phase mutation trials; 1,500 SQLite atomic validation/effect rows.
+**T.** 100,000 dependency-membership trials; normalized cost sweep; heavy-hash and SQLite microbenchmarks; retained failed linear calibration; paired calibration with 5,000-repetition holdouts; 100,000 inter-phase mutation trials; 1,500 SQLite atomic rows; 96 compiled-shape states; 154 single-predicate states; 3,047 branch-uniqueness transitions; 100,000 generated certificate pairs; 19 retained multi-branch fixture pairs.
 
-**D.** PASS only for **staged + branch-predicate revalidation**: stale 0 / false reject 0 in the 100,000-trial inter-phase block and 500/500 correct SQLite cases. Plain staged FAILS (19,926/100,000 stale executes; SQLite mode-flip wrong 100/100). State union remains sound but over-broad (20,084/100,000 false rejects; SQLite inactive-guard false reject 100/100). RETAIN direct paired batching calibration only as a backend-specific scheduling candidate. HOLD generic runtime/live promotion.
+**D.** RETAIN staged acquisition only with plan-bound decision revalidation. FAIL naive staged. RETAIN `BRANCH_SELECTION(state, selected_branch, unique=true)` as the general control dependency. RETAIN proof-backed selected-`when` simplification for mutually exclusive v1 equality branches. RETAIN direct paired batching calibration only as backend-specific scheduling evidence. HOLD exact-runtime/live promotion.
 
-**C.** Generated graphs know their ground-truth dependencies; discovery remains a separate problem. A real application may not expose branch predicate and action dependencies under one atomic/fresh boundary. Calibration may drift with load or have too-small performance margins.
+**C.** Generated fixtures know ground truth. Richer predicates, hidden application invariants, or undeclared verifier/admission state can invalidate static simplifications. A real application may not expose branch and selected-action evidence under one authoritative final boundary.
 
-**U.** No Chromium-v5 live replication, no model calls, no network backend/GPU, unpinned CPU frequency, synthetic heavy workload, local SQLite. Natural workload frequencies and production scheduling noise are unknown.
+**U.** Exact `compiled_gui_interface_v1.py` execution remains SETUP_BLOCKED in the current container under Issue #197. No Chromium-v5 live replication, model calls, network backend, GPU, or production-load calibration.
 
 ## Error check
 
@@ -140,11 +211,14 @@ The failure modes discriminate the mechanisms:
 
 - omit hidden action dependencies -> stale accepts;
 - union inactive action dependencies -> false rejects;
-- stage without revalidating the selecting branch -> stale executes after mode flip;
-- stage and revalidate branch + selected action -> zero seeded correctness errors.
+- stage without revalidating control decision -> stale execution after branch change;
+- selected predicate truth without uniqueness -> stale execution when a competitor becomes true;
+- exact raw equality -> avoidable false rejects;
+- unique branch-selection revalidation -> zero seeded errors in overlapping branch fixtures;
+- proof-backed v1 mutual exclusivity -> selected `when` revalidation is equivalent to unique selection in the stated language.
 
-This pattern is inconsistent with blanket reject-on-any-change and with blind continuation.
+This pattern is inconsistent with blanket reject-on-any-change and blind continuation.
 
 ## Next smallest experiment
 
-Integrate only **staging + branch-predicate revalidation**, not cost calibration, into one existing compiled finite fixture with two action branches and disjoint admission dependencies. Keep canonical evidence identity and existing authority semantics unchanged. Test stable, selected-dependency change, inactive-dependency change, branch flip, and unrelated change separately.
+Execute Issue #197 with byte-exact `compiled_gui_interface_v1.py`. Prefer a state with at least two branches and retain a static mutual-exclusivity certificate when available. Compare the general unique-selection check with the proof-backed selected-`when` simplification while keeping selected-action dependencies, canonical evidence identity, authority/release semantics, batching calibration, and model/live concerns fixed.
