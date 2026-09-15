@@ -17,7 +17,13 @@
       "kernel": "6.18.44",
       "machine": "x86_64",
       "cpu_model": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz",
-      "cpu_affinity": [0, 1, 2, 3, 4],
+      "cpu_affinity": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
       "cpu_clock": "not pinned / unavailable",
       "concurrency": "single Python process, single thread"
     },
@@ -26,7 +32,23 @@
       "warmups": 3,
       "measured_repetitions": 15,
       "batch": "one ProgressSample per ingest call",
-      "event_counts": [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6]
+      "event_counts": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ]
     },
     "elapsed_ms": {
       "median": 193.273686,
@@ -59,9 +81,21 @@
     "benchmark_independent_progress_clock_v1.py": "fcdf406177de1e84028868ccd95902ab1ca6eb0336e7c3b1e0955f20dafb8d7a"
   },
   "event_contract": {
-    "positive_useful": ["KILL_COUNT_INCREASE", "MAP_EXIT"],
-    "negative": ["DEATH_COUNT_INCREASE", "PLAYER_DEAD", "EPISODE_FINISHED_NO_EXIT"],
-    "excluded_as_useful": ["health", "ammo", "pixels_changed", "frame_hash"],
+    "positive_useful": [
+      "KILL_COUNT_INCREASE",
+      "MAP_EXIT"
+    ],
+    "negative": [
+      "DEATH_COUNT_INCREASE",
+      "PLAYER_DEAD",
+      "EPISODE_FINISHED_NO_EXIT"
+    ],
+    "excluded_as_useful": [
+      "health",
+      "ammo",
+      "pixels_changed",
+      "frame_hash"
+    ],
     "controller_visible": false
   },
   "limitations": [
