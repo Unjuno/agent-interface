@@ -37,4 +37,3 @@ function send(e,kind){{e.stopPropagation();console.log('__SCORER__'+JSON.stringi
 document.body.addEventListener('click',e=>send(e,'background'));
 const c=document.querySelector('canvas');if(c){{const z=c.getContext('2d');z.fillStyle='rgb(220,40,180)';z.fillRect(0,0,22,16)}}
 </script>''')
-
