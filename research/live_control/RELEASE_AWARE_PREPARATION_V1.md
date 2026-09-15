@@ -47,3 +47,18 @@ audits. This is evidence for one fixture-scoped visual preparation overlap, not
 for model planning, executed task progress, token reduction, general speedup or
 human-tempo operation. The next test must bind one freshly revalidated prepared
 candidate to a new Executor acceptance and independently score its visible effect.
+
+## Frozen prepared-selection allocation
+
+The next distinct seed208 allocation restores the original focus after the
+interruption, captures a third exact PNG, and revalidates the early candidate.
+It then submits exactly that click followed by one observation under a new
+Executor action. An independent scorer requires the same red rectangle and dark
+selection handles on all four sides; the pre-click frame must fail this score.
+
+The first feedback observation, scorer completion, completed two-step terminal
+and verified empty release are retained. Bounds are500ms fault-to-semantic-score,
+200ms admission-to-first-feedback and300ms admission-to-score. One run, no retry,
+model or explicit cancel,35 source hashes and absent output are fixed. Twelve
+related tests and freeze verification pass on Windows/WSL. Run once and preserve
+any outcome.

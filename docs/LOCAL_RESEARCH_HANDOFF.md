@@ -1,3 +1,12 @@
+Current handoff r98: seed208 executed prepared-selection allocation is frozen.
+After release preparation and exact terminal, restore focus, capture/revalidate,
+bind the exact click+observe to one new acceptance, detect first feedback, and
+score four-sided visible selection handles. Pre-click must score false; the two-
+step terminal must release empty.500/200/300ms fault-score/accept-feedback/accept-
+score bounds, one run/no retry/model/cancel,35 hashes and absent output are fixed.
+Twelve tests and freeze checks pass Windows/WSL. Commit then run/audit once and
+retain any outcome. No broader claim; no subagent/context handoff.
+
 Current handoff r97: seed209 actual visual-planner overlap ran exactly once and
 passed. Both arms found bbox[596,373,643,408],1645 red pixels, center[619,390].
 Early candidate completed77.638ms vs terminal-first139.137ms. Exact terminal plus

@@ -1,3 +1,13 @@
+Current direction (r98): freeze executed prepared selection. Seed208 restores
+focus after interruption, captures/revalidates exact candidate, binds click+
+observe to one new Executor acceptance, client-detects first feedback, and
+independently requires the same red target plus four-sided visible selection
+handles. Pre-click score must fail; terminal completes2 steps with empty release.
+Bounds are fault→score≤500ms, accept→feedback≤200ms, accept→score≤300ms. One run,
+zero retry/model/cancel,35 hashes and absent output are fixed;12 tests/freeze
+checks pass Windows/WSL. Next commit, run once, audit and retain any result. No
+model/token/general human-tempo claim; no subagent/context handoff; full goal open.
+
 Current direction (r97): the first actual planner-overlap allocation ran once and
 passed. Same Inkscape PNG yielded exact bbox[596,373,643,408]/center[619,390].
 Early candidate completed77.638ms before terminal-first139.137ms. After terminal
