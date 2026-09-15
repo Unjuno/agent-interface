@@ -1,3 +1,12 @@
+Current handoff r96: the first release-aware actual planner comparison is frozen.
+On one stream, early-release and terminal-first clients independently scan the
+same Inkscape PNG, require the exact red target, prepare the same candidate and
+validate it on the post-release PNG. Prepared candidates never reach Executor.
+Seed209, one run/no retry/model/cancel,34 source hashes, absent output and
+200/5/300ms useful-ready bounds are fixed. Windows/WSL verification and10 tests
+pass. Commit before one run; audit and retain the first outcome. No broader
+planner/model/token/task/human-tempo claim; no subagent/context handoff.
+
 Current handoff r95: release-aware preparation v1 turns the observed release-to-
 terminal gap into a no-authority planner boundary. It can begin only after exact
 verified release, copies and hashes one candidate, and remains unable to submit

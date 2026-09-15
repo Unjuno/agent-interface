@@ -1,3 +1,13 @@
+Current direction (r96): freeze the first actual planner-overlap comparison.
+Same-stream early-release and terminal-first clients scan the identical Inkscape
+initial PNG for one exact red rectangle, prepare the same click candidate, then
+fresh-validate it on the real post-release PNG. Candidate authority/input remain
+zero. Seed209, one run/no retry/model/cancel,34 hashes and absent output are fixed.
+Bounds: early useful-ready≤200ms, advantage≥5ms, baseline≤300ms; expected bbox
+[596,373,643,408],1645 pixels, center[619,390]. Freeze checks and10 tests pass
+Windows/WSL. Next commit, run once, audit and retain any result. No model/token/
+task/general human-tempo claim; no subagent/context handoff; full goal open.
+
 Current direction (r95): release-aware preparation v1 consumes the newly proven
 gap without granting authority. After exact token-bound empty release, it may
 prepare/copy/hash one candidate while terminal remains pending. A matching

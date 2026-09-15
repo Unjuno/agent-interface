@@ -16,3 +16,20 @@ Wrong-token or conflicting terminal evidence fails closed. The contract records
 how much preparation overlapped the terminal wait without treating that duration
 as useful work or a speedup. This is model-free construction. It has not yet run
 an actual planner, reduced useful-action latency, or shown a token/task benefit.
+
+## Frozen visual-planner allocation
+
+The first live comparison uses the actual Inkscape fixture rather than an
+artificial sleep. Both same-stream arms scan the same initial PNG inside a fixed
+ROI, require one solid red rectangle, and prepare its exact bounding box, center
+and click candidate. The early arm starts after verified release and separately
+waits for terminal; the baseline starts only after terminal delivery. Both then
+validate the target against the actual post-release PNG. No prepared candidate
+is submitted to Executor.
+
+Seed209, one allocation/no retry/model/cancel,34 source hashes and absent output
+are frozen. Bounds require early fresh-validated readiness within200ms, at least
+5ms advantage over terminal-first, and terminal-first readiness within300ms.
+The exact expected target is bbox[596,373,643,408],1645 red pixels and center
+[619,390]. Windows/WSL freeze verification and10 related tests pass. Run once
+and retain the first outcome.
