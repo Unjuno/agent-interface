@@ -215,8 +215,8 @@ def fixture_paths(runtime_root:Path, exp_root:Path):
     orig=runtime_root/'research/doom/fixtures/map01-threat-contact-v2'
     return {
       'original':{'manifest':orig/'fixture.json','save':orig/'save.png','source':orig/'source.png'},
-      'left':{'manifest':exp_root/'fixtures/left/save.json','save':exp_root/'fixtures/left/save.png','source':exp_root/'fixtures/left/save.source.png'},
-      'right':{'manifest':exp_root/'fixtures/right/save.json','save':exp_root/'fixtures/right/save.png','source':exp_root/'fixtures/right/save.source.png'}}
+      'left':{'manifest':exp_root/'fixtures/left/save.json','save':exp_root/'fixtures/left/save.png','source':exp_root/'fixtures/left/save.source.webp'},
+      'right':{'manifest':exp_root/'fixtures/right/save.json','save':exp_root/'fixtures/right/save.png','source':exp_root/'fixtures/right/save.source.webp'}}
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--runtime-root',type=Path,required=True);ap.add_argument('--bundle-manifest',type=Path,required=True);ap.add_argument('--out',type=Path,required=True);ap.add_argument('--full-runtime-verify',action='store_true');a=ap.parse_args()
