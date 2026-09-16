@@ -7,9 +7,11 @@ import adapter
 ROOT = Path(__file__).resolve().parents[1]
 SVG = ROOT / 'test.svg'
 
+
 def sh(cmd, env, timeout=5, check=True):
     return subprocess.run(cmd, env=env, text=True, stdout=subprocess.PIPE,
                           stderr=subprocess.PIPE, timeout=timeout, check=check)
+
 
 def wait_windows(env, timeout=10.0):
     end=time.time()+timeout
@@ -22,6 +24,7 @@ def wait_windows(env, timeout=10.0):
         if ink and xt: return ink,xt,last
         time.sleep(.1)
     raise RuntimeError('windows_not_ready:'+last)
+
 
 def window_context(d):
     root=d.screen().root
@@ -54,10 +57,12 @@ def window_context(d):
     return {'role':role,'raw_focus_xid':int(focus.id),'raw_surface_xid':int(chosen.id),
             'geometry':geometry,'chain':chain,'wm_class':chosen_row.get('wm_class'),'title':chosen_row.get('title')}
 
+
 def input_state(d):
     km=d.query_keymap()
     pointer=d.screen().root.query_pointer()
     return {'key_bytes_nonzero':sum(1 for x in km if x), 'pointer_mask':int(pointer.mask)}
+
 
 class Client:
     def __init__(self, d, arm, source_context):
@@ -88,12 +93,14 @@ class Client:
         self.recovery_raw=raw
         return receipt
 
+
 def terminate(p):
     if p is None: return
     try: p.terminate(); p.wait(timeout=2)
     except Exception:
         try: p.kill(); p.wait(timeout=2)
         except Exception: pass
+
 
 def run(case_id, arm, display_no, out_path):
     case_dir=out_path.parent/case_id; case_dir.mkdir(parents=True,exist_ok=False)
