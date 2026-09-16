@@ -1,10 +1,22 @@
 {
   "construction_excluded": [
-    {"kind": "missing_xmodmap_setup_failure"},
-    {"kind": "setxkbmap_apply_exit0_no_live_change"},
-    {"kind": "print_to_xkbcomp_server_exit0_no_live_change"},
-    {"kind": "resolved_xkbcomp_server_exit0_no_live_change"},
-    {"decision": "SETUP_BLOCKED_NATIVE_XKB_APPLY", "input_operations": 0, "kind": "one_run_arm_harness_check"}
+    {
+      "kind": "missing_xmodmap_setup_failure"
+    },
+    {
+      "kind": "setxkbmap_apply_exit0_no_live_change"
+    },
+    {
+      "kind": "print_to_xkbcomp_server_exit0_no_live_change"
+    },
+    {
+      "kind": "resolved_xkbcomp_server_exit0_no_live_change"
+    },
+    {
+      "decision": "SETUP_BLOCKED_NATIVE_XKB_APPLY",
+      "input_operations": 0,
+      "kind": "one_run_arm_harness_check"
+    }
   ],
   "decision_gate": "PASS only if all 3 arms expose changed server/core state and AD01 level3 @ after exit-0 native load; SETUP_BLOCKED if integrity passes and exit0 leaves native state incompatible; otherwise FAIL_INTEGRITY",
   "formal_input_operations": 0,
