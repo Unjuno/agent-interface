@@ -117,11 +117,13 @@ def run_arm(root,name,dn,adversarial,gui):
   result['release']=b.release_all().__dict__; result['backend_emissions']=b.emissions
   result['staging_score']=independent_score(staging,out/'staging_score.json')
   if result['staging_score']['cells']['A1']!='office' or result['staging_score']['cells']['A2']!='preview': raise RuntimeError('staging save incorrect')
+  # Final controller check occurs before the adversarial replace attempt.
   checked=statrow(target); result['final_check_target']=checked; result['plan_valid_at_check']=all(checked[k]==plan[k] for k in ['sha256','ino','size'])
   if not result['plan_valid_at_check']: raise RuntimeError('target changed before final check')
   result['writer']=None
   if adversarial:
    wr=writer_attempt(gui,uid,external,target,gui_dir/'writer_result.json'); result['writer']=wr; result['target_after_writer_attempt']=statrow(target); result['external_exists_after_writer_attempt']=external.exists()
+  # Revalidate target as frozen in Issue #318 before controller publication.
   current=statrow(target); result['publish_recheck_target']=current; result['publish_recheck_valid']=all(current[k]==plan[k] for k in ['sha256','ino','size'])
   result['publish_started_ns']=time.monotonic_ns()
   if result['publish_recheck_valid']:
