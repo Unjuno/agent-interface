@@ -1,0 +1,27 @@
+{
+  "schema": "footprint-identical-replacement-prereg-v1",
+  "task": "FOOTPRINT-IDENTICAL-REPLACEMENT-20260916-001",
+  "issue": 347,
+  "publication_base": "4e802fa2ec3c0c97545a38520bb18b3b126d8e4e",
+  "upstream_resolver_git_blob": "a8bb0e564bae738c9091b737ff2abe1922520ec1",
+  "upstream_resolver_path": "research/live_control/target_footprint_reacquire_v1/resolver.py",
+  "schedule_sha256": "839af27732978083e9995d680f0389d66758c3a517cc4c66b3280c97319f6dd9",
+  "formal_cases": 16,
+  "matched_pairs": 8,
+  "template_shape": [61, 61],
+  "source_center": [175, 155],
+  "render_size": [600, 400],
+  "changed_factor": "semantic object incarnation only between current stable/replacement arms",
+  "hard_gates": [
+    "upstream resolver snapshot Git blob identity matches current-main recorded blob",
+    "each stable/replacement current pair is RGB pixel-identical",
+    "stable current contains target-A and not replacement-X",
+    "replacement current contains replacement-X and not target-A",
+    "all stable arms resolve UNIQUE/eligible at exact translated center",
+    "each replacement resolver output equals its stable mate on decision-relevant fields"
+  ],
+  "decision": "RETAIN_IDENTICAL_REPLACEMENT_BOUNDARY iff every hard gate passes; otherwise SETUP_OR_INTEGRITY_FAILURE",
+  "no_task_input": true,
+  "no_model_or_game": true,
+  "no_retry_or_extension": true
+}
