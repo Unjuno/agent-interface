@@ -13,7 +13,7 @@ def audit(root:Path, plan:dict):
     for i in range(plan['repetitions']):
         d=root/f'arm-{i:02d}'; r=json.loads((d/'result.json').read_text()); resolved=(d/'de.resolved.xkb').read_bytes(); b=(d/'baseline.server.xkb').read_bytes(); a=(d/'after.server.xkb').read_bytes()
         if sha(resolved)!=plan['resolved_sha256'] or r['resolved_sha256']!=plan['resolved_sha256']: errs.append(f'{i}:resolved_hash')
-        txt=resolved.decode()
+        txt=resolved.decode();
         if parse_syms(txt,'AD01')[:4]!=['q','Q','at','Greek_OMEGA']: errs.append(f'{i}:resolved_ad01')
         if not parse_syms(txt,'RALT') or parse_syms(txt,'RALT')[0]!='ISO_Level3_Shift': errs.append(f'{i}:resolved_ralt')
         if r['input_operations']!=0: errs.append(f'{i}:input')
