@@ -1,0 +1,16 @@
+{
+  "schema": "agent-interface/map01-door-action-effect-history-audit-v1",
+  "status": "HOLD_EVIDENCE_RETENTION",
+  "formal_first_outcome": "SUPPORT_ACTION_EFFECT_HISTORY",
+  "errors": [],
+  "warnings": ["critical alias-history evidence cannot be recomputed because closing t165 predecessor t164 PNG was not retained"],
+  "pngs_verified": 320,
+  "current_classifier_replayed": true,
+  "current_only_test_accuracy": 0.625,
+  "alias_current_accuracy": 0.5,
+  "history_replayable_from_retained_pngs": false,
+  "alias_history_replayable_from_retained_pngs": false,
+  "missing_predecessor_count": 40,
+  "critical_alias_missing_predecessor_cases": [12,13,14,15,16,17,18,19],
+  "disposition": "retain first formal outcome unchanged; do not promote history effect until a separately versioned retention-complete allocation reproduces it"
+}
