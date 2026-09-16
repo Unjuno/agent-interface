@@ -1,0 +1,26 @@
+{
+  "base_main": "b3bc631d2c6dfae8586bb28abdc9eb2002bb624b",
+  "caller_blob": "7faf042304728ce91a3e4f89d465b251ea0bf70d",
+  "cases": 14,
+  "decision": {
+    "FAIL": "any condition error, wrong-target edit, post-repair-race task input, stable_static regression, model call, or unverified release",
+    "PASS": "14/14 condition-correct; stable_static both succeed; candidate stable_pan+moved succeed via local repair; baseline same safe-stop; replaced/missing/duplicate/race safe-stop both; candidate post-repair race no task input; zero wrong-target edits/model calls/release failures"
+  },
+  "files": {
+    "adaptive_acquisition_caller_v3.py": {"git_blob":"7faf042304728ce91a3e4f89d465b251ea0bf70d","sha256":"8517d130d7336b27e6ddfc0ee06629d2b1183070cf845c3ef4ada8adc3cd79ca"},
+    "resolver.py": {"git_blob":"a8bb0e564bae738c9091b737ff2abe1922520ec1","sha256":"4a14bf804365cce7e1cff1d68e0373e58eb60e2cd50a7a23d78924906a0efd4b"},
+    "integration_case.py": {"git_blob":"3f38b62dab985488333b3d6007df5ba4536f8d62","sha256":"5f02997cd3860fb5914d8a8e714ce18cb8114ffaf63362bc26d0c8eae31cdfdd"},
+    "run_block_v4.py": {"git_blob":"c909a1106787b08294a6050e2916386c955f4c13","sha256":"80e67bb558244abbc333fa142f79ef93ebd8004b4739cd20423c38e1463d0eaf"}
+  },
+  "frozen_ns": 1789560434724740060,
+  "model_calls": 0,
+  "modes": ["baseline", "candidate"],
+  "note": "single-seed integration mechanics; resolver multi-seed evidence retained separately",
+  "only_v4_change": "runner stdout/stderr are direct file handles instead of capture_output pipes",
+  "resolver_blob": "a8bb0e564bae738c9091b737ff2abe1922520ec1",
+  "scenarios": ["stable_static","stable_pan","moved_decoy","replaced_square","missing","duplicate","post_repair_pan"],
+  "schema": "target-footprint-adaptive-caller-integration-v4",
+  "scientific_contract_identical_to_v3": true,
+  "seed": 2041,
+  "status": "FROZEN_BEFORE_EXECUTION"
+}
