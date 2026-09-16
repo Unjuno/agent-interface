@@ -1,53 +1,64 @@
-"""Telemetry-only wrapper for InputOwner v10 ordinary release RPCs.
+"""Telemetry-only InputOwner v11: timestamp ordinary key-up call boundaries.
 
-The v10 owner performs X11 KeyRelease/ButtonRelease followed by ``d.sync()`` for
-ordinary ``up`` / ``button_up`` operations, but returns ``None``.  This version
-keeps v10's owner thread and authority semantics unchanged and brackets those
-existing calls on the caller's ``perf_counter_ns`` clock.
-
-The resulting receipt proves only that the v10 owner call containing X11 release
-and sync completed somewhere inside ``[call_started_ns, call_returned_ns]``.  It
-is not a hardware-state timestamp and does not prove application consumption.
+v10 remains the authority implementation. This wrapper does not change the owner
+thread, focus/lease checks, cancellation, expiry, or X11 injection semantics.
+For ``up`` only, it records a caller-side request time and a caller-side return
+time. Because v10 returns from ``up`` only after its owner thread has issued
+KeyRelease and completed ``d.sync()``, ``release_ack_ns`` is a conservative
+post-sync acknowledgement boundary, not the exact server-side transition time.
 """
-from __future__ import annotations
-
 import time
 
 from input_owner_v10 import InputOwner as Previous
 
 
-RELEASE_OPS = frozenset({"up", "button_up"})
-
-
 class InputOwner(Previous):
-    """V10 semantics plus interval-censored ordinary release receipts."""
+    @staticmethod
+    def _interruption_snapshot(lease):
+        if lease is None or not hasattr(lease, 'interruption_snapshot'):
+            return None
+        return lease.interruption_snapshot()
 
     def call(self, operation, lease=None, key=None):
-        if operation not in RELEASE_OPS:
+        if operation != 'up':
             return super().call(operation, lease, key)
 
-        call_started_ns = time.perf_counter_ns()
-        # Important: if the underlying owner raises, no receipt is fabricated.
+        # Timestamp immediately before delegation; do not add a pre-release
+        # owner/state query that would delay the release being measured.
+        requested_ns = time.perf_counter_ns()
         result = super().call(operation, lease, key)
-        call_returned_ns = time.perf_counter_ns()
-        if result is not None:
-            raise RuntimeError("v10 ordinary release unexpectedly returned a payload")
-        if call_returned_ns < call_started_ns:
-            raise RuntimeError("release telemetry clock moved backwards")
+        ack_ns = time.perf_counter_ns()
+        after = self._interruption_snapshot(lease)
 
-        return {
-            "event": "input_release_rpc",
-            "operation": operation,
-            "payload": key,
-            "owner_id": self.owner_id,
-            "intent_token": getattr(lease, "intent_token", None),
-            "call_started_ns": call_started_ns,
-            "call_returned_ns": call_returned_ns,
-            "release_transition_interval_ns": [call_started_ns, call_returned_ns],
-            "interval_width_ns": call_returned_ns - call_started_ns,
-            "valid_until_ns": getattr(lease, "deadline", None),
-            "x11_release_and_sync_completed_before_return": True,
-            "continuous_physical_state_sampled": False,
-            "application_consumption_observed": False,
-            "grants_input_authority": False,
-        }
+        # v10 deliberately returned None for ordinary up. A different return
+        # contract would mean this wrapper is no longer a telemetry-only delta.
+        if result is not None:
+            raise AssertionError('InputOwner v10 up contract changed')
+
+        interruption = after
+        inner = (interruption.get('record') if isinstance(interruption, dict) and
+                 isinstance(interruption.get('record'), dict) else interruption)
+        interruption_verified_ns = (inner.get('verified_ns')
+                                    if isinstance(inner, dict) else None)
+        if interruption is None:
+            attribution = 'ordinary_up'
+        elif (type(interruption_verified_ns) is int and
+              interruption_verified_ns <= requested_ns):
+            attribution = 'superseded_before_request'
+        else:
+            attribution = 'raced_owner_release'
+
+        record = dict(
+            event='input_release_ack',
+            key=key,
+            release_requested_ns=requested_ns,
+            release_ack_ns=ack_ns,
+            release_attribution=attribution,
+            owner_id=self.owner_id,
+            valid_until_ns=getattr(lease, 'deadline', None),
+            grants_input_authority=False,
+        )
+        if isinstance(inner, dict):
+            record['interruption_reason'] = inner.get('reason')
+            record['interruption_verified_ns'] = inner.get('verified_ns')
+        return record
