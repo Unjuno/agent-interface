@@ -1,0 +1,44 @@
+{
+  "schema": "generation_activation_barrier_result_v1",
+  "task_id": "COORD-GENERATION-ACTIVATION-BARRIER-20260916-011",
+  "decision": "PASS_ACTIVATION_BARRIER_PROPAGATION_GAP_SCOPED",
+  "publication_base": "41e95fddb9b177d0617415c42d3d44f08c14f8ab",
+  "freeze_commit": "96e8e9fc10e5c7064ad0edea6c37a3436e6664a9",
+  "naive": {
+    "coord_g2_commit": "bb728e035d45d83f6438b465f11cf6df20145078",
+    "old_gen1_effect_commit": "9ab69ca53a04be8e48da94f95249e7c269cd927d",
+    "receiver_g2_commit": "cce07594ad1c1877fee0be0e2adf498346200543",
+    "new_gen2_effect_commit": "7319be3ce754ffd362f7fee084483e20aab1fbd7",
+    "old_request_outcome": "APPLIED",
+    "final_active_generation": 2,
+    "final_receiver_generation": 2,
+    "final_effect_count": 2,
+    "final_effect_generations": [1, 2],
+    "final_receiver_blob": "c195d8fc27ab394ab7fb7dec800280f7dd5125e9"
+  },
+  "barrier": {
+    "receiver_block_g1_commit": "1ec6fd7777c81e6b0feb9ad9e0e68c3b3b619612",
+    "coord_g2_commit": "08e72a24cf02725c678718176a4f6e1811d6820b",
+    "old_request_outcome": "BARRIER_BLOCKED",
+    "old_request_write_count": 0,
+    "receiver_install_g2_blocked_commit": "8303edc883d838c1cbc2ddc69690d818cbb7743d",
+    "receiver_activate_g2_commit": "f8d19009b0fee4b9c93d758708700c2c9768b72f",
+    "new_gen2_effect_commit": "cd3a12f42f5c162ac5c2f9008fc2efd2022c5af6",
+    "final_active_generation": 2,
+    "final_receiver_mode": "ACTIVE",
+    "final_receiver_generation": 2,
+    "final_effect_count": 1,
+    "final_effect_generations": [2],
+    "final_receiver_blob": "5ffc9ceb2e7e235dc7a1fdab5dab5cc6be42be4d"
+  },
+  "gates": {
+    "naive_exposes_gap_stale_effect": true,
+    "barrier_old_effect_zero": true,
+    "barrier_current_effect_exactly_one": true,
+    "barrier_final_active_generation_two": true,
+    "coordination_single_active_generation_scalar": true,
+    "no_retries_or_replacement_schedule": true
+  },
+  "boundary": "Receiver barrier installation is assumed to succeed before coordination generation advance. This result does not cover lost barrier acknowledgements, multi-receiver fanout, or atomic broadcast.",
+  "construction_note": "One pre-measurement file-create attempt with filename payload_receiver_barrier_blocked_g2.json was blocked before commit by tool safety classification; neutral filename payload_receiver_barrier_hold_g2.json retained unchanged state bytes and semantics."
+}
