@@ -1,0 +1,75 @@
+{
+  "allocation": "EFFECT-COMPENSATION-COLLATERAL-20260916-001-v1",
+  "completed_all_audit_pass": true,
+  "completed_case_count": 35,
+  "completed_ids": [
+    "m10-wrong_uncompensated",
+    "m06-wrong_uncompensated",
+    "m02-wrong_compensated_clean",
+    "m04-wrong_compensated_collateral",
+    "m10-wrong_compensated_collateral",
+    "m08-wrong_uncompensated",
+    "m09-wrong_compensated_collateral",
+    "m03-wrong_compensated_clean",
+    "m06-correct",
+    "m10-wrong_compensated_clean",
+    "m03-wrong_compensated_collateral",
+    "m05-correct",
+    "m01-correct",
+    "m02-correct",
+    "m03-correct",
+    "m05-wrong_compensated_collateral",
+    "m03-wrong_uncompensated",
+    "m09-correct",
+    "m09-wrong_compensated_clean",
+    "m01-wrong_compensated_clean",
+    "m07-correct",
+    "m07-wrong_compensated_clean",
+    "m02-wrong_compensated_collateral",
+    "m08-correct",
+    "m08-wrong_compensated_collateral",
+    "m01-wrong_uncompensated",
+    "m04-wrong_uncompensated",
+    "m02-wrong_uncompensated",
+    "m07-wrong_uncompensated",
+    "m04-correct",
+    "m05-wrong_uncompensated",
+    "m08-wrong_compensated_clean",
+    "m06-wrong_compensated_collateral",
+    "m04-wrong_compensated_clean",
+    "m01-wrong_compensated_collateral"
+  ],
+  "disposition": "FAILED_HARNESS_RETAIN_FIRST_OUTCOMES_NO_DECISION",
+  "failure_kind": "HARNESS_TIMEOUT_OUTER_COMMAND",
+  "freeze_commit": "e1ebbb784905ac379d50f385d566bd8d1183629b",
+  "outer_timeout_seconds": 120,
+  "partial_evidence": {
+    "m07-wrong_compensated_collateral": {
+      "events": [
+        [
+          "effect",
+          "wrong",
+          "safe"
+        ]
+      ],
+      "integrity": "ok",
+      "result_json": false,
+      "state": [
+        "wrong",
+        "safe"
+      ]
+    }
+  },
+  "partial_ids": [
+    "m07-wrong_compensated_collateral"
+  ],
+  "repair": "new allocation IDs plus frozen batch driver; mechanism unchanged",
+  "same_id_reruns": 0,
+  "schema": "effect-compensation-collateral-v1-harness-failure",
+  "unstarted_ids": [
+    "m10-correct",
+    "m06-wrong_compensated_clean",
+    "m09-wrong_uncompensated",
+    "m05-wrong_compensated_clean"
+  ]
+}
