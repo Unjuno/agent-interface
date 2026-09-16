@@ -1,0 +1,57 @@
+{
+  "audit_decision": "PASS_FFMPEG_PIXEL_POSTCONDITION_SCOPED",
+  "audit_errors": [],
+  "by_policy": {
+    "decoded_pixels": {
+      "accepted": 16,
+      "attempted_publish": 16,
+      "correct": 28,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "published": 12,
+      "rows": 28
+    },
+    "exact_file_bytes": {
+      "accepted": 8,
+      "attempted_publish": 8,
+      "correct": 20,
+      "false_accepts": 0,
+      "false_rejects": 8,
+      "published": 4,
+      "rows": 28
+    }
+  },
+  "by_policy_scenario": {
+    "decoded_pixels:canonical": {"accepted": 4, "correct": 4, "publish_rc_nonzero": 0, "published": 4, "rows": 4},
+    "decoded_pixels:equiv_compression": {"accepted": 4, "correct": 4, "publish_rc_nonzero": 0, "published": 4, "rows": 4},
+    "decoded_pixels:equiv_prediction": {"accepted": 4, "correct": 4, "publish_rc_nonzero": 0, "published": 4, "rows": 4},
+    "decoded_pixels:ref_race": {"accepted": 4, "correct": 4, "publish_rc_nonzero": 4, "published": 0, "rows": 4},
+    "decoded_pixels:truncated": {"accepted": 0, "correct": 4, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
+    "decoded_pixels:wrong_color": {"accepted": 0, "correct": 4, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
+    "decoded_pixels:wrong_geometry": {"accepted": 0, "correct": 4, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
+    "exact_file_bytes:canonical": {"accepted": 4, "correct": 4, "publish_rc_nonzero": 0, "published": 4, "rows": 4},
+    "exact_file_bytes:equiv_compression": {"accepted": 0, "correct": 0, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
+    "exact_file_bytes:equiv_prediction": {"accepted": 0, "correct": 0, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
+    "exact_file_bytes:ref_race": {"accepted": 4, "correct": 4, "publish_rc_nonzero": 4, "published": 0, "rows": 4},
+    "exact_file_bytes:truncated": {"accepted": 0, "correct": 4, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
+    "exact_file_bytes:wrong_color": {"accepted": 0, "correct": 4, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
+    "exact_file_bytes:wrong_geometry": {"accepted": 0, "correct": 4, "publish_rc_nonzero": 0, "published": 0, "rows": 4}
+  },
+  "exact_equivalent_false_rejects": 8,
+  "formal_first_outcomes": 56,
+  "formal_reruns": 0,
+  "hashes": {
+    "audit_json_sha256": "a2c779f0cb06eafd9947610ea425161a2dd04bde4f0e2511ed873a13d6aeb189",
+    "freeze_json_sha256": "fd0b775d3daeb0ecfacd4a8c57cd7c39bb5347570316077bbb455c79304624a0",
+    "result_json_sha256": "2b3b34db447c6801eef9ae145dd02f2472838c217bf14c77f56a61f43bf62a20"
+  },
+  "integrity": {
+    "entry_mode_type_path_fixed_all": true,
+    "ref_race_publish_failures": 8,
+    "ref_race_rows": 8,
+    "scope_output_only_all": true,
+    "unrelated_preservation_audited": true
+  },
+  "schema": "ffmpeg_png_semantic_postcondition_compact_v1",
+  "task": "FFMPEG-PNG-SEMANTIC-POSTCONDITION-20260916-004"
+}
