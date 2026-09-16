@@ -65,6 +65,7 @@ def main():
                     read_args['action_id']=command['action_id']
                     submitted=command.get('command',{})
                     if submitted.get('op') in ('submit','cancel') and submitted.get('id')!=command['action_id']:raise ValueError('command/action scope mismatch')
+                # Validate full read request before any command write.
                 probe=cursor.read_until(**dict(read_args,timeout=0))
                 if type(read_args['timeout']) not in (int,float) or not 0<=read_args['timeout']<=30:raise ValueError('timeout 0..30 required')
                 if probe['status']=='gap':result=probe
@@ -82,6 +83,7 @@ def main():
             try:self.wfile.write((json.dumps(result)+'\n').encode());self.wfile.flush()
             except (BrokenPipeError,ConnectionResetError,TimeoutError):pass
     with tempfile.TemporaryDirectory(prefix='agent-interface-events-') as private:
+        # mkdtemp creates mode 0700; no TCP listener; same-user private command endpoint.
         socket_path=Path(private)/'events.sock'
         with BoundedServer(str(socket_path),Handler) as server:
             server_thread=threading.Thread(target=server.serve_forever,daemon=True)
