@@ -5,15 +5,32 @@
     "acquisitions_per_case": 32,
     "pairs": 6,
     "period_ns": 2000000,
-    "switch_intervals": {"gil1ms": 0.001, "gil5ms": 0.005}
+    "switch_intervals": {
+      "gil1ms": 0.001,
+      "gil5ms": 0.005
+    }
   },
   "construction": {
     "excluded_preflight_pairs": 1,
-    "static_counts": [0, 1, 511, 512, 513, 1023, 1024],
+    "static_counts": [
+      0,
+      1,
+      511,
+      512,
+      513,
+      1023,
+      1024
+    ],
     "timing_not_used_to_tune_gate": true
   },
   "cpus": {
-    "allowed": [0, 1, 2, 3, 4],
+    "allowed": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
     "competitor": 1,
     "observer": 0,
     "server": 2,
@@ -25,7 +42,11 @@
       "4": {"core_id": "4", "physical_package_id": "0", "thread_siblings_list": "4"}
     }
   },
-  "gate": {"candidate_over_baseline_ratio_max": 0.4, "candidate_post_native_median_ns_max": 2000000, "pairs_required": 4},
+  "gate": {
+    "candidate_over_baseline_ratio_max": 0.4,
+    "candidate_post_native_median_ns_max": 2000000,
+    "pairs_required": 4
+  },
   "schedule": [
     {"arm": "gil5ms", "count": 0, "order": 0, "pair": 0},
     {"arm": "gil1ms", "count": 0, "order": 1, "pair": 0},
