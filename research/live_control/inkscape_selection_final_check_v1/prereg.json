@@ -1,0 +1,41 @@
+{
+  "schema": "inkscape-selection-final-check-prereg-v1",
+  "task": "INKSCAPE-SELECTION-FINAL-CHECK-20260916-371",
+  "issue": 371,
+  "publication_base": "0dd239b7db10831a4e8ac078d3a32d4be6370e3d",
+  "question": "Can one final selection-specific visual check immediately before the ordinary Right effect reject current B while allowing stable A, unrelated pointer movement, and return to the same living A?",
+  "one_primary_change": "Add a final A-selection handle predicate immediately before effect input; no production/runtime integration claim.",
+  "environment": {
+    "inkscape": "1.4 (e7c3feb100, 2024-10-09)",
+    "xvfb": "1100x800x24",
+    "python": "3.13.5",
+    "input": "XTEST",
+    "model_calls": 0,
+    "game_calls": 0
+  },
+  "predicate": {
+    "target": "same living rectangle A",
+    "dark_rgb_strictly_below": 60,
+    "four_side_min_dark_pixels_each": 100,
+    "construction_observed_A_each_side": 176,
+    "construction_observed_B_as_A_region_each_side": 0,
+    "tuning_after_freeze": false
+  },
+  "effect": {"key": "Right", "dwell_ms": 20, "expected_A_dx_svg_units": 2.0, "tolerance": 0.001},
+  "scenarios": ["stable", "switch_to_B", "A_B_A", "unrelated_pointer"],
+  "repetitions_each": 5,
+  "total_cases": 20,
+  "schedule_seed": 37120260916,
+  "decision": {
+    "pass": "All 15 valid-A cases final-check true, admit exactly one Right, move A +2 and B 0; all 5 switch-to-B cases final-check false, admit no Right and move neither object; all 20 preserve focus and empty physical input after the decision/effect; independent audit passes.",
+    "fail_false_admit": "Any switch-to-B case admits the Right effect or moves any object.",
+    "fail_false_stop": "Any stable, unrelated-pointer, or same-A-return case refuses or fails the exact A-only effect.",
+    "harness_fail": "Render/source/process/release/integrity failure; stop block without replacing a measured case."
+  },
+  "limits": [
+    "The final check is not atomic with the later effect; a selection change after the check remains possible.",
+    "One Inkscape version/layout/action on one container host.",
+    "Deliberately authored trajectories; no natural failure-rate claim.",
+    "Standalone XTEST harness, not full latest Executor/caller stack and not a speed claim."
+  ]
+}
