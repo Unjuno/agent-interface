@@ -1,0 +1,18 @@
+{
+  "task": "MAP01-SECTOR165-DROP-EFFECT-20260917-001",
+  "disposition": "HARNESS_FAIL_STALE_SCORER_READBACK",
+  "completed_cases": 1,
+  "planned_cases": 8,
+  "failed_case": "case-00",
+  "seed": 993100,
+  "class": "drop",
+  "controller_pixel_status": "DROP_COMPLETED",
+  "controller_valid_tracks": 196,
+  "controller_median_dy_px": -44.82020568847656,
+  "scorer_before": {"x": 984.4905853271484, "y": -303.97789001464844, "z": -64.0, "sector": 165},
+  "scorer_after_stale": {"x": 984.4905853271484, "y": -303.97789001464844, "z": -64.0, "sector": 165},
+  "diagnosis": "fixture process did not refresh ViZDoom evaluator state after the separately executed X11 controller returned; prior single-process construction explicitly advanced the evaluator before scorer readback",
+  "science_interpretation": "none",
+  "remaining_cases_executed": 0,
+  "same_id_retry": false
+}
