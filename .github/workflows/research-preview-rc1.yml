@@ -14,10 +14,23 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Checkout frozen RC
+      - name: Checkout frozen RC source closure
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /LICENSE
+            /README.md
+            /SECURITY.md
+            /runtime/**
+            /release/**
+            /research/live_control/*.py
+            /research/live_control/*.json
+            /research/live_control/*.txt
+            /research/live_control/results/integrated-efficiency-live-01/preregistration.json
+            /research/live_control/results/integrated-efficiency-live-01/report.json
+            /research/live_control/results/integrated-efficiency-live-01/audit.json
 
       - name: Set up Python
         uses: actions/setup-python@v5
