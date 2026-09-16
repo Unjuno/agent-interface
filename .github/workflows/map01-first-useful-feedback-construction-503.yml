@@ -1,0 +1,42 @@
+name: MAP01 first useful feedback construction 503
+on:
+  push:
+    branches:
+      - research/map01-first-useful-feedback-e2f3afa
+permissions:
+  contents: read
+jobs:
+  construction:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install exact offline analysis dependencies
+        run: python -m pip install --disable-pip-version-check 'vizdoom==1.3.0' 'Pillow==11.3.0'
+      - name: Run construction discriminator
+        shell: bash
+        run: |
+          set -euo pipefail
+          R=research/doom/map01_first_useful_feedback_posthoc_v1
+          if test -f "$R/prereg.json"; then
+            echo 'prereg exists; construction allocation is already closed'
+            exit 0
+          fi
+          python "$R/analyze.py" construction --repo "$GITHUB_WORKSPACE" --out "$R/construction.json"
+          python "$R/audit.py" "$R/construction.json" --repo "$GITHUB_WORKSPACE" --out "$R/construction_audit.json"
+          python "$R/test_audit.py" "$R/construction.json" "$GITHUB_WORKSPACE" | tee "$R/construction_negative_tests.jsonl"
+          sha256sum "$R"/*.py "$R"/construction*.json* | sort > "$R/construction.sha256"
+          cat "$R/construction.json"
+          cat "$R/construction_audit.json"
+      - name: Upload construction evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: map01-first-useful-feedback-construction-503
+          path: |
+            research/doom/map01_first_useful_feedback_posthoc_v1/construction.json
+            research/doom/map01_first_useful_feedback_posthoc_v1/construction_audit.json
+            research/doom/map01_first_useful_feedback_posthoc_v1/construction_negative_tests.jsonl
+            research/doom/map01_first_useful_feedback_posthoc_v1/construction.sha256
+          if-no-files-found: error
