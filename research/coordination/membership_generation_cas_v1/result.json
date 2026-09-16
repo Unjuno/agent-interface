@@ -1,0 +1,48 @@
+{
+  "task_id": "COORD-MEMBERSHIP-GENERATION-CAS-20260916-015",
+  "decision": "PASS_CANONICAL_MEMBERSHIP_GENERATION_CAS_SCOPED",
+  "publication_base": "bae0c5ecf990605a807f237b899eb758542935c5",
+  "freeze_commit": "bf1f85f70317ffef6d4af207926361500e9b0bbb",
+  "cases": {
+    "split_race": {
+      "pre_validation_decision": "ALL_CONFIRMED",
+      "membership_update_commit": "15ed640defa431636690e7e489284ec39b54c823",
+      "coordination_advance_commit": "f0d48cd7b19b1efc1a6365576c10deb059a45459",
+      "final_membership_epoch": 2,
+      "final_members": ["A", "B", "C"],
+      "final_active_generation": 2,
+      "outcome": "STALE_ADVANCE_EXPOSED"
+    },
+    "canonical_race": {
+      "pre_validation_decision": "ALL_CONFIRMED",
+      "validation_blob_sha": "6b0b41a9c9ce6bba3c676ba5321e807a7d5004e1",
+      "membership_update_commit": "10b7f2ef6af8757b1703b447dab1653d2fec059a",
+      "stale_generation_attempts": 1,
+      "stale_sha_409s": 1,
+      "post_409_gets": 1,
+      "fresh_sha_retries": 0,
+      "readback_decision": "HOLD_MEMBERSHIP_CHANGED",
+      "final_membership_epoch": 2,
+      "final_members": ["A", "B", "C"],
+      "final_active_generation": 1,
+      "outcome": "STALE_ADVANCE_REJECTED"
+    },
+    "canonical_stable": {
+      "pre_validation_decision": "ALL_CONFIRMED",
+      "coordination_advance_commit": "4b36eaf8007e64c63d828df07f0f781f0001c5a4",
+      "final_membership_epoch": 1,
+      "final_members": ["A", "B"],
+      "final_active_generation": 2,
+      "outcome": "ADVANCE"
+    }
+  },
+  "totals": {
+    "split_stale_advances": 1,
+    "canonical_stale_attempts": 1,
+    "canonical_stale_sha_409s": 1,
+    "canonical_post_409_gets": 1,
+    "canonical_fresh_sha_retries": 0,
+    "canonical_stable_advances": 1
+  },
+  "scope_limit": "Sequential GitHub-backed fixture only; no simultaneous-request linearizability, consensus, confirmation freshness atomicity, membership authorization, crash recovery, or external effect claim."
+}
