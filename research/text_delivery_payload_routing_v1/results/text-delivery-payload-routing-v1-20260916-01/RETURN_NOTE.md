@@ -1,0 +1,1 @@
+Publication note: formal result `text-delivery-payload-routing-v1-20260916-01` executed once from source freeze `df9a7b68c8ee287e12e8127e7d6e20836a830d54`. All decision-relevant result blobs in this directory were read back against local retained bytes before publication. Unreferenced mismatched scratch blobs created during publication are not part of this tree.
