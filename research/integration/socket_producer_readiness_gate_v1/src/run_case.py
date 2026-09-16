@@ -3,7 +3,6 @@ import json,socket,subprocess,sys,time
 from pathlib import Path
 
 HERE=Path(__file__).resolve().parents[1];UP=HERE/'upstream'
-sys.path.insert(0,str(UP))
 READ_TIMEOUT_S=0.05;PRODUCER_DELAY_S=0.15
 
 def recv_line(sock):
