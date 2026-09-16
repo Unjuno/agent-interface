@@ -1,0 +1,14 @@
+{
+  "schema":"inkscape-postcheck-selection-race-prereg-v1",
+  "task":"INKSCAPE-POSTCHECK-SELECTION-RACE-20260916-383",
+  "issue":383,
+  "question":"Can selection change after a passing final A check but before Right redirect the effect to B?",
+  "unchanged":{"predicate":"RGB<60 and >=100 dark pixels on each of four A strips","fixture":"same A/B SVG","effect":"Right 20 ms","scorer":"saved SVG geometry","application":"Inkscape 1.4"},
+  "factor":"ordinary Tab selection step after final_check and before Right",
+  "scenarios":["stable_after_check","switch_after_check"],
+  "repetitions_each":5,
+  "total_cases":10,
+  "schedule_seed":38320260916,
+  "decision":{"pass":"All 10 final checks show A. Stable 5/5 persists A+2/B0; post-check switch 5/5 persists A0/B+2; focus/release/order/audit pass.","harness_fail":"Any missing A-positive final check, broken event order, source/process/integrity/release failure."},
+  "limits":["deliberately injected race","no natural incidence estimate","not a general app impossibility claim","positive result does not test an application-owned conditional effect API"]
+}
