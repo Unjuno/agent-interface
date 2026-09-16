@@ -1,0 +1,25 @@
+{
+  "task": "COORD-ONE-USE-TRANSITION-CONSUMPTION-20260916-018",
+  "publication_base": "e2f3afadef75f8778a4e9f07b51f7c9329b23c76",
+  "scope": "research/coordination/transition_consumption_v1/**",
+  "confirmation_content_id": "51ea2d31c0b555b2aad8587f3e78201bd28ab1e41c3850a93824dbfe89e95b90",
+  "membership": {"epoch": 1, "members": ["A", "B"]},
+  "cases": [
+    {
+      "name": "reusable_baseline",
+      "mode": "reusable",
+      "schedule": ["read", "g1_to_g2", "read", "g2_to_g3"]
+    },
+    {
+      "name": "one_use_candidate",
+      "mode": "one_use",
+      "schedule": ["read", "g1_to_g2_consume", "read", "classify_second_use_no_write"]
+    },
+    {
+      "name": "fresh_confirmation_control",
+      "mode": "one_use",
+      "schedule": ["read", "g1_to_g2_consume", "refresh_rev2", "read", "g2_to_g3_consume"]
+    }
+  ],
+  "forbidden": ["retry_after_refusal", "timeout_inference", "quorum_change", "membership_change", "semantic_content_change"]
+}
