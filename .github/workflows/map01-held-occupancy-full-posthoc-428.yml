@@ -1,0 +1,39 @@
+name: MAP01 held occupancy full posthoc 428
+
+on:
+  push:
+    branches:
+      - research/map01-held-occupancy-full-posthoc-20260916-001
+    paths:
+      - .github/workflows/map01-held-occupancy-full-posthoc-428.yml
+
+permissions:
+  contents: read
+
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify frozen analyzer regression set
+        run: python3 research/doom/test_map01_held_input_occupancy_v1.py
+      - name: Compute retained-log occupancy intervals once
+        run: |
+          mkdir -p /tmp/occ428
+          python3 research/doom/map01_held_input_occupancy_full_posthoc_v1/run_full_posthoc.py --out /tmp/occ428/result.json | tee /tmp/occ428/summary.log
+      - name: Independent audit
+        run: |
+          python3 research/doom/map01_held_input_occupancy_full_posthoc_v1/audit_full.py /tmp/occ428/result.json --repo "$GITHUB_WORKSPACE" | tee /tmp/occ428/audit.json
+      - name: Retained output hashes
+        run: |
+          sha256sum /tmp/occ428/result.json /tmp/occ428/audit.json /tmp/occ428/summary.log
+          cat /tmp/occ428/summary.log
+          cat /tmp/occ428/audit.json
+      - name: Upload exact posthoc evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: map01-held-occupancy-full-posthoc-428
+          path: /tmp/occ428/
+          if-no-files-found: error
+          retention-days: 7
