@@ -1,0 +1,94 @@
+{
+  "schema": "agent-interface/libreoffice-save-conflict-retained-summary-v1",
+  "base": "9088adefb48b97b79828774dd954bb8161885d59",
+  "pair02": {
+    "allocation": "c254-pair-02",
+    "order": ["stable", "replacement"],
+    "rows": [
+      {
+        "arm": "stable",
+        "classification": "stable_saved",
+        "pre_inode": 1314040,
+        "pre_sha256": "7e8ee998a0878e7821d8e788f5046ebb46d6de2bf036d941c9964fd3af6ccc17",
+        "modal_after_ctrl_s": ["Confirm File Format"],
+        "modal_after_format_confirm": [],
+        "final_inode": 1314150,
+        "final_sha256": "70ea94981e2e2527b15b6ec0b58c0f4634e091f23b5968d8096bee6570e971ef",
+        "release_verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "cells": {"A1": "office", "A2": "preview", "A3": null, "B1": null}
+      },
+      {
+        "arm": "replacement",
+        "classification": "external_preserved_with_prompt",
+        "pre_inode": 1314174,
+        "pre_sha256": "2f8963f87b9077a191afe357d65fe1874ba4dcd3ed62008f1e095091d64edde9",
+        "modal_after_ctrl_s": ["Confirm File Format"],
+        "modal_after_format_confirm": ["Document Has Been Changed by Others"],
+        "final_inode": 1314297,
+        "final_sha256": "50fdd687e63fb9d01bc99f77ff3d37978df667dcd36fe568b13ed313dbfb7ba0",
+        "release_verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "cells": {"A1": "external", "A2": "replacement", "A3": "external-marker", "B1": "writer"},
+        "mutation": {"kind": "os.replace", "inode": 1314297, "sha256": "50fdd687e63fb9d01bc99f77ff3d37978df667dcd36fe568b13ed313dbfb7ba0"}
+      }
+    ]
+  },
+  "pair03": {
+    "allocation": "c254-pair-03",
+    "order": ["stable", "inplace"],
+    "rows": [
+      {
+        "arm": "stable",
+        "classification": "stable_saved",
+        "pre_inode": 1313880,
+        "pre_sha256": "dd2042fa0a95de2b9ee7c120abcdbebe43ee67424c11224ce37b61e1b72cf673",
+        "modal_after_ctrl_s": ["Confirm File Format"],
+        "modal_after_format_confirm": [],
+        "final_inode": 1314397,
+        "final_sha256": "f7f62a4a4eb1b00b54887d252f549884941322615bc9483f08547cd7eb594615",
+        "release_verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "cells": {"A1": "office", "A2": "preview", "A3": null, "B1": null}
+      },
+      {
+        "arm": "inplace",
+        "classification": "inplace_external_preserved_with_prompt",
+        "pre_inode": 1314421,
+        "pre_sha256": "02c9f27e55b18f90ab5d94491d36e4ead954a6b00ed972a92a4c8c1b585e4c3f",
+        "modal_after_ctrl_s": ["Confirm File Format"],
+        "modal_after_format_confirm": ["Document Has Been Changed by Others"],
+        "final_inode": 1314421,
+        "final_sha256": "f6df9f69634a1694cadc34ec2434c455937df09e56d76a86f85864cc763f013f",
+        "release_verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "cells": {"A1": "external", "A2": "replacement", "A3": "external-marker", "B1": "writer"},
+        "mutation": {"kind": "same_inode_r+b", "inode": 1314421, "sha256": "f6df9f69634a1694cadc34ec2434c455937df09e56d76a86f85864cc763f013f"}
+      }
+    ]
+  },
+  "audit_pair02": {
+    "schema": "agent-interface/libreoffice-save-conflict-audit-v1",
+    "allocation": "c254-pair-02",
+    "errors": [],
+    "pass": true,
+    "corruption_rejections": {"wrong_cells": true, "missing_conflict_modal": true, "bad_release": true, "bad_order": true},
+    "corruption_pass": true,
+    "source_sha256": {"pair_runner.py": "f15e57af4fa75a237e4333fee1f6a7763c2f29f979834f838534e758ff2a1a38", "score_any.py": "cb22bd2ab6f55c5c99a9135417b511d683fc519b193c809dedefe6ed23e6cc7a"},
+    "source_git_blobs": {"backend_x11.py": "b4f8e043ce4f8929d446e038418ea0fd3655bab0", "office_backend.py": "3aeca10f62fb1366bcdd5fad561509cfcc0d91ab"}
+  },
+  "audit_pair03": {
+    "schema": "agent-interface/libreoffice-save-conflict-inplace-audit-v1",
+    "allocation": "c254-pair-03",
+    "errors": [],
+    "pass": true,
+    "corruption_rejections": {"change_inode": true, "erase_prompt": true, "wrong_cells": true, "bad_release": true},
+    "corruption_pass": true,
+    "runner_sha256": "b88c328f5567bc7f83e6fb014fe19c1644da798b62eb17f226c8314511ca2cb1",
+    "scorer_sha256": "cb22bd2ab6f55c5c99a9135417b511d683fc519b193c809dedefe6ed23e6cc7a"
+  }
+}
