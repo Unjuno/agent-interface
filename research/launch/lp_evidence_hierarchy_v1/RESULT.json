@@ -1,0 +1,50 @@
+{
+  "baseline_site_blob": "aa12064154b1d9d2972223bda31d2a9a740a6e22",
+  "classification": "DEVELOPMENT_CONTAINER_LAYOUT_EVIDENCE",
+  "container": {
+    "chromium": "144.0.7559.96",
+    "playwright": "1.57.0"
+  },
+  "decision": "PROMOTE_MEDIA_ONLY_EVIDENCE_SWAP_CANDIDATE",
+  "gates": {
+    "candidate_swapmedia_cta_above_fold_all": true,
+    "candidate_swapmedia_failed_after_verified_all": true,
+    "candidate_swapmedia_height_delta_lt_2pct": true,
+    "candidate_swapmedia_no_duplicate_ids": true,
+    "candidate_swapmedia_scripts_zero": true,
+    "candidate_swapmedia_skip_valid": true,
+    "candidate_swapmedia_verified_above_fold_all": true,
+    "whole_section_reorder_fails_mobile_above_fold": true
+  },
+  "integrity": {
+    "aria_labels": true,
+    "hrefs": true,
+    "ids": true,
+    "text_tokens": true,
+    "video_srcs": true
+  },
+  "limits": [
+    "local baseline reconstruction 5 bytes shorter than canonical site blob",
+    "no media bytes/network/Lighthouse",
+    "no human study or conversion claim"
+  ],
+  "schema": "agent-interface/lp-evidence-hierarchy-v1",
+  "summary": {
+    "baseline": {
+      "desktop": {"hero_cta_top_px":404.594,"hero_cta_above_fold":true,"verified_top_px":2160.578,"verified_above_fold":false,"failed_top_px":572.094,"failed_above_fold":true,"page_height_px":3867},
+      "laptop": {"hero_cta_top_px":373.031,"hero_cta_above_fold":true,"verified_top_px":1961.938,"verified_above_fold":false,"failed_top_px":540.531,"failed_above_fold":true,"page_height_px":3546},
+      "mobile": {"hero_cta_top_px":492.828,"hero_cta_above_fold":true,"verified_top_px":2795.953,"verified_above_fold":false,"failed_top_px":674.219,"failed_above_fold":true,"page_height_px":4728}
+    },
+    "candidate_reorder": {
+      "desktop": {"verified_top_px":662.094,"verified_above_fold":true,"failed_top_px":1372.844,"failed_above_fold":false,"page_height_px":3867},
+      "laptop": {"verified_top_px":630.531,"verified_above_fold":true,"failed_top_px":1249.422,"failed_above_fold":false,"page_height_px":3546},
+      "mobile": {"verified_top_px":1161.406,"verified_above_fold":false,"failed_top_px":1669.859,"failed_above_fold":false,"page_height_px":4728}
+    },
+    "candidate_swapmedia": {
+      "desktop": {"hero_cta_top_px":404.594,"hero_cta_above_fold":true,"verified_top_px":572.094,"verified_above_fold":true,"failed_top_px":2160.578,"failed_above_fold":false,"page_height_px":3840,"page_height_delta_pct":-0.6982},
+      "laptop": {"hero_cta_top_px":373.031,"hero_cta_above_fold":true,"verified_top_px":540.531,"verified_above_fold":true,"failed_top_px":1961.938,"failed_above_fold":false,"page_height_px":3527,"page_height_delta_pct":-0.5358},
+      "mobile": {"hero_cta_top_px":492.828,"hero_cta_above_fold":true,"verified_top_px":674.219,"verified_above_fold":true,"failed_top_px":2795.953,"failed_above_fold":false,"page_height_px":4728,"page_height_delta_pct":0.0}
+    }
+  },
+  "task": "LP-EVIDENCE-HIERARCHY-20260916-001"
+}
