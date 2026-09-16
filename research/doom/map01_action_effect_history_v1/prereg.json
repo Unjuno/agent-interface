@@ -1,0 +1,25 @@
+{
+  "schema": "agent-interface/map01-door-action-effect-history-prereg-v1",
+  "task": "MAP01-ACTION-EFFECT-HISTORY-20260916-001",
+  "status": "FROZEN_BEFORE_FORMAL",
+  "question": "On held-out real MAP01 door animation states whose current task-relative view is near-aliased, does one-step visual action/effect history disambiguate opening vs closing better than current-view-only evidence?",
+  "source_sha256": "9f9adf50ca1d7e8d553262c9480185d49f9f21b41f55ed7ce09730d5062f1afd",
+  "development_seeds_excluded": [994001, 994010, 994011, 994012, 994013, 994014],
+  "formal_seeds": [994100, 994101, 994102, 994103, 994104, 994105, 994106, 994107, 994108, 994109, 994110, 994111, 994112, 994113, 994114, 994115, 994116, 994117, 994118, 994119],
+  "train_cases": 12,
+  "held_out_cases": 8,
+  "yaw_schedule": [-2, -1, 0, 1, 2, 0, -1, 1, 0, 2, -2, 1, -2, 2, -1, 1, 0, 2, -2, 0],
+  "wait_schedule": [0, 3, 6, 1, 5, 2, 7, 4, 1, 6, 3, 0, 5, 2, 7, 4, 0, 6, 1, 3],
+  "opening_tics": [1, 2, 3, 4, 5, 6, 7],
+  "closing_tics": [165, 166, 167, 168, 169, 170, 171, 172, 173],
+  "alias_rmse_threshold": 0.005,
+  "descriptor": "grayscale task-relative crop y10:170,x35:285 bilinear resize 32x20",
+  "classifiers": "train-label centroids; current descriptor vs one-step delta descriptor",
+  "pass_gates": {
+    "alias_pairs_at_least": 6,
+    "alias_current_accuracy_max": 0.75,
+    "alias_history_accuracy_min": 0.95,
+    "history_cross_label_exact_hash_collisions": 0
+  },
+  "claims_forbidden": ["OS-input efficacy", "model efficacy", "MAP01 clear", "general GUI improvement", "causal long-horizon navigation improvement"]
+}
