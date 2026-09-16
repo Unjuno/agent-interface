@@ -1,0 +1,34 @@
+{
+  "controls": [
+    {
+      "audit_returncode": 1,
+      "name": "same_pid_false",
+      "rejected": true,
+      "stderr": "",
+      "stdout": "{\"counts\": {\"cloexec_cap/B_change\": 3, \"cloexec_cap/stable\": 3, \"persistent_cap/B_change\": 3, \"persistent_cap/stable\": 3}, \"decision\": \"FAIL_INTEGRITY\", \"errors\": [[\"m01\", \"exec_pid\"]]}"
+    },
+    {
+      "audit_returncode": 1,
+      "name": "persistent_add_B_token",
+      "rejected": true,
+      "stderr": "",
+      "stdout": "{\"counts\": {\"cloexec_cap/B_change\": 3, \"cloexec_cap/stable\": 3, \"persistent_cap/B_change\": 3, \"persistent_cap/stable\": 3}, \"decision\": \"FAIL_INTEGRITY\", \"errors\": [[\"m03\", \"persistent_cap\"]]}"
+    },
+    {
+      "audit_returncode": 1,
+      "name": "cloexec_cap_survives",
+      "rejected": true,
+      "stderr": "",
+      "stdout": "{\"counts\": {\"cloexec_cap/B_change\": 3, \"cloexec_cap/stable\": 3, \"persistent_cap/B_change\": 3, \"persistent_cap/stable\": 3}, \"decision\": \"FAIL_INTEGRITY\", \"errors\": [[\"m04\", \"cloexec_cap\"]]}"
+    },
+    {
+      "audit_returncode": 1,
+      "name": "cloexec_stale_commit",
+      "rejected": true,
+      "stderr": "",
+      "stdout": "{\"counts\": {\"cloexec_cap/B_change\": 3, \"cloexec_cap/stable\": 3, \"persistent_cap/B_change\": 3, \"persistent_cap/stable\": 3}, \"decision\": \"FAIL_INTEGRITY\", \"errors\": [[\"m04\", \"effect\"]]}"
+    }
+  ],
+  "rejected": 4,
+  "total": 4
+}
