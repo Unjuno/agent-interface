@@ -1,0 +1,39 @@
+{
+  "task_id": "COORD-DURABLE-EFFECT-GENERATION-FENCE-20260916-010",
+  "decision": "PASS_DURABLE_EFFECT_GENERATION_FENCE_SCOPED",
+  "baseline": {
+    "policy": "idempotency_only",
+    "old_generation_decision": "APPLY",
+    "old_generation_commit": "23b3dc57f6e4e3dc0a6f4a04e944d00c10a04700",
+    "current_generation_decision": "APPLY",
+    "current_generation_commit": "f3f1721c15a34e8f3027e19c56db6fdc0016deca",
+    "exact_replay_decision": "REPLAY_APPLIED",
+    "exact_replay_write": false,
+    "final_blob": "5b5c65725c668570d244e05c682591131263848d",
+    "final_effect_count": 2,
+    "stale_generation_effects": 1
+  },
+  "fenced": {
+    "policy": "generation_fenced",
+    "old_generation_decision": "FENCED_STALE",
+    "old_generation_write": false,
+    "current_generation_decision": "APPLY",
+    "current_generation_commit": "79d3a9eba6b2e9233d9cbef4aec2248f827081b0",
+    "exact_replay_decision": "REPLAY_APPLIED",
+    "exact_replay_write": false,
+    "same_id_changed_payload_decision": "CONFLICT",
+    "same_id_changed_payload_write": false,
+    "final_blob": "cc886ed3916d348e58eedc85683e58f4d2b934d0",
+    "final_effect_count": 1,
+    "stale_generation_effects": 0,
+    "current_generation_effects": 1
+  },
+  "writes": {
+    "baseline_effect_commits": 2,
+    "fenced_effect_commits": 1,
+    "fenced_rejection_writes": 0,
+    "replay_writes": 0,
+    "conflict_writes": 0
+  },
+  "boundary": "accepted_generation=2 was already durably present in each receiver before request measurement; propagation atomicity from coordination register to receiver is not tested"
+}
