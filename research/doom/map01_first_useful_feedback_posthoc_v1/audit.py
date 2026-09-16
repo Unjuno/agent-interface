@@ -17,7 +17,7 @@ def audit(result_path, repo):
         if rr["report_sha256"]!=sha256(root/"report.json") or rr["events_sha256"]!=sha256(root/"runtime/events.jsonl"):
             errors.append(f"{rr['run']}: source hash"); continue
         obs={x["sequence"]:x for x in events if x.get("event")=="observation"}; typed={x["sequence"]:x for x in events if x.get("event")=="typed_observation"}
-        expected_inv=inventory(report)
+        expected_inv=inventory(report,events)
         if result["mode"]=="construction": expected_inv=expected_inv[:1]
         actual={p["iteration"]:p for p in rr["plans"]}
         if [x["iteration"] for x in expected_inv] != [p["iteration"] for p in rr["plans"]]: errors.append(f"{rr['run']}: inventory"); continue
