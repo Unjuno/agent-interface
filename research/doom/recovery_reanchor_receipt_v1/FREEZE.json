@@ -1,0 +1,52 @@
+{
+  "construction_excluded_pairs": 1,
+  "files": {
+    "audit.py": {
+      "git_blob": "0b0d31e5dde3b0806fa6b974d17dfaca34164e6c",
+      "sha256": "10d92cf703c7e0e90ccb4949c84b70d3a378b9af217090e2e14784ddfce91907"
+    },
+    "construction_plan.json": {
+      "git_blob": "b507d60459bd2f804e2bd87489cf44e1719695e9",
+      "sha256": "7e7802fb1925c7e2fb89552816cf11918a4aed3514ca813d9b7ad028c9c82793"
+    },
+    "construction_receipt.json": {
+      "git_blob": "a5262793f2c94bd561009c857b7fed45b18415cd",
+      "sha256": "44a6bd481873ada89675fa62bb1406ee24016bd9c6a04e23c7cb288f206da901"
+    },
+    "experiment.py": {
+      "git_blob": "cd87cd2360f792021c723bc999fc3bed1dc8fe69",
+      "sha256": "780460713d813d8aba3f0c2d6af8f474c67f6e59d99b917fdfc61c78bf500e1a"
+    },
+    "formal_plan.json": {
+      "git_blob": "2fd38eed3c689f0413c88fa7b91d502b78e44e65",
+      "sha256": "c18795f3fee425d39eed94790f46d2e38dd1779c600485000e4d22916e30b34c"
+    },
+    "test_audit_mutations.py": {
+      "git_blob": "91ad333f50f0cb82a225ec8392359f4e4f1fc19f",
+      "sha256": "4dfc12bc5c2b2ad3f02705440e7cc3c110396424bd5c8d3b96defbf01f50d48c"
+    },
+    "test_contract.py": {
+      "git_blob": "dc7aee40175e44ddad9197023a672f745fd9ac02",
+      "sha256": "bbe394f8007d34cafc69c154ce3faf4036046922966dc054af7435cf6c322b96"
+    }
+  },
+  "formal_cases": 6,
+  "formal_cases_executed": 0,
+  "issue": 615,
+  "latency_gate": false,
+  "prefreeze_tests": "12/12 PASS",
+  "publication_base": "d92b9aca1d8e5fabaefc977d494a839fd43bafd4",
+  "runtime_bundle_sha256": "522763418610ea10e57e55615fa71e76445200b9f86d208820ea97c77c234f0b",
+  "same_id_reruns": 0,
+  "schema": "recovery-reanchor-receipt-freeze-v1",
+  "source_bundle": {
+    "git_blob": "1c6fce0a43225e17df21e60db8eef5b4b4e39a94",
+    "members": 7,
+    "tar_bytes": 40960,
+    "tar_sha256": "10340d53f24f3857d710c2c26aa8f37710ff757548f8a4bba472ab09b3c362fd",
+    "xz_bytes": 6844,
+    "xz_sha256": "7d0df05a08ee6c4fff8d193f69dcc7191879812a8e6041327b15749ee0f7300b"
+  },
+  "stopping_rule": "one supervised six-case formal block; no retry, replacement, extension or tuning",
+  "task": "MAP01-RECOVERY-REANCHOR-RECEIPT-20260917-001"
+}
