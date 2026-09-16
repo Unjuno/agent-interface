@@ -17,8 +17,11 @@ Do **not** promote this as generic socket semantics. A persistent runtime may ne
 
 ## Integrity
 - publication base `2adef46f497ed74729b93ea67cf93928df992e52`;
-- preformal FREEZE SHA-256 `9b5bd223fabc064df78ec836f207647615f3f9e7b2f7af063956ecc113a68170` committed remotely before formal;
+- preformal semantic freeze was committed before formal as commit `e121654423531604ea277559f401d22c7eae242b`, Git blob `4330d69f8b65415e08ba3e0e42680a1ee4404f0c`; it records formal rows=0, reruns=0, all exact source SHA-256/Git-blob identities, the preflight SHA-256 and decision names;
+- the first GitHub write compacted nested JSON formatting, so its bytes did **not** equal the canonical local `FREEZE.json` byte stream. After formal, commit `9fe1ea43178d0c5d02740bf568fb790f9a1224d0` changed formatting only and restored the canonical frozen bytes: Git blob `8fab524a206c5df75ae1be6544547604b5d1c36c`, SHA-256 `9b5bd223fabc064df78ec836f207647615f3f9e7b2f7af063956ecc113a68170`. No freeze field, threshold, allocation or source hash changed;
+- `plan.json` and `prereg.json` were also committed before formal (`2bb25a11...`, `02a58fbe...`);
 - formal rows 12, invocations 1, reruns 0;
 - RESULT SHA-256 `d38c151055ad41e94cac9165d7783f160a81000d4b1f5a2091edae3880861f02`;
 - AUDIT SHA-256 `981b48dded76c582c3417f3c73f3784dc7b87b1d0dc7dfcb9eaa6de451f064e7`;
+- exact formal evidence archive SHA-256 `c093648fe613cfda831800c3dedb313dc94b2abb663b85dbe3c0226e4fcbfe89` reconstructs the raw result, audit, summary and per-case formal records;
 - no GUI/model/provider/network task/input authority or production runtime mutation.
