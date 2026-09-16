@@ -1,0 +1,53 @@
+name: Portable unified runtime zipapp v1
+
+on:
+  push:
+    branches:
+      - integration/runtime-portable-zipapp-v1-20260917
+    paths:
+      - 'runtime/distribution_v2/**'
+      - '.github/workflows/runtime-portable-zipapp-v1.yml'
+  pull_request:
+    paths:
+      - 'runtime/distribution_v2/**'
+      - '.github/workflows/runtime-portable-zipapp-v1.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile distribution tooling
+        run: python -m compileall -q runtime/distribution_v2
+      - name: Run portable distribution tests
+        run: python -m unittest -v runtime.distribution_v2.test_distribution
+      - name: Build portable runtime artifact
+        shell: bash
+        run: |
+          mkdir -p out
+          python -m runtime.distribution_v2.build \
+            --root . \
+            --out out/agent-interface-runtime.pyz \
+            --manifest out/MANIFEST.json \
+            --sums out/SHA256SUMS
+          python out/agent-interface-runtime.pyz doctor
+          cat out/SHA256SUMS
+      - name: Upload platform construction artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: portable-runtime-${{ matrix.os }}
+          path: out/
+          if-no-files-found: error
+          compression-level: 0
