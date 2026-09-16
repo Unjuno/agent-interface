@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
-import base64,hashlib,tarfile
+import base64,hashlib,json,tarfile
 from pathlib import Path
 r=Path(__file__).resolve().parent
-text=''.join(''.join(p.read_text().split()) for p in sorted(r.glob('evidence.part*.b64')))
-b=base64.b64decode(text,validate=True)
-assert len(b)==28773
-assert hashlib.sha256(b).hexdigest()=="c3d5272349e317ae70278545990f8b23f698d6555d595d5bbefe5225a620b68f"
-p=r/'evidence.tar.gz';p.write_bytes(b)
-o=r/'reconstructed';o.mkdir(exist_ok=True)
-with tarfile.open(p,'r:gz') as tf: tf.extractall(o,filter='data')
-print({"ok":True,"parts":len(list(r.glob('evidence.part*.b64'))),"bytes":len(b),"sha256":"c3d5272349e317ae70278545990f8b23f698d6555d595d5bbefe5225a620b68f"})
+m=json.loads((r/'publication.json').read_text())
+parts=[]
+for meta in m['github_archive_storage']['parts']:
+    p=r/meta['path']; b=p.read_bytes()
+    assert len(b)==meta['bytes'], (p.name,len(b),meta['bytes'])
+    assert hashlib.sha256(b).hexdigest()==meta['sha256'], p.name
+    parts.append(b.decode())
+raw=base64.b64decode(''.join(''.join(s.split()) for s in parts),validate=True)
+assert len(raw)==m['archive_bytes']
+assert hashlib.sha256(raw).hexdigest()==m['archive_sha256']
+p=r/m['archive_path'];p.write_bytes(raw)
+out=r/'reconstructed';out.mkdir(exist_ok=True)
+with tarfile.open(p,'r:gz') as tf: tf.extractall(out,filter='data')
+print({'ok':True,'parts':len(parts),'bytes':len(raw),'sha256':m['archive_sha256']})
