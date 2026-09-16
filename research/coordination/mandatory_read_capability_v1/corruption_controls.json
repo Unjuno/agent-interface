@@ -1,0 +1,26 @@
+[
+  {
+    "name": "mediated_raw_escape",
+    "rejected": true,
+    "returncode": 1,
+    "stdout": "{\"counts\": {\"mediated/B_change\": 3, \"mediated/stable\": 3, \"unrestricted/B_change\": 3, \"unrestricted/stable\": 3}, \"decision\": \"FAIL_INTEGRITY\", \"errors\": [[\"a2-m-stable-01\", \"raw_escape\"]]}"
+  },
+  {
+    "name": "mediated_drop_B_token",
+    "rejected": true,
+    "returncode": 1,
+    "stdout": "{\"counts\": {\"mediated/B_change\": 3, \"mediated/stable\": 3, \"unrestricted/B_change\": 3, \"unrestricted/stable\": 3}, \"decision\": \"FAIL_INTEGRITY\", \"errors\": [[\"a2-m-stable-01\", \"token\", {\"A\": 1}]]}"
+  },
+  {
+    "name": "mediated_Bchange_false_commit",
+    "rejected": true,
+    "returncode": 1,
+    "stdout": "{\"counts\": {\"mediated/B_change\": 3, \"mediated/stable\": 3, \"unrestricted/B_change\": 3, \"unrestricted/stable\": 3}, \"decision\": \"FAIL_INTEGRITY\", \"errors\": [[\"a2-m-Bchange-01\", \"commit\", true, false]]}"
+  },
+  {
+    "name": "capability_mode_corrupt",
+    "rejected": true,
+    "returncode": 1,
+    "stdout": "{\"counts\": {\"mediated/B_change\": 3, \"mediated/stable\": 3, \"unrestricted/B_change\": 3, \"unrestricted/stable\": 3}, \"decision\": \"FAIL_INTEGRITY\", \"errors\": [[\"a2-m-stable-01\", \"capability_metadata\"]]}"
+  }
+]
