@@ -1,0 +1,47 @@
+{
+  "audit": {
+    "errors": 0,
+    "mutation_controls_rejected": "6/6",
+    "passed": true
+  },
+  "decision": "PASS_HISTORICAL_PERSISTENT_SCOPE_REPAIR_SCOPED",
+  "formal": {
+    "candidate": {
+      "anchor_calls": 64,
+      "attempted": 448,
+      "caller_failed": 0,
+      "errors": 0,
+      "repair_calls": 192,
+      "restart_events": 192,
+      "restart_traces": 63,
+      "safe_stops": 0,
+      "stale_execute": 0,
+      "successes": 448,
+      "traces": 64
+    },
+    "extensions": 0,
+    "formal_invocations": 1,
+    "historical": {
+      "anchor_calls": 64,
+      "attempted": 448,
+      "caller_failed": 321,
+      "errors": 0,
+      "repair_calls": 0,
+      "restart_events": 192,
+      "restart_traces": 63,
+      "safe_stops": 0,
+      "stale_execute": 0,
+      "successes": 127,
+      "traces": 64
+    },
+    "replacements": 0,
+    "reruns": 0,
+    "tasks_total": 896,
+    "traces": 64
+  },
+  "interpretation": "Historical exact wrapper fails closed with CALLER_FAILED on raw scope_mismatch; the minimal three-line patch normalizes SCOPE_MISMATCH to typed stale and routes it through the existing repair branch, restoring liveness without stale execution or stable-path model calls.",
+  "limits": "Deterministic exact-wrapper integration only; no GUI/provider/model endpoint, token/economic benefit, task UI effect, lifecycle detection, final check-to-input atomicity or production reliability claim.",
+  "publication_base": "e43b992a13606e515cba2e77763b27c1188223bc",
+  "schema": "agent-interface/integrated-efficiency-scope-repair-result-v2",
+  "task_id": "INTEGRATED-EFFICIENCY-PERSISTENT-SCOPE-REPAIR-20260917-002"
+}
