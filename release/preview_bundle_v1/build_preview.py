@@ -28,6 +28,8 @@ REQUIRED_TRACKED = (
     "release/first_run_smoke_v1/preflight.py",
     "release/preview_bundle_v1/QUICKSTART.md",
     "release/preview_bundle_v1/SUPPORT.md",
+    "release/preview_bundle_v1/RELEASE_NOTES.md",
+    "release/preview_bundle_v1/accept_supported_host.py",
     "research/live_control/results/integrated-efficiency-live-01/preregistration.json",
     "research/live_control/results/integrated-efficiency-live-01/report.json",
     "research/live_control/results/integrated-efficiency-live-01/audit.json",

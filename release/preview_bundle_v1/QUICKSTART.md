@@ -31,9 +31,18 @@ This checks the packaged launcher boundary only. It does not prove GUI/model rea
 
 ## Install and inspect the supported host
 
+You can run the gates individually:
+
 ```bash
 ./runtime/setup-golden-demo-v3.sh
 ./runtime/golden-demo-v3.sh doctor
+```
+
+Or retain the whole supported-host prefix in one new evidence directory:
+
+```bash
+python3 release/preview_bundle_v1/accept_supported_host.py \
+  --out artifacts-local/release-acceptance-prefix
 ```
 
 `doctor` must pass before a live run. If path discovery is ambiguous, set the environment variables documented in `runtime/README.md`.
@@ -48,12 +57,15 @@ This archive contains the complete tracked RC closure specifically so the retain
 
 ## Fresh preview run
 
+For final supported-host acceptance, explicitly consume one no-retry live allocation:
+
 ```bash
-./runtime/golden-demo-v3.sh run
-./runtime/golden-demo-v3.sh audit-live artifacts-local/golden-desktop-YYYYMMDD-HHMMSS
+python3 release/preview_bundle_v1/accept_supported_host.py \
+  --live \
+  --out artifacts-local/release-acceptance-live
 ```
 
-The run is no-retry and writes a new artifact directory. Keep failures; do not overwrite them.
+The runner executes preflight, setup, doctor, retained audit, one fresh run, and `audit-live`, retaining stdout/stderr/return codes for every step. It refuses to reuse the acceptance directory and performs no automatic retry.
 
 ## What this preview does not claim
 

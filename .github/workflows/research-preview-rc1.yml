@@ -24,8 +24,10 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Test deterministic bundle builder
-        run: python release/preview_bundle_v1/test_build_preview.py -v
+      - name: Test release tooling
+        run: |
+          python release/preview_bundle_v1/test_build_preview.py -v
+          python release/preview_bundle_v1/test_accept_supported_host.py -v
 
       - name: Static first-run preflight on checkout
         run: python release/first_run_smoke_v1/preflight.py --root .
