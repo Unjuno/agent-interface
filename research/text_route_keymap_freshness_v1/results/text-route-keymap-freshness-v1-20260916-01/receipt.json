@@ -1,0 +1,29 @@
+{
+  "schema": "agent-interface/text-route-keymap-freshness-formal-receipt-v1",
+  "result_id": "text-route-keymap-freshness-v1-20260916-01",
+  "unit_exitcode": 0,
+  "matrix_exitcode": 0,
+  "aggregate_exists": true,
+  "aggregate_sha256": "a429cc57d974e9ebfc156cd809c2342f929668f9661c3b1468a5726576614194",
+  "passed": true,
+  "cases": [
+    {
+      "layout": "us",
+      "exitcode": 0,
+      "unsafe_actual": "@",
+      "safe_error": null
+    },
+    {
+      "layout": "de",
+      "exitcode": 0,
+      "unsafe_actual": "\"",
+      "safe_error": "TEXT_NOT_REPRESENTABLE_IN_KEYMAP"
+    },
+    {
+      "layout": "fr",
+      "exitcode": 0,
+      "unsafe_actual": "2",
+      "safe_error": "TEXT_NOT_REPRESENTABLE_IN_KEYMAP"
+    }
+  ]
+}
