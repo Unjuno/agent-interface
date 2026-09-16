@@ -7,7 +7,7 @@ import json
 import zipfile
 from pathlib import Path
 
-from .build import FIXED_TIME, GENERATED, SOURCE_FILES
+from .build import FIXED_TIME, GENERATED, SOURCE_FILES, _source_bytes
 
 
 def verify(root: Path, artifact: Path, manifest_path: Path, expected_path: Path) -> dict:
@@ -34,7 +34,7 @@ def verify(root: Path, artifact: Path, manifest_path: Path, expected_path: Path)
             if info.compress_type != zipfile.ZIP_STORED:
                 errors.append(f"compression:{info.filename}")
         for rel in SOURCE_FILES:
-            if archive.read(rel) != (root / rel).read_bytes():
+            if archive.read(rel) != _source_bytes(root, rel):
                 errors.append(f"source_bytes:{rel}")
         build = json.loads(archive.read("BUILD.json"))
         if build.get("support_claim") is not False or build.get("ready_for_side_effects") is not False:
