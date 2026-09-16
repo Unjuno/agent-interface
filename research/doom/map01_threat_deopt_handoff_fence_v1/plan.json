@@ -1,0 +1,23 @@
+{
+  "schema": "agent-interface/map01-threat-deopt-handoff-fence-plan-v1",
+  "task": "MAP01-THREAT-DEOPT-HANDOFF-FENCE-20260917-001",
+  "repetitions": 4,
+  "seed": 61720260917,
+  "policies": ["authority_guarded", "handoff_fenced"],
+  "scenarios": [
+    "expired_old_deopt",
+    "expired_fresh_deopt",
+    "expired_old_threat",
+    "expired_fresh_unowned_threat",
+    "invalidated_old_deopt",
+    "no_authority_deopt",
+    "nonoverlap_resources",
+    "active_overlap"
+  ],
+  "decision": {
+    "PASS_AUTHORITY_HANDOFF_GENERATION_FENCE_SCOPED": "candidate correct 32/32; zero stale/unowned post-authority executions; baseline exposes all authored stale/unowned controls; fresh/no-authority/non-overlap liveness and active authority are preserved",
+    "FAIL_AUTHORITY_HANDOFF_FENCE": "candidate admits stale/unowned post-authority proposal, blocks required fresh/non-overlap liveness, or violates active authority/integrity",
+    "HOLD": "authored baseline controls do not expose the intended post-authority boundary"
+  },
+  "forbidden_claims": ["MAP01 clear", "threat efficacy", "survival improvement", "natural handoff rate", "production scheduler correctness"]
+}
