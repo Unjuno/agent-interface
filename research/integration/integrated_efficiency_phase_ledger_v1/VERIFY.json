@@ -1,0 +1,27 @@
+{
+  "arm_totals": {
+    "ephemeral": {"cached":4864,"durable_calls":96,"elapsed_ms":"80378.859099","generations":7,"images":6,"input":63779,"local_observations":129,"output":1209,"reasoning":404},
+    "persistent": {"cached":0,"durable_calls":114,"elapsed_ms":"51627.109593","generations":3,"images":2,"input":26563,"local_observations":136,"output":472,"reasoning":127},
+    "plain": {"cached":0,"durable_calls":36,"elapsed_ms":"62754.198912","generations":7,"images":6,"input":63128,"local_observations":105,"output":754,"reasoning":306}
+  },
+  "errors": [],
+  "pass": true,
+  "phase_totals": {
+    "ephemeral::acquisition":{"durable_calls":16,"elapsed_ms":"13285.716767","generations":1,"images":1,"input":9302,"local_observations":21,"output":172,"reasoning":57},
+    "ephemeral::invalidation_repair":{"durable_calls":16,"elapsed_ms":"12556.640965","generations":1,"images":1,"input":9302,"local_observations":21,"output":186,"reasoning":71},
+    "ephemeral::preflight":{"durable_calls":0,"elapsed_ms":"7140.746175","generations":1,"images":0,"input":7967,"local_observations":0,"output":154,"reasoning":39},
+    "ephemeral::repeated_A":{"durable_calls":32,"elapsed_ms":"22030.832844","generations":2,"images":2,"input":18604,"local_observations":43,"output":316,"reasoning":86},
+    "ephemeral::repeated_B":{"durable_calls":32,"elapsed_ms":"25364.922348","generations":2,"images":2,"input":18604,"local_observations":44,"output":381,"reasoning":151},
+    "persistent::acquisition":{"durable_calls":16,"elapsed_ms":"11024.952714","generations":1,"images":1,"input":9299,"local_observations":21,"output":168,"reasoning":53},
+    "persistent::invalidation_repair":{"durable_calls":18,"elapsed_ms":"12341.465157","generations":1,"images":1,"input":9299,"local_observations":22,"output":161,"reasoning":46},
+    "persistent::preflight":{"durable_calls":0,"elapsed_ms":"7495.828365","generations":1,"images":0,"input":7965,"local_observations":0,"output":143,"reasoning":28},
+    "persistent::repeated_A":{"durable_calls":40,"elapsed_ms":"8231.816299","generations":0,"images":0,"input":0,"local_observations":47,"output":0,"reasoning":0},
+    "persistent::repeated_B":{"durable_calls":40,"elapsed_ms":"12533.047058","generations":0,"images":0,"input":0,"local_observations":46,"output":0,"reasoning":0},
+    "plain::acquisition":{"durable_calls":6,"elapsed_ms":"9410.429011","generations":1,"images":1,"input":9210,"local_observations":17,"output":118,"reasoning":54},
+    "plain::invalidation_repair":{"durable_calls":6,"elapsed_ms":"9127.145957","generations":1,"images":1,"input":9210,"local_observations":17,"output":106,"reasoning":42},
+    "plain::preflight":{"durable_calls":0,"elapsed_ms":"6341.907755","generations":1,"images":0,"input":7868,"local_observations":0,"output":89,"reasoning":25},
+    "plain::repeated_A":{"durable_calls":12,"elapsed_ms":"17929.983573","generations":2,"images":2,"input":18420,"local_observations":36,"output":209,"reasoning":81},
+    "plain::repeated_B":{"durable_calls":12,"elapsed_ms":"19944.732616","generations":2,"images":2,"input":18420,"local_observations":35,"output":232,"reasoning":104}
+  },
+  "schema":"phase-ledger-independent-verifier-v1"
+}
