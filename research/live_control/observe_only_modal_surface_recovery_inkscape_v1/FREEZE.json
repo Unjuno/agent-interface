@@ -1,0 +1,66 @@
+{
+  "construction_excluded": {
+    "discriminator": "main and modal same Inkscape class; modal distinct top-level with transient_for=main; replay stale MAIN; fresh TRANSIENT; neutral",
+    "final_runner_cases": 2,
+    "manual_mechanism_sessions": 3
+  },
+  "decision": "PASS_SAMEAPP_MODAL_OBSERVE_ONLY_RECOVERY_SCOPED iff Issue #861 frozen gates and frozen audit pass",
+  "formal_cases": 8,
+  "formal_executed": 0,
+  "formal_reruns": 0,
+  "issue": 861,
+  "publication_base": "b9dcc5cc456b95ed97d36276ec5557bcae1cad5d",
+  "source_archive": {
+    "bytes": 4684,
+    "git_blob": "ae1984b77d2dfc8177fb21a9d994257a7bd53840",
+    "members": [
+      "run_case.py",
+      "run_block.py",
+      "audit.py",
+      "schedule.json",
+      "environment.json",
+      "prereg.json",
+      "source_hashes.json",
+      "test.svg"
+    ],
+    "sha256": "0bb483bd086383accfcb7b3278d15843fa282f2ae34e612c69061697a28736c0"
+  },
+  "source_files": {
+    "audit.py": {
+      "bytes": 2470,
+      "git_blob": "1df79e9a66c0c2aa0f6a7d52c2424cdef03255f9",
+      "sha256": "86976639b99b830f4d7922a422ad4a729c872f65e147ff0ff8520e7279574055"
+    },
+    "environment.json": {
+      "bytes": 200,
+      "git_blob": "7bdbcdbdfd2bb1327ac8e9467a2ca4b3abc09410",
+      "sha256": "6d234b5991a2c425edcfe8976c6f02df73bd0cf8362953366b55af4bbc30fb00"
+    },
+    "prereg.json": {
+      "bytes": 342,
+      "git_blob": "5137fca808d95a923f5f6b1b5dcaa95301cb8512",
+      "sha256": "98333e06677e5e0a44007526f073fce51dcc7725920bf2f2ed7b9a0d073db119"
+    },
+    "run_block.py": {
+      "bytes": 858,
+      "git_blob": "992fe15f1de1f6dde1b32cfc5108856acec8ebb9",
+      "sha256": "85d5e6f0fe254f29eae10fab30f1452fb063452d3fce89c6f15db6059c5a0ff5"
+    },
+    "run_case.py": {
+      "bytes": 7149,
+      "git_blob": "d0f1aeb3f0c4cec569f7d282bd1e30d48e3fb3fa",
+      "sha256": "3b8ced3ee2092d4e2605e65f07b711117f09a9a92192fe755b3eaba75ec98b95"
+    },
+    "schedule.json": {
+      "bytes": 495,
+      "git_blob": "dc8c76581809a001af8070e42498cb3f3b83a3ef",
+      "sha256": "106dbc456d611a719fc7f77d95f8e8a2f98d9dc63a00abac9b5a69b34ca695d3"
+    },
+    "test.svg": {
+      "bytes": 176,
+      "git_blob": "1b0d1d2278a73961b6c0f1bff0db8ae82be8e3b7",
+      "sha256": "8d74f1840f55abaef48e9d12da19ae8197a394329dd85131e00066840d36e55b"
+    }
+  },
+  "task": "OBSERVE-ONLY-MODAL-SURFACE-RECOVERY-INKSCAPE-20260917-001"
+}
