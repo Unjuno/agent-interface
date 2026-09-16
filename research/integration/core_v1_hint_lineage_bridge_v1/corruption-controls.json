@@ -1,0 +1,22 @@
+[
+  {
+    "name": "naive_laundered_flip",
+    "rejected": true,
+    "stdout": "{\n  \"decision\": \"FAIL_INTEGRITY\",\n  \"errors\": [\n    [\n      \"naive\",\n      \"hint_laundered_current_numeric\",\n      \"accepted\",\n      false,\n      true\n    ]\n  ],\n  \"row_count\": 22\n}"
+  },
+  {
+    "name": "typed_laundered_forged_construct",
+    "rejected": true,
+    "stdout": "{\n  \"decision\": \"FAIL_INTEGRITY\",\n  \"errors\": [\n    [\n      \"typed\",\n      \"hint_laundered_current_numeric\",\n      \"bridge\",\n      \"PROGRAM_CONSTRUCTED\",\n      \"BRIDGE_REJECTED\"\n    ],\n    [\n      \"typed\",\n      \"hint_laundered_current_numeric\",\n      \"bridge_error\",\n      null,\n      \"HINT_REQUIRES_CURRENT_REVALIDATION\"\n    ]\n  ],\n  \"row_count\": 22\n}"
+  },
+  {
+    "name": "stale_revalidation_accept",
+    "rejected": true,
+    "stdout": "{\n  \"decision\": \"FAIL_INTEGRITY\",\n  \"errors\": [\n    [\n      \"typed\",\n      \"hint_stale_revalidation_observation\",\n      \"accepted\",\n      true,\n      false\n    ],\n    [\n      \"typed\",\n      \"hint_stale_revalidation_observation\",\n      \"core_error\",\n      null,\n      \"STALE_OBSERVATION\"\n    ]\n  ],\n  \"row_count\": 22\n}"
+  },
+  {
+    "name": "core_blob_mutation",
+    "rejected": true,
+    "stdout": "{\n  \"decision\": \"FAIL_INTEGRITY\",\n  \"errors\": [\n    [\n      \"core_blob\"\n    ]\n  ],\n  \"row_count\": 22\n}"
+  }
+]
