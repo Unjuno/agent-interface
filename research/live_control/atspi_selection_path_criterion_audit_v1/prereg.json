@@ -1,0 +1,15 @@
+{
+  "task": "ATSPI-SELECTION-PATH-CRITERION-AUDIT-20260916-024",
+  "question": "During a visually verified A-only canvas selection, does the current Issue #415 source-path equality criterion also classify B because both pre-discovered target row paths emit unrelated object events?",
+  "cases": 3,
+  "fresh_sessions": true,
+  "action": "single click A; no document edit/save/effect",
+  "event_families_registered": [
+    "object:state-changed",
+    "object:selection-changed",
+    "object:children-changed",
+    "object:property-change"
+  ],
+  "decision": "REJECT_PATH_EQUALITY_AS_DIRECT_SELECTION_IDENTITY iff all 3 visual A setups pass and B target path emits at least one PID-bound Object event in the A selection window in all 3 cases, making current criterion identities include both A and B. Otherwise HOLD.",
+  "scope": "criterion audit only; does not claim which event identifies selected object"
+}
