@@ -1,0 +1,132 @@
+{
+  "cases": {
+    "controls": {
+      "epoch_gap": "ROTATION_EPOCH_GAP",
+      "exact_first": "ROTATED",
+      "exact_replay": "ALREADY_ROTATED_SELF",
+      "previous_signer_mismatch": "ROTATION_PREVIOUS_SIGNER_MISMATCH",
+      "same_id_changed_content": "ROTATION_RECEIPT_CONFLICT"
+    },
+    "durable_rotation_restart_recovery": {
+      "fresh_i3_apply": "APPLIED",
+      "new_k2_install": "INSTALLED",
+      "old_k1_install": "STALE_INSTALL_KEY_EPOCH",
+      "snapshot": {
+        "current_incarnation": 3,
+        "current_key_epoch": 2,
+        "current_public_key_sha256": "bde85afddfc0a654bc8404e773b45c32aaa97c484c7992130a5c074364fc0710",
+        "current_signer_id": "issuer-root-v2",
+        "durable_rotation": {
+          "new_key_epoch": 2,
+          "new_public_key_sha256": "bde85afddfc0a654bc8404e773b45c32aaa97c484c7992130a5c074364fc0710",
+          "new_signer_id": "issuer-root-v2",
+          "previous_key_epoch": 1,
+          "previous_signer_id": "issuer-root-v1",
+          "rotation_id": "rotation-K2"
+        },
+        "generation": 6,
+        "install_writes": 1,
+        "latest_install": {
+          "install_id": "install-I3-new",
+          "key_epoch": 2,
+          "new_incarnation": 3,
+          "previous_incarnation": 2,
+          "signer_id": "issuer-root-v2"
+        },
+        "rotation_state_shape": "single_content_bound_signed_receipt_plus_current_scalars",
+        "rotation_writes": 0,
+        "transition_writes": 1
+      }
+    },
+    "durable_rotation_rollback_detected": {
+      "install_writes_after_attempt": 0,
+      "old_k1_install": "KEY_ROTATION_STATE_ROLLBACK",
+      "reconcile": "KEY_ROTATION_STATE_ROLLBACK",
+      "rotation": "ROTATED",
+      "snapshot": {
+        "current_incarnation": 2,
+        "current_key_epoch": 1,
+        "current_public_key_sha256": "824deb4a0417ad7ad8c5e5318e26e11e28804a85d40c900ccf057e32a9f705c9",
+        "current_signer_id": "issuer-root-v1",
+        "durable_rotation": {
+          "new_key_epoch": 2,
+          "new_public_key_sha256": "bde85afddfc0a654bc8404e773b45c32aaa97c484c7992130a5c074364fc0710",
+          "new_signer_id": "issuer-root-v2",
+          "previous_key_epoch": 1,
+          "previous_signer_id": "issuer-root-v1",
+          "rotation_id": "rotation-K2"
+        },
+        "generation": 5,
+        "install_writes": 0,
+        "latest_install": null,
+        "rotation_state_shape": "single_content_bound_signed_receipt_plus_current_scalars",
+        "rotation_writes": 1,
+        "transition_writes": 0
+      }
+    },
+    "forged_rotation_rejected": {
+      "rotation": "ROTATION_SIGNATURE_INVALID",
+      "rotation_writes_after_attempt": 0,
+      "snapshot": {
+        "current_incarnation": 2,
+        "current_key_epoch": 1,
+        "current_public_key_sha256": "824deb4a0417ad7ad8c5e5318e26e11e28804a85d40c900ccf057e32a9f705c9",
+        "current_signer_id": "issuer-root-v1",
+        "durable_rotation": null,
+        "generation": 5,
+        "install_writes": 0,
+        "latest_install": null,
+        "rotation_state_shape": "single_content_bound_signed_receipt_plus_current_scalars",
+        "rotation_writes": 0,
+        "transition_writes": 0
+      }
+    },
+    "mutable_rotation_rollback_baseline": {
+      "fresh_i3_apply": "APPLIED",
+      "old_k1_install": "INSTALLED",
+      "snapshot": {
+        "current_incarnation": 3,
+        "current_key_epoch": 1,
+        "current_public_key_sha256": "824deb4a0417ad7ad8c5e5318e26e11e28804a85d40c900ccf057e32a9f705c9",
+        "current_signer_id": "issuer-root-v1",
+        "durable_rotation": null,
+        "generation": 6,
+        "install_writes": 1,
+        "latest_install": {
+          "install_id": "install-I3-old",
+          "key_epoch": 1,
+          "new_incarnation": 3,
+          "previous_incarnation": 2,
+          "signer_id": "issuer-root-v1"
+        },
+        "rotation_state_shape": "single_content_bound_signed_receipt_plus_current_scalars",
+        "rotation_writes": 0,
+        "transition_writes": 1
+      }
+    }
+  },
+  "decision": "PASS_DURABLE_AUTH_KEY_ROTATION_RECEIPT_SCOPED",
+  "formal_reruns": 0,
+  "gates": {
+    "baseline_rollback_revives_k1": true,
+    "bounded_rotation_state": true,
+    "candidate_rollback_detected": true,
+    "candidate_stale_install_writes_zero": true,
+    "candidate_valid_rotation_installs": true,
+    "epoch_gap_rejected": true,
+    "exact_rotation_replay_idempotent": true,
+    "forged_rotation_rejected_before_write": true,
+    "predecessor_signer_mismatch_rejected": true,
+    "restart_fresh_i3_applies_once": true,
+    "restart_new_k2_installs": true,
+    "restart_old_k1_stale": true,
+    "retained_has_no_private_keys": true,
+    "same_id_changed_rotation_conflicts": true
+  },
+  "notes": [
+    "Deterministic single-process container fixture.",
+    "K1 is trusted to authorize K2 rotation by construction.",
+    "Private keys are excluded before formal freeze."
+  ],
+  "task": "COORD-DURABLE-AUTH-KEY-ROTATION-20260917-028"
+}
