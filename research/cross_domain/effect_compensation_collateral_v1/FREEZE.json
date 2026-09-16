@@ -1,0 +1,53 @@
+{
+  "branch": "research/effect-comp-collateral-e80bd5d",
+  "construction_excluded": {
+    "post_repair_cases": [
+      "c-correct",
+      "c-clean",
+      "c-collateral",
+      "c-uncompensated"
+    ],
+    "reused_in_formal": false,
+    "setup_failure": "SQLite reserved-word column name primary; six construction tests failed before repair"
+  },
+  "decision": {
+    "candidate_truth_required": 40,
+    "clean_compensation_full_restoration_required": 10,
+    "collateral_compensation_collateral_preserved_required": 0,
+    "collateral_compensation_primary_restored_required": 10,
+    "primary_only_truthful_on_collateral_required": 0
+  },
+  "formal_case_count": 40,
+  "formal_id_prefix": "m",
+  "issue": 463,
+  "local_git_blobs": {
+    "audit.py": "2de8813c2b129c0ae4ed2f7664168fe51d8b5ab3",
+    "experiment.py": "cee14a1ef2a7619f02cac36171d40a7cdb2e083d",
+    "plan.json": "a965669312d8aa31e0116049658e6c794914f2c7",
+    "receiver.py": "ba6712a06f1ecb94f5600f77e1777fa9867ac126",
+    "test_contract.py": "fc9e0d69286d6efde7ad3ed561a5e66959c3d185"
+  },
+  "plan_sha256": "9a266d02d6d30c1ddceb2554c74a7e488b25622c194150b7e6dd20c7c2bbe732",
+  "prefreeze_tests": {
+    "failed": 0,
+    "passed": 6
+  },
+  "publication_base": "e80bd5dca372d13404c5265d9aeb0f62695efdf4",
+  "remote_git_blobs": {
+    "audit.py": "2de8813c2b129c0ae4ed2f7664168fe51d8b5ab3",
+    "experiment.py": "cee14a1ef2a7619f02cac36171d40a7cdb2e083d",
+    "plan.json": "a965669312d8aa31e0116049658e6c794914f2c7",
+    "receiver.py": "ba6712a06f1ecb94f5600f77e1777fa9867ac126",
+    "test_contract.py": "fc9e0d69286d6efde7ad3ed561a5e66959c3d185"
+  },
+  "remote_source_plan_head": "203640b4121bea3fe8fb66c3262e38d000589a53",
+  "same_id_reruns_allowed": false,
+  "schema": "effect-compensation-collateral-freeze-v1",
+  "source_sha256": {
+    "audit.py": "3936462c4ffac7b4212c885b528e7449a5d9fd7c89477ccb3e513ddb72e0bd29",
+    "experiment.py": "c844fbcc7d09c5e800b44616089bad0da2dc8509d9c963080ca8a51f70e4ee2d",
+    "receiver.py": "a00126ecebfde33725279bb294c8fc5219c521a5d9cfcb2fb365433c95275bab",
+    "test_contract.py": "3991ca8cb1638d5cfad628e87361a38a594f3748863f79c8e2e5c355f837f70c"
+  },
+  "task": "EFFECT-COMPENSATION-COLLATERAL-20260916-001"
+}
