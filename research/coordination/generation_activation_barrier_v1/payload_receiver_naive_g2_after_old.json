@@ -1,0 +1,14 @@
+{
+  "schema": "effect_receiver_activation_v1",
+  "case": "naive_two_step",
+  "mode": "ACTIVE",
+  "accepted_generation": 2,
+  "effect_count": 1,
+  "effects": [
+    {"request_id":"cmd-old-011","generation":1,"fingerprint":"fp-old-011","payload":{"delta":3}}
+  ],
+  "receipts": {
+    "cmd-old-011": {"generation":1,"fingerprint":"fp-old-011","outcome":"APPLIED"}
+  },
+  "revision": 2
+}
