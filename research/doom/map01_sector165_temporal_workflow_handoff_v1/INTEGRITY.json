@@ -1,0 +1,81 @@
+{
+  "auditor_limitation": "Frozen auditor does not independently recompute workflow_release_elapsed_ms from raw workflow_start_ns and next_subgoal_release_done_ns. One single-pair derived-field-only corruption can remain PASS under the preregistered >=3/4 timing gate. Posthoc verifier detects the inconsistency. Frozen source/audit/result unchanged; no formal rerun.",
+  "compact_archive": {
+    "bytes": 21408,
+    "github_retained": false,
+    "sha256": "378b96ae6847e63ca87e862a4c6515955d9d2d0954f594296d56c5281549779a"
+  },
+  "formal_manifest_file_count": 423,
+  "formal_manifest_sha256": "664c4df83453bf5c7ecfafd2eda58c0b5bb904ae051b81d0ecb523e6dd5c2838",
+  "frozen_audit_mutations": [
+    {
+      "decision": "FAIL_WORKFLOW_HANDOFF",
+      "errors": [
+        "f01:gate_action_mismatch"
+      ],
+      "name": "m1_gate_action"
+    },
+    {
+      "decision": "FAIL_WORKFLOW_HANDOFF",
+      "errors": [
+        "f10:wall_false_drop"
+      ],
+      "name": "m2_wall_drop"
+    },
+    {
+      "decision": "FAIL_WORKFLOW_HANDOFF",
+      "errors": [
+        "f04:next_release"
+      ],
+      "name": "m3_release"
+    },
+    {
+      "decision": "FAIL_WORKFLOW_HANDOFF",
+      "errors": [
+        "f07:next_yaw_effect"
+      ],
+      "name": "m4_yaw"
+    },
+    {
+      "decision": "PASS_TEMPORAL_WORKFLOW_HANDOFF_SCOPED",
+      "errors": [],
+      "name": "m5_timing"
+    },
+    {
+      "decision": "FAIL_WORKFLOW_HANDOFF",
+      "errors": [
+        "f11:missing"
+      ],
+      "name": "m6_missing"
+    },
+    {
+      "decision": "HOLD_NO_WORKFLOW_DISCRIMINATOR",
+      "errors": [],
+      "name": "m7_timing_gate"
+    }
+  ],
+  "frozen_source_rehash": "9/9 exact",
+  "full_archive": {
+    "bytes": 26077985,
+    "github_retained": false,
+    "sha256": "c39635d7c0f6932a24e136f14bb7faa2843a3f16bfa8aca33f03a5e4bcf705de"
+  },
+  "posthoc_raw_timing_verifier": {
+    "errors": [],
+    "gates": {
+      "timing_raw_ge200_ge3pairs": true,
+      "timing_raw_median_ge200": true
+    },
+    "median_reduction_ms_from_raw_timestamps": 544.9942814999998,
+    "note": "Postformal integrity verifier only. It does not alter frozen audit or scientific disposition.",
+    "pair_reductions_ms_from_raw_timestamps": [
+      490.1019749999998,
+      780.5370669999998,
+      486.4169780000002,
+      599.8865879999998
+    ],
+    "schema": "map01-sector165-temporal-workflow-handoff-posthoc-timing-verifier-v1",
+    "status": "PASS_POSTHOC_RAW_TIMING_INTEGRITY"
+  },
+  "schema": "map01-sector165-temporal-workflow-handoff-integrity-v1"
+}
