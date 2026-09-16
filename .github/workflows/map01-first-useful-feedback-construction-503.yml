@@ -14,7 +14,21 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             research/doom/map01_first_useful_feedback_posthoc_v1
-            research/doom/results/map01-v39-coast-liveness-live-01
+            research/doom/results/map01-v39-coast-liveness-live-01/report.json
+            research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl
+            research/doom/results/map01-v39-coast-liveness-live-01/runtime/028.png
+            research/doom/results/map01-v39-coast-liveness-live-01/runtime/029.png
+            research/doom/results/map01-v39-coast-liveness-live-01/runtime/030.png
+            research/doom/results/map01-v39-coast-liveness-live-01/runtime/031.png
+            research/doom/results/map01-v39-coast-liveness-live-01/runtime/032.png
+            research/doom/results/map01-v39-coast-liveness-live-01/runtime/033.png
+            research/doom/results/map01-v39-coast-liveness-live-01/runtime/034.png
+            research/doom/results/map01-v39-coast-liveness-live-01/runtime/035.png
+            research/doom/results/map01-v39-coast-liveness-live-01/runtime/036.png
+            research/doom/results/map01-v39-coast-liveness-live-01/runtime/037.png
+            research/doom/results/map01-v39-coast-liveness-live-01/runtime/038.png
+            research/doom/results/map01-v39-coast-liveness-live-01/runtime/039.png
+            research/doom/results/map01-v39-coast-liveness-live-01/runtime/040.png
           sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
