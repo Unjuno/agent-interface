@@ -1,0 +1,26 @@
+{
+  "allocation": "lo-macro-interleave-20260916-a1",
+  "arms": [
+    "window_stable",
+    "window_concurrent"
+  ],
+  "branch": "research/libreoffice-macro-interleave-20260916-2139",
+  "decision": {
+    "harness_fail": "ambiguous source/order/barrier or incomplete case",
+    "interleave": "CONCURRENT_UNO_INTERLEAVES_MACRO_SCOPED",
+    "serialized": "SERIALIZED_MACRO_CALL_SCOPED"
+  },
+  "issue": 438,
+  "limits": "One LibreOffice 25.2.3.2 user-Python macro, Draw RectangleShape X, fixed 500 ms window; no C++/SolarMutex/custom service/general atomicity claim.",
+  "positions": {
+    "initial_A": 1000,
+    "initial_B": 5000,
+    "macro_A": 1200,
+    "writer_A": 1700
+  },
+  "publication_base": "795d5435c83ef8a1969644f3a79efeed5cf248fb",
+  "repetitions_per_arm": 5,
+  "scope": "research/live_control/libreoffice_macro_interleave_v1/**",
+  "sleep_ms": 500,
+  "task_id": "LO-MACRO-INTERLEAVE-20260916-2139"
+}
