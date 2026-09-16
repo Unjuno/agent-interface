@@ -1,0 +1,244 @@
+{
+  "cases": [
+    {
+      "id": "m10-wrong_uncompensated",
+      "rep": 10,
+      "scenario": "wrong_uncompensated"
+    },
+    {
+      "id": "m06-wrong_uncompensated",
+      "rep": 6,
+      "scenario": "wrong_uncompensated"
+    },
+    {
+      "id": "m02-wrong_compensated_clean",
+      "rep": 2,
+      "scenario": "wrong_compensated_clean"
+    },
+    {
+      "id": "m04-wrong_compensated_collateral",
+      "rep": 4,
+      "scenario": "wrong_compensated_collateral"
+    },
+    {
+      "id": "m10-wrong_compensated_collateral",
+      "rep": 10,
+      "scenario": "wrong_compensated_collateral"
+    },
+    {
+      "id": "m08-wrong_uncompensated",
+      "rep": 8,
+      "scenario": "wrong_uncompensated"
+    },
+    {
+      "id": "m09-wrong_compensated_collateral",
+      "rep": 9,
+      "scenario": "wrong_compensated_collateral"
+    },
+    {
+      "id": "m03-wrong_compensated_clean",
+      "rep": 3,
+      "scenario": "wrong_compensated_clean"
+    },
+    {
+      "id": "m06-correct",
+      "rep": 6,
+      "scenario": "correct"
+    },
+    {
+      "id": "m10-wrong_compensated_clean",
+      "rep": 10,
+      "scenario": "wrong_compensated_clean"
+    },
+    {
+      "id": "m03-wrong_compensated_collateral",
+      "rep": 3,
+      "scenario": "wrong_compensated_collateral"
+    },
+    {
+      "id": "m05-correct",
+      "rep": 5,
+      "scenario": "correct"
+    },
+    {
+      "id": "m01-correct",
+      "rep": 1,
+      "scenario": "correct"
+    },
+    {
+      "id": "m02-correct",
+      "rep": 2,
+      "scenario": "correct"
+    },
+    {
+      "id": "m03-correct",
+      "rep": 3,
+      "scenario": "correct"
+    },
+    {
+      "id": "m05-wrong_compensated_collateral",
+      "rep": 5,
+      "scenario": "wrong_compensated_collateral"
+    },
+    {
+      "id": "m03-wrong_uncompensated",
+      "rep": 3,
+      "scenario": "wrong_uncompensated"
+    },
+    {
+      "id": "m09-correct",
+      "rep": 9,
+      "scenario": "correct"
+    },
+    {
+      "id": "m09-wrong_compensated_clean",
+      "rep": 9,
+      "scenario": "wrong_compensated_clean"
+    },
+    {
+      "id": "m01-wrong_compensated_clean",
+      "rep": 1,
+      "scenario": "wrong_compensated_clean"
+    },
+    {
+      "id": "m07-correct",
+      "rep": 7,
+      "scenario": "correct"
+    },
+    {
+      "id": "m07-wrong_compensated_clean",
+      "rep": 7,
+      "scenario": "wrong_compensated_clean"
+    },
+    {
+      "id": "m02-wrong_compensated_collateral",
+      "rep": 2,
+      "scenario": "wrong_compensated_collateral"
+    },
+    {
+      "id": "m08-correct",
+      "rep": 8,
+      "scenario": "correct"
+    },
+    {
+      "id": "m08-wrong_compensated_collateral",
+      "rep": 8,
+      "scenario": "wrong_compensated_collateral"
+    },
+    {
+      "id": "m01-wrong_uncompensated",
+      "rep": 1,
+      "scenario": "wrong_uncompensated"
+    },
+    {
+      "id": "m04-wrong_uncompensated",
+      "rep": 4,
+      "scenario": "wrong_uncompensated"
+    },
+    {
+      "id": "m02-wrong_uncompensated",
+      "rep": 2,
+      "scenario": "wrong_uncompensated"
+    },
+    {
+      "id": "m07-wrong_uncompensated",
+      "rep": 7,
+      "scenario": "wrong_uncompensated"
+    },
+    {
+      "id": "m04-correct",
+      "rep": 4,
+      "scenario": "correct"
+    },
+    {
+      "id": "m05-wrong_uncompensated",
+      "rep": 5,
+      "scenario": "wrong_uncompensated"
+    },
+    {
+      "id": "m08-wrong_compensated_clean",
+      "rep": 8,
+      "scenario": "wrong_compensated_clean"
+    },
+    {
+      "id": "m06-wrong_compensated_collateral",
+      "rep": 6,
+      "scenario": "wrong_compensated_collateral"
+    },
+    {
+      "id": "m04-wrong_compensated_clean",
+      "rep": 4,
+      "scenario": "wrong_compensated_clean"
+    },
+    {
+      "id": "m01-wrong_compensated_collateral",
+      "rep": 1,
+      "scenario": "wrong_compensated_collateral"
+    },
+    {
+      "id": "m07-wrong_compensated_collateral",
+      "rep": 7,
+      "scenario": "wrong_compensated_collateral"
+    },
+    {
+      "id": "m10-correct",
+      "rep": 10,
+      "scenario": "correct"
+    },
+    {
+      "id": "m06-wrong_compensated_clean",
+      "rep": 6,
+      "scenario": "wrong_compensated_clean"
+    },
+    {
+      "id": "m09-wrong_uncompensated",
+      "rep": 9,
+      "scenario": "wrong_uncompensated"
+    },
+    {
+      "id": "m05-wrong_compensated_clean",
+      "rep": 5,
+      "scenario": "wrong_compensated_clean"
+    }
+  ],
+  "construction_excluded": {
+    "case_count": 4,
+    "id_prefix": "c-",
+    "note": "one case per scenario after schema repair; excluded from formal estimates and never reused"
+  },
+  "construction_setup_failure": {
+    "reason": "SQLite reserved-word column name before freeze; retained in construction_tests.txt",
+    "tests_failed": 6
+  },
+  "decision": {
+    "candidate_truth_required": 40,
+    "clean_compensation_full_restoration_required": 10,
+    "collateral_compensation_collateral_preserved_required": 0,
+    "collateral_compensation_primary_restored_required": 10,
+    "primary_only_truthful_on_collateral_required": 0,
+    "same_id_reruns": 0
+  },
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "prefreeze_tests": {
+    "failed": 0,
+    "passed": 6
+  },
+  "publication_base": "e80bd5dca372d13404c5265d9aeb0f62695efdf4",
+  "python": "3.13.5",
+  "scenarios": [
+    "correct",
+    "wrong_compensated_clean",
+    "wrong_compensated_collateral",
+    "wrong_uncompensated"
+  ],
+  "schema": "effect-compensation-collateral-plan-v1",
+  "seed": 45920260916,
+  "source_sha256": {
+    "audit.py": "3936462c4ffac7b4212c885b528e7449a5d9fd7c89477ccb3e513ddb72e0bd29",
+    "experiment.py": "c844fbcc7d09c5e800b44616089bad0da2dc8509d9c963080ca8a51f70e4ee2d",
+    "receiver.py": "a00126ecebfde33725279bb294c8fc5219c521a5d9cfcb2fb365433c95275bab",
+    "test_contract.py": "3991ca8cb1638d5cfad628e87361a38a594f3748863f79c8e2e5c355f837f70c"
+  },
+  "sqlite": "3.46.1",
+  "task": "EFFECT-COMPENSATION-COLLATERAL-20260916-001"
+}
