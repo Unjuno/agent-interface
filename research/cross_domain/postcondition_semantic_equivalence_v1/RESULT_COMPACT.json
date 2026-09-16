@@ -20,24 +20,132 @@
     }
   },
   "by_policy_scenario": {
-    "exact_bytes:canonical": {"accepted": 4, "correct": 4, "publish_rc_nonzero": 0, "published": 4, "rows": 4},
-    "exact_bytes:duplicate_key": {"accepted": 0, "correct": 4, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
-    "exact_bytes:equiv_key_order": {"accepted": 0, "correct": 0, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
-    "exact_bytes:equiv_whitespace": {"accepted": 0, "correct": 0, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
-    "exact_bytes:extra_key": {"accepted": 0, "correct": 4, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
-    "exact_bytes:invalid_json": {"accepted": 0, "correct": 4, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
-    "exact_bytes:ref_race": {"accepted": 4, "correct": 4, "publish_rc_nonzero": 4, "published": 0, "rows": 4},
-    "exact_bytes:wrong_type": {"accepted": 0, "correct": 4, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
-    "exact_bytes:wrong_value": {"accepted": 0, "correct": 4, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
-    "parsed_semantics:canonical": {"accepted": 4, "correct": 4, "publish_rc_nonzero": 0, "published": 4, "rows": 4},
-    "parsed_semantics:duplicate_key": {"accepted": 0, "correct": 4, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
-    "parsed_semantics:equiv_key_order": {"accepted": 4, "correct": 4, "publish_rc_nonzero": 0, "published": 4, "rows": 4},
-    "parsed_semantics:equiv_whitespace": {"accepted": 4, "correct": 4, "publish_rc_nonzero": 0, "published": 4, "rows": 4},
-    "parsed_semantics:extra_key": {"accepted": 0, "correct": 4, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
-    "parsed_semantics:invalid_json": {"accepted": 0, "correct": 4, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
-    "parsed_semantics:ref_race": {"accepted": 4, "correct": 4, "publish_rc_nonzero": 4, "published": 0, "rows": 4},
-    "parsed_semantics:wrong_type": {"accepted": 0, "correct": 4, "publish_rc_nonzero": 0, "published": 0, "rows": 4},
-    "parsed_semantics:wrong_value": {"accepted": 0, "correct": 4, "publish_rc_nonzero": 0, "published": 0, "rows": 4}
+    "exact_bytes:canonical": {
+      "accepted": 4,
+      "correct": 4,
+      "publish_rc_nonzero": 0,
+      "published": 4,
+      "rows": 4
+    },
+    "exact_bytes:duplicate_key": {
+      "accepted": 0,
+      "correct": 4,
+      "publish_rc_nonzero": 0,
+      "published": 0,
+      "rows": 4
+    },
+    "exact_bytes:equiv_key_order": {
+      "accepted": 0,
+      "correct": 0,
+      "publish_rc_nonzero": 0,
+      "published": 0,
+      "rows": 4
+    },
+    "exact_bytes:equiv_whitespace": {
+      "accepted": 0,
+      "correct": 0,
+      "publish_rc_nonzero": 0,
+      "published": 0,
+      "rows": 4
+    },
+    "exact_bytes:extra_key": {
+      "accepted": 0,
+      "correct": 4,
+      "publish_rc_nonzero": 0,
+      "published": 0,
+      "rows": 4
+    },
+    "exact_bytes:invalid_json": {
+      "accepted": 0,
+      "correct": 4,
+      "publish_rc_nonzero": 0,
+      "published": 0,
+      "rows": 4
+    },
+    "exact_bytes:ref_race": {
+      "accepted": 4,
+      "correct": 4,
+      "publish_rc_nonzero": 4,
+      "published": 0,
+      "rows": 4
+    },
+    "exact_bytes:wrong_type": {
+      "accepted": 0,
+      "correct": 4,
+      "publish_rc_nonzero": 0,
+      "published": 0,
+      "rows": 4
+    },
+    "exact_bytes:wrong_value": {
+      "accepted": 0,
+      "correct": 4,
+      "publish_rc_nonzero": 0,
+      "published": 0,
+      "rows": 4
+    },
+    "parsed_semantics:canonical": {
+      "accepted": 4,
+      "correct": 4,
+      "publish_rc_nonzero": 0,
+      "published": 4,
+      "rows": 4
+    },
+    "parsed_semantics:duplicate_key": {
+      "accepted": 0,
+      "correct": 4,
+      "publish_rc_nonzero": 0,
+      "published": 0,
+      "rows": 4
+    },
+    "parsed_semantics:equiv_key_order": {
+      "accepted": 4,
+      "correct": 4,
+      "publish_rc_nonzero": 0,
+      "published": 4,
+      "rows": 4
+    },
+    "parsed_semantics:equiv_whitespace": {
+      "accepted": 4,
+      "correct": 4,
+      "publish_rc_nonzero": 0,
+      "published": 4,
+      "rows": 4
+    },
+    "parsed_semantics:extra_key": {
+      "accepted": 0,
+      "correct": 4,
+      "publish_rc_nonzero": 0,
+      "published": 0,
+      "rows": 4
+    },
+    "parsed_semantics:invalid_json": {
+      "accepted": 0,
+      "correct": 4,
+      "publish_rc_nonzero": 0,
+      "published": 0,
+      "rows": 4
+    },
+    "parsed_semantics:ref_race": {
+      "accepted": 4,
+      "correct": 4,
+      "publish_rc_nonzero": 4,
+      "published": 0,
+      "rows": 4
+    },
+    "parsed_semantics:wrong_type": {
+      "accepted": 0,
+      "correct": 4,
+      "publish_rc_nonzero": 0,
+      "published": 0,
+      "rows": 4
+    },
+    "parsed_semantics:wrong_value": {
+      "accepted": 0,
+      "correct": 4,
+      "publish_rc_nonzero": 0,
+      "published": 0,
+      "rows": 4
+    }
   },
   "exact_equivalent_false_rejects": 8,
   "formal_first_outcomes": 72,
