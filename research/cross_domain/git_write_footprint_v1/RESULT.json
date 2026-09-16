@@ -1,0 +1,18 @@
+{
+  "schema": "git-write-footprint-summary-v1",
+  "issue": 332,
+  "freeze_commit": "fd2ae619e5e3c769672b14abef1af2a544573f44",
+  "scored_cases": 63,
+  "integrity_pass": 63,
+  "task_correct_including_controls": 48,
+  "by_policy": {
+    "fixed_snapshot": {"n":21,"correct":9,"outside_write_loss":9,"write_conflict_loss":3,"accepted":15},
+    "current_patch": {"n":21,"correct":18,"outside_write_loss":0,"write_conflict_loss":3,"accepted":15},
+    "guarded_current_patch": {"n":21,"correct":21,"outside_write_loss":0,"write_conflict_loss":0,"accepted":12}
+  },
+  "historical_review": {"selected_records":10,"prior_pass":10,"unrelated_u1_to_u0":10,"observed_readset_candidate_subset":5,"old_cases_rerun":0,"old_frozen_oracle_relabelled":false},
+  "decision": "RETAIN_SCOPED_GUARDED_CURRENT_PATCH",
+  "full_per_case_verdicts": "CASE_TABLE.csv",
+  "raw_evidence": "conversation attachment only",
+  "not_claimed": ["whole-ref replacement was an invalid historical goal","automatic read/write discovery","production integration","new Doom or GUI evidence","speed or reliability-rate improvement"]
+}
