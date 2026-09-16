@@ -1,0 +1,48 @@
+{
+  "expected_artifact": {
+    "bytes": 28913,
+    "sha256": "5fc7b440553f96d77b757e1b1ad5ded8961af7ab742b528c27d91b51085a9e05"
+  },
+  "files": {
+    ".github/workflows/runtime-standalone-doctor.yml": {
+      "bytes": 2479,
+      "sha256": "64380d2190d35989516956eccbd3ee2039c4939c8b977570e6ba87368b9bb563"
+    },
+    "runtime/distribution_v1/EXPECTED.json": {
+      "bytes": 162,
+      "sha256": "b3f51c596a595c5d8063ac42e212c401c066ceebab4869c3f0fd840de0c79c8d"
+    },
+    "runtime/distribution_v1/README.md": {
+      "bytes": 490,
+      "sha256": "94ac3264c01704977e855cd764c6e2dc481a278266fb691fb11590585545a7f6"
+    },
+    "runtime/distribution_v1/REPORT.md": {
+      "bytes": 1262,
+      "sha256": "d270c422e6152e95e51660d32488683f6794a9d2af0db8e2b507d125a16e8022"
+    },
+    "runtime/distribution_v1/build.py": {
+      "bytes": 3130,
+      "sha256": "d4d86b672c3476a4271ae5cd7a277ca6ef8192341544b01c889626db774812b9"
+    },
+    "runtime/distribution_v1/test_distribution.py": {
+      "bytes": 1206,
+      "sha256": "71df434e188b559fd123f973705c85bcfe6b1eebf1b910d8d20dba7547f5f12b"
+    },
+    "runtime/distribution_v1/verify.py": {
+      "bytes": 2417,
+      "sha256": "1f94af4eda73f3568007a545c28bfe9ad0a76186604425335ffce52afc4f3a5d"
+    }
+  },
+  "integration_base": "5970859ba4bf9f4109b45f63ee0981386349de46",
+  "issue": 600,
+  "local": {
+    "compileall": true,
+    "distribution_test_pass": 1,
+    "execution_pass": true,
+    "verify_pass": true
+  },
+  "ready_for_side_effects": false,
+  "schema": "agent_interface_standalone_doctor_build_receipt_v1",
+  "support_claim": false,
+  "task": "RUNTIME-STANDALONE-DOCTOR-V1-20260917-001"
+}
