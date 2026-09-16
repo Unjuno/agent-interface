@@ -1,0 +1,148 @@
+{
+  "label": "POSTHOC_EXPLANATORY_MODEL_NOT_INDEPENDENT_VALIDATION",
+  "max_abs_residual_deg": 8.340975909959525e-08,
+  "mismatch_samples": 0,
+  "rows": [
+    {
+      "arm": "none",
+      "case": "case-00",
+      "fast_turn_tics": 0,
+      "max_abs_residual_deg": 0.0,
+      "mismatch_samples": 0,
+      "observed_yaw_deg": 0.0,
+      "predicted_yaw_deg": 0.0,
+      "slow_turn_tics": 0
+    },
+    {
+      "arm": "short",
+      "case": "case-01",
+      "fast_turn_tics": 31,
+      "max_abs_residual_deg": 8.340975909959525e-08,
+      "mismatch_samples": 0,
+      "observed_yaw_deg": -126.5624999456486,
+      "predicted_yaw_deg": -126.5625,
+      "slow_turn_tics": 10
+    },
+    {
+      "arm": "long",
+      "case": "case-02",
+      "fast_turn_tics": 11,
+      "max_abs_residual_deg": 8.340975909959525e-08,
+      "mismatch_samples": 0,
+      "observed_yaw_deg": -91.40624993746314,
+      "predicted_yaw_deg": -91.40625,
+      "slow_turn_tics": 30
+    },
+    {
+      "arm": "long",
+      "case": "case-03",
+      "fast_turn_tics": 11,
+      "max_abs_residual_deg": 8.340975909959525e-08,
+      "mismatch_samples": 0,
+      "observed_yaw_deg": -91.40624993746314,
+      "predicted_yaw_deg": -91.40625,
+      "slow_turn_tics": 30
+    },
+    {
+      "arm": "short",
+      "case": "case-04",
+      "fast_turn_tics": 13,
+      "max_abs_residual_deg": 8.340975909959525e-08,
+      "mismatch_samples": 0,
+      "observed_yaw_deg": -89.64843743705387,
+      "predicted_yaw_deg": -89.6484375,
+      "slow_turn_tics": 25
+    },
+    {
+      "arm": "short",
+      "case": "case-05",
+      "fast_turn_tics": 31,
+      "max_abs_residual_deg": 8.340975909959525e-08,
+      "mismatch_samples": 0,
+      "observed_yaw_deg": -126.5624999456486,
+      "predicted_yaw_deg": -126.5625,
+      "slow_turn_tics": 10
+    },
+    {
+      "arm": "long",
+      "case": "case-06",
+      "fast_turn_tics": 10,
+      "max_abs_residual_deg": 8.340975909959525e-08,
+      "mismatch_samples": 0,
+      "observed_yaw_deg": -87.8906249366446,
+      "predicted_yaw_deg": -87.890625,
+      "slow_turn_tics": 30
+    },
+    {
+      "arm": "long",
+      "case": "case-07",
+      "fast_turn_tics": 10,
+      "max_abs_residual_deg": 8.340975909959525e-08,
+      "mismatch_samples": 0,
+      "observed_yaw_deg": -87.8906249366446,
+      "predicted_yaw_deg": -87.890625,
+      "slow_turn_tics": 30
+    },
+    {
+      "arm": "short",
+      "case": "case-08",
+      "fast_turn_tics": 31,
+      "max_abs_residual_deg": 8.340975909959525e-08,
+      "mismatch_samples": 0,
+      "observed_yaw_deg": -126.5624999456486,
+      "predicted_yaw_deg": -126.5625,
+      "slow_turn_tics": 10
+    },
+    {
+      "arm": "short",
+      "case": "case-09",
+      "fast_turn_tics": 37,
+      "max_abs_residual_deg": 8.340975909959525e-08,
+      "mismatch_samples": 0,
+      "observed_yaw_deg": -138.8671874485135,
+      "predicted_yaw_deg": -138.8671875,
+      "slow_turn_tics": 5
+    },
+    {
+      "arm": "long",
+      "case": "case-10",
+      "fast_turn_tics": 10,
+      "max_abs_residual_deg": 8.340975909959525e-08,
+      "mismatch_samples": 0,
+      "observed_yaw_deg": -87.8906249366446,
+      "predicted_yaw_deg": -87.890625,
+      "slow_turn_tics": 30
+    },
+    {
+      "arm": "long",
+      "case": "case-11",
+      "fast_turn_tics": 10,
+      "max_abs_residual_deg": 8.340975909959525e-08,
+      "mismatch_samples": 0,
+      "observed_yaw_deg": -87.8906249366446,
+      "predicted_yaw_deg": -87.890625,
+      "slow_turn_tics": 30
+    },
+    {
+      "arm": "short",
+      "case": "case-12",
+      "fast_turn_tics": 37,
+      "max_abs_residual_deg": 8.340975909959525e-08,
+      "mismatch_samples": 0,
+      "observed_yaw_deg": -138.8671874485135,
+      "predicted_yaw_deg": -138.8671875,
+      "slow_turn_tics": 5
+    },
+    {
+      "arm": "none",
+      "case": "case-13",
+      "fast_turn_tics": 0,
+      "max_abs_residual_deg": 0.0,
+      "mismatch_samples": 0,
+      "observed_yaw_deg": 0.0,
+      "predicted_yaw_deg": 0.0,
+      "slow_turn_tics": 0
+    }
+  ],
+  "rule": "For each contiguous TURN_RIGHT episode, first five tics predict -1.7578125deg/tic, later tics -3.515625deg/tic; neutral predicts0. Constants and breakpoint inspected after formal."
+}
