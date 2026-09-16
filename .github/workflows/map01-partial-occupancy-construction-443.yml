@@ -1,0 +1,40 @@
+name: MAP01 partial occupancy construction 443
+
+on:
+  push:
+    branches:
+      - research/map01-held-occupancy-partial-posthoc-20260916-002
+    paths:
+      - .github/workflows/map01-partial-occupancy-construction-443.yml
+
+permissions:
+  contents: read
+
+jobs:
+  construction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/doom/map01_held_input_occupancy_partial_posthoc_v2
+          sparse-checkout-cone-mode: false
+      - name: Compile exact published sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile \
+            research/doom/map01_held_input_occupancy_partial_posthoc_v2/analyze_partial.py \
+            research/doom/map01_held_input_occupancy_partial_posthoc_v2/audit_partial.py \
+            research/doom/map01_held_input_occupancy_partial_posthoc_v2/run_full.py
+      - name: Run frozen semantic construction tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/doom/map01_held_input_occupancy_partial_posthoc_v2/test_partial.py
+      - name: Hash exact tested sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          sha256sum research/doom/map01_held_input_occupancy_partial_posthoc_v2/*.py
