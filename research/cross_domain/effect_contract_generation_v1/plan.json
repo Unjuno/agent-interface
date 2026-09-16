@@ -1,0 +1,219 @@
+{
+  "cases": [
+    {
+      "id": "m05-effect_bound-post_effect_narrow",
+      "policy": "effect_bound",
+      "rep": 5,
+      "scenario": "post_effect_narrow"
+    },
+    {
+      "id": "m03-latest_contract-pre_effect_narrow",
+      "policy": "latest_contract",
+      "rep": 3,
+      "scenario": "pre_effect_narrow"
+    },
+    {
+      "id": "m04-latest_contract-post_effect_narrow",
+      "policy": "latest_contract",
+      "rep": 4,
+      "scenario": "post_effect_narrow"
+    },
+    {
+      "id": "m01-effect_bound-pre_effect_narrow",
+      "policy": "effect_bound",
+      "rep": 1,
+      "scenario": "pre_effect_narrow"
+    },
+    {
+      "id": "m02-latest_contract-pre_effect_narrow",
+      "policy": "latest_contract",
+      "rep": 2,
+      "scenario": "pre_effect_narrow"
+    },
+    {
+      "id": "m04-latest_contract-stable",
+      "policy": "latest_contract",
+      "rep": 4,
+      "scenario": "stable"
+    },
+    {
+      "id": "m02-effect_bound-post_effect_narrow",
+      "policy": "effect_bound",
+      "rep": 2,
+      "scenario": "post_effect_narrow"
+    },
+    {
+      "id": "m04-effect_bound-stable",
+      "policy": "effect_bound",
+      "rep": 4,
+      "scenario": "stable"
+    },
+    {
+      "id": "m03-effect_bound-stable",
+      "policy": "effect_bound",
+      "rep": 3,
+      "scenario": "stable"
+    },
+    {
+      "id": "m03-latest_contract-stable",
+      "policy": "latest_contract",
+      "rep": 3,
+      "scenario": "stable"
+    },
+    {
+      "id": "m01-effect_bound-post_effect_narrow",
+      "policy": "effect_bound",
+      "rep": 1,
+      "scenario": "post_effect_narrow"
+    },
+    {
+      "id": "m04-effect_bound-pre_effect_narrow",
+      "policy": "effect_bound",
+      "rep": 4,
+      "scenario": "pre_effect_narrow"
+    },
+    {
+      "id": "m02-effect_bound-stable",
+      "policy": "effect_bound",
+      "rep": 2,
+      "scenario": "stable"
+    },
+    {
+      "id": "m05-effect_bound-stable",
+      "policy": "effect_bound",
+      "rep": 5,
+      "scenario": "stable"
+    },
+    {
+      "id": "m03-effect_bound-post_effect_narrow",
+      "policy": "effect_bound",
+      "rep": 3,
+      "scenario": "post_effect_narrow"
+    },
+    {
+      "id": "m04-latest_contract-pre_effect_narrow",
+      "policy": "latest_contract",
+      "rep": 4,
+      "scenario": "pre_effect_narrow"
+    },
+    {
+      "id": "m04-effect_bound-post_effect_narrow",
+      "policy": "effect_bound",
+      "rep": 4,
+      "scenario": "post_effect_narrow"
+    },
+    {
+      "id": "m01-latest_contract-stable",
+      "policy": "latest_contract",
+      "rep": 1,
+      "scenario": "stable"
+    },
+    {
+      "id": "m02-latest_contract-stable",
+      "policy": "latest_contract",
+      "rep": 2,
+      "scenario": "stable"
+    },
+    {
+      "id": "m01-latest_contract-post_effect_narrow",
+      "policy": "latest_contract",
+      "rep": 1,
+      "scenario": "post_effect_narrow"
+    },
+    {
+      "id": "m05-latest_contract-stable",
+      "policy": "latest_contract",
+      "rep": 5,
+      "scenario": "stable"
+    },
+    {
+      "id": "m03-latest_contract-post_effect_narrow",
+      "policy": "latest_contract",
+      "rep": 3,
+      "scenario": "post_effect_narrow"
+    },
+    {
+      "id": "m05-latest_contract-post_effect_narrow",
+      "policy": "latest_contract",
+      "rep": 5,
+      "scenario": "post_effect_narrow"
+    },
+    {
+      "id": "m02-effect_bound-pre_effect_narrow",
+      "policy": "effect_bound",
+      "rep": 2,
+      "scenario": "pre_effect_narrow"
+    },
+    {
+      "id": "m05-effect_bound-pre_effect_narrow",
+      "policy": "effect_bound",
+      "rep": 5,
+      "scenario": "pre_effect_narrow"
+    },
+    {
+      "id": "m01-effect_bound-stable",
+      "policy": "effect_bound",
+      "rep": 1,
+      "scenario": "stable"
+    },
+    {
+      "id": "m03-effect_bound-pre_effect_narrow",
+      "policy": "effect_bound",
+      "rep": 3,
+      "scenario": "pre_effect_narrow"
+    },
+    {
+      "id": "m01-latest_contract-pre_effect_narrow",
+      "policy": "latest_contract",
+      "rep": 1,
+      "scenario": "pre_effect_narrow"
+    },
+    {
+      "id": "m05-latest_contract-pre_effect_narrow",
+      "policy": "latest_contract",
+      "rep": 5,
+      "scenario": "pre_effect_narrow"
+    },
+    {
+      "id": "m02-latest_contract-post_effect_narrow",
+      "policy": "latest_contract",
+      "rep": 2,
+      "scenario": "post_effect_narrow"
+    }
+  ],
+  "construction": {
+    "count": 6,
+    "excluded": true
+  },
+  "decision": {
+    "effect_bound_correct_required": 15,
+    "formal_count": 30,
+    "latest_post_effect_false_complete_required": 5,
+    "latest_stable_pre_correct_required": 10,
+    "same_id_reruns": 0
+  },
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "policies": [
+    "latest_contract",
+    "effect_bound"
+  ],
+  "prefreeze_tests": {
+    "failed": 0,
+    "passed": 5
+  },
+  "python": "3.13.5",
+  "scenarios": [
+    "stable",
+    "pre_effect_narrow",
+    "post_effect_narrow"
+  ],
+  "schema": "effect-contract-generation-plan-v1",
+  "seed": 511916,
+  "source_sha256": {
+    "audit.py": "4b8bf831a80aa00dddd355f954beb1c81b301921af4dbdeed8ceaa29ac46ebea",
+    "experiment.py": "31771aba71ac795192ac1eeb3bba20492b113d2c8df2a7b8a2db2c0c6af51189",
+    "test_contract.py": "5e81c3d610aaf0285448f9d6e8eef6c24403ddadde877734ea8d749ab8a74379"
+  },
+  "sqlite": "3.46.1",
+  "task": "EFFECT-CONTRACT-GENERATION-20260916-001"
+}
