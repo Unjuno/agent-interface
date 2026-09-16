@@ -1,0 +1,9 @@
+{
+  "schema": "target-footprint-adaptive-caller-integration-v4-result",
+  "decision": "PASS_INTEGRATION_MECHANICS",
+  "caller_blob": "7faf042304728ce91a3e4f89d465b251ea0bf70d",
+  "resolver_blob": "a8bb0e564bae738c9091b737ff2abe1922520ec1",
+  "prereg_sha256": "b9ab9def0ef5b0d156b3b317c252fb728b309f18fb51d9723db5e7c4838bce61",
+  "audit": {"schema":"target-footprint-adaptive-caller-integration-v4-audit","decision":"PASS_INTEGRATION_MECHANICS","cases":14,"condition_correct":14,"wrong_target_edits":0,"model_calls":0,"release_failures":0,"candidate_local_successes":2,"candidate_local_safe_stops":1,"local_repair_stage_ms":{"n":6,"median":167.481076,"range":[158.81161,431.610554]},"final_revalidate_stage_ms":{"n":5,"median":30.402088,"range":[29.442526,31.404646]}},
+  "development_failures": {"v1":"adapter/caller contract mismatch; block incomplete after 3 cases","v2":"42-case block exceeded local execution budget; first 3 completed outcomes retained only","v3":"multi-case wrapper inherited pipes from Inkscape child; first 3 completed outcomes retained only"}
+}
