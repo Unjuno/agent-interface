@@ -1,0 +1,48 @@
+{
+  "controls": [
+    {
+      "name": "missing_row",
+      "rc": 1,
+      "rejected": true,
+      "stdout": ""
+    },
+    {
+      "name": "duplicate_row_id",
+      "rc": 1,
+      "rejected": true,
+      "stdout": "{\"counts\": {\"safe_runtime_matches\": 20, \"structural_unsafe_backend_emissions\": 20, \"typed_safe_accept\": 20, \"typed_unsafe_reject_preinput\": 20}, \"decision\": \"FAIL_ROLE_GATE\", \"errors\": [\"duplicate_ids\"], \"schema\": \"agent-interface/sensorimotor-graph-evidence-role-audit-v1\"}"
+    },
+    {
+      "name": "typed_unsafe_admit",
+      "rc": 1,
+      "rejected": true,
+      "stdout": "{\"counts\": {\"safe_runtime_matches\": 20, \"structural_unsafe_backend_emissions\": 20, \"typed_safe_accept\": 20, \"typed_unsafe_reject_preinput\": 19}, \"decision\": \"FAIL_ROLE_GATE\", \"errors\": [\"m01-typed_roles:unsafe_typed_admitted\", \"typed_unsafe:19\"], \"schema\": \"agent-interface/sensorimotor-graph-evidence-role-audit-v1\"}"
+    },
+    {
+      "name": "typed_reject_with_backend",
+      "rc": 1,
+      "rejected": true,
+      "stdout": "{\"counts\": {\"safe_runtime_matches\": 20, \"structural_unsafe_backend_emissions\": 20, \"typed_safe_accept\": 20, \"typed_unsafe_reject_preinput\": 19}, \"decision\": \"FAIL_ROLE_GATE\", \"errors\": [\"m01-typed_roles:unsafe_typed_admitted\", \"typed_unsafe:19\"], \"schema\": \"agent-interface/sensorimotor-graph-evidence-role-audit-v1\"}"
+    },
+    {
+      "name": "baseline_boundary_hidden",
+      "rc": 1,
+      "rejected": true,
+      "stdout": "{\"counts\": {\"safe_runtime_matches\": 20, \"structural_unsafe_backend_emissions\": 19, \"typed_safe_accept\": 20, \"typed_unsafe_reject_preinput\": 20}, \"decision\": \"FAIL_ROLE_GATE\", \"errors\": [\"m01-structural_only:baseline_boundary_not_exposed\", \"base_unsafe:19\"], \"schema\": \"agent-interface/sensorimotor-graph-evidence-role-audit-v1\"}"
+    },
+    {
+      "name": "typed_safe_reject",
+      "rc": 1,
+      "rejected": true,
+      "stdout": "{\"counts\": {\"safe_runtime_matches\": 19, \"structural_unsafe_backend_emissions\": 20, \"typed_safe_accept\": 19, \"typed_unsafe_reject_preinput\": 20}, \"decision\": \"FAIL_ROLE_GATE\", \"errors\": [\"m00-typed_roles:safe_reject:INJECTED\", \"typed_safe:19\", \"safe_match:19\"], \"schema\": \"agent-interface/sensorimotor-graph-evidence-role-audit-v1\"}"
+    },
+    {
+      "name": "wrong_reject_reason",
+      "rc": 1,
+      "rejected": true,
+      "stdout": "{\"counts\": {\"safe_runtime_matches\": 20, \"structural_unsafe_backend_emissions\": 20, \"typed_safe_accept\": 20, \"typed_unsafe_reject_preinput\": 19}, \"decision\": \"FAIL_ROLE_GATE\", \"errors\": [\"m01-typed_roles:reason:ACTUATOR_REQUIRES_ADMISSION_DEPENDENCY:ACTUATOR_REQUIRES_CURRENT\", \"typed_unsafe:19\"], \"schema\": \"agent-interface/sensorimotor-graph-evidence-role-audit-v1\"}"
+    }
+  ],
+  "rejected": 7,
+  "total": 7
+}
