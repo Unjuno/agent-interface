@@ -1,0 +1,32 @@
+{
+  "schema": "generation_activation_barrier_plan_v1",
+  "task_id": "COORD-GENERATION-ACTIVATION-BARRIER-20260916-011",
+  "publication_base": "41e95fddb9b177d0617415c42d3d44f08c14f8ab",
+  "scope": "research/coordination/generation_activation_barrier_v1/**",
+  "request_old": "cmd-old-011",
+  "request_new": "cmd-new-011",
+  "naive_order": [
+    "coord_g1_to_g2_active",
+    "old_gen1_request_applied_in_gap",
+    "receiver_g1_to_g2",
+    "new_gen2_request_applied"
+  ],
+  "barrier_order": [
+    "receiver_active_to_blocked_g1",
+    "coord_g1_to_g2_active",
+    "old_gen1_request_barrier_blocked_no_write",
+    "receiver_install_g2_while_blocked",
+    "receiver_blocked_to_active_g2",
+    "new_gen2_request_applied"
+  ],
+  "expected": {
+    "naive_final_effect_count": 2,
+    "barrier_final_effect_count": 1,
+    "barrier_old_outcome": "BARRIER_BLOCKED",
+    "barrier_final_mode": "ACTIVE",
+    "barrier_final_generation": 2
+  },
+  "decision": "PASS_ACTIVATION_BARRIER_PROPAGATION_GAP_SCOPED",
+  "no_retries": true,
+  "first_outcomes_only": true
+}
