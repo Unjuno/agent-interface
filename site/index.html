@@ -224,17 +224,16 @@
       </div>
     </section>
 
-    <figure class="hero-media wrap" aria-labelledby="realtime-label">
-      <div class="media-bar"><span class="eyebrow" id="realtime-label">Real-time showcase / Freedoom</span><span class="media-state">FAILED RUN · 2× PLAYBACK</span></div>
-      <!-- Preserve the recording published in upstream commit 13552b3. The cover is typography, not gameplay. -->
-      <div class="media-well" id="realtime-media">
-        <video controls playsinline preload="none" poster="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221280%22%20height%3D%22550%22%20viewBox%3D%220%200%201280%20550%22%3E%3Cdefs%3E%3Cpattern%20id%3D%22g%22%20width%3D%2264%22%20height%3D%2264%22%20patternUnits%3D%22userSpaceOnUse%22%3E%3Cpath%20d%3D%22M64%200H0V64%22%20fill%3D%22none%22%20stroke%3D%22%23242f24%22%20stroke-width%3D%221%22%2F%3E%3C%2Fpattern%3E%3C%2Fdefs%3E%3Cpath%20fill%3D%22%23101510%22%20d%3D%22M0%200h1280v550H0z%22%2F%3E%3Cpath%20fill%3D%22url%28%23g%29%22%20d%3D%22M0%200h1280v550H0z%22%2F%3E%3Cpath%20d%3D%22M54%2024H24v30m1202%20442h30v-30%22%20fill%3D%22none%22%20stroke%3D%22%23657753%22%2F%3E%3Ctext%20x%3D%22640%22%20y%3D%22211%22%20fill%3D%22%23d5f879%22%20font-family%3D%22monospace%22%20font-size%3D%2215%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%223%22%3ERETAINED%20EXPERIMENT%3C%2Ftext%3E%3Ctext%20x%3D%22640%22%20y%3D%22278%22%20fill%3D%22%23f1f3eb%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2246%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%22-1%22%3EAstra%20%2F%20Freedoom%20MAP01%3C%2Ftext%3E%3Ctext%20x%3D%22640%22%20y%3D%22322%22%20fill%3D%22%23a5aea4%22%20font-family%3D%22monospace%22%20font-size%3D%2216%22%20text-anchor%3D%22middle%22%3EFull%20recording%20%C2%B7%202%C3%97%20playback%20%C2%B7%20no%20MAP01%20exit%3C%2Ftext%3E%3Ctext%20x%3D%22640%22%20y%3D%22490%22%20fill%3D%22%23a5aea4%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%3ERecording%20cover.%20Not%20live%20gameplay.%3C%2Ftext%3E%3C%2Fsvg%3E" aria-label="Full failed Astra MAP01 experiment at two times playback speed">
-          <source src="media/map01-astra-live-01-2x-h264.mp4" type="video/mp4">
-          Your browser does not support embedded video. <a href="media/map01-astra-live-01-2x-h264.mp4">Download the recording.</a>
+    <figure class="hero-media wrap" aria-labelledby="desktop-label">
+      <div class="media-bar"><span class="eyebrow" id="desktop-label">Desktop workflow</span><span class="media-state">VERIFIED RUN · 2× EVIDENCE PLAYBACK</span></div>
+      <div class="media-well" id="desktop-media">
+        <video controls playsinline preload="metadata" aria-label="Verified six-task persistent desktop workflow at two times playback speed">
+          <source src="media/golden-desktop-live-02-2x-h264.mp4" type="video/mp4">
+          Your browser does not support embedded video. <a href="media/golden-desktop-live-02-2x-h264.mp4">Download the recording.</a>
         </video>
       </div>
-      <figcaption><div class="media-caption"><span>Retained Astra-low attempt. Death, no MAP01 exit. Not a live demo.</span><a href="https://github.com/Unjuno/agent-interface/blob/main/research/doom/MAP01_ASTRA_ATTEMPT_V1.md">Inspect the run &amp; limitations <span aria-hidden="true">↗</span></a></div>
-      <details class="run-details"><summary>Recording details</summary><p>One frozen Astra-low attempt, shown in full at labelled 2× playback: 149.911 seconds, 13 decisions, one kill, then death without a MAP01 exit. The clock advanced at 35.016 tics/s. Fixed cover expired before seven model returns; later renewal work is measured separately.</p></details></figcaption>
+      <figcaption><div class="media-caption"><span>6/6 exact · cold/reuse/reuse/repair/reuse/reuse · median input acknowledgement to observation 101.276 ms</span><a href="https://github.com/Unjuno/agent-interface/blob/main/runtime/results/golden-desktop-live-02/golden-report.json">Open the retained report <span aria-hidden="true">↗</span></a></div>
+      <details class="run-details"><summary>Recording details</summary><p>One fresh persistent-only run, shown at labelled 2× playback from 137 exact retained observations over 47.472 seconds. Unchanged intervals hold the latest observation. The run used 26,531 input tokens, made three model generations, admitted zero stale pointers, and verified 57/57 terminal input releases. This is one successful run, not a baseline comparison.</p></details></figcaption>
     </figure>
 
     <section class="section wrap" aria-labelledby="execution-title">
@@ -272,16 +271,17 @@
         <p class="intro">This is retained evidence from Linux/X11: 6/6 exact submissions, three model generations, and two model-visible images.</p>
         <a class="text-link" href="https://github.com/Unjuno/agent-interface/blob/main/runtime/GOLDEN_DESKTOP_DEMO_V1.md">Inspect the run &amp; limitations <span class="external" aria-hidden="true">↗</span></a>
       </div>
-      <figure aria-labelledby="desktop-label">
-        <div class="media-bar"><span class="eyebrow" id="desktop-label">Desktop workflow</span><span class="media-state">VERIFIED RUN · 2× EVIDENCE PLAYBACK</span></div>
-        <div class="media-well" id="desktop-media">
-          <video controls playsinline preload="metadata" aria-label="Verified six-task persistent desktop workflow at two times playback speed">
-            <source src="media/golden-desktop-live-02-2x-h264.mp4" type="video/mp4">
-            Your browser does not support embedded video. <a href="media/golden-desktop-live-02-2x-h264.mp4">Download the recording.</a>
+        <figure aria-labelledby="realtime-label">
+        <div class="media-bar"><span class="eyebrow" id="realtime-label">Real-time showcase / Freedoom</span><span class="media-state">FAILED RUN · 2× PLAYBACK</span></div>
+        <!-- Preserve the recording published in upstream commit 13552b3. The cover is typography, not gameplay. -->
+        <div class="media-well" id="realtime-media">
+          <video controls playsinline preload="none" poster="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221280%22%20height%3D%22550%22%20viewBox%3D%220%200%201280%20550%22%3E%3Cdefs%3E%3Cpattern%20id%3D%22g%22%20width%3D%2264%22%20height%3D%2264%22%20patternUnits%3D%22userSpaceOnUse%22%3E%3Cpath%20d%3D%22M64%200H0V64%22%20fill%3D%22none%22%20stroke%3D%22%23242f24%22%20stroke-width%3D%221%22%2F%3E%3C%2Fpattern%3E%3C%2Fdefs%3E%3Cpath%20fill%3D%22%23101510%22%20d%3D%22M0%200h1280v550H0z%22%2F%3E%3Cpath%20fill%3D%22url%28%23g%29%22%20d%3D%22M0%200h1280v550H0z%22%2F%3E%3Cpath%20d%3D%22M54%2024H24v30m1202%20442h30v-30%22%20fill%3D%22none%22%20stroke%3D%22%23657753%22%2F%3E%3Ctext%20x%3D%22640%22%20y%3D%22211%22%20fill%3D%22%23d5f879%22%20font-family%3D%22monospace%22%20font-size%3D%2215%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%223%22%3ERETAINED%20EXPERIMENT%3C%2Ftext%3E%3Ctext%20x%3D%22640%22%20y%3D%22278%22%20fill%3D%22%23f1f3eb%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2246%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%22-1%22%3EAstra%20%2F%20Freedoom%20MAP01%3C%2Ftext%3E%3Ctext%20x%3D%22640%22%20y%3D%22322%22%20fill%3D%22%23a5aea4%22%20font-family%3D%22monospace%22%20font-size%3D%2216%22%20text-anchor%3D%22middle%22%3EFull%20recording%20%C2%B7%202%C3%97%20playback%20%C2%B7%20no%20MAP01%20exit%3C%2Ftext%3E%3Ctext%20x%3D%22640%22%20y%3D%22490%22%20fill%3D%22%23a5aea4%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%3ERecording%20cover.%20Not%20live%20gameplay.%3C%2Ftext%3E%3C%2Fsvg%3E" aria-label="Full failed Astra MAP01 experiment at two times playback speed">
+            <source src="media/map01-astra-live-01-2x-h264.mp4" type="video/mp4">
+            Your browser does not support embedded video. <a href="media/map01-astra-live-01-2x-h264.mp4">Download the recording.</a>
           </video>
         </div>
-        <figcaption><div class="media-caption"><span>6/6 exact · cold/reuse/reuse/repair/reuse/reuse · median input acknowledgement to observation 101.276 ms</span><a href="https://github.com/Unjuno/agent-interface/blob/main/runtime/results/golden-desktop-live-02/golden-report.json">Open the retained report <span aria-hidden="true">↗</span></a></div>
-        <details class="run-details"><summary>Recording details</summary><p>One fresh persistent-only run, shown at labelled 2× playback from 137 exact retained observations over 47.472 seconds. Unchanged intervals hold the latest observation. The run used 26,531 input tokens, made three model generations, admitted zero stale pointers, and verified 57/57 terminal input releases. This is one successful run, not a baseline comparison.</p></details></figcaption>
+        <figcaption><div class="media-caption"><span>Retained Astra-low attempt. Death, no MAP01 exit. Not a live demo.</span><a href="https://github.com/Unjuno/agent-interface/blob/main/research/doom/MAP01_ASTRA_ATTEMPT_V1.md">Inspect the run &amp; limitations <span aria-hidden="true">↗</span></a></div>
+        <details class="run-details"><summary>Recording details</summary><p>One frozen Astra-low attempt, shown in full at labelled 2× playback: 149.911 seconds, 13 decisions, one kill, then death without a MAP01 exit. The clock advanced at 35.016 tics/s. Fixed cover expired before seven model returns; later renewal work is measured separately.</p></details></figcaption>
       </figure>
     </section>
 
