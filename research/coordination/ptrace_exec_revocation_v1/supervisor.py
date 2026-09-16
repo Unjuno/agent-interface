@@ -35,6 +35,7 @@ def main():
                 p.returncode=-os.WTERMSIG(st); break
             if os.WIFSTOPPED(st):
                 sig=os.WSTOPSIG(st); trace['post_exec_stops'].append(sig)
+                # CPython ignores SIGPIPE by default; suppress the ptrace delivery to preserve that behavior.
                 deliver=0 if sig==13 else sig
                 ptrace(PTRACE_CONT,p.pid,deliver); continue
             raise RuntimeError(f'bad child state {hex(st)}')
