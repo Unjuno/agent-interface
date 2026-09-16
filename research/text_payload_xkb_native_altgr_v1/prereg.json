@@ -1,0 +1,27 @@
+{
+  "development_before_freeze": "py_compile + embedded synthetic parser test only; no X server, Tk, XTEST or live input under this task",
+  "formal_repetitions": 3,
+  "formal_trials": 48,
+  "frozen_contract": "native full-XKB readback preflight and physical keycodes only; no keymap mutation/projection/Compose",
+  "issue": 399,
+  "predecessor_evidence": [
+    "#387 PASS_XDUMMY_NATIVE_XKB_MAP_SCOPED",
+    "#360 RETAIN_ALTGR_DIRECT_PREFLIGHT_SCOPED projected fixture"
+  ],
+  "publication_base": "b3bc631d2c6dfae8586bb28abdc9eb2002bb624b",
+  "resolved_sha256": "3d3133ea34205324545de76b99d9f65e450d45451a705443336f71a5ac6a7ffd",
+  "schedule_sha256": "a9448f3b4273e5709b05793fc1ea437eadda1af36e7e90a19b925e2f3f1bff0a",
+  "schema": "agent-interface/xkb-xdummy-native-altgr-prereg-v1",
+  "source_sha256": {
+    "audit.py": "91a8aa7bf117233050eabe0878e80ec14d16335706abaf780a4212ab640968c7",
+    "candidate.py": "c732913207ec7fbf96ebe9cb05b63e1a9ee8715420f64a4fdc0898a95ed860f7",
+    "environment.json": "3f7443e866613e053a47db71b361637d2e389ae4b1e38b3cbd67987139273e37",
+    "plan.json": "b316114033bbc4f22eb03e569b51470b7527f13a0ca95bb7fe4c282440309bd7",
+    "receiver.py": "984f86bc1651ec6c2b718b34a9372603efd1f12b0c26f838e083f5e46b90a538",
+    "run_arm.py": "01b989c792bdb9a496c3563659fec495d3058fad53ba202b839b21225e88693f",
+    "run_block.py": "68449879e191d87cb6894e31701ce2a6d1f237630d0be061252108567cfa63d6",
+    "schedule.json": "a9448f3b4273e5709b05793fc1ea437eadda1af36e7e90a19b925e2f3f1bff0a",
+    "test_candidate.py": "fdabbd9ecbb5d127e0236546ad71bc37c59b0d754882e4270dc58387a651fa36"
+  },
+  "task": "XKB-XDUMMY-NATIVE-ALTGR-DELIVERY-20260916-001"
+}
