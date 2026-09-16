@@ -1,0 +1,56 @@
+{
+  "canonical_reanchor_receipt_sha256": "6afe34e25fde1996812e2b5d1a3c26320f51496a7a265dc8ea86b0dd53e52f68",
+  "construction": {
+    "deterministic_matrix_executed_prefreeze": true,
+    "note": "Pure deterministic construction only; formal first-outcome is a distinct post-freeze invocation.",
+    "unit_and_mutation_tests": "16/16 PASS",
+    "used_for_threshold_or_case_tuning": false
+  },
+  "decision": "PASS_REANCHOR_PLANNER_ADMISSION_SCOPED only if frozen independent audit passes all six fixed cases and no-authority/executor-gate invariants",
+  "dependency_upstream_path": "research/live_control/semantic_grounding_admission_v1.py",
+  "dependency_upstream_sha256": "337eed1ef5fc248ba121ad7c9769fda7e2f685bade1c82482542eab2b0674dcc",
+  "files": {
+    "audit.py": {
+      "bytes": 3516,
+      "git_blob": "a0a79c15a49454d2d388b91fb5e234fc717e4a8e",
+      "sha256": "3a1713065b9bba8a71b9a7def74f4ac6e49affbec4f648b99c9b46c41b87eb1c"
+    },
+    "experiment.py": {
+      "bytes": 6945,
+      "git_blob": "2e5013a4c4cf53a9e74765b1b21f7fba881d326b",
+      "sha256": "e1d735e04c1baa9b171a350d6cb49440bcedafd05cb1cdefd5f7dfe3a611ffa9"
+    },
+    "plan.json": {
+      "bytes": 1142,
+      "git_blob": "bc29215f1144d1f5986b115b27265468dbc9a0ab",
+      "sha256": "e5677d4b31f3a9ce15f8edaa18466ebbdaaed318805b7940491534f6de2b18b8"
+    },
+    "semantic_grounding_admission_v1.py": {
+      "bytes": 2492,
+      "git_blob": "720895f7e5474f755c3d0be07596b7a50f0081e2",
+      "sha256": "337eed1ef5fc248ba121ad7c9769fda7e2f685bade1c82482542eab2b0674dcc"
+    },
+    "test_audit_mutations.py": {
+      "bytes": 2053,
+      "git_blob": "c1a5ad2624ca9d1a7351d49cb567ae5c9bd77496",
+      "sha256": "fbd4e9ec475469e520963e595782a6d5b52c214d4067e4d05b8b7928f1d81a80"
+    },
+    "test_binding.py": {
+      "bytes": 1946,
+      "git_blob": "655e9933788245bd747f70c03caccf37abed6bba",
+      "sha256": "5aaf144f56ab805b0ac5310dd80d3632b65e68be7bce4137d979bed781967584"
+    }
+  },
+  "formal": {
+    "cases": 6,
+    "executed": 0,
+    "invocations_allowed": 1,
+    "retry": false,
+    "tuning": false
+  },
+  "issue": 629,
+  "publication_base": "7d0e391150c0a771ab9903a8d4cff7a1945884ea",
+  "python": "3.13.5",
+  "schema": "reanchor-planner-admission-freeze-v1",
+  "task": "MAP01-REANCHOR-PLANNER-ADMISSION-20260917-001"
+}
