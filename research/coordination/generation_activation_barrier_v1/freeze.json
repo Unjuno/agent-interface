@@ -1,0 +1,39 @@
+{
+  "schema": "generation_activation_barrier_freeze_v1",
+  "task_id": "COORD-GENERATION-ACTIVATION-BARRIER-20260916-011",
+  "publication_base": "41e95fddb9b177d0617415c42d3d44f08c14f8ab",
+  "source_data_head_before_manifest": "eaeeab1220bd90037345cc3a182184ddf09576c3",
+  "blobs": {
+    "policy.py": "acd1cd3e7ae39019656b0a156f7acc02438bdb7c",
+    "plan.json": "75f06226c4df5ac3ac1ea20b640e06da0295dbf9",
+    "coord_naive.json": "890851080c75a6840dccf0ff97eaf892943e68c8",
+    "coord_barrier.json": "9d67d48f3b4a21803fecdac9c144437d91e6e031",
+    "receiver_naive.json": "f744c009d6899259fb23c6a294390a308be7cb01",
+    "receiver_barrier.json": "f77ed2dab6ce093ed8ca2ba9c295db6a6deffe59",
+    "request_old.json": "ef47a6c1beccdfbe20f12de33982285d1aecd2f1",
+    "request_new.json": "a627710cca9b1633fcce2a8477831ad2181dfa9e",
+    "payload_coord_naive_g2.json": "f0be93cccc9383222b1e346f4cf420081dab33fb",
+    "payload_receiver_naive_after_old.json": "47d5cc1ff20a4fda535919d8fddb9916c8c41673",
+    "payload_receiver_naive_g2_after_old.json": "4b116957d2deeb4225db20d0d500d67278b9d4af",
+    "payload_receiver_naive_final.json": "c195d8fc27ab394ab7fb7dec800280f7dd5125e9",
+    "payload_receiver_barrier_blocked_g1.json": "fa5dfda3cd946a5508b0f8906b509afe2d10d8eb",
+    "payload_coord_barrier_g2.json": "dce0a1195216a9797ec6058ff66245ca1fff2441",
+    "payload_receiver_barrier_hold_g2.json": "fe3f927760d1c38e6f857a6a7231cbc03a117730",
+    "payload_receiver_barrier_active_g2.json": "2459fcba8ba0f4ce8546e88dc5555b53f6fe9864",
+    "payload_receiver_barrier_final.json": "5ffc9ceb2e7e235dc7a1fdab5dab5cc6be42be4d"
+  },
+  "measured_order": [
+    "naive_coord_g2",
+    "naive_old_request",
+    "naive_receiver_g2",
+    "naive_new_request",
+    "barrier_receiver_block_g1",
+    "barrier_coord_g2",
+    "barrier_old_request_no_write",
+    "barrier_receiver_install_g2_blocked",
+    "barrier_receiver_activate_g2",
+    "barrier_new_request"
+  ],
+  "construction_note": "A pre-measurement create attempt using filename payload_receiver_barrier_blocked_g2.json was blocked before commit by tool safety classification. Neutral filename payload_receiver_barrier_hold_g2.json was used with unchanged state bytes and semantics.",
+  "measured_writes_before_freeze": 0
+}
