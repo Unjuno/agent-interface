@@ -1,5 +1,5 @@
 from pathlib import Path
-import argparse, hashlib, json
+import argparse, hashlib, json, statistics, sys
 import cv2, numpy as np
 from PIL import Image
 
@@ -36,6 +36,7 @@ def close(a,b,tol=1e-5):
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('root',type=Path);ap.add_argument('--plan',type=Path,required=True);a=ap.parse_args()
     plan=json.loads(a.plan.read_text()); root=a.root; errs=[]; rows=[]
+    # source identity
     for name,expect in plan['source_sha256'].items():
         p=Path(plan['source_dir'])/name
         if not p.exists() or sha(p)!=expect: errs.append(f'source:{name}')
@@ -48,7 +49,8 @@ def main():
         if s.get('error') is not None or not rp.exists(): errs.append(c['id']+':case_error'); continue
         r=json.loads(rp.read_text()); files=[p1/x for x in r['frame_files']]
         if len(files)<8 or any(not p.exists() for p in files): errs.append(c['id']+':frames'); continue
-        starts=r['frame_capture_start_ns']; cons=[]
+        starts=r['frame_capture_start_ns']
+        cons=[]
         for i in range(1,len(files)):
             m=metric(files[i-1],files[i]);m['dt_ms']=(starts[i]-starts[i-1])/1e6;cons.append(m)
         elig=[m for m in cons if m['dt_ms']<=MAX_PAIR_DT_MS and m['valid_tracks']>=MIN_TRACKS and m['median_dy_px'] is not None]
@@ -64,7 +66,8 @@ def main():
         if expected_extra != phase2.exists(): errs.append(c['id']+':phase2_presence')
         ok,nrel=releases_ok([p1/'owner-records.json',phase2,d/'setup-owner-records.json'])
         if not ok: errs.append(c['id']+':release')
-        hidden=bool(s.get('hidden_phase1_drop')); z=float(s['after_phase1']['z'])
+        hidden=bool(s.get('hidden_phase1_drop'))
+        z=float(s['after_phase1']['z'])
         if hidden!=(z<=-120): errs.append(c['id']+':hidden_drop_receipt')
         if c['class']=='drop':
             if not hidden: errs.append(c['id']+':positive_not_dropped')
@@ -72,7 +75,8 @@ def main():
             if c['gate']=='temporal_gate':
                 if temporal!='DROP_COMPLETED' or expected_extra: errs.append(c['id']+':temporal_positive_miss')
                 else: pos_temporal_stop+=1
-            elif hidden and expected_extra: pos_endpoint_redundant+=1
+            else:
+                if hidden and expected_extra: pos_endpoint_redundant+=1
         else:
             if hidden: errs.append(c['id']+':wall_dropped')
             if endpoint['status']=='DROP_COMPLETED' or temporal=='DROP_COMPLETED' or not expected_extra: errs.append(c['id']+':wall_false_complete')
@@ -80,10 +84,11 @@ def main():
         rows.append({'id':c['id'],'seed':c['seed'],'class':c['class'],'heading':c['heading'],'gate':c['gate'],'hidden_phase1_drop':hidden,'endpoint_status':endpoint['status'],'endpoint_dy':endpoint['median_dy_px'],'temporal_status':temporal,'extra_forward_issued':expected_extra,'release_receipts':nrel})
     complete=len(rows)==len(plan['cases']) and not errs
     temporal_pos=sum(1 for c in plan['cases'] if c['class']=='drop' and c['gate']=='temporal_gate')
+    endpoint_pos=sum(1 for c in plan['cases'] if c['class']=='drop' and c['gate']=='endpoint_gate')
     wall_n=sum(1 for c in plan['cases'] if c['class']=='wall')
     if not complete: decision='FAIL_INTEGRITY'
     elif pos_temporal_stop != temporal_pos or walls_ok != wall_n: decision='FAIL_TEMPORAL_COMPLETION_GATE'
-    elif pos_endpoint_redundant>=2: decision='PASS_TEMPORAL_CONTINUATION_GATE_SCOPED'
+    elif pos_endpoint_redundant>=2 and (pos_endpoint_redundant-(temporal_pos-pos_temporal_stop))>=2: decision='PASS_TEMPORAL_CONTINUATION_GATE_SCOPED'
     else: decision='HOLD_NO_CONTINUATION_DISCRIMINATOR'
     out={'schema':'agent-interface/map01-sector165-continuation-gate-audit-v1','status':'PASS_AUDIT' if not errs else 'FAIL_AUDIT','scientific_decision':decision,'errors':errs,'counts':{'cases':len(rows),'positive_temporal_stops':pos_temporal_stop,'positive_endpoint_redundant_continuations':pos_endpoint_redundant,'wall_correct_continuations':walls_ok},'rows':rows}
     print(json.dumps(out,indent=2,sort_keys=True)); raise SystemExit(0 if not errs else 2)
