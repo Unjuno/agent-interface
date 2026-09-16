@@ -34,10 +34,12 @@ def main():
    time.sleep(.03)
   if not addr: raise RuntimeError('org.a11y.Bus unavailable')
   sbown=call(['dbus-send','--session','--dest=org.freedesktop.DBus','--print-reply','--reply-timeout=1000','/org/freedesktop/DBus','org.freedesktop.DBus.NameHasOwner','string:org.a11y.Bus'],env=env); session_bus_owner=('boolean true' in sbown.stdout)
+  # activate official Registry
   q=call(['dbus-send','--bus='+addr,'--dest=org.a11y.atspi.Registry','--print-reply','--reply-timeout=2000','/org/a11y/atspi/registry','org.a11y.atspi.Registry.GetRegisteredEvents'],env=env)
   if q.returncode: raise RuntimeError('Registry activation failed '+q.stderr)
   rgown=call(['dbus-send','--bus='+addr,'--dest=org.freedesktop.DBus','--print-reply','--reply-timeout=1000','/org/freedesktop/DBus','org.freedesktop.DBus.NameHasOwner','string:org.a11y.atspi.Registry'],env=env); registry_owner=('boolean true' in rgown.stdout)
   if not session_bus_owner or not registry_owner: raise RuntimeError(f'owner gate failed session={session_bus_owner} registry={registry_owner}')
+  # persistent focused listener + monitor before app start
   mon=spawn('monitor',['dbus-monitor','--address',addr,"type='signal',interface='org.a11y.atspi.Event.Object',member='StateChanged',arg0='focused'"],env)
   listener=spawn('listener',[sys.executable,str(HERE/'register_listener.py'),addr,'20','object:state-changed:focused'],env)
   for _ in range(100):
@@ -45,6 +47,7 @@ def main():
    time.sleep(.03)
   listener_line=(root/'listener.out').read_text(errors='replace').splitlines()[0]
   listener_obj=json.loads(listener_line)
+  # launch app
   svg=root/'fixture.svg';svg.write_text(SVG);before=shab(svg)
   ink=spawn('inkscape',['inkscape',str(svg)],env)
   win=''
@@ -57,11 +60,14 @@ def main():
    time.sleep(.05)
   if not win: raise RuntimeError('Inkscape window unavailable')
   call(['wmctrl','-ia',win],env=env);time.sleep(2.0)
+  # public named widget positive control
   wd=call([sys.executable,str(HERE/'discover_widget.py'),addr,str(ink.pid)],env={**env,'PYTHONPATH':str(HERE)},timeout=25)
-  (root/'widget.json').write_text(wd.stdout); widget=json.loads(wd.stdout)
+  (root/'widget.json').write_text(wd.stdout); widget=json.loads(wd.stdout); 
   if not widget.get('pass'): raise RuntimeError('widget positive control failed '+wd.stdout+wd.stderr)
+  # map app bus, then establish quiet pre-operation point
   app_bus=widget['app_bus'];time.sleep(.5)
   op_start=time.time_ns()/1e9
+  # benign File menu focus transitions, no document effect
   d=xdisplay.Display(env['DISPLAY'])
   def raw(k,down):
    kc=d.keysym_to_keycode(XK.string_to_keysym(k));xtest.fake_input(d,X.KeyPress if down else X.KeyRelease,kc);d.sync()
@@ -69,6 +75,7 @@ def main():
   def key(k): raw(k,1);raw(k,0)
   chord('Alt_L','f');time.sleep(.25);key('Down');time.sleep(.25);key('Escape');time.sleep(.35)
   op_end=time.time_ns()/1e9;d.close();time.sleep(.4)
+  # stop monitor before app teardown to avoid defunct noise
   os.killpg(mon.pid,signal.SIGTERM);mon.wait(timeout=2);time.sleep(.05)
   text=(root/'monitor.out').read_text(errors='replace')
   blocks=re.split(r'(?=^signal time=)',text,flags=re.M);ev=[]
@@ -79,6 +86,7 @@ def main():
    t=float(m.group(1)); strings=re.findall(r'^\s*string "(.*)"$',b,flags=re.M); ints=[int(x) for x in re.findall(r'^\s*int32 (-?\d+)$',b,flags=re.M)]
    ev.append({'time':t,'sender':m.group(2),'path':m.group(3),'interface':m.group(4),'member':m.group(5).strip(),'strings':strings,'ints':ints})
   inwin=[e for e in ev if op_start-0.05 <= e['time'] <= op_end+0.2 and e['sender']==app_bus and e['strings'] and e['strings'][0]=='focused']
+  # final physical keymap
   d=xdisplay.Display(env['DISPLAY']); keymap=list(d.query_keymap());d.close()
   after=shab(svg)
   result={'task':'ATSPI-STANDARD-STACK-20260916-022','display':a.display,'package_sha256':shab('/tmp/atspi-022/at-spi2-core_2.56.2-1+deb13u1_amd64.deb'),'a11y_address':addr,'listener':listener_obj,'inkscape_pid':ink.pid,'app_bus':app_bus,'widget':widget,'op_start_epoch':op_start,'op_end_epoch':op_end,'focused_events_all':len(ev),'focused_events_operation_window':inwin,'focused_operation_event_count':len(inwin),'svg_before_sha256':before,'svg_after_sha256':after,'svg_unchanged':before==after,'final_keymap_hex':bytes(keymap).hex(),'final_keymap_empty':all(x==0 for x in keymap),'registry_get_events_rc':q.returncode,'session_a11y_bus_owner':session_bus_owner,'registry_owner':registry_owner,'pass': bool(inwin) and before==after and all(x==0 for x in keymap) and widget.get('pass') and listener_obj.get('registered') and session_bus_owner and registry_owner}
