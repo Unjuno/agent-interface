@@ -1,0 +1,95 @@
+{
+  "branch": "research/map01-threat-deopt-real-handoff-1a2b937",
+  "component_motor_content": {
+    "deopt": [
+      "hold e 40ms",
+      "hold Right 190ms",
+      "hold Right 190ms",
+      "hold Right 190ms",
+      "hold Right 190ms",
+      "hold Right 190ms",
+      "hold Right 190ms"
+    ],
+    "deopt_transport_note": "#595 post-release 10/30ms non-input settling is omitted because session_map01_v12 coast observation minimum is 50ms; task-input holds are unchanged",
+    "threat": [
+      "hold a 350ms",
+      "hold d 350ms"
+    ]
+  },
+  "construction": {
+    "complete_matched_pair": {
+      "baseline": {
+        "active_selected": "threat-g1",
+        "ammo": 48,
+        "death_count": 0,
+        "health": 97,
+        "kill_count": 0,
+        "map_exit": false,
+        "post_selected": "deopt-g1",
+        "stale_release_verified": true,
+        "threat_release_verified": true
+      },
+      "candidate": {
+        "active_selected": "threat-g1",
+        "ammo": 48,
+        "death_count": 0,
+        "fresh_release_verified": true,
+        "fresh_selected": "deopt-g2",
+        "health": 97,
+        "kill_count": 0,
+        "map_exit": false,
+        "post_selected": null,
+        "stale_reason": "STALE_RESOURCE_GENERATION",
+        "stale_submit_count": 0,
+        "threat_release_verified": true
+      }
+    },
+    "excluded": true,
+    "max_matched_pairs": 1,
+    "not_scored": true,
+    "setup_stop": "first baseline rejected sub-50ms coast representation before scored handoff execution; no formal row"
+  },
+  "container_first": true,
+  "fixture": "research/doom/fixtures/map01-threat-contact-v2/fixture.json",
+  "formal_cases_executed": 0,
+  "formal_order": [
+    "rh01-baseline",
+    "rh01-candidate",
+    "rh02-candidate",
+    "rh02-baseline",
+    "rh03-baseline",
+    "rh03-candidate"
+  ],
+  "formal_runner_max_invocations_per_case": 1,
+  "health_ammo_score_presence_required": true,
+  "health_ammo_score_value_gate": false,
+  "issue": 626,
+  "latency_gate": false,
+  "predecessor_policy": {
+    "byte_exact": true,
+    "sha256": "02fc70a13295162ee36da36f786dd8ff02b404db6b87a513b5aed964e73d1fc0",
+    "source": "research/doom/map01_threat_deopt_handoff_fence_v1/policy.py"
+  },
+  "publication_base": "1a2b9370f04e72533188e58da23e0d3eafd7b9a5",
+  "replacements": 0,
+  "runtime_bundle_artifact_id": 10398313098,
+  "runtime_bundle_sha256": "522763418610ea10e57e55615fa71e76445200b9f86d208820ea97c77c234f0b",
+  "same_id_reruns": 0,
+  "schema": "map01-threat-deopt-real-handoff-freeze-v1",
+  "scope": "research/doom/map01_threat_deopt_real_handoff_v1/**",
+  "seed": 990619,
+  "source_sha256": {
+    "audit.py": "7ab3d8895c9e8d7c80cf4ff463bac0623fb39247f8aa0d65f34941a1f8c48a40",
+    "plan.json": "d09aeefe7646b152b9df506a2f2325cfb7dbaf0b34012999821e8ce9dfa5998b",
+    "policy.py": "02fc70a13295162ee36da36f786dd8ff02b404db6b87a513b5aed964e73d1fc0",
+    "run_case.py": "aec2e66734809255899ba9671280e1901548b097ba27784f056d3fa9ecea6243",
+    "test_contract.py": "9fcb7fd66f576305f7fdc76b5bad2f1e0f91fc392e2c48f522b698e030c0d030"
+  },
+  "static_gate": {
+    "py_compile": "PASS",
+    "unit_tests": "3/3 PASS"
+  },
+  "stopping_rule": "six fresh first-outcome sessions; no retry, replacement, extension or post-result tuning",
+  "task": "MAP01-THREAT-DEOPT-REAL-HANDOFF-20260917-001",
+  "threshold_tuning": false
+}
