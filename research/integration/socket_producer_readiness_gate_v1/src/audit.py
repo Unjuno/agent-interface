@@ -24,10 +24,12 @@ for r in candidate:
  adm=rec.get('admitted_request') or {}
  if adm.get('declared_action_id')!=expected_action or adm.get('transport_request_id')!=expected_request:errors.append(cid+':request_identity')
  if r['read_timeout_s']!=0.05 or r['producer_delay_s']!=0.15:errors.append(cid+':timing_mutation')
-rehash={}
+# Rehash every frozen source after formal.
+rehash={};
 for rel,meta in freeze['files'].items():
  p=HERE/rel;got=hashlib.sha256(p.read_bytes()).hexdigest();rehash[rel]=got
  if got!=meta['sha256']:errors.append('source_hash:'+rel)
+# Exact git blob identities for upstream current-main dependencies.
 for rel,want in freeze['exact_git_blobs'].items():
  got=subprocess.check_output(['git','hash-object',str(HERE/rel)],text=True).strip()
  if got!=want:errors.append('git_blob:'+rel)
