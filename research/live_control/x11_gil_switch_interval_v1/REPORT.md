@@ -58,7 +58,7 @@ Postformal negative controls over the real raw result reject five mutations: tim
 
 Formal raw JSON: 190,577 bytes, SHA-256 `9a4876108b3a6f25254b8fd033f0fa517ff16095b31840d518154128561a5a19`.
 
-Exact XZ: 16,200 bytes, SHA-256 `6cb47870313e68c2a26c1f738528e98d3e8a8dece29390fa740237c8b3458132`. `raw.json.xz.b64` stores those XZ bytes losslessly; `decode.py` verifies both compressed and decoded digests.
+Exact XZ: 16,200 bytes, SHA-256 `6cb47870313e68c2a26c1f738528e98d3e8a8dece29390fa740237c8b3458132`. `raw.part00.b64` through `raw.part11.b64` concatenate to those XZ bytes losslessly; `decode.py` verifies both compressed and decoded digests.
 
 ## H / T / D / C / U
 
