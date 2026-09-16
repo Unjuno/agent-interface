@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import subprocess
 import zipfile
 from pathlib import Path
 
@@ -35,11 +36,27 @@ def _info(name: str) -> zipfile.ZipInfo:
     return info
 
 
+def _source_bytes(root: Path, rel: str) -> bytes:
+    """Use committed bytes in a Git checkout so OS newline conversion is irrelevant."""
+    if (root / ".git").exists():
+        try:
+            return subprocess.check_output(
+                ["git", "-C", str(root), "show", f"HEAD:{rel}"],
+                stderr=subprocess.STDOUT,
+            )
+        except (OSError, subprocess.CalledProcessError) as error:
+            detail = getattr(error, "output", b"")
+            if isinstance(detail, bytes):
+                detail = detail.decode("utf-8", "replace")
+            raise RuntimeError(f"cannot read committed source {rel}: {detail}") from error
+    return (root / rel).read_bytes()
+
+
 def build(root: Path, out: Path, manifest_out: Path, sums_out: Path) -> dict:
     entries: dict[str, bytes] = dict(GENERATED)
     source_manifest = []
     for rel in SOURCE_FILES:
-        data = (root / rel).read_bytes()
+        data = _source_bytes(root, rel)
         entries[rel] = data
         source_manifest.append({
             "path": rel,
