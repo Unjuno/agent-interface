@@ -17,7 +17,9 @@ def rgb_sha(path):
     with Image.open(path) as im:
         return hashlib.sha256(im.convert("RGB").tobytes()).hexdigest()
 
-def inventory(report):
+def inventory(report, events):
+    accepted={r["id"]:r for r in events if r.get("event")=="accepted"}
+    terminals={r["id"]:r for r in events if r.get("event")=="terminal"}
     out=[]
     for d in report["decisions"]:
         adm=d.get("final_action_admission") or {}
@@ -25,11 +27,15 @@ def inventory(report):
             continue
         exe=adm["executor_admission"]
         snap=adm["action_validity"]["snapshot"]
-        traces=[r for r in d.get("execution_trace",[]) if r.get("role")=="primary" and r.get("accepted_ns")==exe["accepted_ns"]]
-        if not traces:
-            raise AssertionError(f"admitted decision {d['iteration']} has no primary trace")
-        terminal=max(r["terminal_ns"] for r in traces)
-        out.append({"iteration":d["iteration"],"id":exe["id"],"accepted_ns":exe["accepted_ns"],
+        identifier=exe["id"]
+        if identifier not in accepted or identifier not in terminals:
+            raise AssertionError(f"admitted decision {d['iteration']} missing retained program lifecycle {identifier}")
+        if accepted[identifier]["accepted_ns"] != exe["accepted_ns"]:
+            raise AssertionError(f"admitted decision {d['iteration']} accepted_ns mismatch")
+        terminal=terminals[identifier]["terminal_ns"]
+        if terminal < exe["accepted_ns"]:
+            raise AssertionError(f"admitted decision {d['iteration']} terminal precedes admission")
+        out.append({"iteration":d["iteration"],"id":identifier,"accepted_ns":exe["accepted_ns"],
                     "terminal_ns":terminal,"baseline_sequence":snap["sequence"],
                     "report_snapshot":snap["signals"]})
     return out
@@ -46,7 +52,7 @@ def analyze_run(repo, run, reader, construction=False):
     events=load_events(root/"runtime/events.jsonl")
     observations={r["sequence"]:r for r in events if r.get("event")=="observation"}
     typed={r["sequence"]:r for r in events if r.get("event")=="typed_observation"}
-    inv=inventory(report)
+    inv=inventory(report,events)
     if construction:
         inv=inv[:1]
     rows=[]
