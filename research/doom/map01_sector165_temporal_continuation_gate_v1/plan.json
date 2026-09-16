@@ -1,0 +1,144 @@
+{
+  "cases": [
+    {
+      "class": "drop",
+      "gate": "endpoint_gate",
+      "heading": 35,
+      "id": "case-00",
+      "seed": 996100
+    },
+    {
+      "class": "drop",
+      "gate": "temporal_gate",
+      "heading": 35,
+      "id": "case-01",
+      "seed": 996100
+    },
+    {
+      "class": "drop",
+      "gate": "temporal_gate",
+      "heading": 35,
+      "id": "case-02",
+      "seed": 996101
+    },
+    {
+      "class": "drop",
+      "gate": "endpoint_gate",
+      "heading": 35,
+      "id": "case-03",
+      "seed": 996101
+    },
+    {
+      "class": "drop",
+      "gate": "endpoint_gate",
+      "heading": 55,
+      "id": "case-04",
+      "seed": 996102
+    },
+    {
+      "class": "drop",
+      "gate": "temporal_gate",
+      "heading": 55,
+      "id": "case-05",
+      "seed": 996102
+    },
+    {
+      "class": "drop",
+      "gate": "temporal_gate",
+      "heading": 55,
+      "id": "case-06",
+      "seed": 996103
+    },
+    {
+      "class": "drop",
+      "gate": "endpoint_gate",
+      "heading": 55,
+      "id": "case-07",
+      "seed": 996103
+    },
+    {
+      "class": "drop",
+      "gate": "endpoint_gate",
+      "heading": 75,
+      "id": "case-08",
+      "seed": 996104
+    },
+    {
+      "class": "drop",
+      "gate": "temporal_gate",
+      "heading": 75,
+      "id": "case-09",
+      "seed": 996104
+    },
+    {
+      "class": "drop",
+      "gate": "temporal_gate",
+      "heading": 75,
+      "id": "case-10",
+      "seed": 996105
+    },
+    {
+      "class": "drop",
+      "gate": "endpoint_gate",
+      "heading": 75,
+      "id": "case-11",
+      "seed": 996105
+    },
+    {
+      "class": "wall",
+      "gate": "endpoint_gate",
+      "heading": null,
+      "id": "case-12",
+      "seed": 996106
+    },
+    {
+      "class": "wall",
+      "gate": "temporal_gate",
+      "heading": null,
+      "id": "case-13",
+      "seed": 996106
+    },
+    {
+      "class": "wall",
+      "gate": "temporal_gate",
+      "heading": null,
+      "id": "case-14",
+      "seed": 996107
+    },
+    {
+      "class": "wall",
+      "gate": "endpoint_gate",
+      "heading": null,
+      "id": "case-15",
+      "seed": 996107
+    }
+  ],
+  "endpoint_relation": {
+    "median_dy_lte": -20.0,
+    "min_tracks": 80
+  },
+  "formal_cases": 16,
+  "formal_reruns": 0,
+  "optional_phase2": "forward350ms_once",
+  "phase1": "use80ms-forward450ms-release-settle350ms",
+  "publication_base": "17d080a8f4e71af79b1d7ee51470f29d53fa7df9",
+  "schema": "agent-interface/map01-sector165-continuation-gate-plan-v1",
+  "source_dir": "/mnt/data/sector165-continuation-formal/source",
+  "source_sha256": {
+    "audit.py": "dc1ba61e8189652cd168f7c4ffb3d36c1622520961827bee15eff79462120a5f",
+    "base_fixture.py": "8afc317c13e69a90d53a9b398ef7210cb2bc6691e45bcc7d181cb5a6b94160cd",
+    "common.py": "0fd76e82c9bbdb0d560b2f04ae87d463ca48596f93597368dc64ba256f58a4f4",
+    "extra_forward.py": "15fa0eaf5c4fa5a0e7d6bf525a7771cef0c2630efeafdb65fc49827a9a9374e5",
+    "fixture.py": "d4117b56371f6394db6aba13e94c32375734f67704de2e7243da7e57d92a180d",
+    "phase1.py": "149485c240dd931a134586a5b042dc8def925a54338e93e7f3858c2559e04e9e",
+    "run_case.py": "c02fa1ad6a4d09d56507238f20f1feac15e9badceffa1df1a76e083758c4ba25"
+  },
+  "task": "MAP01-SECTOR165-TEMPORAL-CONTINUATION-GATE-20260917-005",
+  "temporal_relation": {
+    "max_pair_dt_ms": 100.0,
+    "median_dy_lte": -20.0,
+    "min_tracks": 80
+  },
+  "wad_path": "/opt/pyvenv/lib/python3.13/site-packages/vizdoom/freedoom2.wad",
+  "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+}
