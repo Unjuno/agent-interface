@@ -1,0 +1,14 @@
+{
+  "schema": "effect_receiver_activation_v1",
+  "case": "activation_barrier",
+  "mode": "ACTIVE",
+  "accepted_generation": 2,
+  "effect_count": 1,
+  "effects": [
+    {"request_id":"cmd-new-011","generation":2,"fingerprint":"fp-new-011","payload":{"delta":5}}
+  ],
+  "receipts": {
+    "cmd-new-011": {"generation":2,"fingerprint":"fp-new-011","outcome":"APPLIED"}
+  },
+  "revision": 4
+}
