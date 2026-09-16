@@ -39,11 +39,14 @@ def ready(s,source,path,events):
 
 def target_template(im):
     arr=np.asarray(im);mask=(arr[:,:,0]>220)&(arr[:,:,1]<20)&(arr[:,:,2]>150)&(arr[:,:,2]<200);yy,xx=np.where(mask)
+    # circle is leftmost magenta component; decoy is farther right
     if len(xx)<40:raise RuntimeError('magenta target missing')
+    # cluster around leftmost half
     cutoff=float(np.median(xx)); sel=xx<cutoff
     xs=xx[sel];ys=yy[sel]
     if len(xs)<20: xs=xx;ys=yy
     cx,cy=int(round(float(xs.mean()))),int(round(float(ys.mean())))
+    # fixed outline footprint 51x51
     r=25;arr=np.asarray(im)
     return [float(cx),float(cy)],arr[cy-r:cy+r+1,cx-r:cx+r+1].copy()
 
@@ -57,6 +60,7 @@ def main():
         ref=screenshot(s.name,box);ref.save(out/'prewait.png');point,template=target_template(ref);Image.fromarray(template).save(out/'template.png')
         pre_capture_ns=time.perf_counter_ns();score['source_point']=point;score['pre_capture_ns']=pre_capture_ns
         wait_start=time.perf_counter_ns();score['wait_started_ns']=wait_start
+        # world changes during decision wait, same in both arms
         time.sleep(1.0)
         for _ in range(abs(a.pan)):inp.press(['Control_L','Right' if a.pan>0 else 'Left'],.04,.12,'harness_pan')
         elapsed=(time.perf_counter_ns()-wait_start)/1e9
