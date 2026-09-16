@@ -14,7 +14,7 @@ class TestAuditMutations(unittest.TestCase):
             pix=(b'\x32\x32\xdc\x00'*case['count'])+(b'\x10\x10\x10\x00'*(1024-case['count']))
             dg=hashlib.sha256(pix).hexdigest(); rows=[]
             for i in range(32):
-                due=10_000_000+i*2_000_000
+                due=10_000_000+i*2_000_000; off=i*2_000_000
                 rows.append({'due_ns':due,'python_before_ns':due+10,'c_enter_ns':due+20,'x_before_ns':due+30,'x_after_ns':due+130,'c_exit_ns':due+140,'python_return_ns':due+(5_000_140 if case['arm']=='gil5ms' else 1_000_140),'bytes_ready_ns':due+(5_000_150 if case['arm']=='gil5ms' else 1_000_150),'x_thread_cpu_ns':50,'pixel_digest':dg})
             rows_sha256=hashlib.sha256(json.dumps(rows,sort_keys=True,separators=(',',':')).encode()).hexdigest()
             recs.append({'case':case,'rows':rows,'rows_sha256':rows_sha256,'pixels':{dg:base64.b64encode(pix).decode()},'switch_interval':0.005 if case['arm']=='gil5ms' else 0.001,'observer_affinity':[p['cpus']['observer']],'load':{'before':{'ticks':1,'affinity':[p['cpus']['competitor']],'alive':True},'after':{'ticks':2,'affinity':[p['cpus']['competitor']],'alive':True},'cleaned':True}})
