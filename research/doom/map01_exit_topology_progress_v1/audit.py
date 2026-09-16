@@ -55,7 +55,7 @@ def main():
   d=Path(a.root)/f"case-{c['case']:02d}";s=json.loads((d/'score.json').read_text());t=json.loads((d/'trajectory.json').read_text())
   hs=[];es=[]
   for r in t:
-   sec=sector(float(r['x']),float(r['y']))
+   sec=sector(float(r['x']),float(r['y']));
    if sec not in H:errors.append(f"case{c['case']}:unreachable");continue
    hs.append(H[sec]);es.append(dist(float(r['x']),float(r['y']),ex[2],ex[3]))
   cov=len({(math.floor(float(r['x'])/64),math.floor(float(r['y'])/64)) for r in t})
