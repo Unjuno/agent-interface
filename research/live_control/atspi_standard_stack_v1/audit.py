@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Independent result audit. Imports no measured runner or bus client."""
-import argparse,json
+import argparse,json,hashlib
 from pathlib import Path
 EXPECTED_PKG='135b9619d7f8bf8996adcee7a869af2563184faaa7eae8f1e384ede62846252f'
 KNOWN={'Reset to simple snapping mode','Advanced mode','Open Collections Editor'}
@@ -35,7 +35,7 @@ def audit(root):
         errors.extend(f'{d.name}:{x}' for x in sorted(set(e)))
     return {'schema':'atspi-standard-stack-audit-v1','pass':not errors,'decision':'PASS_STANDARD_ATSPI_EVENT_POSITIVE_CONTROL' if not errors else 'FAIL_AUDIT','errors':errors,'rows':rows}
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('root');ap.add_argument('--out');a=ap.parse_args();o=audit(a.root);s=json.dumps(o,indent=2,sort_keys=True)+'\n';print(s,end='')
+    ap=argparse.ArgumentParser();ap.add_argument('root');ap.add_argument('--out');a=ap.parse_args();o=audit(a.root);s=json.dumps(o,indent=2,sort_keys=True)+'\n';print(s,end='');
     if a.out:Path(a.out).write_text(s)
     raise SystemExit(0 if o['pass'] else 1)
 if __name__=='__main__':main()
