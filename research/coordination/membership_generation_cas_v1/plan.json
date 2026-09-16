@@ -1,0 +1,30 @@
+{
+  "task_id": "COORD-MEMBERSHIP-GENERATION-CAS-20260916-015",
+  "publication_base": "bae0c5ecf990605a807f237b899eb758542935c5",
+  "scope": "research/coordination/membership_generation_cas_v1/**",
+  "measured_order": ["split_race", "canonical_race", "canonical_stable"],
+  "cases": {
+    "split_race": {
+      "validation": "membership epoch1 A,B plus exact A,B confirmations",
+      "intervention": "membership only -> epoch2 A,B,C",
+      "candidate_commit": "separate coordination g1->g2 using unchanged coordination SHA",
+      "expected": "STALE_ADVANCE_EXPOSED"
+    },
+    "canonical_race": {
+      "validation": "canonical epoch1 A,B/g1 plus exact A,B confirmations; retain canonical SHA S",
+      "intervention": "same canonical record -> epoch2 A,B,C/g1 using S",
+      "candidate_commit": "stale pre-validation epoch1 A,B/g2 payload using old S exactly once",
+      "expected": "STALE_SHA_REJECT_THEN_HOLD"
+    },
+    "canonical_stable": {
+      "validation": "canonical epoch1 A,B/g1 plus exact A,B confirmations",
+      "intervention": "none",
+      "candidate_commit": "canonical epoch1 A,B/g1->g2 using validation SHA",
+      "expected": "ADVANCE"
+    }
+  },
+  "fresh_sha_retry": false,
+  "second_readback": false,
+  "timeout_inference": false,
+  "no_post_freeze_tuning": true
+}
