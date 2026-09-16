@@ -2,7 +2,20 @@
   "schema": "durable_effect_receiver_v1",
   "policy": "idempotency_only",
   "accepted_generation": 2,
-  "effect_count": 0,
-  "effects": [],
-  "receipts": {}
+  "effect_count": 1,
+  "effects": [
+    {
+      "request_id": "cmd-old-010",
+      "generation": 1,
+      "fingerprint": "386247b2788cf4b418db8b42e5c817b45157f543944fc7b64ebd84a28ee7fcbd",
+      "payload": {"delta": 3}
+    }
+  ],
+  "receipts": {
+    "cmd-old-010": {
+      "generation": 1,
+      "fingerprint": "386247b2788cf4b418db8b42e5c817b45157f543944fc7b64ebd84a28ee7fcbd",
+      "outcome": "APPLIED"
+    }
+  }
 }
