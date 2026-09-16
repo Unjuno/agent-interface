@@ -1,0 +1,157 @@
+$ python -m py_compile model.py test_model.py run_experiment.py verify.py
+PASS_PY_COMPILE
+$ python -m unittest -v test_model.py
+test_fresh_sequence_reuses_label_and_applies (test_model.LedgerTests.test_fresh_sequence_reuses_label_and_applies) ... ok
+test_id_only_forgets_evicted_identifier (test_model.LedgerTests.test_id_only_forgets_evicted_identifier) ... ok
+test_retained_same_instance_changed_content_conflicts (test_model.LedgerTests.test_retained_same_instance_changed_content_conflicts) ... ok
+test_retirement_state_is_scalar_and_history_bounded (test_model.LedgerTests.test_retirement_state_is_scalar_and_history_bounded) ... ok
+test_sequence_gap_rejected (test_model.LedgerTests.test_sequence_gap_rejected) ... ok
+test_watermark_rejects_expired_exact_and_changed_replay (test_model.LedgerTests.test_watermark_rejects_expired_exact_and_changed_replay) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.000s
+
+OK
+$ python run_experiment.py
+{
+  "capacity": 2,
+  "cases": {
+    "id_only_after_gc": {
+      "old_exact_A_seq1": "NEW_INTENT_ALLOWED",
+      "same_instance_changed_content": "NEW_INTENT_ALLOWED",
+      "same_instance_changed_content_apply": "APPLIED",
+      "snapshot": {
+        "capacity": 2,
+        "generation": 5,
+        "history": [
+          {
+            "confirmation_content_id": "content-C",
+            "confirmation_revision": 3,
+            "from_generation": 3,
+            "intent_id": "C",
+            "intent_seq": 3,
+            "to_generation": 4
+          },
+          {
+            "confirmation_content_id": "content-C",
+            "confirmation_revision": 4,
+            "from_generation": 4,
+            "intent_id": "A",
+            "intent_seq": 1,
+            "to_generation": 5
+          }
+        ]
+      },
+      "writes": 4
+    },
+    "watermark_expired_replay": {
+      "initial_applied_writes": 3,
+      "old_exact_A_seq1": "EXPIRED_INTENT",
+      "same_instance_changed_content": "EXPIRED_INTENT",
+      "snapshot": {
+        "capacity": 2,
+        "generation": 4,
+        "history": [
+          {
+            "confirmation_content_id": "content-C",
+            "confirmation_revision": 2,
+            "from_generation": 2,
+            "intent_id": "B",
+            "intent_seq": 2,
+            "to_generation": 3
+          },
+          {
+            "confirmation_content_id": "content-C",
+            "confirmation_revision": 3,
+            "from_generation": 3,
+            "intent_id": "C",
+            "intent_seq": 3,
+            "to_generation": 4
+          }
+        ],
+        "retired_through_seq": 1,
+        "retirement_state_shape": "scalar"
+      },
+      "transition_writes_after_replay_attempt": 0
+    },
+    "watermark_fresh_reuse": {
+      "fresh_apply": "APPLIED",
+      "fresh_label_A_seq4": "NEW_INTENT_ALLOWED",
+      "snapshot": {
+        "capacity": 2,
+        "generation": 5,
+        "history": [
+          {
+            "confirmation_content_id": "content-C",
+            "confirmation_revision": 3,
+            "from_generation": 3,
+            "intent_id": "C",
+            "intent_seq": 3,
+            "to_generation": 4
+          },
+          {
+            "confirmation_content_id": "content-C",
+            "confirmation_revision": 4,
+            "from_generation": 4,
+            "intent_id": "A",
+            "intent_seq": 4,
+            "to_generation": 5
+          }
+        ],
+        "retired_through_seq": 2,
+        "retirement_state_shape": "scalar"
+      },
+      "writes": 4
+    },
+    "watermark_retained_conflict": {
+      "B_seq2_changed_content": "CONFLICT_INTENT_CONTENT",
+      "snapshot": {
+        "capacity": 2,
+        "generation": 4,
+        "history": [
+          {
+            "confirmation_content_id": "content-C",
+            "confirmation_revision": 2,
+            "from_generation": 2,
+            "intent_id": "B",
+            "intent_seq": 2,
+            "to_generation": 3
+          },
+          {
+            "confirmation_content_id": "content-C",
+            "confirmation_revision": 3,
+            "from_generation": 3,
+            "intent_id": "C",
+            "intent_seq": 3,
+            "to_generation": 4
+          }
+        ],
+        "retired_through_seq": 1,
+        "retirement_state_shape": "scalar"
+      },
+      "writes": 3
+    }
+  },
+  "decision": "PASS_SCALAR_INTENT_RETIREMENT_WATERMARK_SCOPED",
+  "formal_reruns": 0,
+  "gates": {
+    "expired_replay_transition_writes_zero": true,
+    "fresh_seq4_allowed": true,
+    "fresh_seq4_applies_once": true,
+    "history_capacity_stays_two": true,
+    "id_only_old_exact_misclassified_new_after_gc": true,
+    "id_only_same_instance_changed_content_can_apply_after_gc": true,
+    "retained_same_instance_changed_content_conflicts": true,
+    "retirement_state_is_scalar": true,
+    "watermark_rejects_expired_changed_content": true,
+    "watermark_rejects_expired_exact": true
+  },
+  "notes": [
+    "Deterministic single-process container fixture.",
+    "The watermark is an issuer-ordered namespace boundary, not a timeout.",
+    "No unbounded intent-ID tombstone set is retained."
+  ],
+  "task": "COORD-INTENT-GC-WATERMARK-20260917-022"
+}
+$ python verify.py
+PASS_VERIFY
