@@ -1,0 +1,106 @@
+{
+  "audit_sha256": "d644fdeeac0d9113dbe2f7e0a12d6e507a637e901c80afdce737ff49ece92dda",
+  "by_case": {
+    "capability_touch_missing": {
+      "candidate_pass_count": 4,
+      "candidate_rows": 4,
+      "candidate_selected": ["pointer_track_v2"],
+      "candidate_status": ["EXECUTABLE"],
+      "semantic_only_exposed_nonexecutable_or_revalidation": 4,
+      "semantic_only_rows": 4,
+      "semantic_only_top": ["touch_track_v1"]
+    },
+    "hint_no_revalidation": {
+      "candidate_pass_count": 4,
+      "candidate_rows": 4,
+      "candidate_selected": ["fresh_resolve_v1"],
+      "candidate_status": ["FALLBACK"],
+      "semantic_only_exposed_nonexecutable_or_revalidation": 4,
+      "semantic_only_rows": 4,
+      "semantic_only_top": ["cached_route_v1"]
+    },
+    "hint_with_revalidation": {
+      "candidate_pass_count": 4,
+      "candidate_rows": 4,
+      "candidate_selected": ["cached_route_v1"],
+      "candidate_status": ["EXECUTABLE_AFTER_REVALIDATION"],
+      "semantic_only_exposed_nonexecutable_or_revalidation": 4,
+      "semantic_only_rows": 4,
+      "semantic_only_top": ["cached_route_v1"]
+    },
+    "mae_out_of_envelope": {
+      "candidate_pass_count": 4,
+      "candidate_rows": 4,
+      "candidate_selected": ["raw_current_v1"],
+      "candidate_status": ["FALLBACK"],
+      "semantic_only_exposed_nonexecutable_or_revalidation": 4,
+      "semantic_only_rows": 4,
+      "semantic_only_top": ["mae_guard_v1"]
+    },
+    "resource_conflict": {
+      "candidate_pass_count": 4,
+      "candidate_rows": 4,
+      "candidate_selected": ["keyboard_adjust_v1"],
+      "candidate_status": ["FALLBACK"],
+      "semantic_only_exposed_nonexecutable_or_revalidation": 4,
+      "semantic_only_rows": 4,
+      "semantic_only_top": ["exclusive_drag_v1"]
+    },
+    "surface_mismatch": {
+      "candidate_pass_count": 4,
+      "candidate_rows": 4,
+      "candidate_selected": ["desktop_click_v1"],
+      "candidate_status": ["FALLBACK"],
+      "semantic_only_exposed_nonexecutable_or_revalidation": 4,
+      "semantic_only_rows": 4,
+      "semantic_only_top": ["browser_click_v1"]
+    },
+    "universal_fallback": {
+      "candidate_pass_count": 4,
+      "candidate_rows": 4,
+      "candidate_selected": ["universal_control_v1"],
+      "candidate_status": ["FALLBACK"],
+      "semantic_only_exposed_nonexecutable_or_revalidation": 4,
+      "semantic_only_rows": 4,
+      "semantic_only_top": ["special_tracker_v1"]
+    },
+    "version_envelope": {
+      "candidate_pass_count": 4,
+      "candidate_rows": 4,
+      "candidate_selected": ["reveal_v2"],
+      "candidate_status": ["EXECUTABLE"],
+      "semantic_only_exposed_nonexecutable_or_revalidation": 4,
+      "semantic_only_rows": 4,
+      "semantic_only_top": ["legacy_reveal_v1"]
+    }
+  },
+  "decision": "PASS_SKILL_APPLICABILITY_FILTER_SCOPED",
+  "errors": [],
+  "formal_reruns": 0,
+  "formal_rows": 64,
+  "full_formal_sha256": "aae9e695776c782d7c4fc3e7fe4fe4a83ebb5b7813d75a9c9b22ba0171d2eb8c",
+  "gates": {
+    "baseline_discriminator_32_32": true,
+    "candidate_expected_32_32": true,
+    "hard_filter_before_detail": true,
+    "identity_preserved": true,
+    "malformed_controls_4_4_reject": true,
+    "role_promotion_explicit": true,
+    "row_count_64": true
+  },
+  "malformed_controls": [
+    {"accepted": false, "name": "missing_version", "reason": "MISSING_VERSION"},
+    {"accepted": false, "name": "missing_provenance", "reason": "MISSING_PROVENANCE"},
+    {"accepted": false, "name": "unknown_role", "reason": "UNKNOWN_EVIDENCE_ROLE"},
+    {"accepted": false, "name": "hint_in_place_promotion", "reason": "FORBIDDEN_IN_PLACE_ROLE_PROMOTION"}
+  ],
+  "source_sha256": {
+    "PLAN.md": "f3df066995e8cbbc002951c4e94ebc42376f0decbb525f83a0c4c0f9fd44a8db",
+    "audit.py": "b4e20c05608398543e5120fd76372ddccda7179136b816e052bc1579221d79fb",
+    "cases.json": "75d26a48ca7ed3d24587170f2a66dd6c9da6027bc0602917b82ef9add796d84e",
+    "model.py": "eb6f025b2557728683d54ebf86fcb0b32c48f3e12a9debbf736eddeb51c5774f",
+    "prereg.json": "4d60b6ac0d860e0ed9bb3eb5f3e95621d0bf48bca1ab6b075a9f42dfa8a1a87b",
+    "run.py": "3e3282c9a5cd40128f156d73027587d2c1f6517b220676c6c8d4006f6d649fdd"
+  },
+  "task": "SKILL-REGISTRY-APPLICABILITY-FILTER-20260917-001"
+}
