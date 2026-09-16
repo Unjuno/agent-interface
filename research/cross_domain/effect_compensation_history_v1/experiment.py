@@ -19,6 +19,7 @@ def read_db(db):
 
 def one(case,out):
     out.mkdir(parents=True,exist_ok=False); db=out/'effect.sqlite'
+    # initialize through receiver schema without effect event
     c=sqlite3.connect(db); c.execute('PRAGMA journal_mode=WAL'); c.execute('PRAGMA synchronous=FULL');
     c.execute('CREATE TABLE state(id INTEGER PRIMARY KEY CHECK(id=1), value TEXT NOT NULL)'); c.execute("INSERT INTO state VALUES(1,'old')")
     c.execute('CREATE TABLE events(seq INTEGER PRIMARY KEY AUTOINCREMENT, kind TEXT NOT NULL, value TEXT NOT NULL, ns INTEGER NOT NULL)'); c.commit(); c.close()
@@ -37,12 +38,14 @@ def one(case,out):
             compensation={'returncode':98,'stdout':'','stderr':'compensation deliberately unavailable'}
         else: raise ValueError(scenario)
     final,events,integ=read_db(db)
+    # candidate phase-aware result
     if verified:
         phase='EFFECT_VERIFIED'
     elif final=='old' and any(e['kind']=='compensation' and e['value']=='old' for e in events):
         phase='EFFECT_CONTRADICTED_COMPENSATED'
     else:
         phase='EFFECT_CONTRADICTED_UNCOMPENSATED'
+    # deliberately conflated control that only inspects final state
     if final=='target': final_only='VERIFIED'
     elif final=='old': final_only='NO_EFFECT'
     else: final_only='CONTRADICTED'
