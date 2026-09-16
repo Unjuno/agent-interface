@@ -1,0 +1,27 @@
+{
+  "task_id": "COORD-MEMBERSHIP-GENERATION-CAS-20260916-015",
+  "publication_base": "bae0c5ecf990605a807f237b899eb758542935c5",
+  "source_data_head_before_manifest": "1dead483c4d31410d309a90e4224345cbcbfef9d",
+  "scope": "research/coordination/membership_generation_cas_v1/**",
+  "blobs": {
+    "policy.py": "338fb4a239eecbfda4cc79854cdededadb760b2a",
+    "plan.json": "a7529a68d1875277dba9c113ec530f77144fdadf",
+    "membership_split.json": "8b83ed398b9889e57b88e953091fd38f57dd945c",
+    "coord_split.json": "f3433336ebc85e43297713482545fce0fedcdc21",
+    "confirm_split.json": "738bd90eec9d782177b653d0f40137d9a8c66db0",
+    "canonical_race.json": "6b0b41a9c9ce6bba3c676ba5321e807a7d5004e1",
+    "confirm_canonical_race.json": "3a1082d13910ef057ea050c16cc05e0977002eae",
+    "canonical_stable.json": "cf18208f5b90277d63cfcef68508a25101851b0b",
+    "confirm_canonical_stable.json": "0b24624539700b8f467751361b43bffeee87fdc7",
+    "payload_membership_split_epoch2.json": "da0080ad78b964f829a4b7cae1b64b08d59acb5a",
+    "payload_coord_split_g2.json": "f7ae8d95b1ce44613a15f2759c52c52042c948ab",
+    "payload_canonical_race_membership_epoch2.json": "eb9ca1ede2877c03a2abf447c878bd402e1c303a",
+    "payload_canonical_race_stale_g2.json": "d667baf0959d9eada43ab0948f6f882786d6b5d9",
+    "payload_canonical_stable_g2.json": "7bafec8396e90ea92171a7a9cceb7b410403f372"
+  },
+  "measured_order": ["split_race", "canonical_race", "canonical_stable"],
+  "measured_writes_before_freeze": 0,
+  "canonical_race_post_409_gets": 1,
+  "canonical_race_fresh_sha_retries": 0,
+  "no_post_freeze_tuning": true
+}
