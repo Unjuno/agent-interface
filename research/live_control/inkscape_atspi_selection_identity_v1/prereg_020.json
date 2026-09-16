@@ -1,0 +1,45 @@
+{
+  "decision": "DEPENDENCY_UNAVAILABLE_ATSPI_SELECTION_SCOPED if all 12 valid setups have working Selection positive control yet target A/B selected-state and nearest object-tree Selection remain non-discriminative; otherwise HOLD and report observed signal/failure",
+  "gates": {
+    "finished": 12,
+    "input_empty": 12,
+    "positive_selection_control": 12,
+    "selection_ancestor_nselected_expected": 0,
+    "svg_unchanged": 12,
+    "target_label_found": 24,
+    "target_selected_state_expected": "no declared selected identity signal",
+    "visual_setup_correct": 12
+  },
+  "limits": [
+    "explicit AT_SPI_BUS_ADDRESS route, not standard registry/autolaunch",
+    "fixture-authored labels",
+    "selection observation only; no edit/effect/model/game",
+    "one Inkscape version/theme/backend",
+    "negative result applies only to queried public fields"
+  ],
+  "matrix": "4 repetitions x none/A/B = 12 fresh sessions",
+  "orchestration": "one case per outer invocation; measured source/schedule/gates unchanged",
+  "predecessor": "019 stopped after 3 complete cases plus 3 partial directories due outer execution timeout; 019 not pooled",
+  "publication_base": "0a6012d189d2b4228d6f01462efc257e8d5e29dd",
+  "schedule": [
+    {"rep": 3, "target": "none"},
+    {"rep": 2, "target": "B"},
+    {"rep": 1, "target": "A"},
+    {"rep": 1, "target": "B"},
+    {"rep": 2, "target": "none"},
+    {"rep": 0, "target": "B"},
+    {"rep": 3, "target": "B"},
+    {"rep": 0, "target": "none"},
+    {"rep": 2, "target": "A"},
+    {"rep": 1, "target": "none"},
+    {"rep": 3, "target": "A"},
+    {"rep": 0, "target": "A"}
+  ],
+  "schedule_seed": 35620260916,
+  "scope": "research/live_control/inkscape_atspi_selection_identity_v1/**",
+  "source_sha256": {
+    "native_dbus.py": "3a6044c2f88d0828f50b5234f61390df46ee5876c1f2046fa802c481b6d3ea1e",
+    "run_case.py": "ec12975f12529e31e5df2c3b4d943ecc0e04f4d4be113e0d591657a675df0392"
+  },
+  "task": "INKSCAPE-ATSPI-SELECTION-IDENTITY-20260916-020"
+}
