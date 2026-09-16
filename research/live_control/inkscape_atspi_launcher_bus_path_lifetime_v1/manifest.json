@@ -8,6 +8,7 @@
   "corruption_controls": 6,
   "github_retained_files": [
     "REPORT.md",
+    "POSTHOC_METADATA_NOTE.md",
     "prereg.json",
     "audit.py",
     "audit_result.json",
@@ -43,5 +44,6 @@
     "bytes": 15182,
     "sha256": "41730113d3701598c14181bc98ca5d9c31761b634c6e08aea658928afd3f5c33"
   },
+  "metadata_anomaly": "The frozen runner retains a construction-era result.task literal; see POSTHOC_METADATA_NOTE.md. Raw result bytes are not rewritten.",
   "note": "GitHub retains the executable frozen sources, decision/audit records and measured summary. Full raw per-case payloads are cryptographically bound here but remain in the conversation-local archive; no GitHub full-raw claim is made."
 }
