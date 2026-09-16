@@ -3,13 +3,25 @@ name: Portable unified runtime zipapp v1
 on:
   push:
     branches:
-      - integration/runtime-portable-zipapp-v1-20260917
+      - main
     paths:
       - 'runtime/distribution_v2/**'
+      - 'runtime/core_v1/**'
+      - 'runtime/selector_v1/**'
+      - 'runtime/cli_v1/**'
+      - 'runtime/backends/x11_v1/**'
+      - 'runtime/backends/win32_v1/**'
+      - 'runtime/backends/quartz_v1/**'
       - '.github/workflows/runtime-portable-zipapp-v1.yml'
   pull_request:
     paths:
       - 'runtime/distribution_v2/**'
+      - 'runtime/core_v1/**'
+      - 'runtime/selector_v1/**'
+      - 'runtime/cli_v1/**'
+      - 'runtime/backends/x11_v1/**'
+      - 'runtime/backends/win32_v1/**'
+      - 'runtime/backends/quartz_v1/**'
       - '.github/workflows/runtime-portable-zipapp-v1.yml'
 
 permissions:
