@@ -1,0 +1,67 @@
+name: MAP01 partial occupancy full compute 443
+
+on:
+  push:
+    branches:
+      - research/map01-held-occupancy-partial-posthoc-20260916-002
+    paths:
+      - .github/workflows/map01-partial-occupancy-full-compute-443.yml
+
+permissions:
+  contents: read
+
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/doom/map01_held_input_occupancy_partial_posthoc_v2
+            research/doom/results/map01-v38-integrated-threat-live-01/report.json
+            research/doom/results/map01-v38-integrated-threat-live-01/runtime/events.jsonl
+            research/doom/results/map01-v39-coast-liveness-live-01/report.json
+            research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl
+          sparse-checkout-cone-mode: false
+      - name: Verify frozen source identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd research/doom/map01_held_input_occupancy_partial_posthoc_v2
+          echo 'fe21e5b6d5d5e36f46eb74826d0f7abde5cac9ce8346278f22f0d5facc3cab9d  analyze_partial.py' | sha256sum -c -
+          echo 'ea4093d0eeb29e56ed88621ca20bd970f2ab795cc2c6922511ceaa6a3660a78d  test_partial.py' | sha256sum -c -
+          echo '5e447d8f087f99f31f31d6bac7a406b82650a469a9e6415a47ae84e671f6ebf5  audit_partial.py' | sha256sum -c -
+          echo '2b2b903ae2c70f481e34090059c2cdadeaf5983f8e1f2a1d81b24f2b33957a82  run_full.py' | sha256sum -c -
+      - name: Re-run frozen semantic tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/doom/map01_held_input_occupancy_partial_posthoc_v2/test_partial.py
+      - name: Compute complete retained logs once
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/occ443
+          python3 research/doom/map01_held_input_occupancy_partial_posthoc_v2/run_full.py --out /tmp/occ443/result.json > /tmp/occ443/summary.log 2>&1
+          cat /tmp/occ443/summary.log
+      - name: Independent audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/doom/map01_held_input_occupancy_partial_posthoc_v2/audit_partial.py /tmp/occ443/result.json --repo "$GITHUB_WORKSPACE" > /tmp/occ443/audit.json 2>&1
+          cat /tmp/occ443/audit.json
+      - name: Hash exact result evidence
+        if: success()
+        shell: bash
+        run: |
+          set -euo pipefail
+          sha256sum /tmp/occ443/result.json /tmp/occ443/summary.log /tmp/occ443/audit.json | tee /tmp/occ443/SHA256SUMS
+      - name: Upload first-outcome evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: map01-partial-occupancy-full-compute-443
+          path: /tmp/occ443/
+          if-no-files-found: warn
+          retention-days: 7
