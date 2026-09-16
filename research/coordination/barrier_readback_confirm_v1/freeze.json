@@ -1,0 +1,40 @@
+{
+  "schema": "barrier_readback_confirm_freeze_v1",
+  "task_id": "COORD-BARRIER-READBACK-CONFIRM-20260916-012",
+  "issue": 449,
+  "publication_base": "c00de06ff3b94655dec1d346a360bcde61d37476",
+  "source_data_head_before_manifest": "2ea5b237b6c062ade2419614e98e80be09f3041b",
+  "measured_writes_before_freeze": 0,
+  "blobs": {
+    "policy.py": "57d7baf3ed79ed38c8d3611bde9c1b88e5d4c609",
+    "plan.json": "c8ebfc75e05f7f2d43f9a05aad1e2d657d7f995c",
+    "receiver_exact.json": "63b581fde320e01002bde0cf7ea4249cb64d73a4",
+    "receiver_changed.json": "4be36612a778fea38db85afbf2b3054c0396ad9e",
+    "receiver_unavailable.json": "81d17f02f9422f2a546e799decb43849cb8fe550",
+    "coord_exact.json": "fead6286761969705d325b9b55264c67cc09fa12",
+    "coord_changed.json": "e719a950f329980015facddb3e79179a423aaafc",
+    "coord_unavailable.json": "34e6eb63b349af84c4c34c59628cf9e46b86e6b6",
+    "payload_barrier_exact.json": "31f8bdea498902598f3a9e2f90b9082506bac951",
+    "payload_barrier_changed.json": "0519d50fa17d6a2613df83fec0510781837c6ec9",
+    "payload_barrier_unavailable.json": "3b25f80c7be2ccde1d19e9c2fa0f36aba0dad924",
+    "payload_changed_after_intervening.json": "ae5dfd9276f7848b89f30a66b2f0e7daa265a1c5",
+    "payload_coord_exact_g2.json": "b4c0e6e6699e98f799a0dda33a591f0a88a334ee"
+  },
+  "budgets": {
+    "initial_barrier_updates": 3,
+    "intervening_receiver_updates": 1,
+    "receiver_recovery_puts": 0,
+    "classifier_real_gets": 2,
+    "classifier_fixture_unavailable": 1,
+    "coordination_updates": 1,
+    "second_classifier_readbacks": 0
+  },
+  "order": [
+    "exact_barrier_readback",
+    "changed_barrier_readback",
+    "unavailable_barrier_observation"
+  ],
+  "response_visible_to_classifier": false,
+  "mode_only_confirmation_forbidden": true,
+  "timeout_is_evidence": false
+}
