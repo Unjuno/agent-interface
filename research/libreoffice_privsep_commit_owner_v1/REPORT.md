@@ -84,4 +84,24 @@ Result: **2/2 rows pass, errors `[]`**. Four deliberate summary corruptions (wri
 
 This does not make ordinary GUI Save atomic. It changes the architecture so the GUI never owns the authoritative target write capability; controller publication is the consequential commit.
 
-The next discriminating question is whether the same unprivileged GUI principal can mutate an existing target inode directly despite pathname denial. Under the current UID/mode layout this should be denied by file permissions, but it should be tested separately rather than inferred into this result.
+## Successor rung — direct existing-inode write
+
+The pathname-replacement result was not generalized by assumption. A separate frozen allocation tested a different GUI-domain write class: `open(target,'r+b')` followed by write/truncate/flush/fsync.
+
+First outcomes before completion remain separate:
+
+- `c318-privsep-04`: HARNESS FAIL / 0 scored arms because a relative output path created a relative GUI HOME and Openbox/Calc never became ready;
+- `c318-privsep-05`: INCOMPLETE. Stable completed; the adversarial arm produced an incorrect staging edit (`A1=oldffice`) and fail-closed before the direct writer ran;
+- `c318-privsep-06`: changed only post-window setup settle (0.6 s -> 1.5 s) plus fresh allocation/display identities and completed both arms once.
+
+`c318-privsep-06` result:
+
+- stable staging/final: `office / preview`, release empty/verified;
+- direct-write arm: UID 1001 writer operation `inplace_r+b` failed with `EACCES (13)` before target mutation;
+- target remained plan-valid through the writer attempt and controller recheck;
+- controller publication succeeded; final target independently scored `office / preview`;
+- independent audit: 2/2 rows, errors `[]`.
+
+The executed v6 source is reconstructible from the exact retained v3 source plus `runner_v6_direct.patch`; the reconstruction was byte-compared to the executed local source and matches SHA-256 `f7e54e9d9f4495ea8d13968cffe182accc84015573213bd77ae965b0b95c78fe`.
+
+**Refined decision:** under this UID/mode split, the tested GUI principal cannot mutate the authoritative target either by pathname replacement or by opening the existing inode for write. This strengthens the narrow capability-ownership interpretation. It still does not protect against a privileged/same-controller-domain writer or establish a deployable desktop sandbox.
