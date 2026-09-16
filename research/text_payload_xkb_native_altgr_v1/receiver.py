@@ -7,7 +7,7 @@ root=tk.Tk(); root.title('xkb-altgr-receiver'); root.geometry('500x120+80+80')
 value=tk.StringVar(); entry=tk.Entry(root,textvariable=value,font=('monospace',18)); entry.pack(fill='both',expand=True); entry.focus_force(); root.update_idletasks()
 q=queue.Queue()
 def server():
-    s = socket.socket(socket.AF_UNIX,socket.SOCK_STREAM); s.bind(path); s.listen(8)
+    s=socket.socket(socket.AF_UNIX,socket.SOCK_STREAM); s.bind(path); s.listen(8)
     while True:
         c,_=s.accept(); data=b''
         while not data.endswith(b'\n'):
