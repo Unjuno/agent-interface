@@ -1,0 +1,32 @@
+{
+  "audit_byte_identical": true,
+  "construction_not_in_formal_ids": true,
+  "corruption_controls": {
+    "all_rejected": true,
+    "controls": [
+      {"name":"flip_phase_label","rejected":true},
+      {"name":"flip_final_only_label","rejected":true},
+      {"name":"delete_wrong_effect_event","rejected":true},
+      {"name":"corrupt_final_state","rejected":true},
+      {"name":"reverse_timestamps","rejected":true}
+    ],
+    "count": 5
+  },
+  "formal_case_dirs": 30,
+  "manifest_files": 71,
+  "manifest_mismatches": [],
+  "plan_sha256": "4e64ac458cf5ace06309d51d45f9669988b6a7818489488ee20fb433fce274b9",
+  "plan_sha_match": true,
+  "raw_archive": {
+    "bytes": 12524,
+    "path": "effect_compensation_history_evidence.tar.xz",
+    "sha256": "944d14c37088f1a1b11e83b0e10ce5eaaab20fd8af5d6284bac38da14e4046f8"
+  },
+  "source_hash_match": {
+    "audit.py": true,
+    "experiment.py": true,
+    "receiver.py": true,
+    "test_contract.py": true
+  },
+  "tests_returncode": 0
+}
