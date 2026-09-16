@@ -1,0 +1,114 @@
+{
+  "capacity": 2,
+  "cases": {
+    "durable_receipt_content_conflict": {
+      "classification": "INSTALL_RECEIPT_CONFLICT",
+      "snapshot": {
+        "capacity": 2,
+        "current_incarnation": 2,
+        "durable_install_state_shape": "single_content_bound_receipt",
+        "generation": 1,
+        "history": [],
+        "install_writes": 1,
+        "latest_install_receipt": {
+          "install_id": "install-I2",
+          "new_incarnation": 2,
+          "previous_incarnation": 1
+        },
+        "retired_through_seq": 0,
+        "transition_writes": 0
+      }
+    },
+    "durable_receipt_restart_recovery": {
+      "fresh_i2_apply": "APPLIED",
+      "fresh_i2_classification": "NEW_INTENT_ALLOWED",
+      "old_i1_classification": "STALE_ISSUER_INCARNATION",
+      "snapshot": {
+        "capacity": 2,
+        "current_incarnation": 2,
+        "durable_install_state_shape": "single_content_bound_receipt",
+        "generation": 5,
+        "history": [
+          {
+            "confirmation_content_id": "content-C",
+            "confirmation_revision": 4,
+            "from_generation": 4,
+            "intent_id": "A",
+            "intent_seq": 1,
+            "issuer_incarnation": 2,
+            "to_generation": 5
+          }
+        ],
+        "install_writes": 1,
+        "latest_install_receipt": {
+          "install_id": "install-I2",
+          "new_incarnation": 2,
+          "previous_incarnation": 1
+        },
+        "retired_through_seq": 0,
+        "transition_writes": 1
+      }
+    },
+    "durable_receipt_rollback_detected": {
+      "apply": "REJECTED",
+      "classification": "INSTALL_STATE_ROLLBACK",
+      "snapshot": {
+        "capacity": 2,
+        "current_incarnation": 1,
+        "durable_install_state_shape": "single_content_bound_receipt",
+        "generation": 4,
+        "history": [],
+        "install_writes": 1,
+        "latest_install_receipt": {
+          "install_id": "install-I2",
+          "new_incarnation": 2,
+          "previous_incarnation": 1
+        },
+        "retired_through_seq": 0,
+        "transition_writes": 3
+      },
+      "transition_writes_after_replay_attempt": 0
+    },
+    "mutable_install_rollback_baseline": {
+      "apply": "APPLIED",
+      "classification": "NEW_INTENT_ALLOWED",
+      "snapshot": {
+        "capacity": 2,
+        "current_incarnation": 1,
+        "generation": 5,
+        "history": [
+          {
+            "confirmation_content_id": "content-C",
+            "confirmation_revision": 4,
+            "from_generation": 4,
+            "intent_id": "A",
+            "intent_seq": 1,
+            "issuer_incarnation": 1,
+            "to_generation": 5
+          }
+        ],
+        "retired_through_seq": 0,
+        "transition_writes": 4
+      }
+    }
+  },
+  "decision": "PASS_DURABLE_INCARNATION_INSTALL_RECEIPT_SCOPED",
+  "formal_reruns": 0,
+  "gates": {
+    "baseline_old_i1_applies": true,
+    "baseline_rollback_revives_old_i1": true,
+    "bounded_state": true,
+    "candidate_rollback_detected": true,
+    "candidate_rollback_transition_writes_zero": true,
+    "restart_fresh_i2_allowed": true,
+    "restart_fresh_i2_applies_once": true,
+    "restart_old_i1_stale": true,
+    "same_install_id_changed_content_conflicts": true
+  },
+  "notes": [
+    "Deterministic single-process container fixture.",
+    "Install-receipt producer is trusted; cryptographic authentication is out of scope in this rung.",
+    "Candidate stores one content-bound durable install receipt, one current incarnation scalar, one current-incarnation retirement scalar, and capacity-2 intent history."
+  ],
+  "task": "COORD-DURABLE-INCARNATION-INSTALL-20260917-025"
+}
