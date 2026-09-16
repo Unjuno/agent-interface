@@ -58,6 +58,23 @@ Frozen source SHA-256:
 - `audit.py`: `d05acbd8ab895e3120646b3b9fd09051310495277e3732adef48e977907ad462`
 - `test_contract.py`: `516ec91300e9f699be35499d97001812258c740f554b5f63e9f51a44c46e04da`
 
+## Remote premeasurement source identity defect
+
+After formal measurement, a GitHub/local blob audit found that the `experiment.py` stored at the remote freeze commit was not byte-identical to the measured source. The remote file omitted exactly three comment-only lines; all executable statements were identical. The measured source SHA-256 had been declared in `FREEZE.json`, but the exact measured bytes were not remotely materialized until after measurement.
+
+Posthoc checks retained this as a freeze-attestation defect rather than rerunning the allocation:
+
+- remote prefreeze `experiment.py` Git blob: `61264f0e4309d76c1d709cdaf95ca8905b117feb`;
+- reconstructed remote prefreeze SHA-256: `e6be19e54057a10a4a374f96c177c0d5f9b837cf548ef74501a5e463539d5a02`;
+- measured source SHA-256: `a91c3e3cd735cc57ee58849c8fa38114fce345cf3cfb584c7ad91c9687bfe4dc`;
+- textual diff: exactly three comments only;
+- Python ASTs ignoring source-location attributes: equal;
+- fresh three-scenario posthoc normalized outputs: equal;
+- exact measured bytes were published afterward as Git blob `0b8b1af01ea4df9fd55622af566609fb8aced1ad`;
+- formal measured IDs rerun: 0.
+
+Therefore the scientific outcome is retained, but the claim “all exact executable source bytes were remotely frozen before measurement” is **false for this allocation**. The exact local measured source was hash-declared before measurement and is now published, but the remote byte-attestation defect remains explicit.
+
 ## Formal result
 
 30 first outcomes: 10 repetitions per scenario, one execution per `m*` ID.
@@ -97,7 +114,7 @@ Separate extraction of the raw evidence archive verified:
 - archive manifest files: 71;
 - manifest hash/size mismatches: 0;
 - independent audit replay: byte-identical;
-- source SHA-256 values: 4/4 exact;
+- source SHA-256 values in the raw archive: 4/4 exact;
 - canonical plan SHA-256: exact;
 - tests after extraction: 5/5 PASS.
 
