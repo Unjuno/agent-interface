@@ -5,6 +5,7 @@ cases=[
     (1,-1,'YIELD_REVERSAL'),(-1,1,'YIELD_REVERSAL'),
     (1,0,'YIELD_UNKNOWN'),(1,None,'YIELD_UNKNOWN'),
     (0,1,'YIELD_UNKNOWN'),('1',1,'YIELD_UNKNOWN'),
+    (1,True,'YIELD_UNKNOWN'),(True,1,'YIELD_UNKNOWN'),
 ]
 for i,(h,f,want) in enumerate(cases):
     got=decide(h,f)
