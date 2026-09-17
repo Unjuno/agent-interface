@@ -21,6 +21,8 @@ def main() -> None:
         errors.append("formal_invocations")
     if manifest.get("reruns") != 0:
         errors.append("reruns")
+    if manifest.get("case_runner") != "run_case_v2.py":
+        errors.append("case_runner")
     if manifest.get("schedule") != FREEZE["schedule"]:
         errors.append("schedule")
     if len(manifest.get("cases", [])) != 12:
@@ -103,6 +105,7 @@ def main() -> None:
         "candidate_app_release_after_return_ns": candidate_app_release_after_return_ns,
         "formal_invocations": manifest.get("formal_invocations"),
         "reruns": manifest.get("reruns"),
+        "case_runner": manifest.get("case_runner"),
     }
     (RESULT / "audit.json").write_text(json.dumps(report, indent=2, sort_keys=True))
     print(json.dumps(report, sort_keys=True))
