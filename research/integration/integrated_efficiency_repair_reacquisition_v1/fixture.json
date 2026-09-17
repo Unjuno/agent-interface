@@ -1,0 +1,81 @@
+{
+  "schema": "integrated_efficiency_repair_reacquisition_fixture_v1",
+  "task": "INTEGRATED-EFFICIENCY-REPAIR-REACQUISITION-20260917-001",
+  "issue": 947,
+  "publication_base": "2221053ba1bc0a85d61cb4d68eeb6655b7e0e28e",
+  "source": {
+    "path": "research/integration/integrated_efficiency_phase_ledger_v1/RESULT.json",
+    "git_blob": "7db368b2d492b5b95f5f038fb7cb5dd6b78a27a7",
+    "report_json_blob": "57954e7608f823ec031600a12e0062eeceafdcf4",
+    "preflight_wall_result_blob": "89e8bc08d4d81f93a496eac83437ad77a06f1214"
+  },
+  "primary_comparator": {
+    "numerator_id": "persistent.task4.layout_B.repair",
+    "denominator_id": "ephemeral.task4.layout_B.cold_reacquisition"
+  },
+  "repair": {
+    "arm": "persistent",
+    "phase": "layout_change",
+    "task": 4,
+    "layout": "B",
+    "route": "repair",
+    "elapsed_ms": "12341.465157",
+    "input_tokens": 9299,
+    "cached_input_tokens": 0,
+    "output_tokens": 161,
+    "reasoning_output_tokens": 46,
+    "planner_generations": 1,
+    "model_visible_images": 1,
+    "local_observations": 22,
+    "durable_calls": 18
+  },
+  "matched_reacquisition": {
+    "arm": "ephemeral",
+    "phase": "layout_change",
+    "task": 4,
+    "layout": "B",
+    "route": "cold",
+    "elapsed_ms": "12556.640965",
+    "input_tokens": 9302,
+    "cached_input_tokens": 0,
+    "output_tokens": 186,
+    "reasoning_output_tokens": 71,
+    "planner_generations": 1,
+    "model_visible_images": 1,
+    "local_observations": 21,
+    "durable_calls": 16
+  },
+  "secondary_context": {
+    "plain_task4_cold": {
+      "elapsed_ms": "9127.145957",
+      "input_tokens": 9210,
+      "output_tokens": 106,
+      "reasoning_output_tokens": 42,
+      "planner_generations": 1,
+      "model_visible_images": 1,
+      "local_observations": 17,
+      "durable_calls": 6
+    },
+    "persistent_task1_cold": {
+      "elapsed_ms": "11024.952714",
+      "input_tokens": 9299,
+      "output_tokens": 168,
+      "reasoning_output_tokens": 53,
+      "planner_generations": 1,
+      "model_visible_images": 1,
+      "local_observations": 21,
+      "durable_calls": 16
+    }
+  },
+  "persistent_repeat_B": {
+    "elapsed_ms": "12533.047058",
+    "input_tokens": 0,
+    "cached_input_tokens": 0,
+    "output_tokens": 0,
+    "reasoning_output_tokens": 0,
+    "planner_generations": 0,
+    "model_visible_images": 0,
+    "local_observations": 46,
+    "durable_calls": 40
+  }
+}
