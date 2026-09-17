@@ -2,12 +2,49 @@
   "audit_sha256": "228f1dc35103708e02c73c5044d454283d893497daab686a2b7f5c02fb4b0495",
   "controls_rejected": 6,
   "corruption_controls": [
-    {"errors":["summary_recompute"],"name":"alias_count","rejected":true},
-    {"errors":["summary_recompute"],"name":"temporal_hits","rejected":true},
-    {"errors":["authority"],"name":"authority","rejected":true},
-    {"errors":["digest","summary_recompute"],"name":"current_digest","rejected":true},
-    {"errors":["summary_recompute"],"name":"future_label","rejected":true},
-    {"errors":["future_join"],"name":"future_join","rejected":true}
+    {
+      "errors": [
+        "summary_recompute"
+      ],
+      "name": "alias_count",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "summary_recompute"
+      ],
+      "name": "temporal_hits",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "authority"
+      ],
+      "name": "authority",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "digest",
+        "summary_recompute"
+      ],
+      "name": "current_digest",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "summary_recompute"
+      ],
+      "name": "future_label",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "future_join"
+      ],
+      "name": "future_join",
+      "rejected": true
+    }
   ],
   "formal_reruns": 0,
   "result_sha256": "5738a192186e6f1e53cf4da42db157ccfb8388a61064a9a2324f4f70cd36aa60",
