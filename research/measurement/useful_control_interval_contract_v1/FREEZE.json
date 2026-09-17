@@ -1,0 +1,29 @@
+{
+  "task": "USEFUL-CONTROL-INTERVAL-CONTRACT-20260917-001",
+  "issue": 941,
+  "base": "d303c98522c47cb35d0db511e05d26d29e91d85b",
+  "branch": "research/useful-control-interval-contract-20260917-001",
+  "formal_authorized": false,
+  "formal_invocations": 0,
+  "live_model_gui_input_authority": false,
+  "construction": {
+    "fixed_cases": "PASS",
+    "seeded_fuzz_cases": 100000,
+    "seeded_fuzz_result": "PASS",
+    "independent_bruteforce_cases": 50000,
+    "independent_bruteforce_result": "PASS"
+  },
+  "construction_local_sha256": {
+    "PLAN.md": "ca00aa2512b6e83252e43c6d0acb767c65ccb65a91bf1e459c6ad286a9b2355f",
+    "interval_contract.py": "beab990b0b0cae99e41b01f51274be1eecf7b20b206871c803d5ec042279d36a",
+    "test_interval_contract.py": "bfae5f10e1e76cde80131f4ad14715234eb7e8f60eb7b66fbbf1783a3e74fab3",
+    "audit_bruteforce.py": "3084fd3a8fa89944dc61ff24a1479463a281ac10d5111d00a45f77fd15f69638"
+  },
+  "github_blob_ids_before_freeze": {
+    "PLAN.md": "7da05c8eb16327f0e3a43ee00889ed869f86d625",
+    "interval_contract.py": "d90d550c27e97f727be3c173e66432e69990bb88",
+    "test_interval_contract.py": "d883fccfe7d51f0b7aecc678fdb8ae0d2d94c6d4",
+    "audit_bruteforce.py": "b1695bb389bfa6f4c59226efea1cb2ded07d1189"
+  },
+  "stop": "Construction only. Do not run formal or consume #869 lease from this branch."
+}
