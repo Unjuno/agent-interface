@@ -45,6 +45,7 @@ def apply(seq,mode):
     elif mode=='PAYLOAD_MISSING':
         adm='CURRENT'; cands=[candidate(f'{sid}-field2','field','TYPE_TEXT')]; acc=[{'op':'YIELD','reason':'PAYLOAD_MISSING'}]
     else: raise ValueError(mode)
+    # Draw candidate markers to ensure visible state changes in the X11 surface.
     for i,c in enumerate(cands):
         x=30+i*100; boxes.append(cv.create_rectangle(x,90,x+70,145,fill='white',outline='cyan'))
         boxes.append(cv.create_text(x+35,118,text=c['role'][:6],fill='black'))
