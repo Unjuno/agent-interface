@@ -1,0 +1,35 @@
+{
+  "schema": "mindustry_live_smoke_asset_readiness_fixture_v1",
+  "task": "MINDUSTRY-LIVE-SMOKE-ASSET-READINESS-20260917-001",
+  "base": "1e42633af36a2c6307df511754c1a9792061cb32",
+  "jar": {
+    "repo_path": "Mindustry-v160.2-complete.jar",
+    "repo_url": "https://github.com/Anuken/Mindustry/releases/download/v160.2/Mindustry.jar",
+    "repo_sha256": "7f210295dfffb4c17b582b27bab41f4dde83f557f00f0877572fdac943f40539",
+    "repo_bytes": 87022576,
+    "official_tag": "v160.2",
+    "official_asset_name": "Mindustry.jar",
+    "official_asset_id": 559668837,
+    "official_sha256": "7f210295dfffb4c17b582b27bab41f4dde83f557f00f0877572fdac943f40539",
+    "official_bytes": 87022576
+  },
+  "save": {
+    "repo_path": "research/benchmark_discovery/results/mindustry-reset-01/canonical.msav",
+    "git_blob": "7663b25633d853a257fbb407723fe85579120111",
+    "sha256": "8fff67b0c130ee59a3838c92754b73225a506902bd4838dcc3f1fb5be286cbed"
+  },
+  "required_commands": ["Xvfb", "openbox", "wmctrl", "java"],
+  "required_python_modules": ["PIL", "Xlib", "numpy", "openpyxl"],
+  "candidate_jar_paths": [
+    "/home/taka/agent-interface-bench-feasibility/Mindustry-v160.2-complete.jar",
+    "/tmp/Mindustry-v160.2-complete.jar",
+    "/mnt/data/Mindustry-v160.2-complete.jar",
+    "/workspace/Mindustry-v160.2-complete.jar"
+  ],
+  "candidate_save_paths": [
+    "/tmp/canonical.msav",
+    "/mnt/data/canonical.msav",
+    "/workspace/research/benchmark_discovery/results/mindustry-reset-01/canonical.msav",
+    "/home/taka/agent-interface/research/benchmark_discovery/results/mindustry-reset-01/canonical.msav"
+  ]
+}
