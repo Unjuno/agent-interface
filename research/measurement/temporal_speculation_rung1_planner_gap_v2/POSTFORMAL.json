@@ -1,16 +1,71 @@
 {
   "all_match": true,
   "source_rehash": [
-    {"expected":"deb07cd861f63fb071f9f8475dc14819ca4b15276839d89bc1d26a7f53e91759","file":"PLAN.md","match":true,"sha256":"deb07cd861f63fb071f9f8475dc14819ca4b15276839d89bc1d26a7f53e91759"},
-    {"expected":"68b0ca640651d52eaec239d7b8c540e821f400a11b6150edc9c4958299da7ca4","file":"audit.py","match":true,"sha256":"68b0ca640651d52eaec239d7b8c540e821f400a11b6150edc9c4958299da7ca4"},
-    {"expected":"3f87dc03eb61c1fe61f6938c52e96a875a7781e2fca3d94c0b2f04cd62c30ea9","file":"contract.py","match":true,"sha256":"3f87dc03eb61c1fe61f6938c52e96a875a7781e2fca3d94c0b2f04cd62c30ea9"},
-    {"expected":"968ce8611beb4f60a81092708316da2aa918d4945768dc95969a002c49e8bd49","file":"controls.py","match":true,"sha256":"968ce8611beb4f60a81092708316da2aa918d4945768dc95969a002c49e8bd49"},
-    {"expected":"256b5cc46841ed92828c2aace81bb448fe83fe92da7d7e2035a08557e93254de","file":"corpus.py","match":true,"sha256":"256b5cc46841ed92828c2aace81bb448fe83fe92da7d7e2035a08557e93254de"},
-    {"expected":"8d767b4e19a82803ab8bca0dd68344acc1e2caf77dbb6fd2f2a3453c4ef230b0","file":"fixture_child.py","match":true,"sha256":"8d767b4e19a82803ab8bca0dd68344acc1e2caf77dbb6fd2f2a3453c4ef230b0"},
-    {"expected":"e1be1756d15a40743a4812c083e0deea1f50190debcef2001ffde18f081c5450","file":"launcher.sh","match":true,"sha256":"e1be1756d15a40743a4812c083e0deea1f50190debcef2001ffde18f081c5450"},
-    {"expected":"ac6496dcbe230e984dd2205276abcdfcae225644ec169d73f21940d475bb23a8","file":"live.py","match":true,"sha256":"ac6496dcbe230e984dd2205276abcdfcae225644ec169d73f21940d475bb23a8"},
-    {"expected":"99e2934a71e84c3ec251d673b94d3aff24d90a11b4e61eb00e69234b1f56734c","file":"oracle.py","match":true,"sha256":"99e2934a71e84c3ec251d673b94d3aff24d90a11b4e61eb00e69234b1f56734c"},
-    {"expected":"6168b5c7420e0d2d01657c322c93dbb22c67648264316b03d924c23f55ee63d3","file":"runner.py","match":true,"sha256":"6168b5c7420e0d2d01657c322c93dbb22c67648264316b03d924c23f55ee63d3"},
-    {"expected":"b7e1337d2923e14358d1c0a8ae9852467ad3d1c06fc8dbb42ab8611e767bbff7","file":"schedule.json","match":true,"sha256":"b7e1337d2923e14358d1c0a8ae9852467ad3d1c06fc8dbb42ab8611e767bbff7"}
+    {
+      "expected": "deb07cd861f63fb071f9f8475dc14819ca4b15276839d89bc1d26a7f53e91759",
+      "file": "PLAN.md",
+      "match": true,
+      "sha256": "deb07cd861f63fb071f9f8475dc14819ca4b15276839d89bc1d26a7f53e91759"
+    },
+    {
+      "expected": "68b0ca640651d52eaec239d7b8c540e821f400a11b6150edc9c4958299da7ca4",
+      "file": "audit.py",
+      "match": true,
+      "sha256": "68b0ca640651d52eaec239d7b8c540e821f400a11b6150edc9c4958299da7ca4"
+    },
+    {
+      "expected": "3f87dc03eb61c1fe61f6938c52e96a875a7781e2fca3d94c0b2f04cd62c30ea9",
+      "file": "contract.py",
+      "match": true,
+      "sha256": "3f87dc03eb61c1fe61f6938c52e96a875a7781e2fca3d94c0b2f04cd62c30ea9"
+    },
+    {
+      "expected": "968ce8611beb4f60a81092708316da2aa918d4945768dc95969a002c49e8bd49",
+      "file": "controls.py",
+      "match": true,
+      "sha256": "968ce8611beb4f60a81092708316da2aa918d4945768dc95969a002c49e8bd49"
+    },
+    {
+      "expected": "256b5cc46841ed92828c2aace81bb448fe83fe92da7d7e2035a08557e93254de",
+      "file": "corpus.py",
+      "match": true,
+      "sha256": "256b5cc46841ed92828c2aace81bb448fe83fe92da7d7e2035a08557e93254de"
+    },
+    {
+      "expected": "8d767b4e19a82803ab8bca0dd68344acc1e2caf77dbb6fd2f2a3453c4ef230b0",
+      "file": "fixture_child.py",
+      "match": true,
+      "sha256": "8d767b4e19a82803ab8bca0dd68344acc1e2caf77dbb6fd2f2a3453c4ef230b0"
+    },
+    {
+      "expected": "e1be1756d15a40743a4812c083e0deea1f50190debcef2001ffde18f081c5450",
+      "file": "launcher.sh",
+      "match": true,
+      "sha256": "e1be1756d15a40743a4812c083e0deea1f50190debcef2001ffde18f081c5450"
+    },
+    {
+      "expected": "ac6496dcbe230e984dd2205276abcdfcae225644ec169d73f21940d475bb23a8",
+      "file": "live.py",
+      "match": true,
+      "sha256": "ac6496dcbe230e984dd2205276abcdfcae225644ec169d73f21940d475bb23a8"
+    },
+    {
+      "expected": "99e2934a71e84c3ec251d673b94d3aff24d90a11b4e61eb00e69234b1f56734c",
+      "file": "oracle.py",
+      "match": true,
+      "sha256": "99e2934a71e84c3ec251d673b94d3aff24d90a11b4e61eb00e69234b1f56734c"
+    },
+    {
+      "expected": "6168b5c7420e0d2d01657c322c93dbb22c67648264316b03d924c23f55ee63d3",
+      "file": "runner.py",
+      "match": true,
+      "sha256": "6168b5c7420e0d2d01657c322c93dbb22c67648264316b03d924c23f55ee63d3"
+    },
+    {
+      "expected": "b7e1337d2923e14358d1c0a8ae9852467ad3d1c06fc8dbb42ab8611e767bbff7",
+      "file": "schedule.json",
+      "match": true,
+      "sha256": "b7e1337d2923e14358d1c0a8ae9852467ad3d1c06fc8dbb42ab8611e767bbff7"
+    }
   ]
 }
