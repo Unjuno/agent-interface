@@ -36,6 +36,17 @@ except ValueError:
 else:
     raise AssertionError('post_key_down=true should reject')
 
+# Duplicate causal IDs must fail closed rather than overwrite per-actuation evidence.
+try:
+    analyze(Interval(0,1000), [
+        Actuation(100, ReleaseReceipt(200,210,False), [Interval(0,1000)], 'dup'),
+        Actuation(300, ReleaseReceipt(400,410,False), [Interval(0,1000)], 'dup'),
+    ], [EffectEvent(350,'dup',True,True)])
+except ValueError:
+    pass
+else:
+    raise AssertionError('duplicate actuation_id should reject')
+
 rng = random.Random(9172026)
 for _ in range(100_000):
     ws = rng.randrange(0,10_000)
