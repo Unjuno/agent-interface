@@ -148,7 +148,8 @@ def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--mode',choices=['construction','case'],required=True); ap.add_argument('--seed',type=int); ap.add_argument('--out',required=True); a=ap.parse_args()
     torch.set_num_threads(1); torch.set_num_interop_threads(1); out=Path(a.out); out.mkdir(parents=True,exist_ok=True)
     if a.mode=='construction':
-        seq=[(2,.95),(2,.96),(3,.99),(3,.99)]; prev=None; exit_depth=None
+        seq=[(2,.95),(2,.96),(3,.99),(3,.99)]
+        prev=None; exit_depth=None
         for d,(p,c) in enumerate(seq,1):
             if d<DEPTH:
                 cur=p if p<ACTIONS and c>=EXEC_CONF else None
