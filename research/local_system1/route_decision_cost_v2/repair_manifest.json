@@ -1,0 +1,23 @@
+{
+  "predecessor_issue": 892,
+  "predecessor_freeze_head": "b69a7aa8f8a0c7b28972eb539bbaa88ee89f2560",
+  "predecessor_stop": "STOPPED_FORMAL_HARNESS_SEED_RANGE",
+  "predecessor_measured_rows": 0,
+  "v1_exact_git_blobs_preserved": {
+    "decision.py": "3db78ccc3379d301a7305eb879b17a19b8a5430a",
+    "test_static.py": "9476b1fa5723954e3a49fda65f8023b4f0107ef6",
+    "environment.json": "9485b8eb9faf3474b8289a45b5bb3f0b098f7e73"
+  },
+  "v2_setup_changes": [
+    "TASK identity -001 -> -002",
+    "define SKLEARN_SEED = SEED % 2**32",
+    "LogisticRegression random_state uses SKLEARN_SEED",
+    "DecisionTreeClassifier random_state uses SKLEARN_SEED",
+    "result records scientific_seed and sklearn_seed for auditability"
+  ],
+  "audit_only_changes": [
+    "require successor task identity",
+    "require scientific seed unchanged and sklearn seed equal uint32 projection"
+  ],
+  "scientific_contract_changes": []
+}
