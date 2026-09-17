@@ -1,0 +1,11 @@
+{
+  "controls": [
+    {"control":"correctness","rejected":true,"returncode":1,"errors":["correctness_RULE","decision"]},
+    {"control":"decision","rejected":true,"returncode":1,"errors":["decision"]},
+    {"control":"linear_ratio","rejected":true,"returncode":1,"errors":["linear_ratio","decision"]},
+    {"control":"side_effect","rejected":true,"returncode":1,"errors":["side_effect","decision"]}
+  ],
+  "rejected": 4,
+  "total": 4,
+  "note": "Controls were applied only to copied FORMAL_RESULT.json files; no formal rerun occurred. Full auditor stdout for each copied corruption is retained inside evidence.tar.xz."
+}
