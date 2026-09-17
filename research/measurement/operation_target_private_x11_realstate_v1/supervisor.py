@@ -43,6 +43,7 @@ def run_session(root,session,display_num,construction=False):
                 (sroot/'command.json').write_text(json.dumps({'seq':seq,'mode':mode}))
                 pp=sroot/'public'/f'{seq:02d}.json'; op=sroot/'oracle'/f'{seq:02d}.json'; wait(pp); wait(op)
                 read_ns=time.perf_counter_ns(); p=json.loads(pp.read_text()); o=json.loads(op.read_text())
+                # X11 witness: screenshot bytes from the actual private root after state application.
                 img=rw.get_image(0,0,320,240,X.ZPixmap,0xffffffff); pix=bytes(img.data); xhash=hashlib.sha256(pix).hexdigest()
                 prop=decide(p); member=key(prop) in {key(x) for x in o['acceptable']}
                 rows.append({'session':session,'seq':seq,'mode':mode,'public':p,'oracle':o,'proposal':prop,'member':member,'read_ns':read_ns,'x11_sha256':xhash})
