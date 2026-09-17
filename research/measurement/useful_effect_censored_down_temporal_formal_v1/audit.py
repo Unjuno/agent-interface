@@ -29,6 +29,7 @@ def audit(path,seed=FORMAL_SEED,per=FORMAL_PER_STRATUM):
         if analyze(wait,acts,[])['occupancy']!=occ:occ_mismatch+=1
         if stratum=='EXACT_DOWN':
             if got['effects']['temporal_ambiguous']!=0: exact_parent_mismatch+=1
+            # Compare each record against exact parent disposition where lineage binds one actuation.
             by={a.actuation_id:a for a in acts}
             for er in ers:
                 a=by.get(er.event.actuation_id)
@@ -38,6 +39,7 @@ def audit(path,seed=FORMAL_SEED,per=FORMAL_PER_STRATUM):
         for er in ers:
             orole=oracle.role(er.event,acts)
             if orole=='temporal_ambiguous':
+                # candidate per-record classification
                 one=analyze(wait,acts,[EffectRecord('only',er.event)])['effects']
                 if one['useful_bound'] or one['nonuseful_bound']: ambiguous_promotions+=1
         if stratum=='PRECEDENCE_STRESS' and got['effects']!=want: precedence_mismatch+=1
