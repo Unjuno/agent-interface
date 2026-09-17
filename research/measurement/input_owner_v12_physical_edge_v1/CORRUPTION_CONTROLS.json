@@ -1,0 +1,11 @@
+{
+  "all_rejected": false,
+  "rows": [
+    {"name":"control_mismatch","rejected":true,"stdout":"{\"audit_pass\": false, \"errors\": [\"control_mismatch\"]}"},
+    {"name":"false_interval","rejected":true,"stdout":"{\"audit_pass\": false, \"errors\": [\"false_interval\"]}"},
+    {"name":"wrong_sequences","rejected":true,"stdout":"{\"audit_pass\": false, \"errors\": [\"sequences\"]}"},
+    {"name":"zero_composed","rejected":true,"stdout":"{\"audit_pass\": false, \"errors\": [\"no_composed\"]}"},
+    {"name":"bad_decision","rejected":true,"stdout":"{\"audit_pass\": false, \"errors\": [\"decision\"]}"},
+    {"name":"bad_digest","rejected":false,"stdout":"{\"audit_pass\": true, \"errors\": []}"}
+  ]
+}
