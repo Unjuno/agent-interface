@@ -16,7 +16,7 @@ FREEZE = json.loads((HERE / "freeze.json").read_text())
 
 def main() -> None:
     if not FREEZE.get("formal_authorized", False):
-        raise RuntimeError("formal allocation blocked by freeze.json; resolve Issue #60 lease/provenance first")
+        raise RuntimeError("formal allocation blocked by freeze.json; resolve Issue #60 formal/live lease first")
     if FREEZE["formal_invocation_budget"] != 1 or FREEZE["same_id_rerun_budget"] != 0:
         raise RuntimeError("unexpected formal budget")
 
@@ -31,6 +31,7 @@ def main() -> None:
         "cases": [],
         "formal_invocations": 1,
         "reruns": 0,
+        "case_runner": "run_case_v2.py",
     }
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True))
 
@@ -38,7 +39,7 @@ def main() -> None:
         case_out = out / case_id
         command = [
             sys.executable,
-            str(HERE / "run_case.py"),
+            str(HERE / "run_case_v2.py"),
             "--case-id",
             case_id,
             "--arm",
