@@ -17,6 +17,7 @@ class Invalidation:
     event_id: str
     scope: Scope
 
+
 def _id(x):
     return isinstance(x, str) and bool(x.strip())
 
@@ -41,7 +42,7 @@ def validate_invalidation(e):
 class EpochBarrier:
     def __init__(self):
         self.epoch = {}
-        self.decisions = {}
+        self.decisions = {}  # decision_id -> (scope, stamped_epoch, planner_generation)
         self.seen_invalidations = set()
 
     def install(self, d):
