@@ -32,6 +32,7 @@ def main(param_count: int, out: Path):
     rng = np.random.default_rng(QUERY_SEED)
     queries = rng.standard_normal((MEASURED_QUERIES, INPUT_DIM), dtype=np.float32)
     fixed = np.linspace(-1.0, 1.0, INPUT_DIM, dtype=np.float32)
+    # Warm the exact decision path; timing output is excluded from formal metrics.
     for i in range(WARMUPS):
         kernel.decide(queries[i % MEASURED_QUERIES])
     a = kernel.decide(fixed); b = kernel.decide(fixed)
