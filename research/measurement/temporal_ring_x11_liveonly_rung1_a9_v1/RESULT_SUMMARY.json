@@ -1,0 +1,48 @@
+{
+  "task": "TEMPORAL-RING-X11-LIVEONLY-RUNG1-20260918-009",
+  "decision": "PASS_X11_TEMPORAL_RING_RUNG1_INTEGRATION_SCOPED",
+  "formal_invocations": 1,
+  "reruns": 0,
+  "grants_input_authority": false,
+  "audit": {
+    "ring_trials": 24,
+    "jit_trials": 24,
+    "ring_boundaries": 0,
+    "jit_boundaries": 24,
+    "exact_past_jit_promotions": 0,
+    "ring_query_p95_ns": 29529.849999999984,
+    "jit_evidence_median_ns": 100484616,
+    "paired_median_jit_minus_ring_ns": 100485152.5
+  },
+  "capture": {
+    "roi": [
+      80,
+      60,
+      160,
+      120
+    ],
+    "frame_bytes": 76800,
+    "capture_exceptions_total": 0,
+    "payload_types": {
+      "bytes": 181,
+      "str": 47
+    },
+    "ring_capture_p95_ns_range": [
+      451315.3999999999,
+      699956.1499999996
+    ],
+    "jit_capture_p95_ns_range": [
+      419198.14999999997,
+      666308.8999999999
+    ],
+    "max_target_error_ns": 1319087
+  },
+  "first_outcome": {
+    "raw_bytes": 37671,
+    "raw_sha256": "ff1e66737c147f8eebfa3903e72d59954dc94b21ae27cbe474c57f1166b50db7",
+    "raw_git_blob": "eaa8ca0062e6968f3277cb85e00acce4f12af051",
+    "gzip_bytes": 3323,
+    "gzip_sha256": "e05d8e5734a9f6f2f7cc6def0f2c6983ffb32057fab3d247398703e59796c37c",
+    "gzip_git_blob": "c36a8c46dfad5e8c1ed01ffd1a0d2864b6ab8bfc"
+  }
+}
