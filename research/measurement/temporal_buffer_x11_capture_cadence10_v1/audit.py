@@ -9,12 +9,12 @@ def main():
     ap=argparse.ArgumentParser(); ap.add_argument('result'); args=ap.parse_args(); p=Path(args.result); d=json.loads(p.read_text()); errs=[]
     if not d.get('formal') or d.get('formal_invocations')!=1 or d.get('reruns')!=0: errs.append('formal_identity')
     if len(d.get('pairs',[]))!=6: errs.append('pair_count')
-    ratios=[]; p95inc=[]; severe=0
+    ratios=[]; p95inc=[]; severe=0; rows=[]
     for i,pair in enumerate(d.get('pairs',[])):
         if len(pair)!=2: errs.append(f'pair{i}_arms'); continue
         by={r['arm']:r for r in pair}
         if set(by)!={'baseline','capture'}: errs.append(f'pair{i}_names'); continue
-        b=by['baseline']; c=by['capture']
+        b=by['baseline']; c=by['capture']; rows.extend([b,c])
         if b['fixture_geometry']!=[320,240] or c['fixture_geometry']!=[320,240]: errs.append(f'pair{i}_geometry')
         if b['fixture_gap_ns']['max'] and b['fixture_gap_ns']['max']>100_000_000: severe+=1
         if c['capture_count']<13: errs.append(f'pair{i}_capture_count')
@@ -31,6 +31,8 @@ def main():
         if not ratios or not (0.97<=pct(ratios,.5)<=1.03): errs.append('paired_count_ratio')
         if not p95inc or pct(p95inc,.5)>2_000_000: errs.append('paired_p95_gap')
         if errs: decision='REJECT_CADENCE10_CAPTURE_COST' if any(('capture_' in x or x.endswith('_cpu') or x.endswith('_ring') or 'paired_' in x or 'max_gap' in x) for x in errs) else 'FAIL_INTEGRITY'
-    out={'decision':decision,'audit_pass':not errs or decision=='HOLD_HOST_SCHEDULING_NOISE','errors':errs,'severe_baseline_stalls':severe,'paired_count_ratio_p50':pct(ratios,.5) if ratios else None,'paired_p95_gap_increase_ns_p50':pct(p95inc,.5) if p95inc else None,'result_sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'checked_pairs':len(d.get('pairs',[]))}
+    out={'decision':decision,'audit_pass':not errs or decision=='HOLD_HOST_SCHEDULING_NOISE','errors':errs,'severe_baseline_stalls':severe,
+         'paired_count_ratio_p50':pct(ratios,.5) if ratios else None,'paired_p95_gap_increase_ns_p50':pct(p95inc,.5) if p95inc else None,
+         'result_sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'checked_pairs':len(d.get('pairs',[]))}
     print(json.dumps(out,indent=2,sort_keys=True)); raise SystemExit(0 if out['audit_pass'] else 1)
 if __name__=='__main__': main()
