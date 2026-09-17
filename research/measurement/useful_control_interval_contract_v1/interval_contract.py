@@ -109,6 +109,9 @@ def classify_effects(events: Iterable[EffectEvent], known_actuation_ids: set[str
 
 
 def analyze(wait: Interval, actuations: Sequence[Actuation], events: Sequence[EffectEvent]) -> dict:
+    ids = [a.actuation_id for a in actuations]
+    if len(ids) != len(set(ids)):
+        raise ValueError('duplicate actuation_id')
     per = {a.actuation_id: occupancy_bounds(a, wait).__dict__ for a in actuations}
     lower_intervals: list[Interval] = []
     upper_intervals: list[Interval] = []
