@@ -23,6 +23,44 @@ only the interface changes
 
 Then measure model calls, serialization, image/observation cost, latency, retries, recovery, and task correctness separately.
 
+## Governing intent principle — preserve rich-model intent, localize refinement
+
+> **Preserve rich-model intent; localize the high-frequency refinement loop.**
+
+The frontier/rich model remains the source of semantic intent, strategy, novelty, and recovery. Agent Interface should make that intent **continue to produce useful, current-state-aware work while the rich model is reasoning**, by compiling or caching bounded execution structures that can observe, act, verify, and adjust locally.
+
+The desired split is:
+
+```text
+rich model
+    semantic intent / strategy / acceptable futures / stop conditions
+            |
+            v
+Agent Interface
+    compile or bind that intent into bounded local execution
+            |
+            v
+local refinement loop
+    observe -> act -> verify -> adjust
+            |
+            +-- still inside intent/envelope -> continue
+            +-- stale / ambiguous / semantic change -> YIELD
+```
+
+Local execution may refine **how** an already-declared intent is carried out at computer timescales. It must not silently redefine **what** the agent is trying to accomplish.
+
+This means:
+
+- direct rich-model computer operation remains a first-class path; local execution is an optimization/delegation path, not a mandatory intermediary;
+- deterministic macro, servo, watcher, cache, or graph should be preferred when it completely covers the local problem;
+- a lightweight learned policy or supervisor is justified only for a real residual decision that simpler mechanisms do not close;
+- a local policy may select only inside the current rich-model-authored intent/policy envelope and ordinary authority boundaries;
+- prediction, historical evidence, cached decisions, confidence, and speculative branches never become current input authority merely by reuse;
+- current evidence must be able to invalidate local continuation quickly; uncertainty or semantic novelty yields upward to the rich model;
+- optimization should remove repeated semantic re-decision and waiting, not replace a stronger model's semantic competence with a weaker mandatory agent.
+
+**Worker invariant:** every new mechanism or experiment should state (1) which rich-model intent it preserves, (2) what repeated/local work it removes from the rich-model critical path, (3) what current evidence invalidates or yields the local path, and (4) whether direct rich-model operation is the relevant baseline. A component-level PASS does not establish that the integrated architecture is better.
+
 ## Component principles
 
 These principles constrain the eventual user-facing component, not only the current Python research harness.

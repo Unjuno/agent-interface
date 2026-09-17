@@ -13,6 +13,53 @@ The target cost is not just mouse latency. It includes:
 - retries and recovery,
 - relearning after environment changes.
 
+## Rich-model intent and local refinement
+
+The architecture is not a pipeline in which every rich-model action must pass through a weaker local model. The rich model may act directly whenever semantic novelty or uncertainty makes that appropriate.
+
+The preferred optimization boundary is:
+
+```text
+                         +----------------------+
+                         | Rich model / planner |
+                         | intent / strategy    |
+                         +----------+-----------+
+                                    |
+                    +---------------+----------------+
+                    |                                |
+                    | direct operation               | bounded delegation
+                    v                                v
+          ordinary current admission       intent / policy compiler
+                    |                                |
+                    |                         macro / servo / watcher
+                    |                         cached policy / branches
+                    |                                |
+                    |                         observe -> act -> verify
+                    |                                  -> adjust
+                    |                                |
+                    |                   stale/ambiguous/novel -> YIELD
+                    |                                |
+                    +---------------+----------------+
+                                    v
+                         deterministic authority
+                                    |
+                                    v
+                               computer
+```
+
+The local side exists to **continue and refine a rich-model-authored intent at higher cadence**, especially while the rich model is unavailable. It is not an independent semantic agent by default.
+
+A lightweight learned component, when present, should normally solve only a residual problem such as cache validity, bounded branch choice, or local correction among already-authorized alternatives. It must not become a compulsory semantic bottleneck between the rich model and the computer.
+
+Consequences:
+
+- direct rich-model control is preserved as a first-class route and experimental baseline;
+- local mechanisms inherit a bounded intent/envelope and must expose explicit invalidation and YIELD;
+- deterministic macro/servo execution wins when it is sufficient;
+- policy caches and speculative futures cache decisions or preparation, never permission;
+- historical/predicted evidence may guide preparation but fresh current evidence governs admission;
+- component-level mechanism evidence must not be promoted to an integrated architecture claim without a separate end-to-end comparison.
+
 ## Current stack
 
 ```text
