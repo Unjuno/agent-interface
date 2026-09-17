@@ -63,8 +63,8 @@ def one_sequence(proc,rwin,seq,side,mode):
     derived_future_label='RIGHT' if future_dir>0 else 'LEFT' if future_dir<0 else 'CENTER'
     return {'sequence':side,'mode':mode,'authored':authored,'phases':phases,'content_direction':observed_dir,'content_future_direction':future_dir,'content_reversal':derived_reversal,'content_future_label':derived_future_label}
 
-def one_pair(root,pair_id,display_num,mode):
-    ddir=root/f'pair{pair_id:02d}'; ddir.mkdir(parents=True,exist_ok=True)
+def one_pair(root,pair_id,display_num,mode,prefix='pair'):
+    ddir=root/f'{prefix}{pair_id:02d}'; ddir.mkdir(parents=True,exist_ok=True)
     env=os.environ.copy(); env['DISPLAY']=f':{display_num}'; env['XAUTHORITY']=str(ddir/'xauth'); (ddir/'xauth').touch()
     xv=subprocess.Popen(['Xvfb',f':{display_num}','-screen','0','320x240x24','-nolisten','tcp','-ac'],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,env=env)
     fix=None; d=None
@@ -100,7 +100,7 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('--out',required=True);ap.add_argument('--construction',action='store_true');a=ap.parse_args();out=Path(a.out);root=Path(__file__).parent
     if out.exists(): raise SystemExit('result exists')
     n=2 if a.construction else 32; pairs=[]
-    for i in range(n): pairs.append(one_pair(root,i+1,(700 if a.construction else 720)+i,'continue' if i<n//2 else 'reverse'))
+    for i in range(n): pairs.append(one_pair(root,i+1,(700 if a.construction else 720)+i,'continue' if i<n//2 else 'reverse',prefix=('construction_pair' if a.construction else 'formal_pair')))
     result={'task':'TEMPORAL-SPECULATION-X11-LABELED-READINESS-20260918-001','construction':a.construction,'formal':not a.construction,'formal_invocations':0 if a.construction else 1,'reruns':0,'roi':list(ROI),'authority_grants':0,'input_actions':0,'pairs':pairs}
     out.write_text(json.dumps(result,indent=2,sort_keys=True)+'\n'); print(json.dumps(result,sort_keys=True))
 if __name__=='__main__':main()
