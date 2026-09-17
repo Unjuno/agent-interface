@@ -1,0 +1,42 @@
+{
+  "base": "d994bc01a6a23d21bd565b84d58a43a99a562f89",
+  "branch": "research/useful-effect-actuation-id-validation-962",
+  "construction": {
+    "formal_rows": 0,
+    "py_compile": true,
+    "static_controls": "PASS"
+  },
+  "excluded_overlap": [
+    946,
+    950,
+    952,
+    869
+  ],
+  "formal": {
+    "malformed_cases": 50000,
+    "malformed_seed": 96220260917002,
+    "valid_cases": 50000,
+    "valid_seed": 96220260917001
+  },
+  "formal_authorized": true,
+  "formal_invocations": 0,
+  "formal_reruns": 0,
+  "issue": 962,
+  "live_model_gui_input_authority": false,
+  "parent": {
+    "bytes": 4800,
+    "git_blob": "979f257b4f02be80bcaa30ae8d5a0aa92162bfb1",
+    "path": "research/measurement/useful_control_interval_contract_v1/interval_contract.py",
+    "sha256": "9783b3b6b24bcb93b4cf608db2bbd3f65740a1b0f5372c783f6c0367b680fc8b"
+  },
+  "source_sha256": {
+    "PLAN.md": "122e69fe02e030f1928e9046074585c5b48f9c0fbe48cf1917a8d381d8a90a6c",
+    "audit.py": "f1b95e1394622f0ccf487e97df72ae1896411091a98832ad367e12fb24457840",
+    "id_validation.py": "9a561d61977cfb621365ca12e1b11d09e95734fcf46a047b2de3f193b026b16d",
+    "interval_contract.py": "9783b3b6b24bcb93b4cf608db2bbd3f65740a1b0f5372c783f6c0367b680fc8b",
+    "run_formal.py": "d98e2889d74a5beba01c40537f0926a0b8c28d84cb241ffa1e75b82b439dac73",
+    "test_static.py": "a2146212f69a078e303d3c5303aecf8827be96f263c903fdacb2a3c54c02d078"
+  },
+  "stop": "One formal invocation after Git readback and ownership reread; reruns/replacements/tuning0.",
+  "task": "USEFUL-EFFECT-ACTUATION-ID-VALIDATION-20260917-001"
+}
