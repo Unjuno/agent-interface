@@ -1,0 +1,15 @@
+{
+  "aggregate_frozen_corruption_script_completed": false,
+  "aggregate_frozen_corruption_script_outer_timeout_count": 2,
+  "individual_controls": [
+    {"mutation":"seed","rejected":true,"errors":["records","critical_records","retained_critical_records","unretained_critical_records","overflow_batches","overflow_sessions","digest"]},
+    {"mutation":"digest","rejected":true,"errors":["digest"]},
+    {"mutation":"critical_records","rejected":true,"errors":["critical_records"]},
+    {"mutation":"decision","rejected":true,"errors":["decision"]},
+    {"mutation":"formal_invocations","rejected":true,"errors":["formal_invocations"]}
+  ],
+  "controls_rejected": 5,
+  "controls_total": 5,
+  "primary_rerun": false,
+  "note": "Each mutation was checked separately with the frozen audit.verify after the aggregate five-recompute wrapper exceeded the outer command budget. No primary seed was rerun."
+}
