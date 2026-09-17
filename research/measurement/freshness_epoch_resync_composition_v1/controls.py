@@ -19,6 +19,7 @@ def main():
     m=overflow_mgr(); a=m.get('A'); oid=a.overflow_identity(); s=Snapshot('s',6,1_400_000,'A','T','X',oid); assert m.resync('A',s,1_400_000)=='RESYNC_ACCEPTED'; pre=a.view(1_400_000); assert m.resync('A',s,1_400_000)=='ALREADY_RESYNCED_SELF' and a.view(1_400_000)==pre;n+=1
     m=Manager(); [m.append(r(i),1_000_000) for i in range(1,4)]; a=m.get('A'); assert m.resync('A',Snapshot('s',3,1_400_000,'A','T','X',None),1_400_000)=='RESYNC_NOT_REQUIRED';n+=1
     m=overflow_mgr(); [m.append(r(i,s='B'),1_000_000) for i in range(1,3)]; bpre=m.get('B').view(1_400_000); a=m.get('A'); s=Snapshot('s',6,1_400_000,'A','T','X',a.overflow_identity()); m.resync('A',s,1_400_000); assert m.get('B').view(1_400_000)==bpre;n+=1
+    # Naive same-epoch clear negative: gap disappears by construction.
     m=overflow_mgr(); a=m.get('A'); assert a.overflow is not None; a.overflow=None; assert a.view(1_400_000)['coverage_complete'] and not a.view(1_400_000)['historical_gaps'];n+=1
     print({'controls_passed':n})
 if __name__=='__main__':main()
