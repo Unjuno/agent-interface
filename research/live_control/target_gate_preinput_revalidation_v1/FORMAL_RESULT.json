@@ -1,0 +1,37 @@
+{
+  "task": "TARGET-GATE-PREINPUT-REVALIDATION-20260917-001",
+  "decision": "PASS_PREINPUT_PATCH_REVALIDATION_SCOPED",
+  "formal_invocations": 1,
+  "reruns": 0,
+  "cases": 16,
+  "stats": {
+    "no_reval_stable_target": 4,
+    "no_reval_swap_decoy": 4,
+    "reval_stable_target": 4,
+    "reval_swap_stale_zero_click": 4
+  },
+  "revalidation_capture_ms": {"median": 1.5856465, "min": 1.12431, "max": 3.864424},
+  "revalidation_done_to_click_start_ms_stable": {"median": 5.1922615, "min": 5.09767, "max": 10.312142},
+  "raw_png_git_retained": false,
+  "raw_manifest_sha256": "c640e00c38484a864c08ecc18a5d31cbcef7ba209ded537a64d1f042eeedca5c",
+  "raw_audit_sha256": "9a9a3dc9b294b374e97f7548860509f93dcf7885d19591976a9d0f87f5819bd2",
+  "rows": [
+    ["r01-sn","stable","no_revalidation","NOT_REVALIDATED",null,1,"task-target"],
+    ["r01-sr","stable","revalidate","CURRENT_TARGET",0,1,"task-target"],
+    ["r01-xn","swap","no_revalidation","NOT_REVALIDATED",null,1,"decoy"],
+    ["r01-xr","swap","revalidate","STALE_TARGET",240,0,null],
+    ["r02-xr","swap","revalidate","STALE_TARGET",240,0,null],
+    ["r02-xn","swap","no_revalidation","NOT_REVALIDATED",null,1,"decoy"],
+    ["r02-sr","stable","revalidate","CURRENT_TARGET",0,1,"task-target"],
+    ["r02-sn","stable","no_revalidation","NOT_REVALIDATED",null,1,"task-target"],
+    ["r03-sr","stable","revalidate","CURRENT_TARGET",0,1,"task-target"],
+    ["r03-sn","stable","no_revalidation","NOT_REVALIDATED",null,1,"task-target"],
+    ["r03-xr","swap","revalidate","STALE_TARGET",240,0,null],
+    ["r03-xn","swap","no_revalidation","NOT_REVALIDATED",null,1,"decoy"],
+    ["r04-xn","swap","no_revalidation","NOT_REVALIDATED",null,1,"decoy"],
+    ["r04-xr","swap","revalidate","STALE_TARGET",240,0,null],
+    ["r04-sn","stable","no_revalidation","NOT_REVALIDATED",null,1,"task-target"],
+    ["r04-sr","stable","revalidate","CURRENT_TARGET",0,1,"task-target"]
+  ],
+  "row_schema": ["case_id","state","policy","disposition","revalidation_patch_diff","click_count","click_role"]
+}
