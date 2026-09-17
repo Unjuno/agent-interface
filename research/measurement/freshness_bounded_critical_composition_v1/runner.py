@@ -20,8 +20,8 @@ def invariants(rows,out):
         ov=out['overflow_by_session'].get(s)
         if len(crit)>CAPACITY:
             u=crit[CAPACITY]
-            want={'status':'RESYNC_REQUIRED','first_unretained_event_id':u.event_id,
-                  'first_unretained_seq':u.seq,'first_unretained_kind':u.kind,'unretained_count':len(crit)-CAPACITY}
+            want={'status':'RESYNC_REQUIRED','first_unretained_event_id':u.event_id,'first_unretained_seq':u.seq,
+                  'first_unretained_kind':u.kind,'unretained_count':len(crit)-CAPACITY}
             if ov!=want: errs.append('gap')
             if out['coverage_complete_by_session'].get(s) is not False: errs.append('coverage_false')
         else:
