@@ -3,7 +3,7 @@
   "task": "TEMPORAL-SPECULATION-X11-LABELED-READINESS-20260918-001",
   "base": "e62c4d97c21d1cb5c66715720fa47cf62097a550",
   "reservation_commit": "3e5b01624f68e82fa9f13939769b8a9a5564071b",
-  "source_commit": "2f14cbdab6e6cd18246fd83eaa8da0e3f846dea0",
+  "source_commit": "cb24f0923060d39bacc83334685a706caad47b52",
   "formal_invocations_before_freeze": 0,
   "rerun_budget": 0,
   "replacement_budget": 0,
@@ -12,29 +12,21 @@
   "formal_sequences": 64,
   "continue_pairs": 16,
   "reverse_pairs": 16,
-  "roi": [
-    80,
-    60,
-    160,
-    120
-  ],
-  "positions": {
-    "left": 90,
-    "center": 140,
-    "right": 190
-  },
+  "roi": [80,60,160,120],
+  "positions": {"left":90,"center":140,"right":190},
   "source_blobs": {
     "PLAN.md": "0e1ca9c08d3382b68749ea7212e2f729b3429171",
     "fixture.py": "465a50529ec205bcdb0e2ff64c3d0fd9105b2849",
-    "runner.py": "81c3879d142202a928086f7e681dba7221217275",
+    "runner.py": "ad01b8fb72396d2367cdde9e305de67c7009f265",
     "audit.py": "ab7168f27f8bda8daa69843a2483b77f356f7d01"
   },
   "pass_gates": {
-    "same_current_alias_pairs": 32,
-    "min_opposite_history_future_disagreement_pairs": 16,
-    "binding_ok_sequences": 64,
-    "classification_ok_sequences": 64,
-    "authority_grants": 0,
-    "input_actions": 0
-  }
+    "same_current_alias_pairs":32,
+    "min_opposite_history_future_disagreement_pairs":16,
+    "binding_ok_sequences":64,
+    "classification_ok_sequences":64,
+    "authority_grants":0,
+    "input_actions":0
+  },
+  "preformal_correction": "construction/formal output directories separated; scientific fixture/gates unchanged"
 }
