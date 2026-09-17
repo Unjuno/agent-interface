@@ -1,0 +1,48 @@
+{
+  "base": "e0f1f215890d8626ac012c5ee924075b4a2c2926",
+  "branch": "research/queryable-temporal-buffer-rung1-latency-20260918-001",
+  "cadence_ns": 5000000,
+  "construction_import_loader_repair": "pre-source-freeze only; formal seed unused",
+  "construction_seed": 103820260918000,
+  "construction_status": "PASS_PLUMBING_2_PLUS_2",
+  "formal_authorized": true,
+  "formal_invocation_budget": 1,
+  "formal_live_trials": 64,
+  "formal_replay_trials": 64,
+  "formal_result_absent_at_freeze": true,
+  "formal_seed": 103820260918001,
+  "gates": {
+    "jit_future_p50_ns_min": 45000000,
+    "live_jit_exact_past": "0/64",
+    "live_jit_future_boundaries": "64/64",
+    "live_ring_past": "64/64",
+    "paired_advantage_p50_ns_min": 35000000,
+    "replay_boundaries": 0,
+    "replay_exact_identity": "64/64",
+    "ring_p95_ns_max": 10000000
+  },
+  "horizon_ns": 50000000,
+  "issue": 1038,
+  "max_frames": 6,
+  "parent_contract_git_blob": "00bcf7ed503f61b0240b9502b6f775c5418ea179",
+  "parent_contract_sha256": "77439c932e2dbc8116813e02630346b9b5405876d2e58b0e70080f0c7e5c8aec",
+  "parent_issue": 1028,
+  "payload_bytes": 4096,
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "python": "3.13.5",
+  "reruns": 0,
+  "reservation_commit": "3924bd772f9d39bf31d8474ff22d3a15785dff12",
+  "ring_max_age_ns": 250000000,
+  "source_git_blobs": {
+    "PLAN.md": "9fb34104f5044082f69c35287e965b3dd69a314c",
+    "audit.py": "081935ddf5ecc30696737ff920cc4e8eef3bdd47",
+    "runner.py": "65afd9fe0e17f4b2ebc41b67cb5cafd4558dd155"
+  },
+  "source_sha256": {
+    "PLAN.md": "3c148650e0a899cb1637f734804009ac9cc5cdfeb52083c0e4a09b595c36f51b",
+    "audit.py": "e315e383abe55c5e60ffa9859d475c9c4811ad99d48ad6a225b49bf2a81c5668",
+    "runner.py": "2c706402a9630fac2d70aa37e26e85ac53f0d73ae78460304e03dfc607f214e3"
+  },
+  "task": "QUERYABLE-TEMPORAL-BUFFER-RUNG1-LATENCY-20260918-001",
+  "warmup_ns": 110000000
+}
