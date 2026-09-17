@@ -15,6 +15,7 @@ required={
 }
 field_presence={k:sorted(v & retained) for k,v in required.items()}
 missing=[k for k,v in field_presence.items() if not v]
+# Important: frame_bytes is a size scalar, not frame content.
 assert 'frame_bytes' in retained and 'data' not in retained
 assert s['capture_transient_only_fields']==['data']
 assert 'x' not in retained and 'dx' not in retained
