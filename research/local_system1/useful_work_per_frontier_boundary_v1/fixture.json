@@ -1,0 +1,81 @@
+{
+  "arms": {
+    "ephemeral": {
+      "durable_calls": 96,
+      "local_observations": 129,
+      "model_visible_images": 6,
+      "phase_generations": {
+        "acquisition": 1,
+        "layout_change": 1,
+        "repeat_A": 2,
+        "repeat_B": 2
+      },
+      "preflight_generations": 1,
+      "routes": [
+        "cold",
+        "cold",
+        "cold",
+        "cold",
+        "cold",
+        "cold"
+      ],
+      "task6_wall_ns": 80378859099,
+      "verified_tasks": 6
+    },
+    "persistent": {
+      "durable_calls": 114,
+      "local_observations": 136,
+      "model_visible_images": 2,
+      "phase_generations": {
+        "acquisition": 1,
+        "layout_change": 1,
+        "repeat_A": 0,
+        "repeat_B": 0
+      },
+      "preflight_generations": 1,
+      "routes": [
+        "cold",
+        "reuse",
+        "reuse",
+        "repair",
+        "reuse",
+        "reuse"
+      ],
+      "task6_wall_ns": 51627109593,
+      "verified_tasks": 6
+    },
+    "plain": {
+      "durable_calls": 36,
+      "local_observations": 105,
+      "model_visible_images": 6,
+      "phase_generations": {
+        "acquisition": 1,
+        "layout_change": 1,
+        "repeat_A": 2,
+        "repeat_B": 2
+      },
+      "preflight_generations": 1,
+      "routes": [
+        "cold",
+        "cold",
+        "cold",
+        "cold",
+        "cold",
+        "cold"
+      ],
+      "task6_wall_ns": 62754198912,
+      "verified_tasks": 6
+    }
+  },
+  "persistent_wall": {
+    "break_even_vs_ephemeral_task": 1,
+    "break_even_vs_plain_task": 2,
+    "task6_margin_vs_ephemeral_ns": 28751749506,
+    "task6_margin_vs_plain_ns": 11127089319
+  },
+  "schema": "useful_work_per_frontier_boundary_fixture_v1",
+  "source_blobs": {
+    "cumulative_wall_RESULT.json": "d23e2db9ee212d5f7409960301c84a454faf6934",
+    "phase_ledger_RESULT.json": "7db368b2d492b5b95f5f038fb7cb5dd6b78a27a7"
+  }
+}
