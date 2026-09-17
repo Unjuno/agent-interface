@@ -17,7 +17,9 @@ for name,mut in [
  ('promote_decision',lambda x:x.__setitem__('decision','PASS_RETAINED_SPECULATION_DATA_READY_SCOPED')),
  ('fake_current_identity',lambda x:x['readiness_gates'].__setitem__('explicit_fresh_current_identity',True)),
  ('fake_future_label',lambda x:x['readiness_gates'].__setitem__('independent_future_label_per_scored_pair',True))]:
-    y=copy.deepcopy(r); mut(y); mutations.append({'name':name,'rejected':y!=r})
+    y=copy.deepcopy(r); mut(y)
+    reject=(y!=r)
+    mutations.append({'name':name,'rejected':reject})
 a={'passed':not errs and all(x['rejected'] for x in mutations),'errors':errs,'mutations':mutations,'result_sha256':hashlib.sha256((p/'RESULT.json').read_bytes()).hexdigest()}
 (p/'AUDIT.json').write_text(json.dumps(a,indent=2,sort_keys=True)+'\n')
 print(json.dumps(a,sort_keys=True))
