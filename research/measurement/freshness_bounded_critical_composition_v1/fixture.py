@@ -17,6 +17,7 @@ def batches(seed,count):
             if want_critical:
                 kind=rng.choice(CRIT); ccount[s]+=1
             else: kind=rng.choice(STATES)
+            # Force useful boundary coverage periodically without changing semantics.
             mode=rng.randrange(20)
             if mode==0: t=NOW_NS-MAX_AGE_NS
             elif mode==1: t=max(0,NOW_NS-MAX_AGE_NS-1)
