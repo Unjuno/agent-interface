@@ -30,6 +30,7 @@ def audit(rows, invocation, freeze, root):
     biggest=next((r for r in rows if r.get('parameter_count')==16777216),None)
     if biggest is None: errors.append('largest_missing'); p95=None
     else: p95=biggest['warm_single_ms']['p95']
+    # Source-first identity check.
     for rel,want in freeze['source_sha256'].items():
         got=hashlib.sha256((Path(root)/rel).read_bytes()).hexdigest()
         if got!=want: errors.append('source:'+rel)
