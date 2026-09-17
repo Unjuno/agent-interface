@@ -4,7 +4,7 @@ Issue: #869
 BASE: `e2eaa0fb53c561852d286797d6477aeba194b7f7`  
 Status: **PREFORMAL_FROZEN_NO_FORMAL_ROWS**
 
-This directory freezes the next live measurement rung without consuming a formal allocation. Issue #60 still records unresolved formal-lease/provenance state, so this branch contains no formal result and must not be represented as one.
+This directory freezes the next live measurement rung without consuming a formal allocation. Later #60 coordination comments acknowledge the O1 handoff, but the searchable current coordination state still says `FORMAL EXPERIMENT LEASE: NONE` / `LIVE MODEL/GUI/OS-INPUT AUTHORITY: NONE` for new live lanes. Therefore this branch contains no formal result and must not be represented as one.
 
 ## Pinned current-main dependencies
 
