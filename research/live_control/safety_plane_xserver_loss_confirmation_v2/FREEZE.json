@@ -1,0 +1,71 @@
+{
+  "formal_cases": 8,
+  "formal_rows_before_freeze": 0,
+  "issue": 871,
+  "predecessor": "SAFETY-PLANE-XSERVER-LOSS-CONFIRMATION-20260917-001",
+  "predecessor_disposition": "FAIL_INTEGRITY_FREEZE_SELF_HASH",
+  "publication_base": "c833289b3a632c69087e8b51209f92a8eddda707",
+  "repair": "freeze metadata only; manifest excludes itself from hashed file set",
+  "rerun_budget": 0,
+  "schema": "safety-plane-xserver-loss-repair-freeze-v2",
+  "science_runtime_byte_identical_to_id001": true,
+  "source_archive": {
+    "bytes": 14092,
+    "git_blob": "efb59f0e2088588832a520fd1309435b11c83d52",
+    "sha256": "58da91d59a10495cd2660def704f7069b66d1baa8a9cb9ac294953864116538a"
+  },
+  "source_hashes": {
+    "audit.py": {
+      "bytes": 1526,
+      "git_blob": "d07aa10ecde3929e0cfeca8d65e1898b94726bd5",
+      "sha256": "f4e55b9df08da28d9517b060c5ecd8ba27ca60182b3ed6ea750b85e030129f6c"
+    },
+    "mutation_check.py": {
+      "bytes": 1429,
+      "git_blob": "dc79df3ad4b01a947f8e43f781707be2c63cd163",
+      "sha256": "64698b3c7faa4576625a657be88e888854283f603151e66342aea8bf4fb39291"
+    },
+    "owner.py": {
+      "bytes": 327,
+      "git_blob": "4c5bee40fa25cfbe9d2ac896edc31cce83e0b042",
+      "sha256": "b31fcba11e530ba6662b8ae42837b40dfd9776297df62831a37b3d0f95c89ab8"
+    },
+    "prereg.json": {
+      "bytes": 728,
+      "git_blob": "f9bf77aab76afb3d2dced6678b29ae0765454700",
+      "sha256": "42cc713f5144addc233248ed7aef6123de39a96b938faf723130422a2a0d7af3"
+    },
+    "receiver.py": {
+      "bytes": 410,
+      "git_blob": "ba25929392123ed36c40c684105869590c8049aa",
+      "sha256": "871cbcb3103863e56754fee37dcd1f0158300f1cd5fc4ba5a33567e55f14de13"
+    },
+    "run_case.py": {
+      "bytes": 3462,
+      "git_blob": "5b7af3340c422abbf8440c429aa6f91d9afad0eb",
+      "sha256": "34022413cce46eeaede6df5923a50b5dbafe9a798048536d7a54e8a5043aba54"
+    },
+    "run_formal_case.py": {
+      "bytes": 524,
+      "git_blob": "fe8a325e001a9deee9757cc56af1014e0662ee57",
+      "sha256": "4771866e974571d0d9634502412815167c1b7b6c38d4dea064507f9f45bc10c3"
+    },
+    "schedule.json": {
+      "bytes": 917,
+      "git_blob": "7692a794cdd97dc67658e0ba976f2a4f0b9e371a",
+      "sha256": "505215bdc31e44366412ec1551fac09e17a827bd14e131554b08b6948b9bd9f6"
+    },
+    "watchdog.py": {
+      "bytes": 1235,
+      "git_blob": "c7a277df3f47940b7f6fcee49913a75f644aa07e",
+      "sha256": "78980235fe42469da888c80460849ee3632be94f0e1f84b7765cb38aa061922b"
+    },
+    "xutil.py": {
+      "bytes": 334,
+      "git_blob": "5a54c44636564efc1af36bd048ac1974d1506c22",
+      "sha256": "83d27fcc375771051c57decb70a0aa8f836a4bec390b21725671c3145f897b1c"
+    }
+  },
+  "source_manifest_schema": "non-self-referential-source-hashes-v1",
+  "task": "SAFETY-PLANE-XSERVER-LOSS-CONFIRMATION-20260917-002"
+}
