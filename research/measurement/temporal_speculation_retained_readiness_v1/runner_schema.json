@@ -1,0 +1,22 @@
+{
+  "source_blobs": {
+    "fixture.py": "0843f29618b0aa9010b22789f56d248bbeb8f7a4",
+    "runner.py": "c495fad798cc325bd2321a097bd6a3acff081c15",
+    "RESULT_SUMMARY.json": "314e85e29c01d49b322a4a8f467dcd9b11602cab",
+    "AUDIT.json": "7300abd31cff9061c61183830f8fc6159e5756db",
+    "FORMAL_RESULT.json.gz": "c36a8c46dfad5e8c1ed01ffd1a0d2864b6ab8bfc"
+  },
+  "raw_first_outcome": {
+    "raw_bytes": 37671,
+    "raw_sha256": "ff1e66737c147f8eebfa3903e72d59954dc94b21ae27cbe474c57f1166b50db7",
+    "gzip_bytes": 3323,
+    "gzip_sha256": "e05d8e5734a9f6f2f7cc6def0f2c6983ffb32057fab3d247398703e59796c37c"
+  },
+  "ring_trial_fields": ["request_index","request_ns","query_latency_ns","target_ns","selected_capture_ns","target_error_ns","distinct_frames","both_before_request","exact_requested_past_available","evidence_role","extra_acquisition_boundaries"],
+  "jit_trial_fields": ["request_index","request_ns","evidence_latency_ns","current_capture_ns","future_capture_ns","future_delay_ns","exact_requested_past_available","evidence_role","extra_acquisition_boundaries","promoted_future_as_history"],
+  "arm_fields": ["arm","display","trials","capture_count","capture_exceptions","capture_latency_ns","capture_payload_types","frame_bytes","max_ring_bytes","capture_region","fixture_geometry","fixture_count"],
+  "top_fields": ["formal","formal_invocations","reruns","pairs","platform","python","grants_input_authority","task"],
+  "capture_transient_only_fields": ["data"],
+  "fixture_internal_only_fields": ["x","dx","times_ns","tick_count"],
+  "summary_audit": {"ring_trials":24,"jit_trials":24,"ring_boundaries":0,"jit_boundaries":24}
+}
