@@ -16,10 +16,13 @@ if R['valid_exact_equal']!=R['valid_cases'] or R['valid_cases']!=50000: errors.a
 if R['malformed_rejected']!=R['malformed_cases'] or R['malformed_cases']!=50000: errors.append('malformed')
 if any(R[k]!=0 for k in ['authority_actions','task_input_actions','network_actions','model_calls']): errors.append('side_effect')
 if R['disposition']!='PASS_ACTUATION_ID_VALIDATION_SCOPED': errors.append('disposition')
+# Independent edge controls, not the frozen formal corpus.
 W=Interval(0,50)
 def A(x): return Actuation(5,ReleaseReceipt(10,12,False),[],x)
 def E(x,useful=True): return EffectEvent(7,x,True,useful)
+# Parent ambiguity is real.
 if analyze(W,[A(None)],[E(None)])['effects']['useful_bound']!=1: errors.append('defect_not_reproduced')
+# Candidate fails malformed IDs closed.
 for bad in (None,'',0,False,3.14,b'x',('x',)):
     try: analyze_validated(W,[A(bad)],[E(bad)])
     except ValueError: pass
@@ -28,6 +31,7 @@ for bad in ('',0,False,3.14,b'x',('x',),['x'],{'x':1}):
     try: analyze_validated(W,[A('ok')],[E(bad)])
     except ValueError: pass
     else: errors.append(f'effect_escape:{bad!r}')
+# None effect remains valid unbound.
 got=analyze_validated(W,[A('ok')],[E(None)])['effects']
 if got['useful_unbound']!=1 or got['useful_bound']!=0: errors.append('none_unbound')
 out={'task':R['task'],'passed':not errors,'errors':errors,'result_sha256':sha('FORMAL_RESULT.json'),'formal_rerun_executed':False}
