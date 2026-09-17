@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 
 from candidate import run_cached_action_guard, EFFECT
+from runner import run_experiment
 from oracle import guarded_cache_reference, regime_at
 from scenario import ACTION_TIMES_MS, HARD, AMBIG, Scenario, generate_scenarios
 
@@ -79,9 +80,19 @@ def mutation_controls() -> dict:
         "mismatch_count": sum(a != b for a, b in zip(mutant_generation, oracle_mismatch)),
     }
 
-    # Copied/corrupted result control: if guarded metrics are overwritten with supervisor-only
-    # metrics, the invariant audit must reject it because stale effects become nonzero.
-    controls["copied_supervisor_result_as_guard"] = {"detected": True, "mismatch_count": 1}
+    # Copied/corrupted result control: make candidate/oracle counters look superficially clean
+    # while overwriting guarded metrics with the unsafe supervisor-only arm. The independent
+    # invariant audit must still reject the corruption from effect-state counts.
+    copied = run_experiment(64, 424243)
+    copied["metrics"]["cached_action_guard"] = copy.deepcopy(copied["metrics"]["cached_supervisor_only"])
+    copied["candidate_oracle_mismatch"] = {"redecide_vs_oracle": 0, "guard_vs_oracle": 0}
+    copied["decision"] = REQUIRED_DECISION
+    copied_errors = audit_result(copied)
+    controls["copied_supervisor_result_as_guard"] = {
+        "detected": bool(copied_errors),
+        "mismatch_count": len(copied_errors),
+        "errors": copied_errors,
+    }
     return controls
 
 
