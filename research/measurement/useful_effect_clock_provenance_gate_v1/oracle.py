@@ -15,6 +15,7 @@ def classify(e, acts):
     vals=(e.clock_domain,e.clock_epoch,a.clock_domain,a.clock_epoch)
     if any(type(v) is not str or v=='' for v in vals): return 'temporal_clock_unknown'
     if e.clock_domain!=a.clock_domain or e.clock_epoch!=a.clock_epoch: return 'temporal_clock_mismatch'
+    # Independent endpoint reasoning: all admissible exact down times are integers in [lo,hi].
     before=[]
     for d in range(a.down_lo,a.down_hi+1): before.append(e.t_ns < d)
     if all(before): return 'invalid_temporal'
