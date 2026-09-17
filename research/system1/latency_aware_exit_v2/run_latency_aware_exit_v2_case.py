@@ -3,7 +3,9 @@ import argparse, json, os, sys, resource
 from pathlib import Path
 import numpy as np
 import torch
-sys.path.insert(0, str(Path(__file__).parent))
+BASE_DIR=Path(__file__).resolve().parent
+sys.path.insert(0, str(BASE_DIR))
+sys.path.insert(0, str(BASE_DIR.parent/'latency_aware_exit_v1'))
 import run_latency_aware_exit_v1 as v1
 
 ARMS={'ACCURACY_ONLY':v1.LAM_BASE,'LATENCY_AWARE':v1.LAM_FAST}
