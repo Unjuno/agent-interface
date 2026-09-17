@@ -1,0 +1,25 @@
+{
+  "audit_sha256": "228f1dc35103708e02c73c5044d454283d893497daab686a2b7f5c02fb4b0495",
+  "controls_rejected": 6,
+  "corruption_controls": [
+    {"errors":["summary_recompute"],"name":"alias_count","rejected":true},
+    {"errors":["summary_recompute"],"name":"temporal_hits","rejected":true},
+    {"errors":["authority"],"name":"authority","rejected":true},
+    {"errors":["digest","summary_recompute"],"name":"current_digest","rejected":true},
+    {"errors":["summary_recompute"],"name":"future_label","rejected":true},
+    {"errors":["future_join"],"name":"future_join","rejected":true}
+  ],
+  "formal_reruns": 0,
+  "result_sha256": "5738a192186e6f1e53cf4da42db157ccfb8388a61064a9a2324f4f70cd36aa60",
+  "source_mismatches": [],
+  "source_rehash_exact": true,
+  "source_sha256": {
+    "PLAN.md": "07164114ad425e876ca728bd42c8e12273c59d44be71e79ac5cecf766aa0535a",
+    "schedule.json": "3c7f4cc3e0e086b0186c9bee11b01773fee93de1638669887f47d04f429284ec",
+    "src/audit.py": "00496b5e7b6f659a15e5757e7299b77c962f075a0638dd03269fbd9f5fd9bf54",
+    "src/controls.py": "dca3366d585496f90bc970fd82b1c4e8508579daf51fc7b6b5793070feaa8579",
+    "src/fixture.py": "c5e562d3b258402d7721735830e6dbd51631f13ca9c52e4a9fe9f2eda21adbca",
+    "src/model.py": "1ff75a9a0673fef2f684ec0ebfea9017e78a0766991d601cba6db20672998d0e",
+    "src/runner.py": "1c950953f35e2fbc84f5cdc94426cb2971cca31541b592d287424d4bec646ef5"
+  }
+}
