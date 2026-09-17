@@ -109,6 +109,9 @@ def run_case(case_id: str, arm: str, display_number: int, out: Path) -> dict:
     env = os.environ.copy()
     env["DISPLAY"] = display_name
     env["XAUTHORITY"] = str(xauth)
+    # python-xlib in this process consults os.environ, not only child env.
+    os.environ["DISPLAY"] = display_name
+    os.environ["XAUTHORITY"] = str(xauth)
 
     xvfb_log = open(out / "xvfb.log", "wb")
     receiver_out = open(out / "receiver.stdout", "wb")
