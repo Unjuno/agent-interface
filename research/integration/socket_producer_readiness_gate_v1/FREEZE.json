@@ -1,0 +1,87 @@
+{
+  "construction": "py_compile PASS; exact upstream Git blobs 6/6; excluded construction discriminator PASS; unit tests 6/6 PASS; RESULT.json absent",
+  "exact_git_blobs": {
+    "upstream/bounded_pipe_writer_v2.py": "8dbace5de64bcf4699f43365b42a42166645c7d4",
+    "upstream/command_once_v2.py": "40a24130e5f8f2bd9b54536d5468b73b2abe908d",
+    "upstream/event_cursor_v5.py": "924979d24611601c4595c1f412fb75cdc413e444",
+    "upstream/event_scope.py": "d5fc49ce4bf595426adfc833650c3f2641913c94",
+    "upstream/event_socket_v11.py": "fe71be94c9284af0ae7c0b4db0b47dd8b1a86522",
+    "upstream/request_boundary_v2.py": "6e4be1e8a6c7829f91258fd88f6243bbd799adab"
+  },
+  "files": {
+    "PREFLIGHT.json": {
+      "bytes": 3006,
+      "sha256": "970ac874633f969d45fc125a79690c0af5e46c3a53505ade412ec26bb437cc15"
+    },
+    "environment.json": {
+      "bytes": 233,
+      "sha256": "05b37f53dc0c03f14b8e3fa6488e03039ff6c1ad5954053458ab94453ebd8525"
+    },
+    "plan.json": {
+      "bytes": 340,
+      "sha256": "eef773bb0ed6a39bfb9e441383dcdd7edd81b3a37541e4b4512105c206cd1435"
+    },
+    "prereg.json": {
+      "bytes": 282,
+      "sha256": "fb78f9137d75b8438534ff84d36e965f873d16ec6270a2f88f6ff013ea89caa7"
+    },
+    "src/audit.py": {
+      "bytes": 3549,
+      "sha256": "12a7502430e5f9037776f8b86cd1df281e24ead94430e44af1839451de29f6fd"
+    },
+    "src/run_case.py": {
+      "bytes": 3719,
+      "sha256": "e97feda9b5bd084b97d33042d0cfa2f5d0699d140f6917b2b3fde7b439f8a483"
+    },
+    "src/run_formal.py": {
+      "bytes": 1179,
+      "sha256": "32dd7fd44a10441c95e25de0f90364f429c94b2b0c4c34a65572fbc9bc6d11a4"
+    },
+    "src/test_contract.py": {
+      "bytes": 2542,
+      "sha256": "b0815c0f09b74751009b50fd7acb6bd56ac8f4dd4e1f2a789961b930d1564bd6"
+    },
+    "upstream/bounded_pipe_writer_v2.py": {
+      "bytes": 2141,
+      "sha256": "5ebf379d41ab4fd51789019d0793fa99625dab990b5dbfc3401908a0f34826c2"
+    },
+    "upstream/command_once_v2.py": {
+      "bytes": 1875,
+      "sha256": "3b4015b91f29da4fae5eeab611aae57b55284a4f60b2ef4304f7e7381cf0c2a0"
+    },
+    "upstream/event_cursor_v5.py": {
+      "bytes": 3350,
+      "sha256": "7db5fba6a2d3b4cf6d3e1d61575d3fbf3b62bd9f40825ff76ced02fab97c33b3"
+    },
+    "upstream/event_scope.py": {
+      "bytes": 1379,
+      "sha256": "bf7beafcd4b0efc257a8bfbde1029b25cc6e6c2d4f80ba76b1e600c78bc9cb9a"
+    },
+    "upstream/event_socket_first_record_gate_v1.py": {
+      "bytes": 8467,
+      "sha256": "35ff1d30674a3db7df0ac24bf2200a4fdf7ada89c24b7788afa4bd017f8d37e6"
+    },
+    "upstream/event_socket_v11.py": {
+      "bytes": 7768,
+      "sha256": "e6988e4f586b1554c40a4969fbb428143cc7e10213bf303cf800d679f9e7e96c"
+    },
+    "upstream/interactive_v27.py": {
+      "bytes": 1342,
+      "sha256": "731aee00e3e3c66bcbd603a50fb7f48c3d6b682d4e65f49d72328ed1496c918a"
+    },
+    "upstream/request_boundary_v2.py": {
+      "bytes": 1162,
+      "sha256": "2b45cb0103571b078f35d2e1d50a6861e5d8ef449fe1f0bf1d96c91132b5a1e8"
+    }
+  },
+  "formal_executed": 0,
+  "formal_reruns": 0,
+  "formal_rows": 12,
+  "issue": 802,
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "preflight_sha256": "970ac874633f969d45fc125a79690c0af5e46c3a53505ade412ec26bb437cc15",
+  "publication_base": "2adef46f497ed74729b93ea67cf93928df992e52",
+  "python": "3.13.5",
+  "schema": "socket-producer-readiness-freeze-v1",
+  "task": "SOCKET-PRODUCER-READINESS-GATE-20260917-001"
+}
