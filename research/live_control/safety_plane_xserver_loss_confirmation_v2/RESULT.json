@@ -1,0 +1,40 @@
+{
+  "decision": "PASS_BACKEND_LOSS_CONFIRMATION_FAIL_CLOSED_SCOPED",
+  "environment": {
+    "kernel": "6.18.44",
+    "machine": "x86_64",
+    "openbox_path": "/usr/bin/openbox",
+    "python": "3.13.5",
+    "xvfb_path": "/usr/bin/Xvfb"
+  },
+  "formal_cases": 8,
+  "freeze_head": "4807d1ec8cd19da0d7b18214ad24e9cef61b1e70",
+  "issue": 871,
+  "postformal_source_rehash": "PASS",
+  "publication_base": "c833289b3a632c69087e8b51209f92a8eddda707",
+  "raw_results_sha256": "a12fa71508d1736a5f2becfa7bcc12190f906e7fe31479ff90725d62bf8b81d9",
+  "replacement_cases": 0,
+  "running": {
+    "app_press_release": 4,
+    "n": 4,
+    "release_confirmed": 4,
+    "terminal_key_up": 4,
+    "verified_empty_true": 4
+  },
+  "same_id_reruns": 0,
+  "server_sigkill": {
+    "app_press_only": 4,
+    "backend_error_type": "DisplayConnectionError",
+    "false_release_confirmation": 0,
+    "n": 4,
+    "release_unconfirmed_backend_lost": 4,
+    "terminal_unavailable": 4,
+    "verified_empty_false": 4
+  },
+  "source_archive": {
+    "bytes": 14092,
+    "sha256": "58da91d59a10495cd2660def704f7069b66d1baa8a9cb9ac294953864116538a"
+  },
+  "task": "SAFETY-PLANE-XSERVER-LOSS-CONFIRMATION-20260917-002",
+  "tuning_after_output": 0
+}
