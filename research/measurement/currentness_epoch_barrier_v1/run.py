@@ -1,4 +1,4 @@
-import itertools, random, json, hashlib
+import itertools, random, json, hashlib, sys, time
 from contract import *
 from oracle import replay
 
@@ -17,6 +17,7 @@ def apply(c,history,op,args):
         raise AssertionError('authority promotion')
     return got
 
+# Fixed controls, including predecessor failure.
 c=EpochBarrier(); h=[]
 apply(c,h,'install',(DecisionRequest('hi',S0,100),))
 assert apply(c,h,'use',(S0,'hi'))['status']=='ADMITTED'
@@ -42,8 +43,9 @@ for bad in [Invalidation('',S0),Invalidation('x',Scope('s',''))]:
     try: EpochBarrier().invalidate(bad); raise AssertionError('malformed invalidation accepted')
     except ValueError: pass
 
+# Random independent short traces, >=500k total transitions.
 rng=random.Random(109220260918002)
-transitions=0; traces=0; stale_refusals=0; admitted=0; invalidations=0; duplicate_invalidations=0
+transitions=0; traces=0; mismatches=0; stale_refusals=0; admitted=0; invalidations=0; duplicate_invalidations=0
 while transitions < 520_000:
     c=EpochBarrier(); h=[]; known=[]; inv_ids=[]
     n=rng.randint(8,42)
@@ -51,17 +53,21 @@ while transitions < 520_000:
         scope=rng.choice(SCOPES)
         p=rng.random()
         if p < .34:
+            # 90% new decision id, 10% deliberate duplicate handled as fail-closed outside oracle state advance
             if known and rng.random()<.10:
                 did=rng.choice(known)
                 d=DecisionRequest(did,scope,rng.choice([0,1,2,100,10**6]))
                 try: c.install(d); raise AssertionError('duplicate decision accepted random')
                 except ValueError as e: assert str(e)=='duplicate_decision_id'
+                # Oracle would also reject; don't append failed operation.
             else:
                 did=f'd{traces}:{step}'; known.append(did)
-                apply(c,h,'install',(DecisionRequest(did,scope,rng.choice([0,1,2,3,100,10**6])),))
+                out=apply(c,h,'install',(DecisionRequest(did,scope,rng.choice([0,1,2,3,100,10**6])),))
         elif p < .62:
-            if inv_ids and rng.random()<.18: eid=rng.choice(inv_ids)
-            else: eid=f'e{traces}:{step}'; inv_ids.append(eid)
+            if inv_ids and rng.random()<.18:
+                eid=rng.choice(inv_ids)
+            else:
+                eid=f'e{traces}:{step}'; inv_ids.append(eid)
             out=apply(c,h,'invalidate',(Invalidation(eid,scope),)); invalidations+=1
             duplicate_invalidations += out['status']=='DUPLICATE_INVALIDATION_NOOP'
         else:
@@ -72,23 +78,25 @@ while transitions < 520_000:
         transitions+=1
     traces+=1
 
-A=[
- ('install',(DecisionRequest('a',S0,100),)),
- ('install',(DecisionRequest('b',S0,0),)),
- ('install',(DecisionRequest('c',S1,7),)),
- ('invalidate',(Invalidation('x',S0),)),
- ('invalidate',(Invalidation('y',S1),)),
- ('use',(S0,'a')),('use',(S0,'b')),('use',(S1,'c')),
-]
-exhaustive=0; exhaustive_rejected=0
+# Exhaustive bounded language, isolated traces. Alphabet deliberately small but includes high planner generation.
+def alphabet():
+    return [
+      ('install',(DecisionRequest('a',S0,100),)),
+      ('install',(DecisionRequest('b',S0,0),)),
+      ('install',(DecisionRequest('c',S1,7),)),
+      ('invalidate',(Invalidation('x',S0),)),
+      ('invalidate',(Invalidation('y',S1),)),
+      ('use',(S0,'a')),('use',(S0,'b')),('use',(S1,'c')),
+    ]
+A=alphabet(); exhaustive=0; exhaustive_rejected=0
 for length in range(0,6):
     for seq in itertools.product(range(len(A)), repeat=length):
-        c=EpochBarrier(); h=[]
+        c=EpochBarrier(); h=[]; ok=True
         for idx in seq:
             op,args=A[idx]
             try: apply(c,h,op,args)
             except ValueError:
-                exhaustive_rejected+=1; break
+                ok=False; exhaustive_rejected+=1; break
         exhaustive+=1
 
 summary={
