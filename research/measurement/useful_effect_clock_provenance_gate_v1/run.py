@@ -10,6 +10,7 @@ fixed=[
  (E(effect_id=''),[A]),(E(t_ns=-1),[A]),(E(scored=False,clock_domain='other'),[A]),
  (E(actuation_id=None,clock_domain='other'),[A]),(E(actuation_id='unknown',useful=False,clock_domain='other'),[A])]
 fp=sum(clock_bound(e,a)==classify(e,a) for e,a in fixed)
+# same-clock parent degeneration over boundary regions and usefulness/scored/bound cases
 pd=pt=0
 for t in [0,9,10,11,13,14,20]:
   for useful in [False,True]:
@@ -31,6 +32,7 @@ for i in range(N):
       c=clock_bound(e,acts); o=classify(e,acts)
       if c!=o:mismatch+=1
       status[c]=status.get(c,0)+1
+      # Discriminator only for scored+bound records with complete but mismatched clocks.
       amap={a.actuation_id:a for a in acts}
       if e.scored and e.t_ns>=0 and aid in amap and e.clock_domain and e.clock_epoch and amap[aid].clock_domain and amap[aid].clock_epoch and (e.clock_domain,e.clock_epoch)!=(amap[aid].clock_domain,amap[aid].clock_epoch):
         n=numeric_only(e,acts)
@@ -41,10 +43,11 @@ for i in range(N):
       h.update(json.dumps([e.__dict__,[a.__dict__ for a in acts],c],sort_keys=True,separators=(',',':')).encode())
     except ValueError:
       pass
+# malformed duplicate actuation id / malformed actuation interval controls
 mal=0
 for acts in [[A,A],[Actuation('',1,2,'m','e')],[Actuation('a',3,2,'m','e')]]:
   try: clock_bound(E(actuation_id='a'),acts)
   except ValueError: mal+=1
 passed=fp==len(fixed) and pd==pt and mismatch==0 and cross_bound_promoted==0 and cross_numeric_promoted>0 and same_parent_mismatch==0 and mal==3
 res={'decision':'PASS_USEFUL_EFFECT_CLOCK_PROVENANCE_GATE_SCOPED' if passed else 'FAIL_USEFUL_EFFECT_CLOCK_PROVENANCE_GATE','fixed_pass':fp,'fixed_total':len(fixed),'parent_degeneration_pass':pd,'parent_degeneration_total':pt,'random_records':N,'candidate_oracle_mismatches':mismatch,'cross_clock_numeric_only_bound_promotions':cross_numeric_promoted,'cross_clock_clock_bound_promotions':cross_bound_promoted,'same_clock_parent_mismatches':same_parent_mismatch,'malformed_controls_pass':mal,'status_counts':status,'digest':h.hexdigest(),'authority_grants':0,'task_input_calls':0,'occupancy_mutations':0}
-pathlib.Path('RESULT.json').write_text(json.dumps(res,indent=2,sort_keys=True)+'\n');print(json.dumps(res,sort_keys=True))
+pathlib.Path('/tmp/ai_exp1004/RESULT.json').write_text(json.dumps(res,indent=2,sort_keys=True)+'\n');print(json.dumps(res,sort_keys=True))
