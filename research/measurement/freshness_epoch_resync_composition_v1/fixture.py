@@ -27,6 +27,7 @@ def scenarios(seed,count):
         preA=_segment(rng,'A',1,rng.randint(5,9),rng.randint(0,6),'pre')
         preB=_segment(rng,'B',1,rng.randint(0,7),rng.randint(1,5),'pre')
         lastA=preA[-1].seq; snap_seq=lastA+rng.randint(0,2)
+        # expected_overflow filled by runner from the actual candidate pre-state; oracle derives same pre-gap independently.
         postA=_segment(rng,'A',snap_seq+1,rng.randint(0,8),rng.randint(0,7),'post')
         lastB=preB[-1].seq if preB else 0
         postB=_segment(rng,'B',lastB+1,rng.randint(0,5),rng.randint(0,5),'post')
