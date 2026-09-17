@@ -1,0 +1,11 @@
+{
+  "task": "TARGET-GATE-PREINPUT-REVALIDATION-20260917-001",
+  "issue": 979,
+  "formal_sessions": 16,
+  "formal_block_invocations": 1,
+  "reruns": 0,
+  "strata": ["stable|single_gate", "stable|preinput_revalidate", "swap|single_gate", "swap|preinput_revalidate"],
+  "repetitions_per_stratum": 4,
+  "decision_pass": "PASS_PREINPUT_VISUAL_REVALIDATION_SCOPED",
+  "forbidden": ["target relocation", "threshold change", "semantic role input to gate", "second capture in SINGLE_GATE", "same-ID rerun", "pixel-identical identity claim"]
+}
