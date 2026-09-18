@@ -3,6 +3,23 @@
 This directory is reserved for the user-facing Agent Interface runtime.
 
 The project is still research-first, so experimental benchmark code remains under `research/`. Code moves here only when it represents the current promoted semantics rather than a one-off experiment.
+## Directory map
+
+| Path | Role |
+|---|---|
+| [`core_v1/`](core_v1/) | Promoted platform-neutral runtime contract and admission semantics. |
+| [`kernel/`](kernel/) | Platform-neutral mechanical lifecycle seam. |
+| [`interface_v1/`](interface_v1/) | Side-effect-free native discovery/doctor facade. |
+| [`selector_v1/`](selector_v1/) | Runtime backend selection layer. |
+| [`cli_v1/`](cli_v1/) | Model/vendor-neutral local CLI/API entry point. |
+| [`backends/`](backends/) | Native X11, Win32, and Quartz backend candidates; see each backend's README for its evidence boundary. |
+| [`distribution_v1/`](distribution_v1/) | Standalone doctor/bootstrap distribution work. |
+| [`distribution_v2/`](distribution_v2/) | Portable unified runtime zipapp work. |
+| [`results/`](results/) | Retained runtime-result artifacts where applicable. |
+| `golden_desktop_*`, `golden-demo-*`, `setup-golden-demo*` | Current golden desktop demonstration runners, audits, preregistration, and reports. |
+
+Directory presence does not by itself establish platform support. Support claims remain bounded by each component's retained evidence and the user-facing release contract.
+
 
 ## Target properties
 
