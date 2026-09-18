@@ -40,14 +40,32 @@
       "min_binary_roots": 4,
       "minimum_pair_distance": 2,
       "search_trace": [
-        {"found": false,"m": 1},
-        {"found": false,"m": 2},
-        {"found": false,"m": 3},
-        {"found": true,"m": 4}
+        {
+          "found": false,
+          "m": 1
+        },
+        {
+          "found": false,
+          "m": 2
+        },
+        {
+          "found": false,
+          "m": 3
+        },
+        {
+          "found": true,
+          "m": 4
+        }
       ]
     },
     "NO_FAULT": {
-      "codebook": ["000","001","010","011","100"],
+      "codebook": [
+        "000",
+        "001",
+        "010",
+        "011",
+        "100"
+      ],
       "direct_byzantine_1": false,
       "direct_erasure_1": false,
       "direct_no_fault": true,
@@ -55,13 +73,28 @@
       "min_binary_roots": 3,
       "minimum_pair_distance": 1,
       "search_trace": [
-        {"found": false,"m": 1},
-        {"found": false,"m": 2},
-        {"found": true,"m": 3}
+        {
+          "found": false,
+          "m": 1
+        },
+        {
+          "found": false,
+          "m": 2
+        },
+        {
+          "found": true,
+          "m": 3
+        }
       ]
     },
     "UNKNOWN_BYZANTINE_1": {
-      "codebook": ["000000","000111","011001","011110","101010"],
+      "codebook": [
+        "000000",
+        "000111",
+        "011001",
+        "011110",
+        "101010"
+      ],
       "direct_byzantine_1": true,
       "direct_erasure_1": true,
       "direct_no_fault": true,
@@ -69,12 +102,30 @@
       "min_binary_roots": 6,
       "minimum_pair_distance": 3,
       "search_trace": [
-        {"found": false,"m": 1},
-        {"found": false,"m": 2},
-        {"found": false,"m": 3},
-        {"found": false,"m": 4},
-        {"found": false,"m": 5},
-        {"found": true,"m": 6}
+        {
+          "found": false,
+          "m": 1
+        },
+        {
+          "found": false,
+          "m": 2
+        },
+        {
+          "found": false,
+          "m": 3
+        },
+        {
+          "found": false,
+          "m": 4
+        },
+        {
+          "found": false,
+          "m": 5
+        },
+        {
+          "found": true,
+          "m": 6
+        }
       ]
     }
   },
