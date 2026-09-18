@@ -84,6 +84,7 @@ def run_case(root, idx, arm, offset_ms, app_delay_ms, display_name=':98'):
     os.environ['DISPLAY']=display_name; os.environ['XAUTHORITY']=str(root/'.Xauthority'); d=display.Display(display_name); win=d.create_resource_object('window',wid); kc=d.keysym_to_keycode(XK.string_to_keysym('F8')); win.set_input_focus(X.RevertToParent,X.CurrentTime); d.sync()
     parent,child=mp.Pipe(); proc=mp.Process(target=actuator,args=(child,display_name,str(root/'.Xauthority'),wid,HOLD_MS),daemon=True); proc.start()
     obs={}; q=queue.Queue(maxsize=1); stop_evt=threading.Event(); th=threading.Thread(target=observe,args=(stop_evt,display_name,str(root/'.Xauthority'),wid,kc,generation,q,obs),daemon=True); th.start(); time.sleep(0.01)
+    # wait until observer has captured exact initial bytes before timing begins
     deadline=time.time()+1
     while 'initial_target_sha256' not in obs and time.time()<deadline: time.sleep(0.0002)
     initial_hash=obs['initial_target_sha256']
@@ -113,7 +114,8 @@ def run_case(root, idx, arm, offset_ms, app_delay_ms, display_name=':98'):
     (case/'result.json').write_text(json.dumps(r,indent=2,sort_keys=True)); d.close(); return r
 def directed_controls():
     base={'kind':'current_effect_receipt','window_id':7,'generation':9,'initial_target_sha256':'a'*64,'current_target_sha256':'b'*64,'observe_start_ns':10,'observe_end_ns':11,'changed':True,'grants_input_authority':False}
-    ok=validate_effect_receipt(base,window_id=7,generation=9,initial_hash='a'*64); stale=dict(base,generation=8); wrong=dict(base,initial_target_sha256='c'*64)
+    ok=validate_effect_receipt(base,window_id=7,generation=9,initial_hash='a'*64)
+    stale=dict(base,generation=8); wrong=dict(base,initial_target_sha256='c'*64)
     return {'valid_accept':ok,'stale_generation_rejected':not validate_effect_receipt(stale,window_id=7,generation=9,initial_hash='a'*64),'mismatched_source_rejected':not validate_effect_receipt(wrong,window_id=7,generation=9,initial_hash='a'*64)}
 def summarize(rows):
     by={a:[r for r in rows if r['arm']==a] for a in ARMS}
