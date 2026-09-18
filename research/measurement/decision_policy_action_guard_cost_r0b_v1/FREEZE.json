@@ -1,0 +1,71 @@
+{
+  "block_size": 1000,
+  "construction": {
+    "ambiguous_admitted_effects": 0,
+    "delta": {
+      "max_ns": 1850939,
+      "mean_ns": 33190.982,
+      "min_ns": -82542,
+      "n": 4000,
+      "p50_ns": 26180,
+      "p95_ns": 56393,
+      "p99_ns": 120540
+    },
+    "disposition_mismatches": 0,
+    "hard_admitted_effects": 0,
+    "inproc": {
+      "max_ns": 109913,
+      "mean_ns": 1848.792,
+      "min_ns": 1582,
+      "n": 4000,
+      "p50_ns": 1663,
+      "p95_ns": 2554,
+      "p99_ns": 3155
+    },
+    "invalidation_to_refusal": {
+      "max_ns": 198859,
+      "mean_ns": 15560.367,
+      "min_ns": 5492,
+      "n": 1000,
+      "p50_ns": 11622,
+      "p95_ns": 21822,
+      "p99_ns": 41030
+    },
+    "socket": {
+      "max_ns": 1852702,
+      "mean_ns": 35039.774,
+      "min_ns": 18267,
+      "n": 4000,
+      "p50_ns": 27901,
+      "p95_ns": 58167,
+      "p99_ns": 122342
+    }
+  },
+  "construction_controls": [
+    {"name": "checksum", "rejected": true},
+    {"name": "wrong_scope", "rejected": true},
+    {"name": "wrong_generation", "rejected": true},
+    {"name": "nonadvancing_seq", "rejected": true},
+    {"name": "unknown_regime", "rejected": true},
+    {"name": "truncated", "rejected": true},
+    {"name": "stale_time", "rejected": true}
+  ],
+  "files": {
+    "PLAN.md": {"bytes": 861, "git_blob": "f9d6a64dfc4cc9e589fc7730a58005d3766f841a", "sha256": "fe3ce175e67c48aaaa3407a50f0bc1db7a947ac6dc1cdf2dd852728e09195ac9"},
+    "audit.py": {"bytes": 2103, "git_blob": "dbda7cbe21725f060e3556617a65f3c64edeba2b", "sha256": "815f595b2a24e381695510ce81ff5878340edae5b9a0930c34cb760a1c59ea61"},
+    "guard.py": {"bytes": 875, "git_blob": "d620b985ddebcefc7f848be4333761f068d7abc3", "sha256": "22ef88e86912ff3b4c40b13413987be66d86844e093f64d4710894e4d86374b9"},
+    "prereg.json": {"bytes": 400, "git_blob": "65e47d21581f8de3e2debc2c253d4a05a70ed78a", "sha256": "eb21337822bf1c796f1393b277c5576c0decfd04495600d36e270ba3f6871dec"},
+    "protocol.py": {"bytes": 1356, "git_blob": "acca15e5c3dfb9efe27252d12d9207380e1265b2", "sha256": "80a2815052e6618bdb273f94bfa983e679bf43cc3cda7b2a963ca20f061b1feb"},
+    "runner.py": {"bytes": 6785, "git_blob": "65e631e5f46ab02b5ac629fdbca8045075515582", "sha256": "b19f772be04effdcd84a8832344841e929fb59c61f747b6e90fe11b0e4c73b4c"},
+    "server.py": {"bytes": 1046, "git_blob": "23e4115bf63812600d82380e83d0d6ed946a0a77", "sha256": "a19077238030707bc3d2b8d6ff07f44e170c4dc156d219831dde587375b3bb52"}
+  },
+  "formal_invocations_before_freeze": 0,
+  "formal_seed": 117920260918001,
+  "invalidation_probes": 10000,
+  "issue": 1179,
+  "publication_base": "919e391e6df72260a54abfb7780ae411b7008013",
+  "reads_per_arm": 60000,
+  "rerun_budget": 0,
+  "task": "DECISION-POLICY-ACTION-GUARD-COST-R0B-20260918-001",
+  "warmup_per_arm": 2000
+}
