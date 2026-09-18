@@ -1,14 +1,54 @@
 {
   "decision": "PASS_LAST_EFFECT_REPRESENTATION_V31_R2_SCOPED",
   "derived_receipts": {
-    "0": {"kind": "NONE"},
-    "1": {"kind": "NONE"},
-    "2": {"action": "retreat_fire", "extent": "short", "kind": "RECEIPT", "result": "visible_change", "source_iteration": 1},
-    "3": {"action": "fire", "extent": "pulse", "kind": "RECEIPT", "result": "no_visible_effect", "source_iteration": 2},
-    "4": {"action": "strafe_left", "extent": "medium", "kind": "RECEIPT", "result": "visible_change", "source_iteration": 3},
-    "5": {"action": "retreat_fire", "extent": "short", "kind": "RECEIPT", "result": "visible_change", "source_iteration": 4},
-    "6": {"action": "strafe_right", "extent": "medium", "kind": "RECEIPT", "result": "visible_change", "source_iteration": 5},
-    "7": {"action": "strafe_right", "extent": "medium", "kind": "RECEIPT", "result": "visible_change", "source_iteration": 5}
+    "0": {
+      "kind": "NONE"
+    },
+    "1": {
+      "kind": "NONE"
+    },
+    "2": {
+      "action": "retreat_fire",
+      "extent": "short",
+      "kind": "RECEIPT",
+      "result": "visible_change",
+      "source_iteration": 1
+    },
+    "3": {
+      "action": "fire",
+      "extent": "pulse",
+      "kind": "RECEIPT",
+      "result": "no_visible_effect",
+      "source_iteration": 2
+    },
+    "4": {
+      "action": "strafe_left",
+      "extent": "medium",
+      "kind": "RECEIPT",
+      "result": "visible_change",
+      "source_iteration": 3
+    },
+    "5": {
+      "action": "retreat_fire",
+      "extent": "short",
+      "kind": "RECEIPT",
+      "result": "visible_change",
+      "source_iteration": 4
+    },
+    "6": {
+      "action": "strafe_right",
+      "extent": "medium",
+      "kind": "RECEIPT",
+      "result": "visible_change",
+      "source_iteration": 5
+    },
+    "7": {
+      "action": "strafe_right",
+      "extent": "medium",
+      "kind": "RECEIPT",
+      "result": "visible_change",
+      "source_iteration": 5
+    }
   },
   "eligible_rows": 5,
   "enriched_collisions": [],
@@ -19,7 +59,10 @@
   "prompt_collisions": [
     {
       "distinct_labels": 2,
-      "iterations": [1, 2],
+      "iterations": [
+        1,
+        2
+      ],
       "labels": [
         "{\"commands\":[{\"action\":\"fire\",\"extent\":\"pulse\"}],\"contingencies\":[],\"next_cover\":[{\"action\":\"strafe_left\",\"extent\":\"short\"},{\"action\":\"strafe_right\",\"extent\":\"short\"}],\"next_cover_validity\":[{\"critical_health_minimum\":45,\"max_source_age_ms\":30000,\"maximum_health_loss\":8,\"signal_id\":\"health\"}],\"state\":\"active\"}",
         "{\"commands\":[{\"action\":\"retreat_fire\",\"extent\":\"short\"}],\"contingencies\":[],\"next_cover\":[{\"action\":\"strafe_left\",\"extent\":\"short\"},{\"action\":\"strafe_right\",\"extent\":\"short\"},{\"action\":\"backward\",\"extent\":\"short\"}],\"next_cover_validity\":[{\"critical_health_minimum\":45,\"max_source_age_ms\":30000,\"maximum_health_loss\":8,\"signal_id\":\"health\"}],\"state\":\"active\"}"
