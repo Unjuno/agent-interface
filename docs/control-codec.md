@@ -1,5 +1,7 @@
 # Control Codec and Compact IR
 
+> **Document role:** research/design note for compact model-boundary representation. It does not define the current stable runtime protocol. Current promoted runtime semantics live under [`../runtime/`](../runtime/) and evidence status is indexed in [`../RESEARCH.md`](../RESEARCH.md).
+
 ## Why this exists
 
 Agent Interface already measures `planner bytes`, but measurement alone does not define how model-visible control should be encoded.

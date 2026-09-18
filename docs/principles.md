@@ -1,5 +1,7 @@
 # Thesis and Component Principles
 
+> **Document role:** current project thesis and design constraints. Use [`CURRENT_GOAL.md`](CURRENT_GOAL.md) for the active governing direction and [`EVIDENCE_MAP.md`](EVIDENCE_MAP.md) / [`../RESEARCH.md`](../RESEARCH.md) for evidence status.
+
 ## Core thesis
 
 > **AI agents are smart. Their computer tools are primitive.**

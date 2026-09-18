@@ -1,5 +1,7 @@
 # Product Hunt positioning
 
+> **Document role:** presentation/launch-positioning notes. This page is not the canonical source for current research status or release readiness; use [`PROGRESS_FROM_BASELINE.md`](PROGRESS_FROM_BASELINE.md), [`EVIDENCE_MAP.md`](EVIDENCE_MAP.md), and [`../release/README.md`](../release/README.md).
+
 ## Name
 
 Agent Interface
