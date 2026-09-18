@@ -29,6 +29,7 @@ def rev_num_for_anchor(s,a): return int(any(a-150<=t<=a-25 for t in s) and any(a
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--output',required=True); ap.add_argument('--construction',action='store_true'); a=ap.parse_args(); p=Path(a.output); assert not p.exists()
+    # symbolic incompatibility witness: RECENT_DENSE consumes all 4 slots inside recent window, LONG requires one <=300 outside it.
     symbolic = {'budget':BUDGET,'recent_requires_recent_count':4,'long_requires_old_outside_recent':True,'mutually_incompatible':True}
     schedules=list(combinations(GRID,BUDGET)) if not a.construction else list(combinations(GRID[:17],BUDGET))
     best_score=Fraction(-1,1); best=[]; max_min=Fraction(-1,1); max_min_sched=[]; count_all_positive=0
