@@ -3,29 +3,23 @@
   "issue": 1639,
   "base_main": "e600b244c895eb53496e545597cfe9fb7a625750",
   "branch": "research/observation-epoch-xterm-focus-aba-a2-1639",
-  "formal_status": "NOT_RUN",
+  "formal_status": "ELIGIBLE_NOT_RUN",
   "formal_invocations": 0,
   "reruns": 0,
   "replacements": 0,
   "tuning": 0,
   "skew_budget_ns": 2000000,
-  "source_construction_bundle": {
-    "file": "source_construction.tar.gz.b64",
-    "tar_gz_sha256": "3d27ce11882974d4c119af208c4ed37877e48050525ccd1b75cbc28a0bb810c0",
-    "base64_sha256": "0ae5555561396b4b4c8b0e23b660e5263b41b4048a8b4666daa570f112ebb716",
-    "tar_gz_bytes": 9421,
-    "base64_bytes": 12564,
-    "expected_git_blob_sha1": "7fc81f721b932c3e13268f6fc00f720795802f3c"
+  "canonical_source_git_blobs": {
+    "source/PLAN.md": "e3ba4e98433c44f7556bdbfb556b16378e58052b",
+    "source/run.py": "aa1f8d7ff873b1ba41dde374582738694803161a",
+    "source/audit.py": "e52ed2cafba369f0b17a2af71e64995fe20abcc5",
+    "source/independent_audit.py": "747d2bae20262df5823707e0528c172f0a46a747"
   },
-  "source_sha256": {
-    "PLAN.md": "f2e6c2f4a160bf9236dc918fb25c0ec4fb36592a54fff50d9f405595571fd22b",
-    "run.py": "c217db5e1e1be3c8a0f15a2ebcf8fadd3589f3ea58be37082daad0d291969365",
-    "audit.py": "61ab824a4f8959565df795ac434d09f923252b523b5f9ddcfbac694c1cdaa7be",
-    "independent_audit.py": "401d34c0faa3096a0d5ef9d4cd254404fe6364a85506cce30d089c16a9c34850",
-    "CONSTRUCTION_A2.json": "7c8b680d3f53efdd266628c9ea5784b0ecdbc7bd88b2edfdb8a0e092854ea6a2",
-    "CONSTRUCTION_A2_AUDIT.json": "b053d8f4b58bc07a61b7448248865e0460214ce811c56bddf63ee12744de477f",
-    "CONSTRUCTION_A2_INDEPENDENT_AUDIT.json": "08bb7c949c6216c73a1a52c25f7e1ef6d3f42e00d58e397e3c1bdf0add265f8c"
-  },
+  "local_git_blob_readback_match": true,
+  "construction_decision": "PASS_CONSTRUCTION_ELIGIBLE",
+  "construction_rows": 40,
+  "readiness_preflight_pass": true,
   "predecessor_1625_pooled": false,
-  "science_factor_changed": "pre-science viewability/focus witness readiness only"
+  "science_factor_changed": "pre-science viewability/focus witness readiness only",
+  "publication_note": "source_construction.tar.gz.b64 is supplemental only: its publication blob differs from the local bundle hash. Formal authority is bound exclusively to the four exact individual source Git blobs above."
 }
