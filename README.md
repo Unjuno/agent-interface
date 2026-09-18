@@ -207,9 +207,9 @@ Python remains the experimentation vehicle while semantics are changing quickly.
 
 ## Research discipline
 
-Every promoted change should define H/T/D/C/U: hypothesis, minimum test, decision rule, competing explanation, and uncertainty. Correctness is a hard gate. Small noisy wins are not promotions. Negative results remain part of the record.
+Every promoted change should define H/T/D/C/U: hypothesis, minimum discriminator, decision rule, competing explanation, and uncertainty. The discriminator may be analytical (proof/invariant/exhaustive oracle) or empirical, depending on the question. Correctness is a hard gate. Small noisy wins are not promotions. Negative results remain part of the record.
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+See [`docs/RESEARCH_METHOD.md`](docs/RESEARCH_METHOD.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## License
 
