@@ -127,6 +127,10 @@ Use current/canonical documents for present project direction and architecture. 
 - [../release/README.md](../release/README.md) — public release contract and readiness boundary.
 - [product-hunt.md](product-hunt.md) — launch/presentation notes; not a research-status source.
 
+### Retained public-entry detail
+
+- [PUBLIC_README_DETAILS.md](PUBLIC_README_DETAILS.md) — extended material moved out of the root README to keep the public entry concise; retained for continuity/provenance.
+
 ### Coordination records
 
 - [orchestration/](orchestration/) — retained coordination/launch records. These are operational history, not the canonical statement of current project status.
