@@ -1,13 +1,71 @@
-# Research
+# Research workspace
 
-This directory is the experimental workspace and evidence record. Directories are research steps, not product versions.
+This directory is the experimental workspace and retained evidence record for Agent Interface. Directories represent experiments, mechanisms, fixtures, audits, or historical work; they are **not product versions** and their names alone do not imply promotion.
 
-## Tracks
+For claims and scientific disposition, start with the top-level [research index](../RESEARCH.md).
 
-- [`real_apps_v1/`](real_apps_v1/) — input-delivery semantics and fixed-wait vs sparse/reactive control.
-- [`real_apps_v2/`](real_apps_v2/) — semantic-method lifetime vs optimized-route lifetime.
-- [`real_apps_v3/`](real_apps_v3/) — Guarded Hierarchical Deoptimization, binding repair, and pre-execution guards.
-- [`observation_gating/`](observation_gating/) — active track: eliminate model-visible observations that carry no new task-relevant information.
+## Start here
+
+| Need | Entry point |
+|---|---|
+| Evidence ledger and claims taxonomy | [../RESEARCH.md](../RESEARCH.md) |
+| Current research objective | [../docs/CURRENT_GOAL.md](../docs/CURRENT_GOAL.md) |
+| Latest detailed handoff | [../docs/LOCAL_RESEARCH_HANDOFF.md](../docs/LOCAL_RESEARCH_HANDOFF.md) |
+| Progress and remaining gates | [../docs/PROGRESS_FROM_BASELINE.md](../docs/PROGRESS_FROM_BASELINE.md) |
+| Current Linux research caller | [live_control/CURRENT_CLIENT.md](live_control/CURRENT_CLIENT.md) |
+| Research convergence/freeze criteria | [evolution/freeze_criteria.md](evolution/freeze_criteria.md) |
+| Revisit history | [REVISIT_LEDGER.md](REVISIT_LEDGER.md) |
+
+## Workspace map
+
+The top level is intentionally evidence-preserving. The categories below are navigation aids; they do not change the status of any experiment.
+
+### Live control and integration
+
+- [`live_control/`](live_control/) — shared/live GUI-control mechanisms and integration studies.
+- [`doom/`](doom/) — real-time/continuous-control studies and MAP01 evidence.
+- [`integration/`](integration/) — integration-focused experiments.
+- [`measurement/`](measurement/) — scoped measurement and composition studies.
+- [`cross_domain/`](cross_domain/) — cross-domain transfer work.
+
+### Observation, grounding, and visual state
+
+- [`observation/`](observation/) — observation mechanisms.
+- [`observation_gating/`](observation_gating/) — unchanged/relevant observation gating.
+- [`observation_tiles/`](observation_tiles/) — exact changed-region/tile transport.
+- [`visual_tracking/`](visual_tracking/) — visual tracking experiments.
+- `observation_*`, `grounding_*`, and `visual_*` directories — scoped successors and focused mechanisms.
+
+### Runtime, input, and text delivery
+
+- `runtime_*` directories — backend/native/runtime experiments.
+- [`container_control/`](container_control/) — containerized control work.
+- [`control_codec/`](control_codec/) — control-codec experiments.
+- `text_*` directories — text delivery, keymap, XKB, observation binding, and related robustness studies.
+
+### Application and domain studies
+
+- [`real_apps_v1/`](real_apps_v1/), [`real_apps_v2/`](real_apps_v2/), [`real_apps_v3/`](real_apps_v3/) — early real-application control studies.
+- `openttd_*` directories — OpenTTD task/oracle and transfer studies.
+- `libreoffice_*` and `writer_uno_*` directories — office/document-control studies.
+
+### Reliability, concurrency, ownership, and commit semantics
+
+- `receiver_*`, `external_effect_*`, `outbox_*`, `staged_*`, and `exact_runtime_*` directories — effect/commit/recovery semantics.
+- `git_*` directories — Git/reference concurrency and atomicity experiments.
+- [`coordination/`](coordination/) and [`orchestration/`](orchestration/) — retained coordination/orchestration evidence.
+
+### Evaluation and research governance
+
+- [`benchmark_discovery/`](benchmark_discovery/) — benchmark/coverage discovery.
+- [`evolution/`](evolution/) — convergence, freeze criteria, evolution ledger, and evaluation contracts.
+- [`conditional_optimization/`](conditional_optimization/) and [`optimization_revisits/`](optimization_revisits/) — conditional reuse and revisit work.
+- [`retention/`](retention/) — retained-evidence utilities/records where applicable.
+- [REVISIT_LEDGER.md](REVISIT_LEDGER.md) — explicit revisit ledger.
+
+### Historical archival namespaces
+
+Both [`archive/`](archive/) and [`archives/`](archives/) are retained historical namespaces. They are not merged or renamed here because existing evidence links and provenance may depend on exact paths. Use [../RESEARCH.md](../RESEARCH.md) and the experiment's own report to determine scientific status.
 
 ## Environment
 
@@ -17,10 +75,10 @@ Research-only Python dependencies live here:
 python -m pip install -r research/requirements.txt
 ```
 
-Some harnesses inject real GUI input. Use an isolated X session/container with disposable application state.
+Some harnesses inject real GUI input. Use an isolated X session or disposable container with disposable application state.
 
 ## Evidence policy
 
-Start from [`../RESEARCH.md`](../RESEARCH.md) for the evidence ledger, claims taxonomy, promoted results, rejected ideas, and promotion policy.
+A research directory should keep its benchmark/source, preregistration where applicable, raw result, audit, environment, and negative results close enough that a claim can be traced back to the experiment.
 
-A research directory should keep the benchmark, raw summary, environment, and negative results close enough that a performance claim can be traced back to its experiment.
+A directory existing here does **not** mean its mechanism is promoted. Negative results, stopped allocations, superseded harnesses, and scoped passes are intentionally retained.

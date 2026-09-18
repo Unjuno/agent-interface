@@ -144,30 +144,22 @@ Raw reports and CSVs are under [`research/`](research/). `planner bytes` are not
 
 ```text
 .
-├── README.md                  # project entry point
-├── RESEARCH.md                # evidence ledger
-├── ROADMAP.md                 # research sequence
+├── README.md              # public project entry point
+├── RESEARCH.md            # detailed evidence ledger
+├── ROADMAP.md             # research and release sequence
 ├── docs/
-│   ├── README.md              # documentation index
-│   ├── principles.md          # thesis + component principles
-│   ├── architecture.md        # current promoted architecture
-│   └── product-hunt.md        # launch notes
+│   └── README.md          # documentation map and canonical status links
 ├── research/
-│   ├── requirements.txt       # research-only Python dependencies
-│   ├── real_apps_v1/          # input delivery + sparse reactive control
-│   ├── real_apps_v2/          # method lifetime vs route lifetime
-│   ├── real_apps_v3/          # guarded hierarchical deoptimization
-│   ├── observation_gating/   # frozen O0/O1 experiments and raw evidence
-│   └── observation_tiles/    # exact transport, assistant use and image preparation
+│   └── README.md          # experimental workspace map; reports/evidence live below it
 ├── runtime/
-│   └── README.md              # future runnable runtime workspace
+│   └── README.md          # runnable construction preview and runtime entry points
 ├── release/
-│   └── README.md              # user-facing release contract
-├── site/                      # GitHub Pages landing page
-└── .github/
-    ├── ISSUE_TEMPLATE/        # idea / research proposal / bug forms
-    └── workflows/             # Pages + manual research archive
+│   └── README.md          # user-facing release contract and readiness boundary
+├── site/                  # GitHub Pages landing/proof pages
+└── .github/               # issue templates and repository workflows
 ```
+
+Use [`docs/README.md`](docs/README.md) for the documentation map and [`research/README.md`](research/README.md) for the experimental workspace. The large number of retained experiment directories is intentional: failed, stopped, superseded, and scoped results remain available for provenance.
 
 ## Reproducing the research
 
