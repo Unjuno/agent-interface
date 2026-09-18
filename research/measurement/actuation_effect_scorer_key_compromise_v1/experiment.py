@@ -24,7 +24,7 @@ def verify(r):
 
 def pair(i):
     rec=sign(base(i))
-    # Same exact visible receipt bytes. Only hidden producer provenance differs.
+    # Hidden producer provenance is deliberately not verifier-visible.
     trusted={'producer':'TRUSTED_SCORER','receipt':json.loads(json.dumps(rec,sort_keys=True))}
     compromised={'producer':'COMPROMISED_SCORER','receipt':json.loads(json.dumps(rec,sort_keys=True))}
     wrong=sign(base(i+10_000_000),WRONG); wrong['key_id']='score-current'
