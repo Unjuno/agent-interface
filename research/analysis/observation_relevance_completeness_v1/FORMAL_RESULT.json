@@ -1,0 +1,45 @@
+{
+  "analytic": {
+    "inputs_identical": true,
+    "required_decisions_differ": true,
+    "w0_required": "SUPPRESS",
+    "w0_visible": ["s0",7,11,[0,1],[2],[]],
+    "w1_required": "FORWARD",
+    "w1_visible": ["s0",7,11,[0,1],[2],[]],
+    "x_outside_declared": true
+  },
+  "examples": [
+    {"critical":[],"declared":[],"true":[0],"x":0},
+    {"critical":[],"declared":[1],"true":[0],"x":0},
+    {"critical":[],"declared":[2],"true":[0],"x":0},
+    {"critical":[],"declared":[3],"true":[0],"x":0},
+    {"critical":[],"declared":[4],"true":[0],"x":0},
+    {"critical":[],"declared":[5],"true":[0],"x":0},
+    {"critical":[],"declared":[1,2],"true":[0],"x":0},
+    {"critical":[],"declared":[1,3],"true":[0],"x":0}
+  ],
+  "formal_invocations": 1,
+  "ledger_sha256": "40e48780b670ed147f3de34f36ef6d129c232411ce1ccee54863fcdb683396e1",
+  "metrics": {
+    "complete_only_false_suppressions_truthful": 0,
+    "complete_only_true_suppressions_truthful": 192,
+    "forged_complete_false_suppressions": 6144,
+    "partial_suppressions": 0,
+    "rows": 49152,
+    "stale_suppressions": 0,
+    "unknown_suppressions": 0,
+    "unsafe_false_suppressions": 6144,
+    "unsafe_true_suppressions": 6144
+  },
+  "phase": "formal",
+  "replacements": 0,
+  "reruns": 0,
+  "source_sha256": {
+    "PLAN.md": "047c4a534fef55ecfa869f62952640016b9a12c5f2bb64479b2dedea8a284ca9",
+    "audit.py": "48658c3e871ca67fa309dc00246097360c0cdb26801f160c19bf670526f7f185",
+    "candidate.py": "ae71c335d2a54a4e04af780c0e960bcf581322241c96120a15264420abbbbac5",
+    "formal.py": "79002a564afb5e084fa6548fffdc01a3ee49206440434d56ff7cc0251b7490c8"
+  },
+  "task": "OBSERVATION-GATING-O3-RELEVANCE-COMPLETENESS-20260918-001",
+  "tuning": 0
+}
