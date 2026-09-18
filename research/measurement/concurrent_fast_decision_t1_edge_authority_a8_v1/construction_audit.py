@@ -20,7 +20,11 @@ def evaluate(r):
         if c.get('terminal_f8_up') is not True: errors.append(cid+':terminal')
         if not all(c.get('cleanup',{}).get(k) is True for k in ('xvfb_exit','tk_destroyed','control_closed','scorer_closed')): errors.append(cid+':cleanup')
         handback=c.get('start_ns',0)+FRONTIER
+        close=c.get('authority_stop_set_ns')
+        if c.get('authority_deadline_ns')!=handback or not isinstance(close,int) or close < handback: errors.append(cid+':authority_close_clock')
         if any(s.get('send_begin_ns',0)>=handback for s in c.get('sends',[])): errors.append(cid+':post_handback_send')
+        for tr in c.get('actual_transitions',[]):
+            if tr.get('nominal_offset_ns')==FRONTIER and isinstance(close,int) and tr.get('t_ns',0)<close: errors.append(cid+':boundary_before_authority_close')
     b=by.get(BASE); c=by.get(CAND)
     if b and (b.get('sends') or b.get('score',{}).get('progress_pixels')!=0): errors.append('baseline_effect')
     if c:
@@ -33,8 +37,10 @@ def evaluate(r):
 def synthetic():
     start=1_000_000_000; cases=[]
     for arm in (BASE,CAND):
+        close=start+FRONTIER+100_000
         c={'case_id':arm,'arm':arm,'scenario':'TRANSIENT_28','start_ns':start,'initial_state':CLEAR,
-           'actual_transitions':[{'nominal_offset_ns':o,'state':s,'t_ns':start+o} for o,s in PROGRAMS['TRANSIENT_28']],
+           'authority_deadline_ns':start+FRONTIER,'authority_stop_set_ns':close,
+           'actual_transitions':[{'nominal_offset_ns':o,'state':st,'t_ns':(close+100_000 if o==FRONTIER else start+o)} for o,st in PROGRAMS['TRANSIENT_28']],
            'samples':[],'sends':[],'effects':[],'score':{'progress_pixels':0,'harm_pixels':0},'terminal_f8_up':True,
            'cleanup':{'xvfb_exit':True,'tk_destroyed':True,'control_closed':True,'scorer_closed':True},'exceptions':[]}
         if arm==CAND:
