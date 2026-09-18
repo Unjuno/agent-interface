@@ -1,5 +1,22 @@
 # Asynchronous live control: development evidence
 
+> **Directory role:** retained live-control development evidence. For current project status, use the canonical status documents below; older “Latest” entries are historical within this directory.
+
+## Navigate
+
+| Need | Read |
+|---|---|
+| Current project objective | [../../docs/CURRENT_GOAL.md](../../docs/CURRENT_GOAL.md) |
+| Latest cross-project handoff | [../../docs/LOCAL_RESEARCH_HANDOFF.md](../../docs/LOCAL_RESEARCH_HANDOFF.md) |
+| Current Linux research caller | [CURRENT_CLIENT.md](CURRENT_CLIENT.md) |
+| Project evidence ledger | [../../RESEARCH.md](../../RESEARCH.md) |
+| Implemented live-control surface | [What is implemented](#what-is-implemented) |
+| Reproduction notes | [Reproduce](#reproduce) |
+
+
+<details>
+<summary><strong>Expand retained live-control chronology</strong></summary>
+
 Latest model-free boundary: [running action guard v1](RUNNING_ACTION_GUARD_V1.md)
 uses the exact observations already emitted during held input to re-evaluate a
 planner-authored action contract. Retained v31 replay accepts22/22 historical
@@ -278,6 +295,9 @@ worker. A planner can submit a finite program, receive early acknowledgements
 and observations, and request cancellation while the worker is active.
 It uses the existing private Xvfb application fixtures and exact O2 transport.
 It is not yet a general desktop runtime or a human-speed agent benchmark.
+
+
+</details>
 
 ## What is implemented
 
