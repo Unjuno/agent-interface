@@ -1,11 +1,23 @@
 {
-  "files": {
-    "PLAN.md": "3273d7e524a15ffd04c98759aed1a57eeea6bd7e9aaeb9a233216a0265775433",
-    "audit.py": "692906578290557522d1227f6c05d9f3b6a0d484252fc409adb38b4f52282a8c",
-    "candidate.py": "cbf5c7b0c1b8a7f2c79eaca085f42624931888d6c3801aea083f010990db8d12",
-    "runner.py": "46767db8f2859ab2c2e54ae7a63dfa72bce62b3f0ebda01e3c453b91ff2e5a52"
+  "task": "CONCURRENT-FAST-DECISION-T2-ASYNC-RETURN-PREFLIGHT-20260918-009",
+  "issue": 1449,
+  "base": "c4a77a0a0195395022d377be62e869b2cc9496fc",
+  "canonical_source_identity": "Git blob readback after remote write",
+  "formal_invocations_before_freeze": 0,
+  "git_blobs": {
+    "candidate.py": "2faa24e5cfff087ec169748d3c0511158e7f07ef",
+    "runner.py": "1186b76b685e3736337861870ae8c5e0cc59d35a",
+    "audit.py": "8184a81e7f586e9d4f5f11e8f2a739ac9d5692eb",
+    "PLAN.md": "1dd13e139521175801f693da6759292a774bdaa3",
+    "construction_audit.json": "1d8bd7ed9498d7eff228b001d0e94b71273db267",
+    "construction.json.gz.b64": "787c1c6b88b724717df573af47ef33adad0246e3"
   },
-  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
-  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
-  "task": "CONCURRENT-FAST-DECISION-T2-ASYNC-RETURN-PREFLIGHT-20260918-009"
+  "construction": {
+    "decision": "PASS_CONSTRUCTION_ELIGIBLE",
+    "cases": 4,
+    "post_return_admissions": 0,
+    "stale_probe_rejections": 4,
+    "corruption_controls_pass": true
+  },
+  "note": "An earlier local SHA-256 manifest was invalidated before formal execution because remote source formatting differed from the local pre-upload bytes. It was deleted; these read-back Git blob IDs are the source freeze."
 }
