@@ -42,6 +42,9 @@ The arrows show the intended reading/promotion direction, not code dependencies.
 
 ## Documentation layers
 
+## Living history documents
+
+`CURRENT_GOAL.md` and `LOCAL_RESEARCH_HANDOFF.md` are living documents with retained history. Their newest governing/current material stays visible at the top; older direction and legacy document bodies are preserved under expandable sections. Use the visible top sections for current status and expand history only when tracing provenance.
 ### Current status
 
 - [CURRENT_GOAL.md](CURRENT_GOAL.md) — current governing invariant and active research direction.
