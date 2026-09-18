@@ -1,0 +1,55 @@
+{
+  "task": "GUARD-POLICY-RECOVERABLE-X11-CALIBRATION-R2-20260918-001",
+  "issue": 1722,
+  "base_main": "24e2708d4dfe23ce3bc28548cdc541eb4ee75688",
+  "branch": "research/guard-policy-recoverable-x11-calibration-r2-1722",
+  "formal_status": "NOT_RUN",
+  "formal_invocations": 0,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "source_archive": {
+    "gzip_bytes": 9661,
+    "gzip_sha256": "67325d00480ddf7bbef34c9939a1c0f400507162301312aad1a3c267bcc9bb07",
+    "base64_chars": 12884,
+    "base64_sha256": "5438ebdb24f270a062c675ea536c12ee93bbc28a9283045d7e0249fc722103f6"
+  },
+  "source_chunk_git_blobs": {
+    "source/part00.b64": "f6d76453a89a9ffdb096177d5d34cf787b9122eb",
+    "source/part01.b64": "f62ef92ad8fab22fa108f412bcafb128ca28e497",
+    "source/part02.b64": "c4d03b820af9412bf27df02b2184e56ce2ecf1f7",
+    "source/part03.b64": "6f2e86b4080ce1c904a2f1ddea6b01a281a06af5",
+    "source/part04.b64": "4dc301d3b83870aab6fffc83f53388d5f9151855",
+    "source/part05.b64": "0e321e1d765c5dff5b2f6e8b1c8be78d3dea06ac",
+    "source/part06.b64": "6518d623adedf27580e2c19fafa145f37df949bb"
+  },
+  "source_files_sha256": {
+    "PLAN.md": "bdba4ec88db5c5cfd1df14e0ac7b6977600d09dac9eb47f362ca56fe1bd0c8b1",
+    "PREREG.json": "8e6719609392f0e8a4bff88b8b73189ac26a450d8da7105ceb7738d400f6cc82",
+    "fixture.py": "632d2b850d9d81b8b481085fb7f68b4c56f382091d79311264a89f6c091a7ce7",
+    "experiment.py": "43f60ef90c63dcd64c7f4e29bb45e3c76ebc7812726a34a552d0803b71f1e6c7",
+    "audit.py": "09b9a7aeeab0937f9f6dfb6446a2a1d108506a6382522e15e8fac53b35b60eec",
+    "independent_audit.py": "aa34ab15675f4b14423db6e3e9666ded799568389655a25421ee091e521447e1"
+  },
+  "construction": {
+    "decision": "PASS_CONSTRUCTION_ELIGIBLE",
+    "raw_sha256": "65a819d148478f1a3563249a13fc50ca7ed708bfd50b58a3fd95ab3125a18393",
+    "primary_audit_sha256": "117943615031815cd65551dbc5e86c963e6f4aa1c349f4476085e79d1bd0ed5b",
+    "independent_audit_sha256": "13fc5bccafc275f91947681fd06c51d0790c9b21c6d0619fd9ba12fd2278e07f"
+  },
+  "formal_shape": {
+    "calibration_groups": 128,
+    "classification_fresh": 128,
+    "classification_stale": 128,
+    "policy_pairs_per_q": 256,
+    "q_levels": [
+      "1/100",
+      "1/20",
+      "1/5",
+      "1/2"
+    ],
+    "no_effect_wait_ns": 3000000,
+    "bootstrap_resamples": 10000,
+    "seed": 172220260918001
+  }
+}
