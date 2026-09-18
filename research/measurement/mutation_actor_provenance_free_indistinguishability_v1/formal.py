@@ -8,6 +8,7 @@ FOCUS=(False,True)
 DIGEST=('D0','D1','D2','D3')
 ACTORS=('HUMAN','EXTERNAL_PROCESS')
 
+
 def observable(event,effect,timing,focus,digest):
     return {'event_family':event,'effect_class':effect,'timing_bucket':timing,
             'focus_owned':focus,'state_digest_class':digest}
