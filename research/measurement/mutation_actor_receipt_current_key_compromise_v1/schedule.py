@@ -1,0 +1,10 @@
+TASK='MUTATION-ACTOR-RECEIPT-CURRENT-KEY-COMPROMISE-20260918-001'
+SEED=127720260918001
+BATCHES=4
+PAIRS_PER_BATCH=50000
+TOTAL_PAIRS=BATCHES*PAIRS_PER_BATCH
+
+def range_for(batch:int):
+    if batch not in range(BATCHES): raise ValueError('bad batch')
+    start=10_000_000 + batch*PAIRS_PER_BATCH
+    return start,start+PAIRS_PER_BATCH
