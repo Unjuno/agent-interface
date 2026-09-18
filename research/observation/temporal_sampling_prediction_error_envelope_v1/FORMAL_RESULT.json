@@ -1,0 +1,54 @@
+{
+  "affine_clean_controls": 6000,
+  "amax_counts": {
+    "0": 24000,
+    "1000": 24000,
+    "200": 24000,
+    "2000": 24000,
+    "500": 24000
+  },
+  "choices": {
+    "INDEX_LOG": 66066,
+    "TARGET_AGE_LOG": 53934
+  },
+  "decision": "PASS_TEMPORAL_PREDICTION_ERROR_ENVELOPE_SCOPED",
+  "errors": {
+    "index_bound_escape": 0,
+    "min_bound_not_min": 0,
+    "oracle_mismatch": 0,
+    "role_violation": 0,
+    "target_bound_escape": 0
+  },
+  "family_counts": {
+    "alternating_jitter": 20000,
+    "bounded_random_jitter": 20000,
+    "middle_gap": 20000,
+    "mixed_jitter_gap": 20000,
+    "recent_jitter_older_regular": 20000,
+    "regular60": 20000
+  },
+  "formal_invocations": 1,
+  "issue": 1497,
+  "maxima": {
+    "affine_residual": 9.592326932761353e-14,
+    "index_bound_escape_margin": -0.14236782178236318,
+    "oracle_abs_diff": 5.684341886080802e-14,
+    "target_bound_escape_margin": -0.13969647628166926
+  },
+  "realized_error_relation_of_min_bound_choice": {
+    "better": 63617,
+    "interpretation": "descriptive only; MIN_BOUND minimizes worst-case guarantee, not realized error",
+    "tie": 43209,
+    "worse": 13174
+  },
+  "replacements": 0,
+  "reruns": 0,
+  "row_digest_sha256": "70ce29599705c4c1dca6d68379d9534cfdae388a06d1d172945fd14b390077cc",
+  "schema": "temporal-prediction-error-envelope-result-v1",
+  "seed": 149720260918001,
+  "supported_rows": 120000,
+  "task": "TEMPORAL-SAMPLING-PREDICTION-ERROR-ENVELOPE-20260918-001",
+  "tuning": 0,
+  "unsupported_controls": 10000,
+  "unsupported_refused": 10000
+}
