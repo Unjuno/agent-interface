@@ -134,7 +134,9 @@ def mutate_effect(q,scenario,state):
     c=next(c for c in q['cases'] if c.get('arm')==CAND and c.get('scenario')==scenario)
     spans=intervals(c,state)
     if not spans:raise RuntimeError('missing interval '+scenario+' '+state)
-    lo,hi=spans[0]; c.setdefault('effects',[]).append({'t_ns':lo+(hi-lo)//2,'effect_kind':'harm','state':state})
+    if not c.get('effects'):raise RuntimeError('missing effect '+scenario)
+    lo,hi=spans[0]; e=c['effects'][-1]
+    e['t_ns']=lo+(hi-lo)//2; e['effect_kind']='harm'; e['state']=state
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('result');ap.add_argument('--out',required=True);a=ap.parse_args()
