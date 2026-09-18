@@ -1,0 +1,30 @@
+{
+  "excluded_construction": true,
+  "formal_invocations": 0,
+  "reruns": 0,
+  "rows": [
+    {
+      "arm": "V10_BASELINE",
+      "cleanup": {"fixture_exit": -15, "socket_exists_after": false, "xvfb_exit": 0},
+      "clock_provenance": "same_host_python_perf_counter_ns",
+      "display": ":1300",
+      "exceptions": ["XauthError: ~/.Xauthority: [Errno 2] No such file or directory: '/opt/xvfb/.Xauthority'"],
+      "fixture_ready": {"clock": "python_perf_counter_ns", "pid": 781, "ready_ns": 1264700795390, "window_id": 2097167},
+      "pair": 0,
+      "position": 1
+    },
+    {
+      "arm": "V12_MEASURED",
+      "cleanup": {"fixture_exit": -15, "socket_exists_after": false, "xvfb_exit": 0},
+      "clock_provenance": "same_host_python_perf_counter_ns",
+      "display": ":1301",
+      "exceptions": ["XauthError: ~/.Xauthority: [Errno 2] No such file or directory: '/opt/xvfb/.Xauthority'"],
+      "fixture_ready": {"clock": "python_perf_counter_ns", "pid": 798, "ready_ns": 1265450505275, "window_id": 2097167},
+      "pair": 0,
+      "position": 2
+    }
+  ],
+  "sessions": 2,
+  "summary": {"baseline_application_ok": 0, "candidate_application_ok": 0, "candidate_physical_composed": 0, "exceptions": 2, "sessions": 2, "terminal_up": 0},
+  "task": "INPUT-OWNER-V12-LIVE-CAUSAL-X11-20260918-001"
+}
