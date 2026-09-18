@@ -40,12 +40,12 @@ PUBLIC_DOCS = [
     ".github/workflows/README.md",
 ]
 
-LINK_RE = re.compile(r"!?[[^]]*](([^)]+))")
+LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
 
 
 def tracked_paths() -> set[str]:
     raw = subprocess.check_output(["git", "ls-files", "-z"], cwd=ROOT)
-    return {item.decode("utf-8") for item in raw.split(b"\\0") if item}
+    return {item.decode("utf-8") for item in raw.split(b"\0") if item}
 
 
 def target_is_tracked(target: str, tracked: set[str]) -> bool:
