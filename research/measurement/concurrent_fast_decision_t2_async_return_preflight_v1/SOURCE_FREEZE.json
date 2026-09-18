@@ -7,7 +7,7 @@
   "source_blobs": {
     "candidate.py": "2faa24e5cfff087ec169748d3c0511158e7f07ef",
     "runner.py": "dc22caa47db26125637a1302c177f0cc0026f7f5",
-    "audit.py": "8184a81e7f586e9d4f5f11e8f2a739ac9d5692eb",
+    "audit.py": "96fe5afe6104deef3c071f0aef31cced019af2cb",
     "PLAN.md": "1dd13e139521175801f693da6759292a774bdaa3",
     "static_preflight.py": "86fba90e70c15ecb7c4c4b9445162b88f82ef723"
   },
@@ -15,7 +15,8 @@
     "static_preflight_result.json": "81229eb6e7766dbca1365ab40734840ec5fd4556",
     "construction_v3_audit.json": "1d8bd7ed9498d7eff228b001d0e94b71273db267",
     "construction_v3.json.gz.b64": "394d2ef4cdd988c6c556229e355b9bbc97040dc1",
-    "stress_v3.json": "a666ee652a75a30af0bb617b993207d5693e71cb"
+    "stress_v3.json": "a666ee652a75a30af0bb617b993207d5693e71cb",
+    "construction_v4_audit.json": "a10ae9db43711c6487d4998c523b1b3000aa738d"
   },
   "retained_preformal_failures": [
     {
@@ -58,5 +59,16 @@
     "receive_to_close_ns_p95": 3825,
     "receive_to_close_ns_max": 5628
   },
-  "formal_status": "NOT_RUN"
+  "formal_status": "NOT_RUN",
+  "audit_strengthening": {
+    "terminal_authority_closed_required": true,
+    "terminal_generation_required": 2,
+    "frontier_child_pid_binding_required": true,
+    "frontier_clock_order_required": true,
+    "frontier_receive_binding_required": true,
+    "stale_probe_prepared_before_return_required": true,
+    "corruption_controls": 7,
+    "construction_raw_reused": true,
+    "construction_rerun": false
+  }
 }
