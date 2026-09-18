@@ -53,9 +53,9 @@ def audit(path,formal=True):
     if errors:decision='FAIL_INTEGRITY'
     elif science:
         bad=[x for x in science if x.startswith('ceiling')]
-        decision='HOLD_CURRENT_REPRESENTATION_MAY_SUFFICE' if bad else 'PASS_TWO_DISPLACEMENT_OBSERVABILITY_CEILING_SCOPED'
+        decision='HOLD_CURRENT_REPRESENTATION_MAY_SUFFICE' if bad else 'PASS_TWO_DISPLACEMENT_OBSERVABILITY_CEILING_A2_SCOPED'
     else: decision='HOLD_BLIND_TAIL_NOT_SUFFICIENT'
-    return {'pass':decision=='PASS_TWO_DISPLACEMENT_OBSERVABILITY_CEILING_SCOPED','decision':decision,'errors':errors,'science':science,'by_age':p.get('by_age')}
+    return {'pass':decision=='PASS_TWO_DISPLACEMENT_OBSERVABILITY_CEILING_A2_SCOPED','decision':decision,'errors':errors,'science':science,'by_age':p.get('by_age')}
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('path');ap.add_argument('--construction',action='store_true');ap.add_argument('--out');a=ap.parse_args();r=audit(a.path,not a.construction);s=json.dumps(r,separators=(',',':'),sort_keys=True);print(s);pathlib.Path(a.out).write_text(s) if a.out else None
