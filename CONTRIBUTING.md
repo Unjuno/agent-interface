@@ -25,11 +25,11 @@ Use the [Research proposal form](https://github.com/Unjuno/agent-interface/issue
 
 Every promoted research result should state:
 
-- **H — Hypothesis:** a falsifiable claim with metric and environment.
-- **T — Test:** dataset/tasks, environment, sample size, changed variable, and stopping rule.
-- **D — Decision:** explicit PASS / FAIL / UNCERTAIN condition.
-- **C — Competing explanation:** how the apparent win could be misleading.
-- **U — Uncertainty:** dominant error sources and scope limits.
+- **H — Hypothesis:** a falsifiable claim under explicit assumptions and, where relevant, a named environment/metric.
+- **T — Minimum discriminator:** the smallest proof/invariant check, exhaustive enumeration, independent oracle comparison, or empirical test that can decide the claim; include dataset/tasks, environment, sample size, changed variable, and stopping rule when those are actually needed.
+- **D — Decision:** explicit PASS / FAIL / HOLD / UNCERTAIN condition.
+- **C — Competing explanation:** alternate model, hidden assumption, omitted state, or empirical effect that could make the apparent result misleading.
+- **U — Uncertainty:** model incompleteness, measurement error, transfer limits, and other dominant scope limits.
 
 ### 3. Research harness bug
 
