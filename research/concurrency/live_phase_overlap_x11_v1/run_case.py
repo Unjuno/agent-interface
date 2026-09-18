@@ -115,6 +115,7 @@ pixel_correct=all(pixels[s]==expected[s] for s in expected)
 space_neutral=not key_is_down(space)
 with lock: ev=list(logs)
 keypress_counts={s:sum(1 for e in ev if e['kind']=='keypress' and e.get('surface')==s) for s in ['A','B']}
+# Exact order diagnostics
 kp={s:next(e['t_ns'] for e in ev if e['kind']=='keypress' and e.get('surface')==s) for s in ['A','B']}
 eff={s:next(e['t_ns'] for e in ev if e['kind']=='effect' and e.get('surface')==s) for s in ['A','B']}
 out={
