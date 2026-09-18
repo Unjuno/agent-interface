@@ -1,27 +1,31 @@
 {
   "base": "e222a429e1c6b796fc7a08949a48a9eb977615c5",
   "batch_size": 4,
-  "branch": "research/ordered-interrupt-batching-1871",
+  "branch": "research/ordered-interrupt-batching-a2-1876",
   "construction": {
     "py_compile": "PASS",
+    "smoke": "PASS",
     "unit_tests": "10/10 PASS"
   },
-  "formal_corpus": "all sequences length 0..6 over 4 event kinds x 2 sessions plus directed controls",
+  "formal_corpus": "unchanged #1871 all sequences length 0..6 over 4 event kinds x 2 sessions plus directed controls",
   "formal_invocations": 0,
-  "issue": 1871,
+  "issue": 1876,
+  "one_factor_repair": "move E import to module scope and remove in-function E/ordered_batch imports",
   "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "predecessor_issue": 1871,
+  "predecessor_poolable_rows": 0,
   "python": "3.13.5",
   "replacements": 0,
   "reruns": 0,
-  "schema": "ordered-interrupt-batching-freeze-v1",
+  "schema": "ordered-interrupt-batching-a2-freeze-v1",
   "source_sha256": {
-    "PLAN.md": "f6e2352eefeb684e97b23b8714d1fc9478256fe86b5d6a7917a4dff1ddda7fcd",
+    "PLAN.md": "ea1f4d65820a91731f036de9fb140d07aff9109cd5f9ee3f05b6f1508d41bbb4",
     "audit.py": "17155d296500837c94999dc7f158d2affd7591eb22bb7130d26a98d6faf68d15",
     "cases.py": "8a1f2317bb38c3cef0e8e9d4717183b1ee6189324d24d54f9a17653c2f76426e",
     "model.py": "2906d594b11a25035a9843263d4f88a678da4a84010cba4bee3d17f19fd7a154",
-    "run_formal.py": "e45bb37005a5fcecd500a8e705e8980e83d75826cdab0844c1cfbe08750522cb",
+    "run_formal.py": "6c7d1de6fb6ae37ef242194dc91dd7dc4a78cf79d34063f0ba7c7dcd344ee8f2",
     "test_model.py": "0bc1f61e576655de20dabcc3ff55fbc0039bda203940b59d3b719e6d1f3581fc"
   },
-  "task": "EVENT-ORDERED-INTERRUPT-BATCHING-20260919-001",
+  "task": "EVENT-ORDERED-INTERRUPT-BATCHING-A2-20260919-002",
   "tuning": 0
 }
