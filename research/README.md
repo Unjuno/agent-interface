@@ -45,6 +45,12 @@ flowchart TD
 
 Prefer the narrowest existing namespace. The diagram is a placement guide; retained historical paths are not reorganized retroactively.
 
+## Analytical studies
+
+- [`analysis/`](analysis/) — proofs, exact derivations, exhaustive state-space checks, break-even/identifiability analysis, and the empirical residuals they expose.
+
+Use analytical work to eliminate questions that are already decidable from explicit assumptions; do not treat it as measurement of a real backend/model unless the retained evidence actually contains those endpoints.
+
 ## Workspace map
 
 The top level is intentionally evidence-preserving. The categories below are navigation aids; they do not change the status of any experiment.

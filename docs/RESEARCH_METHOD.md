@@ -88,7 +88,9 @@ flowchart LR
 ## Repository placement
 
 - General methodology and public explanation: `docs/`.
-- Scoped analytical or quantitative evidence: keep it with the relevant experiment, usually under `research/measurement/`, `research/integration/`, or the existing domain directory.
+- Primarily analytical proof/derivation/identifiability evidence: use `research/analysis/` when it is reusable across domains or stands on its own.
+- Scoped quantitative/formal measurement: keep it under `research/measurement/`, `research/integration/`, or the existing domain directory.
+- Domain-coupled analysis may remain beside the domain experiment when separating it would obscure assumptions or provenance.
 - Promoted executable semantics: `runtime/` only after the relevant promotion gate.
 - Release/package evidence: `release/`.
 

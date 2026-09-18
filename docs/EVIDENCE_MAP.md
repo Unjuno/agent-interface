@@ -46,6 +46,7 @@ The diagram shows document/evidence responsibility. It is not a claim that every
 | What changed relative to the initial baseline? | [`PROGRESS_FROM_BASELINE.md`](PROGRESS_FROM_BASELINE.md) | A release claim |
 | What happened most recently, including failures and handoffs? | [`LOCAL_RESEARCH_HANDOFF.md`](LOCAL_RESEARCH_HANDOFF.md) | The concise public entry point |
 | What evidence and scoped dispositions have been retained? | [`../RESEARCH.md`](../RESEARCH.md) | A product-support statement |
+| Where are analytical proof/identifiability artifacts? | [`../research/analysis/README.md`](../research/analysis/README.md) | A substitute for empirical measurements when the claim is environment-dependent |
 | Where are the experiment sources and raw artifacts? | [`../research/README.md`](../research/README.md) and [`../research/`](../research/) | A promotion list |
 | When is discovery/convergence strong enough to consider freezing? | [`../research/evolution/freeze_criteria.md`](../research/evolution/freeze_criteria.md) | Automatic promotion |
 | What executable semantics are currently organized as runtime code? | [`../runtime/README.md`](../runtime/README.md) | Proof of general platform support |
