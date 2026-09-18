@@ -1,6 +1,6 @@
 # Research root namespace map
 
-This page organizes retained experiment directories that live directly under `research/`. It is a navigation aid only: no directory is moved, renamed, promoted, rejected, or reclassified scientifically.
+This page organizes retained research directories that live directly under `research/`. It is a navigation aid only: no directory is moved, renamed, promoted, rejected, or reclassified scientifically.
 
 ## Placement rule
 
@@ -9,7 +9,7 @@ flowchart TD
     Q[New research work] --> C{Existing category fits?}
     C -->|yes| N[Place under the narrowest category<br/>measurement / integration / live_control / observation / domain track]
     C -->|no| R[Direct research/<name>/ only when<br/>a genuinely new category is required]
-    O[Existing direct-root experiment] --> P[Keep exact path for provenance]
+    O[Existing direct-root research path] --> P[Keep exact path for provenance]
     P --> I[Index it here by theme]
     I --> S[Use its own report / audit<br/>for scientific status]
 ```
@@ -36,7 +36,7 @@ New work should normally use a category directory. Existing direct-root paths re
 | Public presentation experiments | [`launch/`](launch/) |
 | Small uncategorized experiments | [`experiments/`](experiments/) |
 
-## Retained direct-root experiment families
+## Retained direct-root research families
 
 The directories below predate or sit outside the newer category structure. Their placement is historical; read each experiment's own report/result for its exact disposition.
 

@@ -84,7 +84,7 @@ Keep new material in the narrowest existing namespace that matches its role. Do 
 | Material | Preferred location |
 |---|---|
 | Public/current documentation | `docs/` |
-| Experimental evidence | `research/` |
+| Research workspace / retained evidence | `research/` |
 | Primarily analytical proof / exact derivation / identifiability work | `research/analysis/` |
 | Scoped quantitative/formal measurement | `research/measurement/` |
 | Cross-component/domain composition | `research/integration/` |
@@ -98,15 +98,16 @@ Retained evidence paths may be referenced by Issues, PRs, reports, hashes, and a
 
 ## Adding a research track
 
-Create the work under the narrowest applicable research namespace (for example `research/analysis/<name>/`, `research/measurement/<name>/`, `research/integration/<name>/`, or `research/concurrency/<name>/`). Use a direct `research/<name>/` directory only when no existing category fits. A typical experiment directory contains:
+Create the work under the narrowest applicable research namespace (for example `research/analysis/<name>/`, `research/measurement/<name>/`, `research/integration/<name>/`, or `research/concurrency/<name>/`). Use a direct `research/<name>/` directory only when no existing category fits. A typical retained research result directory may contain:
 
 ```text
+PLAN.md
 REPORT.md
-<benchmark>.py
-summary.csv
+AUDIT.json
+<analysis-or-experiment code/data as appropriate>
 ```
 
-A good `REPORT.md` includes environment details, exact success counts, p50/p95/p99 where meaningful, negative results, and a short error check.
+A good `REPORT.md` states scope, assumptions, decision/disposition, retained evidence, uncertainty, and the remaining empirical or integration boundary. Empirical reports should include environment and measured endpoints where relevant; analytical reports should state the model/proof or exact-enumeration boundary.
 
 ## Safety
 
