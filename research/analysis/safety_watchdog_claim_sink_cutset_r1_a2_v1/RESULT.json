@@ -1,19 +1,105 @@
 {
   "classifications": [
-    {"arbitrary_oracle":true,"arbitrary_theorem":true,"base_reachable":true,"data":["local_journal","ordinary_pipe","ordinary_recovery"],"min_data_cut":null,"name":"release_vs_postrelease_data","sink":"release_verified","theorem_match":true},
-    {"arbitrary_oracle":true,"arbitrary_theorem":true,"base_reachable":true,"data":["ordinary_pipe","ordinary_recovery"],"min_data_cut":null,"name":"durable_receipt_vs_ordinary_pipe","sink":"durable_receipt","theorem_match":true},
-    {"arbitrary_oracle":false,"arbitrary_theorem":false,"base_reachable":true,"data":["local_journal","ordinary_pipe","ordinary_recovery"],"min_data_cut":1,"name":"durable_receipt_vs_all_evidence_storage","sink":"durable_receipt","theorem_match":true},
-    {"arbitrary_oracle":false,"arbitrary_theorem":false,"base_reachable":true,"data":["ordinary_recovery"],"min_data_cut":1,"name":"republished_receipt_vs_recovery_phase","sink":"republished_receipt","theorem_match":true},
-    {"arbitrary_oracle":false,"arbitrary_theorem":false,"base_reachable":false,"data":["ordinary_pipe"],"min_data_cut":0,"name":"pipe_only_local_evidence","sink":"local_evidence","theorem_match":true}
+    {
+      "arbitrary_oracle": true,
+      "arbitrary_theorem": true,
+      "base_reachable": true,
+      "data": [
+        "local_journal",
+        "ordinary_pipe",
+        "ordinary_recovery"
+      ],
+      "min_data_cut": null,
+      "name": "release_vs_postrelease_data",
+      "sink": "release_verified",
+      "theorem_match": true
+    },
+    {
+      "arbitrary_oracle": true,
+      "arbitrary_theorem": true,
+      "base_reachable": true,
+      "data": [
+        "ordinary_pipe",
+        "ordinary_recovery"
+      ],
+      "min_data_cut": null,
+      "name": "durable_receipt_vs_ordinary_pipe",
+      "sink": "durable_receipt",
+      "theorem_match": true
+    },
+    {
+      "arbitrary_oracle": false,
+      "arbitrary_theorem": false,
+      "base_reachable": true,
+      "data": [
+        "local_journal",
+        "ordinary_pipe",
+        "ordinary_recovery"
+      ],
+      "min_data_cut": 1,
+      "name": "durable_receipt_vs_all_evidence_storage",
+      "sink": "durable_receipt",
+      "theorem_match": true
+    },
+    {
+      "arbitrary_oracle": false,
+      "arbitrary_theorem": false,
+      "base_reachable": true,
+      "data": [
+        "ordinary_recovery"
+      ],
+      "min_data_cut": 1,
+      "name": "republished_receipt_vs_recovery_phase",
+      "sink": "republished_receipt",
+      "theorem_match": true
+    },
+    {
+      "arbitrary_oracle": false,
+      "arbitrary_theorem": false,
+      "base_reachable": false,
+      "data": [
+        "ordinary_pipe"
+      ],
+      "min_data_cut": 0,
+      "name": "pipe_only_local_evidence",
+      "sink": "local_evidence",
+      "theorem_match": true
+    }
   ],
-  "decision":"PASS_WATCHDOG_TYPED_SINK_CUTSET_SCOPED",
-  "errors":[],
-  "facts":{"run_case_lines":[65,68,72,73,75,76],"watchdog_lines":[19,26,28,29,30,32]},
-  "formal_invocations":1,
-  "mutation_controls":{"a2_scope_change":true,"pipe_before_verified":true,"recovered_before_recovery":true,"verified_after_journal":true},
-  "replacements":0,
-  "reruns":0,
-  "source_sha256":{"run_case.py":"5d477ef04719cc81671d4b5d79af23c2896f11e5ac4a5abed64d1016572a5a1c","run_case_a2.py":"7f4df5cd664e0adbf188abde368f7b3783d570d08cd2e49f6f672efa7fc546a4","watchdog.py":"8c296923db25cd6ec5c948e55ebdad8b82e56fda8123ede4549534172417fe31"},
-  "task":"SAFETY-WATCHDOG-CLAIM-SINK-CUTSET-R1-A2-20260919-001",
-  "tuning":0
+  "decision": "PASS_WATCHDOG_TYPED_SINK_CUTSET_SCOPED",
+  "errors": [],
+  "facts": {
+    "run_case_lines": [
+      65,
+      68,
+      72,
+      73,
+      75,
+      76
+    ],
+    "watchdog_lines": [
+      19,
+      26,
+      28,
+      29,
+      30,
+      32
+    ]
+  },
+  "formal_invocations": 1,
+  "mutation_controls": {
+    "a2_scope_change": true,
+    "pipe_before_verified": true,
+    "recovered_before_recovery": true,
+    "verified_after_journal": true
+  },
+  "replacements": 0,
+  "reruns": 0,
+  "source_sha256": {
+    "run_case.py": "5d477ef04719cc81671d4b5d79af23c2896f11e5ac4a5abed64d1016572a5a1c",
+    "run_case_a2.py": "7f4df5cd664e0adbf188abde368f7b3783d570d08cd2e49f6f672efa7fc546a4",
+    "watchdog.py": "8c296923db25cd6ec5c948e55ebdad8b82e56fda8123ede4549534172417fe31"
+  },
+  "task": "SAFETY-WATCHDOG-CLAIM-SINK-CUTSET-R1-A2-20260919-001",
+  "tuning": 0
 }
