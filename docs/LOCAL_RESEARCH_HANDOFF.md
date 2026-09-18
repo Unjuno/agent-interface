@@ -559,6 +559,13 @@ Latest measured candidate: phased_replan_ink_v1 separates fresh target activatio
 
 </details>
 
+## Legacy retained handoff document
+
+The material below is retained coordination/history from the earlier handoff document and remains verbatim for provenance. It is collapsed by default so the newest handoff stays readable.
+
+<details>
+<summary><strong>Expand legacy retained handoff body</strong></summary>
+
 ## Expired execution now has opt-in post-release observations, status remains expired
 
 executor_v9 / interactive_v6 / socket_v8 extend existing passive release sampling to expiry without lease renewal. Actual Inkscape Shift hold expires under500ms deadline; trailing text never starts, Shift released, two captures after release arrive before expired terminal. Latest capture+205.250ms, terminal+228.801ms. Audit20 events/8 exact frames/one pre-deadline Shift admission/unchangedSVG50/50/40/30/exit0/sockets removed. Fake release-failure/explicit-stop/expiry controls pass after retained harness-race repair. See research/live_control/EXPIRY_OBSERVATION.md and results/expiry-observation-01. Fixes stale post-expiry observation gap, not first-click versus full-program duration; next checked phase separation, no blanket deadline extension/tail replay. Previous frozen entries/default unchanged; full goal open.
@@ -3945,3 +3952,5 @@ snapshot before focus request.
 The distinct seed210 allocation keeps the same timing, passive observation,
 same-stream and2-vs-1 exchange rules. All32 hashes and output absence verify.
 Run once/no retry; v1's missing-evidence failure stays unchanged.
+
+</details>
