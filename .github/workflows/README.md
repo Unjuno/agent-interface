@@ -23,6 +23,10 @@ GitHub Actions in this directory serve different purposes. They are grouped here
 - `runtime-portable-zipapp-v1.yml` — portable zipapp checks.
 - `runtime-preview-artifact-v1.yml`, `runtime-preview-artifact-v2.yml` — runtime-preview artifact workflows.
 
+## Repository maintenance
+
+- `analysis-index.yml` — checks that every retained `research/analysis/*/REPORT.md` result is linked from the analytical index and that index links do not point to missing directories.
+
 ## Research execution
 
 - `container-lab-bundle-01.yml` — container research bundle execution.
