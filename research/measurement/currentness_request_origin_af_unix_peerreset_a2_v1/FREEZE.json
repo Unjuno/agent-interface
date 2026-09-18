@@ -1,0 +1,35 @@
+{
+  "base": "df0779629cfd3ea257124dc84c6a4048432eb17c",
+  "branch": "research/currentness-request-origin-afunix-peerreset-a2-20260918-008",
+  "candidate_git_blob": "3e9fc5474de9af820b653c36e5db5d912edfc076",
+  "formal_invocations": 0,
+  "fresh_seed": 124320260918008,
+  "frozen_unix_ns": "1789689490931149185",
+  "held_parent_sha256": {
+    "candidate_copy.py": "df9d7f891efd3741372d19bb5de8484482359dbad494dcf7624aaf6a51e694eb",
+    "corruption_controls.py": "f4b46e3236f5eb97ca050794879141a18318b1c9103261e120fd04e9480b842a",
+    "oracle.py": "fefd43b959d6e79403fea5f4f857ea780c5f4303460e199c8adfbf79e5f8c48e",
+    "protocol.py": "fe520baf24d0436a89b638f5be33411cb01538cb30db1e4e035286e30133b752"
+  },
+  "issue": 1250,
+  "mechanism_change": "runtime_server.py Handler.handle catches ConnectionResetError only around rfile.readline and returns",
+  "owned_path": "research/measurement/currentness_request_origin_af_unix_peerreset_a2_v1/",
+  "parent_issue": 1243,
+  "parent_result": "FAIL_CURRENTNESS_REQUEST_ORIGIN_AF_UNIX_CONCURRENCY",
+  "reruns": 0,
+  "source_sha256": {
+    "EXCLUDED_A2.json": "233ff2af0fe2868dd566defeba27dd068cff200248cde686a442fdeeceae9f1d",
+    "PLAN.md": "ec0824378b152000cc7a8f893d6df0c2b2860480e707673cdf49cd302b2ab1cc",
+    "auditor.py": "391b498592cb6ddb4678e520cddf0c0e9ca8775440b25d9ae9df17ea0d9ff1c2",
+    "candidate_copy.py": "df9d7f891efd3741372d19bb5de8484482359dbad494dcf7624aaf6a51e694eb",
+    "corruption_controls.py": "f4b46e3236f5eb97ca050794879141a18318b1c9103261e120fd04e9480b842a",
+    "excluded_smoke.py": "5cf4818af62b1a1cd6e8179a71b185704212848b7e85bc70750f55b2f9b3fc46",
+    "oracle.py": "fefd43b959d6e79403fea5f4f857ea780c5f4303460e199c8adfbf79e5f8c48e",
+    "postformal.py": "c5fa3cdbd0ac78aef2d3a134447fb0f2c4bfa837b1b9fcff1e61fa93178eb585",
+    "protocol.py": "fe520baf24d0436a89b638f5be33411cb01538cb30db1e4e035286e30133b752",
+    "runner.py": "cd91589f18bddadbe3870143d0b06b535e6760fccf991c8d6a94891eb28ece88",
+    "runtime_server.py": "ca563da37f1d46601de73712ef5af59f7bc125fdb5a6f945e89aa62c436164ff",
+    "schedule.json": "cc97167900a32f09272450f37dc4f28486b0edcbffe6d88e2a2711bf3802149f"
+  },
+  "task": "CURRENTNESS-REQUEST-ORIGIN-AF_UNIX-CONCURRENCY-PEERRESET-A2-20260918-008"
+}
