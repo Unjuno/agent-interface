@@ -17,6 +17,7 @@ For claims and scientific disposition, start with the top-level [research index]
 | Revisit history | [REVISIT_LEDGER.md](REVISIT_LEDGER.md) |
 | Analysis vs experiment decision flow | [../docs/RESEARCH_METHOD.md](../docs/RESEARCH_METHOD.md) |
 | Public evidence/document relationship map | [../docs/EVIDENCE_MAP.md](../docs/EVIDENCE_MAP.md) |
+| Retained direct-root experiment namespaces | [ROOT_NAMESPACE_MAP.md](ROOT_NAMESPACE_MAP.md) |
 
 
 ## Research routing
@@ -48,7 +49,7 @@ Prefer the narrowest existing namespace. The diagram is a placement guide; retai
 
 The top level is intentionally evidence-preserving. The categories below are navigation aids; they do not change the status of any experiment.
 
-For new work, prefer the narrowest existing category below rather than adding another top-level research namespace. Existing direct experiment paths are retained for provenance; see [`../CONTRIBUTING.md`](../CONTRIBUTING.md) for placement guidance.
+For new work, prefer the narrowest existing category below rather than adding another top-level research namespace. Existing direct experiment paths are retained for provenance; see [`ROOT_NAMESPACE_MAP.md`](ROOT_NAMESPACE_MAP.md) for the retained root-path index and [`../CONTRIBUTING.md`](../CONTRIBUTING.md) for placement guidance.
 
 ### Live control and integration
 
