@@ -1,0 +1,45 @@
+{
+  "audit": {
+    "disposition": "PASS_CURRENT_EFFECT_RECEIPT_HANDBACK_SCOPED",
+    "errors": [],
+    "pass": true,
+    "rows": 32,
+    "sha256": "f18bb2840943daa83fc7ffcbca8588c4533f14b405f87bb8df1df01e429135a5"
+  },
+  "audit_sha256": "0d0c671e2389bb34baa2482c291728e6fe04e2dd4d0dab6c2b9f1e83234a4a09",
+  "batch_sha256": [
+    "d6d2231d85e8f8c22146f8a01867144ccf0367a6406218c5337936fbb5b64edb",
+    "b4e32240303c364276e08d9f8faa89ade3cfdfc7ee012b17e80f199f9e89c487",
+    "9501255ebcfaf3584b54d1d1e6ee99138827984821144d661932b04dfcccd02a",
+    "777c709af50a59fc3eb24c05ef5e3c6e2dfb3565408bc339f07944711c2964b9"
+  ],
+  "batches": 4,
+  "cases": 32,
+  "construction_controls": {
+    "mismatched_source_rejected": true,
+    "stale_generation_rejected": true,
+    "valid_accept": true
+  },
+  "formal_invocations": 1,
+  "formal_result_gzip_sha256": "eafc024cb26fa0513210b553dce445dfc5ed24067f4e7daa9553b0c291f44a9e",
+  "formal_result_sha256": "f18bb2840943daa83fc7ffcbca8588c4533f14b405f87bb8df1df01e429135a5",
+  "pairs": 16,
+  "preformal_publication_correction": "experiment.py first published bytes differed from construction source; corrected before formal; final remote Git blob matched exact construction source",
+  "replacements": 0,
+  "reruns": 0,
+  "strata": {
+    "baseline_delay_0": {"effect_after_handback": 8, "extra_wait_max_ms": 0.0, "extra_wait_p50_ms": 0.0, "handback_max_ms": 8.702554, "handback_p50_ms": 6.499276500000001, "n": 8},
+    "baseline_delay_3": {"effect_after_handback": 8, "extra_wait_max_ms": 0.0, "extra_wait_p50_ms": 0.0, "handback_max_ms": 8.574124, "handback_p50_ms": 6.4709935, "n": 8},
+    "candidate_delay_0": {"effect_after_handback": 0, "extra_wait_max_ms": 0.774305, "extra_wait_p50_ms": 0.5766065, "handback_max_ms": 11.604467, "handback_p50_ms": 7.1433145, "n": 8},
+    "candidate_delay_3": {"effect_after_handback": 0, "extra_wait_max_ms": 3.751476, "extra_wait_p50_ms": 3.5164239999999998, "handback_max_ms": 12.268264, "handback_p50_ms": 9.9689295, "n": 8}
+  },
+  "summary": {
+    "arms": {
+      "ACTUATION_RECEIPT_DRAIN": {"effect_after_handback": 16, "effect_correct": 16, "effect_receipt_valid": 0, "extra_wait_after_actuation_receipt_ms_max": 0.0, "extra_wait_after_actuation_receipt_ms_p50": 0.0, "handback_delay_ms_max": 8.702554, "local_completion_after_handback": 0, "n": 16, "physical_guaranteed_after_handback": 0, "physical_possible_after_handback": 0, "terminal_released": 16},
+      "CURRENT_EFFECT_RECEIPT_DRAIN": {"effect_after_handback": 0, "effect_correct": 16, "effect_receipt_valid": 16, "extra_wait_after_actuation_receipt_ms_max": 3.751476, "extra_wait_after_actuation_receipt_ms_p50": 2.0558515, "handback_delay_ms_max": 12.268264, "local_completion_after_handback": 0, "n": 16, "physical_guaranteed_after_handback": 0, "physical_possible_after_handback": 0, "terminal_released": 16}
+    },
+    "disposition": "PASS_CURRENT_EFFECT_RECEIPT_HANDBACK_SCOPED"
+  },
+  "task": "T2-LIVE-X11-CURRENT-EFFECT-RECEIPT-HANDBACK-20260918-003",
+  "tuning": 0
+}
