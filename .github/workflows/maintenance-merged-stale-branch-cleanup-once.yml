@@ -55,7 +55,7 @@ jobs:
             tip_ts="$(git show -s --format=%ct "$ref")"
             explicit=false
             case "$branch" in
-              *20260916*|*2026-09-16*|*20260917*|*2026-09-17*|branch-spam-end|last-accidental|oops-final|please-delete|really-last|stop-branch-spam|tmp-do-not-use|tmp-ignore|maintenance/merged-stale-branch-cleanup-20260918)
+              *20260916*|*2026-09-16*|*20260917*|*2026-09-17*|branch-spam-end|last-accidental|oops-final|please-delete|really-last|stop-branch-spam|tmp-do-not-use|tmp-ignore|maintenance/merged-stale-branch-cleanup-20260918|research/live-existing-runtime-ready-fence-17d080a-check|research/live-existing-runtime-ready-fence-17d080a-final|research/live-existing-runtime-ready-fence-17d080a-pr|maintenance/cleanup-leftover-ready-fence-20260918)
                 explicit=true
                 ;;
             esac
