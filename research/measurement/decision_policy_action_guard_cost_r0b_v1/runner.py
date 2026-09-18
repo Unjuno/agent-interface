@@ -35,6 +35,7 @@ def malformed_controls():
     try:validate_and_decide(base,0,time.perf_counter_ns(),SCOPE,GENERATION+1);controls.append({'name':'wrong_generation','rejected':False})
     except ValueError:controls.append({'name':'wrong_generation','rejected':True})
     rejects('nonadvancing_seq',base,last_seq=10)
+    # unknown regime with valid checksum
     core=CORE.pack(SCOPE,GENERATION,11,99,now); unknown=core+hashlib.blake2b(core,digest_size=DIGEST).digest();rejects('unknown_regime',unknown)
     rejects('truncated',base[:-1])
     stale=encode_record(12,REG_VALID,now-100_000_000);rejects('stale_time',stale,now_ns=now)
@@ -60,15 +61,18 @@ def run(seed,reads,inv,block,warmup):
     inproc=[];sock=[];deltas=[]; invlat=[]; last_in=0;last_sock=0
     hard_effects=0;ambig_effects=0; mismatches=0
     try:
+        # warm both paths equally, no retained metrics
         for i in range(warmup):
             regime=regimes[i]
             t0=time.perf_counter_ns(); data=encode_record(i+1,regime); disp, last_in=validate_and_decide(data,last_in); _=time.perf_counter_ns()-t0
-            c.sendall(REQ.pack(OP_GET,regime));data=recv_exact(c,len(data)); disp2,last_sock=validate_and_decide(data,last_sock)
+            c.sendall(REQ.pack(OP_GET,regime));data=recv_exact(c,len(data)); disp2,last_sock=validate_and_decide(data,last_sock); 
             if disp!=disp2:mismatches+=1
         last_in=0;last_sock=0
+        # restart sequence domains by restarting server so both measured arms use seq1..reads
         c.sendall(REQ.pack(OP_STOP,0));c.close();proc.wait(timeout=2)
         proc,c=connect_server(path)
         measured=regimes[warmup:]
+        # block counterbalance. Each arm runs exactly same regime block.
         for bs in range(0,reads,block):
             sub=measured[bs:bs+block]; first='inproc' if (bs//block)%2==0 else 'socket'
             for arm in (first,'socket' if first=='inproc' else 'inproc'):
@@ -82,10 +86,12 @@ def run(seed,reads,inv,block,warmup):
                         t0=time.perf_counter_ns();c.sendall(REQ.pack(OP_GET,regime));data=recv_exact(c,57);disp,last_sock=validate_and_decide(data,last_sock);dt=time.perf_counter_ns()-t0;sock.append(dt)
                         if regime==REG_HARD and disp=='ADMIT':hard_effects+=1
                         if regime==REG_AMBIG and disp=='ADMIT':ambig_effects+=1
+        # matched by ordinal after counterbalanced blocks; regimes are same, timings are arm vectors.
         deltas=[b-a for a,b in zip(inproc,sock)]
+        # invalidation publish -> response -> typed refusal. Server seq continues.
         for _ in range(inv):
             c.sendall(REQ.pack(OP_HARD,0));data=recv_exact(c,57); row_pub=struct.unpack('<16sQQBQ',data[:-16])[4]
-            disp,last_sock=validate_and_decide(data,last_sock);end=time.perf_counter_ns()
+            disp,last_sock=validate_and_decide(data,last_sock);end=time.perf_counter_ns();
             if disp!='REFUSE_HARD':hard_effects+=1
             invlat.append(end-row_pub)
         c.sendall(REQ.pack(OP_STOP,0));c.close();proc.wait(timeout=2)
