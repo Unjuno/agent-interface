@@ -7,6 +7,33 @@ Establish an evolution ledger, audit failure classes/regressions, and define
 shared cross-domain evaluation before adding more local mechanisms. Use the
 [convergence review](research/evolution/freeze_criteria.md) to end discovery;
 the sections below remain a backlog, not automatic implementation instructions.
+## Roadmap at a glance
+
+```mermaid
+flowchart TD
+    G[Current goal<br/>rich-model intent + local refinement]
+    N[Now<br/>actual agent interaction loop]
+    O[Observation gating<br/>O0/O1/O2 foundation → O3/O4]
+    S[Guard/speculation policy<br/>cost-aware guarded fast paths]
+    D[Real-time DOOM milestone<br/>continuous control demonstration]
+    C[Runtime consolidation<br/>one coherent local component]
+    P[User-facing runtime preview<br/>runnable + checksummed + supported]
+    L[Production stabilization<br/>frozen semantics + broader backends]
+    R[Stable release gate]
+
+    G --> N
+    N --> O
+    O --> S
+    N --> D
+    S --> C
+    D --> C
+    C --> P
+    P --> L
+    L --> R
+```
+
+This diagram is a reading/promotion map of the existing sections, not a claim that every item must execute serially or that a later box is already qualified.
+
 
 ## Now — actual agent interaction loop
 
