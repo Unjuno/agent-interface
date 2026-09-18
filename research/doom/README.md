@@ -9,6 +9,7 @@
 | Current project objective | [../../docs/CURRENT_GOAL.md](../../docs/CURRENT_GOAL.md) |
 | Latest cross-project handoff | [../../docs/LOCAL_RESEARCH_HANDOFF.md](../../docs/LOCAL_RESEARCH_HANDOFF.md) |
 | Project evidence ledger | [../../RESEARCH.md](../../RESEARCH.md) |
+| Retained raw result artifacts | [results/README.md](results/README.md) |
 | Shared-runtime transfer | [Shared runtime transfer](#shared-runtime-transfer) |
 | Reproduction notes | [Reproduce](#reproduce) |
 
