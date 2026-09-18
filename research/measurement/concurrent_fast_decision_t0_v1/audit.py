@@ -5,6 +5,10 @@ from oracle import expected_disposition
 from candidate import select_disposition,ALLOWED
 from runner import SEED,N,FRONTIER_RETURN_NS,DEADLINE_DELTA_NS,SAMPLE_PERIOD_NS,STATES,OFFSETS_NS,first_sample_at_or_after
 
+def pct(values,q):
+    xs=sorted(values); k=(len(xs)-1)*q; lo=math.floor(k); hi=math.ceil(k)
+    return xs[lo] if lo==hi else xs[lo]*(hi-k)+xs[hi]*(k-lo)
+
 def make_cases():
     rng=random.Random(SEED); base=[]; per=N//len(STATES); cid=0
     for state in STATES:
@@ -17,6 +21,7 @@ def main():
     if got.get("formal_invocations")!=1 or got.get("reruns")!=0 or got.get("n")!=N: errors.append("invocation_or_count")
     s=got.get("summary",{})
     front_miss=0; det_miss=0; det_correct=0; hard_false=0; env=0; num=0; den=0
+    # Auditor intentionally recomputes semantic/timing structure but does not reproduce measured CPU nanoseconds.
     for _,state,change in make_cases():
         exp=expected_disposition(state); out=select_disposition(state)
         if out not in ALLOWED: env+=1
@@ -25,6 +30,7 @@ def main():
         deadline=change+DEADLINE_DELTA_NS
         front_miss += int(FRONTIER_RETURN_NS>deadline)
         sample=first_sample_at_or_after(change)
+        # Measured compute is nonnegative; lower-bound semantic miss uses sample time only.
         det_miss += int(sample>deadline)
         num += max(0,FRONTIER_RETURN_NS-sample)
         den += max(0,FRONTIER_RETURN_NS-change)
@@ -36,10 +42,12 @@ def main():
     expected_front_rate=front_miss/N
     if abs(s.get("frontier_deadline_miss_rate",-1)-expected_front_rate)>1e-12: errors.append("frontier_rate")
     expected_coverage=num/den
+    # measured compute can only reduce coverage from sample-only upper bound
     if not (0.5 < s.get("correct_local_disposition_frontier_open_coverage",0) <= expected_coverage+1e-12): errors.append("coverage")
     if s.get("whole_local_cycle_ns",{}).get("p99",10**30)>12_000_000: errors.append("cycle_p99")
     if s.get("deadline_miss_improvement_pp",0)<50: errors.append("improvement")
     if got.get("decision")!="PASS_T0_DETERMINISTIC_CONCURRENCY_SHADOW_SCOPED": errors.append("decision")
+    # Corruption controls: unknown state and hard->ADVANCE mutation must not pass candidate/oracle contract.
     corruption={}
     try: select_disposition("UNKNOWN_STATE"); corruption["unknown_state_rejected"]=False
     except ValueError: corruption["unknown_state_rejected"]=True
