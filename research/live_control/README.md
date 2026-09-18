@@ -10,6 +10,7 @@
 | Latest cross-project handoff | [../../docs/LOCAL_RESEARCH_HANDOFF.md](../../docs/LOCAL_RESEARCH_HANDOFF.md) |
 | Current Linux research caller | [CURRENT_CLIENT.md](CURRENT_CLIENT.md) |
 | Project evidence ledger | [../../RESEARCH.md](../../RESEARCH.md) |
+| Retained raw result artifacts | [results/README.md](results/README.md) |
 | Implemented live-control surface | [What is implemented](#what-is-implemented) |
 | Reproduction notes | [Reproduce](#reproduce) |
 
