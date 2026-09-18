@@ -1,15 +1,15 @@
-import base64,gzip,hashlib,io,json,tarfile,pathlib
+import base64,gzip,hashlib,io,json,tarfile,pathlib,re
 root=pathlib.Path(__file__).resolve().parent
 man=json.loads((root/"EVIDENCE_MANIFEST.json").read_text())
-chunks=[]
+pieces=[]
 for p in man["parts"]:
     b=(root/p["name"]).read_bytes()
     assert len(b)==p["bytes"]
     assert hashlib.sha256(b).hexdigest()==p["sha256"]
-    chunks.append(b.decode("ascii").strip())
-combined=("".join(chunks)+"\n").encode("ascii")
-assert hashlib.sha256(combined).hexdigest()==man["archive_base64_sha256"]
-gz=base64.b64decode(combined)
+    pieces.append(b)
+clean=re.sub(br"\s+",b"",b"".join(pieces))+b"\n"
+assert hashlib.sha256(clean).hexdigest()==man["archive_base64_sha256"]
+gz=base64.b64decode(clean)
 assert hashlib.sha256(gz).hexdigest()==man["archive_gzip_sha256"]
 raw=gzip.decompress(gz)
 with tarfile.open(fileobj=io.BytesIO(raw),mode="r:") as tf:
