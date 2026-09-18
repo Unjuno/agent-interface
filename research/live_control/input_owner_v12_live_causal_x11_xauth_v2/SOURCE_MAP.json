@@ -1,0 +1,27 @@
+{
+  "task": "INPUT-OWNER-V12-LIVE-CAUSAL-X11-XAUTH-20260918-002",
+  "issue": 1261,
+  "parent_issue": 1099,
+  "base": "7580ed40eb2c9cb600e1f51591bf43adba00baa9",
+  "parent_source": "research/live_control/input_owner_v12_live_causal_x11_v1/**",
+  "parent_runner_sha256": "5a3a9c534bc37c95d0e97b7bcb1140a53e683a20feeaaa54682cd6cf28643cc9",
+  "successor_runner_sha256": "4fe06071b84132c69103d0808201d40c5af821a359f74d43a7a7c9e40417e0ce",
+  "parent_audit_sha256": "4f1e085c67049c5039a3015f53aa19d9af04f63154cc673f52c067eca4a745e6",
+  "successor_audit_sha256": "b89236abcbeeb7a8d5c944d9e502e606d61ee83284027c5cfaaf6821b629de44",
+  "fixture_sha256": "7739e9cfa4c4f68171cb6dfec91c647868896111619c70577d8456c6fefa5b2a",
+  "schedule_sha256": "4522763c6cc0bb1dda802779207e896af814f646bd1480316c65e44203329479",
+  "xauthority_wrapper_sha256": "28de6604ebe8dc4311af1dfb82824bcfa1c19b5d2e5306f004941531c0ba3288",
+  "construction_sha256": "cbafdafd168feaa06ae44a58ff7aa24373e8f93613ea71f04c1e0f507b7c4120",
+  "reconstructor_sha256": "7fa2c6ab15eb81f57c945012d8f75979268a75b3e57a5b03b91b209fc3cdb865",
+  "scientific_changes": [],
+  "harness_changes": [
+    "repair parent source-gate Path join: src[x['name']] -> src/x['name']",
+    "change task/issue/branch identifiers to successor allocation",
+    "provide a fresh empty mode-0600 XAUTHORITY to the private -ac Xvfb harness"
+  ],
+  "static_runner": {"pass": true, "live_sessions": 0},
+  "static_audit": {"pass": true, "live_sessions": 0, "corruption_controls": "5/5"},
+  "live_sessions": 0,
+  "formal_invocations": 0,
+  "reruns": 0
+}
