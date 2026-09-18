@@ -1,6 +1,6 @@
 # Research workspace
 
-This directory is the experimental workspace and retained evidence record for Agent Interface. Directories represent experiments, mechanisms, fixtures, audits, or historical work; they are **not product versions** and their names alone do not imply promotion.
+This directory is the research workspace and retained evidence record for Agent Interface. Directories represent analyses, experiments, mechanisms, fixtures, audits, or historical work; they are **not product versions** and their names alone do not imply promotion.
 
 For claims and scientific disposition, start with the top-level [research index](../RESEARCH.md).
 
