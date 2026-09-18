@@ -1,0 +1,27 @@
+{
+  "environment": "disposable container; Python stdlib multiprocessing Pipe; no network/model/GUI/X11",
+  "cases": 20,
+  "return_delays_ms": [
+    12,
+    19,
+    27,
+    43,
+    71
+  ],
+  "programs": [
+    "INITIAL_CLEAR",
+    "ACTIVATE",
+    "INVALIDATE",
+    "TRANSIENT"
+  ],
+  "post_return_admissions": 0,
+  "stale_crossing_rejections": 20,
+  "child_failures": 0,
+  "decision": "PASS_T2_ASYNC_RETURN_AUTHORITY_PREFLIGHT_SCOPED",
+  "classification": "EXCLUDED_CONTAINER_PREFLIGHT",
+  "limitations": [
+    "This is a preflight implementation, not the frozen formal allocation.",
+    "Synthetic admission only; no OS effect or provider/model call.",
+    "Timing jitter was not used as a performance claim."
+  ]
+}
