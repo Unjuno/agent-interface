@@ -49,6 +49,7 @@ def main():
  if prior(rows,1)!={'kind':'NONE'}:errs.append('iter1_none')
  if prior(rows,2)!={'kind':'RECEIPT','action':'retreat_fire','extent':'short','result':'visible_change','source_iteration':1}:errs.append('iter2_receipt')
  if ecol:errs.append('enriched_collision')
+ expected_decision='PASS_LAST_EFFECT_REPRESENTATION_V31_R2_SCOPED' if not errs else 'FAIL_INTEGRITY'
  if result.get('formal_invocations')!=1 or result.get('reruns')!=0:errs.append('invocation')
  if result.get('prompt_signature_groups')!=pg or result.get('enriched_signature_groups')!=eg:errs.append('group_counts')
  if sorted([sorted(x['iterations']) for x in result.get('prompt_collisions',[])])!=pcol:errs.append('result_prompt_collision')
