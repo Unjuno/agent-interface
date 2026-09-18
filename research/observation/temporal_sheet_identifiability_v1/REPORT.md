@@ -73,3 +73,9 @@ The next legitimate model-facing rung, if allocated, should be prediction-only a
 3. `PACKED_SHEET_N` — the exact same source images packed into one sheet.
 
 For the packing question, the decisive comparison is (2) vs (3), with the same prompt/schema/model/effort/session policy and independent future-state oracle. Include static and abrupt-reversal controls. No task input should be added until prediction value is established.
+
+### Publication-source readback
+
+Post-upload readback found one transfer-only source mismatch: the first published `audit.py` used local variable name `dec`, while the actually executed local source used `decision`. The expressions and outputs are semantically equivalent, but byte identity matters.
+
+The retained result was **not rerun**. The exact executed source was added as `audit_executed.py`; its remote Git blob `9375b65582d5ba015813600ba360fcc02323a9e9` exactly matches the container-executed Git blob. The earlier `audit.py` remains preserved as a noncanonical publication variant and is not claimed as the result-generating source.
