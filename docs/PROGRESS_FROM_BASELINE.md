@@ -5,6 +5,22 @@ claim. The repository grew from an initial coordinate-and-screenshot research
 baseline into a Linux/X11 control candidate with durable recovery, scoped local
 execution and independent effect checks. It still does not deliver human-tempo
 general computer use or an installable Agent Market product.
+## How to read this progress map
+
+```mermaid
+flowchart LR
+    B[Initial baseline<br/>coordinate + screenshot loop]
+    C[What changed<br/>promoted/scoped mechanisms]
+    L[Closest current live loop<br/>integrated behavior]
+    D[Domain coverage<br/>where evidence exists]
+    Q[Quantified evidence<br/>measured endpoints]
+    G[Distance to stated goal<br/>remaining gates]
+
+    B --> C --> L --> D --> Q --> G
+```
+
+This diagram mirrors the existing sections below. It is a reading guide, not a new performance claim or a statement that the evidence forms one causal sequence.
+
 
 The first fresh compiled-interface integration now passes its positive and
 changed mechanics pair.  The positive Chromium case performs two fresh-evidence-
