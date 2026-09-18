@@ -70,12 +70,14 @@ flowchart TD
     IDENT --> MA[multi-app transition audit]
 ```
 
-These families are navigation aids, not scientific rankings. Each study's own report remains authoritative, including retained FAIL/HOLD outcomes.
+These family nodes are representative navigation aids, not an exhaustive taxonomy or scientific ranking. The generated directory index below is the completeness surface; each study's own report remains authoritative, including retained FAIL/HOLD outcomes.
 
-## Complete retained analysis index
+## Curated analytical result guide
+
+The table below summarizes major analytical chains and representative retained outcomes. It is intentionally explanatory rather than the completeness mechanism; the generated directory index below is exhaustive.
 
 <details>
-<summary><strong>Expand retained analytical results and failures</strong></summary>
+<summary><strong>Expand curated analytical results and failures</strong></summary>
 
 | Family | Study | Retained result | Residual empirical or successor question |
 |---|---|---|---|
@@ -117,6 +119,68 @@ These families are navigation aids, not scientific rankings. Each study's own re
 | Identifiability / audit | [`multi_app_transition_retained_audit_r0_v1/`](multi_app_transition_retained_audit_r0_v1/) | Retained evidence covers focus drift, modal, geometry drift, and window replacement across components/apps, but no single session integrates all four under one contract. | Run a finite multi-app integrated allocation preserving one caller/controller identity across the transition families. |
 
 </details>
+## Complete retained result directory index
+
+This compact list is generated from child directories that contain `REPORT.md` or `FORMAL_FAILURE.md`. It is the completeness surface used by the index checker.
+
+<!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
+
+<details>
+<summary><strong>Expand all 48 retained result/failure directories</strong></summary>
+
+- [`deterministic_replay_boundary_r0_v1/`](deterministic_replay_boundary_r0_v1/)
+- [`event_sourced_projection_r0_v1/`](event_sourced_projection_r0_v1/)
+- [`evidence_compute_calibration_identifiability_r3_v1/`](evidence_compute_calibration_identifiability_r3_v1/)
+- [`evidence_compute_decision_lattice_r2_v1/`](evidence_compute_decision_lattice_r2_v1/)
+- [`evidence_compute_partial_dag_reuse_r3_v1/`](evidence_compute_partial_dag_reuse_r3_v1/)
+- [`evidence_compute_run_wait_break_even_r1_v1/`](evidence_compute_run_wait_break_even_r1_v1/)
+- [`evidence_compute_x11_png_calibration_uncertainty_r7_v1/`](evidence_compute_x11_png_calibration_uncertainty_r7_v1/)
+- [`evidence_dependent_compute_reuse_r0_v1/`](evidence_dependent_compute_reuse_r0_v1/)
+- [`evidence_dependent_compute_scheduler_dominance_r0_v1/`](evidence_dependent_compute_scheduler_dominance_r0_v1/)
+- [`guard_policy_break_even_r0_v1/`](guard_policy_break_even_r0_v1/)
+- [`guard_policy_calibration_identifiability_r1_v1/`](guard_policy_calibration_identifiability_r1_v1/)
+- [`interaction_consistency_product_lattice_r0_v1/`](interaction_consistency_product_lattice_r0_v1/)
+- [`justification_graph_invalidation_r0_v1/`](justification_graph_invalidation_r0_v1/)
+- [`justification_graph_truth_maintenance_r0_v1/`](justification_graph_truth_maintenance_r0_v1/)
+- [`layered_lifetime_admission_r0_v1/`](layered_lifetime_admission_r0_v1/)
+- [`map01_useful_occupied_control_identifiability_v1/`](map01_useful_occupied_control_identifiability_v1/)
+- [`mediated_typed_dependency_ledger_v1/`](mediated_typed_dependency_ledger_v1/)
+- [`multi_actuator_state_domain_independence_r0_v1/`](multi_actuator_state_domain_independence_r0_v1/)
+- [`multi_app_transition_retained_audit_r0_v1/`](multi_app_transition_retained_audit_r0_v1/)
+- [`multicursor_parking_reposition_r0_v1/`](multicursor_parking_reposition_r0_v1/)
+- [`multicursor_target_handle_regrounding_r0_v1/`](multicursor_target_handle_regrounding_r0_v1/)
+- [`observation_relevance_completeness_v1/`](observation_relevance_completeness_v1/)
+- [`observation_reveal_support_closure_v1/`](observation_reveal_support_closure_v1/)
+- [`optimistic_concurrent_readwrite_commit_r0_v1/`](optimistic_concurrent_readwrite_commit_r0_v1/)
+- [`optimistic_readwrite_x11_retained_audit_a3_v1/`](optimistic_readwrite_x11_retained_audit_a3_v1/)
+- [`phase_overlap_dynamic_footprint_binding_r1_v1/`](phase_overlap_dynamic_footprint_binding_r1_v1/)
+- [`phase_overlap_resource_footprint_a2_v1/`](phase_overlap_resource_footprint_a2_v1/)
+- [`phase_overlap_resource_footprint_r0_v1/`](phase_overlap_resource_footprint_r0_v1/)
+- [`phase_overlap_resource_footprint_r0_v2/`](phase_overlap_resource_footprint_r0_v2/)
+- [`query_version_writer_atomicity_v1/`](query_version_writer_atomicity_v1/)
+- [`real_source_adapter_admission_v1/`](real_source_adapter_admission_v1/)
+- [`register_automaton_dynamic_identity_r0_v1/`](register_automaton_dynamic_identity_r0_v1/)
+- [`role_bound_ledger_lifetime_v1/`](role_bound_ledger_lifetime_v1/)
+- [`safe_probe_minimax_r0_v1/`](safe_probe_minimax_r0_v1/)
+- [`temporal_break_even_retained_identifiability_v1/`](temporal_break_even_retained_identifiability_v1/)
+- [`temporal_contract_monitor_compilation_a2_v1/`](temporal_contract_monitor_compilation_a2_v1/)
+- [`temporal_contract_monitor_compilation_a3_v1/`](temporal_contract_monitor_compilation_a3_v1/)
+- [`temporal_contract_monitor_compilation_r0_v1/`](temporal_contract_monitor_compilation_r0_v1/)
+- [`temporal_sample_cost_identifiability_v1/`](temporal_sample_cost_identifiability_v1/)
+- [`transactional_belief_action_safe_r0_v1/`](transactional_belief_action_safe_r0_v1/)
+- [`transactional_belief_action_safe_r1_batched_v1/`](transactional_belief_action_safe_r1_batched_v1/)
+- [`two_tier_dependency_commit_gate_v1/`](two_tier_dependency_commit_gate_v1/)
+- [`typed_dynamic_branch_readset_v1/`](typed_dynamic_branch_readset_v1/)
+- [`typed_query_dependency_v1/`](typed_query_dependency_v1/)
+- [`typed_resolve_dependency_v1/`](typed_resolve_dependency_v1/)
+- [`xterm_resource_footprint_transfer_v1/`](xterm_resource_footprint_transfer_v1/)
+- [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
+- [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
+
+</details>
+
+<!-- END GENERATED ANALYSIS RESULT INDEX -->
+
 ## Interpretation
 
 - A mathematical or exhaustive PASS is not a live-backend PASS.
@@ -135,7 +199,8 @@ When analysis is tightly coupled to one domain/runtime experiment, keep it in th
 The index is intentionally checked separately from the scientific artifacts:
 
 ```bash
-python research/analysis/check_index.py
+python research/analysis/check_index.py          # check
+python research/analysis/check_index.py --write  # refresh generated directory list
 ```
 
-The checker requires every child directory with a retained `REPORT.md` or `FORMAL_FAILURE.md` to be linked from this README and rejects links to missing child directories. PLAN-only/in-progress directories do not block the index until a retained result/failure artifact exists.
+The checker compares the generated block against every child directory with a retained `REPORT.md` or `FORMAL_FAILURE.md`. PLAN-only/in-progress directories do not enter the generated index until a retained result/failure artifact exists. The curated table above may remain selective because completeness is enforced by the generated block.
