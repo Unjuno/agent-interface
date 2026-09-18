@@ -1,3 +1,36 @@
+# Benchmark discovery
+
+> **Directory role:** benchmark/domain discovery and coverage evidence. This area identifies capability axes, feasibility, scoring gaps, and candidate task domains; it is not a difficulty ranking or a formal benchmark suite.
+
+## Navigate
+
+| Need | Read |
+|---|---|
+| Current project objective | [../../docs/CURRENT_GOAL.md](../../docs/CURRENT_GOAL.md) |
+| Evidence ledger | [../../RESEARCH.md](../../RESEARCH.md) |
+| Public evidence map | [../../docs/EVIDENCE_MAP.md](../../docs/EVIDENCE_MAP.md) |
+| Domain coverage matrix | [Domain Coverage Matrix](#domain-coverage-matrix) |
+| Executed feasibility study | [Executed study and feasibility comparison](#executed-study-and-feasibility-comparison) |
+| Initial-state / failure findings | [Initial-state and failure findings](#initial-state-and-failure-findings) |
+| Task pilots / adoption gates | [Task pilots and adoption gates](#task-pilots-and-adoption-gates) |
+| Evidence / reproduction | [Evidence and reproduction](#evidence-and-reproduction) |
+
+## Coverage map
+
+```mermaid
+flowchart TD
+    I[Shared Agent Interface]
+    I --> DESK[Desktop apps<br/>text · dialogs · focus · recovery]
+    I --> DOOM[DOOM<br/>continuous motor · held input · reaction]
+    I --> MIND[Mindustry<br/>placement · resources · multi-object planning]
+    I --> OTTD[OpenTTD<br/>dense GUI · placement · long-horizon planning]
+    I --> LUA[Luanti<br/>3D camera · inventory · interaction]
+```
+
+These domains expose different failure classes. They must not be averaged into a single difficulty score or treated as substitutes for one another.
+
+## Recent linked evidence
+
 [Live changed-target refusal](LIVE_MENU_MUTATION.md): actual pixel/focus mutations produce zero input admissions; first transport failure retained and strict intent types corrected.
 
 [Live bounded menu intent](LIVE_MENU_INTENT.md): new observation plus local target check permits one click after model delay; fresh-capture-to-click358ms, fixture-specific scope.
@@ -27,7 +60,7 @@ Selection-only fixed layout; no placement or human-tempo claim.
 
 [Bent-route calibration](MINDUSTRY_BEND.md): eight direction-specific targets deliver 33 copper in the complete engine-authored case; wrong-turn and empty cases fail. This prepares a changed-geometry pilot, not agent construction success.
 
-# Domain Coverage Matrix and Linux feasibility — 2026-09-13
+## Domain Coverage Matrix and Linux feasibility — 2026-09-13
 
 [Mindustry actual construction](MINDUSTRY_BUILD_SELF_USE.md): one assistant visual
 episode builds six conveyors through shared pointer input, preserves the 112-tile
@@ -280,3 +313,4 @@ Mindustry surface resize both refuse the receipt target before button-down and
 restore the prior state. Four calls use 34,806 input tokens across 20 exchanges
 and 15 exact frames. Windows/WSL audits pass. Two setup failures and three
 fault-control feasibility revisions are retained rather than overwritten.
+
