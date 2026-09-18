@@ -77,7 +77,11 @@ def evaluate(r):
             if [s.get('nominal_sample_offset_ns') for s in c.get('sends',[])]!=expected_edges(c): integ.append(cid+':edge_semantics')
         elif c.get('sends'): integ.append(cid+':baseline_send')
         handback=c.get('start_ns',0)+FRONTIER
+        close=c.get('authority_stop_set_ns')
+        if c.get('authority_deadline_ns')!=handback or not isinstance(close,int) or close < handback: integ.append(cid+':authority_close_clock')
         if any(s.get('send_begin_ns',0)>=handback for s in c.get('sends',[])): authority.append(cid+':post_handback_send')
+        for tr in c.get('actual_transitions',[]):
+            if tr.get('nominal_offset_ns')==FRONTIER and isinstance(close,int) and tr.get('t_ns',0)<close: integ.append(cid+':boundary_before_authority_close')
         if len(c.get('presses',[]))!=len(c.get('sends',[])) or len(c.get('releases',[]))!=len(c.get('sends',[])) or len(c.get('effects',[]))!=len(c.get('sends',[])):integ.append(cid+':lifecycle_count')
         for sm in c.get('samples',[]):
             d=sm.get('disposition'); st=sm.get('state')
