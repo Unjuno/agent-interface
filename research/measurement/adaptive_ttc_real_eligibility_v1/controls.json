@@ -22,7 +22,9 @@
     "consume_unpublished_1223": {
       "decision": "FAIL_INTEGRITY",
       "eligible": false,
-      "errors": ["unpublished_active_result_consumed"],
+      "errors": [
+        "unpublished_active_result_consumed"
+      ],
       "prerequisites": {
         "enough_leakage_free_rows": false,
         "first_rung_no_live_input_authority": true,
@@ -35,7 +37,9 @@
     "five_rows_declared_enough": {
       "decision": "FAIL_INTEGRITY",
       "eligible": false,
-      "errors": ["activation_rows_contradict_source"],
+      "errors": [
+        "activation_rows_contradict_source"
+      ],
       "prerequisites": {
         "enough_leakage_free_rows": true,
         "first_rung_no_live_input_authority": true,
@@ -48,7 +52,9 @@
     "future_or_oracle_feature_leakage": {
       "decision": "FAIL_INTEGRITY",
       "eligible": false,
-      "errors": ["feature_leakage"],
+      "errors": [
+        "feature_leakage"
+      ],
       "prerequisites": {
         "enough_leakage_free_rows": false,
         "first_rung_no_live_input_authority": true,
@@ -61,7 +67,9 @@
     "invent_independent_oracle": {
       "decision": "FAIL_INTEGRITY",
       "eligible": false,
-      "errors": ["oracle_claim_contradicts_source"],
+      "errors": [
+        "oracle_claim_contradicts_source"
+      ],
       "prerequisites": {
         "enough_leakage_free_rows": false,
         "first_rung_no_live_input_authority": true,
