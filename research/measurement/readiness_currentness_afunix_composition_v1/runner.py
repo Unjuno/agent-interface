@@ -1,4 +1,4 @@
-import argparse, json, os, pathlib, random, socket, struct, subprocess, sys, time, hashlib
+import argparse, json, os, pathlib, random, socket, statistics, struct, subprocess, sys, time, hashlib
 from protocol import *
 from guard import composite_guard,currentness_only
 from oracle import decide as oracle_decide
@@ -54,23 +54,28 @@ def malformed_controls():
     return out
 def run(seed,counts,warmup=1000):
     controls=malformed_controls(); fams=family_rows(seed,counts); path=f'/tmp/guard1372-{os.getpid()}.sock';p,c=connect(path)
-    in_ns=[];sock_ns=[];mismatch=0;identity_mismatch=0;candidate_effects={};negative_stale=0;hard_effect=ambig_effect=0;authority_promotions=0;last_in=last_sock=last_neg=0;base_rg=100
+    in_ns=[];sock_ns=[];delta=[];mismatch=0;identity_mismatch=0;candidate_effects={};negative_stale=0;hard_effect=ambig_effect=0;authority_promotions=0;last_in=last_sock=last_neg=0;base_rg=100
     try:
+        # construction-independent warmup, not retained in primary metrics
         for i in range(warmup):
             seq=i+1;data=encode_record(seq,REG_VALID,base_rg,READY);composite_guard(data,i,base_rg)
             c.sendall(REQ.pack(OP_SET)+data);recv_exact(c,1);c.sendall(REQ.pack(OP_GET));back=recv_exact(c,RECORD_SIZE);composite_guard(back,i,base_rg)
+        # restart server and sequence domains for formal
         c.sendall(REQ.pack(OP_STOP));c.close();p.wait(timeout=3);p,c=connect(path)
         for idx,name in enumerate(fams,1):
             regime,record_rg,rs,expected_rg=row_spec(name,base_rg)
             data=encode_record(idx,regime,record_rg,rs)
+            # negative discriminator uses same exact bytes/currentness only
             nd,last_neg=currentness_only(data,last_neg)
             if name in ('readiness_nonready','readiness_aba_old') and nd=='ADMIT':negative_stale+=1
+            # in-process candidate
             t0=time.perf_counter_ns();disp,last_in=composite_guard(data,last_in,expected_rg);in_ns.append(time.perf_counter_ns()-t0)
             od=oracle_decide(regime,record_rg,rs,expected_rg)
             if disp!=od:mismatch+=1
             if disp=='ADMIT':candidate_effects[name]=candidate_effects.get(name,0)+1
             if regime==REG_HARD and disp=='ADMIT':hard_effect+=1
             if regime==REG_AMBIG and disp=='ADMIT':ambig_effect+=1
+            # publish same authored record; SET excluded just like source publication, GET+validation timed
             c.sendall(REQ.pack(OP_SET)+data);recv_exact(c,1)
             t1=time.perf_counter_ns();c.sendall(REQ.pack(OP_GET));back=recv_exact(c,RECORD_SIZE);sdisp,last_sock=composite_guard(back,last_sock,expected_rg);sock_ns.append(time.perf_counter_ns()-t1)
             if back!=data:identity_mismatch+=1
