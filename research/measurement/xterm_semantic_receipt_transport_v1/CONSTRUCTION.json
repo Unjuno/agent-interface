@@ -1,0 +1,96 @@
+{
+  "matched_file_minus_dgram_median_ms": 0.09560449999999987,
+  "pairs": 2,
+  "rows": [
+    {
+      "case_id": "p000-file",
+      "drain_ms": 5.414129,
+      "effect_offset_ms": 51.990106,
+      "focus_match": true,
+      "input_byte_hex": "78",
+      "input_recv_offset_ms": 38.989006,
+      "press_before_frontier": true,
+      "press_offset_ms": 38.001904,
+      "receipt_valid": true,
+      "release_offset_ms": 46.872107,
+      "seen_offset_ms": 52.286236,
+      "terminal_key_down": false,
+      "transport": "file",
+      "transport_seen_ms": 0.29613,
+      "xterm_rc": 0
+    },
+    {
+      "case_id": "p000-dgram",
+      "drain_ms": 5.422852,
+      "effect_offset_ms": 51.895613,
+      "focus_match": true,
+      "input_byte_hex": "78",
+      "input_recv_offset_ms": 38.895045,
+      "press_before_frontier": true,
+      "press_offset_ms": 38.113101,
+      "receipt_valid": true,
+      "release_offset_ms": 46.630088,
+      "seen_offset_ms": 52.05294,
+      "terminal_key_down": false,
+      "transport": "dgram",
+      "transport_seen_ms": 0.157327,
+      "xterm_rc": 0
+    },
+    {
+      "case_id": "p001-dgram",
+      "drain_ms": 5.496863,
+      "effect_offset_ms": 51.860717,
+      "focus_match": true,
+      "input_byte_hex": "78",
+      "input_recv_offset_ms": 38.859327,
+      "press_before_frontier": true,
+      "press_offset_ms": 38.000553,
+      "receipt_valid": true,
+      "release_offset_ms": 46.539322,
+      "seen_offset_ms": 52.036185,
+      "terminal_key_down": false,
+      "transport": "dgram",
+      "transport_seen_ms": 0.175468,
+      "xterm_rc": 0
+    },
+    {
+      "case_id": "p001-file",
+      "drain_ms": 5.696795,
+      "effect_offset_ms": 51.770712,
+      "focus_match": true,
+      "input_byte_hex": "78",
+      "input_recv_offset_ms": 38.770093,
+      "press_before_frontier": true,
+      "press_offset_ms": 38.000749,
+      "receipt_valid": true,
+      "release_offset_ms": 46.512826,
+      "seen_offset_ms": 52.209621,
+      "terminal_key_down": false,
+      "transport": "file",
+      "transport_seen_ms": 0.438909,
+      "xterm_rc": 0
+    }
+  ],
+  "stats": {
+    "dgram": {
+      "drain_max_ms": 5.496863,
+      "drain_median_ms": 5.4598575,
+      "drain_p95_ms": 5.49316245,
+      "integrity": 2,
+      "n": 2,
+      "transport_max_ms": 0.175468,
+      "transport_median_ms": 0.1663975,
+      "transport_p95_ms": 0.17456095
+    },
+    "file": {
+      "drain_max_ms": 5.696795,
+      "drain_median_ms": 5.555462,
+      "drain_p95_ms": 5.6826617,
+      "integrity": 2,
+      "n": 2,
+      "transport_max_ms": 0.438909,
+      "transport_median_ms": 0.3675195,
+      "transport_p95_ms": 0.43177004999999996
+    }
+  }
+}
