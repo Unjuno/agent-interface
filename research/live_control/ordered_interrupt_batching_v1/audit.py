@@ -20,6 +20,7 @@ def main(path='FORMAL_RESULT.json'):
         seqs+=1; bs=batch(xs); flat=[e for b in bs for e in b['events']]
         if flat!=xs: errors.append('sequence')
         if n>=2 and len(bs)<n: reduced+=1
+        # Reconstruct candidate JSON shape for the exact digest produced by run_formal.
         digest_batches=[]
         for j,b in enumerate(bs):
           digest_batches.append({'batch_id':f'b{j}','events':b['events'],'highest_priority':b['highest_priority'],'first_arrival':b['first_arrival'],'last_arrival':b['last_arrival'],'sessions':b['sessions'],'input_authority':False,'semantic_authority':False,'resolution_claim':None})
