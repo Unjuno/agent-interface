@@ -1,0 +1,32 @@
+{
+  "base": "c2826ec7cfb2aceaf55c9ef0e6fe1e9ed301692c",
+  "branch": "research/t2-live-x11-effect-tail-a2-1472",
+  "construction_disposition": "HOLD_EFFECT_TAIL_AFTER_ACTUATION_DRAIN",
+  "environment": {
+    "backend": "python-xlib XTEST + Tk",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5",
+    "xvfb": "private 320x240x24"
+  },
+  "formal_authorized": true,
+  "formal_plan": {
+    "batches": 4,
+    "cases_per_batch": 8,
+    "cases_total": 32,
+    "pairs_per_batch": 4,
+    "pairs_total": 16,
+    "replacements": 0,
+    "reruns": 0,
+    "tuning": 0
+  },
+  "issue": 1472,
+  "sha256": {
+    "CONSTRUCTION_AUDIT.json": "3c68d007b134af32d535e3fb17ae5c707bc7092e6bfbaa790c0b41cbe156e9e9",
+    "CONSTRUCTION_RESULT.json": "15191bb14992100b5340afad5662ee1eb0387caa2a19405e0094252c38c99427",
+    "aggregate.py": "b7ee9adb5ddde1c09c30356093169bbb3ecded591ebdf3f73ac4473c66f78591",
+    "audit.py": "6fd4ccad64cdda9799e4b98f0044b10618fc3847ed4f618d39c3cadddd17292a",
+    "experiment.py": "347faa773032ca4c67a0aabbf0d6802e626fe90991d07ab8834da809d3cefebd",
+    "fixture.py": "1644eead92080e0a7ffba8ca76dee8fac190fbb3da2a7ed664c9a3996746ce90"
+  },
+  "task": "T2-LIVE-X11-RECEIPT-DRAIN-EFFECT-TAIL-A2-20260918-002"
+}
