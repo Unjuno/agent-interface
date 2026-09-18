@@ -19,7 +19,7 @@ def retained_result_dirs() -> set[str]:
         for path in ROOT.iterdir()
         if path.is_dir()
         and not path.name.startswith(".")
-        and (path / "REPORT.md").is_file()
+        and ((path / "REPORT.md").is_file() or (path / "FORMAL_FAILURE.md").is_file())
     }
 
 
@@ -50,7 +50,7 @@ def main() -> int:
                 print(f"  - {name}")
         return 1
 
-    print(f"analysis index OK: {len(retained)} retained result directories indexed")
+    print(f"analysis index OK: {len(retained)} retained result/failure directories indexed")
     return 0
 
 
