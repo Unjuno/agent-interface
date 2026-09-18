@@ -64,6 +64,7 @@ flowchart LR
 | See what must happen before release | [Roadmap](ROADMAP.md) and [release contract](release/README.md) |
 | See how analysis and experiments are chosen | [Research method](docs/RESEARCH_METHOD.md) |
 | See how current status, evidence, runtime, and release relate | [Evidence map](docs/EVIDENCE_MAP.md) |
+| Look up project terminology and status words | [Terminology](docs/TERMINOLOGY.md) |
 
 ## The hypothesis
 
