@@ -27,14 +27,14 @@ flowchart TD
     ROOT --> ENTRY[README.md<br/>public entry point]
     ROOT --> DOCS[docs/<br/>current status + architecture + method]
     ROOT --> EVID[RESEARCH.md<br/>evidence ledger]
-    ROOT --> RES[research/<br/>experiments + retained evidence]
+    ROOT --> RES[research/<br/>analysis + experiments + retained evidence]
     ROOT --> RUN[runtime/<br/>promoted executable semantics]
     ROOT --> REL[release/<br/>packaging + readiness]
     ROOT --> SITE[site/<br/>public presentation]
     DOCS --> GOAL[CURRENT_GOAL.md]
     DOCS --> ARCH[architecture.md]
     DOCS --> METHOD[RESEARCH_METHOD.md]
-    RES --> MEAS[measurement / integration / domain tracks]
+    RES --> MEAS[analysis / measurement / integration / domain tracks]
     EVID --> RES
     RUN --> REL
 ```
