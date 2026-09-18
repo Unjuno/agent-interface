@@ -1,0 +1,39 @@
+{
+  "aggregate": {
+    "effects": 16,
+    "fallback_active_match": 16,
+    "fallback_batches": 16,
+    "ordered_refusals": 4,
+    "refusal_gates": 16,
+    "refusal_zero_task_input": 16,
+    "replacement_valid": 4,
+    "terminal_neutral": 4
+  },
+  "audit_sha256": "9662b3f8591ac1dc31a00b06f593ca714c73271ca63a6b820674913a4083e6de",
+  "decision": "PASS_MULTI_APP_GUARDED_RECOVERY_A2_SCOPED",
+  "environment": {
+    "chromium": "Chromium 144.0.7559.96 built on Debian GNU/Linux 13 (trixie)",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5",
+    "x11": "private Xvfb/Openbox",
+    "xterm": "XTerm(398)"
+  },
+  "errors": [],
+  "expected_effect_titles": [
+    "chrome://downloads/ - Chromium",
+    "chrome://history/ - Chromium",
+    "chrome://downloads/ - Chromium",
+    "chrome://history/ - Chromium"
+  ],
+  "formal_invocations": 1,
+  "passed_sessions": 4,
+  "replacements": 0,
+  "reruns": 0,
+  "result_gzip_b64_sha256": "c326d8d6924777a712eefdac25c793d0f3224c21f53fc87586d1a1e1af23968b",
+  "result_gzip_sha256": "43508c972ea09a45f3f8f91ebb033696162f66f88709d1bcaa597fc7631e3bc4",
+  "result_sha256": "9fbc5ab7aa2efcc885b92a17f0702fa71aec3bd2478ca6d956c2b7c4577fda17",
+  "sessions": 4,
+  "summary_digest_sha256": "eae7e53d02ad9697f8c126cd4104586f986aeee700a60a9c02e52f18ddbcdbfa",
+  "task": "MULTI-APP-GUARDED-RECOVERY-A2-20260918-002",
+  "tuning": 0
+}
