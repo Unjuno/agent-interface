@@ -1,0 +1,111 @@
+{
+  "alias_checks": 16368,
+  "alias_mismatch": 0,
+  "by_length": {
+    "2": 16,
+    "3": 64,
+    "4": 256,
+    "5": 1024,
+    "6": 4096
+  },
+  "decision": "PASS_MULTICURSOR_PARKING_REPOSITION_SCOPED",
+  "examples": {
+    "alternating_far": {
+      "aliased_k2": 9,
+      "gain": {
+        "0": 9,
+        "1": 6,
+        "2": 3,
+        "3": 0
+      },
+      "sequence": [
+        0,
+        3,
+        0,
+        3
+      ],
+      "single": 9,
+      "switch": {
+        "0": 0,
+        "1": 3,
+        "2": 6,
+        "3": 9
+      }
+    },
+    "alternating_near": {
+      "aliased_k2": 4,
+      "gain": {
+        "0": 4,
+        "1": 0,
+        "2": 0,
+        "3": 0
+      },
+      "sequence": [
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "single": 4,
+      "switch": {
+        "0": 0,
+        "1": 4,
+        "2": 4,
+        "3": 4
+      }
+    },
+    "monotone": {
+      "aliased_k2": 3,
+      "gain": {
+        "0": 3,
+        "1": 0,
+        "2": 0,
+        "3": 0
+      },
+      "sequence": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "single": 3,
+      "switch": {
+        "0": 0,
+        "1": 3,
+        "2": 3,
+        "3": 3
+      }
+    },
+    "stationary": {
+      "aliased_k2": 0,
+      "gain": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0
+      },
+      "sequence": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "single": 0,
+      "switch": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0
+      }
+    }
+  },
+  "formal_invocations": 1,
+  "pass": true,
+  "reruns": 0,
+  "sequences": 5456,
+  "strict_gain_cases": 12466,
+  "switch_checks": 21824,
+  "switch_mismatch": 0,
+  "task": "MULTICURSOR-PARKING-REPOSITION-R0-20260918-001"
+}
