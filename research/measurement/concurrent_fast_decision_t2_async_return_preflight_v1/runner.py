@@ -90,11 +90,12 @@ def run_case(delay_ms, program, case_idx):
         with lock:
             gen=auth['generation']
         prep=time.perf_counter_ns()
-        target=start_ns+delay_ns+4_000_000
-        while True:
-            now=time.perf_counter_ns(); rem=target-now
-            if rem<=0: break
-            time.sleep(min(rem/1e9,0.001))
+        if not stop.wait(timeout=2):
+            rejected.append({'kind':'stale_probe','prepared_generation':gen,'prepared_ns':prep,
+                             'commit_ns':time.perf_counter_ns(),'admitted':False,
+                             'generation_at_commit':auth['generation'],'closed_at_commit':auth['closed'],
+                             'probe_error':'return_not_observed'})
+            return
         commit('stale_probe',gen,None,prep)
 
     rt=threading.Thread(target=receiver,name='frontier-receiver')
