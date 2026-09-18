@@ -10,12 +10,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 INDEX_FILES = (ROOT / "README.md", ROOT / "ROOT_NAMESPACE_MAP.md")
 
-LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+DIR_LINK_RE = re.compile(r"\[\x60([^\x60]+?)/\x60\]\(([^)]+)/\)")
 
 
 def top_level_links(text: str) -> set[str]:
     result: set[str] = set()
-    for label, target in LINK_RE.findall(text):
+    for label, target in DIR_LINK_RE.findall(text):
         if label != target:
             continue
         if target.startswith("../") or "/" in target or "://" in target:
@@ -26,9 +26,9 @@ def top_level_links(text: str) -> set[str]:
 
 def main() -> int:
     actual = {
-        p.name
-        for p in ROOT.iterdir()
-        if p.is_dir() and not p.name.startswith(".")
+        path.name
+        for path in ROOT.iterdir()
+        if path.is_dir() and not path.name.startswith(".")
     }
 
     indexed: set[str] = set()
