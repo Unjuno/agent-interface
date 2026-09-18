@@ -85,6 +85,7 @@ Keep new material in the narrowest existing namespace that matches its role. Do 
 |---|---|
 | Public/current documentation | `docs/` |
 | Experimental evidence | `research/` |
+| Primarily analytical proof / exact derivation / identifiability work | `research/analysis/` |
 | Scoped quantitative/formal measurement | `research/measurement/` |
 | Cross-component/domain composition | `research/integration/` |
 | Coordination-semantics experiments | `research/coordination/` |
@@ -96,7 +97,7 @@ Retained evidence paths may be referenced by Issues, PRs, reports, hashes, and a
 
 ## Adding a research track
 
-Create the experiment under the narrowest applicable research namespace (for example `research/measurement/<name>/` or `research/integration/<name>/`). Use a direct `research/<name>/` directory only when no existing category fits. A typical experiment directory contains:
+Create the work under the narrowest applicable research namespace (for example `research/analysis/<name>/`, `research/measurement/<name>/`, or `research/integration/<name>/`). Use a direct `research/<name>/` directory only when no existing category fits. A typical experiment directory contains:
 
 ```text
 REPORT.md
