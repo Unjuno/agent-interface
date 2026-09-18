@@ -43,6 +43,7 @@ reduction=smed-omed if smed and omed else None
 if ratio is None or ratio>0.65: errors.append(f'ratio={ratio}')
 if reduction is None or reduction<100: errors.append(f'reduction={reduction}')
 if res.get('formal_invocations')!=1 or res.get('reruns')!=0 or res.get('tuning_after_freeze')!=0: errors.append('formal_budget')
+# Independently reconcile reported summary metrics.
 rm=res.get('metrics',{})
 if smed is not None and abs(rm.get('serial_independent_median_wall_ms',-1)-smed)>1e-9: errors.append('serial_median_mismatch')
 if omed is not None and abs(rm.get('overlap_independent_median_wall_ms',-1)-omed)>1e-9: errors.append('overlap_median_mismatch')
