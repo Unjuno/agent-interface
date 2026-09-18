@@ -1,0 +1,32 @@
+{
+  "controls_pass": true,
+  "corruption_controls": {
+    "classification_loss": true,
+    "discriminator_loss": true,
+    "mismatch": true,
+    "post_publication_effect": true,
+    "replay_escape": true,
+    "source_missing": true,
+    "trace_count": true
+  },
+  "decision": "PASS_T2_HANDOFF_LINEARIZATION_SCOPED",
+  "integrity_errors": [],
+  "metrics": {
+    "candidate_oracle_mismatch": 0,
+    "discriminator_hidden_after_raw_effects": 60000,
+    "duplicate_publish_double_advance": 0,
+    "fresh_effects": 100000,
+    "future_generation_effects": 0,
+    "hard_effects": 0,
+    "ordinary_false_effects": 0,
+    "post_publication_attempts": 60000,
+    "post_publication_effects": 0,
+    "rcp_between_classified": 60000,
+    "rcp_rows": 60000,
+    "replay_second_effects": 0,
+    "stale_generation_effects": 0,
+    "traces": 250000,
+    "wrong_scope_effects": 0
+  },
+  "pass": true
+}
