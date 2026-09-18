@@ -1,46 +1,70 @@
 name: Research proposal
-description: Propose a falsifiable experiment or benchmark improvement.
-title: "[experiment] "
+description: Propose a falsifiable analytical result, experiment, or benchmark improvement.
+title: "[research] "
 labels: []
 body:
   - type: markdown
     attributes:
       value: |
-        Use this form when the idea is mature enough to test. If you only have the design idea, use the simpler Idea form instead.
+        Use this form when the idea is mature enough to evaluate. If you only have the design idea, use the simpler Idea form instead.
 
-        Frame the proposal so it can fail, not only succeed.
+        Prefer analysis first when exact semantics, invariants, or a tractable finite state space can decide the question. Use an empirical experiment for the residual that depends on a real backend, application, timing distribution, model, or workload.
+
+        See docs/RESEARCH_METHOD.md. Frame the proposal so it can fail, not only succeed.
+  - type: dropdown
+    id: primary_method
+    attributes:
+      label: Primary method
+      options:
+        - Analytical invariant or proof
+        - Exhaustive finite enumeration / state-space check
+        - Independent oracle / reference comparison
+        - Deterministic container experiment
+        - Live backend / application experiment
+        - Same-model live measurement
+        - Hybrid analysis + empirical residual
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: analytical_reduction
+    attributes:
+      label: Analytical reduction
+      description: What part can be decided from contracts, invariants, exact state transitions, exhaustive cases, or a reference oracle before any empirical allocation? If none, state why the unknown is inherently empirical.
+    validations:
+      required: true
   - type: textarea
     id: hypothesis
     attributes:
       label: Hypothesis (H)
-      description: What measurable claim should be falsified?
+      description: What falsifiable, measurable, or formally checkable claim should be evaluated?
     validations:
       required: true
   - type: textarea
     id: test
     attributes:
       label: Minimum test (T)
-      description: Environment, tasks/data, sample size, changed variable, and stopping rule.
+      description: Smallest proof check, enumeration, oracle comparison, dataset/tasks, environment, sample size, changed variable, and stopping rule needed to discriminate the claim.
     validations:
       required: true
   - type: textarea
     id: decision
     attributes:
       label: Decision rule (D)
-      description: Exact PASS / FAIL / UNCERTAIN criterion.
+      description: Exact PASS / FAIL / HOLD / UNCERTAIN criterion.
     validations:
       required: true
   - type: textarea
     id: competing
     attributes:
       label: Competing explanation (C)
-      description: How could an apparent win be misleading?
+      description: What alternate model, hidden assumption, omitted state, or empirical effect could make an apparent win misleading?
     validations:
       required: true
   - type: textarea
     id: uncertainty
     attributes:
       label: Uncertainty (U)
-      description: Dominant error sources and scope limits.
+      description: Model incompleteness, measurement error, backend/scheduler effects, transfer limits, and other dominant uncertainty.
     validations:
       required: true
