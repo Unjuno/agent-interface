@@ -1,6 +1,21 @@
 # Research index
 
 Agent Interface is being developed by experiment, not by locking an API early. This file is the evidence ledger for the public repository.
+## How to read this ledger
+
+This file is intentionally comprehensive. For public navigation, use the shorter status documents first and come here for the retained evidence history.
+
+| Need | Read |
+|---|---|
+| Current governing objective | [docs/CURRENT_GOAL.md](docs/CURRENT_GOAL.md) |
+| Public progress summary and remaining gates | [docs/PROGRESS_FROM_BASELINE.md](docs/PROGRESS_FROM_BASELINE.md) |
+| Latest detailed handoff, failures, and next steps | [docs/LOCAL_RESEARCH_HANDOFF.md](docs/LOCAL_RESEARCH_HANDOFF.md) |
+| Experimental workspace map | [research/README.md](research/README.md) |
+| Convergence and freeze criteria | [research/evolution/freeze_criteria.md](research/evolution/freeze_criteria.md) |
+| Runnable construction preview | [runtime/README.md](runtime/README.md) |
+
+**Interpretation rule:** a directory, experiment, PASS, or retained result is not automatically a product-level or integrated claim. Read the stated scope and uncertainty attached to the specific result.
+
 
 ## Research question
 
