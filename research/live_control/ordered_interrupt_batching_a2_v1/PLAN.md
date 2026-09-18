@@ -1,13 +1,13 @@
-# Ordered interrupt batching — #1871
+# Ordered interrupt batching A2 — #1876
 
-Task: `EVENT-ORDERED-INTERRUPT-BATCHING-20260919-001`
+Task: `EVENT-ORDERED-INTERRUPT-BATCHING-A2-20260919-002`
 
-H: after classification/coalescing/budget/arbitration are fixed, batching is semantics-preserving only when it treats scheduler output as an immutable ordered sequence. Re-prioritizing members inside a batch can reverse causal event order.
+Direct predecessor #1871 stopped before durable scientific rows because a later in-function import shadowed `ordered_batch`. A2 preserves batch_size4, event semantics, directed controls, exhaustive corpus, metadata, gates and independent-audit semantics. The only harness repair is module-scope import binding in `run_formal.py`.
 
-T: stdlib-only deterministic container. Batch size 4. Directed causal/critical/terminal controls plus exhaustive sequences length 0..6 over four event classes × two sessions. Candidate flattened output and every prefix must equal input exactly. Independent audit reimplements batching and corpus enumeration.
+H: removing local import shadowing permits the frozen #1871 scientific corpus to execute without changing batching semantics.
 
-D: PASS iff sequence/identity/per-session projection/metadata exact, naive priority-sorted comparator exposes at least one directed reversal, delivery reduction exists, malformed controls reject, and formal1/reruns0/replacements0/tuning0.
+T: stdlib-only deterministic container. Construction: py_compile PASS, unchanged tests 10/10 PASS, nonformal one-case smoke PASS. Formal: exact #1871 exhaustive sequences length0..6 over four event kinds x two sessions, plus directed controls, one invocation only. Independent audit remains structurally independent.
 
-C: representation-only after scheduler decisions. No claim about model comprehension, tokens, transport atomicity, wall time, natural event rates, ACK/resolution, or production batch size.
+D: `PASS_ORDERED_INTERRUPT_BATCHING_A2_SCOPED` iff all #1871 sequence/identity/session/metadata/order/reduction/malformed/integrity gates pass with formal1/reruns0/replacements0/tuning0. Harness stop before durable rows is scientific NONE.
 
-U: deterministic finite corpus only; no GUI/model/network/input/runtime mutation.
+C/U: representation-only after scheduler decisions; no model, token, latency, transport atomicity, natural event rate, ACK/retry/task-success or production claim.
