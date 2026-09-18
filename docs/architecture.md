@@ -179,24 +179,19 @@ the source binding on which its points were authored.
 The current research candidate resolves the complete program against the latest
 stable target binding before validation:
 
-```text
-source point + explicit frame + source geometry
-    |
-    v
-latest target focus / surface / geometry
-    |
-    v
-frame-specific translation
-    |
-    v
-whole-program validation
-    |
-    v
-runtime focus / surface / geometry / hit checks
-    |
-    +-- mismatch -> needs_decision before pointer admission
-    v
-input
+```mermaid
+flowchart TD
+    S["Source point + explicit frame + source geometry"]
+    T["Latest target focus / surface / geometry"]
+    X["Frame-specific translation"]
+    V["Whole-program validation"]
+    R{"Runtime focus / surface / geometry / hit checks"}
+    N["needs_decision before pointer admission"]
+    I["Input"]
+
+    S --> T --> X --> V --> R
+    R -->|"mismatch"| N
+    R -->|"match"| I
 ```
 
 Resolution itself grants no authority. Frame identity is still task-declared in
@@ -212,20 +207,21 @@ expiry and a small set of permitted transformations. Later actions carry the
 runtime handle and a point offset. Revalidation derives geometry from the fresh
 observed binding and returns an explicit status before ordinary input admission:
 
-```text
-handle + point relation + fresh observation
-    |
-    v
-scope / expiry / binding checks
-    |
-    v
-predicted region from observed geometry delta
-    |
-    v
-exact region match and ambiguity check
-    |
-    +-- VALID / REVALIDATED -> resolved point -> ordinary admission
-    +-- AMBIGUOUS / MOVED / MISSING / STALE / SCOPE_MISMATCH -> stop
+```mermaid
+flowchart TD
+    H["Handle + point relation + fresh observation"]
+    C{"Scope / expiry / binding checks pass?"}
+    P["Predicted region from observed geometry delta"]
+    M{"Exact region match and ambiguity check"}
+    RP["Resolved point"]
+    A["Ordinary admission"]
+    STOP["Stop"]
+
+    H --> C
+    C -->|"no: STALE / SCOPE_MISMATCH"| STOP
+    C -->|"yes"| P --> M
+    M -->|"VALID / REVALIDATED"| RP --> A
+    M -->|"AMBIGUOUS / MOVED / MISSING"| STOP
 ```
 
 The first live result shows why requested window movement cannot define the
