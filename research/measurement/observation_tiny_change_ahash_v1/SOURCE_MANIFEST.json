@@ -5,15 +5,22 @@
   "seed": 155920260918001,
   "formal_pairs": 150000,
   "sha256": {
-    "candidate.py": "52c11c93fa101a235a9ac863ee525f05aced3d9c6f933555a5efdc232fd404fe",
+    "candidate.py": "bc3f533426acab8570cdc0bed2ad452740c4a54b2e5ff9829abfce58c9b8de1c",
     "oracle.py": "e39ad62e4c1860942868c81f59bb0adbf0e696e794ec659437a4371322efe16f",
-    "runner.py": "0da815cacbc49cb06bb004aba0861c43260608aec9ad1b91673a5a004898c382",
-    "audit.py": "bed8f349c57805dc8f9cbc23083bae12bf55b675d190c089120e8f80d883a3fc",
+    "runner.py": "f3389454b56300d4c3da97b7eeaaf6d0dc8636ab74eb69926321e29798567ec0",
+    "audit.py": "244fc89efae7412f13bda93ba045db98ef8ca9a1dd260bd96a36c5869a9bd9e9",
     "PLAN.md": "05223515c2e692ef5f01364e05cb9b66dcf775bd15ce54640525918856cbb395"
   },
   "construction": {
     "raw_sha256": "a661acb00f80e5e82da12dcb64117ca0222dc665a2e69eb3e9bac9a76cd51b7d",
     "audit_sha256": "0b392f6512764b707f6446cfda82a5a49dfd5bbdab5d85bf18110a75fe4142b6",
     "decision": "PASS_CONSTRUCTION_ELIGIBLE"
+  },
+  "preformal_remote_normalization": {
+    "formal_consumed": 0,
+    "candidate_runner_difference": "blank-line normalization only",
+    "audit_difference": "unused random import removed only",
+    "scientific_logic_changed": false,
+    "seed_or_corpus_or_gates_changed": false
   }
 }
