@@ -142,3 +142,13 @@ Some harnesses inject real GUI input. Use an isolated X session or disposable co
 A research directory should keep its benchmark/source, preregistration where applicable, raw result, audit, environment, and negative results close enough that a claim can be traced back to the experiment.
 
 A directory existing here does **not** mean its mechanism is promoted. Negative results, stopped allocations, superseded harnesses, and scoped passes are intentionally retained.
+
+## Navigation maintenance
+
+Check that every top-level research directory is covered by either this workspace map or the retained root-namespace map:
+
+```bash
+python research/check_navigation.py
+```
+
+This check validates navigation only. It does not infer scientific status from directory placement.
