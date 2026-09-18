@@ -1,0 +1,52 @@
+{
+  "task": "CACHE-REQUEST-ORIGIN-COMPOSITION-A2-20260918-002",
+  "issue": 1360,
+  "base": "eca863c932bb36b724bec27bd49be598ce48151f",
+  "seed": 136020260918001,
+  "traces": 150000,
+  "transitions": 600000,
+  "categories": {
+    "stale": [
+      20000,
+      5
+    ],
+    "fresh_replay": [
+      20000,
+      6
+    ],
+    "installed_invalidate": [
+      20000,
+      4
+    ],
+    "hard": [
+      20000,
+      4
+    ],
+    "ambig": [
+      20000,
+      4
+    ],
+    "cross_scope": [
+      20000,
+      3
+    ],
+    "duplicate_invalidation": [
+      20000,
+      2
+    ],
+    "generation": [
+      10000,
+      4
+    ]
+  },
+  "planner_generations": [
+    0,
+    1,
+    7,
+    65535,
+    2147483647,
+    9223372036854776000
+  ],
+  "formal_invocations": 0,
+  "reruns": 0
+}
