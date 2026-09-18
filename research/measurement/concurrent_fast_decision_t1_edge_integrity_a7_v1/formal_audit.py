@@ -141,20 +141,34 @@ def main():
     r=json.loads(Path(a.result).read_text())
     decision,integ,authority,watch,timing,metrics=evaluate(r)
     controls={}
+    def mutate_edge_repeat(q):
+        c=next(c for c in q['cases'] if c.get('arm')==CAND and c.get('scenario')=='TRANSIENT_28')
+        t=c['start_ns']+6_000_000
+        c['sends'].append({'send_begin_ns':t,'send_end_ns':t+10_000,'nominal_sample_offset_ns':5_000_000})
+        c['presses'].append({'t_ns':t,'state':CLEAR})
+        c['releases'].append({'t_ns':t+10_000,'state':CLEAR})
+        c['effects'].append({'t_ns':t+20_000,'effect_kind':'useful','state':CLEAR})
+    def mutate_resume_after_handback(q):
+        c=next(c for c in q['cases'] if c.get('arm')==CAND and c.get('scenario')=='TRANSIENT_8')
+        clears=[x for x in transitions(c) if x.get('state')==CLEAR]
+        if not clears: raise RuntimeError('no resume clear')
+        t=clears[-1]['t_ns']
+        e=next(e for e in c.get('effects',[]) if e.get('effect_kind')=='useful' and e.get('t_ns',0)>=t)
+        e['t_ns']=c['start_ns']+FRONTIER+1
     muts=[
-      ('hard_effect',lambda q:mutate_effect(q,'INVALIDATE_18',HARD)),
-      ('watch_effect',lambda q:mutate_effect(q,'TRANSIENT_8',WATCH)),
-      ('baseline_progress',lambda q:next(c for c in q['cases'] if c.get('arm')==BASE)['score'].__setitem__('progress_pixels',1)),
-      ('cleanup',lambda q:q['cases'][0]['cleanup'].__setitem__('xvfb_exit',False)),
-      ('invocation',lambda q:q.__setitem__('formal_invocations',2)),
-      ('wrong_disposition',lambda q:next(c for c in q['cases'] if c.get('arm')==CAND and c.get('samples'))['samples'][0].__setitem__('disposition','BROKEN')),
-      ('transition_program',lambda q:next(c for c in q['cases'] if c.get('scenario')=='TRANSIENT_28')['actual_transitions'].pop()),
-      ('edge_repeat',lambda q:next(c for c in q['cases'] if c.get('arm')==CAND and c.get('scenario')=='TRANSIENT_28')['sends'].append({'send_begin_ns':1,'send_end_ns':2,'nominal_sample_offset_ns':5_000_000})),
-      ('resume_after_handback',lambda q:(lambda c,clear:[e.__setitem__('t_ns',c['start_ns']+FRONTIER+1) for e in c.get('effects',[]) if e.get('effect_kind')=='useful' and e.get('t_ns',0)>=clear])(next(c for c in q['cases'] if c.get('arm')==CAND and c.get('scenario')=='TRANSIENT_8'),max(x['t_ns'] for x in next(c for c in q['cases'] if c.get('arm')==CAND and c.get('scenario')=='TRANSIENT_8').get('actual_transitions',[]) if x.get('state')==CLEAR))),
-      ('integrity_precedence',lambda q:(q['cases'][0]['cleanup'].__setitem__('xvfb_exit',False),q['cases'][0]['score'].__setitem__('harm_pixels',1))),
+      ('hard_effect',lambda q:mutate_effect(q,'INVALIDATE_18',HARD),'FAIL_EDGE_ENVELOPE_OR_AUTHORITY'),
+      ('watch_effect',lambda q:mutate_effect(q,'TRANSIENT_8',WATCH),'FAIL_EDGE_WATCH_CONTINUATION'),
+      ('baseline_progress',lambda q:next(c for c in q['cases'] if c.get('arm')==BASE)['score'].__setitem__('progress_pixels',1),'FAIL_INTEGRITY'),
+      ('cleanup',lambda q:q['cases'][0]['cleanup'].__setitem__('xvfb_exit',False),'FAIL_INTEGRITY'),
+      ('invocation',lambda q:q.__setitem__('formal_invocations',2),'FAIL_INTEGRITY'),
+      ('wrong_disposition',lambda q:next(c for c in q['cases'] if c.get('arm')==CAND and c.get('samples'))['samples'][0].__setitem__('disposition','BROKEN'),'FAIL_INTEGRITY'),
+      ('transition_program',lambda q:next(c for c in q['cases'] if c.get('scenario')=='TRANSIENT_28')['actual_transitions'].pop(),'FAIL_INTEGRITY'),
+      ('edge_repeat',mutate_edge_repeat,'FAIL_INTEGRITY'),
+      ('resume_after_handback',mutate_resume_after_handback,'FAIL_EDGE_WATCH_CONTINUATION'),
+      ('integrity_precedence',lambda q:(q['cases'][0]['cleanup'].__setitem__('xvfb_exit',False),next(c for c in q['cases'] if c.get('arm')==CAND)['score'].__setitem__('harm_pixels',1)),'FAIL_INTEGRITY'),
     ]
-    for name,fn in muts:
-        q=copy.deepcopy(r);fn(q);d,*_=evaluate(q);controls[name]=d!='PASS_T1_EDGE_TRIGGERED_LIVE_CONCURRENCY_SCOPED'
+    for name,fn,expected in muts:
+        q=copy.deepcopy(r);fn(q);d,*_=evaluate(q);controls[name]=(d==expected)
     errors=integ+authority+watch+timing
     if controls and not all(controls.values()):errors.append('corruption_control')
     out={'task':r.get('task'),'decision':decision,'pass':decision=='PASS_T1_EDGE_TRIGGERED_LIVE_CONCURRENCY_SCOPED' and all(controls.values()),'errors':errors,'integrity_errors':integ,'authority_errors':authority,'watch_errors':watch,'timing_errors':timing,'metrics':metrics,'corruption_controls':controls}
