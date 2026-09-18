@@ -28,6 +28,11 @@ The top level is intentionally evidence-preserving. The categories below are nav
 - [`measurement/`](measurement/) — scoped measurement and composition studies.
 - [`cross_domain/`](cross_domain/) — cross-domain transfer work.
 
+### Fast local decision / System-1 research
+
+- [`system1/`](system1/) — bounded fast-path representation and decision experiments.
+- [`local_system1/`](local_system1/) — local decision-kernel, latency, typed-evidence, and frontier-gap mechanics.
+
 ### Observation, grounding, and visual state
 
 - [`observation/`](observation/) — observation mechanisms.
@@ -62,6 +67,11 @@ The top level is intentionally evidence-preserving. The categories below are nav
 - [`conditional_optimization/`](conditional_optimization/) and [`optimization_revisits/`](optimization_revisits/) — conditional reuse and revisit work.
 - [`retention/`](retention/) — retained-evidence utilities/records where applicable.
 - [REVISIT_LEDGER.md](REVISIT_LEDGER.md) — explicit revisit ledger.
+
+### Presentation and miscellaneous scoped work
+
+- [`launch/`](launch/) — public-evidence/launch presentation experiments.
+- [`experiments/`](experiments/) — small scoped experiments without a narrower established category.
 
 ### Historical archival namespaces
 
