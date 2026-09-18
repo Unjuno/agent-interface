@@ -1139,6 +1139,13 @@ Latest measured candidate: phased_replan_ink_v1 separates fresh target activatio
 
 </details>
 
+## Legacy retained goal document
+
+The material below predates the current governing-invariant presentation and remains verbatim for provenance. It is collapsed by default so the active direction stays readable.
+
+<details>
+<summary><strong>Expand legacy retained goal body</strong></summary>
+
 ## Expired execution now has opt-in post-release observations, status remains expired
 
 executor_v9 / interactive_v6 / socket_v8 extend existing passive release sampling to expiry without lease renewal. Actual Inkscape Shift hold expires under500ms deadline; trailing text never starts, Shift released, two captures after release arrive before expired terminal. Latest capture+205.250ms, terminal+228.801ms. Audit20 events/8 exact frames/one pre-deadline Shift admission/unchangedSVG50/50/40/30/exit0/sockets removed. Fake release-failure/explicit-stop/expiry controls pass after retained harness-race repair. See research/live_control/EXPIRY_OBSERVATION.md and results/expiry-observation-01. Fixes stale post-expiry observation gap, not first-click versus full-program duration; next checked phase separation, no blanket deadline extension/tail replay. Previous frozen entries/default unchanged; full goal open.
@@ -2076,3 +2083,5 @@ research/live_control/OPENTTD_ACTIVE_EVIDENCE_V2.md. Full goal stays open.
   この固定1 sequenceではpersistentをRETAINするが、一般的token削減・成功率・人間速度は未証明。
   次は通常進行を止めないFreedoom MAP01の有限clear attemptを事前登録し実行する。
 contract before another frozen hero attempt; keep the desktop golden demo and
+
+</details>
