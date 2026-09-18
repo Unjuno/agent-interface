@@ -1,5 +1,16 @@
 # Changelog
 
+## Reading this changelog
+
+This file records publication/research-update history. It is not the canonical source for the project's current research direction or release readiness.
+
+- Current objective: [`docs/CURRENT_GOAL.md`](docs/CURRENT_GOAL.md)
+- Current detailed handoff: [`docs/LOCAL_RESEARCH_HANDOFF.md`](docs/LOCAL_RESEARCH_HANDOFF.md)
+- Evidence ledger: [`RESEARCH.md`](RESEARCH.md)
+- Release readiness: [`release/README.md`](release/README.md)
+
+Existing changelog entries below are retained unchanged.
+
 ## Unreleased — 2026-09-13 research update
 
 - Reconstruct v38/v39 model-wait cover envelopes from retained SHA-bound raw
