@@ -71,7 +71,10 @@ flowchart TD
 
 These families are navigation aids, not scientific rankings. Each study's own report remains authoritative, including retained FAIL/HOLD outcomes.
 
-## Indexed analyses
+## Complete retained analysis index
+
+<details>
+<summary><strong>Expand retained analytical results and failures</strong></summary>
 
 | Family | Study | Retained result | Residual empirical or successor question |
 |---|---|---|---|
@@ -110,6 +113,8 @@ These families are navigation aids, not scientific rankings. Each study's own re
 | Identifiability / audit | [`temporal_sample_cost_identifiability_v1/`](temporal_sample_cost_identifiability_v1/) | Source sample-count reduction alone does not identify token, wall-time, or monetary break-even; measured `F/Q/H` endpoints are required. | Run fresh matched provider/model measurements with presentation/session/cache identity. |
 | Identifiability / audit | [`temporal_break_even_retained_identifiability_v1/`](temporal_break_even_retained_identifiability_v1/) | Existing retained temporal evidence contains zero admissible fully matched rows for the required empirical break-even estimate. | Run a source-matched allocation retaining `F_m`, `Q_m`, `H_m`, identity, and correctness endpoints. |
 | Identifiability / audit | [`multi_app_transition_retained_audit_r0_v1/`](multi_app_transition_retained_audit_r0_v1/) | Retained evidence covers focus drift, modal, geometry drift, and window replacement across components/apps, but no single session integrates all four under one contract. | Run a finite multi-app integrated allocation preserving one caller/controller identity across the transition families. |
+
+</details>
 ## Interpretation
 
 - A mathematical or exhaustive PASS is not a live-backend PASS.
