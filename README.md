@@ -62,6 +62,7 @@ flowchart LR
 | Follow the latest handoff and failures | [Local research handoff](docs/LOCAL_RESEARCH_HANDOFF.md) |
 | Try the runnable construction preview | [Runtime preview](runtime/README.md) |
 | See what must happen before release | [Roadmap](ROADMAP.md) and [release contract](release/README.md) |
+| See how analysis and experiments are chosen | [Research method](docs/RESEARCH_METHOD.md) |
 
 ## The hypothesis
 
