@@ -14,6 +14,7 @@ This file is intentionally comprehensive. For public navigation, use the shorter
 | Convergence and freeze criteria | [research/evolution/freeze_criteria.md](research/evolution/freeze_criteria.md) |
 | Runnable construction preview | [runtime/README.md](runtime/README.md) |
 | Analysis vs experiment decision method | [docs/RESEARCH_METHOD.md](docs/RESEARCH_METHOD.md) |
+| Relationship between current status, evidence, runtime and release | [docs/EVIDENCE_MAP.md](docs/EVIDENCE_MAP.md) |
 
 **Interpretation rule:** a directory, experiment, PASS, or retained result is not automatically a product-level or integrated claim. Read the stated scope and uncertainty attached to the specific result.
 
