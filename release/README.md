@@ -7,6 +7,19 @@ The repository itself remains research-first. Historical `v0.0.1-research.*` pre
 ## Current Research Preview RC
 
 The active release lane is `release/research-preview-20260917-rc1` (Issue #515). Its packaging implementation lives under `release/preview_bundle_v1/`.
+### Release workspace map
+
+| Path | Role |
+|---|---|
+| [`preview_bundle_v1/`](preview_bundle_v1/) | Current Research Preview bundle builder, quickstart, support metadata, release notes, and supported-host acceptance. |
+| [`runtime_preview_v1/`](runtime_preview_v1/) | Runtime-preview candidate verification/checksum utilities and support metadata examples. |
+| [`preview_readiness_v1/`](preview_readiness_v1/) | Retained preview-readiness result and audit artifacts. |
+| [`first_run_smoke_v1/`](first_run_smoke_v1/) | First-run smoke/preflight experiment and retained results. |
+| [`offline_dependency_closure_v1/`](offline_dependency_closure_v1/) | Offline dependency-closure check and retained result. |
+| [`golden_artifact_closure_v1/`](golden_artifact_closure_v1/) | Golden-artifact closure check and retained result. |
+
+These directories are release-engineering evidence and tooling. The parent release gate below remains the user-facing acceptance boundary.
+
 
 Build from a clean RC checkout:
 
