@@ -1,0 +1,17 @@
+{
+  "audit_rule_mismatch": true,
+  "corruption_controls_discriminative_for_base_result": false,
+  "corruption_controls_rejected": 7,
+  "corruption_controls_total": 7,
+  "corruption_note": "Because the unmodified base result already fails the frozen binary auditor, mutation controls are not evidence that the auditor distinguishes these corruptions from a passing base.",
+  "frozen_auditor_decision": "FAIL_LIVE_ANCHOR_TRANSFER_A2",
+  "frozen_auditor_errors": [
+    "parent_evidence_anchor"
+  ],
+  "issue": 1476,
+  "promotion_eligible": false,
+  "reason": "Issue #1476 preregistered HOLD for safety-correct but incomplete positive recovery. The observed result is 22/24 evidence admissions/effects with zero wrong/negative effects; frozen audit_a2.py maps any inherited parent error to generic FAIL instead of the preregistered HOLD class.",
+  "rerun_authorized": false,
+  "scientific_disposition_per_issue_D": "HOLD_LIVE_ANCHOR_NOT_SUFFICIENT_A2",
+  "task": "TEMPORAL-SPECULATION-VALIDITY-ANCHOR-X11-TRANSFER-A2-20260918-002"
+}
