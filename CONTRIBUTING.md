@@ -61,6 +61,23 @@ The project prefers mechanisms that remove unnecessary boundaries while preservi
 9. Prefer eliminating unnecessary observation/work before applying lossy compression.
 10. A fast path must retain a safe fallback when its assumptions are no longer valid.
 
+## Repository placement
+
+Keep new material in the narrowest existing namespace that matches its role. Do not create new root-level categories when an existing area already fits.
+
+| Material | Preferred location |
+|---|---|
+| Public/current documentation | `docs/` |
+| Experimental evidence | `research/` |
+| Scoped quantitative/formal measurement | `research/measurement/` |
+| Cross-component/domain composition | `research/integration/` |
+| Coordination-semantics experiments | `research/coordination/` |
+| Promoted runnable semantics/code | `runtime/` |
+| Packaging/release-readiness work | `release/` |
+| Public presentation assets | `site/` |
+
+Retained evidence paths may be referenced by Issues, PRs, reports, hashes, and audits. Prefer adding an index/README over renaming or moving completed evidence solely for cosmetic cleanup.
+
 ## Adding a research track
 
 Create a directory under `research/` containing:
