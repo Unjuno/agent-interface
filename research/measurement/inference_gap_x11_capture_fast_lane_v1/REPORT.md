@@ -16,6 +16,8 @@ Measured candidate values:
 
 The formal batches, aggregate and independent audit completed before an outer wrapper timeout occurred during the subsequent corruption command. The formal allocation was **not rerun**. Corruption controls were then executed separately as postformal verification only and rejected 5/5 mutations. Postformal scientific-source rehash matches every frozen member exactly.
 
-RESULT SHA-256: `f0a338e4e55d4bd370090cc6549e82856da81ad33ec62e314ad686cc293dda02`. AUDIT SHA-256: `1f97a4b8a1abd7125737ced3957eadd62b870c596249fa536ba4d6b258a86415`. Raw first outcome is retained losslessly as base64 xz/tar with xz SHA-256 `fb904347b880b905ab85870d51326a1e1c70dca5e77230fd3d24ae8184b82463`.
+RESULT SHA-256: `f0a338e4e55d4bd370090cc6549e82856da81ad33ec62e314ad686cc293dda02`. AUDIT SHA-256: `1f97a4b8a1abd7125737ced3957eadd62b870c596249fa536ba4d6b258a86415`.
+
+The complete local raw archive had xz SHA-256 `fb904347b880b905ab85870d51326a1e1c70dca5e77230fd3d24ae8184b82463`, but GitHub text-relay readback failed byte identity for 3/13 Base64 parts. Those parts were rejected and removed; see `RAW_RETENTION_BOUNDARY.md`. No lossless remote raw archive is claimed.
 
 Scope is narrow: one private-X11 320×240 fixture, separate Xlib capture connection, nominal10 Hz capture, one-key edge-triggered bounded lane and a 300 ms simulated frontier gap. This establishes scoped concurrency compatibility only; it does not establish a real-frontier/model, full-screen/high-DPI, encoding, token, task-level speed, human-tempo or production result.
