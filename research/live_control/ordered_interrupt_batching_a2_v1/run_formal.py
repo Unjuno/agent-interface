@@ -3,7 +3,7 @@ import hashlib,itertools,json,os,time
 from model import Event,VALID_KINDS,ordered_batch,priority_sorted_batch,flatten
 from cases import directed_cases,E
 
-TASK='EVENT-ORDERED-INTERRUPT-BATCHING-20260919-001'
+TASK='EVENT-ORDERED-INTERRUPT-BATCHING-A2-20260919-002'
 BATCH_SIZE=4
 ALPHABET=[(s,k) for s in ['A','B'] for k in ['PROGRESS','NEEDS_DECISION','TARGET_LOST','LEASE_EXPIRED']]
 
