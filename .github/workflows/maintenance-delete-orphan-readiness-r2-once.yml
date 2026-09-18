@@ -1,0 +1,36 @@
+name: one-shot delete orphan readiness r2 ref
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/maintenance-delete-orphan-readiness-r2-once.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Delete exact orphan contained ref
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch="research/readiness-currentness-afunix-composition-20260918-r2"
+          expected="9a739cbf516f5db2d51b3b8f385a57d72ce8780e"
+          git fetch --prune --force origin '+refs/heads/*:refs/remotes/origin/*'
+          ref="refs/remotes/origin/$branch"
+          if ! git show-ref --verify --quiet "$ref"; then
+            echo "ALREADY_GONE $branch"
+            exit 0
+          fi
+          actual="$(git rev-parse "$ref")"
+          test "$actual" = "$expected"
+          git merge-base --is-ancestor "$ref" refs/remotes/origin/main
+          git push origin --delete "$branch"
