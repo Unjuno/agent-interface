@@ -45,7 +45,7 @@ Parent #1579 blobs are pinned exactly:
 
 ## Retained packaging failure
 
-After the successful formal and independent audit, the first packaging command used a wildcard that also matched `__pycache__` and returned exit 1. No scientific command was rerun. `PACKAGING_FAILURE.json` records this postformal failure; the repair hashes regular files only.
+After the successful formal and independent audit, the first packaging command used `sha256sum "$W"/*`, which also matched `__pycache__` and returned exit 1. No scientific command was rerun. `PACKAGING_FAILURE.json` records this postformal failure; the repair hashes regular files only.
 
 ## Scope / next discriminator
 
