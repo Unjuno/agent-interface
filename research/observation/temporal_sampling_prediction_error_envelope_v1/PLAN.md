@@ -1,6 +1,6 @@
 # Temporal sampling prediction error envelope — Issue #1497
 
-Task: `TEMPORAL-SAMPLING-PREDICTION-ERROR-ENVELOPE-20260918-001`
+Task: TEMPORAL-SAMPLING-PREDICTION-ERROR-ENVELOPE-20260918-001
 
 H: with INDEX_LOG and TARGET_AGE_LOG frozen, a timestamp-only worst-case bound for the shared OLS linear predictor is exact under a declared constant-acceleration and bounded-observation-error class. MIN_BOUND may choose the lower guarantee without claiming lower realized error.
 
