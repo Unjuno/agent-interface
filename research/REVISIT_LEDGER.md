@@ -5,6 +5,29 @@ does not permanently reject the underlying mechanism. Revisit an idea only when
 the new run changes a named condition, preserves the safety lesson from the old
 failure and defines an independent comparison before execution.
 
+## Revisit decision flow
+
+```mermaid
+flowchart TD
+    F[Retained failed / stopped result]
+    I[Extract preserved invariant<br/>and exact failed condition]
+    C[Name one changed condition<br/>with causal reason]
+    A{Can the changed question<br/>be decided analytically?}
+    P[Proof / invariant / exhaustive oracle]
+    R{Empirical residual remains?}
+    S[Freeze successor H/T/D/C/U<br/>without altering old result]
+    E[Run first successor allocation]
+    L[Retain both old and new evidence]
+
+    F --> I --> C --> A
+    A -->|yes| P --> R
+    R -->|no| L
+    R -->|yes| S
+    A -->|no| S
+    S --> E --> L
+```
+
+A revisit should consume analytical structure first when the changed condition is an exact contract, invariant, or tractable finite-state question. Only the remaining environment/model/timing uncertainty needs a fresh allocation. See [`../docs/RESEARCH_METHOD.md`](../docs/RESEARCH_METHOD.md).
 Each revisit records:
 
 1. the retained failed artifact and exact failed condition;
@@ -13,6 +36,8 @@ Each revisit records:
 4. a frozen acceptance rule and resource allocation;
 5. the first result, including refusal or another failure;
 6. whether the result changes the shared interface or remains domain-specific.
+
+## Revisit ledger
 
 | Mechanism | Retained failed condition | Preserved invariant | Revisit condition | Status |
 |---|---|---|---|---|
