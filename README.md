@@ -15,6 +15,220 @@ Latest research handoff: [measured progress, failures and next steps](docs/LOCAL
 
 Current Linux research caller: [components, usage and evidence limits](research/live_control/CURRENT_CLIENT.md).
 
+## Project at a glance
+
+| | |
+|---|---|
+| **Goal** | Keep the model fixed and improve the computer interface: less waiting, fewer redundant observations, fewer unnecessary model boundaries, and less recovery work at the same correctness. |
+| **Current design invariant** | Preserve rich-model intent; localize the high-frequency refinement loop. |
+| **Control model** | Rich model for semantics/strategy; bounded local macro/servo/watcher execution for high-cadence refinement; fresh evidence and explicit YIELD at the authority boundary. |
+| **Current status** | Research Preview. The repository is an evidence record; user-facing Releases are reserved for runnable distributions. |
+| **Main evidence environment** | Linux/X11 research harnesses, with scoped live GUI, recovery, observation, concurrency, and DOOM studies. |
+| **Release posture** | Component PASS is not an integrated PASS. Broad human-tempo, cross-platform, and stable-runtime claims remain open. |
+
+## System shape
+
+```mermaid
+flowchart LR
+    A["Rich model / planner<br/>intent · semantics · strategy"]
+    B{"Agent Interface"}
+    C["Bounded local refinement<br/>macro · servo · watcher"]
+    D{"Fresh evidence<br/>still valid?"}
+    E["Deterministic authority<br/>admission · lease · release"]
+    F["OS / GUI"]
+    G["Incremental feedback"]
+
+    A --> B
+    B -->|"direct operation"| E
+    B -->|"bounded delegation"| C
+    C --> D
+    D -->|"yes"| E
+    D -->|"stale / ambiguous / novel → YIELD"| A
+    E --> F
+    F --> G
+    G --> C
+    G --> A
+```
+
+## Where to start
+
+| If you want to… | Read |
+|---|---|
+| Understand the thesis | [Principles](docs/principles.md) |
+| See the current architecture | [Architecture](docs/architecture.md) |
+| See the current research goal | [Current goal](docs/CURRENT_GOAL.md) |
+| Check measured progress and remaining gates | [Progress from baseline](docs/PROGRESS_FROM_BASELINE.md) |
+| Inspect the evidence ledger | [Research index](RESEARCH.md) |
+| Follow the latest handoff and failures | [Local research handoff](docs/LOCAL_RESEARCH_HANDOFF.md) |
+| Try the runnable construction preview | [Runtime preview](runtime/README.md) |
+| See what must happen before release | [Roadmap](ROADMAP.md) and [release contract](release/README.md) |
+
+## The hypothesis
+
+Most computer-use systems still resemble:
+
+```text
+model -> one action -> screenshot -> model -> one action -> screenshot -> ...
+```
+
+Agent Interface asks whether the interface, not only the model, is now a major bottleneck:
+
+```text
+strong planner
+    -> semantic method / short reactive program
+    -> guarded local execution
+    -> immediate useful feedback
+    -> observe only meaningful change
+    -> deoptimize only the stale layer
+    -> return to the model when semantics require it
+```
+
+The clean experiment is simple:
+
+```text
+same model
+same task
+same environment
+same correctness requirement
+
+only the interface changes
+```
+
+Then measure model boundaries, serialization, observation cost, latency, retries, recovery, and eventually real token use separately.
+
+## Component principles
+
+The eventual tool should satisfy four constraints from the start:
+
+1. **Install quickly.** A user should be able to install or unpack it, start it, connect an agent, and use it without app-specific setup.
+2. **Work with every agent.** The core should be model- and vendor-agnostic. Model-specific adapters belong outside the runtime core.
+3. **Do not stop the agent's thinking.** After an action, return the earliest trustworthy feedback instead of blocking on fixed waits or unnecessarily complete observations. Reduce **agent idle time**.
+4. **React locally.** Input delivery, state-change detection, local verification, retry, and fine motor correction should stay in the local fast path when they do not require semantic reasoning.
+
+Full rationale: [`docs/principles.md`](docs/principles.md).
+
+## Ideas shaping the system
+
+| Idea | Why it exists | Expected effect | State |
+|---|---|---|---|
+| **Universal fallback** | Optimizations must never be required for basic correctness | Unknown apps still work | Baseline |
+| **Self-compiling semantic methods** | Repeated successful traces should not be replanned forever | Fewer model turns / less serialization | Baseline |
+| **Layered lifetimes** | A stale coordinate, binding, or visual cache does not imply the task meaning changed | Less relearning | Promoted |
+| **Guarded Hierarchical Deoptimization** | Predictably stale fast paths should be skipped before failure | Better reliability / lower tail latency | Promoted |
+| **Latest-only visual state** | Old frames are not extra evidence about the current GUI | Less stale-state processing | Runtime principle |
+| **Event-driven observation** | Polling without state change creates work but no information | Fewer captures / faster feedback | Experimental baseline |
+| **Observation gating** | An unchanged or irrelevant screen should not consume another model-visible image | Lower visual/token cost | Active research |
+| **Visual delta / changed-region feedback** | A small local change does not justify resending the whole frame | Lower visual bandwidth | Active research |
+| **Local verification** | Deterministic postconditions do not always need model interpretation | Fewer model escalations | Active design |
+| **Input delivery semantics** | Sending an OS event is not the same as application consumption | Higher correctness | Measured |
+| **Closed-loop motor control** | Pointer movement and on-screen movement are not always identical | Better fine control | Experimental |
+
+## Current evidence
+
+These are scoped research measurements, not production claims.
+
+| Experiment | Result | Scope |
+|---|---:|---|
+| Sparse reactive control | B1 reached 8/8 success on XTerm, Chromium, Calc, and Inkscape in the development screen | Linux/X11, small `n=8/app` |
+| Route-level deoptimization | Inkscape observation reduced **51.9%** and planner-byte proxy **27.8%** vs method invalidation | 72 hidden episodes |
+| XTerm focus guard | p99 reduced about **77.5%** | 72 hidden episodes |
+| Chromium geometry guard | p99 reduced about **75.4%** | 72 hidden episodes |
+| Layered binding + route guards | 72/72 success with predictable stale-route execution eliminated before execution | Chromium drift + process replacement |
+| Exact unchanged-frame suppression (O1) | 96/96 tasks per strategy; 17.15% same-trace image reduction; zero false suppressions | [Four real apps, 24 fresh pairs/app](research/observation_gating/REPORT.md); scripted controller, no model/token measurement; local speedup unproven |
+| Exact tile transport (O2) | 32/32 tasks per strategy; 70.73% same-trace serialized-byte reduction; 553 exact frames | [Four apps, 8 fresh pairs/app](research/observation_tiles/REPORT.md); reconstructed full images, no token saving or local speedup established |
+| Assistant-operated research interface | Calc, Inkscape and XTerm tasks completed through reconstructed images; feedback wait and PNG-reference reuse exercised | [Three exploratory sessions](research/observation_tiles/DEVELOPMENT.md), not a controlled model performance comparison |
+
+Raw reports and CSVs are under [`research/`](research/). `planner bytes` are not tokens, `observed pixels` are not image tokens, and local wall time is not model-in-loop latency.
+
+## Repository map
+
+```text
+.
+├── README.md                  # project entry point
+├── RESEARCH.md                # evidence ledger
+├── ROADMAP.md                 # research sequence
+├── docs/
+│   ├── README.md              # documentation index
+│   ├── principles.md          # thesis + component principles
+│   ├── architecture.md        # current promoted architecture
+│   └── product-hunt.md        # launch notes
+├── research/
+│   ├── requirements.txt       # research-only Python dependencies
+│   ├── real_apps_v1/          # input delivery + sparse reactive control
+│   ├── real_apps_v2/          # method lifetime vs route lifetime
+│   ├── real_apps_v3/          # guarded hierarchical deoptimization
+│   ├── observation_gating/   # frozen O0/O1 experiments and raw evidence
+│   └── observation_tiles/    # exact transport, assistant use and image preparation
+├── runtime/
+│   └── README.md              # future runnable runtime workspace
+├── release/
+│   └── README.md              # user-facing release contract
+├── site/                      # GitHub Pages landing page
+└── .github/
+    ├── ISSUE_TEMPLATE/        # idea / research proposal / bug forms
+    └── workflows/             # Pages + manual research archive
+```
+
+## Reproducing the research
+
+Current real-app harnesses target Linux/X11 and can inject real keyboard and pointer input. Use an isolated X session or disposable container.
+
+```bash
+python -m pip install -r research/requirements.txt
+python research/real_apps_v1/real_app_suite_v1.py --help
+```
+
+Read [`RESEARCH.md`](RESEARCH.md) before interpreting benchmark numbers.
+
+## Ideas and contributions
+
+This project explicitly accepts design ideas, not only bug reports.
+
+If you can remove unnecessary observations, model calls, serialization, retries, latency, or fragile assumptions **without removing information the agent needs**, open an [Idea issue](https://github.com/Unjuno/agent-interface/issues/new?template=idea.yml).
+
+A useful idea can be simple:
+
+1. What work or information flow is wasteful today?
+2. What is the smallest mechanism that removes it?
+3. Why should correctness or precision be preserved or improved?
+
+If it is mature enough to benchmark, use the stricter [Research proposal](https://github.com/Unjuno/agent-interface/issues/new?template=research-proposal.yml) form.
+
+## Repository vs Releases
+
+- **Repository:** research, experiments, rejected ideas, benchmarks, design notes, and evolving implementation work.
+- **GitHub Releases:** future runnable distributions a user can download, install/unpack, and actually try.
+- **Historical `v0.0.1-research.*` tags:** archival snapshots created while bootstrapping the public research record; not the target user-distribution format.
+
+The user-release contract is documented in [`release/README.md`](release/README.md).
+
+## What is not proven yet
+
+- Cross-platform generality beyond current Linux/X11 evidence.
+- Production-grade automatic method discovery.
+- Broad end-to-end model/token savings beyond the first scoped evidence-presentation result.
+- Stable runtime/API semantics.
+- A finished user-facing runtime distribution.
+
+Python remains the experimentation vehicle while semantics are changing quickly. A lower-level production implementation comes after the algorithmic boundary stabilizes.
+
+## Research discipline
+
+Every promoted change should define H/T/D/C/U: hypothesis, minimum test, decision rule, competing explanation, and uncertainty. Correctness is a hard gate. Small noisy wins are not promotions. Negative results remain part of the record.
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+## License
+
+Apache License 2.0. See [`LICENSE`](LICENSE).
+
+## Detailed research record
+
+The complete retained narrative remains in this README for auditability, but is collapsed by default so the public entry point stays scannable. The underlying claims, numbers, caveats, and links below are unchanged.
+
+<details>
+<summary><strong>Expand the retained research narrative</strong></summary>
+
 Runnable construction preview: [golden desktop demo](runtime/README.md). The
 one-command WSLg path checks its environment, audits the frozen comparison, or
 runs a fresh persistent six-task workflow. The current v3 path keeps two image-
@@ -463,166 +677,14 @@ speedup or human-like tempo; outer decision waits remain measured in seconds.
 
 Recent recovery candidate: [bounded followup after input interruption](research/live_control/CALC_COMBINED_LIVE.md). In one actual Calc task, the caller collected short passive followups inside the original operation, avoiding two separate followup invocations while preserving interruption reasons and correct saved values. Socket round trips remained unchanged. This is an optional research path with report-compatibility work outstanding, not a general speed or token-saving claim.
 
-## The hypothesis
-
-Most computer-use systems still resemble:
-
-```text
-model -> one action -> screenshot -> model -> one action -> screenshot -> ...
-```
-
-Agent Interface asks whether the interface, not only the model, is now a major bottleneck:
-
-```text
-strong planner
-    -> semantic method / short reactive program
-    -> guarded local execution
-    -> immediate useful feedback
-    -> observe only meaningful change
-    -> deoptimize only the stale layer
-    -> return to the model when semantics require it
-```
-
-The clean experiment is simple:
-
-```text
-same model
-same task
-same environment
-same correctness requirement
-
-only the interface changes
-```
-
-Then measure model boundaries, serialization, observation cost, latency, retries, recovery, and eventually real token use separately.
-
-## Component principles
-
-The eventual tool should satisfy four constraints from the start:
-
-1. **Install quickly.** A user should be able to install or unpack it, start it, connect an agent, and use it without app-specific setup.
-2. **Work with every agent.** The core should be model- and vendor-agnostic. Model-specific adapters belong outside the runtime core.
-3. **Do not stop the agent's thinking.** After an action, return the earliest trustworthy feedback instead of blocking on fixed waits or unnecessarily complete observations. Reduce **agent idle time**.
-4. **React locally.** Input delivery, state-change detection, local verification, retry, and fine motor correction should stay in the local fast path when they do not require semantic reasoning.
-
-Full rationale: [`docs/principles.md`](docs/principles.md).
-
-## Ideas shaping the system
-
-| Idea | Why it exists | Expected effect | State |
-|---|---|---|---|
-| **Universal fallback** | Optimizations must never be required for basic correctness | Unknown apps still work | Baseline |
-| **Self-compiling semantic methods** | Repeated successful traces should not be replanned forever | Fewer model turns / less serialization | Baseline |
-| **Layered lifetimes** | A stale coordinate, binding, or visual cache does not imply the task meaning changed | Less relearning | Promoted |
-| **Guarded Hierarchical Deoptimization** | Predictably stale fast paths should be skipped before failure | Better reliability / lower tail latency | Promoted |
-| **Latest-only visual state** | Old frames are not extra evidence about the current GUI | Less stale-state processing | Runtime principle |
-| **Event-driven observation** | Polling without state change creates work but no information | Fewer captures / faster feedback | Experimental baseline |
-| **Observation gating** | An unchanged or irrelevant screen should not consume another model-visible image | Lower visual/token cost | Active research |
-| **Visual delta / changed-region feedback** | A small local change does not justify resending the whole frame | Lower visual bandwidth | Active research |
-| **Local verification** | Deterministic postconditions do not always need model interpretation | Fewer model escalations | Active design |
-| **Input delivery semantics** | Sending an OS event is not the same as application consumption | Higher correctness | Measured |
-| **Closed-loop motor control** | Pointer movement and on-screen movement are not always identical | Better fine control | Experimental |
-
-## Current evidence
-
-These are scoped research measurements, not production claims.
-
-| Experiment | Result | Scope |
-|---|---:|---|
-| Sparse reactive control | B1 reached 8/8 success on XTerm, Chromium, Calc, and Inkscape in the development screen | Linux/X11, small `n=8/app` |
-| Route-level deoptimization | Inkscape observation reduced **51.9%** and planner-byte proxy **27.8%** vs method invalidation | 72 hidden episodes |
-| XTerm focus guard | p99 reduced about **77.5%** | 72 hidden episodes |
-| Chromium geometry guard | p99 reduced about **75.4%** | 72 hidden episodes |
-| Layered binding + route guards | 72/72 success with predictable stale-route execution eliminated before execution | Chromium drift + process replacement |
-| Exact unchanged-frame suppression (O1) | 96/96 tasks per strategy; 17.15% same-trace image reduction; zero false suppressions | [Four real apps, 24 fresh pairs/app](research/observation_gating/REPORT.md); scripted controller, no model/token measurement; local speedup unproven |
-| Exact tile transport (O2) | 32/32 tasks per strategy; 70.73% same-trace serialized-byte reduction; 553 exact frames | [Four apps, 8 fresh pairs/app](research/observation_tiles/REPORT.md); reconstructed full images, no token saving or local speedup established |
-| Assistant-operated research interface | Calc, Inkscape and XTerm tasks completed through reconstructed images; feedback wait and PNG-reference reuse exercised | [Three exploratory sessions](research/observation_tiles/DEVELOPMENT.md), not a controlled model performance comparison |
-
-Raw reports and CSVs are under [`research/`](research/). `planner bytes` are not tokens, `observed pixels` are not image tokens, and local wall time is not model-in-loop latency.
-
-## Repository map
-
-```text
-.
-├── README.md                  # project entry point
-├── RESEARCH.md                # evidence ledger
-├── ROADMAP.md                 # research sequence
-├── docs/
-│   ├── README.md              # documentation index
-│   ├── principles.md          # thesis + component principles
-│   ├── architecture.md        # current promoted architecture
-│   └── product-hunt.md        # launch notes
-├── research/
-│   ├── requirements.txt       # research-only Python dependencies
-│   ├── real_apps_v1/          # input delivery + sparse reactive control
-│   ├── real_apps_v2/          # method lifetime vs route lifetime
-│   ├── real_apps_v3/          # guarded hierarchical deoptimization
-│   ├── observation_gating/   # frozen O0/O1 experiments and raw evidence
-│   └── observation_tiles/    # exact transport, assistant use and image preparation
-├── runtime/
-│   └── README.md              # future runnable runtime workspace
-├── release/
-│   └── README.md              # user-facing release contract
-├── site/                      # GitHub Pages landing page
-└── .github/
-    ├── ISSUE_TEMPLATE/        # idea / research proposal / bug forms
-    └── workflows/             # Pages + manual research archive
-```
-
-## Reproducing the research
-
-Current real-app harnesses target Linux/X11 and can inject real keyboard and pointer input. Use an isolated X session or disposable container.
-
-```bash
-python -m pip install -r research/requirements.txt
-python research/real_apps_v1/real_app_suite_v1.py --help
-```
-
-Read [`RESEARCH.md`](RESEARCH.md) before interpreting benchmark numbers.
-
-## Ideas and contributions
-
-This project explicitly accepts design ideas, not only bug reports.
-
-If you can remove unnecessary observations, model calls, serialization, retries, latency, or fragile assumptions **without removing information the agent needs**, open an [Idea issue](https://github.com/Unjuno/agent-interface/issues/new?template=idea.yml).
-
-A useful idea can be simple:
-
-1. What work or information flow is wasteful today?
-2. What is the smallest mechanism that removes it?
-3. Why should correctness or precision be preserved or improved?
-
-If it is mature enough to benchmark, use the stricter [Research proposal](https://github.com/Unjuno/agent-interface/issues/new?template=research-proposal.yml) form.
-
-## Repository vs Releases
-
-- **Repository:** research, experiments, rejected ideas, benchmarks, design notes, and evolving implementation work.
-- **GitHub Releases:** future runnable distributions a user can download, install/unpack, and actually try.
-- **Historical `v0.0.1-research.*` tags:** archival snapshots created while bootstrapping the public research record; not the target user-distribution format.
-
-The user-release contract is documented in [`release/README.md`](release/README.md).
-
-## What is not proven yet
-
-- Cross-platform generality beyond current Linux/X11 evidence.
-- Production-grade automatic method discovery.
-- Broad end-to-end model/token savings beyond the first scoped evidence-presentation result.
-- Stable runtime/API semantics.
-- A finished user-facing runtime distribution.
-
-Python remains the experimentation vehicle while semantics are changing quickly. A lower-level production implementation comes after the algorithmic boundary stabilizes.
-
-## Research discipline
-
-Every promoted change should define H/T/D/C/U: hypothesis, minimum test, decision rule, competing explanation, and uncertainty. Correctness is a hard gate. Small noisy wins are not promotions. Negative results remain part of the record.
-
-See [`CONTRIBUTING.md`](CONTRIBUTING.md).
-
-## License
-
-Apache License 2.0. See [`LICENSE`](LICENSE).
+</details>
 
 ## Latest integrated result
+
+For the current direction and handoff, see [Current goal](docs/CURRENT_GOAL.md) and [Local research handoff](docs/LOCAL_RESEARCH_HANDOFF.md).
+
+<details>
+<summary><strong>Expand the integrated-result narrative</strong></summary>
 
 The preregistered Issue #57 desktop comparison retains persistent compiled
 control for this fixed workflow. Plain, ephemeral and persistent each complete
@@ -695,3 +757,6 @@ completion predicate after a same-surface resize. Handle resolution and contract
 repair took0.091ms and0.145ms; the task then completed with no frontier-model
 resumption. The relation is fixture-calibrated. See
 [`research/live_control/TARGET_HANDLE_SEMANTIC_REPAIR_V1.md`](research/live_control/TARGET_HANDLE_SEMANTIC_REPAIR_V1.md).
+
+</details>
+
