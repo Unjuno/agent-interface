@@ -92,7 +92,7 @@ Keep new material in the narrowest existing namespace that matches its role. Do 
 | Packaging/release-readiness work | `release/` |
 | Public presentation assets | `site/` |
 
-Retained evidence paths may be referenced by Issues, PRs, reports, hashes, and audits. Prefer adding an index/README over renaming or moving completed evidence solely for cosmetic cleanup.
+Retained evidence paths may be referenced by Issues, PRs, reports, hashes, and audits. Prefer adding an index/README over renaming or moving completed evidence solely for cosmetic cleanup. Existing direct-root research paths are indexed in [`research/ROOT_NAMESPACE_MAP.md`](research/ROOT_NAMESPACE_MAP.md).
 
 ## Adding a research track
 
