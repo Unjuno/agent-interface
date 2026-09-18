@@ -108,7 +108,7 @@ class Fixture:
 def child(case_id,arm,root_path,out_path,scenario_name):
     scenario=next(x for x in SCENARIOS if x['name']==scenario_name)
     cr=Path(root_path); cr.mkdir(parents=True,exist_ok=False); xvfb=root=cd=sd=None; events=[]; samples=[]; sends=[]; errs=[]
-    cleanup={'xvfb_exit':False,'tk_destroyed':False,'control_closed':False,'scorer_closed':False}; result={'case_id':case_id,'arm':arm,'scenario':scenario['name']}; stop=threading.Event(); threads=[]
+    cleanup={'xvfb_exit':False,'tk_destroyed':False,'control_closed':False,'scorer_closed':False}; result={'case_id':case_id,'arm':arm,'scenario':scenario['name']}; stop=threading.Event(); threads=[]; authority_stop_set_ns=None
     try:
         xvfb,env=start_xvfb(cr); os.environ['DISPLAY']=env['DISPLAY']; os.environ['XAUTHORITY']=env['XAUTHORITY']; title='AI1421-'+case_id
         root=tk.Tk(); root.title(title); root.geometry(f'{WIDTH}x{HEIGHT}+20+20'); root.resizable(False,False); fx=Fixture(root,scenario['initial'],events); root.update_idletasks(); root.update()
@@ -146,7 +146,7 @@ def child(case_id,arm,root_path,out_path,scenario_name):
                 if now>=end: break
             if now>=end: break
             root.update(); time.sleep(.0002)
-        stop.set()
+        stop.set(); authority_stop_set_ns=time.perf_counter_ns()
         ct.join(.1)
         if ct.is_alive(): raise RuntimeError('controller failed to stop at handback')
         # A7 evidence-only boundary flush. Authority is already closed; no controller/send path runs here.
@@ -156,7 +156,7 @@ def child(case_id,arm,root_path,out_path,scenario_name):
             fx.set_state(state,off); next_transition += 1
         root.update_idletasks(); root.update()
         for _ in range(5):root.update();time.sleep(.001)
-        result.update({'samples':samples,'sends':sends,'fixture_events':events,'actual_transitions':[x for x in events if x['event']=='state_transition'],'effects':[x for x in events if x['event']=='f8_effect'],'presses':[x for x in events if x['event']=='f8_press'],'releases':[x for x in events if x['event']=='f8_release'],'score':{'progress_pixels':count_color(sw,PROG_RECT,(0,255,0)),'harm_pixels':count_color(sw,HARM_RECT,(255,0,0))},'terminal_f8_up':key_up(sd,k)})
+        result.update({'authority_deadline_ns':deadline,'authority_stop_set_ns':authority_stop_set_ns,'samples':samples,'sends':sends,'fixture_events':events,'actual_transitions':[x for x in events if x['event']=='state_transition'],'effects':[x for x in events if x['event']=='f8_effect'],'presses':[x for x in events if x['event']=='f8_press'],'releases':[x for x in events if x['event']=='f8_release'],'score':{'progress_pixels':count_color(sw,PROG_RECT,(0,255,0)),'harm_pixels':count_color(sw,HARM_RECT,(255,0,0))},'terminal_f8_up':key_up(sd,k)})
     except Exception as e:errs.append({'type':type(e).__name__,'message':str(e)})
     finally:
         stop.set()
