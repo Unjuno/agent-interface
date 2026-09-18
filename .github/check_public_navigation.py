@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import re
+import subprocess
 import sys
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -42,6 +43,18 @@ PUBLIC_DOCS = [
 LINK_RE = re.compile(r"!?[[^]]*](([^)]+))")
 
 
+def tracked_paths() -> set[str]:
+    raw = subprocess.check_output(["git", "ls-files", "-z"], cwd=ROOT)
+    return {item.decode("utf-8") for item in raw.split(b"\\0") if item}
+
+
+def target_is_tracked(target: str, tracked: set[str]) -> bool:
+    if target in tracked:
+        return True
+    prefix = target.rstrip("/") + "/"
+    return any(path.startswith(prefix) for path in tracked)
+
+
 def extract_target(raw: str) -> str | None:
     target = raw.strip()
     if not target:
@@ -69,6 +82,7 @@ def extract_target(raw: str) -> str | None:
 def main() -> int:
     errors: list[str] = []
     checked_links = 0
+    tracked = tracked_paths()
 
     for relative_doc in PUBLIC_DOCS:
         doc = ROOT / relative_doc
@@ -90,8 +104,11 @@ def main() -> int:
                 errors.append(f"{relative_doc}: link escapes repository: {target}")
                 continue
 
-            if not resolved.exists():
-                errors.append(f"{relative_doc}: missing relative target: {target}")
+            relative_target = resolved.relative_to(ROOT).as_posix()
+            if not target_is_tracked(relative_target, tracked):
+                errors.append(
+                    f"{relative_doc}: missing tracked relative target: {target}"
+                )
 
     if errors:
         print("Public navigation check failed:")
