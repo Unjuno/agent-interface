@@ -68,6 +68,7 @@ The arrows show the intended reading/promotion direction, not code dependencies.
 - [TERMINOLOGY.md](TERMINOLOGY.md) — non-normative term index pointing to canonical definitions.
 - [../RESEARCH.md](../RESEARCH.md) — top-level evidence ledger and claims index.
 - [../research/README.md](../research/README.md) — map of the experimental workspace.
+- [../research/analysis/README.md](../research/analysis/README.md) — analytical proofs, exact derivations, and identifiability studies.
 - [../research/](../research/) — experiment sources, reports, raw summaries, audits, and retained negative results.
 
 ### Runtime and release
