@@ -27,11 +27,21 @@
       "fixed_length_bits_lower_bound": 3,
       "safe_taxonomy_count": 52,
       "witness_partition": [
-        ["THIS_INTENT"],
-        ["THIS_SESSION_OTHER_INTENT"],
-        ["EXTERNAL_PROCESS"],
-        ["HUMAN"],
-        ["OS"]
+        [
+          "THIS_INTENT"
+        ],
+        [
+          "THIS_SESSION_OTHER_INTENT"
+        ],
+        [
+          "EXTERNAL_PROCESS"
+        ],
+        [
+          "HUMAN"
+        ],
+        [
+          "OS"
+        ]
       ],
       "witness_states": 5
     },
@@ -39,13 +49,15 @@
       "exact_five_class_feasible": false,
       "fixed_length_bits_lower_bound": 0,
       "safe_taxonomy_count": 1,
-      "witness_partition": [[
-        "THIS_INTENT",
-        "THIS_SESSION_OTHER_INTENT",
-        "EXTERNAL_PROCESS",
-        "HUMAN",
-        "OS"
-      ]],
+      "witness_partition": [
+        [
+          "THIS_INTENT",
+          "THIS_SESSION_OTHER_INTENT",
+          "EXTERNAL_PROCESS",
+          "HUMAN",
+          "OS"
+        ]
+      ],
       "witness_states": 1
     },
     "SELF_BIT": {
@@ -53,7 +65,9 @@
       "fixed_length_bits_lower_bound": 1,
       "safe_taxonomy_count": 2,
       "witness_partition": [
-        ["THIS_INTENT"],
+        [
+          "THIS_INTENT"
+        ],
         [
           "THIS_SESSION_OTHER_INTENT",
           "EXTERNAL_PROCESS",
@@ -68,8 +82,12 @@
       "fixed_length_bits_lower_bound": 2,
       "safe_taxonomy_count": 5,
       "witness_partition": [
-        ["THIS_INTENT"],
-        ["THIS_SESSION_OTHER_INTENT"],
+        [
+          "THIS_INTENT"
+        ],
+        [
+          "THIS_SESSION_OTHER_INTENT"
+        ],
         [
           "EXTERNAL_PROCESS",
           "HUMAN",
@@ -84,11 +102,26 @@
   "task_success_promotions": 0,
   "tuning": 0,
   "witness_cell_summary": {
-    "1": {"feasible_pairs": 1, "witness_partitions": 1},
-    "2": {"feasible_pairs": 30, "witness_partitions": 15},
-    "3": {"feasible_pairs": 125, "witness_partitions": 25},
-    "4": {"feasible_pairs": 150, "witness_partitions": 10},
-    "5": {"feasible_pairs": 52, "witness_partitions": 1}
+    "1": {
+      "feasible_pairs": 1,
+      "witness_partitions": 1
+    },
+    "2": {
+      "feasible_pairs": 30,
+      "witness_partitions": 15
+    },
+    "3": {
+      "feasible_pairs": 125,
+      "witness_partitions": 25
+    },
+    "4": {
+      "feasible_pairs": 150,
+      "witness_partitions": 10
+    },
+    "5": {
+      "feasible_pairs": 52,
+      "witness_partitions": 1
+    }
   },
   "witness_taxonomy_pairs": 2704
 }
