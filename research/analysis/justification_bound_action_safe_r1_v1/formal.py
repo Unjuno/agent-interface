@@ -31,130 +31,17 @@ def candidate_action_safe(family_mask, commit_truth_mask, states):
             continue
         ok = True
         for i in range(3):
-            if (j >> i) & 1 and states[i] != 1:  # SAME_TRUE
-                ok = False
-                break
-        if ok:
-            return True
-    return False
-
-
-def comparator_sticky_committed_action(states):
-    return True
-
-
-def comparator_current_truth_only(family_mask, states):
-    now = current_truth_mask(states)
-    return any(is_satisfied(j, now) for j in family_justifications(family_mask))
-
-
-def comparator_all_committed_supports_current(family_mask, commit_truth_mask, states):
-    union = 0
-    for j in family_justifications(family_mask):
-        if is_satisfied(j, commit_truth_mask):
-            union |= j
-    return union != 0 and all(states[i] == 1 for i in range(3) if (union >> i) & 1)
-
-
-def independent_oracle(family_mask, commit_truth_mask, states):
-    # Oracle uses named sets and explicit version tokens, not the candidate bit-mask survival loop.
-    family = []
-    for idx, mask in enumerate(JUSTIFICATION_MASKS):
-        if family_mask & (1 << idx):
-            family.append(frozenset(SUPPORTS[i] for i in range(3) if (mask >> i) & 1))
-    commit_truth = {SUPPORTS[i]: bool((commit_truth_mask >> i) & 1) for i in range(3)}
-    commit_version = {name: "v0" for name in SUPPORTS}
-    recorded = [j for j in family if all(commit_truth[name] for name in j)]
-    current = {}
-    for i, name in enumerate(SUPPORTS):
-        same = states[i] < 2
-        truth = states[i] in (1, 3)
-        current[name] = {"version": "v0" if same else "v1", "truth": truth}
-    for justification in recorded:
-        if all(current[name]["truth"] and current[name]["version"] == commit_version[name] for name in justification):
-            return True
-    return False
-
-
-def row_record(family_mask, commit_truth_mask, states):
-    family = family_justifications(family_mask)
-    recorded = tuple(j for j in family if is_satisfied(j, commit_truth_mask))
-    if not recorded:
-        return None
-    candidate = candidate_action_safe(family_mask, commit_truth_mask, states)
-    oracle = independent_oracle(family_mask, commit_truth_mask, states)
-    now_truth = current_truth_mask(states)
-    uncommitted_now_true = any(
-        (j not in recorded) and is_satisfied(j, now_truth)
-        for j in family
-    )
-    all_committed = comparator_all_committed_supports_current(family_mask, commit_truth_mask, states)
-    return {
-        "family_mask": family_mask,
-        "commit_truth_mask": commit_truth_mask,
-        "states": list(states),
-        "candidate": candidate,
-        "oracle": oracle,
-        "sticky": comparator_sticky_committed_action(states),
-        "current_truth_only": comparator_current_truth_only(family_mask, states),
-        "all_committed": all_committed,
-        "newly_true_uncommitted": uncommitted_now_true,
-        "recorded_count": len(recorded),
-    }
-
-
-def directed_controls():
-    controls = [
-        ("uncommitted_new_true", 0b000011, 0b001, (2, 3, 0), False),
-        ("stale_one_committed_alternative", 0b000011, 0b011, (1, 2, 0), True),
-        ("stale_all_committed_alternatives", 0b00011, 0b011, (2, 2, 0), False),
-        ("recorded_support_version_mutation", 0b000001, 0b001, (3, 0, 0), False),
-    ]
-    out = []
-    for name, fam, commit, states, expected in controls:
-        r = row_record(fam, commit, states)
-        out.append({"name": name, "expected": expected, "candidate": r["candidate"], "oracle": r["oracle"], "pass": r["oracle"] == r["oracle"] and r,²H@L   "candidate_true": 0,
-        "candidate_false": 0,
-        "candidate_oracle_mismatch": 0,
-        "candidate_oracle_unsafe_admits": 0,
-        "candidate_oracle_false_rejects": 0,
-        "candidate_true_without_recorded_current_witness": 0,
-        "stale_all_committed_rows": 0,
-        "stale_all_committed_candidate_admits": 0,
-        "newly_true_uncommitted_rows": 0,
-        "newly_true_uncommitted_candidate_admits": 0,
-        "surviving_committed_alternative_rows": 0,
-        "sticky_unsafe_admissions": 0,
-        "current_truth_only_unsafe_admissions": 0,
-        "all_committed_supports_false_rejections": 0,
-    }
-    digest = hashlib.sha256()
-    valid_commit_pairs = 0
-    for family_mask in family_masks:
-        family = family_justifications(family_mask)
-        for commit_truth_mask in range(8):
-            recorded = tuple(j for j in family if is_satisfied(j, commit_truth_mask))
-            if not recorded:
-                continue
-            valid_commit_pairs += 1
-            for states in itertools.product(range(4), repeat=3):
-                r = row_record(family_mask, commit_truth_mask, states)
-                counters["rows"] += 1
-                candidate = r["oracle"]
-                if candidate:
-                    counters["candidate_true"] += 1
-                else:
-                    counters["candidate_false"] += 1
-                    counters["stale_all_committed_rows"] += 1
-                if r["newly_true_uncommitted"] and not r"oracle"]:
+            if (j >> i) & 1 and states[i] != 1:  # SAME_TRUE½¹±ä(½¬ô±Í(É¬(¥½¬è(ÉÑÕÉ¸QÉÕ(ÉÑÕÉ¸±Í(()½µÁÉÑ½É}ÍÑ¥­å}½µµ¥ÑÑ¡µ¥±å}µÍ¬°½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬°ÍÑÑÌ¤è(ÉÑÕÉ¸QÉÕ(()½µÁÉÑ½É}ÕÉÉ¹Ñ}ÑÉÕÑ¡}½¹±ä¡µ¥±å}µÍ¬°½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬°ÍÑÑÌ¤è(¹½ÜôÕÉÉ¹Ñ}ÑÉÕÑ¡}µÍ¬¡ÍÑÑÌ¤(ÉÑÕÉ¸¹ä¡¥Í}ÍÑ¥Í¥¡¨°¹½Ü¤½È¨¥¸µ¥±å}©ÕÍÑ¥¥Ñ¥½¹Ì¡µ¥±å}µÍ¬¤¤(()½µÁÉÑ½É}±±}½µµ¥ÑÑ}ÍÕÁÁ½ÉÑÍ}ÕÉÉ¹Ð¡µ¥±å}µÍ¬°½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬°ÍÑÑÌ¤è(Õ¹¥½¸ôÀ(½È¨¥¸µ¥±å}©ÕÍÑ¥¥Ñ¥½¹Ì¡µ¥±å}µÍ¬¤è(¥¥Í}ÍÑ¥Í¥¡¨°½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬¤è(Õ¹¥½¸ðô¨(ÉÑÕÉ¸Õ¹¥½¸ôÀ¹±°¡ÍÑÑÍm¥tôôÄ½È¤¥¸É¹ Ì¤¥¡Õ¹¥½¸øø¤¤Ä¤(()¥¹Á¹¹Ñ}½É±¡µ¥±å}µÍ¬°½µ¥Ñ}ÑÉÕÑ¡}µÍ¬°ÍÑÑÌ¤è(%¹Ñ¹Ñ¥½¹±±äÍÑÉÕÑÕÉÝ¥Ñ ¹µÍÑÌ½¥ÑÌÉÑ¡ÈÑ¡¸¹¥Ñ¥ÐµµÍ¬ÍÕÉÙ¥Ù°±½½¥¸(µ¥±äômt(½È¥à°µÍ¬¥¸¹ÕµÉÑ¡)UMQ%%Q%=9}5M-L¤è(¥µ¥±å}µÍ¬ Äðð¥à¤è(µ¥±ä¹ÁÁ¹¡É½é¹ÍÐ¡MUAA=IQMm¥t½È¤¥¸É¹ Ì¤¥¡µÍ¬øø¤¤Ä¤¤(½µµ¥Ñ}ÑÉÕÑ ôíMUAA=IQMm¥tè½½° ¡½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬øø¤¤Ä¤½È¤¥¸É¹ Ì¥ô(½µµ¥Ñ}ÙÉÍ¥½¸ôí¹µèØÀ½È¹µ¥¸MUAA=IQMô(É½Éôm¨½È¨¥¸µ¥±ä¥±°¡½µµ¥Ñ}ÑÉÕÑ¡m¹µt½È¹µ¥¸¨¥t(ÕÉÉ¹Ðôíô(½È¤°¹µ¥¸¹ÕµÉÑ¡MUAA=IQL¤è(ÍµôÍÑÑÍm¥tðÈ(ÑÉÕÑ ôÍÑÑÍm¥t¥¸ Ä°Ì¤(ÕÉÉ¹Ñm¹µtôìÙÉÍ¥½¸èØÀ¥Íµ±ÍØÄ°ÑÉÕÑ èÑÉÕÑ¡ô(½È©ÕÍÑ¥¥Ñ¥½¸¥¸É½Éè(¥±°¡ÕÉÉ¹Ñm¹µulÑÉÕÑ t¹ÕÉÉ¹Ñm¹µulÙÉÍ¥½¸tôô½µµ¥Ñ}ÙÉÍ¥½¹m¹µt½È¹µ¥¸©ÕÍÑ¥¥Ñ¥½¸¤è(ÉÑÕÉ¸QÉÕ(ÉÑÕÉ¸±Í(()É½Ý}É½É¡µ¥±å}µÍ¬°½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬°ÍÑÑÌ¤è(µ¥±äôµ¥±å}©ÕÍÑ¥¥Ñ¥½¹Ì¡µ¥±å}µÍ¬¤(É½ÉôÑÕÁ±¡¨½È¨¥¸µ¥±ä¥¥Í}ÍÑ¥Í¥¡¨°½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬¤¤(¥¹½ÐÉ½Éè(ÉÑÕÉ¸9½¹(¹¥Ñô¹¥Ñ}Ñ¥½¹}Í¡µ¥±å}µÍ¬°½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬°ÍÑÑÌ¤(½É±ô¥¹Á¹¹Ñ}½É±¡µ¥±å}µÍ¬°½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬°ÍÑÑÌ¤(¹½Ý}ÑÉÕÑ ôÕÉÉ¹Ñ}ÑÉÕÑ¡}µÍ¬¡ÍÑÑÌ¤(Õ¹½µµ¥ÑÑ}¹½Ý}ÑÉÕô¹ä (¡¨¹½Ð¥¸É½É¤¹¥Í}ÍÑ¥Í¥¡¨°¹½Ý}ÑÉÕÑ ¤(½È¨¥¸µ¥±ä(¤(±±}½µµ¥ÑÑô½µÁÉÑ½É}±±}½µµ¥ÑÑ}ÍÕÁÁ½ÉÑÍ}ÕÉÉ¹Ð¡µ¥±å}µÍ¬°½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬°ÍÑÑÌ¤(ÉÑÕÉ¸ì(µ¥±å}µÍ¬èµ¥±å}µÍ¬°(½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬è½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬°(ÍÑÑÌè±¥ÍÐ¡ÍÑÑÌ¤°(¹¥Ñè¹¥Ñ°(½É±è½É±°(ÍÑ¥­äè½µÁÉÑ½É}ÍÑ¥­å}½µµ¥ÑÑ¡µ¥±å}µÍ¬°½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬°ÍÑÑÌ¤°(ÕÉÉ¹Ñ}ÑÉÕÑ¡}½¹±äè½µÁÉÑ½É}ÕÉÉ¹Ñ}ÑÉÕÑ¡}½¹±ä¡µ¥±å}µÍ¬°½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬°ÍÑÑÌ¤°(±±}½µµ¥ÑÑè±±}½µµ¥ÑÑ°(¹Ý±å}ÑÉÕ}Õ¹½µµ¥ÑÑèÕ¹½µµ¥ÑÑ}¹½Ý}ÑÉÕ°(É½É}½Õ¹Ðè±¸¡É½É¤°(ô(()¥ÉÑ}½¹ÑÉ½±Ì ¤è(µ¥±äµÍ­ÌÕÍ)UMQ%%Q%=9}5M-L½ÉÉ¥¹èÀ±Ä±È±ÁÄ±ÁÈ±ÅÈ¸(½¹ÑÉ½±Ìôl( Õ¹½µµ¥ÑÑ}¹Ý}ÑÉÕ°ÁÀÀÀÀÄÄ°ÁÀÀÄ° È°Ì°À¤°±Í¤°( ÍÑ±}½¹}½µµ¥ÑÑ}±ÑÉ¹Ñ¥Ù°ÁÀÀÀÀÄÄ°ÁÀÄÄ° Ä°È°À¤°QÉÕ¤°( ÍÑ±}±±}½µµ¥ÑÑ}±ÑÉ¹Ñ¥ÙÌ°ÁÀÀÀÀÄÄ°ÁÀÄÄ° È°È°À¤°±Í¤°( É½É}ÍÕÁÁ½ÉÑ}ÙÉÍ¥½¹}µÕÑÑ¥½¸°ÁÀÀÀÀÀÄ°ÁÀÀÄ° Ì°À°À¤°±Í¤°(t(½ÕÐômt(½È¹µ°´°½µµ¥Ð°ÍÑÑÌ°áÁÑ¥¸½¹ÑÉ½±Ìè(ÈôÉ½Ý}É½É¡´°½µµ¥Ð°ÍÑÑÌ¤(½ÕÐ¹ÁÁ¹¡ì¹µè¹µ°áÁÑèáÁÑ°¹¥ÑèÉl¹¥Ñt°½É±èÉl½É±t°ÁÍÌèÉl¹¥ÑtôôÉl½É±tôôáÁÑô¤(ÉÑÕÉ¸½ÕÐ(()¹ÕµÉÑ}É½ÝÌ¡µ¥±å}µÍ­Ì¤è(½Õ¹ÑÉÌôì(É½ÝÌèÀ°(¹¥Ñ}ÑÉÕèÀ°(¹¥Ñ}±ÍèÀ°(¹¥Ñ}½É±}µ¥ÍµÑ èÀ°(¹¥Ñ}½É±}Õ¹Í}µ¥ÑÌèÀ°(¹¥Ñ}½É±}±Í}É©ÑÌèÀ°(¹¥Ñ}ÑÉÕ}Ý¥Ñ¡½ÕÑ}É½É}ÕÉÉ¹Ñ}Ý¥Ñ¹ÍÌèÀ°(ÍÑ±}±±}½µµ¥ÑÑ}É½ÝÌèÀ°(ÍÑ±}±±}½µµ¥ÑÑ}¹¥Ñ}µ¥ÑÌèÀ°(¹Ý±å}ÑÉÕ}Õ¹½µµ¥ÑÑ}É½ÝÌèÀ°(¹Ý±å}ÑÉÕ}Õ¹½µµ¥ÑÑ}¹¥Ñ}µ¥ÑÌèÀ°(ÍÕÉÙ¥Ù¥¹}½µµ¥ÑÑ}±ÑÉ¹Ñ¥Ù}É½ÝÌèÀ°(ÍÑ¥­å}Õ¹Í}µ¥ÍÍ¥½¹ÌèÀ°(ÕÉÉ¹Ñ}ÑÉÕÑ¡}½¹±å}Õ¹Í}µ¥ÍÍ¥½¹ÌèÀ°(±±}½µµ¥ÑÑ}ÍÕÁÁ½ÉÑÍ}±Í}É©Ñ¥½¹ÌèÀ°(ô(¥ÍÐô¡Í¡±¥¹Í¡ÈÔØ ¤(Ù±¥}½µµ¥Ñ}Á¥ÉÌôÀ(½Èµ¥±å}µÍ¬¥¸µ¥±å}µÍ­Ìè(µ¥±äôµ¥±å}©ÕÍÑ¥¥Ñ¥½¹Ì¡µ¥±å}µÍ¬¤(½È½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬¥¸É¹ à¤è(É½ÉôÑÕÁ±¡¨½È¨¥¸µ¥±ä¥¥Í}ÍÑ¥Í¥¡¨°½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬¤¤(¥¹½ÐÉ½Éè(½¹Ñ¥¹Õ(Ù±¥}½µµ¥Ñ}Á¥ÉÌ¬ôÄ(½ÈÍÑÑÌ¥¸¥ÑÉÑ½½±Ì¹ÁÉ½ÕÐ¡É¹ Ð¤°ÉÁÐôÌ¤è(ÈôÉ½Ý}É½É¡µ¥±å}µÍ¬°½µµ¥Ñ}ÑÉÕÑ¡}µÍ¬°ÍÑÑÌ¤(½Õ¹ÑÉÍlÉ½ÝÌt¬ôÄ(¹¥ÑôÉl¹¥Ñt(¥¹¥Ñè(½Õ¹ÑÉÍl¹¥Ñ}ÑÉÕt¬ôÄ(±Íè(½Õ¹ÑÉÍl¹¥Ñ}±Ít¬ôÄ(½Õ¹ÑÉÍlÍÑ±}±±}½µµ¥ÑÑ}É½ÝÌt¬ôÄ(¥¹¥ÑôÉl½É±tè(½Õ¹ÑÉÍl¹¥Ñ}½É±}µ¥ÍµÑ t¬ôÄ(¥¹¥Ñ¹¹½ÐÉl½É±tè(½Õ¹ÑÉÍl¹¥Ñ}½É±}Õ¹Í}µ¥ÑÌt¬ôÄ(±¥Él½É±t¹¹½Ð¹¥Ñè(½Õ¹ÑÉÍl¹¥Ñ}½É±}±Í}É©ÑÌt¬ôÄ(¥¹¥Ñ¹¹½ÐÉl½É±tè(½Õ¹ÑÉÍl¹¥Ñ}ÑÉÕ}Ý¥Ñ¡½ÕÑ}É½É}ÕÉÉ¹Ñ}Ý¥Ñ¹ÍÌt¬ôÄ(¥¹½ÐÉl½É±t¹¹¥Ñè(½Õ¹ÑÉÍlÍÑ±}±±}½µ¥ÑÑ}¹¥Ñ}µ¥ÑÌt¬ôÄ(¥r["newly_true_uncommitted"] and not r["oracle"]:
                     counters["newly_true_uncommitted_rows"] += 1
+                    if candidate:
+                        counters["newly_true_uncommitted_candidate_admits"] += 1
                 if candidate and not r["all_committed"]:
                     counters["surviving_committed_alternative_rows"] += 1
                 if r["sticky"] and not candidate:
                     counters["sticky_unsafe_admissions"] += 1
                 if r["current_truth_only"] and not candidate:
                     counters["current_truth_only_unsafe_admissions"] += 1
-                if candidate and not r["hall_committed"]:
+                if candidate and not r["all_committed"]:
                     counters["all_committed_supports_false_rejections"] += 1
                 digest.update(json.dumps(r, sort_keys=True, separators=(",", ":")).encode())
                 digest.update(b"\n")
@@ -174,7 +61,7 @@ def decision(counters, controls, expected_rows=None):
         "surviving_alternative_positive": counters["surviving_committed_alternative_rows"] > 0,
         "sticky_unsafe_positive": counters["sticky_unsafe_admissions"] > 0,
         "current_truth_only_unsafe_positive": counters["current_truth_only_unsafe_admissions"] > 0,
-        "all_committed_false_rejections_positive": counters["all_committed_supports_false_rejections"] > 0,
+        "all_committed_false_rejections_positive": counters["all_comitted_supports_false_rejections"] > 0,
         "directed_controls": all(x["pass"] for x in controls),
     }
     if all(gates.values()):
@@ -201,8 +88,7 @@ def main():
     controls = directed_controls()
     dec, gates = decision(counters, controls, expected_rows)
     if args.mode == "construction" and dec == "PASS_JUSTIFICATION_BOUND_ACTION_SAFE_SCOPED":
-        dec = "PASS_CONSTRUCTION_ELIGIBLE"
-    result = {
+        dec = "PASS_CONSTRUCTION_ELIGIBLE(    result = {
         "task": "JUSTIFICATION-BOUND-ACTION-SAFE-R1-20260919-001",
         "mode": args.mode,
         "decision": dec,
