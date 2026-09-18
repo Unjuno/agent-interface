@@ -3,13 +3,17 @@ import base64, hashlib, json, sys
 from collections import defaultdict
 from pathlib import Path
 
+
 def canon(v):
     return json.dumps(v, sort_keys=True, separators=(',', ':'), ensure_ascii=False)
+
 def git_blob(data: bytes) -> str:
     return hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
+
 def eligible(r):
     e=r['eligibility']
     return e['planner_turn_status']=='completed' and e['planner_answer_eligible'] is True and e['model_action_discarded'] is False and e['plan_terminal']=='completed' and r['teacher_label'] is not None
+
 def derive_prior(rows, iteration):
     by={r['iteration']:r for r in rows}
     for j in range(iteration-1,-1,-1):
@@ -23,10 +27,12 @@ def derive_prior(rows, iteration):
                 return {'kind':'RECEIPT','action':q['action'],'extent':q['extent'],'result':q['result'],'source_iteration':j}
             return {'kind':'UNKNOWN','source_iteration':j}
     return {'kind':'NONE'}
+
 def receipt_repr(r):
     if r['kind'] in ('NONE','UNKNOWN'):
         return {'kind':r['kind']}
     return {'kind':'RECEIPT','action':r['action'],'extent':r['extent'],'result':r['result']}
+
 def groups(rows, enriched=False):
     g=defaultdict(list)
     for r in rows:
@@ -43,6 +49,7 @@ def groups(rows, enriched=False):
         if len(labels)>1:
             out.append({'signature':sig,'iterations':[i for i,_ in vals],'distinct_labels':len(labels),'labels':labels})
     return out, len(g)
+
 def main():
     fixture=json.loads(Path(sys.argv[1]).read_text())
     rows=fixture['rows']
