@@ -14,6 +14,30 @@ This directory is the public documentation map for Agent Interface. It organizes
 | What are the latest failures, handoffs, and next steps? | [LOCAL_RESEARCH_HANDOFF.md](LOCAL_RESEARCH_HANDOFF.md) |
 | What remains before a public release? | [ROADMAP.md](../ROADMAP.md) and the [release contract](../release/README.md) |
 | What can currently be run? | [runtime/README.md](../runtime/README.md) |
+| How should a question be split between analysis and experiment? | [RESEARCH_METHOD.md](RESEARCH_METHOD.md) |
+
+
+## Repository structure
+
+```mermaid
+flowchart TD
+    ROOT[Agent Interface repository]
+    ROOT --> ENTRY[README.md<br/>public entry point]
+    ROOT --> DOCS[docs/<br/>current status + architecture + method]
+    ROOT --> EVID[RESEARCH.md<br/>evidence ledger]
+    ROOT --> RES[research/<br/>experiments + retained evidence]
+    ROOT --> RUN[runtime/<br/>promoted executable semantics]
+    ROOT --> REL[release/<br/>packaging + readiness]
+    ROOT --> SITE[site/<br/>public presentation]
+    DOCS --> GOAL[CURRENT_GOAL.md]
+    DOCS --> ARCH[architecture.md]
+    DOCS --> METHOD[RESEARCH_METHOD.md]
+    RES --> MEAS[measurement / integration / domain tracks]
+    EVID --> RES
+    RUN --> REL
+```
+
+The arrows show the intended reading/promotion direction, not code dependencies.
 
 ## Documentation layers
 
@@ -34,6 +58,7 @@ This directory is the public documentation map for Agent Interface. It organizes
 
 ### Research and evidence
 
+- [RESEARCH_METHOD.md](RESEARCH_METHOD.md) — analytical-first decision flow: prove/model exact semantics first, measure only the empirical residual.
 - [../RESEARCH.md](../RESEARCH.md) — top-level evidence ledger and claims index.
 - [../research/README.md](../research/README.md) — map of the experimental workspace.
 - [../research/](../research/) — experiment sources, reports, raw summaries, audits, and retained negative results.
