@@ -4,6 +4,27 @@ GitHub Releases are intended for artifacts a user can actually download and try.
 
 The repository itself remains research-first. Historical `v0.0.1-research.*` prereleases are archival research snapshots and are not the target release format going forward.
 
+## Release path
+
+```mermaid
+flowchart TD
+    R[Research repository<br/>analysis · experiments · retained evidence]
+    RT[Promoted runtime semantics / candidate]
+    B[Preview bundle<br/>manifest · checksums · quickstart · support metadata]
+    CI[Generic CI<br/>source/package closure + audit-retained]
+    HOST[Supported-host acceptance<br/>setup · doctor · fresh no-retry run · audit-live]
+    PREVIEW[Runtime preview release<br/>downloadable + runnable + scoped support envelope]
+    STABLE[Stable release<br/>later separate stabilization gate]
+
+    R --> RT --> B
+    B --> CI
+    B --> HOST
+    CI -.->|does not substitute for| HOST
+    HOST --> PREVIEW --> STABLE
+```
+
+This diagram restates the existing release boundary: repository/CI evidence can prepare a candidate, but the intended supported host must satisfy its own acceptance gate before publication.
+
 ## Current Research Preview RC
 
 The active release lane is `release/research-preview-20260917-rc1` (Issue #515). Its packaging implementation lives under `release/preview_bundle_v1/`.
@@ -50,7 +71,7 @@ For RC1, final publication acceptance additionally requires the intended WSLg ho
 
 ## Release tracks
 
-- **Research repository:** experiments and evidence on `main`.
+- **Research repository:** analyses, experiments, and retained evidence on `main`.
 - **Runtime preview releases:** downloadable, runnable distributions for users.
 - **Stable releases:** only after execution semantics, recovery behavior, installation, and cross-app correctness are substantially frozen.
 
