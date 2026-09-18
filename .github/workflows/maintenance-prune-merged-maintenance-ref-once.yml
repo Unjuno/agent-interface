@@ -1,0 +1,50 @@
+name: one-shot merged maintenance ref cleanup
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/maintenance-prune-merged-maintenance-ref-once.yml"
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Delete exact merged maintenance ref
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch="maintenance/remove-prune-stale-refs-20260918-2"
+          expected="18c95ef54517201ce0d256356624f9849163d8d1"
+
+          git fetch --prune --force origin '+refs/heads/*:refs/remotes/origin/*'
+          ref="refs/remotes/origin/$branch"
+
+          if ! git show-ref --verify --quiet "$ref"; then
+            echo "ALREADY_GONE $branch"
+            exit 0
+          fi
+
+          actual="$(git rev-parse "$ref")"
+          test "$actual" = "$expected"
+
+          pr_json="$(gh pr view 1386 --repo "$GITHUB_REPOSITORY" --json state,mergedAt,headRefName,headRefOid)"
+          echo "$pr_json"
+          test "$(jq -r '.state' <<<"$pr_json")" = "MERGED"
+          test "$(jq -r '.headRefName' <<<"$pr_json")" = "$branch"
+          test "$(jq -r '.headRefOid' <<<"$pr_json")" = "$expected"
+          test "$(jq -r '.mergedAt' <<<"$pr_json")" != "null"
+
+          git push origin --delete "$branch"
