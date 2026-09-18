@@ -1,4 +1,4 @@
-import argparse,json,pathlib,random,time
+import argparse,json,pathlib,random,time,hashlib
 from candidate import RequestOriginBound,InstallTimeOnly,VALID,HARD,AMBIG,SCOPES
 from oracle import new_state,apply,snapshot
 GENS=(0,1,7,65535,2**31-1,2**63-1)
@@ -36,7 +36,8 @@ def run(seed):
     transitions=traces=mismatch=result_mismatch=state_mismatch=0;stale_refused=stale_installs=stale_effects=fresh_installs=fresh_effects=replay_attempts=replay_refused=rebinds=0;hard_effects=ambig_effects=double_advance=cross_mut=authority_promotions=generation_failures=0;gen_seen=set();negative_stale_effects=0
     for cat,i,expected_steps in order:
         g=GENS[i%len(GENS)];gen_seen.add(g);ops=ops_for(cat,i,g);assert len(ops)==expected_steps
-        c=RequestOriginBound();o=new_state()
+        c=RequestOriginBound();o=new_state(); before_other=None
+        if cat=='cross_scope':before_other=c.snapshot()
         for op in ops:
             cr=invoke(c,op);orr=apply(o,op);transitions+=1
             if cr!=orr:result_mismatch+=1
@@ -57,12 +58,13 @@ def run(seed):
             if cat=='ambig' and op['op']=='USE' and cr.get('effect'):ambig_effects+=1
         if cat=='duplicate_invalidation' and c.epochs[SCOPES[i%4]]!=1:double_advance+=1
         if cat=='cross_scope':
-            other=SCOPES[(i+1)%4]
+            s=SCOPES[i%4];other=SCOPES[(i+1)%4]
             if c.cache[other] is not None or c.epochs[other]!=0:cross_mut+=1
         if cat=='generation':
             s=SCOPES[i%4]
             if c.cache[s] is None or invoke(c,dict(op='USE',scope=s)).get('effect') is not True:generation_failures+=1
         traces+=1
+        # negative discriminator only on stale topology; same authored ops
         if cat=='stale':
             u=InstallTimeOnly()
             for op in ops:
