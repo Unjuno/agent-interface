@@ -17,20 +17,106 @@
   },
   "formal_invocations": 0,
   "malformed": [
-    {"name":"bad_count","rejected":true},
-    {"name":"bad_state","rejected":true},
-    {"name":"bad_binding","rejected":true}
+    {
+      "name": "bad_count",
+      "rejected": true
+    },
+    {
+      "name": "bad_state",
+      "rejected": true
+    },
+    {
+      "name": "bad_binding",
+      "rejected": true
+    }
   ],
   "pass": true,
   "phase": "construction",
   "rows": [
-    {"baseline":{"action":"REUSE_CONTEXT","reason":"CROP_UNCHANGED"},"candidate":{"action":"REUSE_CONTEXT","reason":"GLOBAL_UNIQUENESS_PROVEN"},"name":"irrelevant_outside","required_reuse":true},
-    {"baseline":{"action":"REUSE_CONTEXT","reason":"CROP_UNCHANGED"},"candidate":{"action":"RAW_FALLBACK","reason":"AMBIGUOUS_TARGET"},"name":"duplicate_outside","required_reuse":false},
-    {"baseline":{"action":"FORWARD_CRITICAL","reason":"CRITICAL_EVENT"},"candidate":{"action":"FORWARD_CRITICAL","reason":"CRITICAL_EVENT"},"name":"critical","required_reuse":false},
-    {"baseline":{"action":"STALE_SOURCE_REJECTED","reason":"STALE_SOURCE"},"candidate":{"action":"STALE_SOURCE_REJECTED","reason":"STALE_SOURCE"},"name":"stale_source","required_reuse":false},
-    {"baseline":{"action":"RAW_FALLBACK","reason":"CROP_CHANGED"},"candidate":{"action":"RAW_FALLBACK","reason":"CROP_CHANGED"},"name":"target_removed","required_reuse":false},
-    {"baseline":{"action":"RAW_FALLBACK","reason":"CROP_CHANGED"},"candidate":{"action":"RAW_FALLBACK","reason":"CROP_CHANGED"},"name":"target_changed","required_reuse":false},
-    {"baseline":{"action":"REUSE_CONTEXT","reason":"CROP_UNCHANGED"},"candidate":{"action":"UNIQUENESS_RECEIPT_REJECTED","reason":"UNBOUND_UNIQUENESS_EVIDENCE"},"name":"forged_uniqueness","required_reuse":true}
+    {
+      "baseline": {
+        "action": "REUSE_CONTEXT",
+        "reason": "CROP_UNCHANGED"
+      },
+      "candidate": {
+        "action": "REUSE_CONTEXT",
+        "reason": "GLOBAL_UNIQUENESS_PROVEN"
+      },
+      "name": "irrelevant_outside",
+      "required_reuse": true
+    },
+    {
+      "baseline": {
+        "action": "REUSE_CONTEXT",
+        "reason": "CROP_UNCHANGED"
+      },
+      "candidate": {
+        "action": "RAW_FALLBACK",
+        "reason": "AMBIGUOUS_TARGET"
+      },
+      "name": "duplicate_outside",
+      "required_reuse": false
+    },
+    {
+      "baseline": {
+        "action": "FORWARD_CRITICAL",
+        "reason": "CRITICAL_EVENT"
+      },
+      "candidate": {
+        "action": "FORWARD_CRITICAL",
+        "reason": "CRITICAL_EVENT"
+      },
+      "name": "critical",
+      "required_reuse": false
+    },
+    {
+      "baseline": {
+        "action": "STALE_SOURCE_REJECTED",
+        "reason": "STALE_SOURCE"
+      },
+      "candidate": {
+        "action": "STALE_SOURCE_REJECTED",
+        "reason": "STALE_SOURCE"
+      },
+      "name": "stale_source",
+      "required_reuse": false
+    },
+    {
+      "baseline": {
+        "action": "RAW_FALLBACK",
+        "reason": "CROP_CHANGED"
+      },
+      "candidate": {
+        "action": "RAW_FALLBACK",
+        "reason": "CROP_CHANGED"
+      },
+      "name": "target_removed",
+      "required_reuse": false
+    },
+    {
+      "baseline": {
+        "action": "RAW_FALLBACK",
+        "reason": "CROP_CHANGED"
+      },
+      "candidate": {
+        "action": "RAW_FALLBACK",
+        "reason": "CROP_CHANGED"
+      },
+      "name": "target_changed",
+      "required_reuse": false
+    },
+    {
+      "baseline": {
+        "action": "REUSE_CONTEXT",
+        "reason": "CROP_UNCHANGED"
+      },
+      "candidate": {
+        "action": "UNIQUENESS_RECEIPT_REJECTED",
+        "reason": "UNBOUND_UNIQUENESS_EVIDENCE"
+      },
+      "name": "forged_uniqueness",
+      "required_reuse": true
+    }
   ],
   "task": "OBSERVATION-GATING-O3-REVEAL-SUPPORT-CLOSURE-20260919-001"
 }
