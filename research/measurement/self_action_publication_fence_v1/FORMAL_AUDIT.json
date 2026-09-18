@@ -1,0 +1,32 @@
+{
+  "controls_pass": true,
+  "corruption_controls": {
+    "always_history_loss": true,
+    "duplicate_action_escape": true,
+    "fresh_positive_loss": true,
+    "future_cover_escape": true,
+    "mismatch": true,
+    "source_missing": true,
+    "stale_escape": true,
+    "visual_discriminator_loss": true
+  },
+  "decision": "PASS_SELF_ACTION_PUBLICATION_FENCE_SCOPED",
+  "integrity_errors": [],
+  "metrics": {
+    "always_history_fresh_positive_false_refusals": 40000,
+    "candidate_oracle_mismatch": 0,
+    "duplicate_action_double_advance": 0,
+    "duplicate_evidence_conflict_accepted": 0,
+    "fresh_negative_effects": 0,
+    "fresh_positive_effects": 40000,
+    "future_cover_accepted": 0,
+    "irrelevant_false_rejections": 0,
+    "ordinary_false_effects": 0,
+    "publication_gap_stale_effects": 0,
+    "stale_cover_effects": 0,
+    "traces": 240000,
+    "visual_only_stale_effects": 80000,
+    "wrong_scope_effects": 0
+  },
+  "pass": true
+}
