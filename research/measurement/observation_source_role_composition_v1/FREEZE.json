@@ -1,0 +1,40 @@
+{
+  "task": "OBSERVATION-SOURCE-ROLE-COMPOSITION-20260918-001",
+  "issue": 1471,
+  "base": "0186dbe6a7a3674c1fd591a7ed7e472e01e0746e",
+  "branch": "research/observation-source-role-composition-1471",
+  "pre_freeze_head": "b1d0a4de7ef2e0f40781703fc691b61e43789260",
+  "formal_invocations_before_freeze": 0,
+  "source_bundle": {
+    "tar_gz_bytes": 6371,
+    "tar_gz_sha256": "59d4b9641a7222fba360a666eead4f3e0292e6c1e294cfb7534dfe474d5a18df",
+    "b64_sha256": "fbb6c6adbed9032127b8c4e652e09cf5a96e1cca942526b2046a479ff44b0f19",
+    "b64_git_blob": "0c365308cb0a4cf4712d599245d3bebbe2c331d4"
+  },
+  "readable_git_blobs": {
+    "PLAN.md": "8de9d97c3d5881d9981a86b97b82167e33e9ef3f",
+    "parent_evidence.json": "4fa03bb5f83259da778e603f2e2a55318343da8c",
+    "CONSTRUCTION.json": "9d01bbb86a618a226291f1f361291811cf9a711e"
+  },
+  "source_member_sha256": {
+    "PLAN.md": "5ec25411576a7aa466e1e3de10f44e09ce2d3e0f7ce5f731f0dcb4f199599714",
+    "parent_evidence.json": "25ca122ef92a86c39eb3540be013420991e368fe1035cfdb280652c574ea9f8f",
+    "contract.py": "a992d8e96372c61d7c107583b4ecd26fd1da32b2f71c5b9ca76ccefe1f1d5f53",
+    "oracle.py": "222ba232c049bb1a0b155d6c4225e17877c336ad9616fc43120a22ed1bf3fafb",
+    "corpus.py": "a6f3734d0b83e582e98d97b44bb48cc3f67d8b511d88617d3809287e5dcf053a",
+    "construction.py": "9191d5ca62041d4c4d5df513e76c9c978eea9d7d49c3ffc8b34145df31db16e0",
+    "formal.py": "66d1eea70565df20bbde5beb9c13bd04326a4ae9ebc007438c6a7182464d17ad",
+    "audit.py": "c22f872d50d23e52c278ca9d0cab70cfdadb576ff600731fe7fd80a7c4b1afb2"
+  },
+  "construction": {
+    "directed": "8/8 PASS",
+    "nonformal_rows": 60000,
+    "candidate_oracle_mismatches": 0,
+    "primary_attack_candidate_accepts": 0,
+    "primary_attack_untyped_accepts": 50000
+  },
+  "formal_status": "NOT_RUN",
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0
+}
