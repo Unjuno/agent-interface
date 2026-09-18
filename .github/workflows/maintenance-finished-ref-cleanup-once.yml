@@ -1,0 +1,77 @@
+name: one-shot finished maintenance ref cleanup
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/maintenance-finished-ref-cleanup-once.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Delete exact completed refs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --prune --force origin '+refs/heads/*:refs/remotes/origin/*'
+          failures=0
+          deleted=0
+
+          delete_exact() {
+            branch="$1"
+            expected="$2"
+            ref="refs/remotes/origin/$branch"
+            if ! git show-ref --verify --quiet "$ref"; then
+              echo "ALREADY_GONE $branch"
+              return 0
+            fi
+            actual="$(git rev-parse "$ref")"
+            if [[ "$actual" != "$expected" ]]; then
+              echo "SHA_MISMATCH $branch expected=$expected actual=$actual" >&2
+              failures=$((failures + 1))
+              return 0
+            fi
+            if ! git merge-base --is-ancestor "$ref" refs/remotes/origin/main; then
+              echo "NOT_CONTAINED $branch" >&2
+              failures=$((failures + 1))
+              return 0
+            fi
+            git push origin --delete "$branch"
+            deleted=$((deleted + 1))
+          }
+
+          delete_contained() {
+            branch="$1"
+            ref="refs/remotes/origin/$branch"
+            if ! git show-ref --verify --quiet "$ref"; then
+              echo "ALREADY_GONE $branch"
+              return 0
+            fi
+            if ! git merge-base --is-ancestor "$ref" refs/remotes/origin/main; then
+              echo "NOT_CONTAINED $branch" >&2
+              failures=$((failures + 1))
+              return 0
+            fi
+            git push origin --delete "$branch"
+            deleted=$((deleted + 1))
+          }
+
+          delete_exact "maintenance/prune-contained-refs-20260918-b2" "bae251358925228199338b22e19df17229f6c7a7"
+          delete_exact "maintenance/prune-yesterday-contained-refs-20260918" "bcb4bb59a18147c6b7d31d4d7aa44d7251342124"
+          delete_exact "maintenance/remove-contained-ref-cleanup-workflow-20260918" "b045f9af0c9932f8a6ca931dbe7b4fb2a7bbd537"
+          delete_exact "maintenance/remove-yesterday-ref-cleanup-workflow-20260918" "21bbfd3233027319e2d14a799e6b1d79c7962bdc"
+          delete_exact "maintenance/rescue-1344-direct-displacement-result-20260918" "a9e80c46ff93201ae39a4d25d829e4f753161ae9"
+          delete_contained "maintenance/prune-finished-maintenance-refs-20260918"
+
+          echo "deleted=$deleted failures=$failures" >> "$GITHUB_STEP_SUMMARY"
+          test "$failures" -eq 0
