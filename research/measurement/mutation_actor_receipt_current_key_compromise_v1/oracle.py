@@ -20,6 +20,7 @@ def verifier_accepts_current(record:dict,w:dict,current_epoch:int=1,used=None):
         if w.get(k)!=record.get(k): return False
     return True
 
+
 def hidden_provenance_disposition(accepted:bool, producer:str):
     if not accepted: return 'REJECTED'
     if producer=='TRUSTED_RUNTIME': return 'TRUSTED_SELF_ACCEPTED'
