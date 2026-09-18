@@ -15,6 +15,33 @@ For claims and scientific disposition, start with the top-level [research index]
 | Current Linux research caller | [live_control/CURRENT_CLIENT.md](live_control/CURRENT_CLIENT.md) |
 | Research convergence/freeze criteria | [evolution/freeze_criteria.md](evolution/freeze_criteria.md) |
 | Revisit history | [REVISIT_LEDGER.md](REVISIT_LEDGER.md) |
+| Analysis vs experiment decision flow | [../docs/RESEARCH_METHOD.md](../docs/RESEARCH_METHOD.md) |
+
+
+## Research routing
+
+```mermaid
+flowchart TD
+    Q[New research question] --> M{Exact semantics or<br/>tractable state space?}
+    M -->|yes| A[Analytical reduction<br/>invariant · oracle · enumeration]
+    A --> U{Empirical uncertainty remains?}
+    U -->|no| R[Retain scoped analytical result]
+    U -->|yes| E[Freeze minimal empirical test]
+    M -->|no| E
+    E --> C{Primary scope}
+    C -->|measurement / semantics| MEAS[measurement/]
+    C -->|cross-component| INT[integration/]
+    C -->|live GUI control| LIVE[live_control/]
+    C -->|real-time motor| DOOM[doom/ or domain track]
+    C -->|observation| OBS[observation*/]
+    MEAS --> AUD[Independent audit + evidence ledger]
+    INT --> AUD
+    LIVE --> AUD
+    DOOM --> AUD
+    OBS --> AUD
+```
+
+Prefer the narrowest existing namespace. The diagram is a placement guide; retained historical paths are not reorganized retroactively.
 
 ## Workspace map
 
