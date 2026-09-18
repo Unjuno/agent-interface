@@ -26,7 +26,8 @@ For claims and scientific disposition, start with the top-level [research index]
 flowchart TD
     Q[New research question] --> M{Exact semantics or<br/>tractable state space?}
     M -->|yes| A[Analytical reduction<br/>invariant · oracle · enumeration]
-    A --> U{Empirical uncertainty remains?}
+    A --> ANA[analysis/<br/>standalone reusable analytical studies]
+    ANA --> U{Empirical uncertainty remains?}
     U -->|no| R[Retain scoped analytical result]
     U -->|yes| E[Freeze minimal empirical test]
     M -->|no| E
