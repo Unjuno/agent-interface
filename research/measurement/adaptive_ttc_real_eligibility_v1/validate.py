@@ -32,6 +32,7 @@ def evaluate(d):
         errors.append("row_sufficiency_overclaim")
     a=d["activation"]
     if set(a) != set(REQ): errors.append("activation_schema")
+    # Source-bound consistency: retained report explicitly says 5-row v31 cohort is insufficient for TTC activation.
     if a.get("enough_leakage_free_rows") and s["map01_v31_representation"].get("eligible_rows") == 5 and s["map01_v31_representation"].get("report_boundary_requires_larger_corpus"):
         errors.append("activation_rows_contradict_source")
     if a.get("independent_semantic_effect_oracle") and not s["map01_v31_representation"].get("independent_semantic_effect_oracle"):
