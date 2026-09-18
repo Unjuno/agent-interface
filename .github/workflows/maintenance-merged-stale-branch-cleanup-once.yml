@@ -1,0 +1,100 @@
+name: one-shot merged stale branch cleanup
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/maintenance-merged-stale-branch-cleanup-once.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Delete only merged stale branches
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git fetch --prune --force origin '+refs/heads/*:refs/remotes/origin/*'
+
+          now="$(date -u +%s)"
+          cutoff="$((now - 86400))"
+          deleted=0
+          eligible=0
+          failures=0
+          recent_kept=0
+          unique_kept=0
+
+          : > /tmp/deleted.txt
+          : > /tmp/failures.txt
+
+          while IFS= read -r ref; do
+            branch="${ref#refs/remotes/origin/}"
+
+            case "$branch" in
+              HEAD|main|release/*)
+                continue
+                ;;
+            esac
+
+            if ! git merge-base --is-ancestor "$ref" refs/remotes/origin/main; then
+              unique_kept="$((unique_kept + 1))"
+              continue
+            fi
+
+            tip_ts="$(git show -s --format=%ct "$ref")"
+            explicit=false
+            case "$branch" in
+              *20260916*|*2026-09-16*|*20260917*|*2026-09-17*|              branch-spam-end|last-accidental|oops-final|please-delete|really-last|              stop-branch-spam|tmp-do-not-use|tmp-ignore|              maintenance/merged-stale-branch-cleanup-20260918)
+                explicit=true
+                ;;
+            esac
+
+            if (( tip_ts >= cutoff )) && [[ "$explicit" != true ]]; then
+              recent_kept="$((recent_kept + 1))"
+              continue
+            fi
+
+            eligible="$((eligible + 1))"
+            echo "DELETE $branch"
+            if git push origin --delete "$branch"; then
+              deleted="$((deleted + 1))"
+              echo "$branch" >> /tmp/deleted.txt
+            else
+              failures="$((failures + 1))"
+              echo "$branch" >> /tmp/failures.txt
+            fi
+          done < <(git for-each-ref --format='%(refname)' refs/remotes/origin)
+
+          {
+            echo "## One-shot merged stale branch cleanup"
+            echo
+            echo "- eligible merged stale/explicit branches: $eligible"
+            echo "- deleted: $deleted"
+            echo "- deletion failures: $failures"
+            echo "- recent merged branches kept: $recent_kept"
+            echo "- branches with unique commits kept: $unique_kept"
+            echo
+            echo "### Deleted branches"
+            if [[ -s /tmp/deleted.txt ]]; then
+              sed 's/^/- `/; s/$/`/' /tmp/deleted.txt
+            else
+              echo "- none"
+            fi
+            if (( failures > 0 )); then
+              echo
+              echo "### Failures"
+              sed 's/^/- `/; s/$/`/' /tmp/failures.txt
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          test "$failures" -eq 0
