@@ -1,0 +1,36 @@
+{
+  "construction": false,
+  "corruptions": {
+    "archive_preserved": true,
+    "fresh_epoch_not_overinvalidated": true,
+    "reuse_epoch_detected": true,
+    "stale_prepared_epoch_rejected": true
+  },
+  "decision": "PASS_BELIEF_RECOMMIT_EPOCH_ABA_SCOPED",
+  "digest": "f6563a73381c85a5611b62dece1473f0babea02e47d947b08e860168d911ecde",
+  "directed": {
+    "contradiction_blocks": true,
+    "fresh_epoch_accepted": true,
+    "normal_action": true,
+    "reused_id_exposes_aba": true,
+    "stale_old_epoch_blocked": true
+  },
+  "formal_invocations": 1,
+  "replacements": 0,
+  "reruns": 0,
+  "stats": {
+    "archived_old_commit_witnesses": 27332,
+    "depth": 9,
+    "fresh_current_action_admissions": 60522,
+    "mismatch": 0,
+    "nonincreasing_successful_commit_epochs": 0,
+    "old_epoch_action_admissions": 0,
+    "replayed_old_receipt_attempts_after_recommit": 156,
+    "reused_id_aba_admissions": 140,
+    "stale_or_contradicted_action_admissions": 0,
+    "successful_commits": 1523288,
+    "trace_prefix_nodes": 153391689,
+    "transitions": 153391688
+  },
+  "tuning": 0
+}
