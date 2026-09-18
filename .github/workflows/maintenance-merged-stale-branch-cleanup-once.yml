@@ -1,4 +1,5 @@
 name: one-shot merged stale branch cleanup
+# retrigger-after-install: 2026-09-18T03:08Z
 
 on:
   push:
@@ -54,7 +55,7 @@ jobs:
             tip_ts="$(git show -s --format=%ct "$ref")"
             explicit=false
             case "$branch" in
-              *20260916*|*2026-09-16*|*20260917*|*2026-09-17*|              branch-spam-end|last-accidental|oops-final|please-delete|really-last|              stop-branch-spam|tmp-do-not-use|tmp-ignore|              maintenance/merged-stale-branch-cleanup-20260918)
+              *20260916*|*2026-09-16*|*20260917*|*2026-09-17*|branch-spam-end|last-accidental|oops-final|please-delete|really-last|stop-branch-spam|tmp-do-not-use|tmp-ignore|maintenance/merged-stale-branch-cleanup-20260918)
                 explicit=true
                 ;;
             esac
