@@ -16,6 +16,7 @@ This directory is the public documentation map for Agent Interface. It organizes
 | What can currently be run? | [runtime/README.md](../runtime/README.md) |
 | How should a question be split between analysis and experiment? | [RESEARCH_METHOD.md](RESEARCH_METHOD.md) |
 | How do current goal, evidence, runtime, and release documents relate? | [EVIDENCE_MAP.md](EVIDENCE_MAP.md) |
+| What do recurring terms like GHD, authority lease, HOLD, and PROMOTED mean here? | [TERMINOLOGY.md](TERMINOLOGY.md) |
 
 
 ## Repository structure
@@ -64,6 +65,7 @@ The arrows show the intended reading/promotion direction, not code dependencies.
 
 - [RESEARCH_METHOD.md](RESEARCH_METHOD.md) — analytical-first decision flow: prove/model exact semantics first, measure only the empirical residual.
 - [EVIDENCE_MAP.md](EVIDENCE_MAP.md) — public map from current goal through retained evidence, convergence, runtime, and release.
+- [TERMINOLOGY.md](TERMINOLOGY.md) — non-normative term index pointing to canonical definitions.
 - [../RESEARCH.md](../RESEARCH.md) — top-level evidence ledger and claims index.
 - [../research/README.md](../research/README.md) — map of the experimental workspace.
 - [../research/](../research/) — experiment sources, reports, raw summaries, audits, and retained negative results.

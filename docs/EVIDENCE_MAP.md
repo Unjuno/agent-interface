@@ -51,6 +51,7 @@ The diagram shows document/evidence responsibility. It is not a claim that every
 | What executable semantics are currently organized as runtime code? | [`../runtime/README.md`](../runtime/README.md) | Proof of general platform support |
 | What must a user-facing distribution satisfy? | [`../release/README.md`](../release/README.md) | The research ledger |
 | What should a new contributor read first? | [`../CONTRIBUTING.md`](../CONTRIBUTING.md) | A substitute for experiment-specific reports |
+| Where are recurring architecture/status terms indexed? | [`TERMINOLOGY.md`](TERMINOLOGY.md) | A replacement for the canonical source documents |
 
 ## Reader paths
 
