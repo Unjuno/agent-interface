@@ -17,6 +17,17 @@ This file is intentionally comprehensive. For public navigation, use the shorter
 | Relationship between current status, evidence, runtime and release | [docs/EVIDENCE_MAP.md](docs/EVIDENCE_MAP.md) |
 
 **Interpretation rule:** a directory, experiment, PASS, or retained result is not automatically a product-level or integrated claim. Read the stated scope and uncertainty attached to the specific result.
+### Ledger layers
+
+| Layer | Purpose |
+|---|---|
+| [Research evidence ladder](#research-evidence-ladder) | Current/scoped evidence organized by major research track. |
+| [Promotion policy](#promotion-policy) | Conditions before a candidate is treated as promoted. |
+| [Claims taxonomy](#claims-taxonomy) | Meaning of repository measurement terms and proxies. |
+| [Rejected or held ideas](#rejected-or-held-ideas) | Negative evidence that constrains the design space. |
+| [Next research questions](#next-research-questions) | Open questions; analytical reduction should precede empirical allocation where possible. |
+| [Historical follow-up ledger](#historical-follow-up-ledger) | Retained chronological follow-ups, collapsed by default. |
+
 
 
 
@@ -1213,6 +1224,14 @@ reference before task-4 input, repairs once, and finishes in 44.131s versus
 and WSL audit. This RETAIN decision applies to the fixed workflow and allocation,
 not broad token savings or human-speed performance. See
 `research/live_control/INTEGRATED_EFFICIENCY_LIVE_V1.md`.
+
+## Historical follow-up ledger
+
+The retained follow-up chronology below remains verbatim for provenance. It is collapsed by default because current direction, progress, promotion policy, and next research questions are indexed above.
+
+<details>
+<summary><strong>Expand retained follow-up history</strong></summary>
+
 ## Latest follow-up — fresh action-validity admission separates stale evidence (2026-09-15)
 
 The retained v31 tempo trace shows why a whole-frame equality gate would fail:
@@ -1427,3 +1446,5 @@ appearance as stale/misleading. The original audit's missing prereg
 ten raw call plans record Luna-low, and a v2 retained audit passes Windows/WSL
 without rerun. Crop advances only as a conditional full-history replacement for
 a history-needed OpenTTD/Mindustry test; it is not promoted over current-only.
+
+</details>
