@@ -1,7 +1,7 @@
 from __future__ import annotations
 import hashlib,itertools,json,os,time
 from model import Event,VALID_KINDS,ordered_batch,priority_sorted_batch,flatten
-from cases import directed_cases
+from cases import directed_cases,E
 
 TASK='EVENT-ORDERED-INTERRUPT-BATCHING-20260919-001'
 BATCH_SIZE=4
@@ -51,8 +51,6 @@ def main(out_path='FORMAL_RESULT.json'):
         reversals += int(naive_reversed)
         directed[name]={'candidate_exact':cand_ok,'priority_sorted_reversed':naive_reversed,'individual_deliveries':len(xs),'candidate_deliveries':len(ordered_batch(xs,BATCH_SIZE))}
     controls={'duplicate':False,'nonmonotonic':False,'invalid_priority':False,'invalid_kind':False,'invalid_batch_size':False}
-    from cases import E
-    from model import ordered_batch
     checks=[
       ('duplicate',lambda: ordered_batch([E(0,'A','PROGRESS'),E(0,'A','PROGRESS')])),
       ('nonmonotonic',lambda: ordered_batch([E(0,'A','PROGRESS'),Event('r1','A',0,1,'PROGRESS',1,'ev1')])),
