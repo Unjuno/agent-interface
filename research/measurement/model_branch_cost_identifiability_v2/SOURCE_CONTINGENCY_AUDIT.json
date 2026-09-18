@@ -1,0 +1,118 @@
+{
+  "status": "passed",
+  "protocol": {
+    "seed": 990609,
+    "same_model_effort_task_environment_iterations_session_span": true,
+    "initial_descriptor_normalized_mae": 2.723311546840959e-06,
+    "initial_descriptor_below_no_visible_effect_threshold": true,
+    "allocation_limit": "two sequential 12-decision feasibility runs; model outputs and ASYNC timing are nondeterministic",
+    "iwad_paths_differ_but_sha256_matches": true
+  },
+  "ungrouped": {
+    "iterations": 12,
+    "map_exit": false,
+    "death_count": 0,
+    "kill_count": 0,
+    "wall_seconds": 100.500428339,
+    "model_seconds": 86.683909487,
+    "nonmodel_seconds": 13.816518852000002,
+    "contingencies_authored": 6,
+    "branches_taken": 1,
+    "branch_latency_ms": [
+      111.497198
+    ],
+    "program_admissions": 18,
+    "extra_program_admissions_vs_one_bundle": 6,
+    "receipt_commands": 18,
+    "receipt_samples": 66,
+    "receipt_capture_ms": 234.562696,
+    "usage": {
+      "input_tokens": 122048,
+      "cached_input_tokens": 66176,
+      "output_tokens": 1682,
+      "reasoning_output_tokens": 819,
+      "uncached_input_tokens": 55872
+    }
+  },
+  "grouped": {
+    "iterations": 12,
+    "map_exit": false,
+    "death_count": 0,
+    "kill_count": 0,
+    "wall_seconds": 106.629233999,
+    "model_seconds": 92.396785146,
+    "nonmodel_seconds": 14.232448852999994,
+    "contingencies_authored": 4,
+    "branches_taken": 1,
+    "branch_latency_ms": [
+      95.331434
+    ],
+    "program_admissions": 13,
+    "extra_program_admissions_vs_one_bundle": 1,
+    "receipt_commands": 16,
+    "receipt_samples": 66,
+    "receipt_capture_ms": 232.250645,
+    "usage": {
+      "input_tokens": 121459,
+      "cached_input_tokens": 65024,
+      "output_tokens": 1370,
+      "reasoning_output_tokens": 572,
+      "uncached_input_tokens": 56435
+    }
+  },
+  "grouping_delta": {
+    "program_admissions": -5,
+    "extra_admissions": -5,
+    "receipt_capture_ms": -2.3120509999999967
+  },
+  "latency_reference": {
+    "prior_no_effect_to_next_model_plan_median_ms": 8682.542156,
+    "grouped_local_branch_ms": 95.331434,
+    "observed_path_ratio": 91.07743156365402,
+    "scope": "reference median from three prior events versus one local branch; not a population speedup estimate"
+  },
+  "observed_result": "a real no-visible-effect branch ran a model-authored fallback locally; contingency-boundary grouping removed five unused admissions and retained sub-100ms branch admission",
+  "decision": "retain as local contingency mechanism feasibility; completion and false-branch quality remain unproven",
+  "retained_failures": [
+    {
+      "run": "schema-failure",
+      "status": "invalid_json_schema",
+      "stage": "first model call",
+      "model_calls_failed": 1,
+      "input_programs": 0,
+      "seed": 990610,
+      "cause": "const condition omitted required type",
+      "retained_local": "map01-contingency-live-smoke-01-schema-failure"
+    },
+    {
+      "run": "grouped-env-failure-01",
+      "status": "missing_dependency",
+      "stage": "before game ready",
+      "model_calls": 0,
+      "input_programs": 0,
+      "seed": 990609,
+      "cause": "system Python lacked vizdoom",
+      "retained_local": "map01-contingency-grouped-live-01"
+    },
+    {
+      "run": "grouped-env-failure-02",
+      "status": "missing_dependency",
+      "stage": "before controller import",
+      "model_calls": 0,
+      "input_programs": 0,
+      "seed": 990609,
+      "cause": "selected virtualenv lacked Pillow",
+      "retained_local": "map01-contingency-grouped-live-02"
+    },
+    {
+      "run": "grouped-env-failure-03",
+      "status": "bad_dependency_path_quoting",
+      "stage": "before game ready",
+      "model_calls": 0,
+      "input_programs": 0,
+      "seed": 990609,
+      "cause": "PYTHONPATH with a space was not exported intact",
+      "retained_local": "map01-contingency-grouped-live-03"
+    }
+  ]
+}
