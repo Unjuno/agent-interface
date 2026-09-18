@@ -2,6 +2,7 @@ import argparse,json,hashlib
 from pathlib import Path
 OPS=('OBS0','OBS1','VALIDATE','COMMIT','ADVANCE','CONTRADICT','REOBSERVE','ACTION')
 DEPTH=8
+# state tuple: current_gen,lifecycle,value,support_gen,contradicted,commit_count,last_committed_gen,last_committed_value
 INIT=(0,'RAW',None,None,False,0,None,None)
 def step(s,op):
  g,life,val,sg,con,cc,lcg,lcv=s
