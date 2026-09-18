@@ -182,6 +182,20 @@ def supervise(out_path,root_dir):
     print(json.dumps({'child_exit':[x['returncode'] for x in runs],'rows':len(cases)},sort_keys=True))
     return 0 if len(cases)==12 and all(x['returncode']==0 for x in runs) else 3
 
+def construction(out_path,root_dir):
+    out=Path(out_path); root=Path(root_dir)
+    if out.exists() or root.exists():raise SystemExit('output exists')
+    root.mkdir(); cases=[]; runs=[]; scenario=next(x for x in SCENARIOS if x['name']=='TRANSIENT_28')
+    for pos,arm in enumerate(ARMS):
+        cid=f'construction-{pos}-{arm}-TRANSIENT_28'; row=root/f'{cid}.json'; cr=root/cid
+        cp=subprocess.run([sys.executable,__file__,'child','--case-id',cid,'--arm',arm,'--scenario','TRANSIENT_28','--root',str(cr),'--out',str(row)],text=True,capture_output=True)
+        runs.append({'case_id':cid,'returncode':cp.returncode,'stdout':cp.stdout,'stderr':cp.stderr})
+        if row.exists():cases.append(json.loads(row.read_text()))
+    r={'task':TASK,'phase':'construction','formal_invocations':0,'reruns':0,'replacements':0,'tuning':0,'process_isolation':True,'frontier_schedule':{'request_ns':0,'return_ns':FRONTIER},'sample_period_ns':SAMPLE,'emission_policy':'one-shot-on-observed-CLEAR-entry','cases':cases,'child_runs':runs}
+    out.write_text(json.dumps(r,indent=2,sort_keys=True)+'\n')
+    print(json.dumps({'child_exit':[x['returncode'] for x in runs],'rows':len(cases)},sort_keys=True))
+    return 0 if len(cases)==2 and all(x['returncode']==0 for x in runs) else 3
+
 def intervals(c,state):
     start=c['start_ns']; end=start+FRONTIER; cur=c['initial_state']; cursor=start; out=[]
     for tr in sorted(c.get('actual_transitions',[]),key=lambda x:x['t_ns']):
@@ -236,8 +250,10 @@ def main():
     ap=argparse.ArgumentParser(); sub=ap.add_subparsers(dest='mode',required=True)
     p=sub.add_parser('child');p.add_argument('--case-id',required=True);p.add_argument('--arm',required=True);p.add_argument('--scenario',required=True);p.add_argument('--root',required=True);p.add_argument('--out',required=True)
     p=sub.add_parser('supervise');p.add_argument('--root',required=True);p.add_argument('--out',required=True)
+    p=sub.add_parser('construction');p.add_argument('--root',required=True);p.add_argument('--out',required=True)
     sub.add_parser('pure');a=ap.parse_args()
     if a.mode=='child':return child(a.case_id,a.arm,a.root,a.out,a.scenario)
     if a.mode=='supervise':return supervise(a.out,a.root)
+    if a.mode=='construction':return construction(a.out,a.root)
     return pure()
 if __name__=='__main__':raise SystemExit(main())
