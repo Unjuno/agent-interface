@@ -150,7 +150,7 @@ def main():
       ('wrong_disposition',lambda q:next(c for c in q['cases'] if c.get('arm')==CAND and c.get('samples'))['samples'][0].__setitem__('disposition','BROKEN')),
       ('transition_program',lambda q:next(c for c in q['cases'] if c.get('scenario')=='TRANSIENT_28')['actual_transitions'].pop()),
       ('edge_repeat',lambda q:next(c for c in q['cases'] if c.get('arm')==CAND and c.get('scenario')=='TRANSIENT_28')['sends'].append({'send_begin_ns':1,'send_end_ns':2,'nominal_sample_offset_ns':5_000_000})),
-      ('resume_after_handback',lambda q:next(e for c in q['cases'] if c.get('arm')==CAND and c.get('scenario')=='TRANSIENT_8' for e in c.get('effects',[]) if e.get('effect_kind')=='useful').__setitem__('t_ns',next(c for c in q['cases'] if c.get('arm')==CAND and c.get('scenario')=='TRANSIENT_8')['start_ns']+FRONTIER+1)),
+      ('resume_after_handback',lambda q:(lambda c,clear:[e.__setitem__('t_ns',c['start_ns']+FRONTIER+1) for e in c.get('effects',[]) if e.get('effect_kind')=='useful' and e.get('t_ns',0)>=clear])(next(c for c in q['cases'] if c.get('arm')==CAND and c.get('scenario')=='TRANSIENT_8'),max(x['t_ns'] for x in next(c for c in q['cases'] if c.get('arm')==CAND and c.get('scenario')=='TRANSIENT_8').get('actual_transitions',[]) if x.get('state')==CLEAR))),
       ('integrity_precedence',lambda q:(q['cases'][0]['cleanup'].__setitem__('xvfb_exit',False),q['cases'][0]['score'].__setitem__('harm_pixels',1))),
     ]
     for name,fn in muts:
