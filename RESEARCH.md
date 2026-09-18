@@ -1,6 +1,6 @@
 # Research index
 
-Agent Interface is being developed by experiment, not by locking an API early. This file is the evidence ledger for the public repository.
+Agent Interface is being developed by analysis and experiment rather than by locking an API early. This file is the evidence ledger for the public repository.
 ## How to read this ledger
 
 This file is intentionally comprehensive. For public navigation, use the shorter status documents first and come here for the retained evidence history.
@@ -13,9 +13,32 @@ This file is intentionally comprehensive. For public navigation, use the shorter
 | Experimental workspace map | [research/README.md](research/README.md) |
 | Convergence and freeze criteria | [research/evolution/freeze_criteria.md](research/evolution/freeze_criteria.md) |
 | Runnable construction preview | [runtime/README.md](runtime/README.md) |
+| Analysis vs experiment decision method | [docs/RESEARCH_METHOD.md](docs/RESEARCH_METHOD.md) |
 
 **Interpretation rule:** a directory, experiment, PASS, or retained result is not automatically a product-level or integrated claim. Read the stated scope and uncertainty attached to the specific result.
 
+
+
+## Evidence lifecycle
+
+```mermaid
+flowchart LR
+    Q[Research question] --> A{Analytically decidable?}
+    A -->|yes| P[Invariant / proof / exhaustive oracle]
+    A -->|no| E[Minimal empirical allocation]
+    P --> R{Empirical residual remains?}
+    R -->|yes| E
+    R -->|no| AUD[Independent audit]
+    E --> AUD
+    AUD --> L[Retained evidence ledger]
+    L --> X{Cross-domain / integration gate}
+    X -->|not yet| H[Scoped PASS / FAIL / HOLD]
+    X -->|passed| M[Promotion review]
+    M --> RT[runtime/]
+    RT --> REL[release/]
+```
+
+Exact contract/state-machine questions should be reduced analytically first; timing, model behavior, OS/application behavior, and integrated capability remain empirical where their outcome depends on the real environment.
 
 ## Research question
 
@@ -27,7 +50,7 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 - survives UI/environment drift by invalidating only stale layers,
 - and preserves correctness as a hard gate?
 
-## Experimental ladder
+## Research evidence ladder
 
 ### Current real-time gate — typed liveness construction passes replay
 
@@ -931,7 +954,7 @@ Negative results are retained because they constrain the design space.
 - event filtering across a high-frequency Python/stdio boundary — observer overhead erased gains;
 - replacing all observation with a single global perceptual hash — insufficient for local motion/change.
 
-## Next experiments
+## Next research questions
 
 1. Paired agent-in-the-loop adapter measurement: PNG/reference reuse, real image tokens and resume latency.
 2. Isolate adaptive motor feedback from additional pacing/observation cost; retain the failed drag regression.
