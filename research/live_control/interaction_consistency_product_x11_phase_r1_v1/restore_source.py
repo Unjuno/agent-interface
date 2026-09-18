@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 import base64,gzip,hashlib,json,pathlib,sys
 ROOT=pathlib.Path(__file__).parent
-binding=json.loads((ROOT/'SOURCE_BINDING.json').read_text()); b64=(ROOT/'SOURCE_BUNDLE.json.gz.b64').read_bytes()
+binding=json.loads((ROOT/'SOURCE_BINDING.json').read_text())
+parts=[]
+for p in binding['parts']:
+ d=(ROOT/p).read_bytes()
+ if hashlib.sha256(d).hexdigest()!=binding['part_sha256'][p]: raise SystemExit('part_sha256:'+p)
+ parts.append(d)
+b64=b''.join(parts)
 if hashlib.sha256(b64).hexdigest()!=binding['bundle_b64_sha256']: raise SystemExit('bundle_b64_sha256')
 gz=base64.b64decode(b64)
 if hashlib.sha256(gz).hexdigest()!=binding['decoded_bundle_gzip_sha256']: raise SystemExit('gzip_sha256')
