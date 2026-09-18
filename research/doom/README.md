@@ -1,5 +1,21 @@
 # First DOOM-engine transfer: visual input through X11
 
+> **Directory role:** retained DOOM/MAP01 continuous-control research. Chronological development claims remain preserved below, while current project status lives in the canonical status documents.
+
+## Navigate
+
+| Need | Read |
+|---|---|
+| Current project objective | [../../docs/CURRENT_GOAL.md](../../docs/CURRENT_GOAL.md) |
+| Latest cross-project handoff | [../../docs/LOCAL_RESEARCH_HANDOFF.md](../../docs/LOCAL_RESEARCH_HANDOFF.md) |
+| Project evidence ledger | [../../RESEARCH.md](../../RESEARCH.md) |
+| Shared-runtime transfer | [Shared runtime transfer](#shared-runtime-transfer) |
+| Reproduction notes | [Reproduce](#reproduce) |
+
+
+<details>
+<summary><strong>Expand retained MAP01 / DOOM chronology</strong></summary>
+
 Latest running-control evidence: [MAP01 running-action cancellation v2](MAP01_RUNNING_ACTION_CANCEL_LIVE_V2.md)
 uses an existing held-input observation to detect real screen ammo48→47, request
 the matching cancel in136.780ms from capture and verify empty release in138.694ms.
@@ -128,6 +144,9 @@ input and X11 screenshots, using the existing async executor and exact image
 transport. This uses the bundled **Freedoom assets**, not original commercial
 DOOM assets. It is a one-room integration test, not full-game competence or a
 Product Hunt-ready demonstration.
+
+
+</details>
 
 ## Shared runtime transfer
 
