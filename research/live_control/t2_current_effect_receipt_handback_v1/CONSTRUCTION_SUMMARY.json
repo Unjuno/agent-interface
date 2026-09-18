@@ -1,0 +1,44 @@
+{
+  "audit_pass": true,
+  "directed_controls": {
+    "mismatched_source_rejected": true,
+    "stale_generation_rejected": true,
+    "valid_accept": true
+  },
+  "disposition": "PASS_CURRENT_EFFECT_RECEIPT_HANDBACK_SCOPED",
+  "errors": [],
+  "excluded_from_formal": true,
+  "raw_sha256": "8780bad4474780f74e8b0d8cf0df31bd133b3f878d6b5e7e9045c48a05aac1d5",
+  "rows": 4,
+  "summary": {
+    "arms": {
+      "ACTUATION_RECEIPT_DRAIN": {
+        "effect_after_handback": 2,
+        "effect_correct": 2,
+        "effect_receipt_valid": 0,
+        "extra_wait_after_actuation_receipt_ms_max": 0.0,
+        "extra_wait_after_actuation_receipt_ms_p50": 0.0,
+        "handback_delay_ms_max": 8.851908,
+        "local_completion_after_handback": 0,
+        "n": 2,
+        "physical_guaranteed_after_handback": 0,
+        "physical_possible_after_handback": 0,
+        "terminal_released": 2
+      },
+      "CURRENT_EFFECT_RECEIPT_DRAIN": {
+        "effect_after_handback": 0,
+        "effect_correct": 2,
+        "effect_receipt_valid": 2,
+        "extra_wait_after_actuation_receipt_ms_max": 3.607925,
+        "extra_wait_after_actuation_receipt_ms_p50": 2.103649,
+        "handback_delay_ms_max": 11.918168,
+        "local_completion_after_handback": 0,
+        "n": 2,
+        "physical_guaranteed_after_handback": 0,
+        "physical_possible_after_handback": 0,
+        "terminal_released": 2
+      }
+    },
+    "disposition": "PASS_CURRENT_EFFECT_RECEIPT_HANDBACK_SCOPED"
+  }
+}
