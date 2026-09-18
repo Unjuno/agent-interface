@@ -6,6 +6,6 @@ Container execution is primarily a fast/disposable experimental environment. A c
 
 - Evidence ledger: [`../../RESEARCH.md`](../../RESEARCH.md)
 - Current objective: [`../../docs/CURRENT_GOAL.md`](../../docs/CURRENT_GOAL.md)
-- Experimental workspace map: [`../README.md`](../README.md)
+- Research workspace map: [`../README.md`](../README.md)
 
 Retained failures and versioned successors stay beside the relevant source/results for provenance.
