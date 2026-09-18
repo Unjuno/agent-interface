@@ -21,32 +21,25 @@ The architecture is not a pipeline in which every rich-model action must pass th
 
 The preferred optimization boundary is:
 
-```text
-                         +----------------------+
-                         | Rich model / planner |
-                         | intent / strategy    |
-                         +----------+-----------+
-                                    |
-                    +---------------+----------------+
-                    |                                |
-                    | direct operation               | bounded delegation
-                    v                                v
-          ordinary current admission       intent / policy compiler
-                    |                                |
-                    |                         macro / servo / watcher
-                    |                         cached policy / branches
-                    |                                |
-                    |                         observe -> act -> verify
-                    |                                  -> adjust
-                    |                                |
-                    |                   stale/ambiguous/novel -> YIELD
-                    |                                |
-                    +---------------+----------------+
-                                    v
-                         deterministic authority
-                                    |
-                                    v
-                               computer
+```mermaid
+flowchart TD
+    RM["Rich model / planner<br/>intent / strategy"]
+    ADM["Ordinary current admission"]
+    COMP["Intent / policy compiler"]
+    LOCAL["Macro / servo / watcher<br/>cached policy / branches"]
+    LOOP["Observe → act → verify → adjust"]
+    Y["YIELD<br/>stale / ambiguous / novel"]
+    AUTH["Deterministic authority"]
+    PC["Computer"]
+
+    RM -->|"direct operation"| ADM
+    RM -->|"bounded delegation"| COMP
+    COMP --> LOCAL --> LOOP
+    LOOP -->|"current / authorized"| AUTH
+    LOOP -->|"stale / ambiguous / novel"| Y
+    Y --> RM
+    ADM --> AUTH
+    AUTH --> PC
 ```
 
 The local side exists to **continue and refine a rich-model-authored intent at higher cadence**, especially while the rich model is unavailable. It is not an independent semantic agent by default.
@@ -64,54 +57,20 @@ Consequences:
 
 ## Current stack
 
-```text
-User intent
-    |
-    v
-Strong planner / LLM
-    |
-    | semantic goal / method call / short program
-    v
-+---------------------------------------------+
-| Agent Interface                              |
-|  semantic methods                            |
-|  short workflow methods                      |
-|  universal fallback                          |
-+----------------------+----------------------+
-                       |
-                       v
-+---------------------------------------------+
-| Guarded Hierarchical Runtime                 |
-|  target binding                              |
-|  repairable preconditions                    |
-|  optimized route cache                       |
-|  observation policy                          |
-|  motor calibration                           |
-|  retry / deopt / reheat                      |
-+----------------------+----------------------+
-                       |
-                       v
-+---------------------------------------------+
-| Universal Reactive Control                   |
-|  acquire / verify / wait-update / fallback   |
-+----------------------+----------------------+
-                       |
-                       v
-+---------------------------------------------+
-| Universal Input ISA                          |
-|  keyboard / text / pointer / drag / scroll   |
-|  focus / observation                         |
-+----------------------+----------------------+
-                       |
-                       v
-+---------------------------------------------+
-| Local backend                                |
-|  delivery semantics / event processing       |
-|  image-change feedback / visual servo        |
-+----------------------+----------------------+
-                       |
-                       v
-                    OS / GUI
+```mermaid
+flowchart TD
+    U["User intent"]
+    P["Strong planner / LLM"]
+    AI["Agent Interface<br/>semantic methods · short workflow methods · universal fallback"]
+    GHR["Guarded Hierarchical Runtime<br/>target binding · repairable preconditions · optimized route cache<br/>observation policy · motor calibration · retry / deopt / reheat"]
+    URC["Universal Reactive Control<br/>acquire · verify · wait-update · fallback"]
+    ISA["Universal Input ISA<br/>keyboard · text · pointer · drag · scroll · focus · observation"]
+    LB["Local backend<br/>delivery semantics · event processing<br/>image-change feedback · visual servo"]
+    OS["OS / GUI"]
+
+    U --> P
+    P -->|"semantic goal / method call / short program"| AI
+    AI --> GHR --> URC --> ISA --> LB --> OS
 ```
 
 ## Universal control is the floor
@@ -142,27 +101,32 @@ Invalidating all layers together creates unnecessary relearning.
 
 The current candidate lifecycle:
 
-```text
-invoke semantic method
-    |
-    v
-binding guard
-    | stale -> rediscover/rebind, keep method
-    v
-repairable precondition guard
-    | focus/mode invalid -> repair, keep route if dependency still valid
-    v
-optimized-route dependency guard
-    | stale -> deopt route before execution
-    v
-execute route or universal fallback
-    |
-    v
-verify semantic effect
-    | route failure -> route cold + fallback
-    | universal failure with fresh binding -> escalate semantic invalidation
-    v
-2 clean fallback uses -> route may reheat
+```mermaid
+flowchart TD
+    INV["Invoke semantic method"]
+    BG{"Binding guard"}
+    REB["Rediscover / rebind<br/>keep method"]
+    PG{"Repairable precondition guard"}
+    REP["Repair focus / mode<br/>keep route if dependency still valid"]
+    RG{"Optimized-route dependency guard"}
+    DEOPT["Deopt route before execution"]
+    EX["Execute route or universal fallback"]
+    VERIFY{"Verify semantic effect"}
+    COLD["Route cold + fallback"]
+    ESC["Escalate semantic invalidation"]
+    CLEAN["Clean fallback use"]
+    REHEAT["After 2 clean fallback uses<br/>route may reheat"]
+
+    INV --> BG
+    BG -->|"stale"| REB --> PG
+    BG -->|"current"| PG
+    PG -->|"focus / mode invalid"| REP --> RG
+    PG -->|"valid"| RG
+    RG -->|"stale"| DEOPT --> EX
+    RG -->|"current"| EX
+    EX --> VERIFY
+    VERIFY -->|"route failure"| COLD --> CLEAN --> REHEAT
+    VERIFY -->|"universal failure with fresh binding"| ESC
 ```
 
 This is analogous to guarded speculation and deoptimization in JIT systems: retain semantic knowledge, invalidate the narrowest stale optimization.
@@ -173,26 +137,28 @@ The next research layer is Observation Gating.
 
 The intended escalation path is:
 
-```text
-OS/semantic event?
-    no -> no observation
-    yes
-      |
-frame changed?
-    no -> do not send image
-    yes
-      |
-relevant region changed?
-    no -> suppress
-    yes
-      |
-local verification sufficient?
-    yes -> return compact event/result
-    no
-      |
-send changed ROI
-      |
-uncertain -> full-frame escalation
+```mermaid
+flowchart TD
+    E{"OS / semantic event?"}
+    NONE["No observation"]
+    F{"Frame changed?"}
+    NOIMG["Do not send image"]
+    R{"Relevant region changed?"}
+    SUP["Suppress"]
+    V{"Local verification sufficient?"}
+    COMPACT["Return compact event / result"]
+    ROI["Send changed ROI"]
+    FULL["Full-frame escalation"]
+
+    E -->|"no"| NONE
+    E -->|"yes"| F
+    F -->|"no"| NOIMG
+    F -->|"yes"| R
+    R -->|"no"| SUP
+    R -->|"yes"| V
+    V -->|"yes"| COMPACT
+    V -->|"no"| ROI
+    ROI -->|"uncertain"| FULL
 ```
 
 The key distinction is between *screen changed* and *agent-relevant information changed*.
