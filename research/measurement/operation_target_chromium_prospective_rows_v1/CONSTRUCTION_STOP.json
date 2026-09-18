@@ -1,0 +1,38 @@
+{
+  "decision": "PREFORMAL_CONSTRUCTION_STOP_CHROMIUM_URL_POLICY",
+  "formal_invocations": 0,
+  "reruns": 0,
+  "issue": 1582,
+  "task": "OPERATION-TARGET-CHROMIUM-PROSPECTIVE-ROWS-20260918-001",
+  "scientific_disposition": "NONE",
+  "source_frozen": false,
+  "model_calls": 0,
+  "provider_calls": 0,
+  "task_input_actions": 0,
+  "construction_attempts": [
+    {
+      "transport": "http://127.0.0.1",
+      "server_probe_http_status": 200,
+      "chromium_document_url": "chrome-error://chromewebdata/",
+      "chromium_body_class": "organization_url_blocked"
+    },
+    {
+      "transport": "http://127.0.0.1",
+      "no_proxy_server": true,
+      "chromium_document_url": "chrome-error://chromewebdata/",
+      "chromium_body_class": "organization_url_blocked"
+    },
+    {
+      "transport": "file://",
+      "chromium_document_url": "chrome-error://chromewebdata/",
+      "chromium_body_class": "organization_file_links_blocked"
+    }
+  ],
+  "managed_policy": {
+    "path": "/etc/chromium/policies/managed/000_policy_merge.json",
+    "sha256": "3b740260e337305aaef268e6c63af8fa2796057ce46f43df5ae5a3949e085e86",
+    "URLBlocklist": ["*"]
+  },
+  "policy_bypass_attempted": false,
+  "interpretation": "The intended real-Chromium fixture cannot load either localhost or file URLs in this container because an externally managed Chromium policy blocks all URLs. This is a harness/environment stop before source freeze or formal allocation; it is not evidence for or against the operation/target row-collection hypothesis."
+}
