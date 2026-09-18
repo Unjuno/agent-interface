@@ -1,0 +1,53 @@
+{
+  "snapshot_main": "66a72f17518d7b978309b186662d017cebef5b6b",
+  "sources": {
+    "cross_domain_rule_vm_result": {
+      "path": "research/local_system1/cross_domain_rule_vm_v2/RESULT.json",
+      "git_blob": "20ed6bc4c682e5d2e1cf60fb44f4fcdf5a1bd21d",
+      "decision": "PASS_CROSS_DOMAIN_RULE_VM_SCOPED",
+      "chromium_exact": true,
+      "chromium_rows": 8192,
+      "openttd_retained_exact": 5,
+      "controls_fail_closed": true
+    },
+    "map01_v31_representation": {
+      "path": "research/system1/map01_last_effect_representation_v31_r2/RESULT.json",
+      "git_blob": "9b131cc22860ca210959202790688a0759bc8b24",
+      "decision": "PASS_LAST_EFFECT_REPRESENTATION_V31_R2_SCOPED",
+      "eligible_rows": 5,
+      "enriched_collisions": 0,
+      "report_boundary_requires_larger_corpus": true,
+      "independent_semantic_effect_oracle": false
+    },
+    "operation_target_realstate_reservation": {
+      "path": "research/measurement/operation_target_private_x11_realstate_v1/RESERVATION.md",
+      "git_blob": "eaf2e5c01288e2531a1767ffd22731ee6d9bb646",
+      "status": "ACTIVE_UPSTREAM_RESULT_NOT_CONSUMED",
+      "issue": 1223
+    },
+    "issue_1026_comment": {
+      "comment_id": 5720862825,
+      "decision": "BLOCKED_REAL_SHADOW_DATA",
+      "notes": "deterministic Chromium/OpenTTD leaves no residual; v30 only 3 rows; v31 was pending at that snapshot"
+    },
+    "issue_1027_comment": {
+      "comment_id": 5730673024,
+      "decision_in_substance": "HOLD_NO_REAL_ADAPTIVE_RESIDUAL",
+      "notes": "v31 representation blocker closed but 5 rows remain insufficient; real NEEDS_POLICY residual and independent semantic/effect oracle absent"
+    }
+  },
+  "activation": {
+    "real_caller_visible_contract": true,
+    "representation_sufficient_for_frozen_residual": false,
+    "genuine_needs_policy_residual": false,
+    "enough_leakage_free_rows": false,
+    "independent_semantic_effect_oracle": false,
+    "first_rung_no_live_input_authority": true
+  },
+  "integrity": {
+    "uses_unpublished_active_result": false,
+    "uses_future_or_oracle_as_feature": false,
+    "claims_deterministic_exact_rows_as_residual": false,
+    "claims_five_rows_are_sufficient_despite_source_boundary": false
+  }
+}
