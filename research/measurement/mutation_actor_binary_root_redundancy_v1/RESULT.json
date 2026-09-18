@@ -1,0 +1,82 @@
+{
+  "actor_count": 5,
+  "actors": [
+    "THIS_INTENT",
+    "THIS_SESSION_OTHER_INTENT",
+    "EXTERNAL_PROCESS",
+    "HUMAN",
+    "OS"
+  ],
+  "authority_promotions": 0,
+  "decision": "PASS_ACTOR_BINARY_ROOT_REDUNDANCY_BOUND_SCOPED",
+  "errors": [],
+  "formal_invocations": 1,
+  "negative_controls": {
+    "m2_no_fault_exists": false,
+    "m3_erasure_exists": false,
+    "m5_byzantine_exists": false
+  },
+  "parent_blobs": {
+    "partition_result": "91b4bf873337046101dc551ec8fb013db27858d0",
+    "single_root_compromise_result": "697d53777bd2b7bd621178ed577fb344271bc5fd"
+  },
+  "replacements": 0,
+  "reruns": 0,
+  "task": "MUTATION-ACTOR-BINARY-ROOT-REDUNDANCY-20260918-001",
+  "task_success_promotions": 0,
+  "threat_models": {
+    "KNOWN_ERASURE_1": {
+      "codebook": [
+        "0000",
+        "0011",
+        "0101",
+        "0110",
+        "1001"
+      ],
+      "direct_byzantine_1": false,
+      "direct_erasure_1": true,
+      "direct_no_fault": true,
+      "distance_required": 2,
+      "min_binary_roots": 4,
+      "minimum_pair_distance": 2,
+      "search_trace": [
+        {"found": false,"m": 1},
+        {"found": false,"m": 2},
+        {"found": false,"m": 3},
+        {"found": true,"m": 4}
+      ]
+    },
+    "NO_FAULT": {
+      "codebook": ["000","001","010","011","100"],
+      "direct_byzantine_1": false,
+      "direct_erasure_1": false,
+      "direct_no_fault": true,
+      "distance_required": 1,
+      "min_binary_roots": 3,
+      "minimum_pair_distance": 1,
+      "search_trace": [
+        {"found": false,"m": 1},
+        {"found": false,"m": 2},
+        {"found": true,"m": 3}
+      ]
+    },
+    "UNKNOWN_BYZANTINE_1": {
+      "codebook": ["000000","000111","011001","011110","101010"],
+      "direct_byzantine_1": true,
+      "direct_erasure_1": true,
+      "direct_no_fault": true,
+      "distance_required": 3,
+      "min_binary_roots": 6,
+      "minimum_pair_distance": 3,
+      "search_trace": [
+        {"found": false,"m": 1},
+        {"found": false,"m": 2},
+        {"found": false,"m": 3},
+        {"found": false,"m": 4},
+        {"found": false,"m": 5},
+        {"found": true,"m": 6}
+      ]
+    }
+  },
+  "tuning": 0
+}
