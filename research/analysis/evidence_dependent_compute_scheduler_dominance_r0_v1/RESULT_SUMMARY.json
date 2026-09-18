@@ -1,0 +1,37 @@
+{
+  "decision": "PASS_COMPUTE_SCHEDULER_HARD_DOMINANCE_SCOPED",
+  "exact_tie_current_rows": 23,
+  "exact_tie_feasible_rows": 23,
+  "formal_invocations": 1,
+  "mismatches": 0,
+  "paired_futures": {
+    "invalidate_at": "1/4",
+    "invalidate_soon": {
+      "preference": "WAIT",
+      "run": {"completion": null, "cost": "41/4", "useful": false, "wasted": "1/4"},
+      "wait": {"completion": null, "cost": "10", "useful": false, "wasted": "0"}
+    },
+    "metadata": {"c": "1", "current": true, "d": "2", "t": "0"},
+    "stable": {
+      "preference": "RUN",
+      "run": {"completion": "1", "cost": "1", "useful": true, "wasted": "0"},
+      "wait": {"completion": "3/2", "cost": "3/2", "useful": true, "wasted": "0"}
+    },
+    "wait_delay": "1/2"
+  },
+  "raw_result": {
+    "bytes": 74558,
+    "sha256": "c34229d4f8f9821e71176336b60429325927d610d3acf11ce5199682e9e3a40b",
+    "gzip_n_bytes": 2071,
+    "gzip_n_sha256": "4a057128c6570e2b5a647ba860c5bd19851446f9f3f85890414017be3ac28385",
+    "retained_encoding": "RESULT.json.gz.b64"
+  },
+  "replacements": 0,
+  "reruns": 0,
+  "reuse_decisions": 0,
+  "rows": 480,
+  "stale_run_accepted": 0,
+  "tardy_run_accepted": 0,
+  "tuning": 0,
+  "universal_hard_metadata_choice_rejected": true
+}
