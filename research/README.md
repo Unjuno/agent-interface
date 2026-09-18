@@ -33,11 +33,13 @@ flowchart TD
     E --> C{Primary scope}
     C -->|measurement / semantics| MEAS[measurement/]
     C -->|cross-component| INT[integration/]
+    C -->|safe overlap / phase scheduling| CONC[concurrency/]
     C -->|live GUI control| LIVE[live_control/]
     C -->|real-time motor| DOOM[doom/ or domain track]
     C -->|observation| OBS[observation*/]
     MEAS --> AUD[Independent audit + evidence ledger]
     INT --> AUD
+    CONC --> AUD
     LIVE --> AUD
     DOOM --> AUD
     OBS --> AUD
@@ -93,6 +95,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 ### Reliability, concurrency, ownership, and commit semantics
 
+- [`concurrency/`](concurrency/) — phase-level overlap, shared-resource conflicts, and serialized-actuator concurrency studies.
 - `receiver_*`, `external_effect_*`, `outbox_*`, `staged_*`, and `exact_runtime_*` directories — effect/commit/recovery semantics.
 - `git_*` directories — Git/reference concurrency and atomicity experiments.
 - [`coordination/`](coordination/) and [`orchestration/`](orchestration/) — retained coordination/orchestration evidence.
