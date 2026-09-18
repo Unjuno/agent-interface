@@ -1,0 +1,35 @@
+{
+  "construction_full_job_median_ns": 25219983,
+  "corruption_controls": {
+    "cache_mismatch_rejected": true,
+    "digest_corruption_rejected": true,
+    "double_count_obsolete_rejected": false,
+    "stale_publish_rejected": true,
+    "workload_label_corruption_rejected": true
+  },
+  "decision": "FAIL_INTEGRITY",
+  "derived": {
+    "cache_counts": {
+      "DROP_EXPIRED": 8,
+      "REBUILD_REQUIRED": 8,
+      "REUSE": 48
+    },
+    "g_sum_ns": 240512261,
+    "run_sum_ns": 1686444137,
+    "threshold_den": 7499815328,
+    "threshold_num": 3848196176,
+    "w_sum_ns": 76075399,
+    "wait_sum_ns": 1850880999
+  },
+  "errors": [
+    "corruptions"
+  ],
+  "formal_invocations": 1,
+  "freeze_sha256": "c71d2a605dddc7a2628fdfd1393783afc1a7eaba93377e4df5e66c72a4b93586",
+  "raw_sha256": "71e9a44f02e86d498c567cd4286f6171e8472dee9e469fce7a7716b345d4f468",
+  "replacements": 0,
+  "reruns": 0,
+  "result_sha256": "9b9007edb8f1b0593bcaf9e6535fd345dbc378677faeae8cbac7b72473fcb42e",
+  "status": "FAIL",
+  "tuning": 0
+}
