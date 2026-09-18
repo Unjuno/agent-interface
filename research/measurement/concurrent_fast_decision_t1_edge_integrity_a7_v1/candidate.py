@@ -1,10 +1,12 @@
 from __future__ import annotations
+
 ALLOWED = ("ADVANCE", "WATCH", "YIELD")
 _MAPPING = {
     "CLEAR_PROGRESS": "ADVANCE",
     "UNCERTAIN_TRANSIENT": "WATCH",
     "HARD_INVALIDATION": "YIELD",
 }
+
 def select_disposition(state: str) -> str:
     out = _MAPPING.get(state)
     if out is None:
