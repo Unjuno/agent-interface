@@ -185,7 +185,7 @@ A useful idea can be simple:
 2. What is the smallest mechanism that removes it?
 3. Why should correctness or precision be preserved or improved?
 
-If it is mature enough to benchmark, use the stricter [Research proposal](https://github.com/Unjuno/agent-interface/issues/new?template=research-proposal.yml) form.
+If it is mature enough to evaluate analytically or empirically, use the stricter [Research proposal](https://github.com/Unjuno/agent-interface/issues/new?template=research-proposal.yml) form.
 
 ## Repository vs Releases
 

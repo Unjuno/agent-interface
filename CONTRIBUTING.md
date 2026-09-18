@@ -23,7 +23,7 @@ You do **not** need benchmark results or an implementation before opening an ide
 
 Use the [Research proposal form](https://github.com/Unjuno/agent-interface/issues/new?template=research-proposal.yml) once an idea is specific enough to test.
 
-Every promoted experiment should state:
+Every promoted research result should state:
 
 - **H — Hypothesis:** a falsifiable claim with metric and environment.
 - **T — Test:** dataset/tasks, environment, sample size, changed variable, and stopping rule.
