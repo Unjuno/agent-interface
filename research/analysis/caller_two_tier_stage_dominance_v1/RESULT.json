@@ -1,0 +1,31 @@
+{
+  "decision": "PASS_CALLER_TWO_TIER_STAGE_DOMINANCE_SCOPED",
+  "caller_blob": "7faf042304728ce91a3e4f89d465b251ea0bf70d",
+  "line_count": 418,
+  "call_sites": {
+    "reuse_revalidate": [371],
+    "final_revalidate": [392],
+    "execute": [399]
+  },
+  "call_site_counts": {
+    "reuse_revalidate": 1,
+    "final_revalidate": 1,
+    "execute": 1
+  },
+  "guards": {
+    "final_nonrevalidated_return_line": 393,
+    "model_repair_non_target_return": true,
+    "post_model_nonmatch_return": true,
+    "reuse_unrepairable_return": true
+  },
+  "path_classes": {
+    "direct_reuse_success": "joins_final_revalidate",
+    "local_repair_success": "joins_final_revalidate",
+    "model_repair_success": "joins_final_revalidate",
+    "unrepaired_reuse_failure": "returns_before_final",
+    "model_repair_failure": "returns_before_final",
+    "final_revalidation_failure": "returns_before_execute"
+  },
+  "execute_dominated_by_final_revalidate": true,
+  "reuse_route_executes_without_final_gate": false
+}
