@@ -45,8 +45,8 @@ def run_case(delay_ms, program, case_idx):
 
     def receiver():
         msg=parent.recv()
-        recv_ns=time.perf_counter_ns()
         with lock:
+            recv_ns=time.perf_counter_ns()
             auth['return_receive_ns']=recv_ns
             auth['closed']=True
             auth['generation']+=1
