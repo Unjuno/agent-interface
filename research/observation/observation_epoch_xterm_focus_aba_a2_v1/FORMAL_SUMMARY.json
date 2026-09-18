@@ -1,0 +1,94 @@
+{
+  "task": "OBSERVATION-EPOCH-XTERM-FOCUS-ABA-A2-20260918-002",
+  "phase": "formal",
+  "decision": "PASS_OBSERVATION_EPOCH_XTERM_FOCUS_ABA_A2_SCOPED",
+  "formal_invocations": 1,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "readiness": {
+    "window_a": {
+      "viewable_consecutive_polls": 2
+    },
+    "window_b": {
+      "viewable_consecutive_polls": 2
+    },
+    "preflight_pass": true,
+    "preflight_logical_sequence": [
+      "FocusOut(A)",
+      "FocusIn(B)",
+      "FocusOut(B)",
+      "FocusIn(A)"
+    ]
+  },
+  "metrics": {
+    "rows": 320,
+    "arm_counts": {
+      "STABLE": 64,
+      "PAINT_ONLY": 64,
+      "FOCUS_ABA": 64,
+      "FOCUS_CHANGE": 64,
+      "IDENTITY_MISMATCH": 64
+    },
+    "generation_oracle_mismatch": 0,
+    "equality_focus_aba_joins": 64,
+    "generation_focus_aba_joins": 0,
+    "generation_focus_change_joins": 0,
+    "generation_identity_mismatch_joins": 0,
+    "generation_stable_paint_joins": 128,
+    "equality_stable_paint_joins": 128,
+    "aba_rows_with_focus_events": 64,
+    "change_rows_with_focus_events": 64,
+    "stable_paint_rows_with_focus_events": 0,
+    "noncritical_within_2ms": 320,
+    "image_bytes_all_1024": true,
+    "restored_focus_all": true
+  },
+  "witness_distributions": {
+    "STABLE": {
+      "focus_event_count": {
+        "0": 64
+      },
+      "generation_delta": {
+        "0": 64
+      },
+      "max_noncritical_age_ns": 343678
+    },
+    "PAINT_ONLY": {
+      "focus_event_count": {
+        "0": 64
+      },
+      "generation_delta": {
+        "0": 64
+      },
+      "max_noncritical_age_ns": 734365
+    },
+    "FOCUS_ABA": {
+      "focus_event_count": {
+        "4": 64
+      },
+      "generation_delta": {
+        "4": 64
+      },
+      "max_noncritical_age_ns": 164826
+    },
+    "FOCUS_CHANGE": {
+      "focus_event_count": {
+        "2": 64
+      },
+      "generation_delta": {
+        "2": 64
+      },
+      "max_noncritical_age_ns": 507136
+    },
+    "IDENTITY_MISMATCH": {
+      "focus_event_count": {
+        "0": 64
+      },
+      "generation_delta": {
+        "0": 64
+      },
+      "max_noncritical_age_ns": 820937
+    }
+  }
+}
