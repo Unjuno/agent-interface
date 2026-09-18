@@ -24,7 +24,9 @@ def expected(direction,d,semantic):
     ux,uy=DIRECTIONS[direction]
     a=(TARGET_X,TARGET_Y,TARGET_X+TARGET,TARGET_Y+TARGET)
     b=(TARGET_X+ux*d,TARGET_Y+uy*d,TARGET_X+ux*d+TARGET,TARGET_Y+uy*d+TARGET)
+    roi=(ROI_X,ROI_Y,ROI_X+ROI,ROI_Y+ROI)
     aa=clipped_area(a); bb=clipped_area(b)
+    # intersection clipped to ROI; A is fully inside ROI but keep formula general.
     inter_rect=(max(a[0],b[0]),max(a[1],b[1]),min(a[2],b[2]),min(a[3],b[3]))
     inter=clipped_area(inter_rect) if inter_rect[2]>inter_rect[0] and inter_rect[3]>inter_rect[1] else 0
     return aa+bb-inter if semantic else aa+bb-2*inter
