@@ -1,0 +1,30 @@
+{
+  "task": "CONCURRENT-FAST-DECISION-T2-HANDOFF-LINEARIZATION-A10-20260918-013",
+  "issue": 1463,
+  "formal_invocations": 1,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "decision": "PASS_T2_HANDOFF_LINEARIZATION_SCOPED",
+  "result_sha256": "0915ed0e46f8b2a257ea3fa5b8224704b8a750e0cc4d81aa04597f47a47ed77b",
+  "audit_sha256": "86e3c0861dc3e6b109c749001d436ba9dc8587366c4fd3d42d959bafd47ab203",
+  "ledger_sha256": "9ba95ecbe51fec9591dcf320b21624051f2bcb946434f600c02d02bc8c16776c",
+  "source_rehash_exact": true,
+  "source_sha256": {
+    "candidate.py": "e0d101bcf0fd8fb06b44a33514b3c85b1b1b86ea703da57be443e8ea91b9e326",
+    "oracle.py": "1ab3d31dcd1ba65826935d67174cd1ceccf5579b5dbd2a42d10c416f6ca747d3",
+    "runner.py": "67cdb49866f5f9aaee250b43c210489dfab1a44c3016bf2d922fc81bc92cbb3a",
+    "audit.py": "f7d018d61967f05d65a50ed97ce0ba547734ee6cbf219fbdd8a0c30599f27800",
+    "PLAN.md": "c80cc1788f9dc0dac09a5973b078cf26c1548d3b3ac1dc2cb7c5f3d833392c1f"
+  },
+  "corruption_controls_pass": true,
+  "corruption_controls": {
+    "classification_loss": true,
+    "discriminator_loss": true,
+    "mismatch": true,
+    "post_publication_effect": true,
+    "replay_escape": true,
+    "source_missing": true,
+    "trace_count": true
+  }
+}
