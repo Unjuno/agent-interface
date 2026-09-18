@@ -2,42 +2,61 @@
   "task": "CONCURRENT-FAST-DECISION-T2-ASYNC-RETURN-PREFLIGHT-20260918-009",
   "issue": 1449,
   "base": "c4a77a0a0195395022d377be62e869b2cc9496fc",
-  "canonical_source_identity": "Git blob readback after preformal repair",
   "formal_invocations_before_freeze": 0,
-  "git_blobs": {
+  "canonical_source_identity": "remote Git blob readback after v3 linearization repair",
+  "source_blobs": {
     "candidate.py": "2faa24e5cfff087ec169748d3c0511158e7f07ef",
-    "runner.py": "9df397e7a39fb36bd19a0b4386565407f406fca5",
+    "runner.py": "dc22caa47db26125637a1302c177f0cc0026f7f5",
     "audit.py": "8184a81e7f586e9d4f5f11e8f2a739ac9d5692eb",
     "PLAN.md": "1dd13e139521175801f693da6759292a774bdaa3",
-    "construction_v2_audit.json": "1d8bd7ed9498d7eff228b001d0e94b71273db267",
-    "construction_v2.json.gz.b64": "5e111916cdcb2a44909ac85bb91b54af147abc62"
+    "static_preflight.py": "86fba90e70c15ecb7c4c4b9445162b88f82ef723"
   },
-  "retained_preformal_defect": {
-    "old_source_head": "f0d029b17ac904c0148e291ab1c16de8796dbe44",
-    "stress_cases": 120,
-    "post_return_admissions": 0,
-    "value_misses": 0,
-    "stale_probe_failures": 3,
-    "cause": "probe targeted requested delay +4 ms rather than observed return; child-send to parent-receive tail exceeded 4 ms",
-    "formal_consumed": 0
+  "v3_evidence_blobs": {
+    "static_preflight_result.json": "81229eb6e7766dbca1365ab40734840ec5fd4556",
+    "construction_v3_audit.json": "1d8bd7ed9498d7eff228b001d0e94b71273db267",
+    "construction_v3.json.gz.b64": "394d2ef4cdd988c6c556229e355b9bbc97040dc1",
+    "stress_v3.json": "a666ee652a75a30af0bb617b993207d5693e71cb"
   },
-  "repaired_construction": {
+  "retained_preformal_failures": [
+    {
+      "version": "v1",
+      "cause": "local pre-upload SHA256 manifest differed from remote uploaded bytes",
+      "formal_consumed": 0
+    },
+    {
+      "version": "v2",
+      "cause": "stale probe targeted requested delay +4ms rather than observed return; 3/120 stress probes did not cross observed return",
+      "formal_consumed": 0
+    },
+    {
+      "version": "v2_source_review",
+      "cause": "observed return timestamp was recorded before authority mutex; reachable ordering allowed admission timestamp >= observed return before close",
+      "formal_consumed": 0
+    }
+  ],
+  "v3_static": {
+    "two_mutex_orders_exhausted": true,
+    "reachable_post_return_admission": false
+  },
+  "v3_construction": {
     "decision": "PASS_CONSTRUCTION_ELIGIBLE",
     "cases": 4,
+    "lane_admissions": 5,
     "post_return_admissions": 0,
     "stale_probe_rejections": 4,
     "corruption_controls_pass": true
   },
-  "repaired_stress": {
+  "v3_stress": {
     "cases": 120,
     "post_return_admissions": 0,
     "stale_probe_failures": 0,
     "value_misses": 0,
     "child_bad": 0,
     "thread_bad": 0,
-    "child_send_to_parent_receive_p95_ns": 405466,
-    "child_send_to_parent_receive_max_ns": 4592472,
-    "authority_close_after_receive_p95_ns": 4496,
-    "authority_close_after_receive_max_ns": 18307
-  }
+    "child_send_to_parent_receive_ns_p95": 404791,
+    "child_send_to_parent_receive_ns_max": 465771,
+    "receive_to_close_ns_p95": 3825,
+    "receive_to_close_ns_max": 5628
+  },
+  "formal_status": "NOT_RUN"
 }
