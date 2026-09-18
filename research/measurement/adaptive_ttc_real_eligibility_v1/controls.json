@@ -1,0 +1,92 @@
+{
+  "baseline": {
+    "decision": "HOLD_NO_REAL_ADAPTIVE_RESIDUAL",
+    "eligible": false,
+    "errors": [],
+    "failed_prerequisites": [
+      "representation_sufficient_for_frozen_residual",
+      "genuine_needs_policy_residual",
+      "enough_leakage_free_rows",
+      "independent_semantic_effect_oracle"
+    ],
+    "prerequisites": {
+      "enough_leakage_free_rows": false,
+      "first_rung_no_live_input_authority": true,
+      "genuine_needs_policy_residual": false,
+      "independent_semantic_effect_oracle": false,
+      "real_caller_visible_contract": true,
+      "representation_sufficient_for_frozen_residual": false
+    }
+  },
+  "controls": {
+    "consume_unpublished_1223": {
+      "decision": "FAIL_INTEGRITY",
+      "eligible": false,
+      "errors": ["unpublished_active_result_consumed"],
+      "prerequisites": {
+        "enough_leakage_free_rows": false,
+        "first_rung_no_live_input_authority": true,
+        "genuine_needs_policy_residual": false,
+        "independent_semantic_effect_oracle": false,
+        "real_caller_visible_contract": true,
+        "representation_sufficient_for_frozen_residual": false
+      }
+    },
+    "five_rows_declared_enough": {
+      "decision": "FAIL_INTEGRITY",
+      "eligible": false,
+      "errors": ["activation_rows_contradict_source"],
+      "prerequisites": {
+        "enough_leakage_free_rows": true,
+        "first_rung_no_live_input_authority": true,
+        "genuine_needs_policy_residual": false,
+        "independent_semantic_effect_oracle": false,
+        "real_caller_visible_contract": true,
+        "representation_sufficient_for_frozen_residual": false
+      }
+    },
+    "future_or_oracle_feature_leakage": {
+      "decision": "FAIL_INTEGRITY",
+      "eligible": false,
+      "errors": ["feature_leakage"],
+      "prerequisites": {
+        "enough_leakage_free_rows": false,
+        "first_rung_no_live_input_authority": true,
+        "genuine_needs_policy_residual": false,
+        "independent_semantic_effect_oracle": false,
+        "real_caller_visible_contract": true,
+        "representation_sufficient_for_frozen_residual": false
+      }
+    },
+    "invent_independent_oracle": {
+      "decision": "FAIL_INTEGRITY",
+      "eligible": false,
+      "errors": ["oracle_claim_contradicts_source"],
+      "prerequisites": {
+        "enough_leakage_free_rows": false,
+        "first_rung_no_live_input_authority": true,
+        "genuine_needs_policy_residual": false,
+        "independent_semantic_effect_oracle": true,
+        "real_caller_visible_contract": true,
+        "representation_sufficient_for_frozen_residual": false
+      }
+    },
+    "relabel_deterministic_rows_as_residual": {
+      "decision": "FAIL_INTEGRITY",
+      "eligible": false,
+      "errors": [
+        "deterministic_closure_relabelled_as_residual",
+        "residual_claim_uses_closed_rule_rows"
+      ],
+      "prerequisites": {
+        "enough_leakage_free_rows": false,
+        "first_rung_no_live_input_authority": true,
+        "genuine_needs_policy_residual": true,
+        "independent_semantic_effect_oracle": false,
+        "real_caller_visible_contract": true,
+        "representation_sufficient_for_frozen_residual": false
+      }
+    }
+  },
+  "pass": true
+}
