@@ -2,6 +2,33 @@
 
 > **Document role:** current project thesis and design constraints. Use [`CURRENT_GOAL.md`](CURRENT_GOAL.md) for the active governing direction and [`EVIDENCE_MAP.md`](EVIDENCE_MAP.md) / [`../RESEARCH.md`](../RESEARCH.md) for evidence status.
 
+## Principles at a glance
+
+```mermaid
+flowchart TD
+    TH[Core thesis<br/>improve the interface while holding model/task/environment/correctness fixed]
+    INT[Preserve rich-model intent<br/>localize high-frequency refinement]
+    U[Universal before optimized<br/>unknown apps still work]
+    INFO[Preserve information<br/>remove waste]
+    CORR[Correctness is the hard gate]
+    FEED[Do not stop the agent's thinking<br/>early truthful feedback]
+    LOCAL[React at local computer timescales<br/>keep deterministic loops local]
+    AGN[Work with every agent<br/>vendor/model-neutral core]
+    INSTALL[Install quickly<br/>low setup burden]
+
+    TH --> INT
+    INT --> U
+    INT --> INFO
+    U --> CORR
+    INFO --> CORR
+    CORR --> FEED
+    CORR --> LOCAL
+    AGN --> INT
+    INSTALL --> U
+```
+
+The arrows show how the existing principles constrain one another; they are not a priority ranking or an evidence claim.
+
 ## Core thesis
 
 > **AI agents are smart. Their computer tools are primitive.**
@@ -33,20 +60,17 @@ The frontier/rich model remains the source of semantic intent, strategy, novelty
 
 The desired split is:
 
-```text
-rich model
-    semantic intent / strategy / acceptable futures / stop conditions
-            |
-            v
-Agent Interface
-    compile or bind that intent into bounded local execution
-            |
-            v
-local refinement loop
-    observe -> act -> verify -> adjust
-            |
-            +-- still inside intent/envelope -> continue
-            +-- stale / ambiguous / semantic change -> YIELD
+```mermaid
+flowchart TD
+    RM[Rich model<br/>semantic intent · strategy · acceptable futures · stop conditions]
+    AI[Agent Interface<br/>compile / bind intent into bounded local execution]
+    LOOP[Local refinement loop<br/>observe → act → verify → adjust]
+    CONT[Continue inside current intent / envelope]
+    Y[YIELD<br/>stale · ambiguous · semantic change]
+
+    RM --> AI --> LOOP
+    LOOP -->|still authorized / current| CONT --> LOOP
+    LOOP -->|outside envelope or uncertain| Y --> RM
 ```
 
 Local execution may refine **how** an already-declared intent is carried out at computer timescales. It must not silently redefine **what** the agent is trying to accomplish.
