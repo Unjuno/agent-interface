@@ -20,6 +20,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 The top level is intentionally evidence-preserving. The categories below are navigation aids; they do not change the status of any experiment.
 
+For new work, prefer the narrowest existing category below rather than adding another top-level research namespace. Existing direct experiment paths are retained for provenance; see [`../CONTRIBUTING.md`](../CONTRIBUTING.md) for placement guidance.
+
 ### Live control and integration
 
 - [`live_control/`](live_control/) — shared/live GUI-control mechanisms and integration studies.
