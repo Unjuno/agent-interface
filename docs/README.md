@@ -41,6 +41,52 @@ flowchart TD
 
 The arrows show the intended reading/promotion direction, not code dependencies.
 
+## Document authority map
+
+```mermaid
+flowchart TD
+    CUR[Current / canonical guidance]
+    SUP[Supporting design / vocabulary]
+    HIST[Retained review / provisional history]
+    PRES[Presentation / launch notes]
+
+    CUR --> G[CURRENT_GOAL.md]
+    CUR --> P[principles.md]
+    CUR --> A[architecture.md]
+    CUR --> M[RESEARCH_METHOD.md]
+    CUR --> E[EVIDENCE_MAP.md]
+    CUR --> PROG[PROGRESS_FROM_BASELINE.md]
+
+    SUP --> T[TERMINOLOGY.md]
+    SUP --> DT[design-theses.md]
+    SUP --> CC[control-codec.md]
+
+    HIST --> CAR[CANDIDATE_ARCHITECTURE_REVIEW.md]
+    HIST --> SES[SEMANTIC_EVIDENCE_STATUS.md]
+    HIST --> ORCH[orchestration/]
+
+    PRES --> PH[product-hunt.md]
+```
+
+Use current/canonical documents for present project direction and architecture. Supporting, historical, provisional, and presentation documents remain useful context but do not override newer canonical guidance or retained evidence.
+
+| Document / area | Role | Authority for current state |
+|---|---|---|
+| [`CURRENT_GOAL.md`](CURRENT_GOAL.md) | Governing objective and newest direction | **Canonical** |
+| [`principles.md`](principles.md) | Thesis and durable design constraints | **Canonical design guidance** |
+| [`architecture.md`](architecture.md) | Current promoted architecture description | **Canonical architecture guidance** |
+| [`RESEARCH_METHOD.md`](RESEARCH_METHOD.md) | Analysis-vs-experiment workflow | **Canonical research-method guidance** |
+| [`EVIDENCE_MAP.md`](EVIDENCE_MAP.md) | Navigation among goal/evidence/runtime/release | **Canonical navigation** |
+| [`PROGRESS_FROM_BASELINE.md`](PROGRESS_FROM_BASELINE.md) | Evidence-backed progress and remaining gaps | Current summary; **not a release claim** |
+| [`LOCAL_RESEARCH_HANDOFF.md`](LOCAL_RESEARCH_HANDOFF.md) | Detailed current handoff plus retained chronology | Current coordination source; history retained inside |
+| [`TERMINOLOGY.md`](TERMINOLOGY.md) | Non-normative index to canonical definitions | Supporting only |
+| [`design-theses.md`](design-theses.md) | Durable idea/thesis ledger | Supporting; does not override current goal/architecture |
+| [`control-codec.md`](control-codec.md) | Compact-control research/design note | Supporting; **not stable runtime protocol** |
+| [`CANDIDATE_ARCHITECTURE_REVIEW.md`](CANDIDATE_ARCHITECTURE_REVIEW.md) | Review of an earlier candidate report/baseline | Retained review material |
+| [`SEMANTIC_EVIDENCE_STATUS.md`](SEMANTIC_EVIDENCE_STATUS.md) | Provisional 2026-09-13 vocabulary/evaluation intake | Provisional/retained; not frozen ABI |
+| [`orchestration/`](orchestration/) | Coordination and launch-history records | Historical/operational context |
+| [`product-hunt.md`](product-hunt.md) | Presentation/launch positioning | Presentation only |
+
 ## Documentation layers
 
 ## Living history documents
