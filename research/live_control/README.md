@@ -13,6 +13,40 @@
 | Implemented live-control surface | [What is implemented](#what-is-implemented) |
 | Reproduction notes | [Reproduce](#reproduce) |
 
+## Track map
+
+```mermaid
+flowchart TD
+    L[Live control evidence]
+    AUTH[Authority / admission / release]
+    OBS[Observation / semantic feedback]
+    TARGET[Target binding / framed pointer]
+    REC[Recovery / durability / continuation]
+    CALLER[Adaptive caller / model boundary]
+    COMP[Compiled / persistent interface]
+    DOMAIN[Cross-domain application studies]
+
+    L --> AUTH
+    L --> OBS
+    L --> TARGET
+    L --> REC
+    L --> CALLER
+    L --> COMP
+    L --> DOMAIN
+```
+
+| Theme | Representative entry points |
+|---|---|
+| Authority, action validity, and release | [`ACTION_VALIDITY_ADMISSION_V1.md`](ACTION_VALIDITY_ADMISSION_V1.md), [`RUNNING_ACTION_GUARD_V1.md`](RUNNING_ACTION_GUARD_V1.md) |
+| Observation and semantic feedback | [`CHROMIUM_SEMANTIC_PROBE_TRANSFER_V1.md`](CHROMIUM_SEMANTIC_PROBE_TRANSFER_V1.md), [`RELEASE_AWARE_PREPARATION_V1.md`](RELEASE_AWARE_PREPARATION_V1.md) |
+| Target binding and coordinate frames | [`SCOPED_TARGET_HANDLES_V1.md`](SCOPED_TARGET_HANDLES_V1.md), [`FRAMED_POINTER_INTENTS_V1.md`](FRAMED_POINTER_INTENTS_V1.md) |
+| Recovery, continuation, and durability | [`AUTO_RECOVER_INK.md`](AUTO_RECOVER_INK.md), [`CHECKPOINT_CONTINUATION.md`](CHECKPOINT_CONTINUATION.md) |
+| Adaptive caller / local repair | [`ADAPTIVE_ACQUISITION_CALLER_V3.md`](ADAPTIVE_ACQUISITION_CALLER_V3.md), [`ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md`](ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md) |
+| Compiled / persistent interface | [`COMPILED_GUI_INTERFACE_LIVE_V5.md`](COMPILED_GUI_INTERFACE_LIVE_V5.md), [`INTEGRATED_EFFICIENCY_LIVE_V1.md`](INTEGRATED_EFFICIENCY_LIVE_V1.md) |
+| Cross-domain transfer | OpenTTD reports under `OPENTTD_*`, plus retained Calc/Inkscape/browser/Mindustry studies in this directory |
+
+This is a navigation map, not a dependency graph or promotion hierarchy. Individual reports remain authoritative for scope and disposition.
+
 
 <details>
 <summary><strong>Expand retained live-control chronology</strong></summary>

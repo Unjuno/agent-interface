@@ -12,6 +12,40 @@
 | Shared-runtime transfer | [Shared runtime transfer](#shared-runtime-transfer) |
 | Reproduction notes | [Reproduce](#reproduce) |
 
+## Track map
+
+```mermaid
+flowchart TD
+    D[DOOM / MAP01 evidence]
+    BASE[Engine / X11 / binding foundation]
+    COVER[Planner overlap / cover policy]
+    VALID[Typed validity / current evidence]
+    ACTION[Final admission / running-action guards]
+    LIVE[Liveness / handback / release]
+    METRIC[Posthoc timing / useful-effect measurement]
+    REC[Recovery / history / deoptimization]
+
+    D --> BASE
+    D --> COVER
+    D --> VALID
+    D --> ACTION
+    D --> LIVE
+    D --> METRIC
+    D --> REC
+```
+
+| Theme | Representative entry points |
+|---|---|
+| Initial engine/X11 integration | [`MAP01_LIVE_CONTROL_V1.md`](MAP01_LIVE_CONTROL_V1.md), [`SHARED_RUNTIME.md`](SHARED_RUNTIME.md) |
+| Planner overlap and cover | [`MAP01_COVER_POLICY_V1.md`](MAP01_COVER_POLICY_V1.md), [`MAP01_COVER_RENEWAL_V1.md`](MAP01_COVER_RENEWAL_V1.md) |
+| Typed validity/current evidence | [`MAP01_TYPED_COVER_VALIDITY_V29.md`](MAP01_TYPED_COVER_VALIDITY_V29.md), [`MAP01_ACTION_VALIDITY_SIGNALS_V1.md`](MAP01_ACTION_VALIDITY_SIGNALS_V1.md) |
+| Admission and running actions | [`MAP01_FINAL_ADMISSION_V32.md`](MAP01_FINAL_ADMISSION_V32.md), [`MAP01_RUNNING_ACTION_CANCEL_LIVE_V2.md`](MAP01_RUNNING_ACTION_CANCEL_LIVE_V2.md) |
+| Liveness and handback | [`MAP01_V39_COAST_LIVENESS_LIVE_V1.md`](MAP01_V39_COAST_LIVENESS_LIVE_V1.md), [`MAP01_V38_INTEGRATED_LIVE_V1.md`](MAP01_V38_INTEGRATED_LIVE_V1.md) |
+| Timing/effect measurement | [`MAP01_V38_V39_CONTROL_TEMPO_POSTHOC_V1.md`](MAP01_V38_V39_CONTROL_TEMPO_POSTHOC_V1.md), [`MAP01_HELD_INPUT_OCCUPANCY_POSTHOC_V1.md`](MAP01_HELD_INPUT_OCCUPANCY_POSTHOC_V1.md) |
+| Recovery/history/deoptimization | Directories and reports prefixed `map01_*history*`, `recovery_*`, and `map01_*deopt*` |
+
+This is a thematic navigation map. It does not imply that the listed mechanisms form one validated end-to-end stack.
+
 
 <details>
 <summary><strong>Expand retained MAP01 / DOOM chronology</strong></summary>
