@@ -5,6 +5,7 @@ from pathlib import Path
 
 GRID = tuple(F(i,4) for i in range(0,17))  # 0..4 seconds by 0.25 s
 
+
 def hard_decision(current, t, c, d):
     if not current:
         return 'CANCEL_STALE'
@@ -12,10 +13,14 @@ def hard_decision(current, t, c, d):
         return 'CANCEL_TARDY'
     return 'RUN_FEASIBLE'
 
+
 def direct_feasible(current, t, c, d):
     return bool(current and t + c <= d)
 
+
 def stable_preference(t,c,d):
+    # Compare RUN-now to a concrete WAIT policy: wait delta=c/4, then run if still current.
+    # Utility is lexicographic: timely useful completion, earlier completion, less wasted compute.
     assert c > 0 and t+c <= d
     delta=c/4
     run_finish=t+c
@@ -26,13 +31,18 @@ def stable_preference(t,c,d):
     wait=(int(wait_success), -wait_finish, F(0))
     return 'RUN' if run>wait else ('WAIT' if wait>run else 'TIE')
 
+
 def invalidate_preference(t,c,d):
+    # Same current metadata; future invalidates old source at epsilon=c/2.
+    # Replacement job cost r=c/4. RUN wastes epsilon old compute; WAIT does not.
+    # Both replacement completions are timely because t+3c/4 <= t+c <= d.
     assert c > 0 and t+c <= d
     eps=c/2; repl=c/4; finish=t+eps+repl
     assert finish <= d
-    run=(1, -finish, -eps)
+    run=(1, -finish, -eps)   # timely, same finish, but wasted old compute
     wait=(1, -finish, F(0))
     return 'RUN' if run>wait else ('WAIT' if wait>run else 'TIE')
+
 
 def directed_controls():
     return {
@@ -43,6 +53,7 @@ def directed_controls():
       'stable_prefers_run': stable_preference(F(0),F(1),F(4))=='RUN',
       'invalidate_prefers_wait': invalidate_preference(F(0),F(1),F(4))=='WAIT',
     }
+
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--construction',action='store_true'); ap.add_argument('--output',required=True)
