@@ -1,5 +1,7 @@
 # Architecture
 
+> **Document role:** current promoted architecture description, not a stable ABI or a product-support guarantee. Use [`CURRENT_GOAL.md`](CURRENT_GOAL.md) for active direction and [`EVIDENCE_MAP.md`](EVIDENCE_MAP.md) for the evidence-to-runtime promotion path.
+
 ## First-principles objective
 
 Agent Interface minimizes total agent-computer control cost subject to a hard correctness constraint.
