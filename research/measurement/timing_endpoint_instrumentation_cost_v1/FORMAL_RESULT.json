@@ -34,12 +34,60 @@
     "p99_ns": 123376
   },
   "intervals": {
-    "accept_to_input_ack": {"max_ns":204007,"mean_ns":238.87884,"min_ns":170,"n":100000,"p50_ns":211.0,"p95_ns":301,"p99_ns":381},
-    "input_to_useful": {"max_ns":195014,"mean_ns":403.9811,"min_ns":300,"n":100000,"p50_ns":361.0,"p95_ns":521,"p99_ns":641},
-    "observation_to_useful": {"max_ns":56525,"mean_ns":231.51356,"min_ns":160,"n":100000,"p50_ns":201.0,"p95_ns":301,"p99_ns":391},
-    "planner_wait": {"max_ns":2263970,"mean_ns":23255.64234,"min_ns":10436,"n":100000,"p50_ns":22624.0,"p95_ns":33841,"p99_ns":75524},
-    "response_to_accept": {"max_ns":205078,"mean_ns":436.02164,"min_ns":311,"n":100000,"p50_ns":380.0,"p95_ns":641,"p99_ns":871},
-    "useful_to_terminal": {"max_ns":1901924,"mean_ns":1709.42345,"min_ns":1222,"n":100000,"p50_ns":1452.0,"p95_ns":2583,"p99_ns":3966}
+    "accept_to_input_ack": {
+      "max_ns": 204007,
+      "mean_ns": 238.87884,
+      "min_ns": 170,
+      "n": 100000,
+      "p50_ns": 211.0,
+      "p95_ns": 301,
+      "p99_ns": 381
+    },
+    "input_to_useful": {
+      "max_ns": 195014,
+      "mean_ns": 403.9811,
+      "min_ns": 300,
+      "n": 100000,
+      "p50_ns": 361.0,
+      "p95_ns": 521,
+      "p99_ns": 641
+    },
+    "observation_to_useful": {
+      "max_ns": 56525,
+      "mean_ns": 231.51356,
+      "min_ns": 160,
+      "n": 100000,
+      "p50_ns": 201.0,
+      "p95_ns": 301,
+      "p99_ns": 391
+    },
+    "planner_wait": {
+      "max_ns": 2263970,
+      "mean_ns": 23255.64234,
+      "min_ns": 10436,
+      "n": 100000,
+      "p50_ns": 22624.0,
+      "p95_ns": 33841,
+      "p99_ns": 75524
+    },
+    "response_to_accept": {
+      "max_ns": 205078,
+      "mean_ns": 436.02164,
+      "min_ns": 311,
+      "n": 100000,
+      "p50_ns": 380.0,
+      "p95_ns": 641,
+      "p99_ns": 871
+    },
+    "useful_to_terminal": {
+      "max_ns": 1901924,
+      "mean_ns": 1709.42345,
+      "min_ns": 1222,
+      "n": 100000,
+      "p50_ns": 1452.0,
+      "p95_ns": 2583,
+      "p99_ns": 3966
+    }
   },
   "ledger_gzip_bytes": 845496,
   "ledger_gzip_sha256": "fe8aac782c4e65b96b44bf2f4157644d4d0a52aca345b56687b5612e09bed9c3",
@@ -47,7 +95,15 @@
   "pairs": 100000,
   "reruns": 0,
   "seed": 128020260918001,
-  "serialized_bytes": {"max_ns":1066,"mean_ns":1066.0,"min_ns":1066,"n":100000,"p50_ns":1066.0,"p95_ns":1066,"p99_ns":1066},
+  "serialized_bytes": {
+    "max_ns": 1066,
+    "mean_ns": 1066.0,
+    "min_ns": 1066,
+    "n": 100000,
+    "p50_ns": 1066.0,
+    "p95_ns": 1066,
+    "p99_ns": 1066
+  },
   "task": "TIMING-ENDPOINT-INSTRUMENTATION-COST-20260918-001",
   "task_input_actions": 0,
   "task_success_promotions": 0,

@@ -24,7 +24,7 @@ Interval medians are descriptive harness timings only: planner_wait 22.624 us; r
 - postformal source rehash10/10 exact;
 - formal invocation1/reruns0.
 
-The full 845KB gzip timing ledger was consumed by the frozen auditor. GitHub publication retains its cryptographic commitment rather than transporting the binary through the text connector.
+The full 845KB gzip timing ledger was consumed by the frozen auditor. GitHub publication may retain its cryptographic commitment rather than transporting the binary through the text connector.
 
 ## Boundary
 
