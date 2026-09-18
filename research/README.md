@@ -117,6 +117,16 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 Both [`archive/`](archive/) and [`archives/`](archives/) are retained historical namespaces. They are not merged or renamed here because existing evidence links and provenance may depend on exact paths. Use [../RESEARCH.md](../RESEARCH.md) and the experiment's own report to determine scientific status.
 
+## Workspace index maintenance
+
+Top-level research directories must remain reachable from either this README or [`ROOT_NAMESPACE_MAP.md`](ROOT_NAMESPACE_MAP.md). Check locally with:
+
+```bash
+python research/check_workspace_index.py
+```
+
+The check validates navigation only; it does not infer scientific status or require moving historical evidence.
+
 ## Environment
 
 Research-only Python dependencies live here:

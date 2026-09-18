@@ -26,6 +26,7 @@ GitHub Actions in this directory serve different purposes. They are grouped here
 ## Repository maintenance
 
 - `analysis-index.yml` — checks that every retained `research/analysis/*/REPORT.md` result is linked from the analytical index and that index links do not point to missing directories.
+- `research-workspace-index.yml` — checks that every top-level `research/` directory is reachable from `research/README.md` or `research/ROOT_NAMESPACE_MAP.md`.
 
 ## Research execution
 
