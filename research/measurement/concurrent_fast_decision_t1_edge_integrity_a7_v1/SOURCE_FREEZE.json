@@ -10,25 +10,34 @@
     "candidate.py": "5ee5df38dc95647d2c5f9ce381e0560445110681",
     "formal_runner.py": "1e785ce0ef95fd14c75e46cf1a81c6940ac39f55",
     "audit.py": "9d69f913309577fbe20792dc2250ffb15b810c5e",
-    "formal_audit.py": "0ad78fbb6b7dfb8541510ed83f34ac7ddb82d1fa",
+    "formal_audit.py": "5891a67919c01423baec5f48f49ccd69b128dc6f",
+    "construction_runner.py": "c577ff7cfac1680ebf95b1d202559fff05b93e59",
+    "construction_audit.py": "cf64fdd1ddddd2ee573caa9ed153eb7d8c8a815c",
     "PURE_PREFLIGHT.json": "50ca9bd796fb2d9379fa69fb931dccd941f147f6",
     "AUDIT_PREFLIGHT.json": "174c8d80f4a263d8daf7aeca854240e36421e97d",
+    "CONSTRUCTION_AUDIT_PREFLIGHT.json": "b31c8366436c9fbfa3198ad1c0b35d10fdcc3883",
     "PLAN.md": "b5a7ba128b281891445d953d572043419e5e9b7b"
   },
   "static_preflight": {
     "compile": "PASS",
-    "corruption_controls": {
+    "formal_corruption_controls": {
       "missing_transition": true,
       "repeated_edge_send": true,
       "integrity_precedence": true,
       "resume_after_handback_rejected": true
+    },
+    "excluded_construction_corruption_controls": {
+      "missing_clear40": true,
+      "post_handback_send": true,
+      "repeat_send": true
     }
   },
   "x11_sessions_before_freeze": 0,
+  "construction_invocations_before_freeze": 0,
   "formal_invocations_before_freeze": 0,
   "reruns": 0,
   "replacements": 0,
   "tuning": 0,
   "lease_status": "NOT_GRANTED",
-  "note": "Freeze binds Git blobs after GitHub readback. No live/private-X11 session is authorized or consumed by this freeze."
+  "note": "Final pre-lease freeze binds GitHub readback blobs including a dedicated 2-session excluded construction supervisor/auditor. No private-X11 session is authorized or consumed."
 }
