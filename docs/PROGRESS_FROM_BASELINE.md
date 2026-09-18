@@ -21,6 +21,12 @@ flowchart LR
 
 This diagram mirrors the existing sections below. It is a reading guide, not a new performance claim or a statement that the evidence forms one causal sequence.
 
+## Detailed recent progress narrative
+
+The retained chronological narrative below is collapsed by default. The summary table and current live-loop sections remain visible immediately afterward.
+
+<details>
+<summary><strong>Expand detailed recent progress narrative</strong></summary>
 
 The first fresh compiled-interface integration now passes its positive and
 changed mechanics pair.  The positive Chromium case performs two fresh-evidence-
@@ -230,6 +236,8 @@ corrected pairs: target admits the second segment and independently completes th
 L2/2; wrong-row stops before the second segment2/2. All119 corrected frames audit
 cross-OS. Human-authored boxes, one seed and about2.5s from first drag to local
 condition prevent a general or human-tempo claim.
+
+</details>
 
 ## What changed
 
@@ -633,3 +641,4 @@ cancellation, budget, uncertain delivery and release controls prevent later
 input. Fifteen offline scenarios, including cold/warm #53 caller integration,
 audit on Windows and WSL. No GUI, model, token or latency result exists yet. See
 [compiled GUI interface v1](../research/live_control/COMPILED_GUI_INTERFACE_V1.md).
+
