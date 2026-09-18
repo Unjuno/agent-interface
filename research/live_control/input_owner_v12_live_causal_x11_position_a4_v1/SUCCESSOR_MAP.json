@@ -1,0 +1,23 @@
+{
+  "task": "INPUT-OWNER-V12-LIVE-CAUSAL-X11-POSITION-A4-20260918-004",
+  "issue": 1276,
+  "parent_source": {
+    "runner.py": "b8a1fd2c413b7b61f7bbcb68c7b437b282f555ce4bfcd822d44ba247f1e615c8",
+    "audit.py": "d21ee0d247d2915826b0ec6dc009c352fa29ab324ff37d05c8f76e6639d25569",
+    "fixture.py": "7739e9cfa4c4f68171cb6dfec91c647868896111619c70577d8456c6fefa5b2a"
+  },
+  "patches": [
+    {"file":"runner.py","old":"INPUT-OWNER-V12-LIVE-CAUSAL-X11-POSITION-20260918-003","new":"INPUT-OWNER-V12-LIVE-CAUSAL-X11-POSITION-A4-20260918-004"},
+    {"file":"runner.py","old":"ISSUE=1273","new":"ISSUE=1276"},
+    {"file":"runner.py","old":"research/input-owner-v12-live-causal-x11-position-20260918-003","new":"research/input-owner-v12-live-causal-x11-position-a4-1276"},
+    {"file":"audit.py","old":"INPUT-OWNER-V12-LIVE-CAUSAL-X11-POSITION-20260918-003","new":"INPUT-OWNER-V12-LIVE-CAUSAL-X11-POSITION-A4-20260918-004"}
+  ],
+  "result_source": {
+    "runner.py": {"bytes":10678,"sha256":"d5c9d7219c0bc058ff1a4dc15a4f13ce7d2f6808957e479e84a90414b6a4ed5c"},
+    "audit.py": {"bytes":6471,"sha256":"aacd160b05ce4385ec1be305bce662efe4d6184799b1c5cab6862f44530295f8"},
+    "fixture.py": {"bytes":1583,"sha256":"7739e9cfa4c4f68171cb6dfec91c647868896111619c70577d8456c6fefa5b2a"}
+  },
+  "scientific_change": "none; identity retarget only",
+  "formal_invocations": 0,
+  "reruns": 0
+}
