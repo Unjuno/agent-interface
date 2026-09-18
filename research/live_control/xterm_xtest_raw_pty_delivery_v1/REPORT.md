@@ -23,6 +23,6 @@ This isolates the #1537 construction failure: window mapping alone was an insuff
 - result SHA-256: 0d4c201d004cc234118f06fbfe6b7b8d38643ddde668da0e3a33c18fb78f7352
 - experiment source SHA-256: 0b010c45ec8b9f5bf74215a1016592894a678d37dc18796f56bb36726ad5511b
 - helper source SHA-256: ec83c0e2cd3be6f7d5a93135467e4f8cd30e2dd662085587aa38661ab68e96dc
-- Git blobs: experiment 58bfa9254f10c322994a94646cb15364c97f2c72, helper 87ba88edec2c878c8043795361c909823b91bfac, result 3150bcc0056c38898a8e5b5f3fb982799764bfa3.
+- local git hash-object values at construction: experiment 58bfa9254f10c322994a94646cb15364c97f2c72, helper 87ba88edec2c878c8043795361c909823b91bfac, raw result 3150bcc0056c38898a8e5b5f3fb982799764bfa3. Only helper.py is retained byte-for-byte in this branch; the experiment hash identifies the disposable construction harness rather than a published GitHub source blob.
 
 Scope: private Xvfb/XTerm only. This proves a harness input route, not semantic-effect handback or general application control.
