@@ -8,10 +8,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-WORKSPACE_README = ROOT / "README.md"
-ROOT_MAP = ROOT / "ROOT_NAMESPACE_MAP.md"
+INDEX_FILES = (ROOT / "README.md", ROOT / "ROOT_NAMESPACE_MAP.md")
 
-LINK_RE = re.compile(r"\]\(([^)#]+?)/\)")
+DIR_LINK_RE = re.compile(r"\[\x60([^\x60]+?)/\x60\]\(([^)]+)/\)")
 
 
 def top_level_dirs() -> set[str]:
@@ -22,10 +21,12 @@ def top_level_dirs() -> set[str]:
     }
 
 
-def one_segment_links(text: str) -> set[str]:
+def indexed_top_level_dirs(text: str) -> set[str]:
     result: set[str] = set()
-    for target in LINK_RE.findall(text):
-        if target.startswith(".") or "/" in target:
+    for label, target in DIR_LINK_RE.findall(text):
+        if label != target:
+            continue
+        if target.startswith("../") or "/" in target or "://" in target:
             continue
         result.add(target)
     return result
@@ -33,15 +34,13 @@ def one_segment_links(text: str) -> set[str]:
 
 def main() -> int:
     dirs = top_level_dirs()
-    text = (
-        WORKSPACE_README.read_text(encoding="utf-8")
-        + "\n"
-        + ROOT_MAP.read_text(encoding="utf-8")
-    )
-    linked = one_segment_links(text)
+    indexed: set[str] = set()
 
-    missing = sorted(dirs - linked)
-    dangling = sorted(linked - dirs)
+    for path in INDEX_FILES:
+        indexed.update(indexed_top_level_dirs(path.read_text(encoding="utf-8")))
+
+    missing = sorted(dirs - indexed)
+    dangling = sorted(indexed - dirs)
 
     if missing or dangling:
         if missing:
