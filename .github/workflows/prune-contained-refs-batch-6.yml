@@ -1,0 +1,41 @@
+name: Prune fully contained refs batch 6
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          prune() {
+            b="$1"
+            expected="$2"
+            current="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/$b" --jq .object.sha 2>/dev/null || true)"
+            if [ -z "$current" ]; then
+              echo "already missing: $b"
+              return 0
+            fi
+            if [ "$current" != "$expected" ]; then
+              echo "::error::ref head changed for $b: expected $expected got $current"
+              exit 1
+            fi
+            echo "deleting exact contained ref: $b @ $current"
+            gh api -X DELETE "repos/${GITHUB_REPOSITORY}/git/refs/heads/$b"
+          }
+
+          prune "research/retention-manifest-closure-audit-1467" "5fbad92a5042f876cccdcee0420cb8856f605d36"
+          prune "research/t2-inflight-receipt-drain-a4-1459" "3269a0d3e53e0d23f08c239b3db198dfe4307c98"
+          prune "research/scorer-coherence-exact-phase-1461" "2a12eedc5978aa76ebb5c51d85c0c6b46af12abe"
+          prune "research/concurrent-fast-decision-t1-edge-integrity-a7-1441" "d08be85a6aca97335a52add14ddc0249ed5b2933"
+          prune "maintenance/rescue-1426-ximage-stop-20260918" "3b4ddc443c9aaafdc43c61a29050333a7ef77a55"
+          prune "research/model-branch-cost-identifiability-20260918" "2ce293466ad83603d3a914d7f9052c915cedc1a0"
+          prune "research/t2-retained-frontier-gap-1451" "51528b0ab199920424033b3c23db5a29da3e8cdb"
+          prune "research/t2-inflight-receipt-drain-r0-1450" "4ce3393c00753f6711aa7b85c9db91e699b50f75"
+          prune "research/physical-edge-clock-domain-gate-a2-1433" "4ac0595ce1e52dbe4806175c7fd8bd65f6821006"
+          prune "research/release-receipt-dual-edge-adapter-a2-1425" "ba6c5725816a1e4f2d7d4fd40c07d9ebc8b47ea4"
