@@ -80,7 +80,7 @@ Retained evidence paths may be referenced by Issues, PRs, reports, hashes, and a
 
 ## Adding a research track
 
-Create a directory under `research/` containing:
+Create the experiment under the narrowest applicable research namespace (for example `research/measurement/<name>/` or `research/integration/<name>/`). Use a direct `research/<name>/` directory only when no existing category fits. A typical experiment directory contains:
 
 ```text
 REPORT.md
