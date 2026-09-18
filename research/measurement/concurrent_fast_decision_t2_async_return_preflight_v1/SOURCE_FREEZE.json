@@ -2,22 +2,42 @@
   "task": "CONCURRENT-FAST-DECISION-T2-ASYNC-RETURN-PREFLIGHT-20260918-009",
   "issue": 1449,
   "base": "c4a77a0a0195395022d377be62e869b2cc9496fc",
-  "canonical_source_identity": "Git blob readback after remote write",
+  "canonical_source_identity": "Git blob readback after preformal repair",
   "formal_invocations_before_freeze": 0,
   "git_blobs": {
     "candidate.py": "2faa24e5cfff087ec169748d3c0511158e7f07ef",
-    "runner.py": "1186b76b685e3736337861870ae8c5e0cc59d35a",
+    "runner.py": "9df397e7a39fb36bd19a0b4386565407f406fca5",
     "audit.py": "8184a81e7f586e9d4f5f11e8f2a739ac9d5692eb",
     "PLAN.md": "1dd13e139521175801f693da6759292a774bdaa3",
-    "construction_audit.json": "1d8bd7ed9498d7eff228b001d0e94b71273db267",
-    "construction.json.gz.b64": "787c1c6b88b724717df573af47ef33adad0246e3"
+    "construction_v2_audit.json": "1d8bd7ed9498d7eff228b001d0e94b71273db267",
+    "construction_v2.json.gz.b64": "5e111916cdcb2a44909ac85bb91b54af147abc62"
   },
-  "construction": {
+  "retained_preformal_defect": {
+    "old_source_head": "f0d029b17ac904c0148e291ab1c16de8796dbe44",
+    "stress_cases": 120,
+    "post_return_admissions": 0,
+    "value_misses": 0,
+    "stale_probe_failures": 3,
+    "cause": "probe targeted requested delay +4 ms rather than observed return; child-send to parent-receive tail exceeded 4 ms",
+    "formal_consumed": 0
+  },
+  "repaired_construction": {
     "decision": "PASS_CONSTRUCTION_ELIGIBLE",
     "cases": 4,
     "post_return_admissions": 0,
     "stale_probe_rejections": 4,
     "corruption_controls_pass": true
   },
-  "note": "An earlier local SHA-256 manifest was invalidated before formal execution because remote source formatting differed from the local pre-upload bytes. It was deleted; these read-back Git blob IDs are the source freeze."
+  "repaired_stress": {
+    "cases": 120,
+    "post_return_admissions": 0,
+    "stale_probe_failures": 0,
+    "value_misses": 0,
+    "child_bad": 0,
+    "thread_bad": 0,
+    "child_send_to_parent_receive_p95_ns": 405466,
+    "child_send_to_parent_receive_max_ns": 4592472,
+    "authority_close_after_receive_p95_ns": 4496,
+    "authority_close_after_receive_max_ns": 18307
+  }
 }
