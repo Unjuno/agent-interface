@@ -1,0 +1,37 @@
+{
+  "task": "USEFUL-EFFECT-OCCUPANCY-INTERVAL-UNION-20260918-001",
+  "issue": 1328,
+  "branch": "research/useful-effect-occupancy-interval-union-20260918-001",
+  "base": "14d9137a83bfe8a96dc8c9c399685ba726472cc3",
+  "source_git_blob": {
+    "parent_candidate.py": "0482cf4c08b8c04d524a3eac11b798f07f0e0524",
+    "interval_candidate.py": "289b58e1f0afeffbf453a4c577cf3f61c3013154",
+    "batch.py": "04474b6ae21e1c6be78d880d1428482ebb85bfcc",
+    "aggregate.py": "9866f6a7cb411a80884867b5f1b06d08f8cab35d",
+    "audit.py": "0801c5f8b6b78aa14655f1aa9d076aa1805c4049",
+    "FORMAL_SCHEDULE.json": "6f272910d83a709c9257672e4754f2c3b5e61287",
+    "PLAN.md": "5a7327f96d5924ceffdfefbaa23d1037e43345d2"
+  },
+  "parent_exact": true,
+  "construction": {
+    "cases": 67630,
+    "mismatches": 0
+  },
+  "pilot_excluded": [
+    {
+      "kind": "bounded",
+      "index": 99,
+      "cases": 100000,
+      "old_mismatches": 0,
+      "pointwise_mismatches": 0
+    },
+    {
+      "kind": "stress",
+      "index": 99,
+      "cases": 20000,
+      "invariant_errors": 0
+    }
+  ],
+  "formal_invocations": 0,
+  "reruns": 0
+}
