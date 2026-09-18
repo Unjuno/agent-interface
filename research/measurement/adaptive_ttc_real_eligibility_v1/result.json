@@ -5,14 +5,13 @@
   "failed_prerequisites": [
     "representation_sufficient_for_frozen_residual",
     "genuine_needs_policy_residual",
-    "enough_leakage_free_rows",
-    "independent_semantic_effect_oracle"
+    "enough_leakage_free_rows"
   ],
   "prerequisites": {
     "enough_leakage_free_rows": false,
     "first_rung_no_live_input_authority": true,
     "genuine_needs_policy_residual": false,
-    "independent_semantic_effect_oracle": false,
+    "independent_semantic_effect_oracle": true,
     "real_caller_visible_contract": true,
     "representation_sufficient_for_frozen_residual": false
   }
