@@ -11,6 +11,7 @@ def run(name, mut, expected_error):
     assert r['decision']=='FAIL_INTEGRITY', (name,r)
     assert expected_error in r['errors'], (name,r)
 
+# Baseline must remain the preregistered HOLD with exactly four failed prerequisites.
 baseline=evaluate(base)
 assert baseline['decision']=='HOLD_NO_REAL_ADAPTIVE_RESIDUAL'
 assert baseline['failed_prerequisites']==[
