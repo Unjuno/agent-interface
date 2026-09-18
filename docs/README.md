@@ -34,7 +34,11 @@ flowchart TD
     DOCS --> GOAL[CURRENT_GOAL.md]
     DOCS --> ARCH[architecture.md]
     DOCS --> METHOD[RESEARCH_METHOD.md]
-    RES --> MEAS[analysis / measurement / integration / domain tracks]
+    RES --> ANA[analysis/]
+    RES --> MEAS[measurement/]
+    RES --> INT[integration/]
+    RES --> CONC[concurrency/]
+    RES --> DOM[domain tracks]
     EVID --> RES
     RUN --> REL
 ```
@@ -89,7 +93,7 @@ Use current/canonical documents for present project direction and architecture. 
 
 ## Documentation layers
 
-## Living history documents
+### Living history documents
 
 `CURRENT_GOAL.md` and `LOCAL_RESEARCH_HANDOFF.md` are living documents with retained history. Their newest governing/current material stays visible at the top; older direction and legacy document bodies are preserved under expandable sections. Use the visible top sections for current status and expand history only when tracing provenance.
 ### Current status
