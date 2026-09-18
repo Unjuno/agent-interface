@@ -40,6 +40,6 @@ For lower-level local decision mechanics, route cost, TTC admission, typed evide
 - Current governing direction: [`../../docs/CURRENT_GOAL.md`](../../docs/CURRENT_GOAL.md)
 - Research method: [`../../docs/RESEARCH_METHOD.md`](../../docs/RESEARCH_METHOD.md)
 - Evidence ledger: [`../../RESEARCH.md`](../../RESEARCH.md)
-- Experimental workspace map: [`../README.md`](../README.md)
+- Research workspace map: [`../README.md`](../README.md)
 
 Read each child experiment for its allowed decision vocabulary, authority boundary, and scoped disposition.

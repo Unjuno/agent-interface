@@ -10,7 +10,7 @@ This file is intentionally comprehensive. For public navigation, use the shorter
 | Current governing objective | [docs/CURRENT_GOAL.md](docs/CURRENT_GOAL.md) |
 | Public progress summary and remaining gates | [docs/PROGRESS_FROM_BASELINE.md](docs/PROGRESS_FROM_BASELINE.md) |
 | Latest detailed handoff, failures, and next steps | [docs/LOCAL_RESEARCH_HANDOFF.md](docs/LOCAL_RESEARCH_HANDOFF.md) |
-| Experimental workspace map | [research/README.md](research/README.md) |
+| Research workspace map | [research/README.md](research/README.md) |
 | Convergence and freeze criteria | [research/evolution/freeze_criteria.md](research/evolution/freeze_criteria.md) |
 | Runnable construction preview | [runtime/README.md](runtime/README.md) |
 | Analysis vs experiment decision method | [docs/RESEARCH_METHOD.md](docs/RESEARCH_METHOD.md) |

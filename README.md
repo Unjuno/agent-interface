@@ -153,7 +153,7 @@ Raw reports and CSVs are under [`research/`](research/). `planner bytes` are not
 ├── docs/
 │   └── README.md          # documentation map and canonical status links
 ├── research/
-│   └── README.md          # experimental workspace map; reports/evidence live below it
+│   └── README.md          # research workspace map; analyses/reports/evidence live below it
 ├── runtime/
 │   └── README.md          # runnable construction preview and runtime entry points
 ├── release/

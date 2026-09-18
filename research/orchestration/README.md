@@ -10,4 +10,4 @@ For current status, use:
 - [`../../docs/LOCAL_RESEARCH_HANDOFF.md`](../../docs/LOCAL_RESEARCH_HANDOFF.md);
 - [`../../RESEARCH.md`](../../RESEARCH.md).
 
-For the broader experimental workspace map, return to [`../README.md`](../README.md).
+For the broader research workspace map, return to [`../README.md`](../README.md).
