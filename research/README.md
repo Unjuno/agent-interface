@@ -16,6 +16,7 @@ For claims and scientific disposition, start with the top-level [research index]
 | Research convergence/freeze criteria | [evolution/freeze_criteria.md](evolution/freeze_criteria.md) |
 | Revisit history | [REVISIT_LEDGER.md](REVISIT_LEDGER.md) |
 | Analysis vs experiment decision flow | [../docs/RESEARCH_METHOD.md](../docs/RESEARCH_METHOD.md) |
+| Public evidence/document relationship map | [../docs/EVIDENCE_MAP.md](../docs/EVIDENCE_MAP.md) |
 
 
 ## Research routing
