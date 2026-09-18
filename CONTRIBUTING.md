@@ -48,6 +48,22 @@ Before promoting a design change, ask:
 
 The project prefers mechanisms that remove unnecessary boundaries while preserving an explicit fallback.
 
+## Analytical-first gate
+
+Before allocating an empirical run, ask whether the question is already decidable from the declared semantics.
+
+Prefer analysis first when the target is an exact contract, invariant, finite state machine, ordering rule, bounded codec, or other tractable state space. Use an independent oracle, exhaustive enumeration, invariant argument, or proof where appropriate. Then experiment only on the residual that depends on a real OS/backend/application/model/timing distribution.
+
+Examples:
+
+- generation/lease/ABA safety can often be reduced to transition semantics before any GUI run;
+- codec or serialization correctness can often be checked by exact round trips and bounded exhaustive cases;
+- real latency, model tokens, GUI timing, focus contention, and cross-application transfer remain empirical.
+
+An analytical result is valid only under its explicit assumptions. It does not establish real-backend timing or integrated product behavior by itself.
+
+See [`docs/RESEARCH_METHOD.md`](docs/RESEARCH_METHOD.md) for the decision flow and repository placement.
+
 ## Benchmark rules
 
 1. Correctness is a hard gate.
