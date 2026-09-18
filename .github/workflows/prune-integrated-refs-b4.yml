@@ -1,0 +1,15 @@
+name: Prune integrated refs batch 4
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for b in             release/preview-2026-09-17-rc1             research/cache-request-origin-composition-a2-20260918-002             research/release-receipt-dual-edge-adapter-20260918             research/timing-endpoint-xterm-fixed-roi-20260918             research/timing-endpoint-xterm-roi-cost-20260918             maintenance/archive-p0-diagnostic-a3-20260918             maintenance/final-prune-integrated-refs-20260918             maintenance/prune-integrated-refs-b3-20260918
+          do gh api -X DELETE "repos/${GITHUB_REPOSITORY}/git/refs/heads/$b" || true; done
