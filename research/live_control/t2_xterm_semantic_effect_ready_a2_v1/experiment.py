@@ -65,6 +65,7 @@ def run_case(helper,mode,delay_ms,offset_ms,case_id,display_num):
             time.sleep(.0002)
         if semrow is None and sem.exists(): semrow=json.loads(sem.read_text())
         candidate_handback=(semrow['effect_ns'] if semrow and semrow.get('effect_ns',0)<=deadline else None)
+        # ensure helper exits if it got input
         try: rc=xterm.wait(timeout=1.0)
         except subprocess.TimeoutExpired: xterm.terminate(); rc=xterm.wait(timeout=1.0)
         terminal_down=key_is_down(d,kc)
@@ -99,6 +100,7 @@ def main():
         specs=[('positive',10,36),('no_effect',10,36)]
     else:
         specs=[]
+        # 16 matched positive pairs -> baseline/candidate share one physical run's semantic timing metrics; arm outcomes are derived from same row.
         for off in [34,36,38,39]:
             for delay in [10,13]:
                 for rep in range(2): specs.append(('positive',delay,off))
