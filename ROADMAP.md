@@ -58,7 +58,7 @@ Goal: remove visual/model input that carries no new task-relevant information wh
 - [ ] Add O4: local `VERIFY` before model escalation.
 - [x] Measure local action-to-first-feedback latency; full agent latency remains open.
 - [x] Measure image-observation elimination at equal correctness in A1's four-app suite.
-- [ ] Stress tiny but semantically important changes so approximate hashes cannot silently hide them.
+- [x] Stress tiny but semantically important changes so approximate hashes cannot silently hide them ([#1564 retained scoped PASS](research/measurement/observation_tiny_change_ahash_v1/REPORT.md)).
 
 Active track: [`research/observation_gating/`](research/observation_gating/).
 
