@@ -9,6 +9,33 @@ This file records durable system ideas without replacing the repository's curren
 - **Proposed** — design hypothesis worth testing.
 - **Deferred** — blocked on a dependency or measurement boundary.
 
+## Thesis map
+
+```mermaid
+flowchart TD
+    I[Interface efficiency]
+    L[Local control / invalidation]
+    C[Concurrency / authority]
+    E[Evidence discipline]
+
+    I --> IB[Interface bottleneck]
+    I --> UF[Universal fallback]
+    I --> CC[Compact control → validated semantics]
+    I --> OG[Observation gating ↔ Control Codec]
+
+    L --> HF[Deterministic high-frequency loops local]
+    L --> LL[Layered lifetimes / narrow invalidation]
+    L --> VI[Scoped renewable visual invalidation]
+
+    C --> PE[Pending effects are dependencies]
+    C --> PA[Physical authority bounded / observable]
+
+    E --> BI[Benchmark integrity]
+    E --> BT[Bytes are not tokens]
+```
+
+This map groups the existing durable theses for navigation. It does not assign promotion status, scientific priority, or override current goal/architecture documents.
+
 ## Durable theses
 
 ### Interface bottleneck
@@ -27,9 +54,10 @@ The retained portable-runtime work under `research/runtime_portability_v0/` is a
 
 ### Observation gating and Control Codec are complementary
 
-```text
-computer -> model : Observation Gating
-model -> computer : Control Codec / Compact IR
+```mermaid
+flowchart LR
+    C["Computer"] -->|"Observation Gating"| M["Model / planner"]
+    M -->|"Control Codec / Compact IR"| C
 ```
 
 Both are interface optimizations and must be evaluated at equal correctness.
