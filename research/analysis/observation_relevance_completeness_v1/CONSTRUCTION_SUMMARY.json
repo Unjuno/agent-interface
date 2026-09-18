@@ -1,0 +1,13 @@
+{
+  "decision": "PASS_CONSTRUCTION_ELIGIBLE",
+  "formal_invocations": 0,
+  "rows": [
+    {"name":"complete_irrelevant","required":"SUPPRESS","unsafe":"SUPPRESS","candidate":"SUPPRESS"},
+    {"name":"complete_relevant","required":"FORWARD","unsafe":"FORWARD","candidate":"FORWARD"},
+    {"name":"incomplete_omission","required":"FORWARD","unsafe":"SUPPRESS","candidate":"FORWARD_FULL_CURRENT"},
+    {"name":"forged_complete","required":"FORWARD","unsafe":"SUPPRESS","candidate":"SUPPRESS"},
+    {"name":"critical_outside","required":"FORWARD","unsafe":"FORWARD","candidate":"FORWARD"},
+    {"name":"stale","required":"SUPPRESS","unsafe":"FORWARD_FULL_CURRENT","candidate":"FORWARD_FULL_CURRENT"}
+  ],
+  "task": "OBSERVATION-GATING-O3-RELEVANCE-COMPLETENESS-20260918-001"
+}
