@@ -1,65 +1,31 @@
 {
-  "base": "020bb2713af7e115b29a71625326707e60118417",
-  "batches": 4,
-  "branch": "research/mutation-actor-current-key-compromise-20260918-001",
-  "issue": 1277,
-  "pairs_per_batch": 50000,
-  "predecessor": {
-    "chunk_git_blobs": [
-      "7907866d94e3f495c903880f8a2de94af966bfd6",
-      "630cbafdfa2311dd12f65f6d3948da76480e4ac5",
-      "4fb02b81f9e67658b0e09c82eea02f7867cf1f3a",
-      "c0ecf422de27e34918e42048bebf97f2334f681b",
-      "91a96b3e75ba7e5b92a4b1610ec6fc7b6563ca11",
-      "3d9f623d66b38296f82ac97b783b03d1b3d1938a",
-      "ee505f4a636412a27858311cf735e8dd7e45803a",
-      "f5e14422858ca6c777075855d69a4fabf04b0faa",
-      "ff5b7b7cc61f1bda049a34054f3c06664aff4aff"
-    ],
-    "decoded_sha256": "7d264de601f475d0face9b4b4860cd58a4389133407f9fcb3fcde013ade94cdd",
-    "expected_sha256": "7d264de601f475d0face9b4b4860cd58a4389133407f9fcb3fcde013ade94cdd"
-  },
-  "primary_batches_before_freeze": 0,
-  "reruns": 0,
-  "seed": 127720260918001,
-  "source": {
-    "EXPERIMENT_CHARTER.md": {
-      "bytes": 2719,
-      "sha256": "2feb0dcfc1d1984264c832133c7d3b97042ea313733acf37070572be1b4a5a38"
-    },
-    "ROADMAP.md": {
-      "bytes": 768,
-      "sha256": "7f14743e0ca96a8c3accb02a50c786b338555045da1e7a9a30ba76fa31272c9c"
-    },
-    "audit.py": {
-      "bytes": 1178,
-      "sha256": "dd62b7c898c7c1736fe2a2c572c6de51463c92076c2f39e9694c86470ca51f1f"
-    },
-    "construction.py": {
-      "bytes": 762,
-      "sha256": "a790dca87208dbd47367cc8c7b5b63befc6e8670e7304c5c67876f02851f9488"
-    },
-    "core.py": {
-      "bytes": 3226,
-      "sha256": "ca98f6e47b3a2added083c410c6d6c199ee9b6abf1a15122d51bd4c056703f89"
-    },
-    "corruption_controls.py": {
-      "bytes": 1585,
-      "sha256": "88cd41388e1e29ae59354a17ec8cab2fa80b2a4966a41a747440f82fd0a3a088"
-    },
-    "oracle.py": {
-      "bytes": 1442,
-      "sha256": "7b154aa42033fa909a20c756e261634b47b97ce9f8acb3b3d5760c3494a41904"
-    },
-    "run_batch.py": {
-      "bytes": 2040,
-      "sha256": "e83a12e504f1dac51b6fb54eaf10b675ac4aecab02e4fa74350e12da9f0016d0"
-    },
-    "schedule.py": {
-      "bytes": 332,
-      "sha256": "209adb4a51922221926e19e3df59b903dae2733989238ae86df468d718c3e9c7"
-    }
-  },
   "task": "MUTATION-ACTOR-RECEIPT-CURRENT-KEY-COMPROMISE-20260918-001",
-  "total_pairs": 200000
+  "issue": 1277,
+  "base": "020bb2713af7e115b29a71625326707e60118417",
+  "branch": "research/mutation-actor-receipt-current-key-compromise-20260918-001",
+  "formal_pairs": 200000,
+  "batch_count": 4,
+  "batch_size": 50000,
+  "formal_batch_invocations": 0,
+  "batch_reruns": 0,
+  "construction": {
+    "pairs": 128,
+    "legit_accept": 128,
+    "compromised_forge_accept": 128,
+    "visible_byte_identical_pairs": 128,
+    "wrong_key_reject": 128,
+    "retired_epoch_reject": 128
+  },
+  "source_sha256": {
+    "ROADMAP.md": "005e21771a6abef6c8a898b2bbcaf1b96749fb8e161bc977a763f3d8f2573003",
+    "experiment.py": "c66163f8f28bd0f8e3328447f3a0962ea18c7d026e81ce1e525d7d46eefe31f7",
+    "aggregate.py": "55ca6da119903c552e7cac93c0b2f46fd8a1eab52f86b530129c13b99e4d954b",
+    "reconstruct_source.py": "ded5dc09048b68238bc7be92f5bac7fe592f16fcc6d6d9c7b370208845024ade"
+  },
+  "source_chunk_blob_sha": {
+    "00.b64": "6a88113f897a93f133ac89f2d77a805e5abbf031",
+    "01.b64": "3d78f85036d3088a4f10d49b7b7ed9253dc22ac0",
+    "02.b64": "84b484adfa909a8ca00f7388bc71ea8c659cf696",
+    "03.b64": "a014d547bf29cffa98316c82acc2a2c469253e17"
+  }
 }
