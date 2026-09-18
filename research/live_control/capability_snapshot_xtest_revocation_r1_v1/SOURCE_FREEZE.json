@@ -2,23 +2,21 @@
   "task": "CAPABILITY-SNAPSHOT-XTEST-REVOCATION-R1-20260919-001",
   "issue": 1927,
   "branch": "research/capability-snapshot-xtest-revocation-r1-1927",
-  "source_bundle": {
-    "file": "SOURCE_BUNDLE.tar.gz.b64",
-    "git_blob": "4c523a91d04f0b820a1b3eb588afbcff46bb5cbe",
-    "tar_sha256": "f43af52057a1eab74d2d36d043b4ec2ecb441f7d3775b802af8f3084f1c10557",
-    "gzip_sha256": "1e871ac12bf64d8da29d24fd458526a1ce1c0d7edd0f1de67d99a51d2f45735d",
-    "base64_sha256": "65762e6c38367ab21f60b8cd7a1a0d84250217ff9eeb18534c16bcdcef4b2bdb",
-    "base64_bytes": 8248
+  "formal_status": "ELIGIBLE_NOT_RUN",
+  "formal_invocations": 0,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "canonical_source_git_blobs": {
+    "source/PLAN.md": "7110cdc83d893cbe2970ad9cb5216194b0055d00",
+    "source/snapshot.py": "07f091a8aa34c7f52364717fc3f03be04ca726ea",
+    "source/oracle.py": "3da3f564f739dc7c61a2a28c8fdb811dd1374324",
+    "source/runner.py": "af1e70b839bbc004452d8b2185da0c86431da88d",
+    "source/tk_fixture.py": "7522eb434c440e6fd5b8e218c6644d01c3223ba6",
+    "source/audit.py": "7599551c55c500d53d80d77ee98c7a5d759a36fa",
+    "source/independent_audit.py": "6bed284eda34032fb6e5edb968819de45272cf54"
   },
-  "source_git_blobs": {
-    "PLAN.md": "7110cdc83d893cbe2970ad9cb5216194b0055d00",
-    "snapshot.py": "07f091a8aa34c7f52364717fc3f03be04ca726ea",
-    "oracle.py": "3da3f564f739dc7c61a2a28c8fdb811dd1374324",
-    "runner.py": "af1e70b839bbc004452d8b2185da0c86431da88d",
-    "tk_fixture.py": "7522eb434c440e6fd5b8e218c6644d01c3223ba6",
-    "audit.py": "7599551c55c500d53d80d77ee98c7a5d759a36fa",
-    "independent_audit.py": "6bed284eda34032fb6e5edb968819de45272cf54"
-  },
+  "local_git_blob_readback_match": true,
   "construction": {
     "decision": "PASS_CONSTRUCTION_ELIGIBLE",
     "pairs": 2,
@@ -27,9 +25,13 @@
     "audit_sha256": "066962665507b53650d3a3ea538e49726a9364e83e186c89fb8367549d8a7d07",
     "independent_audit_sha256": "90e42f386a0d57a7663da3732336519826fcc4c589168ec305e2d48590bb7cb7"
   },
-  "formal_status": "NOT_RUN",
-  "formal_invocations": 0,
-  "reruns": 0,
-  "replacements": 0,
-  "tuning": 0
+  "supplemental_failed_bundle_publication": {
+    "local_expected_git_blob": "4c523a91d04f0b820a1b3eb588afbcff46bb5cbe",
+    "remote_git_blob": "264163b5abe8e6249b79f2fdc56499cf93e26b29",
+    "authoritative": false,
+    "reason": "manual Base64 relay byte mismatch before formal"
+  },
+  "preformal_stops": [
+    "Tk/Xlib parent-connection XIO during first construction before result publication; fixture lifecycle packaging repaired only"
+  ]
 }
