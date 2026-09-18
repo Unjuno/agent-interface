@@ -5,8 +5,10 @@ This directory contains repository-facing GitHub configuration and automation.
 ## Issue intake
 
 - [`ISSUE_TEMPLATE/idea.yml`](ISSUE_TEMPLATE/idea.yml) — design/research ideas.
-- [`ISSUE_TEMPLATE/research-proposal.yml`](ISSUE_TEMPLATE/research-proposal.yml) — benchmarkable research proposals.
+- [`ISSUE_TEMPLATE/research-proposal.yml`](ISSUE_TEMPLATE/research-proposal.yml) — falsifiable research proposals, including analytical, exhaustive, oracle-based, and empirical methods.
 - [`ISSUE_TEMPLATE/bug-report.yml`](ISSUE_TEMPLATE/bug-report.yml) — reproducible defects.
+
+Research intake follows the analytical-first decision flow in [`docs/RESEARCH_METHOD.md`](../docs/RESEARCH_METHOD.md).
 
 ## Automation
 
