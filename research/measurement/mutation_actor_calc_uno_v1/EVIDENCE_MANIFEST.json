@@ -1,18 +1,25 @@
 {
   "archive_base64_sha256": "8eb116ff72fb71df58a88ec5246c0dec1384c056264583d89dfc1d20b75966fa",
   "archive_gzip_sha256": "4ef99ff121845ba588c6d6b61e06032d36f8448a0245015f618a3a81e06052d1",
-  "files": {
-    "RESULT.json": {"bytes": 1041, "sha256": "79a5f5387511afa5a4059b419975f0d8c3ff2927c9f483af69f252ebb6407d99"},
-    "formal_audit.json": {"bytes": 319, "sha256": "9699ffb1ca5f15c671f752ea0cb1aa2bbe7c489c03e89947c86806a57fd59b9e"},
-    "formal_exit_code.txt": {"bytes": 2, "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"},
-    "formal_out/ROWS.jsonl": {"bytes": 125962, "sha256": "836aa9362e4676b575e24e36041d92f1e0d08c352fad8776a78a60259ce6d11e"},
-    "formal_out/SUMMARY.json": {"bytes": 946, "sha256": "3cdfdb75c7f1225d4860659f770b995c062c141084820389b7d7d40bf6c6bac6"},
-    "formal_stderr.txt": {"bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
-    "formal_stdout.json": {"bytes": 836, "sha256": "11d3d1c7c5c90e01d97ca66c0e8add04522c371421d19140e972dca384479e85"}
-  },
+  "initial_large_parts_valid": false,
+  "initial_large_parts_note": "Initial 7001-byte manual connector transfers for part00/part01 did not match local bytes. They are not evidence. The evidence_exact.part00..07 files are authoritative; all eight Git blobs were verified against local git hash-object.",
   "parts": [
-    {"bytes": 7001, "name": "evidence_bundle.part00", "sha256": "b5c66b3f948b24aab26ff4539cbf9f19bbd2bc9d7bbd7c52ae1816ee7638664e"},
-    {"bytes": 7001, "name": "evidence_bundle.part01", "sha256": "219e3f94757720ef048a2453a67402db2a03bb54779e9020163b13b4720d4424"},
-    {"bytes": 381, "name": "evidence_bundle.part02", "sha256": "fee17020a6a590e7260560e22c0363a3c681e6962406890efcdb33a6a636868e"}
-  ]
+    {"bytes":1800,"name":"evidence_exact.part00","sha256":"71c2217b0b08285506734509bdfb58b725c87eeebf4caf2eaf889ad6efe9c4ae","git_blob":"83dc139ec6d99e40b0df22f7a34343a778cc5ba9"},
+    {"bytes":1800,"name":"evidence_exact.part01","sha256":"9aa5fa65dbaa955eaa0583b4813e250225fec9719f6fd2cd1325cca088bfd9a5","git_blob":"92af315c90acdbb9798f22c3310e32ba57b5286f"},
+    {"bytes":1800,"name":"evidence_exact.part02","sha256":"8550ff9830122b529888f0d2a744a6b4fc1320f631aff9b02588075020cfa412","git_blob":"ce9efdafd5bcbb31278521911c1fe5d8dd570e98"},
+    {"bytes":1800,"name":"evidence_exact.part03","sha256":"e98029e818c6152e551e032b330f0861eb66629994413c10fd2553ae7a425926","git_blob":"6ed9c66329d3e5d3ddffa8d955b0131d41a86c56"},
+    {"bytes":1800,"name":"evidence_exact.part04","sha256":"d97f9bfe862971ae28b18e749f9ce4cb24266cec3284b46c7cdfd7f550595e2e","git_blob":"704f9195e33e4000af57a89c3961d552aa347945"},
+    {"bytes":1800,"name":"evidence_exact.part05","sha256":"b69bc156956aa55b3ea99546545ba5b6bb5437b57c318a3ba1d906bb0c1bf184","git_blob":"606161194ccc364cb838cc7f15fedd53afcc0638"},
+    {"bytes":1800,"name":"evidence_exact.part06","sha256":"7d031a6115b96acee1d367b9ff2a9543751493a93fd298105c34cd3e2c142766","git_blob":"5770d32e0e5e0852cdfef8f181be02953b96add3"},
+    {"bytes":1783,"name":"evidence_exact.part07","sha256":"8b331cb72e34dd0a4dad5dc21664c71d5575c0ac2eefb929eb7cc08a27b9a7c4","git_blob":"f8cd06f226b6de4d1383d74335b1b8f8de478c29"}
+  ],
+  "files": {
+    "RESULT.json": {"bytes":1041,"sha256":"79a5f5387511afa5a4059b419975f0d8c3ff2927c9f483af69f252ebb6407d99"},
+    "formal_audit.json": {"bytes":319,"sha256":"9699ffb1ca5f15c671f752ea0cb1aa2bbe7c489c03e89947c86806a57fd59b9e"},
+    "formal_exit_code.txt": {"bytes":2,"sha256":"9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"},
+    "formal_out/ROWS.jsonl": {"bytes":125962,"sha256":"836aa9362e4676b575e24e36041d92f1e0d08c352fad8776a78a60259ce6d11e"},
+    "formal_out/SUMMARY.json": {"bytes":946,"sha256":"3cdfdb75c7f1225d4860659f770b995c062c141084820389b7d7d40bf6c6bac6"},
+    "formal_stderr.txt": {"bytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+    "formal_stdout.json": {"bytes":836,"sha256":"11d3d1c7c5c90e01d97ca66c0e8add04522c371421d19140e972dca384479e85"}
+  }
 }
