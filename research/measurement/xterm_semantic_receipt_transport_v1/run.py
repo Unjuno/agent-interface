@@ -37,6 +37,7 @@ def viewable_top(d):
 
 def key_down(d,kc):
     km=d.query_keymap()
+    # python-xlib returns 32-byte str/bytes-like
     if isinstance(km,str): km=km.encode('latin1')
     return bool(km[kc//8] & (1<<(kc%8)))
 
