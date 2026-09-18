@@ -90,6 +90,7 @@ flowchart LR
 - General methodology and public explanation: `docs/`.
 - Primarily analytical proof/derivation/identifiability evidence: use `research/analysis/` when it is reusable across domains or stands on its own.
 - Scoped quantitative/formal measurement: keep it under `research/measurement/`, `research/integration/`, or the existing domain directory.
+- Safe-overlap / phase-scheduling / serialized-actuator concurrency studies: use `research/concurrency/` when concurrency itself is the primary research question.
 - Domain-coupled analysis may remain beside the domain experiment when separating it would obscure assumptions or provenance.
 - Promoted executable semantics: `runtime/` only after the relevant promotion gate.
 - Release/package evidence: `release/`.

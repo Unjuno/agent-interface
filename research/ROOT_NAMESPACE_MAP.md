@@ -20,8 +20,10 @@ New work should normally use a category directory. Existing direct-root paths re
 
 | Research scope | Preferred location |
 |---|---|
+| Analytical proof / exact derivation / identifiability | [`analysis/`](analysis/) |
 | Scoped quantitative/formal semantics | [`measurement/`](measurement/) |
 | Cross-component composition | [`integration/`](integration/) |
+| Safe overlap / phase scheduling / concurrency | [`concurrency/`](concurrency/) |
 | Live desktop control and caller integration | [`live_control/`](live_control/) |
 | Continuous / real-time DOOM control | [`doom/`](doom/) |
 | Observation/temporal representation | [`observation/`](observation/) |
