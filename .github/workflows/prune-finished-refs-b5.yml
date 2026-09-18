@@ -1,0 +1,15 @@
+name: Prune finished refs batch 5
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for b in             maintenance/prune-yesterday-release-20260918             maintenance/remove-yesterday-prune-20260918             research/concurrent-fast-decision-t1-x11-1384
+          do gh api -X DELETE "repos/${GITHUB_REPOSITORY}/git/refs/heads/$b" || true; done
