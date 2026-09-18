@@ -131,10 +131,4 @@ These are research predecessors. Current promoted executable organization lives 
 
 ## Navigation check
 
-Run [`check_navigation.py`](check_navigation.py) after adding or reclassifying a top-level research directory:
-
-```bash
-python research/check_navigation.py
-```
-
-The checker requires every top-level directory to appear in either the research workspace map or this retained namespace map and rejects dangling top-level links. It does not move, relabel, or score research evidence.
+The canonical top-level workspace check is [`check_workspace_index.py`](check_workspace_index.py), documented in [`README.md`](README.md). It verifies that this retained namespace map and the current workspace map together cover every top-level research directory.
