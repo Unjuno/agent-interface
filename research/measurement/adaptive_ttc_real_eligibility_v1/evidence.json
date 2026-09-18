@@ -1,5 +1,5 @@
 {
-  "snapshot_main": "66a72f17518d7b978309b186662d017cebef5b6b",
+  "snapshot_main": "4b886e0cc79fb57ffce07b84b364eb886bde1cbf",
   "sources": {
     "cross_domain_rule_vm_result": {
       "path": "research/local_system1/cross_domain_rule_vm_v2/RESULT.json",
@@ -8,7 +8,8 @@
       "chromium_exact": true,
       "chromium_rows": 8192,
       "openttd_retained_exact": 5,
-      "controls_fail_closed": true
+      "controls_fail_closed": true,
+      "learned_residual_rows": 0
     },
     "map01_v31_representation": {
       "path": "research/system1/map01_last_effect_representation_v31_r2/RESULT.json",
@@ -16,24 +17,37 @@
       "decision": "PASS_LAST_EFFECT_REPRESENTATION_V31_R2_SCOPED",
       "eligible_rows": 5,
       "enriched_collisions": 0,
-      "report_boundary_requires_larger_corpus": true,
-      "independent_semantic_effect_oracle": false
+      "report_boundary_requires_larger_corpus": true
     },
-    "operation_target_realstate_reservation": {
-      "path": "research/measurement/operation_target_private_x11_realstate_v1/RESERVATION.md",
-      "git_blob": "eaf2e5c01288e2531a1767ffd22731ee6d9bb646",
-      "status": "ACTIVE_UPSTREAM_RESULT_NOT_CONSUMED",
-      "issue": 1223
+    "operation_target_private_x11_result": {
+      "path": "research/measurement/operation_target_private_x11_realstate_v1/RESULT.md",
+      "git_blob": "0b98bdfd7f00d063f252b5e9db27f9868eb4c9a8",
+      "audit_git_blob": "9f22e0291e38b450bdbac105d5ec42b3e4941b65",
+      "decision": "PASS_PRIVATE_X11_OPERATION_TARGET_CONTRACT_SCOPED",
+      "formal_invocations": 1,
+      "rows": 96,
+      "acceptable_membership": 96,
+      "positive_coverage": 48,
+      "semantic_negatives": 48,
+      "false_executable_negatives": 0,
+      "stale_executable": 0,
+      "missing_arguments": 0,
+      "public_oracle_leakage": 0,
+      "normalized_incompatible_groups": 0,
+      "model_calls": 0,
+      "task_input_actions": 0,
+      "independent_decision_oracle": true,
+      "learned_residual_rows": 0
     },
     "issue_1026_comment": {
       "comment_id": 5720862825,
       "decision": "BLOCKED_REAL_SHADOW_DATA",
-      "notes": "deterministic Chromium/OpenTTD leaves no residual; v30 only 3 rows; v31 was pending at that snapshot"
+      "notes": "deterministic Chromium/OpenTTD left no residual; retained MAP01 cohorts were too small for leakage-free train/eval"
     },
     "issue_1027_comment": {
       "comment_id": 5730673024,
       "decision_in_substance": "HOLD_NO_REAL_ADAPTIVE_RESIDUAL",
-      "notes": "v31 representation blocker closed but 5 rows remain insufficient; real NEEDS_POLICY residual and independent semantic/effect oracle absent"
+      "notes": "v31 representation blocker closed but five retained rows did not activate adaptive TTC"
     }
   },
   "activation": {
@@ -41,13 +55,13 @@
     "representation_sufficient_for_frozen_residual": false,
     "genuine_needs_policy_residual": false,
     "enough_leakage_free_rows": false,
-    "independent_semantic_effect_oracle": false,
+    "independent_semantic_effect_oracle": true,
     "first_rung_no_live_input_authority": true
   },
   "integrity": {
-    "uses_unpublished_active_result": false,
     "uses_future_or_oracle_as_feature": false,
-    "claims_deterministic_exact_rows_as_residual": false,
+    "claims_cross_domain_deterministic_rows_as_residual": false,
+    "claims_private_x11_deterministic_rows_as_residual": false,
     "claims_five_rows_are_sufficient_despite_source_boundary": false
   }
 }
