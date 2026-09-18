@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/tmp/ai_1871/run_formal.py", line 85, in <module>
+    if __name__=='__main__': main()
+                             ~~~~^^
+  File "/tmp/ai_1871/run_formal.py", line 25, in main
+    batches=ordered_batch(xs,BATCH_SIZE); flat=flatten(batches); ref=[e.to_dict() for e in xs]
+            ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'ordered_batch' where it is not associated with a value
+Command exited with non-zero status 1
+
+TIME elapsed=0.61 maxrss_kb=92852
