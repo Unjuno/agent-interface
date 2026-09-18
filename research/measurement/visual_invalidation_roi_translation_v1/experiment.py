@@ -20,20 +20,26 @@ TARGET_Y=ROI_Y+18
 DIRECTIONS={'horizontal':(1,0),'vertical':(0,1),'diagonal':(1,1)}
 FORMAL_SEED=149420260918001
 
+
 def rect_pixels(x:int,y:int,w:int,h:int):
     return {(xx,yy) for yy in range(y,y+h) for xx in range(x,x+w)}
+
 
 def in_roi(p):
     x,y=p
     return ROI_X <= x < ROI_X+ROI and ROI_Y <= y < ROI_Y+ROI
+
 
 def oracle_count(direction:str,d:int,semantic_change:bool)->int:
     dxu,dyu=DIRECTIONS[direction]
     a={p for p in rect_pixels(TARGET_X,TARGET_Y,TARGET,TARGET) if in_roi(p)}
     b={p for p in rect_pixels(TARGET_X+dxu*d,TARGET_Y+dyu*d,TARGET,TARGET) if in_roi(p)}
     if semantic_change:
+        # overlap pixels change by +16 and therefore count at sigma=0;
+        # non-overlap target/background pixels also exceed the threshold.
         return len(a|b)
     return len(a^b)
+
 
 def render(direction:str,d:int,semantic_change:bool,rng:np.random.Generator,sigma:float=SIGMA):
     src=np.full((CANVAS,CANVAS),BG,dtype=np.float32)
@@ -50,15 +56,18 @@ def render(direction:str,d:int,semantic_change:bool,rng:np.random.Generator,sigm
     cur=np.clip(np.rint(cur),0,255).astype(np.uint8)
     return src,cur
 
+
 def detector(src,cur):
     a=src[ROI_Y:ROI_Y+ROI,ROI_X:ROI_X+ROI].astype(np.int16)
     b=cur[ROI_Y:ROI_Y+ROI,ROI_X:ROI_X+ROI].astype(np.int16)
     count=int(np.count_nonzero(np.abs(a-b)>=PIXEL_DELTA))
     return count, count>=COUNT_THRESHOLD
 
+
 def construction(out:Path):
     mismatches=[]; rows=[]
     rng=np.random.default_rng(1495001)
+    # Exact sigma=0 oracle check for all frozen cells.
     for direction in DIRECTIONS:
         for d in range(25):
             for semantic in (False,True):
@@ -69,10 +78,12 @@ def construction(out:Path):
                 rows.append(row)
                 if count!=expected:
                     mismatches.append(row)
+    # Boundary challenges under sigma=2, excluded from fixed-seed characterization.
     boundary=[('horizontal',4),('horizontal',5),('vertical',4),('vertical',5),('diagonal',2),('diagonal',3)]
     challenge=[]
     for direction,d in boundary:
-        flags=[]; changed_flags=[]; counts=[]; changed_counts=[]
+        flags=[]; changed_flags=[]
+        counts=[]; changed_counts=[]
         for _ in range(250):
             s,c=render(direction,d,False,rng)
             n,f=detector(s,c); counts.append(n); flags.append(f)
@@ -92,6 +103,7 @@ def construction(out:Path):
             'decision':'PASS_CONSTRUCTION_ELIGIBLE' if pass_shape else 'STOP_CONSTRUCTION_UNEXPECTED_BOUNDARY'}
     out.write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
     return result
+
 
 def characterization(out:Path, seed:int=FORMAL_SEED, trials:int=1000):
     rng=np.random.default_rng(seed)
@@ -134,6 +146,7 @@ def characterization(out:Path, seed:int=FORMAL_SEED, trials:int=1000):
             'limits':['synthetic independent Gaussian jitter','translation explicitly permitted by policy','no X11/capture/task efficacy claim']}
     out.write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
     return result
+
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--phase',choices=['construction','characterization'],required=True); ap.add_argument('--out',required=True)
