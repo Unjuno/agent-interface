@@ -1,0 +1,52 @@
+name: one-shot final completed-maintenance ref cleanup
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/maintenance-final-delete-completed-refs-once.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Delete exact completed maintenance refs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --prune --force origin '+refs/heads/*:refs/remotes/origin/*'
+          failures=0
+
+          delete_exact() {
+            branch="$1"
+            expected="$2"
+            ref="refs/remotes/origin/$branch"
+            if ! git show-ref --verify --quiet "$ref"; then
+              echo "ALREADY_GONE $branch"
+              return 0
+            fi
+            actual="$(git rev-parse "$ref")"
+            if [[ "$actual" != "$expected" ]]; then
+              echo "SHA_MISMATCH $branch expected=$expected actual=$actual" >&2
+              failures=$((failures + 1))
+              return 0
+            fi
+            git push origin --delete "$branch"
+          }
+
+          delete_exact "maintenance/prune-integrated-refs-b4-20260918" "8dce2fd9195d0f267a5d2000eefb3946ee73e9d8"
+          delete_exact "maintenance/remove-prune-workflows-20260918" "8f0e91644acd05c502fc8fd685ec81287fbc4a31"
+
+          # This branch is created solely to install this one-shot workflow.
+          git push origin --delete "maintenance/final-delete-completed-maintenance-refs-20260918" || true
+
+          test "$failures" -eq 0
