@@ -13,7 +13,7 @@ def main(batch:int):
     for i in range(start,end):
         q=pair_case(i)
         legit=parent.signed(i,1,nonce=f'p{i}')
-        forge=dict(legit)
+        forge=dict(legit)  # byte-identical verifier-visible evidence by construction
         rl=parent.rec(i,[legit]); rf=parent.rec(i,[forge])
         ol=verifier_accepts_current(rl,legit); of=verifier_accepts_current(rf,forge)
         lp=q['legit']; fp=q['forge']
