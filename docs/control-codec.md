@@ -24,13 +24,16 @@ A shorter command is useful only if the runtime reconstructs the same validated 
 
 ## Candidate ladder
 
-```text
-C0  verbose structured actions / JSON-like baseline
-C1  compact textual IR with fixed grammar
-C2  persistent opcode / field dictionary
-C3  persistent app-method references with parameters
-C4  short workflow references composed from methods
-C5  session-local aliases for repeatedly referenced targets/state
+```mermaid
+flowchart LR
+    C0["C0<br/>verbose structured actions<br/>JSON-like baseline"]
+    C1["C1<br/>compact textual IR<br/>fixed grammar"]
+    C2["C2<br/>persistent opcode / field dictionary"]
+    C3["C3<br/>persistent app-method references<br/>with parameters"]
+    C4["C4<br/>short workflow references<br/>composed from methods"]
+    C5["C5<br/>session-local aliases<br/>repeated targets / state"]
+
+    C0 --> C1 --> C2 --> C3 --> C4 --> C5
 ```
 
 The ladder is intentionally incremental. A candidate is promoted only if it preserves correctness and has lower total cost after setup / definition overhead is included.
@@ -128,20 +131,15 @@ Unknown opcodes or malformed programs must fail closed. The runtime must never g
 
 ## Design direction
 
-```text
-planner-visible compact codec
-        |
-        v
-codec parser / dictionary resolver
-        |
-        v
-validated semantic AST
-        |
-        v
-Universal Input ISA / reactive runtime
-        |
-        v
-OS / GUI
+```mermaid
+flowchart TD
+    P["Planner-visible compact codec"]
+    R["Codec parser / dictionary resolver"]
+    AST["Validated semantic AST"]
+    RT["Universal Input ISA / reactive runtime"]
+    OS["OS / GUI"]
+
+    P --> R --> AST --> RT --> OS
 ```
 
 This keeps the compact representation replaceable. The project can later compare text DSLs, binary transports, structured tool calls, or vendor-specific adapters without changing semantic execution.
