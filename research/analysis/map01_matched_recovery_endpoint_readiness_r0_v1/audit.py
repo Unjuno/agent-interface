@@ -27,6 +27,12 @@ def sha256_file(path):
     return h.hexdigest()
 
 
+def git_blob_file(path):
+    data = Path(path).read_bytes()
+    header = f"blob {len(data)}\\0".encode("ascii")
+    return hashlib.sha1(header + data).hexdigest()
+
+
 def independent_current(snapshot):
     g = snapshot["gates"]
     values = {}
@@ -230,15 +236,21 @@ def main():
 
     file_checks = {}
     for name in ("PLAN.md", "SNAPSHOT.json", "formal.py", "audit.py"):
-        expected = freeze["files"][name]["sha256"]
-        actual = sha256_file(here / name)
-        file_checks[name] = {"expected": expected, "actual": actual, "match": expected == actual}
-        if expected != actual:
-            errors.append(f"source_sha256:{name}")
+        expected_blob = freeze["files"][name]["git_blob"]
+        actual_blob = git_blob_file(here / name)
+        actual_sha256 = sha256_file(here / name)
+        file_checks[name] = {
+            "expected_git_blob": expected_blob,
+            "actual_git_blob": actual_blob,
+            "sha256": actual_sha256,
+            "match": expected_blob == actual_blob,
+        }
+        if expected_blob != actual_blob:
+            errors.append(f"source_git_blob:{name}")
 
-    if result.get("source_sha256", {}).get("formal.py") != freeze["files"]["formal.py"]["sha256"]:
+    if result.get("source_sha256", {}).get("formal.py") != sha256_file(here / "formal.py"):
         errors.append("result_formal_sha")
-    if result.get("source_sha256", {}).get("SNAPSHOT.json") != freeze["files"]["SNAPSHOT.json"]["sha256"]:
+    if result.get("source_sha256", {}).get("SNAPSHOT.json") != sha256_file(here / "SNAPSHOT.json"):
         errors.append("result_snapshot_sha")
 
     audit = {
