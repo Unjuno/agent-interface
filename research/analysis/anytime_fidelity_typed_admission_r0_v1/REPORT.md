@@ -96,7 +96,7 @@ Audit result:
 Raw rows semantic digest: `4ccae353677ee10825ba187bd4f18e3764e57f20556593f33d5a9222d3fbb919`.
 Result summary-core digest: `bf3b78c53494a82162184ffdc1c4fb114456e02024c8b3d4a4ad66d8e3b88904`.
 
-The complete pretty-printed row table is retained as deterministic gzip encoded to ASCII base64 in `ROWS.json.gz.b64`; decode base64, then gunzip to recover `ROWS.json`.
+The 464,227-byte pretty-printed `ROWS.json` is not retained as a repository blob: an ASCII base64 transport attempt produced a Git blob mismatch during publication, so that artifact was deleted without rerunning the formal. `ROWS_REPRODUCE.txt` records the deterministic reconstruction command plus the expected raw SHA-256 `89bfd5945c6187411e14bd119831ec9e840e2f4d539146deff3c9fed48a0ff6f`; the semantic rows digest above remains the formal canonical row digest.
 
 ## Design consequence for #1662
 
