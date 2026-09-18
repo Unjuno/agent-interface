@@ -15,13 +15,12 @@ LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 
 def top_level_links(text: str) -> set[str]:
     result: set[str] = set()
-    for target in LINK_RE.findall(text):
-        target = target.split("#", 1)[0]
-        if not target or target.startswith("../") or "://" in target:
+    for label, target in LINK_RE.findall(text):
+        if label != target:
             continue
-        target = target.rstrip("/")
-        if "/" not in target and target not in {".", ".."}:
-            result.add(target)
+        if target.startswith("../") or "/" in target or "://" in target:
+            continue
+        result.add(target)
     return result
 
 
