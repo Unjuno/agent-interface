@@ -1,4 +1,4 @@
-name: MAP01 v12 physical occupancy R1 successor r4
+name: MAP01 v12 physical occupancy R1 successor r5
 # r3 dependency/import gate audit: workflow-only synchronization marker
 
 on:
@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: map01-v12-physical-occupancy-r1-successor-r4
+  group: map01-v12-physical-occupancy-r1-successor-r5
   cancel-in-progress: false
 
 jobs:
@@ -79,20 +79,16 @@ jobs:
           mkdir -p work/map01-r1
           python research/doom/map01_v12_physical_occupancy_live_r1_v1/preflight.py --source . --v12 work/map01-r1/v12 | tee work/map01-r1/PREFLIGHT.stdout
 
-      - name: Run one fresh construction allocation
-        id: construction
-        continue-on-error: true
+      - name: Record r5 preflight-only stop
+        if: always()
         run: |
-          mkdir -p work/map01-r1
-          xvfb-run -a python research/doom/map01_v12_physical_occupancy_live_r1_v1/construction_runner.py --source . --v12 work/map01-r1/v12 --out work/map01-r1/construction | tee work/map01-r1/CONSTRUCTION.stdout
-
-      - name: Run formal only after explicit construction PASS
-        if: steps.construction.outcome == 'success' && hashFiles('work/map01-r1/construction/CONSTRUCTION_RESULT.json') != ''
-        id: formal
-        continue-on-error: true
-        run: |
-          xvfb-run -a python research/doom/map01_v12_physical_occupancy_live_r1_v1/formal_runner.py --source . --v12 work/map01-r1/v12 --out work/map01-r1/formal | tee work/map01-r1/FORMAL.stdout
-
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path("work/map01-r1")
+          root.mkdir(parents=True, exist_ok=True)
+          (root / "STOP.json").write_text(json.dumps({"decision":"STOPPED_R5_PREFLIGHT_ONLY","construction_invocations":0,"formal_invocations":0,"reason":"r5 scope is import authority and frozen preflight only"}, indent=2) + "\n")
+          PY
       - name: Record successor stop
         if: always() && (steps.construction.outcome != 'success' || hashFiles('work/map01-r1/construction/CONSTRUCTION_RESULT.json') == '')
         run: |
