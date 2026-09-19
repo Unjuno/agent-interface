@@ -13,6 +13,6 @@ jobs:
     steps:
       - name: Fetch exact branch sources inside pinned container
         run: |
-          python -c "import urllib.request; base='https://raw.githubusercontent.com/Unjuno/agent-interface/3ed16af3fbb1806788246330a612d3cd7768440c/research/live_control/dwell_bound_provenance_2279_v1/'; [(open(n,'wb').write(urllib.request.urlopen(base+n).read())) for n in ['oracle.py','audit.py']]"
-      - run: python -m py_compile research/live_control/dwell_bound_provenance_2279_v1/oracle.py research/live_control/dwell_bound_provenance_2279_v1/audit.py
-      - run: python research/live_control/dwell_bound_provenance_2279_v1/audit.py
+          python -c "import urllib.request; base='https://raw.githubusercontent.com/Unjuno/agent-interface/bd2d77349db10310fa2bb9e21c36e8db650a0cf5/research/live_control/dwell_bound_provenance_2279_v1/'; [(open(n,'wb').write(urllib.request.urlopen(base+n).read())) for n in ['oracle.py','audit.py']]"
+      - run: python -m py_compile oracle.py audit.py
+      - run: python audit.py
