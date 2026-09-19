@@ -1,6 +1,6 @@
 import json, tempfile, unittest
 from pathlib import Path
-from scorer import score
+from .scorer import score
 
 def fixture():
     return {"schema":"agent_interface_golden_desktop_live_v2","passed":True,

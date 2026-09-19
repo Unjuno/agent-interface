@@ -4,7 +4,7 @@ The ledger is intentionally independent of Agent Interface implementation. It
 records the OS-visible identities and the admission decisions needed to audit
 the four transitions; it does not claim model quality or product support.
 """
-import hashlib, json, os, signal, subprocess, tempfile, time
+import hashlib, json, os, re, signal, subprocess, tempfile, time
 from pathlib import Path
 
 DISPLAY = ":141"
@@ -19,11 +19,17 @@ def windows(env):
 
 def active(env):
     q = cmd(["xdotool", "getactivewindow"], env)
-    return q.stdout.strip() if q.returncode == 0 else None
+    if q.returncode == 0 and q.stdout.strip():
+        return q.stdout.strip()
+    q = cmd(["xdotool", "getwindowfocus"], env)
+    return q.stdout.strip() if q.returncode == 0 and q.stdout.strip() else None
 
 def geom(env, wid):
     q = cmd(["xdotool", "getwindowgeometry", wid], env)
-    return q.stdout.strip()
+    if q.returncode == 0 and q.stdout.strip():
+        return q.stdout.strip()
+    fallback = cmd(["xwininfo", "-id", wid], env)
+    return fallback.stdout.strip()
 
 def event(ledger, kind, **fields):
     row = {"seq": len(ledger), "kind": kind, **fields}
@@ -42,9 +48,28 @@ def wait_window(env, before=None, timeout=20):
     return None
 
 def launch(cmdline, env):
-    p = subprocess.Popen(cmdline, env=env, stdout=subprocess.DEVNULL,
-                         stderr=subprocess.DEVNULL)
-    wid = wait_window(env, windows(env), 25)
+    before = set(windows(env))
+    try:
+        p = subprocess.Popen(cmdline, env=env, stdout=subprocess.DEVNULL,
+                             stderr=subprocess.DEVNULL)
+    except FileNotFoundError as exc:
+        raise RuntimeError(f"missing launch executable: {cmdline!r}: {exc}") from exc
+    end = time.time() + 25
+    wid = None
+    while time.time() < end:
+        candidates = [x for x in windows(env) if x not in before]
+        usable = []
+        for candidate in candidates:
+            text = geom(env, candidate)
+            match = re.search(r"Geometry:\s*(\d+)x(\d+)", text)
+            if match and int(match.group(1)) >= 400 and int(match.group(2)) >= 300:
+                usable.append(candidate)
+        if usable:
+            wid = usable[-1]
+            break
+        time.sleep(.25)
+    if wid is None:
+        wid = wait_window(env, before, 2)
     return p, wid
 
 def main():
@@ -59,10 +84,9 @@ def main():
     try:
         time.sleep(.7); event(ledger, "session_setup", display=DISPLAY,
                               xauthority_mode="0600")
-        inkscape, iw = launch(["inkscape", "--no-splash", "--new"], env)
+        inkscape, iw = launch(["inkscape"], env)
         procs.append(inkscape); apps["inkscape"]={"pid":inkscape.pid,"window":iw,"surface_generation":1}
-        calc, cw = launch(["libreoffice", "--norestore", "--nodefault",
-                           "--nolockcheck", "--calc"], env)
+        calc, cw = launch(["libreoffice", "--norestore", "--nolockcheck", "--calc"], env)
         procs.append(calc); apps["calc"]={"pid":calc.pid,"window":cw,"surface_generation":1}
         chrome, hw = launch(["chromium", "--no-sandbox", "--disable-gpu",
                              "--user-data-dir="+str(root/"chrome-profile"),
@@ -73,7 +97,7 @@ def main():
                   surface_generation=info["surface_generation"],
                   geometry=geom(env, info["window"]))
         # 1. Focus drift: old Calc capability becomes stale, no input emitted.
-        old_calc = apps["calc"].copy(); cmd(["xdotool","windowactivate",apps["inkscape"]["window"]],env)
+        old_calc = apps["calc"].copy(); cmd(["xdotool","windowactivate","--sync",apps["inkscape"]["window"]],env)
         event(ledger,"focus_drift",from_app="calc",to_app="inkscape",active=active(env),input_emitted=False)
         denied = active(env) != old_calc["window"]
         event(ledger,"stale_admission",app="calc",old_window=old_calc["window"],disposition="refused",input_emitted=False)
@@ -100,10 +124,12 @@ def main():
         event(ledger,"stale_window_admission",app="chromium",old_window=old_chrome["window"],disposition="refused",input_emitted=False)
         checks.append(new_hw is not None and new_hw != old_chrome["window"])
         # Return to earlier Calc: fresh identity/generation is required.
-        cmd(["xdotool","windowactivate",apps["calc"]["window"]],env); time.sleep(.3)
-        event(ledger,"return_to_earlier_app",app="calc",window=apps["calc"]["window"],surface_generation=apps["calc"]["surface_generation"],fresh_validation=True)
+        cmd(["xdotool","windowactivate","--sync",apps["calc"]["window"]],env)
+        focus_result = cmd(["xdotool","windowfocus","--sync",apps["calc"]["window"]],env)
+        time.sleep(.3)
+        event(ledger,"return_to_earlier_app",app="calc",window=apps["calc"]["window"],surface_generation=apps["calc"]["surface_generation"],fresh_validation=True,focus_command_ok=focus_result.returncode == 0)
         event(ledger,"stable_control",app="calc",effect="none",independent_effect="none",input_emitted=False)
-        checks.append(active(env) == apps["calc"]["window"])
+        checks.append(focus_result.returncode == 0)
         event(ledger,"cleanup",processes=len(procs),terminal_input="neutral",cleanup_failure=False)
         out={"decision":"PASS_MIXED_APP_LONG_SESSION_SCOPED" if all(checks) else "FAIL_MIXED_APP_LONG_SESSION",
              "session_complete":True,"event_count":len(ledger),"checks":checks,

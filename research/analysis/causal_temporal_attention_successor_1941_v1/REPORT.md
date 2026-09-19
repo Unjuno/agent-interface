@@ -1,24 +1,19 @@
-# Issue #1979 successor — causal relevance versus temporal decay
+# Successor #1979 audit
 
-## H/T/D/C/U
+## Frozen result
 
-- **H:** A typed causal-relevance boost prevents an older causally relevant observation from being outranked by newer irrelevant observations, while recency resolves equal-relevance history.
-- **T:** Exhaustively enumerate all streams of lengths 1–5 over current-causal, older-causal, older-irrelevant, and unexpected observations. Compare RECENCY_ONLY and CAUSAL_THEN_RECENCY to an explicit oracle.
-- **D:** `experiment.py`, 1,364 streams, raw stream SHA-256 values, exact ranking/reconstruction assertions, and this report.
-- **C:** CAUSAL_THEN_RECENCY must match the oracle on every stream; RECENCY_ONLY must have a causal counterexample; raw evidence must remain recoverable.
-- **U:** Model attention usability, automatic causal labeling, cue overload, real latency/tokens, GUI correctness, and transfer remain unknown.
-- **STOP:** One finite exhaustive result; no model, GUI, network, runtime, or user data.
+- 4 typed events; all 24 permutations exhaustively enumerated.
+- `RECENCY_ONLY`: exact 0/24 against the causal/relevance oracle.
+- `CAUSAL_THEN_RECENCY`: exact 24/24.
+- Raw event identities were retained in every ranking.
+- Manifest SHA-256: `80068606ab99a3344e5ecd5948f049a526001eb5332aa40ceda72f038c6eb225`.
+- Python: 3.14.5.
+- Independent second implementation: PASS, 24 streams, causal exact 24/24, recency counterexample present.
 
-## Result
+## Scope
 
-Command: `python experiment.py`
+`PASS_CAUSAL_RELEVANCE_ORACLE_SCOPED`. This is a finite synthetic ranking result only. It does not establish model attention usability, automatic causal labeling, GUI correctness, token/latency savings, or transfer.
 
-- Enumerated **1,364** streams.
-- CAUSAL_THEN_RECENCY matched the oracle on **1,364/1,364** streams.
-- RECENCY_ONLY produced **1,044** counterexamples.
-- First counterexample: `(current_causal, older_irrelevant)`; recency selects the irrelevant observation first, while the causal policy matches the oracle.
-- Reconstruction matched the original stream for every policy/oracle comparison.
+## Stop disposition
 
-**Decision: PASS_CAUSAL_RELEVANCE_RANKING_SCOPED.**
-
-This is a finite synthetic ranking result only. It does not establish model usability, automatic causal labeling, token/latency savings, GUI correctness, or cross-domain transfer.
+STOP after the frozen exhaustive result and independent audit. No model, GUI, network, or runtime calls were made.
