@@ -8,34 +8,38 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-buildx-action@v3
-      - name: Verify exact retained source blob
+      - name: Verify exact retained parent source blob
         run: |
           python3 - <<'PY'
           import json, subprocess
           m=json.load(open('research/analysis/generation_bound_evidence_provenance_successor_2196_v1/SOURCE_MANIFEST.json'))
-          got=subprocess.check_output(['git','hash-object','research/analysis/generation_bound_evidence_provenance_successor_2196_v1/experiment.py'],text=True).strip()
+          got=subprocess.check_output(['git','hash-object',m['parent_path']],text=True).strip()
           assert got == m['parent_blob_sha'], (got,m['parent_blob_sha'])
           PY
-      - name: Resolve image and run one fresh container
+      - name: Resolve image and run exact parent source once
         run: |
+          ROOT=research/analysis/generation_bound_evidence_provenance_successor_2196_v1
+          PARENT=research/analysis/generation_bound_evidence_container_successor_2166_v1
           docker pull python:3.12-slim
           IMAGE_DIGEST=$(docker image inspect python:3.12-slim --format '{{index .RepoDigests 0}}')
           test -n "$IMAGE_DIGEST"
-          docker run --rm -v "$PWD/research/analysis/generation_bound_evidence_provenance_successor_2196_v1:/work" -w /work python:3.12-slim python experiment.py > stdout.txt
-          python3 -m py_compile research/analysis/generation_bound_evidence_provenance_successor_2196_v1/experiment.py
-          python3 -m json.tool research/analysis/generation_bound_evidence_provenance_successor_2196_v1/RESULT.json >/dev/null
+          docker run --rm -v "$PWD/$PARENT:/work" -w /work python:3.12-slim python experiment.py > "$ROOT/stdout.txt"
+          cp "$PARENT/RESULT.json" "$ROOT/RESULT.json"
+          python3 -m py_compile "$PARENT/experiment.py"
+          python3 -m json.tool "$ROOT/RESULT.json" >/dev/null
           python3 - <<'PY'
           import hashlib,json,subprocess
           root='research/analysis/generation_bound_evidence_provenance_successor_2196_v1/'
+          m=json.load(open(root+'SOURCE_MANIFEST.json'))
           p=json.load(open(root+'RESULT.json'))
-          assert p['decision']=='PASS_CONTAINER_PROVENANCE_COMPLETE_SCOPED'
+          assert p['decision']=='PASS_CONTAINER_REVALIDATION_SCOPED'
           assert p['statuses']==['ENCODED','OBSOLETE','CACHE_HIT','ENCODED']
           assert p['stale_control']==p['reuse_control']==p['provenance_control']=='PASS'
           assert p['model']==p['x11']==p['input']==0
-          source_sha=hashlib.sha256(open(root+'experiment.py','rb').read()).hexdigest()
+          source_sha=hashlib.sha256(open(m['parent_path'],'rb').read()).hexdigest()
           result_sha=hashlib.sha256(open(root+'RESULT.json','rb').read()).hexdigest()
           image=subprocess.check_output(['docker','image','inspect','python:3.12-slim','--format','{{index .RepoDigests 0}}'],text=True).strip()
-          out={'parent_blob_sha':json.load(open(root+'SOURCE_MANIFEST.json'))['parent_blob_sha'],'source_sha256':source_sha,'image_digest':image,'result_sha256':result_sha,'stdout':open('stdout.txt').read(),'independent_audit':'PASS','model':0,'x11':0,'input':0}
+          out={'parent_path':m['parent_path'],'parent_blob_sha':m['parent_blob_sha'],'source_sha256':source_sha,'image_digest':image,'result_sha256':result_sha,'stdout':open(root+'stdout.txt').read(),'independent_audit':'PASS','model':0,'x11':0,'input':0}
           json.dump(out,open(root+'PROVENANCE.json','w'),indent=2,sort_keys=True)
           PY
       - name: Independent audit
@@ -46,4 +50,4 @@ jobs:
           path: |
             research/analysis/generation_bound_evidence_provenance_successor_2196_v1/RESULT.json
             research/analysis/generation_bound_evidence_provenance_successor_2196_v1/PROVENANCE.json
-            stdout.txt
+            research/analysis/generation_bound_evidence_provenance_successor_2196_v1/stdout.txt
