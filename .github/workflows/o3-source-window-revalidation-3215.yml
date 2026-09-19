@@ -24,6 +24,9 @@ jobs:
           mkdir -p "$RUNNER_TEMP/o3"
           docker run --rm --network none --entrypoint python3             -v "$GITHUB_WORKSPACE:/workspace:ro" -v "$RUNNER_TEMP/o3:/out"             o3-revalidate-3215 /workspace/research/observation_gating/o3_multi_app_negative_matrix_20260920/run_fixed.py > "$RUNNER_TEMP/o3/result.json"
           cp "$RUNNER_TEMP/o3/result.json" "$RUNNER_TEMP/o3/RAW.json"
+          sha256sum "$RUNNER_TEMP/o3/RAW.json" "$RUNNER_TEMP/o3/result.json" > "$RUNNER_TEMP/o3/MANIFEST.sha256"
+          git -C "$GITHUB_WORKSPACE" rev-parse HEAD > "$RUNNER_TEMP/o3/SOURCE_COMMIT.txt"
+          sha256sum "$GITHUB_WORKSPACE/research/observation_gating/o3_multi_app_negative_matrix_20260920/run_fixed.py" "$GITHUB_WORKSPACE/research/observation_gating/o3_relevant_region_successor_v1/gate.py" >> "$RUNNER_TEMP/o3/MANIFEST.sha256"
       - name: Independent audit
         run: docker run --rm --network none --entrypoint python3 -v "$RUNNER_TEMP/o3:/out:ro" -v "$GITHUB_WORKSPACE:/workspace:ro" o3-revalidate-3215 /workspace/research/observation_gating/o3_source_window_revalidation_3215/audit.py /out/RAW.json | tee "$RUNNER_TEMP/o3/audit.txt"
       - uses: actions/upload-artifact@v4
