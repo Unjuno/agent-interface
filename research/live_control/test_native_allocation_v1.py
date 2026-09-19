@@ -10,6 +10,21 @@ from native_exchange_v1 import current_owner_identity
 
 
 class AllocationTests(unittest.TestCase):
+    def test_explicit_text_policy_is_forwarded_and_reported(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            for gap in (0,2,10):
+                allocation=NativeAllocation(Path(tmp)/str(gap),'calc',text_gap_ms=gap)
+                process=Mock(pid=os.getpid()); process.poll.return_value=None
+                with patch('native_allocation_v1.subprocess.Popen',return_value=process) as spawn:
+                    state=allocation.start(timeout=0)
+                self.assertEqual(state['text_gap_ms'],gap)
+                argv=spawn.call_args.args[0]
+                self.assertEqual(argv[argv.index('--text-gap-ms')+1],str(gap))
+            for bad in (True,1,20,'2',2.0):
+                with self.assertRaises(ValueError):
+                    NativeAllocation(Path(tmp)/'invalid','calc',text_gap_ms=bad)
+            self.assertFalse((Path(tmp)/'invalid').exists())
+
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
