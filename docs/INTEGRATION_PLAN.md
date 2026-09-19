@@ -145,6 +145,14 @@ remains a later continuous-control stress domain alongside desktop coverage.
 
 ## Delivery order and acceptance
 
+The [Calc transfer](../runtime/results/native-calc-transfer-01/README.md) now uses
+the same native handle/feedback path on an existing second-application task.
+The primary assistant completed exact saved cells after a flat-target refusal,
+format-dialog review and visual correction of a dropped repeated digit. This is
+a recovered success, not clean transfer or broad held-out evaluation. Prioritize
+the observed repeated-character loss and explicit observation handoff after a
+dialog closes; the title cue itself remains insufficient for task scoring.
+
 The [native feedback successor](../runtime/results/native-feedback-01/README.md)
 now returns application title cues together with a consistent native image from
 the existing bridge. The six-task run uses these cues for continuation; a live
