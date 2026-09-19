@@ -1,4 +1,4 @@
-name: release telemetry decision successor 2107 r1
+name: release telemetry decision successor 2107 r2
 on:
   pull_request:
     paths:
@@ -32,7 +32,7 @@ jobs:
           assert d["decision"] == "PASS_RELEASE_RECEIPT_DECISION_VALUE_STUB_SCOPED"
           s=d["summary"]
           assert s["VALID_RELEASE_RECEIPT"]["unnecessary_waits"] < s["NO_RELEASE_RECEIPT"]["unnecessary_waits"]
-          assert all(r["decision"] != "CONTINUE" for r in d["rows"] if r["receipt"] in {"ambiguous","contradictory"})
+          assert all(r.get("decision") != "CONTINUE" for r in d["rows"] if r.get("receipt") in {"ambiguous","contradictory"})
           print("INDEPENDENT_AUDIT_PASS")
           PY
       - uses: actions/upload-artifact@v4
