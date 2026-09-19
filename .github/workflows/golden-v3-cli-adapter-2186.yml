@@ -1,0 +1,24 @@
+name: golden v3 cli adapter contract 2186
+on:
+  pull_request:
+    paths:
+      - "research/integration/golden_v3_cli_adapter_2186_v1/**"
+      - ".github/workflows/golden-v3-cli-adapter-2186.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contract:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Run adapter tests
+        run: |
+          python -m py_compile research/integration/golden_v3_cli_adapter_2186_v1/adapter.py research/integration/golden_v3_cli_adapter_2186_v1/test_adapter.py
+          cd research/integration/golden_v3_cli_adapter_2186_v1
+          python -m pytest -q
