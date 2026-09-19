@@ -106,6 +106,8 @@ def main():
             decision = json.loads(request_bytes)
             if decision['source_sequence'] != source['sequence']:
                 raise ValueError('decision must refer to exact presented source')
+            if decision.get('interaction') == 'observe' and set(decision) - {'source_sequence', 'interaction'}:
+                raise ValueError('observe accepts only source_sequence and interaction')
             finish_after = decision.get('finish_after', False)
             if type(finish_after) is not bool:
                 raise ValueError('finish_after must be boolean')
@@ -114,6 +116,17 @@ def main():
             if decision.get('finish') is True:
                 break
             interaction = decision.get('interaction', 'click')
+            if interaction == 'observe':
+                started = time.monotonic_ns()
+                source = bridge.observe()
+                observation_only = {'started_ns': started, 'ended_ns': time.monotonic_ns(),
+                                    'input_dispatched': False, 'captures': 1}
+                publish(out/f'source-{stage+1}.json', encoded(source))
+                publish(out/f'reply-{stage}.json', encoded({'status': 'boundary', 'stage': stage,
+                    'decision_sha256': decision_hash, 'observation': source,
+                    'observation_only': observation_only,
+                    'authority_granted': False, 'task_success': None}))
+                continue
             if interaction not in ('click', 'keyboard'):
                 raise ValueError('interaction must be click or keyboard')
             # Validate caller-placed lanes against the delivered image before input.

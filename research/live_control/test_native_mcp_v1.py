@@ -15,6 +15,15 @@ from native_exchange_v1 import encoded
 
 
 class MCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_observe_decision_has_no_input_fields_or_implicit_defaults(self):
+        from native_mcp_v1 import NativeDecision
+        decision = {'source_sequence': 4, 'interaction': 'observe'}
+        self.assertEqual(NativeDecision.model_validate(decision).model_dump(exclude_unset=True), decision)
+        for extra in ({'tail': []}, {'finish': False}, {'finish_after': True},
+                      {'point': [0, 0]}, {'watch_regions': []}, {'unknown': True}):
+            with self.subTest(extra=extra), self.assertRaises(ValueError):
+                NativeDecision.model_validate(dict(decision, **extra))
+
     async def test_managed_reply_snapshot_never_replaces_task_result_or_replays(self):
         from native_mcp_v1 import create_server
         with tempfile.TemporaryDirectory() as tmp:

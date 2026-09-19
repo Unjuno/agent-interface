@@ -26,8 +26,8 @@ class NativeDecision(BaseModel):
         description='Observed [x,y] in screen physical pixels; required for click and keyboard context binding.')
     expected_title: StrictStr | None = Field(default=None,
         description='Expected application title for feedback; required for an action, not a task success assertion.')
-    interaction: Literal['click','keyboard'] = Field(default='click',
-        description='click then tail, or keyboard-only tail with the same visual context checks.')
+    interaction: Literal['click','keyboard','observe'] = Field(default='click',
+        description='click then tail, keyboard-only tail, or observe for one fresh capture without input; observe consumes a stage.')
     tail: list[dict] = Field(default_factory=list, description=(
         'Explicit ordered native operations. Examples: {"op":"text","text":"190"}, '
         '{"op":"key_chord","keys":["CTRL","s"]}, '
@@ -40,6 +40,10 @@ class NativeDecision(BaseModel):
 
     @model_validator(mode='after')
     def complete_decision(self):
+        if self.interaction == 'observe':
+            if set(self.model_dump(exclude_unset=True)) - {'source_sequence', 'interaction'}:
+                raise ValueError('observe accepts only source_sequence and interaction; no input or finish flags')
+            return self
         if self.finish and self.finish_after:
             raise ValueError('choose finish or finish_after, not both')
         if not self.finish and (self.point is None or self.expected_title is None):
@@ -161,6 +165,8 @@ def create_server(run_directory, *, allocation=None):
         Never retry submit after timeout/error. Pending returns decision_sha256:
         use native_resume. Task success is separate from input completion.
         Managed responses include a process snapshot; it may still be live.
+        interaction=observe requests one fresh capture without input; include only
+        source_sequence and interaction. It consumes a stage and does not finish.
         """
         def submit():
             if allocation is not None and allocation.status()['status'] != 'ready':

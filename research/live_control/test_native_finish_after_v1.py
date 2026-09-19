@@ -158,6 +158,22 @@ class NativeFinishAfterTests(unittest.TestCase):
         self.assertEqual(replies[0]['status'], 'finished')
         self.assertIs(replies[0]['evaluation']['success'], False)
 
+    def test_explicit_observation_neither_mints_nor_dispatches_input(self):
+        replies, sources, events = self.exercise([{'interaction': 'observe'}, {'finish': True}])
+        self.assertEqual([r['status'] for r in replies], ['boundary', 'finished'])
+        self.assertEqual(set(sources), {'source-1.json', 'source-2.json'})
+        self.assertEqual(replies[0]['observation_only']['captures'], 1)
+        self.assertFalse(replies[0]['observation_only']['input_dispatched'])
+        self.assertNotIn('action', replies[0])
+        self.assertNotIn('input', events)
+        self.assertNotIn('mint', events)
+
+    def test_observation_rejects_hidden_input_fields(self):
+        replies, _, events = self.exercise([{'interaction': 'observe', 'tail': []}],
+                                            expected_error=ValueError)
+        self.assertEqual(replies[0]['status'], 'needs_review')
+        self.assertNotIn('mint', events)
+
     def test_invalid_or_conflicting_flags_precede_mint(self):
         for decision in ({'finish_after': 'true'}, {'finish_after': 1},
                          {'finish_after': True, 'finish': True}):
