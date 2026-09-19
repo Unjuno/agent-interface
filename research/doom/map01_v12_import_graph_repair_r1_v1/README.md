@@ -2,23 +2,26 @@
 
 This additive source audit is a successor to the infrastructure stop in #1950. It does not rerun or reinterpret the retained MAP01 allocation.
 
-## Frozen observation
+## Corrected frozen observation
 
-On main `5432f3aa2374753e7ab206ad5e1f3f093ac0a641`, the entrypoint
-`research/doom/session_v7.py` imports `Backend,suite` from
-`research/live_control/session_v8.py`. The fetched `session_v8.py` imports
-`Backend as Previous,suite` from `session_v7.py` in the same
-`research/live_control` directory. This is an import-name collision/recursive
-resolution hazard: the doom entrypoint's intended v8 dependency is not a
-self-contained import boundary.
+On the historical audit base `main@5432f3aa2374753e7ab206ad5e1f3f093ac0a641`,
+the Doom entrypoint inserts `research/live_control` at `sys.path[0]` and
+imports bare `session_v8`. That module's bare `session_v7` import correctly
+resolves to `research/live_control/session_v7.py` in the intended fresh
+process. The observed circular import instead occurs when the Doom file
+`research/doom/session_v7.py` is loaded under the top-level name
+`session_v7`; its partially initialized module then captures
+`sys.modules['session_v7']` and is re-entered by `session_v8`.
 
 ## Disposition
 
 `STOP_IMPORT_GRAPH_REPAIR_NOT_YET_IMPLEMENTED`. This branch records the
-source identity and collision boundary only. No MAP01, GUI, model, X11,
-network, or formal invocation was made. No retained evidence was changed.
+corrected source identity and collision boundary only. No MAP01, GUI, model,
+X11, network, or formal invocation was made. No retained source or historical
+evidence was changed.
 
-The next implementation must add a private adapter/namespace under the issue's
-dedicated path, run `py_compile` and an isolated import smoke in a container,
-and prove that imported symbols resolve to the intended backend classes without
+The next implementation must repair or isolate the Doom entrypoint's module
+identity under the dedicated path, run `py_compile` and separate import-only
+smokes for the intended and failure-triggering load paths in a container, and
+prove that imported symbols resolve to the intended backend classes without
 changing retained source or fixture hashes.
