@@ -8,6 +8,7 @@ on:
     paths:
       - 'runtime/core_v1/**'
       - 'runtime/backends/x11_v1/**'
+      - 'runtime/cli_v1/**'
       - '.github/workflows/runtime-x11-v1.yml'
   workflow_dispatch:
 
@@ -24,13 +25,15 @@ jobs:
           sparse-checkout: |
             runtime/core_v1
             runtime/backends/x11_v1
+            runtime/cli_v1
+            runtime/selector_v1
           sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Install X11 test dependency
         run: |
-          python -m pip install --disable-pip-version-check python-xlib==0.33
+          python -m pip install --disable-pip-version-check python-xlib==0.33 Pillow==10.2.0
           sudo apt-get update -qq
           sudo apt-get install -y -qq xvfb
       - name: Compile runtime core and X11 backend
@@ -45,4 +48,4 @@ jobs:
           XVFB_PID=$!
           trap 'kill "$XVFB_PID" 2>/dev/null || true' EXIT
           sleep 0.5
-          DISPLAY=:88 XAUTHORITY="$AUTH" python -m unittest -v runtime.backends.x11_v1.test_integration
+          DISPLAY=:88 XAUTHORITY="$AUTH" python -m unittest -v runtime.backends.x11_v1.test_integration runtime.backends.x11_v1.test_capture_artifacts runtime.cli_v1.test_native_golden_boundary

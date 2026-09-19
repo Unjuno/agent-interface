@@ -6,6 +6,29 @@ use the same path again. Research supplies evidence for design choices. Prioriti
 fewer avoidable tool boundaries, usable observations/results and recovery in the
 agent's own loop. The [receipt self-use example](../runtime/results/receipt-self-use-01/README.md)
 records the first concrete result-presentation improvement from this loop.
+The [composed exchange](../research/live_control/AGENT_EXCHANGE.md) now removes
+manual clock-request and steps-file assembly in that research path. Actual
+assistant use covered a viewed draft followed by correction and independent
+scoring, with the first rejected development attempt retained. This does not
+yet connect the golden semantic compiler to the native CLI.
+Its [review companion](../runtime/results/composed-review-01/README.md) returns
+the receipt and referenced image together, avoiding a separate host image read
+and WSL path conversion. This is a verified presentation path on retained data;
+live-tempo and model-token effects remain unmeasured.
+The [live Calc use](../runtime/results/calc-live-review-01/README.md) now connects
+these through `agent_exchange --review`. It passed independent saved-cell
+evaluation, while exposing delayed dialog pixels and 18–25 second outer gaps.
+Next address observation/result continuation and caller assembly; native input
+speed alone does not explain the remaining tempo gap.
+The [final-drain integration](../runtime/results/calc-final-drain-01/README.md)
+now reads an already-available independent result once after early saved-effect
+evidence. Actual Calc use returned evaluation in the action response; a missing
+result remains pending. It removes one outer continuation turn in this example,
+not a socket exchange or the remaining deliberation gaps.
+An [existing settle-step recipe](../runtime/results/calc-settle-self-use-01/README.md)
+also avoided the separate observe program in one actual Calc session. Keep this
+opt-in at expected GUI transitions: it adds native captures and cannot certify
+semantic completion. No runtime change or universal wait policy was introduced.
 
 The user's current direction is to concentrate this task on integration while
 other contributors continue benchmarks and experiments. Product Hunt publication
@@ -17,6 +40,55 @@ The bounded admission-audit work in [PR #2014](https://github.com/Unjuno/agent-i
 is finished. Integration starts now and does not wait for the full research backlog.
 
 ## Selected starting path
+
+**Primary-assistant verification:** the existing
+`integrated_efficiency_client_v1.RuntimeClient.execute_handles` route has now
+been [used directly by the assistant](../runtime/results/guarded-method-self-use-01/README.md)
+for all six tasks, with visual grounding and repair in this conversation and
+no helper model. Task 4 refused the old target before pointer input; reminting
+from the viewed changed layout enabled the remaining tasks. Independent scoring
+confirmed six exact submissions and 43 programs verified empty release.
+This is the guarded method, not the distinct compiled state-graph runtime.
+Its intermediate target check is not a semantic text-effect check. Prioritize
+an explicit bridge from this existing route to the public native interface,
+retaining those boundaries, rather than introducing a parallel caller.
+
+The native result seam exposed a concrete mismatch: native sessions return
+`status: completed/refused/release_unverified`, while the initial golden adapter
+only read golden boolean flags. The v2 adapter now preserves native completion,
+refusal reasons and the complete dispatch response; missing application scoring
+remains unknown. Tests exercise real core admission, X11 session and API cleanup
+with an inert backend. This establishes result interoperability, not visual
+guard interoperability or a new live performance result. The next bridge must
+still preserve visual target checks immediately before native pointer admission;
+copying a research alias to a native window ID is not sufficient.
+The newly reviewed [Issue #2337](https://github.com/Unjuno/agent-interface/issues/2337)
+requires that live bridge plus scored effects, fault handling, actual model usage
+availability and a held-out second workflow. It remains open: this result repair
+and the earlier research-route self-use do not satisfy that live integration gate.
+An [actual native-adapter self-use](../runtime/results/native-result-self-use-01/README.md)
+now confirms the result seam on a private Tk desktop fixture: a stale program
+emitted no input, and a fresh one saved exact text with verified release. The
+first accepted run had no scored effect at teardown; the successor reads the
+independent result with a two-second bound and no input retry. All setup and task
+failures remain retained. This also exposes that native capture supplies only
+image metadata/hash: the harness still needs a separate assistant-visible PNG.
+Neither that observation seam nor visual-target revalidation is integrated yet.
+The [native artifact successor](../runtime/results/native-artifact-self-use-01/README.md)
+now adds opt-in PNG output from the same X11 capture as the returned observation
+hash. The primary assistant used that initial image to operate the fixture.
+Its action image was still pre-save while the later independent effect succeeded;
+both are retained with their distinct identities. This closes the duplicate
+capture requirement for a native observation, but late-render continuation and
+visual-target admission remain open. No matched latency/token benefit is claimed.
+The [read-only observation successor](../runtime/results/native-observe-self-use-01/README.md)
+now connects delayed-render continuation to the public API without dispatching
+input or changing focus. Actual assistant use retrieved the saved state through
+that path. Its timing trigger still uses the fixture scorer, so general
+application-effect detection and caller recovery policy remain open alongside
+visual-target admission. The growing native path must next connect source
+identity and guarded method reuse, rather than treat this single form as the
+complete integration workload.
 
 Starting repository revision: `2d78394e4128d9274030dcc52cf0957be2eb312d`.
 Use the existing [golden desktop v3 entry point](../runtime/golden-demo-v3.sh) and
