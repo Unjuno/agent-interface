@@ -56,7 +56,7 @@ def parse(output: Path, contract: str):
             "requested_effort": process["requested_effort"], "cost": None}
 
 
-def call(root: Path, prompt: str, image: Path, contract: str, workspace: Path):
+def _legacy_call(root: Path, prompt: str, image: Path, contract: str, workspace: Path):
     if contract not in CONTRACTS:
         raise ValueError("contract must be plain or compiled")
     schema, instructions, _validator = CONTRACTS[contract]
