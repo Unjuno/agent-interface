@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 107 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 113 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
@@ -232,6 +232,12 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`typed_query_dependency_v1/`](typed_query_dependency_v1/)
 - [`typed_resolve_dependency_v1/`](typed_resolve_dependency_v1/)
 - [`visual_cue_coordinate_map_successor_2043_v1/`](visual_cue_coordinate_map_successor_2043_v1/)
+- [`x11_augmentation_fail_2394_v1/`](x11_augmentation_fail_2394_v1/)
+- [`x11_container_transfer_1635_v1/`](x11_container_transfer_1635_v1/)
+- [`x11_fresh_family_hold_2404_v1/`](x11_fresh_family_hold_2404_v1/)
+- [`x11_ood_gate_2409_v1/`](x11_ood_gate_2409_v1/)
+- [`x11_shift_adaptation_2399_v1/`](x11_shift_adaptation_2399_v1/)
+- [`x11_shift_gate_hold_2388_v1/`](x11_shift_gate_hold_2388_v1/)
 - [`xterm_resource_footprint_transfer_v1/`](xterm_resource_footprint_transfer_v1/)
 - [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
