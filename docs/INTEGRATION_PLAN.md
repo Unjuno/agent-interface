@@ -275,3 +275,14 @@ with new values [360,125] succeeded. Same-report expansion and image equality
 passed; two reply text bodies shrank about 7-8%, but base64-inclusive transport
 shrunk less than 1%. Keep opt-in: this is modest byte evidence, not actual model
 usage or latency benefit. Cross-app transfer remains the larger outstanding step.
+
+
+The [Inkscape native exchange transfer](../runtime/results/native-inkscape-transfer-01/README.md)
+exposed a real cross-app mismatch: guarded focus reassigned GTK child focus to
+its top-level window, invalidating its own source binding. The bridge now preserves
+validated descendant focus using bounded X11 ancestry; exact focus identity and
+ordinary target guards remain. The shared harness accepts --app inkscape and the
+same exchange/review path completed one rightward shape move/save. Independent
+SVG scoring found x 50 -> 84 with y/size unchanged. Uppercase-key refusal and
+pre-fix focus failure remain retained. The action was keyboard nudge, not drag;
+18 chords versus +34 SVG units is not an exact motor-delivery result.
