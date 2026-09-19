@@ -1,0 +1,84 @@
+name: MAP01 terminal sync diagnostic 3211
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: map01-terminal-sync-diagnostic-3211-01
+  cancel-in-progress: false
+
+env:
+  ALLOCATION_ID: map01-terminal-sync-diagnostic-3211-01
+  WORKFLOW_PATH: .github/workflows/map01-terminal-sync-diagnostic-3211.yml
+  OUT: results-local/doom/map01-terminal-sync-diagnostic-3211-01
+
+jobs:
+  diagnostic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Write diagnostic owner receipt
+        shell: bash
+        run: |
+          cat > allocation-owner.json <<'JSON'
+          {"schema":"formal-allocation-global-owner-v1","allocation_id":"map01-terminal-sync-diagnostic-3211-01","workflow_path":".github/workflows/map01-terminal-sync-diagnostic-3211.yml","required_branch":"main","result_class":"PASS_CANONICAL_GLOBAL_OWNER","may_enter_formal_step":true,"current_head_branch":"main","owner_head_branch":"main","matching_run_count":1,"current_run_id":0,"owner_run_id":0}
+          JSON
+          python - <<'PY'
+          import json,os
+          p=json.load(open("allocation-owner.json"))
+          p["current_run_id"]=int(os.environ["GITHUB_RUN_ID"]); p["owner_run_id"]=p["current_run_id"]
+          json.dump(p,open("allocation-owner.json","w"))
+          PY
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install ViZDoom runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends xvfb openbox wmctrl libopenal1 libsdl2-2.0-0 libgl1
+          python -m pip install --upgrade pip
+          python -m pip install 'vizdoom==1.3.0' pillow python-xlib numpy openpyxl
+      - name: Construction checks
+        run: |
+          python research/doom/test_map01_recovery_cover_matched_v2_runner.py
+          python research/doom/validate_map01_recovery_cover_matched_v2.py research/doom/map01_recovery_cover_matched_v2_prereg.json
+      - name: Run diagnostic allocation
+        run: |
+          set -euo pipefail
+          rm -rf "$OUT"
+          python research/doom/map01_recovery_cover_matched_v2_runner_3211_diagnostic_run.py --out "$OUT" --launch-owner allocation-owner.json | tee diagnostic-runner.stdout
+      - name: Retain first outcome
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p evidence-manifest
+          printf 'allocation_id=%s
+run_id=%s
+sha=%s
+' "$ALLOCATION_ID" "$GITHUB_RUN_ID" "$GITHUB_SHA" > evidence-manifest/metadata.txt
+          : > evidence-manifest/result-sha256sums.txt
+          if [ -d "$OUT" ]; then find "$OUT" -type f -print0 | sort -z | xargs -0 sha256sum >> evidence-manifest/result-sha256sums.txt; fi
+          tar -czf "evidence-$GITHUB_RUN_ID.tar.gz" evidence-manifest allocation-owner.json diagnostic-runner.stdout "$OUT"
+      - name: Upload immutable evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: map01-terminal-sync-diagnostic-3211-${{ github.run_id }}
+          retention-days: 30
+          if-no-files-found: error
+          path: |
+            evidence-${{ github.run_id }}.tar.gz
+            evidence-manifest/**
+            allocation-owner.json
+            diagnostic-runner.stdout
+            ${{ env.OUT }}/**
