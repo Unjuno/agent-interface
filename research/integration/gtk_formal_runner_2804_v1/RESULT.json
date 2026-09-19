@@ -1,0 +1,19 @@
+{
+  "issue": 2804,
+  "status": "HOLD_X11_XLIB_DEPENDENCY_UNAVAILABLE",
+  "runner_readiness": "PASS_CASE_1_TO_CASE_8_REACHED",
+  "allocation": {
+    "image": "agent-interface-gtk-fixture-v2:2748",
+    "image_digest": "sha256:65c35be50f37bca68c35f514e62dc1a16daf75f5b6b663bab349ea928667a739",
+    "docker_server": "29.8.0",
+    "network": "none",
+    "resource_limits": {"cpus": 2, "memory": "2g"},
+    "attempts": 1
+  },
+  "cases": 8,
+  "adapter_failure": "X11 backend dependency unavailable: No module named 'Xlib'",
+  "formal_acceptance": false,
+  "independent_effects": false,
+  "old_results_modified": false,
+  "next_entry_condition": "Use a bounded local image that contains the exact Xlib dependency and rerun once; retain this result and the case-1 timeout result."
+}
