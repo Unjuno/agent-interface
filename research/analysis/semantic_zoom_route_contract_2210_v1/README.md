@@ -2,11 +2,13 @@
 
 ## H/T/D
 
-The hypothesis is that semantic route choice must use verified capability and task-effect dimensions, not visible scale alone. Six frozen states cover verified XI2, verified Ctrl+wheel, stale capability, collateral selection risk, unknown cleanup, and backend mismatch. The expected policy is encoded in `RESULT.json`.
+The hypothesis is that semantic route choice must use verified capability and task-effect dimensions, not visible scale alone. Six frozen states are passed through the executable policy in `run_check.py`; observed decisions are compared with expected decisions.
+
+Reproduction: `python3 research/analysis/semantic_zoom_route_contract_2210_v1/run_check.py`.
 
 ## C
 
-Visible scale equivalence does not prove cursor anchoring, focus, selection, modal state, document semantics, or input neutrality. A deterministic contract fixture cannot establish live application behavior or model utility.
+Visible scale equivalence does not prove cursor anchoring, focus, selection, modal state, document semantics, or input neutrality. A deterministic policy check cannot establish live application behavior or model utility.
 
 ## U / stop
 
