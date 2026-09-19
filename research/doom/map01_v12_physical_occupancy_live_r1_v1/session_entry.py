@@ -4,6 +4,10 @@ from pathlib import Path
 source=Path(os.environ['MAP01_SOURCE_ROOT']).resolve(); v12=Path(os.environ['MAP01_V12_ROOT']).resolve(); exp=Path(__file__).resolve().parent
 for p in (source/'research/live_control',source/'research/observation_gating',source/'research/doom',v12,exp):
     sys.path.insert(0,str(p))
+# The repository has historical same-name modules in doom/ and live_control/.
+# Make the shared live-control lineage authoritative before importing the v3 backend:
+# live_control/session_v8 -> live_control/session_v7 -> live_control/session_v6.
+sys.path.insert(0,str(source/'research/live_control'))
 import doom_retained_input_backend_v3 as backend
 from map01_v12_transition_owner import InputOwner
 backend.InputOwner=InputOwner
