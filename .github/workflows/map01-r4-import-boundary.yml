@@ -2,6 +2,8 @@ name: MAP01 r4 side-effect-free import boundary
 
 on:
   workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
   push:
     paths:
       - "research/doom/map01_v12_import_boundary_successor_r4_v1/**"
