@@ -1,0 +1,12 @@
+{
+  "decision": "PASS_O3_SOURCE_WINDOW_BOUND_SCOPED",
+  "trusted_window": "2097155",
+  "rows": [
+    {"case":"complete_current","admitted":true,"binding_reason":"source_window_bound","gate_reason":"admitted"},
+    {"case":"stale_frame","admitted":false,"binding_reason":"source_window_bound","gate_reason":"stale_freshness"},
+    {"case":"partial_coverage","admitted":false,"binding_reason":"source_window_bound","gate_reason":"incomplete_coverage"},
+    {"case":"wrong_region","admitted":false,"binding_reason":"source_window_bound","gate_reason":"region_mismatch"},
+    {"case":"ambiguous","admitted":false,"binding_reason":"source_window_bound","gate_reason":"ambiguous"},
+    {"case":"forged_complete","admitted":false,"binding_reason":"source_window_mismatch","gate_reason":"admitted"}
+  ]
+}
