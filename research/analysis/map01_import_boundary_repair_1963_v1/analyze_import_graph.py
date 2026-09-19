@@ -5,7 +5,7 @@ import ast
 import json
 from pathlib import Path
 
-ROOT = Path(__file__).parents[5]
+ROOT = Path(__file__).parents[3]
 TARGETS = {
     "doom.session_v7": ROOT / "doom/session_v7.py",
     "live_control.session_v8": ROOT / "live_control/session_v8.py",
