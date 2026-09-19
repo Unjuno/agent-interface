@@ -145,6 +145,14 @@ remains a later continuous-control stress domain alongside desktop coverage.
 
 ## Delivery order and acceptance
 
+The [Calc text conditions](../runtime/results/native-calc-text-01/README.md)
+reproduce 116 becoming 16 in one of eight zero-gap inputs; all eight 2 ms and
+eight 10 ms inputs matched. A shared research helper exposes explicit pacing
+without changing the native default, and a fresh primary-assistant two-cell
+task succeeded with 2 ms and no value repair. This small matrix does not establish
+causality or a universally safe delay. Post-dialog observation handoff remains
+the next integration gap exposed by the same Calc workflow.
+
 The [Calc transfer](../runtime/results/native-calc-transfer-01/README.md) now uses
 the same native handle/feedback path on an existing second-application task.
 The primary assistant completed exact saved cells after a flat-target refusal,
