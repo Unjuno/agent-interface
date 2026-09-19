@@ -37,3 +37,21 @@ def test_accepts_complete_scoped_receipts():
         immutable_provenance={"image_id": "sha256:x"},
     )
     assert result["decision"] == "PASS_FORMAL_RECEIPT_INTEGRITY_SCOPED"
+
+
+def test_rejects_empty_provenance_and_hashes():
+    rows = [row(case) for case in CASES]
+    rows[5]["repair"] = {
+        "original_revision": 1,
+        "reacquired_revision": 2,
+        "second_dispatch": True,
+    }
+    result = audit_receipts(
+        rows,
+        source_hashes={},
+        recomputed_hashes={},
+        immutable_provenance={},
+    )
+    assert result["decision"] == "STOP_RECEIPT_INTEGRITY"
+    assert "source_hash_mismatch" in result["reasons"]
+    assert "missing_immutable_provenance" in result["reasons"]
