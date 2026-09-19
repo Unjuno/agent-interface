@@ -1,15 +1,26 @@
 name: Native MCP v1
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'research/live_control/**'
+      - 'runtime/cli_v1/**'
+      - 'runtime/motor_state_v1/**'
+      - 'runtime/selector_v1/**'
+      - '.github/workflows/native-mcp-v1.yml'
   push:
     paths:
       - 'research/live_control/**'
+      - 'runtime/cli_v1/**'
+      - 'runtime/motor_state_v1/**'
+      - 'runtime/selector_v1/**'
       - '.github/workflows/native-mcp-v1.yml'
 permissions:
   contents: read
 jobs:
   native-mcp:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
