@@ -72,7 +72,7 @@ def main():
             if app == "inkscape":
                 cmd = [app]
             elif app == "libreoffice":
-                cmd = [app, "--norestore", "--nodefault", "--nolockcheck",
+                cmd = [app, "--norestore", "--nolockcheck",
                        f"-env:UserInstallation=file://{root / 'lo-profile'}",
                        "--calc"]
             else:
