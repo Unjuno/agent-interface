@@ -61,11 +61,6 @@ def main():
         apps = ('calc', 'inkscape') if args.app == 'calc-inkscape' else (args.app,)
         for index, app in enumerate(apps):
             app_goal, output, _ = suite.prepare(session, app, args.seed + index, '')
-            if app == 'calc':
-                # Public task destination, not an inferred controller convention.
-                app_goal['task'] = {'kind': 'write_cells',
-                    'cells': {'A1': app_goal['a'], 'A2': app_goal['b']},
-                    'save_format': 'xlsx'}
             workloads[app] = {'goal': app_goal, 'output': output}
         goal = ({app: data['goal'] for app, data in workloads.items()}
                 if len(workloads) > 1 else app_goal)

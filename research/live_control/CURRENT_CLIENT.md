@@ -577,3 +577,9 @@ primary-assistant Inkscape run selected once, then moved/saved x=50 to x=74 usin
 guards and verified release. No sensor lane was configured. This removes mandatory
 activation, not a measured end-to-end latency claim. See
 [native keyboard continuation](../../runtime/results/native-keyboard-01/README.md).
+
+Calc transfer retained a task failure: the assistant used A1/B1 while the task
+required A1/A2 and the public goal exposed only a/b. The harness now explicitly
+supplies cell destinations. A fresh primary-assistant keyboard-first run saved
+A1=551, A2=768; the original failed workbook and its B1=745 remain unchanged.
+See [Calc task destination](../../runtime/results/native-calc-explicit-task-01/README.md).
