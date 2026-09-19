@@ -1,10 +1,10 @@
 """Fail-closed audit for live scorer coherence JSONL."""
 import json
-import sys
+import sys`r`nimport re
 from pathlib import Path
 
 
-REQUIRED = {
+DECISIONS = {"ACCEPT", "REJECT", "STALE", "PHASE_MISMATCH"}`r`n`r`nREQUIRED = {
     "sample", "scheduled_ns", "sample_started_ns", "sample_finished_ns",
     "capture_ns", "typed_ready_ns", "frame_sha256", "epoch",
     "missed_periods_before", "decision", "input_emitted",
