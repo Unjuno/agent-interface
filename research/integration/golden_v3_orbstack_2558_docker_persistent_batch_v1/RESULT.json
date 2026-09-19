@@ -1,0 +1,15 @@
+{
+  "schema":"agent_interface_golden_v3_docker_persistent_batch_v1",
+  "issue":2558,
+  "decision":"PASS_THREE_FRESH_DOCKER_PERSISTENT_BATCH_SCOPED",
+  "tasks":[
+    {"task":5,"task_success":true,"visual_target_revalidation":true,"release_verified":true,"focus_change":"SCOPE_MISMATCH","guard_emissions_delta":0,"continuation_input_dispatched":false,"action_to_scored_effect_ms":166.804158},
+    {"task":6,"task_success":true,"visual_target_revalidation":true,"release_verified":true,"focus_change":"SCOPE_MISMATCH","guard_emissions_delta":0,"continuation_input_dispatched":false,"action_to_scored_effect_ms":149.354124},
+    {"task":7,"task_success":true,"visual_target_revalidation":true,"release_verified":true,"focus_change":"SCOPE_MISMATCH","guard_emissions_delta":0,"continuation_input_dispatched":false,"action_to_scored_effect_ms":150.202487}
+  ],
+  "count":3,
+  "means":{"action_to_scored_effect_ms":155.45358966666667},
+  "container":{"context":"orbstack","docker_server":"29.4.0","architecture":"aarch64","image_digest":"sha256:1a16aa431254514de58c909e84e5094a8e894caac11bf4c9d937dde6ea6d6398"},
+  "formal_six_task_claim":false,
+  "retained_stop":{"tasks":[2,3,4],"reason":"pre-created output directory caused harness exist_ok=False STOP_NO_READY"}
+}
