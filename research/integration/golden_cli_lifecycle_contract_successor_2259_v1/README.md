@@ -7,3 +7,5 @@ This static successor freezes four current-main source identities and maps ten l
 This is a contract prerequisite only. It does not implement the adapter or run GUI/model/network/input/Docker. A live adapter requires a fresh successor.
 
 Reproduction: run python audit.py.
+
+The audit recomputes Git blob identities without requiring a Git executable inside the pinned container.
