@@ -1,0 +1,31 @@
+name: Mixed-app startup diagnostic #2821
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "research/integration/mixed_app_long_session_2499/startup_diagnostic.py"
+      - "research/integration/mixed_app_long_session_2499/Dockerfile.formal"
+      - ".github/workflows/mixed-app-startup-diagnostic-2821.yml"
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build dependency-pinned image
+        run: docker build -f research/integration/mixed_app_long_session_2499/Dockerfile.formal -t mixed-formal-2821:diagnostic .
+      - name: Run startup diagnostic with network isolation
+        shell: bash
+        run: |
+          set +e
+          mkdir -p "$RUNNER_TEMP/mixed-2821-diagnostic"
+          docker run --rm --network none -v "$GITHUB_WORKSPACE:/workspace:ro" -v "$RUNNER_TEMP/mixed-2821-diagnostic:/out" -w /workspace mixed-formal-2821:diagnostic python3 research/integration/mixed_app_long_session_2499/startup_diagnostic.py > "$RUNNER_TEMP/mixed-2821-diagnostic/result.json" 2> "$RUNNER_TEMP/mixed-2821-diagnostic/stderr.log"
+          printf '%s\n' "$?" > "$RUNNER_TEMP/mixed-2821-diagnostic/container_exit.txt"
+          test -s "$RUNNER_TEMP/mixed-2821-diagnostic/result.json"
+      - name: Upload diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mixed-app-startup-diagnostic-2821
+          path: ${{ runner.temp }}/mixed-2821-diagnostic
+          if-no-files-found: error
