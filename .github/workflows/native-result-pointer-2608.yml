@@ -1,0 +1,16 @@
+name: Native result pointer guard #2608
+
+on:
+  pull_request:
+    paths:
+      - 'runtime/motor_state_v1/native_result.py'
+      - 'runtime/motor_state_v1/test_native_result.py'
+      - '.github/workflows/native-result-pointer-2608.yml'
+
+jobs:
+  native-result-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run native-result contract tests
+        run: python3 -m unittest runtime.motor_state_v1.test_native_result
