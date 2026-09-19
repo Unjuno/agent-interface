@@ -569,25 +569,3 @@ base64 reduces the relative difference below 1%, and actual model tokens/latency
 are unmeasured. See [native watch references](../../runtime/results/native-watch-refs-01/README.md).
 The retained local projection-only cost check is slower: median 0.822 to 1.579 ms
 over 100 alternating pairs. Keep the byte reduction separate from total latency.
-
-Keyboard continuation is now an opt-in interaction on the same native exchange:
-guard the explicitly presented context and emit keys without another click. A
-primary-assistant Inkscape run selected once, then moved/saved x=50 to x=74 using
-12 Right chords and Ctrl+S. The keyboard program has zero pointer ops, two boundary
-guards and verified release. No sensor lane was configured. This removes mandatory
-activation, not a measured end-to-end latency claim. See
-[native keyboard continuation](../../runtime/results/native-keyboard-01/README.md).
-
-Calc transfer retained a task failure: the assistant used A1/B1 while the task
-required A1/A2 and the public goal exposed only a/b. The harness now explicitly
-supplies cell destinations. A fresh primary-assistant keyboard-first run saved
-A1=551, A2=768; the original failed workbook and its B1=745 remain unchanged.
-See [Calc task destination](../../runtime/results/native-calc-explicit-task-01/README.md).
-
-The native Calc/Inkscape harness publishes terminal replies after artifact
-preservation and cleanup attempts, with separate task and cleanup outcomes.
-Copy/close failures do not skip subsequent cleanup. `finished` requires terminal
-tracked processes and successful cleanup attempts; it does not prove owner or
-descendant exit. Both an input-refused run and a completed, visually corrected
-Inkscape run are retained with fault tests in
-[native terminal cleanup](../../runtime/results/native-terminal-cleanup-01/README.md).
