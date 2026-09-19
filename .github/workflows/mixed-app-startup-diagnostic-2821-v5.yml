@@ -53,5 +53,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: mixed-app-long-session-ledger-2821-v11
-          path: \${{ runner.temp }}/mixed-2821-ledger-v11
+          path: ${{ runner.temp }}/mixed-2821-ledger-v11
           if-no-files-found: error
