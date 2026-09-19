@@ -82,10 +82,9 @@ def content(result):
     return CallToolResult(content=blocks)
 
 
-def create_server(run_directory, *, allocation=None):
-    root = (allocation.run_directory if allocation is not None
-            else Path(run_directory).resolve(strict=True))
-    if allocation is None and not root.is_dir():
+def create_server(run_directory):
+    root = Path(run_directory).resolve(strict=True)
+    if not root.is_dir():
         raise ValueError('explicit existing native run directory required')
     server = FastMCP('Agent Interface native research session')
     lock = threading.Lock()
@@ -100,29 +99,6 @@ def create_server(run_directory, *, allocation=None):
                     'status':'client_error', 'error':str(error), 'authority':'none',
                     'program_attempted':None,
                     'recovery':'Inspect the selected stage request/reply. An error does not prove no input; do not replay.'}))])
-
-    if allocation is not None:
-        @server.tool(structured_output=False)
-        def native_start(timeout: float = 5) -> CallToolResult:
-            """Start the configured research allocation once, or wait on that same process.
-
-            Starting/timeout is not permission to restart. Ready returns stage1
-            image and public task. End with native_submit finish/finish_after;
-            terminal process status alone does not prove task success or cleanup.
-            """
-            def start():
-                state = allocation.start(timeout=timeout)
-                if state['status'] != 'ready':
-                    return {'allocation':state,'image':None,'authority':'none'}
-                result = review_native(root/'source-1.json',root,compact=True)
-                result.update(allocation=state, session_context=session_context(root))
-                return result
-            return invoke(start)
-
-        @server.tool(structured_output=False)
-        def native_status() -> CallToolResult:
-            """Read the launched process state; never starts, kills or restarts it."""
-            return invoke(lambda: {'allocation':allocation.status(),'image':None,'authority':'none'})
 
     @server.tool(structured_output=False)
     def native_observe(stage: StrictInt) -> CallToolResult:
@@ -148,12 +124,8 @@ def create_server(run_directory, *, allocation=None):
         Never retry submit after timeout/error. Pending returns decision_sha256:
         use native_resume. Task success is separate from input completion.
         """
-        def submit():
-            if allocation is not None and allocation.status()['status'] != 'ready':
-                raise ValueError('managed input requires this server to own a live ready allocation')
-            return run(root, stage, decision.model_dump(mode='json', exclude_unset=True),
-                       timeout=timeout, compact=True)
-        return invoke(submit)
+        return invoke(lambda: run(root, stage, decision.model_dump(mode='json', exclude_unset=True),
+                                  timeout=timeout, compact=True))
 
     @server.tool(structured_output=False)
     def native_resume(stage: StrictInt, decision_sha256: str, timeout: float = 5) -> CallToolResult:
@@ -169,21 +141,6 @@ def create_server(run_directory, *, allocation=None):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    locations = parser.add_mutually_exclusive_group(required=True)
-    locations.add_argument('--run-directory', help='attach an existing harness run')
-    locations.add_argument('--allocation-directory', help='fresh parent directory for an explicitly started private run')
-    parser.add_argument('--app', choices=('calc','inkscape','calc-inkscape'))
-    parser.add_argument('--seed',type=int,default=991116)
-    parser.add_argument('--max-stages',type=int,default=4)
-    parser.add_argument('--harness-python', help='Python with existing GUI harness dependencies')
+    parser.add_argument('--run-directory', required=True)
     args = parser.parse_args()
-    allocation = None
-    if args.allocation_directory:
-        if args.app is None:
-            parser.error('--allocation-directory requires --app')
-        from native_allocation_v1 import NativeAllocation
-        allocation = NativeAllocation(args.allocation_directory,args.app,seed=args.seed,
-                                      max_stages=args.max_stages,python=args.harness_python)
-    elif args.app or args.harness_python:
-        parser.error('--app/--harness-python require --allocation-directory')
-    create_server(args.run_directory,allocation=allocation).run(transport='stdio')
+    create_server(args.run_directory).run(transport='stdio')
