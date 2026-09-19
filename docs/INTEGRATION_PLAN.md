@@ -25,6 +25,10 @@ now reads an already-available independent result once after early saved-effect
 evidence. Actual Calc use returned evaluation in the action response; a missing
 result remains pending. It removes one outer continuation turn in this example,
 not a socket exchange or the remaining deliberation gaps.
+An [existing settle-step recipe](../runtime/results/calc-settle-self-use-01/README.md)
+also avoided the separate observe program in one actual Calc session. Keep this
+opt-in at expected GUI transitions: it adds native captures and cannot certify
+semantic completion. No runtime change or universal wait policy was introduced.
 
 The user's current direction is to concentrate this task on integration while
 other contributors continue benchmarks and experiments. Product Hunt publication
