@@ -46,6 +46,14 @@ A close failure returns `runtime_failed` with `cleanup_error`, preserving any
 execution result or original error. The CLI consequently exits nonzero. This
 connection cleanup does not replace the backend's input-release checks.
 
+X11 execution errors return nested `status: execution_failed` with the retained
+`execution` record. `completed_ops` lists zero-based operations that returned;
+`failed_op` identifies the interrupted operation, whose effects remain unknown
+and may include partial input. Observations obtained before failure, per-program
+emission count and recovery-release results survive. A failed recovery release
+is recorded separately from the original execution error. None of these fields
+prove application success or authorize replay of the completed prefix.
+
 Wayland-only Linux currently fails closed because no Wayland backend has been promoted. Linux/X11 requires the existing `python-xlib` dependency used by `x11-v1`.
 
 For assistant-visible observations on X11, pass `--capture-directory DIRECTORY`

@@ -89,6 +89,13 @@ application-effect detection and caller recovery policy remain open alongside
 visual-target admission. The growing native path must next connect source
 identity and guarded method reuse, rather than treat this single form as the
 complete integration workload.
+Before connecting a guard that can stop a native program, repair X11's exception
+boundary: a mid-program exception previously discarded completed operations and
+observations. Native execution failures now retain that prefix, the uncertain
+failed operation, emissions and recovery-release evidence through the common
+result adapter. A private-Xvfb test injects failure after a real button press,
+confirms release and prevents following text/save operations. This establishes
+the required failure path; it does not yet implement the visual guard itself.
 
 Starting repository revision: `2d78394e4128d9274030dcc52cf0957be2eb312d`.
 Use the existing [golden desktop v3 entry point](../runtime/golden-demo-v3.sh) and

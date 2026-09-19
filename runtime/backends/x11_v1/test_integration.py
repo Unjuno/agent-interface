@@ -69,6 +69,29 @@ class X11IntegrationTests(unittest.TestCase):
         self.assertTrue(office_readiness(manifest)["ready"])
         self.assertIn("strict ASCII", manifest["capabilities"]["input.text"]["detail"])
 
+    def test_failure_after_real_button_press_retains_prefix_and_releases(self):
+        class FailAfterPress(X11Backend):
+            def pointer_button(self, button, down):
+                super().pointer_button(button, down)
+                if down:
+                    raise RuntimeError("injected failure after native press")
+
+        target = self.backend.targets["fixture"].id
+        backend = FailAfterPress(os.environ["DISPLAY"], {"fixture": target})
+        try:
+            row = X11RuntimeSession(backend).dispatch(make_program("partial-press"),
+                current_observation_seq=7, current_binding_revision=3)
+            self.assertEqual(row["status"], "execution_failed")
+            execution = row["execution"]
+            self.assertEqual(execution["completed_ops"], [0, 1])
+            self.assertEqual(execution["failed_op"], 2)
+            self.assertEqual(execution["program_emissions"], 3)  # move, press, recovery release
+            self.assertEqual(execution["releases"][-1]["buttons_down"], [])
+            self.assertTrue(execution["releases"][-1]["verified"])
+            self.assertFalse(self.effect.exists())
+        finally:
+            backend.close()
+
     def test_valid_program_has_independent_effect_and_verified_release(self):
         before = self.backend.emissions
         row = self.session.dispatch(make_program("valid"), current_observation_seq=7, current_binding_revision=3)
