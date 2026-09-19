@@ -1,6 +1,10 @@
 name: Mixed-app live identity preflight #2666
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - "research/integration/mixed_app_identity_2666_live/**"
+      - ".github/workflows/mixed-app-live-identity-2666.yml"
   push:
     paths:
       - "research/integration/mixed_app_identity_2666_live/**"
