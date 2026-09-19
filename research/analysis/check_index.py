@@ -52,7 +52,7 @@ def generated_dirs(text: str) -> set[str]:
     return {
         target
         for label, target in LINK_RE.findall(body)
-        if label == target
+        if label.rstrip("/") == target.rstrip("/")
     }
 
 
