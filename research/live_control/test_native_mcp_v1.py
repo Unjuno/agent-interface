@@ -135,6 +135,15 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual((next_step['stage'],next_step['source_sequence']),(2,2))
                     self.assertEqual(base64.b64decode(boundary.content[1].data),pixels)
                     self.assertEqual((root/'request-1.json').read_bytes(),raw)
+                    # A conflicting root-level observation can select a different image identity.
+                    (root/'reply-1.json').write_bytes(encoded(dict(source,stage=1,status='boundary',
+                        decision_sha256=row['decision_sha256'],observation=next_source)))
+                    conflicting=await client.call_tool('native_resume',{'stage':1,
+                        'decision_sha256':row['decision_sha256'],'timeout':0})
+                    conflict_metadata=json.loads(conflicting.content[0].text)
+                    self.assertEqual(conflict_metadata['continuation']['status'],'needs_review')
+                    self.assertNotIn('source_sequence',conflict_metadata['continuation'])
+                    self.assertEqual(base64.b64decode(conflicting.content[1].data),pixels)
                     (root/'request-2.json').write_bytes(b'{}')
                     occupied=await client.call_tool('native_resume',{'stage':1,
                         'decision_sha256':row['decision_sha256'],'timeout':0})

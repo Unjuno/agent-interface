@@ -105,7 +105,13 @@ def continuation(root, stage, max_stages, displayed):
         if (not isinstance(source, dict) or type(source.get('sequence')) is not int
                 or source['sequence'] < 1 or source != report.get('observation')):
             raise ValueError('next source differs from returned observation')
-    except (OSError, ValueError, TypeError) as error:
+        reference = displayed.get('image_reference')
+        if (not isinstance(reference, dict) or type(reference.get('sequence')) is not int
+                or reference['sequence'] != source['sequence']
+                or reference.get('capture_ns') != source.get('capture_ns')
+                or reference.get('sha256') != source['native']['artifact']['sha256']):
+            raise ValueError('next source differs from delivered image reference')
+    except (OSError, ValueError, TypeError, KeyError) as error:
         return dict(base, status='needs_review', reason=str(error))
     return dict(base, status='source_available', stage=next_stage,
                 source_sequence=source['sequence'], source_sha256=hashlib.sha256(data).hexdigest(),

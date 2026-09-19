@@ -13,8 +13,8 @@ from native_exchange_v1 import encoded, publish, run, current_owner_identity, co
 class NativeExchangeTests(unittest.TestCase):
     def test_continuation_requires_matching_source_and_unoccupied_slot(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root=Path(tmp); source={'sequence':9,'capture_ns':123}
-            displayed={'image_status':'image','receipt':{'native_result':{
+            root=Path(tmp); source={'sequence':9,'capture_ns':123,'native':{'artifact':{'sha256':'pixels'}}}
+            displayed={'image_status':'image','image_reference':{'sequence':9,'capture_ns':123,'sha256':'pixels'},'receipt':{'native_result':{
                 'status':'boundary','observation':source}}}
             self.assertEqual(continuation(root,1,4,displayed)['status'],'needs_review')
             (root/'source-2.json').write_bytes(encoded(source))
@@ -28,8 +28,8 @@ class NativeExchangeTests(unittest.TestCase):
 
     def test_continuation_never_infers_from_bad_or_terminal_sources(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root=Path(tmp); source={'sequence':9}
-            displayed={'image_status':'image','receipt':{'native_result':{
+            root=Path(tmp); source={'sequence':9,'capture_ns':123,'native':{'artifact':{'sha256':'pixels'}}}
+            displayed={'image_status':'image','image_reference':{'sequence':9,'capture_ns':123,'sha256':'pixels'},'receipt':{'native_result':{
                 'status':'boundary','observation':source}}}
             for raw in [b'{',b'[]',encoded({'sequence':True}),encoded({'sequence':10})]:
                 (root/'source-2.json').write_bytes(raw)
@@ -44,6 +44,21 @@ class NativeExchangeTests(unittest.TestCase):
             self.assertEqual(continuation(root,1,1,displayed)['reason'],'stage_bound_exhausted')
             displayed['receipt']['native_result']['status']='finished'
             self.assertEqual(continuation(root,1,4,displayed)['status'],'unavailable')
+
+    def test_continuation_rejects_different_delivered_image_identity(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            source={'sequence':9,'capture_ns':123,'native':{'artifact':{'sha256':'pixels'}}}
+            (root/'source-2.json').write_bytes(encoded(source))
+            for reference in [None,{'sequence':True,'capture_ns':123,'sha256':'pixels'},
+                              {'sequence':8,'capture_ns':123,'sha256':'pixels'},
+                              {'sequence':9,'capture_ns':124,'sha256':'pixels'},
+                              {'sequence':9,'capture_ns':123,'sha256':'other'}]:
+                displayed={'image_status':'image','image_reference':reference,
+                           'receipt':{'native_result':{'status':'boundary','observation':source}}}
+                result=continuation(root,1,4,displayed)
+                self.assertEqual(result['status'],'needs_review')
+                self.assertNotIn('source_sequence',result)
 
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
