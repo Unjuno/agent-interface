@@ -1,0 +1,23 @@
+{
+  "issue": 2780,
+  "status": "HOLD_LOCAL_DOCKER_ENGINE_UNAVAILABLE",
+  "source_bundle": {
+    "status": "PASS_SOURCE_BUNDLE_FREEZE",
+    "files": 15,
+    "bytes": 100794
+  },
+  "formal_allocation": {
+    "started": false,
+    "reason": "docker executable is not available in the local execution shell",
+    "image": "agent-interface-gtk-fixture-v2:2748",
+    "network": "none",
+    "raw_artifacts": "not_created"
+  },
+  "claims": {
+    "gtk_effect": false,
+    "formal_2606_acceptance": false,
+    "authority": false,
+    "cleanup": false
+  },
+  "next_entry_condition": "Expose the local Docker engine to this shell, then run exactly one bounded allocation from the frozen manifest and retain either all eight rows or a pre-case stop."
+}
