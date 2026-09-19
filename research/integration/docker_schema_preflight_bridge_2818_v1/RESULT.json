@@ -1,0 +1,12 @@
+{
+  "issue": 2818,
+  "status": "HOLD_HOST_MODEL_IPC_RESPONSE_TIMEOUT",
+  "contract_tests": {"passed": 3, "authority_granted": false},
+  "attempts": [
+    {"attempt": 1, "status": "STOP_HOST_BROKER_EXECUTABLE_UNAVAILABLE", "reason": "codex.exe was not on broker PATH", "gui": false, "input": false},
+    {"attempt": 2, "status": "STOP_RESPONSE_MISSING", "reason": "absolute CODEX_EXE path launched the local broker boundary but no response file arrived before bounded wait", "gui": false, "input": false}
+  ],
+  "bridge_claim": "malformed, mismatch, failure, and missing-response paths fail closed; successful schema bridge remains unproven",
+  "formal_task_route": false,
+  "next_entry_condition": "Diagnose the local codex.exe broker response wait with a bounded broker timeout and retained stderr/process receipt before another schema preflight."
+}
