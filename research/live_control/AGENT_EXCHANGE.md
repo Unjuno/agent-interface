@@ -283,3 +283,22 @@ also saved the expected x=64. This is a caller-selected recipe for that setup,
 not a global default, a minimum sufficient delay or a semantic readiness test.
 Keep the returned image and independent effect check. See
 [allocation, failures and actual use](../../runtime/results/native-inkscape-boundaries-01/README.md).
+
+## Persistent two-application use
+
+The same harness accepts `--app calc-inkscape --max-stages 8`. Both private apps
+stay open on one X server and one bridge; the last prepared app is initially
+visible. Caller-selected Alt+Tab chords can switch apps. Every returned image
+needs review before selecting the next target. The existing read-only handoff
+uses the actual focus's nearest managed ancestor from _NET_CLIENT_LIST, preserving
+a GTK child focus while binding its application surface. Missing or failed
+lookup stops; it never focuses a guessed target.
+
+The explicit stage bound is published in exchange-contract.json (2..64, default
+4). Historical runs without a contract keep the four-stage bound. Reserve a
+stage for explicit finish, which scores both saved files. With --probe-old-target,
+all previous stage aliases are probed after each review and must refuse without
+input. This is diagnostic work with additional capture cost.
+
+See the [actual round trip, child-surface failure and fix](../../runtime/results/native-mixed-app-01/README.md).
+This does not constitute the broader formal mixed-app allocation in Issue #2499.
