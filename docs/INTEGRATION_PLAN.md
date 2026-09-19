@@ -145,6 +145,14 @@ remains a later continuous-control stress domain alongside desktop coverage.
 
 ## Delivery order and acceptance
 
+The [native feedback successor](../runtime/results/native-feedback-01/README.md)
+now returns application title cues together with a consistent native image from
+the existing bridge. The six-task run uses these cues for continuation; a live
+wrong-value control completed input but observed rejection and stopped before
+the next task. The initial legacy-title failure is retained. Cue matching never
+sets task success; independent scoring remains separate. This closes the external
+post-save title-poll seam, not general semantic feedback or durable-effect proof.
+
 The [native navigation successor](../runtime/results/native-navigation-01/README.md)
 now moves between all six fixture tasks through the public native dispatch API,
 while reusing the existing guarded field/Save bridge. Both the first navigation
