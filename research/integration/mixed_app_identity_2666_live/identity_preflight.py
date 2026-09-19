@@ -13,22 +13,40 @@ from pathlib import Path
 
 APPS = ("inkscape", "libreoffice", "chromium")
 
+
 def run(cmd, env, timeout=20):
-    return subprocess.run(cmd, env=env, text=True, capture_output=True, timeout=timeout, check=False)
+    return subprocess.run(cmd, env=env, text=True, capture_output=True,
+                          timeout=timeout, check=False)
+
 
 def visible_records(env):
     q = run(["xdotool", "search", "--onlyvisible", "--name", ".*"], env)
     records = []
     for raw in q.stdout.splitlines():
         wid = raw.strip()
-        if not wid.isdigit(): continue
+        if not wid.isdigit():
+            continue
         name = run(["xdotool", "getwindowname", wid], env).stdout.strip()
         pid_text = run(["xdotool", "getwindowpid", wid], env).stdout.strip()
         wm = run(["xprop", "-id", wid, "WM_CLASS"], env).stdout.strip()
-        if pid_text.isdigit() and int(pid_text) > 0 and name and wm:
-            records.append({"window_id": int(wid), "pid": int(pid_text), "title": name,
-                            "wm_class": wm, "display": env["DISPLAY"]})
+        if (pid_text.isdigit() and int(pid_text) > 0 and name and wm
+                and "not found" not in wm.lower()):
+            records.append({"window_id": int(wid), "pid": int(pid_text),
+                            "title": name, "wm_class": wm,
+                            "display": env["DISPLAY"]})
     return records
+
+
+def wait_for_records(env, minimum=3, timeout=15):
+    deadline = time.monotonic() + timeout
+    last = []
+    while time.monotonic() < deadline:
+        last = visible_records(env)
+        if len(last) >= minimum:
+            return last
+        time.sleep(0.5)
+    return last
+
 
 def main():
     root = Path(tempfile.mkdtemp(prefix="identity-2666-"))
@@ -36,27 +54,37 @@ def main():
     env.update(DISPLAY=":141", XAUTHORITY=str(root / "Xauthority"))
     (root / "Xauthority").touch(mode=0o600)
     procs = []
-    out = {"display": env["DISPLAY"], "input_operations": 0, "model_calls": 0,
-           "network_calls": 0, "apps": list(APPS)}
-    xvfb = subprocess.Popen(["Xvfb", env["DISPLAY"], "-screen", "0", "1600x1000x24",
-                             "-auth", env["XAUTHORITY"]], env=env,
-                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    out = {"display": env["DISPLAY"], "input_operations": 0,
+           "model_calls": 0, "network_calls": 0, "apps": list(APPS)}
+    xvfb = subprocess.Popen(
+        ["Xvfb", env["DISPLAY"], "-screen", "0", "1600x1000x24",
+         "-auth", env["XAUTHORITY"]],
+        env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     try:
         time.sleep(0.7)
         for app in APPS:
-            if app == "inkscape": cmd = [app, "--no-splash", "--new"]
-            elif app == "libreoffice": cmd = [app, "--norestore", "--nodefault", "--nolockcheck", "--calc"]
-            else: cmd = [app, "--no-sandbox", "--disable-gpu",
-                        "--user-data-dir=" + str(root / "chrome-profile"), "about:blank"]
-            procs.append(subprocess.Popen(cmd, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL))
-            time.sleep(2.0)
-        first = visible_records(env)
+            if app == "inkscape":
+                cmd = [app, "--no-splash", "--new"]
+            elif app == "libreoffice":
+                cmd = [app, "--norestore", "--nodefault", "--nolockcheck",
+                       "--calc"]
+            else:
+                cmd = [app, "--no-sandbox", "--disable-gpu", "--no-first-run",
+                       "--no-default-browser-check", "--disable-session-crashed-bubble",
+                       "--user-data-dir=" + str(root / "chrome-profile"),
+                       "about:blank"]
+            procs.append(subprocess.Popen(
+                cmd, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL))
+            time.sleep(1.0)
+        first = wait_for_records(env)
         time.sleep(0.4)
         second = visible_records(env)
         keys = {(r["window_id"], r["pid"]) for r in first}
-        out.update({"first_records": first, "second_records": second, "record_count": len(first),
-                    "stable": first == second, "distinct_window_pid": len(keys) == len(first),
-                    "nonempty_titles": all(r["title"] for r in first), "all_apps_observed": len(first) >= 3,
+        out.update({"first_records": first, "second_records": second,
+                    "record_count": len(first), "stable": first == second,
+                    "distinct_window_pid": len(keys) == len(first),
+                    "nonempty_titles": all(r["title"] for r in first),
+                    "all_apps_observed": len(first) >= 3,
                     "decision": "PASS_IDENTITY_DISCOVERY_SCOPED"
                     if first == second and len(keys) == len(first) and len(first) >= 3
                     else "HOLD_IDENTITY_DISCOVERY"})
@@ -64,7 +92,11 @@ def main():
         raise SystemExit(0 if out["decision"].startswith("PASS") else 1)
     finally:
         for p in reversed(procs):
-            if p.poll() is None: p.send_signal(signal.SIGTERM)
-        if xvfb.poll() is None: xvfb.send_signal(signal.SIGTERM)
+            if p.poll() is None:
+                p.send_signal(signal.SIGTERM)
+        if xvfb.poll() is None:
+            xvfb.send_signal(signal.SIGTERM)
 
-if __name__ == "__main__": main()
+
+if __name__ == "__main__":
+    main()
