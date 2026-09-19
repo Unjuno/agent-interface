@@ -39,7 +39,9 @@ def _pointer_point(program: Mapping[str, Any]) -> list[int]:
 
 
 def validate_lineage(program: Mapping[str, Any], receipt: Mapping[str, Any],
-                     sidecar: Mapping[str, Any]) -> None:
+                     sidecar: Mapping[str, Any], *,
+                     current_observation_seq: int,
+                     current_binding_revision: int) -> None:
     if receipt.get("digest") != receipt_digest(receipt):
         raise ValueError("EVIDENCE_RECEIPT_DIGEST_MISMATCH")
     if sidecar.get("digest") != sidecar_digest(sidecar):
@@ -53,6 +55,10 @@ def validate_lineage(program: Mapping[str, Any], receipt: Mapping[str, Any],
             raise ValueError("SIDECAR_RECEIPT_MISMATCH")
     if receipt.get("role") != "ADMISSION_DEPENDENCY" or receipt.get("currentness") != "CURRENT":
         raise ValueError("LINEAGE_NOT_CURRENT_ADMISSION")
+    if receipt.get("observation_seq") != current_observation_seq:
+        raise ValueError("STALE_OBSERVATION")
+    if receipt.get("binding_revision") != current_binding_revision:
+        raise ValueError("STALE_BINDING")
     if program.get("source") != {
         "observation_seq": receipt.get("observation_seq"),
         "binding_revision": receipt.get("binding_revision"),
@@ -63,29 +69,24 @@ def validate_lineage(program: Mapping[str, Any], receipt: Mapping[str, Any],
 
 
 def dispatch_with_lineage(
-    program: dict[str, Any],
-    targets: Mapping[str, int],
-    receipt: Mapping[str, Any],
-    sidecar: Mapping[str, Any],
-    *,
-    current_observation_seq: int,
-    current_binding_revision: int,
-    display_name: str | None = None,
-    capture_directory: str | None = None,
+    program: dict[str, Any], targets: Mapping[str, int],
+    receipt: Mapping[str, Any], sidecar: Mapping[str, Any], *,
+    current_observation_seq: int, current_binding_revision: int,
+    display_name: str | None = None, capture_directory: str | None = None,
     dispatch_fn=None,
 ) -> dict[str, Any]:
     try:
-        validate_lineage(program, receipt, sidecar)
+        validate_lineage(program, receipt, sidecar,
+                         current_observation_seq=current_observation_seq,
+                         current_binding_revision=current_binding_revision)
     except (KeyError, TypeError, ValueError) as error:
         return {"schema": SCHEMA, "status": "lineage_rejected", "error": str(error)}
     if dispatch_fn is None:
         from .api import dispatch
         dispatch_fn = dispatch
     result = dispatch_fn(
-        program, targets,
-        current_observation_seq=current_observation_seq,
+        program, targets, current_observation_seq=current_observation_seq,
         current_binding_revision=current_binding_revision,
-        display_name=display_name,
-        capture_directory=capture_directory,
+        display_name=display_name, capture_directory=capture_directory,
     )
     return {"schema": SCHEMA, "status": "delegated", "cli_result": result}
