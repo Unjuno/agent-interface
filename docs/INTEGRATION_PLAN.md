@@ -105,6 +105,16 @@ six-task reuse/repair, source revisions, semantic tail-effect checks and the
 capture-to-input race remain open. Keep it experimental while extending that
 same adapter, rather than promoting this single-field result as acceptance.
 
+The [six-task native bridge successor](../runtime/results/native-six-task-bridge-01/README.md)
+now verifies cold/reuse/reuse/refusal/visual-repair/reuse/reuse on the existing
+Chromium fixture, with six exact independent submissions and zero old-target
+input at task 4. The first run exposed a native text bug on the advertised `-`
+character; it is retained and the supported text is now resolved before emission.
+Field/Save operations use the native guarded bridge; URL navigation still uses
+the research keyboard driver. This mixed path does not close public-interface
+or matched-model acceptance requirements. Next integrate navigation/text and
+semantic completion/recovery while keeping this six-task workload.
+
 Starting repository revision: `2d78394e4128d9274030dcc52cf0957be2eb312d`.
 Use the existing [golden desktop v3 entry point](../runtime/golden-demo-v3.sh) and
 its [retained six-task result](../runtime/GOLDEN_DESKTOP_DEMO_V3.md) as the first

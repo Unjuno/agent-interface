@@ -153,35 +153,34 @@ class X11Backend:
             elif kind in {"pointer_move", "observe"} and not focused:
                 raise X11BackendError(f"{kind} requires focused target")
             elif kind == "text":
-                for ch in op["text"]:
-                    if ch == " ":
-                        continue
-                    if not (ch.isascii() and (ch.isalpha() or ch.isdigit() or ch in ".-_")):
-                        raise X11BackendError(f"unsupported text character U+{ord(ch):04X}")
+                self._text_plan(op["text"])
             elif kind == "key_chord":
                 for key in op["keys"]:
                     self._keycode(key)
             elif kind == "key_state":
                 self._keycode(op["key"])
 
-    def text(self, value: str) -> None:
-        # Validate the complete string before the first physical emission.
-        # A rejected text operation must not leave an accepted prefix behind.
+    def _text_plan(self, value: str) -> list[list[str]]:
+        plan = []
         for ch in value:
-            if ch == " ":
-                continue
             if not (ch.isascii() and (ch.isalpha() or ch.isdigit() or ch in ".-_")):
-                raise X11BackendError(f"unsupported text character U+{ord(ch):04X}")
-        for ch in value:
-            if ch == " ":
-                self.key_chord(["SPACE"])
-                continue
-            if ch.isalpha() and ch.isupper():
-                self.key_state("SHIFT", True)
-                self.key_chord([ch.lower()])
-                self.key_state("SHIFT", False)
+                if ch != " ":
+                    raise X11BackendError(f"unsupported text character U+{ord(ch):04X}")
+            if ch in {" ", ".", "-", "_"}:
+                keys = {" ": ["SPACE"], ".": ["period"], "-": ["minus"], "_": ["SHIFT", "minus"]}[ch]
+            elif ch.isupper():
+                keys = ["SHIFT", ch.lower()]
             else:
-                self.key_chord([ch])
+                keys = [ch]
+            for key in keys:
+                self._keycode(key)
+            plan.append(keys)
+        return plan
+
+    def text(self, value: str) -> None:
+        # Resolve the entire supported payload before emitting its first key.
+        for keys in self._text_plan(value):
+            self.key_chord(keys)
 
     def scroll(self, dx: int, dy: int) -> None:
         buttons = [4] * max(0, -dy) + [5] * max(0, dy)
