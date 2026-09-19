@@ -1,0 +1,82 @@
+name: Golden IPC live receipt composition v1
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/golden-ipc-live-receipt-composition-2996.yml'
+      - 'research/live_control/session_v4.py'
+      - 'research/integration/golden_v3_receipt_composition_2916/**'
+      - 'research/observation_tiles/**'
+      - 'research/observation_gating/**'
+
+permissions:
+  contents: read
+
+jobs:
+  live-receipt-composition:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install X11 fixture dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb openbox xterm wmctrl
+          python -m pip install --disable-pip-version-check numpy pillow openpyxl python-xlib
+      - name: Compose one live observation without authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          export DISPLAY=:99
+          Xvfb "$DISPLAY" -screen 0 1280x800x24 -nolisten tcp >/tmp/xvfb.log 2>&1 &
+          xvfb_pid=$!
+          openbox >/tmp/openbox.log 2>&1 &
+          wm_pid=$!
+          cleanup() { kill "$wm_pid" "$xvfb_pid" 2>/dev/null || true; }
+          trap cleanup EXIT
+          mkdir -p out
+          python - <<'PY'
+          import hashlib, json, subprocess, sys, time
+          sys.path.insert(0, 'research/integration/golden_v3_receipt_composition_2916')
+          from receipt_composition import compose
+          command=[sys.executable, 'research/live_control/session_v4.py', '--app', 'xterm', '--seed', '2996', '--out', 'out/live-receipt']
+          p=subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+          ready=None
+          observation=None
+          deadline=time.time()+30
+          for line in iter(p.stdout.readline, ''):
+              if line.strip():
+                  row=json.loads(line)
+                  if row.get('event') == 'ready':
+                      ready=row
+                  if row.get('event') == 'observation' and observation is None:
+                      observation=row
+                      break
+              if time.time()>deadline:
+                  break
+          if ready is None: raise SystemExit('STOP_LIVE_READY_NOT_REACHED')
+          if observation is None: raise SystemExit('STOP_LIVE_OBSERVATION_NOT_REACHED')
+          context=observation.get('context')
+          if not context or not isinstance(observation.get('image'), str):
+              raise SystemExit('STOP_LIVE_PROVENANCE_FIELDS_MISSING')
+          session_id='live-x11-2996'
+          target_id='x11-context-'+hashlib.sha256(json.dumps(context,sort_keys=True,default=list).encode()).hexdigest()[:16]
+          intent_id='intent-2996'
+          current={'session_id':session_id,'target_id':target_id,'observation_seq':observation['sequence'],'binding_revision':0,'intent_id':intent_id}
+          admission={'schema':'visual-target-admission-v1','disposition':'TARGET_REFERENCE_ONLY',**{k:current[k] for k in ('session_id','target_id','observation_seq','binding_revision')}}
+          source={'schema':'source-identity-v1','session_id':session_id,'source_sha256':hashlib.sha256(json.dumps({'image':observation['image'],'context':context,'sequence':observation['sequence']},sort_keys=True,default=list).encode()).hexdigest()}
+          effect={'session_id':session_id,'target_id':target_id,'intent_id':intent_id,'task_success':False}
+          accepted=compose(admission=admission,source=source,dispatch={'status':'not_dispatched','authority_granted':False},effect=effect,current=current)
+          if accepted['decision'] != 'ACCEPT_FOR_ORDINARY_ADMISSION' or accepted['authority_granted'] is not False:
+              raise SystemExit('STOP_LIVE_COMPOSITION_NOT_ACCEPTED')
+          stale=dict(current,observation_seq=0)
+          stale_result=compose(admission=admission,source=source,dispatch={'status':'not_dispatched','authority_granted':False},effect=effect,current=stale)
+          if stale_result['decision'] != 'REFUSE' or 'ADMISSION_STALE_OBSERVATION_SEQ' not in stale_result['reasons']:
+              raise SystemExit('STOP_LIVE_STALE_NOT_REFUSED')
+          contradiction=compose(admission=admission,source=source,dispatch={'status':'not_dispatched','authority_granted':True},effect=effect,current=current)
+          if contradiction['decision'] != 'REFUSE' or 'AUTHORITY_CONTRADICTION' not in contradiction['reasons']:
+              raise SystemExit('STOP_LIVE_AUTHORITY_CONTRADICTION_NOT_REFUSED')
+          p.stdin.write(json.dumps({'op':'finish'})+'\\n'); p.stdin.flush()
+          stdout,stderr=p.communicate(timeout=15)
+          if p.returncode != 0: raise SystemExit('STOP_LIVE_FINISH_FAILED')
+          print(json.dumps({'status':'PASS_LIVE_RECEIPT_COMPOSITION','ready':True,'observation_sequence':observation['sequence'],'source_context_present':True,'accepted_decision':accepted['decision'],'stale_decision':stale_result['decision'],'authority_contradiction_decision':contradiction['decision'],'authority_granted':False,'model_calls':0,'input_operations':0,'task_effect':0,'returncode':p.returncode},indent=2))
+          PY
