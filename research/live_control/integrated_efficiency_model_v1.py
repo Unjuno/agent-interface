@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 from pathlib import Path
 
@@ -20,6 +21,8 @@ CONTRACTS = {
     "compiled": (HERE / "compiled_form_grounding_schema_v1.json",
                  HERE / "compiled_form_grounding_responder_v1.txt", validate_compiled),
 }
+RUNNER = Path(os.environ.get("AGENT_INTERFACE_MODEL_RUNNER",
+                             str(HERE / "target_handle_model_runner_v2.py")))
 
 
 def windows_path(path):
@@ -57,7 +60,7 @@ def call(root: Path, prompt: str, image: Path, contract: str, workspace: Path):
     prompt_path = root / "prompt.txt"
     prompt_path.write_text(prompt, encoding="utf-8", newline="\n")
     output = root / "model"
-    command = [str(WINDOWS_PYTHON), windows_path(HERE / "target_handle_model_runner_v2.py"),
+    command = [str(WINDOWS_PYTHON), windows_path(RUNNER),
                NODE, CLI, windows_path(prompt_path), windows_path(workspace),
                windows_path(output), "coordinate", windows_path(image),
                windows_path(instructions), windows_path(schema)]
