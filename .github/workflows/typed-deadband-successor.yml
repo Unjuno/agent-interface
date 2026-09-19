@@ -1,6 +1,11 @@
 name: Typed deadband successor container run
 
 on:
+  push:
+    branches: [research/typed-deadband-postcondition-successor-v1]
+    paths:
+      - 'research/container_control/typed_deadband_postcondition_successor_v1/**'
+      - '.github/workflows/typed-deadband-successor.yml'
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
