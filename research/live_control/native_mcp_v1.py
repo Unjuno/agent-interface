@@ -4,13 +4,47 @@ import hashlib
 import json
 from pathlib import Path
 import threading
+from typing import Literal
 
 from mcp.server.fastmcp import FastMCP
 from mcp.types import CallToolResult, ImageContent, TextContent
-from pydantic import StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, model_validator
 
 from agent_review import review_native
 from native_exchange_v1 import run
+
+
+class NativeDecision(BaseModel):
+    """One explicit action, or finish=true to end without another action.
+
+    Action decisions require point and expected_title. Extension fields are
+    preserved for the existing harness; this model grants no input authority.
+    """
+    model_config = ConfigDict(extra='allow', allow_inf_nan=False)
+    source_sequence: StrictInt = Field(ge=1, description='Exact sequence of the source image you viewed.')
+    point: list[StrictInt | StrictFloat] | None = Field(default=None, min_length=2, max_length=2,
+        description='Observed [x,y] in screen physical pixels; required for click and keyboard context binding.')
+    expected_title: StrictStr | None = Field(default=None,
+        description='Expected application title for feedback; required for an action, not a task success assertion.')
+    interaction: Literal['click','keyboard'] = Field(default='click',
+        description='click then tail, or keyboard-only tail with the same visual context checks.')
+    tail: list[dict] = Field(default_factory=list, description=(
+        'Explicit ordered native operations. Examples: {"op":"text","text":"190"}, '
+        '{"op":"key_chord","keys":["CTRL","s"]}, '
+        '{"op":"key_chord","keys":["Right"],"repeat":18}, '
+        '{"op":"wait_update","timeout_ms":50}. No automatic waits or retries.'))
+    finish: StrictBool = Field(default=False,
+        description='End and evaluate without new input; requires only source_sequence. Session closes even if scoring fails.')
+    finish_after: StrictBool = Field(default=False,
+        description='End/evaluate after this explicit action. Do not use if a new dialog may need a decision.')
+
+    @model_validator(mode='after')
+    def complete_decision(self):
+        if self.finish and self.finish_after:
+            raise ValueError('choose finish or finish_after, not both')
+        if not self.finish and (self.point is None or self.expected_title is None):
+            raise ValueError('action requires point and expected_title')
+        return self
 
 
 def session_context(root):
@@ -83,14 +117,15 @@ def create_server(run_directory):
         return invoke(observe)
 
     @server.tool(structured_output=False)
-    def native_submit(stage: StrictInt, decision: dict, timeout: float = 5) -> CallToolResult:
+    def native_submit(stage: StrictInt, decision: NativeDecision, timeout: float = 5) -> CallToolResult:
         """Submit one explicit decision against its viewed source_sequence.
 
         Uses existing guarded click/keyboard tail and immutable stage publication.
         Never retry submit after timeout/error. Pending returns decision_sha256:
         use native_resume. Task success is separate from input completion.
         """
-        return invoke(lambda: run(root, stage, decision, timeout=timeout, compact=True))
+        return invoke(lambda: run(root, stage, decision.model_dump(mode='json', exclude_unset=True),
+                                  timeout=timeout, compact=True))
 
     @server.tool(structured_output=False)
     def native_resume(stage: StrictInt, decision_sha256: str, timeout: float = 5) -> CallToolResult:

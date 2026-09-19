@@ -27,6 +27,12 @@ install a plugin or add tools to the current Codex conversation.
   the task; it grants no authority and is not an atomic snapshot with the image.
 - `native_submit(stage, decision, timeout=5)` uses existing immutable publication
   and guarded action execution. After pending/error, never retry submit.
+  The tool schema describes source_sequence, point, expected_title, interaction,
+  tail and strict boolean finish/finish_after. Action decisions need point/title;
+  finish=true needs only source_sequence. Malformed envelopes refuse before
+  publication. Unspecified defaults are not inserted into the saved request;
+  extension fields remain available. Tail/runtime admission is still checked
+  by the existing harness and backend, not certified by this input schema.
 - `native_resume(stage, decision_sha256, timeout=5)` follows the existing
   read-only digest-bound path. It does not create a missing request.
 
