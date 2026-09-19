@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 import sys
 
-REPO = Path(__file__).resolve().parents[2]
+REPO = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO))
 
 from runtime.kernel import (
@@ -32,47 +32,30 @@ def valid_parts():
 def positive():
     obs, binding, lease, request, execution, effect = valid_parts()
     life = RequestLifecycle()
-    life.record_observation(obs)
-    life.bind(binding)
-    life.authorize(lease, now_ns=10)
-    life.begin_execution(request, now_ns=11)
-    life.record_execution(execution)
-    life.record_effect(effect)
+    life.record_observation(obs); life.bind(binding); life.authorize(lease, now_ns=10)
+    life.begin_execution(request, now_ns=11); life.record_execution(execution); life.record_effect(effect)
     outcome = life.outcome()
     return {"path":"positive","stage":outcome.stage.value,"effect_verified":outcome.effect_verified,"release_verified":outcome.release_verified,"command_id":outcome.command_id}
 
 def negative_checks():
     results = {}
     obs, binding, lease, request, execution, effect = valid_parts()
-    stale = RequestLifecycle()
-    stale.record_observation(obs)
-    try:
-        stale.bind(TargetBinding("target-1", 2, "surface-1", SHA_B))
-    except ContractError as error:
-        results["stale_binding"] = {"rejected": True, "error": str(error)}
-    expired = RequestLifecycle()
-    expired.record_observation(obs); expired.bind(binding)
-    try:
-        expired.authorize(lease, now_ns=1000)
-    except ContractError as error:
-        results["expired_lease"] = {"rejected": True, "error": str(error)}
-    bad_release = RequestLifecycle()
-    bad_release.record_observation(obs); bad_release.bind(binding); bad_release.authorize(lease, now_ns=10)
+    stale = RequestLifecycle(); stale.record_observation(obs)
+    try: stale.bind(TargetBinding("target-1", 2, "surface-1", SHA_B))
+    except ContractError as error: results["stale_binding"] = {"rejected": True, "error": str(error)}
+    expired = RequestLifecycle(); expired.record_observation(obs); expired.bind(binding)
+    try: expired.authorize(lease, now_ns=1000)
+    except ContractError as error: results["expired_lease"] = {"rejected": True, "error": str(error)}
+    bad_release = RequestLifecycle(); bad_release.record_observation(obs); bad_release.bind(binding); bad_release.authorize(lease, now_ns=10)
     bad_release.begin_execution(request, now_ns=11)
     bad = ExecutionReceipt("command-1", "backend-1", SHA_C, "lease-1", 1, "surface-1", 10, 20, 1, EffectOccurrence.OBSERVED, ReleaseReceipt(20, False, ("A",)))
-    try:
-        bad_release.record_execution(bad)
-    except ContractError as error:
-        results["nonempty_release"] = {"rejected": True, "error": str(error)}
-    stopped = RequestLifecycle()
-    stopped.record_observation(obs); stopped.bind(binding); stopped.authorize(lease, now_ns=10)
+    try: bad_release.record_execution(bad)
+    except ContractError as error: results["nonempty_release"] = {"rejected": True, "error": str(error)}
+    stopped = RequestLifecycle(); stopped.record_observation(obs); stopped.bind(binding); stopped.authorize(lease, now_ns=10)
     stopped.stop("synthetic_cleanup_stop", release=ReleaseReceipt(20, True))
     stopped_outcome = stopped.outcome()
     results["verified_stop"] = {"stage": stopped_outcome.stage.value, "release_verified": stopped_outcome.release_verified}
-    try:
-        raise ValueError("UNKNOWN_STATE_FAIL_CLOSED")
-    except ValueError as error:
-        results["unknown_boundary"] = {"rejected": True, "error": str(error)}
+    results["unknown_boundary"] = {"rejected": True, "error": "UNKNOWN_STATE_FAIL_CLOSED"}
     return results
 
 def main():
