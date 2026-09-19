@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Fetch pinned scorer sources
         env:
-          PIN: HEADPIN
+          PIN: 88e8beb2f0ae71b2823f08598d2fc7433fd1a170
           BASE: https://raw.githubusercontent.com/Unjuno/agent-interface
         run: |
           python - <<'PY'
