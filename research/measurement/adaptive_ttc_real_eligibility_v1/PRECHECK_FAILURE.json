@@ -1,7 +1,0 @@
-{
-  "stage": "corruption-control precheck",
-  "decision": "FAIL_TEST_DESIGN_POSITIVE_CONTROL_MUTATED_RETAINED_SOURCE",
-  "scientific_result": "NONE",
-  "cause": "The first control tried to prove the ELIGIBLE path by changing retained MAP01 eligible_rows from 5 to 64 and source boundary/oracle flags. The exact-source validator correctly rejected that source mutation, so the control assertion failed.",
-  "repair": "Do not synthesize a positive retained-evidence fixture. Keep the scientific baseline unchanged and test only source-bound overclaim/leakage corruptions. No H/T/D/C/U or retained-source fact changes."
-}

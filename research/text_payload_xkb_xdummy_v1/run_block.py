@@ -1,6 +1,0 @@
-import argparse,json,subprocess,sys
-from pathlib import Path
-p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--plan',type=Path,required=True);a=p.parse_args();a.out.mkdir(parents=True,exist_ok=False);rows=[]
-for i in range(3):
- d=a.out/f'arm-{i:02d}';q=subprocess.run([sys.executable,str(Path(__file__).with_name('run_arm.py')),'--out',str(d),'--plan',str(a.plan),'--index',str(i)],text=True,capture_output=True,timeout=25);(a.out/f'arm-{i:02d}.stdout').write_text(q.stdout);(a.out/f'arm-{i:02d}.stderr').write_text(q.stderr); rows.append(json.loads((d/'result.json').read_text()))
-ds=[r['decision'] for r in rows]; decision='PASS_XDUMMY_NATIVE_XKB_MAP_SCOPED' if all(x=='PASS_XDUMMY_NATIVE_XKB_MAP_SCOPED' for x in ds) else ('SETUP_BLOCKED_XDUMMY' if all(x=='SETUP_BLOCKED_XDUMMY' for x in ds) else ('SETUP_BLOCKED_NATIVE_XKB_APPLY' if all(x=='SETUP_BLOCKED_NATIVE_XKB_APPLY' for x in ds) else 'FAIL_INTEGRITY'));s={'decision':decision,'arms':3,'arm_decisions':ds,'input_operations':0,'formal_reruns':0};(a.out/'summary.json').write_text(json.dumps(s,indent=2,sort_keys=True)+'\n');print(json.dumps(s));raise SystemExit(0 if decision!='FAIL_INTEGRITY' else 2)

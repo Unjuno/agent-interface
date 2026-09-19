@@ -1,3 +1,0 @@
-# #2166 container revalidation successor
-
-**H:** The generation-bound evidence harness is reproducible in an isolated python:3.12-slim container with identical status semantics and stale-generation rejection.\n\n**T:** Compile and execute the retained deterministic harness once in the container; independently audit ENCODED, OBSOLETE, CACHE_HIT, ENCODED, exact reuse bytes, stale rejection, and zero model/X11/input counters.\n\n**D:** PASS_CONTAINER_REVALIDATION_SCOPED only if all controls and digest match the retained #2047 experiment.\n\n**C:** A local-only pass could hide path, interpreter, or serialization differences.\n\n**U:** PNG/X11 capture, model-facing value, latency, task correctness, and transfer remain unverified.\n

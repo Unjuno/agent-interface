@@ -43,7 +43,6 @@ def bridge_dispatch_result(
         release = {"status": "NOT_TERMINAL", "retained": False}
     else:
         release = dict(release)
-    report["release"] = dict(release)
     events = list(context.get("events", []))
     if not isinstance(events, list):
         report["reason"] = "context_events"

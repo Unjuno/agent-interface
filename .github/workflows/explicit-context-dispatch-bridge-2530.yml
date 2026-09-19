@@ -7,6 +7,12 @@ on:
       - runtime/motor_state_v1/test_dispatch_bridge.py
       - runtime/motor_state_v1/adapter.py
       - .github/workflows/explicit-context-dispatch-bridge-2530.yml
+  pull_request:
+    paths:
+      - runtime/motor_state_v1/dispatch_bridge.py
+      - runtime/motor_state_v1/test_dispatch_bridge.py
+      - runtime/motor_state_v1/adapter.py
+      - .github/workflows/explicit-context-dispatch-bridge-2530.yml
 jobs:
   test:
     runs-on: ubuntu-latest

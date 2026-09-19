@@ -1,7 +1,0 @@
-{
-  "schema":"authority-ended-receipt-replay-baseline-failure-v1",
-  "source":"retained live authority-ended delivery-race first terminal",
-  "finding":"after consume_for_execute on the first minted token, calling open_replan_token on the identical receipt mints a new unused token; current_sequence=4 then revalidates",
-  "classification":"REPLAY_REMINT_ACCEPTED",
-  "scope":"offline replay of retained real receipt; no live input"
-}
