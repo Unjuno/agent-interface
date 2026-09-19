@@ -1,8 +1,4 @@
-"""Fixed-order evidence gate for the formal GTK successor experiment.
-
-This module is intentionally model-free and fixture-free. It makes the
-pre-registration boundary executable without manufacturing GUI evidence.
-"""
+"""Fixed-order, model-free evidence gate for the formal GTK successor experiment."""
 
 from __future__ import annotations
 
@@ -63,11 +59,25 @@ def gate(receipt: Mapping[str, Any]) -> GateResult:
     if not isinstance(receipt["cleanup"], Mapping):
         return GateResult(case, "UNKNOWN", False, "cleanup")
     if case == "AMBIGUOUS_DELIVERY":
-        if receipt.get("replay_count", 0) != 0:
+        delivery = receipt.get("delivery")
+        if not isinstance(delivery, Mapping):
+            return GateResult(case, "UNKNOWN", False, "ambiguous_delivery_evidence")
+        if delivery.get("status") != "ambiguous" or not delivery.get("reason"):
+            return GateResult(case, "UNKNOWN", False, "ambiguous_delivery_evidence")
+        if receipt.get("replay_allowed") is not False:
+            return GateResult(case, "UNKNOWN", False, "ambiguous_replay_policy")
+        if receipt.get("replay_count") != 0:
             return GateResult(case, "UNKNOWN", False, "ambiguous_replay")
-        return GateResult(case, "UNKNOWN", False, "ambiguous_no_replay")
+        return GateResult(case, "UNKNOWN", True, "ambiguous_no_replay")
     if case == "TERMINAL_CLEANUP_FAILURE":
-        return GateResult(case, "CLEANUP_FAILURE", False, "cleanup")
+        cleanup = receipt["cleanup"]
+        if cleanup.get("status") != "failed":
+            return GateResult(case, "CLEANUP_FAILURE", False, "cleanup_status")
+        if not cleanup.get("failure_reason"):
+            return GateResult(case, "CLEANUP_FAILURE", False, "cleanup_failure_evidence")
+        if cleanup.get("release_verified") is not True:
+            return GateResult(case, "CLEANUP_FAILURE", False, "cleanup_release_truth")
+        return GateResult(case, "CLEANUP_FAILURE", True, "cleanup_failure_recorded")
     return GateResult(case, EXPECTED[case], True, "classified")
 
 
