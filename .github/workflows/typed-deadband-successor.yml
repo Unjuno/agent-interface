@@ -1,0 +1,64 @@
+name: Typed deadband successor container run
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'research/container_control/typed_deadband_postcondition_successor_v1/**'
+      - '.github/workflows/typed-deadband-successor.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: typed-deadband-successor-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  run-once:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install X11 runtime dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb python3-tk
+          python -m pip install --disable-pip-version-check python-xlib
+      - name: Execute preregistered successor once
+        run: |
+          mkdir -p results/typed-deadband-successor-v1
+          python research/container_control/typed_deadband_postcondition_successor_v1/typed_deadband_runner.py             --pairs 3 --decisions 6 --planner-wait 0.34 --cover-budget 0.24 --deadband 0.06             --out results/typed-deadband-successor-v1
+      - name: Write immutable run manifest
+        run: |
+          python - <<'PY'
+          import hashlib,json,pathlib,subprocess
+          root=pathlib.Path('results/typed-deadband-successor-v1')
+          files={}
+          for p in sorted(root.rglob('*')):
+              if p.is_file():
+                  b=p.read_bytes()
+                  files[str(p.relative_to(root))]={'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
+          manifest={
+              'schema':'typed-deadband-successor-v1-run-manifest',
+              'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+              'experiment_identity':'TYPED-DEADBAND-POSTCONDITION-SUCCESSOR-V1-001',
+              'retry':False,
+              'files':files,
+          }
+          (root/'manifest.json').write_text(json.dumps(manifest,indent=2,sort_keys=True)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: typed-deadband-successor-v1-${{ github.run_id }}
+          path: results/typed-deadband-successor-v1
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
