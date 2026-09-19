@@ -1,0 +1,31 @@
+{
+  "issue": 2187,
+  "decision": "HOLD_SCHEMA_NOT_YET_MACHINE_READABLE",
+  "base_main": "f7bbeebb33c99abc8005fca678f362197ed6e71e",
+  "scope": "source_first_schema_freeze",
+  "frozen_sources": {
+    "runtime/golden-demo-v3.sh": "ef489bb68d3e80fac060b179fe90da2cce8d209",
+    "runtime/golden_desktop_demo_v3.py": "26db03b8400b03fbe5272bd4ae5ad9c3a82d31a2",
+    "runtime/GOLDEN_DESKTOP_DEMO_V3.md": "940213efdcb582d6c7399d0cd1f0afc3fecb1c4a",
+    "runtime/cli_v1/api.py": "5674bd39e3cb2170095f476dac90e2a781f4f77a2",
+    "runtime/cli_v1/README.md": "8cafa39718f0d5d66cb73adeb3aa99f0f1cce6d6"
+  },
+  "mapping": {
+    "setup_doctor": "cli_source_backed; v3_machine_result_unverified",
+    "model_attempt": "v3_documented_live_measurement; typed_field_unverified",
+    "observation_freshness": "v3_documented; typed_field_unverified",
+    "guarded_dispatch": "cli_source_backed; v3_to_cli_mapping_unverified",
+    "refusal": "cli_source_backed; v3_to_cli_mapping_unverified",
+    "useful_effect": "v3_documented task route; machine_effect_field_unverified",
+    "stale_invalidation": "v3_documented repair/reuse route; typed_field_unverified",
+    "release": "v3_documented empty release; typed_field_unverified",
+    "cleanup_failure": "cli_source_backed non_success; v3_to_cli_mapping_unverified",
+    "usage": "v3_documented aggregate usage; typed_field_unverified",
+    "partial_effect": "unverified"
+  },
+  "task_success_distinct_from_program_completion": "unverified",
+  "explicit_adapter_present": false,
+  "authority_grant_in_mapping": "not_applicable_until_mapping_exists",
+  "formal_invocations": 0,
+  "docker": "not_required"
+}
