@@ -611,3 +611,12 @@ repeat. This syntax belongs to the guarded bridge, not the public core opcode
 schema. A primary-assistant use saved x=86; the exact decision representation
 shrunk from 849 to 249 JSON bytes, with model tokens and latency unmeasured. See
 [key-repeat integration](../../runtime/results/native-key-repeat-01/README.md).
+
+For an explicitly final action, the native harness now accepts boolean
+`decision.finish_after=true`. The same response includes the action, last
+pre-cleanup reviewed image, independent evaluation and cleanup, then the private
+session ends even if task scoring fails. Omit it when another decision may be
+needed. This removes the separate finish request in one primary-assistant run,
+with identical native operations; invalid-flag and task-failure controls are
+retained. It is not automatic success detection or repair. See
+[native finish-after](../../runtime/results/native-finish-after-01/README.md).
