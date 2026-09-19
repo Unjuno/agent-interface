@@ -1,0 +1,32 @@
+name: MAP01 matched recovery entry gate r5
+
+on:
+  push:
+    branches:
+      - research/map01-matched-recovery-entry-gate-1866-r5
+  pull_request:
+    paths:
+      - .github/workflows/map01-matched-recovery-entry-gate-r5.yml
+      - research/analysis/map01_matched_recovery_entry_gate_1866_r5/**
+      - research/analysis/map01_matched_recovery_entry_gate_1866_r4/**
+
+jobs:
+  execute-pinned-main-classifier:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.12-slim
+    steps:
+      - name: Fetch and execute pinned current-main classifier
+        env:
+          SOURCE_URL: https://raw.githubusercontent.com/Unjuno/agent-interface/5931817c5a1a1a6f491c2c761ef05a8869a76b46/research/analysis/map01_matched_recovery_entry_gate_1866_r4/gate.py
+        run: |
+          python - <<'PY'
+          import os, urllib.request
+          url = os.environ["SOURCE_URL"]
+          data = urllib.request.urlopen(url, timeout=30).read()
+          open("/tmp/gate.py", "wb").write(data)
+          print("PINNED_SOURCE", url)
+          print("SOURCE_BYTES", len(data))
+          PY
+          python -m py_compile /tmp/gate.py
+          python /tmp/gate.py
