@@ -26,7 +26,7 @@ class DockerBackendTest(unittest.TestCase):
             try:
                 command=build_command(root/'out', prompt, image, 'compiled', workspace)
                 self.assertIn('test:local', command)
-                self.assertIn('/ipc', command)
+                self.assertIn("HOST_MODEL_IPC_DIR=/ipc", command)
                 self.assertIn('coordinate', command)
             finally:
                 for k,v in old.items():
