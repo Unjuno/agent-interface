@@ -53,7 +53,6 @@ class NativeHandleBridge:
         self.moved_point = None
         self.deadline = None
         self.review_required = False
-        self.binding_revision = 0
         self.used_aliases = set()
         self.backend = _GuardedBackend(display_name, dict(targets))
         self.backend.owner = self
@@ -93,8 +92,7 @@ class NativeHandleBridge:
         with Image.open(io.BytesIO(data)) as opened:
             image = opened.convert("RGB")
         self.sequence += 1
-        observation = {"sequence": self.sequence, "binding_revision": self.binding_revision,
-                       "capture_ns": native["capture_started_ns"],
+        observation = {"sequence": self.sequence, "capture_ns": native["capture_started_ns"],
                        "pointer_binding": before, "native": native}
         self.history[self.sequence] = (observation, image)
         self._save(f"observation-{self.sequence}.json", observation)
@@ -128,8 +126,6 @@ class NativeHandleBridge:
         if type(window_id) is not int or window_id <= 0:
             raise ValueError('explicit positive window ID required')
         previous_scope = self.scope
-        previous_revision = getattr(self, 'binding_revision', 0)
-        self.binding_revision = previous_revision + 1
         previous_window = self.backend.targets[self.target].id
         self.review_required = True
         self.scope = 'native-x11:' + uuid.uuid4().hex
@@ -137,7 +133,6 @@ class NativeHandleBridge:
         self.history.clear()
         row = {'status': 'needs_review', 'authority_granted': False,
                'input_dispatched': False, 'previous_scope': previous_scope,
-               'previous_binding_revision': previous_revision, 'binding_revision': self.binding_revision,
                'scope': self.scope, 'previous_window_id': previous_window,
                'requested_window_id': window_id, 'started_ns': time.monotonic_ns()}
         try:
@@ -253,8 +248,7 @@ class NativeHandleBridge:
             else:
                 program = {
                     "schema": SCHEMA_PROGRAM, "program_id": "guarded-" + uuid.uuid4().hex,
-                    "source": {"observation_seq": self.sequence,
-                               "binding_revision": self.binding_revision},
+                    "source": {"observation_seq": self.sequence, "binding_revision": 0},
                     "authority": {"lease_id": self.scope.replace(":", "-"), "expires_at_ns": self.deadline},
                     "terminal": {"release_all_required": True},
                     "ops": [{"op": "focus", "target": self.target},
@@ -265,7 +259,7 @@ class NativeHandleBridge:
                 }
                 self._save("program-" + program["program_id"] + ".json", program)
                 row = self.session.dispatch(program, current_observation_seq=self.sequence,
-                                            current_binding_revision=self.binding_revision)
+                                            current_binding_revision=0)
             row["guard_checks"] = list(self.checks)
             self._save("result-" + uuid.uuid4().hex + ".json", row)
             return row

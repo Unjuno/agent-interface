@@ -145,6 +145,15 @@ remains a later continuous-control stress domain alongside desktop coverage.
 
 ## Delivery order and acceptance
 
+The [native window-review successor](../runtime/results/native-window-review-02/README.md)
+now carries Calc's dialog and parent-window review on one bridge connection.
+Each explicit handoff invalidates old aliases/sources, advances binding revision,
+and returns the exact image used by the next assistant decision. The live final
+version saved [116,476] and refused both old-target probes without input. The
+destroyed-dialog feedback error is retained, with a successful read-only review
+of the parent alongside it. This replaces per-stage connection reconstruction;
+it does not establish a matched latency benefit or public multi-client semantics.
+
 The [Calc text conditions](../runtime/results/native-calc-text-01/README.md)
 reproduce 116 becoming 16 in one of eight zero-gap inputs; all eight 2 ms and
 eight 10 ms inputs matched. A shared research helper exposes explicit pacing

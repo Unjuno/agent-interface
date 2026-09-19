@@ -44,8 +44,6 @@ class NativeHandleBridgeTests(unittest.TestCase):
         self.assertFalse(result['input_dispatched'])
         self.assertIs(bridge.backend.d, connection)
         self.assertNotEqual(bridge.scope, 'previous')
-        self.assertEqual(result['previous_binding_revision'], 0)
-        self.assertEqual(result['binding_revision'], 1)
         self.assertNotIn(7, bridge.history)
         with self.assertRaises(KeyError):
             bridge.mint('new_target', 7, [1, 1])
