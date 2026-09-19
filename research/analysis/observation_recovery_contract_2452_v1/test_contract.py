@@ -14,7 +14,7 @@ def result(status="READY"):
             "focus":{"window":"xterm"},"surface":{"id":"surface-a"},
             "geometry":{"x":0,"y":0,"width":640,"height":400},
             "motor":{"held":[]}, "observation":{"id":"o4"},
-            "uncertainty":[],"authority":False,
+            "uncertainty":[], "authority":False,
             **({"rejection_reason":"observer_unavailable"} if status=="REJECTED" else {})}
 
 class RecoveryContractTests(unittest.TestCase):
@@ -22,12 +22,21 @@ class RecoveryContractTests(unittest.TestCase):
         self.assertIsNone(validate_request(request()))
         self.assertIsNone(validate_result(request(), result(), 4))
         self.assertIsNone(validate_result(request(), result("UNKNOWN"), 4))
+
     def test_escalation_controls_reject(self):
         for key in ("input_ops","lease_extension","lease_transfer","task_success","effect_verified","authority_granted"):
             bad=result(); bad[key]=False
-            self.assertEqual(validate_result(request(), bad, 4), "FORBIDDEN_RESULT_FIELD" if key != "authority_granted" else "RESULT_SCHEMA_INVALID")
+            self.assertEqual(validate_result(request(), bad, 4),
+                             "FORBIDDEN_RESULT_FIELD" if key != "authority_granted"
+                             else "RESULT_SCHEMA_INVALID")
         bad=result(); bad["authority"]=True
         self.assertEqual(validate_result(request(), bad, 4), "AUTHORITY_ESCALATION")
+
+    def test_ready_requires_requested_evidence(self):
+        for key in request()["want"]:
+            bad=result(); bad[key]=None
+            self.assertEqual(validate_result(request(), bad, 4), "REQUESTED_EVIDENCE_MISSING")
+
     def test_stale_identity_and_deadline_reject(self):
         bad=copy.deepcopy(request()); bad["deadline_ms"]=0
         self.assertEqual(validate_request(bad), "DEADLINE_INVALID")
@@ -35,6 +44,7 @@ class RecoveryContractTests(unittest.TestCase):
         self.assertEqual(validate_result(request(), stale, 4), "STALE_RESULT")
         wrong=result(); wrong["session_id"]="s2"
         self.assertEqual(validate_result(request(), wrong, 4), "IDENTITY_MISMATCH")
+
     def test_unknown_and_rejection_forms(self):
         bad=copy.deepcopy(request()); bad["extra"]=1
         self.assertEqual(validate_request(bad), "UNKNOWN_REQUEST_FIELD")
