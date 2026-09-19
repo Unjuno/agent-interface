@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 120 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 121 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
@@ -238,6 +238,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`x11_augmentation_fail_2394_v1/`](x11_augmentation_fail_2394_v1/)
 - [`x11_composed_ood_gate_2419_v1/`](x11_composed_ood_gate_2419_v1/)
 - [`x11_container_transfer_1635_v1/`](x11_container_transfer_1635_v1/)
+- [`x11_fresh_adaptation_hold_2471_v1/`](x11_fresh_adaptation_hold_2471_v1/)
 - [`x11_fresh_family_hold_2404_v1/`](x11_fresh_family_hold_2404_v1/)
 - [`x11_mixed_composed_audit_2425_v1/`](x11_mixed_composed_audit_2425_v1/)
 - [`x11_ood_gate_2409_v1/`](x11_ood_gate_2409_v1/)
