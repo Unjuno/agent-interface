@@ -24,7 +24,7 @@ jobs:
           for spec in '00 repeat_small 991400' '01 escalate 991400' '02 escalate 991401' '03 repeat_small 991401' '04 repeat_small 991402' '05 escalate 991402' '06 escalate 991403' '07 repeat_small 991403'; do
             read -r case arm seed <<<"$spec"
             mkdir -p "out/case-$case"
-            docker run --rm --network none -v "$GITHUB_WORKSPACE:/workspace:ro" -v "$GITHUB_WORKSPACE/out/case-$case:/out" agent-interface-map01-deopt:2988 bash -lc "cd /out; Xvfb :99 -screen 0 1280x800x24 -nolisten tcp >/tmp/xvfb.log 2>&1 & xv=\$!; openbox >/tmp/openbox.log 2>&1 & wm=\$!; trap 'kill \$wm \$xv 2>/dev/null || true' EXIT; python /workspace/research/doom/map01_normal_no_progress_deopt_v1/run_case.py --out /out/result --arm $arm --seed $seed --source /workspace"
+            docker run --rm --network none -v "$GITHUB_WORKSPACE:/workspace:ro" -v "$GITHUB_WORKSPACE/out/case-$case:/out" agent-interface-map01-deopt:2988 bash -lc "set -e; cd /out; Xvfb :99 -screen 0 1280x800x24 -nolisten tcp >/tmp/xvfb.log 2>&1 & xv=\$!; openbox >/tmp/openbox.log 2>&1 & wm=\$!; trap 'kill \$wm \$xv 2>/dev/null || true' EXIT; python /workspace/research/doom/map01_normal_no_progress_deopt_v1/run_case.py --out /out/result --arm $arm --seed $seed --source /workspace; cp /out/result/score.json /out/; cp /out/result/trajectory.json /out/; cp /out/result/owner-records.json /out/; cp /out/result/descriptors.npz /out/; rm -rf /out/result /out/_vizdoom"
           done
       - name: Audit fresh matched block
         run: |
