@@ -167,6 +167,8 @@ def create_server(run_directory, *, allocation=None):
         Managed responses include a process snapshot; it may still be live.
         interaction=observe requests one fresh capture without input; include only
         source_sequence and interaction. It consumes a stage and does not finish.
+        It reviews the currently focused window on the private display and revokes
+        old target aliases, like the existing post-action handoff; it never focuses.
         """
         def submit():
             if allocation is not None and allocation.status()['status'] != 'ready':

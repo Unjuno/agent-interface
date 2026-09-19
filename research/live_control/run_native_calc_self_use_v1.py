@@ -32,6 +32,15 @@ def paced_text_tail(ops, gap_ms):
     return result
 
 
+def review_current_window(bridge):
+    """Use the existing read-only focus handoff for action and observation replies."""
+    window = (bridge.backend.targets['app'].id if bridge._focus_within_target()
+              else bridge.focused_client_window())
+    if not window:
+        raise RuntimeError('no managed focused window for explicit next-stage review')
+    return bridge.review_window(window)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--out', type=Path, required=True)
@@ -118,9 +127,13 @@ def main():
             interaction = decision.get('interaction', 'click')
             if interaction == 'observe':
                 started = time.monotonic_ns()
-                source = bridge.observe()
+                review = review_current_window(bridge)
+                if review['status'] != 'reviewed':
+                    raise RuntimeError('window review failed; no automatic input or replay')
+                source = review['observation']
                 observation_only = {'started_ns': started, 'ended_ns': time.monotonic_ns(),
-                                    'input_dispatched': False, 'captures': 1}
+                                    'input_dispatched': False, 'captures': 1,
+                                    'window_review': review}
                 publish(out/f'source-{stage+1}.json', encoded(source))
                 publish(out/f'reply-{stage}.json', encoded({'status': 'boundary', 'stage': stage,
                     'decision_sha256': decision_hash, 'observation': source,
@@ -155,11 +168,7 @@ def main():
             row['feedback'] = bridge.feedback(decision['expected_title'], timeout_ms=2000)
             row['ended_ns'] = time.monotonic_ns()
             save('actions.json', rows)
-            window = (bridge.backend.targets['app'].id if bridge._focus_within_target()
-                      else bridge.focused_client_window())
-            if not window:
-                raise RuntimeError('no managed focused window for explicit next-stage review')
-            row['window_review'] = bridge.review_window(window)
+            row['window_review'] = review_current_window(bridge)
             if row['window_review']['status'] != 'reviewed':
                 save('actions.json', rows)
                 raise RuntimeError('window review failed; no automatic input or replay')

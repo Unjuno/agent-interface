@@ -11,7 +11,8 @@ from unittest.mock import patch
 
 class NativeFinishAfterTests(unittest.TestCase):
     def exercise(self, decisions, *, task_success=True, action_status='completed',
-                 close_failure=False, expected_error=None, max_stages=4, inspect_goal=None):
+                 close_failure=False, expected_error=None, max_stages=4, inspect_goal=None,
+                 focus_within=True, review_status='reviewed'):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             out = root / 'out'
@@ -50,10 +51,14 @@ class NativeFinishAfterTests(unittest.TestCase):
                     return {'status': 'matched'}
 
                 def _focus_within_target(self):
-                    return True
+                    return focus_within
+
+                def focused_client_window(self):
+                    return 2
 
                 def review_window(self, window):
-                    return {'status': 'reviewed', 'observation': {
+                    assert window == (1 if focus_within else 2)
+                    return {'status': review_status, 'observation': {
                         'sequence': 2, 'native': {'artifact': {'path': 'inert-final.png'}}}}
 
                 def close(self):
@@ -173,6 +178,22 @@ class NativeFinishAfterTests(unittest.TestCase):
                                             expected_error=ValueError)
         self.assertEqual(replies[0]['status'], 'needs_review')
         self.assertNotIn('mint', events)
+
+    def test_observation_reviews_changed_focus_without_input(self):
+        replies, _, events = self.exercise([{'interaction': 'observe'}, {'finish': True}],
+                                            focus_within=False)
+        self.assertEqual(replies[0]['observation']['sequence'], 2)
+        self.assertEqual(replies[0]['observation_only']['window_review']['status'], 'reviewed')
+        self.assertNotIn('mint', events)
+        self.assertNotIn('input', events)
+
+    def test_observation_failed_window_review_never_publishes_next_source(self):
+        replies, sources, events = self.exercise([{'interaction': 'observe'}],
+            focus_within=False, review_status='needs_review', expected_error=RuntimeError)
+        self.assertEqual(sources, ['source-1.json'])
+        self.assertEqual(replies[0]['status'], 'needs_review')
+        self.assertNotIn('mint', events)
+        self.assertNotIn('input', events)
 
     def test_invalid_or_conflicting_flags_precede_mint(self):
         for decision in ({'finish_after': 'true'}, {'finish_after': 1},
