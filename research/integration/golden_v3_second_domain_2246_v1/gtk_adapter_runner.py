@@ -12,6 +12,11 @@ import sys
 import time
 from pathlib import Path
 
+# Keep the research runner runnable from any working directory.
+REPO_ROOT = Path(__file__).resolve().parents[3]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from runtime.cli_v1.golden_v3 import dispatch_golden_v3
 from runtime.core_v1.contract import SCHEMA_PROGRAM
 
