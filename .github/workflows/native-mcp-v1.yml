@@ -10,6 +10,7 @@ on:
       - 'research/live_control/receipt_references.py'
       - 'research/live_control/receipt_image.py'
       - 'runtime/cli_v1/**'
+      - 'runtime/selector_v1/**'
       - 'runtime/motor_state_v1/**'
       - '.github/workflows/native-mcp-v1.yml'
   workflow_dispatch:
@@ -25,6 +26,7 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             runtime/cli_v1
+            runtime/selector_v1
             runtime/motor_state_v1
             research/live_control/native_mcp_v1.py
             research/live_control/test_native_mcp_v1.py

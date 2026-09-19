@@ -41,6 +41,12 @@ composition evidence, not primary-model live GUI use through registered MCP tool
 The existing CLI has real GUI evidence; that does not automatically transfer a
 model usability, throughput, latency, token or cost result to MCP.
 
+Subsequent [primary-assistant live MCP composition](../../runtime/results/native-mcp-live-01/README.md)
+does operate Inkscape using the image returned by native_observe and an explicit
+native_submit decision, with saved-file scoring and image/receipt audit. It uses
+an SDK bridge launched through shell tools, not host-registered MCP tools. This
+closes real GUI composition only; host integration and performance remain open.
+
 The official [Python SDK v1 documentation](https://py.sdk.modelcontextprotocol.io/v1/)
 documents FastMCP and stdio. This construction pins the tested maintenance-line
 SDK mcp1.30.0; transitive packages are not fully locked. Runtime core has no new
