@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - research/autonomous-ledger-1961-negative-attention-20260919
+  pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
   frozen-formal:
     runs-on: ubuntu-latest
