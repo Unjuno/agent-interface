@@ -27,8 +27,7 @@ class RecoveryContractTests(unittest.TestCase):
         for key in ("input_ops","lease_extension","lease_transfer","task_success","effect_verified","authority_granted"):
             bad=result(); bad[key]=False
             self.assertEqual(validate_result(request(), bad, 4),
-                             "FORBIDDEN_RESULT_FIELD" if key != "authority_granted"
-                             else "RESULT_SCHEMA_INVALID")
+                             "FORBIDDEN_RESULT_FIELD")
         bad=result(); bad["authority"]=True
         self.assertEqual(validate_result(request(), bad, 4), "AUTHORITY_ESCALATION")
 
