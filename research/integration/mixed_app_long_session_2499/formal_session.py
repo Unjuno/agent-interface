@@ -40,12 +40,25 @@ def window_pid(env, wid):
     q = cmd(["xdotool", "getwindowpid", wid], env)
     return q.stdout.strip() if q.returncode == 0 and q.stdout.strip() else None
 
-def wait_window(env, before=None, timeout=20, owner_pid=None):
+def process_lineage(env, root_pid):
+    owned = {str(root_pid)}
+    changed = True
+    while changed:
+        changed = False
+        q = cmd(["ps", "-eo", "pid=,ppid="], env)
+        for line in q.stdout.splitlines():
+            parts = line.split()
+            if len(parts) == 2 and parts[1] in owned and parts[0] not in owned:
+                owned.add(parts[0]); changed = True
+    return owned
+
+def wait_window(env, before=None, timeout=20, owner_pids=None):
     end = time.time() + timeout
     before = set(before or [])
     while time.time() < end:
         now = windows(env)
-        new = [x for x in now if x not in before and (owner_pid is None or window_pid(env, x) == str(owner_pid))]
+        new = [x for x in now if x not in before and
+               (owner_pids is None or window_pid(env, x) in owner_pids)]
         if new:
             return new[-1]
         time.sleep(.25)
@@ -64,7 +77,7 @@ def launch(cmdline, env):
         candidates = [x for x in windows(env) if x not in before]
         usable = []
         for candidate in candidates:
-            if window_pid(env, candidate) != str(p.pid):
+            if window_pid(env, candidate) not in process_lineage(env, p.pid):
                 continue
             text = geom(env, candidate)
             match = re.search(r"Geometry:\s*(\d+)x(\d+)", text)
@@ -75,9 +88,9 @@ def launch(cmdline, env):
             break
         time.sleep(.25)
     if wid is None:
-        wid = wait_window(env, before, 2, owner_pid=p.pid)
+        wid = wait_window(env, before, 2, owner_pids=process_lineage(env, p.pid))
     if wid is None:
-        raise RuntimeError(f"no usable window owned by pid {p.pid}: {cmdline!r}")
+        raise RuntimeError(f"no usable window in process lineage of pid {p.pid}: {cmdline!r}")
     return p, wid
 
 def main():
@@ -113,7 +126,7 @@ def main():
         # 2. Same-app modal: open Calc file chooser then observe/close, no action.
         modal_before = windows(env)
         cmd(["xdotool","windowactivate",apps["calc"]["window"],"key","ctrl+o"],env); input_ops += 1; time.sleep(1)
-        modal = wait_window(env, modal_before, 8, owner_pid=apps["calc"]["pid"])
+        modal = wait_window(env, modal_before, 8, owner_pids=process_lineage(env, apps["calc"]["pid"]))
         event(ledger,"modal_transition",app="calc",parent=apps["calc"]["window"],modal=modal,input_emitted=True)
         cmd(["xdotool","key","Escape"],env); input_ops += 1; time.sleep(.5)
         event(ledger,"modal_recovery",app="calc",modal=modal,disposition="observe_only",input_emitted=False)
