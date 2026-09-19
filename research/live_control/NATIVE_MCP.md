@@ -144,3 +144,10 @@ the prior paragraph as the failed first trial; successful single-stage use is
 now evidenced, but response-file reads, host integration and wider recovery
 remain open. Use LF shell scripts and exclusive output creation; never overwrite
 another connection's responses or retry an action when a read times out.
+
+The relay's real-pipe regression also covers pending stage 1, digest-bound
+read-only resume, explicit stage 2 and a final false task score on one SDK
+connection. It verifies the first request's bytes and mtime stay unchanged
+through resume, and exactly two immutable requests exist for two submissions.
+This uses an inert exchange fixture, not live GUI input, process-crash recovery
+or a measured reduction in recovery cost.
