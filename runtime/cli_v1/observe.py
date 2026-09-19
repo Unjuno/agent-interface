@@ -21,6 +21,10 @@ def observe(targets, *, target, frame, region, capture_directory=None, display_n
         session = open_session(targets, display_name=display_name)
     except BackendUnavailable as error:
         return dict(row, status="backend_unavailable", error=str(error))
+    except RuntimeError as error:
+        # Backend selection succeeded, but construction/capability setup failed.
+        # Preserve the observation API's structured no-authority failure boundary.
+        return dict(row, status="observation_failed", error=repr(error))
     try:
         reader = getattr(session.backend, "observe_read_only", None)
         if not callable(reader):
