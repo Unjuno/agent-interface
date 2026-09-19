@@ -96,6 +96,14 @@ failed operation, emissions and recovery-release evidence through the common
 result adapter. A private-Xvfb test injects failure after a real button press,
 confirms release and prevents following text/save operations. This establishes
 the required failure path; it does not yet implement the visual guard itself.
+An [experimental native handle bridge](../runtime/results/native-handle-bridge-01/README.md)
+now reuses the existing scoped handle store over the promoted X11 session.
+Two primary-assistant saves passed with fresh checks before movement and press;
+a controlled focus change refused reuse with zero additional input. This is
+the first live connection of those two components, not full route convergence:
+six-task reuse/repair, source revisions, semantic tail-effect checks and the
+capture-to-input race remain open. Keep it experimental while extending that
+same adapter, rather than promoting this single-field result as acceptance.
 
 Starting repository revision: `2d78394e4128d9274030dcc52cf0957be2eb312d`.
 Use the existing [golden desktop v3 entry point](../runtime/golden-demo-v3.sh) and

@@ -9,6 +9,8 @@ on:
       - 'runtime/core_v1/**'
       - 'runtime/backends/x11_v1/**'
       - 'runtime/cli_v1/**'
+      - 'research/live_control/native_handle_bridge_v1.py'
+      - 'research/live_control/test_native_handle_bridge_v1.py'
       - '.github/workflows/runtime-x11-v1.yml'
   workflow_dispatch:
 
@@ -27,6 +29,12 @@ jobs:
             runtime/backends/x11_v1
             runtime/cli_v1
             runtime/selector_v1
+            research/live_control/native_handle_bridge_v1.py
+            research/live_control/test_native_handle_bridge_v1.py
+            research/live_control/scoped_target_handle_v1.py
+            research/live_control/scoped_target_handle_v2.py
+            research/live_control/scoped_target_handle_v3.py
+            research/live_control/coordinate_frame_transform_v1.py
           sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
@@ -38,6 +46,10 @@ jobs:
           sudo apt-get install -y -qq xvfb
       - name: Compile runtime core and X11 backend
         run: python -m compileall -q runtime/core_v1 runtime/backends/x11_v1
+      - name: Test experimental handle bridge boundary
+        env:
+          PYTHONPATH: research/live_control
+        run: python -m unittest -v test_native_handle_bridge_v1
       - name: Run private Xvfb integration
         shell: bash
         run: |
