@@ -1,53 +1,157 @@
-name: MAP01 finite clear attempt v1
+name: Freedoom MAP01 finite clear attempt v1
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/map01-finite-clear-attempt-v1.yml'
-      - 'research/doom/map01_finite_clear_attempt_v1/**'
-      - 'research/doom/session_map01_v13.py'
-
+  workflow_dispatch:
+    inputs:
+      allocation_id:
+        description: 'Fresh immutable finite-clear allocation identifier'
+        required: true
+        type: string
+        default: 'map01-finite-clear-attempt-v1'
+      formal_seed:
+        description: 'Frozen formal seed for this allocation'
+        required: true
+        type: string
+        default: '990615'
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: map01-finite-clear-attempt-v1
   cancel-in-progress: false
 
+env:
+  ALLOCATION_ID: ${{ inputs.allocation_id }}
+  WORKFLOW_PATH: .github/workflows/map01-finite-clear-attempt-v1.yml
+  FORMAL_SEED: ${{ inputs.formal_seed || '990615' }}
+
 jobs:
-  finite-attempt:
+  measurement-gate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout allocation state
+        uses: actions/checkout@v4
+
+      - name: Verify frozen runtime blobs
+        shell: bash
+        run: |
+          set -euo pipefail
+          check_blob() {
+            path="$1" expected="$2"
+            actual="$(git rev-parse "HEAD:$path")"
+            test "$actual" = "$expected" || { echo "$path blob mismatch: $actual != $expected" >&2; exit 1; }
+          }
+          check_blob research/doom/session_map01_v13.py 51c644ce424e41bb2cd3d401a52b6c9820f70135
+          check_blob research/doom/map01_scorer_stdio_adapter_v1.py 50c8b664413b8ddc45dcb2572429d0fe7d9eb7c7
+          check_blob research/doom/probe_map01_measurement_integration_v1.py a7db337385c4e24e69c73010db782535533992b1
+          check_blob research/doom/audit_map01_measurement_integration_v1.py fc567e41a79416c56bc0f7179dbb7f795ee08713
+          check_blob research/doom/audit_map01_terminal_score_agreement_v1.py 8b5c5340dec2f4e89be46891fb9f739b4203ee77
+          check_blob research/live_control/input_transition_owner_v3.py 0ea631abcf6272f0538a9ef9198ad8069b47b464
+          check_blob research/doom/doom_retained_input_backend_v3.py 65d3f1a7b21af09ab8fe10ef883e3e17a9f6cb27
+          check_blob research/orchestration/o3-g7/global-owner/formal_allocation_global_owner_v1.py f07f928f67a7a6c670d399efb23d67246506c802
+
+      - name: Claim allocation-global one-shot ownership
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          test "$GITHUB_REF_NAME" = "main"
+          api="$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/actions/workflows/map01-finite-clear-attempt-v1.yml/runs?event=$GITHUB_EVENT_NAME&per_page=100"
+          visible=0
+          for attempt in $(seq 1 15); do
+            curl --fail --silent --show-error \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "$api" > allocation-runs.json
+            if python - "$GITHUB_RUN_ID" <<'PY'
+          import json,sys
+          payload=json.load(open('allocation-runs.json',encoding='utf-8'))
+          current=int(sys.argv[1])
+          ids={int(r['id']) for r in payload.get('workflow_runs',[]) if isinstance(r,dict) and 'id' in r}
+          raise SystemExit(0 if current in ids else 1)
+          PY
+            then
+              visible=1
+              break
+            fi
+            sleep 2
+          done
+          test "$visible" = 1
+          python research/orchestration/o3-g7/global-owner/formal_allocation_global_owner_v1.py \
+            allocation-runs.json \
+            --current-run-id "$GITHUB_RUN_ID" \
+            --workflow-path "$WORKFLOW_PATH" \
+            --allocation-id "$ALLOCATION_ID" \
+            --required-branch main \
+            --out launch-owner.json
+
+      - name: Set up CPython 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
       - name: Install X11 and ViZDoom dependencies
+        shell: bash
         run: |
           set -euo pipefail
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends xvfb openbox wmctrl libopenal1 libsdl2-2.0-0 libgl1
+          sudo apt-get install -y --no-install-recommends \
+            xvfb openbox wmctrl libopenal1 libsdl2-2.0-0 libgl1
           python -m pip install --upgrade pip
-          python -m pip install 'vizdoom==1.3.0' pillow python-xlib numpy
-      - name: Run bounded controller-visible allocation
-        env:
-          SDL_VIDEODRIVER: x11
+          python -m pip install 'vizdoom==1.3.0' pillow python-xlib numpy openpyxl
+
+      - name: Record runner environment
+        shell: bash
         run: |
           set -euo pipefail
-          mkdir -p research/doom/map01_finite_clear_attempt_v1/results
-          xvfb-run -a -s '-screen 0 1024x768x24' \
-            python research/doom/map01_finite_clear_attempt_v1/run_attempt.py \
-            --out research/doom/map01_finite_clear_attempt_v1/results/run-${GITHUB_RUN_ID} \
-            --seed 2679 --skill 1 --timeout-seconds 60
-      - name: Audit allocation conservatively
-        if: always()
+          {
+            echo "allocation_id=$ALLOCATION_ID"
+            echo "github_run_id=$GITHUB_RUN_ID"
+            echo "github_run_number=$GITHUB_RUN_NUMBER"
+            echo "github_run_attempt=$GITHUB_RUN_ATTEMPT"
+            echo "github_ref_name=$GITHUB_REF_NAME"
+            echo "github_sha=$GITHUB_SHA"
+            uname -a
+            python --version
+            python - <<'PY'
+          import vizdoom
+          from pathlib import Path
+          print('vizdoom', vizdoom.__version__)
+          print('vizdoom_package', Path(vizdoom.__file__).parent)
+          print('freedoom2_exists', (Path(vizdoom.__file__).parent / 'freedoom2.wad').is_file())
+          PY
+            python -m pip freeze
+            dpkg-query -W xvfb openbox wmctrl libopenal1 libsdl2-2.0-0 libgl1
+          } > runner-environment.txt
+          cat runner-environment.txt
+
+      - name: Revalidate frozen construction and guards
+        shell: bash
         run: |
-          python research/doom/map01_finite_clear_attempt_v1/audit_result.py \
-            research/doom/map01_finite_clear_attempt_v1/results/run-${GITHUB_RUN_ID} || test $? -eq 2
-      - name: Upload immutable first outcome
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: map01-finite-clear-attempt-v1-${{ github.run_id }}
-          if-no-files-found: warn
-          retention-days: 30
-          path: research/doom/map01_finite_clear_attempt_v1/results/run-${{ github.run_id }}/**
+          set -euo pipefail
+          python research/orchestration/o3-g7/global-owner/test_formal_allocation_global_owner_v1.py
+          python research/doom/test_map01_scorer_stdio_adapter_v1.py
+          python research/doom/test_session_map01_v13.py
+          python research/doom/test_audit_map01_measurement_integration_v1.py
+          python research/doom/test_audit_map01_terminal_score_agreement_v1.py
+
+      - name: Run one-shot MAP01 measurement allocation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/doom/probe_map01_measurement_integration_v1.py \
+            --out "results-local/doom/$ALLOCATION_ID" \
+            --seed "$FORMAL_SEED" | tee formal-audit.stdout
+
+      - name: Enforce terminal score agreement
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/doom/audit_map01_terminal_score_agreement_v1.py \
+            "results-local/doom/$ALLOCATION_ID/runtime" \
+            --out "results-local/doom/$ALLOCATION_ID/terminal-score-audit.json"
