@@ -20,6 +20,8 @@ on:
       - 'research/live_control/test_native_exchange_v1.py'
       - 'research/live_control/native_visual_watch_v1.py'
       - 'research/live_control/test_native_visual_watch_v1.py'
+      - 'research/live_control/native_release_observation_v1.py'
+      - 'research/live_control/test_native_release_observation_v1.py'
       - 'research/live_control/agent_exchange.py'
       - 'research/live_control/run_native_calc_self_use_v1.py'
       - '.github/workflows/runtime-x11-v1.yml'
@@ -50,6 +52,8 @@ jobs:
             research/live_control/test_native_exchange_v1.py
             research/live_control/native_visual_watch_v1.py
             research/live_control/test_native_visual_watch_v1.py
+            research/live_control/native_release_observation_v1.py
+            research/live_control/test_native_release_observation_v1.py
             research/live_control/native_handle_bridge_v1.py
             research/live_control/test_native_handle_bridge_v1.py
             research/live_control/scoped_target_handle_v1.py
@@ -70,7 +74,7 @@ jobs:
       - name: Test experimental handle bridge boundary
         env:
           PYTHONPATH: research/live_control
-        run: python -m unittest -v test_native_handle_bridge_v1 test_agent_review test_native_exchange_v1 test_receipt_references test_native_visual_watch_v1
+        run: python -m unittest -v test_native_handle_bridge_v1 test_agent_review test_native_exchange_v1 test_receipt_references test_native_visual_watch_v1 test_native_release_observation_v1
       - name: Run private Xvfb integration
         shell: bash
         run: |
