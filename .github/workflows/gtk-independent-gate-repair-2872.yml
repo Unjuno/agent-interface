@@ -1,0 +1,48 @@
+name: GTK independent gate repair allocation #2872
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/gtk-independent-gate-repair-2872.yml"
+      - "research/integration/golden_v3_second_domain_2246_v1/**"
+  push:
+    branches:
+      - "research/gtk-independent-gate-repair-2872"
+
+jobs:
+  gate-and-allocation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run model-free gate contract tests
+        run: python3 -m unittest research.integration.golden_v3_second_domain_2246_v1.formal_matrix_2606.test_matrix_gate -v
+      - name: Build additive GTK/Xlib image
+        run: docker build --pull=false -f research/integration/gtk_fixture_dependency_2606_v3/Dockerfile -t agent-interface-gtk-fixture-v3:gate-repair .
+      - name: Run one fresh bounded allocation
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/gtk-gate-repair-out"
+          docker image inspect agent-interface-gtk-fixture-v3:gate-repair > "$RUNNER_TEMP/gtk-gate-repair-out/image-inspect.json"
+          git rev-parse HEAD > "$RUNNER_TEMP/gtk-gate-repair-out/source-commit.txt"
+          set +e
+          docker run --rm --network none --read-only --tmpfs /tmp             -e PYTHONPATH=/workspace:/usr/lib/python3/dist-packages             -v "$GITHUB_WORKSPACE:/workspace:ro"             -v "$RUNNER_TEMP/gtk-gate-repair-out:/out"             -w /workspace             agent-interface-gtk-fixture-v3:gate-repair             python3 /workspace/research/integration/golden_v3_second_domain_2246_v1/formal_matrix_runner.py             --out /out/raw > "$RUNNER_TEMP/gtk-gate-repair-out/runner.stdout" 2> "$RUNNER_TEMP/gtk-gate-repair-out/runner.stderr"
+          code=$?
+          printf '%s' "$code" > "$RUNNER_TEMP/gtk-gate-repair-out/exit-code.txt"
+          if [ "$code" -eq 0 ]; then
+            printf '%s
+' 'COMPLETED_GATE_REPAIR_ALLOCATION' > "$RUNNER_TEMP/gtk-gate-repair-out/decision.txt"
+          else
+            printf '%s
+' 'STOP_GTK_INDEPENDENT_GATE_REPAIR' > "$RUNNER_TEMP/gtk-gate-repair-out/decision.txt"
+          fi
+          exit 0
+      - name: Upload retained gate-repair evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gtk-independent-gate-repair-2872
+          path: ${{ runner.temp }}/gtk-gate-repair-out
+          if-no-files-found: error
