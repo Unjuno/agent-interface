@@ -118,6 +118,9 @@ The table below summarizes major analytical chains and representative retained o
 | Identifiability / audit | [`temporal_break_even_retained_identifiability_v1/`](temporal_break_even_retained_identifiability_v1/) | Existing retained temporal evidence contains zero admissible fully matched rows for the required empirical break-even estimate. | Run a source-matched allocation retaining `F_m`, `Q_m`, `H_m`, identity, and correctness endpoints. |
 | Identifiability / audit | [`multi_app_transition_retained_audit_r0_v1/`](multi_app_transition_retained_audit_r0_v1/) | Retained evidence covers focus drift, modal, geometry drift, and window replacement across components/apps, but no single session integrates all four under one contract. | Run a finite multi-app integrated allocation preserving one caller/controller identity across the transition families. |
 
+- [ction_conditioned_routing_repair_successor_2059_r2_v1/](action_conditioned_routing_repair_successor_2059_r2_v1/)
+- [ction_conditioned_routing_repair_successor_2059_v1/](action_conditioned_routing_repair_successor_2059_v1/)
+- [ction_conditioned_routing_successor_1934_r2/](action_conditioned_routing_successor_1934_r2/)
 </details>
 ## Complete retained result directory index
 
