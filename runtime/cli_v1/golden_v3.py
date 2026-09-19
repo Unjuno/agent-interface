@@ -7,6 +7,7 @@ from .api import dispatch
 STATUSES={"invalid_request","backend_unavailable","runtime_failed","returned"}
 LIFECYCLE={"doctor","model_attempt","observation","dispatch","refusal","effect","repair","release","cleanup"}
 NESTED_REFUSAL_STATUSES={"refused","invalid_request","backend_unavailable"}
+AMBIGUOUS_DELIVERY_VALUES={"ambiguous","uncertain","unknown","write_uncertain","delivery_uncertain"}
 
 def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None=None, lifecycle: list[str]|None=None) -> dict[str,Any]:
     status=result.get("status")
@@ -18,6 +19,7 @@ def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None
     cleanup=result.get("cleanup_error")
     nested=result.get("result") if isinstance(result.get("result"),dict) else {}
     native_status=nested.get("status")
+    delivery=result.get("delivery", nested.get("delivery"))
     # Native sessions return status, not the legacy golden success flags.
     # Completion does not supply an independent application score.
     completed=(native_status=="completed" if native_status is not None
@@ -25,7 +27,12 @@ def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None
     task_success=nested.get("task_success")
     if type(task_success) is not bool:
         task_success=None
-    if cleanup is not None:
+    if delivery in AMBIGUOUS_DELIVERY_VALUES:
+        mapped="refused"
+        completed=False
+        task_success=False
+        diagnostic=f"AMBIGUOUS_DELIVERY:{delivery}"
+    elif cleanup is not None:
         mapped="cleanup_failed"
     elif status in {"invalid_request","backend_unavailable"}:
         mapped="refused"
@@ -47,8 +54,11 @@ def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None
     # Overall task success remains false after cleanup failure. The supplied
     # application score and completed execution are still in raw_dispatch.
     if cleanup is not None: row["task_success"]=False
-    if "error" in result: row["diagnostic"]=result["error"]
-    elif "error" in nested: row["diagnostic"]=nested["error"]
+    if delivery in AMBIGUOUS_DELIVERY_VALUES:
+        row["diagnostic"] = f"AMBIGUOUS_DELIVERY:{delivery}"
+    elif "diagnostic" not in row:
+        if "error" in result: row["diagnostic"]=result["error"]
+        elif "error" in nested: row["diagnostic"]=nested["error"]
     return row
 
 def _reject(reason:str,result:dict[str,Any],usage:Mapping[str,Any]|None)->dict[str,Any]:
