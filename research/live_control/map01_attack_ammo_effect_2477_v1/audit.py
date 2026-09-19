@@ -24,7 +24,9 @@ try:
     print("action_vector [0,0,0,0,0,0,1]"); print("action_tics 1"); print("before_ammo1",before); print("after_ammo1",after); print("ammo_delta",after-before); print("reward",reward)
     print("before_screen_sha256",ah); print("after_screen_sha256",bh)
     g.close();g=None
-    emit("PASS_DIRECT_ATTACK_AMMO_BOUNDARY" if after<before or ah!=bh else "HOLD_NO_ATTACK_EFFECT")
+    # A frame change is supplementary only; attack calibration requires the
+    # action-specific AMMO1 decrease to avoid animation/no-op false positives.
+    emit("PASS_DIRECT_ATTACK_AMMO_BOUNDARY" if after < before else "HOLD_NO_ATTACK_EFFECT")
 finally:
     if g is not None:g.close()
     x.terminate();x.wait(timeout=5)
