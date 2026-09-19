@@ -20,6 +20,38 @@ class FakeSession:
 
 
 class ApiTests(unittest.TestCase):
+    def test_owned_backend_closed_on_completion_refusal_and_exception(self):
+        for outcome in ({"status": "completed"}, {"status": "refused"}, RuntimeError("dispatch failed")):
+            session = mock.Mock()
+            if isinstance(outcome, Exception):
+                session.dispatch.side_effect = outcome
+            else:
+                session.dispatch.return_value = outcome
+            with self.subTest(outcome=outcome), mock.patch("runtime.cli_v1.api.open_session", return_value=session):
+                row = dispatch({}, {"fixture": 1}, current_observation_seq=0, current_binding_revision=0)
+                session.backend.close.assert_called_once_with()
+                self.assertEqual(row["status"], "runtime_failed" if isinstance(outcome, Exception) else "returned")
+
+    def test_close_failure_retains_completed_result_without_reporting_success(self):
+        session = mock.Mock()
+        session.dispatch.return_value = {"status": "completed", "execution": {"emissions": 2}}
+        session.backend.close.side_effect = RuntimeError("close failed")
+        with mock.patch("runtime.cli_v1.api.open_session", return_value=session):
+            row = dispatch({}, {"fixture": 1}, current_observation_seq=0, current_binding_revision=0)
+        self.assertEqual(row["status"], "runtime_failed")
+        self.assertEqual(row["error"], "BACKEND_CLOSE_FAILED")
+        self.assertEqual(row["result"], session.dispatch.return_value)
+        self.assertIn("close failed", row["cleanup_error"])
+
+    def test_close_failure_preserves_original_execution_error(self):
+        session = mock.Mock()
+        session.dispatch.side_effect = RuntimeError("dispatch failed")
+        session.backend.close.side_effect = RuntimeError("close failed")
+        with mock.patch("runtime.cli_v1.api.open_session", return_value=session):
+            row = dispatch({}, {"fixture": 1}, current_observation_seq=0, current_binding_revision=0)
+        self.assertIn("dispatch failed", row["error"])
+        self.assertIn("close failed", row["cleanup_error"])
+
     def test_doctor_is_side_effect_free(self):
         row = doctor(platform="win32", environ={})
         self.assertEqual(row["selection"]["backend_id"], "win32-v1")

@@ -18,4 +18,10 @@ python -m runtime.cli_v1 dispatch \
 
 The CLI does not discover targets, rewrite leases/freshness, retry automatically, or grant authority. `doctor` is diagnostic only. `dispatch` delegates to `selector_v1`, then the promoted backend session, then `runtime/core_v1` admission.
 
+Each `dispatch` owns its one-shot session and closes its native backend connection
+when that backend exposes `close`, including after refusal or an execution error.
+A close failure returns `runtime_failed` with `cleanup_error`, preserving any
+execution result or original error. The CLI consequently exits nonzero. This
+connection cleanup does not replace the backend's input-release checks.
+
 Wayland-only Linux currently fails closed because no Wayland backend has been promoted. Linux/X11 requires the existing `python-xlib` dependency used by `x11-v1`.

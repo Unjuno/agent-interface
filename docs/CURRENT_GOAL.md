@@ -1,5 +1,15 @@
 # Worker governing invariant — 2026-09-18
 
+**Current task priority — user direction, 2026-09-19:** concentrate on integration
+while other contributors continue benchmark/research work. Complete one usable
+desktop path from setup and observation through guarded action, result and
+bounded recovery, starting with the existing golden desktop v3 route and #57.
+Adopt proven components where they resolve a gap in that path; use new experiments
+for concrete integration/correctness blockers or end-to-end evaluation.
+See [the integration plan](INTEGRATION_PLAN.md). Earlier evidence and the broader
+human-tempo objective remain valid; Product Hunt publication is not proof of
+runtime completion.
+
 > **Preserve rich-model intent; localize the high-frequency refinement loop.**
 
 The project is not trying to replace Astra/a rich frontier model with a weaker local agent. The target is to let the rich model decide semantics/strategy, then let Agent Interface continue, refine, verify, and invalidate that intent locally while the rich model is reasoning elsewhere. Direct rich-model computer operation remains a first-class route.

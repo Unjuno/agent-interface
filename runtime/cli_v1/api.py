@@ -39,12 +39,25 @@ def dispatch(
         session = open_session(targets, display_name=display_name)
     except BackendUnavailable as error:
         return {"schema": SCHEMA_DISPATCH, "status": "backend_unavailable", "error": str(error)}
+    row: dict[str, Any] = {}
     try:
         result = session.dispatch(
             program,
             current_observation_seq=current_observation_seq,
             current_binding_revision=current_binding_revision,
         )
+        row = {"schema": SCHEMA_DISPATCH, "status": "returned", "result": result}
     except Exception as error:
-        return {"schema": SCHEMA_DISPATCH, "status": "runtime_failed", "error": repr(error)}
-    return {"schema": SCHEMA_DISPATCH, "status": "returned", "result": result}
+        row = {"schema": SCHEMA_DISPATCH, "status": "runtime_failed", "error": repr(error)}
+    finally:
+        # This facade owns the session it opens. In particular, X11 holds a
+        # display connection even if core admission refuses the program.
+        close = getattr(getattr(session, "backend", None), "close", None)
+        if callable(close):
+            try:
+                close()
+            except Exception as error:
+                row["status"] = "runtime_failed"
+                row.setdefault("error", "BACKEND_CLOSE_FAILED")
+                row["cleanup_error"] = repr(error)
+    return row
