@@ -1,0 +1,26 @@
+name: Golden IPC 3232 accounting gate
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - research/analysis/full_golden_ipc_2737_v1/RESULT.json
+      - research/analysis/full_golden_ipc_3232_v1/audit_accounting.py
+      - .github/workflows/golden-ipc-accounting-3232.yml
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit compact task accounting
+        shell: bash
+        run: |
+          set -o pipefail
+          python3 research/analysis/full_golden_ipc_3232_v1/audit_accounting.py | tee "$RUNNER_TEMP/golden-ipc-3232-accounting.json"
+      - name: Upload accounting receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-ipc-3232-accounting-audit
+          path: ${{ runner.temp }}/golden-ipc-3232-accounting.json
+          if-no-files-found: error
