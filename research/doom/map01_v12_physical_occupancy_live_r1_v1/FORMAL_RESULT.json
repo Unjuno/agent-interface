@@ -1,0 +1,45 @@
+{
+  "decision": "PASS_MAP01_V12_PHYSICAL_OCCUPANCY_R1_SCOPED",
+  "run_id": 35443160602,
+  "head_sha": "68d5e9332c512dfe792c0872741fe3666830fd65",
+  "workflow_job_id": 105897426767,
+  "artifact_id": 10584416285,
+  "artifact_digest": "sha256:94dff5ec39475ef74d887660eccdc1d1ab13a8152671021cdfccd258ef3fa1b4",
+  "source_freeze": {
+    "session_map01_v13.py": "51c644ce424e41bb2cd3d401a52b6c9820f70135",
+    "doom_retained_input_backend_v3.py": "65d3f1a7b21af09ab8fe10ef883e3e17a9f6cb27",
+    "input_transition_owner_v3.py": "0ea631abcf6272f0538a9ef9198ad8069b47b464",
+    "fixture.json": "2b898a68d38e14ac1981985dc58f295f18a06eaa",
+    "input_owner_v12.py": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+    "adapter_contract.py": "ed7e4f00675e79a9ef86984c7c129bb6c3eda64855c6c71821c313c9feb9badf"
+  },
+  "preflight": "PASS",
+  "construction": {
+    "invocations": 1,
+    "pass": true,
+    "actuations": 2,
+    "max_censor_width_ms": 0.532423,
+    "reruns": 0,
+    "tuning": 0,
+    "v3_physical_promotions": 0
+  },
+  "formal": {
+    "invocations": 1,
+    "sessions_completed": 3,
+    "sessions_pass": 3,
+    "actuations": 6,
+    "max_censor_width_ms": 0.559054,
+    "median_censor_width_ms": 0.435413,
+    "reruns": 0,
+    "replacements": 0,
+    "tuning": 0,
+    "authority_expansions": 0,
+    "v3_physical_promotions": 0,
+    "all_precision_pass": true,
+    "all_owned_after_empty": true,
+    "all_post_sample_up": true,
+    "all_terminal_completed": true,
+    "all_errors_empty": true
+  },
+  "scope": "Three fresh GitHub Actions container sessions; one hold(['a','d'],250ms) per session; six actuation edges total. Scoped physical-occupancy result only; no broad production or user-facing claim."
+}
