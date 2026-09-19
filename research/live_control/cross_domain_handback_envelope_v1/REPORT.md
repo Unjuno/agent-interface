@@ -40,4 +40,4 @@ This PASS is a **representation-transfer candidate**, not a runtime or behaviora
 
 ## Next discriminator
 
-Use the envelope on a fresh real-application task-semantic transition only after the effect source independently establishes the requested task predicate. #1537 remains a retained delivery stop. #1539 repaired XTEST→raw-PTY delivery. #1541 then passed semantic-handback construction with that readiness rule but consumed one monolithic formal invocation that hit the 45 s outer limit before `FORMAL.json` serialization; scientific disposition is `NONE`. That successor now exists as #1548 and already freezes exactly that immutable-batch packaging change. This #1530 lane must not duplicate or consume #1548; it only supplies the cross-domain representation boundary.
+Use the envelope on a fresh real-application task-semantic transition only after the effect source independently establishes the requested task predicate. The failed #1537 XTerm transfer must not be relabeled; #1539 only repaired XTEST→raw-PTY delivery and therefore enables, but does not itself satisfy, a separately versioned semantic-effect successor.
