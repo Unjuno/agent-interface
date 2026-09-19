@@ -14,4 +14,4 @@ def test_refusal():
 
 def test_cleanup_failure():
  r=adapt_dispatch({"status":"returned","result":{"program_completed":True,"task_success":True},"cleanup_error":"close"})
- assert r["status"]=="partial" and r["task_success"] is False
+ assert r["status"]=="cleanup_failed" and r["task_success"] is False
