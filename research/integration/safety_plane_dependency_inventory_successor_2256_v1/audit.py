@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[3]
 SOURCES = {
     "runtime/kernel/contracts.py": "3d24fb5b28ae7812c71c6c1fedd3439d1473f0b8",
     "runtime/kernel/lifecycle.py": "0735f1b2bc4f8c8c66a16cd0687a8b631c99f0b3",
-    "runtime/cli_v1/api.py": "5674bd39e3cb2170095f476dac90e2a781f4f77a",
+    "runtime/cli_v1/api.py": "f9dc26441c5f4ff9d7f57aa6a6a7b3849a1537d7",
 }
 
 def blob_sha(data: bytes) -> str:
