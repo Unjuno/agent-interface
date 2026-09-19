@@ -620,3 +620,14 @@ needed. This removes the separate finish request in one primary-assistant run,
 with identical native operations; invalid-flag and task-failure controls are
 retained. It is not automatic success detection or repair. See
 [native finish-after](../../runtime/results/native-finish-after-01/README.md).
+# Native result presentation
+
+Native review responses include `outcome_summary` before the complete receipt.
+It projects only `status`, strictly boolean `evaluation.success`,
+`action.result.status`, `action.feedback.status`, and `cleanup.status`.
+Missing or malformed values are null. `finished` does not imply task success;
+successful scoring does not imply successful feedback or current image pixels.
+The summary grants no authority and does not inspect history or classify images.
+Full and compact receipts preserve the original report and image validation.
+This adds metadata (165 bytes in the retained Calc example), not compression.
+See `runtime/results/native-outcome-summary-01` for the scoped read-only check.

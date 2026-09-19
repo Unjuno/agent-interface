@@ -13,6 +13,28 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from runtime.cli_v1.receipt import receipt_view
 
 
+def native_outcome_summary(report):
+    """Project recorded fields only; null means absent or malformed evidence."""
+    def field(*keys):
+        value = report
+        for key in keys:
+            if not isinstance(value, dict):
+                return None
+            value = value.get(key)
+        return value
+
+    def status(*keys):
+        value = field(*keys)
+        return value if isinstance(value, str) and value else None
+
+    success = field('evaluation', 'success')
+    return {'reported_status': status('status'),
+            'evaluation_success': success if type(success) is bool else None,
+            'action_status': status('action', 'result', 'status'),
+            'feedback_status': status('action', 'feedback', 'status'),
+            'cleanup_status': status('cleanup', 'status')}
+
+
 def review_native(report_path, run_directory, *, compact=False):
     """Present an explicit native observation/feedback without recapturing it."""
     path = Path(report_path).resolve(strict=True)
@@ -21,6 +43,7 @@ def review_native(report_path, run_directory, *, compact=False):
     if not isinstance(report, dict):
         raise ValueError('native report must be an object')
     result = {'schema': 'agent-interface/review-v1', 'authority': 'none',
+              'outcome_summary': native_outcome_summary(report),
               'receipt': {'source': {'path': str(path), 'sha256': hashlib.sha256(data).hexdigest()},
                           'native_result': report}, 'image': None}
     if compact:
