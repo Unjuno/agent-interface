@@ -1,0 +1,24 @@
+name: focused-observation-1998-current-main
+
+on:
+  pull_request:
+    paths:
+      - "research/analysis/focused_observation_request_successor_1935_v1/**"
+      - ".github/workflows/focused-observation-1998-current-main.yml"
+
+jobs:
+  scoped-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run pinned offline audit
+        run: |
+          set -eu
+          d="research/analysis/focused_observation_request_successor_1935_v1"
+          image="python:3.11-slim@sha256:da047cb8f9d1d98e5c070f5300ba9f7274e33b8fc0e5be5ed88740aed1b95ba9"
+          docker pull "$image"
+          docker run --rm --network none -v "$PWD/$d:/work:ro" -w /work "$image" python experiment.py | tee experiment.out
+          grep -F '"rows": 256' experiment.out
+          grep -F '"valid": 16' experiment.out
+          docker run --rm --network none -v "$PWD/$d:/work:ro" -w /work "$image" python audit.py
+          docker run --rm --network none -v "$PWD/$d:/work:ro" -w /work "$image" python corruption_controls.py
