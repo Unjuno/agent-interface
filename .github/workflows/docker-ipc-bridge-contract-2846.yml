@@ -1,0 +1,19 @@
+name: Docker IPC bridge contract successor (scoped)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    container: python:3.12-slim
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            runtime
+            research/live_control
+          sparse-checkout-cone-mode: true
+      - name: Run non-authoritative bridge and broker contract tests
+        run: python -m unittest runtime.test_docker_host_model_bridge_v1 runtime.test_host_model_ipc_broker_v1 -v
