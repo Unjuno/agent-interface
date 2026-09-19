@@ -1,4 +1,4 @@
-name: MAP01 v12 physical occupancy R1 successor r4
+name: MAP01 v12 physical occupancy R1 successor r5
 # r3 dependency/import gate audit: workflow-only synchronization marker
 
 on:
@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: map01-v12-physical-occupancy-r1-successor-r4
+  group: map01-v12-physical-occupancy-r1-successor-r5
   cancel-in-progress: false
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
       - name: Install isolated X11 and ViZDoom runtime dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb openbox xauth libgl1 libglu1-mesa libasound2t64
+          sudo apt-get install -y xvfb openbox xauth libgl1 libglu1-mesa libasound2t64 wmctrl
           python -m pip download --only-binary=:all: --dest /tmp/map01-wheels 'vizdoom==1.3.0' pillow 'python-xlib' numpy openpyxl
           python -m pip install --no-index --find-links /tmp/map01-wheels 'vizdoom==1.3.0' pillow 'python-xlib' numpy openpyxl
 
