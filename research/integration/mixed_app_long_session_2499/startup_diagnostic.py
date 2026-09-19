@@ -26,7 +26,7 @@ def main():
         time.sleep(1)
         checks.append({"name": "xvfb_alive", "ok": xvfb.poll() is None})
         specs = [
-            ("inkscape", resolve("inkscape"), ["--new"]),
+            ("inkscape", resolve("inkscape"), []),
             ("libreoffice", resolve("libreoffice"),
              ["--norestore", "--nodefault", "--nolockcheck", "--calc"]),
             ("chromium", resolve("chromium", (
