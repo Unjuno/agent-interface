@@ -132,8 +132,12 @@ def main():
         event(ledger,"stale_admission",app="calc",old_window=old_calc["window"],disposition="refused",input_emitted=False)
         checks.append(denied)
         # 2. Same-app modal: open Calc file chooser then observe/close, no action.
+        # Remove any pre-existing Calc-owned transient surface before establishing baseline.
+        cmd(["xdotool","windowactivate","--sync",apps["calc"]["window"]],env)
+        cmd(["xdotool","key","Escape"],env); time.sleep(.5)
         modal_before = windows(env)
-        cmd(["xdotool","windowactivate",apps["calc"]["window"],"key","ctrl+o"],env); input_ops += 1; time.sleep(1)
+        cmd(["xdotool","windowactivate","--sync",apps["calc"]["window"]],env)
+        cmd(["xdotool","key","--window",apps["calc"]["window"],"ctrl+o"],env); input_ops += 1; time.sleep(1)
         event(ledger,"modal_candidates",app="calc",parent=apps["calc"]["window"],
               candidates=window_snapshot(env),owner_pids=sorted(process_lineage(env, apps["calc"]["pid"])))
         modal = wait_window(env, modal_before, 8, owner_pids=process_lineage(env, apps["calc"]["pid"]))
