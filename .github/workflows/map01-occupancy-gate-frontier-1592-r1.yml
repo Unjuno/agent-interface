@@ -21,11 +21,10 @@ jobs:
           python - "${SHA}" <<'PY'
           import pathlib,sys,urllib.request
           b=f"https://raw.githubusercontent.com/Unjuno/agent-interface/{sys.argv[1]}/research/measurement/map01_occupancy_gate_frontier_1592_r1"
-          o=pathlib.Path("research/measurement/map01_occupancy_gate-frontier-1592-r1")
-          o.mkdir(parents=True,exist_ok=True)
+          out=pathlib.Path("research/measurement/map01_occupancy_gate_frontier_1592_r1")
           with urllib.request.urlopen(b+"/frontier.py",timeout=30) as r:
-              pathlib.Path("research/measurement/map01_occupancy_gate_frontier_1592_r1/frontier.py").write_bytes(r.read())
+              (out/"frontier.py").write_bytes(r.read())
           PY
       - run: python -m py_compile research/measurement/map01_occupancy_gate_frontier_1592_r1/frontier.py
-      - working-directory: research/measurement/map01_occupancy_gate-frontier-1592-r1
+      - working-directory: research/measurement/map01_occupancy_gate_frontier_1592_r1
         run: python frontier.py
