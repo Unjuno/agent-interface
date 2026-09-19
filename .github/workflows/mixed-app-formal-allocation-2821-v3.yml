@@ -1,0 +1,40 @@
+name: Mixed-app formal allocation #2821 v3
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "research/integration/mixed_app_long_session_2499/**"
+      - ".github/workflows/mixed-app-formal-allocation-2821-v3.yml"
+jobs:
+  allocation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build dependency-pinned image
+        run: docker build -f research/integration/mixed_app_long_session_2499/Dockerfile.formal -t mixed-formal-2821:allocation .
+      - name: Run one network-isolated allocation
+        shell: bash
+        run: |
+          set +e
+          mkdir -p "$RUNNER_TEMP/mixed-2499"
+          docker run --rm --network none \
+            -v "$GITHUB_WORKSPACE:/workspace:ro" \
+            -v "$RUNNER_TEMP/mixed-2499:/out" \
+            -w /workspace mixed-formal-2821:allocation \
+            > "$RUNNER_TEMP/mixed-2499/stdout.log" 2> "$RUNNER_TEMP/mixed-2499/stderr.log"
+          rc=$?
+          if [ ! -s "$RUNNER_TEMP/mixed-2499/stdout.log" ]; then
+            printf '%s\n' '{"decision":"STOP_MIXED_APP_LONG_SESSION","reason":"formal runner produced no stdout","container_exit":'$rc'}' > "$RUNNER_TEMP/mixed-2499/result.json"
+          else
+            cp "$RUNNER_TEMP/mixed-2499/stdout.log" "$RUNNER_TEMP/mixed-2499/result.json"
+          fi
+          printf '%s\n' "$rc" > "$RUNNER_TEMP/mixed-2499/container_exit.txt"
+          exit 0
+      - name: Upload formal allocation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mixed-app-formal-allocation-2821-v3
+          path: ${{ runner.temp }}/mixed-2499
+          if-no-files-found: error
