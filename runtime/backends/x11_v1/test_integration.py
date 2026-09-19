@@ -116,7 +116,7 @@ class X11IntegrationTests(unittest.TestCase):
         self.assertFalse(self.effect.exists())
 
     def test_supported_punctuation_has_exact_independent_effect(self):
-        payload = "a-._ A"
+        payload = "http://127.0.0.1:8765/a-._ A"
         row = self.session.dispatch(make_program("punctuation", text=payload),
                                     current_observation_seq=7, current_binding_revision=3)
         self.assertEqual(row["status"], "completed")

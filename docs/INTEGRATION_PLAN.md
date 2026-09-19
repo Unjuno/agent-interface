@@ -64,8 +64,9 @@ still preserve visual target checks immediately before native pointer admission;
 copying a research alias to a native window ID is not sufficient.
 The newly reviewed [Issue #2337](https://github.com/Unjuno/agent-interface/issues/2337)
 requires that live bridge plus scored effects, fault handling, actual model usage
-availability and a held-out second workflow. It remains open: this result repair
-and the earlier research-route self-use do not satisfy that live integration gate.
+availability and a held-out second workflow. The issue is now closed on GitHub,
+but this result repair and the earlier research-route self-use do not establish
+completion of that live integration gate.
 An [actual native-adapter self-use](../runtime/results/native-result-self-use-01/README.md)
 now confirms the result seam on a private Tk desktop fixture: a stale program
 emitted no input, and a fresh one saved exact text with verified release. The
@@ -143,6 +144,16 @@ compression mechanisms stay outside this first integration increment. DOOM
 remains a later continuous-control stress domain alongside desktop coverage.
 
 ## Delivery order and acceptance
+
+The [native navigation successor](../runtime/results/native-navigation-01/README.md)
+now moves between all six fixture tasks through the public native dispatch API,
+while reusing the existing guarded field/Save bridge. Both the first navigation
+timeout after three saves and the corrected six-save run are retained. Explicit
+100 ms transition waits accompanied the successful run; causality and general
+reliability remain unproven. Next integrate meaningful application feedback and
+recovery across this route, then verify an existing second desktop workflow.
+The harness still owns separate API/bridge connections and is not a promoted
+single public agent interface. No matched latency or model-cost benefit is claimed.
 
 1. **Make the existing entry points dependable.** Verify setup/doctor/result
    behavior and fix resource ownership and error propagation at the public API.
