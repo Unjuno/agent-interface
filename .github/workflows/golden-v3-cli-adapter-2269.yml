@@ -1,0 +1,18 @@
+name: golden v3 cli adapter contract 2269
+on:
+  pull_request:
+    paths:
+      - "research/integration/golden_v3_cli_adapter_2203_v2/**"
+      - ".github/workflows/golden-v3-cli-adapter-2269.yml"
+jobs:
+  contract:
+    runs-on: ubuntu-24.04
+    container: python:3.12-slim
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - run: python -m py_compile research/integration/golden_v3_cli_adapter_2203_v2/adapter.py research/integration/golden_v3_cli_adapter_2203_v2/test_adapter.py
+      - working-directory: research/integration/golden_v3_cli_adapter_2203_v2
+        run: python -m unittest -v
