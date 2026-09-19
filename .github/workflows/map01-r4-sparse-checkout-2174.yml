@@ -14,15 +14,10 @@ jobs:
     runs-on: ubuntu-24.04
     container: python:3.12-slim
     steps:
-      - name: Sparse blobless checkout
+      - name: Shallow checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-          filter: blob:none
-          sparse-checkout: |
-            research/doom/map01_r4_sparse_checkout_successor_2174
-            research/doom/map01_v12_physical_occupancy_live_r1_v1/session_entry.py
-          sparse-checkout-cone-mode: false
       - name: Run source-only gate
         run: |
           python research/doom/map01_r4_sparse_checkout_successor_2174/import_gate.py | tee r4-sparse-result.json
