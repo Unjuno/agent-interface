@@ -15,3 +15,7 @@ A static PASS is not a runtime or task-success claim.
 ## CI evidence boundary
 
 The dedicated workflow runs this static verifier on pull requests touching the closure paths. A green workflow proves only declared filesystem closure; it does not prove runtime readiness or task execution.
+
+## Startup-ready smoke boundary
+
+A separate CI smoke gate may start a private Xvfb/Openbox session and require the existing session route to publish `ready`. This gate uses no model, input, or task effect and does not establish runtime acceptance.
