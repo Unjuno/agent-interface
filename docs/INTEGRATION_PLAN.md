@@ -1,5 +1,12 @@
 # Integration priority — 2026-09-19
 
+**Agent-first clarification:** the primary user is the agent itself. Drive this
+task by actual assistant use: observe a difficulty, improve the interface, then
+use the same path again. Research supplies evidence for design choices. Prioritize
+fewer avoidable tool boundaries, usable observations/results and recovery in the
+agent's own loop. The [receipt self-use example](../runtime/results/receipt-self-use-01/README.md)
+records the first concrete result-presentation improvement from this loop.
+
 The user's current direction is to concentrate this task on integration while
 other contributors continue benchmarks and experiments. Product Hunt publication
 has already happened according to the user. The engineering objective is a
