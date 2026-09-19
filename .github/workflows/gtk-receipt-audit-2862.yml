@@ -40,5 +40,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: gtk-receipt-audit-2862
-          path: $RUNNER_TEMP/gtk-audit-out
+          path: ${{ runner.temp }}/gtk-audit-out
           if-no-files-found: error
