@@ -15,17 +15,19 @@ try:
     g.set_mode(vd.Mode.PLAYER); g.set_window_visible(False); g.set_sound_enabled(False)
     g.set_screen_resolution(vd.ScreenResolution.RES_320X240); g.set_screen_format(vd.ScreenFormat.RGB24)
     g.set_available_buttons([vd.Button.MOVE_FORWARD,vd.Button.USE,vd.Button.TURN_LEFT,vd.Button.TURN_RIGHT])
+    g.set_available_game_variables([vd.GameVariable.ANGLE])
     g.set_episode_timeout(35*40); g.init(); g.new_episode()
-    a=g.get_state(); before=float(g.get_game_variable(vd.GameVariable.ANGLE)) if False else None
+    a=g.get_state(); before=float(g.get_game_variable(vd.GameVariable.ANGLE))
     ah=sha(a.screen_buffer)
     # Match the repository's known-good four-element vector convention.
     reward=g.make_action([0,0,1,0],4)
-    b=g.get_state(); bh=sha(b.screen_buffer)
+    b=g.get_state(); after=float(g.get_game_variable(vd.GameVariable.ANGLE)); bh=sha(b.screen_buffer)
     print("vizdoom",vd.__version__); print("wad",str(pkg/"freedoom2.wad")); print("mode PLAYER")
     print("action_vector [0,0,1,0]"); print("action_tics 4"); print("reward",reward)
+    print("before_angle",before); print("after_angle",after); print("angle_delta",after-before)
     print("before_screen_sha256",ah); print("after_screen_sha256",bh)
     g.close(); g=None
-    emit("PASS_DIRECT_FIXTURE_OBSERVATION_CHANGE" if ah!=bh else "HOLD_FIXTURE_NO_FRAME_CHANGE")
+    emit("PASS_DIRECT_FIXTURE_ACTION_STATE_CHANGE" if abs(after-before)>1e-6 else "HOLD_ACTION_STATE_UNCHANGED")
 finally:
     if g is not None:g.close()
     x.terminate();x.wait(timeout=5)
