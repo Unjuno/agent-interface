@@ -1,6 +1,14 @@
 name: Exact LP evidence order successor v2
 
 on:
+  push:
+    branches:
+      - research/lp-exact-evidence-order-2576-fix-v2
+    paths:
+      - 'research/launch/lp_exact_evidence_order_2576_v2/**'
+      - 'site/index.html'
+      - 'site/media/**'
+      - '.github/workflows/exact-lp-evidence-order-2576-v2.yml'
   pull_request:
     types: [opened, synchronize, ready_for_review]
     paths:
