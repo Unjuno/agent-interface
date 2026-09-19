@@ -99,3 +99,31 @@ return `image_status="needs_review"` while retaining the receipt. There is no
 fallback to the pre-action source image. Full intermediate history remains in
 the original report. The image remains a historical capture and may precede
 task evaluation; displaying them together does not prove a post-effect capture.
+
+## Request a rendered boundary before the next decision
+
+The selected v27 runtime already inherits `settle` from `session_v8`. When an
+explicit GUI action is expected to open or close a dialog, a caller can append:
+
+```json
+{"op":"settle","quiet_ms":200,"timeout_ms":1200}
+```
+
+This samples pixels and focus until they remain equal for the quiet interval,
+or the polling budget expires. Supported quiet interval: 40–250 ms; timeout:
+quiet interval through 2000 ms, within the program's combined wait budget.
+It emits `settle_result` with reason, sample count and elapsed time. The receipt
+keeps this event visible. Captures/encoding may overrun the nominal timeout;
+this is not a hard wall-clock deadline.
+
+Use it as the final observation step before returning to the agent. View the
+returned image before choosing a dialog response. Quiet pixels neither prove
+rendering completeness nor semantic completion, and do not refresh input
+authority for a later input step. Animations can consume the timeout; a blank
+surface can be quiet. Do not add it indiscriminately to continuous-game input.
+
+[Actual Calc self-use](../../runtime/results/calc-settle-self-use-01/README.md)
+received readable dialog and dismissed-dialog frames in two calls, with saved
+content independently verified. It avoided a separate observation program in
+that example while performing extra native captures. Token and general latency
+benefits remain unmeasured; the runtime implementation was unchanged.
