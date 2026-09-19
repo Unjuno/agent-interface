@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Pin every PR check to the same immutable head commit; do not use
+          # the moving pull_request merge ref while main is changing.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: Verify pinned source blobs
         run: |
           python3 - <<'PY'
