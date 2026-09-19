@@ -23,8 +23,11 @@ class IdentityGateTests(unittest.TestCase):
     def test_ambiguous_duplicate_and_wrong_display_are_rejected(self):
         ambiguous = dict(self.selected); ambiguous["chromium"] = [self.selected["chromium"]]
         self.assertEqual(evaluate_identities(ambiguous, self.repeated, display=":141").reason, "ambiguous")
-        duplicate = dict(self.selected); duplicate["chromium"] = dict(duplicate["inkscape"])
-        self.assertEqual(evaluate_identities(duplicate, self.repeated, display=":141").reason, "duplicate")
+        duplicate = dict(self.selected)
+        duplicate["chromium"] = dict(duplicate["inkscape"])
+        duplicate_repeated = dict(self.repeated)
+        duplicate_repeated["chromium"] = dict(duplicate_repeated["inkscape"])
+        self.assertEqual(evaluate_identities(duplicate, duplicate_repeated, display=":141").reason, "duplicate")
         wrong = dict(self.selected); wrong["calc"] = wrong.pop("libreoffice")
         self.assertEqual(evaluate_identities(wrong, self.repeated, display=":141").reason, "app_set")
 
