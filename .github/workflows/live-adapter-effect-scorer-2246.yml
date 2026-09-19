@@ -22,7 +22,7 @@ jobs:
           PY
       - name: Run unit tests and score retained evidence
         run: |
-          python -m unittest discover -s research/integration/live_adapter_effect_scorer_2246_v1 -t . -p 'test_*.py' -v
+          python -m unittest discover -s research/integration/live_adapter_effect_scorer_2246_v1 -p 'test_*.py' -v
           python research/integration/live_adapter_effect_scorer_2246_v1/scorer.py /tmp/golden-report.json
       - name: Cleanup
         if: always()
