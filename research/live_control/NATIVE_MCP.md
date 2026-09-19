@@ -46,6 +46,21 @@ harness's concern.
 
 ## Managed startup
 
+Managed startup accepts `--text-gap-ms 0|2|10`, forwarding the existing research
+harness pacing policy. Default remains 0. For an explicitly paced Calc run add
+`--text-gap-ms 2`; allocation metadata reports the selected value and launch.json
+records it in the child argv. This is a launch-time choice, not a dynamic setting
+or automatic correction. Attach mode rejects it because the existing harness's
+policy cannot be changed by attaching another client.
+
+The [earlier Calc text experiment](../../runtime/results/native-calc-text-01/README.md)
+observed intermittent loss at zero gap and scoped success with explicit pacing.
+Managed startup previously omitted this option, preventing that policy from
+being selected through MCP. Passing it through closes that integration gap;
+it does not establish the cause of repeated-character loss or a universally
+safe delay. The harness still expands pacing into ordinary text/wait operations
+subject to existing admission and operation limits.
+
 For one new private Linux allocation, configure a fresh allocation directory
 whose parent exists and a Python interpreter with the harness dependencies:
 
@@ -106,48 +121,3 @@ the full responses. This removes two explicit view calls in that run, not the
 shell/SDK bridge or decision-file boundary. It is an interim composition recipe,
 not automatic host registration or demonstrated latency/token savings. Preserve
 complete JSON output; truncation or split chunks must never trigger action replay.
-
-## Experimental pipe relay
-
-`native_mcp_relay_v1.py -- --run-directory /absolute/existing/run` keeps one SDK
-connection and accepts JSON lines on stdin. Managed mode accepts the same
-explicit server options after `--`. Each line has exactly `id`, `tool` and
-`arguments`, starting at id 1. Supported names are list_tools and the native
-tools above. Results preserve complete SDK content and include SDK timestamps.
-No tool is called automatically except protocol initialization.
-
-```json
-{"id":1,"tool":"native_observe","arguments":{"stage":1}}
-```
-
-Accepted IDs are consumed before dispatch, including transport failures. Reusing
-an ID refuses; a different ID is not permission to replay an ambiguous action.
-Use the existing immutable request and read-only resume to reconcile it. These
-IDs are local to one relay process, not durable deduplication across restarts.
-EOF disconnects and is not an implicit finish or cleanup guarantee.
-
-Use ordinary pipes preserving exact bytes. The first primary Windows PTY trial
-[failed](../../runtime/results/native-mcp-relay-pty-failure-01/README.md): terminal
-redraw corrupted image-bearing JSON. The allocation was explicitly finished
-without input and its false task score retained. Twelve related local tests
-passed, including a real pipe subprocess, but successful primary live use through
-this relay is still unproven. Do not use a PTY or strip redraw codes and assume
-the response is intact. This candidate is not the default host integration.
-
-Follow-up: relay stdout now refuses a terminal before starting the SDK/server.
-The regression test uses a real PTY and verifies no allocation is created.
-[Primary pipe-preserved use](../../runtime/results/native-mcp-relay-pipe-01/README.md)
-then succeeded by redirecting stdout inside Linux to a fresh JSONL file and
-reading complete responses by explicit ID. The assistant sent instructions on
-stdin without per-decision files and viewed exact returned image blocks. Keep
-the prior paragraph as the failed first trial; successful single-stage use is
-now evidenced, but response-file reads, host integration and wider recovery
-remain open. Use LF shell scripts and exclusive output creation; never overwrite
-another connection's responses or retry an action when a read times out.
-
-The relay's real-pipe regression also covers pending stage 1, digest-bound
-read-only resume, explicit stage 2 and a final false task score on one SDK
-connection. It verifies the first request's bytes and mtime stay unchanged
-through resume, and exactly two immutable requests exist for two submissions.
-This uses an inert exchange fixture, not live GUI input, process-crash recovery
-or a measured reduction in recovery cost.
