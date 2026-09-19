@@ -89,27 +89,6 @@ jobs:
           root.mkdir(parents=True, exist_ok=True)
           (root / "STOP.json").write_text(json.dumps({"decision":"STOPPED_R5_PREFLIGHT_ONLY","construction_invocations":0,"formal_invocations":0,"reason":"r5 scope is import authority and frozen preflight only"}, indent=2) + "\n")
           PY
-      - name: Record successor stop
-        if: always() && (steps.construction.outcome != 'success' || hashFiles('work/map01-r1/construction/CONSTRUCTION_RESULT.json') == '')
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          root = Path("work/map01-r1")
-          root.mkdir(parents=True, exist_ok=True)
-          result = root / "construction" / "CONSTRUCTION_RESULT.json"
-          payload = {
-              "decision": "STOPPED_SUCCESSOR_CONSTRUCTION_NOT_PASS",
-              "construction_result_present": result.exists(),
-              "formal_invocations": 0,
-              "reruns": 0,
-              "replacements": 0,
-              "tuning": 0,
-              "reason": "formal is hard-gated on construction step success and explicit construction result",
-          }
-          (root / "STOP.json").write_text(json.dumps(payload, indent=2) + "\n")
-          PY
-
       - name: Upload retained successor evidence
         if: always()
         uses: actions/upload-artifact@v4
