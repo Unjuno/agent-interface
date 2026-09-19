@@ -1,0 +1,38 @@
+name: golden-v3 fail-closed scorer repair #2615
+
+on:
+  pull_request:
+    paths:
+      - 'research/integration/golden_v3_second_domain_2246_repair_v1/**'
+      - '.github/workflows/golden-v3-repair-2615.yml'
+
+jobs:
+  pinned-evaluator:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.12-slim-bookworm@sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run unit tests
+        working-directory: research/integration/golden_v3_second_domain_2246_repair_v1
+        run: python -m unittest -v
+      - name: Run formal first-result block
+        working-directory: research/integration/golden_v3_second_domain_2246_repair_v1
+        run: |
+          python - <<'PY'
+          import json
+          cases=[
+            {'kind':'normal','adapter_result':{'status':'completed','dispatch_terminal':True,'release':{'released':True,'cleanup_ok':True}},'independent_effect':{'saved':True,'text':'gtk2492'}},
+            {'kind':'stale','adapter_result':{'status':'refused','raw_dispatch':{'result':{'error':'STALE_OBSERVATION'}}},'attempts':[]},
+            {'kind':'false_effect','adapter_result':{'status':'completed','dispatch_terminal':True,'release':{'released':True,'cleanup_ok':True}},'independent_effect':{'saved':False}},
+            {'kind':'incomplete_release','adapter_result':{'status':'completed','dispatch_terminal':True,'release':{'released':True,'cleanup_ok':False}},'independent_effect':{'saved':True,'text':'gtk2492'}},
+            {'kind':'ambiguous_refusal','adapter_result':{'status':'refused','raw_dispatch':{'result':{'error':'REFUSED'}}},'attempts':[]},
+          ]
+          open('cases.json','w').write(json.dumps(cases))
+          PY
+          python evaluator.py cases.json RESULT.json
+      - name: Publish evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-v3-repair-2615-result
+          path: research/integration/golden_v3_second_domain_2246_repair_v1/RESULT.json
