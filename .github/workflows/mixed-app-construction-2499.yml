@@ -1,0 +1,19 @@
+name: Mixed-app construction gate #2499
+on:
+  pull_request:
+    paths:
+      - "research/integration/mixed_app_long_session_2499/**"
+      - ".github/workflows/mixed-app-construction-2499.yml"
+  workflow_dispatch:
+jobs:
+  construction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install X11 fixture dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb xdotool x11-utils inkscape libreoffice chromium
+      - name: Run construction gate
+        run: python research/integration/mixed_app_long_session_2499/construction.py
