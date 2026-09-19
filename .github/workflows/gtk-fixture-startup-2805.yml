@@ -1,0 +1,39 @@
+name: GTK fixture startup diagnostic #2805
+
+on:
+  pull_request:
+    paths:
+      - "research/integration/gtk_fixture_startup_2805/**"
+      - "research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py"
+      - "research/integration/gtk_fixture_dependency_2606_v2/**"
+      - ".github/workflows/gtk-fixture-startup-2805.yml"
+  push:
+    branches:
+      - "research/gtk-fixture-startup-diagnostic-2805"
+
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build pinned GTK image
+        run: docker build --pull=false -f research/integration/gtk_fixture_dependency_2606_v2/Dockerfile -t agent-interface-gtk-fixture-v2:diagnostic .
+      - name: Run no-input startup diagnostic
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/gtk-startup-out"
+          set +e
+          docker run --rm --network none --read-only --tmpfs /tmp             -e PYTHONPATH=/workspace             -v "$GITHUB_WORKSPACE:/workspace:ro"             -v "$RUNNER_TEMP/gtk-startup-out:/out"             -w /workspace             agent-interface-gtk-fixture-v2:diagnostic             python3 /workspace/research/integration/gtk_fixture_startup_2805/diagnostic.py /out
+          code=$?
+          printf '%s' "$code" > "$RUNNER_TEMP/gtk-startup-out/runner-exit-code.txt"
+          exit 0
+      - name: Upload diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gtk-fixture-startup-2805
+          path: ${{ runner.temp }}/gtk-startup-out
+          if-no-files-found: error
