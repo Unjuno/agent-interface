@@ -2,6 +2,24 @@
 
 ## Current integration decision — 2026-09-20
 
+The [managed MCP composition](../runtime/results/native-mcp-managed-01/README.md)
+now starts one explicitly configured private application, delivers its initial
+image/goal and accepts primary-assistant input on one SDK connection. Two start
+calls reused one process; one Inkscape action saved the expected geometry and
+the process exited. This is shell-launched SDK use, not host registration.
+Normal finish is covered; disconnect/crash cleanup and cooperative cancellation
+remain open. No sensor work is added.
+
+Its retained timing audit partitions 1133.463 ms inside the exchange, including
+395.886 ms of input execution and explicit waits. The feedback record exists at
+871.707 ms, but is not delivered to the model then. Avoid equating internal
+timestamps with first useful feedback or semantic completion. The next live
+measurement needs SDK call entry/return and presentation boundaries around the
+same task, alongside existing harness intervals; model usage/cost needs actual
+host usage data. Preserve the current guarded path while obtaining that evidence
+before choosing a delay or capture optimization. Existing stage-specific read-only
+resume remains the recovery route; do not add automatic action replay.
+
 The primary assistant's [combined Calc/Inkscape use](../runtime/results/native-combined-batch-01/README.md)
 completed both saved-file goals in three requests using existing repeated-key
 batches, an observed application switch, and explicit finish_after. Retain the
