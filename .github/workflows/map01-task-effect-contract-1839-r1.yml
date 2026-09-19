@@ -9,9 +9,15 @@ jobs:
     runs-on: ubuntu-24.04
     container: python:3.12-slim
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
+      - name: Fetch immutable PR source bytes
+        env:
+          SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -eu
+          mkdir -p research/measurement/map01_task_effect_contract_1839_r1
+          base="https://raw.githubusercontent.com/Unjuno/agent-interface/${SHA}/research/measurement/map01_task_effect_contract_1839_r1"
+          curl --fail --location --retry 3 "${base}/contract.py" -o research/measurement/map01_task_effect_contract_1839_r1/contract.py
+          curl --fail --location --retry 3 "${base}/test_contract.py" -o research/measurement/map01_task_effect_contract_1839_r1/test_contract.py
       - name: Compile
         run: python -m py_compile research/measurement/map01_task_effect_contract_1839_r1/contract.py research/measurement/map01_task_effect_contract_1839_r1/test_contract.py
       - name: Formal offline contract test
