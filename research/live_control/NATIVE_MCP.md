@@ -38,6 +38,16 @@ install a plugin or add tools to the current Codex conversation.
 
 The run is bound at server startup; tools cannot select another filesystem path.
 Calls are serialized. Existing source, request, reply and image checks remain.
+Completed exchange responses include descriptive `continuation` metadata.
+At a boundary, `source_available` supplies the explicit next stage,
+source_sequence and source-file SHA256 only if the retained next source matches
+the returned observation and its image is available. It is a snapshot, not
+authority or proof that an application is still ready. Continue choosing actions
+from the image; ordinary source binding and admission still apply.
+An occupied next request returns `already_submitted`; inspect/resume that request
+instead of sending it again. Missing/mismatched images or sources and exhausted
+stage bounds return `needs_review`. Non-boundary responses provide no next-stage
+advice. The metadata does not discover arbitrary stages or replay input.
 SDK/process errors or transport cancellation do not prove an action was absent;
 reconcile the selected request/reply. This adapter grants no extra authority.
 Attach mode does not allocate GUI sessions. Neither mode infers next stages,

@@ -123,6 +123,23 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual((root/'request-1.json').read_bytes(),raw)
                     self.assertEqual((root/'request-1.json').stat().st_mtime_ns,before)
 
+                    # An inert boundary fixture exercises the new metadata over real stdio.
+                    next_source=dict(source,sequence=2)
+                    (root/'source-2.json').write_bytes(encoded(next_source))
+                    (root/'reply-1.json').write_bytes(encoded({'stage':1,'status':'boundary',
+                        'decision_sha256':row['decision_sha256'],'observation':next_source}))
+                    boundary=await client.call_tool('native_resume',{'stage':1,
+                        'decision_sha256':row['decision_sha256'],'timeout':0})
+                    next_step=json.loads(boundary.content[0].text)['continuation']
+                    self.assertEqual(next_step['status'],'source_available')
+                    self.assertEqual((next_step['stage'],next_step['source_sequence']),(2,2))
+                    self.assertEqual(base64.b64decode(boundary.content[1].data),pixels)
+                    self.assertEqual((root/'request-1.json').read_bytes(),raw)
+                    (root/'request-2.json').write_bytes(b'{}')
+                    occupied=await client.call_tool('native_resume',{'stage':1,
+                        'decision_sha256':row['decision_sha256'],'timeout':0})
+                    self.assertEqual(json.loads(occupied.content[0].text)['continuation']['status'],'already_submitted')
+
     def test_context_errors_remain_explicit_without_scores_or_mutation(self):
         from native_mcp_v1 import session_context
         with tempfile.TemporaryDirectory() as tmp:
