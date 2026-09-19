@@ -1,0 +1,11 @@
+{
+  "status": "CUDA_REPEATABLE_CPU_DIVERGENCE_RETAINED",
+  "seed": 2417,
+  "cuda_runs": 2,
+  "cuda_environment": "CUBLAS_WORKSPACE_CONFIG=:4096:8",
+  "run_1": {"threshold_0.50_accept": 40, "threshold_0.60_accept": 15, "threshold_0.70_accept": 0, "accuracy": 1.0},
+  "run_2": {"threshold_0.50_accept": 40, "threshold_0.60_accept": 15, "threshold_0.70_accept": 0, "accuracy": 1.0},
+  "agreement": true,
+  "interpretation": "The observed threshold-0.60 difference from CPU is repeatable within CUDA under the deterministic setting; it is not explained by within-CUDA run-to-run nondeterminism.",
+  "scope": "synthetic fresh-family threshold harness; no threshold promotion or runtime policy claim"
+}
