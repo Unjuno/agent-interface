@@ -40,7 +40,7 @@ jobs:
           json.dump(out,open(root+"PROVENANCE.json","w"),indent=2,sort_keys=True)
           PY
       - name: Independent audit
-        run: python3 research/analysis/generation_bound_evidence_provenance_successor_2196_v1/audit.py
+        run: cd research/analysis/generation_bound_evidence_provenance_successor_2196_v1 && python3 audit.py
       - uses: actions/upload-artifact@v4
         with:
           name: generation-bound-evidence-provenance-successor-2196
