@@ -1,0 +1,29 @@
+name: Golden IPC static closure v2
+
+on:
+  push:
+    paths:
+      - 'research/analysis/golden_ipc_transitive_closure_2922_v2/**'
+      - 'research/live_control/tile_transport.py'
+      - 'research/live_control/gui_suite.py'
+      - '.github/workflows/golden-ipc-static-closure-2922.yml'
+  pull_request:
+    paths:
+      - 'research/analysis/golden_ipc_transitive_closure_2922_v2/**'
+      - 'research/live_control/tile_transport.py'
+      - 'research/live_control/gui_suite.py'
+      - '.github/workflows/golden-ipc-static-closure-2922.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  static-closure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run static closure verifier
+        run: python research/analysis/golden_ipc_transitive_closure_2922_v2/verify_static_closure.py
