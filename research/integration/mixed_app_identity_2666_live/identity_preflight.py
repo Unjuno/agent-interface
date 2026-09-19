@@ -37,12 +37,32 @@ def visible_records(env):
     return records
 
 
-def wait_for_records(env, minimum=3, timeout=15):
+def app_key(record):
+    text = (record["wm_class"] + " " + record["title"]).lower()
+    if "inkscape" in text:
+        return "inkscape"
+    if "libreoffice" in text or "calc" in text:
+        return "libreoffice"
+    if "chrom" in text:
+        return "chromium"
+    return None
+
+
+def primary_records(records):
+    chosen = {}
+    for record in records:
+        key = app_key(record)
+        if key and key not in chosen:
+            chosen[key] = record
+    return [chosen[app] for app in APPS if app in chosen]
+
+
+def wait_for_records(env, timeout=15):
     deadline = time.monotonic() + timeout
     last = []
     while time.monotonic() < deadline:
-        last = visible_records(env)
-        if len(last) >= minimum:
+        last = primary_records(visible_records(env))
+        if len(last) == len(APPS):
             return last
         time.sleep(0.5)
     return last
@@ -86,20 +106,20 @@ def main():
             time.sleep(1.0)
         first = wait_for_records(env)
         time.sleep(0.4)
-        second = visible_records(env)
+        second = primary_records(visible_records(env))
         keys = {(r["window_id"], r["pid"]) for r in first}
         out.update({"first_records": first, "second_records": second,
                     "record_count": len(first), "stable": first == second,
                     "distinct_window_pid": len(keys) == len(first),
                     "nonempty_titles": all(r["title"] for r in first),
-                    "all_apps_observed": len(first) >= 3,
+                    "all_apps_observed": len(first) == len(APPS),
                     "process_states": {app: {"returncode": proc.poll()}
                                        for app, proc in procs},
                     "launch_diagnostics": {
                         app: (proc.stderr.read(400) if proc.poll() is not None else "")
                         for app, proc in procs},
                     "decision": "PASS_IDENTITY_DISCOVERY_SCOPED"
-                    if first == second and len(keys) == len(first) and len(first) >= 3
+                    if first == second and len(keys) == len(first) and len(first) == len(APPS)
                     else "HOLD_IDENTITY_DISCOVERY"})
         print(json.dumps(out, sort_keys=True))
         raise SystemExit(0 if out["decision"].startswith("PASS") else 1)
