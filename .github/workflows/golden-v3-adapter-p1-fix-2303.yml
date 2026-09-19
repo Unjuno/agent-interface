@@ -1,0 +1,31 @@
+name: golden-v3-adapter-p1-fix-2303
+on:
+  pull_request:
+    paths:
+      - "runtime/cli_v1/golden_v3.py"
+      - "research/integration/golden_v3_adapter_p1_fix_2303_v1/**"
+      - ".github/workflows/golden-v3-adapter-p1-fix-2303.yml"
+  push:
+    paths:
+      - "runtime/cli_v1/golden_v3.py"
+      - "research/integration/golden_v3_adapter_p1_fix_2303_v1/**"
+      - ".github/workflows/golden-v3-adapter-p1-fix-2303.yml"
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: native P1 audit
+        run: python3 research/integration/golden_v3_adapter_p1_fix_2303_v1/audit.py
+      - name: pinned container P1 audit
+        run: |
+          docker run --rm -v "$PWD:/repo" -w /repo/research/integration/golden_v3_adapter_p1_fix_2303_v1 python:3.12-slim             sh -c "apt-get update -qq && apt-get install -y -qq git >/dev/null && python audit.py"
+      - name: syntax and JSON audit
+        run: |
+          python3 -m py_compile runtime/cli_v1/golden_v3.py
+          python3 -m py_compile research/integration/golden_v3_adapter_p1_fix_2303_v1/test_adapter.py
+          python3 -m py_compile research/integration/golden_v3_adapter_p1_fix_2303_v1/audit.py
+          python3 -m json.tool research/integration/golden_v3_adapter_p1_fix_2303_v1/SOURCE_MANIFEST.json >/dev/null
