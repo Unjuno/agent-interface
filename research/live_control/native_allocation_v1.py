@@ -11,22 +11,26 @@ from native_exchange_v1 import owner_state
 
 
 class NativeAllocation:
-    def __init__(self, directory, app, *, seed=991116, max_stages=4, python=None):
+    def __init__(self, directory, app, *, seed=991116, max_stages=4, python=None, text_gap_ms=0):
         if app not in ('calc','inkscape','calc-inkscape'):
             raise ValueError('explicit supported research app required')
         if type(seed) is not int or type(max_stages) is not int or not 2 <= max_stages <= 64:
             raise ValueError('integer seed and max_stages 2..64 required')
+        if type(text_gap_ms) is not int or text_gap_ms not in (0, 2, 10):
+            raise ValueError('supported text gaps are 0, 2, 10 ms')
         self.directory = Path(directory).resolve()
         self.run_directory = self.directory/'run'
         self.app, self.seed, self.max_stages = app, seed, max_stages
         self.python = python or sys.executable
+        self.text_gap_ms = text_gap_ms
         self.process = None
         self.attempted = False
         self.error = None
 
     def status(self):
         base = {'authority':'none', 'run_directory':str(self.run_directory),
-                'app':self.app, 'seed':self.seed, 'max_stages':self.max_stages}
+                'app':self.app, 'seed':self.seed, 'max_stages':self.max_stages,
+                'text_gap_ms':self.text_gap_ms}
         if self.error is not None:
             return dict(base, status='needs_review', error=self.error, restart_allowed=False)
         if self.process is None:
@@ -63,7 +67,8 @@ class NativeAllocation:
                 repo = Path(__file__).resolve().parents[2]
                 args = [self.python, str(Path(__file__).with_name('run_native_calc_self_use_v1.py')),
                         '--out', str(self.run_directory), '--app', self.app,
-                        '--seed', str(self.seed), '--max-stages', str(self.max_stages)]
+                        '--seed', str(self.seed), '--max-stages', str(self.max_stages),
+                        '--text-gap-ms', str(self.text_gap_ms)]
                 (self.directory/'launch.json').write_text(json.dumps({'argv':args},indent=2)+'\n')
                 env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1',
                            PYTHONPATH=os.pathsep.join([str(repo),str(Path(__file__).parent)]))
