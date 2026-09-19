@@ -11,8 +11,8 @@ class IdentityGateTests(unittest.TestCase):
         self.repeated = {app: dict(value) for app, value in self.selected.items()}
 
     def test_admits_stable_typed_same_display_identities(self):
-        self.assertEqual(evaluate_identities(self.selected, self.repeated, display=":141"),
-                         (True, "admitted"))
+        decision = evaluate_identities(self.selected, self.repeated, display=":141")
+        self.assertEqual((decision.admitted, decision.reason), (True, "admitted"))
 
     def test_none_and_missing_are_rejected(self):
         selected = dict(self.selected); selected["inkscape"] = None
