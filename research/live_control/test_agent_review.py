@@ -61,6 +61,47 @@ class ReviewTests(unittest.TestCase):
         self.assertIsNone(row['image'])
         self.assertEqual(row['receipt']['native_result'], report)
 
+    def test_native_summary_keeps_disagreeing_results_and_bad_image(self):
+        from receipt_references import expand_native_receipt
+        report = {'status': 'finished', 'evaluation': {'success': True},
+                  'action': {'result': {'status': 'completed'},
+                             'feedback': {'status': 'needs_review', 'error': 'BadWindow'}},
+                  'cleanup': {'status': 'completed'}, 'observation': self.native_report()}
+        report['observation']['native']['artifact']['sha256'] = 'damaged'
+        self.report.write_text(json.dumps(report))
+        original = self.report.read_bytes()
+        full = review_native(self.report, self.root)
+        compact = review_native(self.report, self.root, compact=True)
+        self.assertEqual(full['outcome_summary'], {
+            'reported_status': 'finished', 'evaluation_success': True,
+            'action_status': 'completed', 'feedback_status': 'needs_review',
+            'cleanup_status': 'completed'})
+        self.assertEqual(compact['outcome_summary'], full['outcome_summary'])
+        self.assertEqual(expand_native_receipt(compact['receipt']), full['receipt'])
+        self.assertEqual(full['receipt']['native_result'], report)
+        self.assertEqual(full['image_status'], 'needs_review')
+        self.assertIsNone(full['image'])
+        self.assertEqual(self.report.read_bytes(), original)
+        self.assertEqual(full['receipt']['source']['sha256'], hashlib.sha256(original).hexdigest())
+
+    def test_native_summary_never_infers_success_or_uses_history(self):
+        for success in [False, None, 0, 1, 'true', {}, []]:
+            with self.subTest(success=success):
+                report = {'status': 'finished', 'evaluation': {'success': success},
+                          'actions': [{'result': {'status': 'completed'}}],
+                          'action': [], 'cleanup': {'status': True}}
+                self.report.write_text(json.dumps(report))
+                row = review_native(self.report, self.root)
+                self.assertEqual(row['outcome_summary'], {
+                    'reported_status': 'finished',
+                    'evaluation_success': False if success is False else None,
+                    'action_status': None, 'feedback_status': None, 'cleanup_status': None})
+                self.assertEqual(row['image_status'], 'no_observation')
+        for report in [{}, {'status': [], 'evaluation': [], 'action': {'result': None}}]:
+            self.report.write_text(json.dumps(report))
+            self.assertTrue(all(value is None for value in
+                                review_native(self.report, self.root)['outcome_summary'].values()))
+
     def test_image_bytes_and_full_result_share_one_response(self):
         self.write()
         original = self.report.read_bytes()

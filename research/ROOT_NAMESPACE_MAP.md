@@ -164,6 +164,7 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 
 ### Recent additive namespaces
 
+- [`chromium/`](chromium/) — retained Chromium live-run evidence; consult the report for its scoped outcome and limitations.
 - [`verification/`](verification/)
 - [`docker_ipc_schema_bridge_2818_v1/`](docker_ipc_schema_bridge_2818_v1/)
 - [`semantic_checkpoint_contract_2661_v1/`](semantic_checkpoint_contract_2661_v1/)

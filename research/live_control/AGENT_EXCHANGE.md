@@ -1,5 +1,35 @@
 # Prepared exchange for the agent's own loop
 
+## Native caller without a request file
+
+The native CLI also accepts one explicit JSON object on stdin. From PowerShell,
+set UTF-8 output and use `wsl --cd` plus `--exec` to avoid another shell's quoting
+and cwd rules. Replace the paths and decision with the current viewed session:
+
+```powershell
+$OutputEncoding = [System.Text.UTF8Encoding]::new($false)
+@'
+{"run_directory":"results-local/SESSION","stage":1,"decision":{"source_sequence":1,"finish":true}}
+'@ | wsl.exe -d Ubuntu --cd '/absolute/linux/repository' --exec env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:research/live_control python3 research/live_control/agent_exchange.py --native --review compact --request -
+```
+
+The example explicitly ends the selected session; it does not perform a task.
+For input, provide the observed point, interaction, tail and expected title as
+usual. Do not infer current stage/sequence from this example. The JSON here-string
+must occupy its own lines and must not contain a standalone closing delimiter.
+Forward the returned image block to the host image channel, not text/base64.
+Check the process exit code before treating output as a valid response.
+
+This removes the caller request file only: native exchange still publishes its
+immutable request slot. After pending, submit exactly the committed decision
+with `resume:true` for read-only continuation; never resubmit it as a new action.
+An outer shell error alone is not evidence that input was absent.
+The [primary-assistant stdin run](../../runtime/results/native-direct-stdin-01/README.md)
+completed the same Calc/Inkscape tasks without three caller-file creation calls.
+It is one ordered comparison, not a causal latency or token benefit result.
+
+## Prepared socket caller
+
 `agent_exchange.py` composes existing v27 preparation and socket exchange. After
 viewing a received image, provide its complete batch and explicit steps in one
 Python call, or one JSON object on stdin:
