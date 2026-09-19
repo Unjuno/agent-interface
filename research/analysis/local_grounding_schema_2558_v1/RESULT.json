@@ -1,0 +1,24 @@
+{
+  "schema": "compiled-form-grounding-v1",
+  "status": "PASS_SCHEMA_BOUNDARY_ONLY",
+  "model": "gpt-5.6-luna",
+  "image": "runtime/results/native-docker-integration-2558-v2/before.png",
+  "image_sha256": "839B1C4A62ECA7B4B774B7F1D7BF50635A7B8BC5A31B5567B30E715B16D5AFC8",
+  "answer": {
+    "format": "compiled-form-grounding-v1",
+    "field": {"point_space": "source_observation_pixels", "point": {"x": 210, "y": 145}, "motion_model": "surface_origin_translation"},
+    "submit": {"point_space": "source_observation_pixels", "point": {"x": 130, "y": 190}, "motion_model": "surface_origin_translation"},
+    "method": {
+      "first_action": "enter_exact_token",
+      "continue_when": "field_pixels_changed_and_submit_revalidated",
+      "second_action": "activate_submit",
+      "complete_when": "submission_pixels_changed_then_independent_score"
+    }
+  },
+  "usage": {"input_tokens": 15811, "output_tokens": 302, "reasoning_output_tokens": 187},
+  "authority_granted": 0,
+  "task_success": "NOT_RUN",
+  "action_emitted": 0,
+  "validation": {"jsonschema": "PASS", "py_compile": "PASS"},
+  "scope": "The model produced a schema-valid grounding plan from one captured image. No GUI action, effect, or task-success claim was made."
+}
