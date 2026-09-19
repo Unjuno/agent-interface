@@ -1,0 +1,44 @@
+name: GTK independent receipt audit #2862
+on:
+  workflow_dispatch:
+  push:
+    branches: ["research/gtk-receipt-audit-2862"]
+  pull_request:
+    paths:
+      - "research/analysis/gtk_receipt_audit_2862/**"
+      - ".github/workflows/gtk-receipt-audit-2862.yml"
+      - "research/integration/golden_v3_second_domain_2246_v1/**"
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build pinned GTK/Xlib image
+        run: docker build --pull=false -f research/integration/gtk_fixture_dependency_2606_v3/Dockerfile -t agent-interface-gtk-fixture-v3:xlib-audit .
+      - name: Run existing bounded allocation
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/gtk-audit-out"
+          set +e
+          docker run --rm --network none --read-only --tmpfs /tmp -e PYTHONPATH=/workspace:/usr/lib/python3/dist-packages -v "$GITHUB_WORKSPACE:/workspace:ro" -v "$RUNNER_TEMP/gtk-audit-out:/out" -w /workspace agent-interface-gtk-fixture-v3:xlib-audit python3 /workspace/research/integration/golden_v3_second_domain_2246_v1/formal_matrix_runner.py --out /out/raw > "$RUNNER_TEMP/gtk-audit-out/runner.stdout" 2> "$RUNNER_TEMP/gtk-audit-out/runner.stderr"
+          runner_code=$?
+          printf '%s' "$runner_code" > "$RUNNER_TEMP/gtk-audit-out/runner-exit-code.txt"
+          if [ -f "$RUNNER_TEMP/gtk-audit-out/raw/summary.json" ]; then
+            python3 research/analysis/gtk_receipt_audit_2862/audit.py --summary "$RUNNER_TEMP/gtk-audit-out/raw/summary.json" --out "$RUNNER_TEMP/gtk-audit-out/audit.json"
+            audit_code=$?
+          else
+            printf '%s' '{"decision":"HOLD_CAPTURE_TIME_PROVENANCE","reason":"summary_missing"}' > "$RUNNER_TEMP/gtk-audit-out/audit.json"
+            audit_code=2
+          fi
+          printf '%s' "$audit_code" > "$RUNNER_TEMP/gtk-audit-out/audit-exit-code.txt"
+          exit 0
+      - name: Upload raw allocation and audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gtk-receipt-audit-2862
+          path: $RUNNER_TEMP/gtk-audit-out
+          if-no-files-found: error
