@@ -1,5 +1,6 @@
 """Optional stdio MCP adapter for one explicitly attached native research run."""
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import threading
@@ -10,6 +11,31 @@ from pydantic import StrictInt
 
 from agent_review import review_native
 from native_exchange_v1 import run
+
+
+def session_context(root):
+    """Present existing public task/limits, not evaluator output or authority."""
+    context = {'authority':'none'}
+    for key, filename in [('goal','goal.json'), ('exchange_contract','exchange-contract.json')]:
+        path = root/filename
+        try:
+            data = path.read_bytes()
+            value = json.loads(data)
+            if not isinstance(value, dict):
+                raise ValueError('object required')
+            json.dumps(value, allow_nan=False)
+            if key == 'exchange_contract' and (
+                    value.get('schema') != 'agent-interface/native-exchange-contract-v1'
+                    or type(value.get('max_stages')) is not int
+                    or not 2 <= value['max_stages'] <= 64):
+                raise ValueError('invalid native exchange contract')
+            context[key] = {'status':'recorded', 'value':value,
+                            'source':{'path':str(path),'sha256':hashlib.sha256(data).hexdigest()}}
+        except FileNotFoundError:
+            context[key] = {'status':'unavailable'}
+        except (OSError, ValueError, TypeError) as error:
+            context[key] = {'status':'needs_review', 'error':str(error)}
+    return context
 
 
 def content(result):
@@ -44,13 +70,16 @@ def create_server(run_directory):
     def native_observe(stage: StrictInt) -> CallToolResult:
         """Read the retained source for an explicit stage; no recapture or input.
 
+        Includes recorded public goal and exchange limits when available.
         View its image before choosing an action. A historical frame is not fresh
         authority. No latest-stage guessing and no session allocation.
         """
         def observe():
             if not 1 <= stage <= 64:
                 raise ValueError('stage 1..64 required')
-            return review_native(root/f'source-{stage}.json', root, compact=True)
+            result = review_native(root/f'source-{stage}.json', root, compact=True)
+            result['session_context'] = session_context(root)
+            return result
         return invoke(observe)
 
     @server.tool(structured_output=False)

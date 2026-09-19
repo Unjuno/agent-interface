@@ -24,6 +24,11 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     'path':str(root/'frame.png'), 'sha256':hashlib.sha256(pixels).hexdigest(),
                     'source_raw_sha256':'raw','mime_type':'image/png'}}}
             (root/'source-1.json').write_bytes(encoded(source))
+            goal = {'task':{'kind':'write_cells','cells':{'A1':190,'A2':676}}}
+            (root/'goal.json').write_bytes(encoded(goal))
+            (root/'exchange-contract.json').write_bytes(encoded({
+                'schema':'agent-interface/native-exchange-contract-v1','max_stages':6}))
+            (root/'evaluation.json').write_text('{"private_score":"DO_NOT_EXPOSE"}')
             parameters = StdioServerParameters(command=sys.executable, args=[
                 str(Path(__file__).with_name('native_mcp_v1.py')), '--run-directory', tmp], env=dict(os.environ))
             async with stdio_client(parameters) as (reader, writer):
@@ -36,6 +41,19 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual([b.type for b in observed.content], ['text','image'])
                     self.assertEqual(base64.b64decode(observed.content[1].data), pixels)
                     self.assertNotIn('"data":', observed.content[0].text)
+                    context=json.loads(observed.content[0].text)['session_context']
+                    self.assertEqual(context['goal']['value'],goal)
+                    self.assertEqual(context['goal']['source']['sha256'],hashlib.sha256(encoded(goal)).hexdigest())
+                    self.assertEqual(context['exchange_contract']['value']['max_stages'],6)
+                    self.assertEqual(context['authority'],'none')
+                    self.assertNotIn('DO_NOT_EXPOSE',observed.content[0].text)
+                    (root/'goal.json').write_text('[]')
+                    incomplete = await client.call_tool('native_observe', {'stage':1})
+                    self.assertFalse(incomplete.isError)
+                    incomplete_metadata=json.loads(incomplete.content[0].text)
+                    self.assertEqual(incomplete_metadata['session_context']['goal']['status'],'needs_review')
+                    self.assertEqual(base64.b64decode(incomplete.content[1].data),pixels)
+                    (root/'goal.json').write_bytes(encoded(goal))
                     invalid = await client.call_tool('native_submit', {'stage':True,'decision':{},'timeout':0})
                     self.assertTrue(invalid.isError)
                     self.assertFalse((root/'request-1.json').exists())
@@ -61,6 +79,23 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(base64.b64decode(resumed.content[1].data),pixels)
                     self.assertEqual((root/'request-1.json').read_bytes(),raw)
                     self.assertEqual((root/'request-1.json').stat().st_mtime_ns,before)
+
+    def test_context_errors_remain_explicit_without_scores_or_mutation(self):
+        from native_mcp_v1 import session_context
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            empty=session_context(root)
+            self.assertEqual(empty['goal']['status'],'unavailable')
+            self.assertEqual(empty['exchange_contract']['status'],'unavailable')
+            for data in [b'[]', b'{', b'{"a": NaN}']:
+                (root/'goal.json').write_bytes(data)
+                result=session_context(root)
+                self.assertEqual(result['goal']['status'],'needs_review')
+                self.assertNotIn('value',result['goal'])
+                self.assertEqual((root/'goal.json').read_bytes(),data)
+            (root/'exchange-contract.json').write_bytes(encoded({
+                'schema':'agent-interface/native-exchange-contract-v1','max_stages':True}))
+            self.assertEqual(session_context(root)['exchange_contract']['status'],'needs_review')
 
 
 if __name__ == '__main__':
