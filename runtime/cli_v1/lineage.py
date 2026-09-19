@@ -76,6 +76,10 @@ def dispatch_with_lineage(
 ) -> dict[str, Any]:
     try:
         validate_lineage(program, receipt, sidecar)
+        if receipt.get("observation_seq") != current_observation_seq:
+            raise ValueError("LINEAGE_STALE_CURRENT_OBSERVATION")
+        if receipt.get("binding_revision") != current_binding_revision:
+            raise ValueError("LINEAGE_STALE_CURRENT_BINDING")
     except (KeyError, TypeError, ValueError) as error:
         return {"schema": SCHEMA, "status": "lineage_rejected", "error": str(error)}
     if dispatch_fn is None:
