@@ -18,6 +18,8 @@ class NativeResultTests(unittest.TestCase):
         v=raw(); v["observation"]["observed_pointer"]={"x":"1","y":2}; self.assertNotEqual(motor_state_from_native_result(v)["uncertainty"],"NONE")
     def test_bool_pointer_is_uncertain(self):
         v=raw(); v["observation"]["observed_pointer"]={"x":True,"y":2}; self.assertNotEqual(motor_state_from_native_result(v)["uncertainty"],"NONE")
+    def test_large_integer_pointer_is_safe(self):
+        v=raw(); v["observation"]["observed_pointer"]={"x":10**309,"y":2}; self.assertEqual(motor_state_from_native_result(v)["uncertainty"],"NONE")
     def test_missing_observation_is_uncertain(self):
         v=raw(); v["observation"]=None; self.assertEqual(motor_state_from_native_result(v)["uncertainty"],"OS_UNCONFIRMED")
     def test_release_error_precedes_verified_flag(self):

@@ -8,13 +8,15 @@ class NativeResultError(ValueError):
     pass
 
 def _valid_pointer(value: Any) -> bool:
+    def finite_number(item: Any) -> bool:
+        if type(item) is int:
+            return True
+        return type(item) is float and math.isfinite(item)
+
     return (
         isinstance(value, Mapping)
         and all(key in value for key in ("x", "y"))
-        and all(
-            type(value[key]) in (int, float) and math.isfinite(value[key])
-            for key in ("x", "y")
-        )
+        and all(finite_number(value[key]) for key in ("x", "y"))
     )
 
 def motor_state_from_native_result(raw: Mapping[str, Any]) -> dict[str, Any]:
