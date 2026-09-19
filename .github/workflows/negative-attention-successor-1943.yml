@@ -1,12 +1,10 @@
 name: negative-attention-successor-1943
 on:
-  push:
-    branches:
-      - research/autonomous-ledger-1961-negative-attention-20260919
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_dispatch:
 jobs:
   frozen-formal:
+    # Archived consumed allocation (#1996). New science needs a successor identity.
+    if: ${{ false }}
     runs-on: ubuntu-latest
     container: python:3.12-slim
     steps:
