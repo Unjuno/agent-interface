@@ -1,0 +1,45 @@
+{
+  "success": true,
+  "cases": [
+    {
+      "kind": "normal",
+      "attention": []
+    },
+    {
+      "kind": "interruption",
+      "attention": [
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            24
+          ],
+          "reason": "recorded interruption/decision reason requires review regardless of terminal status"
+        }
+      ]
+    },
+    {
+      "kind": "decision_reason",
+      "attention": [
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            24
+          ],
+          "reason": "recorded interruption/decision reason requires review regardless of terminal status"
+        }
+      ]
+    }
+  ],
+  "source_sha256": "4c4c6ca16bc42a71e71b8ae947874439028fb13c9cfeffb4cd2365a9ede1a340",
+  "sources": {
+    "probe_receipt_cause_v1.py": "7f2184ac71b4fbff56a8f69bb16a1f8508574d877d0acb3ac8dc46ec2f4f41f7",
+    "decision_receipt_v3.py": "96f805800577a324a76e2663c7222bb546f3bbeedf5cbab0a064b495b5354baf"
+  },
+  "scope": "offline mutated terminal copies, not actual completed-with-cause app execution"
+}

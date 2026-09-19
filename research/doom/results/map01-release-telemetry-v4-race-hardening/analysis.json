@@ -1,0 +1,53 @@
+{
+  "schema": "map01-release-telemetry-v4-race-hardening-v1",
+  "task": "O3-PH48-G5-RELEASE-V4-001",
+  "base_commit": "ceda6ab15beca499918abd42ca78e86df317cd57",
+  "status": {
+    "v3_retained_on_main": "PASS_OFFLINE_AND_XVFB_BUT_REVIEW_FOUND_POST_REQUEST_AUTHORITY_RACE",
+    "v4_deterministic_gate": "PASS",
+    "v4_xvfb_gate": "NOT_RERUN_NO_RELEASE_ORDER_OR_X11_SAMPLE_COUNT_CHANGE",
+    "map01_vizdoom_integration": "NOT_RUN",
+    "formal_live_allocation": "NONE"
+  },
+  "tests": {
+    "py_compile": "PASS",
+    "deterministic_tests": {"passed": 15, "failed": 0}
+  },
+  "repair": {
+    "new_owner_or_x11_samples_between_releases": 0,
+    "new_owner_or_x11_samples_after_batch": 0,
+    "requires_interruption_snapshot_clear": true,
+    "requires_post_batch_cancel_clear": true,
+    "requires_post_batch_active_lease_time_valid": true,
+    "requires_active_deadline_identity": true,
+    "requires_local_focus_invalid_clear": true,
+    "requires_sampled_focus_match": true,
+    "preserves_v3_owner_identity_token_empty_backend_ownership_and_sample_order_checks": true,
+    "preserves_direct_analyzer_per_key_event_shape": true
+  },
+  "race_regressions": [
+    "recorded interruption after release request",
+    "cancel visible only in post-batch input_state",
+    "expiry visible only in post-batch input_state",
+    "active lease deadline mismatch",
+    "local focus invalidation",
+    "post-batch sampled focus mismatch",
+    "missing interruption API fails closed"
+  ],
+  "source_sha256": {
+    "research/doom/doom_retained_input_backend_v4.py": "7cb2cb0e16de8f824e2a090f3250ba6a15e04b8f90e0ffd5cd974af5724f233f",
+    "research/doom/test_doom_retained_input_backend_v4.py": "d2517a64645965231f6eea83aeec8da84d74d8b95ebee77729fc5a5c9d5b6f48"
+  },
+  "environment": {
+    "python": "CPython 3.13.5",
+    "kernel": "Linux 6.18.44 x86_64",
+    "site_packages_disabled_for_clean_verification": true
+  },
+  "decision": "PASS offline race hardening only; one provenance-complete MAP01 telemetry session remains separately gated",
+  "limits": [
+    "V4 does not retest Xvfb because it does not alter per-release order or add an owner/X11 call; retained v3 Xvfb evidence remains scoped to that mechanical path.",
+    "Post-batch owner state is not continuous hardware keyboard occupancy.",
+    "False negatives near authority boundaries are accepted; false ordinary-release attribution is not.",
+    "No ViZDoom/session/scorer integration was executed by this task."
+  ]
+}

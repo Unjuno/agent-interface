@@ -1,0 +1,31 @@
+{
+  "schema": "agent-interface/map01-door-action-effect-history-v2",
+  "decision": "SUPPORT_ACTION_EFFECT_HISTORY",
+  "development_seeds_excluded": [994001,994010,994011,994012,994013,994014,994100,994101,994102,994103,994104,994105,994106,994107,994108,994109,994110,994111,994112,994113,994114,994115,994116,994117,994118,994119],
+  "formal_seeds": [994200,994201,994202,994203,994204,994205,994206,994207,994208,994209,994210,994211,994212,994213,994214,994215,994216,994217,994218,994219],
+  "train_cases": 12,
+  "test_cases": 8,
+  "samples": 320,
+  "test_samples": 128,
+  "alias_threshold": 0.005,
+  "alias_pairs": [
+    {"case":12,"open_tic":7,"close_tic":165,"current_rmse":0.0008347738184966147,"delta_rmse":0.10093112289905548,"open_rgb_sha256":"5bb9a521c33c3461ae9c35d1312884c257838657b0f82474f51a14adb0689887","close_rgb_sha256":"9025dd4815c810f541d87612d92cc5d5718055fc6ab40cdc0ce54e83aeb87989"},
+    {"case":13,"open_tic":7,"close_tic":165,"current_rmse":0.0003797042299993336,"delta_rmse":0.10301269590854645,"open_rgb_sha256":"39bdffc7275ca7609a08971914a42a6c79040b9c0d33d0a132ad2240fd68467f","close_rgb_sha256":"144d066b74a47df983859c7f1e9137e771f365af58de4863cdd722d6aefa6e01"},
+    {"case":14,"open_tic":7,"close_tic":165,"current_rmse":0.00015501359303016216,"delta_rmse":0.09880765527486801,"open_rgb_sha256":"50440be2a40493772c8e4edecbf0c7539361702c5022750f2fabd9c41b8903e2","close_rgb_sha256":"1c8cbbd0ad8cc68180f871931b6d56a55c1a219ff8a2a56fb70dd407ba97b578"},
+    {"case":15,"open_tic":7,"close_tic":165,"current_rmse":0.0003100271860603243,"delta_rmse":0.09959416091442108,"open_rgb_sha256":"75745747e2166f612f904103c539fa8bc22a35ed4ea94040714aadb7f1ded63f","close_rgb_sha256":"73ab83d7b0636cc632430a2ada0cb3a340464e7a5078991b4e02455ec15bfdc6"},
+    {"case":16,"open_tic":7,"close_tic":165,"current_rmse":0.0,"delta_rmse":0.09869401156902313,"open_rgb_sha256":"1a7e44e84c1a538f670533f74a3cea9c8f8863e4245477dd7b6ce97e5e4fab12","close_rgb_sha256":"0f553eb8f703f62ddc52689880be1bfe4a7c77caf559967009ea335b04ab08ab"},
+    {"case":17,"open_tic":7,"close_tic":165,"current_rmse":0.0003466209745965898,"delta_rmse":0.103012815117836,"open_rgb_sha256":"25d778b7213bffef207d11c4fd7bc8f78f353c7fc46d7c35bf7a5b59f089df44","close_rgb_sha256":"26a2b23d35827ab54e325e7626c268bc98cdbf869a9245c229987223d67506ac"},
+    {"case":18,"open_tic":7,"close_tic":165,"current_rmse":0.0008630792144685984,"delta_rmse":0.10093112289905548,"open_rgb_sha256":"3fa3fd145dc6d09e53e7db8947fe88fe11cf3b86d0d2449704ea8697d5a0f2d8","close_rgb_sha256":"7fdd32c228959fe043fd49a868654eae1bdc0e67cbade92f72f8af8b0b101c62"},
+    {"case":19,"open_tic":7,"close_tic":165,"current_rmse":0.000219222332816571,"delta_rmse":0.09869449585676193,"open_rgb_sha256":"79004f6dd94e5588c245962643f6172285bc72985abbec99568a84f169a241e0","close_rgb_sha256":"3e3002b71974b476c250d49121c7c9a51af4e601b2474a5b4141da7e7d0dba01"}
+  ],
+  "current_only_test_accuracy": 0.625,
+  "delta_history_test_accuracy": 0.71875,
+  "alias_current_accuracy": 0.5,
+  "alias_history_accuracy": 1.0,
+  "current_descriptor_cross_label_exact_collisions": 3,
+  "history_descriptor_cross_label_exact_collisions": 0,
+  "gates": {"alias_pairs_at_least_6":true,"alias_current_accuracy_le_0_75":true,"alias_history_accuracy_ge_0_95":true,"history_cross_label_hash_collisions_zero":true},
+  "wall_seconds": 9.458060503005981,
+  "environment": {"python":"3.13.5","platform":"Linux-6.18.44-x86_64-with-glibc2.41","vizdoom":"1.3.0","numpy":"2.5.3"},
+  "scope": "Direct ViZDoom teacher/evaluator mechanics study. Deployment claim forbidden; no OS-input/model/MAP01-clear claim."
+}

@@ -1,0 +1,3858 @@
+{
+  "passed": true,
+  "retained_sources": {
+    "anchor_report": {
+      "path": "results/openttd-anchor-first-live-01/report.json",
+      "sha256": "98992a49db78bce847c59f367aa67e24c0f0f31347999254902c51c05c5d3177"
+    },
+    "recovery_report": {
+      "path": "results/openttd-wrong-anchor-recovery-live-02/report.json",
+      "sha256": "41f2027d22e99419f0fcc1555d490d35422fbc3aeca77fc1e79d94209a3424df"
+    },
+    "no_match_report": {
+      "path": "results/openttd-evidence-authority-pair-02/no-match/report.json",
+      "sha256": "9d80def7c1f5a682464a3a5805ce545650c620a1017448101f5ad379ddc19fc4"
+    }
+  },
+  "journal_samples": {
+    "cold-anchor-accepted": [
+      {
+        "event": "stage_started",
+        "stage": "observe_source",
+        "started_ns": 1000100
+      },
+      {
+        "event": "stage_completed",
+        "stage": "observe_source",
+        "ended_ns": 1000200
+      },
+      {
+        "event": "model_attempt_started",
+        "attempt_id": "a1",
+        "stage": "coarse_model",
+        "status": "started",
+        "started_ns": 1000300,
+        "completed_ns": null,
+        "call_id": null,
+        "usage": null,
+        "error": null
+      },
+      {
+        "event": "model_attempt_finished",
+        "attempt_id": "a1",
+        "stage": "coarse_model",
+        "status": "completed",
+        "started_ns": 1000300,
+        "completed_ns": 1000400,
+        "call_id": "retained:coarse",
+        "usage": {
+          "input_tokens": 9288,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 390,
+          "reasoning_output_tokens": 310
+        },
+        "error": null
+      },
+      {
+        "event": "stage_started",
+        "stage": "acquire_anchor",
+        "started_ns": 1000500
+      },
+      {
+        "event": "stage_completed",
+        "stage": "acquire_anchor",
+        "ended_ns": 1000600
+      },
+      {
+        "event": "model_attempt_started",
+        "attempt_id": "a2",
+        "stage": "anchor_model",
+        "status": "started",
+        "started_ns": 1000700,
+        "completed_ns": null,
+        "call_id": null,
+        "usage": null,
+        "error": null
+      },
+      {
+        "event": "model_attempt_finished",
+        "attempt_id": "a2",
+        "stage": "anchor_model",
+        "status": "completed",
+        "started_ns": 1000700,
+        "completed_ns": 1000800,
+        "call_id": "retained:anchor-accept",
+        "usage": {
+          "input_tokens": 8098,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 114,
+          "reasoning_output_tokens": 57
+        },
+        "error": null
+      },
+      {
+        "event": "stage_started",
+        "stage": "final_revalidate",
+        "started_ns": 1000900
+      },
+      {
+        "event": "stage_completed",
+        "stage": "final_revalidate",
+        "ended_ns": 1001000
+      },
+      {
+        "event": "stage_started",
+        "stage": "execute",
+        "started_ns": 1001100
+      },
+      {
+        "event": "stage_completed",
+        "stage": "execute",
+        "ended_ns": 1001200
+      },
+      {
+        "event": "stage_started",
+        "stage": "verify_effect",
+        "started_ns": 1001300
+      },
+      {
+        "event": "stage_completed",
+        "stage": "verify_effect",
+        "ended_ns": 1001400
+      },
+      {
+        "event": "adaptive_route_finished",
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "verified_effect",
+        "attempted_calls": 2
+      }
+    ],
+    "cold-expanded-recovery": [
+      {
+        "event": "stage_started",
+        "stage": "observe_source",
+        "started_ns": 1000100
+      },
+      {
+        "event": "stage_completed",
+        "stage": "observe_source",
+        "ended_ns": 1000200
+      },
+      {
+        "event": "model_attempt_started",
+        "attempt_id": "e1",
+        "stage": "coarse_model",
+        "status": "started",
+        "started_ns": 1000300,
+        "completed_ns": null,
+        "call_id": null,
+        "usage": null,
+        "error": null
+      },
+      {
+        "event": "model_attempt_finished",
+        "attempt_id": "e1",
+        "stage": "coarse_model",
+        "status": "completed",
+        "started_ns": 1000300,
+        "completed_ns": 1000400,
+        "call_id": "retained:coarse-expanded",
+        "usage": {
+          "input_tokens": 9288,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 390,
+          "reasoning_output_tokens": 310
+        },
+        "error": null
+      },
+      {
+        "event": "stage_started",
+        "stage": "acquire_anchor",
+        "started_ns": 1000500
+      },
+      {
+        "event": "stage_completed",
+        "stage": "acquire_anchor",
+        "ended_ns": 1000600
+      },
+      {
+        "event": "model_attempt_started",
+        "attempt_id": "e2",
+        "stage": "anchor_model",
+        "status": "started",
+        "started_ns": 1000700,
+        "completed_ns": null,
+        "call_id": null,
+        "usage": null,
+        "error": null
+      },
+      {
+        "event": "model_attempt_finished",
+        "attempt_id": "e2",
+        "stage": "anchor_model",
+        "status": "completed",
+        "started_ns": 1000700,
+        "completed_ns": 1000800,
+        "call_id": "retained:anchor-expand",
+        "usage": {
+          "input_tokens": 8107,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 98,
+          "reasoning_output_tokens": 41
+        },
+        "error": null
+      },
+      {
+        "event": "stage_started",
+        "stage": "acquire_expansion",
+        "started_ns": 1000900
+      },
+      {
+        "event": "stage_completed",
+        "stage": "acquire_expansion",
+        "ended_ns": 1001000
+      },
+      {
+        "event": "model_attempt_started",
+        "attempt_id": "e3",
+        "stage": "expanded_model",
+        "status": "started",
+        "started_ns": 1001100,
+        "completed_ns": null,
+        "call_id": null,
+        "usage": null,
+        "error": null
+      },
+      {
+        "event": "model_attempt_finished",
+        "attempt_id": "e3",
+        "stage": "expanded_model",
+        "status": "completed",
+        "started_ns": 1001100,
+        "completed_ns": 1001200,
+        "call_id": "retained:expanded",
+        "usage": {
+          "input_tokens": 8280,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 87,
+          "reasoning_output_tokens": 30
+        },
+        "error": null
+      },
+      {
+        "event": "stage_started",
+        "stage": "final_revalidate",
+        "started_ns": 1001300
+      },
+      {
+        "event": "stage_completed",
+        "stage": "final_revalidate",
+        "ended_ns": 1001400
+      },
+      {
+        "event": "stage_started",
+        "stage": "execute",
+        "started_ns": 1001500
+      },
+      {
+        "event": "stage_completed",
+        "stage": "execute",
+        "ended_ns": 1001600
+      },
+      {
+        "event": "stage_started",
+        "stage": "verify_effect",
+        "started_ns": 1001700
+      },
+      {
+        "event": "stage_completed",
+        "stage": "verify_effect",
+        "ended_ns": 1001800
+      },
+      {
+        "event": "adaptive_route_finished",
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "verified_effect",
+        "attempted_calls": 3
+      }
+    ]
+  },
+  "scenarios": {
+    "cold-anchor-accepted": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "cache_update": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "route": "cold",
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "omitted_stages": [],
+        "comparable_to_full_cold": true
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "a1",
+          "stage": "coarse_model",
+          "status": "completed",
+          "started_ns": 1000300,
+          "completed_ns": 1000400,
+          "call_id": "retained:coarse",
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "a2",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1000700,
+          "completed_ns": 1000800,
+          "call_id": "retained:anchor-accept",
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "a1",
+          "stage": "coarse_model",
+          "call_id": "retained:coarse",
+          "output": {
+            "status": "candidate",
+            "point": [
+              505,
+              79
+            ]
+          },
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        {
+          "attempt_id": "a2",
+          "stage": "anchor_model",
+          "call_id": "retained:anchor-accept",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "point": [
+                506,
+                79
+              ],
+              "receipt": "finance",
+              "authority": "reference_only"
+            }
+          },
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 2,
+        "completed_calls": 2,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 17386,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 504,
+          "reasoning_output_tokens": 367
+        },
+        "usage_coverage": {
+          "input_tokens": 2,
+          "cached_input_tokens": 2,
+          "cache_write_input_tokens": 2,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 2
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "coarse_model",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1000500,
+          "ended_ns": 1000600,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1000700,
+          "ended_ns": 1000800,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1000900,
+          "ended_ns": 1001000,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1001100,
+          "ended_ns": 1001200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 1001300,
+          "ended_ns": 1001400,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "cold-expanded-recovery": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "cache_update": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "route": "cold",
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "omitted_stages": [],
+        "comparable_to_full_cold": true
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "completed",
+          "reason": null
+        },
+        "expanded_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "e1",
+          "stage": "coarse_model",
+          "status": "completed",
+          "started_ns": 1000300,
+          "completed_ns": 1000400,
+          "call_id": "retained:coarse-expanded",
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "e2",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1000700,
+          "completed_ns": 1000800,
+          "call_id": "retained:anchor-expand",
+          "usage": {
+            "input_tokens": 8107,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 98,
+            "reasoning_output_tokens": 41
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "e3",
+          "stage": "expanded_model",
+          "status": "completed",
+          "started_ns": 1001100,
+          "completed_ns": 1001200,
+          "call_id": "retained:expanded",
+          "usage": {
+            "input_tokens": 8280,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 87,
+            "reasoning_output_tokens": 30
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "e1",
+          "stage": "coarse_model",
+          "call_id": "retained:coarse-expanded",
+          "output": {
+            "status": "candidate",
+            "point": [
+              505,
+              79
+            ]
+          },
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        {
+          "attempt_id": "e2",
+          "stage": "anchor_model",
+          "call_id": "retained:anchor-expand",
+          "output": {
+            "status": "expand_search",
+            "anchor": [
+              456,
+              79
+            ]
+          },
+          "usage": {
+            "input_tokens": 8107,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 98,
+            "reasoning_output_tokens": 41
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        {
+          "attempt_id": "e3",
+          "stage": "expanded_model",
+          "call_id": "retained:expanded",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "point": [
+                506,
+                79
+              ],
+              "receipt": "finance",
+              "authority": "reference_only"
+            }
+          },
+          "usage": {
+            "input_tokens": 8280,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 87,
+            "reasoning_output_tokens": 30
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 3,
+        "completed_calls": 3,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 25675,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 575,
+          "reasoning_output_tokens": 381
+        },
+        "usage_coverage": {
+          "input_tokens": 3,
+          "cached_input_tokens": 3,
+          "cache_write_input_tokens": 3,
+          "output_tokens": 3,
+          "reasoning_output_tokens": 3
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "coarse_model",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1000500,
+          "ended_ns": 1000600,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1000700,
+          "ended_ns": 1000800,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_expansion",
+          "started_ns": 1000900,
+          "ended_ns": 1001000,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "expanded_model",
+          "started_ns": 1001100,
+          "ended_ns": 1001200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1001300,
+          "ended_ns": 1001400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1001500,
+          "ended_ns": 1001600,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 1001700,
+          "ended_ns": 1001800,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "injected-expanded-subpath": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "cache_update": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "route": "cold",
+      "coarse_origin": "injected_archive",
+      "comparison": {
+        "class": "injected_subpath",
+        "omitted_stages": [
+          "coarse_model"
+        ],
+        "comparable_to_full_cold": false
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "skipped",
+          "reason": "coarse_injected_archive"
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "completed",
+          "reason": null
+        },
+        "expanded_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "i1",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1000500,
+          "completed_ns": 1000600,
+          "call_id": "retained:injected-anchor",
+          "usage": {
+            "input_tokens": 8107,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 98,
+            "reasoning_output_tokens": 41
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "i2",
+          "stage": "expanded_model",
+          "status": "completed",
+          "started_ns": 1000900,
+          "completed_ns": 1001000,
+          "call_id": "retained:injected-expanded",
+          "usage": {
+            "input_tokens": 8280,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 87,
+            "reasoning_output_tokens": 30
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "i1",
+          "stage": "anchor_model",
+          "call_id": "retained:injected-anchor",
+          "output": {
+            "status": "expand_search",
+            "anchor": [
+              456,
+              79
+            ]
+          },
+          "usage": {
+            "input_tokens": 8107,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 98,
+            "reasoning_output_tokens": 41
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        {
+          "attempt_id": "i2",
+          "stage": "expanded_model",
+          "call_id": "retained:injected-expanded",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "point": [
+                506,
+                79
+              ],
+              "receipt": "finance",
+              "authority": "reference_only"
+            }
+          },
+          "usage": {
+            "input_tokens": 8280,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 87,
+            "reasoning_output_tokens": 30
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 2,
+        "completed_calls": 2,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 16387,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 185,
+          "reasoning_output_tokens": 71
+        },
+        "usage_coverage": {
+          "input_tokens": 2,
+          "cached_input_tokens": 2,
+          "cache_write_input_tokens": 2,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 2
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1000500,
+          "ended_ns": 1000600,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_expansion",
+          "started_ns": 1000700,
+          "ended_ns": 1000800,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "expanded_model",
+          "started_ns": 1000900,
+          "ended_ns": 1001000,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1001100,
+          "ended_ns": 1001200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1001300,
+          "ended_ns": 1001400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 1001500,
+          "ended_ns": 1001600,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "cold-no-match": {
+      "outcome": "SAFE_STOP",
+      "reason": "no_match",
+      "task_effect": null,
+      "delivery": null,
+      "execution_progress": null,
+      "selected_target": null,
+      "cache_update": null,
+      "route": "cold",
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "omitted_stages": [],
+        "comparable_to_full_cold": true
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "completed",
+          "reason": null
+        },
+        "expanded_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "final_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "execute": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "verify_effect": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "n1",
+          "stage": "coarse_model",
+          "status": "completed",
+          "started_ns": 1000300,
+          "completed_ns": 1000400,
+          "call_id": "retained:coarse-no-match",
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "n2",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1000700,
+          "completed_ns": 1000800,
+          "call_id": "retained:no-match-anchor",
+          "usage": {
+            "input_tokens": 8104,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 107,
+            "reasoning_output_tokens": 50
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "n3",
+          "stage": "expanded_model",
+          "status": "completed",
+          "started_ns": 1001100,
+          "completed_ns": 1001200,
+          "call_id": "retained:no-match-expanded",
+          "usage": {
+            "input_tokens": 8399,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 89,
+            "reasoning_output_tokens": 28
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "n1",
+          "stage": "coarse_model",
+          "call_id": "retained:coarse-no-match",
+          "output": {
+            "status": "candidate",
+            "point": [
+              505,
+              79
+            ]
+          },
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        {
+          "attempt_id": "n2",
+          "stage": "anchor_model",
+          "call_id": "retained:no-match-anchor",
+          "output": {
+            "status": "expand_search",
+            "anchor": [
+              456,
+              79
+            ]
+          },
+          "usage": {
+            "input_tokens": 8104,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 107,
+            "reasoning_output_tokens": 50
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        {
+          "attempt_id": "n3",
+          "stage": "expanded_model",
+          "call_id": "retained:no-match-expanded",
+          "output": {
+            "status": "no_match"
+          },
+          "usage": {
+            "input_tokens": 8399,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 89,
+            "reasoning_output_tokens": 28
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 3,
+        "completed_calls": 3,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 25791,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 586,
+          "reasoning_output_tokens": 388
+        },
+        "usage_coverage": {
+          "input_tokens": 3,
+          "cached_input_tokens": 3,
+          "cache_write_input_tokens": 3,
+          "output_tokens": 3,
+          "reasoning_output_tokens": 3
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "coarse_model",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1000500,
+          "ended_ns": 1000600,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1000700,
+          "ended_ns": 1000800,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_expansion",
+          "started_ns": 1000900,
+          "ended_ns": 1001000,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "expanded_model",
+          "started_ns": 1001100,
+          "ended_ns": 1001200,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "none"
+    },
+    "cold-search-exhausted": {
+      "outcome": "SAFE_STOP",
+      "reason": "search_exhausted",
+      "task_effect": null,
+      "delivery": null,
+      "execution_progress": null,
+      "selected_target": null,
+      "cache_update": null,
+      "route": "cold",
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "omitted_stages": [],
+        "comparable_to_full_cold": true
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "completed",
+          "reason": null
+        },
+        "expanded_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "final_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "execute": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "verify_effect": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "x1",
+          "stage": "coarse_model",
+          "status": "completed",
+          "started_ns": 1000300,
+          "completed_ns": 1000400,
+          "call_id": "retained:coarse-exhaust",
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "x2",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1000700,
+          "completed_ns": 1000800,
+          "call_id": "retained:anchor-exhaust",
+          "usage": {
+            "input_tokens": 8107,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 98,
+            "reasoning_output_tokens": 41
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "x3",
+          "stage": "expanded_model",
+          "status": "completed",
+          "started_ns": 1001100,
+          "completed_ns": 1001200,
+          "call_id": "retained:expanded-exhaust",
+          "usage": {
+            "input_tokens": 8280,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 87,
+            "reasoning_output_tokens": 30
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "x1",
+          "stage": "coarse_model",
+          "call_id": "retained:coarse-exhaust",
+          "output": {
+            "status": "candidate",
+            "point": [
+              505,
+              79
+            ]
+          },
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        {
+          "attempt_id": "x2",
+          "stage": "anchor_model",
+          "call_id": "retained:anchor-exhaust",
+          "output": {
+            "status": "expand_search",
+            "anchor": [
+              456,
+              79
+            ]
+          },
+          "usage": {
+            "input_tokens": 8107,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 98,
+            "reasoning_output_tokens": 41
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        {
+          "attempt_id": "x3",
+          "stage": "expanded_model",
+          "call_id": "retained:expanded-exhaust",
+          "output": {
+            "status": "search_exhausted"
+          },
+          "usage": {
+            "input_tokens": 8280,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 87,
+            "reasoning_output_tokens": 30
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 3,
+        "completed_calls": 3,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 25675,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 575,
+          "reasoning_output_tokens": 381
+        },
+        "usage_coverage": {
+          "input_tokens": 3,
+          "cached_input_tokens": 3,
+          "cache_write_input_tokens": 3,
+          "output_tokens": 3,
+          "reasoning_output_tokens": 3
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "coarse_model",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1000500,
+          "ended_ns": 1000600,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1000700,
+          "ended_ns": 1000800,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_expansion",
+          "started_ns": 1000900,
+          "ended_ns": 1001000,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "expanded_model",
+          "started_ns": 1001100,
+          "ended_ns": 1001200,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "none"
+    },
+    "cold-stale-refusal": {
+      "outcome": "SAFE_STOP",
+      "reason": "stale",
+      "task_effect": null,
+      "delivery": null,
+      "execution_progress": null,
+      "selected_target": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "cache_update": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "route": "cold",
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "omitted_stages": [],
+        "comparable_to_full_cold": true
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "verify_effect": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "cold-stale-refusal1",
+          "stage": "coarse_model",
+          "status": "completed",
+          "started_ns": 1000300,
+          "completed_ns": 1000400,
+          "call_id": "retained:cold-stale-refusal-coarse",
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "cold-stale-refusal2",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1000700,
+          "completed_ns": 1000800,
+          "call_id": "retained:cold-stale-refusal-anchor",
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "cold-stale-refusal1",
+          "stage": "coarse_model",
+          "call_id": "retained:cold-stale-refusal-coarse",
+          "output": {
+            "status": "candidate",
+            "point": [
+              505,
+              79
+            ]
+          },
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        {
+          "attempt_id": "cold-stale-refusal2",
+          "stage": "anchor_model",
+          "call_id": "retained:cold-stale-refusal-anchor",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "point": [
+                506,
+                79
+              ],
+              "receipt": "finance",
+              "authority": "reference_only"
+            }
+          },
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 2,
+        "completed_calls": 2,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 17386,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 504,
+          "reasoning_output_tokens": 367
+        },
+        "usage_coverage": {
+          "input_tokens": 2,
+          "cached_input_tokens": 2,
+          "cache_write_input_tokens": 2,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 2
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "coarse_model",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1000500,
+          "ended_ns": 1000600,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1000700,
+          "ended_ns": 1000800,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1000900,
+          "ended_ns": 1001000,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "none"
+    },
+    "cold-association-refusal": {
+      "outcome": "SAFE_STOP",
+      "reason": "association_changed",
+      "task_effect": null,
+      "delivery": null,
+      "execution_progress": null,
+      "selected_target": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "cache_update": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "route": "cold",
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "omitted_stages": [],
+        "comparable_to_full_cold": true
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "verify_effect": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "cold-association-refusal1",
+          "stage": "coarse_model",
+          "status": "completed",
+          "started_ns": 1000300,
+          "completed_ns": 1000400,
+          "call_id": "retained:cold-association-refusal-coarse",
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "cold-association-refusal2",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1000700,
+          "completed_ns": 1000800,
+          "call_id": "retained:cold-association-refusal-anchor",
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "cold-association-refusal1",
+          "stage": "coarse_model",
+          "call_id": "retained:cold-association-refusal-coarse",
+          "output": {
+            "status": "candidate",
+            "point": [
+              505,
+              79
+            ]
+          },
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        {
+          "attempt_id": "cold-association-refusal2",
+          "stage": "anchor_model",
+          "call_id": "retained:cold-association-refusal-anchor",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "point": [
+                506,
+                79
+              ],
+              "receipt": "finance",
+              "authority": "reference_only"
+            }
+          },
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 2,
+        "completed_calls": 2,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 17386,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 504,
+          "reasoning_output_tokens": 367
+        },
+        "usage_coverage": {
+          "input_tokens": 2,
+          "cached_input_tokens": 2,
+          "cache_write_input_tokens": 2,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 2
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "coarse_model",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1000500,
+          "ended_ns": 1000600,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1000700,
+          "ended_ns": 1000800,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1000900,
+          "ended_ns": 1001000,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "none"
+    },
+    "warm-reuse": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "cache_update": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "route": "reuse",
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "warm_reuse",
+        "omitted_stages": [
+          "observe_source",
+          "coarse_model",
+          "acquire_anchor",
+          "anchor_model"
+        ],
+        "comparable_to_full_cold": false
+      },
+      "stages": {
+        "observe_source": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "coarse_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_anchor": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "anchor_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "reuse_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [],
+      "model_call_ledger": [],
+      "accounting": {
+        "attempted_calls": 0,
+        "completed_calls": 0,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "usage_coverage": {
+          "input_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "cost": 0,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "reuse_revalidate",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1000500,
+          "ended_ns": 1000600,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 1000700,
+          "ended_ns": 1000800,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "warm-invalidate-repair": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "cache_update": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "route": "reuse",
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "warm_reuse",
+        "omitted_stages": [
+          "observe_source",
+          "coarse_model",
+          "acquire_anchor",
+          "anchor_model"
+        ],
+        "comparable_to_full_cold": false
+      },
+      "stages": {
+        "observe_source": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "coarse_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_anchor": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "anchor_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "reuse_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_expansion": {
+          "status": "completed",
+          "reason": null
+        },
+        "expanded_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "r1",
+          "stage": "expanded_model",
+          "status": "completed",
+          "started_ns": 1000500,
+          "completed_ns": 1000600,
+          "call_id": "retained:warm-repair",
+          "usage": {
+            "input_tokens": 8280,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 87,
+            "reasoning_output_tokens": 30
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "r1",
+          "stage": "expanded_model",
+          "call_id": "retained:warm-repair",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "point": [
+                506,
+                79
+              ],
+              "receipt": "finance",
+              "authority": "reference_only"
+            }
+          },
+          "usage": {
+            "input_tokens": 8280,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 87,
+            "reasoning_output_tokens": 30
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 1,
+        "completed_calls": 1,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 8280,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 87,
+          "reasoning_output_tokens": 30
+        },
+        "usage_coverage": {
+          "input_tokens": 1,
+          "cached_input_tokens": 1,
+          "cache_write_input_tokens": 1,
+          "output_tokens": 1,
+          "reasoning_output_tokens": 1
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "reuse_revalidate",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_expansion",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "expanded_model",
+          "started_ns": 1000500,
+          "ended_ns": 1000600,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1000700,
+          "ended_ns": 1000800,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1000900,
+          "ended_ns": 1001000,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 1001100,
+          "ended_ns": 1001200,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "warm-association-refusal": {
+      "outcome": "SAFE_STOP",
+      "reason": "association_changed",
+      "task_effect": null,
+      "delivery": null,
+      "execution_progress": null,
+      "selected_target": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "cache_update": null,
+      "route": "reuse",
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "warm_reuse",
+        "omitted_stages": [
+          "observe_source",
+          "coarse_model",
+          "acquire_anchor",
+          "anchor_model"
+        ],
+        "comparable_to_full_cold": false
+      },
+      "stages": {
+        "observe_source": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "coarse_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_anchor": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "anchor_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "reuse_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "execute": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "verify_effect": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        }
+      },
+      "attempt_ledger": [],
+      "model_call_ledger": [],
+      "accounting": {
+        "attempted_calls": 0,
+        "completed_calls": 0,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "usage_coverage": {
+          "input_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "cost": 0,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "reuse_revalidate",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "none"
+    },
+    "execution-delivery-uncertain": {
+      "outcome": "EXECUTION_INCOMPLETE",
+      "reason": "delivery_uncertain",
+      "task_effect": null,
+      "delivery": "delivery_uncertain",
+      "execution_progress": {
+        "status": "delivery_uncertain"
+      },
+      "selected_target": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "cache_update": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "route": "cold",
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "omitted_stages": [],
+        "comparable_to_full_cold": true
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "u1",
+          "stage": "coarse_model",
+          "status": "completed",
+          "started_ns": 1000300,
+          "completed_ns": 1000400,
+          "call_id": "retained:uncertain-coarse",
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "u2",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1000700,
+          "completed_ns": 1000800,
+          "call_id": "retained:uncertain-anchor",
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "u1",
+          "stage": "coarse_model",
+          "call_id": "retained:uncertain-coarse",
+          "output": {
+            "status": "candidate",
+            "point": [
+              505,
+              79
+            ]
+          },
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        {
+          "attempt_id": "u2",
+          "stage": "anchor_model",
+          "call_id": "retained:uncertain-anchor",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "point": [
+                506,
+                79
+              ],
+              "receipt": "finance",
+              "authority": "reference_only"
+            }
+          },
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 2,
+        "completed_calls": 2,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 17386,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 504,
+          "reasoning_output_tokens": 367
+        },
+        "usage_coverage": {
+          "input_tokens": 2,
+          "cached_input_tokens": 2,
+          "cache_write_input_tokens": 2,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 2
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "coarse_model",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1000500,
+          "ended_ns": 1000600,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1000700,
+          "ended_ns": 1000800,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1000900,
+          "ended_ns": 1001000,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1001100,
+          "ended_ns": 1001200,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "execution-local-safe-yield-after-action": {
+      "outcome": "EXECUTION_INCOMPLETE",
+      "reason": "unknown_state",
+      "task_effect": null,
+      "delivery": "confirmed_partial",
+      "execution_progress": {
+        "status": "safe_yield",
+        "reason": "unknown_state",
+        "completed_actions": 1
+      },
+      "selected_target": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "cache_update": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "route": "cold",
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "omitted_stages": [],
+        "comparable_to_full_cold": true
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "y1",
+          "stage": "coarse_model",
+          "status": "completed",
+          "started_ns": 1000300,
+          "completed_ns": 1000400,
+          "call_id": "retained:yield-coarse",
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "y2",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1000700,
+          "completed_ns": 1000800,
+          "call_id": "retained:yield-anchor",
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "y1",
+          "stage": "coarse_model",
+          "call_id": "retained:yield-coarse",
+          "output": {
+            "status": "candidate",
+            "point": [
+              505,
+              79
+            ]
+          },
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        {
+          "attempt_id": "y2",
+          "stage": "anchor_model",
+          "call_id": "retained:yield-anchor",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "point": [
+                506,
+                79
+              ],
+              "receipt": "finance",
+              "authority": "reference_only"
+            }
+          },
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 2,
+        "completed_calls": 2,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 17386,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 504,
+          "reasoning_output_tokens": 367
+        },
+        "usage_coverage": {
+          "input_tokens": 2,
+          "cached_input_tokens": 2,
+          "cache_write_input_tokens": 2,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 2
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "coarse_model",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1000500,
+          "ended_ns": 1000600,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1000700,
+          "ended_ns": 1000800,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1000900,
+          "ended_ns": 1001000,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1001100,
+          "ended_ns": 1001200,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "execution-local-safe-yield-before-action": {
+      "outcome": "EXECUTION_INCOMPLETE",
+      "reason": "missing_symbol",
+      "task_effect": null,
+      "delivery": "not_attempted",
+      "execution_progress": {
+        "status": "safe_yield",
+        "reason": "missing_symbol",
+        "completed_actions": 0
+      },
+      "selected_target": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "cache_update": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "route": "cold",
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "omitted_stages": [],
+        "comparable_to_full_cold": true
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "z1",
+          "stage": "coarse_model",
+          "status": "completed",
+          "started_ns": 1000300,
+          "completed_ns": 1000400,
+          "call_id": "retained:zero-coarse",
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "z2",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1000700,
+          "completed_ns": 1000800,
+          "call_id": "retained:zero-anchor",
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "z1",
+          "stage": "coarse_model",
+          "call_id": "retained:zero-coarse",
+          "output": {
+            "status": "candidate",
+            "point": [
+              505,
+              79
+            ]
+          },
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        {
+          "attempt_id": "z2",
+          "stage": "anchor_model",
+          "call_id": "retained:zero-anchor",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "point": [
+                506,
+                79
+              ],
+              "receipt": "finance",
+              "authority": "reference_only"
+            }
+          },
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 2,
+        "completed_calls": 2,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 17386,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 504,
+          "reasoning_output_tokens": 367
+        },
+        "usage_coverage": {
+          "input_tokens": 2,
+          "cached_input_tokens": 2,
+          "cache_write_input_tokens": 2,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 2
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "coarse_model",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1000500,
+          "ended_ns": 1000600,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1000700,
+          "ended_ns": 1000800,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1000900,
+          "ended_ns": 1001000,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1001100,
+          "ended_ns": 1001200,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "none"
+    },
+    "execution-invalid-yield-reason": {
+      "outcome": "CALLER_FAILED",
+      "reason": "ValueError('unsupported local execution yield reason invented_reason')",
+      "task_effect": null,
+      "delivery": null,
+      "execution_progress": null,
+      "selected_target": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "cache_update": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "route": "cold",
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "omitted_stages": [],
+        "comparable_to_full_cold": true
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "b1",
+          "stage": "coarse_model",
+          "status": "completed",
+          "started_ns": 1000300,
+          "completed_ns": 1000400,
+          "call_id": "retained:bad-coarse",
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "b2",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1000700,
+          "completed_ns": 1000800,
+          "call_id": "retained:bad-anchor",
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "b1",
+          "stage": "coarse_model",
+          "call_id": "retained:bad-coarse",
+          "output": {
+            "status": "candidate",
+            "point": [
+              505,
+              79
+            ]
+          },
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        {
+          "attempt_id": "b2",
+          "stage": "anchor_model",
+          "call_id": "retained:bad-anchor",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "point": [
+                506,
+                79
+              ],
+              "receipt": "finance",
+              "authority": "reference_only"
+            }
+          },
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 2,
+        "completed_calls": 2,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 17386,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 504,
+          "reasoning_output_tokens": 367
+        },
+        "usage_coverage": {
+          "input_tokens": 2,
+          "cached_input_tokens": 2,
+          "cache_write_input_tokens": 2,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 2
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "coarse_model",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1000500,
+          "ended_ns": 1000600,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1000700,
+          "ended_ns": 1000800,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1000900,
+          "ended_ns": 1001000,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1001100,
+          "ended_ns": 1001200,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "model-failure-missing-usage": {
+      "outcome": "CALLER_FAILED",
+      "reason": "ModelFailure('retained unavailable usage')",
+      "task_effect": null,
+      "delivery": null,
+      "execution_progress": null,
+      "selected_target": null,
+      "cache_update": null,
+      "route": "cold",
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "omitted_stages": [],
+        "comparable_to_full_cold": true
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "failed",
+          "reason": "ModelFailure('retained unavailable usage')"
+        },
+        "acquire_anchor": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "anchor_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "execute": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "verify_effect": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "f1",
+          "stage": "coarse_model",
+          "status": "failed",
+          "started_ns": 1000300,
+          "completed_ns": 1000400,
+          "call_id": "failed:1",
+          "usage": null,
+          "error": "ModelFailure('retained unavailable usage')"
+        }
+      ],
+      "model_call_ledger": [],
+      "accounting": {
+        "attempted_calls": 1,
+        "completed_calls": 0,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": null,
+          "cached_input_tokens": null,
+          "cache_write_input_tokens": null,
+          "output_tokens": null,
+          "reasoning_output_tokens": null
+        },
+        "usage_coverage": {
+          "input_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "cost": 0,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "coarse_model",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "none"
+    },
+    "model-failure-available-usage": {
+      "outcome": "CALLER_FAILED",
+      "reason": "ModelFailure('retained usage on failed call')",
+      "task_effect": null,
+      "delivery": null,
+      "execution_progress": null,
+      "selected_target": null,
+      "cache_update": null,
+      "route": "cold",
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "omitted_stages": [],
+        "comparable_to_full_cold": true
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "failed",
+          "reason": "ModelFailure('retained usage on failed call')"
+        },
+        "acquire_anchor": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "anchor_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "execute": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "verify_effect": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "fu1",
+          "stage": "coarse_model",
+          "status": "failed",
+          "started_ns": 1000300,
+          "completed_ns": 1000400,
+          "call_id": "failed:usage",
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "error": "ModelFailure('retained usage on failed call')"
+        }
+      ],
+      "model_call_ledger": [],
+      "accounting": {
+        "attempted_calls": 1,
+        "completed_calls": 0,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 9288,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 390,
+          "reasoning_output_tokens": 310
+        },
+        "usage_coverage": {
+          "input_tokens": 1,
+          "cached_input_tokens": 1,
+          "cache_write_input_tokens": 1,
+          "output_tokens": 1,
+          "reasoning_output_tokens": 1
+        },
+        "cost": 0,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "coarse_model",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "none"
+    },
+    "completed-missing-usage-field": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "cache_update": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "route": "cold",
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "omitted_stages": [],
+        "comparable_to_full_cold": true
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "p1",
+          "stage": "coarse_model",
+          "status": "completed",
+          "started_ns": 1000300,
+          "completed_ns": 1000400,
+          "call_id": "retained:partial",
+          "usage": {
+            "input_tokens": 9288,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "p2",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1000700,
+          "completed_ns": 1000800,
+          "call_id": "retained:partial-anchor",
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "p1",
+          "stage": "coarse_model",
+          "call_id": "retained:partial",
+          "output": {
+            "status": "candidate",
+            "point": [
+              505,
+              79
+            ]
+          },
+          "usage": {
+            "input_tokens": 9288,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        {
+          "attempt_id": "p2",
+          "stage": "anchor_model",
+          "call_id": "retained:partial-anchor",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "point": [
+                506,
+                79
+              ],
+              "receipt": "finance",
+              "authority": "reference_only"
+            }
+          },
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 2,
+        "completed_calls": 2,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 17386,
+          "cached_input_tokens": null,
+          "cache_write_input_tokens": null,
+          "output_tokens": 504,
+          "reasoning_output_tokens": 367
+        },
+        "usage_coverage": {
+          "input_tokens": 2,
+          "cached_input_tokens": 1,
+          "cache_write_input_tokens": 1,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 2
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "coarse_model",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1000500,
+          "ended_ns": 1000600,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1000700,
+          "ended_ns": 1000800,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1000900,
+          "ended_ns": 1001000,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1001100,
+          "ended_ns": 1001200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 1001300,
+          "ended_ns": 1001400,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "duplicate-call-id": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "cache_update": {
+        "point": [
+          506,
+          79
+        ],
+        "receipt": "finance",
+        "authority": "reference_only"
+      },
+      "route": "cold",
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "omitted_stages": [],
+        "comparable_to_full_cold": true
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "d1",
+          "stage": "coarse_model",
+          "status": "completed",
+          "started_ns": 1000300,
+          "completed_ns": 1000400,
+          "call_id": "duplicate",
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "d2",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1000700,
+          "completed_ns": 1000800,
+          "call_id": "duplicate",
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "d1",
+          "stage": "coarse_model",
+          "call_id": "duplicate",
+          "output": {
+            "status": "candidate",
+            "point": [
+              505,
+              79
+            ]
+          },
+          "usage": {
+            "input_tokens": 9288,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 390,
+            "reasoning_output_tokens": 310
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        {
+          "attempt_id": "d2",
+          "stage": "anchor_model",
+          "call_id": "duplicate",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "point": [
+                506,
+                79
+              ],
+              "receipt": "finance",
+              "authority": "reference_only"
+            }
+          },
+          "usage": {
+            "input_tokens": 8098,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 114,
+            "reasoning_output_tokens": 57
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 2,
+        "completed_calls": 2,
+        "duplicate_call_ids": [
+          "duplicate"
+        ],
+        "usage_totals": {
+          "input_tokens": 17386,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 504,
+          "reasoning_output_tokens": 367
+        },
+        "usage_coverage": {
+          "input_tokens": 2,
+          "cached_input_tokens": 2,
+          "cache_write_input_tokens": 2,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 2
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1000100,
+          "ended_ns": 1000200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "coarse_model",
+          "started_ns": 1000300,
+          "ended_ns": 1000400,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1000500,
+          "ended_ns": 1000600,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1000700,
+          "ended_ns": 1000800,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1000900,
+          "ended_ns": 1001000,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1001100,
+          "ended_ns": 1001200,
+          "elapsed_ns": 100
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 1001300,
+          "ended_ns": 1001400,
+          "elapsed_ns": 100
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    }
+  },
+  "scope": "offline accounting and branch mechanics using retained usage plus test doubles; no new model, GUI, task efficacy, latency, portability or token-saving claim"
+}

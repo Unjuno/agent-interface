@@ -1,0 +1,43 @@
+{
+  "clock": {
+    "clock": "perf_counter_ns",
+    "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+    "monotonic": true,
+    "adjustable": false,
+    "resolution_seconds": 1e-09,
+    "authority": "none",
+    "status": "identified",
+    "domain": {
+      "boot_id": "41843812-5516-48b1-bfe0-2cea3f7feda1",
+      "time_namespace": "time:[4026531834]",
+      "time_namespace_offsets": "monotonic           0         0\nboottime            0         0\n",
+      "implementation": "clock_gettime(CLOCK_MONOTONIC)"
+    },
+    "domain_id": "be6ef9a5b7060ed8c2f2b4d3adef53fd78f9be051d3e623b3c9bd50df103b74b",
+    "uncertainty": "clock resolution recorded; scheduling/endpoint uncertainty not measured"
+  },
+  "endpoints": {
+    "client_main_entered_ns": 16602714626,
+    "arguments_parsed_ns": 16609116117,
+    "source_loaded_ns": 16614009823,
+    "program_prepared_ns": 16633152435,
+    "request_persisted_ns": 16642526148,
+    "clock_described_ns": 16642974557,
+    "socket_connected_ns": 16643289663,
+    "request_sendall_returned_ns": 16643351518,
+    "response_line_received_ns": 17316546667,
+    "response_decoded_ns": 17316763381,
+    "result_and_image_processed_ns": 17336965605,
+    "optional_drain_finished_ns": 17336969225,
+    "report_file_written_ns": 17340558961,
+    "stdout_serialized_ns": 17340680577,
+    "stdout_flush_returned_ns": 17340712929
+  },
+  "unobserved_endpoints": {
+    "model_observation_received_ns": null,
+    "model_generation_started_ns": null,
+    "model_generation_finished_ns": null,
+    "model_result_received_ns": null
+  },
+  "scope": "flush return is local pipe completion, not consumer or model receipt"
+}

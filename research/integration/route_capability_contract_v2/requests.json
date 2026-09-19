@@ -1,0 +1,16 @@
+{
+  "schema": "route-capability-request-matrix-v1",
+  "known_dimensions": ["scale", "center"],
+  "requests": [
+    {"id":"scale-native","required_dimensions":["scale"],"allowed_routes":["native_fixed80"]},
+    {"id":"scale-wheel","required_dimensions":["scale"],"allowed_routes":["ctrl_wheel"]},
+    {"id":"scale-prefer-native","required_dimensions":["scale"],"allowed_routes":["native_fixed80","ctrl_wheel"]},
+    {"id":"center-fallback-wheel","required_dimensions":["scale","center"],"allowed_routes":["native_fixed80","ctrl_wheel"]},
+    {"id":"center-native-only","required_dimensions":["scale","center"],"allowed_routes":["native_fixed80"]},
+    {"id":"center-wheel-only","required_dimensions":["scale","center"],"allowed_routes":["ctrl_wheel"]},
+    {"id":"scale-negative-first","required_dimensions":["scale"],"allowed_routes":["one_contact_negative","ctrl_wheel"]},
+    {"id":"center-insufficient-only","required_dimensions":["scale","center"],"allowed_routes":["one_contact_negative","native_fixed80"]},
+    {"id":"unknown-dimension","required_dimensions":["scale","teleport"],"allowed_routes":["ctrl_wheel"]},
+    {"id":"missing-provenance","required_dimensions":["scale"],"allowed_routes":["route_without_retained_evidence"]}
+  ]
+}

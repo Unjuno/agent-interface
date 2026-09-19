@@ -1,0 +1,66 @@
+{
+  "critical_barrier": {
+    "critical_identity": [
+      {
+        "event_id": "A-target-lost",
+        "kind": "TARGET_LOST",
+        "record_class": "critical",
+        "seq": 3,
+        "session": "A"
+      }
+    ],
+    "extrema_sequence": [
+      "NEEDS_DECISION",
+      "TARGET_LOST",
+      "CONTINUE"
+    ],
+    "raw_sequence": [
+      "NEEDS_DECISION",
+      "TARGET_LOST",
+      "CONTINUE"
+    ]
+  },
+  "cross_session": [
+    {
+      "decision": "NEEDS_DECISION",
+      "session": "A"
+    },
+    {
+      "decision": "CONTINUE",
+      "session": "B"
+    }
+  ],
+  "decision": "PASS_EXTREMA_PRESERVING_PROGRESS_DECISION_SCOPED",
+  "formal_reruns": 0,
+  "full_result_in_evidence_archive": true,
+  "full_result_sha256": "b63420c8d6fac6c4c67443e6661052dc4d785bb94abcf822aed126dcd637e628",
+  "gates": {
+    "bounded_summary_fields": true,
+    "critical_barrier_not_crossed": true,
+    "critical_identity_order_exact": true,
+    "cross_session_isolated": true,
+    "extrema_matches_raw_all_progress_segments": true,
+    "formal_reruns_zero": true,
+    "latest_only_miss_exposed": true,
+    "threshold_equal_strict": true
+  },
+  "summary": {
+    "extrema_raw_decision_mismatches": 0,
+    "latest_only_missed_needs_decision": 3,
+    "raw_progress_segments": 9
+  },
+  "task": "EVENT-PROGRESS-DECISION-FIDELITY-20260917-002",
+  "threshold": 0.7,
+  "threshold_equal": {
+    "extrema": "CONTINUE",
+    "raw": "CONTINUE"
+  },
+  "threshold_operator": "<",
+  "transient_dip_recovered": {
+    "extrema": "NEEDS_DECISION",
+    "latest_confidence": 0.93,
+    "latest_only": "CONTINUE",
+    "raw": "NEEDS_DECISION",
+    "worst_confidence": 0.64
+  }
+}

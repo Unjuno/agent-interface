@@ -1,0 +1,16 @@
+{
+  "schema": "map01-autoresearch-refresh-freeze-v1",
+  "issue": 121,
+  "allocation": "stage3-refresh",
+  "plan_sha256": "134050ccb63c914600b6e225f6f144d7c5d921ac682bbac72eff1ac19d386b64",
+  "source_sha256": {
+    "runner.py": "03849c6d5b0c502a10f9af8d77b8f146eacabcca8af65dc0c12bcddfb5d67bff",
+    "trace_session.py": "8a9b816fe6ff980aadb03e1d856498d5299424ad6b9430a1896021640ab205ad",
+    "refresh_driver.py": "be3d0506d168280fa882a7e0afaa155ed1effabd922ab6f07b7da469cd0f4e96"
+  },
+  "reason": "Stage1 retained positive kill events only after control despite periodic getter calls. No-input ViZDoom 1.3.0 calibration returned episode/state tic 1 across two 200ms sleeps and a zero-tic update, then tic 17 after a one-tic update. A one-tic refreshed X11 preflight passes release/scorer/bracket/owner-thread checks and is excluded from the comparison.",
+  "T": "Three matched pairs in passive/refresh1, refresh1/passive, passive/refresh1 order. Fresh original threat-contact-v2 restore each case, seed 997302, explicit [s,a,space], owner cutoff 3075ms. Both evaluator arms 10Hz; only refresh1 adds advance_action(1,True) before getter set. ASYNC_SPECTATOR uses OS input; no API action selection, no model, no shared runtime edit.",
+  "D": "Compare positive independent progress observed before owner deadline, actual engine tic updates, getter/refresh duration, verified input release, strict terminal score agreement and scorer isolation. Require valid full acquisition brackets and same-owner-thread tracing. Stop on hard failure; preserve negative utility outcomes. Missed periods descriptive.",
+  "C_U": "Refresh is an evaluator intervention and can perturb scheduling; one tick update does not prove the exact effect timestamp or that a field set is atomically current. Three pairs on one state are not population efficacy. Do not silently combine refreshed measurements with the prior passive scorer protocol.",
+  "retry": false
+}

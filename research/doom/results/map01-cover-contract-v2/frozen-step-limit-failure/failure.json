@@ -1,0 +1,51 @@
+{
+  "allocation_id": "map01-cover-threat-exposure-01",
+  "status": "executor_rejected_cover",
+  "retained": true,
+  "model_calls_completed": 1,
+  "primary_programs_completed": 1,
+  "rejected_reason": "1\u201316 steps required",
+  "rejected_cover_id": "cover-1",
+  "rejected_cover_steps": 20,
+  "authored_action": {
+    "assessment": "Starting view is stable; no enemies visible. Approach the passage and door ahead.",
+    "state": "active",
+    "commands": [
+      {
+        "action": "forward",
+        "extent": "medium"
+      }
+    ],
+    "contingencies": [
+      {
+        "after_command": 0,
+        "condition": "no_visible_effect",
+        "commands": [
+          {
+            "action": "use",
+            "extent": "pulse"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      }
+    ],
+    "next_cover": [
+      {
+        "action": "coast",
+        "extent": "pulse"
+      }
+    ]
+  },
+  "usage": {
+    "input_tokens": 11505,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 96,
+    "reasoning_output_tokens": 0
+  },
+  "post_control_score_available": false,
+  "no_rerun": true
+}

@@ -1,0 +1,44 @@
+{
+  "proposal": {
+    "kind": "replace_and_save",
+    "observation_id": "runtime-sequence-9",
+    "policy_id": "full-control",
+    "policy_version": 1,
+    "field_x": 154,
+    "field_y": 277,
+    "save_x": 271,
+    "save_y": 277,
+    "text": "t000253",
+    "rationale": "Current observation identifies the Value field and adjacent Save button."
+  },
+  "gate": {
+    "authorized": true,
+    "reason": "visible_unredacted_targets",
+    "steps": [
+      {
+        "op": "pointer_click",
+        "x": 154,
+        "y": 277,
+        "duration_ms": 80
+      },
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "a"
+      },
+      {
+        "op": "text",
+        "text": "t000253"
+      },
+      {
+        "op": "pointer_click",
+        "x": 271,
+        "y": 277,
+        "duration_ms": 80
+      },
+      {
+        "op": "observe"
+      }
+    ]
+  }
+}

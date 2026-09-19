@@ -1,0 +1,27 @@
+{
+  "decision": "PASS_LAYERED_LIFETIME_ADMISSION_CONTRACT_SCOPED",
+  "directed": [
+    {"layer":"binding","oracle_changed":false,"oracle_unchanged":true,"same_layer_changed":false,"unchanged":true},
+    {"layer":"precondition","oracle_changed":false,"oracle_unchanged":true,"same_layer_changed":false,"unchanged":true},
+    {"layer":"route","oracle_changed":false,"oracle_unchanged":true,"same_layer_changed":false,"unchanged":true},
+    {"layer":"observation_cache","oracle_changed":false,"oracle_unchanged":true,"same_layer_changed":false,"unchanged":true},
+    {"layer":"motor_calibration","oracle_changed":false,"oracle_unchanged":true,"same_layer_changed":false,"unchanged":true}
+  ],
+  "formal_invocations": 1,
+  "layers": ["binding","precondition","route","observation_cache","motor_calibration"],
+  "ledger_sha256": "a51e7f777995ef0c8c6625502a7fe591e26fc7b7e84fc35337bf4b6df46fe694",
+  "replacements": 0,
+  "reruns": 0,
+  "stats": {
+    "global_false_invalidate": 180,
+    "global_stale_accept": 0,
+    "layered_false_invalidate": 0,
+    "layered_mismatch": 0,
+    "layered_stale_accept": 0,
+    "route_false_invalidate": 65,
+    "route_stale_accept": 350,
+    "rows": 992
+  },
+  "task": "LAYERED-LIFETIME-ADMISSION-CONTRACT-R0-20260918-001",
+  "tuning": 0
+}

@@ -1,0 +1,23 @@
+{"event": "ready", "app": "xterm", "goal": {"token": "t900201", "a": 762, "b": 394, "dx": 24, "setup_readiness_captures": 0}, "operations": ["submit", "cancel", "finish"], "emit_started_ns": 51178403736}
+{"event": "observation", "id": "initial", "step": 0, "sequence": 1, "capture_ns": 51198750310, "context_ns": 51205217776, "context": [["windows", "0x0060000c  0 HPLaptop AI XTERM READY\n"], ["active_window", 6291468]], "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/lease-assistant-01/001.png", "image_reused": false, "image_prepare_ns": 29294403, "image_ready_ns": 51248586828, "capture_ms": 15.342105, "wire_bytes": 20196, "exact": true, "semantic_completion": "unknown", "emit_started_ns": 51255786276}
+{"event": "command", "command": {"op": "submit", "id": "stale", "expected_sequence": 1, "valid_until_ns": 56198750310, "steps": [{"op": "text", "text": "bad"}]}, "received_ns": 67172773544, "emit_started_ns": 67172781492}
+{"event": "rejected", "reason": "intent validity expired", "emit_started_ns": 67177327748}
+{"event": "command", "command": {"op": "submit", "id": "fresh", "expected_sequence": 1, "valid_until_ns": 81198750310, "steps": [{"op": "text", "text": "t900201"}, {"op": "key", "key": "Return"}]}, "received_ns": 67187073826, "emit_started_ns": 67187076631}
+{"event": "accepted", "id": "fresh", "steps": 2, "valid_until_ns": 81198750310, "accepted_ns": 67197905205, "emit_started_ns": 67197912276}
+{"event": "step_started", "id": "fresh", "step": 0, "operation": "text", "issued_ns": 67208595106, "emit_started_ns": 67208597897}
+{"event": "input_admission", "key": "t", "admitted_ns": 67221244443, "valid_until_ns": 81198750310, "emit_started_ns": 67221249868}
+{"event": "input_admission", "key": "9", "admitted_ns": 67233621840, "valid_until_ns": 81198750310, "emit_started_ns": 67233627367}
+{"event": "input_admission", "key": "0", "admitted_ns": 67247143247, "valid_until_ns": 81198750310, "emit_started_ns": 67247148654}
+{"event": "input_admission", "key": "0", "admitted_ns": 67259140240, "valid_until_ns": 81198750310, "emit_started_ns": 67259143714}
+{"event": "input_admission", "key": "2", "admitted_ns": 67268480827, "valid_until_ns": 81198750310, "emit_started_ns": 67268484107}
+{"event": "input_admission", "key": "0", "admitted_ns": 67276917960, "valid_until_ns": 81198750310, "emit_started_ns": 67276921677}
+{"event": "input_admission", "key": "1", "admitted_ns": 67286807283, "valid_until_ns": 81198750310, "emit_started_ns": 67286810439}
+{"event": "observation", "id": "fresh", "step": 0, "sequence": 2, "capture_ns": 67301611133, "context_ns": 67309067971, "context": [["windows", "0x0060000c  0 HPLaptop AI XTERM READY\n"], ["active_window", 6291468]], "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/lease-assistant-01/002.png", "image_reused": false, "image_prepare_ns": 18568338, "image_ready_ns": 67341301666, "capture_ms": 7.355528, "wire_bytes": 1936, "exact": true, "semantic_completion": "unknown", "emit_started_ns": 67345937207}
+{"event": "step_completed", "id": "fresh", "step": 0, "completed_ns": 67348397317, "emit_started_ns": 67348400062}
+{"event": "step_started", "id": "fresh", "step": 1, "operation": "key", "issued_ns": 67358295310, "emit_started_ns": 67358300788}
+{"event": "input_admission", "key": "Return", "admitted_ns": 67367171823, "valid_until_ns": 81198750310, "emit_started_ns": 67367177247}
+{"event": "observation", "id": "fresh", "step": 1, "sequence": 3, "capture_ns": 67381252855, "context_ns": 67386379521, "context": [["windows", "0x0060000c  0 HPLaptop AI XTERM SAVED\n"], ["active_window", 6291468]], "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/lease-assistant-01/003.png", "image_reused": false, "image_prepare_ns": 16435892, "image_ready_ns": 67415393611, "capture_ms": 3.397149, "wire_bytes": 2148, "exact": true, "semantic_completion": "unknown", "emit_started_ns": 67422636041}
+{"event": "step_completed", "id": "fresh", "step": 1, "completed_ns": 67425858676, "emit_started_ns": 67425861537}
+{"event": "terminal", "id": "fresh", "status": "completed", "error": null, "steps_completed": 2, "release": {"verified": true, "keys_down": [], "verified_ns": 67435645572}, "terminal_ns": 67435649761, "semantic_completion": "program status only; task scoring is separate", "emit_started_ns": 67435653642}
+{"event": "command", "command": {"op": "finish"}, "received_ns": 107237491419, "emit_started_ns": 107237527478}
+{"event": "independent_evaluation", "success": true, "actual": "t900201", "known_ns": 107241178084, "emit_started_ns": 107241215897}

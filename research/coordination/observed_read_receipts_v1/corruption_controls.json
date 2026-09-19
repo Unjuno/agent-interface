@@ -1,0 +1,26 @@
+[
+  {
+    "name": "flip_committed",
+    "rejected": true,
+    "returncode": 1,
+    "stdout": "{\"broad_false_contention\": 1, \"broad_truth\": 2, \"decision\": \"FAIL\", \"errors\": [\"generation:m04\", \"gen_events:m04\"], \"observed_truth\": 2, \"rows\": 6}"
+  },
+  {
+    "name": "add_unrelated_token",
+    "rejected": true,
+    "returncode": 1,
+    "stdout": "{\"broad_false_contention\": 1, \"broad_truth\": 2, \"decision\": \"FAIL\", \"errors\": [\"token_keys:m06\"], \"observed_truth\": 3, \"rows\": 6}"
+  },
+  {
+    "name": "delete_generation_event",
+    "rejected": true,
+    "returncode": 1,
+    "stdout": "{\"broad_false_contention\": 1, \"broad_truth\": 2, \"decision\": \"FAIL\", \"errors\": [\"gen_events:m06\"], \"observed_truth\": 3, \"rows\": 6}"
+  },
+  {
+    "name": "duplicate_id",
+    "rejected": true,
+    "returncode": 1,
+    "stdout": "{\"broad_false_contention\": 1, \"broad_truth\": 2, \"decision\": \"FAIL\", \"errors\": [\"duplicate:m05\", \"generation:m05\", \"gen_events:m05\"], \"observed_truth\": 3, \"rows\": 6}"
+  }
+]

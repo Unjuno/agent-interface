@@ -1,0 +1,15 @@
+{
+  "task": "COORD-ISSUER-INCARNATION-FENCE-20260917-023",
+  "publication_base": "a8327e1b04b9ed82d903c57b3a957ee998705ab6",
+  "container_first": true,
+  "capacity": 2,
+  "incarnations": [1, 2],
+  "formal_order": [
+    "seq_reset_baseline_old_replay",
+    "incarnation_old_replay",
+    "incarnation_fresh_restart",
+    "incarnation_retained_conflict"
+  ],
+  "formal_runner_max_invocations": 1,
+  "no_tuning_after_formal_result": true
+}

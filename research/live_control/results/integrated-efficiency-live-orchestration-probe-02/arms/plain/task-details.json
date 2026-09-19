@@ -1,0 +1,2030 @@
+[
+  {
+    "trace": {
+      "arm": "plain",
+      "task_id": "task-1",
+      "layout": "A",
+      "route": "cold",
+      "model_calls": [
+        {
+          "call_id": "engineering:plain:1",
+          "stage": "anchor_model",
+          "requested_model": "synthetic-no-model",
+          "requested_effort": "none",
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          }
+        }
+      ],
+      "planner_generations": 1,
+      "model_visible_images": 1,
+      "local_observations": 17,
+      "durable_calls": 6,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 2444859530,
+      "source_to_completion_ns": 901055805,
+      "input_feedback_ns": [
+        94880890,
+        110138899
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    "source": {
+      "event": "observation",
+      "id": "durable-e73f38628dda4d829edf0ae5195f2424",
+      "step": 0,
+      "sequence": 8,
+      "capture_ns": 1071950597213,
+      "context_ns": 1071956505107,
+      "context": [
+        [
+          "windows",
+          "0x00600003  0 HPLaptop AI INTEGRATED task-1 READY - Google Chrome for Testing\n"
+        ],
+        [
+          "active_window",
+          6291459
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/integrated-efficiency-live-orchestration-probe-02/arms/plain/runtime/005.png",
+      "image_reused": true,
+      "image_prepare_ns": 1384179,
+      "image_ready_ns": 1071963321095,
+      "input_focus_before": 6291459,
+      "input_focus_after": 6291459,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "capture_ms": 6.306041,
+      "wire_bytes": 338,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 1071967564190
+    },
+    "adaptive": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "grounding": {
+          "field_point": [
+            226,
+            401
+          ],
+          "submit_point": [
+            376,
+            401
+          ]
+        },
+        "aliases": null,
+        "needs_mint": false,
+        "layout": "A"
+      },
+      "cache_update": {
+        "grounding": {
+          "field_point": [
+            226,
+            401
+          ],
+          "submit_point": [
+            376,
+            401
+          ]
+        },
+        "aliases": null,
+        "needs_mint": false,
+        "layout": "A"
+      },
+      "route": "cold",
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "injected_subpath",
+        "omitted_stages": [
+          "coarse_model"
+        ],
+        "comparable_to_full_cold": false
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "skipped",
+          "reason": "coarse_caller_provided"
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "plain:task-1",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1072008767403,
+          "completed_ns": 1072008853456,
+          "call_id": "engineering:plain:1",
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "plain:task-1",
+          "stage": "anchor_model",
+          "call_id": "engineering:plain:1",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "grounding": {
+                "field_point": [
+                  226,
+                  401
+                ],
+                "submit_point": [
+                  376,
+                  401
+                ]
+              },
+              "aliases": null,
+              "needs_mint": false,
+              "layout": "A"
+            }
+          },
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          },
+          "requested_model": "synthetic-no-model",
+          "requested_effort": "none",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 1,
+        "completed_calls": 1,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 1000,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 10,
+          "reasoning_output_tokens": 0
+        },
+        "usage_coverage": {
+          "input_tokens": 1,
+          "cached_input_tokens": 1,
+          "cache_write_input_tokens": 1,
+          "output_tokens": 1,
+          "reasoning_output_tokens": 1
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1072008736299,
+          "ended_ns": 1072008751364,
+          "elapsed_ns": 15065
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1072008759615,
+          "ended_ns": 1072008763736,
+          "elapsed_ns": 4121
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1072008767403,
+          "ended_ns": 1072008853456,
+          "elapsed_ns": 86053
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1072008878098,
+          "ended_ns": 1072008886471,
+          "elapsed_ns": 8373
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1072008892105,
+          "ended_ns": 1073178012936,
+          "elapsed_ns": 1169120831
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 1073178038528,
+          "ended_ns": 1073178071554,
+          "elapsed_ns": 33026
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "program_count": 3,
+    "submission_records": [
+      {
+        "exact": true,
+        "expected_token": "t991028-1",
+        "layout": "A",
+        "received_ns": 1072851653018,
+        "schema": "integrated_efficiency_submission_v1",
+        "submitted_values": [
+          "t991028-1"
+        ],
+        "task_id": "task-1"
+      }
+    ],
+    "resolved_target": {
+      "grounding": {
+        "field_point": [
+          226,
+          401
+        ],
+        "submit_point": [
+          376,
+          401
+        ]
+      },
+      "aliases": null,
+      "needs_mint": false,
+      "layout": "A"
+    }
+  },
+  {
+    "trace": {
+      "arm": "plain",
+      "task_id": "task-2",
+      "layout": "A",
+      "route": "cold",
+      "model_calls": [
+        {
+          "call_id": "engineering:plain:2",
+          "stage": "anchor_model",
+          "requested_model": "synthetic-no-model",
+          "requested_effort": "none",
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          }
+        }
+      ],
+      "planner_generations": 1,
+      "model_visible_images": 1,
+      "local_observations": 18,
+      "durable_calls": 6,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 2421630724,
+      "source_to_completion_ns": 888187984,
+      "input_feedback_ns": [
+        96643279,
+        99457676
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    "source": {
+      "event": "observation",
+      "id": "durable-7eb3b53976934791afd5dd6b89eaedad",
+      "step": 0,
+      "sequence": 26,
+      "capture_ns": 1074396964788,
+      "context_ns": 1074401198772,
+      "context": [
+        [
+          "windows",
+          "0x00600003  0 HPLaptop AI INTEGRATED task-2 READY - Google Chrome for Testing\n"
+        ],
+        [
+          "active_window",
+          6291459
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/integrated-efficiency-live-orchestration-probe-02/arms/plain/runtime/023.png",
+      "image_reused": true,
+      "image_prepare_ns": 1802925,
+      "image_ready_ns": 1074409004085,
+      "input_focus_before": 6291459,
+      "input_focus_after": 6291459,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "capture_ms": 3.368429,
+      "wire_bytes": 340,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 1074413400242
+    },
+    "adaptive": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "grounding": {
+          "field_point": [
+            226,
+            401
+          ],
+          "submit_point": [
+            376,
+            401
+          ]
+        },
+        "aliases": null,
+        "needs_mint": false,
+        "layout": "A"
+      },
+      "cache_update": {
+        "grounding": {
+          "field_point": [
+            226,
+            401
+          ],
+          "submit_point": [
+            376,
+            401
+          ]
+        },
+        "aliases": null,
+        "needs_mint": false,
+        "layout": "A"
+      },
+      "route": "cold",
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "injected_subpath",
+        "omitted_stages": [
+          "coarse_model"
+        ],
+        "comparable_to_full_cold": false
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "skipped",
+          "reason": "coarse_caller_provided"
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "plain:task-2",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1074454788601,
+          "completed_ns": 1074454874691,
+          "call_id": "engineering:plain:2",
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "plain:task-2",
+          "stage": "anchor_model",
+          "call_id": "engineering:plain:2",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "grounding": {
+                "field_point": [
+                  226,
+                  401
+                ],
+                "submit_point": [
+                  376,
+                  401
+                ]
+              },
+              "aliases": null,
+              "needs_mint": false,
+              "layout": "A"
+            }
+          },
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          },
+          "requested_model": "synthetic-no-model",
+          "requested_effort": "none",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 1,
+        "completed_calls": 1,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 1000,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 10,
+          "reasoning_output_tokens": 0
+        },
+        "usage_coverage": {
+          "input_tokens": 1,
+          "cached_input_tokens": 1,
+          "cache_write_input_tokens": 1,
+          "output_tokens": 1,
+          "reasoning_output_tokens": 1
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1074454761220,
+          "ended_ns": 1074454774376,
+          "elapsed_ns": 13156
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1074454781749,
+          "ended_ns": 1074454785147,
+          "elapsed_ns": 3398
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1074454788601,
+          "ended_ns": 1074454874691,
+          "elapsed_ns": 86090
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1074454898516,
+          "ended_ns": 1074454906113,
+          "elapsed_ns": 7597
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1074454910798,
+          "ended_ns": 1075601023587,
+          "elapsed_ns": 1146112789
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 1075601048597,
+          "ended_ns": 1075601064834,
+          "elapsed_ns": 16237
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "program_count": 3,
+    "submission_records": [
+      {
+        "exact": true,
+        "expected_token": "t991028-2",
+        "layout": "A",
+        "received_ns": 1075285152772,
+        "schema": "integrated_efficiency_submission_v1",
+        "submitted_values": [
+          "t991028-2"
+        ],
+        "task_id": "task-2"
+      }
+    ],
+    "resolved_target": {
+      "grounding": {
+        "field_point": [
+          226,
+          401
+        ],
+        "submit_point": [
+          376,
+          401
+        ]
+      },
+      "aliases": null,
+      "needs_mint": false,
+      "layout": "A"
+    }
+  },
+  {
+    "trace": {
+      "arm": "plain",
+      "task_id": "task-3",
+      "layout": "A",
+      "route": "cold",
+      "model_calls": [
+        {
+          "call_id": "engineering:plain:3",
+          "stage": "anchor_model",
+          "requested_model": "synthetic-no-model",
+          "requested_effort": "none",
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          }
+        }
+      ],
+      "planner_generations": 1,
+      "model_visible_images": 1,
+      "local_observations": 18,
+      "durable_calls": 6,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 2516675429,
+      "source_to_completion_ns": 967561426,
+      "input_feedback_ns": [
+        97881655,
+        102046338
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    "source": {
+      "event": "observation",
+      "id": "durable-62befd8605b54b37bf1179b921f260fc",
+      "step": 0,
+      "sequence": 44,
+      "capture_ns": 1076829314957,
+      "context_ns": 1076833602227,
+      "context": [
+        [
+          "windows",
+          "0x00600003  0 HPLaptop AI INTEGRATED task-3 READY - Google Chrome for Testing\n"
+        ],
+        [
+          "active_window",
+          6291459
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/integrated-efficiency-live-orchestration-probe-02/arms/plain/runtime/041.png",
+      "image_reused": true,
+      "image_prepare_ns": 1878795,
+      "image_ready_ns": 1076841087411,
+      "input_focus_before": 6291459,
+      "input_focus_after": 6291459,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "capture_ms": 3.840778,
+      "wire_bytes": 340,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 1076845636039
+    },
+    "adaptive": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "grounding": {
+          "field_point": [
+            226,
+            401
+          ],
+          "submit_point": [
+            376,
+            401
+          ]
+        },
+        "aliases": null,
+        "needs_mint": false,
+        "layout": "A"
+      },
+      "cache_update": {
+        "grounding": {
+          "field_point": [
+            226,
+            401
+          ],
+          "submit_point": [
+            376,
+            401
+          ]
+        },
+        "aliases": null,
+        "needs_mint": false,
+        "layout": "A"
+      },
+      "route": "cold",
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "injected_subpath",
+        "omitted_stages": [
+          "coarse_model"
+        ],
+        "comparable_to_full_cold": false
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "skipped",
+          "reason": "coarse_caller_provided"
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "plain:task-3",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1076891777030,
+          "completed_ns": 1076891866817,
+          "call_id": "engineering:plain:3",
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "plain:task-3",
+          "stage": "anchor_model",
+          "call_id": "engineering:plain:3",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "grounding": {
+                "field_point": [
+                  226,
+                  401
+                ],
+                "submit_point": [
+                  376,
+                  401
+                ]
+              },
+              "aliases": null,
+              "needs_mint": false,
+              "layout": "A"
+            }
+          },
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          },
+          "requested_model": "synthetic-no-model",
+          "requested_effort": "none",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 1,
+        "completed_calls": 1,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 1000,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 10,
+          "reasoning_output_tokens": 0
+        },
+        "usage_coverage": {
+          "input_tokens": 1,
+          "cached_input_tokens": 1,
+          "cache_write_input_tokens": 1,
+          "output_tokens": 1,
+          "reasoning_output_tokens": 1
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1076891747080,
+          "ended_ns": 1076891761010,
+          "elapsed_ns": 13930
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1076891767678,
+          "ended_ns": 1076891771617,
+          "elapsed_ns": 3939
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1076891777030,
+          "ended_ns": 1076891866817,
+          "elapsed_ns": 89787
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1076891890531,
+          "ended_ns": 1076891897600,
+          "elapsed_ns": 7069
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1076891901959,
+          "ended_ns": 1078118829996,
+          "elapsed_ns": 1226928037
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 1078118854038,
+          "ended_ns": 1078118892545,
+          "elapsed_ns": 38507
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "program_count": 3,
+    "submission_records": [
+      {
+        "exact": true,
+        "expected_token": "t991028-3",
+        "layout": "A",
+        "received_ns": 1077796876383,
+        "schema": "integrated_efficiency_submission_v1",
+        "submitted_values": [
+          "t991028-3"
+        ],
+        "task_id": "task-3"
+      }
+    ],
+    "resolved_target": {
+      "grounding": {
+        "field_point": [
+          226,
+          401
+        ],
+        "submit_point": [
+          376,
+          401
+        ]
+      },
+      "aliases": null,
+      "needs_mint": false,
+      "layout": "A"
+    }
+  },
+  {
+    "trace": {
+      "arm": "plain",
+      "task_id": "task-4",
+      "layout": "B",
+      "route": "cold",
+      "model_calls": [
+        {
+          "call_id": "engineering:plain:4",
+          "stage": "anchor_model",
+          "requested_model": "synthetic-no-model",
+          "requested_effort": "none",
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          }
+        }
+      ],
+      "planner_generations": 1,
+      "model_visible_images": 1,
+      "local_observations": 18,
+      "durable_calls": 6,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 2552440205,
+      "source_to_completion_ns": 992685495,
+      "input_feedback_ns": [
+        101318824,
+        99640133
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    "source": {
+      "event": "observation",
+      "id": "durable-ae19ff83d96a48dba154524af683c9d2",
+      "step": 0,
+      "sequence": 62,
+      "capture_ns": 1079379468377,
+      "context_ns": 1079383904717,
+      "context": [
+        [
+          "windows",
+          "0x00600003  0 HPLaptop AI INTEGRATED task-4 READY - Google Chrome for Testing\n"
+        ],
+        [
+          "active_window",
+          6291459
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/integrated-efficiency-live-orchestration-probe-02/arms/plain/runtime/059.png",
+      "image_reused": true,
+      "image_prepare_ns": 1588901,
+      "image_ready_ns": 1079391347849,
+      "input_focus_before": 6291459,
+      "input_focus_after": 6291459,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "capture_ms": 3.261124,
+      "wire_bytes": 340,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 1079395436127
+    },
+    "adaptive": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "grounding": {
+          "field_point": [
+            650,
+            558
+          ],
+          "submit_point": [
+            688,
+            634
+          ]
+        },
+        "aliases": null,
+        "needs_mint": false,
+        "layout": "B"
+      },
+      "cache_update": {
+        "grounding": {
+          "field_point": [
+            650,
+            558
+          ],
+          "submit_point": [
+            688,
+            634
+          ]
+        },
+        "aliases": null,
+        "needs_mint": false,
+        "layout": "B"
+      },
+      "route": "cold",
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "injected_subpath",
+        "omitted_stages": [
+          "coarse_model"
+        ],
+        "comparable_to_full_cold": false
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "skipped",
+          "reason": "coarse_caller_provided"
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "plain:task-4",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1079441660839,
+          "completed_ns": 1079441743049,
+          "call_id": "engineering:plain:4",
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "plain:task-4",
+          "stage": "anchor_model",
+          "call_id": "engineering:plain:4",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "grounding": {
+                "field_point": [
+                  650,
+                  558
+                ],
+                "submit_point": [
+                  688,
+                  634
+                ]
+              },
+              "aliases": null,
+              "needs_mint": false,
+              "layout": "B"
+            }
+          },
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          },
+          "requested_model": "synthetic-no-model",
+          "requested_effort": "none",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 1,
+        "completed_calls": 1,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 1000,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 10,
+          "reasoning_output_tokens": 0
+        },
+        "usage_coverage": {
+          "input_tokens": 1,
+          "cached_input_tokens": 1,
+          "cache_write_input_tokens": 1,
+          "output_tokens": 1,
+          "reasoning_output_tokens": 1
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1079441633810,
+          "ended_ns": 1079441648097,
+          "elapsed_ns": 14287
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1079441654284,
+          "ended_ns": 1079441657379,
+          "elapsed_ns": 3095
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1079441660839,
+          "ended_ns": 1079441743049,
+          "elapsed_ns": 82210
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1079441767845,
+          "ended_ns": 1079441775876,
+          "elapsed_ns": 8031
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1079441780592,
+          "ended_ns": 1080672526121,
+          "elapsed_ns": 1230745529
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 1080672549882,
+          "ended_ns": 1080672567040,
+          "elapsed_ns": 17158
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "program_count": 3,
+    "submission_records": [
+      {
+        "exact": true,
+        "expected_token": "t991028-4",
+        "layout": "B",
+        "received_ns": 1080372153872,
+        "schema": "integrated_efficiency_submission_v1",
+        "submitted_values": [
+          "t991028-4"
+        ],
+        "task_id": "task-4"
+      }
+    ],
+    "resolved_target": {
+      "grounding": {
+        "field_point": [
+          650,
+          558
+        ],
+        "submit_point": [
+          688,
+          634
+        ]
+      },
+      "aliases": null,
+      "needs_mint": false,
+      "layout": "B"
+    }
+  },
+  {
+    "trace": {
+      "arm": "plain",
+      "task_id": "task-5",
+      "layout": "B",
+      "route": "cold",
+      "model_calls": [
+        {
+          "call_id": "engineering:plain:5",
+          "stage": "anchor_model",
+          "requested_model": "synthetic-no-model",
+          "requested_effort": "none",
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          }
+        }
+      ],
+      "planner_generations": 1,
+      "model_visible_images": 1,
+      "local_observations": 17,
+      "durable_calls": 6,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 2557018008,
+      "source_to_completion_ns": 975024540,
+      "input_feedback_ns": [
+        97082707,
+        99419698
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    "source": {
+      "event": "observation",
+      "id": "durable-b733ce3f5c0443d2a9a6d0479399e605",
+      "step": 0,
+      "sequence": 79,
+      "capture_ns": 1081947040111,
+      "context_ns": 1081951322796,
+      "context": [
+        [
+          "windows",
+          "0x00600003  0 HPLaptop AI INTEGRATED task-5 READY - Google Chrome for Testing\n"
+        ],
+        [
+          "active_window",
+          6291459
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/integrated-efficiency-live-orchestration-probe-02/arms/plain/runtime/076.png",
+      "image_reused": true,
+      "image_prepare_ns": 2217194,
+      "image_ready_ns": 1081959334464,
+      "input_focus_before": 6291459,
+      "input_focus_after": 6291459,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "capture_ms": 3.137537,
+      "wire_bytes": 340,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 1081963820483
+    },
+    "adaptive": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "grounding": {
+          "field_point": [
+            650,
+            558
+          ],
+          "submit_point": [
+            688,
+            634
+          ]
+        },
+        "aliases": null,
+        "needs_mint": false,
+        "layout": "B"
+      },
+      "cache_update": {
+        "grounding": {
+          "field_point": [
+            650,
+            558
+          ],
+          "submit_point": [
+            688,
+            634
+          ]
+        },
+        "aliases": null,
+        "needs_mint": false,
+        "layout": "B"
+      },
+      "route": "cold",
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "injected_subpath",
+        "omitted_stages": [
+          "coarse_model"
+        ],
+        "comparable_to_full_cold": false
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "skipped",
+          "reason": "coarse_caller_provided"
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "plain:task-5",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1082015624644,
+          "completed_ns": 1082015712039,
+          "call_id": "engineering:plain:5",
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "plain:task-5",
+          "stage": "anchor_model",
+          "call_id": "engineering:plain:5",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "grounding": {
+                "field_point": [
+                  650,
+                  558
+                ],
+                "submit_point": [
+                  688,
+                  634
+                ]
+              },
+              "aliases": null,
+              "needs_mint": false,
+              "layout": "B"
+            }
+          },
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          },
+          "requested_model": "synthetic-no-model",
+          "requested_effort": "none",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 1,
+        "completed_calls": 1,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 1000,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 10,
+          "reasoning_output_tokens": 0
+        },
+        "usage_coverage": {
+          "input_tokens": 1,
+          "cached_input_tokens": 1,
+          "cache_write_input_tokens": 1,
+          "output_tokens": 1,
+          "reasoning_output_tokens": 1
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1082015597499,
+          "ended_ns": 1082015611671,
+          "elapsed_ns": 14172
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1082015617661,
+          "ended_ns": 1082015620706,
+          "elapsed_ns": 3045
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1082015624644,
+          "ended_ns": 1082015712039,
+          "elapsed_ns": 87395
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1082015852878,
+          "ended_ns": 1082015865127,
+          "elapsed_ns": 12249
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1082015870558,
+          "ended_ns": 1083230944256,
+          "elapsed_ns": 1215073698
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 1083230969109,
+          "ended_ns": 1083230985317,
+          "elapsed_ns": 16208
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "program_count": 3,
+    "submission_records": [
+      {
+        "exact": true,
+        "expected_token": "t991028-5",
+        "layout": "B",
+        "received_ns": 1082922064651,
+        "schema": "integrated_efficiency_submission_v1",
+        "submitted_values": [
+          "t991028-5"
+        ],
+        "task_id": "task-5"
+      }
+    ],
+    "resolved_target": {
+      "grounding": {
+        "field_point": [
+          650,
+          558
+        ],
+        "submit_point": [
+          688,
+          634
+        ]
+      },
+      "aliases": null,
+      "needs_mint": false,
+      "layout": "B"
+    }
+  },
+  {
+    "trace": {
+      "arm": "plain",
+      "task_id": "task-6",
+      "layout": "B",
+      "route": "cold",
+      "model_calls": [
+        {
+          "call_id": "engineering:plain:6",
+          "stage": "anchor_model",
+          "requested_model": "synthetic-no-model",
+          "requested_effort": "none",
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          }
+        }
+      ],
+      "planner_generations": 1,
+      "model_visible_images": 1,
+      "local_observations": 17,
+      "durable_calls": 6,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 2609155910,
+      "source_to_completion_ns": 1003222122,
+      "input_feedback_ns": [
+        99218541,
+        96725040
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    "source": {
+      "event": "observation",
+      "id": "durable-ced617542fda4d79b26e3483c91a0b51",
+      "step": 0,
+      "sequence": 96,
+      "capture_ns": 1084500433433,
+      "context_ns": 1084506013067,
+      "context": [
+        [
+          "windows",
+          "0x00600003  0 HPLaptop AI INTEGRATED task-6 READY - Google Chrome for Testing\n"
+        ],
+        [
+          "active_window",
+          6291459
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/integrated-efficiency-live-orchestration-probe-02/arms/plain/runtime/093.png",
+      "image_reused": true,
+      "image_prepare_ns": 1408007,
+      "image_ready_ns": 1084513239178,
+      "input_focus_before": 6291459,
+      "input_focus_after": 6291459,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "capture_ms": 3.398936,
+      "wire_bytes": 340,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 1084517330249
+    },
+    "adaptive": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "grounding": {
+          "field_point": [
+            650,
+            558
+          ],
+          "submit_point": [
+            688,
+            634
+          ]
+        },
+        "aliases": null,
+        "needs_mint": false,
+        "layout": "B"
+      },
+      "cache_update": {
+        "grounding": {
+          "field_point": [
+            650,
+            558
+          ],
+          "submit_point": [
+            688,
+            634
+          ]
+        },
+        "aliases": null,
+        "needs_mint": false,
+        "layout": "B"
+      },
+      "route": "cold",
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "injected_subpath",
+        "omitted_stages": [
+          "coarse_model"
+        ],
+        "comparable_to_full_cold": false
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "skipped",
+          "reason": "coarse_caller_provided"
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "plain:task-6",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 1084566344004,
+          "completed_ns": 1084566423848,
+          "call_id": "engineering:plain:6",
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "plain:task-6",
+          "stage": "anchor_model",
+          "call_id": "engineering:plain:6",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "grounding": {
+                "field_point": [
+                  650,
+                  558
+                ],
+                "submit_point": [
+                  688,
+                  634
+                ]
+              },
+              "aliases": null,
+              "needs_mint": false,
+              "layout": "B"
+            }
+          },
+          "usage": {
+            "input_tokens": 1000,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 10,
+            "reasoning_output_tokens": 0
+          },
+          "requested_model": "synthetic-no-model",
+          "requested_effort": "none",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 1,
+        "completed_calls": 1,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 1000,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 10,
+          "reasoning_output_tokens": 0
+        },
+        "usage_coverage": {
+          "input_tokens": 1,
+          "cached_input_tokens": 1,
+          "cache_write_input_tokens": 1,
+          "output_tokens": 1,
+          "reasoning_output_tokens": 1
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 1084566318430,
+          "ended_ns": 1084566331548,
+          "elapsed_ns": 13118
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 1084566337528,
+          "ended_ns": 1084566341026,
+          "elapsed_ns": 3498
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 1084566344004,
+          "ended_ns": 1084566423848,
+          "elapsed_ns": 79844
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 1084566447771,
+          "ended_ns": 1084566455504,
+          "elapsed_ns": 7733
+        },
+        {
+          "stage": "execute",
+          "started_ns": 1084566460138,
+          "ended_ns": 1085841449226,
+          "elapsed_ns": 1274989088
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 1085841472458,
+          "ended_ns": 1085841487354,
+          "elapsed_ns": 14896
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "program_count": 3,
+    "submission_records": [
+      {
+        "exact": true,
+        "expected_token": "t991028-6",
+        "layout": "B",
+        "received_ns": 1085503655555,
+        "schema": "integrated_efficiency_submission_v1",
+        "submitted_values": [
+          "t991028-6"
+        ],
+        "task_id": "task-6"
+      }
+    ],
+    "resolved_target": {
+      "grounding": {
+        "field_point": [
+          650,
+          558
+        ],
+        "submit_point": [
+          688,
+          634
+        ]
+      },
+      "aliases": null,
+      "needs_mint": false,
+      "layout": "B"
+    }
+  }
+]

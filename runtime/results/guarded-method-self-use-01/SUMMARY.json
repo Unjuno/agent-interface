@@ -1,0 +1,83 @@
+{
+  "scope": "actual primary-assistant grounding of existing guarded method; no helper model or new compiled runtime",
+  "seed": 991077,
+  "independent_exact_submissions": 6,
+  "duplicates": 0,
+  "unexpected": 0,
+  "assistant_grounding_points": {
+    "A": {
+      "field": [
+        300,
+        401
+      ],
+      "submit": [
+        377,
+        401
+      ]
+    },
+    "B": {
+      "field": [
+        760,
+        558
+      ],
+      "submit": [
+        689,
+        634
+      ]
+    }
+  },
+  "viewed_sequences": [
+    9,
+    72,
+    125
+  ],
+  "local_method_ms": [
+    {
+      "task": "task-1",
+      "status": "completed",
+      "ms": 1841.266696
+    },
+    {
+      "task": "task-2",
+      "status": "completed",
+      "ms": 2025.151399
+    },
+    {
+      "task": "task-3",
+      "status": "completed",
+      "ms": 2136.95511
+    },
+    {
+      "task": "task-4",
+      "status": "safe_yield",
+      "ms": 350.72271
+    },
+    {
+      "task": "task-4",
+      "status": "completed",
+      "ms": 2783.104962
+    },
+    {
+      "task": "task-5",
+      "status": "completed",
+      "ms": 3331.412448
+    },
+    {
+      "task": "task-6",
+      "status": "completed",
+      "ms": 3425.858577
+    }
+  ],
+  "programs": 43,
+  "all_release_verified_empty": true,
+  "old_target_pointer_admissions_at_task4": 0,
+  "server_exit_code": 0,
+  "usage": "this assistant conversation usage unavailable per decision; no zero-token claim",
+  "limits": [
+    "not a matched performance comparison",
+    "field-entry semantic effect not independently checked before submit; final server oracle is independent",
+    "uses existing guarded method, not compiled_gui_interface_v1 stategraph",
+    "generic native CLI bridge remains incomplete",
+    "whole interaction includes manual inspection/preparation gaps"
+  ]
+}

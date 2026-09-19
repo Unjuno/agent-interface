@@ -1,0 +1,34 @@
+{
+  "schema": "authority-binder-byte-pin-gap-v1-prereg",
+  "task": "O3-AUTHORITY-BINDER-BYTE-PIN-GAP-20260916-007",
+  "issue": 204,
+  "base_commit": "505d567ff269ecec3ac8ff81e35fc7816a787a6d",
+  "hypothesis": "the retained bound issue API is not restart-stable against identity-binder source drift because durable metadata pins validator bytes but not binder bytes; targeted binder drift can mint a second authority_end_id for the same runtime terminal",
+  "gates": [
+    "process A with exact retained binder issues only runtime-intent-token for the authority epoch",
+    "control restart with exact retained binder rejects caller-forged-id and preserves only runtime-intent-token",
+    "treatment restart changing only binder source admits caller-forged-id as a second pending ID for the same terminal",
+    "validator sidecar identity remains unchanged across control and treatment",
+    "after restoring exact retained binder, the forged pending ID remains recoverable"
+  ],
+  "decision": "RETAIN_BINDER_VERSION_GAP iff all five gates pass with zero formal retries",
+  "diagnostic_drift": "all retained terminal/release/expiry checks remain; only the caller-supplied authority_end_id mismatch rejection is replaced by preservation of a supplied nonempty ID",
+  "confounders": [
+    "diagnostic source drift models deployment/restart change; it is not a proposed binder",
+    "offline separate-process semantics only",
+    "underlying Python modules remain in-process accessible",
+    "PR #168 live executed-source provenance remains independently unresolved"
+  ],
+  "unknowns": [
+    "whether the minimal fix should pin binder bytes separately or pin a composite issue adapter identity",
+    "live runtime wiring and durable-submit remain out of scope"
+  ],
+  "retained_sha256": {
+    "bound_authority_issue_v1.py": "2f812a678b72f09985e24d003b2e7030508a49e4475e9d3aef5533b1a07f2ba2",
+    "authority_end_identity_binding_v1.py": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+    "validator_byte_pinned_ledger_v3.py": "a0744260a48b3575a451c63139fdb2fde898e0493317d1edd1d731ce3d227be5",
+    "bridge_v2_semantic_snapshot.py": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9",
+    "durable_token_state_v2.py": "72a3481653cf9c41ec1a03f4c7a7bf1c482ff69468b5d92986bad8cf814950b4",
+    "authority_ended_bridge_v1.py": "2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e"
+  }
+}

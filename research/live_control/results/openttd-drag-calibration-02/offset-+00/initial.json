@@ -1,0 +1,160 @@
+{
+  "request": {
+    "after": 0,
+    "events": [
+      "observation"
+    ],
+    "timeout": 30
+  },
+  "reply": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "ready",
+        "task": "Build one connected L-shaped road from A through B to C, using only the five path tiles: three tiles across from A to B and three tiles down from B to C, sharing B. Keep the four other tiles in that 3x3 square, marked by X, free of roads and preserve surrounding roads/ownership. Use visual GUI controls.",
+        "emitted_ns": 17412864840553
+      },
+      {
+        "event": "observation",
+        "id": "initial",
+        "step": 0,
+        "sequence": 1,
+        "capture_ns": 17412880488759,
+        "context_ns": 17412887709900,
+        "context": [
+          [
+            "windows",
+            "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+          ],
+          [
+            "active_window",
+            10485762
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/openttd-drag-calibration-02/offset-+00/runtime/001.png",
+        "image_reused": false,
+        "image_prepare_ns": 66132273,
+        "image_ready_ns": 17412990001958,
+        "input_focus_before": 10485762,
+        "input_focus_after": 10485762,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 10485762,
+          "surface": 10485762,
+          "geometry": [
+            129,
+            40,
+            1024,
+            720
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 10485762,
+          "surface": 10485762,
+          "geometry": [
+            129,
+            40,
+            1024,
+            720
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 10485762,
+          "surface": 10485762,
+          "geometry": [
+            129,
+            40,
+            1024,
+            720
+          ]
+        },
+        "capture_ms": 12.135697,
+        "wire_bytes": 570989,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "emitted_ns": 17412993732580
+      }
+    ],
+    "cursor": 2,
+    "returned_ns": 17412996278195,
+    "authority": "none",
+    "acknowledgement": "not implied"
+  },
+  "continuation": {
+    "format": "received-continuation-v1",
+    "session": "/tmp/agent-interface-events-3yyfmacl/events.sock",
+    "cursor": 2,
+    "record_hashes": [
+      "97cbe1859eac2763035d004d5368c90f4e79d36cdb65923c14fdd4dd7b03e715",
+      "997f783f1881cefd3d24e44e62c40689e45d5c70b0d6a7caa7f03e825d96e973"
+    ],
+    "observation": {
+      "event": "observation",
+      "id": "initial",
+      "step": 0,
+      "sequence": 1,
+      "capture_ns": 17412880488759,
+      "context_ns": 17412887709900,
+      "context": [
+        [
+          "windows",
+          "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+        ],
+        [
+          "active_window",
+          10485762
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/openttd-drag-calibration-02/offset-+00/runtime/001.png",
+      "image_reused": false,
+      "image_prepare_ns": 66132273,
+      "image_ready_ns": 17412990001958,
+      "input_focus_before": 10485762,
+      "input_focus_after": 10485762,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 10485762,
+        "surface": 10485762,
+        "geometry": [
+          129,
+          40,
+          1024,
+          720
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 10485762,
+        "surface": 10485762,
+        "geometry": [
+          129,
+          40,
+          1024,
+          720
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 10485762,
+        "surface": 10485762,
+        "geometry": [
+          129,
+          40,
+          1024,
+          720
+        ]
+      },
+      "capture_ms": 12.135697,
+      "wire_bytes": 570989,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emitted_ns": 17412993732580
+    },
+    "observation_cursor": 2,
+    "pending_clock": null,
+    "clocks": {},
+    "channel_closed": false,
+    "authority": "none"
+  },
+  "requested_clock_id": null,
+  "matched_clock": null,
+  "authority": "none; current observation and admission still required"
+}

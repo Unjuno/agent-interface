@@ -1,0 +1,99 @@
+{
+  "schema": "native-overview-reanchor-v2-result",
+  "issue": 298,
+  "freeze_commit_v1": "60a46d43c7a7b4aff00894b7a2f42d3ab83e37b6",
+  "freeze_comment_v2": 5690453249,
+  "scope": "local X11 image-relative out-and-back; no stage-clear claim",
+  "arms": [
+    {
+      "domain": "doom",
+      "arm": "replay",
+      "episodes": 3,
+      "two_phase_and_final_success": 0,
+      "final_abs_error_px": [
+        7,
+        8,
+        4
+      ],
+      "elapsed_s": [
+        1.899388,
+        1.91569,
+        1.915754
+      ],
+      "input_calls": [
+        13,
+        13,
+        13
+      ]
+    },
+    {
+      "domain": "doom",
+      "arm": "closed_loop",
+      "episodes": 3,
+      "two_phase_and_final_success": 3,
+      "final_abs_error_px": [
+        2,
+        2,
+        0
+      ],
+      "elapsed_s": [
+        2.615236,
+        2.446665,
+        3.152115
+      ],
+      "input_calls": [
+        16,
+        15,
+        21
+      ]
+    },
+    {
+      "domain": "gui",
+      "arm": "replay",
+      "episodes": 3,
+      "two_phase_and_final_success": 1,
+      "final_abs_error_px": [
+        0,
+        1,
+        1
+      ],
+      "elapsed_s": [
+        1.898526,
+        1.928739,
+        1.918258
+      ],
+      "input_calls": [
+        12,
+        12,
+        12
+      ]
+    },
+    {
+      "domain": "gui",
+      "arm": "closed_loop",
+      "episodes": 3,
+      "two_phase_and_final_success": 3,
+      "final_abs_error_px": [
+        1,
+        1,
+        1
+      ],
+      "elapsed_s": [
+        1.89627,
+        1.656546,
+        1.327714
+      ],
+      "input_calls": [
+        11,
+        10,
+        6
+      ]
+    }
+  ],
+  "release_verified_episodes": 12,
+  "offline_fault_refusals": 24,
+  "model_calls": 0,
+  "direct_game_buffer_calls": 0,
+  "game_position_reads": 0,
+  "map_clear_tested": false
+}

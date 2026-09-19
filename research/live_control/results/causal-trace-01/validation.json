@@ -1,0 +1,28 @@
+{
+  "nodes": 66,
+  "edges": 31,
+  "gaps": [
+    {
+      "previous": "attempt",
+      "next": "reobserve",
+      "terminal_to_command_ms": 7712.513461
+    },
+    {
+      "previous": "reobserve",
+      "next": "recover",
+      "terminal_to_command_ms": 11138.762699
+    },
+    {
+      "previous": "recover",
+      "next": "save",
+      "terminal_to_command_ms": 9022.501981
+    }
+  ],
+  "negative_controls": {
+    "missing_source": "missing or stale declared observation",
+    "stale_source": "missing or stale declared observation",
+    "wrong_authority": "input authority mismatch",
+    "expired_input": "input outside recorded authority interval",
+    "wrong_feedback_program": "feedback observation misattributed"
+  }
+}

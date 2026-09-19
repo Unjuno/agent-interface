@@ -1,0 +1,44 @@
+{
+  "data_recovery_after_press_ms": 250,
+  "death_to_verified_absolute_max_ms": 30,
+  "death_to_verified_median_max_ms": 10,
+  "formal_cases": [
+    [
+      "a2-f01",
+      "pipe_only"
+    ],
+    [
+      "a2-f02",
+      "watchdog_journal"
+    ],
+    [
+      "a2-f03",
+      "watchdog_journal"
+    ],
+    [
+      "a2-f04",
+      "pipe_only"
+    ],
+    [
+      "a2-f05",
+      "pipe_only"
+    ],
+    [
+      "a2-f06",
+      "watchdog_journal"
+    ],
+    [
+      "a2-f07",
+      "watchdog_journal"
+    ],
+    [
+      "a2-f08",
+      "pipe_only"
+    ]
+  ],
+  "formal_rerun_budget": 0,
+  "kill_after_press_ms": 75,
+  "only_change": "watchdog stdout framing parse: final nonempty JSON line",
+  "predecessor": "STOPPED_FORMAL_HARNESS_OUTPUT_FRAMING; unpooled",
+  "task": "SAFETY-WATCHDOG-RECEIPT-RECOVERY-20260917-002"
+}

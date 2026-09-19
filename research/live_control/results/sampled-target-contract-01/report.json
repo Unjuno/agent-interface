@@ -1,0 +1,118 @@
+{
+  "scope": "offline replay of actual observations, not new live input",
+  "sources": {
+    "sampled_target_contract_v1.py": "5cf9cdbdcea0779ad81fbe4e8d4e923d32169eecfadb762d3efcba776fbe54d6",
+    "probe_sampled_target_contract_v1.py": "c1e16ba9c9b9c36994e253a1f8c709a4e4eb5df45af1631ac4ec4033ea273c7d"
+  },
+  "cases": [
+    {
+      "cohort": "live-menu-intent-01",
+      "result": {
+        "eligible": true,
+        "reason": "sampled_patch_and_binding_match",
+        "contract": "select_basic_conveyor",
+        "point": [
+          1008,
+          578
+        ],
+        "expected_sequence": 3,
+        "valid_until_ns": 33701303100,
+        "patch_sha256": "24dbc84551be81abda6c7d283e98c21b44e6982d3b051f9e60fe2a58253999d3",
+        "authority": "none; caller must submit once through existing owner admission",
+        "scope": "sampled pixels only; no semantic identity, hidden-state or atomic input proof"
+      },
+      "sources": {
+        "benchmark_discovery/results/live-menu-intent-01/decision.json": "773fd27e791e84140bb35eba21bb25c389bd2e6c1ff132c56ecd820d9c226cf3",
+        "benchmark_discovery/results/live-menu-intent-01/state.json": "83cdaffbcce7a992bbed8d7c8de235f7e09d30fda973a963f9118fff4e080675",
+        "benchmark_discovery/results/live-menu-intent-01/runtime/001.png": "9249f4054dd1eca27f952f270ff86b55d34a294743e276925cc08dd158ca793f"
+      }
+    },
+    {
+      "cohort": "live-menu-mutation-patch-02",
+      "result": {
+        "eligible": false,
+        "reason": "target_patch_changed"
+      },
+      "sources": {
+        "benchmark_discovery/results/live-menu-mutation-patch-02/decision.json": "9b86789d905e0099a22c663b76fab06d75cc07dcebcd9720421d03ad4be06229",
+        "benchmark_discovery/results/live-menu-mutation-patch-02/state.json": "651613e93f6ad2a89842c58f49bce7b2249db41641c63d989130175560880a29",
+        "benchmark_discovery/results/live-menu-mutation-patch-02/runtime/001.png": "930f54297a3a45b62cb0267564c13c402e8c71a64d3345cb812a7f146288cb80",
+        "benchmark_discovery/results/live-menu-mutation-patch-02/runtime/003.png": "88268ec205c9b1e019dbd5f5c8642105fff27833487b1dd2ddaaee9eb32f28bf"
+      }
+    },
+    {
+      "cohort": "live-menu-mutation-focus-01",
+      "result": {
+        "eligible": false,
+        "reason": "binding_changed"
+      },
+      "sources": {
+        "benchmark_discovery/results/live-menu-mutation-focus-01/decision.json": "15b3b94a9cb28e66f77d3b3b2326c833cb6e7dd068ef8e32ee543005ab12b9dd",
+        "benchmark_discovery/results/live-menu-mutation-focus-01/state.json": "0f7e77d5df06f26c909c96da926101754b62c56aa7e95dba4f605a5677f83601",
+        "benchmark_discovery/results/live-menu-mutation-focus-01/runtime/001.png": "f7740d59a609cb6da90b3e48ec59f8921cd223d2e58042f661bd56b42064b6fa",
+        "benchmark_discovery/results/live-menu-mutation-focus-01/runtime/003.png": "0f0ace1e2e5ff2f7556cd97774edf9af610b67fa7cc217bea35c2b96ba352cf0"
+      }
+    },
+    {
+      "cohort": "inkscape archived x coordinate field",
+      "result": {
+        "eligible": true,
+        "reason": "sampled_patch_and_binding_match",
+        "contract": "focus_x_coordinate",
+        "point": [
+          550,
+          106
+        ],
+        "expected_sequence": 15,
+        "valid_until_ns": 59274524379,
+        "patch_sha256": "f7825c698d240cc2a50e9ebe167f3d9ff2f9c194cf7ea6af96902ea468531fa7",
+        "authority": "none; caller must submit once through existing owner admission",
+        "scope": "sampled pixels only; no semantic identity, hidden-state or atomic input proof"
+      },
+      "sources": {
+        "live_control/results/inkscape-fallback-live-01/runtime/events.jsonl": "82ed2af3d7355fd47e616645310f15c61a1b1c55a83262fdff038ec4bdc9b2ae",
+        "live_control/results/inkscape-fallback-live-01/runtime/012.png": "ec078813142b61f454cf443cc86cc7675ad8de262efedd2f2e3007e8a7102fea",
+        "live_control/results/inkscape-fallback-live-01/runtime/015.png": "1eefc6b90a8e9587237ddfbb0c3a10c3aebe8472dbc9ecebd75dbd54e38076b4"
+      },
+      "age_clock": "historical image_ready_ns, not current time"
+    }
+  ],
+  "controls": {
+    "boolean_age": {
+      "eligible": false,
+      "reason": "invalid_contract"
+    },
+    "point_outside_patch": {
+      "eligible": false,
+      "reason": "invalid_contract"
+    },
+    "expired": {
+      "eligible": false,
+      "reason": "freshness"
+    },
+    "boolean_sequence": {
+      "eligible": false,
+      "reason": "invalid_observation"
+    },
+    "focus_disagreement": {
+      "eligible": false,
+      "reason": "focus_samples_disagree"
+    },
+    "held_key": {
+      "eligible": false,
+      "reason": "owned_input_active"
+    },
+    "invalid_intent_type": {
+      "eligible": false,
+      "reason": "invalid_intent"
+    },
+    "changed_target_pixels": {
+      "eligible": false,
+      "reason": "target_patch_changed"
+    },
+    "same_sequence": {
+      "eligible": false,
+      "reason": "not_new_observation"
+    }
+  }
+}

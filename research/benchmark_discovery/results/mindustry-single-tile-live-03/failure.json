@@ -1,0 +1,43 @@
+{
+  "error": "RuntimeError('model-world-receipt model call failed; no retry')",
+  "model_usage_ledger": [
+    {
+      "stage": "model-palette-candidate",
+      "usage": {
+        "input_tokens": 9260,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 218,
+        "reasoning_output_tokens": 163
+      },
+      "runner_ms": 9319.4334,
+      "parent_elapsed_ms": 9582.497165
+    },
+    {
+      "stage": "model-palette-receipt",
+      "usage": {
+        "input_tokens": 8129,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 91,
+        "reasoning_output_tokens": 33
+      },
+      "runner_ms": 6053.2851,
+      "parent_elapsed_ms": 6367.784976
+    },
+    {
+      "stage": "model-world-candidate",
+      "usage": {
+        "input_tokens": 9263,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 558,
+        "reasoning_output_tokens": 504
+      },
+      "runner_ms": 15465.5845,
+      "parent_elapsed_ms": 15844.697396
+    }
+  ],
+  "socket_exchanges": 7,
+  "policy": "retained first allocation; no retry"
+}

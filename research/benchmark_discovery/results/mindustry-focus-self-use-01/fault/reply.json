@@ -1,0 +1,124 @@
+{
+  "status": "boundary",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "expected_sequence": 1,
+        "id": "fault",
+        "op": "submit",
+        "steps": [
+          {
+            "duration_ms": 5000,
+            "op": "pointer_drag",
+            "points": [
+              {
+                "x": 900,
+                "y": 300
+              },
+              {
+                "x": 1000,
+                "y": 300
+              }
+            ]
+          },
+          {
+            "duration_ms": 80,
+            "op": "pointer_click",
+            "x": 1008,
+            "y": 578
+          }
+        ],
+        "transport_request_id": "fault",
+        "valid_until_ns": 72357185762
+      },
+      "emitted_ns": 53799436455
+    },
+    {
+      "event": "accepted",
+      "id": "fault",
+      "steps": 2,
+      "valid_until_ns": 72357185762,
+      "accepted_ns": 53807646972,
+      "emitted_ns": 53807648856
+    },
+    {
+      "event": "step_started",
+      "id": "fault",
+      "step": 0,
+      "operation": "pointer_drag",
+      "issued_ns": 53831641925,
+      "emitted_ns": 53831645042
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 900,
+        "y": 300
+      },
+      "admitted_ns": 53849198213,
+      "input_ack_ns": 53849477336,
+      "valid_until_ns": 72357185762,
+      "surface": 6291470,
+      "id": "fault",
+      "step": 0,
+      "emitted_ns": 53851407912
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "button_down",
+      "payload": 1,
+      "admitted_ns": 53874227912,
+      "input_ack_ns": 53874570515,
+      "valid_until_ns": 72357185762,
+      "surface": 6291470,
+      "id": "fault",
+      "step": 0,
+      "emitted_ns": 53874745989
+    },
+    {
+      "event": "fixture_focus_transferred",
+      "physical_button_down": true,
+      "emitted_ns": 53897085973
+    },
+    {
+      "event": "input_stopped",
+      "id": "fault",
+      "decision_reason": "focus_changed",
+      "interruption": {
+        "intent_token": "19906cad09c741d38a9ef78e41578caf",
+        "record": {
+          "event": "owner_release",
+          "reason": "focus_changed",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 53912354282,
+          "valid_until_ns": 72357185762
+        }
+      },
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 53916103468,
+        "valid_until_ns": null
+      },
+      "stopped_ns": 53916284014,
+      "followup": "two passive observations; terminal follows; no further program steps",
+      "emitted_ns": 53916288936
+    }
+  ],
+  "cursor": 11,
+  "returned_ns": 53937005762,
+  "authority": "none",
+  "acknowledgement": "not implied",
+  "command_receipt": {
+    "request_id": "fault",
+    "replayed": false,
+    "state": "stdin_flushed"
+  }
+}

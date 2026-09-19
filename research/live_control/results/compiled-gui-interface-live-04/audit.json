@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "formal_mechanics_passed": true,
+  "positive": {
+    "independent_success": true,
+    "local_transitions": 2,
+    "frontier_model_resumptions": 0,
+    "action_to_feedback_ms": [
+      772.201563,
+      566.856658
+    ],
+    "first_action_to_semantic_completion_ms": 1845.624425,
+    "local_runtime_ms": 2247.059394,
+    "grounding_wait_ms": 14177.2482
+  },
+  "changed": {
+    "independent_success": false,
+    "local_transitions": 1,
+    "submit_target_actions": 0,
+    "typed_runtime_reason": "unknown_state",
+    "outer_adaptive_reason": "failed"
+  },
+  "fresh_model_calls": 2,
+  "fresh_model_usage_totals": {
+    "input_tokens": 18792,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 338,
+    "reasoning_output_tokens": 108
+  },
+  "preflight_model_calls_this_run": 0,
+  "known_limit": "adaptive caller v1 collapses nested typed SAFE_YIELD to generic execute failed",
+  "decision": "RETAIN_LIVE_MECHANICS;_FIX_OUTER_TYPED_YIELD_BEFORE_EFFICIENCY_ABLATION",
+  "scope": "one fresh same-seed positive/changed pair; no baseline, rate, token saving, portability, break-even or human-tempo claim"
+}

@@ -1,0 +1,33 @@
+{
+  "schema":"freshness_backpressure_formal_freeze_v2",
+  "task":"FRESHNESS-BACKPRESSURE-CRITICAL-RETENTION-FORMAL-20260917-002",
+  "issue":1021,
+  "publication_base":"a1f17a1b1b018da83a10d3e2f2d114127424f93c",
+  "formal_invocations_before_freeze":0,
+  "formal_output_present_before_freeze":false,
+  "construction":{"py_compile":"PASS","mechanics":"PASS","candidate_exact_parent_blob":true,"formal_seed_used":false,"remote_alignment":"9/9 source Git objects match container bytes"},
+  "source_git_blobs":{
+    "PLAN.md":"7fa35bf5743628f2995b76033c2e4aa91e710196",
+    "contract.py":"404a452aa304b4bde73ec0182450d241e2a744af",
+    "oracle_independent.py":"7cadbf2f4dcf30c278a587e0bc32489bac1d6a01",
+    "corpus.py":"c55f945d80a02a88097e85da1a76a8235efa5318",
+    "run_formal.py":"f4b8d6d12016bc3b3014817523d3486bf87006d7",
+    "audit.py":"dfcff80489786076222e0994b7be4e0b3202c9a0",
+    "corruption_controls.py":"854dfb7389828124d68980e583f6dc73504b2ade",
+    "test_mechanics.py":"45b28c08a68609b8b32c1af287d8d8c63787f807",
+    "prereg.json":"733d116a0f90b974f28c9bf7211ca5b4b6027abe"
+  },
+  "source_sha256":{
+    "PLAN.md":"9fec30163be5f3457f45dd486068303a9d73b01d301d447ce1024a3eb1661bfa",
+    "contract.py":"681b88331d26d82813410c487407a7292f55813e999bfba7f90b12a29f661ab9",
+    "oracle_independent.py":"d2d2a4bf01ac44aadf1f1c47374d8863f809ab761986e5bd5892f40d945528ce",
+    "corpus.py":"7f38b64c43d7e4caf91f35e4335698d51af6babe8df98e4b9bf2e026bc5cf577",
+    "run_formal.py":"594a60aa3c9ccfca884a36bea4e8579f7fbff871a6d4c394e4a15f7e193aec6d",
+    "audit.py":"815ed97712d8f46ad9909fea10c5eac83125578bff70bacde0f294035edf1eaa",
+    "corruption_controls.py":"b7f65fa61d7324d371afd30e0aaba4de95910f2657444d5f10d4d384e17dd958",
+    "test_mechanics.py":"de1856d480391d34d477c57b7ad9132df86a9e4ffa1193570f25cb616705ca56",
+    "prereg.json":"204343839b9c11c9bcd6d1fad8372ce564f33be038539bde6680cf69e817297b"
+  },
+  "formal":{"seed":100820260917002,"random_batches":25000,"exhaustive_batches_expected":4368,"invocations_planned":1,"reruns":0},
+  "external_authority_consumed":false
+}

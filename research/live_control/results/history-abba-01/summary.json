@@ -1,0 +1,78 @@
+{
+  "rows": [
+    {
+      "label": "history-abba-1-last",
+      "mode": "last",
+      "success": true,
+      "model_calls": 3,
+      "save_chords": 1,
+      "input_tokens": 39433,
+      "cached_input_tokens": 13568,
+      "output_tokens": 380,
+      "model_wall_ms": 21054.561,
+      "capture_to_evaluation_ms": 23645.701577,
+      "full_supervisor_ms": 30172.935,
+      "events": 60,
+      "frames": 12
+    },
+    {
+      "label": "history-abba-2-all",
+      "mode": "all",
+      "success": true,
+      "model_calls": 3,
+      "save_chords": 1,
+      "input_tokens": 39939,
+      "cached_input_tokens": 19968,
+      "output_tokens": 436,
+      "model_wall_ms": 22163.324,
+      "capture_to_evaluation_ms": 25004.411092,
+      "full_supervisor_ms": 28617.9666,
+      "events": 64,
+      "frames": 12
+    },
+    {
+      "label": "history-abba-3-all",
+      "mode": "all",
+      "success": true,
+      "model_calls": 3,
+      "save_chords": 1,
+      "input_tokens": 39870,
+      "cached_input_tokens": 13568,
+      "output_tokens": 338,
+      "model_wall_ms": 22037.933100000002,
+      "capture_to_evaluation_ms": 24640.18615,
+      "full_supervisor_ms": 28331.7372,
+      "events": 60,
+      "frames": 12
+    },
+    {
+      "label": "history-abba-4-last",
+      "mode": "last",
+      "success": true,
+      "model_calls": 3,
+      "save_chords": 1,
+      "input_tokens": 39444,
+      "cached_input_tokens": 3584,
+      "output_tokens": 395,
+      "model_wall_ms": 19826.8224,
+      "capture_to_evaluation_ms": 22470.020816,
+      "full_supervisor_ms": 26522.2256,
+      "events": 60,
+      "frames": 12
+    }
+  ],
+  "identical_first_prompts": true,
+  "conclusion": "All four succeeded with3 model calls/one save; no measured turn reduction from full bounded history. Full history added input tokens. Small sample/stochastic model/cache variation prevents general causal timing claim.",
+  "means": {
+    "last": {
+      "input_tokens": 39438.5,
+      "capture_to_evaluation_ms": 23057.861196500002,
+      "model_wall_ms": 20440.691700000003
+    },
+    "all": {
+      "input_tokens": 39904.5,
+      "capture_to_evaluation_ms": 24822.298621,
+      "model_wall_ms": 22100.62855
+    }
+  }
+}

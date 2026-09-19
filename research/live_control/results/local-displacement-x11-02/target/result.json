@@ -1,0 +1,107 @@
+{
+  "case": "target",
+  "pointer_delta": 28,
+  "before_bbox": [
+    596,
+    373,
+    643,
+    408
+  ],
+  "after_bbox": [
+    620,
+    373,
+    667,
+    408
+  ],
+  "observed_delta": [
+    24,
+    0
+  ],
+  "terminal": {
+    "event": "terminal",
+    "id": "target",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 5,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 27784397031259,
+      "valid_until_ns": 27789057591574
+    },
+    "terminal_ns": 27784397065365,
+    "semantic_completion": "program status only; task scoring is separate"
+  },
+  "postcondition": {
+    "event": "local_displacement_postcondition",
+    "id": "target",
+    "step": 3,
+    "sequence": 8,
+    "format": "local-displacement-postcondition-outcome-v1",
+    "postcondition_id": "red-rectangle-24px",
+    "reason": "met",
+    "continue_program": true,
+    "needs_decision": false,
+    "target_delta": [
+      24,
+      0
+    ],
+    "tolerance_px": 1,
+    "tracking": [
+      {
+        "status": "matched",
+        "error": 0.0,
+        "margin": 0.057467532467532466,
+        "source_observation": 1,
+        "observation": 7,
+        "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+        "patch_sha256": "87765ac1f76508ecded989749724fbea2b8c88dc2ab3ab9c4ff5fdb2eaa96adc",
+        "box": [
+          616,
+          369,
+          56,
+          44
+        ],
+        "delta": [
+          24,
+          0
+        ]
+      },
+      {
+        "status": "matched",
+        "error": 0.0,
+        "margin": 0.057467532467532466,
+        "source_observation": 1,
+        "observation": 8,
+        "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+        "patch_sha256": "87765ac1f76508ecded989749724fbea2b8c88dc2ab3ab9c4ff5fdb2eaa96adc",
+        "box": [
+          616,
+          369,
+          56,
+          44
+        ],
+        "delta": [
+          24,
+          0
+        ]
+      }
+    ],
+    "sample_span_ms": 106.476317,
+    "semantic_effect_verified": false,
+    "task_success_verified": false,
+    "grants_input_authority": false,
+    "scope": "task-relative visual condition for already admitted later steps only"
+  },
+  "steps_started": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "later_save_step_started": true
+}

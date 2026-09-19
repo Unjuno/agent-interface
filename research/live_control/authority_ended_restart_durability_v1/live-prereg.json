@@ -1,0 +1,43 @@
+{
+  "candidate": "durable token state v2; each issue/recover/revalidate/consume/load operation runs in a fresh Python subprocess while one ViZDoom session remains alive",
+  "construction": [
+    {"cause":"wrapper pre-created output directory although session requires nonexistent output path","formal_consumed":false,"outcome":"STARTUP_HARNESS_FAIL","seed":994399},
+    {"formal_consumed":false,"outcome":"SMOKE_PASS_AFTER_ONE_LINE_STARTUP_FIX","seed":994399}
+  ],
+  "decision": "PASS_LIVE_DURABLE_RESTART only if every hard gate passes; otherwise retain first failure and stop",
+  "first_action": {"authority_ms":600,"key":"Shift_L","requested_ms":2000},
+  "fixture": "map01-threat-contact-v2",
+  "formal": {"model_calls":0,"retry_count_allowed":0,"seed":994400,"sessions":1},
+  "hard_gates": [
+    "first terminal authority_ended with verified expired release and valid post-authority observation",
+    "first ledger subprocess issues pending state keyed by runtime authority_end_id",
+    "fresh subprocess recovers same pending token/post_sequence",
+    "fresh subprocess duplicate issue rejects and creates zero input",
+    "observe-only advances current_sequence beyond post_sequence",
+    "fresh subprocess revalidation returns revalidated",
+    "fresh subprocess durable consume transitions pending->consumed before second submit",
+    "zero input admissions after first release before second submit",
+    "exactly one second physical input; second terminal completed and verified empty release",
+    "fresh subprocess after consume rejects recovery and duplicate issue",
+    "fresh subprocess load shows exactly first authority_end_id with consumed status",
+    "zero input after second release before finish; total post-first-release input admissions exactly one",
+    "strict final five-field independent scorer agreement"
+  ],
+  "later_action": {"duration_ms":80,"key":"Shift_L"},
+  "limits": [
+    "caller process restart is represented by fresh ledger helper subprocesses while GUI session remains in the original session process",
+    "crash after durable consume but before OS submit remains an explicit fail-safe/liveness gap",
+    "single-writer local state file only",
+    "no model/gameplay-efficacy claim"
+  ],
+  "mode": "ASYNC_SPECTATOR 35 Hz",
+  "runtime_source_base": "9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+  "schema": "authority-ended-live-durable-restart-prereg-v1",
+  "skill": 1,
+  "source_sha256": {
+    "authority_ended_bridge_v1.py":"2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e",
+    "durable_token_state_v2.py":"72a3481653cf9c41ec1a03f4c7a7bf1c482ff69468b5d92986bad8cf814950b4",
+    "ledger_child.py":"9d977d82d2507d7ecba6dfd3270e15d6d38d3cb7c6aa56bb7a345239d3ef6953",
+    "run_live_durable_restart_v1.py":"c6ea57e23494d350efba3bf8415b90681c3b8706dd1d36ea750af85af1cad857"
+  }
+}

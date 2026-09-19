@@ -1,0 +1,123 @@
+{
+  "schedule": [
+    {
+      "name": "unknown-fresh-full",
+      "case": "unknown-fresh",
+      "arm": "full",
+      "prompt_sha256": "bb2ae559b7680eb5ac3dee51b47cd7911a619babce075e5371f698848ef37477",
+      "expected": {
+        "terminal_status": "needs_decision",
+        "latest_sequence": 3,
+        "historical_target_binding": false,
+        "automatic_tail_replay": false,
+        "reuse_old_lease": false,
+        "proposal": "propose_focus_recovery",
+        "runtime_revalidation_required": true,
+        "record_proves_game_task_success": false
+      },
+      "source": "results\\mindustry-socket-focus-02\\calls.json",
+      "source_sha256": "6dfc0f182749038be391fd83e18fc96c85011ef919a23022dc172424fab6ceb3"
+    },
+    {
+      "name": "unknown-fresh-view",
+      "case": "unknown-fresh",
+      "arm": "view",
+      "prompt_sha256": "aa761a957e678bafbce58ab78f2f45c2f138d4efd37396ba2b5eff990faf890b",
+      "expected": {
+        "terminal_status": "needs_decision",
+        "latest_sequence": 3,
+        "historical_target_binding": false,
+        "automatic_tail_replay": false,
+        "reuse_old_lease": false,
+        "proposal": "propose_focus_recovery",
+        "runtime_revalidation_required": true,
+        "record_proves_game_task_success": false
+      },
+      "source": "results\\mindustry-socket-focus-02\\calls.json",
+      "source_sha256": "6dfc0f182749038be391fd83e18fc96c85011ef919a23022dc172424fab6ceb3"
+    },
+    {
+      "name": "target-fresh-view",
+      "case": "target-fresh",
+      "arm": "view",
+      "prompt_sha256": "fbd16dd67e3b773be48b4540a4ef9db378fb928128514a94fae38a53f3335f9b",
+      "expected": {
+        "terminal_status": "completed",
+        "latest_sequence": 18,
+        "historical_target_binding": true,
+        "automatic_tail_replay": false,
+        "reuse_old_lease": false,
+        "proposal": "propose_new_target_action",
+        "runtime_revalidation_required": true,
+        "record_proves_game_task_success": false
+      },
+      "source": "results\\mindustry-bend-v2-self-use-01\\events.jsonl",
+      "source_sha256": "a8418b5ae4115b7473740e3587042ca6dddf4d438c0f646a08b98ab447105fec"
+    },
+    {
+      "name": "target-fresh-full",
+      "case": "target-fresh",
+      "arm": "full",
+      "prompt_sha256": "1bfef5170a18c043a9593777ba74d573bb275ed431720a1c22d7da3c36f49eec",
+      "expected": {
+        "terminal_status": "completed",
+        "latest_sequence": 18,
+        "historical_target_binding": true,
+        "automatic_tail_replay": false,
+        "reuse_old_lease": false,
+        "proposal": "propose_new_target_action",
+        "runtime_revalidation_required": true,
+        "record_proves_game_task_success": false
+      },
+      "source": "results\\mindustry-bend-v2-self-use-01\\events.jsonl",
+      "source_sha256": "a8418b5ae4115b7473740e3587042ca6dddf4d438c0f646a08b98ab447105fec"
+    },
+    {
+      "name": "target-stale-full",
+      "case": "target-stale",
+      "arm": "full",
+      "prompt_sha256": "4857bd32de899835d6a2dcecb466cf01d73d579ebbe4297a8881a5db020d7b0b",
+      "expected": {
+        "terminal_status": "completed",
+        "latest_sequence": 18,
+        "historical_target_binding": true,
+        "automatic_tail_replay": false,
+        "reuse_old_lease": false,
+        "proposal": "observe_only",
+        "runtime_revalidation_required": true,
+        "record_proves_game_task_success": false
+      },
+      "source": "results\\mindustry-bend-v2-self-use-01\\events.jsonl",
+      "source_sha256": "a8418b5ae4115b7473740e3587042ca6dddf4d438c0f646a08b98ab447105fec"
+    },
+    {
+      "name": "target-stale-view",
+      "case": "target-stale",
+      "arm": "view",
+      "prompt_sha256": "dac44e60ff581da50b943ab816729ccef29d99f90830f7e5731d69072c72719b",
+      "expected": {
+        "terminal_status": "completed",
+        "latest_sequence": 18,
+        "historical_target_binding": true,
+        "automatic_tail_replay": false,
+        "reuse_old_lease": false,
+        "proposal": "observe_only",
+        "runtime_revalidation_required": true,
+        "record_proves_game_task_success": false
+      },
+      "source": "results\\mindustry-bend-v2-self-use-01\\events.jsonl",
+      "source_sha256": "a8418b5ae4115b7473740e3587042ca6dddf4d438c0f646a08b98ab447105fec"
+    }
+  ],
+  "scope": "new archived cases with synthetic freshness; explicit policy adherence, not live planning",
+  "projection_controls": [
+    "unknown terminal field retained",
+    "duplicate sequence rejected",
+    "observation after terminal rejected",
+    "mixed action rejected"
+  ],
+  "sources": {
+    "focus_decision_view_v2.py": "f983ea4f38eb5100ad1eb66d9565a3b9076b343c0ad7487342b38e11defc7f42",
+    "prepare_focus_model_pair_v2.py": "d54455ccd3808a90ed9c21eaaeec6d70a740d025f04c9ae70901fbe3b8e68141"
+  }
+}

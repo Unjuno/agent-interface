@@ -1,0 +1,88 @@
+{
+  "audit_sha256": "8b71344f51f1556852d227772aeda90fcb8afdb00db921ce86dca7ebdfb6de5b",
+  "arms": {
+    "A": {
+      "audit_sha256": "8b71344f51f1556852d227772aeda90fcb8afdb00db921ce86dca7ebdfb6de5b",
+      "pair": 3,
+      "arm": "A",
+      "socket_exchanges": 10,
+      "unique_records": 47,
+      "exact_frames": 7,
+      "recovery_reads": 1,
+      "recovery_outer_calls_reported": 1,
+      "capture_to_last_terminal_seconds": 51.610374058,
+      "capture_to_evaluation_seconds": 64.66792196,
+      "score": {
+        "success": true,
+        "checks": {
+          "target_owned_roads": true,
+          "bidirectional_connections": true,
+          "forbidden_row_clear": true,
+          "surrounding_road_owner_unchanged": true
+        },
+        "changed_surrounding_tiles": [],
+        "legacy_success": true
+      },
+      "cleanup": {
+        "all_owned_processes_exited": true,
+        "save_unchanged": true
+      },
+      "presentation": {
+        "visible_truncation": false,
+        "build_not_retried": true,
+        "original_build_output_seen": true,
+        "recovery": "One explicit read; assembled history plus original image reviewed before open. Full open/build views and original images reviewed before next input/finish.",
+        "independent_evaluation_success": true,
+        "model_receipt_timestamps": null
+      },
+      "paired_effect": null,
+      "model_performance_qualified": false,
+      "scope": "Saved evidence audited; model receipt and original full-output visibility cannot be proved from runtime logs. Presentation failure retained; no clean rerun.",
+      "next": "Pair 4 A then B; retain all pair 3 outcomes."
+    },
+    "B": {
+      "audit_sha256": "8b71344f51f1556852d227772aeda90fcb8afdb00db921ce86dca7ebdfb6de5b",
+      "pair": 3,
+      "arm": "B",
+      "socket_exchanges": 10,
+      "unique_records": 47,
+      "exact_frames": 7,
+      "recovery_reads": 1,
+      "recovery_outer_calls_reported": 1,
+      "capture_to_last_terminal_seconds": 51.688962799,
+      "capture_to_evaluation_seconds": 317.616786557,
+      "score": {
+        "success": true,
+        "checks": {
+          "target_owned_roads": true,
+          "bidirectional_connections": true,
+          "forbidden_row_clear": true,
+          "surrounding_road_owner_unchanged": true
+        },
+        "changed_surrounding_tiles": [],
+        "legacy_success": true
+      },
+      "cleanup": {
+        "all_owned_processes_exited": true,
+        "save_unchanged": true
+      },
+      "presentation": {
+        "visible_truncation": true,
+        "build_not_retried": true,
+        "original_build_output_seen": false,
+        "recovery": "After context compaction, a raw result read was also truncated. Inspected saved terminal separately and viewed runtime/007.png at original resolution before finish.",
+        "independent_evaluation_success": true,
+        "comparison_status": "B completed; A pending; presentation failure retained; no clean performance claim"
+      },
+      "paired_effect": null,
+      "model_performance_qualified": false,
+      "scope": "Saved evidence audited; model receipt and original full-output visibility cannot be proved from runtime logs. Presentation failure retained; no clean rerun.",
+      "next": "Pair 4 A then B; retain all pair 3 outcomes."
+    }
+  },
+  "initial_png_steps_runtime_manifest_equal": true,
+  "recovery_outer_calls_delta_B_minus_A": 0,
+  "recovery_socket_reads_delta_B_minus_A": 0,
+  "capture_to_evaluation_delta_B_minus_A_seconds": 252.948864597,
+  "qualification": "Unqualified: B presentation overflow and cross-turn review differ; exact model configuration unavailable. Elapsed difference is not a causal helper effect."
+}

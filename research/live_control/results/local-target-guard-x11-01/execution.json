@@ -1,0 +1,224 @@
+[
+  {
+    "name": "target",
+    "before_bbox": [
+      596,
+      373,
+      643,
+      408
+    ],
+    "after_bbox": [
+      596,
+      373,
+      643,
+      408
+    ],
+    "observed_visual_delta": [
+      0,
+      0
+    ],
+    "postcondition": null,
+    "postcondition_event_count": 0,
+    "terminal": {
+      "event": "terminal",
+      "id": "target",
+      "status": "needs_decision",
+      "error": null,
+      "steps_completed": 0,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 29745695439166,
+        "valid_until_ns": null
+      },
+      "terminal_ns": 29745695520555,
+      "semantic_completion": "program status only; task scoring is separate"
+    },
+    "steps_started": [
+      0
+    ],
+    "save_started": false,
+    "owner_focus_release": true
+  },
+  {
+    "name": "partial",
+    "before_bbox": [
+      596,
+      373,
+      643,
+      408
+    ],
+    "after_bbox": [
+      616,
+      373,
+      663,
+      408
+    ],
+    "observed_visual_delta": [
+      20,
+      0
+    ],
+    "postcondition": {
+      "event": "local_target_guard_postcondition",
+      "id": "partial",
+      "step": 3,
+      "sequence": 9,
+      "format": "local-target-guard-postcondition-outcome-v1",
+      "postcondition_id": "red-placement-right-24",
+      "reason": "target_not_reached",
+      "continue_program": false,
+      "needs_decision": true,
+      "measurements": [
+        {
+          "sequence": 8,
+          "target_changed_pixels": [
+            0
+          ],
+          "target_changed_total": 0,
+          "guard_changed_pixels": [
+            0
+          ],
+          "guard_changed_total": 0
+        },
+        {
+          "sequence": 9,
+          "target_changed_pixels": [
+            0
+          ],
+          "target_changed_total": 0,
+          "guard_changed_pixels": [
+            0
+          ],
+          "guard_changed_total": 0
+        }
+      ],
+      "minimum_target_changed_pixels": 50,
+      "maximum_guard_changed_pixels": 20,
+      "pixel_delta_threshold": 24,
+      "sample_span_ms": 94.46344,
+      "semantic_effect_verified": false,
+      "task_success_verified": false,
+      "grants_input_authority": false,
+      "scope": "fixed-region visual condition for already admitted later steps only"
+    },
+    "postcondition_event_count": 1,
+    "terminal": {
+      "event": "terminal",
+      "id": "partial",
+      "status": "needs_decision",
+      "error": null,
+      "steps_completed": 3,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 29749357100024,
+        "valid_until_ns": 29754329995165
+      },
+      "terminal_ns": 29749357177458,
+      "semantic_completion": "program status only; task scoring is separate"
+    },
+    "steps_started": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "save_started": false,
+    "owner_focus_release": false
+  },
+  {
+    "name": "guard",
+    "before_bbox": [
+      596,
+      373,
+      643,
+      408
+    ],
+    "after_bbox": [
+      596,
+      353,
+      643,
+      388
+    ],
+    "observed_visual_delta": [
+      0,
+      -20
+    ],
+    "postcondition": {
+      "event": "local_target_guard_postcondition",
+      "id": "guard",
+      "step": 3,
+      "sequence": 9,
+      "format": "local-target-guard-postcondition-outcome-v1",
+      "postcondition_id": "red-placement-right-24",
+      "reason": "guard_changed",
+      "continue_program": false,
+      "needs_decision": true,
+      "measurements": [
+        {
+          "sequence": 8,
+          "target_changed_pixels": [
+            0
+          ],
+          "target_changed_total": 0,
+          "guard_changed_pixels": [
+            450
+          ],
+          "guard_changed_total": 450
+        },
+        {
+          "sequence": 9,
+          "target_changed_pixels": [
+            0
+          ],
+          "target_changed_total": 0,
+          "guard_changed_pixels": [
+            450
+          ],
+          "guard_changed_total": 450
+        }
+      ],
+      "minimum_target_changed_pixels": 50,
+      "maximum_guard_changed_pixels": 20,
+      "pixel_delta_threshold": 24,
+      "sample_span_ms": 94.688012,
+      "semantic_effect_verified": false,
+      "task_success_verified": false,
+      "grants_input_authority": false,
+      "scope": "fixed-region visual condition for already admitted later steps only"
+    },
+    "postcondition_event_count": 1,
+    "terminal": {
+      "event": "terminal",
+      "id": "guard",
+      "status": "needs_decision",
+      "error": null,
+      "steps_completed": 3,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 29753012992159,
+        "valid_until_ns": 29757994694484
+      },
+      "terminal_ns": 29753013045672,
+      "semantic_completion": "program status only; task scoring is separate"
+    },
+    "steps_started": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "save_started": false,
+    "owner_focus_release": false
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "combined_bytes": 21712,
+  "combined_path": "SOURCE_BUNDLE.oneline.b64",
+  "combined_sha256": "18bf3527515e0b37fcb729c81291785f1d5e8b80860a2d5bf07c32170e0004a2",
+  "decoded_gzip_sha256": "28a20e2e2dde4f12dfd80e35e662219833d383769d7011805e496e0653ab95f1",
+  "decoded_source_json_sha256": "8b4660e48f85ca794f06a17fd014f28a2515822909197988fc1e3c9e85bbb313",
+  "parts": [
+    {"bytes": 5429, "path": "SOURCE_BUNDLE.part1.b64", "sha256": "5c26d3b1b7e8bd45dab2edce22ed4a6e5f88145cab1a8554ee89f5dcaf270da0"},
+    {"bytes": 571, "path": "SOURCE_BUNDLE.part1_suffix.b64", "sha256": "ac28789e6184ef436b4e0caa929f7803cfc015121ac630da37ef2e49268a0aed"},
+    {"bytes": 6000, "path": "SOURCE_BUNDLE.part2.b64", "sha256": "4293ee6c381412ba98b2eb1817aec9114981ceb7b299521a82866e7c047649ce"},
+    {"bytes": 6000, "path": "SOURCE_BUNDLE.part3.b64", "sha256": "5c238e6821a4fab1192c1756d3c010572e50613444090a1dc403b47070fcff7c"},
+    {"bytes": 3712, "path": "SOURCE_BUNDLE.part4.b64", "sha256": "efcf140d049c77f0d6e818f0bf06475448bc4b076743ff477b64657b9cea2ec1"}
+  ],
+  "preformal_publication_correction": {
+    "formal_started": false,
+    "kind": "truncated_part1_transfer",
+    "observed_github_part1_bytes": 5429,
+    "frozen_local_part1_bytes": 6000,
+    "repair": "retain the exact transferred 5429-byte prefix and append the missing exact 571-byte suffix as a separately hashed part; no source/scenario/gate change"
+  },
+  "reconstruct": "cat SOURCE_BUNDLE.part1.b64 SOURCE_BUNDLE.part1_suffix.b64 SOURCE_BUNDLE.part2.b64 SOURCE_BUNDLE.part3.b64 SOURCE_BUNDLE.part4.b64 > SOURCE_BUNDLE.oneline.b64; base64 -d SOURCE_BUNDLE.oneline.b64 > SOURCE_BUNDLE.json.gz; gzip -dc SOURCE_BUNDLE.json.gz > SOURCE_BUNDLE.json",
+  "schema": "ffmpeg_png_semantic_source_bundle_index_v2"
+}

@@ -1,0 +1,118 @@
+{
+  "audit_passed": true,
+  "preregistered_cases": 2,
+  "cases": [
+    {
+      "turn": 7,
+      "baseline": {
+        "kind": "act",
+        "intent": "inspect",
+        "checkpoint_status": "uncertain",
+        "drag_count": 0,
+        "drag_points": null
+      },
+      "memory": {
+        "kind": "act",
+        "intent": "progress",
+        "checkpoint_status": "observed",
+        "drag_count": 1,
+        "drag_points": [
+          {
+            "x": 641,
+            "y": 272
+          },
+          {
+            "x": 673,
+            "y": 288
+          },
+          {
+            "x": 705,
+            "y": 304
+          }
+        ]
+      },
+      "baseline_usage": {
+        "input_tokens": 16801,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 306,
+        "reasoning_output_tokens": 147
+      },
+      "memory_usage": {
+        "input_tokens": 17183,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 454,
+        "reasoning_output_tokens": 261
+      }
+    },
+    {
+      "turn": 8,
+      "baseline": {
+        "kind": "stop",
+        "intent": null,
+        "checkpoint_status": "uncertain",
+        "drag_count": 0,
+        "drag_points": null
+      },
+      "memory": {
+        "kind": "act",
+        "intent": "progress",
+        "checkpoint_status": "observed",
+        "drag_count": 1,
+        "drag_points": [
+          {
+            "x": 641,
+            "y": 272
+          },
+          {
+            "x": 673,
+            "y": 288
+          },
+          {
+            "x": 705,
+            "y": 304
+          }
+        ]
+      },
+      "baseline_usage": {
+        "input_tokens": 16854,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 192,
+        "reasoning_output_tokens": 96
+      },
+      "memory_usage": {
+        "input_tokens": 17236,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 483,
+        "reasoning_output_tokens": 294
+      }
+    }
+  ],
+  "primary_endpoint": {
+    "baseline": {
+      "observed": 0,
+      "uncertain": 2,
+      "contradicted": 0
+    },
+    "memory": {
+      "observed": 2,
+      "uncertain": 0,
+      "contradicted": 0
+    }
+  },
+  "input_tokens": {
+    "baseline": 33655,
+    "memory": 34419,
+    "difference": 764
+  },
+  "cached_input_tokens": {
+    "baseline": 13056,
+    "memory": 26112
+  },
+  "live_action_executed": false,
+  "decision": "advance bounded effect memory to a fresh preregistered live episode; do not promote yet",
+  "scope": "two archived contexts and separate model samples; descriptive decision signal, not causal correctness, speed or token evidence"
+}

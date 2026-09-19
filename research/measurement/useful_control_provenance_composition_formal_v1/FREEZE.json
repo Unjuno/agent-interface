@@ -1,0 +1,71 @@
+{
+  "branch": "research/useful-control-provenance-composition-formal-974",
+  "composition_source": {
+    "git_blob": "b78ced2ca877b7c8ba28ec093c531ad4d2cbb73a",
+    "path": "research/measurement/useful_control_provenance_composition_v1/composed_contract.py",
+    "sha256": "91995755c648fbd0ce2c6a7872bd8b793e1083c6d36a9cd3f14261f4190d9017"
+  },
+  "construction": {
+    "boundary_controls": 11,
+    "formal_seeds_used": 0,
+    "initial_command_tail_sha_display_error": "non_scientific_shell_quoting_only",
+    "preformal_runner_publication_reconciled": true,
+    "result": "PASS"
+  },
+  "excluded_overlap": [
+    964,
+    869
+  ],
+  "files": {
+    "PLAN.md": {
+      "bytes": 1281,
+      "git_blob": "b13adc12f22a27362f2e3a28ac1294b5a03ea46c",
+      "sha256": "036f30058bc18d0b535661f39174fa9011e28fe5dcd90f2acdbee57bf91ef477"
+    },
+    "audit.py": {
+      "bytes": 2774,
+      "git_blob": "9c96326a52fd14e929ef5a1930698ff557b80c77",
+      "sha256": "ee3156a22976c635fd5d0da076856fe70965b5d5f0f6477e7cc5fe2b8f881bb1"
+    },
+    "construction.py": {
+      "bytes": 1957,
+      "git_blob": "e382bc643298752fee2a42706eb055a8c2d5ba10",
+      "sha256": "38aa06c1a636054dfa49f457d0f59553a711c095b5f5e16669155093e31ffe74"
+    },
+    "corruption_controls.py": {
+      "bytes": 949,
+      "git_blob": "f3aee16f80d0f3cc27ad644cee21b2b3800d7c56",
+      "sha256": "16cdef9a9eacc916c0a2380ae12b263c0a427160d0f0520a3989e73f05f5c7a2"
+    },
+    "oracle.py": {
+      "bytes": 3473,
+      "git_blob": "d46fc4977dd54588b02eb44cdf923454d37c6119",
+      "sha256": "ce710aee571a9e63c9a5ef78ee91e6146a1fda510e74ed3c2056eb4059528a7d"
+    },
+    "run_formal.py": {
+      "bytes": 7881,
+      "git_blob": "438c61a41c6fec4281145abc11523e57326ba4d1",
+      "sha256": "eb178277f10258cce33a63114421c2fc110d37d781dae7ac838f25b3055e49b9"
+    }
+  },
+  "formal": {
+    "adversarial_cases": 50000,
+    "adversarial_seed": 96320260917012,
+    "authorized": true,
+    "invocations": 0,
+    "reruns": 0,
+    "valid_cases": 100000,
+    "valid_seed": 96320260917011
+  },
+  "interval_parent": {
+    "git_blob": "979f257b4f02be80bcaa30ae8d5a0aa92162bfb1",
+    "path": "research/measurement/useful_control_interval_contract_v1/interval_contract.py",
+    "sha256": "9783b3b6b24bcb93b4cf608db2bbd3f65740a1b0f5372c783f6c0367b680fc8b"
+  },
+  "issue": 974,
+  "live_model_gui_input_authority": false,
+  "parent_issue": 963,
+  "publication_base": "592427d8f70efafed5819acec123f3fd0efa485b",
+  "stop": "Exactly one formal invocation after Git source readback and mandatory ownership reread; reruns/replacements/tuning0.",
+  "task": "USEFUL-CONTROL-PROVENANCE-COMPOSITION-FORMAL-20260917-001"
+}

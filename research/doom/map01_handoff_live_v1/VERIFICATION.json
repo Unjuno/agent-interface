@@ -1,0 +1,95 @@
+{
+  "application_effect": {
+    "baseline_stale_unowned_effects": 6,
+    "candidate_stale_unowned_rejects": 6,
+    "candidate_stale_unowned_task_inputs": 0,
+    "candidate_stale_unowned_yaw_degrees": 0,
+    "explicit_final_releases_verified": 24,
+    "independent_keymap_empty_before_and_after": 24
+  },
+  "construction_cases_excluded": 2,
+  "corruption_controls": [
+    {
+      "control": "selected_old_proposal",
+      "errors": [
+        "selected-id"
+      ],
+      "rejected": true
+    },
+    {
+      "control": "bitmap_contradiction",
+      "errors": [
+        "independent-release"
+      ],
+      "rejected": true
+    },
+    {
+      "control": "generation_rollback",
+      "errors": [
+        "handoff-epoch"
+      ],
+      "rejected": true
+    },
+    {
+      "control": "missing_final_release_record",
+      "errors": [
+        "nonvacuous-release"
+      ],
+      "rejected": true
+    },
+    {
+      "control": "refused_but_rotated",
+      "errors": [
+        "refused-but-rotation"
+      ],
+      "rejected": true
+    },
+    {
+      "control": "png_hash_mismatch",
+      "errors": [
+        "png:before.png"
+      ],
+      "rejected": true
+    }
+  ],
+  "decision": "PASS_LIVE_HANDOFF_EFFECT_SCOPED",
+  "formal_cases": 24,
+  "formal_reruns": 0,
+  "fresh_archive_reaudit": {
+    "archive_sha256": "444106cb165529deb72d9ffc98fd25ae6d2a18198fa65c034977cd0026954fac",
+    "audit_byte_identical": true,
+    "cases": 24,
+    "live_cases_rerun": 0,
+    "manifest_entries": 201,
+    "manifest_errors": [],
+    "reaudit_returncode": 0
+  },
+  "frozen_audit_errors": [],
+  "frozen_audit_sha256": "00d3a444633591efc39eaf3b8c44f9ca1d9ada3b451a340f51695555eeb9f2e0",
+  "frozen_sources_checked": 5,
+  "json_restore": {
+    "exact_byte_records": 96,
+    "existing_output_refused": true,
+    "full_audit_requires_png_archive": true,
+    "png_files_in_json_restore": 0,
+    "total": 96
+  },
+  "png_bytes_checked": true,
+  "replacements": 0,
+  "scope": "scripted resource-authority transition; no threat-policy efficacy or precision-control claim",
+  "six_pulse_yaw_degrees": {
+    "max": 138.8671874485135,
+    "median": 89.64843743705387,
+    "min": 77.34374993418896,
+    "n": 9
+  },
+  "static_tests_after": {
+    "passed": 9,
+    "total": 9
+  },
+  "static_tests_before": {
+    "passed": 9,
+    "total": 9
+  },
+  "task": "MAP01-HANDOFF-LIVE-EFFECT-20260917-001"
+}

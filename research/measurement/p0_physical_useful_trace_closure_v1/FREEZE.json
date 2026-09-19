@@ -1,0 +1,22 @@
+{
+  "schema":"p0_physical_useful_trace_freeze_v1",
+  "task":"P0-PHYSICAL-USEFUL-TRACE-SOURCE-CLOSURE-20260917-001",
+  "issue":1006,
+  "publication_base":"159dd3684ffcd0ee78b9ff5939e0173cd77c7b4f",
+  "formal_invocations_before_freeze":0,
+  "formal_output_present_before_freeze":false,
+  "construction":{"py_compile":"PASS","mechanics":"PASS","corruption_controls":"5/5 rejected","preformal_repair":"missing-gate corruption initially raised KeyError; evaluator changed to fail closed before formal; scientific DAG/gates unchanged"},
+  "source_git_blobs":{
+    "PLAN.md":"b1798bf18aa79f24875e65502e7a5235d5f429f1",
+    "fixture.json":"b0abd51117c476a19c8febcf0f0c84c7e8f991b7",
+    "common.py":"f63ecd7f56fb2c99e33b006c1c31fa52ec6f309f",
+    "run_formal.py":"7bdb7151d7df1a7604dc76752729708e418bdf98",
+    "audit.py":"e2145d4a875b6ad1f47ce0673632c13033c1c9c6",
+    "corruption_controls.py":"2b0a0358cc61ffb1192493342b2422f6ef4e7a63",
+    "test_mechanics.py":"86112df7895304dcb6c2f2fd92eda8d44f8a3726",
+    "prereg.json":"ded1bbe511441781a886c86dde9f324baaa9c859"
+  },
+  "retained_inputs":{"release_result_blob":"e5166e924b6c1cb5d99f5dde6f5b29ef6014dff0","press_result_blob":"ffc1eec9bbf30843515b1ca0c5fcbd5a9a525e50","adapter_result_blob":"6cda6cf2f91b3e23e3758bffbdcaae8c444e615d","dual_edge_formal_sha256":"b534ac82996622e7d6ab337f408ebaf9322e5c52ed3e1f258075f6f1a5923165","temporal_result_blob":"7e1806486e83699b3a6d118a44731f8e9f4aad24","provenance_report_blob":"db1f4a497464897cb9b28e27b08ab09e4ab36c59"},
+  "active_work_not_evidence":[998,999],
+  "live_or_formal_external_authority_consumed":false
+}

@@ -1,0 +1,97 @@
+{
+  "allocation_id": "map01-running-action-cancel-live-01",
+  "disposition": "RETAIN_PRE_INPUT_STALE_FAILURE",
+  "exception_type": "RuntimeError",
+  "exception_payload": {
+    "format": "action-validity-admission-v1",
+    "status": "REJECTED_STALE",
+    "reason": "current_snapshot_too_old",
+    "action_may_proceed_to_executor_admission": false,
+    "requires_new_decision": true,
+    "grants_input_authority": false,
+    "contract": {
+      "format": "action-validity-contract-v1",
+      "action_fingerprint": "3fa362c8e6183a19392132836f629dd5b4bc041f4f8994c7b2c4f4498b46f3fe",
+      "source": {
+        "sequence": 1,
+        "capture_ns": 33922523363877,
+        "binding": {
+          "focus": 6291472,
+          "surface": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ]
+        },
+        "signals": {
+          "health": {
+            "status": "observed",
+            "value": 97
+          },
+          "ammo": {
+            "status": "observed",
+            "value": 48
+          }
+        }
+      },
+      "max_current_age_ms": 500,
+      "predicates": [
+        {
+          "signal_id": "health",
+          "operator": "minimum",
+          "value": 1
+        },
+        {
+          "signal_id": "health",
+          "operator": "max_decrease_from_source",
+          "value": 20
+        },
+        {
+          "signal_id": "ammo",
+          "operator": "minimum",
+          "value": 48
+        }
+      ]
+    },
+    "snapshot": {
+      "format": "action-admission-snapshot-v1",
+      "sequence": 1,
+      "capture_ns": 33922523363877,
+      "binding": {
+        "focus": 6291472,
+        "surface": 6291472,
+        "geometry": [
+          321,
+          180,
+          640,
+          480
+        ]
+      },
+      "signals": {
+        "ammo": {
+          "status": "observed",
+          "value": 48
+        },
+        "health": {
+          "status": "observed",
+          "value": 97
+        }
+      }
+    },
+    "controller_decided_ns": 33923450236942,
+    "checks": []
+  },
+  "failure_capture_to_decision_ms": 926.873065,
+  "input_operations": 0,
+  "model_calls": 0,
+  "missing_cleanup_evidence": [
+    "owner-events.json",
+    "post_control_score",
+    "wrapper process exit code"
+  ],
+  "root_cause": "probe initialized both WAD glyph readers after the source capture; v34 initializes readers before launching the runtime",
+  "transcription": "controller_decided_ns and exception type copied from the retained first-run stderr shown by the allocation launcher; the result is deterministically reconstructed here",
+  "scope": "one real continuously advancing Freedoom/X11 held-input cancellation episode; controller-authored probe threshold, no planner/model call, no task-completion or gameplay-gain claim"
+}

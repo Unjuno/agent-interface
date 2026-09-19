@@ -1,0 +1,25 @@
+{
+  "schema": "git-write-footprint-freeze-v1",
+  "allocation": "READSET-WRITE-FOOTPRINT-20260916-001",
+  "issue": 332,
+  "publication_base": "c6d195473be0aa876cc991093262494209c7971f",
+  "measured_cases_started_at_freeze": 0,
+  "policies": ["fixed_snapshot", "current_patch", "guarded_current_patch"],
+  "scenarios": ["stable", "unrelated_edit", "unrelated_add", "unrelated_delete", "read_conflict", "write_conflict", "after_validation_change"],
+  "repetitions": 3,
+  "case_count": 63,
+  "seed": 332916,
+  "plan_sha256": "2a88f48b54eb4fe83d2e09e21f1206359e57f2da273392e04fdd12ebb11ec0d8",
+  "sources": {
+    "audit.py": "8838c5945469684c2e603df6e8c8958623160611e7bdc72544b7563456d64943",
+    "experiment.py": "85b1e6ee5c2dbf99e42afa7cbc28acc56114d41cb0d840de30689e7e2e7039ff",
+    "review_history.py": "2201b199d0712099282e53ed1b7827f11603d30831a36587d2881f94e2509371",
+    "test_contract.py": "7b55c940c847693e78ec3ed0bdfe344d4c3621800239e3e73599307b3ffef21d"
+  },
+  "construction_tests": {"passed": 15, "failed": 0, "includes_policy_scenario_subcases": 21},
+  "goal": "Change effect.txt only, preserve all other current tree entries and current ancestry; refuse semantic-read conflicts, concurrent write-target edits, or a ref changed after validation.",
+  "decision": "Guarded-current patch must satisfy the full state/parent oracle in 21/21 cases; fixed snapshot must expose unrelated-state loss; unguarded current patch must expose write-target clobber. All 63 evidence-integrity audits must pass. Expected negative controls do not count as audit corruption.",
+  "stop": "Once per fresh case ID. No result-seeking rerun. Stop on an unexpected harness/integrity error and retain the incomplete block.",
+  "environment": {"git": "2.47.3", "python": "3.13.5", "kernel": "6.18.44", "cpu": "AMD EPYC 9V74", "affinity": [0,1,2,3,4], "frequency": "not pinned", "batch": 1, "filesystem": "overlayfs", "repo_type": "bare", "object_format": "sha1"},
+  "limits": "Authored read/write scopes and local bare Git. No GUI, Doom, model, network, performance, natural failure rate or power-loss claim. Old ref-replacement PASS results remain untouched; the new one-file-edit preservation goal is explicitly stronger."
+}

@@ -1,0 +1,61 @@
+{
+  "cases": [
+    {"id": "m06-correct", "rep": 6, "scenario": "correct"},
+    {"id": "m03-wrong_compensated", "rep": 3, "scenario": "wrong_compensated"},
+    {"id": "m04-correct", "rep": 4, "scenario": "correct"},
+    {"id": "m08-correct", "rep": 8, "scenario": "correct"},
+    {"id": "m04-wrong_compensated", "rep": 4, "scenario": "wrong_compensated"},
+    {"id": "m02-wrong_compensated", "rep": 2, "scenario": "wrong_compensated"},
+    {"id": "m07-wrong_uncompensated", "rep": 7, "scenario": "wrong_uncompensated"},
+    {"id": "m05-wrong_compensated", "rep": 5, "scenario": "wrong_compensated"},
+    {"id": "m09-wrong_uncompensated", "rep": 9, "scenario": "wrong_uncompensated"},
+    {"id": "m02-wrong_uncompensated", "rep": 2, "scenario": "wrong_uncompensated"},
+    {"id": "m06-wrong_uncompensated", "rep": 6, "scenario": "wrong_uncompensated"},
+    {"id": "m07-wrong_compensated", "rep": 7, "scenario": "wrong_compensated"},
+    {"id": "m04-wrong_uncompensated", "rep": 4, "scenario": "wrong_uncompensated"},
+    {"id": "m01-correct", "rep": 1, "scenario": "correct"},
+    {"id": "m10-correct", "rep": 10, "scenario": "correct"},
+    {"id": "m09-correct", "rep": 9, "scenario": "correct"},
+    {"id": "m10-wrong_uncompensated", "rep": 10, "scenario": "wrong_uncompensated"},
+    {"id": "m07-correct", "rep": 7, "scenario": "correct"},
+    {"id": "m06-wrong_compensated", "rep": 6, "scenario": "wrong_compensated"},
+    {"id": "m08-wrong_uncompensated", "rep": 8, "scenario": "wrong_uncompensated"},
+    {"id": "m02-correct", "rep": 2, "scenario": "correct"},
+    {"id": "m05-wrong_uncompensated", "rep": 5, "scenario": "wrong_uncompensated"},
+    {"id": "m09-wrong_compensated", "rep": 9, "scenario": "wrong_compensated"},
+    {"id": "m05-correct", "rep": 5, "scenario": "correct"},
+    {"id": "m03-correct", "rep": 3, "scenario": "correct"},
+    {"id": "m03-wrong_uncompensated", "rep": 3, "scenario": "wrong_uncompensated"},
+    {"id": "m01-wrong_compensated", "rep": 1, "scenario": "wrong_compensated"},
+    {"id": "m01-wrong_uncompensated", "rep": 1, "scenario": "wrong_uncompensated"},
+    {"id": "m10-wrong_compensated", "rep": 10, "scenario": "wrong_compensated"},
+    {"id": "m08-wrong_compensated", "rep": 8, "scenario": "wrong_compensated"}
+  ],
+  "construction_excluded": {
+    "case_count": 30,
+    "id_prefix": "r",
+    "note": "provisional construction accidentally covered full 3x10 matrix before freeze; these IDs are excluded and never reused"
+  },
+  "decision": {
+    "compensated_final_restored_required": 10,
+    "compensated_wrong_history_required": 10,
+    "final_state_only_truthful_on_compensated_required": 0,
+    "phase_truth_required": 30,
+    "same_id_reruns": 0
+  },
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "prefreeze_tests": {"failed": 0, "passed": 5},
+  "publication_base": "c00de06ff3b94655dec1d346a360bcde61d37476",
+  "python": "3.13.5",
+  "scenarios": ["correct", "wrong_compensated", "wrong_uncompensated"],
+  "schema": "effect-compensation-history-plan-v1",
+  "seed": 42820260917,
+  "source_sha256": {
+    "audit.py": "d05acbd8ab895e3120646b3b9fd09051310495277e3732adef48e977907ad462",
+    "experiment.py": "a91c3e3cd735cc57ee58849c8fa38114fce345cf3cfb584c7ad91c9687bfe4dc",
+    "receiver.py": "59cb59e11749dda15692e0f924fd90af4dba662ad826e2f16b52690272eab439",
+    "test_contract.py": "516ec91300e9f699be35499d97001812258c740f554b5f63e9f51a44c46e04da"
+  },
+  "sqlite": "3.46.1",
+  "task": "EFFECT-COMPENSATION-HISTORY-20260916-001"
+}

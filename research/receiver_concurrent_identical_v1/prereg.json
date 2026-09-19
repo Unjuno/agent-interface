@@ -1,0 +1,51 @@
+{
+  "base_commit": "4e802fa2ec3c0c97545a38520bb18b3b126d8e4e",
+  "concurrent_workers": 2,
+  "construction": {
+    "audit": "PASS",
+    "cases": 4,
+    "excluded": true,
+    "ledger_sha256": "36340bb8dfa4f04e086717de0dd150ae6699a7a1449cf9646b0bf409f973e9ae",
+    "mutation_controls": 7
+  },
+  "decision": {
+    "any_integrity_or_source_mismatch": "FAIL",
+    "any_lock_or_process_error": "FAIL",
+    "pass_label": "RETAIN_CONCURRENT_IDEMPOTENCY_SCOPED",
+    "require_all_30_independent_audit_pass": true,
+    "require_both_call_enter_before_first_commit": true,
+    "require_exactly_one_effect_per_case": true,
+    "require_one_new_one_historical": true,
+    "require_post_concurrency_replay_historical_no_new_effect": true,
+    "require_same_terminal_receipt_both_callers": true
+  },
+  "environment_sha256": "e8a96dee1cd3c958199492b969136efb310408b53d32cd5fc0d25a1a16d6467c",
+  "formal_cases": 30,
+  "limits": [
+    "local SQLite/process serialization only",
+    "start-barrier overlap is not simultaneous CPU execution",
+    "no power loss/network/distributed transaction claim",
+    "no latency/reliability-rate/product claim"
+  ],
+  "policy": "outcome_first",
+  "predecessor_receiver_git_blob_sha1": "e4f0ef388b2a36dd74f6035ab68517be8a371b66",
+  "receiver_sqlite_timeout_seconds": 3,
+  "request": {
+    "allowed": true,
+    "command_id_template": "cmd-{case_id}",
+    "context_id": "A",
+    "delta": 3,
+    "generation": 1,
+    "scope": "private-fixture"
+  },
+  "schedule_sha256": "e0fc2d65d150069f07c8267e158b379ddde3eb314b12382aae66be2949aed469",
+  "source_sha256": {
+    "audit.py": "e6db6e22512021a6dd5fb66dc9287ab741c91ce914cac18ea249bfcd53439e2c",
+    "receiver.py": "908b4d70de0a6cc2179139463409ad4c929371efc24e6968f189ad22dc706fcb",
+    "run.py": "e7b5f1aadcc7243cf81e06c1a9ae4d6a320137c68998ac652f5ffee6b3a7137a",
+    "test_audit.py": "74eda2b00ce506a850647eb757160539b006d97eede1eba9ae20722489ca2ed0",
+    "worker.py": "df3e6019f5ee8256f38ff23eb8f86beaf26dc36f5c4d71e5f59313d467a1500f"
+  },
+  "stop_rule": "unexpected harness/integrity failure stops the block; no same-case rerun, replacement, extension, or timeout tuning",
+  "task": "RECEIVER-CONCURRENT-IDENTICAL-20260916-001"
+}

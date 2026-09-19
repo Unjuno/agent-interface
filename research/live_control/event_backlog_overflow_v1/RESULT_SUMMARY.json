@@ -1,0 +1,51 @@
+{
+  "capacity": 4,
+  "cross_session": {
+    "authored_records": 109,
+    "drop_oldest": {
+      "coverage_complete": {"A": true, "B": true},
+      "latest_state_seq": {"A": 6, "B": 103},
+      "overflow": {"A": null, "B": null},
+      "retained_event_ids": {"A": ["A-e2", "A-e3", "A-e4", "A-e5"], "B": ["B-e1", "B-e2", "B-e3"]},
+      "retained_payload_count": {"A": 4, "B": 3}
+    },
+    "overflow_fail_closed": {
+      "coverage_complete": {"A": false, "B": true},
+      "latest_state_seq": {"A": 6, "B": 103},
+      "overflow": {"A": {"first_unretained_kind": "TERMINAL", "first_unretained_seq": 5, "status": "RESYNC_REQUIRED", "unretained_count": 1}, "B": null},
+      "retained_event_ids": {"A": ["A-e1", "A-e2", "A-e3", "A-e4"], "B": ["B-e1", "B-e2", "B-e3"]},
+      "retained_payload_count": {"A": 4, "B": 3}
+    }
+  },
+  "decision": "PASS_FAIL_CLOSED_EVENT_OVERFLOW_SCOPED",
+  "formal_reruns": 0,
+  "full_result_in_evidence_archive": true,
+  "full_result_sha256": "8d3caf6db71d93bf5a5c41690761be1c505696c823c87f98a223df5647234e1e",
+  "gates": {
+    "candidate_never_evicts_retained_payloads": true,
+    "candidate_overflow_cases_exposed": true,
+    "candidate_overflow_receipts_exact": true,
+    "candidate_payload_count_bounded": true,
+    "cross_session_isolated": true,
+    "drop_oldest_silent_loss_exposed": true,
+    "latest_state_independent_after_overflow": true
+  },
+  "overflow_many": {
+    "drop_oldest": {
+      "coverage_complete": {"A": true},
+      "retained_event_ids": {"A": ["A-e7", "A-e8", "A-e9", "A-e10"]},
+      "retained_payload_count": {"A": 4}
+    },
+    "overflow_fail_closed": {
+      "coverage_complete": {"A": false},
+      "overflow": {"A": {"first_unretained_kind": "TERMINAL", "first_unretained_seq": 5, "status": "RESYNC_REQUIRED", "unretained_count": 6}},
+      "retained_event_ids": {"A": ["A-e1", "A-e2", "A-e3", "A-e4"]},
+      "retained_payload_count": {"A": 4}
+    }
+  },
+  "summary": {
+    "candidate_overflow_sessions_observed": 4,
+    "drop_oldest_silently_lost_event_payloads": 9
+  },
+  "task": "EVENT-BACKLOG-OVERFLOW-20260917-002"
+}

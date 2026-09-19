@@ -1,0 +1,216 @@
+{
+  "status": "boundary",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "decision_evidence": {
+          "delivery_id": "delivery:16",
+          "observation_sequence": 11,
+          "producer": "scripted"
+        },
+        "expected_sequence": 11,
+        "id": "confirm",
+        "op": "submit",
+        "steps": [
+          {
+            "key": "Return",
+            "op": "key"
+          }
+        ],
+        "transport_request_id": "program:89e50ce4a0024da8abfef4b65432675a",
+        "valid_until_ns": 112331823260
+      },
+      "received_ns": 82578272463,
+      "transport_request_id": "program:89e50ce4a0024da8abfef4b65432675a",
+      "runtime_request_sequence": 4,
+      "declared_action_id": "confirm",
+      "command_op": "submit",
+      "correlation_scope": "current runtime input line; action ID is caller-declared",
+      "clock_domain_id": "da70733393732087f3fe560db6729bbfa496acc1e5671268b5de0cf8d74b1d7b",
+      "emit_started_ns": 82578284489,
+      "delivery_id": "delivery:19"
+    },
+    {
+      "event": "decision_evidence",
+      "source_delivery_id": "delivery:16",
+      "observation_sequence": 11,
+      "producer": "scripted",
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/checkpoint-archive-calc-01/runtime/007.png",
+      "provenance": "caller-declared reference; model viewing unverified",
+      "authority": "none; ordinary admission remains required",
+      "id": "confirm",
+      "received_ns": 82584080473,
+      "clock_domain_id": "da70733393732087f3fe560db6729bbfa496acc1e5671268b5de0cf8d74b1d7b",
+      "emit_started_ns": 82584083968,
+      "delivery_id": "delivery:20"
+    },
+    {
+      "event": "accepted",
+      "id": "confirm",
+      "steps": 1,
+      "valid_until_ns": 112331823260,
+      "accepted_ns": 82596773165,
+      "admitted_request": {
+        "transport_request_id": "program:89e50ce4a0024da8abfef4b65432675a",
+        "runtime_request_sequence": 4,
+        "declared_action_id": "confirm",
+        "command_op": "submit",
+        "correlation_scope": "current runtime input line; action ID is caller-declared"
+      },
+      "clock_domain_id": "da70733393732087f3fe560db6729bbfa496acc1e5671268b5de0cf8d74b1d7b",
+      "emit_started_ns": 82596792911,
+      "delivery_id": "delivery:21"
+    },
+    {
+      "event": "observation",
+      "id": "confirm",
+      "step": 0,
+      "sequence": 12,
+      "capture_ns": 82636844347,
+      "context_ns": 82642567406,
+      "context": [
+        [
+          "windows",
+          "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+        ],
+        [
+          "active_window",
+          8389124
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/checkpoint-archive-calc-01/runtime/012.png",
+      "image_reused": false,
+      "image_prepare_ns": 29999938,
+      "image_ready_ns": 82689663873,
+      "input_focus_before": 8389124,
+      "input_focus_after": 8389124,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 3.916132,
+      "wire_bytes": 24459,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "input_state_before": {
+        "owner_id": "b84b0e212ff847d5a41723ff985414b6",
+        "revision": 25,
+        "sample_started_ns": 82631128485,
+        "sample_finished_ns": 82631493739,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8389124,
+        "active_lease_deadline_ns": null,
+        "active_lease_time_valid": false,
+        "cancel_requested": false
+      },
+      "input_state_after": {
+        "owner_id": "b84b0e212ff847d5a41723ff985414b6",
+        "revision": 25,
+        "sample_started_ns": 82696090800,
+        "sample_finished_ns": 82696700421,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8389124,
+        "active_lease_deadline_ns": null,
+        "active_lease_time_valid": false,
+        "cancel_requested": false
+      },
+      "owner_revision_unchanged": true,
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "clock_domain_id": "da70733393732087f3fe560db6729bbfa496acc1e5671268b5de0cf8d74b1d7b",
+      "emit_started_ns": 82696807457,
+      "delivery_id": "delivery:22"
+    },
+    {
+      "event": "terminal",
+      "id": "confirm",
+      "status": "completed",
+      "error": null,
+      "steps_completed": 1,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 82712945680,
+        "valid_until_ns": null
+      },
+      "terminal_ns": 82713074611,
+      "semantic_completion": "program status only; task scoring is separate",
+      "admitted_request": {
+        "transport_request_id": "program:89e50ce4a0024da8abfef4b65432675a",
+        "runtime_request_sequence": 4,
+        "declared_action_id": "confirm",
+        "command_op": "submit",
+        "correlation_scope": "current runtime input line; action ID is caller-declared"
+      },
+      "clock_domain_id": "da70733393732087f3fe560db6729bbfa496acc1e5671268b5de0cf8d74b1d7b",
+      "emit_started_ns": 82713103313,
+      "review": {
+        "runtime_ns": 82713074611,
+        "clock_scope": "terminal creation time; not current time at delivery",
+        "observation": {
+          "sequence": 12,
+          "capture_ns": 82636844347,
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/checkpoint-archive-calc-01/runtime/012.png",
+          "image_reused": false,
+          "program_id": "confirm",
+          "from_this_program": true,
+          "freshness": "historical; acquire new observation if required"
+        },
+        "local_outcome": null,
+        "semantic_verification": "not implied by execution or local visual goal"
+      },
+      "delivery_id": "delivery:23"
+    }
+  ],
+  "cursor": 23,
+  "returned_ns": 82727525693,
+  "authority": "none",
+  "acknowledgement": "not implied",
+  "command_receipt": {
+    "request_id": "program:89e50ce4a0024da8abfef4b65432675a",
+    "replayed": false,
+    "state": "stdin_flushed"
+  }
+}

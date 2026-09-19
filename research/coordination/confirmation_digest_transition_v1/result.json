@@ -1,0 +1,53 @@
+{
+  "task": "COORD-CONFIRMATION-DIGEST-CAS-20260916-016",
+  "decision": "PASS_CONFIRMATION_IDENTITY_BOUND_CANONICAL_CAS_SCOPED",
+  "freeze_commit": "f1ae7c12ec33978b458e424836d2d57cd00f3e8c",
+  "cases": {
+    "unbound_changed_content": {
+      "confirmation_change_commit": "811432dd7ad766952e3aaff3857a21b730451f57",
+      "generation_transition_commit": "b0172ac6efef6561c3bd16ec867466233164339d",
+      "final_confirmation_content_id": "5eceb2d5b5af55fcc94d09d4c745ffb5ee40f05fd114352444a96714c7194dd8",
+      "final_confirmation_revision": 2,
+      "final_generation": 2,
+      "classification": "STALE_TRANSITION_ADMITTED_UNBOUND"
+    },
+    "bound_changed_content": {
+      "identity_change_commit": "a6ffeff137a8db0b809b7e2b404fd61b64822392",
+      "old_transition_http_status": 409,
+      "final_confirmation_content_id": "5eceb2d5b5af55fcc94d09d4c745ffb5ee40f05fd114352444a96714c7194dd8",
+      "final_confirmation_revision": 2,
+      "final_generation": 1,
+      "classification": "HOLD_CONFIRMATION_CHANGED"
+    },
+    "bound_same_content_new_revision": {
+      "identity_change_commit": "8fa4d28304b30a5c9c63b4fb98eb01f1ac236ab4",
+      "old_transition_http_status": 409,
+      "final_confirmation_content_id": "51ea2d31c0b555b2aad8587f3e78201bd28ab1e41c3850a93824dbfe89e95b90",
+      "final_confirmation_revision": 2,
+      "final_generation": 1,
+      "classification": "HOLD_CONFIRMATION_CHANGED"
+    },
+    "bound_stable": {
+      "generation_transition_commit": "07fb32c2984c15325fe80d3da07c9314fabdeaad",
+      "final_confirmation_content_id": "51ea2d31c0b555b2aad8587f3e78201bd28ab1e41c3850a93824dbfe89e95b90",
+      "final_confirmation_revision": 1,
+      "final_generation": 2,
+      "classification": "ALL_CONFIRMED"
+    }
+  },
+  "totals": {
+    "measured_successful_state_updates": 5,
+    "old_decision_generation_attempts": 3,
+    "old_decision_generation_successes": 1,
+    "candidate_stale_sha_409s": 2,
+    "candidate_post_409_readbacks": 2,
+    "fresh_sha_retries_after_stale_decision": 0,
+    "candidate_stable_advances": 1
+  },
+  "boundary": {
+    "simultaneous_requests_tested": false,
+    "confirmation_authority_tested": false,
+    "external_effect_safety_tested": false,
+    "candidate_requires_confirmation_identity_changes_to_mutate_the_same_canonical_cas_record": true
+  }
+}

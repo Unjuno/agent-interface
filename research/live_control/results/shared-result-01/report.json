@@ -1,0 +1,133 @@
+{
+  "success": true,
+  "archived": [
+    {
+      "cohort": "browser-combined-live-01",
+      "stage": "navigate",
+      "original_bytes": 11412,
+      "packed_bytes": 10775,
+      "definitions": 2,
+      "references": 5
+    },
+    {
+      "cohort": "browser-combined-live-01",
+      "stage": "submit-form",
+      "original_bytes": 10814,
+      "packed_bytes": 10170,
+      "definitions": 2,
+      "references": 5
+    },
+    {
+      "cohort": "calc-combined-live-01",
+      "stage": "enter",
+      "original_bytes": 10653,
+      "packed_bytes": 10386,
+      "definitions": 2,
+      "references": 4
+    },
+    {
+      "cohort": "calc-combined-live-01",
+      "stage": "save",
+      "original_bytes": 10860,
+      "packed_bytes": 10121,
+      "definitions": 2,
+      "references": 4
+    },
+    {
+      "cohort": "calc-combined-live-01",
+      "stage": "confirm",
+      "original_bytes": 10112,
+      "packed_bytes": 9369,
+      "definitions": 2,
+      "references": 4
+    },
+    {
+      "cohort": "calc-early-live-01",
+      "stage": "save",
+      "original_bytes": 6415,
+      "packed_bytes": 6457,
+      "definitions": 1,
+      "references": 2
+    },
+    {
+      "cohort": "calc-early-live-01",
+      "stage": "save-followup",
+      "original_bytes": 9982,
+      "packed_bytes": 9253,
+      "definitions": 2,
+      "references": 4
+    },
+    {
+      "cohort": "calc-early-live-01",
+      "stage": "confirm",
+      "original_bytes": 6328,
+      "packed_bytes": 6369,
+      "definitions": 1,
+      "references": 2
+    },
+    {
+      "cohort": "calc-early-live-01",
+      "stage": "confirm-followup",
+      "original_bytes": 9531,
+      "packed_bytes": 8796,
+      "definitions": 2,
+      "references": 4
+    }
+  ],
+  "controls": [
+    {
+      "case": "repeated negative",
+      "roundtrip": true,
+      "original_bytes": 799,
+      "packed_bytes": 801
+    },
+    {
+      "case": "literal reference-like data",
+      "roundtrip": true,
+      "original_bytes": 825,
+      "packed_bytes": 827
+    },
+    {
+      "case": "distinct numeric types",
+      "roundtrip": true,
+      "original_bytes": 969,
+      "packed_bytes": 1269
+    },
+    {
+      "case": "empty",
+      "roundtrip": true,
+      "original_bytes": 2,
+      "packed_bytes": 302
+    },
+    {
+      "case": "scalar",
+      "roundtrip": true,
+      "original_bytes": 4,
+      "packed_bytes": 304
+    },
+    {
+      "case": "array nesting",
+      "roundtrip": true,
+      "original_bytes": 802,
+      "packed_bytes": 809
+    }
+  ],
+  "rejected_sources": 2,
+  "rejected_corrupt_encodings": 3,
+  "evidence_sha256": {
+    "results/browser-combined-live-01/navigate/result.json": "e0a40d41fc2929178f766209561ff99fc94fc3e7b236055b03c3d5180892401e",
+    "results/browser-combined-live-01/submit-form/result.json": "13bfbe413f339dcd6122ba38d767eba9753992714c527452516af8b60178b193",
+    "results/calc-combined-live-01/enter/result.json": "3879a3ddada906be7eb052e233fb9ed9652fd75f966b29b07f20f22ff172e03e",
+    "results/calc-combined-live-01/save/result.json": "c3eadb7f0038d99a8cff3b189881634b966878a2f923643b2f8fd72875eda826",
+    "results/calc-combined-live-01/confirm/result.json": "756cb0b3567b92f2a457e6ee15d036cf2597c25507dd8020416e6753d1e07b6a",
+    "results/calc-early-live-01/save/result.json": "dd582370277dd2fa55101a0c68c3f3a97bcbf618267a0a76140d2013bacd055b",
+    "results/calc-early-live-01/save-followup/result.json": "2be8b5c94184d3b70276b09e0db3605704bb07e53866c73e307d255c47030659",
+    "results/calc-early-live-01/confirm/result.json": "910147fee9159ccde4eda7e220462345d9e1325ac9de6a3e31f4bd57d12d9185",
+    "results/calc-early-live-01/confirm-followup/result.json": "7b8098094c2011c3a3a83803a2289ee4431078380f54f0824acd782d43c632b1"
+  },
+  "sources": {
+    "shared_result_v1.py": "f6503cbb3ad4e807f7c2b5f35ac131485ae9d4a8ffdbca788d786e651819b4b0",
+    "probe_shared_result_v1.py": "fa0d14613f81b87fbd7f2ef0792c4f792162c0b09d6602811702b727b25ae2dd"
+  },
+  "limits": "JSON-value equivalence, not byte-format equivalence or token reduction; no model-facing usability trial yet; representation overhead can increase small payloads."
+}

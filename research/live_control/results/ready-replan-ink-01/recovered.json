@@ -1,0 +1,1207 @@
+{
+  "request": {
+    "after": 17,
+    "events": [
+      "terminal"
+    ],
+    "timeout": 3,
+    "action_id": "durable-4e7597289b374394bc8eb450918c8583"
+  },
+  "reply": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "expected_sequence": 3,
+          "id": "durable-4e7597289b374394bc8eb450918c8583",
+          "op": "submit",
+          "steps": [
+            {
+              "duration_ms": 80,
+              "op": "pointer_click",
+              "x": 550,
+              "y": 106
+            },
+            {
+              "key": "a",
+              "modifier": "Control_L",
+              "op": "chord"
+            },
+            {
+              "op": "text",
+              "text": "88"
+            },
+            {
+              "key": "Return",
+              "op": "key"
+            },
+            {
+              "key": "s",
+              "modifier": "Control_L",
+              "op": "chord"
+            },
+            {
+              "op": "observe"
+            }
+          ],
+          "transport_request_id": "e90bb632206a4575873c7f7030756e8b",
+          "valid_until_ns": 38036228486
+        },
+        "received_ns": 8087589815,
+        "emit_started_ns": 8087592138
+      },
+      {
+        "event": "accepted",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "steps": 6,
+        "valid_until_ns": 38036228486,
+        "accepted_ns": 8096334045,
+        "emit_started_ns": 8096337087
+      },
+      {
+        "event": "step_started",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 0,
+        "operation": "pointer_click",
+        "issued_ns": 8110688926,
+        "emit_started_ns": 8110690648
+      },
+      {
+        "event": "pointer_admission",
+        "operation": "move",
+        "payload": {
+          "x": 550,
+          "y": 106
+        },
+        "admitted_ns": 8122386686,
+        "input_ack_ns": 8122545612,
+        "valid_until_ns": 38036228486,
+        "surface": 6291463,
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 0,
+        "emit_started_ns": 8122696226
+      },
+      {
+        "event": "pointer_admission",
+        "operation": "button_down",
+        "payload": 1,
+        "admitted_ns": 8156911636,
+        "input_ack_ns": 8157233531,
+        "valid_until_ns": 38036228486,
+        "surface": 6291463,
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 0,
+        "emit_started_ns": 8157387774
+      },
+      {
+        "event": "observation",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 0,
+        "sequence": 4,
+        "capture_ns": 8254528056,
+        "context_ns": 8259120206,
+        "context": [
+          [
+            "windows",
+            "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+          ],
+          [
+            "active_window",
+            6291463
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/ready-replan-ink-01/runtime/004.png",
+        "image_reused": false,
+        "image_prepare_ns": 26771449,
+        "image_ready_ns": 8304119984,
+        "input_focus_before": 6291464,
+        "input_focus_after": 6291464,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 3.344714,
+        "wire_bytes": 8903,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "48fb0e3b8e32450c99c0c313a3b306b9",
+          "revision": 7,
+          "sample_started_ns": 8249695741,
+          "sample_finished_ns": 8249903988,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            550,
+            106
+          ],
+          "focus": 6291464,
+          "active_lease_deadline_ns": 38036228486,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "48fb0e3b8e32450c99c0c313a3b306b9",
+          "revision": 7,
+          "sample_started_ns": 8309014626,
+          "sample_finished_ns": 8309151876,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            550,
+            106
+          ],
+          "focus": 6291464,
+          "active_lease_deadline_ns": 38036228486,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 8309212077
+      },
+      {
+        "event": "step_completed",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 0,
+        "completed_ns": 8315422107,
+        "emit_started_ns": 8315424703
+      },
+      {
+        "event": "step_started",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 1,
+        "operation": "chord",
+        "issued_ns": 8328483881,
+        "emit_started_ns": 8328486575
+      },
+      {
+        "event": "input_admission",
+        "key": "Control_L",
+        "admitted_ns": 8341062215,
+        "input_ack_ns": 8341582968,
+        "valid_until_ns": 38036228486,
+        "emit_started_ns": 8341698024
+      },
+      {
+        "event": "input_admission",
+        "key": "a",
+        "admitted_ns": 8354117578,
+        "input_ack_ns": 8354374939,
+        "valid_until_ns": 38036228486,
+        "emit_started_ns": 8354451451
+      },
+      {
+        "event": "observation",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 1,
+        "sequence": 5,
+        "capture_ns": 8374199746,
+        "context_ns": 8382765064,
+        "context": [
+          [
+            "windows",
+            "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+          ],
+          [
+            "active_window",
+            6291463
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/ready-replan-ink-01/runtime/005.png",
+        "image_reused": false,
+        "image_prepare_ns": 55646941,
+        "image_ready_ns": 8465818073,
+        "input_focus_before": 6291464,
+        "input_focus_after": 6291464,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 4.549506,
+        "wire_bytes": 2246,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "48fb0e3b8e32450c99c0c313a3b306b9",
+          "revision": 11,
+          "sample_started_ns": 8368771654,
+          "sample_finished_ns": 8368926809,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            550,
+            106
+          ],
+          "focus": 6291464,
+          "active_lease_deadline_ns": 38036228486,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "48fb0e3b8e32450c99c0c313a3b306b9",
+          "revision": 11,
+          "sample_started_ns": 8491779131,
+          "sample_finished_ns": 8492083768,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            550,
+            106
+          ],
+          "focus": 6291464,
+          "active_lease_deadline_ns": 38036228486,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 8492144648
+      },
+      {
+        "event": "step_completed",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 1,
+        "completed_ns": 8499574483,
+        "emit_started_ns": 8499577811
+      },
+      {
+        "event": "step_started",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 2,
+        "operation": "text",
+        "issued_ns": 8511462443,
+        "emit_started_ns": 8511464960
+      },
+      {
+        "event": "input_admission",
+        "key": "8",
+        "admitted_ns": 8525614787,
+        "input_ack_ns": 8525853963,
+        "valid_until_ns": 38036228486,
+        "emit_started_ns": 8525922275
+      },
+      {
+        "event": "input_admission",
+        "key": "8",
+        "admitted_ns": 8541450711,
+        "input_ack_ns": 8541807155,
+        "valid_until_ns": 38036228486,
+        "emit_started_ns": 8541943107
+      },
+      {
+        "event": "observation",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 2,
+        "sequence": 6,
+        "capture_ns": 8563562823,
+        "context_ns": 8572048855,
+        "context": [
+          [
+            "windows",
+            "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+          ],
+          [
+            "active_window",
+            6291463
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/ready-replan-ink-01/runtime/006.png",
+        "image_reused": false,
+        "image_prepare_ns": 27494851,
+        "image_ready_ns": 8614522495,
+        "input_focus_before": 6291464,
+        "input_focus_after": 6291464,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 7.402669,
+        "wire_bytes": 979,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "48fb0e3b8e32450c99c0c313a3b306b9",
+          "revision": 15,
+          "sample_started_ns": 8554133862,
+          "sample_finished_ns": 8554491819,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            550,
+            106
+          ],
+          "focus": 6291464,
+          "active_lease_deadline_ns": 38036228486,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "48fb0e3b8e32450c99c0c313a3b306b9",
+          "revision": 15,
+          "sample_started_ns": 8622889351,
+          "sample_finished_ns": 8623157951,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            550,
+            106
+          ],
+          "focus": 6291464,
+          "active_lease_deadline_ns": 38036228486,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 8623217372
+      },
+      {
+        "event": "step_completed",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 2,
+        "completed_ns": 8629683343,
+        "emit_started_ns": 8629685501
+      },
+      {
+        "event": "step_started",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 3,
+        "operation": "key",
+        "issued_ns": 8643271636,
+        "emit_started_ns": 8643273955
+      },
+      {
+        "event": "input_admission",
+        "key": "Return",
+        "admitted_ns": 8655716253,
+        "input_ack_ns": 8656053491,
+        "valid_until_ns": 38036228486,
+        "emit_started_ns": 8656201225
+      },
+      {
+        "event": "observation",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 3,
+        "sequence": 7,
+        "capture_ns": 8676582082,
+        "context_ns": 8683935446,
+        "context": [
+          [
+            "windows",
+            "0x00600007  0 HPLaptop *shape.svg - Inkscape\n"
+          ],
+          [
+            "active_window",
+            6291463
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/ready-replan-ink-01/runtime/007.png",
+        "image_reused": false,
+        "image_prepare_ns": 30157013,
+        "image_ready_ns": 8732306535,
+        "input_focus_before": 6291464,
+        "input_focus_after": 6291464,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 4.773641,
+        "wire_bytes": 6827,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "48fb0e3b8e32450c99c0c313a3b306b9",
+          "revision": 17,
+          "sample_started_ns": 8670196686,
+          "sample_finished_ns": 8670500609,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            550,
+            106
+          ],
+          "focus": 6291464,
+          "active_lease_deadline_ns": 38036228486,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "48fb0e3b8e32450c99c0c313a3b306b9",
+          "revision": 17,
+          "sample_started_ns": 8741197072,
+          "sample_finished_ns": 8741516803,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            550,
+            106
+          ],
+          "focus": 6291464,
+          "active_lease_deadline_ns": 38036228486,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 8741580002
+      },
+      {
+        "event": "step_completed",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 3,
+        "completed_ns": 8748262181,
+        "emit_started_ns": 8748265234
+      },
+      {
+        "event": "step_started",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 4,
+        "operation": "chord",
+        "issued_ns": 8761790807,
+        "emit_started_ns": 8761793789
+      },
+      {
+        "event": "input_admission",
+        "key": "Control_L",
+        "admitted_ns": 8777033666,
+        "input_ack_ns": 8777407182,
+        "valid_until_ns": 38036228486,
+        "emit_started_ns": 8777514605
+      },
+      {
+        "event": "input_admission",
+        "key": "s",
+        "admitted_ns": 8790296759,
+        "input_ack_ns": 8790662126,
+        "valid_until_ns": 38036228486,
+        "emit_started_ns": 8790842813
+      },
+      {
+        "event": "observation",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 4,
+        "sequence": 8,
+        "capture_ns": 8810745347,
+        "context_ns": 8817557952,
+        "context": [
+          [
+            "windows",
+            "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+          ],
+          [
+            "active_window",
+            6291463
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/ready-replan-ink-01/runtime/008.png",
+        "image_reused": false,
+        "image_prepare_ns": 28839472,
+        "image_ready_ns": 8859944981,
+        "input_focus_before": 6291464,
+        "input_focus_after": 6291464,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 4.026373,
+        "wire_bytes": 2282,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "48fb0e3b8e32450c99c0c313a3b306b9",
+          "revision": 21,
+          "sample_started_ns": 8805247483,
+          "sample_finished_ns": 8805485235,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            550,
+            106
+          ],
+          "focus": 6291464,
+          "active_lease_deadline_ns": 38036228486,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "48fb0e3b8e32450c99c0c313a3b306b9",
+          "revision": 21,
+          "sample_started_ns": 8867358709,
+          "sample_finished_ns": 8867599323,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            550,
+            106
+          ],
+          "focus": 6291464,
+          "active_lease_deadline_ns": 38036228486,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 8867663409
+      },
+      {
+        "event": "step_completed",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 4,
+        "completed_ns": 8873581011,
+        "emit_started_ns": 8873582062
+      },
+      {
+        "event": "step_started",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 5,
+        "operation": "observe",
+        "issued_ns": 8886836864,
+        "emit_started_ns": 8886838259
+      },
+      {
+        "event": "observation",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 5,
+        "sequence": 9,
+        "capture_ns": 8904162641,
+        "context_ns": 8908513585,
+        "context": [
+          [
+            "windows",
+            "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+          ],
+          [
+            "active_window",
+            6291463
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/ready-replan-ink-01/runtime/009.png",
+        "image_reused": false,
+        "image_prepare_ns": 25970842,
+        "image_ready_ns": 8949574933,
+        "input_focus_before": 6291464,
+        "input_focus_after": 6291464,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 3.257575,
+        "wire_bytes": 8492,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "48fb0e3b8e32450c99c0c313a3b306b9",
+          "revision": 21,
+          "sample_started_ns": 8899230127,
+          "sample_finished_ns": 8899873199,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            550,
+            106
+          ],
+          "focus": 6291464,
+          "active_lease_deadline_ns": 38036228486,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "48fb0e3b8e32450c99c0c313a3b306b9",
+          "revision": 21,
+          "sample_started_ns": 8955558786,
+          "sample_finished_ns": 8955757520,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            550,
+            106
+          ],
+          "focus": 6291464,
+          "active_lease_deadline_ns": 38036228486,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 8955812132
+      },
+      {
+        "event": "step_completed",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 5,
+        "completed_ns": 8961628722,
+        "emit_started_ns": 8961630883
+      },
+      {
+        "event": "terminal",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 6,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 8974962530,
+          "valid_until_ns": 38036228486
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "post_release_observation": null,
+        "terminal_ns": 8975038756,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 8975041551
+      }
+    ],
+    "cursor": 47,
+    "returned_ns": 8988321864,
+    "authority": "none",
+    "acknowledgement": "not implied"
+  },
+  "state": {
+    "authority": "none",
+    "continuation": {
+      "authority": "none",
+      "channel_closed": false,
+      "clocks": {
+        "4a5b0015a98c404bade9d99973a2370d": {
+          "echo_cursor": 16,
+          "record": {
+            "emit_started_ns": 8036239003,
+            "event": "clock",
+            "runtime_ns": 8036228486,
+            "sequence": 3
+          },
+          "record_cursor": 17
+        },
+        "b01c962b2eac48cf9815b62efc90dbc1": {
+          "echo_cursor": 3,
+          "record": {
+            "emit_started_ns": 7639018560,
+            "event": "clock",
+            "runtime_ns": 7639014519,
+            "sequence": 1
+          },
+          "record_cursor": 4
+        }
+      },
+      "cursor": 47,
+      "format": "received-continuation-v1",
+      "observation": {
+        "event": "observation",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "step": 5,
+        "sequence": 9,
+        "capture_ns": 8904162641,
+        "context_ns": 8908513585,
+        "context": [
+          [
+            "windows",
+            "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+          ],
+          [
+            "active_window",
+            6291463
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/ready-replan-ink-01/runtime/009.png",
+        "image_reused": false,
+        "image_prepare_ns": 25970842,
+        "image_ready_ns": 8949574933,
+        "input_focus_before": 6291464,
+        "input_focus_after": 6291464,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 3.257575,
+        "wire_bytes": 8492,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "48fb0e3b8e32450c99c0c313a3b306b9",
+          "revision": 21,
+          "sample_started_ns": 8899230127,
+          "sample_finished_ns": 8899873199,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            550,
+            106
+          ],
+          "focus": 6291464,
+          "active_lease_deadline_ns": 38036228486,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "48fb0e3b8e32450c99c0c313a3b306b9",
+          "revision": 21,
+          "sample_started_ns": 8955558786,
+          "sample_finished_ns": 8955757520,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            550,
+            106
+          ],
+          "focus": 6291464,
+          "active_lease_deadline_ns": 38036228486,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 8955812132
+      },
+      "observation_cursor": 45,
+      "pending_clock": null,
+      "record_hashes": [
+        "2471d64fe62a75e1bbda9be91ca134dfa25235db78a525fb5239590cfdb7d89d",
+        "6a54b6670d62f4dfa5b8d562846c8e26e47696aeea1eff50fa7bc93fa1b943a0",
+        "d2a8a543e4fdadf15add172a0cfe22f0f4afa4e5a8b678085aef361a9753d314",
+        "e8c4f933ccc04527e83a9822582a103d5cad15addc28245b703885a4cec7826f",
+        "2ed89025ca5b087fe68481384e6a6618f5d8dd52a9964b0275a7d57b7381ad41",
+        "2bf555bf21927907651f53f31f6b8d12efae73c660df0ca1a5d0748b09b65af7",
+        "a8d071c53b19807bbca4375557f68be547d446bd40ac4e3ecc7762ec40066ff8",
+        "beb11c06049d35df7363940d2b86b5925451e1e22e978535f3545f9c8f09a4d3",
+        "a90659af28f3e6c4514ac626479a44f8f3a512a2822f59d7883a425c0c9e6aa7",
+        "29ff884b38250d1da549c7f4fa2959e51e02d3ba420af8966b31ddcb31cfaffd",
+        "aee503ce39bfd9624775ba3e2dde86f6703ea66d70b46b88693dc51515ccc583",
+        "f43194fca43a04ccacd484efa62d9a0acb92dd1d437b1f2f48cd0c7a8396516c",
+        "d9a58927fd4b180d803b0bd73f9e9655977d7a28d0edcd526816c7db42ca5bd6",
+        "89e8ab3887fb8eba92a1ceca930e2f16b3d57865690fd6acaf406907b032a261",
+        "763118bdd3deaebcd41819cd7bcf2eb60d25f5ec93184e7e2f0b79973af19054",
+        "657f5da194cca6f4875abc8cb6ec350c4f02016a2337381dcc68050bd7d47a80",
+        "8fa886d31663543514a87ecc4d9667330e5461eb176315884ed15668b8d12a4e",
+        "a3ec50ce76be899642bbf34acd1e5ec4edb34aa9ec3211561e76bf6356aef065",
+        "b4f8395858d37127de110683aeed702ca4e17dfdb2c7f9a84a2ab8ecbd5cbb43",
+        "2ba4326f32963354c295f6696cbac9b8a70687b17f68beac5123b55d48624431",
+        "8153a59ba8d8996ef45bed40fee21de455ac420b5aea9a1e151a91ac8595abce",
+        "e81489a8ce2f5efd98e3006ef361be0f9830f843b63b67bc955514254c8fb7e1",
+        "69307595347d8cf2f314f2a315d3e48384983600991430ac29351f14ff48c763",
+        "7a8cac705dd43a37718eb0d1af40aa19cfad742a49ff21e85e058b5795b179f0",
+        "8c9f987bc798fb23c9511cbe81a4d546b035ef8348c9f0e035f39d89f8dc7b87",
+        "880d7eab30e227970173f7f2b16b60ecd97c8c9aff739799da8b242204a87ce3",
+        "c5535c1bbd772e9b9b36dbebb569f2fc7c3d7b96a313444993c3763ce9d459db",
+        "d717c28b0e9e9b380fe440c3be2d1fcc81a4dea650b3606e481775429a783f13",
+        "12aa9451fce4c72abf40679c9ee13b0e610475a494fc9b2e15dec272011cdb68",
+        "9d66ea7944c522fa7eab048947928f0f86d2d0d307d877da94b54f7d353cd2e2",
+        "c66c2a1fe40cefa0301698ca76e0d803fa474155da70f3e8f0981c70ad689d9d",
+        "10c8d874ac71325000ed001b831247efd543165501e55423250d7e0f3a93460d",
+        "b7829c1d5084b2bd7a7ba959c782e57f4172e8c7a111336f238a6218bd8c709b",
+        "264f9d8291705f13485b1ca0bcbfce3dd9bd561ef6dbf17978bd284ba8d2d743",
+        "36d78ae7d0d00695157788b2794baae9f381886d0b1e1922f0fb8a84f8c4c499",
+        "4f73ef2f152f0d90898f26283dd388d386aeec8bd34ec9e832add10f387264b5",
+        "a7682a519afc2ae9addc771137cc86ee702bc83fa9a4458a01daab428319ff5c",
+        "53bc936a18cef83c3dfd9993dedfb214d1ff6a206e3b99b7d35f70fed6afc1d0",
+        "12d58dab8a30215164864ab910e5d2e94228b6cbddf9dd7c96b21afafd029396",
+        "8720eab5edab894d2646480ab11e180fc2cfe9b2e51aa31ee698d5d058236e1f",
+        "cf601c01ffd4a1657a2529c66a4d4d5e301ba95959ae95982284bf9a0d1e5be9",
+        "091d69b286eb0e85f31f5fff4d66a2cbd6334095efcb6813b6aba686a1bb0e57",
+        "feb535b420196de81a7ef75c64208f868c419bbc04a6c5a81ede0ae99d7cf935",
+        "4d2af2175270e6bf8a4b83a5548d0bd3cf4cb1ae5409a5886eef2afbcaa46551",
+        "5c74d8713daeba09c1be41aafbe15fca5a65f543cb0cb884b54080f3f7bfcfe5",
+        "31edfc63da5cc3651203dfc316e54a34b7841087d50bcb52354650994e63e343",
+        "4dafbc943375c262039e905ea964b6cf092bb5e2c4f7522c1af4a12d5c86ddfa"
+      ],
+      "session": "/tmp/agent-interface-events-13p7ce2m/events.sock"
+    },
+    "format": "durable-submit-v4",
+    "last_resolution": {
+      "request_id": "e90bb632206a4575873c7f7030756e8b",
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 6,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 8974962530,
+          "valid_until_ns": 38036228486
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "post_release_observation": null,
+        "terminal_ns": 8975038756,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 8975041551
+      },
+      "authority": "none"
+    },
+    "pending": null
+  },
+  "recovery": {
+    "format": "recovery-view-v1",
+    "authority": "none",
+    "status": "resolved",
+    "read_action_id": "durable-4e7597289b374394bc8eb450918c8583",
+    "channel": "not_reported_closed",
+    "runtime_liveness": "not_established_by_channel_status",
+    "new_input": "requires_fresh_admission",
+    "next_step": "interpret_observation_and_resolution",
+    "pending": null,
+    "resolution_for_read_action": {
+      "request_id": "e90bb632206a4575873c7f7030756e8b",
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 6,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 8974962530,
+          "valid_until_ns": 38036228486
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "post_release_observation": null,
+        "terminal_ns": 8975038756,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 8975041551
+      },
+      "authority": "none"
+    },
+    "last_resolution_historical": {
+      "request_id": "e90bb632206a4575873c7f7030756e8b",
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-4e7597289b374394bc8eb450918c8583",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 6,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 8974962530,
+          "valid_until_ns": 38036228486
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "post_release_observation": null,
+        "terminal_ns": 8975038756,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 8975041551
+      },
+      "authority": "none"
+    },
+    "observation": {
+      "event": "observation",
+      "id": "durable-4e7597289b374394bc8eb450918c8583",
+      "step": 5,
+      "sequence": 9,
+      "capture_ns": 8904162641,
+      "context_ns": 8908513585,
+      "context": [
+        [
+          "windows",
+          "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+        ],
+        [
+          "active_window",
+          6291463
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/ready-replan-ink-01/runtime/009.png",
+      "image_reused": false,
+      "image_prepare_ns": 25970842,
+      "image_ready_ns": 8949574933,
+      "input_focus_before": 6291464,
+      "input_focus_after": 6291464,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 3.257575,
+      "wire_bytes": 8492,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "input_state_before": {
+        "owner_id": "48fb0e3b8e32450c99c0c313a3b306b9",
+        "revision": 21,
+        "sample_started_ns": 8899230127,
+        "sample_finished_ns": 8899873199,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          550,
+          106
+        ],
+        "focus": 6291464,
+        "active_lease_deadline_ns": 38036228486,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "input_state_after": {
+        "owner_id": "48fb0e3b8e32450c99c0c313a3b306b9",
+        "revision": 21,
+        "sample_started_ns": 8955558786,
+        "sample_finished_ns": 8955757520,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          550,
+          106
+        ],
+        "focus": 6291464,
+        "active_lease_deadline_ns": 38036228486,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "owner_revision_unchanged": true,
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "emit_started_ns": 8955812132
+    },
+    "observation_scope": "latest received sample; not a freshness or target-identity guarantee",
+    "task_completion": "not_scored_here"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "allocation_id": "OBSERVATION-ADDRESSING-20260915-01",
+  "base_commit": "b13e4c01b0295ef6f2e0594dbdda3bcaa0f041c1",
+  "scope": "one local staged-mechanics comparison; no external model or MAP01 allocation",
+  "sources": {
+    "resolver.py": "2f39a269d743915e91d35a0b5d9f8aedf553dba7f6063d5ce5c18faf08a611fd",
+    "fixture.py": "94058422ef5257d5a7bc2bc089b7292ea793b0a3f51ba5b39a4163612d55a3f2",
+    "experiment.py": "7217b3f25722c1b8210580e04e521e5cd236d709aad47fec27fd891b78cbcd5b",
+    "test_resolver.py": "94dd6fab24bdf9559662ee43e8710ec40daa3a815cc66bbebb9571cca7ada9b9",
+    "audit.py": "078bccae70f299380f0aa6df2dc03a4ce265246891ca824af2bda4ee7605fc89"
+  },
+  "layouts": [
+    0,
+    1
+  ],
+  "cases": [
+    "stable_small",
+    "linear_move",
+    "unexpected_jump",
+    "duplicate_visual",
+    "duplicate_native",
+    "canvas_only",
+    "semantic_conflict",
+    "occluded",
+    "removed",
+    "identity_swap"
+  ],
+  "arms": [
+    "coordinate",
+    "grid_center",
+    "grid_candidates",
+    "predict",
+    "ax",
+    "hybrid"
+  ],
+  "trials": 120,
+  "grid_size": 128,
+  "simulated_wait_ms": 120,
+  "max_current_age_ms": 1500,
+  "world": "three discrete rendered stages; one-step linear displacement extrapolation, NOT wall-time motion prediction",
+  "prediction": "two source observations; no assertion that forecasts constitute fresh evidence",
+  "selection": "exact-color connected components; source grounding scripted; no trained classifier/VLM",
+  "input": "real XTest click, fixed fullscreen CSS/root mapping 800x600 at DPR1; verify focus and empty Button1",
+  "native": "actual Accessibility.getFullAXTree plus DOM.getBoxModel; richer observation capability, not universal pixel claim",
+  "scorer": "app-side isTrusted click handler -> console receipt; controller never uses receipts for decisions; evaluate after controller termination",
+  "changed_development_condition": "data URL and localhost navigation rejected by browser policy; network-free page.set_content setup and app console receipts validated before freeze",
+  "hybrid_gate": {
+    "correct_cases": [
+      "stable_small",
+      "linear_move",
+      "unexpected_jump",
+      "duplicate_native",
+      "canvas_only"
+    ],
+    "abstain_cases": [
+      "duplicate_visual",
+      "semantic_conflict",
+      "occluded",
+      "removed",
+      "identity_swap"
+    ],
+    "wrong_target": 0,
+    "release_failures": 0,
+    "raw_image_replay_failures": 0,
+    "source_and_current_images_identical_between_arms": true
+  },
+  "stop_rule": "complete 120 cases once; infrastructure exception retains partial FAIL and stops; no automatic retry; two layout batches checkpointed separately; no selective pooling",
+  "metrics": "correct/wrong-target/no-effect/abstention, per-channel observation CPU/wall and payload bytes; never provider tokens or model accuracy",
+  "limitations": [
+    "two deterministic layouts, no population reliability",
+    "all channels collected for matched evidence even when an arm ignores them; no end-to-end channel cost claim",
+    "frame/AX capture sequential, scene quiescent after stage2; check-to-input race not eliminated",
+    "coordinate/grid-center/predict are diagnostic controls, not safe production recommendations",
+    "shared user-space scorer isolation is not an OS security guarantee"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "dual-lifetime-stall-transfer-v1-prereg",
+  "status": "FROZEN_BEFORE_FIRST_FORMAL_PAIR",
+  "question": "Does an independent 240 ms owner authority deadline limit harmful movement overshoot when a pixel-derived task-relative guard loop is deterministically stalled for 340 ms?",
+  "task": "rendered X11 tracker derived from existing container fixture with exogenous drift disabled to isolate authority during the injected guard-loop stall; controller uses pixels only; exact app state is scorer-only and read after controller exits",
+  "arms": {
+    "GUARD_ONLY": "same visual guard with loose 1000 ms owner cap, so the 340 ms controller stall delays guard cancellation",
+    "DUAL_LIFETIME": "same visual guard plus independent 240 ms owner deadline"
+  },
+  "fixed": {
+    "pairs": 5,
+    "initial_x": 0.08,
+    "guard_x": 0.02,
+    "stall_ms": 340,
+    "hard_deadline_ms": 240,
+    "loose_deadline_ms": 1000,
+    "key": "Left",
+    "orders": "alternating"
+  },
+  "hard_gates": [
+    "terminal empty and balanced app-side key events in every arm",
+    "owner release verified in every arm",
+    "pixel decoder max error < 0.03",
+    "dual release occurs before stall end in every pair",
+    "guard-only release does not occur before stall end"
+  ],
+  "primary_metric": "independent harmful overshoot time while input is held, defined as exact scorer x < -0.02",
+  "PASS": "all hard gates pass and DUAL_LIFETIME harmful overshoot is strictly lower than GUARD_ONLY in all 5 pairs",
+  "FAIL": "any hard gate fails",
+  "HOLD_OR_REJECT_NONUNIFORM": "hard gates pass but overshoot advantage is not uniform",
+  "claim_scope": "synthetic rendered-X11 fault-injection transfer only; not DOOM, model, human reaction or production safety",
+  "construction_history": [
+    "smoke-0 failed before formal measurement because inherited exogenous drift moved initial x outside the intended source window before controller capture; repair disables drift rather than widening source tolerance",
+    "smoke-1 reached owner interruption but failed writing stop.flag because the arm output directory had not been created; repair creates the output directory at controller start and changes no scientific condition"
+  ]
+}

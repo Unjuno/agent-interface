@@ -1,0 +1,145 @@
+[
+  {
+    "proposal": {
+      "kind": "act",
+      "steps": [
+        {
+          "op": "pointer_click",
+          "x": 79,
+          "y": 190,
+          "duration_ms": 80
+        },
+        {
+          "op": "text",
+          "text": "480"
+        },
+        {
+          "op": "key",
+          "key": "Return"
+        },
+        {
+          "op": "text",
+          "text": "192"
+        },
+        {
+          "op": "chord",
+          "modifier": "Control_L",
+          "key": "s"
+        }
+      ],
+      "rationale": "Enter 480 in A1 and 192 in A2, then save the existing workbook; stop after Save in case a format confirmation dialog appears."
+    },
+    "resolution": {
+      "request_id": "6aeede698de0437a84620417400d5451",
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+        "status": "needs_decision",
+        "error": null,
+        "steps_completed": 4,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 42576489036,
+          "valid_until_ns": null
+        },
+        "interruption": {
+          "intent_token": "d954a619707c4b31a7c6591b457a52ef",
+          "record": {
+            "event": "owner_release",
+            "reason": "focus_changed",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 42571039232,
+            "valid_until_ns": 71845447230
+          }
+        },
+        "decision_reason": "focus_changed",
+        "post_release_observation": {
+          "captures": 2,
+          "sequences": [
+            7,
+            8
+          ],
+          "equal_sample_pair": true,
+          "error": null,
+          "stopped": false,
+          "authority": "none; no input or lease renewal",
+          "scope": "up to two samples with 80ms waits before capture; not readiness or semantic completion",
+          "elapsed_ms": 274.2027
+        },
+        "terminal_ns": 42867583600,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 42867586991
+      },
+      "authority": "none"
+    }
+  },
+  {
+    "proposal": {
+      "kind": "act",
+      "steps": [
+        {
+          "op": "pointer_click",
+          "x": 784,
+          "y": 463,
+          "duration_ms": 80
+        }
+      ],
+      "rationale": "The required values are visible and the Excel format confirmation dialog is open; click Use Excel 2007\u2013365 Format to complete saving in the existing sheet.xlsx format."
+    },
+    "resolution": {
+      "request_id": "74629ed871114a338013a072290b4097",
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-df1eb5f2f6b2476f8b56f30d19906428",
+        "status": "needs_decision",
+        "error": null,
+        "steps_completed": 0,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 50112235930,
+          "valid_until_ns": null
+        },
+        "interruption": {
+          "intent_token": "ab108bc4b37242ca93465e1636e4a499",
+          "record": {
+            "event": "owner_release",
+            "reason": "focus_changed",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 50030274374,
+            "valid_until_ns": 79844252609
+          }
+        },
+        "decision_reason": "focus_changed",
+        "post_release_observation": {
+          "captures": 2,
+          "sequences": [
+            11,
+            12
+          ],
+          "equal_sample_pair": false,
+          "error": null,
+          "stopped": false,
+          "authority": "none; no input or lease renewal",
+          "scope": "up to two samples with 80ms waits before capture; not readiness or semantic completion",
+          "elapsed_ms": 293.381265
+        },
+        "terminal_ns": 50418343470,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 50418352676
+      },
+      "authority": "none"
+    }
+  }
+]

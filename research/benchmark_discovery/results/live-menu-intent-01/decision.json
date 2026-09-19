@@ -1,0 +1,120 @@
+{
+  "model_answer": {
+    "intent": "select_basic_conveyor",
+    "execute_once": true
+  },
+  "old_observation_age_ms": 6969.838525,
+  "fresh_observation": {
+    "event": "observation",
+    "id": "intent-revalidation",
+    "step": 0,
+    "sequence": 3,
+    "capture_ns": 32701303100,
+    "context_ns": 32707763615,
+    "context": [
+      [
+        "windows",
+        "0x0060000e  0 HPLaptop Mindustry\n"
+      ],
+      [
+        "active_window",
+        6291470
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/live-menu-intent-01/runtime/001.png",
+    "image_reused": true,
+    "image_prepare_ns": 3702013,
+    "image_ready_ns": 32728421210,
+    "input_focus_before": 6291470,
+    "input_focus_after": 6291470,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 6291470,
+      "surface": 6291470,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 6291470,
+      "surface": 6291470,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 6291470,
+      "surface": 6291470,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "capture_ms": 18.125602,
+    "wire_bytes": 270,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "input_state_before": {
+      "owner_id": "0d8cbbd0355e405ab42963639f08890e",
+      "revision": 1,
+      "sample_started_ns": 32679038295,
+      "sample_finished_ns": 32680719743,
+      "owned_buttons": [],
+      "owned_keycodes": [],
+      "physical_pointer_mask": 0,
+      "pointer": [
+        640,
+        400
+      ],
+      "focus": 6291470,
+      "active_lease_deadline_ns": null,
+      "active_lease_time_valid": false,
+      "cancel_requested": false
+    },
+    "input_state_after": {
+      "owner_id": "0d8cbbd0355e405ab42963639f08890e",
+      "revision": 1,
+      "sample_started_ns": 32741390728,
+      "sample_finished_ns": 32741985987,
+      "owned_buttons": [],
+      "owned_keycodes": [],
+      "physical_pointer_mask": 0,
+      "pointer": [
+        640,
+        400
+      ],
+      "focus": 6291470,
+      "active_lease_deadline_ns": null,
+      "active_lease_time_valid": false,
+      "cancel_requested": false
+    },
+    "owner_revision_unchanged": true,
+    "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+    "emitted_ns": 32745070220
+  },
+  "revalidation_clock_ns": 32809850954,
+  "guard": {
+    "eligible": true,
+    "reason": "known_menu_patch_and_binding_match",
+    "box": [
+      985,
+      551,
+      1032,
+      603
+    ],
+    "point": [
+      1008,
+      578
+    ],
+    "valid_until_ns": 33701303100,
+    "scope": "local sampled patch, not semantic identity or atomic capture/input proof"
+  }
+}

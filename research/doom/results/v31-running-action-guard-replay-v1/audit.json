@@ -1,0 +1,190 @@
+{
+  "schema": "v31-running-action-guard-replay-v1",
+  "passed": true,
+  "historical_programs": [
+    {
+      "iteration": 1,
+      "action": [
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        }
+      ],
+      "program_id": "plan-1-primary-0-0",
+      "exact_frames": 4,
+      "signal_values": [
+        {
+          "ammo": 48,
+          "health": 91
+        },
+        {
+          "ammo": 47,
+          "health": 91
+        },
+        {
+          "ammo": 47,
+          "health": 91
+        },
+        {
+          "ammo": 47,
+          "health": 91
+        }
+      ],
+      "final_state": "COMPLETED",
+      "validity_checks": 5,
+      "physical_release_verified": true
+    },
+    {
+      "iteration": 2,
+      "action": [
+        {
+          "action": "fire",
+          "extent": "pulse"
+        }
+      ],
+      "program_id": "plan-2-primary-0-0",
+      "exact_frames": 2,
+      "signal_values": [
+        {
+          "ammo": 47,
+          "health": 85
+        },
+        {
+          "ammo": 47,
+          "health": 85
+        }
+      ],
+      "final_state": "COMPLETED",
+      "validity_checks": 3,
+      "physical_release_verified": true
+    },
+    {
+      "iteration": 3,
+      "action": [
+        {
+          "action": "strafe_left",
+          "extent": "medium"
+        }
+      ],
+      "program_id": "plan-3-primary-0-0",
+      "exact_frames": 6,
+      "signal_values": [
+        {
+          "health": 79
+        },
+        {
+          "health": 79
+        },
+        {
+          "health": 79
+        },
+        {
+          "health": 79
+        },
+        {
+          "health": 79
+        },
+        {
+          "health": 79
+        }
+      ],
+      "final_state": "COMPLETED",
+      "validity_checks": 7,
+      "physical_release_verified": true
+    },
+    {
+      "iteration": 4,
+      "action": [
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        }
+      ],
+      "program_id": "plan-4-primary-0-0",
+      "exact_frames": 4,
+      "signal_values": [
+        {
+          "ammo": 46,
+          "health": 75
+        },
+        {
+          "ammo": 46,
+          "health": 75
+        },
+        {
+          "ammo": 45,
+          "health": 75
+        },
+        {
+          "ammo": 45,
+          "health": 75
+        }
+      ],
+      "final_state": "COMPLETED",
+      "validity_checks": 5,
+      "physical_release_verified": true
+    },
+    {
+      "iteration": 5,
+      "action": [
+        {
+          "action": "strafe_right",
+          "extent": "medium"
+        }
+      ],
+      "program_id": "plan-5-primary-0-0",
+      "exact_frames": 6,
+      "signal_values": [
+        {
+          "health": 71
+        },
+        {
+          "health": 71
+        },
+        {
+          "health": 71
+        },
+        {
+          "health": 71
+        },
+        {
+          "health": 71
+        },
+        {
+          "health": 71
+        }
+      ],
+      "final_state": "COMPLETED",
+      "validity_checks": 7,
+      "physical_release_verified": true
+    }
+  ],
+  "historical_program_count": 5,
+  "historical_exact_running_frames": 22,
+  "historical_invalidations": 0,
+  "injected_controls": [
+    {
+      "kind": "health",
+      "invalidation_reason": "health_max_decrease_from_source_failed",
+      "final_state": "REVOKED_ACTION_NOT_CURRENT",
+      "physical_release_verified": true
+    },
+    {
+      "kind": "ammo",
+      "invalidation_reason": "ammo_minimum_failed",
+      "final_state": "REVOKED_ACTION_NOT_CURRENT",
+      "physical_release_verified": true
+    }
+  ],
+  "model_calls": 0,
+  "input_operations": 0,
+  "sources": {
+    "v31_report": "6dbeb51ca17ab87807f4953297ec6e037378564d0fbc5cb8fe580f90b15f85d3",
+    "v31_runtime_events": "5761191a34a1d35fc88786f1b95abb7d9bb5137f0f3c8980d5b3b7e01dabe6a3",
+    "action_validity_construction": "be6632788588885ae192b2bfb30c134a4daa29e0bc3d043f56b2c1868e3f8c32",
+    "running_guard": "f82b2878ada177ab4b64fa4255a5dc311278fd6c48a42952bce1b2c683746b47",
+    "doom_snapshot_adapter": "69713831fb6fecb285fc6bde7b50d6fabaeb7cc0ddf5b24ae347d1f2c47614f0"
+  },
+  "finding": "existing per-hold observations can enforce the same exact action contract without another model or capture boundary",
+  "limits": "retained-trace counterfactual plus synthetic breaches; no historical cancellation, live latency, gameplay, planner-authored schema-v6 output, survival or completion gain"
+}

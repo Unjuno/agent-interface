@@ -1,0 +1,77 @@
+{
+  "checks": {
+    "delta_identities": true,
+    "model_stage_lower_than_ephemeral": true,
+    "model_stage_lower_than_plain": true,
+    "model_stage_within_wall": true,
+    "nonnegative_components": true,
+    "remainder_higher_than_ephemeral": true,
+    "remainder_higher_than_plain": true,
+    "remainder_label_exact": true,
+    "timing_attribution_false": true
+  },
+  "decision": "PASS_RETAINED_WALL_DECOMPOSITION_RESCUED_SCOPED",
+  "deltas": [
+    {
+      "control": "plain",
+      "identity_holds": true,
+      "persistent_model_stage_delta_ms": "-24526.771308",
+      "persistent_remainder_delta_ms": "13399.681989",
+      "persistent_wall_delta_ms": "-11127.089319"
+    },
+    {
+      "control": "ephemeral",
+      "identity_holds": true,
+      "persistent_model_stage_delta_ms": "-32937.195269",
+      "persistent_remainder_delta_ms": "4185.445763",
+      "persistent_wall_delta_ms": "-28751.749506"
+    }
+  ],
+  "formal_invocations": 1,
+  "formal_reruns": 0,
+  "rows": [
+    {
+      "arm": "plain",
+      "durable_calls": 36,
+      "local_observations": 105,
+      "model_stage_share": "0.7517715407244046822069645417",
+      "phase_complete_wall_ms": "62754.198912",
+      "preflight_model_subprocess_lifetime_ms": "5858.4102",
+      "remainder_label": "unattributed_remainder_ms",
+      "retained_model_stage_ms": "47176.820803",
+      "task_image_model_wait_ms": "41318.410603",
+      "timing_attribution": false,
+      "unattributed_remainder_ms": "15577.378109",
+      "unattributed_share": "0.2482284592755953177930354583"
+    },
+    {
+      "arm": "ephemeral",
+      "durable_calls": 96,
+      "local_observations": 129,
+      "model_stage_share": "0.6915654860880149701712799625",
+      "phase_complete_wall_ms": "80378.859099",
+      "preflight_model_subprocess_lifetime_ms": "6845.2538",
+      "remainder_label": "unattributed_remainder_ms",
+      "retained_model_stage_ms": "55587.244764",
+      "task_image_model_wait_ms": "48741.990964",
+      "timing_attribution": false,
+      "unattributed_remainder_ms": "24791.614335",
+      "unattributed_share": "0.3084345139119850298287200375"
+    },
+    {
+      "arm": "persistent",
+      "durable_calls": 114,
+      "local_observations": 136,
+      "model_stage_share": "0.4387239509157233093756242973",
+      "phase_complete_wall_ms": "51627.109593",
+      "preflight_model_subprocess_lifetime_ms": "7190.1764",
+      "remainder_label": "unattributed_remainder_ms",
+      "retained_model_stage_ms": "22650.049495",
+      "task_image_model_wait_ms": "15459.873095",
+      "timing_attribution": false,
+      "unattributed_remainder_ms": "28977.060098",
+      "unattributed_share": "0.5612760490842766906243757027"
+    }
+  ],
+  "schema": "integrated-wall-decomposition-rescue-result-v2"
+}

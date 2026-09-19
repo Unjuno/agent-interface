@@ -1,0 +1,258 @@
+[
+  {
+    "index": 1,
+    "mode": "A",
+    "begin_ns": 96784836577200,
+    "end_ns": 96790841550900,
+    "exit_code": 0,
+    "proposal": {
+      "kind": "wait_and_check",
+      "delay_ms": 3000,
+      "rationale": "A complete submission was already executed, and its asynchronous effect may still be pending."
+    },
+    "expected": "wait_and_check",
+    "expected_decision": true,
+    "verify_on_unknown": false,
+    "usage": {
+      "input_tokens": 9759,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 73,
+      "reasoning_output_tokens": 34
+    }
+  },
+  {
+    "index": 2,
+    "mode": "B",
+    "begin_ns": 96790851220200,
+    "end_ns": 96798124592700,
+    "exit_code": 0,
+    "proposal": {
+      "kind": "submit_once",
+      "steps": [
+        {
+          "op": "pointer_click",
+          "x": 150,
+          "y": 277,
+          "duration_ms": 80
+        },
+        {
+          "op": "chord",
+          "modifier": "Control_L",
+          "key": "a"
+        },
+        {
+          "op": "text",
+          "text": "t000242"
+        },
+        {
+          "op": "key",
+          "key": "Return"
+        }
+      ],
+      "rationale": "No prior complete submission is evidenced; perform one bounded submission of the exact requested value."
+    },
+    "expected": "submit_once",
+    "expected_decision": true,
+    "verify_on_unknown": false,
+    "usage": {
+      "input_tokens": 9485,
+      "cached_input_tokens": 1792,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 171,
+      "reasoning_output_tokens": 84
+    }
+  },
+  {
+    "index": 3,
+    "mode": "B",
+    "begin_ns": 96798133413700,
+    "end_ns": 96803984306800,
+    "exit_code": 0,
+    "proposal": {
+      "kind": "submit_once",
+      "steps": [
+        {
+          "op": "pointer_click",
+          "x": 150,
+          "y": 277,
+          "duration_ms": 80
+        },
+        {
+          "op": "chord",
+          "modifier": "Control_L",
+          "key": "a"
+        },
+        {
+          "op": "text",
+          "text": "t000242"
+        },
+        {
+          "op": "key",
+          "key": "Return"
+        }
+      ],
+      "rationale": "No prior submission is evidenced; submit the exact requested value once."
+    },
+    "expected": "submit_once",
+    "expected_decision": true,
+    "verify_on_unknown": false,
+    "usage": {
+      "input_tokens": 9485,
+      "cached_input_tokens": 1792,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 116,
+      "reasoning_output_tokens": 33
+    }
+  },
+  {
+    "index": 4,
+    "mode": "A",
+    "begin_ns": 96803990928400,
+    "end_ns": 96810672435100,
+    "exit_code": 0,
+    "proposal": {
+      "kind": "wait_and_check",
+      "delay_ms": 1000,
+      "rationale": "A complete submission was already admitted, but its asynchronous effect remains unknown within the allowed delay window."
+    },
+    "expected": "wait_and_check",
+    "expected_decision": true,
+    "verify_on_unknown": false,
+    "usage": {
+      "input_tokens": 9759,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 68,
+      "reasoning_output_tokens": 26
+    }
+  },
+  {
+    "index": 5,
+    "mode": "B",
+    "begin_ns": 96810681345200,
+    "end_ns": 96817375617900,
+    "exit_code": 0,
+    "proposal": {
+      "kind": "submit_once",
+      "steps": [
+        {
+          "op": "pointer_click",
+          "x": 150,
+          "y": 277,
+          "duration_ms": 80
+        },
+        {
+          "op": "chord",
+          "modifier": "Control_L",
+          "key": "a"
+        },
+        {
+          "op": "text",
+          "text": "t000242"
+        },
+        {
+          "op": "key",
+          "key": "Return"
+        }
+      ],
+      "rationale": "No prior submission is evidenced; issue one bounded submission."
+    },
+    "expected": "submit_once",
+    "expected_decision": true,
+    "verify_on_unknown": false,
+    "usage": {
+      "input_tokens": 9485,
+      "cached_input_tokens": 9216,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 133,
+      "reasoning_output_tokens": 52
+    }
+  },
+  {
+    "index": 6,
+    "mode": "A",
+    "begin_ns": 96817384563600,
+    "end_ns": 96823341905400,
+    "exit_code": 0,
+    "proposal": {
+      "kind": "wait_and_check",
+      "delay_ms": 5000,
+      "rationale": "A complete submission was already admitted; allow the asynchronous effect window to elapse before checking saved-effect evidence."
+    },
+    "expected": "wait_and_check",
+    "expected_decision": true,
+    "verify_on_unknown": false,
+    "usage": {
+      "input_tokens": 9759,
+      "cached_input_tokens": 6912,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 116,
+      "reasoning_output_tokens": 72
+    }
+  },
+  {
+    "index": 7,
+    "mode": "A",
+    "begin_ns": 96823351004100,
+    "end_ns": 96829397857900,
+    "exit_code": 0,
+    "proposal": {
+      "kind": "wait_and_check",
+      "delay_ms": 1000,
+      "rationale": "A complete submission was admitted and its effect may still commit within the stated delay window."
+    },
+    "expected": "wait_and_check",
+    "expected_decision": true,
+    "verify_on_unknown": false,
+    "usage": {
+      "input_tokens": 9759,
+      "cached_input_tokens": 6912,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 64,
+      "reasoning_output_tokens": 24
+    }
+  },
+  {
+    "index": 8,
+    "mode": "B",
+    "begin_ns": 96829406646200,
+    "end_ns": 96838581944300,
+    "exit_code": 0,
+    "proposal": {
+      "kind": "submit_once",
+      "steps": [
+        {
+          "op": "pointer_click",
+          "x": 150,
+          "y": 277,
+          "duration_ms": 80
+        },
+        {
+          "op": "chord",
+          "modifier": "Control_L",
+          "key": "a"
+        },
+        {
+          "op": "text",
+          "text": "t000242"
+        },
+        {
+          "op": "key",
+          "key": "Return"
+        }
+      ],
+      "rationale": "No prior submission is evidenced; perform one bounded submission of the exact requested value."
+    },
+    "expected": "submit_once",
+    "expected_decision": true,
+    "verify_on_unknown": false,
+    "usage": {
+      "input_tokens": 9485,
+      "cached_input_tokens": 1792,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 185,
+      "reasoning_output_tokens": 99
+    }
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "allocation": "c318-privsep-06",
+  "rows": [
+    {
+      "arm": "01-stable",
+      "authority_dir_initial": {"gid": 1001, "mode": "0o755", "uid": 0},
+      "classification": "PASS_CAPABILITY_COMMIT_OWNER",
+      "final_cells": {"A1": "office", "A2": "preview", "A3": null, "B1": null},
+      "final_target": {"ino": 1313165, "mode": "0o644", "sha256": "6b555d8c808caa1ea457f46cf37d09c073807301add2828e49fc1a740f6c66cd", "size": 6012, "uid": 0},
+      "gui_uid": 1001,
+      "plan_target": {"ino": 1312915, "mode": "0o644", "sha256": "0c057919cb193af0f688d5853899e460f050eba1bd3bbb83049f099732f94dd7", "size": 4839, "uid": 0},
+      "publish_recheck_valid": true,
+      "published": true,
+      "release": {"buttons_down": [], "keys_down": [], "monotonic_ns": 1425025193806, "verified": true},
+      "soffice_euids": [1001],
+      "staging_cells": {"A1": "office", "A2": "preview", "A3": null, "B1": null},
+      "target_after_writer_attempt": null,
+      "writer": null
+    },
+    {
+      "arm": "02-direct-write-attempt",
+      "authority_dir_initial": {"gid": 1001, "mode": "0o755", "uid": 0},
+      "classification": "PASS_CAPABILITY_COMMIT_OWNER",
+      "final_cells": {"A1": "office", "A2": "preview", "A3": null, "B1": null},
+      "final_target": {"ino": 1313395, "mode": "0o644", "sha256": "1e81c63818f06268fe17287ed29947871aee75fb689e7f3c7d443f8467bd7d08", "size": 6012, "uid": 0},
+      "gui_uid": 1001,
+      "plan_target": {"ino": 1313169, "mode": "0o644", "sha256": "cfbaef51c9f56e3f5a898790056a689e9b2334ff7de055c0d3783d758fcfd7b9", "size": 4838, "uid": 0},
+      "publish_recheck_valid": true,
+      "published": true,
+      "release": {"buttons_down": [], "keys_down": [], "monotonic_ns": 1436152246102, "verified": true},
+      "soffice_euids": [1001],
+      "staging_cells": {"A1": "office", "A2": "preview", "A3": null, "B1": null},
+      "target_after_writer_attempt": {"ino": 1313169, "mode": "0o644", "sha256": "cfbaef51c9f56e3f5a898790056a689e9b2334ff7de055c0d3783d758fcfd7b9", "size": 4838, "uid": 0},
+      "writer": {"egid": 1002, "errno": 13, "error": "PermissionError(13, 'Permission denied')", "euid": 1001, "ok": false, "operation": "inplace_r+b", "started_ns": 1437287945197, "ended_ns": 1437288053908}
+    }
+  ],
+  "source_sha256": {
+    "runner_v6_direct.py": "f7e54e9d9f4495ea8d13968cffe182accc84015573213bd77ae965b0b95c78fe",
+    "score_xlsx.py": "1a176c9fef7ab61b5b615c1e191a539acad2eab65d4c1006c7911459b9f43978",
+    "backend_x11.py": "78b99f3f528bdb1504740d079d460fdb7ee43c1d2b2cb0d88cb2b1cf3996d940",
+    "office_backend.py": "d9ecc0d645e206be91d7f06b67ff8b24b239077cff56aac5431b7507bc726c74"
+  }
+}

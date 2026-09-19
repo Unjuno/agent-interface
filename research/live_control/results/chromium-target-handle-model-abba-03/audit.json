@@ -1,0 +1,59 @@
+{
+  "audit_passed": true,
+  "retained_failures": {
+    "v1": "Windows fcntl import failed before GUI/model",
+    "v2": "coordinate 2/2 success; friendly-name handle 0/2 safe refusal"
+  },
+  "fresh_independent_success": "4/4",
+  "reported_input_tokens": {
+    "coordinate": [
+      9280,
+      9280
+    ],
+    "handle": [
+      8013,
+      8013
+    ],
+    "coordinate_mean": 9280.0,
+    "handle_mean": 8013.0,
+    "handle_minus_coordinate_mean": -1267.0,
+    "handle_reduction_percent": 13.653017241379311
+  },
+  "decision_to_evaluation_return_ms": {
+    "coordinate": [
+      6900.825909,
+      7341.290277
+    ],
+    "handle": [
+      6247.241736,
+      6349.12363
+    ],
+    "coordinate_mean": 7121.058093,
+    "handle_mean": 6298.182683,
+    "handle_minus_coordinate_mean": -822.8754099999996
+  },
+  "durable_calls": {
+    "coordinate": [
+      14,
+      14
+    ],
+    "handle": [
+      16,
+      16
+    ]
+  },
+  "exact_frames": {
+    "1-coordinate-seed991010": 15,
+    "2-handle-seed991010": 16,
+    "3-handle-seed991011": 16,
+    "4-coordinate-seed991011": 15
+  },
+  "total_exact_frames": 62,
+  "promotion_gate": {
+    "four_fresh_independent_successes": true,
+    "within_arm_input_range_at_most_128": true,
+    "handle_input_mean_lower": true,
+    "passed": true
+  },
+  "scope": "four fresh private Chromium X11 sessions over two new seeds; one final model choice per session; isolated alias change; no causal latency, monetary cost, human-speed, cross-domain or default-promotion claim"
+}

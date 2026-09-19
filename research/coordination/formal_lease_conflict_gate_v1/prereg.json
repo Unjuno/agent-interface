@@ -1,0 +1,32 @@
+{
+  "schema": "formal_lease_conflict_gate_prereg_v1",
+  "task": "COORD-LEASE-CONFLICT-GATE-20260916-001",
+  "issue": 346,
+  "publication_base": "4e802fa2ec3c0c97545a38520bb18b3b126d8e4e",
+  "result_absent_at_freeze": true,
+  "frozen_git_blobs": {
+    "snapshot.json": "764607fb4b0223f714e168854899a29dcaf31115",
+    "audit.py": "7f07eed689a3aa68beed52c5f0d170e6362a79f6"
+  },
+  "rules": [
+    "exact task_id reuse conflicts",
+    "exact additive scope collision conflicts",
+    "same direct successor plus same curator-authored question_key conflicts",
+    "consumed task_id reuse conflicts",
+    "same domain alone does not conflict",
+    "same successor with a different question_key alone does not conflict"
+  ],
+  "frozen_gates": {
+    "observed_recent_duplicate": "issues 341 and 342 conflict with semantic_successor",
+    "distinct_active_set": "issues 340,341,344,345 have zero pairwise conflicts",
+    "consumed_identity": "QUIET-WATCH-NATIVE-PREDICATE-NUISANCE-REPL-20260916-001 is rejected as consumed_task_id",
+    "synthetic_controls": "all six controls match their predeclared conflict/non-conflict disposition"
+  },
+  "decision": {
+    "pass": "PASS_SCOPED_PRE_FREEZE_CONFLICT_GATE",
+    "fail": "FAIL_PRE_FREEZE_CONFLICT_GATE",
+    "uncertain": "UNCERTAIN_PROVENANCE if a required GitHub record cannot be mapped without inventing metadata"
+  },
+  "execution_boundary": "The evaluation is deterministic over the frozen GitHub-visible snapshot. Publication of result.json records that evaluation; it is not CI execution and not an atomic GitHub lease transaction.",
+  "known_limit": "Two sessions can both pass a read-only precheck before either publishes a claim. A PASS here does not close the check-to-claim TOCTOU race."
+}

@@ -1,0 +1,39 @@
+{
+  "balance": "8 cases for each launch_order x a_delta joint cell; fixed shuffle seed 35920260916",
+  "base": "0a6012d189d2b4228d6f01462efc257e8d5e29dd",
+  "cases_per_chunk": 8,
+  "chunk_sha256": [
+    "8803983e194681e30ab6c0b7100bb7417c830ffa8e135e77ab804bfc5149f692",
+    "21e323bb69025d170a5c517875c139066e930c9d7a4d38d978219edcfe531c14",
+    "4a6b6aec91421e144fd382342335354337cf65d2c61a110aba3aa620661d25ff",
+    "ae52f64bcfa5c2d480c99265726a14d8942dcedb1dd87181d57fe1c77642f9e0"
+  ],
+  "chunks": 4,
+  "construction": {
+    "audit": "PASS_4_OF_4",
+    "cases": 4,
+    "excluded": true,
+    "ledger_sha256": "2300397fabf82dc9d3365b30fd6cdf0771bc14741c9883e42473216144a502f2",
+    "mutation_controls": "REJECT_7_OF_7"
+  },
+  "decision": "RETAIN_CONCURRENT_CONFLICT_SCOPED iff all 32 independent audit PASS with one APPLIED/new effect and one CONFLICT/no effect, exactly one durable decision/effect bound to winner fingerprint/delta, both calls enter before first commit, winner replay historical APPLIED zero-new, loser replay CONFLICT zero-new, no process/DB/source failures",
+  "factor": "same command ID concurrent requests differ only in delta 3 vs 4 / therefore fingerprint",
+  "formal_cases": 32,
+  "limits": [
+    "local SQLite WAL/FULL",
+    "BEGIN IMMEDIATE serialization part of mechanism",
+    "winner identity not scheduler-priority claim",
+    "no distributed/power-loss/network/throughput/natural-rate claim"
+  ],
+  "receiver_git_blob": "e4f0ef388b2a36dd74f6035ab68517be8a371b66",
+  "schedule_sha256": "519bad2ce0464f954bcd44109cf723e95bc6e544e2da848e37aface6a4729e5e",
+  "source_sha256": {
+    "audit.py": "fa71fe3ef84110286e6c4d7a59b8a5b79932acd31f85e9f7c31d224e4b4669e1",
+    "receiver.py": "908b4d70de0a6cc2179139463409ad4c929371efc24e6968f189ad22dc706fcb",
+    "run.py": "3b04870c8d24dfb0821e78b5bb50e9725b159e3b39f443613df57f5323ed96d9",
+    "test_audit.py": "1103586dbb5972c574ccc29ec4e7a8a7a0fe535fabb73d5975aec6ebb64f9d17",
+    "worker.py": "df3e6019f5ee8256f38ff23eb8f86beaf26dc36f5c4d71e5f59313d467a1500f"
+  },
+  "stop": "first unexpected harness/integrity failure stops; no same-ID rerun/replacement/extension/timeout tuning",
+  "task": "RECEIVER-CONCURRENT-CONFLICT-20260916-001"
+}

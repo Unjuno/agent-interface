@@ -1,0 +1,280 @@
+{
+  "name": "03-shifted-action_crop",
+  "scenario": "shifted",
+  "arm": "action_crop",
+  "ordinal": 3,
+  "status": "COMPLETED",
+  "retry_count": 0,
+  "current_observation": {
+    "event": "observation",
+    "id": "memory-current",
+    "step": 0,
+    "sequence": 6,
+    "capture_ns": 52526127080445,
+    "context_ns": 52526132242653,
+    "context": [
+      [
+        "windows",
+        "0x00600003  0 HPLaptop AI MEMORY shifted READY - Google Chrome for Testing\n"
+      ],
+      [
+        "active_window",
+        6291459
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/action-grounded-memory-ablation-live-01/03-shifted-action_crop/006.png",
+    "image_reused": false,
+    "image_prepare_ns": 24362785,
+    "image_ready_ns": 52526170941953,
+    "input_focus_before": 6291459,
+    "input_focus_after": 6291459,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ]
+    },
+    "capture_ms": 4.109016,
+    "wire_bytes": 12479,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "semantic_probe_sequence": null,
+    "semantic_probe_reconciliation": null,
+    "runtime_emit_ns": 52526176127144
+  },
+  "current_image_sha256": "07494895d694e3d39b0fd3c8ccc552103debfc87a6002f28e9f7959d90e4583b",
+  "prompt_sha256": "a683e34dac2b9edd9de8880158b9c0dce4f0d21aae6708a2e5110040c05304ce",
+  "model": {
+    "call_id": "01a0a35b-8190-7da2-97b1-7876d35308fa",
+    "decision": {
+      "format": "visual-memory-target-decision-v1",
+      "status": "target_reference",
+      "x": 217,
+      "y": 523,
+      "reason": "matched",
+      "memory_use": "none"
+    },
+    "usage": {
+      "input_tokens": 9396,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 125,
+      "reasoning_output_tokens": 80
+    },
+    "requested_model": "gpt-5.6-luna",
+    "requested_effort": "low",
+    "visible_images_submitted": 2,
+    "cost": null,
+    "runner_ms": 7321.7496,
+    "caller_elapsed_ms": 7528.361059,
+    "prompt_sha256": "a683e34dac2b9edd9de8880158b9c0dce4f0d21aae6708a2e5110040c05304ce"
+  },
+  "images": [
+    {
+      "path": "results/action-grounded-memory-ablation-live-01/03-shifted-action_crop/006.png",
+      "sha256": "07494895d694e3d39b0fd3c8ccc552103debfc87a6002f28e9f7959d90e4583b"
+    },
+    {
+      "path": "results/action-grounded-visual-memory-01/local/target.png",
+      "sha256": "1e34582ed711606705460e58df78921c5c44eba70965aa4ffddfb1e713131209"
+    }
+  ],
+  "action": {
+    "id": "select-3",
+    "program": [
+      {
+        "op": "pointer_click",
+        "x": 217,
+        "y": 523,
+        "duration_ms": 80
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 100,
+        "timeout_ms": 700
+      },
+      {
+        "op": "observe"
+      }
+    ],
+    "accepted": {
+      "event": "accepted",
+      "id": "select-3",
+      "steps": 3,
+      "program_sha256": "4f3a2392eceaab7387588c16a93a9b82d5cee502a0e72cd366418fa3986e2190",
+      "intent_token": "3cfc769d9e9c4da0841f7893f788fc6f",
+      "valid_until_ns": 52541776662527,
+      "accepted_ns": 52533776818073,
+      "runtime_emit_ns": 52533776819754
+    },
+    "terminal": {
+      "event": "terminal",
+      "id": "select-3",
+      "status": "completed",
+      "error": null,
+      "steps_completed": 3,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 52534176190535,
+        "valid_until_ns": 52541776662527
+      },
+      "interruption": null,
+      "decision_reason": null,
+      "terminal_ns": 52534176299988,
+      "semantic_completion": "program status only; task scoring is separate",
+      "runtime_emit_ns": 52534176302037
+    }
+  },
+  "oracle_records": [
+    {
+      "exact": true,
+      "kind": "submit",
+      "known_ns": 52533872208323,
+      "scenario": "shifted",
+      "values": {
+        "value": [
+          "t000218"
+        ]
+      }
+    }
+  ],
+  "correct": true,
+  "wrong_target_action": false,
+  "no_effect": false,
+  "release_ok": true,
+  "actions": [
+    {
+      "id": "nav-3",
+      "program": [
+        {
+          "op": "chord",
+          "modifier": "Control_L",
+          "key": "l"
+        },
+        {
+          "op": "text",
+          "text": "http://127.0.0.1:42075/shifted"
+        },
+        {
+          "op": "key",
+          "key": "Return"
+        },
+        {
+          "op": "wait_title",
+          "contains": "AI MEMORY shifted READY",
+          "timeout_ms": 1500
+        }
+      ],
+      "accepted": {
+        "event": "accepted",
+        "id": "nav-3",
+        "steps": 4,
+        "program_sha256": "736ae7a6f6760156078e753dfa69973a80d649090387eaa99e7f99e631018329",
+        "intent_token": "def78735455148c5ac2683c33c43a6ca",
+        "valid_until_ns": 52533726252724,
+        "accepted_ns": 52525726447960,
+        "runtime_emit_ns": 52525726449049
+      },
+      "terminal": {
+        "event": "terminal",
+        "id": "nav-3",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 4,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 52526122012514,
+          "valid_until_ns": 52533726252724
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "terminal_ns": 52526122111779,
+        "semantic_completion": "program status only; task scoring is separate",
+        "runtime_emit_ns": 52526122113269
+      }
+    },
+    {
+      "id": "select-3",
+      "program": [
+        {
+          "op": "pointer_click",
+          "x": 217,
+          "y": 523,
+          "duration_ms": 80
+        },
+        {
+          "op": "settle",
+          "quiet_ms": 100,
+          "timeout_ms": 700
+        },
+        {
+          "op": "observe"
+        }
+      ],
+      "accepted": {
+        "event": "accepted",
+        "id": "select-3",
+        "steps": 3,
+        "program_sha256": "4f3a2392eceaab7387588c16a93a9b82d5cee502a0e72cd366418fa3986e2190",
+        "intent_token": "3cfc769d9e9c4da0841f7893f788fc6f",
+        "valid_until_ns": 52541776662527,
+        "accepted_ns": 52533776818073,
+        "runtime_emit_ns": 52533776819754
+      },
+      "terminal": {
+        "event": "terminal",
+        "id": "select-3",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 3,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 52534176190535,
+          "valid_until_ns": 52541776662527
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "terminal_ns": 52534176299988,
+        "semantic_completion": "program status only; task scoring is separate",
+        "runtime_emit_ns": 52534176302037
+      }
+    }
+  ]
+}

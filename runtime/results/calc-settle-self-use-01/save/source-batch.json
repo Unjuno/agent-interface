@@ -1,0 +1,820 @@
+{
+  "status": "boundary",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "decision_evidence": {
+          "delivery_id": "delivery:2",
+          "observation_sequence": 1,
+          "producer": "assistant"
+        },
+        "expected_sequence": 1,
+        "id": "settle-enter-991075",
+        "op": "submit",
+        "steps": [
+          {
+            "op": "text",
+            "text": "766"
+          },
+          {
+            "key": "Return",
+            "op": "key"
+          },
+          {
+            "op": "text",
+            "text": "761"
+          },
+          {
+            "key": "Return",
+            "op": "key"
+          },
+          {
+            "key": "s",
+            "modifier": "Control_L",
+            "op": "chord"
+          },
+          {
+            "op": "settle",
+            "quiet_ms": 200,
+            "timeout_ms": 1200
+          }
+        ],
+        "transport_request_id": "program:15bf81dd2bb0406da0a635ac6c0f07a2",
+        "valid_until_ns": 46764432547
+      },
+      "received_ns": 41816404536,
+      "transport_request_id": "program:15bf81dd2bb0406da0a635ac6c0f07a2",
+      "runtime_request_sequence": 2,
+      "declared_action_id": "settle-enter-991075",
+      "command_op": "submit",
+      "correlation_scope": "current runtime input line; action ID is caller-declared",
+      "emit_started_ns": 41816418915,
+      "delivery_id": "delivery:5"
+    },
+    {
+      "event": "decision_evidence",
+      "source_delivery_id": "delivery:2",
+      "observation_sequence": 1,
+      "producer": "assistant",
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/agent-settle-991075/001.png",
+      "provenance": "caller-declared reference; model viewing unverified",
+      "authority": "none; ordinary admission remains required",
+      "id": "settle-enter-991075",
+      "received_ns": 41822340207,
+      "emit_started_ns": 41822342877,
+      "delivery_id": "delivery:6"
+    },
+    {
+      "event": "accepted",
+      "id": "settle-enter-991075",
+      "steps": 6,
+      "valid_until_ns": 46764432547,
+      "accepted_ns": 41836541087,
+      "admitted_request": {
+        "transport_request_id": "program:15bf81dd2bb0406da0a635ac6c0f07a2",
+        "runtime_request_sequence": 2,
+        "declared_action_id": "settle-enter-991075",
+        "command_op": "submit",
+        "correlation_scope": "current runtime input line; action ID is caller-declared"
+      },
+      "emit_started_ns": 41836561566,
+      "delivery_id": "delivery:7"
+    },
+    {
+      "event": "observation",
+      "id": "settle-enter-991075",
+      "step": 0,
+      "sequence": 2,
+      "capture_ns": 41917887264,
+      "context_ns": 41929994406,
+      "context": [
+        [
+          "windows",
+          "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+        ],
+        [
+          "active_window",
+          8389124
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/agent-settle-991075/002.png",
+      "image_reused": false,
+      "image_prepare_ns": 37689568,
+      "image_ready_ns": 41992660871,
+      "input_focus_before": 8389124,
+      "input_focus_after": 8389124,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 11.98674,
+      "wire_bytes": 3062,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "input_state_before": {
+        "owner_id": "de7cd11c36f6411e9a1baeea987c4598",
+        "revision": 6,
+        "sample_started_ns": 41903259493,
+        "sample_finished_ns": 41903572534,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8389124,
+        "active_lease_deadline_ns": 46764432547,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "input_state_after": {
+        "owner_id": "de7cd11c36f6411e9a1baeea987c4598",
+        "revision": 6,
+        "sample_started_ns": 41996910020,
+        "sample_finished_ns": 41997460861,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8389124,
+        "active_lease_deadline_ns": 46764432547,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "owner_revision_unchanged": true,
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "emit_started_ns": 41997588530,
+      "delivery_id": "delivery:8"
+    },
+    {
+      "event": "observation",
+      "id": "settle-enter-991075",
+      "step": 1,
+      "sequence": 3,
+      "capture_ns": 42051003444,
+      "context_ns": 42060311046,
+      "context": [
+        [
+          "windows",
+          "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+        ],
+        [
+          "active_window",
+          8389124
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/agent-settle-991075/003.png",
+      "image_reused": false,
+      "image_prepare_ns": 35966956,
+      "image_ready_ns": 42115089465,
+      "input_focus_before": 8389124,
+      "input_focus_after": 8389124,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 5.385333,
+      "wire_bytes": 4552,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "input_state_before": {
+        "owner_id": "de7cd11c36f6411e9a1baeea987c4598",
+        "revision": 8,
+        "sample_started_ns": 42043069560,
+        "sample_finished_ns": 42043601714,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8389124,
+        "active_lease_deadline_ns": 46764432547,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "input_state_after": {
+        "owner_id": "de7cd11c36f6411e9a1baeea987c4598",
+        "revision": 8,
+        "sample_started_ns": 42117530589,
+        "sample_finished_ns": 42117852562,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8389124,
+        "active_lease_deadline_ns": 46764432547,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "owner_revision_unchanged": true,
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "emit_started_ns": 42117911374,
+      "delivery_id": "delivery:9"
+    },
+    {
+      "event": "observation",
+      "id": "settle-enter-991075",
+      "step": 2,
+      "sequence": 4,
+      "capture_ns": 42185400570,
+      "context_ns": 42192318894,
+      "context": [
+        [
+          "windows",
+          "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+        ],
+        [
+          "active_window",
+          8389124
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/agent-settle-991075/004.png",
+      "image_reused": false,
+      "image_prepare_ns": 26356102,
+      "image_ready_ns": 42235015520,
+      "input_focus_before": 8389124,
+      "input_focus_after": 8389124,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 2.914558,
+      "wire_bytes": 8468,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "input_state_before": {
+        "owner_id": "de7cd11c36f6411e9a1baeea987c4598",
+        "revision": 14,
+        "sample_started_ns": 42181122038,
+        "sample_finished_ns": 42181352295,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8389124,
+        "active_lease_deadline_ns": 46764432547,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "input_state_after": {
+        "owner_id": "de7cd11c36f6411e9a1baeea987c4598",
+        "revision": 14,
+        "sample_started_ns": 42237817560,
+        "sample_finished_ns": 42238079948,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8389124,
+        "active_lease_deadline_ns": 46764432547,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "owner_revision_unchanged": true,
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "emit_started_ns": 42238133780,
+      "delivery_id": "delivery:10"
+    },
+    {
+      "event": "observation",
+      "id": "settle-enter-991075",
+      "step": 3,
+      "sequence": 5,
+      "capture_ns": 42283253220,
+      "context_ns": 42288599777,
+      "context": [
+        [
+          "windows",
+          "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+        ],
+        [
+          "active_window",
+          8389124
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/agent-settle-991075/005.png",
+      "image_reused": false,
+      "image_prepare_ns": 32038093,
+      "image_ready_ns": 42334987639,
+      "input_focus_before": 8389124,
+      "input_focus_after": 8389124,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 4.10403,
+      "wire_bytes": 3890,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "input_state_before": {
+        "owner_id": "de7cd11c36f6411e9a1baeea987c4598",
+        "revision": 16,
+        "sample_started_ns": 42278005256,
+        "sample_finished_ns": 42278274493,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8389124,
+        "active_lease_deadline_ns": 46764432547,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "input_state_after": {
+        "owner_id": "de7cd11c36f6411e9a1baeea987c4598",
+        "revision": 16,
+        "sample_started_ns": 42338066115,
+        "sample_finished_ns": 42338465500,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8389124,
+        "active_lease_deadline_ns": 46764432547,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "owner_revision_unchanged": true,
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "emit_started_ns": 42338535937,
+      "delivery_id": "delivery:11"
+    },
+    {
+      "event": "observation",
+      "id": "settle-enter-991075",
+      "step": 4,
+      "sequence": 6,
+      "capture_ns": 42409102417,
+      "context_ns": 42418292564,
+      "context": [
+        [
+          "windows",
+          "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n0x00800877  0 HPLaptop Confirm File Format\n"
+        ],
+        [
+          "active_window",
+          8390775
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/agent-settle-991075/006.png",
+      "image_reused": false,
+      "image_prepare_ns": 30926030,
+      "image_ready_ns": 42468615649,
+      "input_focus_before": 8389124,
+      "input_focus_after": 8390775,
+      "focus_samples_match": false,
+      "pointer_binding": null,
+      "pointer_context_before": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 8390775,
+        "surface": 8390775,
+        "geometry": [
+          386,
+          322,
+          507,
+          174
+        ]
+      },
+      "capture_ms": 5.147366,
+      "wire_bytes": 12977,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "input_state_before": {
+        "owner_id": "de7cd11c36f6411e9a1baeea987c4598",
+        "revision": 20,
+        "sample_started_ns": 42401929232,
+        "sample_finished_ns": 42402229484,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8389124,
+        "active_lease_deadline_ns": 46764432547,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "input_state_after": {
+        "owner_id": "de7cd11c36f6411e9a1baeea987c4598",
+        "revision": 21,
+        "sample_started_ns": 42471888113,
+        "sample_finished_ns": 42472440550,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8390775,
+        "active_lease_deadline_ns": null,
+        "active_lease_time_valid": false,
+        "cancel_requested": false
+      },
+      "owner_revision_unchanged": false,
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "emit_started_ns": 42472522461,
+      "delivery_id": "delivery:12"
+    },
+    {
+      "event": "observation",
+      "id": "settle-enter-991075",
+      "step": 5,
+      "sequence": 7,
+      "capture_ns": 42507705526,
+      "context_ns": 42515117156,
+      "context": [
+        [
+          "windows",
+          "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n0x00800877  0 HPLaptop Confirm File Format\n"
+        ],
+        [
+          "active_window",
+          8390775
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/agent-settle-991075/007.png",
+      "image_reused": false,
+      "image_prepare_ns": 30890707,
+      "image_ready_ns": 42566383263,
+      "input_focus_before": 8390775,
+      "input_focus_after": 8390775,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 8390775,
+        "surface": 8390775,
+        "geometry": [
+          386,
+          322,
+          507,
+          174
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 8390775,
+        "surface": 8390775,
+        "geometry": [
+          386,
+          322,
+          507,
+          174
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 8390775,
+        "surface": 8390775,
+        "geometry": [
+          386,
+          322,
+          507,
+          174
+        ]
+      },
+      "capture_ms": 4.194947,
+      "wire_bytes": 40602,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "input_state_before": {
+        "owner_id": "de7cd11c36f6411e9a1baeea987c4598",
+        "revision": 21,
+        "sample_started_ns": 42502150398,
+        "sample_finished_ns": 42502542537,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8390775,
+        "active_lease_deadline_ns": null,
+        "active_lease_time_valid": false,
+        "cancel_requested": false
+      },
+      "input_state_after": {
+        "owner_id": "de7cd11c36f6411e9a1baeea987c4598",
+        "revision": 21,
+        "sample_started_ns": 42569720910,
+        "sample_finished_ns": 42570361204,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8390775,
+        "active_lease_deadline_ns": null,
+        "active_lease_time_valid": false,
+        "cancel_requested": false
+      },
+      "owner_revision_unchanged": true,
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "emit_started_ns": 42570436458,
+      "delivery_id": "delivery:13"
+    },
+    {
+      "event": "observation",
+      "id": "settle-enter-991075",
+      "step": 5,
+      "sequence": 11,
+      "capture_ns": 42759427059,
+      "context_ns": 42769104677,
+      "context": [
+        [
+          "windows",
+          "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n0x00800877  0 HPLaptop Confirm File Format\n"
+        ],
+        [
+          "active_window",
+          8390775
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/agent-settle-991075/007.png",
+      "image_reused": true,
+      "image_prepare_ns": 2577504,
+      "image_ready_ns": 42778095801,
+      "input_focus_before": 8390775,
+      "input_focus_after": 8390775,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 8390775,
+        "surface": 8390775,
+        "geometry": [
+          386,
+          322,
+          507,
+          174
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 8390775,
+        "surface": 8390775,
+        "geometry": [
+          386,
+          322,
+          507,
+          174
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 8390775,
+        "surface": 8390775,
+        "geometry": [
+          386,
+          322,
+          507,
+          174
+        ]
+      },
+      "capture_ms": 3.994232,
+      "wire_bytes": 341,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "input_state_before": {
+        "owner_id": "de7cd11c36f6411e9a1baeea987c4598",
+        "revision": 21,
+        "sample_started_ns": 42753579899,
+        "sample_finished_ns": 42754136026,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8390775,
+        "active_lease_deadline_ns": null,
+        "active_lease_time_valid": false,
+        "cancel_requested": false
+      },
+      "input_state_after": {
+        "owner_id": "de7cd11c36f6411e9a1baeea987c4598",
+        "revision": 21,
+        "sample_started_ns": 42781732245,
+        "sample_finished_ns": 42782272183,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8390775,
+        "active_lease_deadline_ns": null,
+        "active_lease_time_valid": false,
+        "cancel_requested": false
+      },
+      "owner_revision_unchanged": true,
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "emit_started_ns": 42782349245,
+      "delivery_id": "delivery:14"
+    },
+    {
+      "event": "settle_result",
+      "id": "settle-enter-991075",
+      "step": 5,
+      "reason": "pixel_quiet",
+      "samples": 5,
+      "sequence": 11,
+      "elapsed_ms": 283.422854,
+      "quiet_ms": 200,
+      "timeout_ms": 1200,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 42785412871,
+      "delivery_id": "delivery:15"
+    },
+    {
+      "event": "terminal",
+      "id": "settle-enter-991075",
+      "status": "completed",
+      "error": null,
+      "steps_completed": 6,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 42823598398,
+        "valid_until_ns": null
+      },
+      "terminal_ns": 42823757003,
+      "semantic_completion": "program status only; task scoring is separate",
+      "admitted_request": {
+        "transport_request_id": "program:15bf81dd2bb0406da0a635ac6c0f07a2",
+        "runtime_request_sequence": 2,
+        "declared_action_id": "settle-enter-991075",
+        "command_op": "submit",
+        "correlation_scope": "current runtime input line; action ID is caller-declared"
+      },
+      "emit_started_ns": 42823778945,
+      "review": {
+        "runtime_ns": 42823757003,
+        "clock_scope": "terminal creation time; not current time at delivery",
+        "observation": {
+          "sequence": 11,
+          "capture_ns": 42759427059,
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/agent-settle-991075/007.png",
+          "image_reused": true,
+          "program_id": "settle-enter-991075",
+          "from_this_program": true,
+          "freshness": "historical; acquire new observation if required"
+        },
+        "local_outcome": null,
+        "semantic_verification": "not implied by execution or local visual goal"
+      },
+      "delivery_id": "delivery:16"
+    }
+  ],
+  "cursor": 16,
+  "returned_ns": 42841761963,
+  "authority": "none",
+  "acknowledgement": "not implied",
+  "command_receipt": {
+    "request_id": "program:15bf81dd2bb0406da0a635ac6c0f07a2",
+    "replayed": false,
+    "state": "stdin_flushed"
+  }
+}

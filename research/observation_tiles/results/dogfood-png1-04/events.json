@@ -1,0 +1,196 @@
+[
+  {
+    "app": "xterm",
+    "emit_started_ns": 271330520676,
+    "event": "ready",
+    "goal": {
+      "a": 161,
+      "b": 212,
+      "dx": 36,
+      "setup_readiness_captures": 0,
+      "token": "t810101"
+    },
+    "note": "input_ack only acknowledges X11 injection; image and context have separate timestamps",
+    "operations": [
+      "observe",
+      "text",
+      "key",
+      "chord",
+      "drag",
+      "finish"
+    ],
+    "png_compress_level": 1,
+    "supported_text_characters": "abcdefghijklmnopqrstuvwxyz0123456789:/-._ "
+  },
+  {
+    "action_id": "initial",
+    "archive_ms": 37.914151,
+    "capture_ms": 10.002149,
+    "capture_ns": 271340581932,
+    "changed_tiles": 0,
+    "context": [
+      [
+        "windows",
+        "0x0060000c  0 HPLaptop AI XTERM READY\n"
+      ],
+      [
+        "active_window",
+        6291468
+      ]
+    ],
+    "context_observed_ns": 271346471422,
+    "decode_ms": 3.613714,
+    "emit_started_ns": 271391903346,
+    "encode_ns": 3883422,
+    "event": "observation",
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/observation_tiles/results/dogfood-png1-04/001.png",
+    "image_prepare_ns": 27309908,
+    "image_ready_ns": 271387379946,
+    "image_reused": false,
+    "kind": "full",
+    "local_feedback_ready_ns": 271353976800,
+    "reconstruction_verified": true,
+    "semantic_completion": "unknown",
+    "sequence": 1,
+    "wire_bytes": 20190
+  },
+  {
+    "command": {
+      "id": "type",
+      "op": "text",
+      "text": "t810101",
+      "wait_changed_ms": 1000
+    },
+    "emit_started_ns": 290147445146,
+    "event": "command",
+    "received_ns": 290147443183
+  },
+  {
+    "acknowledged_ns": 290162822881,
+    "action_id": "type",
+    "emit_started_ns": 290162826598,
+    "event": "input_ack",
+    "injection_ms": 15.318486,
+    "issued_ns": 290147504395,
+    "semantic_completion": "unknown"
+  },
+  {
+    "action_id": "type",
+    "archive_ms": 31.047266,
+    "capture_ms": 3.967284,
+    "capture_ns": 290166838979,
+    "changed_tiles": 2,
+    "context": [
+      [
+        "windows",
+        "0x0060000c  0 HPLaptop AI XTERM READY\n"
+      ],
+      [
+        "active_window",
+        6291468
+      ]
+    ],
+    "context_observed_ns": 290171327254,
+    "decode_ms": 3.282323,
+    "emit_started_ns": 290212186583,
+    "encode_ns": 6505606,
+    "event": "observation",
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/observation_tiles/results/dogfood-png1-04/002.png",
+    "image_prepare_ns": 16561726,
+    "image_ready_ns": 290203892163,
+    "image_reused": false,
+    "kind": "tiles",
+    "local_feedback_ready_ns": 290181126317,
+    "reconstruction_verified": true,
+    "semantic_completion": "unknown",
+    "sequence": 2,
+    "wire_bytes": 1824
+  },
+  {
+    "action_id": "type",
+    "changed": true,
+    "emit_started_ns": 290212407358,
+    "event": "change_wait_result",
+    "known_ns": 290212405438,
+    "note": "A visual/context change may be unrelated to the action; inspect it",
+    "semantic_completion": "unknown",
+    "timed_out": false
+  },
+  {
+    "command": {
+      "id": "submit",
+      "key": "Return",
+      "op": "key",
+      "wait_changed_ms": 1000
+    },
+    "emit_started_ns": 300364634692,
+    "event": "command",
+    "received_ns": 300364632489
+  },
+  {
+    "acknowledged_ns": 300365561283,
+    "action_id": "submit",
+    "emit_started_ns": 300365565740,
+    "event": "input_ack",
+    "injection_ms": 0.864393,
+    "issued_ns": 300364696890,
+    "semantic_completion": "unknown"
+  },
+  {
+    "action_id": "submit",
+    "archive_ms": 29.80099,
+    "capture_ms": 4.727772,
+    "capture_ns": 300370326788,
+    "changed_tiles": 3,
+    "context": [
+      [
+        "windows",
+        "0x0060000c  0 HPLaptop AI XTERM SAVED\n"
+      ],
+      [
+        "active_window",
+        6291468
+      ]
+    ],
+    "context_observed_ns": 300375316694,
+    "decode_ms": 0.863157,
+    "emit_started_ns": 300412445329,
+    "encode_ns": 6447085,
+    "event": "observation",
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/observation_tiles/results/dogfood-png1-04/003.png",
+    "image_prepare_ns": 17486465,
+    "image_ready_ns": 300405944827,
+    "image_reused": false,
+    "kind": "tiles",
+    "local_feedback_ready_ns": 300382633218,
+    "reconstruction_verified": true,
+    "semantic_completion": "unknown",
+    "sequence": 3,
+    "wire_bytes": 2055
+  },
+  {
+    "action_id": "submit",
+    "changed": true,
+    "emit_started_ns": 300412671019,
+    "event": "change_wait_result",
+    "known_ns": 300412668369,
+    "note": "A visual/context change may be unrelated to the action; inspect it",
+    "semantic_completion": "unknown",
+    "timed_out": false
+  },
+  {
+    "command": {
+      "op": "finish"
+    },
+    "emit_started_ns": 307175640689,
+    "event": "command",
+    "received_ns": 307175624429
+  },
+  {
+    "actual": "t810101",
+    "emit_started_ns": 307175881014,
+    "event": "independent_evaluation",
+    "known_ns": 307175876657,
+    "success": true
+  }
+]

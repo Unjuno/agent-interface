@@ -1,0 +1,293 @@
+{
+  "allocation_passed": false,
+  "failure_class": "program_evidence_shape_and_first_feedback_semantics",
+  "frozen_sources_match": true,
+  "runner_error": {
+    "type": "TypeError",
+    "detail": "'int' object is not subscriptable"
+  },
+  "report_incomplete": true,
+  "binding_readiness": {
+    "schema": "pointer-binding-readiness-v1",
+    "status": "READY",
+    "observation_id": "prepared-pre-admission-0",
+    "sequence": 3,
+    "binding": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "before": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "after": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "evaluated_ns": 41908639070032,
+    "may_submit_pointer_input": true,
+    "grants_input_authority": false
+  },
+  "fresh_validation": {
+    "schema": "inkscape-red-target-validation-v1",
+    "status": "VALID_CURRENT",
+    "source_image_sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "fresh_image_sha256": "0635671863bcfcd8b51cf2cf695e25b4b5622b61b5b6cb87496440d769bf3002",
+    "source_target": {
+      "bbox": [
+        596,
+        373,
+        643,
+        408
+      ],
+      "red_pixels": 1645,
+      "center": [
+        619,
+        390
+      ]
+    },
+    "fresh_target": {
+      "bbox": [
+        596,
+        373,
+        643,
+        408
+      ],
+      "red_pixels": 1645,
+      "center": [
+        619,
+        390
+      ]
+    },
+    "action": {
+      "op": "pointer_click",
+      "x": 619,
+      "y": 390,
+      "duration_ms": 80
+    },
+    "action_may_proceed_to_admission": true,
+    "requires_new_decision": false,
+    "grants_input_authority": false
+  },
+  "program": {
+    "steps": [
+      {
+        "op": "pointer_click",
+        "x": 619,
+        "y": 390,
+        "duration_ms": 80
+      },
+      {
+        "op": "observe"
+      }
+    ],
+    "sha256": "6de2c6b597e0dd293e869de1a396883c060fc6e5ce1a74574680af1080c11c52",
+    "accepted": {
+      "event": "accepted",
+      "id": "prepared-red-selection-03",
+      "steps": 2,
+      "program_sha256": "6de2c6b597e0dd293e869de1a396883c060fc6e5ce1a74574680af1080c11c52",
+      "intent_token": "4dd08503154c418fbebb13fb9aceb61e",
+      "valid_until_ns": 41913701975572,
+      "accepted_ns": 41908702133139,
+      "runtime_emit_ns": 41908702134534
+    }
+  },
+  "semantic_scores_posthoc": [
+    {
+      "schema": "inkscape-visible-selection-score-v2",
+      "success": false,
+      "reason": "selection_handles_missing",
+      "source_image_sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+      "scored_image_sha256": "d8b1e79f0e6c02b1641db9d8e5183291686a1bedb61f6032701bf93dc6924d7b",
+      "expected_target": {
+        "bbox": [
+          596,
+          373,
+          643,
+          408
+        ],
+        "red_pixels": 1645,
+        "center": [
+          619,
+          390
+        ]
+      },
+      "observed_support": {
+        "bbox": [
+          596,
+          373,
+          643,
+          408
+        ],
+        "red_pixels": 1645
+      },
+      "edge_delta": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "red_coverage_ratio": 1.0,
+      "edge_tolerance": 1,
+      "coverage_minimum": 0.8,
+      "zones": {
+        "left": [
+          578,
+          355,
+          596,
+          426
+        ],
+        "right": [
+          643,
+          355,
+          661,
+          426
+        ],
+        "top": [
+          596,
+          355,
+          643,
+          373
+        ],
+        "bottom": [
+          596,
+          408,
+          643,
+          426
+        ]
+      },
+      "dark_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      },
+      "per_side_minimum": 10,
+      "target_identity_valid": true,
+      "selection_handles_visible": false,
+      "grants_input_authority": false
+    },
+    {
+      "schema": "inkscape-visible-selection-score-v2",
+      "success": true,
+      "reason": "target_identity_and_selection_handles_visible",
+      "source_image_sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+      "scored_image_sha256": "bb950e6fa183fe2547624a9140cf97ba394692d34e878c7a24a3c5f0b8bbcfcb",
+      "expected_target": {
+        "bbox": [
+          596,
+          373,
+          643,
+          408
+        ],
+        "red_pixels": 1645,
+        "center": [
+          619,
+          390
+        ]
+      },
+      "observed_support": {
+        "bbox": [
+          597,
+          374,
+          643,
+          408
+        ],
+        "red_pixels": 1564
+      },
+      "edge_delta": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "red_coverage_ratio": 0.9507598784194529,
+      "edge_tolerance": 1,
+      "coverage_minimum": 0.8,
+      "zones": {
+        "left": [
+          578,
+          355,
+          596,
+          426
+        ],
+        "right": [
+          643,
+          355,
+          661,
+          426
+        ],
+        "top": [
+          596,
+          355,
+          643,
+          373
+        ],
+        "bottom": [
+          596,
+          408,
+          643,
+          426
+        ]
+      },
+      "dark_pixels": {
+        "left": 197,
+        "right": 197,
+        "top": 67,
+        "bottom": 67
+      },
+      "per_side_minimum": 10,
+      "target_identity_valid": true,
+      "selection_handles_visible": true,
+      "grants_input_authority": false
+    }
+  ],
+  "execution": {
+    "pointer_admissions": 2,
+    "observations": 2,
+    "terminal": {
+      "event": "terminal",
+      "id": "prepared-red-selection-03",
+      "status": "completed",
+      "error": null,
+      "steps_completed": 2,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 41908959021770,
+        "valid_until_ns": 41913701975572
+      },
+      "interruption": null,
+      "decision_reason": null,
+      "terminal_ns": 41908959171271,
+      "semantic_completion": "program status only; task scoring is separate",
+      "runtime_emit_ns": 41908959172761
+    }
+  },
+  "limits": "live semantic-score completion clock and full report were not serialized; posthoc mechanics do not pass the allocation",
+  "next_condition": "bind exact program by canonical SHA/count; retain first feedback separately and continue bounded observations until first semantic success or terminal; preserve v3; distinct v4",
+  "retry_count": 0,
+  "model_calls": 0
+}

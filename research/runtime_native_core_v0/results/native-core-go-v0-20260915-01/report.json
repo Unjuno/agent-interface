@@ -1,0 +1,44 @@
+{
+  "schema": "agent-interface/native-core-go-v0-result",
+  "result_id": "native-core-go-v0-20260915-01",
+  "source_freeze": "48fecb2e83e2083cf8eded092d0ab24d8c55b89d",
+  "source_blobs_all_match": true,
+  "go_test_exitcode": 0,
+  "go_test_pass_lines": 12,
+  "go_test_fail_lines": 0,
+  "stress_programs": 10000,
+  "stress_seed": 20260915,
+  "build_targets_requested": [
+    "linux/amd64",
+    "linux/arm64",
+    "windows/amd64",
+    "darwin/amd64",
+    "darwin/arm64"
+  ],
+  "build_failures": 0,
+  "build_matrix": [
+    "linux/amd64 PASS bytes=2158744 file=/mnt/data/agent-interface-native-core-v0/formal-results/native-core-go-v0-20260915-01/builds/ai-contract-linux-amd64: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, Go BuildID=-JziRcbL9cMGn7IPx6Bz/EBHtHifbgHzkCvYEavVx/D0-1N_mg8_-4KIhpRD7P/DcefwkVWY3RN9zOVC82S, stripped",
+    "linux/arm64 PASS bytes=2162840 file=/mnt/data/agent-interface-native-core-v0/formal-results/native-core-go-v0-20260915-01/builds/ai-contract-linux-arm64: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=Nz75dPvaKWKzrpOh9PS6/iSbJ0j833gHtZJXCuE0V/CuEpbaneaKAe_-0KPcQ4/ORgih_ewYdeeny9Gb1-V, stripped",
+    "windows/amd64 PASS bytes=2292736 file=/mnt/data/agent-interface-native-core-v0/formal-results/native-core-go-v0-20260915-01/builds/ai-contract-windows-amd64.exe: PE32+ executable for MS Windows 6.01 (console), x86-64, 8 sections",
+    "darwin/amd64 PASS bytes=2203584 file=/mnt/data/agent-interface-native-core-v0/formal-results/native-core-go-v0-20260915-01/builds/ai-contract-darwin-amd64: Mach-O 64-bit x86_64 executable, flags:<|DYLDLINK|PIE>",
+    "darwin/arm64 PASS bytes=2192306 file=/mnt/data/agent-interface-native-core-v0/formal-results/native-core-go-v0-20260915-01/builds/ai-contract-darwin-arm64: Mach-O 64-bit arm64 executable, flags:<|DYLDLINK|PIE>"
+  ],
+  "build_sha256": [
+    "37a621b7dcddbdf980095c60b072adaae54f0ef8007a29c26d1e3950a514f17f  ai-contract-linux-amd64",
+    "ccf3d0b18c9645fd5906b6e1f30fe7a040694c169b4b8de8480b8ccbc984944e  ai-contract-linux-arm64",
+    "f576643b80dbe200dc24074ac48725dda17109abd879c60989c8210860361634  ai-contract-windows-amd64.exe",
+    "09eba87e1475f2003f4ebb732d5db7e1731957d03fb92889465c0eb47b6d0bda  ai-contract-darwin-amd64",
+    "f36bde09dcc148a5c92042d811d12f5bb86658db3ffdef378cbac78997031a6d  ai-contract-darwin-arm64"
+  ],
+  "formal_pass": true,
+  "claims": {
+    "compiled_systems_core": true,
+    "native_windows_backend": false,
+    "native_macos_backend": false,
+    "native_wayland_backend": false,
+    "provider_token_efficiency": false,
+    "office_task_execution": false,
+    "go_selected_as_final_product_language": false
+  },
+  "scope": "offline semantic/wire conformance and cross-target compilation only; no native OS backend execution"
+}

@@ -1,0 +1,110 @@
+{
+  "schema": "map01-policy-invalidation-v24-live-audit-v1",
+  "passed": true,
+  "allocation_id": "map01-policy-invalidation-v24-live-01",
+  "disposition": "RETAINED_LIVE_ONE_WAY_INVALIDATION",
+  "score": {
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "death_count": 0,
+    "kill_count": 2
+  },
+  "iterations": 12,
+  "model_wall_seconds": 120.717614532,
+  "usage": {
+    "input_tokens": 148803,
+    "cached_input_tokens": 95104,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 1281,
+    "reasoning_output_tokens": 90
+  },
+  "cover_programs": 16,
+  "cover_renewals": 4,
+  "maximum_renewal_gap_ms": 38.848328,
+  "verified_program_releases": 24,
+  "invalidations": {
+    "4": {
+      "earliest_changed_sequence": 200,
+      "trigger_sequence": 201,
+      "trigger_changed_pixels": 921,
+      "source_age_ms": 4642.410481,
+      "earliest_change_to_trigger_capture_ms": 138.003284,
+      "earliest_change_to_detection_ms": 346.779956,
+      "capture_to_detection_ms": 208.776672,
+      "detection_to_release_ms": 34.367839
+    },
+    "5": {
+      "earliest_changed_sequence": 203,
+      "trigger_sequence": 204,
+      "trigger_changed_pixels": 680,
+      "source_age_ms": 8180.753203,
+      "earliest_change_to_trigger_capture_ms": 333.341206,
+      "earliest_change_to_detection_ms": 544.457007,
+      "capture_to_detection_ms": 211.115801,
+      "detection_to_release_ms": 26.577347
+    },
+    "6": {
+      "earliest_changed_sequence": 230,
+      "trigger_sequence": 230,
+      "trigger_changed_pixels": 542,
+      "source_age_ms": 17525.894586,
+      "earliest_change_to_trigger_capture_ms": 0.0,
+      "earliest_change_to_detection_ms": 215.921784,
+      "capture_to_detection_ms": 215.921784,
+      "detection_to_release_ms": 20.42273
+    },
+    "7": {
+      "earliest_changed_sequence": 239,
+      "trigger_sequence": 239,
+      "trigger_changed_pixels": 1096,
+      "source_age_ms": 4391.450494,
+      "earliest_change_to_trigger_capture_ms": 0.0,
+      "earliest_change_to_detection_ms": 208.599702,
+      "capture_to_detection_ms": 208.599702,
+      "detection_to_release_ms": 21.066926
+    }
+  },
+  "discarded_iterations": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "discarded_action_plan_admissions": 0,
+  "discarded_cover_inheritance": 0,
+  "visual_transcription": {
+    "health": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      93,
+      85,
+      82,
+      76,
+      76,
+      76,
+      76
+    ],
+    "ammo": [
+      50,
+      50,
+      50,
+      50,
+      47,
+      45,
+      45,
+      45,
+      45,
+      42,
+      37,
+      34
+    ],
+    "scope": "manual values reviewable in hash-checked HUD contact sheet"
+  },
+  "central_observation": "the one-way authority contract worked on four live health-region changes, but detection arrived about 209-216ms after capture and all four dependent model calls still completed; repeated invalidation used four decisions before a stable frame admitted a new action",
+  "next_mechanism_question": "separate fast event-driven invalidation and cancellable/speculative planning from semantic recovery; measure whether ROI-only decoding and observation callbacks reduce stop latency and renewal overhead without granting fallback authority",
+  "limits": "single unmatched seed; a health-number ROI detects both damage and pickup and cannot classify either; survival, kills and progress are not causally attributable; no reliability, human-speed, token-efficiency or MAP01-clear claim"
+}

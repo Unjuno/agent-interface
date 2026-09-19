@@ -1,0 +1,94 @@
+{
+  "executed": true,
+  "model_calls": 0,
+  "precondition_step": {
+    "op": "chord",
+    "modifier": "Control_L",
+    "key": "2"
+  },
+  "step": {
+    "op": "chord",
+    "modifier": "Control_L",
+    "key": "1"
+  },
+  "before_image": "004.png",
+  "after_image": "006.png",
+  "before_sha256": "205dafb1d9fcc769ae64c83d60628c1fe7e7f292317e5c1ed5c979e37c960585",
+  "after_sha256": "5bdb72784417f77446b48faea522b86dcefa87d404c6145d84a49207ce0d5e27",
+  "image_changed": true,
+  "evaluation": {
+    "event": "independent_evaluation",
+    "success": false,
+    "checks": {
+      "target_owned_roads": false,
+      "bidirectional_connections": false,
+      "forbidden_row_clear": true,
+      "surrounding_road_owner_unchanged": true
+    },
+    "changed_surrounding_tiles": [],
+    "legacy_success": false,
+    "contract": {
+      "x": 17,
+      "y": 7,
+      "width": 64,
+      "target": [
+        465,
+        466,
+        467
+      ],
+      "forbidden": [
+        529,
+        530,
+        531
+      ],
+      "owner": 0,
+      "guard": [
+        335,
+        336,
+        337,
+        338,
+        339,
+        340,
+        341,
+        399,
+        400,
+        401,
+        402,
+        403,
+        404,
+        405,
+        463,
+        464,
+        465,
+        466,
+        467,
+        468,
+        469,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        591,
+        592,
+        593,
+        594,
+        595,
+        596,
+        597,
+        655,
+        656,
+        657,
+        658,
+        659,
+        660,
+        661
+      ]
+    },
+    "emitted_ns": 19969247941191
+  },
+  "durable_calls": 6,
+  "save_unchanged": true
+}

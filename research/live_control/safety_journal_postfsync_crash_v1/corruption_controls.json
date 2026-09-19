@@ -1,0 +1,25 @@
+{
+  "all_rejected": true,
+  "controls": [
+    {
+      "name": "corrupt_duplicate_ledger",
+      "rejected": true,
+      "stdout": "{\"counts\": {\"no_crash\": 5, \"post_fsync_sigkill\": 5}, \"decision\": \"FAIL_INTEGRITY\", \"errors\": [[\"f00\", \"final_count\", 2]]}"
+    },
+    {
+      "name": "corrupt_crash_rc",
+      "rejected": true,
+      "stdout": "{\"counts\": {\"no_crash\": 5, \"post_fsync_sigkill\": 5}, \"decision\": \"FAIL_INTEGRITY\", \"errors\": [[\"f01\", \"kill_rc\", 0]]}"
+    },
+    {
+      "name": "corrupt_authority",
+      "rejected": true,
+      "stdout": "{\"counts\": {\"no_crash\": 5, \"post_fsync_sigkill\": 5}, \"decision\": \"FAIL_INTEGRITY\", \"errors\": [[\"f02\", \"journal\"]]}"
+    },
+    {
+      "name": "corrupt_recovery_disposition",
+      "rejected": true,
+      "stdout": "{\"counts\": {\"no_crash\": 5, \"post_fsync_sigkill\": 5}, \"decision\": \"FAIL_INTEGRITY\", \"errors\": [[\"f01\", \"recovery1\"]]}"
+    }
+  ]
+}

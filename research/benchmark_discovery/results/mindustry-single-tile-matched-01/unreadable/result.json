@@ -1,0 +1,2233 @@
+{
+  "source": {
+    "event": "observation",
+    "id": "initial",
+    "step": 0,
+    "sequence": 1,
+    "capture_ns": 52428304801516,
+    "context_ns": 52428313324852,
+    "context": [
+      [
+        "windows",
+        "0x0060000e  0 HPLaptop Mindustry\n"
+      ],
+      [
+        "active_window",
+        6291470
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-single-tile-matched-01/unreadable/runtime/001.png",
+    "image_reused": false,
+    "image_prepare_ns": 113960060,
+    "image_ready_ns": 52428484059555,
+    "input_focus_before": 6291470,
+    "input_focus_after": 6291470,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 6291470,
+      "surface": 6291470,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 6291470,
+      "surface": 6291470,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 6291470,
+      "surface": 6291470,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "capture_ms": 16.44683,
+    "wire_bytes": 487774,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "input_state_before": {
+      "owner_id": "0286dbadc5b74244af06653261d50b51",
+      "revision": 0,
+      "sample_started_ns": 52428285820341,
+      "sample_finished_ns": 52428286713734,
+      "owned_buttons": [],
+      "owned_keycodes": [],
+      "physical_pointer_mask": 0,
+      "pointer": [
+        640,
+        400
+      ],
+      "focus": 6291470,
+      "active_lease_deadline_ns": null,
+      "active_lease_time_valid": false,
+      "cancel_requested": false
+    },
+    "input_state_after": {
+      "owner_id": "0286dbadc5b74244af06653261d50b51",
+      "revision": 0,
+      "sample_started_ns": 52428496964685,
+      "sample_finished_ns": 52428497379673,
+      "owned_buttons": [],
+      "owned_keycodes": [],
+      "physical_pointer_mask": 0,
+      "pointer": [
+        640,
+        400
+      ],
+      "focus": 6291470,
+      "active_lease_deadline_ns": null,
+      "active_lease_time_valid": false,
+      "cancel_requested": false
+    },
+    "owner_revision_unchanged": true,
+    "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+    "emitted_ns": 52428501336441
+  },
+  "palette_candidate_model": {
+    "typed": {
+      "op": "target_reference",
+      "point_space": "source_observation_pixels",
+      "points": [
+        {
+          "x": 1004,
+          "y": 578
+        }
+      ],
+      "motion_model": "surface_origin_translation",
+      "confidence_basis": "visually_unambiguous"
+    },
+    "usage": {
+      "input_tokens": 9261,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 354,
+      "reasoning_output_tokens": 299
+    },
+    "runner_ms": 12109.9783,
+    "parent_elapsed_ms": 12434.413847
+  },
+  "palette_candidate": {
+    "status": "DIRECT",
+    "points": [
+      [
+        1004,
+        578
+      ]
+    ]
+  },
+  "palette_structure": {
+    "boundary": {
+      "left": 965,
+      "top": 545,
+      "vertical_edge_score": 23229,
+      "horizontal_edge_score": 24198
+    },
+    "slots": [
+      {
+        "row": 0,
+        "column": 0,
+        "point": [
+          1007,
+          577
+        ]
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "point": [
+          1053,
+          577
+        ]
+      },
+      {
+        "row": 0,
+        "column": 2,
+        "point": [
+          1097,
+          577
+        ]
+      },
+      {
+        "row": 0,
+        "column": 3,
+        "point": [
+          1142,
+          577
+        ]
+      },
+      {
+        "row": 1,
+        "column": 0,
+        "point": [
+          1007,
+          623
+        ]
+      },
+      {
+        "row": 1,
+        "column": 1,
+        "point": [
+          1053,
+          623
+        ]
+      },
+      {
+        "row": 1,
+        "column": 2,
+        "point": [
+          1097,
+          623
+        ]
+      },
+      {
+        "row": 1,
+        "column": 3,
+        "point": [
+          1142,
+          623
+        ]
+      },
+      {
+        "row": 2,
+        "column": 0,
+        "point": [
+          1007,
+          669
+        ]
+      },
+      {
+        "row": 2,
+        "column": 1,
+        "point": [
+          1053,
+          669
+        ]
+      },
+      {
+        "row": 2,
+        "column": 2,
+        "point": [
+          1097,
+          669
+        ]
+      },
+      {
+        "row": 2,
+        "column": 3,
+        "point": [
+          1142,
+          669
+        ]
+      },
+      {
+        "row": 3,
+        "column": 0,
+        "point": [
+          1007,
+          715
+        ]
+      },
+      {
+        "row": 3,
+        "column": 1,
+        "point": [
+          1053,
+          715
+        ]
+      },
+      {
+        "row": 3,
+        "column": 2,
+        "point": [
+          1097,
+          715
+        ]
+      },
+      {
+        "row": 3,
+        "column": 3,
+        "point": [
+          1142,
+          715
+        ]
+      }
+    ],
+    "tooltip_box": [
+      966,
+      445,
+      1280,
+      545
+    ],
+    "authority": "screen-derived palette probe geometry only; grants no semantic or input authority"
+  },
+  "palette_binding": {
+    "status": "BOUND",
+    "coarse_point": [
+      1004,
+      578
+    ],
+    "nearest_distance": 3.1622776601683795,
+    "row": 0,
+    "column": 0,
+    "point": [
+      1007,
+      577
+    ]
+  },
+  "palette_steps": [
+    {
+      "op": "pointer_move",
+      "x": 1007,
+      "y": 577
+    },
+    {
+      "op": "settle",
+      "quiet_ms": 100,
+      "timeout_ms": 1200
+    },
+    {
+      "op": "observe"
+    }
+  ],
+  "palette_hover": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "expected_sequence": 1,
+          "id": "hover-palette",
+          "op": "submit",
+          "steps": [
+            {
+              "op": "pointer_move",
+              "x": 1007,
+              "y": 577
+            },
+            {
+              "op": "settle",
+              "quiet_ms": 100,
+              "timeout_ms": 1200
+            },
+            {
+              "op": "observe"
+            }
+          ],
+          "transport_request_id": "87a4be54f661460d9df5d06c1e722309",
+          "valid_until_ns": 52461351506449
+        },
+        "emitted_ns": 52441381506264
+      },
+      {
+        "event": "accepted",
+        "id": "hover-palette",
+        "steps": 3,
+        "valid_until_ns": 52461351506449,
+        "accepted_ns": 52441391944985,
+        "emitted_ns": 52441391947122
+      },
+      {
+        "event": "step_started",
+        "id": "hover-palette",
+        "step": 0,
+        "operation": "pointer_move",
+        "issued_ns": 52441409570103,
+        "emitted_ns": 52441409572930
+      },
+      {
+        "event": "pointer_admission",
+        "operation": "move",
+        "payload": {
+          "x": 1007,
+          "y": 577
+        },
+        "admitted_ns": 52441433069308,
+        "input_ack_ns": 52441433710673,
+        "valid_until_ns": 52461351506449,
+        "surface": 6291470,
+        "id": "hover-palette",
+        "step": 0,
+        "emitted_ns": 52441433897055
+      },
+      {
+        "event": "observation",
+        "id": "hover-palette",
+        "step": 0,
+        "sequence": 2,
+        "capture_ns": 52441470155103,
+        "context_ns": 52441479640976,
+        "context": [
+          [
+            "windows",
+            "0x0060000e  0 HPLaptop Mindustry\n"
+          ],
+          [
+            "active_window",
+            6291470
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-single-tile-matched-01/unreadable/runtime/001.png",
+        "image_reused": true,
+        "image_prepare_ns": 1450602,
+        "image_ready_ns": 52441487673801,
+        "input_focus_before": 6291470,
+        "input_focus_after": 6291470,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 19.120581,
+        "wire_bytes": 267,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 1,
+          "sample_started_ns": 52441447314561,
+          "sample_finished_ns": 52441447982920,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            1007,
+            577
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52461351506449,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 1,
+          "sample_started_ns": 52441501593678,
+          "sample_finished_ns": 52441502147152,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            1007,
+            577
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52461351506449,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emitted_ns": 52441502317035
+      },
+      {
+        "event": "step_completed",
+        "id": "hover-palette",
+        "step": 0,
+        "completed_ns": 52441509977627,
+        "emitted_ns": 52441509981074
+      },
+      {
+        "event": "step_started",
+        "id": "hover-palette",
+        "step": 1,
+        "operation": "settle",
+        "issued_ns": 52441526561705,
+        "emitted_ns": 52441526565486
+      },
+      {
+        "event": "observation",
+        "id": "hover-palette",
+        "step": 1,
+        "sequence": 3,
+        "capture_ns": 52441564437427,
+        "context_ns": 52441572702058,
+        "context": [
+          [
+            "windows",
+            "0x0060000e  0 HPLaptop Mindustry\n"
+          ],
+          [
+            "active_window",
+            6291470
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-single-tile-matched-01/unreadable/runtime/003.png",
+        "image_reused": false,
+        "image_prepare_ns": 119792390,
+        "image_ready_ns": 52441743107372,
+        "input_focus_before": 6291470,
+        "input_focus_after": 6291470,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 14.704742,
+        "wire_bytes": 31680,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 1,
+          "sample_started_ns": 52441546646703,
+          "sample_finished_ns": 52441547321284,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            1007,
+            577
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52461351506449,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 1,
+          "sample_started_ns": 52441752817002,
+          "sample_finished_ns": 52441753011785,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            1007,
+            577
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52461351506449,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emitted_ns": 52441753352630
+      },
+      {
+        "event": "observation",
+        "id": "hover-palette",
+        "step": 1,
+        "sequence": 4,
+        "capture_ns": 52441801532456,
+        "context_ns": 52441811210604,
+        "context": [
+          [
+            "windows",
+            "0x0060000e  0 HPLaptop Mindustry\n"
+          ],
+          [
+            "active_window",
+            6291470
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-single-tile-matched-01/unreadable/runtime/003.png",
+        "image_reused": true,
+        "image_prepare_ns": 1843169,
+        "image_ready_ns": 52441822921158,
+        "input_focus_before": 6291470,
+        "input_focus_after": 6291470,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 8.046869,
+        "wire_bytes": 267,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 1,
+          "sample_started_ns": 52441789356292,
+          "sample_finished_ns": 52441789790129,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            1007,
+            577
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52461351506449,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 1,
+          "sample_started_ns": 52441841246250,
+          "sample_finished_ns": 52441841805314,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            1007,
+            577
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52461351506449,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emitted_ns": 52441841916831
+      },
+      {
+        "event": "observation",
+        "id": "hover-palette",
+        "step": 1,
+        "sequence": 5,
+        "capture_ns": 52441873116671,
+        "context_ns": 52441882733032,
+        "context": [
+          [
+            "windows",
+            "0x0060000e  0 HPLaptop Mindustry\n"
+          ],
+          [
+            "active_window",
+            6291470
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-single-tile-matched-01/unreadable/runtime/003.png",
+        "image_reused": true,
+        "image_prepare_ns": 1562150,
+        "image_ready_ns": 52441892562294,
+        "input_focus_before": 6291470,
+        "input_focus_after": 6291470,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 5.342536,
+        "wire_bytes": 267,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 1,
+          "sample_started_ns": 52441865682595,
+          "sample_finished_ns": 52441866216520,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            1007,
+            577
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52461351506449,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 1,
+          "sample_started_ns": 52441911596152,
+          "sample_finished_ns": 52441912106075,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            1007,
+            577
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52461351506449,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emitted_ns": 52441912466252
+      },
+      {
+        "event": "settle_result",
+        "id": "hover-palette",
+        "step": 1,
+        "reason": "pixel_quiet",
+        "samples": 3,
+        "sequence": 5,
+        "elapsed_ms": 373.858497,
+        "quiet_ms": 100,
+        "timeout_ms": 1200,
+        "semantic_completion": "unknown",
+        "emitted_ns": 52441920383287
+      },
+      {
+        "event": "step_completed",
+        "id": "hover-palette",
+        "step": 1,
+        "completed_ns": 52441936756754,
+        "emitted_ns": 52441936760460
+      },
+      {
+        "event": "step_started",
+        "id": "hover-palette",
+        "step": 2,
+        "operation": "observe",
+        "issued_ns": 52441952321515,
+        "emitted_ns": 52441952324072
+      },
+      {
+        "event": "observation",
+        "id": "hover-palette",
+        "step": 2,
+        "sequence": 6,
+        "capture_ns": 52441983872199,
+        "context_ns": 52441990611645,
+        "context": [
+          [
+            "windows",
+            "0x0060000e  0 HPLaptop Mindustry\n"
+          ],
+          [
+            "active_window",
+            6291470
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-single-tile-matched-01/unreadable/runtime/003.png",
+        "image_reused": true,
+        "image_prepare_ns": 6100045,
+        "image_ready_ns": 52442006716691,
+        "input_focus_before": 6291470,
+        "input_focus_after": 6291470,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 12.192937,
+        "wire_bytes": 267,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 1,
+          "sample_started_ns": 52441967728756,
+          "sample_finished_ns": 52441970049785,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            1007,
+            577
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52461351506449,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 1,
+          "sample_started_ns": 52442028940410,
+          "sample_finished_ns": 52442029416460,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            1007,
+            577
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52461351506449,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emitted_ns": 52442029623001
+      },
+      {
+        "event": "step_completed",
+        "id": "hover-palette",
+        "step": 2,
+        "completed_ns": 52442033817655,
+        "emitted_ns": 52442033820385
+      },
+      {
+        "event": "terminal",
+        "id": "hover-palette",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 3,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 52442051721436,
+          "valid_until_ns": 52461351506449
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "post_release_observation": null,
+        "terminal_ns": 52442051883865,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emitted_ns": 52442051890516
+      }
+    ],
+    "cursor": 20,
+    "returned_ns": 52442067487493,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "87a4be54f661460d9df5d06c1e722309",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "palette_readiness": {
+    "status": "READY",
+    "binding": {
+      "focus": 6291470,
+      "surface": 6291470,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "receipts": [
+      {
+        "receipt_index": 1,
+        "point": [
+          1007,
+          577
+        ],
+        "dwell_sequence": 5,
+        "persistent_sequence": 6,
+        "tooltip": {
+          "box": [
+            966,
+            445,
+            1280,
+            545
+          ],
+          "size": [
+            314,
+            100
+          ],
+          "changed_pixels_from_source": 31364,
+          "pixels_sha256": "e56840ff7416f0e96ff75fac8ab76d93492d8dcaecbf0d7301ddfff2f06937b1"
+        },
+        "authority": "observation evidence only; grants no input authority"
+      }
+    ],
+    "authority": "composed observation evidence only; grants no input authority"
+  },
+  "palette_manifest": {
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-single-tile-matched-01/unreadable/palette-receipt.png",
+    "size": [
+      640,
+      128
+    ],
+    "pixels_sha256": "f0b787f5670baa09dbb26b4c196731c11cfdac0c9d224fe3f09844e42f185fa1",
+    "rows": [
+      {
+        "receipt_index": 1,
+        "point": [
+          1007,
+          577
+        ],
+        "dwell_sequence": 5,
+        "persistent_sequence": 6,
+        "raw_tooltip_sha256": "e56840ff7416f0e96ff75fac8ab76d93492d8dcaecbf0d7301ddfff2f06937b1",
+        "raw_size": [
+          314,
+          100
+        ],
+        "display_scale": 1,
+        "display_filter": "nearest",
+        "row_height": 104
+      }
+    ],
+    "max_scale": 2,
+    "omitted": "full source frame and non-tooltip pixels",
+    "authority": "presentation only; original verified receipts remain authoritative"
+  },
+  "palette_anchor_model": {
+    "typed": {
+      "op": "target_reference",
+      "receipt_index": 1,
+      "point_space": "source_observation_pixels",
+      "point": {
+        "x": 1007,
+        "y": 577
+      },
+      "motion_model": "surface_origin_translation",
+      "evidence_kind": "persistent_hover_tooltip"
+    },
+    "usage": {
+      "input_tokens": 8130,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 91,
+      "reasoning_output_tokens": 33
+    },
+    "runner_ms": 6310.1619,
+    "parent_elapsed_ms": 6655.239407
+  },
+  "palette_decision": {
+    "status": "EVIDENCE_BOUND",
+    "point": [
+      1007,
+      577
+    ],
+    "receipt": {
+      "receipt_index": 1,
+      "point": [
+        1007,
+        577
+      ],
+      "dwell_sequence": 5,
+      "persistent_sequence": 6,
+      "tooltip": {
+        "box": [
+          966,
+          445,
+          1280,
+          545
+        ],
+        "size": [
+          314,
+          100
+        ],
+        "changed_pixels_from_source": 31364,
+        "pixels_sha256": "e56840ff7416f0e96ff75fac8ab76d93492d8dcaecbf0d7301ddfff2f06937b1"
+      },
+      "authority": "observation evidence only; grants no input authority"
+    },
+    "authority": "reference only; ordinary input admission remains required"
+  },
+  "selection_oracle": {
+    "success": true,
+    "title_box": [
+      967,
+      447,
+      1280,
+      547
+    ],
+    "slot_box": [
+      987,
+      557,
+      1032,
+      603
+    ],
+    "observed_title_sha256": "914de6a1cf3a76374449790bf16b2f28c69cac76084903de58acedc26225b553",
+    "expected_title_sha256": "914de6a1cf3a76374449790bf16b2f28c69cac76084903de58acedc26225b553",
+    "observed_slot_sha256": "38149065da4add9e7be205870ea662641ce34003b9c174544c0734e6bc964f1b",
+    "expected_slot_sha256": "38149065da4add9e7be205870ea662641ce34003b9c174544c0734e6bc964f1b",
+    "basis": "exact fixed-fixture RGB title panel plus selected Conveyor slot border"
+  },
+  "world_candidate_model": {
+    "typed": {
+      "op": "target_reference",
+      "point_space": "source_observation_pixels",
+      "points": [
+        {
+          "x": 368,
+          "y": 394
+        }
+      ],
+      "motion_model": "surface_origin_translation",
+      "confidence_basis": "visually_unambiguous"
+    },
+    "usage": {
+      "input_tokens": 9293,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 138,
+      "reasoning_output_tokens": 84
+    },
+    "runner_ms": 7108.9104,
+    "parent_elapsed_ms": 7444.947753
+  },
+  "world_candidate": {
+    "status": "DIRECT",
+    "points": [
+      [
+        368,
+        394
+      ]
+    ]
+  },
+  "world_point": [
+    368,
+    394
+  ],
+  "world_steps": [
+    {
+      "op": "pointer_move",
+      "x": 368,
+      "y": 394
+    },
+    {
+      "op": "settle",
+      "quiet_ms": 100,
+      "timeout_ms": 1200
+    },
+    {
+      "op": "observe"
+    }
+  ],
+  "world_hover": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "expected_sequence": 15,
+          "id": "hover-world",
+          "op": "submit",
+          "steps": [
+            {
+              "op": "pointer_move",
+              "x": 368,
+              "y": 394
+            },
+            {
+              "op": "settle",
+              "quiet_ms": 100,
+              "timeout_ms": 1200
+            },
+            {
+              "op": "observe"
+            }
+          ],
+          "transport_request_id": "713ec1c09e574feea67aed9eaa3de48c",
+          "valid_until_ns": 52479766079405
+        },
+        "emitted_ns": 52459804501542
+      },
+      {
+        "event": "accepted",
+        "id": "hover-world",
+        "steps": 3,
+        "valid_until_ns": 52479766079405,
+        "accepted_ns": 52459813164701,
+        "emitted_ns": 52459813178146
+      },
+      {
+        "event": "step_started",
+        "id": "hover-world",
+        "step": 0,
+        "operation": "pointer_move",
+        "issued_ns": 52459836587126,
+        "emitted_ns": 52459836590543
+      },
+      {
+        "event": "pointer_admission",
+        "operation": "move",
+        "payload": {
+          "x": 368,
+          "y": 394
+        },
+        "admitted_ns": 52459857712852,
+        "input_ack_ns": 52459858003310,
+        "valid_until_ns": 52479766079405,
+        "surface": 6291470,
+        "id": "hover-world",
+        "step": 0,
+        "emitted_ns": 52459863902177
+      },
+      {
+        "event": "observation",
+        "id": "hover-world",
+        "step": 0,
+        "sequence": 16,
+        "capture_ns": 52459889513629,
+        "context_ns": 52459896309988,
+        "context": [
+          [
+            "windows",
+            "0x0060000e  0 HPLaptop Mindustry\n"
+          ],
+          [
+            "active_window",
+            6291470
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-single-tile-matched-01/unreadable/runtime/016.png",
+        "image_reused": false,
+        "image_prepare_ns": 101410608,
+        "image_ready_ns": 52460043894160,
+        "input_focus_before": 6291470,
+        "input_focus_after": 6291470,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 15.820136,
+        "wire_bytes": 9334,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 8,
+          "sample_started_ns": 52459871014485,
+          "sample_finished_ns": 52459871621530,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            368,
+            394
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52479766079405,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 8,
+          "sample_started_ns": 52460059360462,
+          "sample_finished_ns": 52460059632741,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            368,
+            394
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52479766079405,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emitted_ns": 52460059687029
+      },
+      {
+        "event": "step_completed",
+        "id": "hover-world",
+        "step": 0,
+        "completed_ns": 52460068816454,
+        "emitted_ns": 52460068819167
+      },
+      {
+        "event": "step_started",
+        "id": "hover-world",
+        "step": 1,
+        "operation": "settle",
+        "issued_ns": 52460083658105,
+        "emitted_ns": 52460083661489
+      },
+      {
+        "event": "observation",
+        "id": "hover-world",
+        "step": 1,
+        "sequence": 17,
+        "capture_ns": 52460118871316,
+        "context_ns": 52460125807317,
+        "context": [
+          [
+            "windows",
+            "0x0060000e  0 HPLaptop Mindustry\n"
+          ],
+          [
+            "active_window",
+            6291470
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-single-tile-matched-01/unreadable/runtime/017.png",
+        "image_reused": false,
+        "image_prepare_ns": 117173061,
+        "image_ready_ns": 52460284223069,
+        "input_focus_before": 6291470,
+        "input_focus_after": 6291470,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 13.184167,
+        "wire_bytes": 19094,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 8,
+          "sample_started_ns": 52460102761285,
+          "sample_finished_ns": 52460103396496,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            368,
+            394
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52479766079405,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 8,
+          "sample_started_ns": 52460301353602,
+          "sample_finished_ns": 52460302048881,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            368,
+            394
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52479766079405,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emitted_ns": 52460302215956
+      },
+      {
+        "event": "observation",
+        "id": "hover-world",
+        "step": 1,
+        "sequence": 18,
+        "capture_ns": 52460340799050,
+        "context_ns": 52460352979895,
+        "context": [
+          [
+            "windows",
+            "0x0060000e  0 HPLaptop Mindustry\n"
+          ],
+          [
+            "active_window",
+            6291470
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-single-tile-matched-01/unreadable/runtime/018.png",
+        "image_reused": false,
+        "image_prepare_ns": 113644005,
+        "image_ready_ns": 52460508102192,
+        "input_focus_before": 6291470,
+        "input_focus_after": 6291470,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 6.376565,
+        "wire_bytes": 5606,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 8,
+          "sample_started_ns": 52460332223722,
+          "sample_finished_ns": 52460332586231,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            368,
+            394
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52479766079405,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 8,
+          "sample_started_ns": 52460528645090,
+          "sample_finished_ns": 52460529057959,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            368,
+            394
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52479766079405,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emitted_ns": 52460531117313
+      },
+      {
+        "event": "observation",
+        "id": "hover-world",
+        "step": 1,
+        "sequence": 19,
+        "capture_ns": 52460569548367,
+        "context_ns": 52460578871059,
+        "context": [
+          [
+            "windows",
+            "0x0060000e  0 HPLaptop Mindustry\n"
+          ],
+          [
+            "active_window",
+            6291470
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-single-tile-matched-01/unreadable/runtime/019.png",
+        "image_reused": false,
+        "image_prepare_ns": 127112953,
+        "image_ready_ns": 52460755010101,
+        "input_focus_before": 6291470,
+        "input_focus_after": 6291470,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 5.065454,
+        "wire_bytes": 5602,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 8,
+          "sample_started_ns": 52460562398934,
+          "sample_finished_ns": 52460562790281,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            368,
+            394
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52479766079405,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 8,
+          "sample_started_ns": 52460772950969,
+          "sample_finished_ns": 52460773488745,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            368,
+            394
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52479766079405,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emitted_ns": 52460773583144
+      },
+      {
+        "event": "observation",
+        "id": "hover-world",
+        "step": 1,
+        "sequence": 20,
+        "capture_ns": 52460816112471,
+        "context_ns": 52460825669511,
+        "context": [
+          [
+            "windows",
+            "0x0060000e  0 HPLaptop Mindustry\n"
+          ],
+          [
+            "active_window",
+            6291470
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-single-tile-matched-01/unreadable/runtime/020.png",
+        "image_reused": false,
+        "image_prepare_ns": 134396650,
+        "image_ready_ns": 52461009197184,
+        "input_focus_before": 6291470,
+        "input_focus_after": 6291470,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 4.589975,
+        "wire_bytes": 5607,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 8,
+          "sample_started_ns": 52460807931306,
+          "sample_finished_ns": 52460809139681,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            368,
+            394
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52479766079405,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 8,
+          "sample_started_ns": 52461038094382,
+          "sample_finished_ns": 52461038678107,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            368,
+            394
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52479766079405,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emitted_ns": 52461038760776
+      },
+      {
+        "event": "observation",
+        "id": "hover-world",
+        "step": 1,
+        "sequence": 21,
+        "capture_ns": 52461087349004,
+        "context_ns": 52461100931972,
+        "context": [
+          [
+            "windows",
+            "0x0060000e  0 HPLaptop Mindustry\n"
+          ],
+          [
+            "active_window",
+            6291470
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-single-tile-matched-01/unreadable/runtime/021.png",
+        "image_reused": false,
+        "image_prepare_ns": 113753825,
+        "image_ready_ns": 52461268094737,
+        "input_focus_before": 6291470,
+        "input_focus_after": 6291470,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 19.198122,
+        "wire_bytes": 5608,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 8,
+          "sample_started_ns": 52461065638841,
+          "sample_finished_ns": 52461066070031,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            368,
+            394
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52479766079405,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 8,
+          "sample_started_ns": 52461284829350,
+          "sample_finished_ns": 52461285291678,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            368,
+            394
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52479766079405,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emitted_ns": 52461285385141
+      },
+      {
+        "event": "observation",
+        "id": "hover-world",
+        "step": 1,
+        "sequence": 22,
+        "capture_ns": 52461321886077,
+        "context_ns": 52461331663983,
+        "context": [
+          [
+            "windows",
+            "0x0060000e  0 HPLaptop Mindustry\n"
+          ],
+          [
+            "active_window",
+            6291470
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-single-tile-matched-01/unreadable/runtime/022.png",
+        "image_reused": false,
+        "image_prepare_ns": 106828015,
+        "image_ready_ns": 52461493078622,
+        "input_focus_before": 6291470,
+        "input_focus_after": 6291470,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 11.226258,
+        "wire_bytes": 5606,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 8,
+          "sample_started_ns": 52461307324318,
+          "sample_finished_ns": 52461308450430,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            368,
+            394
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52479766079405,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 8,
+          "sample_started_ns": 52461516408699,
+          "sample_finished_ns": 52461516972390,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            368,
+            394
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52479766079405,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emitted_ns": 52461517064930
+      },
+      {
+        "event": "settle_result",
+        "id": "hover-world",
+        "step": 1,
+        "reason": "timeout",
+        "samples": 6,
+        "sequence": 22,
+        "elapsed_ms": 1421.946061,
+        "quiet_ms": 100,
+        "timeout_ms": 1200,
+        "semantic_completion": "unknown",
+        "emitted_ns": 52461524571880
+      },
+      {
+        "event": "step_completed",
+        "id": "hover-world",
+        "step": 1,
+        "completed_ns": 52461538676477,
+        "emitted_ns": 52461538679488
+      },
+      {
+        "event": "step_started",
+        "id": "hover-world",
+        "step": 2,
+        "operation": "observe",
+        "issued_ns": 52461553299388,
+        "emitted_ns": 52461553302731
+      },
+      {
+        "event": "observation",
+        "id": "hover-world",
+        "step": 2,
+        "sequence": 23,
+        "capture_ns": 52461585580602,
+        "context_ns": 52461593830319,
+        "context": [
+          [
+            "windows",
+            "0x0060000e  0 HPLaptop Mindustry\n"
+          ],
+          [
+            "active_window",
+            6291470
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-single-tile-matched-01/unreadable/runtime/023.png",
+        "image_reused": false,
+        "image_prepare_ns": 93256263,
+        "image_ready_ns": 52461737518637,
+        "input_focus_before": 6291470,
+        "input_focus_after": 6291470,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291470,
+          "surface": 6291470,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 9.507696,
+        "wire_bytes": 5606,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 8,
+          "sample_started_ns": 52461573430034,
+          "sample_finished_ns": 52461573899713,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            368,
+            394
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52479766079405,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "0286dbadc5b74244af06653261d50b51",
+          "revision": 8,
+          "sample_started_ns": 52461755617813,
+          "sample_finished_ns": 52461756058752,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            368,
+            394
+          ],
+          "focus": 6291470,
+          "active_lease_deadline_ns": 52479766079405,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emitted_ns": 52461756134944
+      },
+      {
+        "event": "step_completed",
+        "id": "hover-world",
+        "step": 2,
+        "completed_ns": 52461759076064,
+        "emitted_ns": 52461759079118
+      },
+      {
+        "event": "terminal",
+        "id": "hover-world",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 3,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 52461775212267,
+          "valid_until_ns": 52479766079405
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "post_release_observation": null,
+        "terminal_ns": 52461775318411,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emitted_ns": 52461775323939
+      }
+    ],
+    "cursor": 67,
+    "returned_ns": 52461793685849,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "713ec1c09e574feea67aed9eaa3de48c",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "world_readiness": {
+    "status": "READY",
+    "binding": {
+      "focus": 6291470,
+      "surface": 6291470,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "receipts": [
+      {
+        "receipt_index": 1,
+        "point": [
+          368,
+          394
+        ],
+        "dwell_sequences": [
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "last_image": "023.png",
+        "evidence": {
+          "box": [
+            320,
+            340,
+            416,
+            450
+          ],
+          "size": [
+            96,
+            110
+          ],
+          "changed_pixels_each_frame": [
+            1972,
+            1972,
+            1972,
+            1972,
+            1972,
+            1972,
+            1972
+          ],
+          "stable_mask_sha256": "e7b9c105bfa0feb62c23665be69a6f8fb90bb3271b4ab96dd836d26e21eedcbc",
+          "last_pixels_sha256": "9cda29fb5d8aa72cadfbff65e47f9a6d8e06671402611117161ec19e7bed1cf5",
+          "distinct_frame_crops": 6,
+          "settle_reason": "timeout"
+        },
+        "authority": "animated observation evidence only; grants no input authority"
+      }
+    ],
+    "authority": "composed world-preview evidence only; grants no input authority"
+  },
+  "world_manifest": {
+    "size": [
+      640,
+      254
+    ],
+    "scale": 2,
+    "crop_size": [
+      96,
+      110
+    ],
+    "source_sequence": 23,
+    "source_sha256": "957c450af0fee0befdb2ffe579590a080eac752ec55ea242f4aa068a362b3265",
+    "source_pixels_sha256": "9cda29fb5d8aa72cadfbff65e47f9a6d8e06671402611117161ec19e7bed1cf5",
+    "presentation": "unreadable",
+    "presentation_sha256": "13579be83f9a54870300219d02c66abc0dad636cf4a7ee2e40cb9adaedc3643e",
+    "authority": "presentation only; grants no target or input authority"
+  },
+  "world_receipt_model": {
+    "typed": {
+      "op": "needs_decision",
+      "receipt_index": 1,
+      "point_space": "not_applicable",
+      "points": [],
+      "motion_model": "not_applicable",
+      "evidence_kind": "animated_placement_preview_context",
+      "relation": "not_applicable",
+      "reason": "unreadable_evidence"
+    },
+    "usage": {
+      "input_tokens": 8341,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 104,
+      "reasoning_output_tokens": 39
+    },
+    "runner_ms": 6449.7241,
+    "parent_elapsed_ms": 6793.47412
+  },
+  "world_decision": {
+    "status": "NEEDS_DECISION",
+    "reason": "unreadable_evidence",
+    "point": null
+  },
+  "placement_reply": null,
+  "resume_reply": null,
+  "pause_reply": null,
+  "all_button_down_admissions": [
+    {
+      "event": "pointer_admission",
+      "operation": "button_down",
+      "payload": 1,
+      "admitted_ns": 52449684872347,
+      "input_ack_ns": 52449685817291,
+      "valid_until_ns": 52469585942510,
+      "surface": 6291470,
+      "id": "select-conveyor",
+      "step": 0,
+      "emitted_ns": 52449686610943
+    }
+  ],
+  "driver_evaluation": {
+    "event": "independent_evaluation",
+    "status": "CONTRADICTED",
+    "contract_satisfied": false,
+    "wrong_target": true,
+    "collateral_tiles": [],
+    "source_preserved": true,
+    "core_preserved": true,
+    "copper_delta": 0,
+    "paused_idle_completion": true,
+    "guard_tiles": 112,
+    "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+    "emitted_ns": 52469725932935
+  },
+  "bridge_exit_code": 0,
+  "socket_exchanges": 8,
+  "model_usage_ledger": [
+    {
+      "stage": "model-palette-candidate",
+      "usage": {
+        "input_tokens": 9261,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 354,
+        "reasoning_output_tokens": 299
+      },
+      "runner_ms": 12109.9783,
+      "parent_elapsed_ms": 12434.413847
+    },
+    {
+      "stage": "model-palette-receipt",
+      "usage": {
+        "input_tokens": 8130,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 91,
+        "reasoning_output_tokens": 33
+      },
+      "runner_ms": 6310.1619,
+      "parent_elapsed_ms": 6655.239407
+    },
+    {
+      "stage": "model-world-candidate",
+      "usage": {
+        "input_tokens": 9293,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 138,
+        "reasoning_output_tokens": 84
+      },
+      "runner_ms": 7108.9104,
+      "parent_elapsed_ms": 7444.947753
+    },
+    {
+      "stage": "model-world-receipt",
+      "usage": {
+        "input_tokens": 8341,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 104,
+        "reasoning_output_tokens": 39
+      },
+      "runner_ms": 6449.7241,
+      "parent_elapsed_ms": 6793.47412
+    }
+  ],
+  "model_usage_total": {
+    "input_tokens": 35025,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 687,
+    "reasoning_output_tokens": 455
+  },
+  "condition": "unreadable",
+  "timing_ms": {
+    "world_hover_submit_to_return": 2053.307084,
+    "decision_start_to_world_receipt_ready": 33914.486119,
+    "decision_start_to_semantic_world_target": 41087.767417,
+    "fixed_build_wait": null,
+    "decision_start_to_independent_evaluation": 42143.81588
+  }
+}

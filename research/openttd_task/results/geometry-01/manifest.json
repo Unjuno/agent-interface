@@ -1,0 +1,30 @@
+{
+  "sources": {
+    "openttd_task/run_geometry_v1.py": "8b828bc74bd608a5b73abd3c23d9b20c8446773fbb972bb9f662428bcfa7cb25",
+    "openttd_task/plan_geometry_v1.json": "7bf68d6877b4492b8f2ee273e77b410bb4b636226fe890b9f15f9b989b04d9b6",
+    "openttd_task/setup_geometry_v1/common.nut": "af864fcbcc114ed35cf42e6e98795db1630da5d8172ac5cae4271189634e8bb9",
+    "openttd_task/setup_geometry_v1/info.nut": "fb7efbb7faf0bab56f61f3ce5fb6cdf8e8ddadfef4df70cfb3407c9e33a0a614",
+    "openttd_task/setup_geometry_v1/main.nut": "2df32fbea2ccedf6ee1f29d828b3b6699badefddc5a37f9484cde05a47bc4e28",
+    "openttd_task/observer_v2/common.nut": "11b4c0d3c5789adf59d87c9987b85ae4fe4fe8df7966f16566d16f39198f7223",
+    "openttd_task/observer_v2/info.nut": "eeeb72436a43c922172dc9ee436e737f040fdf9ebc1bfd65e1dac3a30f7c2b14",
+    "openttd_task/observer_v2/main.nut": "742e3d91a812bc3a2e8994c7771804d3f2c77b6d2c75f2e9745641f390e0ac27",
+    "observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+    "real_apps_v1/real_app_suite_v1.py": "22b4cc86af68a0ae866fe24735faaeefa40c0e1722238ab8c04723e1a564db24"
+  },
+  "plan": {
+    "study": "openttd-task-geometry-01",
+    "seed": 991002,
+    "setup": "select first flat buildable 3x2 rectangle whose full 7x6 guard and +6,+3 viewport offset fit the 64x64 map; signs A/C and X; no roads constructed",
+    "viewport": "before saving, scroll to tile x+6,y+3 rather than the target midpoint so target appears at a new screen position",
+    "save": "OpenTTD console save through XTEST keyboard, before model or task-controller use",
+    "restore": "two fresh private X11/game processes load the byte-pinned save with observer-only script",
+    "gates": [
+      "new target tile contract differs from [678,679,680]",
+      "restored target coordinates, guard, tiles and connections match setup",
+      "dynamic guarded scorer reports incomplete target, clear forbidden row and unchanged surroundings",
+      "source save bytes unchanged",
+      "all owned processes released"
+    ],
+    "scope": "task preparation/reset and geometry calibration; no model call, shared-runtime task control, speed or generalization claim"
+  }
+}

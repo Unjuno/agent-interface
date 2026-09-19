@@ -1,0 +1,66 @@
+{
+  "schema": "github_claim_unknown_readback_plan_v1",
+  "task": "COORD-GITHUB-CLAIM-UNKNOWN-READBACK-20260916-006",
+  "issue": 381,
+  "publication_base": "f6822835f46f9f8f015317b0ef63a6fab6eed367",
+  "recovery_put_budget_per_case": 0,
+  "later_full_get_budget_per_case": 1,
+  "elapsed_time_is_evidence": false,
+  "canonical_fields": ["owner_nonce", "task_id", "scope", "successor", "question_key"],
+  "cases": [
+    {
+      "name": "unavailable_then_self",
+      "register_path": "register_self.json",
+      "payload_path": "payload_self.json",
+      "candidate": {
+        "owner_nonce": "owner-A-006",
+        "task_id": "SYNTHETIC-CLAIM-A-006",
+        "scope": "research/synthetic/unknown-readback/a/**",
+        "successor": "368/373",
+        "question_key": "claim_unknown_readback"
+      },
+      "first_observation": {"status": "UNAVAILABLE"},
+      "expect_first": "UNKNOWN_READBACK",
+      "expect_final": "ALREADY_REGISTERED_SELF"
+    },
+    {
+      "name": "ambiguous_then_other_owner",
+      "register_path": "register_other.json",
+      "payload_path": "payload_other.json",
+      "candidate": {
+        "owner_nonce": "owner-A-006",
+        "task_id": "SYNTHETIC-CLAIM-A-006",
+        "scope": "research/synthetic/unknown-readback/a/**",
+        "successor": "368/373",
+        "question_key": "claim_unknown_readback"
+      },
+      "first_observation": {
+        "status": "AMBIGUOUS",
+        "projection": {"successor": "368/373", "question_key": "claim_unknown_readback"},
+        "omitted": ["owner_nonce", "task_id", "scope"]
+      },
+      "expect_first": "UNKNOWN_READBACK",
+      "expect_final": "CONFLICT_OTHER_OWNER"
+    },
+    {
+      "name": "ambiguous_then_same_owner_changed_content",
+      "register_path": "register_changed.json",
+      "payload_path": "payload_changed.json",
+      "candidate": {
+        "owner_nonce": "owner-C-006",
+        "task_id": "SYNTHETIC-CLAIM-C-NEW-006",
+        "scope": "research/synthetic/unknown-readback/c-new/**",
+        "successor": "368/373",
+        "question_key": "claim_unknown_readback"
+      },
+      "first_observation": {
+        "status": "AMBIGUOUS",
+        "projection": {"owner_nonce": "owner-C-006"},
+        "omitted": ["task_id", "scope", "successor", "question_key"]
+      },
+      "expect_first": "UNKNOWN_READBACK",
+      "expect_final": "CONFLICT_CONTENT_MISMATCH"
+    }
+  ],
+  "decision": "PASS_BOUNDED_UNKNOWN_READBACK_SCOPED only if all three initial commits succeed once, all first observations classify UNKNOWN_READBACK, recovery PUT count is zero, exactly one later full GET per case matches the frozen committed bytes, and final classifications match the frozen expectations."
+}

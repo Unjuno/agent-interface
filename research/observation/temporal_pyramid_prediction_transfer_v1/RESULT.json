@@ -1,0 +1,68 @@
+{
+  "audit_errors": [
+    "cv-jitter-not-exact"
+  ],
+  "audit_sha256": "6a253622aa632260c365f46d6c6068acc37ed376e108971fadc6ecb89afd8da0",
+  "decision": "HOLD_NO_PREDICTION_TRANSFER",
+  "formal_reruns": 0,
+  "formal_rows": 24,
+  "formal_sha256": "45d28ccd6cb1f43723c5e19b621698ab4d3f7e93e44da382ac0a7ee576337f95",
+  "issue": 766,
+  "postformal_mutations": "8/8 rejected",
+  "postformal_tests": "11/11 PASS",
+  "rows": [
+    {
+      "case": "static_regular",
+      "delta_px": 0.0,
+      "index_error_px": 0.0,
+      "target_age_error_px": 0.0
+    },
+    {
+      "case": "constant_velocity_regular",
+      "delta_px": 0.0,
+      "index_error_px": 1.8803518742060987e-09,
+      "target_age_error_px": 1.8803518742060987e-09
+    },
+    {
+      "case": "constant_velocity_jitter",
+      "delta_px": -1.3570996770795318e-08,
+      "index_error_px": 3.1476076856051804e-08,
+      "target_age_error_px": 1.7905080085256486e-08
+    },
+    {
+      "case": "constant_accel_jitter",
+      "delta_px": -0.6279970829608601,
+      "index_error_px": 5.129669359310526,
+      "target_age_error_px": 4.501672276349666
+    },
+    {
+      "case": "constant_accel_drop",
+      "delta_px": -0.529633799083399,
+     "index_error_px": 4.15639226382541,
+      "target_age_error_px": 3.626758464742011
+    },
+    {
+      "case": "smooth_turn_mixed",
+      "delta_px": -0.5196034292654588,
+      "index_error_px": 3.632224429303335,
+      "target_age_error_px": 3.1126210000378762
+    },
+    {
+      "case": "recent_accel_mixed",
+      "delta_px": -0.08375123483693869,
+      "index_error_px": 2.8167175459834652,
+      "target_age_error_px": 2.7329663111465266
+    },
+    {
+      "case": "abrupt_reversal",
+      "delta_px": -0.40772771214363956,
+      "index_error_px": 8.06594841542011,
+      "target_age_error_px": 7.65822070327647
+    }
+  ],
+  "schema": "temporal-pyramid-prediction-transfer-summary-v1",
+  "source_rehash": "10/10 exact",
+  "source_xz_sha256": "bd4f48f1bd1c3bd3e642e31a33c3f530af094d984689f87957d974fa0538b204",
+  "strict_improvements": 4,
+  "task": "TEMPORAL-PYRAMID-PREDICTION-TRANSFER-20260917-002"
+}

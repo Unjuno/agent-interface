@@ -1,0 +1,25 @@
+{
+  "schema":"owner-v-two-phase-observation-mechanism-prereg-v1",
+  "task_id":"container-map01-owner-v-two-phase-20260915-v1",
+  "runtime_source_base":"9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+  "fixture":"map01-threat-contact-v2",
+  "model_calls":0,
+  "target_authority_ms":50,
+  "conditions":{
+    "owner_deadline":"unchanged v13 publication; 2000 ms hold with lease valid_until clock+50 ms; expired terminal expected",
+    "two_phase":"ordinary 50 ms hold through retained two-phase candidate; completed terminal expected"
+  },
+  "pairs":[
+    {"pair":1,"seed":993601,"order":["owner_deadline","two_phase"]},
+    {"pair":2,"seed":993602,"order":["two_phase","owner_deadline"]},
+    {"pair":3,"seed":993603,"order":["owner_deadline","two_phase"]}
+  ],
+  "primary_metrics":["ack_to_verified_empty_ms","ack_to_first_full_artifact_ms"],
+  "decision":{
+    "OWNER_PARETO_TIMING_CANDIDATE_REQUIRES_SEMANTIC_REPAIR":"owner median ack_to_empty <= two_phase median ack_to_empty + 2 ms AND owner median ack_to_first_full_artifact <= two_phase median, all six releases/scorer gates pass, owner terminals expired and two_phase terminals completed",
+    "TWO_PHASE_TIMING_ADVANTAGE":"two_phase materially wins either timing dimension",
+    "HOLD":"hard gate failure or mixed timing result"
+  },
+  "retry":false,
+  "claim_scope":"zero-model real ViZDoom/X11 mechanism selection; no gameplay efficacy or production semantic claim"
+}

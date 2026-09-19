@@ -1,0 +1,22 @@
+{
+  "kind": "act",
+  "steps": [
+    {
+      "op": "pointer_move",
+      "x": 1008,
+      "y": 345
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 1000
+    }
+  ],
+  "rationale": "Trees, labels, and the cost popup obscure the attempted A-to-B segment. Move the pointer away to inspect the road before constructing the second direction.",
+  "intent": "inspect",
+  "expected_effect": "The placement cursor and cost popup clear so the A-to-B tiles can be checked for a continuous road.",
+  "checkpoint": {
+    "prior_turn": 5,
+    "status": "uncertain",
+    "evidence": "A cost popup is visible near B, but no continuous road surface can be confidently distinguished along all three A-to-B tiles beneath the trees and labels."
+  }
+}

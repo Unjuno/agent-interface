@@ -1,0 +1,132 @@
+{
+  "scope": "one archived actual activation; mutated-record refusal controls; no new live input",
+  "sources": {
+    "replans.json": "b44bf25c5e037c3fed895245192b038d4aa2a24ef6f495b82c197e8aadeee69e",
+    "probe_activation_handoff_v1.py": "110b455d6ccfcfed534973363756d698d5a1f63c0433dafd73e37b916351529f",
+    "activation_handoff_v1.py": "35e23a8a519fd3aa8ccf1670c455e91759eef9cf16d086c425f4b72e173bc13b"
+  },
+  "cases": [
+    {
+      "name": "archived_click_and_post_terminal_sample",
+      "result": {
+        "eligible": true,
+        "expected_sequence": 17,
+        "authority": "none",
+        "scope": "sampled post-activation context; not semantic or atomic",
+        "input_deadline": "caller must explicitly bound a new keyboard-only program"
+      }
+    },
+    {
+      "name": "expired",
+      "result": {
+        "eligible": false,
+        "reason": "activation_not_completed",
+        "authority": "none"
+      }
+    },
+    {
+      "name": "cancelled",
+      "result": {
+        "eligible": false,
+        "reason": "activation_not_completed",
+        "authority": "none"
+      }
+    },
+    {
+      "name": "needs_decision",
+      "result": {
+        "eligible": false,
+        "reason": "activation_not_completed",
+        "authority": "none"
+      }
+    },
+    {
+      "name": "failed",
+      "result": {
+        "eligible": false,
+        "reason": "activation_not_completed",
+        "authority": "none"
+      }
+    },
+    {
+      "name": "wrong_action",
+      "result": {
+        "eligible": false,
+        "reason": "activation_not_completed",
+        "authority": "none"
+      }
+    },
+    {
+      "name": "partial",
+      "result": {
+        "eligible": false,
+        "reason": "activation_partial_or_interrupted",
+        "authority": "none"
+      }
+    },
+    {
+      "name": "failed_release",
+      "result": {
+        "eligible": false,
+        "reason": "release_not_verified",
+        "authority": "none"
+      }
+    },
+    {
+      "name": "capture_before_release",
+      "result": {
+        "eligible": false,
+        "reason": "not_post_terminal_observation",
+        "authority": "none"
+      }
+    },
+    {
+      "name": "expired_sample",
+      "result": {
+        "eligible": false,
+        "reason": "observation_expired",
+        "authority": "none"
+      }
+    },
+    {
+      "name": "newer_clock_sequence",
+      "result": {
+        "eligible": false,
+        "reason": "sequence_mismatch",
+        "authority": "none"
+      }
+    },
+    {
+      "name": "changed_binding",
+      "result": {
+        "eligible": false,
+        "reason": "binding_changed_or_missing",
+        "authority": "none"
+      }
+    },
+    {
+      "name": "focus_changed_after_capture",
+      "result": {
+        "eligible": false,
+        "reason": "focus_or_context_changed",
+        "authority": "none"
+      }
+    },
+    {
+      "name": "held_input",
+      "result": {
+        "eligible": false,
+        "reason": "input_not_idle",
+        "authority": "none"
+      }
+    },
+    {
+      "name": "pointer_moved",
+      "result": {
+        "eligible": false,
+        "reason": "pointer_moved",
+        "authority": "none"
+      }
+    }
+  ]
+}

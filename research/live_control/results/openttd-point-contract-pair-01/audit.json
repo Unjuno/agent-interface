@@ -1,0 +1,100 @@
+{
+  "audit_passed": true,
+  "preregistered_sources_match": true,
+  "prior_known_target": {
+    "point": [
+      820,
+      51
+    ],
+    "box": [
+      812,
+      43,
+      16,
+      16
+    ],
+    "independent_success": true
+  },
+  "same_prompt_sha256": "42dd201b63b6895a67935d9377c0811a490d4a798854854d1d294469a338948f",
+  "model_configuration": {
+    "requested_model": "gpt-5.6-luna",
+    "requested_effort": "low",
+    "image_present": true,
+    "observed_model_identity": null,
+    "cost": null
+  },
+  "explicit_contract_semantics": {
+    "point_space_correct": "2/2",
+    "motion_model_correct": "2/2",
+    "semantic_point_grounding_correct": "0/2",
+    "model_points": {
+      "transient-target": [
+        650,
+        51
+      ],
+      "stable": [
+        432,
+        51
+      ]
+    }
+  },
+  "reported_input_tokens": {
+    "transient-target": 9297,
+    "stable": 9296
+  },
+  "cached_input_tokens": {
+    "transient-target": 0,
+    "stable": 0
+  },
+  "transient_target": {
+    "known_target_click_admissions": 2,
+    "model_region_unchanged": true,
+    "expected_refusal_observed": false,
+    "handle_created_for_wrong_icon": true,
+    "independent_success": false,
+    "durable_calls": 8,
+    "timing_ms": {
+      "model_call_parent": 14898.262411,
+      "model_return_to_mint_return": 1882.175074,
+      "mint_submit_to_return": 228.864119,
+      "program_submit_to_return": null,
+      "decision_start_to_evaluation_return": 17659.231439
+    }
+  },
+  "stable": {
+    "wrong_icon_handle_revalidated": true,
+    "binding_translation": [
+      21,
+      28
+    ],
+    "local_condition": "target_not_reached",
+    "target_changed_total": 12,
+    "guard_changed_total": 0,
+    "terminal_status": "needs_decision",
+    "release_verified": true,
+    "independent_success": false,
+    "durable_calls": 12,
+    "timing_ms": {
+      "model_call_parent": 14208.984783,
+      "model_return_to_mint_return": 223.199044,
+      "mint_submit_to_return": 223.19437,
+      "program_submit_to_return": 2998.236396,
+      "decision_start_to_evaluation_return": 18628.776261
+    }
+  },
+  "exact_frames": {
+    "transient-target": 28,
+    "stable": 34
+  },
+  "total_exact_frames": 62,
+  "promotion_gate": {
+    "model_authored_contract_2_of_2": false,
+    "model_input_range_at_most_128": true,
+    "stable_moved_handle_and_engine_success": false,
+    "transient_visual_change_refused": false,
+    "passed": false
+  },
+  "preregistered_decision": "HOLD_AND_PRESERVE_OPENTTD_POINT_PAIR",
+  "audit_decision": "RETAIN_CROSS_DOMAIN_GROUNDING_FAILURE",
+  "next_hypothesis": "add bounded hover-label evidence for dense icon-only controls",
+  "limits": "two fresh same-save seed991004 OpenTTD X11 sessions and two Luna-low image calls; one scripted guarded L plus selected-target negative; independent engine score; no unseen task, causal speed, cost, broad token or human-tempo claim"
+}

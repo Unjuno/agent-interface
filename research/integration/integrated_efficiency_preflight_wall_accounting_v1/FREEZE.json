@@ -1,0 +1,32 @@
+{
+  "schema": "integrated_efficiency_preflight_wall_freeze_v1",
+  "task": "INTEGRATED-EFFICIENCY-PREFLIGHT-WALL-ACCOUNTING-20260917-001",
+  "issue": 829,
+  "base": "40072ec1962afe9fe1a9f6ade79ce36a2e8cc93f",
+  "formal_invocations_before_freeze": 0,
+  "formal_output_present_before_freeze": false,
+  "source_git_blobs": {
+    "PLAN.md": "145266d4d88d0861331ddfa5eebf2304fd3e0fa3",
+    "audit.py": "4f19111a3c7ca2b1ad1771b1b2646d5d3c31e7a1",
+    "fixture.json": "ecb3fdfb5091b32c159c99b4f27384fa0499ce29",
+    "prereg.json": "3cbcec19104188f8377557e6acfb09d795a9d41f",
+    "run_formal.py": "cc9679876af03168feef9cbd9f9b11100539017c",
+    "test_mechanics.py": "e16877a0469dc032502d911659ce9f8bab41dbc7"
+  },
+  "retained_dependency_git_blobs": {
+    "integrated_efficiency_protocol_v1.py": "e8e5ee9e3abb66cb7673ac90ec9074820a16cac9",
+    "retained_audit.json": "e32fae1480f56e296a47ec7f4dd57ad21d09e35a",
+    "plain_preflight_result.json": "90daa6983502354065155c158519401a7250b2a1",
+    "ephemeral_preflight_result.json": "260b2c011bb5ea1de9fa5a7455d4879e2fbbdabd",
+    "persistent_preflight_result.json": "34bb6647b87b9ae8a53c2efbe7a56bb6d7836fde",
+    "plain_process.json": "c81d3df4c5dc3d90da6ba885106874aad731cbc0",
+    "ephemeral_process.json": "e4a5106ead58c96741ae3477a49684fadf55119c",
+    "persistent_process.json": "563655effe05d46a216359da56feffe3e3f63ca3"
+  },
+  "construction": {
+    "py_compile": "PASS",
+    "mechanics_sources": 7,
+    "mechanics": "PASS",
+    "formal_output": "ABSENT"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "task": "INKSCAPE-ATSPI-LISTENER-PATH-LIFETIME-20260916-026",
+  "publication_base": "2c89154561fdf387f63463ded1bed171a6ce8352",
+  "question": "With genuine Registry held fixed, is registering the same state-changed and selection-changed listener families used by the #415 construction sufficient to make labelled Inkscape object paths defunct or reincarnate across Layers/Objects close-reopen?",
+  "arms": ["no_listener", "listener"],
+  "schedule": ["no_listener", "listener", "no_listener", "listener", "no_listener", "listener"],
+  "n": 6,
+  "common": ["private explicit AT_SPI_BUS_ADDRESS", "genuine at-spi2-registryd", "unmodified Inkscape", "labelled A/B SVG", "same panel close/reopen path probes"],
+  "candidate_only": ["register object:state-changed", "register object:selection-changed"],
+  "decision": "REJECT_LISTENER_REGISTRATION_ALONE_AS_DEFUNCT_CAUSE_SCOPED iff all six finish with Registry owner, listener arm has exactly two successful registrations, both arms preserve readable A/B old paths while panel closed and rediscover identical A/B paths/names after reopen; otherwise HOLD",
+  "boundaries": ["No standard bus launcher/session org.a11y.Bus", "No selection-event identity scoring", "No document edit/save/effect/model/game call", "Does not falsify #415 construction"],
+  "no_retry": true
+}

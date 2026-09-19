@@ -1,0 +1,38 @@
+{
+  "sources": {
+    "audit_report_pages_self_use_v1.py": "88b661bab18bdce0a7dd453e829d5e8cab6391609180e37b7d3519abc2ed80d3",
+    "report_pages_v1.py": "c740ae5b779d4242c4a954e486398c5a66015501de8a108e0e01c29a11ffa331"
+  },
+  "attempts_sha256": "32d9ec0d177eda6fd0d71e1ae916134d74b587842088090cf979d78a0dd158c9",
+  "source_sha256": "7d7babfe423e7fff81c82bd8e1a655d1ecfa68159a5e0c5a1acdb56fa29f17df",
+  "exact_reconstruction": true,
+  "unique_pages": 6,
+  "cli_calls": 7,
+  "simulated_display_omissions": 1,
+  "wire_bytes_unique": 21056,
+  "wire_bytes_attempted": 25152,
+  "source_bytes": 17624,
+  "missing_page_rejected": true,
+  "task_input_calls": 0,
+  "observed_terminal": {
+    "event": "terminal",
+    "id": "build-road",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 3,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 57342437294,
+      "valid_until_ns": 86539452622
+    },
+    "terminal_ns": 57342476749,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emitted_ns": 57342480209
+  },
+  "scope": "Actual assistant inspection of historical text with deliberately suppressed display; not real transport loss, fresh task success, image delivery, model receipt or token measurement.",
+  "usability_issue": "Byte boundaries split numbers and JSON structures; exactness alone does not make fragments easy to review."
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "inkscape-atspi-panel-selection-interaction-prereg-v1",
+  "task": "INKSCAPE-ATSPI-PANEL-SELECTION-INTERACTION-20260917-033",
+  "predecessor": {
+    "task": "INKSCAPE-ATSPI-PANEL-SELECTION-INTERACTION-20260917-032",
+    "disposition": "STOPPED_ORCHESTRATION_PROTOCOL_VIOLATION",
+    "complete_rows_retained_separately": 5,
+    "pooling": false
+  },
+  "scientific_change_from_032": "none; task identity and orchestration bookkeeping only",
+  "question": "With full standard AT-SPI stack and actual A->B->none selection fixed, does one Layers/Objects close->reopen cycle after target path discovery interact with selection transitions to cause path defunct/reincarnation?",
+  "arms": ["selection_no_churn", "panel_churn_then_selection"],
+  "schedule": ["selection_no_churn", "panel_churn_then_selection", "panel_churn_then_selection", "selection_no_churn", "selection_no_churn", "panel_churn_then_selection"],
+  "fresh_sessions": 6,
+  "one_case_per_container_tool_invocation": true,
+  "candidate_only_change": "one panel close->reopen after target path discovery before identical A->B->none selection",
+  "decision": {
+    "reject_interaction": "all six cases pass; controls stable; candidates stable after close/reopen, every selection phase and final rediscovery",
+    "interaction_observed": "controls stable; all candidates stable through close/reopen but all fail path lifetime only after selection begins",
+    "churn_observed": "controls stable; all candidates fail during close/reopen before selection",
+    "otherwise": "HOLD"
+  },
+  "no_retry_replacement_tuning_after_first_outcome": true
+}

@@ -1,0 +1,47 @@
+{
+  "schema": "map01-terminal-score-agreement-posthoc-v1",
+  "base_commit": "810479785d1adb7e785962d3e16d6b1e4bd29f79",
+  "status": "POSTHOC_PASS_BOTH_DUPLICATE_RUNS_FORMAL_ALLOCATION_INVALIDATED",
+  "workflow_runs": [
+    {
+      "run_id": 34968759795,
+      "artifact_id": 10396069016,
+      "artifact_digest": "sha256:dabbc5630b99bde994c3595d09e3a414a3571960b755bc26cedcfd638829f375",
+      "retained_audit_pass": true,
+      "scorer_samples": 19,
+      "missed_sample_periods": 0,
+      "terminal_score_agreement": true,
+      "terminal_fields": {
+        "map_exit": false,
+        "episode_finished": false,
+        "player_dead": false,
+        "death_count": 0,
+        "kill_count": 0
+      }
+    },
+    {
+      "run_id": 34968781910,
+      "artifact_id": 10396068909,
+      "artifact_digest": "sha256:274623504341e6e3419c07b1f07368ca4e0e87078d72ebe507ce925ee670813f",
+      "retained_audit_pass": true,
+      "scorer_samples": 19,
+      "missed_sample_periods": 0,
+      "terminal_score_agreement": true,
+      "terminal_fields": {
+        "map_exit": false,
+        "episode_finished": false,
+        "player_dead": false,
+        "death_count": 0,
+        "kill_count": 0
+      }
+    }
+  ],
+  "audit_regressions": {"passed": 6, "failed": 0},
+  "decision": {
+    "measurement_mechanics": "PASS_REPLICATED_2_OF_2",
+    "terminal_score_agreement": "POSTHOC_PASS_2_OF_2",
+    "preregistered_one_run_allocation": "FAIL_DUPLICATE_EXECUTION",
+    "recovery_vs_coast_authority": "NOT_AUTHORIZED"
+  },
+  "note": "Both executions are retained. Neither may be selected as the sole preregistered first outcome. A new preregistered allocation must include the strict terminal-score audit and enforce single-execution semantics."
+}

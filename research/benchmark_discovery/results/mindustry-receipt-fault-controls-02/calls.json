@@ -1,0 +1,779 @@
+[
+  {
+    "request": {
+      "after": 0,
+      "events": [
+        "observation"
+      ],
+      "timeout": 30
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "ready",
+          "task": "Place exactly one north-facing Conveyor in the empty tile directly above the copper item source, then finish paused with no pending build plans.",
+          "emitted_ns": 55996315062628
+        },
+        {
+          "event": "observation",
+          "id": "initial",
+          "step": 0,
+          "sequence": 1,
+          "capture_ns": 55996355281411,
+          "context_ns": 55996363085241,
+          "context": [
+            [
+              "windows",
+              "0x0060000e  0 HPLaptop Mindustry\n"
+            ],
+            [
+              "active_window",
+              6291470
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-receipt-fault-controls-02/runtime/001.png",
+          "image_reused": false,
+          "image_prepare_ns": 105570029,
+          "image_ready_ns": 55996520377356,
+          "input_focus_before": 6291470,
+          "input_focus_after": 6291470,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291470,
+            "surface": 6291470,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291470,
+            "surface": 6291470,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291470,
+            "surface": 6291470,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 15.942559,
+          "wire_bytes": 487868,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "2994864005344495a417857b1a77ebbb",
+            "revision": 0,
+            "sample_started_ns": 55996337075617,
+            "sample_finished_ns": 55996337706511,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 6291470,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "2994864005344495a417857b1a77ebbb",
+            "revision": 0,
+            "sample_started_ns": 55996537138247,
+            "sample_finished_ns": 55996537481709,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 6291470,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emitted_ns": 55996537652797
+        }
+      ],
+      "cursor": 2,
+      "returned_ns": 55996543605662,
+      "authority": "none",
+      "acknowledgement": "not implied"
+    }
+  },
+  {
+    "request": {
+      "after": 2,
+      "events": [
+        "clock"
+      ],
+      "timeout": 3,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "d54f05fdb8e7450a9e51c0034b27ebd1"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "d54f05fdb8e7450a9e51c0034b27ebd1"
+          },
+          "emitted_ns": 55996553726243
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 55996562219461,
+          "sequence": 1,
+          "emitted_ns": 55996562225637
+        }
+      ],
+      "cursor": 4,
+      "returned_ns": 55996582193719,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "d54f05fdb8e7450a9e51c0034b27ebd1",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 4,
+      "events": [
+        "terminal"
+      ],
+      "timeout": 15,
+      "command": {
+        "op": "submit",
+        "id": "unbound",
+        "expected_sequence": 1,
+        "valid_until_ns": 56006562219461,
+        "steps": [
+          {
+            "op": "test_focus_unbound"
+          },
+          {
+            "op": "observe"
+          }
+        ]
+      },
+      "request_id": "171de3f08b934b63aa6738a37d0de299"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "expected_sequence": 1,
+            "id": "unbound",
+            "op": "submit",
+            "steps": [
+              {
+                "op": "test_focus_unbound"
+              },
+              {
+                "op": "observe"
+              }
+            ],
+            "transport_request_id": "171de3f08b934b63aa6738a37d0de299",
+            "valid_until_ns": 56006562219461
+          },
+          "emitted_ns": 55996595148104
+        },
+        {
+          "event": "accepted",
+          "id": "unbound",
+          "steps": 2,
+          "valid_until_ns": 56006562219461,
+          "accepted_ns": 55996598365400,
+          "emitted_ns": 55996598368408
+        },
+        {
+          "event": "step_started",
+          "id": "unbound",
+          "step": 0,
+          "operation": "test_focus_unbound",
+          "issued_ns": 55996610727152,
+          "emitted_ns": 55996610729612
+        },
+        {
+          "event": "test_focus_unbound",
+          "id": "unbound",
+          "step": 0,
+          "original_focus": 6291470,
+          "fault_focus": 4194304,
+          "after": {
+            "focus": 4194304,
+            "surface": null,
+            "geometry": null
+          },
+          "authority": "fault injection only; grants no input authority",
+          "emitted_ns": 55996632084603
+        },
+        {
+          "event": "step_completed",
+          "id": "unbound",
+          "step": 0,
+          "completed_ns": 55996643994557,
+          "emitted_ns": 55996643996139
+        },
+        {
+          "event": "step_started",
+          "id": "unbound",
+          "step": 1,
+          "operation": "observe",
+          "issued_ns": 55996661567010,
+          "emitted_ns": 55996661569123
+        },
+        {
+          "event": "observation",
+          "id": "unbound",
+          "step": 1,
+          "sequence": 2,
+          "capture_ns": 55996689608147,
+          "context_ns": 55996700813326,
+          "context": [
+            [
+              "windows",
+              "0x0060000e  0 HPLaptop Mindustry\n"
+            ],
+            [
+              "active_window",
+              0
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-receipt-fault-controls-02/runtime/002.png",
+          "image_reused": false,
+          "image_prepare_ns": 102896449,
+          "image_ready_ns": 55996851471172,
+          "input_focus_before": 4194304,
+          "input_focus_after": 4194304,
+          "focus_samples_match": true,
+          "pointer_binding": null,
+          "pointer_context_before": {
+            "focus": 4194304,
+            "surface": null,
+            "geometry": null
+          },
+          "pointer_context_after": {
+            "focus": 4194304,
+            "surface": null,
+            "geometry": null
+          },
+          "capture_ms": 11.775875,
+          "wire_bytes": 30392,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "2994864005344495a417857b1a77ebbb",
+            "revision": 0,
+            "sample_started_ns": 55996676733331,
+            "sample_finished_ns": 55996677231234,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 4194304,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "2994864005344495a417857b1a77ebbb",
+            "revision": 0,
+            "sample_started_ns": 55996863150258,
+            "sample_finished_ns": 55996863551750,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 4194304,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emitted_ns": 55996863792254
+        },
+        {
+          "event": "step_completed",
+          "id": "unbound",
+          "step": 1,
+          "completed_ns": 55996873930518,
+          "emitted_ns": 55996873934099
+        },
+        {
+          "event": "terminal",
+          "id": "unbound",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 2,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 55996886903804,
+            "valid_until_ns": null
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "post_release_observation": null,
+          "terminal_ns": 55996887007492,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emitted_ns": 55996887012797
+        }
+      ],
+      "cursor": 13,
+      "returned_ns": 55996904405343,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "171de3f08b934b63aa6738a37d0de299",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 13,
+      "events": [
+        "clock"
+      ],
+      "timeout": 3,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "880d28827da245e0aa45e4fad77df130"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "880d28827da245e0aa45e4fad77df130"
+          },
+          "emitted_ns": 55996937707829
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 55996942775673,
+          "sequence": 2,
+          "emitted_ns": 55996942782595
+        }
+      ],
+      "cursor": 15,
+      "returned_ns": 55996957678479,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "880d28827da245e0aa45e4fad77df130",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 15,
+      "events": [
+        "terminal"
+      ],
+      "timeout": 15,
+      "command": {
+        "op": "submit",
+        "id": "restore-unbound",
+        "expected_sequence": 2,
+        "valid_until_ns": 56006942775673,
+        "steps": [
+          {
+            "op": "test_focus_unbound_restore"
+          },
+          {
+            "op": "observe"
+          }
+        ]
+      },
+      "request_id": "bc75f02bdb9b46568256f095a4d12c80"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "expected_sequence": 2,
+            "id": "restore-unbound",
+            "op": "submit",
+            "steps": [
+              {
+                "op": "test_focus_unbound_restore"
+              },
+              {
+                "op": "observe"
+              }
+            ],
+            "transport_request_id": "bc75f02bdb9b46568256f095a4d12c80",
+            "valid_until_ns": 56006942775673
+          },
+          "emitted_ns": 55996970500318
+        },
+        {
+          "event": "accepted",
+          "id": "restore-unbound",
+          "steps": 2,
+          "valid_until_ns": 56006942775673,
+          "accepted_ns": 55996981311136,
+          "emitted_ns": 55996981314186
+        },
+        {
+          "event": "step_started",
+          "id": "restore-unbound",
+          "step": 0,
+          "operation": "test_focus_unbound_restore",
+          "issued_ns": 55997001035257,
+          "emitted_ns": 55997001038518
+        },
+        {
+          "event": "test_focus_unbound_restored",
+          "id": "restore-unbound",
+          "step": 0,
+          "restored": {
+            "focus": 6291470,
+            "surface": 6291470,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "authority": "fault cleanup only; grants no input authority",
+          "emitted_ns": 55997017941065
+        },
+        {
+          "event": "step_completed",
+          "id": "restore-unbound",
+          "step": 0,
+          "completed_ns": 55997033164695,
+          "emitted_ns": 55997033167260
+        },
+        {
+          "event": "step_started",
+          "id": "restore-unbound",
+          "step": 1,
+          "operation": "observe",
+          "issued_ns": 55997049091868,
+          "emitted_ns": 55997049094467
+        },
+        {
+          "event": "observation",
+          "id": "restore-unbound",
+          "step": 1,
+          "sequence": 3,
+          "capture_ns": 55997079508505,
+          "context_ns": 55997089175134,
+          "context": [
+            [
+              "windows",
+              "0x0060000e  0 HPLaptop Mindustry\n"
+            ],
+            [
+              "active_window",
+              6291470
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/results/mindustry-receipt-fault-controls-02/runtime/003.png",
+          "image_reused": false,
+          "image_prepare_ns": 99608390,
+          "image_ready_ns": 55997233689683,
+          "input_focus_before": 6291470,
+          "input_focus_after": 6291470,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291470,
+            "surface": 6291470,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291470,
+            "surface": 6291470,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291470,
+            "surface": 6291470,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 11.090582,
+          "wire_bytes": 30746,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "2994864005344495a417857b1a77ebbb",
+            "revision": 1,
+            "sample_started_ns": 55997065568015,
+            "sample_finished_ns": 55997066704748,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 6291470,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "2994864005344495a417857b1a77ebbb",
+            "revision": 1,
+            "sample_started_ns": 55997248268369,
+            "sample_finished_ns": 55997248839182,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 6291470,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emitted_ns": 55997249013275
+        },
+        {
+          "event": "step_completed",
+          "id": "restore-unbound",
+          "step": 1,
+          "completed_ns": 55997255267067,
+          "emitted_ns": 55997255270352
+        },
+        {
+          "event": "terminal",
+          "id": "restore-unbound",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 2,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 55997269309106,
+            "valid_until_ns": null
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "post_release_observation": null,
+          "terminal_ns": 55997269394539,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emitted_ns": 55997269399247
+        }
+      ],
+      "cursor": 24,
+      "returned_ns": 55997282470732,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "bc75f02bdb9b46568256f095a4d12c80",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 24,
+      "events": [
+        "clock"
+      ],
+      "timeout": 3,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "0b3ba5ef469b4614986224f2ca371adf"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "0b3ba5ef469b4614986224f2ca371adf"
+          },
+          "emitted_ns": 55997293607416
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 55997299734123,
+          "sequence": 3,
+          "emitted_ns": 55997299741563
+        }
+      ],
+      "cursor": 26,
+      "returned_ns": 55997315432436,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "0b3ba5ef469b4614986224f2ca371adf",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 26,
+      "events": [
+        "terminal"
+      ],
+      "timeout": 15,
+      "command": {
+        "op": "submit",
+        "id": "resize",
+        "expected_sequence": 3,
+        "valid_until_ns": 56007299734123,
+        "steps": [
+          {
+            "op": "test_surface_resize",
+            "width_delta": -64
+          },
+          {
+            "op": "observe"
+          }
+        ]
+      },
+      "request_id": "3c5395e15ec94d79b2623159ed5d73db"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "expected_sequence": 3,
+            "id": "resize",
+            "op": "submit",
+            "steps": [
+              {
+                "op": "test_surface_resize",
+                "width_delta": -64
+              },
+              {
+                "op": "observe"
+              }
+            ],
+            "transport_request_id": "3c5395e15ec94d79b2623159ed5d73db",
+            "valid_until_ns": 56007299734123
+          },
+          "emitted_ns": 55997329157078
+        },
+        {
+          "event": "accepted",
+          "id": "resize",
+          "steps": 2,
+          "valid_until_ns": 56007299734123,
+          "accepted_ns": 55997339330458,
+          "emitted_ns": 55997339332741
+        },
+        {
+          "event": "step_started",
+          "id": "resize",
+          "step": 0,
+          "operation": "test_surface_resize",
+          "issued_ns": 55997355068030,
+          "emitted_ns": 55997355070388
+        },
+        {
+          "event": "terminal",
+          "id": "resize",
+          "status": "failed",
+          "error": "RuntimeError('test surface did not resize')",
+          "steps_completed": 0,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 56000390831119,
+            "valid_until_ns": null
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "post_release_observation": null,
+          "terminal_ns": 56000390992091,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emitted_ns": 56000390999701
+        }
+      ],
+      "cursor": 30,
+      "returned_ns": 56000402148178,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "3c5395e15ec94d79b2623159ed5d73db",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    }
+  }
+]

@@ -1,0 +1,155 @@
+{
+  "audit_passed": true,
+  "preregistered": true,
+  "negative_control": {
+    "audit_passed": true,
+    "model_calls": 0,
+    "durable_input_calls": 0,
+    "runtime_exact_frames": 1,
+    "failure_mode": "visual_verify_false_positive",
+    "independent_checks": {
+      "target_owned_roads": false,
+      "bidirectional_connections": false,
+      "forbidden_row_clear": true,
+      "surrounding_road_owner_unchanged": true
+    },
+    "save_sha256": "7836587d28056c534dd3ce2968fc89d3e9b47e28400afc90234954a470f8e97c",
+    "task": "Build a straight road connecting only the three ground tiles from A to C. Keep the adjacent row marked X free of roads and preserve surrounding roads/ownership. Use visual GUI controls.",
+    "supervisor_wall_ms": 4673.981
+  },
+  "fixed_astra": {
+    "arm": "fixed-astra",
+    "audit_passed": true,
+    "hard_success": true,
+    "failure_mode": null,
+    "model_turns": [
+      {
+        "turn": 1,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 15780,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 237,
+          "reasoning_output_tokens": 127
+        },
+        "runner_wall_ms": 16160.4689
+      },
+      {
+        "turn": 2,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 16723,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 60,
+          "reasoning_output_tokens": 0
+        },
+        "runner_wall_ms": 7119.7345
+      },
+      {
+        "turn": 3,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 16075,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 144,
+          "reasoning_output_tokens": 51
+        },
+        "runner_wall_ms": 10299.3419
+      },
+      {
+        "turn": 4,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 16559,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 412,
+          "reasoning_output_tokens": 302
+        },
+        "runner_wall_ms": 19513.3364
+      },
+      {
+        "turn": 5,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 16194,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 182,
+          "reasoning_output_tokens": 98
+        },
+        "runner_wall_ms": 12408.427
+      },
+      {
+        "turn": 6,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "verify",
+        "usage": {
+          "input_tokens": 16398,
+          "cached_input_tokens": 13056,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 189,
+          "reasoning_output_tokens": 138
+        },
+        "runner_wall_ms": 13291.0677
+      }
+    ],
+    "model_wait_total_ms": 79681.4686,
+    "proposal_to_useful_feedback_ms": [
+      3769.4168,
+      792.6173,
+      2643.4634,
+      1608.1566,
+      1791.1871
+    ],
+    "proposal_to_useful_feedback_total_ms": 10604.8412,
+    "initial_observation_to_semantic_completion_ms": 92376.9389,
+    "initial_to_completion_uncertainty_ms": 50.0,
+    "input_tokens_total": 97729,
+    "cached_input_tokens_total": 13056,
+    "output_tokens_total": 1224,
+    "reasoning_output_tokens_total": 716,
+    "runtime_exact_frames": 28,
+    "contact_sheets": 3,
+    "durable_calls": 20,
+    "append_records": 41,
+    "save_sha256": "7836587d28056c534dd3ce2968fc89d3e9b47e28400afc90234954a470f8e97c",
+    "task": "Build a straight road connecting only the three ground tiles from A to C. Keep the adjacent row marked X free of roads and preserve surrounding roads/ownership. Use visual GUI controls.",
+    "initial_geometry": [
+      129,
+      40,
+      1024,
+      720
+    ],
+    "missing_endpoints": [
+      "os_injection",
+      "provider_first_token",
+      "provider_request_received",
+      "runtime_receipt"
+    ],
+    "independent_checks": {
+      "target_owned_roads": true,
+      "bidirectional_connections": true,
+      "forbidden_row_clear": true,
+      "surrounding_road_owner_unchanged": true
+    },
+    "changed_surrounding_tiles": []
+  },
+  "scope": "fresh v3 negative finish integration and one fresh fixed-Astra episode; no population or human-speed claim",
+  "audit_sha256": "450fee2874bd8329c251883a2c8d44c60b5299c717918d23514fdbbe2fd59ca6",
+  "shared_audit_dependency_sha256": "658d17953531750d52f49847a31e7d960f9628a8ca8cfe77ec83a1f6fe6c30b4"
+}

@@ -1,0 +1,65 @@
+{
+  "all_rejected": true,
+  "cases": [
+    {
+      "audit_passed": false,
+      "errors": [
+        "candidate_stale_execute"
+      ],
+      "name": "candidate-stale",
+      "trace_errors": []
+    },
+    {
+      "audit_passed": false,
+      "errors": [
+        "candidate_stable_model_calls"
+      ],
+      "name": "stable-repair",
+      "trace_errors": []
+    },
+    {
+      "audit_passed": false,
+      "errors": [
+        "comparator_stale_execute"
+      ],
+      "name": "comparator-stale-count",
+      "trace_errors": []
+    },
+    {
+      "audit_passed": false,
+      "errors": [
+        "trace_log",
+        "trace_log_sha256"
+      ],
+      "name": "missing-trace-row",
+      "trace_errors": [
+        "coverage",
+        "rows"
+      ]
+    },
+    {
+      "audit_passed": false,
+      "errors": [
+        "trace_log",
+        "trace_log_sha256"
+      ],
+      "name": "trace-repair",
+      "trace_errors": [
+        "unified_generation:0010011010010"
+      ]
+    },
+    {
+      "audit_passed": false,
+      "errors": [
+        "trace_log",
+        "trace_log_sha256"
+      ],
+      "name": "duplicate-trace",
+      "trace_errors": [
+        "duplicate:0111110011111",
+        "coverage"
+      ]
+    }
+  ],
+  "schema": "agent-interface/persistent-caller-binding-generation-mutation-controls-v1"
+}

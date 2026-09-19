@@ -1,0 +1,70 @@
+{
+  "construction_excluded": {
+    "cases": 2,
+    "fresh": "XTERM current",
+    "neutral": true,
+    "replay": "INKSCAPE stale while actual XTERM",
+    "svg_unchanged": true
+  },
+  "decision": "PASS_REALAPP_OBSERVE_ONLY_FOCUS_RECOVERY_SCOPED iff Issue #855 gates and frozen auditor pass",
+  "formal_cases": 8,
+  "formal_executed": 0,
+  "formal_reruns": 0,
+  "issue": 855,
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "publication_base": "7f8376c8e74a581bd884416b5313ce4cda756b68",
+  "python": "3.13.5",
+  "source_archive": {
+    "bytes": 4548,
+    "git_blob": "409411ab3aec76b96b8259f345f0975ccc427bd6",
+    "members": [
+      "audit.py",
+      "environment.json",
+      "prereg.json",
+      "run_block.py",
+      "run_case.py",
+      "schedule.json",
+      "source_hashes.json",
+      "test.svg"
+    ],
+    "sha256": "379464c537dce8daf6ef366349acd7fe496a908d262442e98b5c8c0c188eb91a"
+  },
+  "source_files": {
+    "audit.py": {
+      "bytes": 2063,
+      "git_blob": "7aa415f189ebb47882a773752d905a41c13a5ddd",
+      "sha256": "1f13bddfbb5708b0ddc7d9f2d26fe05e49293a2b25dd1d2cb97bafaf6ede4960"
+    },
+    "environment.json": {
+      "bytes": 188,
+      "git_blob": "2a5215e812200be0b0c59a9105c8d42c9c679ce1",
+      "sha256": "3319f75a48e9ca45ce1b545e587487ff7e49445aa66492c2aa31b0479c30ca56"
+    },
+    "prereg.json": {
+      "bytes": 355,
+      "git_blob": "d67c3d9337cd0d551ba38f69815d13f68f88ba7e",
+      "sha256": "c251580a3a71fe517310142c05101cfe87a8b41039c2ea1648eb51957204d58d"
+    },
+    "run_block.py": {
+      "bytes": 802,
+      "git_blob": "f034466d7ebb98473a1c56be7c3f04e2be9eddc6",
+      "sha256": "b0cbb8896f1e01a82be5008f2e52ebd553373a6e821d23a3ba59f56acc0a2b1a"
+    },
+    "run_case.py": {
+      "bytes": 6596,
+      "git_blob": "20852d1a77109e00e478124d34b47ff19a74f354",
+      "sha256": "96d4bc95b5057b181c3a86a814eff199e95bafedddce5befd4c17ffdc32e34fb"
+    },
+    "schedule.json": {
+      "bytes": 545,
+      "git_blob": "4aea1cbb4a0306df921c577e67645f5a25d8462d",
+      "sha256": "e7a50206782cb19c0c241df862aac272c4678db0365ef1bc145fdc9124a76ab8"
+    },
+    "test.svg": {
+      "bytes": 211,
+      "git_blob": "13bb0323d85fd0dde005a9c3a766655b2a14c7f7",
+      "sha256": "3b0d55bedf7de69891dffce438adc338e145ce88b185736d2d7b5311a01ee4df"
+    }
+  },
+  "task": "OBSERVE-ONLY-FOCUS-RECOVERY-INKSCAPE-TRANSFER-20260917-001"
+}

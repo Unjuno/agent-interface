@@ -1,0 +1,980 @@
+{
+  "claim": "pre-formal overlapping inference feasibility",
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "iterations": 20,
+  "decisions": [
+    {
+      "iteration": 0,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/001.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-0/temporal-sheet.png",
+      "model_image_sha256": "2b7df3836b8843f05db1804c39ec76dd7d5e87a32cbb9acd9bdb5c1711c5cd1e",
+      "action": {
+        "assessment": "Advance toward the corridor and try the visible control/door.",
+        "steps": [
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1800
+          },
+          {
+            "keys": [
+              "e"
+            ],
+            "duration_ms": 300
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9001,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 121,
+        "reasoning_output_tokens": 66
+      },
+      "model_ns": 7445863626,
+      "model_session_id": "01a0a086-a8ce-7ac2-bca4-9dc67fa99c47",
+      "controller_model_started_ns": 5022169410945,
+      "controller_model_ended_ns": 5029721269521,
+      "model_image_to_plan_accept_ns": 7959302384,
+      "fresh_observation_to_plan_accept_ns": 327884730,
+      "fresh_sequence_at_plan": 25,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 1,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/043.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-1/temporal-sheet.png",
+      "model_image_sha256": "36224cd4b458daa8dd6342ba005a33a009ed5f2da4deebc2ca04264c18610c22",
+      "action": {
+        "assessment": "Continue forward through the newly opened room, using the central passage.",
+        "steps": [
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 2200
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9592,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 92,
+        "reasoning_output_tokens": 46
+      },
+      "model_ns": 6577962189,
+      "model_session_id": "01a0a086-a8ce-7ac2-bca4-9dc67fa99c47",
+      "controller_model_started_ns": 5032663046491,
+      "controller_model_ended_ns": 5039335467655,
+      "model_image_to_plan_accept_ns": 7194542129,
+      "fresh_observation_to_plan_accept_ns": 85826906,
+      "fresh_sequence_at_plan": 66,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 2,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/085.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-2/temporal-sheet.png",
+      "model_image_sha256": "8589a85c596471212545e40c58ae4ba2bf18d18a4a832b0b51ba8c77b92a979a",
+      "action": {
+        "assessment": "The view is pressed against a wall; turn left substantially, then retreat into the room and advance along the corrected heading.",
+        "steps": [
+          {
+            "keys": [
+              "Left"
+            ],
+            "duration_ms": 700
+          },
+          {
+            "keys": [
+              "Down"
+            ],
+            "duration_ms": 700
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1500
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10154,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 125,
+        "reasoning_output_tokens": 48
+      },
+      "model_ns": 8423619269,
+      "model_session_id": "01a0a086-a8ce-7ac2-bca4-9dc67fa99c47",
+      "controller_model_started_ns": 5042161647892,
+      "controller_model_ended_ns": 5050707604191,
+      "model_image_to_plan_accept_ns": 8539630923,
+      "fresh_observation_to_plan_accept_ns": 313774470,
+      "fresh_sequence_at_plan": 114,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 3,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/141.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-3/temporal-sheet.png",
+      "model_image_sha256": "9ed63f003d21664a30429e40f7207c113299c86997582c24bd52c3a85eedcb7e",
+      "action": {
+        "assessment": "Still against a wall; turn around and back away before proceeding.",
+        "steps": [
+          {
+            "keys": [
+              "Right"
+            ],
+            "duration_ms": 1400
+          },
+          {
+            "keys": [
+              "Down"
+            ],
+            "duration_ms": 1000
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1600
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10749,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 121,
+        "reasoning_output_tokens": 53
+      },
+      "model_ns": 8219302066,
+      "model_session_id": "01a0a086-a8ce-7ac2-bca4-9dc67fa99c47",
+      "controller_model_started_ns": 5054673814107,
+      "controller_model_ended_ns": 5062994850878,
+      "model_image_to_plan_accept_ns": 8803694867,
+      "fresh_observation_to_plan_accept_ns": 103902592,
+      "fresh_sequence_at_plan": 170,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 4,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/203.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-4/temporal-sheet.png",
+      "model_image_sha256": "0cb9efd53583e03ddabb765af7fed06d57c08daa5af72dbdaefdfd04a6a9df72",
+      "action": {
+        "assessment": "Turn left away from the repeated wall, then advance through the room.",
+        "steps": [
+          {
+            "keys": [
+              "Left"
+            ],
+            "duration_ms": 700
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 2200
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9001,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 178,
+        "reasoning_output_tokens": 121
+      },
+      "model_ns": 8181108870,
+      "model_session_id": "01a0a087-59d2-7100-83c5-342de9093a7d",
+      "controller_model_started_ns": 5067836262754,
+      "controller_model_ended_ns": 5076155906986,
+      "model_image_to_plan_accept_ns": 8261285941,
+      "fresh_observation_to_plan_accept_ns": 317407881,
+      "fresh_sequence_at_plan": 231,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 5,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/256.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-5/temporal-sheet.png",
+      "model_image_sha256": "3a1cffc8ba3f14ae0904460803caa1c38193b5dcbe0abc7e9bd3b01fcdaabd76",
+      "action": {
+        "assessment": "The view is still confined by walls; reverse the turn direction and move forward cautiously.",
+        "steps": [
+          {
+            "keys": [
+              "Right"
+            ],
+            "duration_ms": 1000
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1600
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9649,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 158,
+        "reasoning_output_tokens": 97
+      },
+      "model_ns": 9027573622,
+      "model_session_id": "01a0a087-59d2-7100-83c5-342de9093a7d",
+      "controller_model_started_ns": 5079762289733,
+      "controller_model_ended_ns": 5088897008856,
+      "model_image_to_plan_accept_ns": 9483138953,
+      "fresh_observation_to_plan_accept_ns": 198624353,
+      "fresh_sequence_at_plan": 287,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 6,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/310.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-6/temporal-sheet.png",
+      "model_image_sha256": "77c2cbdf5d683ec04e1ab5cda866c1fda146568d6f0c92efc5d6e9a9e7fad6ca",
+      "action": {
+        "assessment": "A bright door is now directly ahead; operate it and advance through.",
+        "steps": [
+          {
+            "keys": [
+              "e"
+            ],
+            "duration_ms": 300
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 2000
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10277,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 105,
+        "reasoning_output_tokens": 48
+      },
+      "model_ns": 7439176082,
+      "model_session_id": "01a0a087-59d2-7100-83c5-342de9093a7d",
+      "controller_model_started_ns": 5092319480910,
+      "controller_model_ended_ns": 5099877700746,
+      "model_image_to_plan_accept_ns": 7795829329,
+      "fresh_observation_to_plan_accept_ns": 108442639,
+      "fresh_sequence_at_plan": 336,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 7,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/357.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-7/temporal-sheet.png",
+      "model_image_sha256": "69500cad1d1f57b7ce2278758ce3b8196e5ee833ef6763057e8d23c9a3347dd5",
+      "action": {
+        "assessment": "The door remains closed and the view repeats; re-center toward it, activate it, then advance.",
+        "steps": [
+          {
+            "keys": [
+              "Left"
+            ],
+            "duration_ms": 300
+          },
+          {
+            "keys": [
+              "e"
+            ],
+            "duration_ms": 500
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1800
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10852,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 226,
+        "reasoning_output_tokens": 153
+      },
+      "model_ns": 9066466075,
+      "model_session_id": "01a0a087-59d2-7100-83c5-342de9093a7d",
+      "controller_model_started_ns": 5102818384123,
+      "controller_model_ended_ns": 5111989935265,
+      "model_image_to_plan_accept_ns": 9087579063,
+      "fresh_observation_to_plan_accept_ns": 300632092,
+      "fresh_sequence_at_plan": 388,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 8,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/413.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-8/temporal-sheet.png",
+      "model_image_sha256": "e9794b857ea6f720210c1b40a94382db1820c491278454781369bc78adae0094",
+      "action": {
+        "assessment": "Turn away from the repeated wall, then advance and try nearby interaction.",
+        "steps": [
+          {
+            "keys": [
+              "Left"
+            ],
+            "duration_ms": 900
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1800
+          },
+          {
+            "keys": [
+              "e"
+            ],
+            "duration_ms": 200
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1800
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9001,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 258,
+        "reasoning_output_tokens": 177
+      },
+      "model_ns": 9625547254,
+      "model_session_id": "01a0a088-138c-7a60-8966-50763e1c0735",
+      "controller_model_started_ns": 5115419444334,
+      "controller_model_ended_ns": 5125153372885,
+      "model_image_to_plan_accept_ns": 9986895122,
+      "fresh_observation_to_plan_accept_ns": 140073854,
+      "fresh_sequence_at_plan": 446,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 9,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/486.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-9/temporal-sheet.png",
+      "model_image_sha256": "2cf6fb6f69e1e30c1b4a16a9fb991e1c91374ce90efbce580702b82883b8bb6d",
+      "action": {
+        "assessment": "The view changed but remains obstructed; turn right and push forward, using any nearby door or switch.",
+        "steps": [
+          {
+            "keys": [
+              "Right"
+            ],
+            "duration_ms": 900
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 2200
+          },
+          {
+            "keys": [
+              "e"
+            ],
+            "duration_ms": 200
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1500
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9729,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 148,
+        "reasoning_output_tokens": 60
+      },
+      "model_ns": 7470267802,
+      "model_session_id": "01a0a088-138c-7a60-8966-50763e1c0735",
+      "controller_model_started_ns": 5130933429301,
+      "controller_model_ended_ns": 5138580311105,
+      "model_image_to_plan_accept_ns": 8055744014,
+      "fresh_observation_to_plan_accept_ns": 110621634,
+      "fresh_sequence_at_plan": 511,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 10,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/553.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-10/temporal-sheet.png",
+      "model_image_sha256": "99b081832116f3e91ffe117642b4cbd72e9567a93c65480d35b369e59bca0437",
+      "action": {
+        "assessment": "Take damage indicates nearby threat; turn sharply left, fire while retreating/advancing out of the dark obstruction.",
+        "steps": [
+          {
+            "keys": [
+              "Left",
+              "space"
+            ],
+            "duration_ms": 900
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L",
+              "space"
+            ],
+            "duration_ms": 2200
+          },
+          {
+            "keys": [
+              "e"
+            ],
+            "duration_ms": 200
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L",
+              "space"
+            ],
+            "duration_ms": 1400
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10347,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 158,
+        "reasoning_output_tokens": 62
+      },
+      "model_ns": 7835438775,
+      "model_session_id": "01a0a088-138c-7a60-8966-50763e1c0735",
+      "controller_model_started_ns": 5144618844566,
+      "controller_model_ended_ns": 5152554006078,
+      "model_image_to_plan_accept_ns": 8155472511,
+      "fresh_observation_to_plan_accept_ns": 231613192,
+      "fresh_sequence_at_plan": 580,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 11,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/620.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-11/temporal-sheet.png",
+      "model_image_sha256": "f1dd50c5340bcc9f250444c8dbf4791210bef65ec1f234ff6129699b603f4234",
+      "action": {
+        "assessment": "An open room is visible; advance through it while firing defensively and operate any encountered door or switch.",
+        "steps": [
+          {
+            "keys": [
+              "Up",
+              "Shift_L",
+              "space"
+            ],
+            "duration_ms": 2500
+          },
+          {
+            "keys": [
+              "e"
+            ],
+            "duration_ms": 250
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L",
+              "space"
+            ],
+            "duration_ms": 1800
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10975,
+        "cached_input_tokens": 10112,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 136,
+        "reasoning_output_tokens": 54
+      },
+      "model_ns": 7619164816,
+      "model_session_id": "01a0a088-138c-7a60-8966-50763e1c0735",
+      "controller_model_started_ns": 5158336317878,
+      "controller_model_ended_ns": 5166030962311,
+      "model_image_to_plan_accept_ns": 8098367865,
+      "fresh_observation_to_plan_accept_ns": 370294189,
+      "fresh_sequence_at_plan": 654,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 12,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/692.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-12/temporal-sheet.png",
+      "model_image_sha256": "090379747fcc3884d6908d7ba5b22e32d1706b0a0748166a87595f8917b63823",
+      "action": {
+        "assessment": "Newest view is pressed against a wall; retreat and turn substantially before advancing.",
+        "steps": [
+          {
+            "keys": [
+              "Down"
+            ],
+            "duration_ms": 600
+          },
+          {
+            "keys": [
+              "Right"
+            ],
+            "duration_ms": 800
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 2200
+          },
+          {
+            "keys": [
+              "e"
+            ],
+            "duration_ms": 200
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9001,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 203,
+        "reasoning_output_tokens": 125
+      },
+      "model_ns": 8488601841,
+      "model_session_id": "01a0a088-ef01-7631-89e3-a076801f4775",
+      "controller_model_started_ns": 5171579725171,
+      "controller_model_ended_ns": 5180133812642,
+      "model_image_to_plan_accept_ns": 8958967942,
+      "fresh_observation_to_plan_accept_ns": 134633985,
+      "fresh_sequence_at_plan": 732,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 13,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/764.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-13/temporal-sheet.png",
+      "model_image_sha256": "b764b1f0cbb628477cf2de8f442678502c733a5ccf7b3f60f1b2fa1d31b8cb02",
+      "action": {
+        "assessment": "The view remains against a wall and health is falling; turn away and retreat before making a short run.",
+        "steps": [
+          {
+            "keys": [
+              "Left"
+            ],
+            "duration_ms": 1000
+          },
+          {
+            "keys": [
+              "Down"
+            ],
+            "duration_ms": 700
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1500
+          },
+          {
+            "keys": [
+              "e"
+            ],
+            "duration_ms": 200
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9674,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 145,
+        "reasoning_output_tokens": 60
+      },
+      "model_ns": 8282725522,
+      "model_session_id": "01a0a088-ef01-7631-89e3-a076801f4775",
+      "controller_model_started_ns": 5185003481392,
+      "controller_model_ended_ns": 5193393901404,
+      "model_image_to_plan_accept_ns": 8059268368,
+      "fresh_observation_to_plan_accept_ns": 341750770,
+      "fresh_sequence_at_plan": 794,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 14,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/825.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-14/temporal-sheet.png",
+      "model_image_sha256": "80d3be626fcbd4851cdc47261ebb5b4624bf3017215af384f286ae2f76893e88",
+      "action": {
+        "assessment": "The view has shifted into a narrow passage but remains constrained; turn decisively and advance, trying the nearby door or switch.",
+        "steps": [
+          {
+            "keys": [
+              "Left"
+            ],
+            "duration_ms": 900
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1800
+          },
+          {
+            "keys": [
+              "e"
+            ],
+            "duration_ms": 250
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10289,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 139,
+        "reasoning_output_tokens": 61
+      },
+      "model_ns": 7523450578,
+      "model_session_id": "01a0a088-ef01-7631-89e3-a076801f4775",
+      "controller_model_started_ns": 5198021371947,
+      "controller_model_ended_ns": 5205660951004,
+      "model_image_to_plan_accept_ns": 8033639796,
+      "fresh_observation_to_plan_accept_ns": 243880168,
+      "fresh_sequence_at_plan": 850,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 15,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/876.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-15/temporal-sheet.png",
+      "model_image_sha256": "c4ab9d67939b7b6a5caf7f13b3d4dcb48317903edbb62e3d5e462b8560662e6b",
+      "action": {
+        "assessment": "An open room with a blue-lit doorway is visible; move toward it and activate it, avoiding combat at critical health.",
+        "steps": [
+          {
+            "keys": [
+              "Right"
+            ],
+            "duration_ms": 500
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1400
+          },
+          {
+            "keys": [
+              "e"
+            ],
+            "duration_ms": 300
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10898,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 178,
+        "reasoning_output_tokens": 101
+      },
+      "model_ns": 8417685112,
+      "model_session_id": "01a0a088-ef01-7631-89e3-a076801f4775",
+      "controller_model_started_ns": 5209627328382,
+      "controller_model_ended_ns": 5218174804748,
+      "model_image_to_plan_accept_ns": 8981886143,
+      "fresh_observation_to_plan_accept_ns": 291867282,
+      "fresh_sequence_at_plan": 903,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 16,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/925.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-16/temporal-sheet.png",
+      "model_image_sha256": "4609fe636984c089e4bf801a2999d04ed202f8492d9abd75aa3d9769b69cc2bd",
+      "action": {
+        "assessment": "Turn away from the repeated wall, then advance toward the open corridor and try the nearby door/switch.",
+        "steps": [
+          {
+            "keys": [
+              "Left"
+            ],
+            "duration_ms": 700
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1400
+          },
+          {
+            "keys": [
+              "e"
+            ],
+            "duration_ms": 250
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1200
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9001,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 277,
+        "reasoning_output_tokens": 189
+      },
+      "model_ns": 11379978531,
+      "model_session_id": "01a0a089-b159-75d1-a848-55f949575e80",
+      "controller_model_started_ns": 5221349294189,
+      "controller_model_ended_ns": 5232833461649,
+      "model_image_to_plan_accept_ns": 11728864379,
+      "fresh_observation_to_plan_accept_ns": 1713706772,
+      "fresh_sequence_at_plan": 959,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 17,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/992.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-17/temporal-sheet.png",
+      "model_image_sha256": "593ae93e61688197966ac3832a4e3848dec59901c828f4677a4ce73f11874d92",
+      "action": {
+        "assessment": "The view is stuck against a wall again; reverse direction decisively and retreat toward the previously visible corridor.",
+        "steps": [
+          {
+            "keys": [
+              "Right"
+            ],
+            "duration_ms": 1200
+          },
+          {
+            "keys": [
+              "Down",
+              "Shift_L"
+            ],
+            "duration_ms": 1400
+          },
+          {
+            "keys": [
+              "Left"
+            ],
+            "duration_ms": 500
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1200
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9748,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 202,
+        "reasoning_output_tokens": 113
+      },
+      "model_ns": 8701797077,
+      "model_session_id": "01a0a089-b159-75d1-a848-55f949575e80",
+      "controller_model_started_ns": 5237410771665,
+      "controller_model_ended_ns": 5246241149450,
+      "model_image_to_plan_accept_ns": 9249031310,
+      "fresh_observation_to_plan_accept_ns": 280153477,
+      "fresh_sequence_at_plan": 1022,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 18,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/1059.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-18/temporal-sheet.png",
+      "model_image_sha256": "2fc3f3cd8729cb2672f8550617e210e50ecd9bc2869c1e494a0ac007d9763599",
+      "action": {
+        "assessment": "Escape the wall/doorframe by turning left, advance through the opening, and operate the nearby blue door or switch while firing defensively.",
+        "steps": [
+          {
+            "keys": [
+              "Left"
+            ],
+            "duration_ms": 900
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L",
+              "space"
+            ],
+            "duration_ms": 1200
+          },
+          {
+            "keys": [
+              "e"
+            ],
+            "duration_ms": 300
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1000
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10420,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 228,
+        "reasoning_output_tokens": 131
+      },
+      "model_ns": 10042398404,
+      "model_session_id": "01a0a089-b159-75d1-a848-55f949575e80",
+      "controller_model_started_ns": 5251580074845,
+      "controller_model_ended_ns": 5261724975455,
+      "model_image_to_plan_accept_ns": 10525980857,
+      "fresh_observation_to_plan_accept_ns": 322750792,
+      "fresh_sequence_at_plan": 1090,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 19,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-hybrid-luna-01/runtime/1121.png",
+      "model_image": "research/doom/results/map01-overlap-hybrid-luna-01/decision-19/temporal-sheet.png",
+      "model_image_sha256": "c8ef976e8a9bd067dae0403167d493ecc8116626a2d5161df5d86e4a179ce1d4",
+      "action": {
+        "assessment": "A new secured area is reached with full health and armor; advance to the AGM-marked doorway and activate it.",
+        "steps": [
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1400
+          },
+          {
+            "keys": [
+              "e"
+            ],
+            "duration_ms": 400
+          },
+          {
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 1400
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 11118,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 122,
+        "reasoning_output_tokens": 42
+      },
+      "model_ns": 8912583394,
+      "model_session_id": "01a0a089-b159-75d1-a848-55f949575e80",
+      "controller_model_started_ns": 5266204317713,
+      "controller_model_ended_ns": 5275173937339,
+      "model_image_to_plan_accept_ns": 9349404022,
+      "fresh_observation_to_plan_accept_ns": 161601381,
+      "fresh_sequence_at_plan": 1160,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    }
+  ],
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 257178852838,
+    "death_count": 0,
+    "kill_count": 0,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 5279067297182
+  },
+  "model_session_span": 4,
+  "model_session_ids": [
+    "01a0a086-a8ce-7ac2-bca4-9dc67fa99c47",
+    "01a0a087-59d2-7100-83c5-342de9093a7d",
+    "01a0a088-138c-7a60-8966-50763e1c0735",
+    "01a0a088-ef01-7631-89e3-a076801f4775",
+    "01a0a089-b159-75d1-a848-55f949575e80"
+  ],
+  "game_continued_during_model_calls": true,
+  "model_wall_seconds": 168.680710905
+}

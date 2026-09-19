@@ -1,0 +1,39 @@
+name: Runtime Kernel v1
+
+on:
+  push:
+    branches:
+      - integration/runtime-kernel-v1-20260916
+    paths:
+      - 'runtime/kernel/**'
+      - '.github/workflows/runtime-kernel-v1.yml'
+  pull_request:
+    paths:
+      - 'runtime/kernel/**'
+      - '.github/workflows/runtime-kernel-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  kernel-contracts:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            runtime/kernel
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile kernel
+        run: python -m compileall -q runtime/kernel
+      - name: Run kernel contract tests
+        run: python -m unittest -v runtime.kernel.test_kernel

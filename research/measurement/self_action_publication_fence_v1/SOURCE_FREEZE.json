@@ -1,0 +1,67 @@
+{
+  "task": "SELF-ACTION-PUBLICATION-FRESHNESS-FENCE-20260918-001",
+  "issue": 1490,
+  "base": "7137efdf52093eedb792ad61d88d18930ea0ea06",
+  "branch": "research/self-action-publication-fence-1490",
+  "formal_invocations_before_freeze": 0,
+  "canonical_source_identity": "remote Git blob readback after preformal comparison-harness repair and comment-only runner normalization",
+  "source_blobs": {
+    "candidate.py": "d9ebb3a3547f93c879db58b842c1d8d9bec1bdb2",
+    "oracle.py": "3dce6d0371be8dc9607b7c0496cf99505b878d04",
+    "runner.py": "a097fc344c2de1445e809235e3f612bc957d1417",
+    "audit.py": "5df86d6b527b1f437cecb2cee28a2f2757835d06",
+    "PLAN.md": "d636eccafdfcda0e86a8cbd238ae59f871388108",
+    "SOURCE_MANIFEST.json": "a20a295227433222691fb3dde93e598f54c0e0b3"
+  },
+  "source_sha256": {
+    "candidate.py": "f1c9fad9a8575795478d1872be58590e2202a50f51ce934c12a0024757918075",
+    "oracle.py": "9801d246c7e409ff4dd7ce3855e466ab22ea8ec2396f9a3996de002cbe79fe0b",
+    "runner.py": "b21f1e626ef4eb7b2896b6a8d2ef9fe8b4e13ac577423bad2ace19f90547c359",
+    "audit.py": "dbdfee2513b61b262c243d94c514d0bd878e11e74e8b4f7d1a704b6876e0e75f",
+    "PLAN.md": "afd2106dbadb1d0977efadb6548f54b1e24b703e5051419a8126d480203c10c9"
+  },
+  "construction": {
+    "summary_blob": "ec2bb2a38b49ea21f60a943ee646fd1821da4e61",
+    "v1_audit_blob": "d0359fd3d98d6ee1281d15c29526116b44aed98e",
+    "v2_audit_blob": "62ea9551a90a120a4f288c42b646a6a95a90fbfa",
+    "v1_raw_sha256": "23f220ff4b6e0944341d1f16272bb4af89976738c6670931a913f9862d98d976",
+    "v2_raw_sha256": "2523146501772315870ae6cf393d5481439d96421819976ca4b7df799237423b",
+    "v1_decision": "FAIL_CONSTRUCTION",
+    "v1_cause": "comparison harness compared independent exception strings literally; fail-closed state/effect behavior matched",
+    "v2_decision": "PASS_CONSTRUCTION_ELIGIBLE",
+    "v2_science_candidate_changed": false,
+    "v2_repairs": [
+      "canonicalize independent fail-closed error classes in comparison harness",
+      "fix VISUAL_ONLY duplicate-action bookkeeping"
+    ],
+    "compressed_b64_uploads": "retained non-canonical transfer artifacts; not used as formal integrity basis"
+  },
+  "preformal_transfer_note": {
+    "formal_consumed": 0,
+    "runner_remote_difference": "one comment line omitted only",
+    "repair": "remote runner adopted as canonical and local normalized byte-exact",
+    "scientific_logic_changed": false,
+    "seed_or_corpus_or_gates_changed": false
+  },
+  "formal": {
+    "seed": 149020260918001,
+    "histories": 240000,
+    "counts": {
+      "LAG_RELEVANT": 50000,
+      "POST_NEGATIVE": 40000,
+      "POST_POSITIVE": 40000,
+      "IRRELEVANT": 25000,
+      "STALE_COVER": 30000,
+      "ORD_FALSE": 15000,
+      "WRONG_SCOPE": 10000,
+      "FUTURE_COVER": 10000,
+      "DUP_ACTION": 10000,
+      "DUP_EVIDENCE_CONFLICT": 10000
+    },
+    "invocations": 1,
+    "reruns": 0,
+    "replacements": 0,
+    "tuning": 0,
+    "status": "NOT_RUN"
+  }
+}

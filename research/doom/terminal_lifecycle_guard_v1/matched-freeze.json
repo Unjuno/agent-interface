@@ -1,0 +1,28 @@
+{
+  "task": "O3-TERMINAL-LIFECYCLE-20260916-001",
+  "publication_base": "7f42fd577dff98d6a27a8eceb79d86bee0358bf9",
+  "runtime_base": "9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+  "plan_sha256": "b874013cc7a12c82512dbcea3e689ec25fb9710d578cba9bf4f72d249e43c6f9",
+  "sources": {
+    "acquisition.py":"7dd7e11a38025e072db79a91559c9264aafce8b59aac1947ba9ad26eab9ac3da",
+    "audit.py":"d64b01eb97082aefd4a23be31e8faaf266cfdb8533a482508ed4fd9c24ee4323",
+    "monitor.py":"fdd22e1190ed9b4dfa65b9e4cf32ad6cd1abab3f117c7f69a3a0d109959293a8",
+    "run.py":"1de483959de6b778bc4ef6539ca906c86270de5dc69d3a4901fe764c8cfda56e",
+    "session.py":"4bcd8f624f7a60864da1088b565c044043fd2dc3f98498256405e44f38f7a5ed",
+    "gate.py":"8039c70589861ee07977ea5af2ab128bf30b692145869dcb23a4c39a207aaff1",
+    "test_gate.py":"e4c5510e0f0457d0e3f6a279d1501608d6d41b5b7f13a8bb2e345d91221b41ef",
+    "outcome.py":"b58374b956fba546e1c13ab65aa6f50feececf7e52b4ddc065e1605de60abc0b",
+    "test_acquisition.py":"2a3150ca33c9d605c6c9982eb10eea662088ded183f97d5a8c01624526616eea"
+  },
+  "baseline_discovery": "one timeout case observed key-down until 2275.006 ms after first end receipt; verified-empty at 2275.912 ms; late fresh input admitted. One 60s control remained running. These are excluded discovery cases.",
+  "construction_tests": "37/37 PASS before allocation: 19 lifecycle tests plus 18 acquisition tests",
+  "conditions": ["timeout40/unguarded", "timeout40/guarded", "timeout60/unguarded", "timeout60/guarded"],
+  "order_by_block": [[0,1,3,2],[3,2,0,1],[1,0,2,3]],
+  "seeds": [997310,997311,997312],
+  "cases": 12,
+  "program": "[a,d] 5000 ms request bounded by 3075 ms owner deadline; fresh [a,d] 50 ms late submit at original deadline+150 ms after primary closure",
+  "timeout_candidate_gate": "3/3 cancelled; observed-end-to-owner-empty in [0,50]ms; 0 late admissions; one matching cancellation",
+  "running_control_gate": "3/3 expire at unchanged deadline; 3/3 late holds complete; no lifecycle cancellation",
+  "integrity": "all source/action/intent/acquisition/physical-release checks; preserve inherited map_exit mismatch rather than claim score equality; no retries or threshold changes",
+  "capability_boundary": "trusted epoch-bound episode-ended bit can revoke only; no kill/health/ammo/reason used for action choice; not a screenshot-only or general gameplay claim"
+}

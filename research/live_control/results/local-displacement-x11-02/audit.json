@@ -1,0 +1,45 @@
+{
+  "audit_passed": true,
+  "archived": {
+    "exact_24px_met": 2,
+    "partial_stopped": true,
+    "binding_change_stopped": true
+  },
+  "first_fresh_allocation": {
+    "passed": false,
+    "target_observed_delta": [
+      44,
+      0
+    ],
+    "partial_observed_delta": [
+      20,
+      0
+    ],
+    "both_stopped": true,
+    "reason": "input-to-screen displacement assumption and immediate decoration state were wrong"
+  },
+  "second_fresh_allocation": {
+    "target_delta": [
+      24,
+      0
+    ],
+    "target_reason": "met",
+    "target_save_started": true,
+    "target_saved_screen_delta_within_one_px": true,
+    "partial_delta": [
+      20,
+      0
+    ],
+    "partial_reason": "target_not_reached",
+    "partial_save_started": false,
+    "exact_frames": 18,
+    "all_terminal_releases_verified": true,
+    "sample_spans_ms": [
+      106.476317,
+      99.152766
+    ]
+  },
+  "decision": "ADVANCE_TO_AGENT_AUTHORED_FIXED_CONTEXT_PROBE;_NO_BENCHMARK_PROMOTION",
+  "scope": "two retained exact-frame checks and one fresh scripted Inkscape met/partial pair after one retained failed pair; no model, cross-domain, speed, token or generalization claim",
+  "audit_sha256": "fd6ab2b6c0feebcc6bea7b288dce5203289bd1552f7acf777d4ac967e4814b19"
+}

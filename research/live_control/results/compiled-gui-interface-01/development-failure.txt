@@ -1,0 +1,7 @@
+Initial independent audit failed after the probe passed.
+
+The audit expected eight calls to the cancellation adapter in the positive
+path, while the runtime correctly made seven: once at each loop entry and once
+before each admission and execution. No runtime or report data was changed to
+make this pass. The audit assertion was corrected from 8 to 7, then the probe
+and independent audit were rerun on Windows and WSL.

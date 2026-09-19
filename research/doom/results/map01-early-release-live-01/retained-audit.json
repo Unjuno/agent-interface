@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "checks": {
+    "manifest": true,
+    "frozen_sources": true,
+    "first_pass_retained": true,
+    "all_frozen_checks_pass": true,
+    "exact_order": true,
+    "lease_identity": true,
+    "two_phase_state": true,
+    "measured_thresholds": true,
+    "zero_model": true
+  },
+  "metrics_ms": {
+    "submit_send_to_accept_ms": 7.870078,
+    "accept_to_first_observation_capture_ms": 60.379923,
+    "accept_to_first_observation_emit_ms": 158.721174,
+    "accept_to_invalidation_capture_ms": 226.47221,
+    "capture_to_guard_decision_ms": 31.857272,
+    "capture_to_typed_ready_ms": 15.001538,
+    "typed_ready_to_emit_ms": 4.912498,
+    "typed_emit_to_artifact_ready_ms": 101.424012,
+    "capture_to_cancel_requested_ms": 54.577783,
+    "guard_decision_to_cancel_requested_ms": 22.720511,
+    "capture_to_physical_release_ms": 57.6595,
+    "guard_decision_to_physical_release_ms": 25.802228,
+    "physical_release_to_publication_ms": 9.320604,
+    "capture_to_terminal_closure_ms": 133.698304,
+    "physical_release_to_terminal_closure_ms": 76.038804
+  },
+  "files_in_retention_manifest": 22,
+  "retained_bytes_before_receipt": 1251326,
+  "scope": "one real continuously advancing Freedoom/X11 held-input cancellation episode testing two-phase physical release publication; controller-authored threshold, no planner/model call, no gameplay-gain, cross-domain or general human-speed claim"
+}

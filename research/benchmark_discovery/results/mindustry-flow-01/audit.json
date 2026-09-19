@@ -1,0 +1,170 @@
+{
+  "scope": "engine-authored scoring calibration, not agent benchmark performance",
+  "cases": {
+    "complete": {
+      "status": "VERIFIED",
+      "contract_satisfied": true,
+      "wrong_targets": [],
+      "collateral_tiles": [],
+      "source_config_preserved": true,
+      "core_location_preserved": true,
+      "copper_delta": 32,
+      "delivery_observed": true,
+      "simulation_ticks": 601.7632358074188,
+      "guard_tiles": 112
+    },
+    "missing": {
+      "status": "CONTRADICTED",
+      "contract_satisfied": false,
+      "wrong_targets": [
+        [
+          140,
+          51
+        ]
+      ],
+      "collateral_tiles": [],
+      "source_config_preserved": true,
+      "core_location_preserved": true,
+      "copper_delta": 0,
+      "delivery_observed": false,
+      "simulation_ticks": 601.7450393438339,
+      "guard_tiles": 112
+    },
+    "reversed": {
+      "status": "CONTRADICTED",
+      "contract_satisfied": false,
+      "wrong_targets": [
+        [
+          140,
+          51
+        ]
+      ],
+      "collateral_tiles": [],
+      "source_config_preserved": true,
+      "core_location_preserved": true,
+      "copper_delta": 0,
+      "delivery_observed": false,
+      "simulation_ticks": 601.5629857778549,
+      "guard_tiles": 112
+    },
+    "partial": {
+      "status": "CONTRADICTED",
+      "contract_satisfied": false,
+      "wrong_targets": [
+        [
+          141,
+          51
+        ],
+        [
+          142,
+          51
+        ],
+        [
+          143,
+          51
+        ]
+      ],
+      "collateral_tiles": [],
+      "source_config_preserved": true,
+      "core_location_preserved": true,
+      "copper_delta": 0,
+      "delivery_observed": false,
+      "simulation_ticks": 601.1960439682007,
+      "guard_tiles": 112
+    },
+    "extra": {
+      "status": "CONTRADICTED",
+      "contract_satisfied": false,
+      "wrong_targets": [],
+      "collateral_tiles": [
+        [
+          140,
+          50
+        ]
+      ],
+      "source_config_preserved": true,
+      "core_location_preserved": true,
+      "copper_delta": 31,
+      "delivery_observed": true,
+      "simulation_ticks": 600.6085331439972,
+      "guard_tiles": 112
+    },
+    "empty": {
+      "status": "CONTRADICTED",
+      "contract_satisfied": false,
+      "wrong_targets": [
+        [
+          138,
+          51
+        ],
+        [
+          139,
+          51
+        ],
+        [
+          140,
+          51
+        ],
+        [
+          141,
+          51
+        ],
+        [
+          142,
+          51
+        ],
+        [
+          143,
+          51
+        ]
+      ],
+      "collateral_tiles": [],
+      "source_config_preserved": true,
+      "core_location_preserved": true,
+      "copper_delta": 0,
+      "delivery_observed": false,
+      "simulation_ticks": 600.8049004077911,
+      "guard_tiles": 112
+    }
+  },
+  "malformed_or_open_controls": {
+    "missing_tile": {
+      "status": "UNKNOWN",
+      "contract_satisfied": null,
+      "reason": "invalid_evidence",
+      "detail": "incomplete projection"
+    },
+    "duplicate_tile": {
+      "status": "UNKNOWN",
+      "contract_satisfied": null,
+      "reason": "invalid_evidence",
+      "detail": "duplicate or foreign coordinate"
+    },
+    "open_window": {
+      "status": "UNKNOWN",
+      "contract_satisfied": null,
+      "reason": "window_not_closed"
+    },
+    "too_early": {
+      "status": "UNKNOWN",
+      "contract_satisfied": null,
+      "reason": "insufficient_simulation_window"
+    },
+    "boolean_copper": {
+      "status": "UNKNOWN",
+      "contract_satisfied": null,
+      "reason": "invalid_evidence",
+      "detail": "invalid copper"
+    },
+    "claimed_authority": {
+      "status": "UNKNOWN",
+      "contract_satisfied": null,
+      "reason": "invalid_evidence",
+      "detail": "oracle claimed task authority"
+    }
+  },
+  "score_sha256": "d161cd56f12359fd004d41df9160c67a4d4c0fe7bafb650ccf0eb4fddc4ea869",
+  "audit_sha256": "ab26a18ec3d46fd247de68e2c7f1ec6d5986b95d92639156ca0ffbbdd3193408",
+  "score_implementation_timing": "implemented after first complete-state inspection; contract plan frozen before engine runs",
+  "agent_task_success": null
+}

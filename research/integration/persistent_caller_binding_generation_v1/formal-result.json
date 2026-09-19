@@ -1,0 +1,41 @@
+{
+  "arms": {
+    "revision_only": {
+      "model_calls": 0,
+      "repairs": 0,
+      "restart_model_calls": 0,
+      "restart_tasks": 53248,
+      "safe_stops": 98305,
+      "stable_model_calls": 0,
+      "stale_execute_presentations": 98305,
+      "successes": 8191,
+      "tasks": 106496
+    },
+    "unified_generation": {
+      "model_calls": 53248,
+      "repairs": 53248,
+      "restart_model_calls": 53248,
+      "restart_tasks": 53248,
+      "safe_stops": 0,
+      "stable_model_calls": 0,
+      "stale_execute_presentations": 0,
+      "successes": 106496,
+      "tasks": 106496
+    }
+  },
+  "base": "be33a94034bd26703726d6474af327d9a171a905",
+  "decision": {
+    "candidate_pass": true,
+    "decision": "PASS_PERSISTENT_CALLER_UNIFIED_GENERATION_CONFORMANCE_SCOPED",
+    "expected_restart_events": 53248,
+    "expected_tasks_per_arm": 106496,
+    "negative_control_exposed": true
+  },
+  "elapsed_ns": 23951504184,
+  "revision_only_restart_traces_with_counterexample": 8191,
+  "schema": "caller-binding-generation-conformance-v1",
+  "trace_length": 13,
+  "trace_log_rows": 8192,
+  "trace_log_sha256": "0115b1d9f0d607114782558f84e56d408b65743fd3f0af5a2677a7d3fb620aa7",
+  "traces": 8192
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "integrated_efficiency_oracle_v1",
+  "known_ns": 1239476206083,
+  "success": false,
+  "record_count": 2,
+  "exact_counts": {
+    "task-1": 1,
+    "task-2": 0,
+    "task-3": 0,
+    "task-4": 0,
+    "task-5": 0,
+    "task-6": 0
+  },
+  "unexpected": [
+    {
+      "exact": false,
+      "expected_token": "t991083-2",
+      "layout": "A",
+      "received_ns": 1239190835722,
+      "schema": "integrated_efficiency_submission_v1",
+      "submitted_values": [
+        "t991083-2-wrong"
+      ],
+      "task_id": "task-2"
+    }
+  ],
+  "duplicates": {},
+  "missing": [
+    "task-2",
+    "task-3",
+    "task-4",
+    "task-5",
+    "task-6"
+  ]
+}

@@ -1,0 +1,7 @@
+You propose the next bounded step for an isolated Inkscape task: set the selected rectangle to X=88, preserve Y=50,W=40,H=30, and save existing shape.svg. The issued move-save program selects the X field, enters88, presses Return and Ctrl+S, then observes. A transport reply was lost after sendall; sendall alone does not prove execution. Use the attached image and supplied evidence to choose what to do next. Do not call tools. Return ONLY one JSON object:
+{"kind":"read","action_id":"move-save","rationale":"short explanation"} for a command-free reconciliation read;
+{"kind":"verify","visible_x":NUMBER,"visible_y":NUMBER,"visible_width":NUMBER,"visible_height":NUMBER,"rationale":"short explanation"} to request independent saved-artifact verification from sufficient visible and received evidence;
+{"kind":"act","steps":[...],"rationale":"short explanation"} to propose GUI edits, with pointer_click/text/key/chord steps;
+{"kind":"stop","rationale":"short explanation"} if no justified next step is available.
+A verify proposal is not saved-file success. The harness must not treat image values alone as proof that an uncertain earlier program is resolved.
+Evidence: {"observation_sequence": 3, "image_timing": "last received capture before move-save was sent; no subsequent response yet", "request_id": "move-save-once", "action_id": "move-save", "send_completed": true, "received_response_bytes": 0, "server_receipt": "unknown", "pending_resolution": null}

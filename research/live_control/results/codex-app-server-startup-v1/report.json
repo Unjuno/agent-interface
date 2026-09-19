@@ -1,0 +1,197 @@
+{
+  "schema": "codex-app-server-startup-benchmark-v1",
+  "passed": true,
+  "codex_version": "codex-cli 0.153.4",
+  "order": [
+    [
+      "baseline",
+      1
+    ],
+    [
+      "minimal",
+      1
+    ],
+    [
+      "minimal",
+      2
+    ],
+    [
+      "baseline",
+      2
+    ],
+    [
+      "baseline",
+      3
+    ],
+    [
+      "minimal",
+      3
+    ]
+  ],
+  "runs": [
+    {
+      "variant": "baseline",
+      "replicate": 1,
+      "thread_id_present": true,
+      "thread_ephemeral": true,
+      "thread_start_ms": 522.66,
+      "whole_process_ms": 1521.0601,
+      "mcp_startup_notifications": 9,
+      "mcp_names": [
+        "blender",
+        "chrome-devtools",
+        "codex_apps",
+        "cua_repl",
+        "node_repl",
+        "playwright",
+        "puppeteer"
+      ],
+      "model_turns_started": 0,
+      "model_calls": 0,
+      "journal": "baseline-1.jsonl",
+      "journal_sha256": "f70eecc96835385e7b8ec5855bf49071ff675f35e9baa82cc4045ed3e66de579"
+    },
+    {
+      "variant": "minimal",
+      "replicate": 1,
+      "thread_id_present": true,
+      "thread_ephemeral": true,
+      "thread_start_ms": 94.368,
+      "whole_process_ms": 810.1093,
+      "mcp_startup_notifications": 0,
+      "mcp_names": [],
+      "model_turns_started": 0,
+      "model_calls": 0,
+      "journal": "minimal-1.jsonl",
+      "journal_sha256": "bd8b81a75be52828d0aa9f2477053d7bf98499f8ec6c60b47d54960868d0dfad"
+    },
+    {
+      "variant": "minimal",
+      "replicate": 2,
+      "thread_id_present": true,
+      "thread_ephemeral": true,
+      "thread_start_ms": 104.8308,
+      "whole_process_ms": 785.3607,
+      "mcp_startup_notifications": 0,
+      "mcp_names": [],
+      "model_turns_started": 0,
+      "model_calls": 0,
+      "journal": "minimal-2.jsonl",
+      "journal_sha256": "68fee6209f5f47c691a5c0e7dcc411786b9f503a6b613676b2f7ce060ee1f84e"
+    },
+    {
+      "variant": "baseline",
+      "replicate": 2,
+      "thread_id_present": true,
+      "thread_ephemeral": true,
+      "thread_start_ms": 176.1685,
+      "whole_process_ms": 903.0359,
+      "mcp_startup_notifications": 9,
+      "mcp_names": [
+        "blender",
+        "chrome-devtools",
+        "codex_apps",
+        "cua_repl",
+        "node_repl",
+        "playwright",
+        "puppeteer"
+      ],
+      "model_turns_started": 0,
+      "model_calls": 0,
+      "journal": "baseline-2.jsonl",
+      "journal_sha256": "de8930437029f04633bf72d36cdc9f8ebd43ae47ec3e650f3581fa00f9fa6254"
+    },
+    {
+      "variant": "baseline",
+      "replicate": 3,
+      "thread_id_present": true,
+      "thread_ephemeral": true,
+      "thread_start_ms": 211.3951,
+      "whole_process_ms": 949.4882,
+      "mcp_startup_notifications": 9,
+      "mcp_names": [
+        "blender",
+        "chrome-devtools",
+        "codex_apps",
+        "cua_repl",
+        "node_repl",
+        "playwright",
+        "puppeteer"
+      ],
+      "model_turns_started": 0,
+      "model_calls": 0,
+      "journal": "baseline-3.jsonl",
+      "journal_sha256": "3cfd61d48e82ac5e2abd373cf071a000afba3ff5a2e54eb02ea41f4f9232accd"
+    },
+    {
+      "variant": "minimal",
+      "replicate": 3,
+      "thread_id_present": true,
+      "thread_ephemeral": true,
+      "thread_start_ms": 85.6092,
+      "whole_process_ms": 788.8219,
+      "mcp_startup_notifications": 0,
+      "mcp_names": [],
+      "model_turns_started": 0,
+      "model_calls": 0,
+      "journal": "minimal-3.jsonl",
+      "journal_sha256": "8bb0f4effa7df7553d96905f5fadbb58f46737e60877ff189a9e97368a4f3b8c"
+    }
+  ],
+  "summary": {
+    "baseline": {
+      "thread_start_ms": [
+        522.66,
+        176.1685,
+        211.3951
+      ],
+      "thread_start_median_ms": 211.3951,
+      "mcp_startup_notifications": [
+        9,
+        9,
+        9
+      ]
+    },
+    "minimal": {
+      "thread_start_ms": [
+        94.368,
+        104.8308,
+        85.6092
+      ],
+      "thread_start_median_ms": 94.368,
+      "mcp_startup_notifications": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "median_reduction_ms": 117.02710000000002,
+  "minimal_contract": {
+    "disabled_features": [
+      "apps",
+      "plugins",
+      "remote_plugin",
+      "browser_use",
+      "browser_use_external",
+      "computer_use",
+      "in_app_browser",
+      "code_mode",
+      "code_mode_host"
+    ],
+    "disabled_mcp_servers": [
+      "blender",
+      "chrome-devtools",
+      "node_repl",
+      "playwright",
+      "puppeteer"
+    ]
+  },
+  "model_turns_started": 0,
+  "model_calls": 0,
+  "source_sha256": {
+    "benchmark_codex_app_server_startup_v1.py": "f4db5bfaeedc21367974214fecc189661be79523f2021bfd4f54e90ac4dcc739",
+    "codex_app_server_client_v2.py": "8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b"
+  },
+  "scope": "matched command-free process/thread startup only; no planner-turn or model-latency claim"
+}

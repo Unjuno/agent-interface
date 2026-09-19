@@ -1,0 +1,21 @@
+{
+  "schema": "agent-interface/map01-sector165-drop-cross-heading-plan-v1",
+  "task": "MAP01-SECTOR165-DROP-CROSS-HEADING-20260917-003",
+  "publication_base": "ac114c6648ad47673214e341df8edbba592d1c5e",
+  "formal_reruns": 0,
+  "metric_inherited_from": "MAP01-SECTOR165-DROP-EFFECT-20260917-002",
+  "heading_tolerance_deg": 8.0,
+  "minimum_heading_span_deg": 30.0,
+  "cases": [
+    {"id":"case-00","class":"drop","seed":993400,"heading":35},
+    {"id":"case-01","class":"wall","seed":993406,"heading":null},
+    {"id":"case-02","class":"drop","seed":993402,"heading":55},
+    {"id":"case-03","class":"drop","seed":993404,"heading":75},
+    {"id":"case-04","class":"drop","seed":993401,"heading":35},
+    {"id":"case-05","class":"drop","seed":993403,"heading":55},
+    {"id":"case-06","class":"wall","seed":993407,"heading":null},
+    {"id":"case-07","class":"drop","seed":993405,"heading":75}
+  ],
+  "pixel_relation": {"roi":[20,300,20,620],"min_tracks":80,"median_dy_threshold_px":-20.0},
+  "program": {"use_s":0.08,"forward_s":0.45,"settle_s":0.35}
+}

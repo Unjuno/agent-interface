@@ -1,0 +1,58 @@
+{
+  "schema": "capture-hold-cost-development-decision-v2",
+  "task_id": "container-capture-hold-cost-20260915-v2",
+  "environment": {
+    "python": "3.13.5",
+    "kernel": "6.18.44",
+    "machine": "x86_64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor"
+  },
+  "result": {
+    "schema": "capture-hold-cost-development-v1",
+    "pairs": 8,
+    "summary": {
+      "none": {
+        "n": 8,
+        "app_hold_median_ms": 250.129881,
+        "app_hold_p95_ms": 250.2266431,
+        "app_hold_min_ms": 249.783281,
+        "app_hold_max_ms": 250.227502,
+        "send_hold_median_ms": 250.123358,
+        "send_up_to_app_release_median_ms": 0.5722105,
+        "capture_total_median_ms": 0.0,
+        "captures_median": 0.0
+      },
+      "capture": {
+        "n": 8,
+        "app_hold_median_ms": 250.12435299999999,
+        "app_hold_p95_ms": 251.06446554999997,
+        "app_hold_min_ms": 249.925491,
+        "app_hold_max_ms": 251.316601,
+        "send_hold_median_ms": 250.1247795,
+        "send_up_to_app_release_median_ms": 0.5512455,
+        "capture_total_median_ms": 12.727938,
+        "captures_median": 4.0
+      }
+    },
+    "paired_capture_minus_none_ms": {
+      "median": 0.10053500000000781,
+      "min": -0.11799399999998172,
+      "max": 1.1629279999999937,
+      "p95": 0.904892950000001
+    }
+  },
+  "decision": "REJECT_CAPTURE_AS_PRIMARY_SIMPLE_FIXTURE_EXPLANATION",
+  "thresholds": {
+    "median_ms": 5.0,
+    "p95_ms": 10.0
+  },
+  "first_outcome_retained": true,
+  "retry_count": 0,
+  "v1_status": "INCOMPLETE_OUTER_TIMEOUT",
+  "source_sha256": "9efaad5de6ee0dc9ce765798172be7f9ede63e6f69480c9b729621722d9bc295",
+  "preregistration_sha256": "9e0589576822f98380bc26c7892b3cada476b09a187c34b3e6ebc5b125cbd2eb",
+  "result_sha256": "9a7fd8319a4f2e506ac6fedb9f0de8033b6deab8517650f054d76f5f058eb671",
+  "raw_case_count": 16,
+  "next_if_rejected": "Change exactly one variable: compare release-before-capture versus capture-before-release at the 250 ms boundary with the same X11 fixture and key authority.",
+  "claim_boundary": "Rendered Xvfb/Tk/XTEST development fixture only."
+}

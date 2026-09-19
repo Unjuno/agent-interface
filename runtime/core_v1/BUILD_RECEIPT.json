@@ -1,0 +1,60 @@
+{
+  "ci_checkout": "shallow sparse runtime/core_v1 only; semantics unchanged",
+  "construction_event": {
+    "initial_test_run": "21/22 due test-harness object-identity assertion",
+    "repair": "assertIs -> assertEqual in test only",
+    "runtime_source_changed_after_event": false
+  },
+  "files": {
+    ".github/workflows/runtime-core-portability.yml": {
+      "bytes": 1019,
+      "sha256": "c834a1f773628a932dc26ca144e1b7521c1d88cd36495e0f5e5834386c895196"
+    },
+    "runtime/core_v1/PROMOTION.json": {
+      "bytes": 929,
+      "sha256": "662c8d9b9f08f2359660697bb5a0550918e312e0c7d52b60e270561471922b73"
+    },
+    "runtime/core_v1/README.md": {
+      "bytes": 1786,
+      "sha256": "8b89dd6ecc3ba2cae0fc7379429e76be1307467adc4646d339397f24fbc972c0"
+    },
+    "runtime/core_v1/__init__.py": {
+      "bytes": 823,
+      "sha256": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0"
+    },
+    "runtime/core_v1/backend.py": {
+      "bytes": 741,
+      "sha256": "5f5959de391dee682c740baf1007f8bf8c74308d379efed2021fba660b5e9d68"
+    },
+    "runtime/core_v1/contract.py": {
+      "bytes": 13869,
+      "sha256": "268cf282c02f9e2dd38a8c45a36378049443ef2a2431063359011d0552b9c37c"
+    },
+    "runtime/core_v1/doctor.py": {
+      "bytes": 798,
+      "sha256": "e27852838e13d5bc8317fc0dbad7255b4deb6db209cf75ab981441f0f64b4098"
+    },
+    "runtime/core_v1/platform_probe.py": {
+      "bytes": 1898,
+      "sha256": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e"
+    },
+    "runtime/core_v1/test_contract.py": {
+      "bytes": 6225,
+      "sha256": "f7b0d40ccccd02a00ef81a1fa0a62437e5ec49c810b8cbfd9679962fd441b8b5"
+    },
+    "runtime/core_v1/test_platform_probe.py": {
+      "bytes": 1584,
+      "sha256": "6e5cd761e071d366039b976baa449f246f077d4e6dc38e88d2f94d0c9fac844e"
+    }
+  },
+  "integration_base": "888399b4262dd6e459646cb28cff8f4f8602a25b",
+  "issue": 558,
+  "prepublication_local": {
+    "clean_copy": true,
+    "compileall": true,
+    "unittest_pass": 22,
+    "unittest_total": 22
+  },
+  "schema": "agent_interface_runtime_core_build_receipt_v1",
+  "task": "RUNTIME-CORE-V1-PROMOTION-20260917-001"
+}

@@ -1,0 +1,33 @@
+name: live-adapter-effect-scorer-2246
+on:
+  pull_request:
+    paths:
+      - "research/integration/live_adapter_effect_scorer_2246_v1/**"
+      - ".github/workflows/live-adapter-effect-scorer-2246.yml"
+      - "runtime/results/golden-desktop-app-server-v3-live-01/golden-report.json"
+jobs:
+  scorer:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy retained report from checked-out source
+        run: |
+          cp runtime/results/golden-desktop-app-server-v3-live-01/golden-report.json /tmp/golden-report.json
+          python - <<'PY'
+          import hashlib
+          data=open("/tmp/golden-report.json","rb").read()
+          print("REPORT_SHA256", hashlib.sha256(data).hexdigest())
+          PY
+      - name: Run unit tests and score retained evidence
+        run: |
+          cd research/integration/live_adapter_effect_scorer_2246_v1
+          python -m unittest discover -s . -t . -p 'test_*.py' -v
+          cd ../../..
+          python research/integration/live_adapter_effect_scorer_2246_v1/scorer.py /tmp/golden-report.json
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -f /tmp/golden-report.json
+          test ! -e /tmp/golden-report.json

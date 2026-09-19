@@ -1,0 +1,89 @@
+{
+  "formal_invocations": 1,
+  "formal_rows_sha256": "81297df4774f34d7c96c4e15a9ed1a0bd027e4ad08eda32ac3e9425cdbb4e5e1",
+  "guarded_artifact": {
+    "authority": "external",
+    "kind": "GUARDED_TYPED_MACRO",
+    "on_unknown": "YIELD",
+    "parameters": [
+      "token",
+      "field_handle",
+      "submit_handle"
+    ],
+    "procedure": {
+      "complete_when": "submission_pixels_changed_then_independent_score",
+      "continue_when": "field_pixels_changed_and_submit_revalidated",
+      "first_action": "enter_exact_token",
+      "second_action": "activate_submit"
+    },
+    "schema": "guarded_typed_macro_v1",
+    "steps": [
+      {
+        "op": "require_current_target",
+        "target": "$field_handle"
+      },
+      {
+        "op": "activate_target",
+        "target": "$field_handle"
+      },
+      {
+        "op": "select_all"
+      },
+      {
+        "op": "enter_parameter",
+        "parameter": "$token"
+      },
+      {
+        "op": "wait_for",
+        "predicate": "field_pixels_changed_and_submit_revalidated"
+      },
+      {
+        "op": "require_current_target",
+        "target": "$submit_handle"
+      },
+      {
+        "op": "activate_target",
+        "target": "$submit_handle"
+      },
+      {
+        "op": "external_verify",
+        "predicate": "submission_pixels_changed_then_independent_score"
+      }
+    ]
+  },
+  "literal_artifact": {
+    "authority": "external",
+    "context_guard": {
+      "focus": 6291459,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ],
+      "surface": 6291459
+    },
+    "field_point": [
+      226,
+      401
+    ],
+    "kind": "LITERAL_REPLAY",
+    "parameters": [
+      "token"
+    ],
+    "procedure": {
+      "complete_when": "submission_pixels_changed_then_independent_score",
+      "continue_when": "field_pixels_changed_and_submit_revalidated",
+      "first_action": "enter_exact_token",
+      "second_action": "activate_submit"
+    },
+    "schema": "literal_replay_v1",
+    "submit_point": [
+      376,
+      401
+    ]
+  },
+  "reruns": 0,
+  "rows": 12,
+  "task": "CHROMIUM-PROCEDURE-GUARDED-MACRO-20260917-001"
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "agent-interface-preview-readiness-container-audit-v1",
+  "environment": {
+    "kernel": "Linux 6.18.44 x86_64",
+    "python": "3.13.5",
+    "scope": "disposable generic Linux container; not the documented WSLg supported host"
+  },
+  "observations": [
+    {
+      "name": "launcher_mode_boundary",
+      "result": "PASS_REPRODUCED",
+      "detail": "Same launcher logic: mode 0644 direct exec failed with 126 for both documented entrypoints; mode 0755 reached fail-closed test dispatch for both."
+    },
+    {
+      "name": "offline_lab_artifact_digest",
+      "result": "PASS",
+      "detail": "Downloaded Actions artifact 10398313098 matched SHA-256 522763418610ea10e57e55615fa71e76445200b9f86d208820ea97c77c234f0b and metadata size 80117931 bytes."
+    },
+    {
+      "name": "offline_exact_pin_install_against_lab_wheels",
+      "result": "FAIL_EXPECTED_INPUT_SET_MISMATCH",
+      "detail": "pip --no-index against lab wheels could not satisfy current Pillow==10.2.0 because the lab carries Pillow 12.3.0. This is not classified as a supported-host runtime failure because the artifact is an offline research lab, not the runtime-preview distribution."
+    },
+    {
+      "name": "offline_source_audit_retained",
+      "result": "FAIL_BUNDLE_INCOMPLETE",
+      "exit_code": 2,
+      "detail": "golden_desktop_demo_v3.py audit-retained raised FileNotFoundError for research/live_control/results/integrated-efficiency-live-01/preregistration.json."
+    }
+  ],
+  "disposition": "RETAIN_RELEASE_BOUNDARY_EVIDENCE; REQUIRE_SUPPORTED_HOST_ACCEPTANCE_AND_DEDICATED_RUNTIME_ARTIFACT"
+}

@@ -1,0 +1,22 @@
+{
+  "pinned": {
+    "report_blob": "eb7c3fd431b333b7b5ee9c8958d59eb56c1d5094",
+    "result_blob": "5286763730c8442bf6b43cbc1038c655a46121fa"
+  },
+  "published_outcomes": {
+    "overlap_independent": ["A_DONE", "B_DONE"],
+    "overlap_shared_negative": ["B_DONE", "B_DONE"],
+    "independent_median_wall_ms": 168.087279,
+    "serial_independent_median_wall_ms": 320.8507305
+  },
+  "independent": {
+    "a_tail": {"read": ["process_A"], "write": ["surface_A"]},
+    "b_input": {"read": [], "write": ["process_B", "surface_B"]},
+    "b_tail": {"read": ["process_B"], "write": ["surface_B"]}
+  },
+  "shared": {
+    "a_tail": {"read": ["process_A", "shared_file"], "write": ["surface_A"]},
+    "b_input": {"read": [], "write": ["process_B", "surface_B", "shared_file"]},
+    "b_tail": {"read": ["process_B", "shared_file"], "write": ["surface_B"]}
+  }
+}

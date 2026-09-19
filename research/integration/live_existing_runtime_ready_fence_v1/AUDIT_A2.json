@@ -1,0 +1,21 @@
+{
+  "core_blobs": {
+    "event_socket_v11.py": "fe71be94c9284af0ae7c0b4db0b47dd8b1a86522",
+    "interactive_v27.py": "9a012c825bcdc995a87185d423ecc496dc399094",
+    "session_v16.py": "c188b3653ef4bec9b1a846296b003b0415f3f173"
+  },
+  "decision": "FAIL_AUDIT",
+  "details": [
+    {"case_id":"a2-f00","clock_status":"timeout","errors":[],"policy":"endpoint_only"},
+    {"case_id":"a2-f01","clock_status":"timeout","errors":["candidate clock not boundary"],"policy":"existing_ready_gate"},
+    {"case_id":"a2-f02","clock_status":"timeout","errors":["candidate clock not boundary"],"policy":"existing_ready_gate"},
+    {"case_id":"a2-f03","clock_status":"timeout","errors":[],"policy":"endpoint_only"},
+    {"case_id":"a2-f04","clock_status":"timeout","errors":[],"policy":"endpoint_only"},
+    {"case_id":"a2-f05","clock_status":"boundary","errors":[],"policy":"existing_ready_gate"}
+  ],
+  "errors": ["a2-f01: candidate clock not boundary", "a2-f02: candidate clock not boundary"],
+  "formal_allocation": 1,
+  "formal_reruns": 0,
+  "outer_case_invocations": 6,
+  "task": "LIVE-EXISTING-RUNTIME-READY-FENCE-20260917-002"
+}

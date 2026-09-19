@@ -1,0 +1,112 @@
+{
+  "setup_offset_requested": 0,
+  "source_box": [
+    592,
+    369,
+    56,
+    44
+  ],
+  "before": {
+    "x": "50",
+    "y": "50",
+    "width": "40",
+    "height": "30",
+    "transform": null
+  },
+  "after": {
+    "x": "70.338982",
+    "y": "50",
+    "width": "40",
+    "height": "30",
+    "transform": null
+  },
+  "saved_dx_screen": 23.99999876,
+  "preserved": true,
+  "precision_pass": true,
+  "terminal": {
+    "event": "terminal",
+    "id": "servo",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 1,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 62489102601,
+      "valid_until_ns": 69743738562
+    },
+    "terminal_ns": 62489130902,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emitted_ns": 62489132153
+  },
+  "controller": [
+    {
+      "event": "servo_feedback",
+      "id": "servo",
+      "step": 0,
+      "observation": 3,
+      "tracking": {
+        "status": "matched",
+        "error": 0.021451914098972923,
+        "margin": 0.04567523979288685,
+        "source_observation": 2,
+        "observation": 3,
+        "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+        "patch_sha256": "87765ac1f76508ecded989749724fbea2b8c88dc2ab3ab9c4ff5fdb2eaa96adc",
+        "box": [
+          592,
+          369,
+          56,
+          44
+        ],
+        "delta": [
+          0,
+          0
+        ]
+      },
+      "reason": "correct",
+      "command": {
+        "op": "move",
+        "x": 655,
+        "y": 390
+      },
+      "updates_remaining": 2,
+      "emitted_ns": 62161931375
+    },
+    {
+      "event": "servo_feedback",
+      "id": "servo",
+      "step": 0,
+      "observation": 4,
+      "tracking": {
+        "status": "matched",
+        "error": 0.021451914098972923,
+        "margin": 0.04567523979288685,
+        "source_observation": 2,
+        "observation": 4,
+        "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+        "patch_sha256": "87765ac1f76508ecded989749724fbea2b8c88dc2ab3ab9c4ff5fdb2eaa96adc",
+        "box": [
+          616,
+          369,
+          56,
+          44
+        ],
+        "delta": [
+          24,
+          0
+        ]
+      },
+      "reason": "local_goal_reached",
+      "command": {
+        "op": "finish"
+      },
+      "updates_remaining": 2,
+      "emitted_ns": 62441994943
+    }
+  ],
+  "program_ms": 751.012186
+}

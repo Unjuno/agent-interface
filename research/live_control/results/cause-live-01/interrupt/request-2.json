@@ -1,0 +1,31 @@
+{
+  "after": 4,
+  "events": [
+    "terminal"
+  ],
+  "timeout": 15,
+  "action_id": "interrupt",
+  "request_id": "program-f472f9c1d58342508dfafe40aeb67c25",
+  "command": {
+    "op": "submit",
+    "id": "interrupt",
+    "steps": [
+      {
+        "op": "hold",
+        "keys": [
+          "Control_L"
+        ],
+        "duration_ms": 1000
+      },
+      {
+        "op": "hold",
+        "keys": [
+          "Right"
+        ],
+        "duration_ms": 80
+      }
+    ],
+    "expected_sequence": 1,
+    "valid_until_ns": 61991019286
+  }
+}

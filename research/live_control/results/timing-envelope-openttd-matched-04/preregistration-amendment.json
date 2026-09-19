@@ -1,0 +1,25 @@
+{
+  "study": "timing-envelope-openttd-matched-04",
+  "status": "AMENDED_BEFORE_EXECUTION",
+  "reason": "Static inspection found that four initial-score assertions used descriptive names rather than the fixed guarded_score.py result keys.",
+  "scope": "implementation-only key-name repair; no GUI episode or model call had started",
+  "original_source_sha256": "c691768d886d2d03e38b46efb039951e6cdeb09d81035a4c0c6264482c8fe480",
+  "corrected_source_sha256": "c437d033c76b6f31177499ba477eb804b2d2b635911a77fb887d9836b1296e7a",
+  "changes": {
+    "target_only_has_road": "target_owned_roads",
+    "target_connected_both_directions": "bidirectional_connections",
+    "forbidden_row_has_no_road": "forbidden_row_clear",
+    "surrounding_road_owner_unchanged": "unchanged"
+  },
+  "unchanged": [
+    "execution order",
+    "task and canonical save",
+    "pre-opened road-toolbar factor",
+    "fixed Astra medium route",
+    "nine-turn bound",
+    "hard success gate",
+    "primary measurements",
+    "failure and interpretation rules"
+  ],
+  "amendment_script_sha256": "3b492aa9ece90ae04d7ebc84368c3e41b9eb61c03097360703c08512d08ec8a8"
+}

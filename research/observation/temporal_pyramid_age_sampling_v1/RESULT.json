@@ -1,0 +1,43 @@
+{
+  "controls": {
+    "insufficient_history": {
+      "INDEX_LOG": "INSUFFICIENT_HISTORY",
+      "TARGET_AGE_LOG": "INSUFFICIENT_HISTORY"
+    },
+    "malformed_rejected": 6,
+    "malformed_total": 6
+  },
+  "decision": "PASS_AGE_TARGETED_TEMPORAL_SAMPLING_SCOPED",
+  "formal_invocations": 1,
+  "formal_reruns": 0,
+  "formal_rows": 20,
+  "schema": "temporal-pyramid-age-result-summary-v1",
+  "strict_improvement_irregular_traces": 3,
+  "task": "TEMPORAL-PYRAMID-AGE-SAMPLING-20260917-001",
+  "timing_errors_ms": {
+    "alternating_jitter": {
+      "INDEX_LOG": 16.666667000000036,
+      "TARGET_AGE_LOG": 16.333333
+    },
+    "burst_drop_middle": {
+      "INDEX_LOG": 56.66667599999997,
+      "TARGET_AGE_LOG": 9.99999600000001
+    },
+    "early_jitter": {
+      "INDEX_LOG": 1.333330000000018,
+      "TARGET_AGE_LOG": 1.333330000000018
+    },
+    "late_jitter": {
+      "INDEX_LOG": 10.666663000000018,
+      "TARGET_AGE_LOG": 10.666663000000018
+    },
+    "mixed_jitter_drop": {
+      "INDEX_LOG": 63.333332999999996,
+      "TARGET_AGE_LOG": 19.999998999999985
+    },
+    "regular_60hz": {
+      "INDEX_LOG": 9.999999974752427e-06,
+      "TARGET_AGE_LOG": 9.999999974752427e-06
+    }
+  }
+}

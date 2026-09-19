@@ -1,0 +1,126 @@
+{
+  "cases": [
+    {
+      "id": "v2-r1-naive",
+      "mode": "naive",
+      "rep": 1,
+      "signal_after_ms": 800
+    },
+    {
+      "id": "v2-r1-generation_gate",
+      "mode": "generation_gate",
+      "rep": 1,
+      "signal_after_ms": 800
+    },
+    {
+      "id": "v2-r2-generation_gate",
+      "mode": "generation_gate",
+      "rep": 2,
+      "signal_after_ms": 800
+    },
+    {
+      "id": "v2-r2-naive",
+      "mode": "naive",
+      "rep": 2,
+      "signal_after_ms": 800
+    },
+    {
+      "id": "v2-r3-naive",
+      "mode": "naive",
+      "rep": 3,
+      "signal_after_ms": 800
+    },
+    {
+      "id": "v2-r3-generation_gate",
+      "mode": "generation_gate",
+      "rep": 3,
+      "signal_after_ms": 800
+    },
+    {
+      "id": "v2-r4-generation_gate",
+      "mode": "generation_gate",
+      "rep": 4,
+      "signal_after_ms": 800
+    },
+    {
+      "id": "v2-r4-naive",
+      "mode": "naive",
+      "rep": 4,
+      "signal_after_ms": 800
+    },
+    {
+      "id": "v2-r5-naive",
+      "mode": "naive",
+      "rep": 5,
+      "signal_after_ms": 800
+    },
+    {
+      "id": "v2-r5-generation_gate",
+      "mode": "generation_gate",
+      "rep": 5,
+      "signal_after_ms": 800
+    },
+    {
+      "id": "v2-r6-generation_gate",
+      "mode": "generation_gate",
+      "rep": 6,
+      "signal_after_ms": 800
+    },
+    {
+      "id": "v2-r6-naive",
+      "mode": "naive",
+      "rep": 6,
+      "signal_after_ms": 800
+    },
+    {
+      "id": "v2-r7-naive",
+      "mode": "naive",
+      "rep": 7,
+      "signal_after_ms": 800
+    },
+    {
+      "id": "v2-r7-generation_gate",
+      "mode": "generation_gate",
+      "rep": 7,
+      "signal_after_ms": 800
+    },
+    {
+      "id": "v2-r8-generation_gate",
+      "mode": "generation_gate",
+      "rep": 8,
+      "signal_after_ms": 800
+    },
+    {
+      "id": "v2-r8-naive",
+      "mode": "naive",
+      "rep": 8,
+      "signal_after_ms": 800
+    }
+  ],
+  "decision_gate": {
+    "all_b_reap_before_a_reap": true,
+    "all_release_verified": true,
+    "gate_final_b": "8/8",
+    "naive_late_overwrite_min": 1,
+    "no_same_id_reruns": true
+  },
+  "fixtures": {
+    "fixtures/a.mkv": "52bfa3db4e9ec283a2b3afebaea6fd20e47cfc521203a022f6df8e87e06663fe",
+    "fixtures/b.mkv": "2fa5d984184f6fed0ca59cee13bcaf8c0c7f8e9f07c63f209cc41ec6a6c03875",
+    "fixtures/expected.json": "5fbcc142b7d2a8fabcc2c37f7dd1d2f5322cd24c96ec53dd6c022b758a904584"
+  },
+  "hypothesis": "Generation gate final B 8/8; naive exposes at least one final A when A stage exists; absent A is NO_EFFECT in both arms.",
+  "limits": "single local FFmpeg pair; generation/publisher process not crash durable; no descendants/external writers/network/exactly-once claim",
+  "publication_base": "82572e80f81e19fb7129218fb5af4386795d8d8d",
+  "question": "Can generation-scoped staging preserve B without reap wait when predecessor may either emit A or emit nothing?",
+  "schema": "staged-promotion-plan-v2",
+  "sources": {
+    "research/cross_domain/staged_promotion_v2/audit.py": "73055e16a6bb8c644f41437f1051d7b15f30b97ecade8110ab9c7e9b72ed54ea",
+    "research/cross_domain/staged_promotion_v2/bench.py": "1785c0e5f0b1a66b60e8605e194684db49d8b7cf67470c1d040a29bdf6749cef",
+    "research/cross_domain/staged_promotion_v2/contract.py": "f5826195e228e01cbbbe5056d065abd450e3064134178b71ffebc6e1ab40c5db",
+    "research/cross_domain/staged_promotion_v2/test_contract.py": "9d2153941fc3791bbadfce331857a3ec4cd36f74a3aba57c573e2380730b0b55",
+    "research/cross_domain/staged_promotion_v2/worker.py": "d14b720513fd7ef3f8f551f2aabe3bacda99201f93d90d7ccf232e6fc3709857"
+  },
+  "successor_to": "Issue #271 v1 incomplete 14/16",
+  "task": "O3-STAGED-PROMOTION-20260916-002"
+}

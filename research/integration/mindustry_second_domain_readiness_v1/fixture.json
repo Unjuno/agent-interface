@@ -1,0 +1,31 @@
+{
+  "schema": "mindustry_second_domain_readiness_fixture_v1",
+  "task": "MINDUSTRY-INTEGRATED-SECOND-DOMAIN-READINESS-20260917-001",
+  "base": "824fe51dc35da56782a0a1817889bff22b9b8b64",
+  "sources": {
+    "research/benchmark_discovery/MINDUSTRY_SINGLE_TILE_LIVE_V5.md": "4eb44dd6c089b64aecac053a029fbbcf320323d8",
+    "research/benchmark_discovery/results/mindustry-single-tile-matched-01/audit.json": "a5b4251b9bec7ee8bfebe61dd7b86c345c6ca572",
+    "research/benchmark_discovery/MINDUSTRY_RECEIPT_REVALIDATION_V1.md": "3125aa3bcf884f8e5cd33ba52c9bd2c0831b7f9a",
+    "research/benchmark_discovery/MINDUSTRY_RECEIPT_REVALIDATION_FOLLOWUP_V3.md": "8f3779abbc05e79389388cf16087e0226388d689",
+    "research/benchmark_discovery/MINDUSTRY_BEND_SELF_USE.md": "248ff93c4edc7f9d3806dc513e0c2d8e7fbde9c0",
+    "research/benchmark_discovery/run_mindustry_single_tile_matched_v1.py": "74f48fc124364c3d7d3f4593251ce703f4885429",
+    "research/benchmark_discovery/run_mindustry_receipt_revalidation_live_v1.py": "0baf84bcfae17d4b1843f27200fe84dfc1217b1b",
+    "research/integration/integrated_efficiency_phase_ledger_v1/RESULT.md": "2617ae71930bdd8af8c31fa30f1e0959d32c383d"
+  },
+  "cells": [
+    {"id":1,"name":"same_model_settings","passed":true,"evidence":["MINDUSTRY_SINGLE_TILE_LIVE_V5.md","run_mindustry_single_tile_matched_v1.py"],"finding":"retained live path requests gpt-5.6-luna with low reasoning through the same target-handle model runner family"},
+    {"id":2,"name":"complete_provider_usage_ledger","passed":true,"evidence":["mindustry-single-tile-matched-01/audit.json"],"finding":"per-attempt input/cached/cache-write/output/reasoning usage is reconciled to raw turn records; cached input remains a subset"},
+    {"id":3,"name":"independent_semantic_effect_and_collateral","passed":true,"evidence":["MINDUSTRY_SINGLE_TILE_LIVE_V5.md","MINDUSTRY_BEND_SELF_USE.md"],"finding":"engine-side scorer is available only after control and checks exact placement/direction, source/core preservation and collateral guard tiles"},
+    {"id":4,"name":"typed_coordinate_free_safe_stop","passed":true,"evidence":["mindustry-single-tile-matched-01/audit.json"],"finding":"no-match and unreadable conditions carry no world coordinate past stop and admit no placement button; retained no-match reason mismatch keeps the old formal block false but does not erase the safe-stop evidence"},
+    {"id":5,"name":"fresh_post_model_target_revalidation","passed":true,"evidence":["MINDUSTRY_RECEIPT_REVALIDATION_V1.md","MINDUSTRY_RECEIPT_REVALIDATION_FOLLOWUP_V3.md"],"finding":"fresh observation plus binding/pixel dependencies is checked after model wait; changed pixels, focus/binding loss and resize fail closed"},
+    {"id":6,"name":"verified_release_cleanup","passed":true,"evidence":["mindustry-single-tile-matched-01/audit.json","MINDUSTRY_RECEIPT_REVALIDATION_V1.md"],"finding":"retained terminal events require verified release and cleanup/source-save checks"},
+    {"id":7,"name":"named_wall_and_model_wait_endpoints","passed":true,"evidence":["MINDUSTRY_SINGLE_TILE_LIVE_V5.md","MINDUSTRY_RECEIPT_REVALIDATION_V1.md"],"finding":"decision-to-receipt/evaluation, model-runner/parent-observed durations and local check-to-input intervals are retained"},
+    {"id":8,"name":"repeatable_multi_operation_workload_exists","passed":true,"evidence":["MINDUSTRY_BEND_SELF_USE.md"],"finding":"eight-target bent conveyor construction is independently scored; controller used screenshots/shared pointer input and did not receive engine score state"},
+    {"id":9,"name":"same_session_model_free_persistent_reuse","passed":false,"evidence":["MINDUSTRY_SINGLE_TILE_LIVE_V5.md","MINDUSTRY_BEND_SELF_USE.md"],"finding":"no retained current-path Mindustry allocation demonstrates a compiled target/method reused for a repeated equivalent operation with zero new model generation"},
+    {"id":10,"name":"dependency_invalidation_old_authority_fails_closed","passed":true,"evidence":["MINDUSTRY_RECEIPT_REVALIDATION_V1.md","MINDUSTRY_RECEIPT_REVALIDATION_FOLLOWUP_V3.md"],"finding":"changed palette/world, unavailable binding and surface resize refuse target authority before target input"},
+    {"id":11,"name":"bounded_selective_repair","passed":false,"evidence":["MINDUSTRY_RECEIPT_REVALIDATION_V1.md"],"finding":"retained fault branches refuse safely; they do not repair only the affected persistent target/method and then continue the same integrated workload"},
+    {"id":12,"name":"subsequent_reuse_after_repair","passed":false,"evidence":["MINDUSTRY_RECEIPT_REVALIDATION_V1.md","MINDUSTRY_RECEIPT_REVALIDATION_FOLLOWUP_V3.md"],"finding":"no retained Mindustry path demonstrates post-repair model-free reuse"},
+    {"id":13,"name":"matched_plain_ephemeral_persistent_arms","passed":false,"evidence":["MINDUSTRY_SINGLE_TILE_LIVE_V5.md","integrated_efficiency_phase_ledger_v1/RESULT.md"],"finding":"Mindustry has no retained three-arm matched economic comparison on one frozen workload; Chromium supplies the accounting shape only"},
+    {"id":14,"name":"all_attempt_preflight_abstention_repair_accounting_available","passed":true,"evidence":["mindustry-single-tile-matched-01/audit.json","integrated_efficiency_phase_ledger_v1/RESULT.md"],"finding":"Mindustry reconciles attempted model calls and safe-stop branches; #57 retained ledger provides the preflight/repair accounting shape to reuse without inventing another cost convention"}
+  ]
+}

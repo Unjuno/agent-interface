@@ -1,0 +1,46 @@
+{
+  "schema": "integrated_efficiency_preflight_wall_fixture_v1",
+  "base": "40072ec1962afe9fe1a9f6ade79ce36a2e8cc93f",
+  "protocol_dependency": {
+    "path": "research/live_control/integrated_efficiency_protocol_v1.py",
+    "git_blob_sha": "e8e5ee9e3abb66cb7673ac90ec9074820a16cac9",
+    "role": "read-only scoring dependency proving retained audit elapsed excludes preflight wall time"
+  },
+  "sources": {
+    "audit": {
+      "path": "research/live_control/results/integrated-efficiency-live-01/audit.json",
+      "git_blob_sha": "e32fae1480f56e296a47ec7f4dd57ad21d09e35a",
+      "raw_text": "{\n  \"passed\": true,\n  \"disposition\": \"RETAIN\",\n  \"observed_break_even_task\": 2,\n  \"all_model_calls\": 17,\n  \"image_grounding_calls\": 14,\n  \"fresh_preflight_calls\": 3,\n  \"actual_usage_totals\": {\n    \"input_tokens\": 153470,\n    \"cached_input_tokens\": 4864,\n    \"cache_write_input_tokens\": 0,\n    \"output_tokens\": 2435,\n    \"reasoning_output_tokens\": 837\n  },\n  \"final_input_tokens\": {\n    \"plain\": 63128,\n    \"ephemeral\": 63779,\n    \"persistent\": 26563\n  },\n  \"elapsed_ms\": {\n    \"plain\": 56412.291157,\n    \"ephemeral\": 73238.112924,\n    \"persistent\": 44131.281228\n  },\n  \"image_model_wait_ms\": {\n    \"plain\": 41318.410603,\n    \"ephemeral\": 48741.990964,\n    \"persistent\": 15459.873095\n  },\n  \"exact_tasks\": {\n    \"plain\": 6,\n    \"ephemeral\": 6,\n    \"persistent\": 6\n  },\n  \"old_target_pointer_admissions\": 0\n}\n"
+    },
+    "preflight_plain": {
+      "path": "research/live_control/results/integrated-efficiency-live-01/preflight/plain/gate/plain-form-grounding/preflight-result.json",
+      "git_blob_sha": "90daa6983502354065155c158519401a7250b2a1",
+      "raw_text": "{\n  \"compatibility_key\": \"7b403140df9d5f07ba898f25b839d8bf59a50c21f36f9ad3b3089f753a6fb918\",\n  \"identity\": {\n    \"schema_sha256\": \"0631ab7b7ba0aaf77a4cbdf758a8dbfba557dfb5120a9d5aa789223c97944291\",\n    \"requested_model\": \"gpt-5.6-luna\",\n    \"requested_effort\": \"low\",\n    \"runner_sha256\": \"db7f28c611fe12d648edab3e9fbd54afa89f6764c80b2be9f2642063b31baaf2\",\n    \"instructions_sha256\": \"fd2785852cd55d2a742fba02f3f214839c912a016e9782339e1eb888d2cfb4ef\",\n    \"cli_entry_sha256\": \"61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70\",\n    \"cli_version\": \"codex-cli 0.153.4\",\n    \"node_version\": \"v24.6.0\",\n    \"request_shape\": \"target_handle_model_runner_v2:handle:no-image:output-schema\"\n  },\n  \"schema\": \"/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/plain_form_points_schema_v1.json\",\n  \"local_schema_status\": \"VALID\",\n  \"local_schema_error\": null,\n  \"cache_hit\": false,\n  \"endpoint_status\": \"ENDPOINT_COMPATIBLE\",\n  \"endpoint_error\": null,\n  \"usage\": {\n    \"input_tokens\": 7868,\n    \"cached_input_tokens\": 0,\n    \"cache_write_input_tokens\": 0,\n    \"output_tokens\": 89,\n    \"reasoning_output_tokens\": 25\n  },\n  \"model_call_performed\": true,\n  \"elapsed_ms\": 6341.907755,\n  \"cost\": null,\n  \"scope\": \"actual no-GUI endpoint compatibility call; no semantic-quality or task claim\"\n}\n"
+    },
+    "preflight_ephemeral": {
+      "path": "research/live_control/results/integrated-efficiency-live-01/preflight/ephemeral/gate/compiled-form-grounding/preflight-result.json",
+      "git_blob_sha": "260b2c011bb5ea1de9fa5a7455d4879e2fbbdabd",
+      "raw_text": "{\n  \"compatibility_key\": \"49fddcd9004c3884bec4de0c9e58f6c637ec15a41df228c19b2bd042fe45f601\",\n  \"identity\": {\n    \"schema_sha256\": \"a1a5901b84656375657538d2dccb975e3b40a5b22272abbab487c54904db1d0f\",\n    \"requested_model\": \"gpt-5.6-luna\",\n    \"requested_effort\": \"low\",\n    \"runner_sha256\": \"db7f28c611fe12d648edab3e9fbd54afa89f6764c80b2be9f2642063b31baaf2\",\n    \"instructions_sha256\": \"fd2785852cd55d2a742fba02f3f214839c912a016e9782339e1eb888d2cfb4ef\",\n    \"cli_entry_sha256\": \"61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70\",\n    \"cli_version\": \"codex-cli 0.153.4\",\n    \"node_version\": \"v24.6.0\",\n    \"request_shape\": \"target_handle_model_runner_v2:handle:no-image:output-schema\"\n  },\n  \"schema\": \"/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/compiled_form_grounding_schema_v1.json\",\n  \"local_schema_status\": \"VALID\",\n  \"local_schema_error\": null,\n  \"cache_hit\": false,\n  \"endpoint_status\": \"ENDPOINT_COMPATIBLE\",\n  \"endpoint_error\": null,\n  \"usage\": {\n    \"input_tokens\": 7967,\n    \"cached_input_tokens\": 0,\n    \"cache_write_input_tokens\": 0,\n    \"output_tokens\": 154,\n    \"reasoning_output_tokens\": 39\n  },\n  \"model_call_performed\": true,\n  \"elapsed_ms\": 7140.746175,\n  \"cost\": null,\n  \"scope\": \"actual no-GUI endpoint compatibility call; no semantic-quality or task claim\"\n}\n"
+    },
+    "preflight_persistent": {
+      "path": "research/live_control/results/integrated-efficiency-live-01/preflight/persistent/gate/compiled-form-grounding/preflight-result.json",
+      "git_blob_sha": "34bb6647b87b9ae8a53c2efbe7a56bb6d7836fde",
+      "raw_text": "{\n  \"compatibility_key\": \"49fddcd9004c3884bec4de0c9e58f6c637ec15a41df228c19b2bd042fe45f601\",\n  \"identity\": {\n    \"schema_sha256\": \"a1a5901b84656375657538d2dccb975e3b40a5b22272abbab487c54904db1d0f\",\n    \"requested_model\": \"gpt-5.6-luna\",\n    \"requested_effort\": \"low\",\n    \"runner_sha256\": \"db7f28c611fe12d648edab3e9fbd54afa89f6764c80b2be9f2642063b31baaf2\",\n    \"instructions_sha256\": \"fd2785852cd55d2a742fba02f3f214839c912a016e9782339e1eb888d2cfb4ef\",\n    \"cli_entry_sha256\": \"61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70\",\n    \"cli_version\": \"codex-cli 0.153.4\",\n    \"node_version\": \"v24.6.0\",\n    \"request_shape\": \"target_handle_model_runner_v2:handle:no-image:output-schema\"\n  },\n  \"schema\": \"/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/compiled_form_grounding_schema_v1.json\",\n  \"local_schema_status\": \"VALID\",\n  \"local_schema_error\": null,\n  \"cache_hit\": false,\n  \"endpoint_status\": \"ENDPOINT_COMPATIBLE\",\n  \"endpoint_error\": null,\n  \"usage\": {\n    \"input_tokens\": 7965,\n    \"cached_input_tokens\": 0,\n    \"cache_write_input_tokens\": 0,\n    \"output_tokens\": 143,\n    \"reasoning_output_tokens\": 28\n  },\n  \"model_call_performed\": true,\n  \"elapsed_ms\": 7495.828365,\n  \"cost\": null,\n  \"scope\": \"actual no-GUI endpoint compatibility call; no semantic-quality or task claim\"\n}\n"
+    },
+    "process_plain": {
+      "path": "research/live_control/results/integrated-efficiency-live-01/preflight/plain/gate/plain-form-grounding/model-call/process.json",
+      "git_blob_sha": "c81d3df4c5dc3d90da6ba885106874aad731cbc0",
+      "raw_text": "{\n  \"exit_code\": 0,\n  \"started_ns\": 2694995709400,\n  \"stdin_closed_ns\": 2695004028100,\n  \"exited_ns\": 2700854119600,\n  \"requested_model\": \"gpt-5.6-luna\",\n  \"requested_effort\": \"low\",\n  \"mode\": \"handle\",\n  \"observed_model_identity\": null,\n  \"cost\": null\n}\n"
+    },
+    "process_ephemeral": {
+      "path": "research/live_control/results/integrated-efficiency-live-01/preflight/ephemeral/gate/compiled-form-grounding/model-call/process.json",
+      "git_blob_sha": "e4a5106ead58c96741ae3477a49684fadf55119c",
+      "raw_text": "{\n  \"exit_code\": 0,\n  \"started_ns\": 2701736532900,\n  \"stdin_closed_ns\": 2701746682200,\n  \"exited_ns\": 2708581786700,\n  \"requested_model\": \"gpt-5.6-luna\",\n  \"requested_effort\": \"low\",\n  \"mode\": \"handle\",\n  \"observed_model_identity\": null,\n  \"cost\": null\n}\n"
+    },
+    "process_persistent": {
+      "path": "research/live_control/results/integrated-efficiency-live-01/preflight/persistent/gate/compiled-form-grounding/model-call/process.json",
+      "git_blob_sha": "563655effe05d46a216359da56feffe3e3f63ca3",
+      "raw_text": "{\n  \"exit_code\": 0,\n  \"started_ns\": 2709470198100,\n  \"stdin_closed_ns\": 2709481027700,\n  \"exited_ns\": 2716660374500,\n  \"requested_model\": \"gpt-5.6-luna\",\n  \"requested_effort\": \"low\",\n  \"mode\": \"handle\",\n  \"observed_model_identity\": null,\n  \"cost\": null\n}\n"
+    }
+  }
+}

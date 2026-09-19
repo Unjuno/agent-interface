@@ -1,0 +1,54 @@
+# Frozen research hashes describe exact on-disk bytes, including line endings.
+# Preserve sources, manifests and raw evidence across Windows/Linux checkouts.
+research/observation_gating/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/observation_tiles/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/live_control/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/visual_tracking/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/doom/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/evolution/readiness_probe.py -text
+research/evolution/pointer_timeline_v1.py -text
+research/evolution/stress_probe.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/evolution/results/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/doom/results/**/doom.ini -whitespace
+# Preserve the exact measured game configuration, including its empty value space.
+research/live_control/results/pointer-domains-02/openttd/runtime/openttd.cfg -whitespace
+research/live_control/results/pointer-combined-openttd-01/openttd.cfg -whitespace
+research/live_control/results/pointer-view-live-01/runtime/openttd.cfg -whitespace
+research/live_control/results/timing-envelope-openttd-*/runtime/openttd.cfg -whitespace
+research/live_control/results/timing-envelope-openttd-matched-*/*/runtime/openttd.cfg -whitespace
+research/live_control/results/openttd-target-guard-live-*/*/runtime/openttd.cfg -whitespace
+research/live_control/results/openttd-target-guard-geometry-*/*/runtime/openttd.cfg -whitespace
+research/live_control/results/openttd-target-guard-repeat-*/*/runtime/openttd.cfg -whitespace
+research/live_control/results/openttd-target-guard-transform-*/*/runtime/openttd.cfg -whitespace
+research/live_control/results/openttd-framed-*/*/runtime/openttd.cfg -whitespace
+research/live_control/results/openttd-target-handle-*/*/runtime/openttd.cfg -whitespace
+research/real_apps_v1/real_app_suite_v1.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Captured application diagnostics are immutable evidence, including spaces.
+research/observation_gating/results/**/application.txt -whitespace
+research/observation_tiles/results/**/application.txt -whitespace
+
+# Domain discovery cohorts retain measured source and raw artifact bytes.
+research/benchmark_discovery/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/benchmark_discovery/results/** -whitespace
+
+research/openttd_oracle/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/openttd_oracle/results/** -whitespace
+
+research/openttd_task/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/openttd_task/results/** -whitespace
+
+# Golden demo results retain raw model/runtime bytes and their hash manifests.
+*.sh text eol=lf
+runtime/results/** -text -whitespace
+research/live_control/results/recovery-pair3-01/B/runtime/openttd.cfg -whitespace
+research/live_control/results/recovery-pair3-01/A/runtime/openttd.cfg -whitespace
+# Preserve measured pair 3 audit source hash, including its final blank line.
+research/live_control/audit_recovery_pair3_v1.py whitespace=-blank-at-eof
+# Preserve delayed-effect measured source hashes, including final blank lines.
+research/live_control/delayed_decision_schema_v1.py whitespace=-blank-at-eof
+research/live_control/delayed_effect_browser_entry_v*.py whitespace=-blank-at-eof
+research/live_control/delayed_effect_socket_v*.py whitespace=-blank-at-eof
+research/live_control/prepare_delayed_effect_v*.py whitespace=-blank-at-eof
+research/live_control/probe_delayed_effect_decisions_v1.py whitespace=-blank-at-eof
+research/live_control/results/recovery-pair4-01/A/runtime/openttd.cfg -whitespace
+research/live_control/results/recovery-pair4-01/B/runtime/openttd.cfg -whitespace

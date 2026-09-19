@@ -1,0 +1,20 @@
+{
+  "study": "openttd-wrong-anchor-recovery-live-01",
+  "status": "PREFLIGHT_FAILED_BEFORE_RUNTIME_ALLOCATION",
+  "failures": [
+    {
+      "launcher": "Windows Python",
+      "stage": "module import",
+      "error": "ModuleNotFoundError: No module named 'fcntl'"
+    },
+    {
+      "launcher": "WSL Python",
+      "stage": "preregistered baseline path resolution before runtime root creation",
+      "error": "Windows backslashes in the preregistered relative path were treated as filename characters"
+    }
+  ],
+  "runtime_started": false,
+  "model_calls": 0,
+  "input_admissions": 0,
+  "disposition": "retain this failed preregistration; replace it with a new v2 preregistration using portable POSIX relative paths"
+}

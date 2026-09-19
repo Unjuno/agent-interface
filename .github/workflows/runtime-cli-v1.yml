@@ -1,0 +1,46 @@
+name: Runtime unified CLI v1
+
+on:
+  push:
+    branches:
+      - integration/runtime-cli-v1-20260917
+    paths:
+      - 'runtime/cli_v1/**'
+      - 'runtime/motor_state_v1/**'
+      - 'runtime/selector_v1/**'
+      - '.github/workflows/runtime-cli-v1.yml'
+  pull_request:
+    paths:
+      - 'runtime/cli_v1/**'
+      - 'runtime/motor_state_v1/**'
+      - 'runtime/selector_v1/**'
+      - '.github/workflows/runtime-cli-v1.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  cli:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            runtime/cli_v1
+            runtime/motor_state_v1
+            runtime/selector_v1
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile unified runtime surface
+        run: python -m compileall -q runtime/cli_v1 runtime/motor_state_v1 runtime/selector_v1
+      - name: Run CLI/API tests
+        run: python -m unittest -v runtime.cli_v1.test_cli runtime.cli_v1.test_observe runtime.cli_v1.test_golden_v3 runtime.cli_v1.test_receipt runtime.cli_v1.test_receipt_motor_state runtime.selector_v1.test_selector runtime.motor_state_v1.test_adapter
+      - name: Run machine-readable doctor
+        run: python -m runtime.cli_v1 doctor

@@ -1,0 +1,24 @@
+{
+  "schema": "codex-app-server-startup-audit-v1",
+  "passed": true,
+  "allocation_id": "codex-app-server-startup-v1",
+  "runs": 6,
+  "model_turns_started": 0,
+  "model_calls": 0,
+  "protocol_turn_start_messages": 0,
+  "baseline_thread_start_median_ms": 211.3951,
+  "minimal_thread_start_median_ms": 94.368,
+  "median_reduction_ms": 117.02710000000002,
+  "baseline_startup_notifications": [
+    9,
+    9,
+    9
+  ],
+  "minimal_startup_notifications": [
+    0,
+    0,
+    0
+  ],
+  "decision": "use the capability-minimized command for a command-free persistent planner adapter",
+  "limits": "same-host fresh-process thread creation only; three replicates per arm; no inference, task, token, controller-loop or cross-machine claim"
+}

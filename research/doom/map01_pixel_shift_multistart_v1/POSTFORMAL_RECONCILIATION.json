@@ -1,0 +1,45 @@
+{
+  "false_matched_count": 0,
+  "formal_cases_rerun": 0,
+  "formal_source_changed_post_output": false,
+  "formal_summary_sha256": "3ee31e9b765223bbf53ad757f951fffebf6da4d1cec4da923b156484ecaf2540",
+  "frozen_automated_decision": "HOLD_REFERENCE_DIVERSITY_NOT_REALIZED",
+  "frozen_extra_subgate_values": {
+    "996301": {"0": 0.0, "12": 1.7578125004092726, "24": 1.7578125004092726},
+    "996302": {"0": 0.0, "12": 1.7578125004092726, "24": 1.7578125004092726},
+    "996303": {"0": 0.0, "12": 0.0, "24": 0.0}
+  },
+  "issue_gates": {
+    "aligned_controls": true,
+    "false_matched_zero": true,
+    "main_12of12_matched_within6": false,
+    "missing_reference_control": true,
+    "nonzero_heading_8of8": false,
+    "reference_span_ge90_each_block": true,
+    "release_neutral": true,
+    "zero_deaths": true
+  },
+  "main_total": 12,
+  "main_within_count": 11,
+  "nonpassing_main_cases": [
+    {
+      "correction_pulses": 1,
+      "decisions": [
+        {"correction": 0, "decision": {"corr": 0.11132782372228327, "margin": 0.006635206232645963, "shift_px": -158, "status": "CONTINUE"}, "yaw_error": -33.39843750777618},
+        {"correction": 1, "decision": {"corr": 0.25358859489888175, "margin": 0.15767440192851828, "shift_px": 160, "status": "UNKNOWN_BOUNDARY"}, "yaw_error": -28.125000006548362}
+      ],
+      "displacement": 6,
+      "id": "a2-11-s12-b-d6",
+      "seed": 996302,
+      "setup_right_pulses": 12,
+      "terminal_status": "UNKNOWN_BOUNDARY",
+      "terminal_yaw_error": -28.125000006548362
+    }
+  ],
+  "nonzero_heading_total": 8,
+  "nonzero_heading_within_count": 7,
+  "preregistered_issue_rule_disposition": "HOLD_CROSS_SCENE_TRANSFER",
+  "reason_for_mismatch": "Frozen aggregate.py added an unpreregistered within-setup reference-yaw consistency <=0.25deg subgate to the diversity gate. Issue #747 preregistered only >=90deg reference span. The extra subgate is retained and not edited.",
+  "reference_spans_deg": {"996301": 135.35156244769496, "996302": 135.35156244769496, "996303": 131.83593744687641},
+  "schema": "map01-pixel-shift-multistart-postformal-reconciliation-v1"
+}

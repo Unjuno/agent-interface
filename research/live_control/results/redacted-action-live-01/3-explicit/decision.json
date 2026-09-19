@@ -1,0 +1,24 @@
+{
+  "proposal": {
+    "kind": "click",
+    "x": 270,
+    "y": 277,
+    "rationale": "Save button is clearly visible and the point is inside its target bounds."
+  },
+  "gate": {
+    "authorized": true,
+    "reason": "visible_disjoint_target",
+    "box_semantics": "LEFT_TOP_INCLUSIVE_RIGHT_BOTTOM_EXCLUSIVE",
+    "steps": [
+      {
+        "op": "pointer_click",
+        "x": 270,
+        "y": 277,
+        "duration_ms": 80
+      },
+      {
+        "op": "observe"
+      }
+    ]
+  }
+}

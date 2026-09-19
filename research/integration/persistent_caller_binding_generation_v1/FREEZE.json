@@ -1,0 +1,82 @@
+{
+  "construction": {
+    "candidate_repairs": 192,
+    "candidate_stale_execute": 0,
+    "candidate_successes": 384,
+    "comparator_stale_execute": 321,
+    "excluded_from_formal": true,
+    "restart_trace_counterexamples": 63,
+    "tasks_total": 768,
+    "trace_length": 6,
+    "traces": 64
+  },
+  "formal": {
+    "extension": false,
+    "one_invocation": true,
+    "replacement": false,
+    "rerun": false,
+    "tasks_total": 212992,
+    "trace_length": 13,
+    "traces": 8192
+  },
+  "formal_cases_executed": 0,
+  "issue": 774,
+  "publication_base": "be33a94034bd26703726d6474af327d9a171a905",
+  "schema": "agent-interface/persistent-caller-binding-generation-freeze-v1",
+  "source_archive": {
+    "decoded_bytes": 11912,
+    "decoded_sha256": "c0411afae1ed5980663ee2e3748a2624bda7f24ea434428ea58fae71f0398ab8",
+    "retained_bytes": 15885,
+    "retained_git_blob": "b266ad5654babed3fe32aa8ea32870eee35b3e4a",
+    "retained_sha256": "bd099015158305f791453705b6a7766bf21e99bdfc0f9b4960cbbe292febd9a3"
+  },
+  "sources": {
+    "adaptive_acquisition_caller_v2.py": {
+      "bytes": 17047,
+      "git_blob": "176b342913ea6b5b704d4c986d5ddbf1dbcd8169",
+      "sha256": "b418b8769078f3406fef2fda3130b8cd6018f61cefbe0b04a0fa94134beb2eb0"
+    },
+    "audit.py": {
+      "bytes": 5967,
+      "git_blob": "d2a289f65d1edf48859b329e827def1d14e369bc",
+      "sha256": "93bc63342f3df544da212a80103c24db3cdf941157e00a0e8f90db0c40a40bd0"
+    },
+    "conformance.py": {
+      "bytes": 9254,
+      "git_blob": "1908160cff54f22e767ea95020e64a21726f5cfd",
+      "sha256": "4422838d7847c6617456792e98e6b5a7681a18dc349f969c17ff418d36fdafc6"
+    },
+    "coordinate_frame_transform_v1.py": {
+      "bytes": 1965,
+      "git_blob": "972daffee40a38d3effbd8155f3da133d664e445",
+      "sha256": "cb6aefeaa4e9a41b4f4b9ca532e24106025247e39e7c7ee026ddc242a7cbb05b"
+    },
+    "environment.json": {
+      "bytes": 300,
+      "git_blob": "69b84315208d59b2adaeff6d5742843e23b7f9c1",
+      "sha256": "e9459b331013f7af5d7442df47f77b8548f7c0db2c2c0d6d97419a28a485f672"
+    },
+    "plan.json": {
+      "bytes": 1542,
+      "git_blob": "b7f3d6ca96c6d2f370387c77933f509821b0b164",
+      "sha256": "7dfc0c7be7dfad113df2eab58eddc983b85ebd0678d4a6638010279fb91d7bf3"
+    },
+    "prereg.json": {
+      "bytes": 922,
+      "git_blob": "fbc7b53cbcae4effe15824bab0566cd1b69c0f07",
+      "sha256": "3cd68b5ad558d69ee08c142854f854d43ce155c0d9f2090e23e7c3c5336b25be"
+    },
+    "scoped_target_handle_v1.py": {
+      "bytes": 9608,
+      "git_blob": "c4482bb7cd9c3a3e780c05bafa34073491a33ece",
+      "sha256": "550d377f145abbb16f8466dc91b5bb84ca25fccadf71e4d24b2f426550f5a19f"
+    }
+  },
+  "stop": "one exhaustive formal invocation, independent audit, retain first result irrespective of outcome",
+  "task_id": "PERSISTENT-CALLER-UNIFIED-BINDING-CONFORMANCE-20260917-001",
+  "upstream_git_blobs": {
+    "adaptive_acquisition_caller_v2.py": "176b342913ea6b5b704d4c986d5ddbf1dbcd8169",
+    "coordinate_frame_transform_v1.py": "972daffee40a38d3effbd8155f3da133d664e445",
+    "scoped_target_handle_v1.py": "c4482bb7cd9c3a3e780c05bafa34073491a33ece"
+  }
+}

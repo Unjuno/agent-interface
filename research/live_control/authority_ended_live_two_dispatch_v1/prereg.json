@@ -1,0 +1,22 @@
+{
+  "schema":"authority-ended-live-two-dispatch-prereg-v1",
+  "base_mechanism":"retained dual-lifetime quiet-hold session over immutable 9e6d5ecd runtime bundle",
+  "fixture":"map01-threat-contact-v2",
+  "seed":994100,
+  "arms":["valid","stale"],
+  "first_action":{"key":"Shift_L","requested_ms":2000,"authority_ms":600},
+  "valid_followup":{"observe_only":true,"require_sequence_strictly_greater_than_post_sequence":true,"second_physical_action":{"key":"Shift_L","duration_ms":80}},
+  "stale_followup":{"current_sequence":"exact post_sequence","expected_gate":"stale","second_submit_forbidden":true},
+  "hard_gates":[
+    "first terminal authority_ended with verified expired owner release and one bounded post-authority capture",
+    "zero input admissions after first verified expiry release and before second submit in both arms",
+    "valid observe-only terminal completed and current_sequence > post_sequence",
+    "valid gate revalidated, exactly one second-action input admission, second terminal completed with verified empty release",
+    "stale gate status stale, no second submit, zero post-first-release input admission",
+    "strict final independent scorer agreement in both arms"
+  ],
+  "decision":"PASS only if every hard gate passes; otherwise retain failure and stop",
+  "model_calls":0,
+  "formal_sessions":2,
+  "no_retry":true
+}

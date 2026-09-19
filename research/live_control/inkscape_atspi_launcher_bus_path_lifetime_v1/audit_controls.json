@@ -1,0 +1,13 @@
+{
+  "controls": [
+    {"name":"path_equal_false","rejected":true,"stdout":"{\n  \"cases\": 6,\n  \"decision\": \"HOLD\",\n  \"errors\": [\n    \"path_equal 0\"\n  ],\n  \"pass\": false,\n  \"schema\": \"inkscape-atspi-launcher-bus-path-lifetime-audit-v1\"\n}\n"},
+    {"name":"wrong_name","rejected":true,"stdout":"{\n  \"cases\": 6,\n  \"decision\": \"HOLD\",\n  \"errors\": [\n    \"names 1\"\n  ],\n  \"pass\": false,\n  \"schema\": \"inkscape-atspi-launcher-bus-path-lifetime-audit-v1\"\n}\n"},
+    {"name":"registry_owner_false","rejected":true,"stdout":"{\n  \"cases\": 6,\n  \"decision\": \"HOLD\",\n  \"errors\": [\n    \"registry 2\"\n  ],\n  \"pass\": false,\n  \"schema\": \"inkscape-atspi-launcher-bus-path-lifetime-audit-v1\"\n}\n"},
+    {"name":"held_key","rejected":true,"stdout":"{\n  \"cases\": 6,\n  \"decision\": \"HOLD\",\n  \"errors\": [\n    \"keymap 3\"\n  ],\n  \"pass\": false,\n  \"schema\": \"inkscape-atspi-launcher-bus-path-lifetime-audit-v1\"\n}\n"},
+    {"name":"launcher_pid_boundary_erased","rejected":true,"stdout":"{\n  \"cases\": 6,\n  \"decision\": \"HOLD\",\n  \"errors\": [\n    \"launcher pid boundary 5\"\n  ],\n  \"pass\": false,\n  \"schema\": \"inkscape-atspi-launcher-bus-path-lifetime-audit-v1\"\n}\n"},
+    {"name":"arm_flip","rejected":true,"stdout":"{\n  \"cases\": 6,\n  \"decision\": \"HOLD\",\n  \"errors\": [\n    \"arm 4\"\n  ],\n  \"pass\": false,\n  \"schema\": \"inkscape-atspi-launcher-bus-path-lifetime-audit-v1\"\n}\n"}
+  ],
+  "count": 6,
+  "pass": true,
+  "schema": "inkscape-atspi-launcher-bus-path-lifetime-corruption-controls-v1"
+}

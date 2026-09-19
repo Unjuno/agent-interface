@@ -1,0 +1,55 @@
+{
+  "schema": "adaptive-semantic-repair-live-failure-diagnosis-v1",
+  "passed": true,
+  "formal_report_passed": false,
+  "started_cases": 1,
+  "local_repair_path": "local",
+  "caller_outcome": "SAFE_STOP",
+  "caller_reason": "association_changed",
+  "final_pre_action_score": {
+    "schema": "target-relative-rgb-crop-semantic-score-v1",
+    "probe_id": "adaptive_completion_1",
+    "target_reference": "submission_heading",
+    "success": false,
+    "reason": "expected_crop_missing",
+    "binding_status": "CURRENT_EXACT",
+    "source_surface": 6291459,
+    "source_geometry": [
+      10,
+      10,
+      930,
+      780
+    ],
+    "current_surface": 6291459,
+    "current_geometry": [
+      10,
+      10,
+      930,
+      780
+    ],
+    "translation": [
+      0,
+      0
+    ],
+    "resolved_box": [
+      15,
+      170,
+      330,
+      215
+    ],
+    "observed_crop_sha256": "4ca500ef977713fcd5e356c03658d85e3649cddcda60cec2ba7bbfc63600224b",
+    "expected_crop_sha256": "879ad35b666f63b1c9a401c359bd563c52170146b3e4ca5c7314448fdfb5784c",
+    "scored_frame_sha256": "2cfeeba09eca3ebcc37cfcad644bce4b2a3154392d34e9ef19d9688245c776a8",
+    "frame": {
+      "width": 1280,
+      "height": 800,
+      "mode": "RGB"
+    },
+    "grants_input_authority": false
+  },
+  "task_input_started": false,
+  "independent_output": {},
+  "all_releases_verified": true,
+  "cause": "final_revalidate incorrectly required the completion predicate to already be true before the Submit action; current geometry and crop were evaluable, and expected_crop_missing is the required pre-action state",
+  "next_change": "accept only an exact current binding with a materialized observed crop and expected_crop_missing before Submit; retain target patch resolution and ordinary admission; freeze v2 before a new allocation"
+}

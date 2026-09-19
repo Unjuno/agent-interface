@@ -1,0 +1,1512 @@
+{
+  "positive": {
+    "state": "evaluated",
+    "task_success": true,
+    "finish_attempted": true,
+    "authority": "none",
+    "exchanges": [
+      {
+        "request": {
+          "after": 23,
+          "events": [
+            "effect_checkpoint"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "effect_checkpoint",
+            "contract": {
+              "expected": {
+                "A1": 612,
+                "A2": 129
+              },
+              "kind": "saved_cells"
+            }
+          },
+          "request_id": "check-after-confirm",
+          "read_request_id": "check-after-confirm"
+        },
+        "reply": {
+          "status": "boundary",
+          "records": [
+            {
+              "event": "command",
+              "command": {
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "op": "effect_checkpoint",
+                "transport_request_id": "check-after-confirm"
+              },
+              "received_ns": 82258819628,
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82258828940,
+              "delivery_id": "delivery:24"
+            },
+            {
+              "event": "effect_checkpoint",
+              "evidence": {
+                "status": "VERIFIED",
+                "authority": "none",
+                "attribution": "not_established",
+                "task_success": null,
+                "observation_closed": false,
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "started_ns": 82264872130,
+                "scope": "saved first worksheet cells at one sample",
+                "expected": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "sampled_ns": 82264991915,
+                "artifact_sha256": "70e6518fdd966890d8a3253535b10bf056e9b6fa8a731230f3a752d8cfa9c234",
+                "actual": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "reason": "sample_matches_declared_cells",
+                "finished_ns": 82269099167
+              },
+              "task_success": null,
+              "authority": "none",
+              "scope": "non-final artifact query; input admission unchanged",
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82269107267,
+              "delivery_id": "delivery:25"
+            }
+          ],
+          "cursor": 25,
+          "returned_ns": 82274941590,
+          "authority": "none",
+          "acknowledgement": "not implied",
+          "command_receipt": {
+            "request_id": "check-after-confirm",
+            "replayed": false,
+            "state": "stdin_flushed"
+          }
+        }
+      },
+      {
+        "request": {
+          "after": 25,
+          "events": [
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "finish"
+          },
+          "request_id": "finish-policy",
+          "read_request_id": "finish-policy"
+        },
+        "reply": {
+          "status": "boundary",
+          "cursor": 26,
+          "records": [
+            {
+              "event": "independent_evaluation",
+              "success": true,
+              "evaluation_request": {
+                "transport_request_id": "finish-policy",
+                "command_op": "finish"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "evaluation": {
+      "event": "independent_evaluation",
+      "success": true,
+      "evaluation_request": {
+        "transport_request_id": "finish-policy",
+        "command_op": "finish"
+      }
+    }
+  },
+  "unknown": {
+    "state": "needs_decision",
+    "task_success": null,
+    "finish_attempted": false,
+    "authority": "none",
+    "exchanges": [
+      {
+        "request": {
+          "after": 23,
+          "events": [
+            "effect_checkpoint"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "effect_checkpoint",
+            "contract": {
+              "expected": {
+                "A1": 612,
+                "A2": 129
+              },
+              "kind": "saved_cells"
+            }
+          },
+          "request_id": "check-after-confirm",
+          "read_request_id": "check-after-confirm"
+        },
+        "reply": {
+          "status": "boundary",
+          "records": [
+            {
+              "event": "command",
+              "command": {
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "op": "effect_checkpoint",
+                "transport_request_id": "check-after-confirm"
+              },
+              "received_ns": 82258819628,
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82258828940,
+              "delivery_id": "delivery:24"
+            },
+            {
+              "event": "effect_checkpoint",
+              "evidence": {
+                "status": "UNKNOWN",
+                "authority": "none",
+                "attribution": "not_established",
+                "task_success": null,
+                "observation_closed": false,
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "started_ns": 82264872130,
+                "scope": "saved first worksheet cells at one sample",
+                "expected": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "sampled_ns": 82264991915,
+                "artifact_sha256": "70e6518fdd966890d8a3253535b10bf056e9b6fa8a731230f3a752d8cfa9c234",
+                "actual": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "reason": "sample_matches_declared_cells",
+                "finished_ns": 82269099167
+              },
+              "task_success": null,
+              "authority": "none",
+              "scope": "non-final artifact query; input admission unchanged",
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82269107267,
+              "delivery_id": "delivery:25"
+            }
+          ],
+          "cursor": 25,
+          "returned_ns": 82274941590,
+          "authority": "none",
+          "acknowledgement": "not implied",
+          "command_receipt": {
+            "request_id": "check-after-confirm",
+            "replayed": false,
+            "state": "stdin_flushed"
+          }
+        }
+      }
+    ]
+  },
+  "wrong_query": {
+    "state": "needs_decision",
+    "task_success": null,
+    "finish_attempted": false,
+    "authority": "none",
+    "exchanges": [
+      {
+        "request": {
+          "after": 23,
+          "events": [
+            "effect_checkpoint"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "effect_checkpoint",
+            "contract": {
+              "expected": {
+                "A1": 612,
+                "A2": 129
+              },
+              "kind": "saved_cells"
+            }
+          },
+          "request_id": "check-after-confirm",
+          "read_request_id": "check-after-confirm"
+        },
+        "reply": {
+          "status": "boundary",
+          "records": [
+            {
+              "event": "command",
+              "command": {
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "op": "effect_checkpoint",
+                "transport_request_id": "check-after-confirm"
+              },
+              "received_ns": 82258819628,
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82258828940,
+              "delivery_id": "delivery:24"
+            },
+            {
+              "event": "effect_checkpoint",
+              "evidence": {
+                "status": "VERIFIED",
+                "authority": "none",
+                "attribution": "not_established",
+                "task_success": null,
+                "observation_closed": false,
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "started_ns": 82264872130,
+                "scope": "saved first worksheet cells at one sample",
+                "expected": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "sampled_ns": 82264991915,
+                "artifact_sha256": "70e6518fdd966890d8a3253535b10bf056e9b6fa8a731230f3a752d8cfa9c234",
+                "actual": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "reason": "sample_matches_declared_cells",
+                "finished_ns": 82269099167
+              },
+              "task_success": null,
+              "authority": "none",
+              "scope": "non-final artifact query; input admission unchanged",
+              "transport_request_id": "other",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82269107267,
+              "delivery_id": "delivery:25"
+            }
+          ],
+          "cursor": 25,
+          "returned_ns": 82274941590,
+          "authority": "none",
+          "acknowledgement": "not implied",
+          "command_receipt": {
+            "request_id": "check-after-confirm",
+            "replayed": false,
+            "state": "stdin_flushed"
+          }
+        }
+      }
+    ]
+  },
+  "wrong_contract": {
+    "state": "needs_decision",
+    "task_success": null,
+    "finish_attempted": false,
+    "authority": "none",
+    "exchanges": [
+      {
+        "request": {
+          "after": 23,
+          "events": [
+            "effect_checkpoint"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "effect_checkpoint",
+            "contract": {
+              "expected": {
+                "A1": 612,
+                "A2": 129
+              },
+              "kind": "saved_cells"
+            }
+          },
+          "request_id": "check-after-confirm",
+          "read_request_id": "check-after-confirm"
+        },
+        "reply": {
+          "status": "boundary",
+          "records": [
+            {
+              "event": "command",
+              "command": {
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "op": "effect_checkpoint",
+                "transport_request_id": "check-after-confirm"
+              },
+              "received_ns": 82258819628,
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82258828940,
+              "delivery_id": "delivery:24"
+            },
+            {
+              "event": "effect_checkpoint",
+              "evidence": {
+                "status": "VERIFIED",
+                "authority": "none",
+                "attribution": "not_established",
+                "task_success": null,
+                "observation_closed": false,
+                "contract": {
+                  "expected": {
+                    "A1": true,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "started_ns": 82264872130,
+                "scope": "saved first worksheet cells at one sample",
+                "expected": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "sampled_ns": 82264991915,
+                "artifact_sha256": "70e6518fdd966890d8a3253535b10bf056e9b6fa8a731230f3a752d8cfa9c234",
+                "actual": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "reason": "sample_matches_declared_cells",
+                "finished_ns": 82269099167
+              },
+              "task_success": null,
+              "authority": "none",
+              "scope": "non-final artifact query; input admission unchanged",
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82269107267,
+              "delivery_id": "delivery:25"
+            }
+          ],
+          "cursor": 25,
+          "returned_ns": 82274941590,
+          "authority": "none",
+          "acknowledgement": "not implied",
+          "command_receipt": {
+            "request_id": "check-after-confirm",
+            "replayed": false,
+            "state": "stdin_flushed"
+          }
+        }
+      }
+    ]
+  },
+  "wrong_actual": {
+    "state": "needs_decision",
+    "task_success": null,
+    "finish_attempted": false,
+    "authority": "none",
+    "exchanges": [
+      {
+        "request": {
+          "after": 23,
+          "events": [
+            "effect_checkpoint"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "effect_checkpoint",
+            "contract": {
+              "expected": {
+                "A1": 612,
+                "A2": 129
+              },
+              "kind": "saved_cells"
+            }
+          },
+          "request_id": "check-after-confirm",
+          "read_request_id": "check-after-confirm"
+        },
+        "reply": {
+          "status": "boundary",
+          "records": [
+            {
+              "event": "command",
+              "command": {
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "op": "effect_checkpoint",
+                "transport_request_id": "check-after-confirm"
+              },
+              "received_ns": 82258819628,
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82258828940,
+              "delivery_id": "delivery:24"
+            },
+            {
+              "event": "effect_checkpoint",
+              "evidence": {
+                "status": "VERIFIED",
+                "authority": "none",
+                "attribution": "not_established",
+                "task_success": null,
+                "observation_closed": false,
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "started_ns": 82264872130,
+                "scope": "saved first worksheet cells at one sample",
+                "expected": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "sampled_ns": 82264991915,
+                "artifact_sha256": "70e6518fdd966890d8a3253535b10bf056e9b6fa8a731230f3a752d8cfa9c234",
+                "actual": {
+                  "A1": 999,
+                  "A2": 129
+                },
+                "reason": "sample_matches_declared_cells",
+                "finished_ns": 82269099167
+              },
+              "task_success": null,
+              "authority": "none",
+              "scope": "non-final artifact query; input admission unchanged",
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82269107267,
+              "delivery_id": "delivery:25"
+            }
+          ],
+          "cursor": 25,
+          "returned_ns": 82274941590,
+          "authority": "none",
+          "acknowledgement": "not implied",
+          "command_receipt": {
+            "request_id": "check-after-confirm",
+            "replayed": false,
+            "state": "stdin_flushed"
+          }
+        }
+      }
+    ]
+  },
+  "bad_hash": {
+    "state": "needs_decision",
+    "task_success": null,
+    "finish_attempted": false,
+    "authority": "none",
+    "exchanges": [
+      {
+        "request": {
+          "after": 23,
+          "events": [
+            "effect_checkpoint"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "effect_checkpoint",
+            "contract": {
+              "expected": {
+                "A1": 612,
+                "A2": 129
+              },
+              "kind": "saved_cells"
+            }
+          },
+          "request_id": "check-after-confirm",
+          "read_request_id": "check-after-confirm"
+        },
+        "reply": {
+          "status": "boundary",
+          "records": [
+            {
+              "event": "command",
+              "command": {
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "op": "effect_checkpoint",
+                "transport_request_id": "check-after-confirm"
+              },
+              "received_ns": 82258819628,
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82258828940,
+              "delivery_id": "delivery:24"
+            },
+            {
+              "event": "effect_checkpoint",
+              "evidence": {
+                "status": "VERIFIED",
+                "authority": "none",
+                "attribution": "not_established",
+                "task_success": null,
+                "observation_closed": false,
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "started_ns": 82264872130,
+                "scope": "saved first worksheet cells at one sample",
+                "expected": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "sampled_ns": 82264991915,
+                "artifact_sha256": "bad",
+                "actual": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "reason": "sample_matches_declared_cells",
+                "finished_ns": 82269099167
+              },
+              "task_success": null,
+              "authority": "none",
+              "scope": "non-final artifact query; input admission unchanged",
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82269107267,
+              "delivery_id": "delivery:25"
+            }
+          ],
+          "cursor": 25,
+          "returned_ns": 82274941590,
+          "authority": "none",
+          "acknowledgement": "not implied",
+          "command_receipt": {
+            "request_id": "check-after-confirm",
+            "replayed": false,
+            "state": "stdin_flushed"
+          }
+        }
+      }
+    ]
+  },
+  "gap": {
+    "state": "needs_decision",
+    "task_success": null,
+    "finish_attempted": false,
+    "authority": "none",
+    "exchanges": [
+      {
+        "request": {
+          "after": 23,
+          "events": [
+            "effect_checkpoint"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "effect_checkpoint",
+            "contract": {
+              "expected": {
+                "A1": 612,
+                "A2": 129
+              },
+              "kind": "saved_cells"
+            }
+          },
+          "request_id": "check-after-confirm",
+          "read_request_id": "check-after-confirm"
+        },
+        "reply": {
+          "status": "gap",
+          "records": [
+            {
+              "event": "command",
+              "command": {
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "op": "effect_checkpoint",
+                "transport_request_id": "check-after-confirm"
+              },
+              "received_ns": 82258819628,
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82258828940,
+              "delivery_id": "delivery:24"
+            },
+            {
+              "event": "effect_checkpoint",
+              "evidence": {
+                "status": "VERIFIED",
+                "authority": "none",
+                "attribution": "not_established",
+                "task_success": null,
+                "observation_closed": false,
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "started_ns": 82264872130,
+                "scope": "saved first worksheet cells at one sample",
+                "expected": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "sampled_ns": 82264991915,
+                "artifact_sha256": "70e6518fdd966890d8a3253535b10bf056e9b6fa8a731230f3a752d8cfa9c234",
+                "actual": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "reason": "sample_matches_declared_cells",
+                "finished_ns": 82269099167
+              },
+              "task_success": null,
+              "authority": "none",
+              "scope": "non-final artifact query; input admission unchanged",
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82269107267,
+              "delivery_id": "delivery:25"
+            }
+          ],
+          "cursor": 25,
+          "returned_ns": 82274941590,
+          "authority": "none",
+          "acknowledgement": "not implied",
+          "command_receipt": {
+            "request_id": "check-after-confirm",
+            "replayed": false,
+            "state": "stdin_flushed"
+          }
+        }
+      }
+    ]
+  },
+  "busy": {
+    "state": "needs_decision",
+    "task_success": null,
+    "finish_attempted": false,
+    "authority": "none",
+    "exchanges": [
+      {
+        "request": {
+          "after": 23,
+          "events": [
+            "effect_checkpoint"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "effect_checkpoint",
+            "contract": {
+              "expected": {
+                "A1": 612,
+                "A2": 129
+              },
+              "kind": "saved_cells"
+            }
+          },
+          "request_id": "check-after-confirm",
+          "read_request_id": "check-after-confirm"
+        },
+        "reply": {
+          "status": "boundary",
+          "records": [
+            {
+              "event": "command",
+              "command": {
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "op": "effect_checkpoint",
+                "transport_request_id": "check-after-confirm"
+              },
+              "received_ns": 82258819628,
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82258828940,
+              "delivery_id": "delivery:24"
+            },
+            {
+              "event": "effect_checkpoint",
+              "transport_request_id": "check-after-confirm",
+              "status": "UNKNOWN",
+              "reason": "verifier_busy",
+              "task_success": null
+            }
+          ],
+          "cursor": 25,
+          "returned_ns": 82274941590,
+          "authority": "none",
+          "acknowledgement": "not implied",
+          "command_receipt": {
+            "request_id": "check-after-confirm",
+            "replayed": false,
+            "state": "stdin_flushed"
+          }
+        }
+      }
+    ]
+  },
+  "missing_cursor": {
+    "state": "needs_decision",
+    "task_success": null,
+    "finish_attempted": false,
+    "authority": "none",
+    "exchanges": [
+      {
+        "request": {
+          "after": 23,
+          "events": [
+            "effect_checkpoint"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "effect_checkpoint",
+            "contract": {
+              "expected": {
+                "A1": 612,
+                "A2": 129
+              },
+              "kind": "saved_cells"
+            }
+          },
+          "request_id": "check-after-confirm",
+          "read_request_id": "check-after-confirm"
+        },
+        "reply": {
+          "status": "boundary",
+          "records": [
+            {
+              "event": "command",
+              "command": {
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "op": "effect_checkpoint",
+                "transport_request_id": "check-after-confirm"
+              },
+              "received_ns": 82258819628,
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82258828940,
+              "delivery_id": "delivery:24"
+            },
+            {
+              "event": "effect_checkpoint",
+              "evidence": {
+                "status": "VERIFIED",
+                "authority": "none",
+                "attribution": "not_established",
+                "task_success": null,
+                "observation_closed": false,
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "started_ns": 82264872130,
+                "scope": "saved first worksheet cells at one sample",
+                "expected": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "sampled_ns": 82264991915,
+                "artifact_sha256": "70e6518fdd966890d8a3253535b10bf056e9b6fa8a731230f3a752d8cfa9c234",
+                "actual": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "reason": "sample_matches_declared_cells",
+                "finished_ns": 82269099167
+              },
+              "task_success": null,
+              "authority": "none",
+              "scope": "non-final artifact query; input admission unchanged",
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82269107267,
+              "delivery_id": "delivery:25"
+            }
+          ],
+          "returned_ns": 82274941590,
+          "authority": "none",
+          "acknowledgement": "not implied",
+          "command_receipt": {
+            "request_id": "check-after-confirm",
+            "replayed": false,
+            "state": "stdin_flushed"
+          }
+        }
+      }
+    ]
+  },
+  "final_false": {
+    "state": "evaluated",
+    "task_success": false,
+    "finish_attempted": true,
+    "authority": "none",
+    "exchanges": [
+      {
+        "request": {
+          "after": 23,
+          "events": [
+            "effect_checkpoint"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "effect_checkpoint",
+            "contract": {
+              "expected": {
+                "A1": 612,
+                "A2": 129
+              },
+              "kind": "saved_cells"
+            }
+          },
+          "request_id": "check-after-confirm",
+          "read_request_id": "check-after-confirm"
+        },
+        "reply": {
+          "status": "boundary",
+          "records": [
+            {
+              "event": "command",
+              "command": {
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "op": "effect_checkpoint",
+                "transport_request_id": "check-after-confirm"
+              },
+              "received_ns": 82258819628,
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82258828940,
+              "delivery_id": "delivery:24"
+            },
+            {
+              "event": "effect_checkpoint",
+              "evidence": {
+                "status": "VERIFIED",
+                "authority": "none",
+                "attribution": "not_established",
+                "task_success": null,
+                "observation_closed": false,
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "started_ns": 82264872130,
+                "scope": "saved first worksheet cells at one sample",
+                "expected": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "sampled_ns": 82264991915,
+                "artifact_sha256": "70e6518fdd966890d8a3253535b10bf056e9b6fa8a731230f3a752d8cfa9c234",
+                "actual": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "reason": "sample_matches_declared_cells",
+                "finished_ns": 82269099167
+              },
+              "task_success": null,
+              "authority": "none",
+              "scope": "non-final artifact query; input admission unchanged",
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82269107267,
+              "delivery_id": "delivery:25"
+            }
+          ],
+          "cursor": 25,
+          "returned_ns": 82274941590,
+          "authority": "none",
+          "acknowledgement": "not implied",
+          "command_receipt": {
+            "request_id": "check-after-confirm",
+            "replayed": false,
+            "state": "stdin_flushed"
+          }
+        }
+      },
+      {
+        "request": {
+          "after": 25,
+          "events": [
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "finish"
+          },
+          "request_id": "finish-policy",
+          "read_request_id": "finish-policy"
+        },
+        "reply": {
+          "status": "boundary",
+          "cursor": 26,
+          "records": [
+            {
+              "event": "independent_evaluation",
+              "success": false,
+              "evaluation_request": {
+                "transport_request_id": "finish-policy",
+                "command_op": "finish"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "evaluation": {
+      "event": "independent_evaluation",
+      "success": false,
+      "evaluation_request": {
+        "transport_request_id": "finish-policy",
+        "command_op": "finish"
+      }
+    }
+  },
+  "wrong_final_id": {
+    "state": "finalization_unresolved",
+    "task_success": null,
+    "finish_attempted": true,
+    "authority": "none",
+    "exchanges": [
+      {
+        "request": {
+          "after": 23,
+          "events": [
+            "effect_checkpoint"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "effect_checkpoint",
+            "contract": {
+              "expected": {
+                "A1": 612,
+                "A2": 129
+              },
+              "kind": "saved_cells"
+            }
+          },
+          "request_id": "check-after-confirm",
+          "read_request_id": "check-after-confirm"
+        },
+        "reply": {
+          "status": "boundary",
+          "records": [
+            {
+              "event": "command",
+              "command": {
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "op": "effect_checkpoint",
+                "transport_request_id": "check-after-confirm"
+              },
+              "received_ns": 82258819628,
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82258828940,
+              "delivery_id": "delivery:24"
+            },
+            {
+              "event": "effect_checkpoint",
+              "evidence": {
+                "status": "VERIFIED",
+                "authority": "none",
+                "attribution": "not_established",
+                "task_success": null,
+                "observation_closed": false,
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "started_ns": 82264872130,
+                "scope": "saved first worksheet cells at one sample",
+                "expected": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "sampled_ns": 82264991915,
+                "artifact_sha256": "70e6518fdd966890d8a3253535b10bf056e9b6fa8a731230f3a752d8cfa9c234",
+                "actual": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "reason": "sample_matches_declared_cells",
+                "finished_ns": 82269099167
+              },
+              "task_success": null,
+              "authority": "none",
+              "scope": "non-final artifact query; input admission unchanged",
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82269107267,
+              "delivery_id": "delivery:25"
+            }
+          ],
+          "cursor": 25,
+          "returned_ns": 82274941590,
+          "authority": "none",
+          "acknowledgement": "not implied",
+          "command_receipt": {
+            "request_id": "check-after-confirm",
+            "replayed": false,
+            "state": "stdin_flushed"
+          }
+        }
+      },
+      {
+        "request": {
+          "after": 25,
+          "events": [
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "finish"
+          },
+          "request_id": "finish-policy",
+          "read_request_id": "finish-policy"
+        },
+        "reply": {
+          "status": "boundary",
+          "cursor": 26,
+          "records": [
+            {
+              "event": "independent_evaluation",
+              "success": true,
+              "evaluation_request": {
+                "transport_request_id": "other",
+                "command_op": "finish"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "legacy_unscoped": {
+    "state": "finalization_unresolved",
+    "task_success": null,
+    "finish_attempted": true,
+    "authority": "none",
+    "exchanges": [
+      {
+        "request": {
+          "after": 23,
+          "events": [
+            "effect_checkpoint"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "effect_checkpoint",
+            "contract": {
+              "expected": {
+                "A1": 612,
+                "A2": 129
+              },
+              "kind": "saved_cells"
+            }
+          },
+          "request_id": "check-after-confirm",
+          "read_request_id": "check-after-confirm"
+        },
+        "reply": {
+          "status": "boundary",
+          "records": [
+            {
+              "event": "command",
+              "command": {
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "op": "effect_checkpoint",
+                "transport_request_id": "check-after-confirm"
+              },
+              "received_ns": 82258819628,
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82258828940,
+              "delivery_id": "delivery:24"
+            },
+            {
+              "event": "effect_checkpoint",
+              "evidence": {
+                "status": "VERIFIED",
+                "authority": "none",
+                "attribution": "not_established",
+                "task_success": null,
+                "observation_closed": false,
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "started_ns": 82264872130,
+                "scope": "saved first worksheet cells at one sample",
+                "expected": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "sampled_ns": 82264991915,
+                "artifact_sha256": "70e6518fdd966890d8a3253535b10bf056e9b6fa8a731230f3a752d8cfa9c234",
+                "actual": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "reason": "sample_matches_declared_cells",
+                "finished_ns": 82269099167
+              },
+              "task_success": null,
+              "authority": "none",
+              "scope": "non-final artifact query; input admission unchanged",
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82269107267,
+              "delivery_id": "delivery:25"
+            }
+          ],
+          "cursor": 25,
+          "returned_ns": 82274941590,
+          "authority": "none",
+          "acknowledgement": "not implied",
+          "command_receipt": {
+            "request_id": "check-after-confirm",
+            "replayed": false,
+            "state": "stdin_flushed"
+          }
+        }
+      },
+      {
+        "request": {
+          "after": 25,
+          "events": [
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "finish"
+          },
+          "request_id": "finish-policy",
+          "read_request_id": "finish-policy"
+        },
+        "reply": {
+          "status": "boundary",
+          "cursor": 26,
+          "records": [
+            {
+              "event": "independent_evaluation",
+              "success": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "final_error": {
+    "state": "transport_or_protocol_error",
+    "task_success": null,
+    "finish_attempted": true,
+    "authority": "none",
+    "exchanges": [
+      {
+        "request": {
+          "after": 23,
+          "events": [
+            "effect_checkpoint"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "effect_checkpoint",
+            "contract": {
+              "expected": {
+                "A1": 612,
+                "A2": 129
+              },
+              "kind": "saved_cells"
+            }
+          },
+          "request_id": "check-after-confirm",
+          "read_request_id": "check-after-confirm"
+        },
+        "reply": {
+          "status": "boundary",
+          "records": [
+            {
+              "event": "command",
+              "command": {
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "op": "effect_checkpoint",
+                "transport_request_id": "check-after-confirm"
+              },
+              "received_ns": 82258819628,
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82258828940,
+              "delivery_id": "delivery:24"
+            },
+            {
+              "event": "effect_checkpoint",
+              "evidence": {
+                "status": "VERIFIED",
+                "authority": "none",
+                "attribution": "not_established",
+                "task_success": null,
+                "observation_closed": false,
+                "contract": {
+                  "expected": {
+                    "A1": 612,
+                    "A2": 129
+                  },
+                  "kind": "saved_cells"
+                },
+                "started_ns": 82264872130,
+                "scope": "saved first worksheet cells at one sample",
+                "expected": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "sampled_ns": 82264991915,
+                "artifact_sha256": "70e6518fdd966890d8a3253535b10bf056e9b6fa8a731230f3a752d8cfa9c234",
+                "actual": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "reason": "sample_matches_declared_cells",
+                "finished_ns": 82269099167
+              },
+              "task_success": null,
+              "authority": "none",
+              "scope": "non-final artifact query; input admission unchanged",
+              "transport_request_id": "check-after-confirm",
+              "runtime_request_sequence": 5,
+              "declared_action_id": null,
+              "command_op": "effect_checkpoint",
+              "correlation_scope": "current runtime input line; action ID is caller-declared",
+              "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+              "emit_started_ns": 82269107267,
+              "delivery_id": "delivery:25"
+            }
+          ],
+          "cursor": 25,
+          "returned_ns": 82274941590,
+          "authority": "none",
+          "acknowledgement": "not implied",
+          "command_receipt": {
+            "request_id": "check-after-confirm",
+            "replayed": false,
+            "state": "stdin_flushed"
+          }
+        }
+      },
+      {
+        "request": {
+          "after": 25,
+          "events": [
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "command": {
+            "op": "finish"
+          },
+          "request_id": "finish-policy",
+          "read_request_id": "finish-policy"
+        }
+      }
+    ],
+    "error": {
+      "type": "TimeoutError",
+      "message": "injected"
+    }
+  }
+}

@@ -1,0 +1,220 @@
+{
+  "name": "repeat",
+  "repeat": true,
+  "resolution": "1280x720",
+  "first_path": [
+    {
+      "x": 577,
+      "y": 239
+    },
+    {
+      "x": 545,
+      "y": 255
+    },
+    {
+      "x": 513,
+      "y": 271
+    }
+  ],
+  "continuation_path": [
+    {
+      "x": 513,
+      "y": 278
+    },
+    {
+      "x": 545,
+      "y": 294
+    },
+    {
+      "x": 577,
+      "y": 310
+    }
+  ],
+  "path_derivation": {
+    "format": "target-guard-from-pointer-paths-v1",
+    "box_width": 12,
+    "box_height": 8,
+    "shared_corner_offset": [
+      0,
+      7
+    ],
+    "shared_corner_tolerance": 8,
+    "guard_excludes_continuation_shared_corner": true
+  },
+  "expected_reason": "target_not_reached",
+  "expected_independent_success": false,
+  "condition": {
+    "event": "local_target_guard_postcondition",
+    "id": "durable-9d815170a76a47d6af0bb77228ef0d98",
+    "step": 3,
+    "sequence": 34,
+    "format": "local-target-guard-postcondition-outcome-v1",
+    "postcondition_id": "seed991004-transform-repeat",
+    "reason": "target_not_reached",
+    "continue_program": false,
+    "needs_decision": true,
+    "measurements": [
+      {
+        "sequence": 33,
+        "target_changed_pixels": [
+          0,
+          0,
+          0
+        ],
+        "target_changed_total": 0,
+        "guard_changed_pixels": [
+          1,
+          0
+        ],
+        "guard_changed_total": 1
+      },
+      {
+        "sequence": 34,
+        "target_changed_pixels": [
+          0,
+          0,
+          0
+        ],
+        "target_changed_total": 0,
+        "guard_changed_pixels": [
+          1,
+          0
+        ],
+        "guard_changed_total": 1
+      }
+    ],
+    "minimum_target_changed_pixels": 120,
+    "maximum_guard_changed_pixels": 20,
+    "pixel_delta_threshold": 24,
+    "sample_span_ms": 166.036261,
+    "semantic_effect_verified": false,
+    "task_success_verified": false,
+    "grants_input_authority": false,
+    "scope": "fixed-region visual condition for already admitted later steps only",
+    "emitted_ns": 32768891003756
+  },
+  "terminal": {
+    "event": "terminal",
+    "id": "durable-9d815170a76a47d6af0bb77228ef0d98",
+    "status": "needs_decision",
+    "error": null,
+    "steps_completed": 3,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 32768900160734,
+      "valid_until_ns": 32796058228877
+    },
+    "terminal_ns": 32768900196752,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emitted_ns": 32768900199592
+  },
+  "steps_started": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "continuation_started": false,
+  "independent_evaluation": {
+    "event": "independent_evaluation",
+    "success": false,
+    "checks": {
+      "target_owned_roads": false,
+      "ordered_bidirectional_connections": false,
+      "forbidden_tiles_clear": true,
+      "surrounding_road_owner_unchanged": true
+    },
+    "changed_surrounding_tiles": [],
+    "contract": {
+      "x": 44,
+      "y": 10,
+      "width": 64,
+      "target": [
+        684,
+        685,
+        686,
+        750,
+        814
+      ],
+      "forbidden": [
+        748,
+        749,
+        812,
+        813
+      ],
+      "owner": 0,
+      "guard": [
+        554,
+        555,
+        556,
+        557,
+        558,
+        559,
+        560,
+        618,
+        619,
+        620,
+        621,
+        622,
+        623,
+        624,
+        682,
+        683,
+        684,
+        685,
+        686,
+        687,
+        688,
+        746,
+        747,
+        748,
+        749,
+        750,
+        751,
+        752,
+        810,
+        811,
+        812,
+        813,
+        814,
+        815,
+        816,
+        874,
+        875,
+        876,
+        877,
+        878,
+        879,
+        880,
+        938,
+        939,
+        940,
+        941,
+        942,
+        943,
+        944
+      ]
+    },
+    "emitted_ns": 32769548763481
+  },
+  "bridge_exit_code": 0,
+  "prebuild_submit_to_return_ms": 2987.95894,
+  "program_submit_to_return_ms": 2847.176336,
+  "drag_issued_to_condition_ms": 2579.081579,
+  "condition_to_terminal_ms": 9.192996,
+  "durable_calls": 6,
+  "coordinate_frames": {
+    "screen_chrome_translation": [
+      0,
+      0
+    ],
+    "viewport_content_translation": [
+      -128,
+      0
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "schema":"agent-interface/gui-target-late-bind-plan-v2",
+  "task":"GUI-TARGET-LATE-BIND-20260916-002",
+  "publication_base":"0df58a574e671f0e147f155ad30b108a6269cdec",
+  "scientific_change_from_v1":"none",
+  "harness_change_from_v1":"formal cases launched one-by-one from the outer orchestrator instead of one multi-case shell command",
+  "single_variable":"target evidence binding time: pre-wait snapshot versus fresh post-wait visual reacquisition",
+  "app":"Inkscape 1.4",
+  "wait_s":6.5,
+  "pan_count":3,
+  "observation_max_age_ns":500000000,
+  "formal_seeds":[881101,881102,881103,881104],
+  "cases":[
+    {"case":0,"seed":881101,"mode":"snapshot_bound"},
+    {"case":1,"seed":881101,"mode":"late_bind"},
+    {"case":2,"seed":881102,"mode":"late_bind"},
+    {"case":3,"seed":881102,"mode":"snapshot_bound"},
+    {"case":4,"seed":881103,"mode":"snapshot_bound"},
+    {"case":5,"seed":881103,"mode":"late_bind"},
+    {"case":6,"seed":881104,"mode":"late_bind"},
+    {"case":7,"seed":881104,"mode":"snapshot_bound"}
+  ],
+  "decision":{
+    "PASS_CROSS_DOMAIN_LATE_BIND":"snapshot_bound safe-yield 4/4 with zero task input and exact unchanged SVG; late_bind fresh 4/4, unique target retrieval 4/4, exact target-only persisted deletion 4/4, zero wrong edits/release failures; paired median snapshot-minus-late evidence age >=5 s",
+    "HOLD_TRANSFER":"safety gates hold but one or more efficacy/separation gates miss",
+    "FAIL_TRANSFER":"late_bind wrong edit/stale/release failure, or stale snapshot emits task input"
+  },
+  "claim_boundary":"one Inkscape fixture family; no model; no general GUI speedup or semantic identity claim"
+}

@@ -1,0 +1,25 @@
+{
+  "after": 16,
+  "events": [
+    "terminal"
+  ],
+  "timeout": 2,
+  "action_id": "refocus",
+  "request_id": "refocus",
+  "command": {
+    "op": "submit",
+    "id": "refocus",
+    "expected_sequence": 3,
+    "valid_until_ns": 118734103482,
+    "steps": [
+      {
+        "op": "chord",
+        "modifier": "Alt_L",
+        "key": "Tab"
+      },
+      {
+        "op": "observe"
+      }
+    ]
+  }
+}

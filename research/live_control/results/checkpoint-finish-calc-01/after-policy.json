@@ -1,0 +1,196 @@
+{
+  "state": "evaluated",
+  "task_success": true,
+  "finish_attempted": true,
+  "authority": "none",
+  "exchanges": [
+    {
+      "request": {
+        "after": 23,
+        "events": [
+          "effect_checkpoint"
+        ],
+        "timeout": 5,
+        "command": {
+          "op": "effect_checkpoint",
+          "contract": {
+            "expected": {
+              "A1": 612,
+              "A2": 129
+            },
+            "kind": "saved_cells"
+          }
+        },
+        "request_id": "after",
+        "read_request_id": "after"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "contract": {
+                "expected": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "kind": "saved_cells"
+              },
+              "op": "effect_checkpoint",
+              "transport_request_id": "after"
+            },
+            "received_ns": 94668586514,
+            "transport_request_id": "after",
+            "runtime_request_sequence": 5,
+            "declared_action_id": null,
+            "command_op": "effect_checkpoint",
+            "correlation_scope": "current runtime input line; action ID is caller-declared",
+            "clock_domain_id": "2416367e5b55c4b7dcc8f17c3b7047c0456bfd0dc4575536fd7ffd23561bf17f",
+            "emit_started_ns": 94668598101,
+            "delivery_id": "delivery:24"
+          },
+          {
+            "event": "effect_checkpoint",
+            "evidence": {
+              "status": "VERIFIED",
+              "authority": "none",
+              "attribution": "not_established",
+              "task_success": null,
+              "observation_closed": false,
+              "contract": {
+                "expected": {
+                  "A1": 612,
+                  "A2": 129
+                },
+                "kind": "saved_cells"
+              },
+              "started_ns": 94685875969,
+              "scope": "saved first worksheet cells at one sample",
+              "expected": {
+                "A1": 612,
+                "A2": 129
+              },
+              "sampled_ns": 94701715229,
+              "artifact_sha256": "89e22241086590676e5752f693e3039ce6a1a1aec7fc8f4e23216b22f8117a87",
+              "actual": {
+                "A1": 612,
+                "A2": 129
+              },
+              "reason": "sample_matches_declared_cells",
+              "finished_ns": 94705716375,
+              "archive_path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/checkpoint-finish-calc-01/runtime/checkpoint-artifacts/89e22241086590676e5752f693e3039ce6a1a1aec7fc8f4e23216b22f8117a87.bin",
+              "source_sampled_ns": 94673785721,
+              "archive_source_path": "/tmp/realapp-x-z2go3h44/sheet.xlsx",
+              "archive_started_ns": 94673673930,
+              "archive_bytes": 5674,
+              "archive_scope": "parsed archived bytes; original read not atomic; no durability or actor attribution"
+            },
+            "task_success": null,
+            "authority": "none",
+            "scope": "non-final artifact query; input admission unchanged",
+            "transport_request_id": "after",
+            "runtime_request_sequence": 5,
+            "declared_action_id": null,
+            "command_op": "effect_checkpoint",
+            "correlation_scope": "current runtime input line; action ID is caller-declared",
+            "clock_domain_id": "2416367e5b55c4b7dcc8f17c3b7047c0456bfd0dc4575536fd7ffd23561bf17f",
+            "emit_started_ns": 94710258652,
+            "delivery_id": "delivery:25"
+          }
+        ],
+        "cursor": 25,
+        "returned_ns": 94715905768,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "after",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      }
+    },
+    {
+      "request": {
+        "after": 25,
+        "events": [
+          "independent_evaluation"
+        ],
+        "timeout": 5,
+        "command": {
+          "op": "finish"
+        },
+        "request_id": "finish-after",
+        "read_request_id": "finish-after"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "finish",
+              "transport_request_id": "finish-after"
+            },
+            "received_ns": 94720592928,
+            "transport_request_id": "finish-after",
+            "runtime_request_sequence": 6,
+            "declared_action_id": null,
+            "command_op": "finish",
+            "correlation_scope": "current runtime input line; action ID is caller-declared",
+            "clock_domain_id": "2416367e5b55c4b7dcc8f17c3b7047c0456bfd0dc4575536fd7ffd23561bf17f",
+            "emit_started_ns": 94720603857,
+            "delivery_id": "delivery:26"
+          },
+          {
+            "event": "independent_evaluation",
+            "evaluation_request": {
+              "transport_request_id": "finish-after",
+              "runtime_request_sequence": 6,
+              "declared_action_id": null,
+              "command_op": "finish",
+              "correlation_scope": "current runtime input line; action ID is caller-declared"
+            },
+            "success": true,
+            "actual": [
+              612,
+              129
+            ],
+            "known_ns": 94729898946,
+            "clock_domain_id": "2416367e5b55c4b7dcc8f17c3b7047c0456bfd0dc4575536fd7ffd23561bf17f",
+            "emit_started_ns": 94729916564,
+            "delivery_id": "delivery:27"
+          }
+        ],
+        "cursor": 27,
+        "returned_ns": 94738136865,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "finish-after",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      }
+    }
+  ],
+  "evaluation": {
+    "event": "independent_evaluation",
+    "evaluation_request": {
+      "transport_request_id": "finish-after",
+      "runtime_request_sequence": 6,
+      "declared_action_id": null,
+      "command_op": "finish",
+      "correlation_scope": "current runtime input line; action ID is caller-declared"
+    },
+    "success": true,
+    "actual": [
+      612,
+      129
+    ],
+    "known_ns": 94729898946,
+    "clock_domain_id": "2416367e5b55c4b7dcc8f17c3b7047c0456bfd0dc4575536fd7ffd23561bf17f",
+    "emit_started_ns": 94729916564,
+    "delivery_id": "delivery:27"
+  }
+}

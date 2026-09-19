@@ -1,0 +1,20 @@
+{
+  "by_cell": {
+    "observed_readset:declared_changed": {"correct": 5, "n": 5, "rejects": 5, "writes_B": 0},
+    "observed_readset:hidden_changed": {"correct": 5, "n": 5, "rejects": 5, "writes_B": 0},
+    "observed_readset:stable": {"correct": 5, "n": 5, "rejects": 0, "writes_B": 5},
+    "observed_readset:unrelated_changed": {"correct": 5, "n": 5, "rejects": 0, "writes_B": 5},
+    "planner_declared:declared_changed": {"correct": 5, "n": 5, "rejects": 5, "writes_B": 0},
+    "planner_declared:hidden_changed": {"correct": 0, "n": 5, "rejects": 0, "writes_B": 5},
+    "planner_declared:stable": {"correct": 5, "n": 5, "rejects": 0, "writes_B": 5},
+    "planner_declared:unrelated_changed": {"correct": 5, "n": 5, "rejects": 0, "writes_B": 5}
+  },
+  "cases": 40,
+  "decision": "RETAIN_SCOPED_OBSERVED_READSET_RECEIPT",
+  "freeze_commit": "173252b1c848674fd22c3f3076495f81101b1935",
+  "interpretation": "Observed reads routed through the tracing adapter recover the hidden dependency missed by planner declaration; this does not cover uninstrumented reads or external state.",
+  "measured_id_reruns": 0,
+  "publication_base": "dce1ced12ab167563cf502ec62e87c4fe803afac",
+  "schema": "git-readset-guard-result-v1",
+  "task": "O3-GIT-READSET-GUARD-20260916-005"
+}

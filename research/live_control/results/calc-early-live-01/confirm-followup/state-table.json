@@ -1,0 +1,106 @@
+{
+  "format": "input-state-table-v1",
+  "source_sha256": "4544df299059a559f93d52d3b747323641684d542cd0b5e6ffdd2fedc760ce1b",
+  "table": {
+    "common_state": {
+      "owner_id": "d53bd55a88e249bb99ad3010dc5b5b7c",
+      "owned_buttons": [],
+      "owned_keycodes": [],
+      "physical_pointer_mask": 0,
+      "pointer": [
+        640,
+        400
+      ],
+      "focus": 8389124,
+      "active_lease_deadline_ns": null,
+      "active_lease_time_valid": false,
+      "cancel_requested": false
+    },
+    "common_observation": {
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "owner_revision_unchanged": true
+    },
+    "observations": [
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          4
+        ],
+        "sequence": 11,
+        "fields": {
+          "input_state_before": {
+            "delta": {
+              "revision": 26,
+              "sample_started_ns": 70896882156,
+              "sample_finished_ns": 70897142867
+            }
+          },
+          "input_state_after": {
+            "delta": {
+              "revision": 26,
+              "sample_started_ns": 71010449909,
+              "sample_finished_ns": 71010785765
+            }
+          }
+        }
+      },
+      {
+        "path": [
+          "exchanges",
+          2,
+          "reply",
+          "records",
+          0
+        ],
+        "sequence": 12,
+        "fields": {
+          "input_state_before": {
+            "delta": {
+              "revision": 27,
+              "sample_started_ns": 71115135517,
+              "sample_finished_ns": 71115538149
+            }
+          },
+          "input_state_after": {
+            "delta": {
+              "revision": 27,
+              "sample_started_ns": 71202910101,
+              "sample_finished_ns": 71203227975
+            }
+          }
+        }
+      },
+      {
+        "path": [
+          "exchanges",
+          2,
+          "reply",
+          "records",
+          1
+        ],
+        "sequence": 13,
+        "fields": {
+          "input_state_before": {
+            "delta": {
+              "revision": 27,
+              "sample_started_ns": 71295470171,
+              "sample_finished_ns": 71295800092
+            }
+          },
+          "input_state_after": {
+            "delta": {
+              "revision": 27,
+              "sample_started_ns": 71370831829,
+              "sample_finished_ns": 71371086507
+            }
+          }
+        }
+      }
+    ]
+  },
+  "coverage": "Four named input-state fields of every exchange observation; all other fields/events/images remain in the original report and receipt.",
+  "authority": "none; historical values only; no attention cleared, lease renewed, or task success inferred"
+}

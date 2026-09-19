@@ -1,0 +1,33 @@
+{
+  "allocation": "c318-privsep-01",
+  "backend_git_blobs": {
+    "backend_x11.py": "b4f8e043ce4f8929d446e038418ea0fd3655bab0",
+    "office_backend.py": "3aeca10f62fb1366bcdd5fad561509cfcc0d91ab"
+  },
+  "base": "3c6f07f0660aee854d6b2d2d0f525fd9f451de68",
+  "branch": "research/libreoffice-privsep-commit-owner-3c6f07f",
+  "construction_note": "one setup-only Xauthority failure retained, followed by successful stable construction; no construction row is scored",
+  "environment": {
+    "kernel": "6.18.44",
+    "libreoffice": "LibreOffice 25.2.3.2 520(Build:2)",
+    "openpyxl": "3.1.5",
+    "python": "3.13.5",
+    "sqlite": "3.46.1"
+  },
+  "intervention": "GUI-domain UID lacks authoritative target-directory write permission; adversarial os.replace after final check",
+  "issue": 318,
+  "order": [
+    "stable",
+    "path_replace_attempt"
+  ],
+  "pass_gate": "stable and adversarial both publish office/preview; adversarial same-UID replace denied EACCES/EPERM before target change; release empty",
+  "repetitions_per_arm": 1,
+  "schema": "agent-interface/libreoffice-privsep-prereg-v1",
+  "source_sha256": {
+    "audit.py": "99757137b845bdce715bf6009f0f5d74291fb233f43cfae09389965243f0771a",
+    "runner.py": "b98d956850afa46909f0a7145cc5fe28f597215a14fedc97e239c304093bae56",
+    "score_xlsx.py": "1a176c9fef7ab61b5b615c1e191a539acad2eab65d4c1006c7911459b9f43978",
+    "source/backend_x11.py": "78b99f3f528bdb1504740d079d460fdb7ee43c1d2b2cb0d88cb2b1cf3996d940",
+    "source/office_backend.py": "d9ecc0d645e206be91d7f06b67ff8b24b239077cff56aac5431b7507bc726c74"
+  }
+}

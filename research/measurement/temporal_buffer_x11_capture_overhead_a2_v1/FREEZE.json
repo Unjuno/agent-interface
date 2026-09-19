@@ -1,0 +1,54 @@
+{
+  "task": "TEMPORAL-BUFFER-X11-CAPTURE-OVERHEAD-20260918-002",
+  "issue": 1053,
+  "predecessor_issue": 1045,
+  "predecessor_merge": "aceb9df6085d9285f314995b3e3a1d8136a28e54",
+  "predecessor_status": "STOPPED_OUTER_ORCHESTRATION_TIMEOUT",
+  "base": "aceb9df6085d9285f314995b3e3a1d8136a28e54",
+  "branch": "research/temporal-buffer-x11-capture-overhead-a2-20260918-002",
+  "reservation_commit": "480f8eb556bd0391c18f7cd3e0f7901553774031",
+  "formal_authorized": true,
+  "formal_invocation_budget": 1,
+  "formal_result_absent_at_freeze": true,
+  "formal_pairs": 6,
+  "warmup_ms": 300,
+  "measure_ms": 1500,
+  "fixture_callback_ms": 16,
+  "capture_period_ms": 50,
+  "capture_hz": 20,
+  "geometry": [320, 240],
+  "ring_age_ms": 500,
+  "allowed_repair_only": {
+    "xvfb_post_measurement_terminate_wait_ms": 250,
+    "fresh_display_base": 220,
+    "a1_scientific_rows_pooled": false
+  },
+  "construction_status": "PLUMBING_PASS_ONE_SHORT_PAIR",
+  "construction_wall_seconds": 5.25,
+  "gates": {
+    "capture_count_min_each": 25,
+    "capture_dropped_slots_max_each": 1,
+    "capture_p95_ns_max": 10000000,
+    "capture_cpu_fraction_max_each": 0.2,
+    "ring_frame_multiple_max": 12,
+    "paired_count_ratio_p50_min": 0.97,
+    "paired_count_ratio_p50_max": 1.03,
+    "paired_p95_gap_increase_ns_p50_max": 2000000,
+    "candidate_minus_baseline_max_gap_ns_max_each": 10000000,
+    "baseline_severe_stall_ns": 100000000,
+    "baseline_severe_stall_count_hold": 2
+  },
+  "source_git_blobs": {
+    "PLAN.md": "ea0ed8e6271f4e9fec3f5e05d68af161e8926bd6",
+    "fixture.py": "0843f29618b0aa9010b22789f56d248bbeb8f7a4",
+    "runner.py": "20ff3471b2e965f464fcacb5581f2bff59b6aede",
+    "audit.py": "0709f34a8b5dc0d4e223e92e1b3f4c4561a12e35"
+  },
+  "source_sha256": {
+    "PLAN.md": "d50578a4de0d9c718f4cfc3f6fccb937024551b37f605913049a248a2acdb70a",
+    "fixture.py": "f98a6ebe24ec80668b4e45f9b0ebb6e452b60d91737b2edb544b596b7c9c525f",
+    "runner.py": "6aa7002c9b21ffb4352b69b59f5fcec1d2a89164db7a7346143856d730b98e01",
+    "audit.py": "331b0a8fbb048e0a29c67e0b17e7c985817d73d06ab3548f2b147551b02a9e6b"
+  },
+  "reruns": 0
+}

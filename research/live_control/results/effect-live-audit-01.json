@@ -1,0 +1,49 @@
+{
+  "audit_passed": true,
+  "rows": [
+    {
+      "cohort": "effect-live-01",
+      "events": 35,
+      "exchanges": 7,
+      "exact_frames": 7,
+      "task_success": false,
+      "compact_card_returned": true,
+      "capture_to_saved_effect_seconds": null
+    },
+    {
+      "cohort": "effect-live-02",
+      "events": 37,
+      "exchanges": 7,
+      "exact_frames": 7,
+      "task_success": false,
+      "compact_card_returned": true,
+      "capture_to_saved_effect_seconds": 39.777592869
+    }
+  ],
+  "checkpoint_guard_cases": [
+    {
+      "case": "busy",
+      "reason": "effect requires idle executor"
+    },
+    {
+      "case": "wrong_id",
+      "reason": "effect requires latest completed save program"
+    },
+    {
+      "case": "failed_save",
+      "reason": "effect requires latest completed save program"
+    },
+    {
+      "case": "wrong_steps",
+      "reason": "effect requires declared save/settle steps"
+    },
+    {
+      "case": "unknown_field",
+      "reason": "effect requires save_id"
+    }
+  ],
+  "positive_checkpoint": "offline preserved successful SVG; not fresh GUI positive control",
+  "effect_dedup_one_write": true,
+  "audit_sha256": "d01de46709faacd1eef99f6e01040d3f8070da2b5c6abe73cfce7aebb731da5c",
+  "limits": "No live recovery, inverse post-goal tracking-loss case, token accounting or speed comparison. No full SVG equivalence or independent per-child cleanup inventory."
+}

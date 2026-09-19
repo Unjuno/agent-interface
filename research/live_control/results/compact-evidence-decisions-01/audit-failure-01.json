@@ -1,0 +1,8 @@
+{
+  "exit_code": 1,
+  "stage": "source hash path replay",
+  "observed": "FileNotFoundError for a Windows backslash-separated relative source path under WSL",
+  "cause": "audit joined the recorded platform-specific spelling without normalizing separators",
+  "effect_on_model_runs": "none; all 16 calls had already completed and remain retained",
+  "audit_source_sha256": "1913f5729c6a16a918191e1555eccf4b025ac9485c84c2a91527a24257ab4ee1"
+}

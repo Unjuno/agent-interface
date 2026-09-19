@@ -1,0 +1,86 @@
+{
+  "authority_actions": 0,
+  "base": "5f9cf330e4bfed82a5360c0df4853d5c32752347",
+  "controls": [
+    {
+      "admissible": [
+        "FOCUS_CHANGED"
+      ],
+      "expected": [
+        "FOCUS_CHANGED"
+      ],
+      "name": "verified_focus_release"
+    },
+    {
+      "admissible": [
+        "LEASE_EXPIRED"
+      ],
+      "expected": [
+        "LEASE_EXPIRED"
+      ],
+      "name": "verified_expiry_release"
+    },
+    {
+      "admissible": [
+        "SAFETY_VIOLATION"
+      ],
+      "expected": [
+        "SAFETY_VIOLATION"
+      ],
+      "name": "owner_failure"
+    },
+    {
+      "admissible": [],
+      "expected": [],
+      "name": "viewport_visible_change_only"
+    }
+  ],
+  "controls_ok": true,
+  "decision": "PASS_CURRENTNESS_VOCABULARY_GAP_SCOPED",
+  "formal_invocation": 1,
+  "gap_retained": true,
+  "gui_actions": 0,
+  "model_calls": 0,
+  "required_cases": [
+    {
+      "admissible": [],
+      "name": "hard_below_minimum",
+      "reason": "below_hard_minimum",
+      "status": "HARD_INVALIDATED"
+    },
+    {
+      "admissible": [],
+      "name": "unknown_signal_unavailable",
+      "reason": "signal_unavailable",
+      "status": "UNKNOWN"
+    },
+    {
+      "admissible": [],
+      "name": "unknown_binding_changed",
+      "reason": "binding_changed",
+      "status": "UNKNOWN"
+    },
+    {
+      "admissible": [],
+      "name": "unknown_source_expired",
+      "reason": "source_expired",
+      "status": "UNKNOWN"
+    },
+    {
+      "admissible": [],
+      "name": "unknown_nonadvancing_sequence",
+      "reason": "nonadvancing_sequence",
+      "status": "UNKNOWN"
+    }
+  ],
+  "reruns": 0,
+  "schema": "currentness_critical_vocabulary_result_v1",
+  "source_git_blobs": {
+    "#1032_RESULT": "f9afddd78ad2221e45dc9f69d304362ed1a3abbb",
+    "#1042_RESULT": "107cc88f4ed3e42c867bbba08ee320050c1611f8",
+    "guard": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+    "queue_contract": "404a452aa304b4bde73ec0182450d241e2a744af"
+  },
+  "task": "CURRENTNESS-CRITICAL-VOCABULARY-ADEQUACY-20260918-001",
+  "task_input_actions": 0
+}

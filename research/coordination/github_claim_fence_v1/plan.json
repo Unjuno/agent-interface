@@ -1,0 +1,52 @@
+{
+  "schema": "github_claim_fence_plan_v1",
+  "task": "COORD-GITHUB-CLAIM-FENCE-20260916-007",
+  "publication_base": "ae2e940c958dbecddcb253ae93b65513d7fa03be",
+  "branch": "research/github-claim-fence-ae2e940",
+  "policy": {
+    "current_requires": ["owner_id", "generation"],
+    "reclaim_requires_fixture_authorization": true,
+    "reclaim_generation_step": 1,
+    "fresh_sha_retry_after_fenced_readback": 0
+  },
+  "cases": [
+    {
+      "name": "current_generation_control",
+      "path": "register_control.json",
+      "initial_owner": "owner-A-007",
+      "initial_generation": 1,
+      "actor_owner": "owner-A-007",
+      "actor_generation": 1,
+      "expected_policy": "CURRENT_OWNER",
+      "expected_update": "success"
+    },
+    {
+      "name": "different_owner_reclaim",
+      "path": "register_other.json",
+      "initial_owner": "owner-A-007",
+      "initial_generation": 1,
+      "reclaim_owner": "owner-B-007",
+      "reclaim_generation": 2,
+      "late_owner": "owner-A-007",
+      "late_generation": 1,
+      "expected_stale_write": "github_sha_mismatch",
+      "expected_post_read_policy": "FENCED_STALE",
+      "expected_fresh_sha_retry": false
+    },
+    {
+      "name": "same_owner_new_generation",
+      "path": "register_same.json",
+      "initial_owner": "owner-A-007",
+      "initial_generation": 1,
+      "reclaim_owner": "owner-A-007",
+      "reclaim_generation": 2,
+      "late_owner": "owner-A-007",
+      "late_generation": 1,
+      "expected_stale_write": "github_sha_mismatch",
+      "expected_post_read_policy": "FENCED_STALE",
+      "expected_fresh_sha_retry": false
+    }
+  ],
+  "decision": "PASS_GENERATION_FENCE_SCOPED only if all frozen gates in Issue #396 hold",
+  "limits": "Explicit reclaim authorization is fixture input; no TTL, timeout, authentication, external-side-effect or production-lock claim."
+}

@@ -1,0 +1,16 @@
+name: motor-state-runtime-adapter-2502
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "research/integration/motor_state_runtime_adapter_2502_v1/**"
+      - ".github/workflows/motor-state-runtime-adapter-2502.yml"
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    container:
+      image: python:3.12-slim-bookworm@sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a
+    steps:
+      - run: python -c "import urllib.request; base='https://raw.githubusercontent.com/Unjuno/agent-interface/a3e21c677ef72833c1751e2c72bf18f2d31cd7c5/research/integration/motor_state_runtime_adapter_2502_v1/'; [(open(n,'wb').write(urllib.request.urlopen(base+n).read())) for n in ['adapter.py','test_adapter.py']]"
+      - run: python -m unittest -v test_adapter.py

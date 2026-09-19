@@ -1,0 +1,24 @@
+{
+  "controls": [
+    {"name":"bad_tile_neg","rejected":true},
+    {"name":"bad_tile_hi","rejected":true},
+    {"name":"advance_before_init","rejected":true},
+    {"name":"duplicate_receipt_noop","rejected":true},
+    {"name":"same_relevance_advance_noop","rejected":true},
+    {"name":"conflicting_receipt_rejected","rejected":true}
+  ],
+  "decision":"PASS_CONSTRUCTION_ELIGIBLE",
+  "formal_invocations":0,
+  "phase":"construction",
+  "rows":[
+    {"candidate_gate":{"action":"SUPPRESS_EXACT_IRRELEVANT","generation":1,"reason":"CURRENT_IRRELEVANT_CHANGE"},"candidate_state_generation":1,"category":"CURRENT_IRRELEVANT","match":true,"static_false_suppressions":0,"static_suppressions":1},
+    {"candidate_gate":{"action":"FORWARD_FULL_CURRENT","generation":1,"reason":"CURRENT_RELEVANT_CHANGE"},"candidate_state_generation":1,"category":"CURRENT_RELEVANT","match":true,"static_false_suppressions":0,"static_suppressions":0},
+    {"candidate_gate":{"action":"FORWARD_FULL_CURRENT","generation":2,"reason":"STALE_RELEVANCE_GENERATION"},"candidate_state_generation":2,"category":"SHIFT_STALE_HIDDEN","match":true,"static_false_suppressions":1,"static_suppressions":1},
+    {"candidate_gate":{"action":"SUPPRESS_EXACT_IRRELEVANT","generation":2,"reason":"CURRENT_IRRELEVANT_CHANGE"},"candidate_state_generation":2,"category":"FRESH_POST_SHIFT_IRRELEVANT","match":true,"static_false_suppressions":0,"static_suppressions":1},
+    {"candidate_gate":{"action":"FORWARD_FULL_CURRENT","generation":1,"reason":"CRITICAL_CHANGE"},"candidate_state_generation":1,"category":"CRITICAL_OUTSIDE","match":true,"static_false_suppressions":0,"static_suppressions":0},
+    {"candidate_gate":{"action":"FORWARD_FULL_CURRENT","generation":1,"reason":"MISSING_RECEIPT"},"candidate_state_generation":1,"category":"MISSING_RECEIPT","match":true,"static_false_suppressions":0,"static_suppressions":0},
+    {"candidate_gate":{"action":"FORWARD_FULL_CURRENT","generation":1,"reason":"WRONG_SCOPE_RECEIPT"},"candidate_state_generation":1,"category":"WRONG_SCOPE_RECEIPT","match":true,"static_false_suppressions":0,"static_suppressions":0},
+    {"candidate_gate":{"action":"FORWARD_FULL_CURRENT","generation":1,"reason":"RECEIPT_IDENTITY_MISMATCH"},"candidate_state_generation":1,"category":"FUTURE_OR_FORGED_GENERATION","match":true,"static_false_suppressions":0,"static_suppressions":0}
+  ],
+  "task":"OBSERVATION-GATING-O3-RELEVANCE-GENERATION-20260918-001"
+}

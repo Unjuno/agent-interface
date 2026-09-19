@@ -1,0 +1,24 @@
+{
+  "allocation_id": "OBSERVATION-ADDRESSING-20260915-03",
+  "base_plan": "plan_v2.json",
+  "base_plan_sha256": "ac860eef4579b877f78cb77f3529e21caa8f6f2972d09e21118fce71a113ac67",
+  "extra_sources": {
+    "experiment_v3.py": "e3cf2c41687987beb6680643d3559be6336645d624d0e7f77a4e1b7219e21f5a"
+  },
+  "supervision": {
+    "changed_condition": "Allocation02 exhausted the assistant-selected 45s tool timeout after 48/120 complete trials. Keep all original cases, arms, thresholds and v2 input/selection logic. Exact source staging changes only allocation identity and budget metadata.",
+    "layout_process_timeout_s": 90,
+    "tool_timeout_s": 120,
+    "layouts": [
+      0,
+      1
+    ],
+    "reuse_previous_partial_samples": false,
+    "automatic_retry": false
+  },
+  "commands": [
+    "timeout 90s python experiment_v3.py --out run03-layout-0 --layout 0",
+    "timeout 90s python experiment_v3.py --out run03-layout-1 --layout 1"
+  ],
+  "first_result_policy": "Retain every result/failure; do not pool allocation02 partial samples or rerun an ID."
+}

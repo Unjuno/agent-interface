@@ -1,0 +1,161 @@
+{
+  "schema": "matched-semantic-delivery-live-audit-v1",
+  "passed": false,
+  "checks": {
+    "frozen_sources": true,
+    "allocation_passed": false,
+    "all_arms": true,
+    "order": true,
+    "same_candidate_program": true,
+    "medians": true,
+    "limits": true,
+    "zero_model": true
+  },
+  "arm_checks": [
+    {
+      "ordinal": 0,
+      "mode": "path",
+      "passed": true,
+      "checks": {
+        "embedded_exact": true,
+        "mode_seed": true,
+        "program": true,
+        "false_true": true,
+        "release": true,
+        "client_order": true
+      },
+      "events": 12
+    },
+    {
+      "ordinal": 1,
+      "mode": "frame",
+      "passed": true,
+      "checks": {
+        "embedded_exact": true,
+        "mode_seed": true,
+        "program": true,
+        "false_true": true,
+        "release": true,
+        "client_order": true,
+        "frame_reconciliation": true,
+        "pre_artifact": true,
+        "probe_limit": true
+      },
+      "events": 16
+    },
+    {
+      "ordinal": 2,
+      "mode": "frame",
+      "passed": true,
+      "checks": {
+        "embedded_exact": true,
+        "mode_seed": true,
+        "program": true,
+        "false_true": true,
+        "release": true,
+        "client_order": true,
+        "frame_reconciliation": true,
+        "pre_artifact": true,
+        "probe_limit": true
+      },
+      "events": 16
+    },
+    {
+      "ordinal": 3,
+      "mode": "path",
+      "passed": true,
+      "checks": {
+        "embedded_exact": true,
+        "mode_seed": true,
+        "program": true,
+        "false_true": true,
+        "release": true,
+        "client_order": true
+      },
+      "events": 12
+    },
+    {
+      "ordinal": 4,
+      "mode": "frame",
+      "passed": true,
+      "checks": {
+        "embedded_exact": true,
+        "mode_seed": true,
+        "program": true,
+        "false_true": true,
+        "release": true,
+        "client_order": true,
+        "frame_reconciliation": true,
+        "pre_artifact": true,
+        "probe_limit": true
+      },
+      "events": 16
+    },
+    {
+      "ordinal": 5,
+      "mode": "path",
+      "passed": true,
+      "checks": {
+        "embedded_exact": true,
+        "mode_seed": true,
+        "program": true,
+        "false_true": true,
+        "release": true,
+        "client_order": true
+      },
+      "events": 12
+    },
+    {
+      "ordinal": 6,
+      "mode": "path",
+      "passed": true,
+      "checks": {
+        "embedded_exact": true,
+        "mode_seed": true,
+        "program": true,
+        "false_true": true,
+        "release": true,
+        "client_order": true
+      },
+      "events": 12
+    },
+    {
+      "ordinal": 7,
+      "mode": "frame",
+      "passed": true,
+      "checks": {
+        "embedded_exact": true,
+        "mode_seed": true,
+        "program": true,
+        "false_true": true,
+        "release": true,
+        "client_order": true,
+        "frame_reconciliation": true,
+        "pre_artifact": true,
+        "probe_limit": true
+      },
+      "events": 16
+    }
+  ],
+  "metrics_ms": {
+    "path_semantic_ready_median_ms": 280.5361605,
+    "frame_semantic_ready_median_ms": 239.23042099999998,
+    "median_advantage_ms": 41.305739500000016,
+    "median_ratio": 0.8527614428515,
+    "samples_ms": {
+      "path": [
+        270.924953,
+        297.146572,
+        276.619585,
+        284.452736
+      ],
+      "frame": [
+        236.563732,
+        233.989886,
+        241.89711,
+        242.706701
+      ]
+    }
+  },
+  "scope": "eight fresh private-Xvfb Inkscape sessions with identical seed/task/candidate/program in frozen ABBA/BAAB order; ordinary observation plus PNG path scoring versus action-scoped pre-artifact exact-frame semantic probe; client-visible admission-to-semantic-ready, correctness, two exchanges and release measured; no model, token, general performance or human-tempo claim"
+}

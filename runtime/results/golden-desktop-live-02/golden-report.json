@@ -1,0 +1,335 @@
+{
+  "schema": "agent_interface_golden_desktop_live_v1",
+  "passed": true,
+  "seed": 991030,
+  "tasks_exact": 6,
+  "routes": [
+    "cold",
+    "reuse",
+    "reuse",
+    "repair",
+    "reuse",
+    "reuse"
+  ],
+  "planner_generations_including_preflight": 3,
+  "model_visible_images": 2,
+  "usage": {
+    "input_tokens": 26531,
+    "cached_input_tokens": 4864,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 480,
+    "reasoning_output_tokens": 135
+  },
+  "old_target_pointer_admissions": 0,
+  "all_releases_verified": true,
+  "input_feedback_median_ms": 101.275633,
+  "six_task_elapsed_ms": 47460.087449,
+  "whole_command_elapsed_ms": 58878.81236,
+  "independent_evaluation": {
+    "event": "independent_evaluation",
+    "schema": "integrated_efficiency_oracle_v1",
+    "known_ns": 15292673949482,
+    "success": true,
+    "record_count": 6,
+    "exact_counts": {
+      "task-1": 1,
+      "task-2": 1,
+      "task-3": 1,
+      "task-4": 1,
+      "task-5": 1,
+      "task-6": 1
+    },
+    "unexpected": [],
+    "duplicates": {},
+    "missing": [],
+    "emit_started_ns": 15292673964360
+  },
+  "tasks": [
+    {
+      "arm": "persistent",
+      "task_id": "task-1",
+      "layout": "A",
+      "route": "cold",
+      "model_calls": [
+        {
+          "call_id": "01a0a122-ab0f-7ca0-ab24-0d60fb5e0545",
+          "stage": "anchor_model",
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "usage": {
+            "input_tokens": 9287,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 166,
+            "reasoning_output_tokens": 51
+          }
+        }
+      ],
+      "planner_generations": 1,
+      "model_visible_images": 1,
+      "local_observations": 21,
+      "durable_calls": 16,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 10993468902,
+      "source_to_completion_ns": 9187106413,
+      "input_feedback_ns": [
+        104828704,
+        100416178
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    {
+      "arm": "persistent",
+      "task_id": "task-2",
+      "layout": "A",
+      "route": "reuse",
+      "model_calls": [],
+      "planner_generations": 0,
+      "model_visible_images": 0,
+      "local_observations": 23,
+      "durable_calls": 20,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 4582487464,
+      "source_to_completion_ns": 2757977283,
+      "input_feedback_ns": [
+        101254661,
+        101296605
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    {
+      "arm": "persistent",
+      "task_id": "task-3",
+      "layout": "A",
+      "route": "reuse",
+      "model_calls": [],
+      "planner_generations": 0,
+      "model_visible_images": 0,
+      "local_observations": 23,
+      "durable_calls": 20,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 4923431799,
+      "source_to_completion_ns": 3117864831,
+      "input_feedback_ns": [
+        100185189,
+        100931552
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    {
+      "arm": "persistent",
+      "task_id": "task-4",
+      "layout": "B",
+      "route": "repair",
+      "model_calls": [
+        {
+          "call_id": "01a0a122-fd1f-7611-a90a-a8a01dc783f7",
+          "stage": "expanded_model",
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "usage": {
+            "input_tokens": 9287,
+            "cached_input_tokens": 4864,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 168,
+            "reasoning_output_tokens": 53
+          }
+        }
+      ],
+      "planner_generations": 1,
+      "model_visible_images": 1,
+      "local_observations": 22,
+      "durable_calls": 18,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 12720490708,
+      "source_to_completion_ns": 10776975172,
+      "input_feedback_ns": [
+        100518621,
+        101301587
+      ],
+      "repair": {
+        "required": true,
+        "old_reference_status": "missing",
+        "old_reference_pointer_admissions": 0,
+        "attempted": true,
+        "succeeded": true
+      }
+    },
+    {
+      "arm": "persistent",
+      "task_id": "task-5",
+      "layout": "B",
+      "route": "reuse",
+      "model_calls": [],
+      "planner_generations": 0,
+      "model_visible_images": 0,
+      "local_observations": 24,
+      "durable_calls": 20,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 6550155442,
+      "source_to_completion_ns": 4397275325,
+      "input_feedback_ns": [
+        100180054,
+        101477078
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    {
+      "arm": "persistent",
+      "task_id": "task-6",
+      "layout": "B",
+      "route": "reuse",
+      "model_calls": [],
+      "planner_generations": 0,
+      "model_visible_images": 0,
+      "local_observations": 23,
+      "durable_calls": 20,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 7690053134,
+      "source_to_completion_ns": 5375277632,
+      "input_feedback_ns": [
+        104572236,
+        102910211
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    }
+  ],
+  "environment": {
+    "schema": "agent_interface_golden_doctor_v1",
+    "passed": true,
+    "checks": [
+      {
+        "name": "linux",
+        "passed": true,
+        "detail": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+      },
+      {
+        "name": "wslpath",
+        "passed": true,
+        "detail": "/usr/bin/wslpath"
+      },
+      {
+        "name": "display",
+        "passed": true,
+        "detail": ":0"
+      },
+      {
+        "name": "python:PIL",
+        "passed": true,
+        "detail": "PIL"
+      },
+      {
+        "name": "python:numpy",
+        "passed": true,
+        "detail": "numpy"
+      },
+      {
+        "name": "python:Xlib",
+        "passed": true,
+        "detail": "Xlib"
+      },
+      {
+        "name": "python:jsonschema",
+        "passed": true,
+        "detail": "jsonschema"
+      },
+      {
+        "name": "windows_python",
+        "passed": true,
+        "detail": "/mnt/c/Users/junny/AppData/Local/Programs/Python/Python312/python.exe"
+      },
+      {
+        "name": "windows_node",
+        "passed": true,
+        "detail": "/mnt/c/Program Files/nodejs/node.exe"
+      },
+      {
+        "name": "windows_cli",
+        "passed": true,
+        "detail": "/mnt/c/Users/junny/AppData/Roaming/npm/node_modules/@openai/codex/bin/codex.js"
+      },
+      {
+        "name": "chromium",
+        "passed": true,
+        "detail": "/usr/bin/google-chrome"
+      },
+      {
+        "name": "x11_connection",
+        "passed": true,
+        "detail": "connected"
+      },
+      {
+        "name": "codex_cli",
+        "passed": true,
+        "detail": "codex-cli 0.153.4"
+      }
+    ],
+    "configuration": {
+      "windows_python": "/mnt/c/Users/junny/AppData/Local/Programs/Python/Python312/python.exe",
+      "windows_node": "/mnt/c/Program Files/nodejs/node.exe",
+      "windows_cli": "/mnt/c/Users/junny/AppData/Roaming/npm/node_modules/@openai/codex/bin/codex.js",
+      "chromium": "/usr/bin/google-chrome"
+    }
+  },
+  "scope": "one fresh persistent-only demonstration; no baseline comparison, rate, generality, or human-speed claim"
+}

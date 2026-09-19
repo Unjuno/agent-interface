@@ -1,0 +1,44 @@
+{
+  "after": 17,
+  "events": [
+    "terminal"
+  ],
+  "timeout": 3,
+  "action_id": "durable-fec1b180eace43fc80e7b04d49ab1b36",
+  "command": {
+    "op": "submit",
+    "expected_sequence": 3,
+    "valid_until_ns": 59344694917,
+    "steps": [
+      {
+        "op": "pointer_click",
+        "x": 550,
+        "y": 106,
+        "duration_ms": 80
+      },
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "a"
+      },
+      {
+        "op": "text",
+        "text": "88"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "s"
+      },
+      {
+        "op": "observe"
+      }
+    ],
+    "id": "durable-fec1b180eace43fc80e7b04d49ab1b36"
+  },
+  "request_id": "e78fbea9df734ae496a24f038c29762f"
+}

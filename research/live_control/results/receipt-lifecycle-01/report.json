@@ -1,0 +1,1496 @@
+{
+  "success": true,
+  "archived": [
+    {
+      "cohort": "calc-early-live-01",
+      "stage": "enter",
+      "binding_verified": true,
+      "attention_before": 9,
+      "attention_after": 7
+    },
+    {
+      "cohort": "calc-early-live-01",
+      "stage": "save",
+      "binding_verified": false,
+      "attention_before": 5,
+      "attention_after": 5
+    },
+    {
+      "cohort": "calc-early-live-01",
+      "stage": "save-followup",
+      "binding_verified": true,
+      "attention_before": 9,
+      "attention_after": 7
+    },
+    {
+      "cohort": "calc-early-live-01",
+      "stage": "confirm",
+      "binding_verified": false,
+      "attention_before": 5,
+      "attention_after": 5
+    },
+    {
+      "cohort": "calc-early-live-01",
+      "stage": "confirm-followup",
+      "binding_verified": true,
+      "attention_before": 9,
+      "attention_after": 7
+    },
+    {
+      "cohort": "calc-combined-live-01",
+      "stage": "enter",
+      "binding_verified": true,
+      "attention_before": 11,
+      "attention_after": 9
+    },
+    {
+      "cohort": "calc-combined-live-01",
+      "stage": "save",
+      "binding_verified": true,
+      "attention_before": 13,
+      "attention_after": 11
+    },
+    {
+      "cohort": "calc-combined-live-01",
+      "stage": "confirm",
+      "binding_verified": true,
+      "attention_before": 11,
+      "attention_after": 9
+    }
+  ],
+  "controls": [
+    {
+      "case": "hidden followup command",
+      "binding_verified": false,
+      "attention": [
+        {
+          "path": [
+            "bounded_followup"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "lifecycle"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "outer_operation"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [],
+          "reason": "caller unresolved or reports reason"
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          "reason": "event requires detail review"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            0
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            1
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "terminal interruption/error/unverified release"
+        },
+        {
+          "path": [],
+          "reason": "program binding unverified",
+          "detail": "caller does not report a resolved attempted program"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "recorded interruption/decision reason requires review regardless of terminal status"
+        },
+        {
+          "path": [],
+          "reason": "lifecycle binding unverified",
+          "detail": "only own command-free terminal reads may follow submit"
+        }
+      ]
+    },
+    {
+      "case": "followup cursor gap",
+      "binding_verified": false,
+      "attention": [
+        {
+          "path": [
+            "bounded_followup"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "lifecycle"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "outer_operation"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [],
+          "reason": "caller unresolved or reports reason"
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          "reason": "event requires detail review"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply"
+          ],
+          "reason": "reply boundary/prefix unresolved"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            0
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            1
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "terminal interruption/error/unverified release"
+        },
+        {
+          "path": [],
+          "reason": "program binding unverified",
+          "detail": "caller does not report a resolved attempted program"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "recorded interruption/decision reason requires review regardless of terminal status"
+        },
+        {
+          "path": [],
+          "reason": "lifecycle binding unverified",
+          "detail": "noncontiguous followup"
+        }
+      ]
+    },
+    {
+      "case": "wrong action in followup",
+      "binding_verified": false,
+      "attention": [
+        {
+          "path": [
+            "bounded_followup"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "lifecycle"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "outer_operation"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [],
+          "reason": "caller unresolved or reports reason"
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          "reason": "event requires detail review"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            0
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            1
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "terminal interruption/error/unverified release"
+        },
+        {
+          "path": [],
+          "reason": "program binding unverified",
+          "detail": "caller does not report a resolved attempted program"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "recorded interruption/decision reason requires review regardless of terminal status"
+        },
+        {
+          "path": [],
+          "reason": "lifecycle binding unverified",
+          "detail": "only own command-free terminal reads may follow submit"
+        }
+      ]
+    },
+    {
+      "case": "read failure retained",
+      "binding_verified": false,
+      "attention": [
+        {
+          "path": [
+            "bounded_followup"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "lifecycle"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "outer_operation"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [],
+          "reason": "caller unresolved or reports reason"
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          "reason": "event requires detail review"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            0
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            1
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "terminal interruption/error/unverified release"
+        },
+        {
+          "path": [],
+          "reason": "program binding unverified",
+          "detail": "caller does not report a resolved attempted program"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "recorded interruption/decision reason requires review regardless of terminal status"
+        },
+        {
+          "path": [],
+          "reason": "lifecycle binding unverified",
+          "detail": "read error requires review"
+        }
+      ]
+    },
+    {
+      "case": "wrong terminal copy",
+      "binding_verified": false,
+      "attention": [
+        {
+          "path": [
+            "bounded_followup"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "lifecycle"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "outer_operation"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [],
+          "reason": "caller unresolved or reports reason"
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          "reason": "event requires detail review"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            0
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            1
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "terminal interruption/error/unverified release"
+        },
+        {
+          "path": [
+            "terminal"
+          ],
+          "reason": "top terminal absent from exchange evidence"
+        },
+        {
+          "path": [],
+          "reason": "program binding unverified",
+          "detail": "caller does not report a resolved attempted program"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "recorded interruption/decision reason requires review regardless of terminal status"
+        },
+        {
+          "path": [],
+          "reason": "lifecycle binding unverified",
+          "detail": "terminal mismatch"
+        }
+      ]
+    },
+    {
+      "case": "invented lifecycle terminal",
+      "binding_verified": false,
+      "attention": [
+        {
+          "path": [
+            "bounded_followup"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "lifecycle"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "outer_operation"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [],
+          "reason": "caller unresolved or reports reason"
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          "reason": "event requires detail review"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            0
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            1
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "terminal interruption/error/unverified release"
+        },
+        {
+          "path": [],
+          "reason": "program binding unverified",
+          "detail": "caller does not report a resolved attempted program"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "recorded interruption/decision reason requires review regardless of terminal status"
+        },
+        {
+          "path": [],
+          "reason": "lifecycle binding unverified",
+          "detail": "lifecycle does not match received evidence"
+        }
+      ]
+    },
+    {
+      "case": "missing source sequence",
+      "binding_verified": false,
+      "attention": [
+        {
+          "path": [
+            "bounded_followup"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "lifecycle"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "outer_operation"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [],
+          "reason": "caller unresolved or reports reason"
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          "reason": "event requires detail review"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            0
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            1
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "terminal interruption/error/unverified release"
+        },
+        {
+          "path": [],
+          "reason": "program binding unverified",
+          "detail": "caller does not report a resolved attempted program"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "recorded interruption/decision reason requires review regardless of terminal status"
+        },
+        {
+          "path": [],
+          "reason": "lifecycle binding unverified",
+          "detail": "clock/source sequence mismatch"
+        }
+      ]
+    },
+    {
+      "case": "changed submitted steps",
+      "binding_verified": false,
+      "attention": [
+        {
+          "path": [
+            "bounded_followup"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "lifecycle"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "outer_operation"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [],
+          "reason": "caller unresolved or reports reason"
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          "reason": "event requires detail review"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            0
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            1
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "terminal interruption/error/unverified release"
+        },
+        {
+          "path": [],
+          "reason": "program binding unverified",
+          "detail": "caller does not report a resolved attempted program"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "recorded interruption/decision reason requires review regardless of terminal status"
+        },
+        {
+          "path": [],
+          "reason": "lifecycle binding unverified",
+          "detail": "echoed command differs from submitted command"
+        }
+      ]
+    },
+    {
+      "case": "wrong deadline",
+      "binding_verified": false,
+      "attention": [
+        {
+          "path": [
+            "bounded_followup"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "lifecycle"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "outer_operation"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [],
+          "reason": "caller unresolved or reports reason"
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          "reason": "event requires detail review"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            0
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            1
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "terminal interruption/error/unverified release"
+        },
+        {
+          "path": [],
+          "reason": "program binding unverified",
+          "detail": "caller does not report a resolved attempted program"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "recorded interruption/decision reason requires review regardless of terminal status"
+        },
+        {
+          "path": [],
+          "reason": "lifecycle binding unverified",
+          "detail": "deadline outside admission horizon"
+        }
+      ]
+    },
+    {
+      "case": "missing admission",
+      "binding_verified": false,
+      "attention": [
+        {
+          "path": [
+            "bounded_followup"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "lifecycle"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "outer_operation"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [],
+          "reason": "caller unresolved or reports reason"
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            1
+          ],
+          "reason": "event requires detail review"
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          "reason": "event requires detail review"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            0
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            1
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "terminal interruption/error/unverified release"
+        },
+        {
+          "path": [],
+          "reason": "program binding unverified",
+          "detail": "caller does not report a resolved attempted program"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "recorded interruption/decision reason requires review regardless of terminal status"
+        },
+        {
+          "path": [],
+          "reason": "lifecycle binding unverified",
+          "detail": "outcome without recorded admission"
+        }
+      ]
+    },
+    {
+      "case": "contradictory last reply",
+      "binding_verified": false,
+      "attention": [
+        {
+          "path": [
+            "bounded_followup"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "lifecycle"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "outer_operation"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [],
+          "reason": "caller unresolved or reports reason"
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          "reason": "event requires detail review"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            0
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            1
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "terminal interruption/error/unverified release"
+        },
+        {
+          "path": [],
+          "reason": "program binding unverified",
+          "detail": "caller does not report a resolved attempted program"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "recorded interruption/decision reason requires review regardless of terminal status"
+        },
+        {
+          "path": [],
+          "reason": "lifecycle binding unverified",
+          "detail": "final reply copy mismatch"
+        }
+      ]
+    },
+    {
+      "case": "unknown nested error preserved",
+      "binding_verified": true,
+      "attention": [
+        {
+          "path": [
+            "bounded_followup"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "extra"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "lifecycle"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "outer_operation"
+          ],
+          "reason": "unknown report field"
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          "reason": "event requires detail review"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            0
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            1
+          ],
+          "reason": "unknown event fields",
+          "fields": [
+            "input_state_after",
+            "input_state_before",
+            "input_state_scope",
+            "owner_revision_unchanged"
+          ]
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "terminal interruption/error/unverified release"
+        },
+        {
+          "path": [
+            "extra",
+            "error"
+          ],
+          "reason": "nested exception or negative evidence"
+        },
+        {
+          "path": [
+            "exchanges",
+            2,
+            "reply",
+            "records",
+            2
+          ],
+          "reason": "recorded interruption/decision reason requires review regardless of terminal status"
+        }
+      ]
+    }
+  ],
+  "evidence_sha256": {
+    "results/calc-early-live-01/enter/report.json": "3336c7c5a34c347ee4244c8eac03b6116cf31718f89b24c04b2e2c18368c3848",
+    "results/calc-early-live-01/save/report.json": "24fa7251e218479376f39c39af96a2969095d60943758db3fbf3d7cbb98e3447",
+    "results/calc-early-live-01/save-followup/report.json": "9d28c99a467cb409eb62acb9f9f46e7a95d05b6e16a6c15253e9039c440bc965",
+    "results/calc-early-live-01/confirm/report.json": "22565a2f83986a42065b8382ac757b21a903d93c8b8cb13fc89a0b32bd3e40a2",
+    "results/calc-early-live-01/confirm-followup/report.json": "4544df299059a559f93d52d3b747323641684d542cd0b5e6ffdd2fedc760ce1b",
+    "results/calc-combined-live-01/enter/report.json": "9500555b5f106d92008bca23b0c58f080d8f277d5d1b544f40688e65774b7ea5",
+    "results/calc-combined-live-01/save/report.json": "dc2e86282ab12fd7f1f69311c1ef8581c7b0091d2eb8c013a976515a8d5ccefe",
+    "results/calc-combined-live-01/confirm/report.json": "9ad1bd2d53c4fc6138be5ec778cf462869111715428eaa4cc5c6fa53d1fbd38f"
+  },
+  "sources": {
+    "decision_receipt_v5.py": "d9cfa5eba9ec6b023c30b5979a5b695bfa894f86304bbd97e090b6aa36c09555",
+    "probe_receipt_lifecycle_v1.py": "3e16b6dfc6540755d3b6537bac795a0259510f8423a85bc5bb390ffffcd9d44c",
+    "decision_receipt_v4.py": "3973f945eead077173d2d2769eb683086e913f3cafc813a1881c6e9a97f63a79",
+    "decision_receipt_v2.py": "5aa1a1456e5c9a3bf8f62434ebb30092421a190f7089beb55a63dfa9cd009a61",
+    "stopped_client_v1.py": "ad0f6e938f575b94aaf8059283de5bd5a2b19ef4dd709f6a6a7894963994eb5b"
+  },
+  "scope": "Offline validation against eight archived live reports; no new input, GUI episode, model speed or token measurement"
+}

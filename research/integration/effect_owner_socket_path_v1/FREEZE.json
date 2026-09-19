@@ -1,0 +1,89 @@
+{
+  "construction": "exact upstream identities 7/7; py_compile PASS; excluded live socket tests 2/2 PASS; formal rows 0; RESULT.json absent",
+  "files": {
+    "environment.json": {
+      "bytes": 165,
+      "git_blob": "2034d6f15cc7316888f602d513c7ca581b42200c",
+      "sha256": "444013c575a245802affe0b1902e07c3cce78508d7893ef6ac845a0cdf55c62f"
+    },
+    "plan.json": {
+      "bytes": 247,
+      "git_blob": "67772d9a8006a2f6ca881352b664eaa549761bff",
+      "sha256": "819b2947d926de1347e0d673ada82ae56ffcadad8c29aa1d1214cae79a3ee3bc"
+    },
+    "prereg.json": {
+      "bytes": 293,
+      "git_blob": "0f2f47f0fc1f090f745557cb61f32b970470eb59",
+      "sha256": "326a9db033f654af1e75d9af505dc990b263cd29a07539e0b0a96cb254f1fa97"
+    },
+    "src/audit.py": {
+      "bytes": 2406,
+      "git_blob": "1c12c84d73f1ff6bb4d7a3f44657aad9dfe184fb",
+      "sha256": "f547cd032f7577736d5d2853dc30e431395dc236bdace9c5245b291e16ef5953"
+    },
+    "src/run_case.py": {
+      "bytes": 3314,
+      "git_blob": "dd1789934fad49f8e72ad2d55f6aeda8bb1a0a1c",
+      "sha256": "3e9eec4431ac6646751c1273e9391d379d1882c3d6bb6879ac48618a1623d043"
+    },
+    "src/run_formal.py": {
+      "bytes": 1238,
+      "git_blob": "7ead3150f5773d1426207a862c52030186976517",
+      "sha256": "1686c6365377053adfec666785ef224058dd2bbf6565f3e87762dc26986d4d00"
+    },
+    "src/test_contract.py": {
+      "bytes": 795,
+      "git_blob": "7d097783fd792fd21f8ec1d9a09c203aa2a040c9",
+      "sha256": "27f209ca1db23d1a2409b112f8d88e543e01cd181a311662d4cdac9764f5e7b0"
+    },
+    "upstream/bounded_pipe_writer_v2.py": {
+      "bytes": 2141,
+      "git_blob": "8dbace5de64bcf4699f43365b42a42166645c7d4",
+      "sha256": "5ebf379d41ab4fd51789019d0793fa99625dab990b5dbfc3401908a0f34826c2"
+    },
+    "upstream/command_once_v2.py": {
+      "bytes": 1875,
+      "git_blob": "40a24130e5f8f2bd9b54536d5468b73b2abe908d",
+      "sha256": "3b4015b91f29da4fae5eeab611aae57b55284a4f60b2ef4304f7e7381cf0c2a0"
+    },
+    "upstream/event_cursor_v5.py": {
+      "bytes": 3350,
+      "git_blob": "924979d24611601c4595c1f412fb75cdc413e444",
+      "sha256": "7db5fba6a2d3b4cf6d3e1d61575d3fbf3b62bd9f40825ff76ced02fab97c33b3"
+    },
+    "upstream/event_scope.py": {
+      "bytes": 1379,
+      "git_blob": "d5fc49ce4bf595426adfc833650c3f2641913c94",
+      "sha256": "bf7beafcd4b0efc257a8bfbde1029b25cc6e6c2d4f80ba76b1e600c78bc9cb9a"
+    },
+    "upstream/event_socket_v11.py": {
+      "bytes": 7768,
+      "git_blob": "fe71be94c9284af0ae7c0b4db0b47dd8b1a86522",
+      "sha256": "e6988e4f586b1554c40a4969fbb428143cc7e10213bf303cf800d679f9e7e96c"
+    },
+    "upstream/interactive_v27.py": {
+      "bytes": 974,
+      "git_blob": "4e69437e01d7590f4824317c35b24cbc5690b08f",
+      "sha256": "c82ff1463fd4b6223fa1ef5c0531741c66b8c7ea09060fea9dff7d5362590486"
+    },
+    "upstream/owner.py": {
+      "bytes": 7031,
+      "git_blob": "287894c6bd06bbccef5dff6ff12fd7580262cb50",
+      "sha256": "406991f06f8e1e18385ee7f78cdc566df6d9cda674d57d898f410b489fae99ef"
+    },
+    "upstream/request_boundary_v2.py": {
+      "bytes": 1162,
+      "git_blob": "6e4be1e8a6c7829f91258fd88f6243bbd799adab",
+      "sha256": "2b45cb0103571b078f35d2e1d50a6861e5d8ef449fe1f0bf1d96c91132b5a1e8"
+    }
+  },
+  "formal_executed": 0,
+  "formal_reruns": 0,
+  "formal_rows": 12,
+  "issue": 791,
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "publication_base": "e43b992a13606e515cba2e77763b27c1188223bc",
+  "python": "3.13.5",
+  "schema": "effect-owner-socket-path-freeze-v1",
+  "task": "EFFECT-OWNER-SOCKET-PATH-20260917-001"
+}

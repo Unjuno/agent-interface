@@ -1,0 +1,47 @@
+{
+  "archive": {
+    "bytes": 8229,
+    "chunks": 7,
+    "sha256": "b4cfe9ad8416039573916b0afd0ddba2778b86c6e108f3504bc4240c77e8cf54"
+  },
+  "audit": {
+    "independent_pass": true,
+    "posthoc_corruption_controls_rejected": 4,
+    "posthoc_corruption_controls_total": 4
+  },
+  "by_scenario": {
+    "correct": {
+      "count": 10,
+      "final_state": ["target", "preserve"],
+      "full_invariant": "EFFECT_VERIFIED",
+      "full_truthful": 10,
+      "primary_only": "EFFECT_VERIFIED",
+      "primary_truthful": 10
+    },
+    "wrong_compensated_clean": {
+      "count": 10,
+      "final_state": ["old", "preserve"],
+      "full_invariant": "EFFECT_CONTRADICTED_COMPENSATED",
+      "full_truthful": 10,
+      "primary_only": "EFFECT_CONTRADICTED_COMPENSATED",
+      "primary_truthful": 10
+    },
+    "wrong_compensated_collateral": {
+      "count": 10,
+      "final_state": ["old", "damaged"],
+      "full_invariant": "EFFECT_CONTRADICTED_COMPENSATION_INCOMPLETE",
+      "full_truthful": 10,
+      "primary_only": "EFFECT_CONTRADICTED_COMPENSATED",
+      "primary_truthful": 0
+    }
+  },
+  "decision": "PASS_COLLATERAL_COMPENSATION_BOUNDARY_SCOPED",
+  "formal_cases": 30,
+  "full_invariant_truthful_count": 30,
+  "primary_only_truthful_count": 20,
+  "publication_base": "d25aee1bdda23b757735990ab22e027e21cf0e18",
+  "same_id_reruns": 0,
+  "schema": "effect-compensation-collateral-result-v1",
+  "source_freeze_commit": "4364ead0d3bc6f553dbd357d629cc86680a778f3",
+  "task": "EFFECT-COMPENSATION-COLLATERAL-20260916-001"
+}

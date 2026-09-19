@@ -1,0 +1,49 @@
+[
+  {
+    "cohort": 1,
+    "exact_frames": 1
+  },
+  {
+    "cohort": 2,
+    "exact_frames": 6,
+    "reply_after_yield_ms": 13390.90405,
+    "reply_lateness_ms": 8474.191405,
+    "terminal": {
+      "event": "terminal",
+      "id": "visual2",
+      "status": "needs_decision",
+      "error": null,
+      "steps_completed": 0,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 53534936794,
+        "valid_until_ns": null
+      },
+      "terminal_ns": 53534974255,
+      "semantic_completion": "program status only; task scoring is separate",
+      "emit_started_ns": 53534976735
+    },
+    "evaluation": {
+      "event": "independent_evaluation",
+      "success": false,
+      "actual": {
+        "x": "50",
+        "y": "50",
+        "width": "40",
+        "height": "30",
+        "transform": null
+      },
+      "known_ns": 113753067760,
+      "emit_started_ns": 113753072714
+    },
+    "rejections": [
+      "integer x/y point required",
+      "obsolete reply ticket/sequence",
+      "unsupported chord"
+    ]
+  }
+]

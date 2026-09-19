@@ -1,0 +1,21 @@
+{
+  "study": "observation-anchored deadline self-use",
+  "seed": 990601,
+  "entrypoint": "session_v7.py",
+  "entrypoint_sha256": "34899e4b9b40e495814775e1c8e43a0e137f2ed228d3f71514db541436de1a05",
+  "validity_rule": "valid_until_ns = latest observation capture_ns + 25_000_000_000",
+  "clock": "runtime perf_counter_ns carried by observation; never substitute host clock",
+  "on_expired": "record rejection; refresh observation using an explicit new read-only intent and clock if necessary; do not renew old input automatically",
+  "presentation": "full",
+  "task": "inspect screen, aim and fire in basic room",
+  "comparison": "mechanism feasibility; previous self-use seed and learning differ, no causal speed claim",
+  "primary": "successful actual task and zero clock commands when fresh observation permits",
+  "metrics": [
+    "clock_commands",
+    "accepted_programs",
+    "rejections",
+    "initial_capture_to_first_accept_ms",
+    "between_accepts_ms"
+  ],
+  "qualification": false
+}

@@ -1,0 +1,83 @@
+{
+  "allocation_id": "release-prepared-selection-live-02",
+  "frozen_at": "2026-09-15",
+  "output": "results-local/live_control/release-prepared-selection-live-02",
+  "app": "inkscape",
+  "seed": 207,
+  "episodes": 1,
+  "retry_limit": 0,
+  "model_calls": 0,
+  "point": {
+    "x": 730,
+    "y": 500
+  },
+  "duration_ms": 250,
+  "v1_failure_repair": "persist an fsync-complete server-request-registration-v1 artifact before focus transfer, bind exactly early-release and terminal-only request IDs, retain its SHA and audit receipt timestamps against the later fault",
+  "comparison_reference": {
+    "failed_allocation": "release-client-wait-live-01",
+    "descriptive_early_client_wait_advantage_ms": 110.444045,
+    "promotion": "forbidden because server request receipts were not retained"
+  },
+  "thresholds_ms": {
+    "focus_to_semantic_score_lte": 500,
+    "admission_to_first_feedback_lte": 200,
+    "admission_to_semantic_score_lte": 300
+  },
+  "decision": "PASS only if neutral fault leaves restored-focus target strict-valid and visibly unselected; prior early preparation precedes exact terminal; exact prepared click+observe binds one new acceptance; first feedback retains target within1px/80% support and shows four-sided handles; two steps complete with empty release; all timing limits and one-run/no-retry/model/cancel rules pass. Retain any first outcome.",
+  "source_sha256": {
+    "research/live_control/audit_release_prepared_selection_live_v2.py": "2edc12fa628ab65bd504fb7a67f0104e5b77acf2a2ca5ce714023d10e3ba8856",
+    "research/live_control/cause_session_v1.py": "7a4377c568c9755f3d980575a6a936b3ccae074bf916db3867b7cf634ef9399b",
+    "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+    "research/live_control/executor_v12.py": "b81ad839318e3a53edfde4425f61947fbbc6e142a85348e0a1fe730b754fc74d",
+    "research/live_control/executor_v13.py": "2e45aeae89038d42b4f8082ef930e50ce2f1d2cd64a0ea5c184ea3daba44c327",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+    "research/live_control/inkscape_red_target_planner_v1.py": "9499ac208d7534acd416c83024b64a735d06a04145ae94c0a85949226e9492d5",
+    "research/live_control/inkscape_selection_scorer_v2.py": "a2ae1fa54b1ecc8e06bf0335c5a3f0b03c1634ef3edb3312ef03806c57fe2f5f",
+    "research/live_control/input_owner.py": "a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3",
+    "research/live_control/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "research/live_control/input_owner_v2.py": "f706aaf812b566e6420536a32d00297d1ed92e84246be769d0a673235f232f8e",
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "research/live_control/lease_cause_v1.py": "800880125308a91aaf7ff49bc6f01ca33782e4161b79e3af4a944f517081d918",
+    "research/live_control/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+    "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+    "research/live_control/quiet_window.py": "4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0",
+    "research/live_control/release_aware_preparation_v1.py": "06c3ed8777ddda02f02605b7e2c75a6e1bd471c9070027ef89624c3deb19ea4d",
+    "research/live_control/release_event_cursor_v1.py": "d0f36616acd0d8a299f9be57d323468a12ed5ec69837a6747ccd46db128d4f60",
+    "research/live_control/release_event_scope_v1.py": "a119ee44c7afc272641f3721f36f6d6994a742602939a994330c60974aab8a79",
+    "research/live_control/release_event_socket_v1.py": "552f0f39b3fcbddd71b95fb46c1282bc8e15855850e3aefb060f6558c5704e32",
+    "research/live_control/release_event_socket_v2.py": "dd57b486f177661a5ea76e97a17932818b034275eb19562e6e266877b89e9731",
+    "research/live_control/release_pending_action_v1.py": "c3e8b0eaf43fa5f4f0c1e71d99cde2a95a88e908d9f33f690f6fc93423f9997c",
+    "research/live_control/release_prepared_selection_live_v2.py": "2111cf730eae5931a84bd8f493f04b4ee9cd8a6b07509f2621401278ef9ba6e9",
+    "research/live_control/release_recovery_backend_v1.py": "f6fb71dd07df4aa6daf2a3280364de1ddce6f9a8cd7a8fe8a751acbc17ffc7d2",
+    "research/live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+    "research/live_control/session_v5.py": "041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12",
+    "research/live_control/session_v6.py": "aafab2dda2f110b6dcd0b2aef13821fc21253681daf20b03eb7d66674eb21c60",
+    "research/live_control/session_v7.py": "68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11",
+    "research/live_control/session_v8.py": "508bc5441a08d7e403b1ec84cc08fd10d7d5f92f3f41549ef8af79f5b5de0943",
+    "research/live_control/unix_json_deadline.py": "decb19099c686ee494fe307c3bf411e61c59e05470319ab80159147d2bd73de3",
+    "research/observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+    "research/observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e",
+    "research/observation_tiles/tile_transport.py": "f74caf4f2bea59fe3a73b3f04975384d8520bb06c296765566c4dd2542ef12b0",
+    "research/real_apps_v1/real_app_suite_v1.py": "22b4cc86af68a0ae866fe24735faaeefa40c0e1722238ab8c04723e1a564db24"
+  },
+  "scope": "one distinct private-Xvfb Inkscape neutral-canvas held-click interruption followed by actual execution of the early-prepared red-target candidate, first-feedback observation, overlay-tolerant identity plus visible selection scoring and verified release; terminal-first remains a matched preparation baseline; no model, token, general speedup or human-tempo claim",
+  "changed_condition": "move fault click from the target to neutral white canvas so task is initially unselected; version selection scorer to preserve target identity under <=1px edge shift and >=80% red support while independently requiring >=10 dark handle pixels on all four sides",
+  "planner_roi": [
+    520,
+    330,
+    720,
+    470
+  ],
+  "expected_evidence": [
+    "fault point[730,500] is outside exact target bbox",
+    "restored-focus003.png strict target VALID_CURRENT and v2 selection score false with no handles",
+    "early candidate was prepared before interrupted terminal and revalidated after focus restore",
+    "exact candidate click+observe binds one new acceptance",
+    "first exact feedback preserves target within1px edge delta and >=80% red coverage",
+    "four sides each contain >=10 dark selection-handle pixels",
+    "selection terminal completed2 with verified empty keys/buttons",
+    "500/200/300ms semantic timing limits",
+    "one allocation, zero retry/model/explicit cancel"
+  ]
+}

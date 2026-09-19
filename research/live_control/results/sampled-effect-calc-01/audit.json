@@ -1,0 +1,126 @@
+{
+  "independent_saved_snapshots": [
+    {
+      "label": "initial",
+      "after_exchanges": 0,
+      "begin_ns": 5794504907,
+      "authority": "none; independent audit only, never planner evidence",
+      "read_status": "unavailable",
+      "error": "FileNotFoundError",
+      "detail": "[Errno 2] No such file or directory: '/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/sampled-effect-calc-01/runtime/sheet.xlsx'",
+      "finished_ns": 5795983633
+    },
+    {
+      "label": "after-phase-1",
+      "after_exchanges": 8,
+      "begin_ns": 19630711221,
+      "authority": "none; independent audit only, never planner evidence",
+      "read_status": "unavailable",
+      "error": "FileNotFoundError",
+      "detail": "[Errno 2] No such file or directory: '/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/sampled-effect-calc-01/runtime/sheet.xlsx'",
+      "finished_ns": 19631458292
+    },
+    {
+      "label": "after-sampling-1",
+      "after_exchanges": 11,
+      "begin_ns": 19894280085,
+      "authority": "none; independent audit only, never planner evidence",
+      "read_status": "unavailable",
+      "error": "FileNotFoundError",
+      "detail": "[Errno 2] No such file or directory: '/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/sampled-effect-calc-01/runtime/sheet.xlsx'",
+      "finished_ns": 19895460545
+    },
+    {
+      "label": "after-phase-2",
+      "after_exchanges": 15,
+      "begin_ns": 28683304036,
+      "authority": "none; independent audit only, never planner evidence",
+      "read_status": "unavailable",
+      "error": "FileNotFoundError",
+      "detail": "[Errno 2] No such file or directory: '/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/sampled-effect-calc-01/runtime/sheet.xlsx'",
+      "finished_ns": 28684141284
+    },
+    {
+      "label": "after-sampling-2",
+      "after_exchanges": 21,
+      "begin_ns": 29315140279,
+      "authority": "none; independent audit only, never planner evidence",
+      "read_status": "unavailable",
+      "error": "FileNotFoundError",
+      "detail": "[Errno 2] No such file or directory: '/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/sampled-effect-calc-01/runtime/sheet.xlsx'",
+      "finished_ns": 29316089559
+    }
+  ],
+  "decision_sampling": [
+    {
+      "turn": 1,
+      "elapsed_s": 0.249459602,
+      "captures": 1,
+      "status": "received_pair_equal"
+    },
+    {
+      "turn": 2,
+      "elapsed_s": 0.618838672,
+      "captures": 2,
+      "status": "received_pair_equal"
+    }
+  ],
+  "scope": "one actual Calc episode; shared caller; no cross-domain speed claim",
+  "events": 111,
+  "frames": 18,
+  "exchanges": 21,
+  "models": [
+    {
+      "turn": 1,
+      "usage": {
+        "input_tokens": 9422,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 206,
+        "reasoning_output_tokens": 106
+      },
+      "runner_s": 11.9325821
+    },
+    {
+      "turn": 2,
+      "usage": {
+        "input_tokens": 10094,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 207,
+        "reasoning_output_tokens": 148
+      },
+      "runner_s": 7.7139253
+    },
+    {
+      "turn": 3,
+      "usage": {
+        "input_tokens": 10034,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 101,
+        "reasoning_output_tokens": 54
+      },
+      "runner_s": 8.5220843
+    }
+  ],
+  "saved_cells": [
+    480,
+    192
+  ],
+  "terminal_statuses": [
+    "completed",
+    "completed",
+    "completed",
+    "needs_decision",
+    "completed",
+    "completed",
+    "needs_decision",
+    "completed",
+    "completed"
+  ],
+  "capture_to_evaluation_s": 32.378311586,
+  "handoff_s": [
+    0.217472155
+  ]
+}

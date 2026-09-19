@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "checks": {
+    "frozen_sources": true,
+    "formal": true,
+    "old_refusal": true,
+    "handle_repair": true,
+    "same_scores": true,
+    "semantic_success": true,
+    "exact_artifacts": true,
+    "independent_output": true,
+    "release": true,
+    "zero_model_retry": true
+  },
+  "formal_passed": true,
+  "rescored": 2,
+  "metrics_ms": {
+    "handle_resolution_ms": 0.090539,
+    "contract_repair_ms": 0.145043,
+    "resize_capture_to_repair_ready_ms": 110.865624,
+    "admission_to_first_feedback_ms": 157.359481,
+    "admission_to_useful_feedback_ms": 271.178209,
+    "useful_probe_compute_ms": 4.100747,
+    "useful_probe_to_image_ready_ms": 24.194697,
+    "useful_client_to_terminal_ms": 139.612614,
+    "positive_exchanges": 2,
+    "frontier_model_resumptions": 0
+  },
+  "scope": "One zero-model/no-retry Linux/X11 Chromium fixture and fresh seed. It measures exact target-handle resolution, semantic-contract derivation and local resize repair, client feedback, independent output and release. The target relation is calibrated and frozen, not discovered. No rate, token saving, unknown-layout, model, portability or human-tempo claim."
+}

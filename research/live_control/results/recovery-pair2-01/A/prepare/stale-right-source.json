@@ -1,0 +1,89 @@
+{
+  "status": "boundary",
+  "records": [
+    {
+      "event": "ready",
+      "app": "inkscape",
+      "task": "Move the red rectangle right while preserving its size and vertical position.",
+      "goal": {
+        "token": "t000202",
+        "a": 882,
+        "b": 494,
+        "dx": 36,
+        "setup_readiness_captures": 3
+      },
+      "presentation": "full",
+      "operations": [
+        "submit",
+        "cancel",
+        "clock",
+        "finish"
+      ],
+      "emit_started_ns": 5691893387
+    },
+    {
+      "event": "observation",
+      "id": "initial",
+      "step": 0,
+      "sequence": 1,
+      "capture_ns": 5711441474,
+      "context_ns": 5717237684,
+      "context": [
+        [
+          "windows",
+          "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+        ],
+        [
+          "active_window",
+          6291463
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair2-01/A/runtime/001.png",
+      "image_reused": false,
+      "image_prepare_ns": 41508124,
+      "image_ready_ns": 5778447153,
+      "input_focus_before": 6291464,
+      "input_focus_after": 6291464,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 5.088066,
+      "wire_bytes": 67750,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 5799980463
+    }
+  ],
+  "cursor": 2,
+  "returned_ns": 19372550261,
+  "authority": "none",
+  "acknowledgement": "not implied"
+}

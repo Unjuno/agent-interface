@@ -1,0 +1,481 @@
+[
+  {
+    "event": "observation",
+    "id": "initial",
+    "step": 0,
+    "sequence": 1,
+    "capture_ns": 41908309937020,
+    "context_ns": 41908317291217,
+    "context": [
+      [
+        "windows",
+        "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+      ],
+      [
+        "active_window",
+        6291463
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/release-prepared-selection-live-03/001.png",
+    "image_reused": false,
+    "image_prepare_ns": 33145078,
+    "image_ready_ns": 41908366843190,
+    "input_focus_before": 6291464,
+    "input_focus_after": 6291464,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "capture_ms": 4.623994,
+    "wire_bytes": 67754,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "runtime_emit_ns": 41908379232988
+  },
+  {
+    "event": "accepted",
+    "id": "release-prepared-pointer-click-03",
+    "steps": 1,
+    "program_sha256": "8d89797dd3db57f4961043d9f567a65636c0bb357e834b5c8e9eaa271355329a",
+    "intent_token": "a9f3824e37984d8984053798eeeefe8e",
+    "valid_until_ns": 41913379313443,
+    "accepted_ns": 41908379458607,
+    "runtime_emit_ns": 41908379459486
+  },
+  {
+    "event": "step_started",
+    "id": "release-prepared-pointer-click-03",
+    "step": 0,
+    "operation": "pointer_click",
+    "issued_ns": 41908379692003,
+    "runtime_emit_ns": 41908379692934
+  },
+  {
+    "event": "pointer_admission",
+    "operation": "move",
+    "payload": {
+      "x": 730,
+      "y": 500
+    },
+    "admitted_ns": 41908382054808,
+    "input_ack_ns": 41908382316126,
+    "valid_until_ns": 41913379313443,
+    "surface": 6291463,
+    "id": "release-prepared-pointer-click-03",
+    "step": 0,
+    "runtime_emit_ns": 41908382424038
+  },
+  {
+    "event": "pointer_admission",
+    "operation": "button_down",
+    "payload": 1,
+    "admitted_ns": 41908385594000,
+    "input_ack_ns": 41908385941703,
+    "valid_until_ns": 41913379313443,
+    "surface": 6291463,
+    "id": "release-prepared-pointer-click-03",
+    "step": 0,
+    "runtime_emit_ns": 41908386124940
+  },
+  {
+    "event": "input_released",
+    "id": "release-prepared-pointer-click-03",
+    "intent_token": "a9f3824e37984d8984053798eeeefe8e",
+    "owner_release": {
+      "event": "owner_release",
+      "reason": "focus_changed",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 41908429245731,
+      "valid_until_ns": 41913379313443
+    },
+    "published_ns": 41908429425671,
+    "program_terminal_pending": true,
+    "grants_input_authority": false,
+    "runtime_emit_ns": 41908429430491
+  },
+  {
+    "event": "post_release_observation_started",
+    "id": "release-prepared-pointer-click-03",
+    "step": 0,
+    "grants_input_authority": false,
+    "runtime_emit_ns": 41908434236048
+  },
+  {
+    "event": "observation",
+    "id": "release-prepared-pointer-click-03",
+    "step": 0,
+    "sequence": 2,
+    "capture_ns": 41908441768296,
+    "context_ns": 41908450011499,
+    "context": [
+      [
+        "windows",
+        "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+      ],
+      [
+        "active_window",
+        0
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/release-prepared-selection-live-03/002.png",
+    "image_reused": false,
+    "image_prepare_ns": 28017383,
+    "image_ready_ns": 41908501147986,
+    "input_focus_before": 16777216,
+    "input_focus_after": 16777216,
+    "focus_samples_match": true,
+    "pointer_binding": null,
+    "pointer_context_before": {
+      "focus": 16777216,
+      "surface": null,
+      "geometry": null
+    },
+    "pointer_context_after": {
+      "focus": 16777216,
+      "surface": null,
+      "geometry": null
+    },
+    "capture_ms": 6.527286,
+    "wire_bytes": 21577,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "runtime_emit_ns": 41908508327329
+  },
+  {
+    "event": "post_release_observation_complete",
+    "id": "release-prepared-pointer-click-03",
+    "step": 0,
+    "sequence": 2,
+    "grants_input_authority": false,
+    "runtime_emit_ns": 41908508412131
+  },
+  {
+    "event": "terminal",
+    "id": "release-prepared-pointer-click-03",
+    "status": "needs_decision",
+    "error": null,
+    "steps_completed": 0,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 41908434124094,
+      "valid_until_ns": null
+    },
+    "interruption": {
+      "intent_token": "a9f3824e37984d8984053798eeeefe8e",
+      "record": {
+        "event": "owner_release",
+        "reason": "focus_changed",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 41908429245731,
+        "valid_until_ns": 41913379313443
+      }
+    },
+    "decision_reason": "focus_changed",
+    "terminal_ns": 41908508460672,
+    "semantic_completion": "program status only; task scoring is separate",
+    "runtime_emit_ns": 41908508461821
+  },
+  {
+    "event": "observation",
+    "id": "prepared-pre-admission-0",
+    "step": 0,
+    "sequence": 3,
+    "capture_ns": 41908575025032,
+    "context_ns": 41908580212968,
+    "context": [
+      [
+        "windows",
+        "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+      ],
+      [
+        "active_window",
+        6291463
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/release-prepared-selection-live-03/003.png",
+    "image_reused": false,
+    "image_prepare_ns": 28222644,
+    "image_ready_ns": 41908626977735,
+    "input_focus_before": 6291464,
+    "input_focus_after": 6291464,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "capture_ms": 5.034394,
+    "wire_bytes": 10405,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "runtime_emit_ns": 41908639070032
+  },
+  {
+    "event": "accepted",
+    "id": "prepared-red-selection-03",
+    "steps": 2,
+    "program_sha256": "6de2c6b597e0dd293e869de1a396883c060fc6e5ce1a74574680af1080c11c52",
+    "intent_token": "4dd08503154c418fbebb13fb9aceb61e",
+    "valid_until_ns": 41913701975572,
+    "accepted_ns": 41908702133139,
+    "runtime_emit_ns": 41908702134534
+  },
+  {
+    "event": "step_started",
+    "id": "prepared-red-selection-03",
+    "step": 0,
+    "operation": "pointer_click",
+    "issued_ns": 41908702339164,
+    "runtime_emit_ns": 41908702340683
+  },
+  {
+    "event": "pointer_admission",
+    "operation": "move",
+    "payload": {
+      "x": 619,
+      "y": 390
+    },
+    "admitted_ns": 41908703555351,
+    "input_ack_ns": 41908703717144,
+    "valid_until_ns": 41913701975572,
+    "surface": 6291463,
+    "id": "prepared-red-selection-03",
+    "step": 0,
+    "runtime_emit_ns": 41908703992067
+  },
+  {
+    "event": "pointer_admission",
+    "operation": "button_down",
+    "payload": 1,
+    "admitted_ns": 41908705394406,
+    "input_ack_ns": 41908705596135,
+    "valid_until_ns": 41913701975572,
+    "surface": 6291463,
+    "id": "prepared-red-selection-03",
+    "step": 0,
+    "runtime_emit_ns": 41908705794517
+  },
+  {
+    "event": "observation",
+    "id": "prepared-red-selection-03",
+    "step": 0,
+    "sequence": 4,
+    "capture_ns": 41908792477334,
+    "context_ns": 41908800262222,
+    "context": [
+      [
+        "windows",
+        "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+      ],
+      [
+        "active_window",
+        6291463
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/release-prepared-selection-live-03/004.png",
+    "image_reused": false,
+    "image_prepare_ns": 31983168,
+    "image_ready_ns": 41908856282720,
+    "input_focus_before": 6291464,
+    "input_focus_after": 6291464,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "capture_ms": 3.552065,
+    "wire_bytes": 8024,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "runtime_emit_ns": 41908869525425
+  },
+  {
+    "event": "step_completed",
+    "id": "prepared-red-selection-03",
+    "step": 0,
+    "completed_ns": 41908869588698,
+    "runtime_emit_ns": 41908869589262
+  },
+  {
+    "event": "step_started",
+    "id": "prepared-red-selection-03",
+    "step": 1,
+    "operation": "observe",
+    "issued_ns": 41908869600968,
+    "runtime_emit_ns": 41908869601641
+  },
+  {
+    "event": "observation",
+    "id": "prepared-red-selection-03",
+    "step": 1,
+    "sequence": 5,
+    "capture_ns": 41908875337214,
+    "context_ns": 41908884349673,
+    "context": [
+      [
+        "windows",
+        "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+      ],
+      [
+        "active_window",
+        6291463
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/release-prepared-selection-live-03/005.png",
+    "image_reused": false,
+    "image_prepare_ns": 27821154,
+    "image_ready_ns": 41908944674735,
+    "input_focus_before": 6291464,
+    "input_focus_after": 6291464,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "capture_ms": 4.232784,
+    "wire_bytes": 18703,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "runtime_emit_ns": 41908958534288
+  },
+  {
+    "event": "step_completed",
+    "id": "prepared-red-selection-03",
+    "step": 1,
+    "completed_ns": 41908958595857,
+    "runtime_emit_ns": 41908958596521
+  },
+  {
+    "event": "terminal",
+    "id": "prepared-red-selection-03",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 2,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 41908959021770,
+      "valid_until_ns": 41913701975572
+    },
+    "interruption": null,
+    "decision_reason": null,
+    "terminal_ns": 41908959171271,
+    "semantic_completion": "program status only; task scoring is separate",
+    "runtime_emit_ns": 41908959172761
+  }
+]

@@ -1,0 +1,93 @@
+{
+  "cases": {
+    "authenticated_content_tamper": {
+      "install": "INSTALL_SIGNATURE_INVALID",
+      "snapshot": {
+        "current_incarnation": 1,
+        "generation": 4,
+        "install_writes": 0,
+        "latest_install_receipt": null,
+        "transition_writes": 0,
+        "trusted_signers": [
+          "issuer-root-v1"
+        ]
+      }
+    },
+    "authenticated_restart_recovery": {
+      "fresh_i2_apply": "APPLIED",
+      "old_i1_classification": "STALE_ISSUER_INCARNATION",
+      "snapshot": {
+        "current_incarnation": 2,
+        "generation": 5,
+        "install_writes": 1,
+        "latest_install_receipt": {
+          "install_id": "install-I2",
+          "new_incarnation": 2,
+          "previous_incarnation": 1,
+          "signer_id": "issuer-root-v1"
+        },
+        "transition_writes": 1,
+        "trusted_signers": [
+          "issuer-root-v1"
+        ]
+      }
+    },
+    "authenticated_valid_install": {
+      "fresh_i2_apply": "APPLIED",
+      "install": "INSTALLED",
+      "snapshot": {
+        "current_incarnation": 2,
+        "generation": 5,
+        "install_writes": 1,
+        "latest_install_receipt": {
+          "install_id": "install-I2",
+          "new_incarnation": 2,
+          "previous_incarnation": 1,
+          "signer_id": "issuer-root-v1"
+        },
+        "transition_writes": 1,
+        "trusted_signers": [
+          "issuer-root-v1"
+        ]
+      }
+    },
+    "authenticated_wrong_signer": {
+      "install": "UNTRUSTED_INSTALL_SIGNER",
+      "snapshot": {
+        "current_incarnation": 1,
+        "generation": 4,
+        "install_writes": 0,
+        "latest_install_receipt": null,
+        "transition_writes": 0,
+        "trusted_signers": [
+          "issuer-root-v1"
+        ]
+      }
+    },
+    "signed_replay_and_conflict_controls": {
+      "changed_first": "INSTALLED",
+      "exact_first": "INSTALLED",
+      "exact_replay": "ALREADY_INSTALLED_SELF",
+      "same_id_changed_content": "INSTALL_RECEIPT_CONFLICT"
+    },
+    "unauthenticated_forged_install_baseline": {
+      "fresh_i2_apply": "APPLIED",
+      "generation": 5,
+      "install": "INSTALLED",
+      "install_writes": 1
+    }
+  },
+  "decision": "PASS_AUTHENTICATED_INCARNATION_INSTALL_RECEIPT_SCOPED",
+  "formal_reruns": 0,
+  "gates": {
+    "baseline_forged_install_applies": true,
+    "exact_signed_replay_idempotent": true,
+    "restart_recovers_i2": true,
+    "retained_has_no_private_key_files": true,
+    "same_id_changed_signed_content_conflicts": true,
+    "tamper_rejected_before_install_write": true,
+    "trusted_signed_install_applies_once": true,
+    "wrong_signer_rejected_before_install_write": true
+  },
+  "task": "COORD-AUTH-INCARNATION-INSTALL-20260917-026"
+}

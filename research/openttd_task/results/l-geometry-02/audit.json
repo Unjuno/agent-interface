@@ -1,0 +1,109 @@
+{
+  "audit_passed": true,
+  "scope": "changed L geometry fixture calibration; no model or task input after save",
+  "seed": 991004,
+  "save_sha256": "88faddae21bd6a24406165941ed02c6746eda8b2cb744747790af6eba786371f",
+  "contract": {
+    "x": 44,
+    "y": 10,
+    "width": 64,
+    "target": [
+      684,
+      685,
+      686,
+      750,
+      814
+    ],
+    "forbidden": [
+      748,
+      749,
+      812,
+      813
+    ],
+    "owner": 0,
+    "guard": [
+      554,
+      555,
+      556,
+      557,
+      558,
+      559,
+      560,
+      618,
+      619,
+      620,
+      621,
+      622,
+      623,
+      624,
+      682,
+      683,
+      684,
+      685,
+      686,
+      687,
+      688,
+      746,
+      747,
+      748,
+      749,
+      750,
+      751,
+      752,
+      810,
+      811,
+      812,
+      813,
+      814,
+      815,
+      816,
+      874,
+      875,
+      876,
+      877,
+      878,
+      879,
+      880,
+      938,
+      939,
+      940,
+      941,
+      942,
+      943,
+      944
+    ]
+  },
+  "prior_geometry": {
+    "seed": 991003,
+    "save_sha256": "c91ea76b4dc8c280f98de2e3a4c9b34d6033c833a34fc401bd0c076a15b4bc5b",
+    "target": [
+      977,
+      978,
+      979,
+      1043,
+      1107
+    ]
+  },
+  "different_save": true,
+  "different_origin": true,
+  "different_target": true,
+  "initial_checks": {
+    "target_owned_roads": false,
+    "ordered_bidirectional_connections": false,
+    "forbidden_tiles_clear": true,
+    "surrounding_road_owner_unchanged": true
+  },
+  "matching_observations": {
+    "setup": 1,
+    "restore-1": 3,
+    "restore-2": 3
+  },
+  "observer_mutation_tokens_absent": true,
+  "malformed_controls": {
+    "missing_edge_rejected": true,
+    "missing_guard_rejected": true,
+    "contradictory_overlap_rejected": true,
+    "changed_geometry_rejected": true
+  },
+  "all_owned_processes_exited": true
+}

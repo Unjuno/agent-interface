@@ -1,0 +1,36 @@
+{
+  "after": 4,
+  "events": [
+    "input_stopped",
+    "terminal"
+  ],
+  "timeout": 15,
+  "action_id": "navigate",
+  "request_id": "program-91087ef2308741c6a16c8e36029f6ed2",
+  "command": {
+    "op": "submit",
+    "id": "navigate",
+    "steps": [
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "l"
+      },
+      {
+        "op": "text",
+        "text": "http://127.0.0.1:34433/"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 80,
+        "timeout_ms": 500
+      }
+    ],
+    "expected_sequence": 1,
+    "valid_until_ns": 86674621907
+  }
+}

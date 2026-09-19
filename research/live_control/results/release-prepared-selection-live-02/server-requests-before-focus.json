@@ -1,0 +1,33 @@
+{
+  "schema": "server-request-registration-v1",
+  "snapshot_ns": 41556140438218,
+  "requests": [
+    {
+      "request_id": "early-release",
+      "received_ns": 41556139085129,
+      "request": {
+        "after": 0,
+        "events": [
+          "input_released",
+          "terminal"
+        ],
+        "timeout": 5,
+        "action_id": "release-prepared-pointer-click-02",
+        "request_id": "early-release"
+      }
+    },
+    {
+      "request_id": "terminal-only",
+      "received_ns": 41556139972203,
+      "request": {
+        "after": 0,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 5,
+        "action_id": "release-prepared-pointer-click-02",
+        "request_id": "terminal-only"
+      }
+    }
+  ]
+}

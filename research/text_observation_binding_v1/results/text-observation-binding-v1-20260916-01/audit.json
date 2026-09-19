@@ -1,0 +1,39 @@
+{
+  "pass": true,
+  "checks": {
+    "rows_60": true,
+    "all_gate_pass": true,
+    "all_physical_empty": true,
+    "bound_fresh_exact": true,
+    "bound_fault_refuse_zero": true,
+    "content_fault_accept_wrong": true,
+    "wrong_target_bound_reason": true,
+    "focus_bound_reason": true,
+    "map_unchanged": true,
+    "final_empty": true
+  },
+  "bound_reasons": {
+    "bound_prefix_valid": 5,
+    "stale_sequence": 5,
+    "stale_binding": 5,
+    "wrong_target": 5,
+    "stale_age": 5,
+    "focus_mismatch": 5
+  },
+  "counts": {
+    "content_only_prefix": {
+      "gate_pass": 30,
+      "total": 30,
+      "exact": 5,
+      "refusals": 0
+    },
+    "bound_prefix": {
+      "gate_pass": 30,
+      "total": 30,
+      "exact": 5,
+      "refusals": 25
+    }
+  },
+  "report_sha256": "51017cf28bcfd68390f79a7ebfe2d867bc61a694f24b4263fada67f60657c2ec",
+  "report_bytes": 56749
+}

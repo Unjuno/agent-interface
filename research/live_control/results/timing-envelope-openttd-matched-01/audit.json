@@ -1,0 +1,508 @@
+{
+  "audit_passed": true,
+  "preregistered": true,
+  "matched_invariants": {
+    "same_canonical_save_sha256": "7836587d28056c534dd3ce2968fc89d3e9b47e28400afc90234954a470f8e97c",
+    "same_task": "Build a straight road connecting only the three ground tiles from A to C. Keep the adjacent row marked X free of roads and preserve surrounding roads/ownership. Use visual GUI controls.",
+    "same_initial_geometry": [
+      129,
+      40,
+      1024,
+      720
+    ],
+    "same_source_and_prompt_policy": true,
+    "only_declared_model_route_varies": true
+  },
+  "arms": [
+    {
+      "arm": "fixed-luna",
+      "audit_passed": true,
+      "hard_success": false,
+      "model_turns": [
+        {
+          "turn": 1,
+          "model": "gpt-5.6-luna",
+          "effort": "low",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 13114,
+            "cached_input_tokens": 9984,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 313,
+            "reasoning_output_tokens": 198
+          },
+          "runner_wall_ms": 11365.2956
+        },
+        {
+          "turn": 2,
+          "model": "gpt-5.6-luna",
+          "effort": "low",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 14061,
+            "cached_input_tokens": 9984,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 296,
+            "reasoning_output_tokens": 181
+          },
+          "runner_wall_ms": 9419.179
+        },
+        {
+          "turn": 3,
+          "model": "gpt-5.6-luna",
+          "effort": "low",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 14125,
+            "cached_input_tokens": 9984,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 348,
+            "reasoning_output_tokens": 229
+          },
+          "runner_wall_ms": 10424.1908
+        },
+        {
+          "turn": 4,
+          "model": "gpt-5.6-luna",
+          "effort": "low",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 14179,
+            "cached_input_tokens": 9984,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 348,
+            "reasoning_output_tokens": 233
+          },
+          "runner_wall_ms": 11068.7348
+        },
+        {
+          "turn": 5,
+          "model": "gpt-5.6-luna",
+          "effort": "low",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 14233,
+            "cached_input_tokens": 9984,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 308,
+            "reasoning_output_tokens": 192
+          },
+          "runner_wall_ms": 10328.4459
+        },
+        {
+          "turn": 6,
+          "model": "gpt-5.6-luna",
+          "effort": "low",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 14286,
+            "cached_input_tokens": 9984,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 600,
+            "reasoning_output_tokens": 488
+          },
+          "runner_wall_ms": 17153.0811
+        },
+        {
+          "turn": 7,
+          "model": "gpt-5.6-luna",
+          "effort": "low",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 14330,
+            "cached_input_tokens": 9984,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 153,
+            "reasoning_output_tokens": 75
+          },
+          "runner_wall_ms": 6711.2672
+        },
+        {
+          "turn": 8,
+          "model": "gpt-5.6-luna",
+          "effort": "low",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 13899,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 292,
+            "reasoning_output_tokens": 172
+          },
+          "runner_wall_ms": 11920.5909
+        },
+        {
+          "turn": 9,
+          "model": "gpt-5.6-luna",
+          "effort": "low",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 14399,
+            "cached_input_tokens": 9984,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 514,
+            "reasoning_output_tokens": 410
+          },
+          "runner_wall_ms": 13539.3314
+        }
+      ],
+      "model_wait_total_ms": 103262.0039,
+      "proposal_to_useful_feedback_ms": [
+        3760.6148,
+        3714.4016,
+        3738.8133,
+        3790.5634,
+        3793.0796,
+        3787.4954,
+        1636.2678,
+        3817.8416,
+        1559.57
+      ],
+      "proposal_to_useful_feedback_total_ms": 29598.6475,
+      "initial_observation_to_semantic_completion_ms": null,
+      "initial_to_completion_uncertainty_ms": null,
+      "input_tokens_total": 126626,
+      "cached_input_tokens_total": 79872,
+      "output_tokens_total": 3172,
+      "reasoning_output_tokens_total": 2178,
+      "runtime_exact_frames": 65,
+      "contact_sheets": 8,
+      "durable_calls": 36,
+      "append_records": 73,
+      "save_sha256": "7836587d28056c534dd3ce2968fc89d3e9b47e28400afc90234954a470f8e97c",
+      "task": "Build a straight road connecting only the three ground tiles from A to C. Keep the adjacent row marked X free of roads and preserve surrounding roads/ownership. Use visual GUI controls.",
+      "initial_geometry": [
+        129,
+        40,
+        1024,
+        720
+      ],
+      "missing_endpoints": [
+        "os_injection",
+        "provider_first_token",
+        "provider_request_received",
+        "runtime_receipt"
+      ],
+      "independent_checks": {
+        "target_owned_roads": false,
+        "bidirectional_connections": false,
+        "forbidden_row_clear": true,
+        "surrounding_road_owner_unchanged": false
+      },
+      "changed_surrounding_tiles": [
+        613,
+        614,
+        615
+      ]
+    },
+    {
+      "arm": "fixed-astra",
+      "audit_passed": true,
+      "hard_success": true,
+      "model_turns": [
+        {
+          "turn": 1,
+          "model": "gpt-6-astra",
+          "effort": "medium",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 15780,
+            "cached_input_tokens": 13056,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 108,
+            "reasoning_output_tokens": 0
+          },
+          "runner_wall_ms": 9825.5056
+        },
+        {
+          "turn": 2,
+          "model": "gpt-6-astra",
+          "effort": "medium",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 16723,
+            "cached_input_tokens": 13056,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 60,
+            "reasoning_output_tokens": 0
+          },
+          "runner_wall_ms": 8085.2026
+        },
+        {
+          "turn": 3,
+          "model": "gpt-6-astra",
+          "effort": "medium",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 16076,
+            "cached_input_tokens": 13056,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 156,
+            "reasoning_output_tokens": 64
+          },
+          "runner_wall_ms": 12832.8272
+        },
+        {
+          "turn": 4,
+          "model": "gpt-6-astra",
+          "effort": "medium",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 16545,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 331,
+            "reasoning_output_tokens": 241
+          },
+          "runner_wall_ms": 19195.572
+        },
+        {
+          "turn": 5,
+          "model": "gpt-6-astra",
+          "effort": "medium",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 16406,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 159,
+            "reasoning_output_tokens": 71
+          },
+          "runner_wall_ms": 10773.9449
+        },
+        {
+          "turn": 6,
+          "model": "gpt-6-astra",
+          "effort": "medium",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 16213,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 123,
+            "reasoning_output_tokens": 41
+          },
+          "runner_wall_ms": 10681.8525
+        },
+        {
+          "turn": 7,
+          "model": "gpt-6-astra",
+          "effort": "medium",
+          "kind": "verify",
+          "usage": {
+            "input_tokens": 16443,
+            "cached_input_tokens": 13056,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 160,
+            "reasoning_output_tokens": 112
+          },
+          "runner_wall_ms": 11681.0193
+        }
+      ],
+      "model_wait_total_ms": 84117.6135,
+      "proposal_to_useful_feedback_ms": [
+        3715.8444,
+        845.1124,
+        2660.7742,
+        1839.2361,
+        1438.7649,
+        2081.9667
+      ],
+      "proposal_to_useful_feedback_total_ms": 12581.6987,
+      "initial_observation_to_semantic_completion_ms": 98351.3407,
+      "initial_to_completion_uncertainty_ms": 50.0,
+      "input_tokens_total": 114186,
+      "cached_input_tokens_total": 52224,
+      "output_tokens_total": 1097,
+      "reasoning_output_tokens_total": 529,
+      "runtime_exact_frames": 32,
+      "contact_sheets": 4,
+      "durable_calls": 24,
+      "append_records": 49,
+      "save_sha256": "7836587d28056c534dd3ce2968fc89d3e9b47e28400afc90234954a470f8e97c",
+      "task": "Build a straight road connecting only the three ground tiles from A to C. Keep the adjacent row marked X free of roads and preserve surrounding roads/ownership. Use visual GUI controls.",
+      "initial_geometry": [
+        129,
+        40,
+        1024,
+        720
+      ],
+      "missing_endpoints": [
+        "os_injection",
+        "provider_first_token",
+        "provider_request_received",
+        "runtime_receipt"
+      ],
+      "independent_checks": {
+        "target_owned_roads": true,
+        "bidirectional_connections": true,
+        "forbidden_row_clear": true,
+        "surrounding_road_owner_unchanged": true
+      },
+      "changed_surrounding_tiles": []
+    },
+    {
+      "arm": "adaptive",
+      "audit_passed": true,
+      "hard_success": true,
+      "model_turns": [
+        {
+          "turn": 1,
+          "model": "gpt-5.6-luna",
+          "effort": "low",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 13112,
+            "cached_input_tokens": 9984,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 227,
+            "reasoning_output_tokens": 112
+          },
+          "runner_wall_ms": 7999.2782
+        },
+        {
+          "turn": 2,
+          "model": "gpt-5.6-luna",
+          "effort": "low",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 14061,
+            "cached_input_tokens": 9984,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 245,
+            "reasoning_output_tokens": 131
+          },
+          "runner_wall_ms": 8688.4665
+        },
+        {
+          "turn": 3,
+          "model": "gpt-6-astra",
+          "effort": "medium",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 16786,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 150,
+            "reasoning_output_tokens": 37
+          },
+          "runner_wall_ms": 10313.3439
+        },
+        {
+          "turn": 4,
+          "model": "gpt-6-astra",
+          "effort": "medium",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 16831,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 56,
+            "reasoning_output_tokens": 0
+          },
+          "runner_wall_ms": 7485.8649
+        },
+        {
+          "turn": 5,
+          "model": "gpt-6-astra",
+          "effort": "medium",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 16181,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 131,
+            "reasoning_output_tokens": 39
+          },
+          "runner_wall_ms": 10023.5955
+        },
+        {
+          "turn": 6,
+          "model": "gpt-6-astra",
+          "effort": "medium",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 16657,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 223,
+            "reasoning_output_tokens": 116
+          },
+          "runner_wall_ms": 12299.4166
+        },
+        {
+          "turn": 7,
+          "model": "gpt-6-astra",
+          "effort": "medium",
+          "kind": "act",
+          "usage": {
+            "input_tokens": 16289,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 144,
+            "reasoning_output_tokens": 60
+          },
+          "runner_wall_ms": 11553.2361
+        },
+        {
+          "turn": 8,
+          "model": "gpt-6-astra",
+          "effort": "medium",
+          "kind": "verify",
+          "usage": {
+            "input_tokens": 16507,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 127,
+            "reasoning_output_tokens": 79
+          },
+          "runner_wall_ms": 10186.967
+        }
+      ],
+      "model_wait_total_ms": 79799.9583,
+      "proposal_to_useful_feedback_ms": [
+        3745.9119,
+        3723.0887,
+        3769.355,
+        844.1404,
+        2751.097,
+        1642.7634,
+        2099.6059
+      ],
+      "proposal_to_useful_feedback_total_ms": 18575.9623,
+      "initial_observation_to_semantic_completion_ms": 100201.2167,
+      "initial_to_completion_uncertainty_ms": 50.0,
+      "input_tokens_total": 126424,
+      "cached_input_tokens_total": 19968,
+      "output_tokens_total": 1303,
+      "reasoning_output_tokens_total": 574,
+      "runtime_exact_frames": 44,
+      "contact_sheets": 5,
+      "durable_calls": 28,
+      "append_records": 57,
+      "save_sha256": "7836587d28056c534dd3ce2968fc89d3e9b47e28400afc90234954a470f8e97c",
+      "task": "Build a straight road connecting only the three ground tiles from A to C. Keep the adjacent row marked X free of roads and preserve surrounding roads/ownership. Use visual GUI controls.",
+      "initial_geometry": [
+        129,
+        40,
+        1024,
+        720
+      ],
+      "missing_endpoints": [
+        "os_injection",
+        "provider_first_token",
+        "provider_request_received",
+        "runtime_receipt"
+      ],
+      "independent_checks": {
+        "target_owned_roads": true,
+        "bidirectional_connections": true,
+        "forbidden_row_clear": true,
+        "surrounding_road_owner_unchanged": true
+      },
+      "changed_surrounding_tiles": []
+    }
+  ],
+  "scope": "one fixed-order fresh episode per arm; descriptive matched evidence only; no latency distribution, randomized causal estimate, human comparison, or route promotion",
+  "audit_sha256": "12f937782487651476fcaaeb76e44b139a342200b61d7b84b83a397a1491dff2"
+}

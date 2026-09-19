@@ -1,0 +1,41 @@
+{
+  "task":"CONCURRENT-FAST-DECISION-T1-X11-EDGE-AUTHORITY-A8-20260918-008",
+  "issue":1445,
+  "base":"327bdb0fec8cd9e759b878ed7e78ff4333729485",
+  "factor":"authority closure ordering only; science inherited from #1441",
+  "source_readback_head":"d4bb0e81cbbcae4804f3902b1fff68416fd86f7e",
+  "git_blobs":{
+    "candidate.py":"279a6923bac658d25fb2ecdc916a75c842269cf6",
+    "formal_runner.py":"352e63b01d79f9bbe67104049c4197b9c97cd83a",
+    "formal_audit.py":"6b5264869cb06f17d63543c94f6d6cb7e16de0a3",
+    "construction_runner.py":"c577ff7cfac1680ebf95b1d202559fff05b93e59",
+    "construction_audit.py":"45caf897f12db947a173ea2199c7b478912ed77e",
+    "PURE_PREFLIGHT.json":"039ae571e39f05ca86b136a49f8c280ddaeec1ee",
+    "SYNTHETIC_AUDIT.json":"79c360344ffb0749f1f1871c599118695ab4df7b"
+  },
+  "sha256_local_readback":{
+    "candidate.py":"e1ec191de75e91d22ad4f50e8cab394ff5d6f51c2ea88dc6ad736dcc1c2e2ffd",
+    "formal_runner.py":"04f338e74df89c9f141172a1afe847df403cb6e1f09c436e946241035c336bb9",
+    "formal_audit.py":"9578d635d9c7b06684f5966efa148ff736154df70fd0c77e39d36a851ca8c258",
+    "construction_runner.py":"8f08e135e9fdd38d909131008dbe3eb48471374aaf8b2442dcc037a52f01b2e1"
+  },
+  "static_preflight":{
+    "compile":"PASS",
+    "authority_gate_39_9ms":true,
+    "authority_gate_40_0ms":false,
+    "authority_gate_40_1001ms":false,
+    "stop_gate_39ms":false,
+    "formal_synthetic_pass":true,
+    "formal_corruption_controls":10,
+    "formal_corruption_controls_all_expected":true,
+    "raw_authority_close_clock_required":true,
+    "boundary_transition_after_stop_clock_required":true
+  },
+  "x11_sessions_before_freeze":0,
+  "construction_invocations_before_freeze":0,
+  "formal_invocations_before_freeze":0,
+  "reruns":0,
+  "replacements":0,
+  "tuning":0,
+  "lease_status":"NOT_GRANTED"
+}

@@ -1,0 +1,80 @@
+{
+  "calibrations": [
+    {
+      "episode_finished": true,
+      "health_first": 97,
+      "health_last": 97,
+      "health_min": 97,
+      "map_exit": true,
+      "path": "dev-health-calibration-001"
+    },
+    {
+      "episode_finished": true,
+      "health_first": 100,
+      "health_last": 97,
+      "health_min": 97,
+      "map_exit": true,
+      "path": "cal-map01-threat-contact-v1"
+    },
+    {
+      "episode_finished": true,
+      "health_first": 97,
+      "health_last": 97,
+      "health_min": 97,
+      "map_exit": true,
+      "path": "cal-map01-threat-contact-v2"
+    }
+  ],
+  "claims": {
+    "all_health_guard_releases_verified": true,
+    "deadline_faster_than_explicit_cancel_in_pairs": 3,
+    "formal_allocation": false,
+    "gameplay_efficacy_proven": false,
+    "health_guard_earlier_than_fixed_deadline_in_pairs": 3,
+    "model_calls": 0
+  },
+  "deadline_vs_cancel": {
+    "all_health_exposed": true,
+    "cancel_median_ms": 1.00651,
+    "cutoff_ms": 3500,
+    "deadline_median_ms": 0.475789,
+    "fixture": "map01-threat-contact-v1",
+    "hold_ms": 5000,
+    "key": "Shift_L",
+    "pair_order": [["deadline", "cancel"], ["cancel", "deadline"], ["deadline", "cancel"]],
+    "paired_difference_median_ms": -0.556784,
+    "pairs": [
+      {"cancel_health_min": 97, "cancel_ms": 2.52292, "deadline_health_min": 97, "deadline_minus_cancel_ms": -2.0471310000000003, "deadline_ms": 0.475789, "pair": 1},
+      {"cancel_health_min": 97, "cancel_ms": 1.00651, "deadline_health_min": 97, "deadline_minus_cancel_ms": -0.556784, "deadline_ms": 0.449726, "pair": 2},
+      {"cancel_health_min": 97, "cancel_ms": 0.814676, "deadline_health_min": 97, "deadline_minus_cancel_ms": -0.33118699999999995, "deadline_ms": 0.483489, "pair": 3}
+    ],
+    "schema": "dev-cutoff-vs-cancel-shift-matched-001"
+  },
+  "fixed_cutoff_ms": 3500,
+  "fixture": "research/doom/fixtures/map01-threat-contact-v1/fixture.json",
+  "health_guard_vs_deadline": {
+    "all_release_verified": true,
+    "cancel_to_empty_median_ms": 1.269174,
+    "comparisons": [
+      {"damage_capture_to_empty_ms": 14.733676, "deadline_accepted_to_empty_ms": 3499.820103, "guard_minus_deadline_ms": -326.66740200000004, "health_guard_accepted_to_empty_ms": 3173.152701, "pair": 1},
+      {"damage_capture_to_empty_ms": 13.559659, "deadline_accepted_to_empty_ms": 3499.9139999999998, "guard_minus_deadline_ms": -401.7627159999997, "health_guard_accepted_to_empty_ms": 3098.151284, "pair": 2},
+      {"damage_capture_to_empty_ms": 14.730688, "deadline_accepted_to_empty_ms": 3500.030757, "guard_minus_deadline_ms": -391.53337599999986, "health_guard_accepted_to_empty_ms": 3108.497381, "pair": 3}
+    ],
+    "damage_capture_to_empty_median_ms": 14.730688,
+    "deadline_accepted_to_empty_median_ms": 3499.9139999999998,
+    "fixture": "map01-threat-contact-v1",
+    "guard_accepted_to_empty_median_ms": 3108.497381,
+    "guard_minus_deadline_median_ms": -391.53337599999986,
+    "key": "Shift_L",
+    "schema": "dev-health-guard-cancel-001",
+    "source_health": 100,
+    "trigger": "first typed health < source health"
+  },
+  "hold_ms": 5000,
+  "key": "Shift_L",
+  "offline_bundle_artifact_id": 10398313098,
+  "offline_bundle_run_id": 34973453255,
+  "result_class": "DEVELOPMENT_MECHANISM_EVIDENCE_NOT_FORMAL",
+  "runtime_source_commit": "9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+  "schema": "container-health-guard-cutoff-v1-result"
+}

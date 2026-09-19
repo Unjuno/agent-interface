@@ -1,0 +1,50 @@
+{
+  "decision": "PASS_CROSS_FILE_TOCTOU_BOUNDARY_SCOPED",
+  "schema": "membership-generation-toctou-result-v1",
+  "split_race": {
+    "coordination_commit": "30f2bc4a959bf0c68182d60c00938e9514b0547c",
+    "final": {
+      "active_generation": 2,
+      "members": [
+        "A",
+        "B",
+        "C"
+      ],
+      "membership_epoch": 2
+    },
+    "membership_change_commit": "c7010b041413620e9d778f80dc0124adf06c1ace",
+    "stale_membership_authorized_advance": true
+  },
+  "split_stable": {
+    "advance": true,
+    "coordination_commit": "510e4f7ce43f9522c34ca718512d2d59a293e4f4",
+    "coordination_initial_blob": "9a115961387b1e46566c6d2f936814f7bbe61b3e",
+    "final": {
+      "active_generation": 2,
+      "members": [
+        "A",
+        "B"
+      ],
+      "membership_epoch": 1
+    },
+    "membership_initial_blob": "f942f35b655228de27d049309d66f881b4e14f45"
+  },
+  "task": "COORD-MEMBERSHIP-GENERATION-TOCTOU-20260916-015",
+  "unified_race": {
+    "final": {
+      "active_generation": 1,
+      "members": [
+        "A",
+        "B",
+        "C"
+      ],
+      "membership_epoch": 2
+    },
+    "initial_blob": "88f2724e618be209f132ebf4a3aa43db91924d38",
+    "membership_change_blob": "22f610e978e6abd9f612656ac2d3f3e61a11b5ed",
+    "membership_change_commit": "8e308e74d2a0a1e4b0327ae39e3e00f4b58cb19d",
+    "stale_generation_attempt_error": "does not match 88f2724e618be209f132ebf4a3aa43db91924d38",
+    "stale_generation_attempt_status": 409,
+    "stale_write_rejected": true
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "x11_gil_switch_live_nuisance_v1_audit_result",
+  "pass": true,
+  "decision": "LIVE_GIL_BOTH_SCOPED",
+  "formal_cases": 20,
+  "normal_acquisitions": 2847,
+  "false_nuisance_cancels": 0,
+  "integrity": {
+    "source_binary_schedule_identity": true,
+    "exact_pixel_semantics": true,
+    "expected_switch_intervals": true,
+    "observer_and_competitor_affinity": true,
+    "positive_competitor_cpu_exposure": true,
+    "competitor_cleanup": true,
+    "one_app_press_release_per_case": true,
+    "verified_empty_final_keymap": true,
+    "final_roi_clear": true,
+    "xvfb_cleanup": true
+  },
+  "observation_gate": {
+    "median_paired_1ms_over_5ms_max_acquisition_start_interval_ratio": 0.31390704917935774,
+    "ratio_gate": 0.60,
+    "pairs_ratio_le_0_75": 10,
+    "pairs_required": 7,
+    "pass": true
+  },
+  "release_gate": {
+    "median_paired_1ms_over_5ms_deadline_to_verified_empty_ratio": 0.1921040676602045,
+    "ratio_gate": 0.60,
+    "median_paired_absolute_reduction_ms": 21.904422,
+    "absolute_reduction_gate_ms": 0.5,
+    "pairs_improved": 10,
+    "pairs_required": 7,
+    "pass": true
+  },
+  "descriptive_medians_ms": {
+    "gil5_max_acquisition_start_interval": 29.9689595,
+    "gil1_max_acquisition_start_interval": 9.222917,
+    "gil5_deadline_to_verified_empty": 27.0606525,
+    "gil1_deadline_to_verified_empty": 4.7188425,
+    "gil5_deadline_to_release_command": 1.3992895,
+    "gil1_deadline_to_release_command": 1.9063695,
+    "gil5_release_command_to_xsync": 10.5774765,
+    "gil1_release_command_to_xsync": 1.2685365,
+    "gil5_xsync_to_verified_empty": 13.0615065,
+    "gil1_xsync_to_verified_empty": 1.361343
+  },
+  "formal_raw_bytes": 1113523,
+  "formal_raw_sha256": "5fa5c329ad129320e934a6ed7eccac42e9365403d86152bd31f9893348dc5121"
+}

@@ -1,0 +1,22 @@
+{
+  "kind": "act",
+  "steps": [
+    {
+      "op": "pointer_move",
+      "x": 590,
+      "y": 390
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    }
+  ],
+  "rationale": "The floating labels and construction feedback obscure the A-to-B road surface. Clear the pointer and allow feedback to fade before deciding whether to build the second arm.",
+  "intent": "inspect",
+  "expected_effect": "Construction feedback clears, allowing inspection of the road surface from A to B and the shared B corner.",
+  "checkpoint": {
+    "prior_turn": 5,
+    "status": "uncertain",
+    "evidence": "The comparison strip shows a changed paved surface near B, but labels obscure the middle of the intended A-to-B arm; its full continuity is not yet clear."
+  }
+}

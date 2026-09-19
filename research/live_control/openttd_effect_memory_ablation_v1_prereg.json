@@ -1,0 +1,80 @@
+{
+  "schema": "openttd-effect-memory-ablation-prereg-v1",
+  "status": "preregistered_before_schema_preflight_and_comparison_calls",
+  "requested_model": "gpt-5.6-luna",
+  "requested_effort": "low",
+  "contexts": [
+    "segment-a-b",
+    "segment-b-c"
+  ],
+  "arms": [
+    "no_memory",
+    "full_history",
+    "action_crop"
+  ],
+  "schedule": [
+    {
+      "ordinal": 1,
+      "context": "segment-a-b",
+      "arm": "no_memory",
+      "name": "01-segment-a-b-no_memory"
+    },
+    {
+      "ordinal": 2,
+      "context": "segment-a-b",
+      "arm": "full_history",
+      "name": "02-segment-a-b-full_history"
+    },
+    {
+      "ordinal": 3,
+      "context": "segment-a-b",
+      "arm": "action_crop",
+      "name": "03-segment-a-b-action_crop"
+    },
+    {
+      "ordinal": 4,
+      "context": "segment-b-c",
+      "arm": "action_crop",
+      "name": "04-segment-b-c-action_crop"
+    },
+    {
+      "ordinal": 5,
+      "context": "segment-b-c",
+      "arm": "no_memory",
+      "name": "05-segment-b-c-no_memory"
+    },
+    {
+      "ordinal": 6,
+      "context": "segment-b-c",
+      "arm": "full_history",
+      "name": "06-segment-b-c-full_history"
+    }
+  ],
+  "calls": {
+    "schema_preflight": 1,
+    "comparison": 6,
+    "total": 7
+  },
+  "retries": 0,
+  "same_current_frame_within_context": true,
+  "same_prompt_within_context": true,
+  "ground_truth": "independent retained engine transition: observed",
+  "input_manifest_sha256": "b2029d70d2f7ea41731a8d91061bcb944c041d92ed73b113075802a76f36bb63",
+  "source_sha256": {
+    "openttd_effect_memory_ablation_v1.py": "994cdca14dacedc00874a8c2fb56365cf880f29dbb3b288f519f4b799e6cd9a1",
+    "openttd_effect_model_v1.py": "ce40cfacce6ff3a3c4c9ff47ca45aad1f6496075ece31380973a67fa4fad2a6c",
+    "openttd_effect_model_runner_v1.py": "f4cccbe274ef2d09a6a42eeb988e0cd905cb96beba3f5cbf916f6f09347ad0bc",
+    "openttd_effect_decision_schema_v1.json": "9c823e03cd71611112bb2a5ae2888f0824a5c129c24fd5aec55eee8477af190b",
+    "openttd_effect_decision_responder_v1.txt": "f9f2d68e31c36dadc2012687f55eaceb9cd15beacad12adcdb42d582cac0cdb7",
+    "audit_openttd_effect_memory_ablation_v1.py": "634d8874814f6e99ef24bd33374627c617739b0a57f2c757f6f8a23151dc5fe6",
+    "preregister_openttd_effect_memory_ablation_v1.py": "9e12b0b18cd0a725d1ae95d5e1f4492a1f2d6faae7463ab749dc58e234c8126e",
+    "test_openttd_effect_decision_v1.py": "683f6ac0d722200b04e5d3ce6263eb8cf47cd97b24e3eb2817616c9935c7821e",
+    "build_openttd_action_effect_memory_inputs_v1.py": "c28b0d80f96e9036ffbc0dfe5bc30459b7372b6f16b4267f0cfae805f456d3e3",
+    "audit_openttd_action_effect_memory_inputs_v1.py": "a37c6fd53d9e1788687c4af71314c508cd257284685fc8fdf498c1f56bb9202a"
+  },
+  "formal_pass": "schema preflight and all six comparison calls complete once with complete usage",
+  "crop_transfer_rule": "2/2 observed with safe advance, no worse correctness than both controls, fewer actual input tokens than full history",
+  "default_rule": "if no-memory is also 2/2, retain current-only as default and allow crop only as a full-history replacement",
+  "failure_policy": "retain first output and diagnostics; do not retry, repair in place, or replace allocation",
+  "scope": "archived exact OpenTTD decisions only; no new game input; no causal latency, live-transfer, general memory, or human-tempo claim"
+}

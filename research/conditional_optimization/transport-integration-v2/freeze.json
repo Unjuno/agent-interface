@@ -1,0 +1,21 @@
+{
+  "task_id": "CO-TRANSPORT-INTEGRATION-20260915-01",
+  "base_commit": "120a1b8de6d515d75c2200ca3acc310a124fb373",
+  "plan_sha256": "caef7a82e3c45c17aacb67f11c7cd5e217b7bbf3a17aa911ae31b0b39e8ca86f",
+  "sources": {
+    "research/observation_gating/exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944",
+    "research/observation_tiles/tile_transport.py": "f74caf4f2bea59fe3a73b3f04975384d8520bb06c296765566c4dd2542ef12b0",
+    "research/observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e",
+    "research/conditional_optimization/transport-revisit-v1/candidate.py": "fe6f935f32b9b3cc912c7cef9088d4da87df89fae44152e9aec48c3f04f717fc",
+    "research/conditional_optimization/transport-integration-v2/candidate.py": "01def727f4bd28b89f4df6a10b5b914516f8ae03d0cdb733e57c743645b89806",
+    "research/conditional_optimization/transport-integration-v2/benchmark.py": "d6d11f75ec13118b3fb0c78af3e2fe9614088b455a525f330eb191b5f61a98ce",
+    "research/conditional_optimization/transport-integration-v2/test_integration.py": "04e3086729d59de3552c847e73e2284bd296b950827ff2f8ee6d60d173a20169"
+  },
+  "H": "The v2 single-comparison repeat path reduces median steady codec time by at least 10% versus v1 in both shared-buffer and copied-buffer repeated-image strata while preserving byte-exact v1 packets and PNG results.",
+  "T": "One fresh offline block of 12 balanced repetitions, six fixed synthetic strata, four arms, eight frames/sequence. No retry or extension after results. No GUI/model/OS input. Cold frame charged and steady frames reported separately.",
+  "D": "Mechanics PASS only on complete allocation with exact decoded pixels, current metadata, exact PNG pixels, deterministic packets/PNGs, and identical v1/v2 receipts. Repeat performance PASS requires both repeat strata <=90% of v1 median. All other timings and wire regressions retained per stratum; no default promotion.",
+  "C": "PNG encoding or local checking dominates; timing variance hides small differences; dense frames favor O1; sparse tile headers cost more than a full compressed frame.",
+  "U": "Host scheduling/cache/filesystem variance; clock not pinned, thermal/host contention unknown. Synthetic fixtures are not independent GUI tasks. No calibrated combined uncertainty or causal application-speed claim.",
+  "write_scope": "research/conditional_optimization/ only; all shared sources and formal allocations read-only",
+  "measurement_has_run": false
+}

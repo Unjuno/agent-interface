@@ -1,0 +1,15 @@
+{
+  "schema":"map01-recovery-cover-mechanism-v5-first-outcome-v1",
+  "allocation_id":"map01-recovery-cover-mechanism-live-v5-01",
+  "workflow_run_id":34981549560,
+  "artifact_id":10401209638,
+  "artifact_sha256":"ac9673b542db674a5dbc43b80202ab553f0d789c9e27f9c443a46ac1a3232bee",
+  "workflow_steps":"all success",
+  "frozen_audit_output":"PASS_MECHANISM_ONLY",
+  "accepted_scientific_decision":null,
+  "disposition":"POSTHOC_INVALID_PLANNER_WINDOW_BOUNDARY",
+  "planner_window_ms":{"coast":[3605.497630,3605.547553,3604.851269],"recovery":[601.041798,614.945273,602.899117]},
+  "cause":"planner_end_ns sampled after fallback cleanup; coast waited up to three seconds for absent input_released event",
+  "retry_same_allocation":false,
+  "next":"new V6 allocation with planner-end boundary sampled before cleanup"
+}

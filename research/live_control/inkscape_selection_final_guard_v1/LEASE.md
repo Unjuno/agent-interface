@@ -1,0 +1,1 @@
+Issue #341 owns the finite INKSCAPE-SELECTION-FINAL-GUARD-20260916-001 question on this branch. No scored allocation had run when this lease marker was written. Exact immutable BASE will be recorded after branch ancestry verification through GitHub API.

@@ -1,0 +1,39 @@
+{
+  "interpretation": "Effect-trigger-bound change-then-settle transport barrier repaired the real xterm adapter without changing the compiled runtime core; this is desktop/X11 transport evidence only.",
+  "lineage": {
+    "v1": {
+      "failure": "fixed 150 ms post-input delay; 3/5 positives observed effect too early",
+      "full_summary": {"bytes": 3274, "git_blob_sha1": "0c4c945829e44b25d4969541a8bd41c8f3ee60f5", "sha256": "360aa15c1d26936303952ec98bf6dc0ca2dbab350d27bb6024d33b6cbc98ba21"},
+      "pass": false, "passes": 2, "runs": 5,
+      "source": {"bytes": 8980, "git_blob_sha1": "85aace86b87d446573bba4cf4426f077b62b5a2b", "sha256": "fb8c1c605c1984cfb8d7c69a7a6bb6e8992258149077d44a143726c757cdeb35"}
+    },
+    "v2": {
+      "failure": "generic stable-screen wait could settle before application effect transition; 2/10 positives failed",
+      "full_summary": {"bytes": 10441, "git_blob_sha1": "90071b8ec3fd1183a4f04f0b37c7569a90a40247", "sha256": "ecd6ae222060f6e0ff5e98798f20eef883efb97169f4d3648e17866cea151ecf"},
+      "pass": false, "passes": 8, "runs": 10,
+      "source": {"bytes": 9726, "git_blob_sha1": "b1be66b9f8888188a01c38dbf9250ce934ce7b03", "sha256": "ca3640c11aef498aa2ac13954f173136529da3a6f482c8f6b46af2dfcb933c54"}
+    },
+    "v4": {
+      "full_summary": {"bytes": 18562, "git_blob_sha1": "5ffc32b156f277b8b125d99cc6ca796f27452107", "sha256": "fa364193a19152e00023fa7a2b0ef6f70da8f4718952c545cf472e80b1c44c2b"},
+      "pass": true, "passes": 10, "runs": 10,
+      "source": {"bytes": 10215, "git_blob_sha1": "4b9fd96c9c2ef829c52b526bee9f469f8a7023f6", "sha256": "fb4c1d0113c9d3af4576341924516e20680260b8e22cf9799f6c70407915df26"}
+    }
+  },
+  "schema": "compiled-runtime-xterm-live-v4-retained-summary",
+  "v4_barriers": {
+    "changed": {"all_changed": true, "all_settled": true, "change_ms_max": 40.562567000051786, "change_ms_median": 33.470525499978976, "change_ms_min": 29.98107199982769, "n": 10, "wait_ms_max": 341.702560000158, "wait_ms_median": 314.88500849991397, "wait_ms_min": 162.15226100030122},
+    "positive": {"all_changed": true, "all_settled": true, "change_ms_max": 43.68964100012818, "change_ms_median": 33.747582999694714, "change_ms_min": 29.05843000007735, "n": 20, "wait_ms_max": 352.0388369997818, "wait_ms_median": 191.68197599947234, "wait_ms_min": 168.7271069995404}
+  },
+  "v4_blocks": [
+    {"index":0,"positive":{"actions":2,"outcome":"TASK_SUCCEEDED","release_failures":0,"score_success":true},"changed":{"actions":1,"outcome":"SAFE_YIELD","reason":"effect_failed","release_failures":0,"score_rows":0}},
+    {"index":1,"positive":{"actions":2,"outcome":"TASK_SUCCEEDED","release_failures":0,"score_success":true},"changed":{"actions":1,"outcome":"SAFE_YIELD","reason":"effect_failed","release_failures":0,"score_rows":0}},
+    {"index":2,"positive":{"actions":2,"outcome":"TASK_SUCCEEDED","release_failures":0,"score_success":true},"changed":{"actions":1,"outcome":"SAFE_YIELD","reason":"effect_failed","release_failures":0,"score_rows":0}},
+    {"index":3,"positive":{"actions":2,"outcome":"TASK_SUCCEEDED","release_failures":0,"score_success":true},"changed":{"actions":1,"outcome":"SAFE_YIELD","reason":"effect_failed","release_failures":0,"score_rows":0}},
+    {"index":4,"positive":{"actions":2,"outcome":"TASK_SUCCEEDED","release_failures":0,"score_success":true},"changed":{"actions":1,"outcome":"SAFE_YIELD","reason":"effect_failed","release_failures":0,"score_rows":0}},
+    {"index":5,"positive":{"actions":2,"outcome":"TASK_SUCCEEDED","release_failures":0,"score_success":true},"changed":{"actions":1,"outcome":"SAFE_YIELD","reason":"effect_failed","release_failures":0,"score_rows":0}},
+    {"index":6,"positive":{"actions":2,"outcome":"TASK_SUCCEEDED","release_failures":0,"score_success":true},"changed":{"actions":1,"outcome":"SAFE_YIELD","reason":"effect_failed","release_failures":0,"score_rows":0}},
+    {"index":7,"positive":{"actions":2,"outcome":"TASK_SUCCEEDED","release_failures":0,"score_success":true},"changed":{"actions":1,"outcome":"SAFE_YIELD","reason":"effect_failed","release_failures":0,"score_rows":0}},
+    {"index":8,"positive":{"actions":2,"outcome":"TASK_SUCCEEDED","release_failures":0,"score_success":true},"changed":{"actions":1,"outcome":"SAFE_YIELD","reason":"effect_failed","release_failures":0,"score_rows":0}},
+    {"index":9,"positive":{"actions":2,"outcome":"TASK_SUCCEEDED","release_failures":0,"score_success":true},"changed":{"actions":1,"outcome":"SAFE_YIELD","reason":"effect_failed","release_failures":0,"score_rows":0}}
+  ]
+}

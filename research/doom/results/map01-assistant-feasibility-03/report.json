@@ -1,0 +1,26 @@
+{
+  "passed": false,
+  "classification": "insufficient_decision_tempo",
+  "input_admissions": 18,
+  "accepted_programs": 2,
+  "rejected_commands": 2,
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": true,
+    "player_dead": true,
+    "wall_control_ns": 231245266865,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1
+  },
+  "finding": "The screen-directed route reached the first combat area at full health, but stop-inspect-decide gaps left the continuously advancing game unattended and the player died before the next valid action.",
+  "interface_findings": [
+    "The ready event exposed submit while the assistant first sent run.",
+    "The executor expects typed hold and observe operations rather than hold_ms fields."
+  ],
+  "retry": false,
+  "claim": "pre-formal exploration failure"
+}

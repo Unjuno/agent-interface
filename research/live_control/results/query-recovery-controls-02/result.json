@@ -1,0 +1,94 @@
+{
+  "scope": "offline archived replies and injected transport faults; no live input",
+  "recovery_controls": [
+    {
+      "case": "matched_unknown",
+      "read_transport_calls": 1,
+      "error": null,
+      "pending_retained": false
+    },
+    {
+      "case": "matched_verified",
+      "read_transport_calls": 1,
+      "error": null,
+      "pending_retained": false
+    },
+    {
+      "case": "timeout",
+      "read_transport_calls": 1,
+      "error": null,
+      "pending_retained": true
+    },
+    {
+      "case": "closed",
+      "read_transport_calls": 1,
+      "error": null,
+      "pending_retained": true
+    },
+    {
+      "case": "transport_error",
+      "read_transport_calls": 1,
+      "error": {
+        "type": "ConnectionError",
+        "detail": "injected read failure"
+      },
+      "pending_retained": true
+    },
+    {
+      "case": "unrelated_reply",
+      "read_transport_calls": 1,
+      "error": null,
+      "pending_retained": true
+    },
+    {
+      "case": "conflicting_echo",
+      "read_transport_calls": 1,
+      "error": null,
+      "pending_retained": true
+    },
+    {
+      "case": "no_pending",
+      "read_transport_calls": 0,
+      "error": {
+        "type": "ValueError",
+        "detail": "no pending query to reconcile"
+      },
+      "pending_retained": false
+    },
+    {
+      "case": "wrong_pending_operation",
+      "read_transport_calls": 0,
+      "error": {
+        "type": "ValueError",
+        "detail": "pending operation is not an artifact query"
+      },
+      "pending_retained": true
+    },
+    {
+      "case": "wrong_expected_identity",
+      "read_transport_calls": 0,
+      "error": {
+        "type": "ValueError",
+        "detail": "original query identity changed"
+      },
+      "pending_retained": true
+    }
+  ],
+  "default_calc_phase_replays": 2,
+  "invalid_proposals_refused_before_transport": [
+    "undeclared_text",
+    "boolean_coordinate",
+    "browser_save_chord",
+    "second_pointer_in_tail"
+  ],
+  "duplicate_json_key_refused": true,
+  "sources": {
+    "probe_query_recovery_v2.py": "13773b08ce1a9b575d359fe0e29c04be6f7f7d8ea3312e296c006adfe2cf4ef2",
+    "recover_query_once_v1.py": "f600f14f79a36a4a8ea783fc2d1e9f91aea9d502647ae5454f2692a21db1059a",
+    "durable_submit_v5.py": "4989626f69fc3184dd09778e9bcf6b4db13d70cb66024610f94f0d9035c297b9",
+    "phased_submit_v2.py": "027ac674b36cfcdc14a0cb4210f97cab79f0fee685f97ca412b17473eae6d2cc",
+    "form_proposal_schema_v1.py": "3d2ee6de49b424b020267dd5e0e50671055a0d004216cb3a73fa40bc6140ec97",
+    "results/checkpoint-decision-calc-01/calls.json": "93d2e7b7738e50283a3dd6ace5a0395a49c056ef7c5ee9784c7d1897e9a49a90",
+    "results/checkpoint-decision-calc-01/turns.json": "2ee8c4de7fc2ed419f5ecc594cd8b31b4bba0b04768a855489e0f2eca56dbc8e"
+  }
+}

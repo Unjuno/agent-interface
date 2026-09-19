@@ -1,0 +1,26 @@
+{
+  "schema": "inkscape_action_history_invalidation_schedule_a2_v1",
+  "predecessor_allocation": "inkscape-action-history-invalidation-20260916-a1",
+  "supervision": "same 16-row scientific order and strata; fresh IDs n01..n16; each four-case chunk invoked separately by outer supervisor",
+  "cases": [
+    {"case_id":"n01","chunk":1,"context":"stable","policy":"current_guard_only"},
+    {"case_id":"n02","chunk":1,"context":"self_switch","policy":"history_invalidate"},
+    {"case_id":"n03","chunk":1,"context":"self_switch","policy":"current_guard_only"},
+    {"case_id":"n04","chunk":1,"context":"stable","policy":"history_invalidate"},
+
+    {"case_id":"n05","chunk":2,"context":"self_switch","policy":"current_guard_only"},
+    {"case_id":"n06","chunk":2,"context":"stable","policy":"history_invalidate"},
+    {"case_id":"n07","chunk":2,"context":"stable","policy":"current_guard_only"},
+    {"case_id":"n08","chunk":2,"context":"self_switch","policy":"history_invalidate"},
+
+    {"case_id":"n09","chunk":3,"context":"stable","policy":"history_invalidate"},
+    {"case_id":"n10","chunk":3,"context":"self_switch","policy":"current_guard_only"},
+    {"case_id":"n11","chunk":3,"context":"self_switch","policy":"history_invalidate"},
+    {"case_id":"n12","chunk":3,"context":"stable","policy":"current_guard_only"},
+
+    {"case_id":"n13","chunk":4,"context":"self_switch","policy":"history_invalidate"},
+    {"case_id":"n14","chunk":4,"context":"stable","policy":"current_guard_only"},
+    {"case_id":"n15","chunk":4,"context":"stable","policy":"history_invalidate"},
+    {"case_id":"n16","chunk":4,"context":"self_switch","policy":"current_guard_only"}
+  ]
+}

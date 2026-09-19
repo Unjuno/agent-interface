@@ -1,0 +1,46 @@
+{
+  "arms": {
+    "B": {
+      "audit_sha256": "73a596abf5e21e01c7d528755c6a7073abe7d590ea0af9d9f4a5446e19b7dcac",
+      "pair": 2,
+      "arm": "B",
+      "recovery_reads": 4,
+      "additional_historical_clocks": 3,
+      "own_clock_final_read": true,
+      "recovery_outer_calls_reported": 1,
+      "socket_exchanges": 14,
+      "unique_records": 47,
+      "exact_frames": 9,
+      "task_success": true,
+      "capture_to_evaluation_seconds": 59.039201361,
+      "paired_effect": null,
+      "model_performance_qualified": false,
+      "next": "Pair 3 OpenTTD B then A; do not rerun pair 2."
+    },
+    "A": {
+      "audit_sha256": "73a596abf5e21e01c7d528755c6a7073abe7d590ea0af9d9f4a5446e19b7dcac",
+      "pair": 2,
+      "arm": "A",
+      "recovery_reads": 4,
+      "additional_historical_clocks": 3,
+      "own_clock_final_read": true,
+      "recovery_outer_calls_reported": 4,
+      "socket_exchanges": 14,
+      "unique_records": 47,
+      "exact_frames": 9,
+      "task_success": true,
+      "capture_to_evaluation_seconds": 92.787083184,
+      "paired_effect": null,
+      "model_performance_qualified": false,
+      "next": "Pair 3 OpenTTD B then A; do not rerun pair 2."
+    }
+  },
+  "recovery_calls_B_minus_A": -3,
+  "recovery_socket_reads_B_minus_A": 0,
+  "capture_to_evaluation_seconds_B_minus_A": -33.74788182299999,
+  "model_performance_qualified": false,
+  "reason": "model identity/configuration and receipt timestamps unavailable",
+  "scheduled_episodes_completed": 4,
+  "scheduled_episodes_remaining": 4,
+  "scope": "One exploratory paired task. Separate model calls observed in conversation; no generalized latency or token claim."
+}

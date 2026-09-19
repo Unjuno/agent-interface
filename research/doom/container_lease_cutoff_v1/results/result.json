@@ -1,0 +1,52 @@
+{
+  "claim_scope": "real ViZDoom/X11 mechanism benchmark; no model call, no navigation efficacy, no hard real-time guarantee",
+  "failures_retained": [
+    {"effect":"no ready event / no measured GUI case","reason":"openpyxl missing","repair":"installed retained offline openpyxl+et_xmlfile wheels","stage":"environment-preflight"},
+    {"completed_measured_cases":7,"effect":"incomplete directory preserved; replacement fresh session kept separate","interrupted_case":"r2-mono250 setup only","reason":"outer container command timeout","stage":"first-long-batch"}
+  ],
+  "lease_cutoff": {
+    "admission_to_verified_empty_upper_median_ms":{"100":99.104802,"150":149.226761,"250":249.461431},
+    "all_owner_verified":true,
+    "cutoff_ms":[100,150,250],
+    "deadline_to_verified_empty_median_ms":{"100":0.514477,"150":0.658876,"250":0.728238},
+    "decision":"PROMOTE_TO_SEPARATE_MECHANISM_CANDIDATE_NOT_RUNTIME_INTEGRATION",
+    "health_delta_all_zero":true,
+    "missed_scorer_periods_total":0,
+    "scorer_leaks_total":0,
+    "sessions":9,
+    "terminal_after_deadline_median_ms":{"100":10.933558,"150":50.596112,"250":58.303033}
+  },
+  "matched_250":{
+    "all_three_lease_upper_lower":true,
+    "lease_deadline_to_empty_median_ms":0.572904,
+    "lease_upper_median_ms":249.321429,
+    "median_lease_minus_normal_ms":-63.88929399999998,
+    "normal_upper_median_ms":313.076762,
+    "pairs":3,
+    "pairs_detail":[
+      {"lease_deadline_to_verified_empty_ms":0.572904,"lease_health_delta":0,"lease_minus_normal_ms":-63.88929399999998,"lease_terminal_after_deadline_ms":8.772468,"lease_upper_ms":249.187468,"normal_health_delta":0,"normal_program_duration_ms":438.037307,"normal_upper_ms":313.076762,"pair":1,"seed":990801},
+      {"lease_deadline_to_verified_empty_ms":0.527746,"lease_health_delta":0,"lease_minus_normal_ms":-9.838205999999985,"lease_terminal_after_deadline_ms":1.391287,"lease_upper_ms":249.321429,"normal_health_delta":0,"normal_program_duration_ms":391.501894,"normal_upper_ms":259.159635,"pair":2,"seed":990802},
+      {"lease_deadline_to_verified_empty_ms":0.831217,"lease_health_delta":0,"lease_minus_normal_ms":-64.014479,"lease_terminal_after_deadline_ms":1.67097,"lease_upper_ms":249.653801,"normal_health_delta":0,"normal_program_duration_ms":438.678803,"normal_upper_ms":313.66828,"pair":3,"seed":990803}
+    ]
+  },
+  "outcomes":{"all_death_count":0,"all_kill_count":0,"all_map_exit":false,"gameplay_efficacy_claim":false,"health_change_observed":false},
+  "runtime_source_base":"9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+  "schema":"container-real-map01-control-cutoff-study-v1",
+  "segmentation":{
+    "all_release_empty":true,
+    "conditions":["coast250","normal_hold_1x250","split_2x125","split_5x50"],
+    "decision":"REJECT_SEGMENTATION_AS_OVERSHOOT_REDUCTION_CANDIDATE_UNDER_THIS_CAPTURE_PATH",
+    "health_delta_all_zero":true,
+    "missed_scorer_periods_total":0,
+    "normal250_program_duration_median_ms":391.352139,
+    "normal250_upper_occupancy_median_ms":255.706343,
+    "repetitions_per_condition":3,
+    "scorer_leaks_total":0,
+    "sessions":12,
+    "split125_program_duration_median_ms":581.086526,
+    "split125_upper_occupancy_median_ms":312.576353,
+    "split50_program_duration_median_ms":1031.061391,
+    "split50_upper_occupancy_median_ms":362.18582
+  },
+  "status":"DEVELOPMENT_PASS_OWNER_LEASE_CUTOFF__SEGMENTATION_REFUTED__NO_GAMEPLAY_EFFICACY"
+}

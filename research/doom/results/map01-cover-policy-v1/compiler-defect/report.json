@@ -1,0 +1,776 @@
+{
+  "claim": "pre-formal overlapping inference feasibility",
+  "model": "gpt-6-astra",
+  "effort": "low",
+  "iterations": 4,
+  "decisions": [
+    {
+      "iteration": 0,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-cover-policy-live-01/runtime/001.png",
+      "model_image": "results-local/doom/map01-cover-policy-live-01/decision-0/temporal-sheet.png",
+      "model_image_sha256": "7bd335c1cbe0927a07626879cbfe96766981e7b9f4b6f03b94917eafcc67964c",
+      "action": {
+        "assessment": "Clear passage ahead toward a closed door; no visible threats.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "long"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ],
+        "contingencies": [
+          {
+            "after_command": 0,
+            "condition": "no_visible_effect",
+            "commands": [
+              {
+                "action": "use",
+                "extent": "pulse"
+              },
+              {
+                "action": "forward",
+                "extent": "short"
+              }
+            ]
+          }
+        ],
+        "next_cover": [
+          {
+            "action": "coast",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 11504,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 100,
+        "reasoning_output_tokens": 0
+      },
+      "model_ns": 9416825544,
+      "effect_memory": [],
+      "effect_receipts": [
+        {
+          "action": "forward",
+          "extent": "long",
+          "result": "visible_change",
+          "normalized_mae": 0.06071895424836601,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 40,
+          "effect_observed_ns": 12717692888142,
+          "samples": 8,
+          "plan_accept_to_first_capture_ms": 63.969418,
+          "plan_accept_to_last_capture_ms": 972.724638,
+          "capture_ms_total": 25.630889,
+          "scope": "viewport pixels only"
+        },
+        {
+          "action": "forward",
+          "extent": "short",
+          "result": "visible_change",
+          "normalized_mae": 0.1281467864923747,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 44,
+          "effect_observed_ns": 12718252216225,
+          "samples": 4,
+          "plan_accept_to_first_capture_ms": 59.431012,
+          "plan_accept_to_last_capture_ms": 410.356204,
+          "capture_ms_total": 13.428391,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 12,
+      "effect_observation_capture_ms": 39.05928,
+      "execution_trace": [
+        {
+          "id": "plan-0-primary-0-0",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "forward",
+            "extent": "long"
+          },
+          "accepted_ns": 12716720163504,
+          "terminal_ns": 12717792256835,
+          "receipt": {
+            "action": "forward",
+            "extent": "long",
+            "result": "visible_change",
+            "normalized_mae": 0.06071895424836601,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 40,
+            "effect_observed_ns": 12717692888142,
+            "samples": 8,
+            "plan_accept_to_first_capture_ms": 63.969418,
+            "plan_accept_to_last_capture_ms": 972.724638,
+            "capture_ms_total": 25.630889,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 8,
+          "observation_capture_ms": 25.630889
+        },
+        {
+          "id": "plan-0-primary-1-1",
+          "role": "primary",
+          "command_index": 1,
+          "command": {
+            "action": "forward",
+            "extent": "short"
+          },
+          "accepted_ns": 12717841860021,
+          "terminal_ns": 12718338173625,
+          "receipt": {
+            "action": "forward",
+            "extent": "short",
+            "result": "visible_change",
+            "normalized_mae": 0.1281467864923747,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 44,
+            "effect_observed_ns": 12718252216225,
+            "samples": 4,
+            "plan_accept_to_first_capture_ms": 59.431012,
+            "plan_accept_to_last_capture_ms": 410.356204,
+            "capture_ms_total": 13.428391,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 4,
+          "observation_capture_ms": 13.428391
+        }
+      ],
+      "contingency_branch": null,
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "long"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0fb-ebe4-7db2-953c-8cb6b0f81861",
+      "controller_model_started_ns": 12706965736101,
+      "controller_model_ended_ns": 12716671481334,
+      "model_image_to_plan_accept_ns": 10144865532,
+      "fresh_observation_to_plan_accept_ns": 294549289,
+      "fresh_sequence_at_plan": 32,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-0"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [
+        {
+          "action": "coast",
+          "extent": "long"
+        }
+      ],
+      "cover_policy_source_iteration": null,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 1,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-cover-policy-live-01/runtime/044.png",
+      "model_image": "results-local/doom/map01-cover-policy-live-01/decision-1/temporal-sheet.png",
+      "model_image_sha256": "aa81715eb170ac0af96b9a246b8ef0455e276627a3a60c237bea31e06d8a99b7",
+      "action": {
+        "assessment": "Advanced to the closed AGM door; no visible threats.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "use",
+            "extent": "pulse"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ],
+        "contingencies": [
+          {
+            "after_command": 1,
+            "condition": "no_visible_effect",
+            "commands": [
+              {
+                "action": "backward",
+                "extent": "short"
+              },
+              {
+                "action": "turn_left",
+                "extent": "short"
+              }
+            ]
+          }
+        ],
+        "next_cover": [
+          {
+            "action": "coast",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 12077,
+        "cached_input_tokens": 11392,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 101,
+        "reasoning_output_tokens": 0
+      },
+      "model_ns": 9489773090,
+      "effect_memory": [],
+      "effect_receipts": [
+        {
+          "action": "use",
+          "extent": "pulse",
+          "result": "visible_change",
+          "normalized_mae": 0.08637935729847496,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 85,
+          "effect_observed_ns": 12728913142122,
+          "samples": 2,
+          "plan_accept_to_first_capture_ms": 48.73089,
+          "plan_accept_to_last_capture_ms": 129.254119,
+          "capture_ms_total": 7.648053,
+          "scope": "viewport pixels only"
+        },
+        {
+          "action": "forward",
+          "extent": "medium",
+          "result": "visible_change",
+          "normalized_mae": 0.15423883442265796,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 91,
+          "effect_observed_ns": 12729702399883,
+          "samples": 6,
+          "plan_accept_to_first_capture_ms": 253.156701,
+          "plan_accept_to_last_capture_ms": 918.51188,
+          "capture_ms_total": 18.553283,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 8,
+      "effect_observation_capture_ms": 26.201336,
+      "execution_trace": [
+        {
+          "id": "plan-1-primary-0-1",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "use",
+            "extent": "pulse"
+          },
+          "accepted_ns": 12728783888003,
+          "terminal_ns": 12729799042664,
+          "receipt": {
+            "action": "use",
+            "extent": "pulse",
+            "result": "visible_change",
+            "normalized_mae": 0.08637935729847496,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 85,
+            "effect_observed_ns": 12728913142122,
+            "samples": 2,
+            "plan_accept_to_first_capture_ms": 48.73089,
+            "plan_accept_to_last_capture_ms": 129.254119,
+            "capture_ms_total": 7.648053,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 2,
+          "observation_capture_ms": 7.648053
+        },
+        {
+          "id": "plan-1-primary-0-1",
+          "role": "primary",
+          "command_index": 1,
+          "command": {
+            "action": "forward",
+            "extent": "medium"
+          },
+          "accepted_ns": 12728783888003,
+          "terminal_ns": 12729799042664,
+          "receipt": {
+            "action": "forward",
+            "extent": "medium",
+            "result": "visible_change",
+            "normalized_mae": 0.15423883442265796,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 91,
+            "effect_observed_ns": 12729702399883,
+            "samples": 6,
+            "plan_accept_to_first_capture_ms": 253.156701,
+            "plan_accept_to_last_capture_ms": 918.51188,
+            "capture_ms_total": 18.553283,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 6,
+          "observation_capture_ms": 18.553283
+        }
+      ],
+      "contingency_branch": null,
+      "compiled_commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a0fb-ebe4-7db2-953c-8cb6b0f81861",
+      "controller_model_started_ns": 12718684549370,
+      "controller_model_ended_ns": 12728737901142,
+      "model_image_to_plan_accept_ns": 10531671778,
+      "fresh_observation_to_plan_accept_ns": 292618293,
+      "fresh_sequence_at_plan": 83,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-1"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [
+        {
+          "action": "coast",
+          "extent": "short"
+        }
+      ],
+      "cover_policy_source_iteration": 0,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 2,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-cover-policy-live-01/runtime/091.png",
+      "model_image": "results-local/doom/map01-cover-policy-live-01/decision-2/temporal-sheet.png",
+      "model_image_sha256": "05ba47c1c335d6d3c05bc76b9c5b93b05ce7228a0e5a01a544f0899a82a9855d",
+      "action": {
+        "assessment": "Door opened into a larger room; an enemy stands across the lower area, slightly left of aim. Ammunition remains.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "pulse"
+          },
+          {
+            "action": "fire",
+            "extent": "long"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          }
+        ],
+        "contingencies": [],
+        "next_cover": [
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "fire",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 12651,
+        "cached_input_tokens": 12032,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 111,
+        "reasoning_output_tokens": 0
+      },
+      "model_ns": 8941701676,
+      "effect_memory": [],
+      "effect_receipts": [
+        {
+          "action": "turn_left",
+          "extent": "pulse",
+          "result": "visible_change",
+          "normalized_mae": 0.03321078431372549,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 130,
+          "effect_observed_ns": 12739761206381,
+          "samples": 2,
+          "plan_accept_to_first_capture_ms": 52.845626,
+          "plan_accept_to_last_capture_ms": 153.423568,
+          "capture_ms_total": 7.7514959999999995,
+          "scope": "viewport pixels only"
+        },
+        {
+          "action": "fire",
+          "extent": "long",
+          "result": "visible_change",
+          "normalized_mae": 0.02139025054466231,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 135,
+          "effect_observed_ns": 12740354636659,
+          "samples": 5,
+          "plan_accept_to_first_capture_ms": 280.089122,
+          "plan_accept_to_last_capture_ms": 746.853846,
+          "capture_ms_total": 17.208388,
+          "scope": "viewport pixels only"
+        },
+        {
+          "action": "strafe_right",
+          "extent": "short",
+          "result": "visible_change",
+          "normalized_mae": 0.08409994553376907,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 139,
+          "effect_observed_ns": 12740823324975,
+          "samples": 4,
+          "plan_accept_to_first_capture_ms": 865.706323,
+          "plan_accept_to_last_capture_ms": 1215.542162,
+          "capture_ms_total": 13.281921,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 11,
+      "effect_observation_capture_ms": 38.241805,
+      "execution_trace": [
+        {
+          "id": "plan-2-primary-0-2",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "turn_left",
+            "extent": "pulse"
+          },
+          "accepted_ns": 12739607782813,
+          "terminal_ns": 12740902526165,
+          "receipt": {
+            "action": "turn_left",
+            "extent": "pulse",
+            "result": "visible_change",
+            "normalized_mae": 0.03321078431372549,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 130,
+            "effect_observed_ns": 12739761206381,
+            "samples": 2,
+            "plan_accept_to_first_capture_ms": 52.845626,
+            "plan_accept_to_last_capture_ms": 153.423568,
+            "capture_ms_total": 7.7514959999999995,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 2,
+          "observation_capture_ms": 7.7514959999999995
+        },
+        {
+          "id": "plan-2-primary-0-2",
+          "role": "primary",
+          "command_index": 1,
+          "command": {
+            "action": "fire",
+            "extent": "long"
+          },
+          "accepted_ns": 12739607782813,
+          "terminal_ns": 12740902526165,
+          "receipt": {
+            "action": "fire",
+            "extent": "long",
+            "result": "visible_change",
+            "normalized_mae": 0.02139025054466231,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 135,
+            "effect_observed_ns": 12740354636659,
+            "samples": 5,
+            "plan_accept_to_first_capture_ms": 280.089122,
+            "plan_accept_to_last_capture_ms": 746.853846,
+            "capture_ms_total": 17.208388,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 5,
+          "observation_capture_ms": 17.208388
+        },
+        {
+          "id": "plan-2-primary-0-2",
+          "role": "primary",
+          "command_index": 2,
+          "command": {
+            "action": "strafe_right",
+            "extent": "short"
+          },
+          "accepted_ns": 12739607782813,
+          "terminal_ns": 12740902526165,
+          "receipt": {
+            "action": "strafe_right",
+            "extent": "short",
+            "result": "visible_change",
+            "normalized_mae": 0.08409994553376907,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 139,
+            "effect_observed_ns": 12740823324975,
+            "samples": 4,
+            "plan_accept_to_first_capture_ms": 865.706323,
+            "plan_accept_to_last_capture_ms": 1215.542162,
+            "capture_ms_total": 13.281921,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 4,
+          "observation_capture_ms": 13.281921
+        }
+      ],
+      "contingency_branch": null,
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "pulse"
+        },
+        {
+          "action": "fire",
+          "extent": "long"
+        },
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0fb-ebe4-7db2-953c-8cb6b0f81861",
+      "controller_model_started_ns": 12730132406195,
+      "controller_model_ended_ns": 12739563237548,
+      "model_image_to_plan_accept_ns": 9905382930,
+      "fresh_observation_to_plan_accept_ns": 209838344,
+      "fresh_sequence_at_plan": 128,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-2"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [
+        {
+          "action": "coast",
+          "extent": "short"
+        }
+      ],
+      "cover_policy_source_iteration": 1,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 3,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-cover-policy-live-01/runtime/139.png",
+      "model_image": "results-local/doom/map01-cover-policy-live-01/decision-3/temporal-sheet.png",
+      "model_image_sha256": "fd7b250eeef79c164d3a34578def84f745230c4c3b808dea17989df6ad1df72e",
+      "action": {
+        "assessment": "Now facing a nearby wall with the enemy out of view; health dropped to 92%. Back away to regain visibility.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "backward",
+            "extent": "short"
+          },
+          {
+            "action": "turn_left",
+            "extent": "short"
+          }
+        ],
+        "contingencies": [
+          {
+            "after_command": 0,
+            "condition": "no_visible_effect",
+            "commands": [
+              {
+                "action": "strafe_left",
+                "extent": "short"
+              },
+              {
+                "action": "turn_left",
+                "extent": "short"
+              }
+            ]
+          }
+        ],
+        "next_cover": [
+          {
+            "action": "coast",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 13235,
+        "cached_input_tokens": 12544,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 137,
+        "reasoning_output_tokens": 18
+      },
+      "model_ns": 11191059103,
+      "effect_memory": [],
+      "effect_receipts": [
+        {
+          "action": "backward",
+          "extent": "short",
+          "result": "visible_change",
+          "normalized_mae": 0.11650871459694989,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 205,
+          "effect_observed_ns": 12752932124155,
+          "samples": 4,
+          "plan_accept_to_first_capture_ms": 47.348299,
+          "plan_accept_to_last_capture_ms": 379.799953,
+          "capture_ms_total": 12.859592,
+          "scope": "viewport pixels only"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short",
+          "result": "visible_change",
+          "normalized_mae": 0.08082107843137255,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 208,
+          "effect_observed_ns": 12753348682921,
+          "samples": 3,
+          "plan_accept_to_first_capture_ms": 48.238745,
+          "plan_accept_to_last_capture_ms": 282.473888,
+          "capture_ms_total": 9.810079,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 7,
+      "effect_observation_capture_ms": 22.669671,
+      "execution_trace": [
+        {
+          "id": "plan-3-primary-0-0",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "backward",
+            "extent": "short"
+          },
+          "accepted_ns": 12752552324202,
+          "terminal_ns": 12753021197223,
+          "receipt": {
+            "action": "backward",
+            "extent": "short",
+            "result": "visible_change",
+            "normalized_mae": 0.11650871459694989,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 205,
+            "effect_observed_ns": 12752932124155,
+            "samples": 4,
+            "plan_accept_to_first_capture_ms": 47.348299,
+            "plan_accept_to_last_capture_ms": 379.799953,
+            "capture_ms_total": 12.859592,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 4,
+          "observation_capture_ms": 12.859592
+        },
+        {
+          "id": "plan-3-primary-1-1",
+          "role": "primary",
+          "command_index": 1,
+          "command": {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          "accepted_ns": 12753066209033,
+          "terminal_ns": 12753451343274,
+          "receipt": {
+            "action": "turn_left",
+            "extent": "short",
+            "result": "visible_change",
+            "normalized_mae": 0.08082107843137255,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 208,
+            "effect_observed_ns": 12753348682921,
+            "samples": 3,
+            "plan_accept_to_first_capture_ms": 48.238745,
+            "plan_accept_to_last_capture_ms": 282.473888,
+            "capture_ms_total": 9.810079,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 3,
+          "observation_capture_ms": 9.810079
+        }
+      ],
+      "contingency_branch": null,
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0fb-ebe4-7db2-953c-8cb6b0f81861",
+      "controller_model_started_ns": 12741256864002,
+      "controller_model_ended_ns": 12752541241879,
+      "model_image_to_plan_accept_ns": 11728999227,
+      "fresh_observation_to_plan_accept_ns": 111577302,
+      "fresh_sequence_at_plan": 201,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-3"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "fire",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        }
+      ],
+      "cover_policy_source_iteration": 2,
+      "plan_terminal": "completed"
+    }
+  ],
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 46852638773,
+    "death_count": 0,
+    "kill_count": 0,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 12753537567663
+  },
+  "model_session_span": 4,
+  "model_session_ids": [
+    "01a0a0fb-ebe4-7db2-953c-8cb6b0f81861"
+  ],
+  "motor_contract": "semantic commands compiled to <=450ms turns and <=900ms movement",
+  "effect_receipt_contract": "reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
+  "effect_receipt_extra_steps": 0,
+  "contingency_contract": "preplanned no-visible-effect fallback skips the primary tail and runs without another model call",
+  "contingencies_authored": 3,
+  "contingency_branches_taken": 0,
+  "contingency_branch_latency_ms": [],
+  "program_admissions": 6,
+  "extra_program_admissions_vs_one_bundle": 2,
+  "effect_receipt_commands": 9,
+  "effect_observation_samples": 38,
+  "effect_observation_capture_ms": 126.172092,
+  "game_continued_during_model_calls": true,
+  "cover_programs": 4,
+  "cover_renewals": 0,
+  "cover_renewal_gaps_ms": [],
+  "model_authored_cover_policies": 4,
+  "model_wall_seconds": 39.039359413
+}
