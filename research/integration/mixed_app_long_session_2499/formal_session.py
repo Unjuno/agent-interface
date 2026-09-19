@@ -49,8 +49,11 @@ def wait_window(env, before=None, timeout=20):
 
 def launch(cmdline, env):
     before = set(windows(env))
-    p = subprocess.Popen(cmdline, env=env, stdout=subprocess.DEVNULL,
-                         stderr=subprocess.DEVNULL)
+    try:
+        p = subprocess.Popen(cmdline, env=env, stdout=subprocess.DEVNULL,
+                             stderr=subprocess.DEVNULL)
+    except FileNotFoundError as exc:
+        raise RuntimeError(f"missing launch executable: {cmdline!r}: {exc}") from exc
     end = time.time() + 25
     wid = None
     while time.time() < end:
@@ -58,7 +61,7 @@ def launch(cmdline, env):
         usable = []
         for candidate in candidates:
             text = geom(env, candidate)
-            match = re.search(r"Geometry:\s*(\\d+)x(\\d+)", text)
+            match = re.search(r"Geometry:\s*(\d+)x(\d+)", text)
             if match and int(match.group(1)) >= 400 and int(match.group(2)) >= 300:
                 usable.append(candidate)
         if usable:
