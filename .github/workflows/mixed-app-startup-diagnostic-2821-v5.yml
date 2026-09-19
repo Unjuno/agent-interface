@@ -48,25 +48,10 @@ jobs:
           printf '%s\n' "$code" > "$out/container_exit.txt"
           python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["decision"])' "$out/result.json" > "$out/decision.txt" 2>/dev/null || printf '%s\n' "STOP_MIXED_APP_LONG_SESSION_NO_RESULT" > "$out/decision.txt"
           test "$code" -eq 0
-      - name: Print v16 ledger result for audit
-        if: always()
-        shell: bash
-        run: |
-          for f in result.json decision.txt stderr.log container_exit.txt; do
-            p="$RUNNER_TEMP/mixed-2821-ledger-v11/$f"
-            if [ -f "$p" ]; then
-              echo "===== v16 ledger $f ====="
-              cat "$p"
-              echo "===== sha256 $f ====="
-              sha256sum "$p"
-            else
-              echo "===== v16 ledger $f MISSING ====="
-            fi
-          done
       - name: Upload persistent ledger evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: mixed-app-long-session-ledger-2821-v16-visibility
+          name: mixed-app-long-session-ledger-2821-v11
           path: ${{ runner.temp }}/mixed-2821-ledger-v11
           if-no-files-found: error

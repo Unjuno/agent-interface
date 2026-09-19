@@ -1,5 +1,6 @@
-FROM debian:bookworm-slim
+FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -qq && apt-get install -y -qq python3 xvfb xdotool x11-utils inkscape libreoffice chromium && rm -rf /var/lib/apt/lists/*
+RUN set -eux; if ! command -v chromium >/dev/null 2>&1; then candidate=$(find /usr /opt -type f -name chromium -perm -111 2>/dev/null | head -n 1); test -n "$candidate"; ln -s "$candidate" /usr/local/bin/chromium; fi; command -v chromium
 WORKDIR /workspace
 ENTRYPOINT ["python3", "/workspace/research/integration/mixed_app_long_session_2499/formal_session.py"]
