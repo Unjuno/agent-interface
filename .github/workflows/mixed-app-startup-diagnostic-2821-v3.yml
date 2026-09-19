@@ -1,0 +1,36 @@
+name: Mixed-app startup diagnostic #2821 v3
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "research/integration/mixed_app_long_session_2499/startup_diagnostic.py"
+      - "research/integration/mixed_app_long_session_2499/Dockerfile.formal"
+      - ".github/workflows/mixed-app-startup-diagnostic-2821-v3.yml"
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build dependency-pinned image
+        run: docker build -f research/integration/mixed_app_long_session_2499/Dockerfile.formal -t mixed-formal-2821:diagnostic .
+      - name: Run startup diagnostic with network isolation
+        shell: bash
+        run: |
+          set +e
+          mkdir -p "$RUNNER_TEMP/mixed-2821-diagnostic-v3"
+          docker run --rm --network none -v "$GITHUB_WORKSPACE:/workspace:ro" -v "$RUNNER_TEMP/mixed-2821-diagnostic-v3:/out" -w /workspace --entrypoint python3 mixed-formal-2821:diagnostic startup_diagnostic.py > "$RUNNER_TEMP/mixed-2821-diagnostic-v3/result.json" 2> "$RUNNER_TEMP/mixed-2821-diagnostic-v3/stderr.log"
+          container_code=$?
+          printf '%s\n' "$container_code" > "$RUNNER_TEMP/mixed-2821-diagnostic-v3/container_exit.txt"
+          if [ ! -s "$RUNNER_TEMP/mixed-2821-diagnostic-v3/result.json" ]; then
+            printf '%s\n' "STOP_MIXED_APP_STARTUP_DIAGNOSTIC_NO_RESULT" > "$RUNNER_TEMP/mixed-2821-diagnostic-v3/decision.txt"
+            exit 1
+          fi
+          exit 0
+      - name: Upload diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mixed-app-startup-diagnostic-2821-v3
+          path: ${{ runner.temp }}/mixed-2821-diagnostic-v3
+          if-no-files-found: error
