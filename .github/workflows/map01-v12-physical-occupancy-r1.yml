@@ -36,7 +36,7 @@ jobs:
       - name: Install isolated X11 and ViZDoom runtime dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb openbox xauth libgl1 libglu1-mesa libasound2
+          sudo apt-get install -y xvfb openbox xauth libgl1 libglu1-mesa libasound2t64
           python -m pip download --only-binary=:all: --dest /tmp/map01-wheels 'vizdoom==1.3.0' pillow 'python-xlib' numpy
           python -m pip install --no-index --find-links /tmp/map01-wheels 'vizdoom==1.3.0' pillow 'python-xlib' numpy
 
@@ -55,6 +55,7 @@ jobs:
 
       - name: Run frozen preflight
         run: |
+          mkdir -p work/map01-r1
           python research/doom/map01_v12_physical_occupancy_live_r1_v1/preflight.py --source . --v12 work/map01-r1/v12 | tee work/map01-r1/PREFLIGHT.stdout
 
       - name: Run at most one excluded construction session
