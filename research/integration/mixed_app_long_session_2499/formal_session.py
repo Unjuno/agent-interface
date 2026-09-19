@@ -59,7 +59,7 @@ def main():
     try:
         time.sleep(.7); event(ledger, "session_setup", display=DISPLAY,
                               xauthority_mode="0600")
-        inkscape, iw = launch(["inkscape", "--no-splash", "--new"], env)
+        inkscape, iw = launch(["inkscape"], env)
         procs.append(inkscape); apps["inkscape"]={"pid":inkscape.pid,"window":iw,"surface_generation":1}
         calc, cw = launch(["libreoffice", "--norestore", "--nodefault",
                            "--nolockcheck", "--calc"], env)
