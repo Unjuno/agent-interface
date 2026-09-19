@@ -1,4 +1,4 @@
-import hashlib
+# Container audit intentionally avoids a Git executable dependency.\nimport hashlib
 import json
 from pathlib import Path
 
