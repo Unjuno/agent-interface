@@ -21,6 +21,13 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+      - name: Verify and materialize frozen session dependency
+        run: |
+          set -euo pipefail
+          git ls-tree -r --name-only HEAD | grep -Fx research/doom/session_map01_v13.py
+          git checkout HEAD -- research/doom/session_map01_v13.py
+          test -f research/doom/session_map01_v13.py
+          sha256sum research/doom/session_map01_v13.py
       - name: Install X11 and ViZDoom dependencies
         run: |
           set -euo pipefail
