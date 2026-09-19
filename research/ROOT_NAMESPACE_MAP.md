@@ -155,3 +155,8 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 ### Fresh GTK effect receipt precheck
 
 - [`gtk_fresh_post_effect_2673/`](gtk_fresh_post_effect_2673/) — additive precheck boundary for independent fresh post-effect drawable receipts; execution result is recorded in Issue #2673 and must not be inferred from this path alone.
+
+
+### GTK research namespace
+
+- [`gtk/`](gtk/) — retained GTK/X11 fixture and adapter research paths; consult each child report for scope and disposition.
