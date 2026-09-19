@@ -7,6 +7,18 @@ on:
     paths:
       - '.github/workflows/map01-measurement-integration-live-04.yml'
       - 'research/doom/map01_measurement_integration_live_04_prereg.json'
+  workflow_dispatch:
+    inputs:
+      allocation_id:
+        description: 'Fresh immutable allocation identifier'
+        required: true
+        type: string
+        default: 'map01-finite-clear-attempt-v1'
+      formal_seed:
+        description: 'Frozen formal seed for this allocation'
+        required: true
+        type: string
+        default: '990615'
 
 permissions:
   contents: read
@@ -17,9 +29,9 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  ALLOCATION_ID: map01-measurement-integration-live-04
+  ALLOCATION_ID: ${{ inputs.allocation_id || 'map01-measurement-integration-live-04' }}
   WORKFLOW_PATH: .github/workflows/map01-measurement-integration-live-04.yml
-  FORMAL_SEED: '990615'
+  FORMAL_SEED: ${{ inputs.formal_seed || '990615' }}
 
 jobs:
   measurement-gate:
