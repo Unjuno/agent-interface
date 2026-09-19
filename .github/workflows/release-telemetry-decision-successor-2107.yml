@@ -1,0 +1,43 @@
+name: release telemetry decision successor 2107 r1
+on:
+  pull_request:
+    paths:
+      - "research/analysis/release_telemetry_decision_successor_2107_v1/**"
+      - ".github/workflows/release-telemetry-decision-successor-2107.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  decision-value:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Run frozen stub experiment
+        run: |
+          python -m py_compile research/analysis/release_telemetry_decision_successor_2107_v1/experiment.py
+          python research/analysis/release_telemetry_decision_successor_2107_v1/experiment.py
+      - name: Independent audit
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("research/analysis/release_telemetry_decision_successor_2107_v1/RESULT.json")
+          d=json.loads(p.read_text())
+          assert d["decision"] == "PASS_RELEASE_RECEIPT_DECISION_VALUE_STUB_SCOPED"
+          s=d["summary"]
+          assert s["VALID_RELEASE_RECEIPT"]["unnecessary_waits"] < s["NO_RELEASE_RECEIPT"]["unnecessary_waits"]
+          assert all(r["decision"] != "CONTINUE" for r in d["rows"] if r["receipt"] in {"ambiguous","contradictory"})
+          print("INDEPENDENT_AUDIT_PASS")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-telemetry-decision-successor-2107-${{ github.run_id }}
+          path: research/analysis/release_telemetry_decision_successor_2107_v1
+          if-no-files-found: error
+          retention-days: 30
