@@ -13,6 +13,18 @@ desktop-linux named pipe accepted a connection, but a read-only /_ping request
 did not respond within 5 seconds. The original docker version/list query also
 remained pending. No shared restart, container stop, prune, or new build was issued.
 
+The host backend log also contains a containerd SIGBUS and VM block-device I/O
+errors at 2026-09-19 16:32 UTC. These historical errors suggest an engine/storage
+failure but do not establish its current cause. The later backend-state query
+timed out after five minutes. The owner requested continued WSL work without a
+Docker restart. Do not attempt a reset, VHD repair or cleanup as part of this setup.
+
+The read-only `engine_probe.ps1` avoids an indefinitely pending Docker CLI:
+it bounds both pipe connection and HTTP header receipt, disposes its own pipe,
+and returns JSON plus a nonzero exit code on failure. On 2026-09-19 18:30 UTC,
+the pipe connected but the HTTP response timed out; total elapsed time was
+5069 ms. An HTTP 200 only establishes API responsiveness, not GUI readiness.
+
 The dependency preflight passed on the existing WSL Ubuntu environment:
 Python 3.12.3, Pillow 10.2.0, numpy 1.26.4, openpyxl 3.1.2, python-xlib 0.33,
 Inkscape 1.2.2 and LibreOffice 24.2.7.2. Its first attempt unnecessarily required
@@ -32,6 +44,8 @@ Choose a unique container name and a fresh results directory for each allocation
 
 ```powershell
 $nativeRepo = (Get-Location).Path
+& powershell -NoProfile -File research/live_control/docker_native/engine_probe.ps1
+if ($LASTEXITCODE -ne 0) { throw 'Docker engine probe failed; no build or allocation started' }
 $nativeName = 'agent-interface-native-own-run-01'
 $nativeOut = Join-Path $nativeRepo 'results-local/docker-native-own-run-01'
 New-Item -ItemType Directory -Path $nativeOut -ErrorAction Stop
