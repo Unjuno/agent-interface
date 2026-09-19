@@ -58,7 +58,7 @@ def launch(cmdline, env):
         usable = []
         for candidate in candidates:
             text = geom(env, candidate)
-            match = re.search(r"Geometry:\s*(\\d+)x(\\d+)", text)
+            match = re.search(r"Geometry:\s*(\d+)x(\d+)", text)
             if match and int(match.group(1)) >= 400 and int(match.group(2)) >= 300:
                 usable.append(candidate)
         if usable:
