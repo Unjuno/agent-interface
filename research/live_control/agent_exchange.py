@@ -129,7 +129,7 @@ def run(socket_path, batch, run_directory, program_id, steps, *, out,
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--request", default="-", help="one JSON request; '-' reads stdin")
-    parser.add_argument("--review", action="store_true", help="return receipt and image together after the one action attempt")
+    parser.add_argument("--review", nargs="?", const="full", choices=("full", "compact"), help="return receipt and image together after the one action attempt")
     args = parser.parse_args()
     try:
         request = resolve_request(json.loads(sys.stdin.read() if args.request == "-" else Path(args.request).read_text()))
@@ -144,7 +144,7 @@ def main():
     if args.review:
         try:
             from agent_review import review
-            displayed = review(Path(request['out']) / 'report.json', request['run_directory'])
+            displayed = review(Path(request['out']) / 'report.json', request['run_directory'], compact=args.review == 'compact')
         except Exception as error:
             # Rendering/preparation is after input. Retain the result without retry.
             displayed = {"report": result, "review_error": str(error), "image": None}

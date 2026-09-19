@@ -145,3 +145,23 @@ received readable dialog and dismissed-dialog frames in two calls, with saved
 content independently verified. It avoided a separate observation program in
 that example while performing extra native captures. Token and general latency
 benefits remain unmeasured; the runtime implementation was unchanged.
+
+## Optional exact event references
+
+Use `agent_exchange.py --review compact` or `agent_review.py --compact` to
+replace duplicate complete event objects inside receipt report metadata with
+`{"event_ref": N}`. The full object remains at `receipt.events[N]`, in the same
+response. Only paths listed in `receipt.event_references` are references; an
+identically shaped object elsewhere remains literal data. The v2 schema is
+explicit, and `expand_receipt` reconstructs the original v1 receipt view.
+
+This replaces exact copies only. Near-matching, conflicting and unknown events
+remain present; all event-list entries and latest observations stay complete.
+The original full report and image are unchanged. Earlier history omitted by
+the v1 view still requires the raw report; expansion recovers the v1 view, not
+that omitted history. Reference lookup requires no additional tool call.
+
+`--review` alone keeps its original full presentation. Compact mode is opt-in:
+reference bookkeeping can increase size on receipts without repeated events,
+and model interpretation/token/latency effects have not been measured. See the
+[same-receipt comparison](../../runtime/results/receipt-event-references-01/README.md).
