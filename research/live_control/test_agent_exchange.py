@@ -3,8 +3,11 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+import io
+from unittest.mock import patch
 
 from agent_exchange import run
+import agent_exchange
 
 
 class ExchangeTests(unittest.TestCase):
@@ -97,6 +100,20 @@ class ExchangeTests(unittest.TestCase):
         result = self.call()
         self.assertFalse(result['program_attempted'])
         self.assertFalse(self.calls)
+
+    def test_cli_review_failure_preserves_attempt_and_does_not_repeat_run(self):
+        request = {'out': str(self.root/'attempt'), 'run_directory': str(self.root)}
+        result = {'status': 'boundary', 'program_attempted': True, 'records': [{'event': 'terminal'}]}
+        output = io.StringIO()
+        with patch('sys.argv', ['agent_exchange', '--review']), patch('sys.stdin', io.StringIO(json.dumps(request))), \
+                patch('sys.stdout', output), patch.object(agent_exchange, 'run', return_value=result) as action, \
+                patch('agent_review.review', side_effect=OSError('report temporarily unavailable')):
+            self.assertEqual(agent_exchange.main(), 0)
+        action.assert_called_once_with(**request)
+        displayed = json.loads(output.getvalue())
+        self.assertEqual(displayed['report'], result)
+        self.assertIsNone(displayed['image'])
+        self.assertIn('unavailable', displayed['review_error'])
 
 
 if __name__ == '__main__':
