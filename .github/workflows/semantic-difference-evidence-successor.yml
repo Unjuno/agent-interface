@@ -1,0 +1,36 @@
+name: semantic-difference-evidence-successor
+on:
+  push:
+    branches: ["research/semantic-difference-evidence-successor-1938-20260919"]
+  pull_request:
+    paths:
+      - "research/analysis/semantic_difference_evidence_successor_1938_v1/**"
+      - ".github/workflows/semantic-difference-evidence-successor.yml"
+jobs:
+  formal:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Formal finite run
+        working-directory: research/analysis/semantic_difference_evidence_successor_1938_v1
+        run: |
+          python3 --version
+          python3 semantic_difference_runner.py
+      - name: Independent audit
+        working-directory: research/analysis/semantic_difference_evidence_successor_1938_v1
+        run: |
+          python3 - <<'PY'
+          import json
+          p=json.load(open("RESULT.json"))
+          assert p["decision"]=="PASS_SEMANTIC_DIFFERENCE_EVIDENCE_SCOPED"
+          assert p["cases"]==12
+          assert p["matches"]==p["cases"]+p["exhaustive_cases"]
+          assert p["authority_positive"]==0
+          assert p["model_calls"]==p["gui_calls"]==p["network_calls"]==p["task_input_events"]==0
+          assert p["reruns"]==p["replacements"]==p["tuning"]==0
+          print("INDEPENDENT_AUDIT_PASS")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: semantic-difference-evidence-successor
+          path: research/analysis/semantic_difference_evidence_successor_1938_v1/RESULT.json
