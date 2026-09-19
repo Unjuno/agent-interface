@@ -21,6 +21,7 @@ def host_path(value: str | None, repo: Path) -> str | None:
 
 def serve(ipc: Path, repo: Path, once: bool = False) -> int:
     cli = os.environ.get("CODEX_EXE", "codex.exe")
+    timeout_s = float(os.environ.get("HOST_MODEL_BROKER_TIMEOUT_S", "90"))
     handled = set()
     while True:
         requests = sorted(ipc.glob("*.request.json"))
@@ -37,20 +38,30 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
             if request.get("image"):
                 args.extend(["--image", host_path(request["image"], repo)])
             args.extend(["-C", host_path(request["working"], repo), "-"])
+            started_ns = time.perf_counter_ns()
             try:
                 completed = subprocess.run(args, input=request["prompt"] + "\n",
                                            text=True, encoding="utf-8", errors="replace",
-                                           capture_output=True, check=False)
+                                           capture_output=True, check=False, timeout=timeout_s)
                 broker = {"request_id": request_id, "returncode": completed.returncode,
                           "stderr": (completed.stderr or "")[-2000:],
-                          "boundary": "host-local-codex-exe", "authority_granted": False}
+                          "boundary": "host-local-codex-exe", "authority_granted": False,
+                          "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                 response = completed.stdout or ""
+            except subprocess.TimeoutExpired as exc:
+                broker = {"request_id": request_id, "returncode": None,
+                          "error_class": "TimeoutExpired", "stop_reason": "HOST_BROKER_SUBPROCESS_TIMEOUT",
+                          "timeout_s": timeout_s, "stderr": str(exc)[-2000:],
+                          "boundary": "host-local-codex-exe", "authority_granted": False,
+                          "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
+                response = ""
             except OSError as exc:
                 broker = {"request_id": request_id, "returncode": None,
                           "error_class": type(exc).__name__,
                           "stop_reason": "HOST_BROKER_EXECUTABLE_UNAVAILABLE",
                           "stderr": str(exc)[-2000:],
-                          "boundary": "host-local-codex-exe", "authority_granted": False}
+                          "boundary": "host-local-codex-exe", "authority_granted": False,
+                          "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                 response = ""
             (ipc / f"{request_id}.response.jsonl").write_text(
                 response, encoding="utf-8", newline="\n")
