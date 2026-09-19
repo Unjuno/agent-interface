@@ -138,8 +138,10 @@ def main():
             if new:
                 break
             time.sleep(0.5)
-        replacement_ok = bool(new) and (old not in new)
+        replacement_ok = bool(new) and replacement.pid != records["chromium"]["pid"]
         ledger.append({"event": "window_replacement", "old_window": old,
+                       "old_pid": records["chromium"]["pid"],
+                       "new_pid": replacement.pid,
                        "new_windows": new[:10],
                        "generation": records["chromium"]["generation"],
                        "ok": replacement_ok})
