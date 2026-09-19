@@ -1,7 +1,8 @@
-# Docker IPC schema bridge (#2818)
+# Docker IPC schema preflight result (#2818)
 
-Contract-only adapter for the retained #2807 schema-preflight stop. It binds
-request/response IDs, requires a schema payload, preserves usage metadata, and
-fails closed on malformed/mismatched/authority-bearing responses. Broker errors
-yield without granting authority. It performs no GUI, model, provider, input,
-or task operation; this is not a six-task result.
+After the JSONL parser correction in PR #2826, one host-local broker preflight
+successfully extracted exactly one `item.completed` agent message and obtained
+a `compiled-form-grounding-v1` payload. The broker returned success and kept
+`authority_granted=false`; no GUI operation or task route ran. This is a
+schema-bridge preflight only, not a model-quality, GUI-effect, or six-task
+result.
