@@ -31,4 +31,29 @@ class GoldenV3AdapterTests(unittest.TestCase):
         call.assert_called_once_with({"p":1},{"fixture":1},current_observation_seq=2,current_binding_revision=4,display_name=None)
         self.assertEqual(row["status"],"success"); self.assertEqual(row["usage"],{"input":1})
 
+    def test_ambiguous_delivery_never_maps_to_success(self):
+        for delivery in ("ambiguous", "uncertain", "write_uncertain", "delivery_uncertain"):
+            row = adapt_dispatch_result({
+                "status": "returned", "delivery": delivery,
+                "result": {"program_completed": True, "task_success": True},
+            })
+            self.assertEqual(row["status"], "refused", delivery)
+            self.assertFalse(row["program_completed"], delivery)
+            self.assertFalse(row["task_success"], delivery)
+            self.assertIn("AMBIGUOUS_DELIVERY", row["diagnostic"])
+
+    def test_nested_ambiguous_delivery_never_maps_to_success(self):
+        row = adapt_dispatch_result({
+            "status": "returned",
+            "result": {
+                "delivery": "ambiguous", "program_completed": True,
+                "task_success": True, "partial_effects": ["attempted"],
+            },
+        })
+        self.assertEqual(row["status"], "refused")
+        self.assertFalse(row["program_completed"])
+        self.assertFalse(row["task_success"])
+        self.assertEqual(row["partial_effects"], ["attempted"])
+        self.assertIn("AMBIGUOUS_DELIVERY", row["diagnostic"])
+
 if __name__=="__main__": unittest.main()
