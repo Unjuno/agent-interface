@@ -219,6 +219,21 @@ slots to retry, reuse run directories, or infer that a timeout means no effect.
 The adapter cannot deduplicate across a restarted/mutated server. This is a
 private single-owner research transport, not the promoted public API.
 
+The Linux private desktop harness records its owner incarnation before setup.
+With no reply, a confirmed absent/replaced/terminal owner returns
+`unknown_requires_external_reconciliation`, with emission and release unknown.
+PID starttime, boot ID and PID namespace prevent treating an unrelated process
+as this owner. Foreign or unreadable identity also requires reconciliation.
+A stopped but existing process can remain pending; timeout is never proof of
+death. A correlated committed reply still takes precedence. Historical runs
+without owner.json retain pending behavior. Do not replay or restart an unknown
+action: independently reconcile its effect and input release.
+
+Immutable publication syncs both file bytes and the directory entry on Linux.
+Failure after linking can leave a committed slot; inspect read-only instead of
+resubmitting. This is not a power-loss or crash-restart exactly-once guarantee.
+See the [actual owner-stop runs](../../runtime/results/native-owner-stop-01/README.md).
+
 The actual [Calc exchange run](../../runtime/results/native-exchange-self-use-01/README.md)
 includes normal combined action/image, intentional timeout/read-only resume,
 and independent saved-file evaluation. The response is a full native report;

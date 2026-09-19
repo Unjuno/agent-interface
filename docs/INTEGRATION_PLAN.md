@@ -296,3 +296,14 @@ wait as a scoped usage recipe, without adding primitives or changing shared
 defaults. Other versions/loads, minimum sufficient delay and semantic readiness
 remain unmeasured. Newly inspected #2704 (crash replay) and #2706 (independent
 formal receipt emission) are not closed by this result.
+
+[Native owner loss](../runtime/results/native-owner-stop-01/README.md) exposed
+a recovery-status gap: a saved action with a killed owner and no reply remained
+pending on every read-only resume. The private Linux harness now records its
+process incarnation; absent/replaced/terminal or unverifiable owners return
+unknown_requires_external_reconciliation without granting replay or release
+authority. A stopped live owner remains pending and committed replies take
+precedence. Immutable publication also syncs its directory entry. Fresh actual
+use, SIGKILL, independent saved SVG/input-state checks and duplicate refusal
+exercise this boundary. This is preparation for #2704, not its formal crash
+matrix or a restart/recovery protocol.
