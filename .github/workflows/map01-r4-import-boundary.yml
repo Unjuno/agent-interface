@@ -1,0 +1,30 @@
+name: MAP01 r4 side-effect-free import boundary
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
+  push:
+    paths:
+      - "research/doom/map01_v12_import_boundary_successor_r4_v1/**"
+      - "research/doom/map01_v12_physical_occupancy_live_r1_v1/session_entry.py"
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    timeout-minutes: 2
+    runs-on: ubuntu-24.04
+    container: python:3.12-slim
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and audit source-only gate
+        run: |
+          python research/doom/map01_v12_import_boundary_successor_r4_v1/import_gate.py | tee r4-result.json
+      - name: Upload result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: map01-r4-import-boundary-result
+          path: r4-result.json
