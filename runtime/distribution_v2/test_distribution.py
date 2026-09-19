@@ -59,6 +59,12 @@ class PortableDistributionTests(unittest.TestCase):
             self.assertNotEqual(proc.returncode, 0)
             row = json.loads(proc.stdout)
             self.assertEqual(row["status"], "backend_unavailable")
+            observation = subprocess.run([
+                sys.executable, str(out), "observe", "--targets", str(targets),
+                "--target", "fixture", "--frame", "window_client", "--region", "0", "0", "10", "10",
+            ], capture_output=True, text=True)
+            self.assertNotEqual(observation.returncode, 0)
+            self.assertEqual(json.loads(observation.stdout)["status"], "backend_unavailable")
 
 
 if __name__ == "__main__":
