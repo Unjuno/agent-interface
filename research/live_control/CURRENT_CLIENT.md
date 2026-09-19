@@ -591,3 +591,13 @@ tracked processes and successful cleanup attempts; it does not prove owner or
 descendant exit. Both an input-refused run and a completed, visually corrected
 Inkscape run are retained with fault tests in
 [native terminal cleanup](../../runtime/results/native-terminal-cleanup-01/README.md).
+
+Inkscape goals now expose the existing directional movement/geometry-preservation
+contract. `dx` is nominal screen-space drag distance, not an exact keyboard gain
+requirement. A fixed four-run click-to-key comparison (0/50/50/0 ms after click)
+saved x=84/86/86/84 after 18 Right chords from x=50; all four passed the existing
+directional task. A subsequent primary-assistant run used a leading 50 ms
+`wait_update` in the click tail and saved x=86 without correction. This is a
+caller-selected policy for that measured configuration, not app readiness
+acknowledgement, a new default, or a general performance claim. See
+[click-to-key evidence and recipe](../../runtime/results/native-key-boundary-01/README.md).
