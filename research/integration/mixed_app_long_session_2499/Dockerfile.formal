@@ -1,6 +1,6 @@
 FROM debian:bookworm-slim
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update -qq && apt-get install -y -qq --no-install-recommends python3 xvfb xdotool x11-utils inkscape libreoffice chromium ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -qq && apt-get install -y -qq --no-install-recommends python3 procps xvfb xdotool x11-utils inkscape libreoffice chromium ca-certificates && rm -rf /var/lib/apt/lists/*
 RUN set -eux; command -v chromium; chromium --version
 WORKDIR /workspace
 ENTRYPOINT ["python3", "/workspace/research/integration/mixed_app_long_session_2499/formal_session.py"]
