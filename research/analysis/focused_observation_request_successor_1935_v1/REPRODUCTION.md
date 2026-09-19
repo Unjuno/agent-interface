@@ -19,4 +19,4 @@ Expected independent audit:
 independent_rows=256 independent_valid=16 independent_rejected=240 audit=PASS
 ```
 
-The formal container gate is intentionally HOLD because Docker was unavailable in the execution environment. No retry or scientific reinterpretation is made.
+Local formal container reproduction is PASS using Docker Desktop 29.8.0 and `python:3.11-slim`; see `MANIFEST.json` for the pinned image digest and scope boundary. The gate remains fixture-scoped and does not claim model, GUI, runtime, or production authority.
