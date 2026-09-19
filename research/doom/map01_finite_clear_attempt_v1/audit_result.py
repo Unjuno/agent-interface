@@ -5,8 +5,19 @@ from pathlib import Path
 
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("root", type=Path); args = ap.parse_args()
-    rows = json.loads((args.root / "controller-events.json").read_text())
-    allocation = json.loads((args.root / "allocation.json").read_text())
+    events_path = args.root / "controller-events.json"
+    allocation_path = args.root / "allocation.json"
+    if not events_path.is_file() or not allocation_path.is_file():
+        result = {
+            "allocation_id": "map01-finite-clear-attempt-v1",
+            "outcome": "HOLD_INFRASTRUCTURE",
+            "reason": "allocation did not produce the required raw event/allocation files",
+        }
+        (args.root / "audit-result.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+        print(json.dumps(result, sort_keys=True))
+        return 2
+    rows = json.loads(events_path.read_text())
+    allocation = json.loads(allocation_path.read_text())
     terminals = [r for r in rows if r.get("event") == "terminal"]
     scores = [r for r in rows if r.get("event") == "post_control_score"]
     malformed = [r for r in rows if r.get("event") == "malformed_stdout"]
