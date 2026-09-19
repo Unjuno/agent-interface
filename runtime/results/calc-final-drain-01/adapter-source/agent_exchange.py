@@ -115,7 +115,7 @@ def run(socket_path, batch, run_directory, program_id, steps, *, out,
                 result['records'] = result['records'] + result['drain']['reply']['records']
                 result['cursor'] = result['drain']['reply']['cursor']
         try:
-            result["image"] = select_image(result, run_directory)
+            result["image"] = select_image(reply, run_directory)
         except Exception as error:
             result["image_error"] = str(error)
     except Exception as error:
