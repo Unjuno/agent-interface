@@ -38,6 +38,7 @@ def main() -> int:
     (root / "plan.json").write_text(json.dumps(request, indent=2) + "\n", encoding="utf-8", newline="\n")
     request_path = ipc / f"{request_id}.request.json"
     response_path = ipc / f"{request_id}.response.jsonl"
+    started_ns = time.perf_counter_ns()
     request_path.write_text(json.dumps(request, indent=2) + "\n", encoding="utf-8", newline="\n")
     deadline = time.monotonic() + float(os.environ.get("HOST_MODEL_IPC_TIMEOUT_S", "120"))
     while not response_path.exists():
@@ -51,10 +52,12 @@ def main() -> int:
     messages = [row for row in events if row.get("type") == "item.completed"]
     if len(turns) != 1 or len(messages) != 1:
         raise RuntimeError("host model IPC response is not one completed turn/message")
+    exited_ns = time.perf_counter_ns()
     result = {"exit_code": 0, "requested_model": "gpt-5.6-luna",
               "requested_effort": "low", "mode": mode,
               "boundary": "container-to-host-model-ipc", "authority_granted": False,
-              "request_id": request_id}
+              "request_id": request_id, "started_ns": started_ns,
+              "exited_ns": exited_ns}
     (root / "process.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8", newline="\n")
     return 0
 
