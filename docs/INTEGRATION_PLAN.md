@@ -20,6 +20,15 @@ host usage data. Preserve the current guarded path while obtaining that evidence
 before choosing a delay or capture optimization. Existing stage-specific read-only
 resume remains the recovery route; do not add automatic action replay.
 
+Follow-up [primary SDK-timed use](../runtime/results/native-mcp-timed-01/README.md)
+completed the same action recipe on a fresh Inkscape task. Its call_tool span
+was 984.206 ms, containing a 964.031 ms exchange; entry/return overhead totaled
+20.175 ms. This bounds SDK-side overhead only in that single run. Images still
+pass through saved files and a separate host view tool, so host presentation and
+model interpretation remain unmeasured. The next integration target is direct
+host image delivery; the measured SDK overhead alone does not justify removing
+source guards, explicit application waits or recovery evidence.
+
 The primary assistant's [combined Calc/Inkscape use](../runtime/results/native-combined-batch-01/README.md)
 completed both saved-file goals in three requests using existing repeated-key
 batches, an observed application switch, and explicit finish_after. Retain the
