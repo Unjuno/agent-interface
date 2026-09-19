@@ -569,3 +569,11 @@ base64 reduces the relative difference below 1%, and actual model tokens/latency
 are unmeasured. See [native watch references](../../runtime/results/native-watch-refs-01/README.md).
 The retained local projection-only cost check is slower: median 0.822 to 1.579 ms
 over 100 alternating pairs. Keep the byte reduction separate from total latency.
+
+Keyboard continuation is now an opt-in interaction on the same native exchange:
+guard the explicitly presented context and emit keys without another click. A
+primary-assistant Inkscape run selected once, then moved/saved x=50 to x=74 using
+12 Right chords and Ctrl+S. The keyboard program has zero pointer ops, two boundary
+guards and verified release. No sensor lane was configured. This removes mandatory
+activation, not a measured end-to-end latency claim. See
+[native keyboard continuation](../../runtime/results/native-keyboard-01/README.md).
