@@ -1,5 +1,10 @@
 import json
+import sys
+from pathlib import Path
 from unittest.mock import patch
+
+REPO = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(REPO))
 
 from runtime.cli_v1 import observe as observe_api
 from runtime.selector_v1 import BackendUnavailable
