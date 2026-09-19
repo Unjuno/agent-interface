@@ -1,0 +1,25 @@
+name: MAP01 occupancy gate frontier 1592 r1
+on:
+  pull_request:
+    paths:
+      - "research/measurement/map01_occupancy_gate_frontier_1592_r1/**"
+      - ".github/workflows/map01-occupancy-gate-frontier-1592-r1.yml"
+jobs:
+  frontier:
+    runs-on: ubuntu-24.04
+    container: python:3.12-slim
+    steps:
+      - name: Fetch immutable source
+        env: { SHA: ${{ github.event.pull_request.head.sha }} }
+        run: |
+          set -eu
+          mkdir -p research/measurement/map01_occupancy_gate_frontier_1592_r1
+          python - "${SHA}" <<'PY'
+          import pathlib,sys,urllib.request
+          b=f"https://raw.githubusercontent.com/Unjuno/agent-interface/{sys.argv[1]}/research/measurement/map01_occupancy_gate_frontier_1592_r1"
+          o=pathlib.Path("research/measurement/map01_occupancy_gate_frontier_1592_r1")
+          with urllib.request.urlopen(b+"/frontier.py",timeout=30) as r:o.joinpath("frontier.py").write_bytes(r.read())
+          PY
+      - run: python -m py_compile research/measurement/map01_occupancy_gate_frontier_1592_r1/frontier.py
+      - working-directory: research/measurement/map01_occupancy_gate_frontier_1592_r1
+        run: python frontier.py
