@@ -31,8 +31,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y xvfb openbox xauth libgl1 libglu1-mesa libasound2t64
-          python -m pip download --only-binary=:all: --dest /tmp/map01-wheels 'vizdoom==1.3.0' pillow 'python-xlib' numpy
-          python -m pip install --no-index --find-links /tmp/map01-wheels 'vizdoom==1.3.0' pillow 'python-xlib' numpy
+          python -m pip download --only-binary=:all: --dest /tmp/map01-wheels 'vizdoom==1.3.0' pillow 'python-xlib' numpy openpyxl
+          python -m pip install --no-index --find-links /tmp/map01-wheels 'vizdoom==1.3.0' pillow 'python-xlib' numpy openpyxl
 
       - name: Reconstruct exact retained v12 source
         run: |
@@ -53,10 +53,7 @@ jobs:
         run: |
           python - <<'PY'
           import runpy
-          runpy.run_path(
-              "research/doom/map01_v12_physical_occupancy_live_r1_v1/session_entry.py",
-              run_name="__map01_import_gate__",
-          )
+          runpy.run_path("research/doom/map01_v12_physical_occupancy_live_r1_v1/session_entry.py", run_name="__map01_import_gate__")
           print("MAP01_IMPORT_BOUNDARY_PASS")
           PY
 
