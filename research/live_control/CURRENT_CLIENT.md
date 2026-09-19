@@ -583,3 +583,11 @@ required A1/A2 and the public goal exposed only a/b. The harness now explicitly
 supplies cell destinations. A fresh primary-assistant keyboard-first run saved
 A1=551, A2=768; the original failed workbook and its B1=745 remain unchanged.
 See [Calc task destination](../../runtime/results/native-calc-explicit-task-01/README.md).
+
+The native Calc/Inkscape harness publishes terminal replies after artifact
+preservation and cleanup attempts, with separate task and cleanup outcomes.
+Copy/close failures do not skip subsequent cleanup. `finished` requires terminal
+tracked processes and successful cleanup attempts; it does not prove owner or
+descendant exit. Both an input-refused run and a completed, visually corrected
+Inkscape run are retained with fault tests in
+[native terminal cleanup](../../runtime/results/native-terminal-cleanup-01/README.md).
