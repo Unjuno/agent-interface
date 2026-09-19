@@ -63,6 +63,9 @@ def main() -> int:
         proc.stdin.write(json.dumps(row) + "\n")
         proc.stdin.flush()
 
+    ready = None
+    initial = None
+    failure = None
     try:
         ready = wait_for(lambda r: r.get("event") == "ready")
         initial = wait_for(lambda r: r.get("event") == "observation" and r.get("id") == "initial")
@@ -94,10 +97,13 @@ def main() -> int:
         wait_for(lambda r: r.get("event") == "post_control_score", limit=15.0)
         proc.stdin.close()
         proc.wait(timeout=15)
+    except Exception as exc:
+        failure = repr(exc)
     finally:
         if proc.poll() is None:
             proc.kill()
             proc.wait()
+    stderr_text = proc.stderr.read() if proc.stderr is not None else ""
     (args.out / "controller-events.json").write_text(
         json.dumps(events, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
@@ -108,7 +114,11 @@ def main() -> int:
         "controller": "fixed bounded OS-input baseline; no model call",
         "ready": ready, "initial": initial,
         "event_count": len(events), "process_returncode": proc.returncode,
+        "failure": failure, "session_stderr": stderr_text,
     }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    if failure:
+        print(json.dumps({"failure": failure, "session_stderr": stderr_text}, sort_keys=True), file=sys.stderr)
+        return 2
     return 0
 
 
