@@ -10,6 +10,8 @@ jobs:
     container: python:3.12-slim
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
       - name: Compile
         run: python -m py_compile research/measurement/map01_task_effect_contract_1839_r1/contract.py research/measurement/map01_task_effect_contract_1839_r1/test_contract.py
       - name: Formal offline contract test
