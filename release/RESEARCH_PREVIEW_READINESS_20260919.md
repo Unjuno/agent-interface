@@ -1,39 +1,46 @@
 # Research Preview readiness audit — 2026-09-19
 
-This is an evidence-indexed gate record for Issue #58. It does not declare the preview ready.
+This is a release decision record for Issue #58. It indexes frozen evidence on
+main and keeps scoped research passes separate from release claims.
 
-## Current disposition
+## Decision
 
-HOLD_RESEARCH_PREVIEW_NOT_READY
+**HOLD_RESEARCH_PREVIEW_NOT_READY**
 
-The repository has retained scoped component and integration evidence, but the release gate still lacks a verified one-command golden desktop demo, a runnable package/checksum/smoke test, and an honest continuously advancing DOOM showcase artifact.
+The repository has three scoped passes, but the complete Research Preview
+gate set is not closed. The current source also does not emit the result
+provenance required by the golden desktop v3 contract, and no source-backed
+CLI adapter mapping exists yet.
 
 ## Gate matrix
 
-| Gate | Status | Evidence / gap |
-|---|---|---|
-| Golden desktop workflow | HOLD | Issue #57 retained one fixed six-task allocation with independent scoring; a reproducible packaged demo is not verified here. |
-| Reconstructable benchmark numbers | PASS_SCOPED | PR #2051 and retained #57 evidence preserve fixed-scope measurements; broad efficiency claims remain disallowed. |
-| README separates proven vs research-stage | PASS_SCOPED | README states Research Preview and scope limits; this audit does not replace a release review. |
-| Architecture explanation | PASS_SCOPED | README/docs architecture links exist on main. |
-| DOOM showcase | HOLD | MAP01 R1 physical occupancy is scoped evidence only; no retained uninterrupted normal-speed MAP01 clear video is verified. |
-| Runnable package/archive | HOLD | No checksummed downloadable runtime artifact was verified in this audit. |
-| Supported OS/backend statement | HOLD | Evidence remains primarily Linux/private-X11 and scoped desktop fixtures. |
-| Smoke/self-check | HOLD | No release-bound smoke command and artifact were verified. |
-| Recovery/observation integration | HOLD | Roadmap still marks O3/O4, guarded policy, runtime consolidation, and stabilization incomplete. |
+| Gate | Disposition | Evidence |
+| --- | --- | --- |
+| Golden desktop workflow | HOLD | Installability, checksum, and a reproducible packaged run are unverified. |
+| Reconstructable benchmark numbers | PASS_SCOPED | Frozen receipts and validator evidence are indexed. |
+| README and operator instructions | PASS_SCOPED | Main documentation is present; release packaging remains unverified. |
+| Architecture and authority boundaries | PASS_SCOPED | Scoped audits preserve zero authority escalation. |
+| DOOM showcase | HOLD | No supported reproducible video/evidence bundle is pinned. |
+| Runnable package | HOLD | Package, checksum, and install smoke are unverified. |
+| Supported OS/backend | HOLD | Supported backend matrix is not proven. |
+| Smoke/self-check | HOLD | Release smoke artifact is not pinned. |
+| Recovery/observation integration | HOLD | O3/O4/recovery/runtime consolidation is incomplete. |
+
+## Secondary integration evidence
+
+| Evidence | Disposition | Why it remains a hold |
+| --- | --- | --- |
+| Golden v3 emitted result provenance | HOLD_FIELD_PROVENANCE_INCOMPLETE | PR #2236 found an emitted v2 report boundary, but source-backed `program_completed`, `task_success`, `partial_effects`, normalized status, and cleanup error fields are absent. |
+| CLI adapter contract | HOLD_ADAPTER_CONTRACT_NOT_SOURCE_BACKED | PR #2215 mapped current CLI statuses (`returned`, `backend_unavailable`, `runtime_failed`) and confirmed the frozen golden statuses are not emitted by current source. |
 
 ## H/T/D/C/U
 
-H — A machine-readable readiness matrix can prevent a scoped research PASS from being misrepresented as a release-ready product.
-
-T — Freeze the current main evidence links, evaluate each Issue #58 gate against retained artifacts, and run a schema validator that rejects missing status/evidence fields.
-
-D — HOLD_RESEARCH_PREVIEW_NOT_READY unless every required release gate has resolving evidence. This record is valid when all rows are explicit and no unsupported claim is promoted.
-
-C — This is an audit/index artifact; it does not run GUI, model, network, packaging, or DOOM work and does not alter historical results.
-
-U — Actual user installability, checksum reproducibility, golden-demo execution, and video synchronization remain unverified.
+- **H:** Keep release readiness machine-readable and prevent scoped PASS claims from becoming release claims.
+- **T:** Freeze main evidence, include the adapter/provenance holds, and evaluate Issue #58 only after the remaining gates have source-backed artifacts.
+- **D:** HOLD until the nine gates and the two secondary integration contracts are resolved.
+- **C:** This audit is additive index/decision evidence. It makes no GUI, model, network, Docker, package, adapter, or authority-escalation claim.
+- **U:** Installability, checksum, golden execution, supported backend, DOOM evidence, smoke, recovery/runtime consolidation, and source-backed result provenance remain unverified.
 
 ## Next bounded successor
 
-Create a fresh release-preparation successor for the golden desktop path. It must freeze the exact setup/runtime dependencies, execute the retained independent scorer in a disposable environment, retain first setup/runtime/semantic outcome, and add a checksum plus smoke command only after the demo is reproducible. A DOOM showcase remains a separate evidence lane.
+A fresh release-preparation successor must produce a source-backed golden desktop result schema, a real CLI adapter mapping, and packaged install/smoke evidence before changing this disposition.

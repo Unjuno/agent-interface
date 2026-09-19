@@ -1,0 +1,48 @@
+{
+  "after": 4,
+  "events": [
+    "terminal"
+  ],
+  "timeout": 5,
+  "request_id": "program:15bf81dd2bb0406da0a635ac6c0f07a2",
+  "read_request_id": "program:15bf81dd2bb0406da0a635ac6c0f07a2",
+  "command": {
+    "op": "submit",
+    "id": "settle-enter-991075",
+    "expected_sequence": 1,
+    "valid_until_ns": 46764432547,
+    "decision_evidence": {
+      "delivery_id": "delivery:2",
+      "observation_sequence": 1,
+      "producer": "assistant"
+    },
+    "steps": [
+      {
+        "op": "text",
+        "text": "766"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "text",
+        "text": "761"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "s"
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 200,
+        "timeout_ms": 1200
+      }
+    ]
+  }
+}
