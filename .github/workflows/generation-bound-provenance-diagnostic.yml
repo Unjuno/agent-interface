@@ -1,0 +1,55 @@
+name: generation-bound-provenance-diagnostic
+on:
+  pull_request:
+    paths: ["research/analysis/generation_bound_evidence_provenance_diagnostic_2225_v1/**",".github/workflows/generation-bound-provenance-diagnostic.yml"]
+jobs:
+  diagnostic:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: One diagnostic container run
+        run: |
+          ROOT=research/analysis/generation_bound_evidence_provenance_diagnostic_2225_v1
+          PARENT=research/analysis/generation_bound_evidence_container_successor_2166_v1
+          docker pull python:3.12-slim
+          IMAGE_DIGEST=$(docker image inspect python:3.12-slim --format '{{index .RepoDigests 0}}')
+          docker run --rm -v "$PWD/$PARENT:/work" -w /work python:3.12-slim python experiment.py > "$ROOT/stdout.txt"
+          cp "$PARENT/RESULT.json" "$ROOT/RESULT.json"
+          python3 - "$ROOT" "$PARENT" "$IMAGE_DIGEST" <<'PY'
+          import hashlib,json,sys
+          from pathlib import Path
+          root=Path(sys.argv[1]); parent=Path(sys.argv[2]); image=sys.argv[3]
+          p=root/"RESULT.json"
+          source_sha=hashlib.sha256((parent/"experiment.py").read_bytes()).hexdigest()
+          result_sha=hashlib.sha256(p.read_bytes()).hexdigest()
+          v={"parent_blob_sha":"2bcb877a2fbd59b2a854122017ff2956d8866524","source_sha256":source_sha,"image_digest":image,"stdout":(root/"stdout.txt").read_text(),"result_sha256":result_sha,"result_bytes":p.stat().st_size}
+          (root/"DIAGNOSTIC.json").write_text(json.dumps(v,sort_keys=True,indent=2)+"\n")
+          print("DIAGNOSTIC_FIELDS")
+          print(json.dumps(v,sort_keys=True,indent=2))
+          PY
+      - name: Independent field diagnostic
+        run: |
+          python3 - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          root=Path("research/analysis/generation_bound_evidence_provenance_diagnostic_2225_v1")
+          p=json.loads((root/"RESULT.json").read_text())
+          v=json.loads((root/"DIAGNOSTIC.json").read_text())
+          checks={
+            "decision":p["decision"]=="PASS_CONTAINER_REVALIDATION_SCOPED",
+            "statuses":p["statuses"]==["ENCODED","OBSOLETE","CACHE_HIT","ENCODED"],
+            "counters":p["model"]==p["x11"]==p["input"]==0,
+            "parent_blob":v["parent_blob_sha"]=="2bcb877a2fbd59b2a854122017ff2956d8866524",
+            "image_format":v["image_digest"].startswith("docker.io/library/python@sha256:"),
+            "stdout_nonempty":bool(v["stdout"].strip()),
+            "result_hash":v["result_sha256"]==hashlib.sha256((root/"RESULT.json").read_bytes()).hexdigest()
+          }
+          print(json.dumps(checks,sort_keys=True,indent=2))
+          assert all(checks.values())
+          print("DIAGNOSTIC_ALL_FIELDS_PASS")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: generation-bound-provenance-diagnostic
+          path: research/analysis/generation_bound_evidence_provenance_diagnostic_2225_v1/
