@@ -85,14 +85,23 @@ def publish(path, data):
         Path(name).unlink(missing_ok=True)
 
 
-def run(run_directory, stage, decision, *, timeout=5, resume=False, compact=False):
+def run(run_directory, stage, decision=None, *, timeout=5, resume=False, compact=False,
+        decision_sha256=None):
     started = time.monotonic_ns()
     if type(stage) is not int or not 1 <= stage <= 64:
         raise ValueError('explicit positive stage, at most 64, required')
     if type(timeout) not in (int, float) or not math.isfinite(timeout) or not 0 <= timeout <= 30:
         raise ValueError('timeout 0..30 required')
-    if type(resume) is not bool or type(compact) is not bool or not isinstance(decision, dict):
-        raise ValueError('explicit decision and boolean resume required')
+    if type(resume) is not bool or type(compact) is not bool:
+        raise ValueError('boolean resume and compact required')
+    by_digest = decision_sha256 is not None
+    if by_digest:
+        if (not resume or decision is not None or not isinstance(decision_sha256, str)
+                or len(decision_sha256) != 64
+                or any(c not in '0123456789abcdef' for c in decision_sha256)):
+            raise ValueError('digest reference requires read-only resume, no decision, and lowercase SHA256')
+    elif not isinstance(decision, dict):
+        raise ValueError('explicit decision or read-only digest reference required')
     root = Path(run_directory).resolve(strict=True)
     contract_path = root/'exchange-contract.json'
     max_stages = 4
@@ -104,12 +113,19 @@ def run(run_directory, stage, decision, *, timeout=5, resume=False, compact=Fals
         max_stages = contract['max_stages']
     if stage > max_stages:
         raise ValueError('stage exceeds declared session bound')
+    request = root / f'request-{stage}.json'
+    if by_digest:
+        retained = request.read_bytes()
+        if hashlib.sha256(retained).hexdigest() != decision_sha256:
+            raise ValueError('retained request does not match the explicit digest; do not replay')
+        decision = json.loads(retained)
+        if not isinstance(decision, dict) or encoded(decision) != retained:
+            raise ValueError('canonical committed request object required')
     source = json.loads((root / f'source-{stage}.json').read_bytes())
     if type(decision.get('source_sequence')) is not int or decision['source_sequence'] != source['sequence']:
         raise ValueError('decision must name the presented source')
     payload = encoded(decision)
     digest = hashlib.sha256(payload).hexdigest()
-    request = root / f'request-{stage}.json'
     reply = root / f'reply-{stage}.json'
     if resume:
         if request.read_bytes() != payload:

@@ -44,6 +44,70 @@ class NativeExchangeTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             run(self.root, 1, dict(self.decision, finish=False), timeout=0, resume=True)
 
+    def test_digest_resume_pending_then_reply_is_read_only(self):
+        first = run(self.root, 1, self.decision, timeout=0)
+        request = self.root/'request-1.json'
+        original, modified = request.read_bytes(), request.stat().st_mtime_ns
+        args = dict(run_directory=self.root, stage=1, resume=True,
+                    decision_sha256=first['decision_sha256'], timeout=0)
+        with patch('native_exchange_v1.publish', side_effect=AssertionError('must not publish')):
+            self.assertEqual(run(**args)['status'], 'pending')
+            publish(self.root/'reply-1.json', encoded({'stage': 1, 'status': 'finished',
+                'decision_sha256': first['decision_sha256'], 'evaluation': {'success': False}}))
+            result = run(**args)
+        self.assertTrue(result['exchange']['resumed_read_only'])
+        self.assertFalse(result['outcome_summary']['evaluation_success'])
+        self.assertEqual(request.read_bytes(), original)
+        self.assertEqual(request.stat().st_mtime_ns, modified)
+
+    def test_digest_resume_rejects_missing_changed_or_ambiguous_reference(self):
+        digest = hashlib.sha256(encoded(self.decision)).hexdigest()
+        with self.assertRaises(FileNotFoundError):
+            run(self.root, 1, resume=True, decision_sha256=digest)
+        self.assertFalse((self.root/'request-1.json').exists())
+        run(self.root, 1, self.decision, timeout=0)
+        with patch('native_exchange_v1.publish', side_effect=AssertionError('must not publish')):
+            for kwargs in [dict(decision_sha256=digest),
+                           dict(resume=True, decision_sha256='a'*64),
+                           dict(resume=True, decision_sha256=digest.upper()),
+                           dict(resume=True, decision_sha256=True),
+                           dict(resume=True, decision_sha256=digest, decision=self.decision)]:
+                with self.subTest(kwargs=kwargs), self.assertRaises(ValueError):
+                    run(self.root, 1, timeout=0, **kwargs)
+            (self.root/'request-1.json').write_bytes(encoded(dict(self.decision, finish=False)))
+            with self.assertRaisesRegex(ValueError, 'digest'):
+                run(self.root, 1, resume=True, decision_sha256=digest)
+
+    def test_digest_resume_keeps_reply_binding_and_owner_loss_rules(self):
+        first = run(self.root, 1, self.decision, timeout=0)
+        args = dict(run_directory=self.root, stage=1, resume=True,
+                    decision_sha256=first['decision_sha256'], timeout=0)
+        with patch('native_exchange_v1.owner_state', return_value={'state': 'terminal'}):
+            self.assertEqual(run(**args)['status'], 'unknown_requires_external_reconciliation')
+        publish(self.root/'reply-1.json', encoded({'stage': 1, 'decision_sha256': 'wrong'}))
+        with self.assertRaisesRegex(ValueError, 'reply'):
+            run(**args)
+
+    def test_digest_resume_rejects_noncanonical_bytes_and_read_race(self):
+        request = self.root/'request-1.json'
+        for retained in [b'[]\n', b'{"source_sequence":7,"finish":true}\n']:
+            request.write_bytes(retained)
+            with self.assertRaisesRegex(ValueError, 'canonical'):
+                run(self.root, 1, resume=True,
+                    decision_sha256=hashlib.sha256(retained).hexdigest())
+        original = encoded(self.decision)
+        request.write_bytes(original)
+        actual_read = Path.read_bytes
+        reads = []
+        def changed_read(path):
+            if path == request:
+                reads.append(path)
+                if len(reads) == 2:
+                    return encoded(dict(self.decision, finish=False))
+            return actual_read(path)
+        with patch.object(Path, 'read_bytes', changed_read), self.assertRaisesRegex(ValueError, 'exact committed'):
+            run(self.root, 1, resume=True, decision_sha256=hashlib.sha256(original).hexdigest())
+
     def test_wrong_reply_identity_and_wrong_source_are_rejected(self):
         with self.assertRaises(ValueError):
             run(self.root, 1, {'source_sequence': 8}, timeout=0)
