@@ -230,3 +230,20 @@ Keep failed ideas and revisit them when a stated condition has changed.
 This task's new experiments should resolve an identified integration or
 correctness gap, or measure the assembled route. Independent discovery remains
 with the ongoing research work. The overall human-tempo goal remains open.
+
+
+## Issue intake: persistent release quarantine (2026-09-20)
+
+Issue #2437 supplies an immediately relevant condition for the persistent native
+path: an unverified release must block ordinary follow-up input. The
+[native quarantine regression](../runtime/results/native-release-quarantine-01/README.md)
+now connects that condition to X11RuntimeSession and the existing handle bridge.
+A real held-button failure refuses follow-up dispatch before backend access;
+window review cannot clear the latch. This does not complete the broader host,
+compositor or recovery protocol requested by #2437. There is no automatic reset.
+
+Other reviewed candidates remain staged: #2530's MotorState bridge has reported
+infrastructure stops before dedicated tests, so it is not evidence for promotion;
+#2499 needs an actual persistent mixed-app trace rather than a union of earlier
+component runs; #2448 needs semantic/effect evidence beyond title cues. Preserve
+those gates while integrating useful, testable conditions into the common path.

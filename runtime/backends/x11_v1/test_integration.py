@@ -94,6 +94,52 @@ class X11IntegrationTests(unittest.TestCase):
         finally:
             backend.close()
 
+    def test_unverified_native_release_quarantines_persistent_session(self):
+        class LostRelease(X11Backend):
+            suppress_release = True
+            def pointer_button(self, button, down):
+                super().pointer_button(button, down)
+                if down:
+                    raise RuntimeError("injected failure after native press")
+            def release_all(self):
+                if self.suppress_release:
+                    return {"verified": False, "error": "injected release request failure"}
+                return super().release_all()
+
+        backend = LostRelease(os.environ["DISPLAY"],
+                              {"fixture": self.backend.targets["fixture"].id})
+        session = X11RuntimeSession(backend)
+        trace = {}
+        try:
+            first = session.dispatch(make_program("lost-release"),
+                current_observation_seq=7, current_binding_revision=3)
+            trace["first"] = first
+            self.assertEqual(first["status"], "execution_failed")
+            self.assertTrue(first["recovery_required"])
+            # A separate connection observes the server state, not the receipt.
+            trace["independent_buttons_before_cleanup"] = self.backend._physical_buttons_down()
+            self.assertIn("left", trace["independent_buttons_before_cleanup"])
+            emissions = backend.emissions
+            second = session.dispatch(make_program("blocked", seq=8, revision=4),
+                current_observation_seq=8, current_binding_revision=4)
+            trace["second"] = second
+            self.assertEqual(second["error"], "INPUT_RECOVERY_REQUIRED")
+            self.assertEqual(backend.emissions, emissions)
+            self.assertFalse(self.effect.exists())
+            # Cleanup remains possible, but cannot silently reset the owner.
+            backend.suppress_release = False
+            trace["explicit_cleanup"] = backend.release_all()
+            trace["independent_buttons_after_cleanup"] = self.backend._physical_buttons_down()
+            self.assertEqual(trace["independent_buttons_after_cleanup"], [])
+            trace["third"] = session.dispatch(make_program("still-blocked"),
+                current_observation_seq=7, current_binding_revision=3)
+            self.assertEqual(trace["third"]["error"], "INPUT_RECOVERY_REQUIRED")
+        finally:
+            backend.suppress_release = False
+            backend.close()
+            if os.environ.get("AI_RELEASE_TRACE"):
+                Path(os.environ["AI_RELEASE_TRACE"]).write_text(json.dumps(trace, indent=2) + "\n")
+
     def test_valid_program_has_independent_effect_and_verified_release(self):
         before = self.backend.emissions
         row = self.session.dispatch(make_program("valid"), current_observation_seq=7, current_binding_revision=3)

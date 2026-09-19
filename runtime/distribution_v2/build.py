@@ -25,6 +25,8 @@ SOURCE_FILES = (
     "runtime/cli_v1/receipt.py",
     "runtime/cli_v1/observe.py",
     "runtime/cli_v1/golden_v3.py",
+    "runtime/motor_state_v1/__init__.py",
+    "runtime/motor_state_v1/adapter.py",
     "runtime/backends/x11_v1/__init__.py",
     "runtime/backends/x11_v1/backend.py",
     "runtime/backends/x11_v1/capture_artifacts.py",

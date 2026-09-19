@@ -21,7 +21,7 @@ class NativeBoundaryTests(unittest.TestCase):
             "inert-x11", "linux", "x11", OFFICE_FLOOR)
         backend.emissions = 0
         backend.execute.return_value = {
-            "releases": [{"verified": released}], "emissions": 2,
+            "releases": [{"verified": released, "keys_down": [], "buttons_down": []}], "emissions": 2,
             "observations": [{"sequence": 8}],
         }
         if close_error:
