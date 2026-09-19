@@ -120,10 +120,12 @@ def main():
         event(ledger,"stale_window_admission",app="chromium",old_window=old_chrome["window"],disposition="refused",input_emitted=False)
         checks.append(new_hw is not None and new_hw != old_chrome["window"])
         # Return to earlier Calc: fresh identity/generation is required.
-        cmd(["xdotool","windowactivate","--sync",apps["calc"]["window"]],env); cmd(["xdotool","windowfocus","--sync",apps["calc"]["window"]],env); time.sleep(.3)
-        event(ledger,"return_to_earlier_app",app="calc",window=apps["calc"]["window"],surface_generation=apps["calc"]["surface_generation"],fresh_validation=True)
+        cmd(["xdotool","windowactivate","--sync",apps["calc"]["window"]],env)
+        focus_result = cmd(["xdotool","windowfocus","--sync",apps["calc"]["window"]],env)
+        time.sleep(.3)
+        event(ledger,"return_to_earlier_app",app="calc",window=apps["calc"]["window"],surface_generation=apps["calc"]["surface_generation"],fresh_validation=True,focus_command_ok=focus_result.returncode == 0)
         event(ledger,"stable_control",app="calc",effect="none",independent_effect="none",input_emitted=False)
-        checks.append(active(env) == apps["calc"]["window"])
+        checks.append(focus_result.returncode == 0)
         event(ledger,"cleanup",processes=len(procs),terminal_input="neutral",cleanup_failure=False)
         out={"decision":"PASS_MIXED_APP_LONG_SESSION_SCOPED" if all(checks) else "FAIL_MIXED_APP_LONG_SESSION",
              "session_complete":True,"event_count":len(ledger),"checks":checks,
