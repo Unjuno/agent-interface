@@ -19,7 +19,7 @@ jobs:
         run: |
           set +e
           mkdir -p "$RUNNER_TEMP/mixed-2821-diagnostic-v3"
-          docker run --rm --network none -v "$GITHUB_WORKSPACE:/workspace:ro" -v "$RUNNER_TEMP/mixed-2821-diagnostic-v3:/out" -w /workspace --entrypoint python3 mixed-formal-2821:diagnostic startup_diagnostic.py > "$RUNNER_TEMP/mixed-2821-diagnostic-v3/result.json" 2> "$RUNNER_TEMP/mixed-2821-diagnostic-v3/stderr.log"
+          docker run --rm --network none -v "$GITHUB_WORKSPACE:/workspace:ro" -v "$RUNNER_TEMP/mixed-2821-diagnostic-v3:/out" -w /workspace --entrypoint python3 mixed-formal-2821:diagnostic /workspace/research/integration/mixed_app_long_session_2499/startup_diagnostic.py > "$RUNNER_TEMP/mixed-2821-diagnostic-v3/result.json" 2> "$RUNNER_TEMP/mixed-2821-diagnostic-v3/stderr.log"
           container_code=$?
           printf '%s\n' "$container_code" > "$RUNNER_TEMP/mixed-2821-diagnostic-v3/container_exit.txt"
           if [ ! -s "$RUNNER_TEMP/mixed-2821-diagnostic-v3/result.json" ]; then
