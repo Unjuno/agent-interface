@@ -165,3 +165,28 @@ that omitted history. Reference lookup requires no additional tool call.
 reference bookkeeping can increase size on receipts without repeated events,
 and model interpretation/token/latency effects have not been measured. See the
 [same-receipt comparison](../../runtime/results/receipt-event-references-01/README.md).
+
+
+## Present native bridge observations
+
+The same presenter accepts explicit native observation files or feedback/window
+review rows with an `observation` field:
+
+```sh
+python3 research/live_control/agent_review.py --native \
+  --report results-local/native-review-self-use-01/source-2.json \
+  --run-directory results-local/native-review-self-use-01
+```
+
+Decode JSON, present the receipt as text, and render the returned `image` block
+through the host's image output (do not print base64 as text). Keep adequate tool
+output capacity; a truncated JSON response must only be re-read, never replayed
+as input. Native review retains the complete native report and exact source hash.
+It checks the raw-capture hash link, capture time, PNG digest/signature and path
+inside the explicit run directory. It does not decode pixels or authenticate the
+producer. The image remains a historical capture; it grants no input authority.
+
+A missing explicit observation returns `no_observation`. Broken references or
+identity mismatch return `needs_review` with the receipt preserved. No old image
+is substituted. `--compact` is not supported for native reports. See the
+[actual Calc use](../../runtime/results/native-review-self-use-01/README.md).
