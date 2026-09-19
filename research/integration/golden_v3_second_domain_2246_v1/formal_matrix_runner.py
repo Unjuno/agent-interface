@@ -5,6 +5,7 @@ REPO_ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(REPO_ROOT))
 from runtime.cli_v1.golden_v3 import dispatch_golden_v3
 from runtime.core_v1.contract import SCHEMA_PROGRAM
+from research.integration.golden_v3_second_domain_2246_v1.formal_matrix_2606.matrix_gate import gate, audit_order
 
 CASES=[('useful','useful','confirmed','useful','released'),('unavailable','useful','unavailable','none','released'),('guarded','useful','refused','none','released'),('no_effect','no_effect','confirmed','none','released'),('partial','partial','confirmed','partial','released'),('stale_repair','useful','stale','none','repaired'),('ambiguous','useful','ambiguous','useful','released'),('cleanup_failure','useful','confirmed','useful','failed')]
 
@@ -32,8 +33,12 @@ def main():
    receipt=json.loads((out/'effect.json').read_text()) if (out/'effect.json').exists() else None
    safe=delivery in {'unavailable','refused','stale','ambiguous'} or cleanup=='failed'; success=delivery=='confirmed' and effect=='useful' and cleanup=='released' and receipt is not None
    disp='SUCCESS' if success else ('YIELD' if safe else effect.upper())
-   row={'case':name,'delivery':delivery,'effect':effect,'cleanup':cleanup,'adapter_result':result,'independent_effect':receipt,'events_path':str(out/'events.jsonl'),'authority_granted':bool(result.get('authority_granted',False)) if isinstance(result,dict) else False,'replay_allowed':False,'disposition':disp}; save(out/'row.json',row); rows.append(row); fixture.terminate(); fixture.wait(timeout=5); procs.pop()
-  expected=['SUCCESS','YIELD','YIELD','NONE','PARTIAL','YIELD','YIELD','YIELD']; actual=[r['disposition'] for r in rows]; summary={'rows':rows,'expected':expected,'actual':actual,'scorer_matches':actual==expected,'scope':'live GTK/X11 adapter matrix preflight; not formal #2606 acceptance'}; save(root/'summary.json',summary); print(json.dumps(summary,indent=2,sort_keys=True))
+   events=[]
+   if (out/'events.jsonl').exists():
+    events=[json.loads(line) for line in (out/'events.jsonl').read_text().splitlines() if line.strip()]
+   formal_receipt={'case':{'useful':'USEFUL_EFFECT','unavailable':'UNAVAILABLE_BEFORE_INPUT','guarded':'GUARDED_REFUSAL','no_effect':'ACCEPTED_NO_EFFECT','partial':'PARTIAL_COLLATERAL','stale_repair':'STALE_REPAIR','ambiguous':'AMBIGUOUS_DELIVERY','cleanup_failure':'TERMINAL_CLEANUP_FAILURE'}[name],'session_id':'gtk-matrix-'+name,'window_id':str(target),'observation_revision':1,'binding_revision':1,'input_ledger':events,'effect_receipt':receipt or {},'cleanup':{'status':'failed' if cleanup=='failed' else ('repaired' if cleanup=='repaired' else 'clean'),'release_verified':bool(result.get('raw_dispatch',{}).get('result',{}).get('execution',{}).get('releases')) if isinstance(result,dict) else False},'authority_grants':0,'replay_count':0}
+   row={'case':name,'delivery':delivery,'effect':effect,'cleanup':cleanup,'adapter_result':result,'independent_effect':receipt,'formal_receipt':formal_receipt,'events_path':str(out/'events.jsonl'),'authority_granted':bool(result.get('authority_granted',False)) if isinstance(result,dict) else False,'replay_allowed':False,'disposition':disp}; save(out/'row.json',row); rows.append(row); fixture.terminate(); fixture.wait(timeout=5); procs.pop()
+  expected=['SUCCESS','YIELD','YIELD','NONE','PARTIAL','YIELD','YIELD','YIELD']; actual=[r['disposition'] for r in rows]; receipts=[r['formal_receipt'] for r in rows]; order_ok,audit_reason=audit_order(receipts); gate_results=[gate(item).__dict__ for item in receipts]; summary={'rows':rows,'expected':expected,'actual':actual,'scorer_matches':actual==expected,'formal_receipt_order_ok':order_ok,'formal_receipt_order_reason':audit_reason,'independent_gate':gate_results,'scope':'live GTK/X11 adapter matrix receipt-emission preflight; not formal #2606 acceptance'}; save(root/'summary.json',summary); print(json.dumps(summary,indent=2,sort_keys=True))
  finally:
   for p in reversed(procs):
    if p.poll() is None: p.terminate()
