@@ -1,0 +1,77 @@
+name: Public Navigation
+
+on:
+  pull_request:
+    paths:
+      - '*.md'
+      - 'docs/**'
+      - 'research/README.md'
+      - 'research/ROOT_NAMESPACE_MAP.md'
+      - 'research/analysis/README.md'
+      - 'research/concurrency/README.md'
+      - 'research/system1/README.md'
+      - 'research/local_system1/README.md'
+      - 'runtime/README.md'
+      - 'release/README.md'
+      - 'site/README.md'
+      - '.github/README.md'
+      - '.github/workflows/README.md'
+      - '.github/check_public_navigation.py'
+      - '.github/workflows/public-navigation.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - '*.md'
+      - 'docs/**'
+      - 'research/README.md'
+      - 'research/ROOT_NAMESPACE_MAP.md'
+      - 'research/analysis/README.md'
+      - 'research/concurrency/README.md'
+      - 'research/system1/README.md'
+      - 'research/local_system1/README.md'
+      - 'runtime/README.md'
+      - 'release/README.md'
+      - 'site/README.md'
+      - '.github/README.md'
+      - '.github/workflows/README.md'
+      - '.github/check_public_navigation.py'
+      - '.github/workflows/public-navigation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-navigation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /README.md
+            /RESEARCH.md
+            /ROADMAP.md
+            /CONTRIBUTING.md
+            /CHANGELOG.md
+            /docs/*.md
+            /research/README.md
+            /research/ROOT_NAMESPACE_MAP.md
+            /research/analysis/README.md
+            /research/concurrency/README.md
+            /research/system1/README.md
+            /research/local_system1/README.md
+            /runtime/README.md
+            /release/README.md
+            /site/README.md
+            /.github/README.md
+            /.github/workflows/README.md
+            /.github/check_public_navigation.py
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate public relative links
+        run: python .github/check_public_navigation.py
