@@ -52,6 +52,14 @@ def process_lineage(env, root_pid):
                 owned.add(parts[0]); changed = True
     return owned
 
+def window_snapshot(env):
+    rows = []
+    for wid in windows(env):
+        name = cmd(["xdotool", "getwindowname", wid], env).stdout.strip()
+        rows.append({"window": wid, "pid": window_pid(env, wid),
+                     "name": name, "geometry": geom(env, wid)})
+    return rows
+
 def wait_window(env, before=None, timeout=20, owner_pids=None):
     end = time.time() + timeout
     before = set(before or [])
@@ -126,6 +134,8 @@ def main():
         # 2. Same-app modal: open Calc file chooser then observe/close, no action.
         modal_before = windows(env)
         cmd(["xdotool","windowactivate",apps["calc"]["window"],"key","ctrl+o"],env); input_ops += 1; time.sleep(1)
+        event(ledger,"modal_candidates",app="calc",parent=apps["calc"]["window"],
+              candidates=window_snapshot(env),owner_pids=sorted(process_lineage(env, apps["calc"]["pid"])))
         modal = wait_window(env, modal_before, 8, owner_pids=process_lineage(env, apps["calc"]["pid"]))
         event(ledger,"modal_transition",app="calc",parent=apps["calc"]["window"],modal=modal,input_emitted=True)
         cmd(["xdotool","key","Escape"],env); input_ops += 1; time.sleep(.5)
