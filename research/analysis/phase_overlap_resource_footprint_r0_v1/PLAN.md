@@ -1,16 +1,25 @@
-# #1720 — phase-overlap resource-footprint serializability
+# #1720 Phase-overlap resource-footprint serializability
 
 ## H
-For two deterministic intents with one serialized actuator, B may begin while A's tail is pending iff every overlapping phase has complete declared read/write footprints and A-tail has no RW/WW conflict with B's phases. UNKNOWN fails closed to SERIAL. Under those assumptions the overlapped execution is observationally equivalent, on all declared resources and per-intent reads, to whole-intent serial A→B.
+For deterministic two-intent phase programs with complete resource declarations, a pending first-intent tail may overlap the second intent only when the first tail has no read/write conflict with either second input or second tail. Under this sufficient condition, every admitted overlap schedule is observationally equivalent to whole-intent serial execution. Unknown declarations serialize. Surface identity alone is insufficient, and omitted dependencies can make an apparently safe overlap unsound.
 
 ## T
-Standard-library finite exhaustive analysis over three logical resources, binary initial states, deterministic read/write/increment/copy operations, serialized input and pending-tail phases. Candidate order is A.input → B.input → A.tail → B.tail; serial oracle is A.input → A.tail → B.input → B.tail. Exhaustively test complete footprints and negative controls: surface-only, one omitted actual A-tail write, UNKNOWN fail-open check, and reversed conflict predicate. One source-frozen formal invocation; independent gate audit and corruption controls.
+- Resources: r0,r1,r2.
+- Two intents A/B, each with serialized input phase and pending tail phase.
+- Phase operation vocabulary: READ, SET0, SET1, INC, COPYPLUS over the resources.
+- Two initial states and both whole-intent serial orders.
+- Exact declared footprints equal actual footprints for the primary theorem.
+- If the first tail is conflict-free with both phases of the second intent, compare both legal overlap completion orders against whole-intent serial state and phase observations.
+- Count a SURFACE_ONLY discriminator that overlaps every distinct-surface pair.
+- Count an OMIT_ONE_DEP discriminator that removes actual conflicting resources from the first-tail declaration until the candidate admits.
+- Directed UNKNOWN and reversed-conflict corruption controls.
+- One formal invocation, reruns/replacements/tuning0; independent audit recomputes the space without importing candidate helpers.
 
 ## D
-PASS only if complete-footprint admitted mismatch=0; every declared conflict serializes; UNKNOWN parallel admissions=0; all three negative controls expose mismatches; both serial orders are covered analytically; integrity/audit/corruption controls pass.
+PASS_PHASE_OVERLAP_RESOURCE_FOOTPRINT_SERIALIZABILITY_SCOPED iff complete-footprint admitted overlap mismatch=0, conflicts serialize, UNKNOWN parallel admissions=0, SURFACE_ONLY mismatches>0, omitted-dependency mismatches>0, both intent orders are exercised, independent audit/corruption/source integrity pass, formal1/reruns0.
 
 ## C
-Static footprints may be incomplete or data-dependent. Syntactic conflict is sufficient but not necessary because commuting/idempotent writes may be safe. Real event loops and hidden global state can violate the deterministic model.
+The footprint may be incomplete or data-dependent; syntactic conflicts can still commute semantically; real event loops and hidden process/WM/filesystem state are outside this model.
 
 ## U
-Analytical contract only: no GUI/X11/model/runtime mutation, no speedup or production promotion claim.
+Analytical deterministic serializability contract only. No live XTerm/X11/model/token/wall-time/runtime promotion claim.
