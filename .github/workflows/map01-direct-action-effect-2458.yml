@@ -19,6 +19,6 @@ jobs:
           python -m pip install --no-cache-dir vizdoom==1.2.3
       - name: Fetch exact branch source
         run: |
-          python -c "import urllib.request; u='https://raw.githubusercontent.com/Unjuno/agent-interface/REPLACE_SHA/research/live_control/map01_direct_action_effect_2458_v1/audit.py'; open('audit.py','wb').write(urllib.request.urlopen(u).read())"
+          python -c "import urllib.request; u='https://raw.githubusercontent.com/Unjuno/agent-interface/090ad521c47bc2beed237df2d1076b8a0c7032a6/research/live_control/map01_direct_action_effect_2458_v1/audit.py'; open('audit.py','wb').write(urllib.request.urlopen(u).read())"
       - name: Run calibration and retain stdout
         run: python audit.py | tee calibration.log
