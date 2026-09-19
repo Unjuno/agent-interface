@@ -149,3 +149,8 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 ### Guard calibration support preflight
 
 - [`guard_calibration_support_2509_v1/`](guard_calibration_support_2509_v1/) — synthetic ledger/readiness gate for successor Issue #2509; this path is construction-only and not a formal route result.
+
+
+### Fresh GTK effect receipt precheck
+
+- [`gtk_fresh_post_effect_2673/`](gtk_fresh_post_effect_2673/) — additive precheck boundary for independent fresh post-effect drawable receipts; execution result is recorded in Issue #2673 and must not be inferred from this path alone.
