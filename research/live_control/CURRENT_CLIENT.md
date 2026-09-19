@@ -620,7 +620,8 @@ needed. This removes the separate finish request in one primary-assistant run,
 with identical native operations; invalid-flag and task-failure controls are
 retained. It is not automatic success detection or repair. See
 [native finish-after](../../runtime/results/native-finish-after-01/README.md).
-# Native result presentation
+
+## Native result presentation
 
 Native review responses include `outcome_summary` before the complete receipt.
 It projects only `status`, strictly boolean `evaluation.success`,
@@ -631,3 +632,11 @@ The summary grants no authority and does not inspect history or classify images.
 Full and compact receipts preserve the original report and image validation.
 This adds metadata (165 bytes in the retained Calc example), not compression.
 See `runtime/results/native-outcome-summary-01` for the scoped read-only check.
+
+Primary-assistant Calc transfer now uses ordinary keyboard entry/Save, views the
+format dialog, then sets finish_after only on its explicit confirmation click.
+The same-seed task needs two requests instead of three and independently saves
+A1=551/A2=768 with neutral release and completed cleanup. The final image still
+contains dialog pixels and old-dialog feedback retains needs_review/BadWindow;
+saved effect and fully repainted final view are not conflated. See
+[Calc final-action transfer](../../runtime/results/native-calc-final-action-01/README.md).
