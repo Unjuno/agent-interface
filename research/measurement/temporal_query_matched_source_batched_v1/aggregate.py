@@ -1,22 +1,31 @@
+from __future__ import annotations
 import argparse,hashlib,json
 from pathlib import Path
-CLASSES=('RECENT_DENSE','LONG_BASELINE','EVENT_CENTERED','REVERSAL_BRACKET');TOTAL=220000;BATCHES=20;BS=11000
+import model
+TASK='TEMPORAL-QUERY-MATCHED-SOURCE-COVERAGE-BATCHED-20260918-002';BATCH=11000;N=20
 def main():
- ap=argparse.ArgumentParser();ap.add_argument('--dir',required=True);ap.add_argument('--output',required=True);a=ap.parse_args(); out=Path(a.output);assert not out.exists()
- counts={k:{'n':0,'fixed':0,'query':0} for k in CLASSES};mm=0;leaks={k:0 for k in ('unknown_source','future','cross_scope','budget','authority')};ranges=[];digests=[]
- for b in range(BATCHES):
-  p=Path(a.dir)/f'batch_{b:02d}.json';r=json.loads(p.read_text());assert r['batch']==b and r['start']==b*BS and r['end']==(b+1)*BS and r['histories']==BS and not r['construction'];ranges.append((r['start'],r['end']));digests.append(r['digest']);mm+=r['candidate_oracle_mismatches']
-  for k in leaks:leaks[k]+=r['leaks'][k]
-  for k in CLASSES:
-   for x in ('n','fixed','query'):counts[k][x]+=r['counts'][k][x]
- assert ranges==[(b*BS,(b+1)*BS) for b in range(BATCHES)]
- n=sum(v['n'] for v in counts.values());assert n==TOTAL
- f=sum(v['fixed'] for v in counts.values());q=sum(v['query'] for v in counts.values());classes={};worse=[]
- for k,v in counts.items():
-  fr=v['fixed']/v['n'];qr=v['query']/v['n'];classes[k]={'n':v['n'],'fixed_rate':fr,'query_rate':qr,'advantage_pp':100*(qr-fr)}
-  if qr<fr:worse.append(k)
- adv=100*((q-f)/n);decision='FAIL_MATCHED_SOURCE_TEMPORAL_QUERY_BATCHED'
- if mm==0 and not any(leaks.values()) and not worse:decision='PASS_MATCHED_SOURCE_TEMPORAL_QUERY_BATCHED_SCOPED' if adv>=15 else 'HOLD_NO_SELECTION_DISCRIMINATOR'
- r={'decision':decision,'histories':n,'formal_batches':BATCHES,'batch_size':BS,'formal_invocations':1,'batch_processes':BATCHES,'reruns':0,'candidate_oracle_mismatches':mm,'leaks':leaks,'counts':counts,'classes':classes,'fixed_coverage_rate':f/n,'query_coverage_rate':q/n,'overall_advantage_pp':adv,'query_worse_classes':worse,'batch_digests':digests,'grants_input_authority':False}
- r['aggregate_digest']=hashlib.sha256(json.dumps(r,sort_keys=True,separators=(',',':')).encode()).hexdigest();out.write_text(json.dumps(r,indent=2,sort_keys=True)+'\n');print(json.dumps(r,indent=2,sort_keys=True))
+ ap=argparse.ArgumentParser();ap.add_argument('dir');ap.add_argument('--out',required=True);a=ap.parse_args();d=Path(a.dir);out=Path(a.out)
+ if out.exists():raise FileExistsError(out)
+ totals={"n":0,"mismatch":0,"future":0,"cross_scope":0,"budget":0,"authority":0,"fixed":0,"query":0};by={k:{"n":0,"fixed":0,"query":0} for k in model.CLASSES};manifest=[]
+ for bi in range(N):
+  p=d/f'BATCH_{bi:02d}.json'
+  if not p.exists():raise RuntimeError('missing batch')
+  raw=p.read_bytes();x=json.loads(raw);s=bi*BATCH
+  if x.get('task')!=TASK or x.get('batch_index')!=bi or x.get('start')!=s or x.get('end')!=s+BATCH or x.get('invocation')!=1 or x.get('reruns')!=0:raise RuntimeError('batch metadata')
+  for k in totals: totals[k]+=x['counters'][k]
+  for cls in by:
+   for k in by[cls]:by[cls][k]+=x['by_class'][cls][k]
+  manifest.append({"batch":bi,"start":s,"end":s+BATCH,"sha256":hashlib.sha256(raw).hexdigest(),"bytes":len(raw),"row_digest":x['row_digest']})
+ if totals['n']!=220000:raise RuntimeError('count')
+ fixed_rate=totals['fixed']/totals['n'];query_rate=totals['query']/totals['n'];delta_pp=(query_rate-fixed_rate)*100
+ class_rates={}
+ for cls,z in by.items():class_rates[cls]={"n":z['n'],"fixed_rate":z['fixed']/z['n'],"query_rate":z['query']/z['n'],"delta_pp":(z['query']-z['fixed'])*100/z['n']}
+ worse=[cls for cls,z in class_rates.items() if z['query_rate']<z['fixed_rate']]
+ r={"task":TASK,"formal_invocations":1,"batch_invocations":20,"batch_reruns":0,"total":totals['n'],"counters":totals,"fixed_rate":fixed_rate,"query_rate":query_rate,"delta_pp":delta_pp,"class_rates":class_rates,"query_worse_classes":worse,"manifest":manifest,"model_calls":0,"gui_actions":0,"task_input_actions":0}
+ if any(totals[k] for k in ('mismatch','future','cross_scope','budget','authority')): decision='FAIL_LEAKAGE_OR_MISMATCH'
+ elif worse: decision='FAIL_QUERY_CLASS_REGRESSION'
+ elif delta_pp>=15: decision='PASS_MATCHED_SOURCE_TEMPORAL_QUERY_BATCHED_SCOPED'
+ else: decision='HOLD_NO_SELECTION_DISCRIMINATOR'
+ r['decision']=decision
+ out.write_text(json.dumps(r,indent=2,sort_keys=True)+'\n');print(json.dumps({k:v for k,v in r.items() if k not in ('manifest','class_rates')},indent=2,sort_keys=True));print(json.dumps(class_rates,indent=2,sort_keys=True))
 if __name__=='__main__':main()
