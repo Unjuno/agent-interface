@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 117 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 120 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
@@ -146,6 +146,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`causal_temporal_attention_successor_1941_v1/`](causal_temporal_attention_successor_1941_v1/)
 - [`causal_temporal_history_2026_v1/`](causal_temporal_history_2026_v1/)
 - [`censored_useful_effect_membership_successor_1838_v1/`](censored_useful_effect_membership_successor_1838_v1/)
+- [`cli_v1_lineage_direct_tests_2428_v1/`](cli_v1_lineage_direct_tests_2428_v1/)
 - [`composition_heldout_fixture_2068_v1/`](composition_heldout_fixture_2068_v1/)
 - [`deterministic_replay_boundary_r0_v1/`](deterministic_replay_boundary_r0_v1/)
 - [`effect_time_contract_authorization_successor_532_v1/`](effect_time_contract_authorization_successor_532_v1/)
@@ -182,6 +183,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`observation_o4_x11_verify_schema_readiness_v1/`](observation_o4_x11_verify_schema_readiness_v1/)
 - [`observation_relevance_completeness_v1/`](observation_relevance_completeness_v1/)
 - [`observation_reveal_support_closure_v1/`](observation_reveal_support_closure_v1/)
+- [`occupancy_gate_frontier_1592_v1/`](occupancy_gate_frontier_1592_v1/)
 - [`optimistic_concurrent_readwrite_commit_r0_v1/`](optimistic_concurrent_readwrite_commit_r0_v1/)
 - [`optimistic_readwrite_x11_retained_audit_a3_v1/`](optimistic_readwrite_x11_retained_audit_a3_v1/)
 - [`phase_overlap_dynamic_footprint_binding_r1_v1/`](phase_overlap_dynamic_footprint_binding_r1_v1/)
@@ -232,6 +234,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`typed_query_dependency_v1/`](typed_query_dependency_v1/)
 - [`typed_resolve_dependency_v1/`](typed_resolve_dependency_v1/)
 - [`visual_cue_coordinate_map_successor_2043_v1/`](visual_cue_coordinate_map_successor_2043_v1/)
+- [`x11_adaptation_multiseed_2459_v1/`](x11_adaptation_multiseed_2459_v1/)
 - [`x11_augmentation_fail_2394_v1/`](x11_augmentation_fail_2394_v1/)
 - [`x11_composed_ood_gate_2419_v1/`](x11_composed_ood_gate_2419_v1/)
 - [`x11_container_transfer_1635_v1/`](x11_container_transfer_1635_v1/)
