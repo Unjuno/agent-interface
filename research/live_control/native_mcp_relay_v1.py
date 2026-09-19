@@ -70,4 +70,6 @@ if __name__ == '__main__':
         args = args[1:]
     if not args:
         parser.error('explicit native server arguments required')
+    if sys.stdout.isatty():
+        parser.error('relay stdout must be a pipe or file, not a terminal; image JSON must remain byte-exact')
     asyncio.run(main(args))
