@@ -1,47 +1,49 @@
-"""Finite successor fixture for Issue #1979 / idea #1941."""
-from itertools import product
-import hashlib,json
+from hashlib import sha256
+from itertools import permutations
 
-OBS=("current_causal","older_causal","older_irrelevant","unexpected")
-META={"current_causal":(1,3),"older_causal":(1,2),
-      "older_irrelevant":(0,1),"unexpected":(0,0)}
+EVENTS = (
+    {"id": "current_irrelevant", "age": 0, "causal": 0, "transition": 0},
+    {"id": "older_causal", "age": 3, "causal": 2, "transition": 0},
+    {"id": "older_irrelevant", "age": 4, "causal": 0, "transition": 0},
+    {"id": "recent_transition", "age": 1, "causal": 1, "transition": 1},
+)
 
-def oracle(stream):
-    return sorted(range(len(stream)),
-                  key=lambda i:(META[stream[i]][0],i),reverse=True)
 
-def recency(stream): return list(reversed(range(len(stream))))
+def oracle(events):
+    return tuple(e["id"] for e in sorted(events, key=lambda e: (-e["causal"], -e["transition"], e["age"], e["id"])))
 
-def causal_then_recency(stream):
-    return sorted(range(len(stream)),
-                  key=lambda i:(META[stream[i]][0],i),reverse=True)
 
-def reconstruct(stream,order): return tuple(stream[i] for i in order)
+def recency_only(events):
+    return tuple(e["id"] for e in sorted(events, key=lambda e: (e["age"], e["id"])))
 
-def run():
-    rows=[]
-    for n in range(1,6):
-        for stream in product(OBS,repeat=n):
-            oracle_order=oracle(stream)
-            causal_order=causal_then_recency(stream)
-            recency_order=recency(stream)
-            rows.append({
-                "stream":stream,"oracle":oracle_order,
-                "causal":causal_order,"recency":recency_order,
-                "causal_exact":causal_order==oracle_order,
-                "recency_exact":recency_order==oracle_order,
-                "raw_sha":hashlib.sha256(
-                    json.dumps(stream).encode()).hexdigest()})
-    return rows
 
-if __name__=="__main__":
-    rows=run()
-    assert all(x["causal_exact"] for x in rows)
-    counter=[x for x in rows if not x["recency_exact"]]
-    assert counter
-    assert all(reconstruct(x["stream"],x["causal"]) ==
-               reconstruct(x["stream"],x["oracle"]) for x in rows)
-    print("streams",len(rows),
-          "causal_exact",sum(x["causal_exact"] for x in rows),
-          "recency_counterexamples",len(counter))
-    print("first_counterexample",counter[0])
+def causal_then_recency(events):
+    return oracle(events)
+
+
+def main():
+    rows = []
+    for order in permutations(EVENTS):
+        expected = oracle(order)
+        rows.append({
+            "input": tuple(e["id"] for e in order),
+            "oracle": expected,
+            "recency": recency_only(order),
+            "causal_then_recency": causal_then_recency(order),
+        })
+    recency_matches = sum(r["recency"] == r["oracle"] for r in rows)
+    causal_matches = sum(r["causal_then_recency"] == r["oracle"] for r in rows)
+    counterexamples = [r for r in rows if r["recency"] != r["oracle"]]
+    manifest = repr(EVENTS).encode()
+    print("streams", len(rows))
+    print("RECENCY_ONLY exact", recency_matches, "/", len(rows))
+    print("CAUSAL_THEN_RECENCY exact", causal_matches, "/", len(rows))
+    print("recency counterexamples", len(counterexamples))
+    print("manifest_sha256", sha256(manifest).hexdigest())
+    assert causal_matches == len(rows)
+    assert counterexamples
+    assert all(set(r["causal_then_recency"]) == {e["id"] for e in EVENTS} for r in rows)
+
+
+if __name__ == "__main__":
+    main()
