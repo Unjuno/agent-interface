@@ -1,0 +1,31 @@
+name: MAP01 task-effect contract 1839 r1
+on:
+  pull_request:
+    paths:
+      - "research/measurement/map01_task_effect_contract_1839_r1/**"
+      - ".github/workflows/map01-task-effect-contract-1839-r1.yml"
+jobs:
+  contract:
+    runs-on: ubuntu-24.04
+    container: python:3.12-slim
+    steps:
+      - name: Fetch immutable PR source bytes
+        env:
+          SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -eu
+          mkdir -p research/measurement/map01_task_effect_contract_1839_r1
+          python - "${SHA}" <<'PY'
+          import pathlib, sys, urllib.request
+          sha=sys.argv[1]
+          base=f"https://raw.githubusercontent.com/Unjuno/agent-interface/{sha}/research/measurement/map01_task_effect_contract_1839_r1"
+          out=pathlib.Path("research/measurement/map01_task_effect_contract_1839_r1")
+          for name in ("contract.py","test_contract.py"):
+              with urllib.request.urlopen(f"{base}/{name}", timeout=30) as r:
+                  (out/name).write_bytes(r.read())
+          PY
+      - name: Compile
+        run: python -m py_compile research/measurement/map01_task_effect_contract_1839_r1/contract.py research/measurement/map01_task_effect_contract_1839_r1/test_contract.py
+      - name: Formal offline contract test
+        working-directory: research/measurement/map01_task_effect_contract_1839_r1
+        run: python test_contract.py
