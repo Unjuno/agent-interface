@@ -56,6 +56,19 @@ class RelevantRegionGateTests(unittest.TestCase):
         )
         self.assertEqual((decision.admitted, decision.reason), (False, "incomplete_coverage"))
 
+    def test_source_window_binding_rejects_forgery(self):
+        evidence = dict(self.base, source_window="window-actual")
+        self.assertEqual(
+            evaluate_region(
+                evidence, observation_id="obs-7", intent_epoch=3,
+                region_id="toolbar", trusted_source_window="window-forged"
+            ),
+            type(evaluate_region(
+                evidence, observation_id="obs-7", intent_epoch=3,
+                region_id="toolbar", trusted_source_window="window-forged"
+            ))(False, "source_window_mismatch"),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
