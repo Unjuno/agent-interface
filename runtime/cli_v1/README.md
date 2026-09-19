@@ -2,6 +2,28 @@
 
 This is the model/vendor-neutral local entry point over promoted Agent Interface backends.
 
+For a retained `prepared_exchange` action report, inspect the result and latest
+observation without printing the full routine event history:
+
+```bash
+python -m runtime.cli_v1 receipt --report /path/to/report.json
+python -m runtime.cli_v1 receipt --report /path/to/report.json --raw
+```
+
+The default view retains every top-level report field, the full latest
+observation(s), terminal/evaluation/error events and all unknown event types.
+It moves older observations and routine command/admission/step records out of
+the view, keeping their counts and the raw report's path/SHA-256. `--raw` returns
+the complete parsed report. Use raw history when intermediate states matter.
+This is an opt-in historical result view, not a live stream reducer or a new
+observation; it neither sends input nor renews a lease. Reading succeeds with
+exit code 0 even when the report describes a failed task: inspect its status and
+outcome. Malformed receipts return `invalid_receipt` and exit code 2.
+
+An [actual assistant XTerm run](../results/receipt-self-use-01/README.md) records
+the motivating truncated output and the subsequent use of this view. Byte counts
+there are not model-token or performance measurements.
+
 ```bash
 python -m runtime.cli_v1 doctor
 python -m runtime.cli_v1 dispatch \
