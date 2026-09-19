@@ -47,9 +47,21 @@ class DispatchBridgeTests(unittest.TestCase):
         self.assertIsNone(row)
         self.assertEqual(report["validation"], "ok")
         self.assertEqual(report["reason"], "dispatch_not_accepted")
+        self.assertEqual(report["release"]["status"], "NOT_TERMINAL")
+
+    def test_failed_release_evidence_is_visible(self):
+        row, report = bridge_dispatch_result(
+            {"status": "failed", "release": {"status": "FAILED", "retained": True,
+                                             "error": "release-timeout"}},
+            context(),
+        )
+        self.assertIsNone(row)
+        self.assertEqual(report["reason"], "dispatch_not_accepted")
+        self.assertEqual(report["release"]["status"], "FAILED")
+        self.assertEqual(report["release"]["error"], "release-timeout")
 
     def test_result_and_context_are_not_mutated(self):
-        result = {"status": "failed"}
+        result = {"status": "failed", "release": {"status": "UNVERIFIED", "retained": True}}
         original = context()
         snapshot = (dict(result), dict(original))
         bridge_dispatch_result(result, original)
