@@ -8,6 +8,7 @@ STATUSES={"invalid_request","backend_unavailable","runtime_failed","returned"}
 LIFECYCLE={"doctor","model_attempt","observation","dispatch","refusal","effect","repair","release","cleanup"}
 NESTED_REFUSAL_STATUSES={"refused","invalid_request","backend_unavailable"}
 AMBIGUOUS_DELIVERY_VALUES={"ambiguous","uncertain","unknown","write_uncertain","delivery_uncertain"}
+KNOWN_DELIVERY_VALUES={"confirmed","confirmed_partial"}
 
 def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None=None, lifecycle: list[str]|None=None) -> dict[str,Any]:
     status=result.get("status")
@@ -27,7 +28,12 @@ def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None
     task_success=nested.get("task_success")
     if type(task_success) is not bool:
         task_success=None
-    if delivery in AMBIGUOUS_DELIVERY_VALUES:
+    if delivery is not None and delivery not in AMBIGUOUS_DELIVERY_VALUES | KNOWN_DELIVERY_VALUES:
+        mapped="refused"
+        completed=False
+        task_success=False
+        diagnostic=f"UNKNOWN_DELIVERY:{delivery}"
+    elif delivery in AMBIGUOUS_DELIVERY_VALUES:
         mapped="refused"
         completed=False
         task_success=False
@@ -54,7 +60,9 @@ def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None
     # Overall task success remains false after cleanup failure. The supplied
     # application score and completed execution are still in raw_dispatch.
     if cleanup is not None: row["task_success"]=False
-    if delivery in AMBIGUOUS_DELIVERY_VALUES:
+    if delivery is not None and delivery not in AMBIGUOUS_DELIVERY_VALUES | KNOWN_DELIVERY_VALUES:
+        row["diagnostic"] = f"UNKNOWN_DELIVERY:{delivery}"
+    elif delivery in AMBIGUOUS_DELIVERY_VALUES:
         row["diagnostic"] = f"AMBIGUOUS_DELIVERY:{delivery}"
     elif "diagnostic" not in row:
         if "error" in result: row["diagnostic"]=result["error"]
