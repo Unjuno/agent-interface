@@ -16,4 +16,10 @@ jobs:
       - name: Build pinned ViZDoom image
         run: docker build -t issue-3300-vizdoom:ci research/doom/issue-3300-live-vizdoom-coherence-v1
       - name: Run live coherence allocation network-isolated
-        run: docker run --rm --network none issue-3300-vizdoom:ci
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/out"
+          docker run --rm --network none -v "$GITHUB_WORKSPACE/out:/out" issue-3300-vizdoom:ci
+      - uses: actions/upload-artifact@v4
+        with:
+          name: issue-3300-live-vizdoom-raw
+          path: out/raw.jsonl
