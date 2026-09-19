@@ -6,6 +6,11 @@ use the same path again. Research supplies evidence for design choices. Prioriti
 fewer avoidable tool boundaries, usable observations/results and recovery in the
 agent's own loop. The [receipt self-use example](../runtime/results/receipt-self-use-01/README.md)
 records the first concrete result-presentation improvement from this loop.
+The [composed exchange](../research/live_control/AGENT_EXCHANGE.md) now removes
+manual clock-request and steps-file assembly in that research path. Actual
+assistant use covered a viewed draft followed by correction and independent
+scoring, with the first rejected development attempt retained. This does not
+yet connect the golden semantic compiler to the native CLI.
 
 The user's current direction is to concentrate this task on integration while
 other contributors continue benchmarks and experiments. Product Hunt publication
