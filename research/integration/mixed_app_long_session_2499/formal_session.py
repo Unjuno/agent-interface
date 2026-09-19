@@ -49,11 +49,8 @@ def wait_window(env, before=None, timeout=20):
 
 def launch(cmdline, env):
     before = set(windows(env))
-    try:
-        p = subprocess.Popen(cmdline, env=env, stdout=subprocess.DEVNULL,
-                             stderr=subprocess.DEVNULL)
-    except FileNotFoundError as exc:
-        raise RuntimeError(f"missing launch executable: {cmdline!r}: {exc}") from exc
+    p = subprocess.Popen(cmdline, env=env, stdout=subprocess.DEVNULL,
+                         stderr=subprocess.DEVNULL)
     end = time.time() + 25
     wid = None
     while time.time() < end:
@@ -61,8 +58,8 @@ def launch(cmdline, env):
         usable = []
         for candidate in candidates:
             text = geom(env, candidate)
-            match = re.search(r"Geometry:\s*(\d+)x(\d+)", text)
-            if match and int(match.group(1)) >= 400 and int(match.group(2)) >= 300:
+            match = re.search(r"Geometry:\s*(\\d+)x(\\d+)", text)
+            if match and int(match.group(1)) >= 600 and int(match.group(2)) >= 400:
                 usable.append(candidate)
         if usable:
             wid = usable[-1]
@@ -120,9 +117,9 @@ def main():
         replacement, new_hw = launch(["chromium","--no-sandbox","--disable-gpu",
                                       "--user-data-dir="+str(root/"chrome-profile-2"),"about:blank"],env); procs.append(replacement)
         apps["chromium"]={"pid":replacement.pid,"window":new_hw,"surface_generation":old_chrome["surface_generation"]+1}
-        event(ledger,"window_replacement",app="chromium",old_window=old_chrome["window"],new_window=new_hw,surface_generation=apps["chromium"]["surface_generation"])
-        event(ledger,"stale_window_admission",app="chromium",old_window=old_chrome["window"],disposition="refused",input_emitted=False)
-        checks.append(new_hw is not None and new_hw != old_chrome["window"])
+        event(ledger,"window_replacement",app="chromium",old_window=old_chrome["window"],new_window=new_hw,old_pid=old_chrome["pid"],new_pid=replacement.pid,surface_generation=apps["chromium"]["surface_generation"])
+        event(ledger,"stale_window_admission",app="chromium",old_window=old_chrome["window"],old_pid=old_chrome["pid"],disposition="refused",input_emitted=False)
+        checks.append(new_hw is not None and (new_hw != old_chrome["window"] or replacement.pid != old_chrome["pid"]))
         # Return to earlier Calc: fresh identity/generation is required.
         cmd(["xdotool","windowactivate","--sync",apps["calc"]["window"]],env)
         focus_result = cmd(["xdotool","windowfocus","--sync",apps["calc"]["window"]],env)
