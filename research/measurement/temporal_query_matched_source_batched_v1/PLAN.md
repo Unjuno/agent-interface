@@ -1,11 +1,7 @@
-# #1501 Batched matched-source temporal query preflight
+# TEMPORAL-QUERY-MATCHED-SOURCE-COVERAGE-BATCHED-20260918-002
 
-TASK: `TEMPORAL-QUERY-MATCHED-SOURCE-COVERAGE-BATCHED-20260918-002`
-PREDECESSOR: #1498 no-result execution stop
-BRANCH: `research/temporal-query-matched-source-batched-1499`
-
-Only changed factor: execution envelope. Scientific design and decision threshold are unchanged from #1498.
-
-Formal universe: master seed 149820260918002, indices [0,220000), 20 immutable batches, 11000 histories/batch. Each case RNG is independently derived from SHA-256(master_seed:index), so batch boundaries do not affect cases. Aggregate sums integer counts before computing rates.
-
-PASS: complete exact index coverage; mismatches/leakage 0; query not worse in any class; overall advantage >=15 pp; independent audit PASS. No batch replacement/rerun.
+H: With one identical retained-history source and identical four-frame/512-byte budgets, request-class-specific after-the-fact query selection covers a later revealed temporal relation more often than one fixed preselected schedule, without future/scope/budget/authority leakage.
+T: Fresh source reconstruction because #1498 declared source bytes are not retained on GitHub. Preserve #1498/#1501 semantics: request classes RECENT_DENSE, LONG_BASELINE, EVENT_CENTERED, REVERSAL_BRACKET; same immutable source; fixed schedule is class-blind; query schedule is class-aware only after decision; historical evidence never grants authority. Master seed 149820260918002, indices0..219999, 20 immutable batches×11,000. Candidate/oracle independently implemented. Construction uses only negative indices.
+D: PASS_MATCHED_SOURCE_TEMPORAL_QUERY_BATCHED_SCOPED iff 220,000 unique cases exactly once, candidate/oracle mismatch0, future/cross-scope/budget/authority leakage0, query not worse in any class, aggregate query coverage minus fixed coverage >=15pp, source/batch/result integrity pass, formal1/reruns0. Less than15pp with integrity => HOLD. Leakage/class regression/integrity contradiction => FAIL.
+C: Synthetic requested-relation coverage may not predict model usefulness; query continuation cost is not measured. The reconstructed source is semantically matched to the frozen issue contract but is not byte-identical to unavailable #1498 local source.
+U: Model-free selection mechanics only. No model/GUI/token/speed/human-tempo/production claim.
