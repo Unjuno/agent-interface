@@ -567,3 +567,5 @@ observation. Primary-assistant Inkscape use completed through the v2 reply. The
 same-receipt metadata comparison is 9633 to 9004 bytes (6.53%); unchanged image
 base64 reduces the relative difference below 1%, and actual model tokens/latency
 are unmeasured. See [native watch references](../../runtime/results/native-watch-refs-01/README.md).
+The retained local projection-only cost check is slower: median 0.822 to 1.579 ms
+over 100 alternating pairs. Keep the byte reduction separate from total latency.

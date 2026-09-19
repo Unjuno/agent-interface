@@ -52,8 +52,16 @@ Canonical compact JSON sizes (not pretty-printed artifact file sizes):
 This saves 629 metadata bytes, 6.53% versus previous compact. The same PNG is
 55,371 bytes, or 73,828 base64 bytes; including that unchanged base64 payload
 reduces the relative difference below 1%. These byte counts are not model input
-tokens, billed image tokens, latency, or a matched model-utility result. Projection
-CPU cost is unmeasured. The actual primary-model usage remains unavailable.
+tokens, billed image tokens, latency, or a matched model-utility result. The actual
+primary-model usage remains unavailable.
+
+A subsequent fixed same-receipt cost check ran 10 warmups per arm, then 100 pairs
+with alternating order, using the retained old/new source in one WSL process.
+Projection-only median was 0.822 ms previous versus 1.579 ms new; p95 was 1.445
+versus 2.911 ms. Thus the smaller representation costs about 0.757 ms more at
+the median in this local check. `projection-cost.json` retains all 200 timings
+and `measure_projection.py` the command. No model, image rendering, network or GUI
+was included. This is an explicit size/cost tradeoff, not end-to-end improvement.
 
 30 focused reference/presenter/exchange tests pass. New controls cover multiple
 captures, complete error/unknown-state preservation, literal reference shapes,
