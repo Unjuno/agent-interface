@@ -1,0 +1,58 @@
+name: Golden IPC startup ready smoke v1
+
+on:
+  pull_request:
+    paths:
+      - 'research/live_control/session_v4.py'
+      - 'research/live_control/gui_suite.py'
+      - 'research/live_control/tile_transport.py'
+      - 'research/observation_tiles/**'
+      - 'research/observation_gating/**'
+      - '.github/workflows/golden-ipc-startup-ready-smoke-2922.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  startup-ready:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install X11 fixture dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb openbox xterm
+          python -m pip install --disable-pip-version-check numpy pillow openpyxl python-xlib
+      - name: Start private X11 session and require ready event
+        shell: bash
+        run: |
+          set -euo pipefail
+          export DISPLAY=:99
+          Xvfb "$DISPLAY" -screen 0 1280x800x24 -nolisten tcp >/tmp/xvfb.log 2>&1 &
+          xvfb_pid=$!
+          openbox >/tmp/openbox.log 2>&1 &
+          wm_pid=$!
+          cleanup() { kill "$wm_pid" "$xvfb_pid" 2>/dev/null || true; }
+          trap cleanup EXIT
+          mkdir -p out/startup-ready
+          python - <<'PY'
+          import json, subprocess, sys, time
+          command=[sys.executable, 'research/live_control/session_v4.py', '--app', 'xterm', '--seed', '2922', '--out', 'out/startup-ready']
+          p=subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+          ready=None
+          deadline=time.time()+25
+          for line in iter(p.stdout.readline, ''):
+              if line.strip():
+                  row=json.loads(line)
+                  if row.get('event') == 'ready':
+                      ready=row
+                      break
+              if time.time()>deadline: break
+          if ready is None:
+              print(p.stderr.read(), file=sys.stderr)
+              raise SystemExit('STOP_STARTUP_READY_NOT_REACHED')
+          p.stdin.write(json.dumps({'op':'finish'})+'\n'); p.stdin.flush()
+          stdout, stderr=p.communicate(timeout=15)
+          print(json.dumps({'status':'PASS_STARTUP_READY_SMOKE','ready':True,'authority_granted':False,'model_calls':0,'input_operations':0,'task_effect':0,'returncode':p.returncode}, indent=2))
+          if p.returncode != 0: raise SystemExit(stderr)
+          PY
