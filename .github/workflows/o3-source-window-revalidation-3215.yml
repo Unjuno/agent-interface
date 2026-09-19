@@ -1,0 +1,32 @@
+name: o3-source-window-revalidation-3215
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'research/observation_gating/o3_source_window_revalidation_3215/**'
+      - 'research/observation_gating/o3_multi_app_negative_matrix_20260920/**'
+      - 'research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py'
+      - 'research/observation_gating/o3_relevant_region_successor_v1/**'
+      - '.github/workflows/o3-source-window-revalidation-3215.yml'
+jobs:
+  revalidate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+      - run: docker build -f research/observation_gating/o3_source_window_revalidation_3215/Dockerfile -t o3-revalidate-3215 .
+      - name: Run real two-app matrix
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/o3"
+          docker run --rm --network none --entrypoint python3             -v "$GITHUB_WORKSPACE:/workspace:ro" -v "$RUNNER_TEMP/o3:/out"             o3-revalidate-3215 /workspace/research/observation_gating/o3_multi_app_negative_matrix_20260920/run_fixed.py > "$RUNNER_TEMP/o3/result.json"
+          cp "$RUNNER_TEMP/o3/result.json" "$RUNNER_TEMP/o3/RAW.json"
+      - name: Independent audit
+        run: docker run --rm --network none --entrypoint python3 -v "$RUNNER_TEMP/o3:/out:ro" -v "$GITHUB_WORKSPACE:/workspace:ro" o3-revalidate-3215 /workspace/research/observation_gating/o3_source_window_revalidation_3215/audit.py /out/RAW.json | tee "$RUNNER_TEMP/o3/audit.txt"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: o3-source-window-revalidation-3215
+          path: ${{ runner.temp }}/o3/
