@@ -12,6 +12,8 @@ import time
 def host_path(value: str | None, repo: Path) -> str | None:
     if value is None:
         return None
+    if value == "/repo":
+        return str(repo)
     if value.startswith("/repo/"):
         return str(repo / value[6:].replace("/", os.sep))
     return value
@@ -36,12 +38,13 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                 args.extend(["--image", host_path(request["image"], repo)])
             args.extend(["-C", host_path(request["working"], repo), "-"])
             completed = subprocess.run(args, input=request["prompt"] + "\n",
-                                       text=True, capture_output=True, check=False)
+                                       text=True, encoding="utf-8", errors="replace",
+                                       capture_output=True, check=False)
             out = ipc / f"{request_id}.response.jsonl"
-            out.write_text(completed.stdout, encoding="utf-8", newline="\n")
+            out.write_text(completed.stdout or "", encoding="utf-8", newline="\n")
             (ipc / f"{request_id}.broker.json").write_text(json.dumps({
                 "request_id": request_id, "returncode": completed.returncode,
-                "stderr": completed.stderr[-2000:], "boundary": "host-local-codex-exe",
+                "stderr": (completed.stderr or "")[-2000:], "boundary": "host-local-codex-exe",
                 "authority_granted": False}) + "\n", encoding="utf-8", newline="\n")
             handled.add(request_id)
             if once:
