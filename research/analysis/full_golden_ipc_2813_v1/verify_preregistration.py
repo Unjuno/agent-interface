@@ -5,13 +5,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 HERE = Path(__file__).resolve().parent
 
+def stable_sha256(path: Path) -> str:
+    """Hash source content independent of Git's Windows newline checkout mode."""
+    data = path.read_bytes()
+    return hashlib.sha256(data.replace(b"\r\n", b"\n")).hexdigest()
+
 def main():
     plan = json.loads((HERE / "preregistration.json").read_text(encoding="utf-8"))
     mismatches = []
     for name, expected in plan["source_sha256"].items():
         path = ROOT / name
         if not path.is_file(): mismatches.append({"path": name, "reason": "missing"}); continue
-        actual = hashlib.sha256(path.read_bytes()).hexdigest()
+        actual = stable_sha256(path)
         if actual != expected: mismatches.append({"path": name, "expected": expected, "actual": actual})
     result = {"status": "PASS_TASK1_ROUTE_PREFLIGHT" if not mismatches else "STOP_SOURCE_HASH_MISMATCH", "issue": 2813, "mismatches": mismatches, "authority_granted": False, "gui_operations": 0, "task_execution": False}
     print(json.dumps(result, indent=2, sort_keys=True))
