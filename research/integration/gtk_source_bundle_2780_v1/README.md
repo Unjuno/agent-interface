@@ -11,3 +11,10 @@ and its output is retained with the container image digest and source commit.
 
 This is a freeze gate only; it does not claim GTK effect correctness or formal
 #2606 acceptance.
+
+The transitive closure audit also walks `runtime.*` imports from the runner,
+fixture, and scorer. The first closure allocation reached `runtime.backends`
+but then stopped because the container lacked Python Xlib. `Dockerfile`
+defines the local successor image, based on the immutable #2748 image and
+adding Debian `python3-xlib`; local image digest:
+`sha256:8e249b9ab9761d1c14fada1eca727b55564f70d67b0f06ae9e9854682fd60199`.
