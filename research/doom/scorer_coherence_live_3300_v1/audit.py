@@ -1,10 +1,13 @@
 """Fail-closed audit for live scorer coherence JSONL."""
 import json
-import sys`r`nimport re
+import sys
+import re
 from pathlib import Path
 
 
-DECISIONS = {"ACCEPT", "REJECT", "STALE", "PHASE_MISMATCH"}`r`n`r`nREQUIRED = {
+DECISIONS = {"ACCEPT", "REJECT", "STALE", "PHASE_MISMATCH"}
+
+REQUIRED = {
     "sample", "scheduled_ns", "sample_started_ns", "sample_finished_ns",
     "capture_ns", "typed_ready_ns", "frame_sha256", "epoch",
     "missed_periods_before", "decision", "input_emitted",
@@ -25,6 +28,10 @@ def audit(path):
             errors.append(f"row={index}: invalid timestamps")
         elif not times[0] <= times[1] <= times[2] <= times[3] <= times[4]:
             errors.append(f"row={index}: timestamp order")
+        if type(row["sample"]) is not int or row["sample"] < 0:
+            errors.append(f"row={index}: invalid sample")
+        if row["decision"] not in DECISIONS:
+            errors.append(f"row={index}: unknown decision")
         if type(row["missed_periods_before"]) is not int or row["missed_periods_before"] < 0:
             errors.append(f"row={index}: invalid missed-period accounting")
         if last_sample is not None and row["sample"] <= last_sample:
@@ -32,8 +39,8 @@ def audit(path):
         last_sample = row["sample"]
         if row["decision"] != "ACCEPT" and row["input_emitted"]:
             errors.append(f"row={index}: rejected row emitted input")
-        if row["decision"] == "ACCEPT" and not row["frame_sha256"]:
-            errors.append(f"row={index}: accepted row missing frame digest")
+        if row["decision"] == "ACCEPT" and not re.fullmatch(r"[0-9a-f]{64}", row["frame_sha256"]):
+            errors.append(f"row={index}: accepted row has invalid frame digest")
     status = "PASS_AUDIT" if rows and not errors else "HOLD_AUDIT"
     print(f"{status} rows={len(rows)} errors={len(errors)}")
     for error in errors:
