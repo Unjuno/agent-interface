@@ -6,6 +6,7 @@ on:
       - "research/integration/mixed_app_long_session_2499/startup_diagnostic.py"
       - "research/integration/mixed_app_long_session_2499/Dockerfile.formal"
       - ".github/workflows/mixed-app-startup-diagnostic-2821-v5.yml"
+      - "research/integration/mixed_app_long_session_2499/formal_session.py"
 jobs:
   diagnostic:
     runs-on: ubuntu-latest
@@ -35,4 +36,22 @@ jobs:
         with:
           name: mixed-app-startup-diagnostic-2821-v5
           path: ${{ runner.temp }}/mixed-2821-diagnostic-v5
+          if-no-files-found: error
+      - name: Run persistent mixed-app ledger with network isolation
+        shell: bash
+        run: |
+          set +e
+          out="$RUNNER_TEMP/mixed-2821-ledger-v11"
+          mkdir -p "$out"
+          docker run --rm --network none -v "$GITHUB_WORKSPACE:/workspace:ro" -v "$out:/out" --entrypoint python3 mixed-formal-2821-v5 /workspace/research/integration/mixed_app_long_session_2499/formal_session.py > "$out/result.json" 2> "$out/stderr.log"
+          code=$?
+          printf '%s\n' "$code" > "$out/container_exit.txt"
+          python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["decision"])' "$out/result.json" > "$out/decision.txt" 2>/dev/null || printf '%s\n' "STOP_MIXED_APP_LONG_SESSION_NO_RESULT" > "$out/decision.txt"
+          test "$code" -eq 0
+      - name: Upload persistent ledger evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mixed-app-long-session-ledger-2821-v11
+          path: \${{ runner.temp }}/mixed-2821-ledger-v11
           if-no-files-found: error
