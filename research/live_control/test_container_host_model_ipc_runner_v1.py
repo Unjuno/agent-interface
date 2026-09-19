@@ -8,6 +8,8 @@ class ContainerHostIpcContractTest(unittest.TestCase):
         self.assertIn("HOST_MODEL_IPC_DIR", source)
         self.assertIn('"authority_granted": False', source)
         self.assertIn("response timeout", source)
+        self.assertIn('"started_ns": started_ns', source)
+        self.assertIn('"exited_ns": exited_ns', source)
 
     def test_runner_has_no_direct_input_api(self):
         source = Path(__file__).with_name("container_host_model_ipc_runner_v1.py").read_text()
