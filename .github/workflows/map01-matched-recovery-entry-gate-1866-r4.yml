@@ -13,7 +13,8 @@ jobs:
     container: python:3.12-slim
     steps:
       - name: Fetch immutable source
-        env: { SHA: ${{ github.sha }} }
+        env:
+          SHA: ${{ github.sha }}
         run: |
           set -eu
           mkdir -p research/analysis/map01_matched_recovery_entry_gate_1866_r4
