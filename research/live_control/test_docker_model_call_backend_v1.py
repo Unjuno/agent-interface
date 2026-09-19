@@ -7,6 +7,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from docker_model_call_backend_v1 import build_command
 
 class DockerBackendTest(unittest.TestCase):
+    def test_call_owns_prompt_creation_and_builder_owns_output_creation(self):
+        source = Path(__file__).with_name('docker_model_call_backend_v1.py').read_text()
+        self.assertEqual(source.count('root.mkdir(parents=True, exist_ok=False)'), 1)
+
     def test_unconfigured_stops_before_docker(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp); prompt=root/'p'; image=root/'i'; workspace=root/'w'; ipc=root/'ipc'
