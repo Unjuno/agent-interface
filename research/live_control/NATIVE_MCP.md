@@ -21,6 +21,10 @@ forward image content blocks. This repository does not auto-edit host settings,
 install a plugin or add tools to the current Codex conversation.
 
 - `native_observe(stage)` reads the retained source image, without recapture.
+  It includes `session_context` containing the recorded public goal and exchange
+  contract, with exact source hashes. Missing or malformed context stays explicit
+  and does not erase a valid image. No evaluator output is read. Context describes
+  the task; it grants no authority and is not an atomic snapshot with the image.
 - `native_submit(stage, decision, timeout=5)` uses existing immutable publication
   and guarded action execution. After pending/error, never retry submit.
 - `native_resume(stage, decision_sha256, timeout=5)` follows the existing
