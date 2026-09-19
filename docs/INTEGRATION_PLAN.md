@@ -23,6 +23,16 @@ read-only resume, full failure evidence and fresh decisions at unknown dialogs.
 Do not batch through unobserved dialog choices to reduce the count artificially.
 Actual model input tokens/cost and first-useful-feedback latency remain open.
 
+Follow-up: the existing stdin CLI already removes caller-file assembly.
+[Primary-assistant direct use](../runtime/results/native-direct-stdin-01/README.md)
+completed the same two-app task with unchanged action policy (only delivered
+source identity changed). Three caller-file creation calls were eliminated;
+immutable native requests were preserved. The single ordered successor took
+28.565s, with26.378s outside exchanges. This is descriptive, not an isolated
+effect of stdin. Use the documented direct path going forward; do not add a
+redundant transport API. Further attribution of host/presentation/deliberation
+time and replicated comparisons remain necessary.
+
 Queue integration remains evidence-gated: #2985/#2995 publishes a scoped result
 but only two report files, without the candidate/raw corpus needed for local
 inspection. #2293 has not established real resource-independent parallel GUI
