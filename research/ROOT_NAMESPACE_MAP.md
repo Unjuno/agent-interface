@@ -47,6 +47,7 @@ The directories below predate or sit outside the newer category structure. Their
 
 ### Effect, admission, and delivery semantics
 
+- [`golden_report_independent_scorer_2246_v1/`](golden_report_independent_scorer_2246_v1/)
 - [`exact_runtime_staged_admission_v1/`](exact_runtime_staged_admission_v1/)
 - [`external_effect_outbox_v1/`](external_effect_outbox_v1/)
 - [`outbox_semantic_revalidation_v1/`](outbox_semantic_revalidation_v1/)
