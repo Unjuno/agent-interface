@@ -98,3 +98,11 @@ SDK mcp1.30.0; transitive packages are not fully locked. Runtime core has no new
 mandatory dependency. A dedicated CI workflow tests only this optional adapter.
 Next gate: primary-assistant use through a host-registered tool on the same
 task/environment, with full content/image preservation and measured host costs.
+
+A [direct image-forwarding trial](../../runtime/results/native-mcp-direct-image-01/README.md)
+passes the actual MCP text/image blocks through orchestration without a separate
+view_image call. Primary use saved the expected Inkscape geometry and retained
+the full responses. This removes two explicit view calls in that run, not the
+shell/SDK bridge or decision-file boundary. It is an interim composition recipe,
+not automatic host registration or demonstrated latency/token savings. Preserve
+complete JSON output; truncation or split chunks must never trigger action replay.
