@@ -4,21 +4,15 @@ on:
     paths:
       - "research/integration/live_adapter_effect_scorer_2246_v1/**"
       - ".github/workflows/live-adapter-effect-scorer-2246.yml"
-  push:
-    branches:
-      - "research/live-adapter-effect-scorer-2246-v1"
-    paths:
-      - "research/integration/live_adapter_effect_scorer_2246_v1/**"
-      - ".github/workflows/live-adapter-effect-scorer-2246.yml"
 jobs:
   scorer:
     runs-on: ubuntu-latest
     container:
       image: python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9
     steps:
-      - name: Fetch pinned scorer sources
+      - name: Fetch immutable sources and retained report
         env:
-          PIN: 88e8beb2f0ae71b2823f08598d2fc7433fd1a170
+          PIN: ${{ github.sha }}
           BASE: https://raw.githubusercontent.com/Unjuno/agent-interface
         run: |
           python - <<'PY'
@@ -35,7 +29,7 @@ jobs:
               data=urllib.request.urlopen(f"{os.environ['BASE']}/{os.environ['PIN']}/{rel}",timeout=30).read()
               path.write_bytes(data)
               print("SOURCE_SHA256", rel, hashlib.sha256(data).hexdigest())
-          report=urllib.request.urlopen(f"{os.environ['BASE']}/39519f3f3e87626bf2ed6abe7f90e45f8b6878a3/runtime/results/golden-desktop-app-server-v3-live-01/golden-report.json",timeout=30).read()
+          report=urllib.request.urlopen(f"{os.environ['BASE']}/{os.environ['PIN']}/runtime/results/golden-desktop-app-server-v3-live-01/golden-report.json",timeout=30).read()
           pathlib.Path("/tmp/golden-report.json").write_bytes(report)
           print("REPORT_SHA256", hashlib.sha256(report).hexdigest())
           PY
