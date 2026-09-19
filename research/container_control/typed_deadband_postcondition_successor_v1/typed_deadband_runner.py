@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# Syntax-validated successor runner revision after run 35442587962.\n#!/usr/bin/env python3
 """Container/X11 typed-deadband successor: coast vs bounded recovery with task-relative cancellation.
 
 This is deliberately model-free: planner latency is simulated with a fixed sleep so
