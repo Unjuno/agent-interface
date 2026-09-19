@@ -33,7 +33,15 @@ def motor_state_from_native_result(raw: Mapping[str, Any]) -> dict[str, Any]:
     observed = obs.get("observed_pointer") if isinstance(obs, Mapping) else None
     transport_ok = execution.get("transport_passed") is True
     focus_ok = raw.get("focus_confirmed") is True
-    uncertainty = "NONE" if isinstance(obs, Mapping) and isinstance(observed, Mapping) and transport_ok and focus_ok else "FOCUS_UNKNOWN" if isinstance(obs, Mapping) else "OS_UNCONFIRMED"
+    ack_id = raw.get("ack_id")
+    ack_ok = isinstance(ack_id, str) and bool(ack_id)
+    pointer_ok = (
+        isinstance(observed, Mapping)
+        and isinstance(observed.get("x"), (int, float))
+        and isinstance(observed.get("y"), (int, float))
+    )
+    certainty_ok = isinstance(obs, Mapping) and pointer_ok and transport_ok and focus_ok and ack_ok
+    uncertainty = "NONE" if certainty_ok else "FOCUS_UNKNOWN" if isinstance(obs, Mapping) else "OS_UNCONFIRMED"
     release_status = "FAILED" if release.get("error") else "VERIFIED_EMPTY" if release.get("final_release_verified") is True else "UNVERIFIED"
     row = {
         "schema": SCHEMA,
@@ -47,7 +55,7 @@ def motor_state_from_native_result(raw: Mapping[str, Any]) -> dict[str, Any]:
         "observed_pointer": observed,
         "held_keys": list(raw.get("held_keys", [])),
         "held_buttons": list(raw.get("held_buttons", [])),
-        "input_ack": {"id": str(raw.get("ack_id", "ack-unknown")), "status": "ACKED" if transport_ok else "UNKNOWN"},
+        "input_ack": {"id": ack_id if ack_ok else "ack-unknown", "status": "ACKED" if transport_ok and ack_ok else "UNKNOWN"},
         "release": {"status": release_status, "retained": True},
         "uncertainty": uncertainty,
         "events": [{"type": "RELEASE_TRANSITION", "status": release_status}],
