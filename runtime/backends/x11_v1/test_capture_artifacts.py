@@ -9,6 +9,20 @@ from runtime.backends.x11_v1.capture_artifacts import CaptureArtifacts
 
 
 class CaptureArtifactTests(unittest.TestCase):
+    def test_read_only_capture_calls_no_input_or_focus_methods(self):
+        from runtime.backends.x11_v1.backend import X11Backend
+        backend = object.__new__(X11Backend)
+        backend.capture = mock.Mock(return_value={"sha256": "capture"})
+        backend.focus = mock.Mock()
+        backend.release_all = mock.Mock()
+        backend.execute = mock.Mock()
+        self.assertEqual(backend.observe_read_only("fixture", "window_client", [0, 0, 2, 2]),
+                         {"sha256": "capture"})
+        backend.capture.assert_called_once_with("fixture", "window_client", 0, 0, 2, 2)
+        backend.focus.assert_not_called()
+        backend.release_all.assert_not_called()
+        backend.execute.assert_not_called()
+
     def test_backend_encodes_one_capture_and_retains_packaging_failure(self):
         from runtime.backends.x11_v1.backend import X11Backend
         for fail in (False, True):

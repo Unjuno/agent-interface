@@ -81,6 +81,14 @@ Its action image was still pre-save while the later independent effect succeeded
 both are retained with their distinct identities. This closes the duplicate
 capture requirement for a native observation, but late-render continuation and
 visual-target admission remain open. No matched latency/token benefit is claimed.
+The [read-only observation successor](../runtime/results/native-observe-self-use-01/README.md)
+now connects delayed-render continuation to the public API without dispatching
+input or changing focus. Actual assistant use retrieved the saved state through
+that path. Its timing trigger still uses the fixture scorer, so general
+application-effect detection and caller recovery policy remain open alongside
+visual-target admission. The growing native path must next connect source
+identity and guarded method reuse, rather than treat this single form as the
+complete integration workload.
 
 Starting repository revision: `2d78394e4128d9274030dcc52cf0957be2eb312d`.
 Use the existing [golden desktop v3 entry point](../runtime/golden-demo-v3.sh) and

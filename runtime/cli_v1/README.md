@@ -66,6 +66,28 @@ show the state before an asynchronous save has rendered, even if a later scorer
 confirms the save. Other backends reject this option before dispatch. Default
 hash-only behavior remains available without Pillow.
 
+After an input result, request a new observation without replaying input or
+changing focus:
+
+```sh
+python -m runtime.cli_v1 observe --targets targets.json --target fixture \
+  --frame window_client --region 0 0 400 180 --capture-directory observations
+```
+
+The equivalent Python entry point is `runtime.cli_v1.observe.observe`. Currently
+this read-only path is implemented for X11. It captures once, closes its own
+connection and returns `agent-interface/runtime-observation-v1` with a new
+`observation_id`. It never dispatches a program, focuses the window, replays an
+action, releases held input, refreshes a lease or supplies task success. A close
+failure keeps any captured observation but returns `observation_failed`.
+Capture/encoding status must still be checked, including `artifact_error`.
+The existing X11 backend constructor requires XTEST even for this read-only
+entry point. Regions are bounded to 8192 pixels per dimension and 16 Mi pixels.
+
+This gives callers the continuation primitive for delayed rendering. The caller
+still chooses when another observation is useful and whether its pixels prove
+the intended effect; repeated observation is not an implicit completion test.
+
 
 Golden-v3 boundary is provided by runtime.cli_v1.golden_v3.dispatch_golden_v3; it preserves the existing dispatch contract and is authority-neutral.
 

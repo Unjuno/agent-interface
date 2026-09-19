@@ -40,6 +40,11 @@ class X11Backend:
         from .capture_artifacts import CaptureArtifacts
         self.capture_artifacts = CaptureArtifacts(directory)
 
+    def observe_read_only(self, target, frame, region):
+        # Unlike a program's focus/observe sequence this does not change focus,
+        # send input, release somebody else's held input, or renew a lease.
+        return self.capture(target, frame, *region)
+
     def close(self) -> None:
         self.d.close()
 
