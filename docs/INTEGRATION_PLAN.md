@@ -41,6 +41,18 @@ is finished. Integration starts now and does not wait for the full research back
 
 ## Selected starting path
 
+**Primary-assistant verification:** the existing
+`integrated_efficiency_client_v1.RuntimeClient.execute_handles` route has now
+been [used directly by the assistant](../runtime/results/guarded-method-self-use-01/README.md)
+for all six tasks, with visual grounding and repair in this conversation and
+no helper model. Task 4 refused the old target before pointer input; reminting
+from the viewed changed layout enabled the remaining tasks. Independent scoring
+confirmed six exact submissions and 43 programs verified empty release.
+This is the guarded method, not the distinct compiled state-graph runtime.
+Its intermediate target check is not a semantic text-effect check. Prioritize
+an explicit bridge from this existing route to the public native interface,
+retaining those boundaries, rather than introducing a parallel caller.
+
 Starting repository revision: `2d78394e4128d9274030dcc52cf0957be2eb312d`.
 Use the existing [golden desktop v3 entry point](../runtime/golden-demo-v3.sh) and
 its [retained six-task result](../runtime/GOLDEN_DESKTOP_DEMO_V3.md) as the first
