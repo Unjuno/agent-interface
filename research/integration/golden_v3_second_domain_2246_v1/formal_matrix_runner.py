@@ -11,6 +11,7 @@ CASES=[('useful','useful','confirmed','useful','released'),('unavailable','usefu
 
 def save(p,v): p.write_text(json.dumps(v,indent=2,sort_keys=True)+'\n',encoding='utf-8')
 def main():
+ fixture_python='/usr/bin/python3' if Path('/usr/bin/python3').exists() else sys.executable
  ap=argparse.ArgumentParser(); ap.add_argument('--out',type=Path,required=True); a=ap.parse_args(); root=a.out.resolve(); root.mkdir(parents=True,exist_ok=False); rows=[]; procs=[]
  xvfb=subprocess.Popen(['Xvfb','-displayfd','1','-screen','0','640x360x24','-nolisten','tcp','-ac'],stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True); procs.append(xvfb)
  if not select.select([xvfb.stdout],[],[],10)[0]: raise RuntimeError('Xvfb startup timeout')
@@ -18,7 +19,7 @@ def main():
  try:
   for i,(name,mode,delivery,effect,cleanup) in enumerate(CASES):
    out=root/name; out.mkdir(); env=dict(os.environ,DISPLAY=display)
-   fixture=subprocess.Popen([sys.executable,'research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py','--mode',mode,'--meta',str(out/'meta.json'),'--effect',str(out/'effect.json'),'--events',str(out/'events.jsonl')],env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True); procs.append(fixture)
+   fixture=subprocess.Popen([fixture_python,'research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py','--mode',mode,'--meta',str(out/'meta.json'),'--effect',str(out/'effect.json'),'--events',str(out/'events.jsonl')],env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True); procs.append(fixture)
    deadline=time.monotonic()+10
    while not (out/'meta.json').exists():
     if fixture.poll() is not None or time.monotonic()>deadline: raise RuntimeError(name+' fixture timeout')
