@@ -1,0 +1,45 @@
+name: GTK bounded allocation after startup repair #2836
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/gtk-bounded-allocation-2836.yml"
+      - "research/integration/**"
+      - "runtime/**"
+  push:
+    branches:
+      - "research/gtk-bounded-allocation-2836"
+
+jobs:
+  allocation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build pinned GTK image
+        run: docker build --pull=false -f research/integration/gtk_fixture_dependency_2606_v2/Dockerfile -t agent-interface-gtk-fixture-v2:allocation .
+      - name: Run one bounded allocation
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/gtk-allocation-out"
+          docker image inspect agent-interface-gtk-fixture-v2:allocation > "$RUNNER_TEMP/gtk-allocation-out/image-inspect.json"
+          git rev-parse HEAD > "$RUNNER_TEMP/gtk-allocation-out/source-commit.txt"
+          set +e
+          docker run --rm --network none --read-only --tmpfs /tmp             -e PYTHONPATH=/workspace:/usr/lib/python3/dist-packages             -v "$GITHUB_WORKSPACE:/workspace:ro"             -v "$RUNNER_TEMP/gtk-allocation-out:/out"             -w /workspace             agent-interface-gtk-fixture-v2:allocation             python3 /workspace/research/integration/golden_v3_second_domain_2246_v1/formal_matrix_runner.py             --out /out/raw > "$RUNNER_TEMP/gtk-allocation-out/runner.stdout" 2> "$RUNNER_TEMP/gtk-allocation-out/runner.stderr"
+          code=$?
+          printf '%s' "$code" > "$RUNNER_TEMP/gtk-allocation-out/exit-code.txt"
+          if [ "$code" -eq 0 ]; then
+            printf '%s\n' 'COMPLETED_UNSCORED_EXISTING_RUNNER' > "$RUNNER_TEMP/gtk-allocation-out/decision.txt"
+          else
+            printf '%s\n' 'STOP_GTK_ALLOCATION' > "$RUNNER_TEMP/gtk-allocation-out/decision.txt"
+          fi
+          exit 0
+      - name: Upload retained allocation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gtk-bounded-allocation-2836
+          path: ${{ runner.temp }}/gtk-allocation-out
+          if-no-files-found: error
