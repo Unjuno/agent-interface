@@ -1,0 +1,26 @@
+name: X11 mixed-app identity readiness successor #2723
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "research/integration/x11_identity_readiness_2723/**"
+      - ".github/workflows/x11-identity-readiness-2723.yml"
+  push:
+    paths:
+      - "research/integration/x11_identity_readiness_2723/**"
+      - ".github/workflows/x11-identity-readiness-2723.yml"
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install private X11 fixture dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb xdotool x11-utils inkscape libreoffice chromium
+          python -m pip install --disable-pip-version-check --no-input pytest
+      - name: Run deterministic contract tests
+        run: python -m pytest -q research/integration/x11_identity_readiness_2723/test_identity_contract.py
+      - name: Run model-free live readiness preflight
+        run: python research/integration/x11_identity_readiness_2723/live_preflight.py
