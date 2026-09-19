@@ -101,6 +101,42 @@ class ExchangeTests(unittest.TestCase):
         self.assertFalse(result['program_attempted'])
         self.assertFalse(self.calls)
 
+    def test_outcome_drain_is_one_bounded_read_and_retains_early_evidence(self):
+        for mode in ('ready', 'pending', 'lost', 'foreign', 'gap_cursor'):
+            with self.subTest(mode=mode):
+                calls = []
+                def scripted(socket, request, **kwargs):
+                    calls.append((copy.deepcopy(request), kwargs))
+                    if request.get('command', {}).get('op') == 'clock':
+                        return self.transport(socket, request, **kwargs)
+                    if 'command' in request:
+                        identity = request['request_id']
+                        scripted.identity = identity
+                        event = {'event': 'effect_evidence', 'final_program': 'action',
+                                 'effect': {'status': 'VERIFIED', 'action_id': 'action'},
+                                 'admitted_request': {'transport_request_id': identity, 'declared_action_id': 'action'}}
+                        return {'status': 'boundary', 'cursor': request['after'] + 1, 'records': [event]}
+                    self.assertEqual(request['timeout'], 0)
+                    self.assertEqual(kwargs['timeout'], .25)
+                    if mode == 'lost':
+                        raise TimeoutError('read reply lost')
+                    if mode == 'pending':
+                        return {'status': 'timeout', 'cursor': request['after'], 'records': []}
+                    event = {'event': 'independent_evaluation', 'final_program': 'action', 'success': True,
+                             'admitted_request': {'transport_request_id': 'foreign' if mode == 'foreign' else scripted.identity,
+                                                  'declared_action_id': 'action'}}
+                    return {'status': 'boundary', 'cursor': request['after'] + (2 if mode == 'gap_cursor' else 1), 'records': [event]}
+                result = run('test.sock', self.batch, self.root, 'action', [{'op': 'key', 'key': 'Return'}],
+                             boundary='outcome', out=self.root/mode, transport=scripted)
+                self.assertEqual(len(calls), 3)
+                self.assertNotIn('command', calls[-1][0])
+                self.assertEqual(sum(q.get('command', {}).get('op') == 'submit' for q, _ in calls), 1)
+                self.assertEqual(result['records'][0]['event'], 'effect_evidence')
+                self.assertEqual(result['outcome']['task_success'], True if mode == 'ready' else None)
+                if mode in ('pending', 'lost', 'gap_cursor'):
+                    self.assertEqual(result['outcome']['state'], 'effect_observed')
+                    self.assertEqual(result['outcome']['continuation']['after'], 4)
+
     def test_cli_review_failure_preserves_attempt_and_does_not_repeat_run(self):
         request = {'out': str(self.root/'attempt'), 'run_directory': str(self.root)}
         result = {'status': 'boundary', 'program_attempted': True, 'records': [{'event': 'terminal'}]}

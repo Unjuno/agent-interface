@@ -20,6 +20,11 @@ these through `agent_exchange --review`. It passed independent saved-cell
 evaluation, while exposing delayed dialog pixels and 18–25 second outer gaps.
 Next address observation/result continuation and caller assembly; native input
 speed alone does not explain the remaining tempo gap.
+The [final-drain integration](../runtime/results/calc-final-drain-01/README.md)
+now reads an already-available independent result once after early saved-effect
+evidence. Actual Calc use returned evaluation in the action response; a missing
+result remains pending. It removes one outer continuation turn in this example,
+not a socket exchange or the remaining deliberation gaps.
 
 The user's current direction is to concentrate this task on integration while
 other contributors continue benchmarks and experiments. Product Hunt publication

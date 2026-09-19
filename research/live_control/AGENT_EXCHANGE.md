@@ -19,6 +19,16 @@ directory for each deliberate action. Defaults: 5-second lease and wait,
 terminal boundary. `boundary="outcome"` submits the final program with
 `finish_after=true`; explicit session cleanup is still required.
 
+If the outcome is early saved-effect evidence, the adapter now composes the
+existing `drain_final` policy: one command-free request for an already-available
+independent evaluation, zero server wait, and a 250-ms transport deadline.
+No loop or input retry occurs. Pending/lost reads retain early evidence and a
+continuation; mismatched identities require reconciliation. Exact final-read
+requests/replies and the full drain interpretation are retained. An evaluated
+result can therefore arrive with the original action response without another
+model/tool turn. If evaluation arrives too late, a later command-free read is
+still required. Early effects are never promoted to task success by themselves.
+
 The adapter makes one clock request and at most one submit. It preserves the
 reviewed observation/delivery reference, requires a contiguous own-clock reply
 without intervening events, then uses the existing preparation logic. A clock
