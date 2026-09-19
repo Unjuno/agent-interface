@@ -12,7 +12,7 @@ import py_compile
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[4]
+ROOT = Path(__file__).resolve().parents[3]
 TARGET = ROOT / "research/doom/map01_v12_physical_occupancy_live_r1_v1/session_entry.py"
 FORBIDDEN = {"main", "construction", "formal", "DoomGame", "XTest", "subprocess"}
 
