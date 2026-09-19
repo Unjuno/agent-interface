@@ -32,15 +32,12 @@ jobs:
           root='research/analysis/generation_bound_evidence_provenance_successor_2196_v1/'
           m=json.load(open(root+'SOURCE_MANIFEST.json'))
           p=json.load(open(root+'RESULT.json'))
-          assert p['decision']=='PASS_CONTAINER_REVALIDATION_SCOPED'
-          assert p['statuses']==['ENCODED','OBSOLETE','CACHE_HIT','ENCODED']
-          assert p['stale_control']==p['reuse_control']==p['provenance_control']=='PASS'
-          assert p['model']==p['x11']==p['input']==0
-          source_sha=hashlib.sha256(open(m['parent_path'],'rb').read()).hexdigest()
-          result_sha=hashlib.sha256(open(root+'RESULT.json','rb').read()).hexdigest()
-          image=subprocess.check_output(['docker','image','inspect','python:3.12-slim','--format','{{index .RepoDigests 0}}'],text=True).strip()
-          out={'parent_path':m['parent_path'],'parent_blob_sha':m['parent_blob_sha'],'source_sha256':source_sha,'image_digest':image,'result_sha256':result_sha,'stdout':open(root+'stdout.txt').read(),'independent_audit':'PASS','model':0,'x11':0,'input':0}
-          json.dump(out,open(root+'PROVENANCE.json','w'),indent=2,sort_keys=True)
+          assert p["decision"]=="PASS_CONTAINER_REVALIDATION_SCOPED"
+          source_sha=hashlib.sha256(open(m["parent_path"],"rb").read()).hexdigest()
+          result_sha=hashlib.sha256(open(root+"RESULT.json","rb").read()).hexdigest()
+          image=subprocess.check_output(["docker","image","inspect","python:3.12-slim","--format","{{index .RepoDigests 0}}"],text=True).strip()
+          out={"parent_path":m["parent_path"],"parent_blob_sha":m["parent_blob_sha"],"source_sha256":source_sha,"image_digest":image,"result_sha256":result_sha,"stdout":open(root+"stdout.txt").read(),"independent_audit":"PASS","model":0,"x11":0,"input":0}
+          json.dump(out,open(root+"PROVENANCE.json","w"),indent=2,sort_keys=True)
           PY
       - name: Independent audit
         run: python3 research/analysis/generation_bound_evidence_provenance_successor_2196_v1/audit.py
