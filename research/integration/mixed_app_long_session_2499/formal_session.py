@@ -19,7 +19,10 @@ def windows(env):
 
 def active(env):
     q = cmd(["xdotool", "getactivewindow"], env)
-    return q.stdout.strip() if q.returncode == 0 else None
+    if q.returncode == 0 and q.stdout.strip():
+        return q.stdout.strip()
+    q = cmd(["xdotool", "getwindowfocus"], env)
+    return q.stdout.strip() if q.returncode == 0 and q.stdout.strip() else None
 
 def geom(env, wid):
     q = cmd(["xdotool", "getwindowgeometry", wid], env)
