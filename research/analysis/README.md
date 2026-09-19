@@ -129,7 +129,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 102 retained result/failure directories</strong></summary
+<summary><strong>Expand all 103 retained result/failure directories</strong></summary>
 
 - [$_/](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [$_/](action_conditioned_routing_repair_successor_2059_v1/)
@@ -181,6 +181,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [$_/](multicursor_target_handle_regrounding_r0_v1/)
 - [$_/](observation_manipulate_dynamic_certificate_v1/)
 - [$_/](observation_manipulate_support_union_v1/)
+- [$_/](observation_o4_x11_verify_schema_readiness_v1/)
 - [$_/](observation_relevance_completeness_v1/)
 - [$_/](observation_reveal_support_closure_v1/)
 - [$_/](optimistic_concurrent_readwrite_commit_r0_v1/)
