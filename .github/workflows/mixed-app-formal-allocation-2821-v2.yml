@@ -32,10 +32,25 @@ jobs:
           fi
           printf '%s\n' "$rc" > "$RUNNER_TEMP/mixed-2499/container_exit.txt"
           exit 0
+      - name: Print formal result for audit
+        if: always()
+        shell: bash
+        run: |
+          for f in result.json stdout.log stderr.log container_exit.txt; do
+            p="$RUNNER_TEMP/mixed-2499/$f"
+            if [ -f "$p" ]; then
+              echo "===== $f ====="
+              cat "$p"
+              echo "===== sha256 $f ====="
+              sha256sum "$p"
+            else
+              echo "===== $f MISSING ====="
+            fi
+          done
       - name: Upload formal allocation evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: mixed-app-formal-allocation-2821-v3
+          name: mixed-app-formal-allocation-2821-v4-visibility
           path: ${{ runner.temp }}/mixed-2499
           if-no-files-found: error
