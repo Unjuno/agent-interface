@@ -25,3 +25,8 @@ An additive standard-library control checks four tampered fields and one truncat
 ## Local Docker reproduction
 
 The candidate, independent audit, and corruption controls were rerun locally in Docker Desktop using `python:3.11-slim`. Candidate output matched the frozen result exactly (256 rows, 16 valid, SHA-256 `5c2699e993fd163a1a01c72c3905b46c8f364e329a8ddef47c37bb713952b936`); the independent audit reported 256 rows/16 valid/240 rejected; corruption controls reported 4/4 digest changes and 1/1 truncation rejection. This is a container reproduction PASS. A complete source/result manifest remains a separate formal gate.
+
+
+## Manifest disposition
+
+`MANIFEST.json` pins the local Docker engine/image and GitHub blob identities for the source, audit, reproduction, corruption-control, report, and result artifacts. The local Docker reproduction is therefore recorded as `PASS_LOCAL_DOCKER_REPRODUCTION`. This remains fixture-scoped and does not grant GUI/model/runtime authority or imply production transfer.
