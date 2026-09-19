@@ -620,3 +620,11 @@ needed. This removes the separate finish request in one primary-assistant run,
 with identical native operations; invalid-flag and task-failure controls are
 retained. It is not automatic success detection or repair. See
 [native finish-after](../../runtime/results/native-finish-after-01/README.md).
+
+Primary-assistant Calc transfer now uses ordinary keyboard entry/Save, views the
+format dialog, then sets finish_after only on its explicit confirmation click.
+The same-seed task needs two requests instead of three and independently saves
+A1=551/A2=768 with neutral release and completed cleanup. The final image still
+contains dialog pixels and old-dialog feedback retains needs_review/BadWindow;
+saved effect and fully repainted final view are not conflated. See
+[Calc final-action transfer](../../runtime/results/native-calc-final-action-01/README.md).
