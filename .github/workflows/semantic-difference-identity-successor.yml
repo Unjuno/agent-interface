@@ -1,0 +1,25 @@
+name: semantic-difference-identity-successor
+on:
+  pull_request:
+    paths: ["research/analysis/semantic_difference_identity_successor_2004_v1/**",".github/workflows/semantic-difference-identity-successor.yml"]
+jobs:
+  formal:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 semantic_difference_identity_runner.py
+        working-directory: research/analysis/semantic_difference_identity_successor_2004_v1
+      - run: |
+          python3 - <<'PY'
+          import json
+          p=json.load(open("research/analysis/semantic_difference_identity_successor_2004_v1/RESULT.json"))
+          assert p["decision"]=="PASS_SEMANTIC_DIFFERENCE_IDENTITY_REGISTRY_SCOPED"
+          assert p["matches"]==p["cases"]
+          assert p["authority_positive"]==p["model_calls"]==p["gui_calls"]==p["network_calls"]==p["task_input_events"]==0
+          assert p["reruns"]==p["replacements"]==p["tuning"]==0
+          print("INDEPENDENT_AUDIT_PASS")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: semantic-difference-identity-successor
+          path: research/analysis/semantic_difference_identity_successor_2004_v1/RESULT.json
