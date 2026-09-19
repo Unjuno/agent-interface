@@ -126,11 +126,12 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 97 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 102 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
 - [`action_conditioned_routing_successor_1934_r2/`](action_conditioned_routing_successor_1934_r2/)
+- [`altgr_preflight_contract_successor_2171_v1/`](altgr_preflight_contract_successor_2171_v1/)
 - [`anytime_fidelity_typed_admission_r0_v1/`](anytime_fidelity_typed_admission_r0_v1/)
 - [`attention_budgeting_successor_1940_v1/`](attention_budgeting_successor_1940_v1/)
 - [`attention_provenance_successor_1936_v1/`](attention_provenance_successor_1936_v1/)
@@ -155,6 +156,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`evidence_compute_x11_png_calibration_uncertainty_r7_v1/`](evidence_compute_x11_png_calibration_uncertainty_r7_v1/)
 - [`evidence_dependent_compute_reuse_r0_v1/`](evidence_dependent_compute_reuse_r0_v1/)
 - [`evidence_dependent_compute_scheduler_dominance_r0_v1/`](evidence_dependent_compute_scheduler_dominance_r0_v1/)
+- [`generation_bound_container_revalidation_2166_v1/`](generation_bound_container_revalidation_2166_v1/)
+- [`generation_bound_evidence_2047_v1/`](generation_bound_evidence_2047_v1/)
 - [`guard_policy_break_even_r0_v1/`](guard_policy_break_even_r0_v1/)
 - [`guard_policy_calibration_identifiability_r1_v1/`](guard_policy_calibration_identifiability_r1_v1/)
 - [`independent_effect_evidence_successor_1295_v1/`](independent_effect_evidence_successor_1295_v1/)
@@ -164,6 +167,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`justification_graph_truth_maintenance_r0_v1/`](justification_graph_truth_maintenance_r0_v1/)
 - [`layered_lifetime_admission_r0_v1/`](layered_lifetime_admission_r0_v1/)
 - [`live_two_tier_applicability_v1/`](live_two_tier_applicability_v1/)
+- [`local_relevance_gating_preflight_2188_v1/`](local_relevance_gating_preflight_2188_v1/)
 - [`map01_task_effect_cross_record_ledger_a2_v1/`](map01_task_effect_cross_record_ledger_a2_v1/)
 - [`map01_useful_occupied_control_identifiability_v1/`](map01_useful_occupied_control_identifiability_v1/)
 - [`map01_v12_plan_step_lineage_r0_v1/`](map01_v12_plan_step_lineage_r0_v1/)
@@ -190,6 +194,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`real_source_adapter_admission_v1/`](real_source_adapter_admission_v1/)
 - [`real_source_role_adapter_registry_v1/`](real_source_role_adapter_registry_v1/)
 - [`register_automaton_dynamic_identity_r0_v1/`](register_automaton_dynamic_identity_r0_v1/)
+- [`resident_reactive_gui_predicate_2055_v1/`](resident_reactive_gui_predicate_2055_v1/)
 - [`resident_reactive_rung0_successor_2025_r3_v1/`](resident_reactive_rung0_successor_2025_r3_v1/)
 - [`resident_reactive_rung0_successor_2110_r1_v1/`](resident_reactive_rung0_successor_2110_r1_v1/)
 - [`reusable_receipt_session_binding_v1/`](reusable_receipt_session_binding_v1/)
@@ -225,38 +230,6 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v1/`](xterm_resource_footprint_transfer_v1/)
 - [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
-
-- [`altgr_preflight_contract_successor_2171_v1/`](altgr_preflight_contract_successor_2171_v1/)
-- [`barrier_recovery_successor_2144_v1/`](barrier_recovery_successor_2144_v1/)
-- [`caller_role_receipt_bridge_v1/`](caller_role_receipt_bridge_v1/)
-- [`capability_bundle_construction_successor_2036_v1/`](capability_bundle_construction_successor_2036_v1/)
-- [`change_invariance_presentation_successor_1937_v1/`](change_invariance_presentation_successor_1937_v1/)
-- [`crash_liveness_successor_2156_v1/`](crash_liveness_successor_2156_v1/)
-- [`effect_receipt_preflight_successor_2183_v1/`](effect_receipt_preflight_successor_2183_v1/)
-- [`focused_observation_container_successor_2137_v1/`](focused_observation_container_successor_2137_v1/)
-- [`focused_observation_request_container_successor_2046_v1/`](focused_observation_request_container_successor_2046_v1/)
-- [`focused_observation_request_count_repair_successor_2052_v1/`](focused_observation_request_count_repair_successor_2052_v1/)
-- [`focused_observation_request_count_repair_successor_2052_v2/`](focused_observation_request_count_repair_successor_2052_v2/)
-- [`generation_bound_container_revalidation_2166_v1/`](generation_bound_container_revalidation_2166_v1/)
-- [`generation_bound_evidence_2047_v1/`](generation_bound_evidence_2047_v1/)
-- [`generation_bound_evidence_container_successor_2166_v1/`](generation_bound_evidence_container_successor_2166_v1/)
-- [`generation_bound_prep_construction_successor_2047_v1/`](generation_bound_prep_construction_successor_2047_v1/)
-- [`geometric_sidecar_construction_successor_2041_v1/`](geometric_sidecar_construction_successor_2041_v1/)
-- [`last_effect_preflight_successor_2175_v1/`](last_effect_preflight_successor_2175_v1/)
-- [`local_relevance_gating_preflight_2188_v1/`](local_relevance_gating_preflight_2188_v1/)
-- [`matched_recovery_readiness_gate_1866_v1/`](matched_recovery_readiness_gate_1866_v1/)
-- [`model_facing_timing_successor_2101/`](model_facing_timing_successor_2101/)
-- [`multires_provenance_construction_successor_2031_v1/`](multires_provenance_construction_successor_2031_v1/)
-- [`negative_attention_hint_successor_1943_v1/`](negative_attention_hint_successor_1943_v1/)
-- [`observation_epoch_join_r0_42_v1/`](observation_epoch_join_r0_42_v1/)
-- [`release_telemetry_decision_successor_2107_v1/`](release_telemetry_decision_successor_2107_v1/)
-- [`resident_reactive_gui_predicate_2055_v1/`](resident_reactive_gui_predicate_2055_v1/)
-- [`resident_reactive_rung0_container_successor_2033_v1/`](resident_reactive_rung0_container_successor_2033_v1/)
-- [`semantic_difference_evidence_successor_1938_v1/`](semantic_difference_evidence_successor_1938_v1/)
-- [`semantic_difference_identity_successor_2004_v1/`](semantic_difference_identity_successor_2004_v1/)
-- [`shared_caller_accounting_successor_53_v1/`](shared_caller_accounting_successor_53_v1/)
-- [`temporal_ring_construction_successor_2045_v1/`](temporal_ring_construction_successor_2045_v1/)
-- [`visual_cue_successor_1999_v1/`](visual_cue_successor_1999_v1/)
 
 </details>
 
