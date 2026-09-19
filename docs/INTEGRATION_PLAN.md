@@ -307,3 +307,13 @@ precedence. Immutable publication also syncs its directory entry. Fresh actual
 use, SIGKILL, independent saved SVG/input-state checks and duplicate refusal
 exercise this boundary. This is preparation for #2704, not its formal crash
 matrix or a restart/recovery protocol.
+
+A [persistent Calc/Inkscape round trip](../runtime/results/native-mixed-app-01/README.md)
+now uses one bridge through focus change, format dialog, return and additional
+input. It exposed a compositional bug: returning to Inkscape adopted its 1x1
+InputOnly focus child as the application surface. A bounded managed-ancestor
+lookup fixes the read-only handoff while preserving exact child focus and alias
+revocation. Fresh primary use saved both [324,455] and SVG x=62; all ten stale
+target probes refused without input. The existing harness supports two-app
+setup and an explicit stage budget, not a separate control route. #2499's full
+three-app/four-transition controlled allocation remains open.
