@@ -10,12 +10,17 @@ class GoldenV3AdapterTests(unittest.TestCase):
     def test_effect_success_without_task_success_is_partial(self):
         row=adapt_dispatch_result({"status":"returned","result":{"program_completed":True,"task_success":False,"partial_effects":["save"]}})
         self.assertEqual(row["status"],"partial"); self.assertEqual(row["partial_effects"],["save"])
+        self.assertTrue(row["program_completed"])
+        self.assertFalse(row["task_success"])
     def test_refusal_and_diagnostic(self):
         row=adapt_dispatch_result({"status":"backend_unavailable","error":"NO_BACKEND"},lifecycle=["doctor","refusal"])
         self.assertEqual(row["status"],"refused"); self.assertEqual(row["diagnostic"],"NO_BACKEND")
     def test_cleanup_failure_cannot_succeed(self):
         row=adapt_dispatch_result({"status":"returned","result":{"program_completed":True,"task_success":True},"cleanup_error":"close"})
-        self.assertEqual(row["status"],"cleanup_failed"); self.assertFalse(row["task_success"])
+        self.assertEqual(row["status"],"cleanup_failed")
+        self.assertTrue(row["program_completed"])
+        self.assertFalse(row["task_success"])
+        self.assertTrue(row["raw_dispatch"]["result"]["task_success"])
     def test_unknown_inputs_fail_closed(self):
         self.assertEqual(adapt_dispatch_result({"status":"mystery"})["adapter_error"],"UNKNOWN_STATUS")
         self.assertEqual(adapt_dispatch_result({"status":"returned"},lifecycle=["bogus"])["adapter_error"],"UNKNOWN_LIFECYCLE")

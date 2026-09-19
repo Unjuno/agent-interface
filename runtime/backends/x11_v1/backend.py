@@ -34,6 +34,16 @@ class X11Backend:
         self.held_keycodes: dict[str, int] = {}
         self.held_buttons: set[str] = set()
         self.emissions = 0
+        self.capture_artifacts = None
+
+    def configure_capture_artifacts(self, directory) -> None:
+        from .capture_artifacts import CaptureArtifacts
+        self.capture_artifacts = CaptureArtifacts(directory)
+
+    def observe_read_only(self, target, frame, region):
+        # Unlike a program's focus/observe sequence this does not change focus,
+        # send input, release somebody else's held input, or renew a lease.
+        return self.capture(target, frame, *region)
 
     def close(self) -> None:
         self.d.close()
@@ -183,11 +193,32 @@ class X11Backend:
             source, sx, sy = self.root, x, y
         else:
             raise X11BackendError(f"unsupported capture frame {frame}")
+        capture_started_ns = time.monotonic_ns()
         image = source.get_image(sx, sy, w, h, X.ZPixmap, 0xFFFFFFFF)
+        capture_ended_ns = time.monotonic_ns()
         if image is None:
             raise X11BackendError("capture returned no image")
         raw = bytes(image.data)
-        return {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest(), "width": w, "height": h}
+        row = {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest(), "width": w, "height": h}
+        if self.capture_artifacts is not None:
+            row.update(target=target, native_window_id=win.id, frame=frame,
+                       region=[x, y, w, h], capture_started_ns=capture_started_ns,
+                       capture_ended_ns=capture_ended_ns)
+            try:
+                info = self.d.display.info
+                fmt = next(f for f in info.pixmap_formats if f.depth == image.depth)
+                visual = next(v for screen in info.roots for d in screen.allowed_depths
+                              for v in d.visuals if v.visual_id == image.visual)
+                row["artifact"] = self.capture_artifacts.write(
+                    raw, w, h, depth=image.depth, bits_per_pixel=fmt.bits_per_pixel,
+                    scanline_pad=fmt.scanline_pad, byte_order=info.image_byte_order,
+                    masks=(visual.red_mask, visual.green_mask, visual.blue_mask),
+                    true_color=visual.visual_class == X.TrueColor)
+            except Exception as error:
+                # Keep the actual observation and completed input evidence even
+                # if image presentation fails. Never take a replacement capture.
+                row["artifact_error"] = repr(error)
+        return row
 
     def _physical_keys_down(self, tracked: dict[str, int] | None = None) -> list[str]:
         keymap = self.d.query_keymap()

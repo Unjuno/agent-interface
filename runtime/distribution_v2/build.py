@@ -23,8 +23,11 @@ SOURCE_FILES = (
     "runtime/cli_v1/__main__.py",
     "runtime/cli_v1/api.py",
     "runtime/cli_v1/receipt.py",
+    "runtime/cli_v1/observe.py",
+    "runtime/cli_v1/golden_v3.py",
     "runtime/backends/x11_v1/__init__.py",
     "runtime/backends/x11_v1/backend.py",
+    "runtime/backends/x11_v1/capture_artifacts.py",
     "runtime/backends/x11_v1/session.py",
     "runtime/backends/win32_v1/__init__.py",
     "runtime/backends/win32_v1/backend.py",
@@ -51,6 +54,7 @@ SUPPORT = {
     "wayland": {"promoted": False, "reason": "WAYLAND_BACKEND_NOT_PROMOTED"},
     "automatic_target_discovery": False,
     "automatic_permission_escalation": False,
+    "optional_dependencies": {"x11_png_artifacts": ["Pillow"]},
 }
 
 

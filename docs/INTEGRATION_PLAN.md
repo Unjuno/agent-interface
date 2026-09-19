@@ -41,6 +41,55 @@ is finished. Integration starts now and does not wait for the full research back
 
 ## Selected starting path
 
+**Primary-assistant verification:** the existing
+`integrated_efficiency_client_v1.RuntimeClient.execute_handles` route has now
+been [used directly by the assistant](../runtime/results/guarded-method-self-use-01/README.md)
+for all six tasks, with visual grounding and repair in this conversation and
+no helper model. Task 4 refused the old target before pointer input; reminting
+from the viewed changed layout enabled the remaining tasks. Independent scoring
+confirmed six exact submissions and 43 programs verified empty release.
+This is the guarded method, not the distinct compiled state-graph runtime.
+Its intermediate target check is not a semantic text-effect check. Prioritize
+an explicit bridge from this existing route to the public native interface,
+retaining those boundaries, rather than introducing a parallel caller.
+
+The native result seam exposed a concrete mismatch: native sessions return
+`status: completed/refused/release_unverified`, while the initial golden adapter
+only read golden boolean flags. The v2 adapter now preserves native completion,
+refusal reasons and the complete dispatch response; missing application scoring
+remains unknown. Tests exercise real core admission, X11 session and API cleanup
+with an inert backend. This establishes result interoperability, not visual
+guard interoperability or a new live performance result. The next bridge must
+still preserve visual target checks immediately before native pointer admission;
+copying a research alias to a native window ID is not sufficient.
+The newly reviewed [Issue #2337](https://github.com/Unjuno/agent-interface/issues/2337)
+requires that live bridge plus scored effects, fault handling, actual model usage
+availability and a held-out second workflow. It remains open: this result repair
+and the earlier research-route self-use do not satisfy that live integration gate.
+An [actual native-adapter self-use](../runtime/results/native-result-self-use-01/README.md)
+now confirms the result seam on a private Tk desktop fixture: a stale program
+emitted no input, and a fresh one saved exact text with verified release. The
+first accepted run had no scored effect at teardown; the successor reads the
+independent result with a two-second bound and no input retry. All setup and task
+failures remain retained. This also exposes that native capture supplies only
+image metadata/hash: the harness still needs a separate assistant-visible PNG.
+Neither that observation seam nor visual-target revalidation is integrated yet.
+The [native artifact successor](../runtime/results/native-artifact-self-use-01/README.md)
+now adds opt-in PNG output from the same X11 capture as the returned observation
+hash. The primary assistant used that initial image to operate the fixture.
+Its action image was still pre-save while the later independent effect succeeded;
+both are retained with their distinct identities. This closes the duplicate
+capture requirement for a native observation, but late-render continuation and
+visual-target admission remain open. No matched latency/token benefit is claimed.
+The [read-only observation successor](../runtime/results/native-observe-self-use-01/README.md)
+now connects delayed-render continuation to the public API without dispatching
+input or changing focus. Actual assistant use retrieved the saved state through
+that path. Its timing trigger still uses the fixture scorer, so general
+application-effect detection and caller recovery policy remain open alongside
+visual-target admission. The growing native path must next connect source
+identity and guarded method reuse, rather than treat this single form as the
+complete integration workload.
+
 Starting repository revision: `2d78394e4128d9274030dcc52cf0957be2eb312d`.
 Use the existing [golden desktop v3 entry point](../runtime/golden-demo-v3.sh) and
 its [retained six-task result](../runtime/GOLDEN_DESKTOP_DEMO_V3.md) as the first
