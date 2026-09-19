@@ -8,7 +8,7 @@ def decide(snapshot):
 
 def oracle(snapshot):
     ok=all(snapshot.get(k) is True for k in GATES)
-    return {"decision":"AUTHORIZE" if ok else "HOLD","missing":[k for k in GATES if snapshot.get(k) is not True]}
+    return {"decision":"AUTHORIZE" if ok else "HOLD","missing":[k for k in GATES if snapshot.get(k) is not True],"authority":False}
 
 def run():
     current={"physical_task_effect_endpoint":False,"task_effect_contract":True,
