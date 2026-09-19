@@ -7,8 +7,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).parents[3]
 TARGETS = {
-    "doom.session_v7": ROOT / "doom/session_v7.py",
-    "live_control.session_v8": ROOT / "live_control/session_v8.py",
+    "doom.session_v7": ROOT / "research/doom/session_v7.py",
+    "live_control.session_v8": ROOT / "research/live_control/session_v8.py",
 }
 
 
