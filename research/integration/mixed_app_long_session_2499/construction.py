@@ -1,8 +1,8 @@
 """Model-free construction gate for the #2499 mixed-app session.
 
 This only verifies that three disposable applications can coexist in one
-private X11 session and that visible windows are observable. It does not
-claim the preregistered four-transition formal result.
+private X11 session and that each launch contributes a distinct visible
+window. It does not claim the preregistered four-transition formal result.
 """
 import json
 import os
@@ -45,6 +45,7 @@ def main():
         env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     try:
         time.sleep(0.7)
+        known = set()
         for app in APPS:
             if app == "inkscape":
                 cmd = [app]
@@ -62,17 +63,23 @@ def main():
             procs.append(p)
             deadline = time.monotonic() + 15
             windows = []
+            new_windows = []
             while time.monotonic() < deadline:
                 windows = visible_windows(env)
-                if windows:
+                new_windows = [w for w in windows if w not in known]
+                if new_windows:
                     break
                 time.sleep(0.5)
+            known.update(new_windows)
             out["apps"].append({"app": app, "pid": p.pid,
-                                "window_count": len(windows),
-                                "windows": windows[:20],
-                                "observed": bool(windows)})
+                                "window_count": len(new_windows),
+                                "windows": new_windows[:20],
+                                "observed": bool(new_windows)})
+        out["distinct_window_ids"] = len(known) == sum(
+            item["window_count"] for item in out["apps"])
         out["decision"] = ("PASS_MIXED_APP_CONSTRUCTION_READY"
-                           if all(x["observed"] for x in out["apps"])
+                           if (all(x["observed"] for x in out["apps"])
+                               and out["distinct_window_ids"])
                            else "HOLD_MIXED_APP_CONSTRUCTION")
         print(json.dumps(out, sort_keys=True))
         raise SystemExit(0 if out["decision"].startswith("PASS") else 1)
