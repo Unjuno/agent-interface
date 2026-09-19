@@ -1,5 +1,34 @@
 # Integration priority — 2026-09-19
 
+## Current integration decision — 2026-09-20
+
+The primary assistant's [combined Calc/Inkscape use](../runtime/results/native-combined-batch-01/README.md)
+completed both saved-file goals in three requests using existing repeated-key
+batches, an observed application switch, and explicit finish_after. Retain the
+separate action, feedback, evaluation and cleanup outcomes: all inputs completed
+and both scores passed, but all three feedback records remained needs_review.
+The new summary exposes that distinction without a new sensor or classifier.
+
+Recorded client timestamps span32.423s from first client entry to final client
+return. Only2.130s is inside the three exchange calls;30.293s (93.43%) lies
+between calls. Reproduce with the archived `timing.py`. This outer interval
+combines host transport, presentation, deliberation and request assembly; it
+is not an isolated model-latency measurement. Setup is excluded. One run has
+no matched control or human baseline and does not establish a speed benefit.
+
+Prioritize removing caller-side file/path assembly from the existing native
+exchange entry point and measuring the same task/model/environment before
+further native-delay tuning. Preserve source binding, immutable stage requests,
+read-only resume, full failure evidence and fresh decisions at unknown dialogs.
+Do not batch through unobserved dialog choices to reduce the count artificially.
+Actual model input tokens/cost and first-useful-feedback latency remain open.
+
+Queue integration remains evidence-gated: #2985/#2995 publishes a scoped result
+but only two report files, without the candidate/raw corpus needed for local
+inspection. #2293 has not established real resource-independent parallel GUI
+effects. The serial combined run does not establish that property. Keep others'
+sensor work separate from this primary-assistant integration scope.
+
 **Primary-assistant scope update — 2026-09-20:** the user asked the primary
 assistant to stop developing/experimenting on sensors itself. Continue interface
 integration and actual use, especially operation batches, result delivery and

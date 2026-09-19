@@ -31,6 +31,16 @@ task, so no latency, token reduction or human-tempo performance claim is made.
 The current primary assistant used the summary on each response; there is no
 counterbalanced model-accuracy comparison.
 
+`timing.py` accounts for the32.423476383s from first client entry to final return:
+2.130018658s inside exchanges and30.293457725s between them (93.43%). Outer
+gaps are15.241700170s and15.051757555s. They combine host transport, presentation,
+deliberation and request assembly and cannot be attributed to one component.
+Setup is excluded. Prioritize direct caller integration and matched measurements;
+this accounting neither estimates first-useful-feedback latency nor proves that
+all outer time is removable. An initial shell one-liner failed quotation parsing
+before executing Python; the retained standalone script avoids that host quoting
+fragility and reads only the existing records.
+
 Run `python3 runtime/results/native-combined-batch-01/audit.py` from any checkout.
 It validates81 frozen evidence files,37 image links, request/source/reply binding,
 release records and saved files without importing the candidate controller.
