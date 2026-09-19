@@ -68,6 +68,13 @@ def main():
                 app_goal['task'] = {'kind': 'write_cells',
                     'cells': {'A1': app_goal['a'], 'A2': app_goal['b']},
                     'save_format': 'xlsx'}
+            elif app == 'inkscape':
+                # Direction/shape preservation is scored, not exact keyboard gain.
+                app_goal['task'] = {'kind': 'move_right_preserve_geometry',
+                    'x_greater_than': 50.5, 'y': 50, 'width': 40, 'height': 30,
+                    'geometry_tolerance_exclusive': 0.1, 'transform': None,
+                    'coordinate_frame': 'svg_user_units', 'save_format': 'svg',
+                    'dx_meaning': 'nominal_drag_screen_px_not_exact_keyboard_displacement'}
             workloads[app] = {'goal': app_goal, 'output': output}
         goal = ({app: data['goal'] for app, data in workloads.items()}
                 if len(workloads) > 1 else app_goal)

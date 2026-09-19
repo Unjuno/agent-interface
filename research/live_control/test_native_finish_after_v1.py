@@ -11,7 +11,7 @@ from unittest.mock import patch
 
 class NativeFinishAfterTests(unittest.TestCase):
     def exercise(self, decisions, *, task_success=True, action_status='completed',
-                 close_failure=False, expected_error=None, max_stages=4):
+                 close_failure=False, expected_error=None, max_stages=4, inspect_goal=None):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             out = root / 'out'
@@ -88,6 +88,8 @@ class NativeFinishAfterTests(unittest.TestCase):
 
             def supply_request(_seconds):
                 stage = len(list(out.glob('request-*.json'))) + 1
+                if inspect_goal is not None:
+                    inspect_goal(json.loads((out / 'goal.json').read_text()))
                 decision = next(remaining)  # Unexpected extra wait is a test failure.
                 source = json.loads((out / f'source-{stage}.json').read_text())
                 subject.publish(out / f'request-{stage}.json', subject.encoded(
@@ -118,6 +120,22 @@ class NativeFinishAfterTests(unittest.TestCase):
         self.assertEqual(replies[0]['observation']['sequence'], 2)
         self.assertEqual(replies[0]['cleanup']['status'], 'completed')
         self.assertEqual(events, ['mint', 'input', 'evaluate', 'bridge.close', 'session.close'])
+
+    def test_directional_task_is_public_before_first_decision(self):
+        seen = []
+        def inspect(goal):
+            task = goal['task']
+            self.assertEqual(task['kind'], 'move_right_preserve_geometry')
+            self.assertEqual(task['coordinate_frame'], 'svg_user_units')
+            self.assertEqual(task['dx_meaning'], 'nominal_drag_screen_px_not_exact_keyboard_displacement')
+            self.assertEqual((task['x_greater_than'], task['y'], task['width'], task['height']),
+                             (50.5, 50, 40, 30))
+            self.assertEqual(task['geometry_tolerance_exclusive'], 0.1)
+            self.assertIsNone(task['transform'])
+            self.assertEqual(task['save_format'], 'svg')
+            seen.append(goal)
+        self.exercise([self.action(finish_after=True)], inspect_goal=inspect)
+        self.assertEqual(len(seen), 1)
 
     def test_finish_after_on_last_permitted_stage(self):
         replies,sources,events=self.exercise(
