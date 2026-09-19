@@ -19,6 +19,24 @@ directory for each deliberate action. Defaults: 5-second lease and wait,
 terminal boundary. `boundary="outcome"` submits the final program with
 `finish_after=true`; explicit session cleanup is still required.
 
+For CLI calls, replace `batch` with `batch_file` to read the explicitly selected
+full received batch or prior `report.json`. Supply exactly one source form.
+This avoids copying result JSON into the next request or generating steps files:
+
+```json
+{"socket_path":"/tmp/SESSION/events.sock","batch_file":"results-local/previous/report.json","run_directory":"results-local/session","program_id":"next-action","steps":[{"op":"observe"}],"out":"results-local/next-action"}
+```
+
+Send this object on stdin with `--review`. Relative paths resolve from the client
+working directory. The loader reads once; `source-batch.json` retains the full
+loaded object. It does not search for a latest file or unwrap a compact receipt
+view, which may omit history. The referenced file must contain `cursor` and
+`records`. Existing clock, image and runtime admission checks still apply: file
+selection alone proves neither viewing nor freshness. A completed final action
+does not become eligible for further input simply by referencing its report.
+See [actual Inkscape use](../../runtime/results/inkscape-batch-reference-01/README.md)
+for a viewed selection followed by a saved position edit using this entry point.
+
 If the outcome is early saved-effect evidence, the adapter now composes the
 existing `drain_final` policy: one command-free request for an already-available
 independent evaluation, zero server wait, and a 250-ms transport deadline.
