@@ -200,6 +200,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`temporal_contract_monitor_compilation_a3_v1/`](temporal_contract_monitor_compilation_a3_v1/)
 - [`temporal_contract_monitor_compilation_r0_v1/`](temporal_contract_monitor_compilation_r0_v1/)
 - [`temporal_observation_transfer_2013_v1/`](temporal_observation_transfer_2013_v1/)
+- [`map01_v12_plan_step_lineage_r0_v1/`](map01_v12_plan_step_lineage_r0_v1/)
+- [`support_closed_crop_successor_1820_v1/`](support_closed_crop_successor_1820_v1/)
 - [`temporal_sample_cost_identifiability_v1/`](temporal_sample_cost_identifiability_v1/)
 - [`transactional_belief_action_safe_r0_v1/`](transactional_belief_action_safe_r0_v1/)
 - [`transactional_belief_action_safe_r1_batched_v1/`](transactional_belief_action_safe_r1_batched_v1/)
