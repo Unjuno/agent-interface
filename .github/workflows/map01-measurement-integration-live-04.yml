@@ -67,7 +67,7 @@ jobs:
           set -euo pipefail
           test "$GITHUB_RUN_ATTEMPT" = "1"
           test "$GITHUB_REF_NAME" = "main"
-          api="$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/actions/workflows/map01-measurement-integration-live-04.yml/runs?event=push&per_page=100"
+          api="$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/actions/workflows/map01-measurement-integration-live-04.yml/runs?event=$GITHUB_EVENT_NAME&per_page=100"
           visible=0
           for attempt in $(seq 1 15); do
             curl --fail --silent --show-error \
