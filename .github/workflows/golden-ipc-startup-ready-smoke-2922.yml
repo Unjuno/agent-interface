@@ -35,7 +35,7 @@ jobs:
           wm_pid=$!
           cleanup() { kill "$wm_pid" "$xvfb_pid" 2>/dev/null || true; }
           trap cleanup EXIT
-          mkdir -p out/startup-ready
+          mkdir -p out
           python - <<'PY'
           import json, subprocess, sys, time
           command=[sys.executable, 'research/live_control/session_v4.py', '--app', 'xterm', '--seed', '2922', '--out', 'out/startup-ready']
