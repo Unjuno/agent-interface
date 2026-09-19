@@ -44,7 +44,6 @@ def build_command(root: Path, prompt: str, image: Path, contract: str, workspace
 
 
 def call(root: Path, prompt: str, image: Path, contract: str, workspace: Path):
-    root.mkdir(parents=True, exist_ok=False)
     prompt_path = root / "prompt.txt"
     prompt_path.write_text(prompt, encoding="utf-8", newline="\\n")
     command = build_command(root, prompt_path, image, contract, workspace)
