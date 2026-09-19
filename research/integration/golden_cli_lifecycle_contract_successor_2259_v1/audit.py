@@ -11,9 +11,9 @@ EXPECTED = [
 ]
 EXPECTED_ROLES = {
     "runtime/golden_desktop_demo_v3.py": {"doctor", "run_live", "schema"},
-    "runtime/cli_v1/api.py": {"setup", "observe", "dispatch", "release"},
-    "runtime/core_v1/__init__.py": {"effect", "stale", "repair"},
-    "runtime/GOLDEN_DESKTOP_DEMO_V3.md": {"acceptance", "limits"},
+    "runtime/cli_v1/api.py": {"doctor", "dispatch", "cleanup"},
+    "runtime/core_v1/__init__.py": {"admission", "release"},
+    "runtime/GOLDEN_DESKTOP_DEMO_V3.md": {"retained_result", "scope_limits"},
 }
 
 def main():
@@ -26,19 +26,12 @@ def main():
         path = REPO / source["path"]
         assert path.is_file(), source["path"]
         assert set(source["roles"]) == EXPECTED_ROLES[source["path"]]
-        actual = subprocess.check_output(
-            ["git", "hash-object", str(path)], text=True
-        ).strip()
+        actual = subprocess.check_output(["git", "hash-object", str(path)], text=True).strip()
         assert actual == source["blob_sha"], (source["path"], actual, source["blob_sha"])
     rows = r["rows_detail"]
     assert [x["state"] for x in rows] == EXPECTED
     assert len(rows) == 10 and all(x["authority_granted"] is False for x in rows)
-    assert all(
-        x["task_success_distinct"]
-        and x["partial_effects_representable"]
-        and x["unknown_fails_closed"]
-        for x in rows
-    )
+    assert all(x["task_success_distinct"] and x["partial_effects_representable"] and x["unknown_fails_closed"] for x in rows)
     assert r["authority_grants"] == r["model_calls"] == r["gui_calls"] == 0
     assert r["input_calls"] == r["network_calls"] == 0
     print("INDEPENDENT_AUDIT_PASS rows=10 source_blobs=4 authority_grants=0")
