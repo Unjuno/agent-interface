@@ -1,0 +1,13 @@
+{
+  "schema":"agent_interface_golden_v3_cold_repeat_three_fresh_v1",
+  "issue":2558,
+  "decision":"PASS_THREE_FRESH_COLD_REPEAT_SCOPED",
+  "count":3,
+  "container":{"context":"orbstack","image_digest":"sha256:1a16aa431254514de58c909e84e5094a8e894caac11bf4c9d937dde6ea6d6398","docker_server":"29.4.0","architecture":"aarch64"},
+  "outcomes":{"effects":3,"visual_target_revalidation":3,"release_verified":3,"focus_change_refused":3,"guard_emissions_delta_zero":3},
+  "model_calls":{"cold":3,"second_call":3,"persistent_thread":false},
+  "wall_ms":{"cold_mean":12342.975875333334,"second_call_mean":11170.050486333334},
+  "usage_mean":{"cold_input_tokens":16092.666666666666,"cold_cached_input_tokens":5034.666666666667,"second_input_tokens":15250.333333333334,"second_cached_input_tokens":0},
+  "action_to_scored_effect_ms":[147.559309,146.173969,154.474053],
+  "claims":[]
+}
