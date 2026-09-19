@@ -1,0 +1,1 @@
+GTK startup diagnostic output contract (#2819)\n\nThe additive diagnostic accepts a pre-created mounted output directory and owns only its files. It records Xvfb readiness, fixture metadata, process state, stdout/stderr, and bounded timing. No GUI input, model, provider, network, matrix, or effect claim. PASS_GTK_FIXTURE_STARTUP_DIAGNOSTIC only.\n
