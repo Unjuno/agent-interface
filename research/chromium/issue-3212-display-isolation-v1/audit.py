@@ -26,7 +26,11 @@ def main(path: str) -> int:
             row.get("cdp_browser", {}).get("pid") == row.get("chromium_pid")
             and row.get("cdp_target", {}).get("display") == row.get("display")
             and row.get("cdp_target", {}).get("profile") == row.get("profile")
-            and any(w.get("pid") == row.get("chromium_pid") for w in row.get("x11_windows", []))
+            and any(
+                w.get("pid") == row.get("chromium_pid")
+                and w.get("display") == row.get("display")
+                for w in row.get("x11_windows", [])
+            )
         )
         if control != "positive_p2_effect" and row.get("dispatch"):
             errors.append(f"{control}: forbidden dispatch")
