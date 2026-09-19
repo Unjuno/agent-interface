@@ -9,6 +9,7 @@ from pathlib import Path
 
 from compiled_form_grounding_v1 import validate as validate_compiled
 from plain_form_points_v1 import validate as validate_plain
+from model_call_backend_v1 import resolve as resolve_model_backend
 
 
 HERE = Path(__file__).resolve().parent
@@ -23,6 +24,9 @@ CONTRACTS = {
 }
 RUNNER = Path(os.environ.get("AGENT_INTERFACE_MODEL_RUNNER",
                              str(HERE / "target_handle_model_runner_v2.py")))
+
+
+# The legacy caller remains the default; explicit non-legacy backends fail closed.
 
 
 def windows_path(path):
@@ -52,7 +56,7 @@ def parse(output: Path, contract: str):
             "requested_effort": process["requested_effort"], "cost": None}
 
 
-def call(root: Path, prompt: str, image: Path, contract: str, workspace: Path):
+def _legacy_call(root: Path, prompt: str, image: Path, contract: str, workspace: Path):
     if contract not in CONTRACTS:
         raise ValueError("contract must be plain or compiled")
     schema, instructions, _validator = CONTRACTS[contract]
