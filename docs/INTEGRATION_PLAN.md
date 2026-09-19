@@ -11,6 +11,10 @@ manual clock-request and steps-file assembly in that research path. Actual
 assistant use covered a viewed draft followed by correction and independent
 scoring, with the first rejected development attempt retained. This does not
 yet connect the golden semantic compiler to the native CLI.
+Its [review companion](../runtime/results/composed-review-01/README.md) returns
+the receipt and referenced image together, avoiding a separate host image read
+and WSL path conversion. This is a verified presentation path on retained data;
+live-tempo and model-token effects remain unmeasured.
 
 The user's current direction is to concentrate this task on integration while
 other contributors continue benchmarks and experiments. Product Hunt publication

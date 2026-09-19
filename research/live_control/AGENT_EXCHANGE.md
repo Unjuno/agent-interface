@@ -43,3 +43,43 @@ does not infer actions, run another model, or modify frozen component sources.
 Actual assistant use, including the first rejected development attempt, is
 retained in [composed self-use](../../runtime/results/composed-self-use-01/README.md).
 This is a research integration candidate, not native CLI/backend convergence.
+
+## Return the receipt and image together
+
+After `run` has persisted its report, `agent_review.review(report_path,
+run_directory)` returns the receipt view plus the exact referenced PNG bytes
+as an image content block. It can run immediately after the action in the same
+Python process. For an existing report:
+
+```sh
+python research/live_control/agent_review.py --report results-local/edit-1/report.json --run-directory results-local/session
+```
+
+Forward the `image` block to the host image channel, not to text. For this
+tool host, after awaiting the completed CLI command:
+
+```javascript
+if (commandResult.session_id || commandResult.exit_code !== 0) {
+  text(commandResult); // resume the existing session; do not repeat the action
+} else {
+  const review = JSON.parse(commandResult.output);
+  const frame = review.image;
+  delete review.image;
+  text(review);
+  if (frame) image(frame);
+}
+```
+
+The output budget must fit the complete JSON plus base64 image. Truncation must
+not be repaired by guessing or replaying input: repeat only the read-only review
+with an adequate output budget, or use the existing file-image path. Base64 adds
+transport bytes; there is no token-saving claim. This path removes host path
+mapping and a separate image-read tool call. The host still performs image
+rendering. The helper does not decode PNG pixels; it checks the signature and
+hash of the exact encoded bytes passed to the renderer.
+
+Newest-reference conflicts, missing images or changed saved image identities
+return `image_status="needs_review"` while retaining the receipt. There is no
+fallback to the pre-action source image. Full intermediate history remains in
+the original report. The image remains a historical capture and may precede
+task evaluation; displaying them together does not prove a post-effect capture.
