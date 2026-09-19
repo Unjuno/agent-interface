@@ -1,0 +1,38 @@
+name: live-adapter-effect-scorer-2246
+on:
+  pull_request:
+    paths:
+      - "research/integration/live_adapter_effect_scorer_2246_v1/**"
+      - ".github/workflows/live-adapter-effect-scorer-2246.yml"
+  push:
+    branches:
+      - "research/live-adapter-effect-scorer-2246-v1"
+    paths:
+      - "research/integration/live_adapter_effect_scorer_2246_v1/**"
+      - ".github/workflows/live-adapter-effect-scorer-2246.yml"
+jobs:
+  scorer:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch pinned retained report
+        env:
+          REPORT_URL: https://raw.githubusercontent.com/Unjuno/agent-interface/39519f3f3e87626bf2ed6abe7f90e45f8b6878a3/runtime/results/golden-desktop-app-server-v3-live-01/golden-report.json
+        run: |
+          python - <<'PY'
+          import hashlib, os, urllib.request
+          data=urllib.request.urlopen(os.environ["REPORT_URL"], timeout=30).read()
+          open("/tmp/golden-report.json","wb").write(data)
+          print("REPORT_SHA256", hashlib.sha256(data).hexdigest())
+          PY
+      - name: Run unit tests and score retained evidence
+        run: |
+          python -m unittest discover -s research/integration/live_adapter_effect_scorer_2246_v1 -t . -p 'test_*.py' -v
+          python research/integration/live_adapter_effect_scorer_2246_v1/scorer.py /tmp/golden-report.json
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -f /tmp/golden-report.json
+          test ! -e /tmp/golden-report.json
