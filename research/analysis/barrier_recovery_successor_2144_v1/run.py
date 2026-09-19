@@ -30,4 +30,5 @@ def main():
     raw=json.dumps(rows,sort_keys=True,separators=(",",":")).encode()
     out={"decision":"HOLD_PRE_MODEL_BARRIER_RECOVERY_POLICY","cases":6,"oracle_agreement":6,"blind_retries":0,"stale_advances":0,"duplicate_writes":0,"authority_grants":0,"model_invocations":0,"sha256":hashlib.sha256(raw).hexdigest()}
     print(json.dumps(out,indent=2,sort_keys=True))
+
 if __name__ == "__main__": main()
