@@ -17,7 +17,6 @@ def independent_effect(case):
     return bool(case["effect"])
 
 def model_decision(arm, case):
-    # Frozen policy stub: receipt is evidence, never authority.
     if arm == "NO_RELEASE_RECEIPT":
         return "WAIT"
     if case["receipt"] == "valid" and case["effect"]:
@@ -44,9 +43,8 @@ def run():
             decision=model_decision(arm,cc)
             effect=independent_effect(cc)
             correct = (decision=="CONTINUE" and effect) or (decision in {"WAIT","QUERY","ABORT"} and not effect)
-            # For true effects, waiting/abort is conservatively safe but not task-successful.
             task_success = decision=="CONTINUE" and effect
-            rows.append({"arm":arm,"case":c["id"],"decision":decision,"effect":effect,"decision_safe":correct,"task_success":task_success})
+            rows.append({"arm":arm,"case":c["id"],"receipt":cc["receipt"],"decision":decision,"effect":effect,"decision_safe":correct,"task_success":task_success})
     by={}
     for arm in ("NO_RELEASE_RECEIPT","VALID_RELEASE_RECEIPT","AMBIGUOUS_RECEIPT","CONTRADICTORY_EFFECT"):
         rr=[r for r in rows if r["arm"]==arm]
