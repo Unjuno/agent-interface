@@ -10,15 +10,28 @@ jobs:
     container:
       image: python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9
     steps:
-      - name: Fetch pinned retained report
+      - name: Fetch immutable sources and retained report
         env:
-          REPORT_URL: https://raw.githubusercontent.com/Unjuno/agent-interface/39519f3f3e87626bf2ed6abe7f90e45f8b6878a3/runtime/results/golden-desktop-app-server-v3-live-01/golden-report.json
+          PIN: ${{ github.sha }}
+          BASE: https://raw.githubusercontent.com/Unjuno/agent-interface
         run: |
           python - <<'PY'
-          import hashlib, os, urllib.request
-          data=urllib.request.urlopen(os.environ["REPORT_URL"], timeout=30).read()
-          open("/tmp/golden-report.json","wb").write(data)
-          print("REPORT_SHA256", hashlib.sha256(data).hexdigest())
+          import hashlib, os, pathlib, urllib.request
+          files = [
+            "research/__init__.py",
+            "research/integration/__init__.py",
+            "research/integration/live_adapter_effect_scorer_2246_v1/__init__.py",
+            "research/integration/live_adapter_effect_scorer_2246_v1/scorer.py",
+            "research/integration/live_adapter_effect_scorer_2246_v1/test_scorer.py",
+          ]
+          for rel in files:
+              path=pathlib.Path(rel); path.parent.mkdir(parents=True,exist_ok=True)
+              data=urllib.request.urlopen(f"{os.environ['BASE']}/{os.environ['PIN']}/{rel}",timeout=30).read()
+              path.write_bytes(data)
+              print("SOURCE_SHA256", rel, hashlib.sha256(data).hexdigest())
+          report=urllib.request.urlopen(f"{os.environ['BASE']}/{os.environ['PIN']}/runtime/results/golden-desktop-app-server-v3-live-01/golden-report.json",timeout=30).read()
+          pathlib.Path("/tmp/golden-report.json").write_bytes(report)
+          print("REPORT_SHA256", hashlib.sha256(report).hexdigest())
           PY
       - name: Run unit tests and score retained evidence
         run: |
@@ -27,5 +40,6 @@ jobs:
       - name: Cleanup
         if: always()
         run: |
-          rm -f /tmp/golden-report.json
+          rm -rf research /tmp/golden-report.json
+          test ! -e research
           test ! -e /tmp/golden-report.json
