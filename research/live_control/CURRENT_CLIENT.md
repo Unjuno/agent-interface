@@ -545,3 +545,12 @@ explicitly rejects the old appearance as misleading. Keep current-only as the
 default and use crop only when history is needed. The initial audit KeyError is
 retained and a raw-call v2 audit passes both OSes without rerun. See
 `ACTION_GROUNDED_MEMORY_ABLATION_LIVE_V1.md`.
+
+Caller-placed visual lanes are now an opt-in native-harness integration candidate.
+The primary assistant placed object and blank-paper regions on an actual Inkscape
+image; two native actions returned per-lane changes with exact image evidence and
+the independently saved SVG reached x=80 from x=50. A second allocation stopped
+before its watch because release was unverified; it was not replayed. This is
+synchronous one-shot sampling after a program, not persistent monitoring or a
+semantic effect oracle. Full captures/receipts remain; no speed or token benefit
+is established. See [retained use and stop](../../runtime/results/native-visual-watch-01/README.md).
