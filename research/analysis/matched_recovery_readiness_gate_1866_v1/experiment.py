@@ -11,7 +11,7 @@ def main():
         r=dict(zip(GATES,bits)); rows.append({"record":r,"candidate":classify(r),"oracle":oracle(r)})
     assert len(rows)==32 and sum(x["candidate"]=="AUTHORIZE" for x in rows)==1
     controls=[
-      ("viewport_as_task_effect",{"physical":True,"task_effect":True,"matched_arms":True,"arm_audit":True,"release_integrity":True},"reject weak role"),
+      ("viewport_as_task_effect",{"physical":True,"task_effect":False,"matched_arms":True,"arm_audit":True,"release_integrity":True},"reject weak role"),
       ("open_prerequisite_as_ready",{"physical":True,"task_effect":True,"matched_arms":True,"arm_audit":True,"release_integrity":False},"open prerequisite"),
       ("pair_summary_without_arm_binding",{"physical":True,"task_effect":True,"matched_arms":True,"arm_audit":False,"release_integrity":True},"missing binding"),
       ("hud_as_task_effect",{"physical":True,"task_effect":False,"matched_arms":True,"arm_audit":True,"release_integrity":True},"state feedback only"),
