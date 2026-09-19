@@ -20,6 +20,16 @@ class FakeSession:
 
 
 class ApiTests(unittest.TestCase):
+    def test_capture_configuration_failure_closes_without_dispatch(self):
+        session = mock.Mock()
+        session.backend.configure_capture_artifacts.side_effect = OSError("not writable")
+        with mock.patch("runtime.cli_v1.api.open_session", return_value=session):
+            row = dispatch({}, {"fixture": 1}, current_observation_seq=1,
+                           current_binding_revision=1, capture_directory="artifacts")
+        session.dispatch.assert_not_called()
+        session.backend.close.assert_called_once_with()
+        self.assertEqual(row["status"], "runtime_failed")
+
     def test_owned_backend_closed_on_completion_refusal_and_exception(self):
         for outcome in ({"status": "completed"}, {"status": "refused"}, RuntimeError("dispatch failed")):
             session = mock.Mock()

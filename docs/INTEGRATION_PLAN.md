@@ -74,6 +74,13 @@ independent result with a two-second bound and no input retry. All setup and tas
 failures remain retained. This also exposes that native capture supplies only
 image metadata/hash: the harness still needs a separate assistant-visible PNG.
 Neither that observation seam nor visual-target revalidation is integrated yet.
+The [native artifact successor](../runtime/results/native-artifact-self-use-01/README.md)
+now adds opt-in PNG output from the same X11 capture as the returned observation
+hash. The primary assistant used that initial image to operate the fixture.
+Its action image was still pre-save while the later independent effect succeeded;
+both are retained with their distinct identities. This closes the duplicate
+capture requirement for a native observation, but late-render continuation and
+visual-target admission remain open. No matched latency/token benefit is claimed.
 
 Starting repository revision: `2d78394e4128d9274030dcc52cf0957be2eb312d`.
 Use the existing [golden desktop v3 entry point](../runtime/golden-demo-v3.sh) and

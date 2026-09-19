@@ -48,6 +48,24 @@ connection cleanup does not replace the backend's input-release checks.
 
 Wayland-only Linux currently fails closed because no Wayland backend has been promoted. Linux/X11 requires the existing `python-xlib` dependency used by `x11-v1`.
 
+For assistant-visible observations on X11, pass `--capture-directory DIRECTORY`
+to `dispatch`, or `capture_directory=...` to the Python dispatch APIs. This
+optional path additionally requires Pillow. Each native `observe` encodes a PNG
+from its existing GetImage reply and returns its path, PNG SHA-256, dimensions
+and source-raw SHA-256 in `artifact`, alongside the unchanged raw pixel hash.
+The row also records target/window, frame/region and capture start/end clocks.
+The directory is caller-selected; generated filenames are unique and created
+without overwrite. No second capture is substituted for that observation.
+
+The initial encoder supports 24-bit TrueColor with 32-bit pixels and the usual
+RGB masks, in either byte order. Unsupported formats or encoding/write errors
+return `artifact_error` while retaining the captured metadata and execution
+result. Consumers needing an image must check that field. Artifact creation is
+not an application score or a renewal of observation/input authority. It can
+show the state before an asynchronous save has rendered, even if a later scorer
+confirms the save. Other backends reject this option before dispatch. Default
+hash-only behavior remains available without Pillow.
+
 
 Golden-v3 boundary is provided by runtime.cli_v1.golden_v3.dispatch_golden_v3; it preserves the existing dispatch contract and is authority-neutral.
 

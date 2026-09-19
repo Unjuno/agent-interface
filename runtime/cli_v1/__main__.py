@@ -34,6 +34,7 @@ def main() -> int:
     run.add_argument("--current-observation-seq", type=int, required=True)
     run.add_argument("--current-binding-revision", type=int, required=True)
     run.add_argument("--display")
+    run.add_argument("--capture-directory")
     args = parser.parse_args()
 
     if args.command == "doctor":
@@ -58,6 +59,7 @@ def main() -> int:
         current_observation_seq=args.current_observation_seq,
         current_binding_revision=args.current_binding_revision,
         display_name=args.display,
+        capture_directory=args.capture_directory,
     )
     _emit(row)
     if row["status"] != "returned":

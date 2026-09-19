@@ -28,6 +28,7 @@ def dispatch(
     current_observation_seq: int,
     current_binding_revision: int,
     display_name: str | None = None,
+    capture_directory: str | None = None,
 ) -> dict[str, Any]:
     if type(current_observation_seq) is not int or current_observation_seq < 0:
         return {"schema": SCHEMA_DISPATCH, "status": "invalid_request", "error": "INVALID_OBSERVATION_SEQ"}
@@ -41,6 +42,11 @@ def dispatch(
         return {"schema": SCHEMA_DISPATCH, "status": "backend_unavailable", "error": str(error)}
     row: dict[str, Any] = {}
     try:
+        if capture_directory is not None:
+            configure = getattr(session.backend, "configure_capture_artifacts", None)
+            if not callable(configure):
+                raise ValueError("CAPTURE_ARTIFACTS_UNSUPPORTED")
+            configure(capture_directory)
         result = session.dispatch(
             program,
             current_observation_seq=current_observation_seq,
