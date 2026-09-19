@@ -98,38 +98,3 @@ SDK mcp1.30.0; transitive packages are not fully locked. Runtime core has no new
 mandatory dependency. A dedicated CI workflow tests only this optional adapter.
 Next gate: primary-assistant use through a host-registered tool on the same
 task/environment, with full content/image preservation and measured host costs.
-
-A [direct image-forwarding trial](../../runtime/results/native-mcp-direct-image-01/README.md)
-passes the actual MCP text/image blocks through orchestration without a separate
-view_image call. Primary use saved the expected Inkscape geometry and retained
-the full responses. This removes two explicit view calls in that run, not the
-shell/SDK bridge or decision-file boundary. It is an interim composition recipe,
-not automatic host registration or demonstrated latency/token savings. Preserve
-complete JSON output; truncation or split chunks must never trigger action replay.
-
-## Experimental pipe relay
-
-`native_mcp_relay_v1.py -- --run-directory /absolute/existing/run` keeps one SDK
-connection and accepts JSON lines on stdin. Managed mode accepts the same
-explicit server options after `--`. Each line has exactly `id`, `tool` and
-`arguments`, starting at id 1. Supported names are list_tools and the native
-tools above. Results preserve complete SDK content and include SDK timestamps.
-No tool is called automatically except protocol initialization.
-
-```json
-{"id":1,"tool":"native_observe","arguments":{"stage":1}}
-```
-
-Accepted IDs are consumed before dispatch, including transport failures. Reusing
-an ID refuses; a different ID is not permission to replay an ambiguous action.
-Use the existing immutable request and read-only resume to reconcile it. These
-IDs are local to one relay process, not durable deduplication across restarts.
-EOF disconnects and is not an implicit finish or cleanup guarantee.
-
-Use ordinary pipes preserving exact bytes. The first primary Windows PTY trial
-[failed](../../runtime/results/native-mcp-relay-pty-failure-01/README.md): terminal
-redraw corrupted image-bearing JSON. The allocation was explicitly finished
-without input and its false task score retained. Twelve related local tests
-passed, including a real pipe subprocess, but successful primary live use through
-this relay is still unproven. Do not use a PTY or strip redraw codes and assume
-the response is intact. This candidate is not the default host integration.
