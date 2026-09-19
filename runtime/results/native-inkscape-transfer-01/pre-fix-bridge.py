@@ -23,11 +23,6 @@ class _GuardedBackend(X11Backend):
     def focus(self, target):
         if self.owner.active is not None:
             self.owner.check("before_focus")
-            if not self.owner._focus_within_target():
-                raise X11BackendError('focused window is outside guarded target')
-            # GTK applications may focus an InputOnly child. Refocusing the
-            # top-level window changes the exact binding we just validated.
-            return
         return super().focus(target)
 
     def pointer_move(self, target, frame, x, y):
@@ -81,25 +76,6 @@ class NativeHandleBridge:
         return {"focus": getattr(focus, "id", focus),
                 "surface": self.backend.targets[self.target].id,
                 "geometry": [geometry[k] for k in ("x", "y", "width", "height")]}
-
-    def _focus_within_target(self, window_id=None):
-        """Read-only X11 ancestry, not title/PID similarity or input authority."""
-        if window_id is None:
-            window_id = self.backend.targets[self.target].id
-        try:
-            focus = self.backend.d.get_input_focus().focus
-            seen = set()
-            for _ in range(64):
-                identifier = getattr(focus, 'id', None)
-                if type(identifier) is not int or identifier <= 0 or identifier in seen:
-                    return False
-                if identifier == window_id:
-                    return True
-                seen.add(identifier)
-                focus = focus.query_tree().parent
-        except Exception:
-            return False
-        return False
 
     def observe(self):
         before = self._binding()
@@ -167,12 +143,12 @@ class NativeHandleBridge:
                'scope': self.scope, 'previous_window_id': previous_window,
                'requested_window_id': window_id, 'started_ns': time.monotonic_ns()}
         try:
-            if not self._focus_within_target(window_id):
+            focus = self.backend.d.get_input_focus().focus
+            if getattr(focus, 'id', None) != window_id:
                 raise X11BackendError('requested review window is not focused')
             self.backend.targets[self.target] = self.backend.d.create_resource_object('window', window_id)
             observation = self.observe()
-            if (getattr(self.backend.d.get_input_focus().focus, 'id', None) != observation['pointer_binding']['focus']
-                    or not self._focus_within_target(window_id)):
+            if observation['pointer_binding']['focus'] != window_id:
                 raise X11BackendError('focus changed during window review')
             row.update(status='reviewed', observation=observation)
             self.review_required = False
@@ -224,14 +200,14 @@ class NativeHandleBridge:
                                 'binding': binding})
                 candidate = ('matched' if title == expected_title else
                              'rejected' if title in rejected_titles else 'pending')
-                focused = self._focus_within_target()
+                focused = binding['focus'] == binding['surface']
                 if candidate != 'pending' or not focused or time.monotonic_ns() >= deadline:
                     observation = self.observe()
                     after_title = self._window_title()
                     row.update(observation=observation, title=title, after_title=after_title)
                     # A changed title/binding during capture cannot certify a cue.
                     stable = (title == after_title and binding == observation['pointer_binding']
-                              and binding == self._binding() and self._focus_within_target())
+                              and binding == self._binding())
                     row['status'] = candidate if stable and focused else 'needs_review'
                     break
                 time.sleep(min(.05, max(0, (deadline-time.monotonic_ns())/1e9)))

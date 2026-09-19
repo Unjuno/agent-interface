@@ -243,3 +243,18 @@ serialized bytes, the ordinary receipt is returned. Default behavior remains ful
 The [fresh Calc run and paired byte comparison](../../runtime/results/native-compact-self-use-01/README.md)
 show a modest text reduction; actual model tokens, cost and performance benefits
 remain unmeasured.
+
+
+## Second application: Inkscape
+
+The existing `run_native_calc_self_use_v1.py` keeps its historical filename and
+Calc default, and accepts `--app inkscape`. It uses the same immutable stage slots,
+agent_exchange --native and image review; output is retained as shape.svg and
+scored only after explicit finish. Ground each point on the current presented
+image. X11 keysyms are case-sensitive (Right, not RIGHT).
+
+GTK may focus a child of the registered top-level window. The guarded bridge
+checks ancestry and preserves that exact focus, rather than changing focus and
+invalidating its own handle. A stable child is accepted by read-only review and
+title-cue feedback; task effect still needs independent scoring. See the
+[retained failures and actual Inkscape use](../../runtime/results/native-inkscape-transfer-01/README.md).
