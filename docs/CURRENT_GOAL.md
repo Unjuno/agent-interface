@@ -25,6 +25,15 @@ general application-effect detection, the full six-task live acceptance gate,
 and matched end-to-end benefit measurements remain open. Research branches and
 Draft PRs remain available for provenance and continued work.
 
+Local model-boundary update (Issue #2558, 2026-09-20): the Docker X11/native
+route now has a retained host-local `codex.exe` bridge. In six fresh fixture
+allocations, five schema/geometry-admitted actions independently produced the
+exact saved effect and one model output was rejected fail-closed because field
+and submit coordinates collided; all focus-reuse probes refused with zero
+additional emissions. This is scoped fixture evidence only: it does not close
+the full six-task live acceptance gate, establish broad GUI reliability, or
+claim an end-to-end efficiency benefit.
+
 > **Preserve rich-model intent; localize the high-frequency refinement loop.**
 
 The project is not trying to replace Astra/a rich frontier model with a weaker local agent. The target is to let the rich model decide semantics/strategy, then let Agent Interface continue, refine, verify, and invalidate that intent locally while the rich model is reasoning elsewhere. Direct rich-model computer operation remains a first-class route.
