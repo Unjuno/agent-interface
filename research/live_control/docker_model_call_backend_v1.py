@@ -44,7 +44,10 @@ def build_command(root: Path, prompt: str, image: Path, contract: str, workspace
 
 
 def call(root: Path, prompt: str, image: Path, contract: str, workspace: Path):
-    command = build_command(root, root / "prompt.txt", image, contract, workspace)
+    root.mkdir(parents=True, exist_ok=False)
+    prompt_path = root / "prompt.txt"
+    prompt_path.write_text(prompt, encoding="utf-8", newline="\\n")
+    command = build_command(root, prompt_path, image, contract, workspace)
     completed = subprocess.run(command, capture_output=True, text=True, check=False)
     if completed.returncode != 0:
         raise RuntimeError("STOP_DOCKER_BACKEND_RUNNER:" + str(completed.returncode))
