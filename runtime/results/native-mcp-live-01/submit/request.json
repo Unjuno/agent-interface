@@ -1,0 +1,41 @@
+{
+  "run_directory": "results-local/native-mcp-live-01",
+  "out": "results-local/native-mcp-live-submit-01",
+  "tool": "native_submit",
+  "arguments": {
+    "stage": 1,
+    "decision": {
+      "source_sequence": 1,
+      "point": [
+        600,
+        378
+      ],
+      "tail": [
+        {
+          "op": "wait_update",
+          "timeout_ms": 50
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "Right"
+          ],
+          "repeat": 18
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 50
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "CTRL",
+            "s"
+          ]
+        }
+      ],
+      "expected_title": "shape.svg - Inkscape",
+      "finish_after": true
+    }
+  }
+}
