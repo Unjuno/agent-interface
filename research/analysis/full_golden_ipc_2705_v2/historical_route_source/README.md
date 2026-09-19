@@ -10,3 +10,9 @@ not alter or rerun the retained v5 allocation.
 
 The current-main runner must not import this file implicitly. A future #2813
 allocation must declare every additional dependency and hash before using it.
+
+The route source is preserved from PR #2730's head, while its dependent
+modules are compared against current main. `DEPENDENCY_MANIFEST.json` keeps
+historical-only and current-main dependencies explicit; a route correction may
+not run while `golden_desktop_demo.py` is only historical or while any listed
+hash is unresolved. This is a provenance/hash gate, not an allocation result.
