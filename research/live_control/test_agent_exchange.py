@@ -151,6 +151,27 @@ class ExchangeTests(unittest.TestCase):
         self.assertIsNone(displayed['image'])
         self.assertIn('unavailable', displayed['review_error'])
 
+    def test_explicit_batch_reference_loads_complete_snapshot_without_mutating_request(self):
+        path = self.root/'received.json'
+        path.write_text(json.dumps(self.batch), encoding='utf-8')
+        request = {'batch_file': str(path), 'steps': [{'op': 'observe'}]}
+        resolved = agent_exchange.resolve_request(request)
+        self.assertEqual(resolved['batch'], self.batch)
+        self.assertNotIn('batch_file', resolved)
+        self.assertEqual(request['batch_file'], str(path))
+        path.write_text('{}', encoding='utf-8')
+        self.assertEqual(resolved['batch'], self.batch)
+        with self.assertRaises(ValueError):
+            agent_exchange.resolve_request(request)
+
+    def test_batch_reference_never_overrides_embedded_source_or_unwraps_view(self):
+        with self.assertRaises(ValueError):
+            agent_exchange.resolve_request({'batch': self.batch, 'batch_file': 'unused'})
+        path = self.root/'view.json'
+        path.write_text(json.dumps({'schema': 'agent-interface/receipt-view-v1', 'report': self.batch}))
+        with self.assertRaises(ValueError):
+            agent_exchange.resolve_request({'batch_file': str(path)})
+
 
 if __name__ == '__main__':
     unittest.main()
