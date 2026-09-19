@@ -37,18 +37,28 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
             if request.get("image"):
                 args.extend(["--image", host_path(request["image"], repo)])
             args.extend(["-C", host_path(request["working"], repo), "-"])
-            completed = subprocess.run(args, input=request["prompt"] + "\n",
-                                       text=True, encoding="utf-8", errors="replace",
-                                       capture_output=True, check=False)
-            out = ipc / f"{request_id}.response.jsonl"
-            out.write_text(completed.stdout or "", encoding="utf-8", newline="\n")
-            (ipc / f"{request_id}.broker.json").write_text(json.dumps({
-                "request_id": request_id, "returncode": completed.returncode,
-                "stderr": (completed.stderr or "")[-2000:], "boundary": "host-local-codex-exe",
-                "authority_granted": False}) + "\n", encoding="utf-8", newline="\n")
+            try:
+                completed = subprocess.run(args, input=request["prompt"] + "\n",
+                                           text=True, encoding="utf-8", errors="replace",
+                                           capture_output=True, check=False)
+                broker = {"request_id": request_id, "returncode": completed.returncode,
+                          "stderr": (completed.stderr or "")[-2000:],
+                          "boundary": "host-local-codex-exe", "authority_granted": False}
+                response = completed.stdout or ""
+            except OSError as exc:
+                broker = {"request_id": request_id, "returncode": None,
+                          "error_class": type(exc).__name__,
+                          "stop_reason": "HOST_BROKER_EXECUTABLE_UNAVAILABLE",
+                          "stderr": str(exc)[-2000:],
+                          "boundary": "host-local-codex-exe", "authority_granted": False}
+                response = ""
+            (ipc / f"{request_id}.response.jsonl").write_text(
+                response, encoding="utf-8", newline="\n")
+            (ipc / f"{request_id}.broker.json").write_text(
+                json.dumps(broker) + "\n", encoding="utf-8", newline="\n")
             handled.add(request_id)
             if once:
-                return completed.returncode
+                return broker.get("returncode") or 1
         time.sleep(.05)
 
 
