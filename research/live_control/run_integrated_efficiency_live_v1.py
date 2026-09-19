@@ -72,7 +72,16 @@ def model_record(row):
             "requested_effort": row["requested_effort"], "usage": row["usage"]}
 
 
-def run_task(client, arm, task, index, cached, workspace, model_root):
+def run_task(client, arm, task, index, cached, workspace, model_root,
+             model_call=call_model):
+    """Run one task using an explicitly injectable model-call backend.
+
+    The historical subprocess backend remains the default.  A Docker-host
+    IPC backend may be supplied by the caller, but it must implement the same
+    ``call(root, prompt, image, contract, workspace)`` contract and return the
+    same validated result shape.  No authority or task-success state is
+    changed by selecting a backend here.
+    """
     task_started = time.perf_counter_ns()
     program_start = len(client.programs)
     durable_start = client.durable_calls
@@ -86,7 +95,7 @@ def run_task(client, arm, task, index, cached, workspace, model_root):
     scheduled_route = ("cold" if arm != "persistent" or index == 0 else "reuse")
 
     def grounding(stage):
-        result = call_model(model_root / task["task_id"] / stage,
+        result = model_call(model_root / task["task_id"] / stage,
             "Locate the editable token field and the control that submits this visible form. ",
             Path(current_source["image"]), contract, workspace)
         target = {"grounding": result["grounding"], "aliases": None,
@@ -209,12 +218,14 @@ def run_task(client, arm, task, index, cached, workspace, model_root):
     return row, resolved if adaptive["outcome"] == "TASK_SUCCEEDED" else cached, detail
 
 
-def run_arm(arm, seed, workspace):
+def run_arm(arm, seed, workspace, model_call=call_model):
+    """Run an arm with the default or explicitly injected model backend."""
     rows, details, cached = [], [], None
     with RuntimeClient(OUT / "arms" / arm, seed) as client:
         for index, task in enumerate(client.ready["goal"]["tasks"]):
-            row, cached, detail = run_task(client, arm, task, index, cached,
-                                            workspace, OUT / "model-calls" / arm)
+            row, cached, detail = run_task(
+                client, arm, task, index, cached, workspace,
+                OUT / "model-calls" / arm, model_call=model_call)
             rows.append(row); details.append(detail)
             # Preserve each completed task before entering the next route. A
             # later fail-closed reuse validation must not erase the prior
