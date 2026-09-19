@@ -69,7 +69,7 @@ def main():
         time.sleep(0.7)
         for app in APPS:
             if app == "inkscape":
-                cmd = [app, "--new"]
+                cmd = [app]
             elif app == "libreoffice":
                 cmd = [app, "--norestore", "--nodefault", "--nolockcheck",
                        f"-env:UserInstallation=file://{root / 'lo-profile'}",
