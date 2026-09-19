@@ -23,7 +23,7 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/gtk-startup-out"
           set +e
-          docker run --rm --network none --read-only --tmpfs /tmp -e PYTHONPATH=/workspace -v "$GITHUB_WORKSPACE:/workspace:ro" -v "$RUNNER_TEMP/gtk-startup-out:/out" -w /workspace agent-interface-gtk-fixture-v2:diagnostic python3 /workspace/research/integration/gtk_fixture_startup_2819/diagnostic.py /out
+          docker run --rm --network none --read-only --tmpfs /tmp -e PYTHONPATH=/workspace:/usr/lib/python3/dist-packages -v "$GITHUB_WORKSPACE:/workspace:ro" -v "$RUNNER_TEMP/gtk-startup-out:/out" -w /workspace agent-interface-gtk-fixture-v2:diagnostic python3 /workspace/research/integration/gtk_fixture_startup_2819/diagnostic.py /out
           code=$?
           printf '%s' "$code" > "$RUNNER_TEMP/gtk-startup-out/runner-exit-code.txt"
           exit 0
@@ -32,5 +32,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: gtk-fixture-startup-2819
-          path: $RUNNER_TEMP/gtk-startup-out
+          path: ${{ runner.temp }}/gtk-startup-out
           if-no-files-found: error
