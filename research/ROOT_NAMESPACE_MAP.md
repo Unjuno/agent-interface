@@ -38,6 +38,8 @@ New work should normally use a category directory. Existing direct-root paths re
 
 ## Retained direct-root research families
 
+- [`x11/`](x11/)
+
 The directories below predate or sit outside the newer category structure. Their placement is historical; read each experiment's own report/result for its exact disposition.
 
 ### Effect, admission, and delivery semantics
