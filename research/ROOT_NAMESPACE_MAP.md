@@ -73,6 +73,10 @@ The directories below predate or sit outside the newer category structure. Their
 - [`observation_addressing_v1/`](observation_addressing_v1/)
 - [`visual_invalidation_discovery_v1/`](visual_invalidation_discovery_v1/)
 
+### Coordination and handoff semantics
+
+- [`session_handoff/`](session_handoff/) — authority-safe advisory handoff capsule contracts.
+
 ### Causality and temporal policy experiments
 
 - [`causality/`](causality/)
