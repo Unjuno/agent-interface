@@ -4,43 +4,49 @@
   "status": "HOLD_PRE_MODEL_SEMANTIC_ZOOM_TRANSFER",
   "scope": "Read-only contract fixture; no model, GUI, input, network, live application, or task claim.",
   "H": "A route choice must depend on verified capability and task-effect dimensions, not visible scale alone.",
-  "T": "Evaluate six frozen route states against XI2_PINCH, CTRL_WHEEL, QUERY_CAPABILITY, RECAPTURE, and ABORT decisions.",
+  "T": "Evaluate six frozen route states through an executable policy and compare observed decisions with expected decisions.",
   "D": [
     {
       "id": "xi2_verified",
       "capability": "XI2_AVAILABLE_AND_VERIFIED",
       "task": "scale+center",
-      "expected": "XI2_PINCH"
+      "expected": "XI2_PINCH",
+      "observed": "XI2_PINCH"
     },
     {
       "id": "wheel_verified",
       "capability": "CTRL_WHEEL_AVAILABLE",
       "task": "scale",
-      "expected": "CTRL_WHEEL"
+      "expected": "CTRL_WHEEL",
+      "observed": "CTRL_WHEEL"
     },
     {
       "id": "unknown",
       "capability": "ROUTE_CAPABILITY_UNKNOWN_OR_STALE",
       "task": "scale+center",
-      "expected": "QUERY_CAPABILITY"
+      "expected": "QUERY_CAPABILITY",
+      "observed": "QUERY_CAPABILITY"
     },
     {
       "id": "same_scale_collateral",
       "capability": "XI2_AVAILABLE_AND_VERIFIED",
       "task": "scale+selection-preservation",
-      "expected": "QUERY_CAPABILITY"
+      "expected": "QUERY_CAPABILITY",
+      "observed": "QUERY_CAPABILITY"
     },
     {
       "id": "cleanup_unknown",
       "capability": "CTRL_WHEEL_AVAILABLE",
       "task": "scale+input-cleanup-unknown",
-      "expected": "ABORT"
+      "expected": "ABORT",
+      "observed": "ABORT"
     },
     {
       "id": "backend_mismatch",
       "capability": "CROSS_PLATFORM_OR_BACKEND_MISMATCH",
       "task": "scale",
-      "expected": "ABORT"
+      "expected": "ABORT",
+      "observed": "ABORT"
     }
   ],
   "checks": {
@@ -49,12 +55,15 @@
     "violations": 0,
     "visible_scale_alone_authorizes": false,
     "unknown_or_stale_blind_input": false,
+    "authority_expansion": false,
     "model_calls": 0,
     "gui_calls": 0,
     "input_calls": 0,
     "network_calls": 0
   },
-  "C": "Equal visible scale does not prove cursor anchoring, focus, selection, modal state, or document semantics; a contract pass cannot establish live route quality or model utility.",
+  "C": "Visible scale equivalence does not prove cursor anchoring, focus, selection, modal state, document semantics, or input neutrality; a deterministic policy check cannot establish live route quality or model utility.",
   "U": "Held-out application-like route, real backend effects, model decisions, latency, and task completion remain unresolved. Stop before live transfer.",
-  "source_ref": "main@ce13fcc11d4a3a7fc5f44743fa2431c7272743f3"
+  "source_ref": "main@ce13fcc11d4a3a7fc5f44743fa2431c7272743f3",
+  "runner": "research/analysis/semantic_zoom_route_contract_2210_v1/run_check.py",
+  "reproduction": "python3 research/analysis/semantic_zoom_route_contract_2210_v1/run_check.py"
 }
