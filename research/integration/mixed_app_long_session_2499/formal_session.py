@@ -23,7 +23,10 @@ def active(env):
 
 def geom(env, wid):
     q = cmd(["xdotool", "getwindowgeometry", wid], env)
-    return q.stdout.strip()
+    if q.returncode == 0 and q.stdout.strip():
+        return q.stdout.strip()
+    fallback = cmd(["xwininfo", "-id", wid], env)
+    return fallback.stdout.strip()
 
 def event(ledger, kind, **fields):
     row = {"seq": len(ledger), "kind": kind, **fields}
@@ -73,7 +76,7 @@ def main():
                   surface_generation=info["surface_generation"],
                   geometry=geom(env, info["window"]))
         # 1. Focus drift: old Calc capability becomes stale, no input emitted.
-        old_calc = apps["calc"].copy(); cmd(["xdotool","windowactivate",apps["inkscape"]["window"]],env)
+        old_calc = apps["calc"].copy(); cmd(["xdotool","windowactivate","--sync",apps["inkscape"]["window"]],env)
         event(ledger,"focus_drift",from_app="calc",to_app="inkscape",active=active(env),input_emitted=False)
         denied = active(env) != old_calc["window"]
         event(ledger,"stale_admission",app="calc",old_window=old_calc["window"],disposition="refused",input_emitted=False)
@@ -100,7 +103,7 @@ def main():
         event(ledger,"stale_window_admission",app="chromium",old_window=old_chrome["window"],disposition="refused",input_emitted=False)
         checks.append(new_hw is not None and new_hw != old_chrome["window"])
         # Return to earlier Calc: fresh identity/generation is required.
-        cmd(["xdotool","windowactivate",apps["calc"]["window"]],env); time.sleep(.3)
+        cmd(["xdotool","windowactivate","--sync",apps["calc"]["window"]],env); cmd(["xdotool","windowfocus","--sync",apps["calc"]["window"]],env); time.sleep(.3)
         event(ledger,"return_to_earlier_app",app="calc",window=apps["calc"]["window"],surface_generation=apps["calc"]["surface_generation"],fresh_validation=True)
         event(ledger,"stable_control",app="calc",effect="none",independent_effect="none",input_emitted=False)
         checks.append(active(env) == apps["calc"]["window"])
