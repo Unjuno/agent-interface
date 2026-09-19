@@ -199,7 +199,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 </details>
 
-<!-- END GENERATED ANALYSIS RESULT INDEX -->
+\n- [\`anytime_fidelity_typed_admission_r0_v1/\`](anytime_fidelity_typed_admission_r0_v1/)\n- [\`causal_temporal_attention_successor_1941_v1/\`](causal_temporal_attention_successor_1941_v1/)\n- [\`censored_useful_effect_membership_successor_1838_v1/\`](censored_useful_effect_membership_successor_1838_v1/)\n- [\`focused_observation_request_successor_1935_v1/\`](focused_observation_request_successor_1935_v1/)\n- [\`safe_probe_identification_successor_1716_v1/\`](safe_probe_identification_successor_1716_v1/)\n- [\`safety_watchdog_claim_sink_cutset_r1_a2_v1/\`](safety_watchdog_claim_sink_cutset_r1_a2_v1/)\n- [\`serialized_attention_duplicate_label_successor_1968_v1/\`](serialized_attention_duplicate_label_successor_1968_v1/)\n<!-- END GENERATED ANALYSIS RESULT INDEX -->
 
 ## Interpretation
 
