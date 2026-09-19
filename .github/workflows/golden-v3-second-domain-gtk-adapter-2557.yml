@@ -1,0 +1,16 @@
+name: golden-v3 second-domain GTK adapter 2557
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - research/integration/golden_v3_second_domain_2246_v1/gtk_adapter/**
+      - .github/workflows/golden-v3-second-domain-gtk-adapter-2557.yml
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    container:
+      image: python:3.12-slim-bookworm@sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m unittest research.integration.golden_v3_second_domain_2246_v1.gtk_adapter.test_adapter
