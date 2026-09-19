@@ -48,7 +48,7 @@ class Relay:
 
 async def main(server_args):
     parameters = StdioServerParameters(command=sys.executable,
-        args=[str(Path(__file__).with_name('native_mcp_v1.py')), *server_args], env=dict(os.environ))
+        args=[str(Path('research/live_control/native_mcp_v1.py').resolve()), *server_args], env=dict(os.environ))
     async with stdio_client(parameters) as (reader, writer):
         async with ClientSession(reader, writer) as client:
             await client.initialize()
