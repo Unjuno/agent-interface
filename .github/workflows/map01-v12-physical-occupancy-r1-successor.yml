@@ -59,20 +59,22 @@ jobs:
           source = Path(os.environ["MAP01_SOURCE_ROOT"]).resolve()
           v12 = Path(os.environ["MAP01_V12_ROOT"]).resolve()
           experiment = source / "research/doom/map01_v12_physical_occupancy_live_r1_v1"
-          for path in (
-              source / "research/live_control",
-              source / "research/observation_gating",
-              source / "research/doom",
-              v12,
-              experiment,
-          ):
-              sys.path.insert(0, str(path))
+          live = source / "research/live_control"
+          observation = source / "research/observation_gating"
+          doom = source / "research/doom"
+          preferred = [str(live), str(observation), str(doom), str(v12), str(experiment)]
+          blocked = set(preferred)
+          sys.path[:] = preferred + [path for path in sys.path if path not in blocked]
           import doom_retained_input_backend_v3 as backend
           from map01_v12_transition_owner import InputOwner
+          import session_v7, session_v8
+          assert Path(session_v7.__file__).resolve().is_relative_to(live)
+          assert Path(session_v8.__file__).resolve().is_relative_to(live)
           assert backend.InputOwner is not None
           assert InputOwner is not None
           print("MAP01_IMPORT_BOUNDARY_PASS")
-          PY
+          print(f"session_v7={session_v7.__file__}")
+          print(f"session_v8={session_v8.__file__}")          PY
 
       - name: Run frozen preflight
         run: |
