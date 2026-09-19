@@ -15,6 +15,11 @@ Its [review companion](../runtime/results/composed-review-01/README.md) returns
 the receipt and referenced image together, avoiding a separate host image read
 and WSL path conversion. This is a verified presentation path on retained data;
 live-tempo and model-token effects remain unmeasured.
+The [live Calc use](../runtime/results/calc-live-review-01/README.md) now connects
+these through `agent_exchange --review`. It passed independent saved-cell
+evaluation, while exposing delayed dialog pixels and 18–25 second outer gaps.
+Next address observation/result continuation and caller assembly; native input
+speed alone does not explain the remaining tempo gap.
 
 The user's current direction is to concentrate this task on integration while
 other contributors continue benchmarks and experiments. Product Hunt publication

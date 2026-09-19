@@ -46,6 +46,12 @@ This is a research integration candidate, not native CLI/backend convergence.
 
 ## Return the receipt and image together
 
+Pass `--review` to `agent_exchange.py` to compose the action attempt and its
+review in one CLI invocation. The raw report is persisted first. Review failure
+returns that action result plus `review_error`; it never repeats input. The CLI
+exit status continues to describe the action adapter status, not rendering or
+task success. Forward the optional image block as described below.
+
 After `run` has persisted its report, `agent_review.review(report_path,
 run_directory)` returns the receipt view plus the exact referenced PNG bytes
 as an image content block. It can run immediately after the action in the same
