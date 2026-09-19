@@ -50,3 +50,20 @@ Wayland-only Linux currently fails closed because no Wayland backend has been pr
 
 
 Golden-v3 boundary is provided by runtime.cli_v1.golden_v3.dispatch_golden_v3; it preserves the existing dispatch contract and is authority-neutral.
+
+Its `golden-v3-result-v2` result distinguishes native program completion from
+application scoring. Native `completed` sets `program_completed: true`;
+`task_success` remains `null` when no independent task result was supplied.
+Native refusal retains its error and returns `refused`. Unverified release does
+not count as completion. `status: success` requires both completion and an
+explicit positive task result, with no dispatch or cleanup failure.
+
+Cleanup failure sets `status: cleanup_failed` without erasing already reported
+completion or a supplied task result. Consumers must use `status` for overall
+success rather than either boolean alone. `raw_dispatch` retains the complete
+dispatch response, including native observations, release evidence and effects,
+even when the adapter cannot interpret it. The older `partial_effects` list is
+only a forwarded field: an empty list is not proof that no input occurred.
+These changes replace v1's conflated success booleans; callers inspecting the
+schema must accept v2 explicitly. This adapter still does not perform visual
+target revalidation, compile guarded methods or obtain an application score.

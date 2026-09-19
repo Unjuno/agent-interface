@@ -53,6 +53,16 @@ Its intermediate target check is not a semantic text-effect check. Prioritize
 an explicit bridge from this existing route to the public native interface,
 retaining those boundaries, rather than introducing a parallel caller.
 
+The native result seam exposed a concrete mismatch: native sessions return
+`status: completed/refused/release_unverified`, while the initial golden adapter
+only read golden boolean flags. The v2 adapter now preserves native completion,
+refusal reasons and the complete dispatch response; missing application scoring
+remains unknown. Tests exercise real core admission, X11 session and API cleanup
+with an inert backend. This establishes result interoperability, not visual
+guard interoperability or a new live performance result. The next bridge must
+still preserve visual target checks immediately before native pointer admission;
+copying a research alias to a native window ID is not sufficient.
+
 Starting repository revision: `2d78394e4128d9274030dcc52cf0957be2eb312d`.
 Use the existing [golden desktop v3 entry point](../runtime/golden-demo-v3.sh) and
 its [retained six-task result](../runtime/GOLDEN_DESKTOP_DEMO_V3.md) as the first
