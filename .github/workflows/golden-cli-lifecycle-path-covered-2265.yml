@@ -23,6 +23,13 @@ jobs:
           persist-credentials: false
       - name: Compile exact successor payload
         run: python -m py_compile research/integration/golden_cli_lifecycle_contract_successor_2259_v1/audit.py
+      - name: Print exact audit inputs
+        working-directory: research/integration/golden_cli_lifecycle_contract_successor_2259_v1
+        run: |
+          pwd
+          ls -la
+          sha256sum RESULT.json SOURCE_MANIFEST.json audit.py
+          python -c "import json; print(json.load(open('RESULT.json'))['status']); print(len(json.load(open('SOURCE_MANIFEST.json'))['sources']))"
       - name: Run independent formal audit
         working-directory: research/integration/golden_cli_lifecycle_contract_successor_2259_v1
         run: python audit.py
