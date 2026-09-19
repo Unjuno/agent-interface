@@ -66,6 +66,39 @@ class AllocationTests(unittest.TestCase):
             self.assertEqual(other.start(timeout=0)['status'],'needs_review')
             self.assertEqual(spawn.call_count,1)
 
+    def test_exit_between_poll_and_owner_read_gets_one_nonblocking_recheck(self):
+        allocation = NativeAllocation(self.path, 'inkscape')
+        allocation.process = self.process
+        for code in (0, 7, None):
+            with self.subTest(code=code):
+                self.process.reset_mock()
+                self.process.poll.side_effect = [None, code]
+                with patch('native_allocation_v1.owner_state', return_value={
+                        'state': 'terminal', 'reason': 'owner_process_terminal'}):
+                    state = allocation.status()
+                self.assertEqual(self.process.poll.call_count, 2)
+                self.process.wait.assert_not_called()
+                self.process.terminate.assert_not_called()
+                self.assertFalse(state['restart_allowed'])
+                if code is None:
+                    self.assertEqual(state['status'], 'needs_review')
+                    self.assertNotIn('returncode', state)
+                else:
+                    self.assertEqual((state['status'], state['returncode']), ('terminal', code))
+                    self.assertIsNone(state['task_success'])
+                    self.assertFalse(state['cleanup_verified'])
+
+    def test_nonterminal_owner_does_not_trigger_extra_poll(self):
+        allocation = NativeAllocation(self.path, 'inkscape')
+        allocation.process = self.process
+        for owner in (None, {'state': 'live'}, {'state': 'unverifiable'}):
+            with self.subTest(owner=owner):
+                self.process.reset_mock()
+                self.process.poll.side_effect = [None]
+                with patch('native_allocation_v1.owner_state', return_value=owner):
+                    allocation.status()
+                self.assertEqual(self.process.poll.call_count, 1)
+
     def test_foreign_source_is_not_ready(self):
         allocation=NativeAllocation(self.path,'inkscape')
         with patch('native_allocation_v1.subprocess.Popen',return_value=self.process):

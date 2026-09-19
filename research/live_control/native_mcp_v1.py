@@ -94,7 +94,9 @@ def create_server(run_directory, *, allocation=None):
         # Do not wait for exit, retry input, or let a polling error hide its receipt.
         if allocation is not None:
             try:
-                state = allocation.status()
+                state = dict(allocation.status())
+                if 'source_stage' in state:
+                    state['initial_source_stage'] = state.pop('source_stage')
             except Exception as error:
                 state = {'status': 'needs_review', 'error': str(error), 'authority': 'none',
                          'scope': 'process snapshot unavailable; action result retained'}

@@ -26,7 +26,7 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
             def result(*args, **kwargs):
                 return {'receipt': {'native_result': receipt}, 'image': {
                     'type': 'image', 'mimeType': 'image/png', 'data': pixels}}
-            for state in ({'status': 'terminal', 'returncode': 0}, {'status': 'ready'},
+            for state in ({'status': 'terminal', 'returncode': 0}, {'status': 'ready', 'source_stage': 1},
                           OSError('poll unavailable')):
                 with self.subTest(state=state):
                     allocation.status.side_effect = [{'status': 'ready'}, state]
@@ -39,6 +39,10 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(blocks.content[1].data, pixels)
                     self.assertEqual(metadata['allocation']['status'],
                                      'needs_review' if isinstance(state, Exception) else state['status'])
+                    if isinstance(state, dict) and 'source_stage' in state:
+                        self.assertNotIn('source_stage', metadata['allocation'])
+                        self.assertEqual(metadata['allocation']['initial_source_stage'], 1)
+                        self.assertEqual(state['source_stage'], 1)
                     run.assert_called_once()
                     allocation.start.assert_not_called()
             allocation.status.side_effect = [{'status': 'terminal', 'returncode': 0}]
