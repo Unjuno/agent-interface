@@ -2,7 +2,7 @@ import hashlib,json,subprocess
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parent
-PARENT=ROOT.parent.parent/"generation_bound_evidence_container_successor_2166_v1"/"experiment.py"
+PARENT=ROOT.parent/"generation_bound_evidence_container_successor_2166_v1"/"experiment.py"
 
 def main():
     p=json.loads((ROOT/"RESULT.json").read_text(encoding="utf-8"))
