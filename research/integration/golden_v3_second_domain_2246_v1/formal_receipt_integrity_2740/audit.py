@@ -36,9 +36,16 @@ def audit_receipts(
     reasons: list[str] = []
     if tuple(row.get("case") for row in rows) != CASES:
         reasons.append("case_order")
-    if not source_hashes or source_hashes != recomputed_hashes:
+    if (
+        not source_hashes
+        or any(not value for value in source_hashes.values())
+        or source_hashes != recomputed_hashes
+    ):
         reasons.append("source_hash_mismatch")
-    if any(not value for value in immutable_provenance.values()):
+    if (
+        not immutable_provenance
+        or any(not value for value in immutable_provenance.values())
+    ):
         reasons.append("missing_immutable_provenance")
 
     for row in rows:
