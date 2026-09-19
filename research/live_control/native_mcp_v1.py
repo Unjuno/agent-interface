@@ -90,6 +90,17 @@ def create_server(run_directory, *, allocation=None):
     server = FastMCP('Agent Interface native research session')
     lock = threading.Lock()
 
+    def with_process_snapshot(result):
+        # Do not wait for exit, retry input, or let a polling error hide its receipt.
+        if allocation is not None:
+            try:
+                state = allocation.status()
+            except Exception as error:
+                state = {'status': 'needs_review', 'error': str(error), 'authority': 'none',
+                         'scope': 'process snapshot unavailable; action result retained'}
+            result['allocation'] = state
+        return result
+
     def invoke(operation):
         # One bound run, no concurrent submit/resume processing or automatic retry.
         with lock:
@@ -147,12 +158,13 @@ def create_server(run_directory, *, allocation=None):
         Uses existing guarded click/keyboard tail and immutable stage publication.
         Never retry submit after timeout/error. Pending returns decision_sha256:
         use native_resume. Task success is separate from input completion.
+        Managed responses include a process snapshot; it may still be live.
         """
         def submit():
             if allocation is not None and allocation.status()['status'] != 'ready':
                 raise ValueError('managed input requires this server to own a live ready allocation')
-            return run(root, stage, decision.model_dump(mode='json', exclude_unset=True),
-                       timeout=timeout, compact=True)
+            return with_process_snapshot(run(root, stage, decision.model_dump(mode='json', exclude_unset=True),
+                       timeout=timeout, compact=True))
         return invoke(submit)
 
     @server.tool(structured_output=False)
@@ -162,8 +174,8 @@ def create_server(run_directory, *, allocation=None):
         Supply the original pending response's stage and SHA256. Missing/changed
         requests refuse. Owner loss requires reconciliation, never restart/replay.
         """
-        return invoke(lambda: run(root, stage, resume=True, decision_sha256=decision_sha256,
-                                  timeout=timeout, compact=True))
+        return invoke(lambda: with_process_snapshot(run(root, stage, resume=True, decision_sha256=decision_sha256,
+                                  timeout=timeout, compact=True)))
     return server
 
 

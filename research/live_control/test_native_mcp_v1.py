@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import Mock, patch
 
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
@@ -14,6 +15,41 @@ from native_exchange_v1 import encoded
 
 
 class MCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_managed_reply_snapshot_never_replaces_task_result_or_replays(self):
+        from native_mcp_v1 import create_server
+        with tempfile.TemporaryDirectory() as tmp:
+            allocation = Mock(run_directory=Path(tmp))
+            server = create_server(None, allocation=allocation)
+            receipt = {'status': 'finished', 'evaluation': {'success': False},
+                       'cleanup': {'status': 'completed'}}
+            pixels = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a9xkAAAAASUVORK5CYII='
+            def result(*args, **kwargs):
+                return {'receipt': {'native_result': receipt}, 'image': {
+                    'type': 'image', 'mimeType': 'image/png', 'data': pixels}}
+            for state in ({'status': 'terminal', 'returncode': 0}, {'status': 'ready'},
+                          OSError('poll unavailable')):
+                with self.subTest(state=state):
+                    allocation.status.side_effect = [{'status': 'ready'}, state]
+                    with patch('native_mcp_v1.run', side_effect=result) as run:
+                        blocks = await server.call_tool('native_submit', {'stage': 1,
+                            'decision': {'source_sequence': 1, 'finish': True}, 'timeout': 0})
+                    self.assertFalse(blocks.isError)
+                    metadata = json.loads(blocks.content[0].text)
+                    self.assertEqual(metadata['receipt']['native_result'], receipt)
+                    self.assertEqual(blocks.content[1].data, pixels)
+                    self.assertEqual(metadata['allocation']['status'],
+                                     'needs_review' if isinstance(state, Exception) else state['status'])
+                    run.assert_called_once()
+                    allocation.start.assert_not_called()
+            allocation.status.side_effect = [{'status': 'terminal', 'returncode': 0}]
+            with patch('native_mcp_v1.run', side_effect=result) as run:
+                blocks = await server.call_tool('native_resume', {'stage': 1,
+                    'decision_sha256': 'a' * 64, 'timeout': 0})
+            self.assertFalse(blocks.isError)
+            self.assertEqual(json.loads(blocks.content[0].text)['allocation']['status'], 'terminal')
+            self.assertTrue(run.call_args.kwargs['resume'])
+            run.assert_called_once()
+
     async def test_managed_start_failure_is_retained_and_never_relaunched(self):
         with tempfile.TemporaryDirectory() as tmp:
             allocation=Path(tmp)/'allocation'
