@@ -16,7 +16,7 @@
   "gui_calls": 0,
   "network_calls": 0,
   "task_input_calls": 0,
-  "container_formal": "HOLD_DOCKER_UNAVAILABLE",
+  "container_formal": "HOLD_SOURCE_RESULT_MANIFEST",
   "claims_excluded": [
     "model usability",
     "token savings",
@@ -30,5 +30,14 @@
     "tamper_cases": 4,
     "digest_changes": 4,
     "truncated_serialization_rejected": true
+  },
+  "container_reproduction": {
+    "status": "PASS",
+    "image": "python:3.11-slim",
+    "candidate_rows": 256,
+    "candidate_valid": 16,
+    "independent_audit": "PASS",
+    "corruption_controls": "PASS",
+    "network_during_run": "image_pull_only"
   }
 }
