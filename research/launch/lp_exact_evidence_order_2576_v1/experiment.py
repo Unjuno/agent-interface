@@ -1,5 +1,5 @@
 from __future__ import annotations
-import hashlib, json, re, subprocess
+import hashlib, json, re
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
@@ -19,7 +19,10 @@ def swap_media(html: str) -> str:
     h, f = hero.group(0), failed.group(0)
     if html.count(h) != 1 or html.count(f) != 1:
         raise RuntimeError("non-unique figure boundary")
-    return html.replace(h, f, 1).replace(f, h, 1)
+    a, b = hero.span(), failed.span()
+    if a[0] > b[0]:
+        a, b, h, f = b, a, f, h
+    return html[:a[0]] + f + html[a[1]:b[0]] + h + html[b[1]:]
 
 def metrics(page):
     return page.evaluate("""() => {
@@ -27,7 +30,7 @@ def metrics(page):
       const text=t=>[...document.querySelectorAll('.media-state')].find(e=>e.textContent.includes(t));
       const ids=[...document.querySelectorAll('[id]')].map(e=>e.id);
       const media=[...document.querySelectorAll('video,iframe')].map(e=>({src:e.currentSrc||e.querySelector('source')?.src||'',loaded:e.readyState===4}));
-      return {cta:rect(document.querySelector('.hero-aside .button')),verified:rect(text('VERIFIED RUN')),failed:rect(text('FAILED RUN')),height:document.documentElement.scrollHeight,dupIds:[...new Set(ids.filter((x,i)=>ids.indexOf(x)!==i))],scripts:document.scripts.length,skip:!!document.querySelector('a.skip[href="#main"]')&&!!document.querySelector('#main'),mainTabindex:document.querySelector('#main')?.getAttribute('tabindex'),reducedMotion:!![...document.styleSheets].length,media};
+      return {cta:rect(document.querySelector('.hero-aside .button')),verified:rect(text('VERIFIED RUN')),failed:rect(text('FAILED RUN')),height:document.documentElement.scrollHeight,dupIds:[...new Set(ids.filter((x,i)=>ids.indexOf(x)!==i))],scripts:document.scripts.length,skip:!!document.querySelector('a.skip[href="#main"]')&&!!document.querySelector('#main'),mainTabindex:document.querySelector('#main')?.getAttribute('tabindex'),media};
     }""")
 
 def main():
