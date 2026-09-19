@@ -64,6 +64,17 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+### MAP01 admission-to-physical-input audit supplement
+
+The [v2 offline audit supplement](research/doom/map01_v12_physical_occupancy_audit_v2/README.md)
+rejects 23 synthetic program/token/step/source/terminal inconsistencies accepted
+by the frozen R1 physical-pair evaluator. A consistent synthetic trace and the
+actual Executor v12 lifecycle with a synthetic backend pass both; unconfirmed
+physical evidence remains rejected. The seven unittest methods and retained
+result match on Windows and Ubuntu/WSL. This is an audit construction result,
+with zero new live/model sessions; it leaves the frozen R1 startup failure and
+the full physical-occupancy, cleanup and useful-effect gates unchanged.
+
 ### Current real-time gate — typed liveness construction passes replay
 
 The first fixed-threat v28 allocation starts from a hash-bound real Freedoom

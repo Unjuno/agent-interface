@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 75 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 74 retained result/failure directories</strong></summary>
 
 - [`anytime_fidelity_typed_admission_r0_v1/`](anytime_fidelity_typed_admission_r0_v1/)
 - [`belief_auto_recommit_semantic_boundary_r3_v1/`](belief_auto_recommit_semantic_boundary_r3_v1/)
@@ -135,7 +135,6 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`caller_two_tier_stage_dominance_v1/`](caller_two_tier_stage_dominance_v1/)
 - [`capability_snapshot_currentness_fallback_r0_v1/`](capability_snapshot_currentness_fallback_r0_v1/)
 - [`causal_temporal_attention_successor_1941_v1/`](causal_temporal_attention_successor_1941_v1/)
-- [`censored_useful_effect_membership_1964_collision_01a0b98a/`](censored_useful_effect_membership_1964_collision_01a0b98a/)
 - [`censored_useful_effect_membership_successor_1838_v1/`](censored_useful_effect_membership_successor_1838_v1/)
 - [`deterministic_replay_boundary_r0_v1/`](deterministic_replay_boundary_r0_v1/)
 - [`event_sourced_projection_r0_v1/`](event_sourced_projection_r0_v1/)
