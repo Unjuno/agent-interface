@@ -1,5 +1,11 @@
 # Integration priority — 2026-09-19
 
+**Primary-assistant scope update — 2026-09-20:** the user asked the primary
+assistant to stop developing/experimenting on sensors itself. Continue interface
+integration and actual use, especially operation batches, result delivery and
+recovery. Other contributors' sensor results can be consumed when relevant;
+existing integrated sensor evidence remains preserved.
+
 **Agent-first clarification:** the primary user is the agent itself. Drive this
 task by actual assistant use: observe a difficulty, improve the interface, then
 use the same path again. Research supplies evidence for design choices. Prioritize
