@@ -155,3 +155,17 @@ jobs:
           python research/doom/audit_map01_terminal_score_agreement_v1.py \
             "results-local/doom/$ALLOCATION_ID/runtime" \
             --out "results-local/doom/$ALLOCATION_ID/terminal-score-audit.json"
+
+      - name: Upload immutable finite-clear evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ALLOCATION_ID }}-${{ github.run_id }}
+          if-no-files-found: warn
+          retention-days: 30
+          path: |
+            launch-owner.json
+            allocation-runs.json
+            results-local/doom/${{ env.ALLOCATION_ID }}/**
+            formal-audit.stdout
+            runner-environment.txt
