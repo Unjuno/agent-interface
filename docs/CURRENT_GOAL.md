@@ -25,6 +25,15 @@ general application-effect detection, the full six-task live acceptance gate,
 and matched end-to-end benefit measurements remain open. Research branches and
 Draft PRs remain available for provenance and continued work.
 
+**Successor acceptance update — 2026-09-20:** Issue #2737's fresh, no-retry
+Docker allocation passed the scoped six-task persistent route through the
+host-local `codex.exe` model IPC boundary. All six independent effects were
+exact, releases were verified, task-4 layout invalidation/repair succeeded, and
+the model remained non-authoritative. Compact evidence is retained in
+`research/analysis/full_golden_ipc_2737_v1/`. This closes the scoped assembled
+route gate for that allocation only; it does not establish broad GUI reliability,
+human-tempo benefit, or a general efficiency claim.
+
 Local model-boundary update (Issue #2558, 2026-09-20): the Docker X11/native
 route now has a retained host-local `codex.exe` bridge. In six fresh fixture
 allocations, five schema/geometry-admitted actions independently produced the
