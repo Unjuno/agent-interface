@@ -19,6 +19,6 @@ jobs:
           python -m pip install --no-cache-dir vizdoom==1.2.3
       - name: Fetch exact branch source
         run: |
-          python -c "import urllib.request; u='https://raw.githubusercontent.com/Unjuno/agent-interface/REPLACE_SHA/research/live_control/map01_observation_preflight_2446_v1/audit.py'; open('audit.py','wb').write(urllib.request.urlopen(u).read())"
+          python -c "import urllib.request; u='https://raw.githubusercontent.com/Unjuno/agent-interface/366d6fe3b99a7cb3347edbf02a444014d9bd631d/research/live_control/map01_observation_preflight_2446_v1/audit.py'; open('audit.py','wb').write(urllib.request.urlopen(u).read())"
       - name: Run bounded preflight
         run: python audit.py
