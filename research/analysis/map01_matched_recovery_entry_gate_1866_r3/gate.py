@@ -31,3 +31,5 @@ def run():
     for s in controls: assert decide(s)["decision"]=="HOLD"
     print("PASS_MATCHED_RECOVERY_ENTRY_GATE_HOLD_SCOPED vectors=32 authorize=1 current=HOLD controls=5/5")
 if __name__=="__main__": run()
+
+# Formal run identity remains bound to the current-main r3 snapshot.
