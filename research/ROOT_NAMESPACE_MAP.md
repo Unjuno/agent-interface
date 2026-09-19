@@ -136,3 +136,8 @@ These are research predecessors. Current promoted executable organization lives 
 ## Navigation check
 
 The canonical top-level workspace check is [`check_workspace_index.py`](check_workspace_index.py), documented in [`README.md`](README.md). It verifies that this retained namespace map and the current workspace map together cover every top-level research directory.
+
+
+### Guard calibration support preflight
+
+- [`guard_calibration_support_2509_v1/`](guard_calibration_support_2509_v1/) — synthetic ledger/readiness gate for successor Issue #2509; this path is construction-only and not a formal route result.
