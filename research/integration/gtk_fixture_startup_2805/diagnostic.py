@@ -4,7 +4,7 @@ import json, os, subprocess, sys, time
 from pathlib import Path
 
 def run(out: Path, timeout: float = 8.0) -> dict[str, object]:
-    out.mkdir(parents=True, exist_ok=False)
+    out.mkdir(parents=True, exist_ok=True)
     display = ":99"
     xvfb = subprocess.Popen(
         ["Xvfb", display, "-screen", "0", "640x360x24", "-nolisten", "tcp", "-ac"],
