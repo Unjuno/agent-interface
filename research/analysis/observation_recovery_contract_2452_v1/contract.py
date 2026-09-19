@@ -43,7 +43,8 @@ def validate_result(request: Mapping[str, Any], result: Mapping[str, Any],
         return "REQUEST_INVALID"
     allowed = {"schema","request_id","session_id","surface_id","freshness_seq",
                "status","focus","surface","geometry","motor","observation",
-               "rejection_reason","uncertainty","authority"} | (_FORBIDDEN_RESULT_KEYS - {"authority_granted"})
+               "rejection_reason","uncertainty","authority"} | (
+                   _FORBIDDEN_RESULT_KEYS - {"authority_granted"})
     if _unknown_keys(result, allowed) or result.get("schema") != SCHEMA:
         return "RESULT_SCHEMA_INVALID"
     if result.get("request_id") != request["request_id"] or result.get("session_id") != request["session_id"]:
@@ -56,8 +57,13 @@ def validate_result(request: Mapping[str, Any], result: Mapping[str, Any],
         return "AUTHORITY_ESCALATION"
     if any(key in result for key in _FORBIDDEN_RESULT_KEYS):
         return "FORBIDDEN_RESULT_FIELD"
-    if result.get("status") not in {"READY","UNKNOWN","REJECTED"}:
+    status = result.get("status")
+    if status not in {"READY","UNKNOWN","REJECTED"}:
         return "STATUS_INVALID"
-    if result["status"] == "REJECTED" and not isinstance(result.get("rejection_reason"), str):
+    if status == "REJECTED" and not isinstance(result.get("rejection_reason"), str):
         return "REJECTION_REASON_MISSING"
+    if status == "READY":
+        missing = [key for key in request["want"] if result.get(key) is None]
+        if missing:
+            return "REQUESTED_EVIDENCE_MISSING"
     return None
