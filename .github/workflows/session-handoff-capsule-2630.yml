@@ -1,0 +1,14 @@
+name: session handoff capsule 2630
+on:
+  pull_request:
+    paths:
+      - research/session_handoff/capsule_contract_successor_v2/**
+      - .github/workflows/session-handoff-capsule-2630.yml
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.12-slim-bookworm@sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m unittest -v research.session_handoff.capsule_contract_successor_v2.test_validator
