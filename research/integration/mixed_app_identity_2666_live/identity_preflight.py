@@ -54,7 +54,8 @@ def main():
     env.update(DISPLAY=":141", XAUTHORITY=str(root / "Xauthority"),
                HOME=str(root / "home"), XDG_CONFIG_HOME=str(root / "config"),
                XDG_CACHE_HOME=str(root / "cache"),
-               XDG_RUNTIME_DIR=str(root / "runtime"))
+               XDG_RUNTIME_DIR=str(root / "runtime"),
+               SAL_USE_VCLPLUGIN="gen", GDK_BACKEND="x11")
     for directory in ("home", "config", "cache", "runtime"):
         (root / directory).mkdir(mode=0o700)
     (root / "Xauthority").touch(mode=0o600)
