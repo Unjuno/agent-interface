@@ -45,9 +45,24 @@ def wait_window(env, before=None, timeout=20):
     return None
 
 def launch(cmdline, env):
+    before = set(windows(env))
     p = subprocess.Popen(cmdline, env=env, stdout=subprocess.DEVNULL,
                          stderr=subprocess.DEVNULL)
-    wid = wait_window(env, windows(env), 25)
+    end = time.time() + 25
+    wid = None
+    while time.time() < end:
+        candidates = [x for x in windows(env) if x not in before]
+        usable = []
+        for candidate in candidates:
+            text = geom(env, candidate)
+            if "Geometry:" in text and "Geometry: 1x1" not in text:
+                usable.append(candidate)
+        if usable:
+            wid = usable[-1]
+            break
+        time.sleep(.25)
+    if wid is None:
+        wid = wait_window(env, before, 2)
     return p, wid
 
 def main():
@@ -64,8 +79,7 @@ def main():
                               xauthority_mode="0600")
         inkscape, iw = launch(["inkscape"], env)
         procs.append(inkscape); apps["inkscape"]={"pid":inkscape.pid,"window":iw,"surface_generation":1}
-        calc, cw = launch(["libreoffice", "--norestore", "--nodefault",
-                           "--nolockcheck", "--calc"], env)
+        calc, cw = launch(["libreoffice", "--norestore", "--nolockcheck", "--calc"], env)
         procs.append(calc); apps["calc"]={"pid":calc.pid,"window":cw,"surface_generation":1}
         chrome, hw = launch(["chromium", "--no-sandbox", "--disable-gpu",
                              "--user-data-dir="+str(root/"chrome-profile"),
