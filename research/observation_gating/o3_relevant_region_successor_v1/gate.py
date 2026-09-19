@@ -20,8 +20,9 @@ def evaluate_region(
     observation_id: str,
     intent_epoch: int,
     region_id: str,
+    trusted_source_window: str | int | None = None,
 ) -> RegionDecision:
-    """Admit only a complete, current, authority-free region evidence record."""
+    """Admit only complete evidence bound to the trusted source window when supplied."""
     if not isinstance(evidence, Mapping):
         return RegionDecision(False, "malformed")
     if evidence.get("observation_id") != observation_id:
@@ -30,6 +31,8 @@ def evaluate_region(
         return RegionDecision(False, "stale_intent")
     if evidence.get("region_id") != region_id:
         return RegionDecision(False, "region_mismatch")
+    if trusted_source_window is not None and str(evidence.get("source_window")) != str(trusted_source_window):
+        return RegionDecision(False, "source_window_mismatch")
     if evidence.get("coverage") != "COMPLETE":
         return RegionDecision(False, "incomplete_coverage")
     if evidence.get("freshness") != "CURRENT":
