@@ -3,48 +3,9 @@ import copy
 import json
 
 NATIVE_REFS = 'agent-interface/native-receipt-v1-observation-refs'
-NATIVE_MULTI_REFS = 'agent-interface/native-receipt-v2-observation-refs'
 
 
 def compact_native_receipt(view):
-    """Choose the smallest lossless representation, including multi-capture refs."""
-    if any(key in view for key in ('schema', 'observation_references', 'reference_scope')):
-        return copy.deepcopy(view)  # Already projected or caller-owned metadata.
-    candidates = [view, _compact_native_single(view), _compact_native_multiple(view)]
-    return copy.deepcopy(min(candidates, key=lambda value: len(_encoded(value).encode('utf-8'))))
-
-
-def _compact_native_multiple(view):
-    result = copy.deepcopy(view)
-    if not isinstance(result.get('native_result'), dict):
-        return result
-    references, canonical = {}, {}
-    top = result['native_result'].get('observation')
-    def is_observation(value):
-        return isinstance(value, dict) and type(value.get('sequence')) is int and isinstance(value.get('native'), dict)
-    if is_observation(top):
-        canonical[_encoded(top)] = '/native_result/observation'
-    def visit(value, path):
-        if is_observation(value):
-            identity = _encoded(value)
-            target = canonical.setdefault(identity, path)
-            if path != target:
-                references[path] = target
-                return {'observation_ref': target}
-            return value  # Canonical observations stay complete, never nested refs.
-        if isinstance(value, dict):
-            return {key: visit(child, path+'/'+key.replace('~', '~0').replace('/', '~1'))
-                    for key, child in value.items()}
-        if isinstance(value, list):
-            return [visit(child, path+'/'+str(index)) for index, child in enumerate(value)]
-        return value
-    result['native_result'] = visit(result['native_result'], '/native_result')
-    result.update(schema=NATIVE_MULTI_REFS, observation_references=references,
-        reference_scope='Only listed source JSON pointers are references. Each target is a complete observation in this response; all other reference-shaped values are literal.')
-    return result
-
-
-def _compact_native_single(view):
     """Reference exact copies of the explicit top-level native observation."""
     report = view.get('native_result', {})
     observation = report.get('observation')
@@ -76,8 +37,6 @@ def _compact_native_single(view):
 
 
 def expand_native_receipt(view):
-    if view.get('schema') == NATIVE_MULTI_REFS:
-        return _expand_native_multiple(view)
     if view.get('schema') != NATIVE_REFS:
         if 'schema' not in view and 'native_result' in view:
             return copy.deepcopy(view)
@@ -102,56 +61,6 @@ def expand_native_receipt(view):
         if parent[key] != {'observation_ref': '/native_result/observation'}:
             raise ValueError('native reference marker mismatch')
         parent[key] = copy.deepcopy(observation)
-    return result
-
-
-def _native_pointer(root, path):
-    if not isinstance(path, str) or not path.startswith('/native_result/'):
-        raise ValueError('native JSON pointer required')
-    parts = path.split('/')[1:]
-    for part in parts:
-        remaining = part.replace('~0', '').replace('~1', '')
-        if '~' in remaining:
-            raise ValueError('invalid JSON pointer escape')
-    parts = [part.replace('~1', '/').replace('~0', '~') for part in parts]
-    parent = root
-    for index, part in enumerate(parts):
-        if isinstance(parent, list):
-            if not part.isascii() or not part.isdigit() or str(int(part)) != part or int(part) >= len(parent):
-                raise ValueError('invalid array reference')
-            key = int(part)
-        elif isinstance(parent, dict) and part in parent:
-            key = part
-        else:
-            raise ValueError('reference path does not exist')
-        if index == len(parts)-1:
-            return parent, key
-        parent = parent[key]
-
-
-def _expand_native_multiple(view):
-    result = copy.deepcopy(view)
-    references = result.get('observation_references')
-    if not isinstance(references, dict) or any(not isinstance(p, str) or not isinstance(t, str)
-                                             for p, t in references.items()):
-        raise ValueError('native reference map required')
-    replacements = []
-    for path, target in references.items():
-        parent, key = _native_pointer(result, path)
-        target_parent, target_key = _native_pointer(result, target)
-        observation = target_parent[target_key]
-        if (path == '/native_result/observation' or path.startswith('/native_result/observation/')
-                or path == target or target in references
-                or any(other.startswith(path+'/') or other.startswith(target+'/') for other in references)
-                or not isinstance(observation, dict) or type(observation.get('sequence')) is not int
-                or not isinstance(observation.get('native'), dict)
-                or parent[key] != {'observation_ref': target}):
-            raise ValueError('invalid, chained or overlapping native observation reference')
-        replacements.append((parent, key, copy.deepcopy(observation)))
-    for parent, key, observation in replacements:
-        parent[key] = observation
-    for field in ('schema', 'observation_references', 'reference_scope'):
-        result.pop(field)
     return result
 
 
