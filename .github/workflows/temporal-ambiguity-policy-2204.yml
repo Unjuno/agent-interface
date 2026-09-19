@@ -13,6 +13,6 @@ jobs:
     steps:
       - name: Fetch exact branch sources inside pinned container
         run: |
-          python -c "import urllib.request; base='https://raw.githubusercontent.com/Unjuno/agent-interface/MAIN_SHA/research/causality/temporal_ambiguity_policy_2204_v1/'; [(open(n,'wb').write(urllib.request.urlopen(base+n).read())) for n in ['policy.py','audit.py']]"
+          python -c "import urllib.request; base='https://raw.githubusercontent.com/Unjuno/agent-interface/56a75ae322e29d818d9dbf23de4532eea991fa45/research/causality/temporal_ambiguity_policy_2204_v1/'; [(open(n,'wb').write(urllib.request.urlopen(base+n).read())) for n in ['policy.py','audit.py']]"
       - run: python -m py_compile policy.py audit.py
       - run: python audit.py
