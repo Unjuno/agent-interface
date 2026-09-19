@@ -2,6 +2,7 @@ import json
 import subprocess
 import sys
 import tempfile
+import os
 import unittest
 from pathlib import Path
 
@@ -24,13 +25,16 @@ def sample(decision="ACCEPT", emitted=False, order=True, missed=0):
 
 class AuditTest(unittest.TestCase):
     def run_audit(self, rows):
-        with tempfile.NamedTemporaryFile("w", suffix=".jsonl") as handle:
+        handle = tempfile.NamedTemporaryFile("w", suffix=".jsonl", delete=False)
+        try:
             handle.write("\n".join(json.dumps(row) for row in rows))
-            handle.flush()
+            handle.close()
             return subprocess.run(
                 [sys.executable, str(HERE / "audit.py"), handle.name],
                 text=True, capture_output=True,
             )
+        finally:
+            os.unlink(handle.name)
 
     def test_valid_row_and_explicit_missed_period_pass(self):
         result = self.run_audit([sample(missed=2)])
