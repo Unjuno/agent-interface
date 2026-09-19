@@ -28,7 +28,9 @@ def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None
     task_success=nested.get("task_success")
     if type(task_success) is not bool:
         task_success=None
-    if delivery is not None and delivery not in AMBIGUOUS_DELIVERY_VALUES | KNOWN_DELIVERY_VALUES:
+    if delivery == "confirmed_partial":
+        mapped="partial"
+    elif delivery is not None and delivery not in AMBIGUOUS_DELIVERY_VALUES | KNOWN_DELIVERY_VALUES:
         mapped="refused"
         completed=False
         task_success=False
