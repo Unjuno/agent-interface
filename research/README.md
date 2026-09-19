@@ -96,6 +96,8 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 ### Reliability, concurrency, ownership, and commit semantics
 
+- [`session_handoff/`](session_handoff/) — advisory handoff-capsule contract experiments; fresh authority acquisition remains required.
+
 - [`concurrency/`](concurrency/) — phase-level overlap, shared-resource conflicts, and serialized-actuator concurrency studies.
 - `receiver_*`, `external_effect_*`, `outbox_*`, `staged_*`, and `exact_runtime_*` directories — effect/commit/recovery semantics.
 - `git_*` directories — Git/reference concurrency and atomicity experiments.
