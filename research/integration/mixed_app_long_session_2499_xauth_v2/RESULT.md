@@ -27,3 +27,14 @@ This is a genuine identity/startup failure after dependency repair, not an
 infrastructure stop. It does not qualify #2499 or rewrite #2664/#2499 history.
 The next experiment must diagnose Xauthority/Xvfb propagation and application
 startup before any integrated-session allocation.
+
+## Transport control and writable-runtime rerun
+
+An independent control authenticated `xdpyinfo` against `Xvfb :155` using the
+same `xauth` cookie construction, proving the cookie/Xvfb transport path works.
+The unchanged identity runner was then rerun with source read-only but a
+writable container filesystem. Chromium produced exactly one valid candidate;
+Calc and Inkscape still produced zero candidates. The missing-token control
+still refused, and input/model/network remained `0/0/0`. The all-three-app
+criterion therefore remains `FAIL_XAUTH_COOKIE_IDENTITY`, narrowed to
+Calc/Inkscape startup or identity discovery rather than cookie transport.
