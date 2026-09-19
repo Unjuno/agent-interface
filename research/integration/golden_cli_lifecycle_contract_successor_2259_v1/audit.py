@@ -1,4 +1,3 @@
-import hashlib
 import json
 import subprocess
 from pathlib import Path
@@ -16,10 +15,12 @@ EXPECTED = [
     "CLEANUP_FAILURE",
 ]
 ROOT = Path(__file__).resolve().parent
+REPO = ROOT.parents[3]
 
 def git_blob_sha(path):
     return subprocess.check_output(
-        ["git", "hash-object", str(path.relative_to(Path.cwd()))],
+        ["git", "hash-object", str(path)],
+        cwd=REPO,
         text=True,
     ).strip()
 
@@ -32,7 +33,7 @@ def main():
     assert result["status"] == "PASS_DESKTOP_VERTICAL_SLICE_CONTRACT_AUDIT_SCOPED"
     assert len(manifest["sources"]) == 4
     for source in manifest["sources"]:
-        path = Path(source["path"])
+        path = REPO / source["path"]
         assert path.is_file(), source["path"]
         assert git_blob_sha(path) == source["blob_sha"], source["path"]
     assert [row["state"] for row in result["rows_detail"]] == EXPECTED
