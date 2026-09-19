@@ -41,10 +41,11 @@ def validate_result(request: Mapping[str, Any], result: Mapping[str, Any],
                     current_seq: int) -> str | None:
     if validate_request(request):
         return "REQUEST_INVALID"
+    if any(key in result for key in _FORBIDDEN_RESULT_KEYS):
+        return "FORBIDDEN_RESULT_FIELD"
     allowed = {"schema","request_id","session_id","surface_id","freshness_seq",
                "status","focus","surface","geometry","motor","observation",
-               "rejection_reason","uncertainty","authority"} | (
-                   _FORBIDDEN_RESULT_KEYS - {"authority_granted"})
+               "rejection_reason","uncertainty","authority"}
     if _unknown_keys(result, allowed) or result.get("schema") != SCHEMA:
         return "RESULT_SCHEMA_INVALID"
     if result.get("request_id") != request["request_id"] or result.get("session_id") != request["session_id"]:
@@ -55,8 +56,6 @@ def validate_result(request: Mapping[str, Any], result: Mapping[str, Any],
         return "STALE_RESULT"
     if result.get("authority") is not False:
         return "AUTHORITY_ESCALATION"
-    if any(key in result for key in _FORBIDDEN_RESULT_KEYS):
-        return "FORBIDDEN_RESULT_FIELD"
     status = result.get("status")
     if status not in {"READY","UNKNOWN","REJECTED"}:
         return "STATUS_INVALID"
