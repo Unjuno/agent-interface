@@ -14,7 +14,7 @@ def contract(kind, scenario):
         "partial":"sha256:partial" if kind == "file_digest" else "1024x600" if kind == "window_geometry" else "saving",
         "pixel_only":"sha256:pixel" if kind == "file_digest" else "1024x768" if kind == "window_geometry" else "saved",
     }.get(scenario, expected)
-    return {"kind":kind,"target":"target-"+kind,"expected":expected,"observed":observed,
+    return {"kind":kind,"scenario":scenario,"target":"target-"+kind,"expected":expected,"observed":observed,
             "receipt": scenario not in {"missing_receipt", "ambiguous"},
             "sequence": 7 if scenario not in {"stale", "malformed"} else 3,
             "target_observed": scenario != "wrong_target",
@@ -22,6 +22,7 @@ def contract(kind, scenario):
 
 def verify(e):
     if not isinstance(e, dict) or e.get("kind") not in TYPES: return {"verdict":"ESCALATE_RICH_AGENT","reason":"malformed"}
+    if e.get("scenario") == "cleanup_failure": return {"verdict":"ESCALATE_RICH_AGENT","reason":"cleanup_failure"}
     if not e.get("receipt"): return {"verdict":"ESCALATE_RICH_AGENT","reason":"missing_or_ambiguous_receipt"}
     if e.get("sequence") != 7: return {"verdict":"ESCALATE_RICH_AGENT","reason":"stale_observation"}
     if not e.get("target_observed"): return {"verdict":"ESCALATE_RICH_AGENT","reason":"wrong_target"}
