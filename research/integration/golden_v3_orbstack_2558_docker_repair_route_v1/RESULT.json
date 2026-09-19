@@ -1,0 +1,13 @@
+{
+  "schema":"agent_interface_golden_v3_docker_repair_route_v1",
+  "issue":2558,
+  "decision":"PASS_DOCKER_STALE_REFUSAL_THEN_REPAIR_SCOPED",
+  "allocation":"task-11",
+  "persistent_model_turns":2,
+  "stale_attempt":{"status":"refused","diagnostic":"STALE_OBSERVATION","backend_emissions":0},
+  "repair_attempt":{"native_status":"completed","task_success":true,"visual_target_revalidation":true,"release_verified":true,"effect_text":"docker2558-repair-11","action_to_scored_effect_ms":144.956939},
+  "focus_invalidation":{"status":"refused","error":"SCOPE_MISMATCH","emissions_delta":0,"input_dispatched":false},
+  "continuation_input_dispatched":false,
+  "formal_six_task_claim":false,
+  "retained_failure":{"allocation":"task-10","reason":"model returned x/y keys instead of point array; container stopped before result publication"}
+}
