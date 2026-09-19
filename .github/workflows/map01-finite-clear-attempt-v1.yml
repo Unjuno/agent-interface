@@ -174,13 +174,20 @@ jobs:
               sha256sum "$path" >> evidence-manifest/result-sha256sums.txt
             done < <(find "results-local/doom/$ALLOCATION_ID" -type f -print0 | sort -z)
           fi
+          test -s evidence-manifest/metadata.txt
+          test -s evidence-manifest/result-sha256sums.txt
+          mkdir -p evidence-bundle
+          tar -czf "evidence-bundle/$ALLOCATION_ID-$GITHUB_RUN_ID.tar.gz" \
+            evidence-manifest launch-owner.json allocation-runs.json \
+            runner-environment.txt formal-audit.stdout \
+            "results-local/doom/$ALLOCATION_ID"
 
       - name: Upload immutable allocation evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ALLOCATION_ID }}-${{ github.run_id }}
-          if-no-files-found: warn
+          if-no-files-found: error
           retention-days: 30
           path: |
             evidence-manifest/**
@@ -189,3 +196,4 @@ jobs:
             runner-environment.txt
             formal-audit.stdout
             results-local/doom/${{ env.ALLOCATION_ID }}/**
+            evidence-bundle/*.tar.gz
