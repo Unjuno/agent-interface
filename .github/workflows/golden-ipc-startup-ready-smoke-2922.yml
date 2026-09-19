@@ -22,7 +22,7 @@ jobs:
       - name: Install X11 fixture dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb openbox xterm
+          sudo apt-get install -y xvfb openbox xterm wmctrl
           python -m pip install --disable-pip-version-check numpy pillow openpyxl python-xlib
       - name: Start private X11 session and require ready event
         shell: bash
