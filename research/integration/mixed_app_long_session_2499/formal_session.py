@@ -4,7 +4,7 @@ The ledger is intentionally independent of Agent Interface implementation. It
 records the OS-visible identities and the admission decisions needed to audit
 the four transitions; it does not claim model quality or product support.
 """
-import hashlib, json, os, signal, subprocess, tempfile, time
+import hashlib, json, os, re, signal, subprocess, tempfile, time
 from pathlib import Path
 
 DISPLAY = ":141"
@@ -58,7 +58,8 @@ def launch(cmdline, env):
         usable = []
         for candidate in candidates:
             text = geom(env, candidate)
-            if "Geometry:" in text and "Geometry: 1x1" not in text:
+            match = re.search(r"Geometry:\s*(\\d+)x(\\d+)", text)
+            if match and int(match.group(1)) >= 400 and int(match.group(2)) >= 300:
                 usable.append(candidate)
         if usable:
             wid = usable[-1]
