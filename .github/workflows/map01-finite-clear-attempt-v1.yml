@@ -1,0 +1,53 @@
+name: MAP01 finite clear attempt v1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/map01-finite-clear-attempt-v1.yml'
+      - 'research/doom/map01_finite_clear_attempt_v1/**'
+      - 'research/doom/session_map01_v13.py'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: map01-finite-clear-attempt-v1
+  cancel-in-progress: false
+
+jobs:
+  finite-attempt:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install X11 and ViZDoom dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends xvfb openbox wmctrl libopenal1 libsdl2-2.0-0 libgl1
+          python -m pip install --upgrade pip
+          python -m pip install 'vizdoom==1.3.0' pillow python-xlib numpy
+      - name: Run bounded controller-visible allocation
+        env:
+          SDL_VIDEODRIVER: x11
+        run: |
+          set -euo pipefail
+          mkdir -p research/doom/map01_finite_clear_attempt_v1/results/run-${GITHUB_RUN_ID}
+          xvfb-run -a -s '-screen 0 1024x768x24' \
+            python research/doom/map01_finite_clear_attempt_v1/run_attempt.py \
+            --out research/doom/map01_finite_clear_attempt_v1/results/run-${GITHUB_RUN_ID} \
+            --seed 2679 --skill 1 --timeout-seconds 60
+      - name: Audit allocation conservatively
+        if: always()
+        run: |
+          python research/doom/map01_finite_clear_attempt_v1/audit_result.py \
+            research/doom/map01_finite_clear_attempt_v1/results/run-${GITHUB_RUN_ID} || test $? -eq 2
+      - name: Upload immutable first outcome
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: map01-finite-clear-attempt-v1-${{ github.run_id }}
+          if-no-files-found: warn
+          retention-days: 30
+          path: research/doom/map01_finite_clear_attempt_v1/results/run-${{ github.run_id }}/**
