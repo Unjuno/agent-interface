@@ -4,9 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import os
 from pathlib import Path
-import shutil
 import sys
 import traceback
 
@@ -34,12 +32,8 @@ def main() -> int:
     prereg_path = args.prereg or root / "research" / "analysis" / "full_golden_ipc_2758_v2" / "preregistration.json"
     report = {
         "schema": "agent_interface_docker_host_ipc_live_v2",
-        "issue": 2758,
-        "seed": args.seed,
-        "status": "NOT_STARTED",
-        "first_terminal_stop": None,
-        "authority_granted": False,
-        "retry_count": 0,
+        "issue": 2758, "seed": args.seed, "status": "NOT_STARTED",
+        "first_terminal_stop": None, "authority_granted": False, "retry_count": 0,
         "accounting": {"model_calls": 0, "failed_calls": 0, "ipc_timeouts": 0,
                        "input_tokens": 0, "output_tokens": 0, "reasoning_tokens": 0,
                        "images": 0, "local_observations": 0, "effect_receipts": 0,
@@ -52,9 +46,11 @@ def main() -> int:
             actual_path = root / relative
             if not actual_path.is_file():
                 mismatches.append({"path": relative, "reason": "missing"})
-            elif sha256(actual_path) != expected.lower():
-                mismatches.append({"path": relative, "reason": "sha256_mismatch",
-                                   "expected": expected, "actual": sha256(actual_path)})
+            else:
+                actual = sha256(actual_path)
+                if actual != expected.lower():
+                    mismatches.append({"path": relative, "reason": "sha256_mismatch",
+                                       "expected": expected, "actual": actual})
         if mismatches:
             report.update(status="STOP_SOURCE_HASH_MISMATCH",
                           first_terminal_stop={"kind": "source_hash_mismatch", "details": mismatches})
@@ -65,12 +61,17 @@ def main() -> int:
         import run_full_golden_ipc_v1 as legacy
         report["status"] = "RUNNING"
         report["legacy_runner"] = "runtime/run_full_golden_ipc_v1.py"
-        # Keep the one allocation boundary here; all exceptions become the final result.
-        legacy.main()
+        # Isolate legacy argparse so v2-only flags cannot escape the boundary.
+        old_argv = sys.argv
+        try:
+            sys.argv = [old_argv[0], "--out", str(args.out), "--seed", str(args.seed)]
+            legacy.main()
+        finally:
+            sys.argv = old_argv
         report.update(status="COMPLETED", first_terminal_stop=None)
         write_report(args.out, report)
         return 0
-    except Exception as exc:
+    except BaseException as exc:
         report.update(status="STOP_EXCEPTION",
                       first_terminal_stop={"kind": "runtime_exception",
                                            "error_class": type(exc).__name__,
