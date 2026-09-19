@@ -1,0 +1,65 @@
+{
+  "first": {
+    "status": "execution_failed",
+    "admission": "accepted",
+    "error": "BACKEND_EXECUTION_FAILED",
+    "required_capabilities": [
+      "capture.frame",
+      "clock.monotonic",
+      "display.geometry",
+      "event.feedback",
+      "input.keyboard",
+      "input.pointer",
+      "input.release_all",
+      "input.text",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 4292778579908,
+      "ended_ns": 4292779364926,
+      "emissions": 2,
+      "program_emissions": 2,
+      "observations": [],
+      "releases": [
+        {
+          "verified": false,
+          "error": "injected release request failure"
+        }
+      ],
+      "completed_ops": [
+        0,
+        1
+      ],
+      "error": "RuntimeError('injected failure after native press')",
+      "failed_op": 2,
+      "failed_op_effect": "unknown; may have emitted partial input"
+    },
+    "recovery_required": true
+  },
+  "independent_buttons_before_cleanup": [
+    "left"
+  ],
+  "second": {
+    "status": "refused",
+    "error": "INPUT_RECOVERY_REQUIRED",
+    "recovery_required": true,
+    "input_dispatched": false,
+    "required_capabilities": [],
+    "backend_emissions": 2
+  },
+  "explicit_cleanup": {
+    "keys_down": [],
+    "buttons_down": [],
+    "verified": true,
+    "monotonic_ns": 4292780142047
+  },
+  "independent_buttons_after_cleanup": [],
+  "third": {
+    "status": "refused",
+    "error": "INPUT_RECOVERY_REQUIRED",
+    "recovery_required": true,
+    "input_dispatched": false,
+    "required_capabilities": [],
+    "backend_emissions": 3
+  }
+}
