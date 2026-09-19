@@ -28,3 +28,23 @@ tools registered in the current Codex host. It proves this bounded composition,
 not lower latency, fewer model tokens, crash/disconnect cleanup, cancellation,
 or general application reliability. Startup readiness returns the retained
 initial frame; it is not an assertion that the frame remains current.
+
+## Timing boundary audit
+
+`python3 runtime/results/native-mcp-managed-01/timing.py` partitions the existing
+same-host monotonic timestamps without changing the archived run. The exchange
+interval is 1133.463 ms: entry to request commitment 118.880 ms; commitment to
+harness action entry 23.539 ms; action entry to input execution 251.814 ms;
+input execution 395.886 ms; feedback call 71.853 ms; window review 64.316 ms;
+and remaining bookkeeping/finalization intervals as emitted by the script.
+Input execution includes explicit waits. Action-entry preparation includes
+multiple operations and must not be attributed to any one guard or capture.
+
+The feedback record finished 871.707 ms after exchange entry, but this is a
+title/image cue retained inside the harness. It was not streamed to the model
+at that time and is not first useful feedback or semantic completion latency.
+Exchange return is also before MCP content encoding, SDK delivery and model
+interpretation. The final 180.421 ms combines evaluation, cleanup, publication,
+polling and result preparation without separate timestamps. This single record
+cannot identify a general bottleneck or a causal improvement. timing.py is an
+additional analysis script, outside the original evidence manifest.
