@@ -1,0 +1,21 @@
+name: negative-attention-successor-1943
+on:
+  push:
+    branches:
+      - research/autonomous-ledger-1961-negative-attention-20260919
+jobs:
+  frozen-formal:
+    runs-on: ubuntu-latest
+    container: python:3.12-slim
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run frozen formal once
+        run: |
+          set -eu
+          python research/analysis/negative_attention_hint_successor_1943_v1/experiment.py | tee result.json
+          test "$(python -c 'import json; print(json.load(open("result.json"))["formal_invocations"])')" = 1
+      - name: Upload retained result
+        uses: actions/upload-artifact@v4
+        with:
+          name: negative-attention-successor-1943-result
+          path: result.json
