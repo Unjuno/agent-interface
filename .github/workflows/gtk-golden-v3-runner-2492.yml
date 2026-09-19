@@ -21,7 +21,6 @@ jobs:
           .venv-gtk/bin/python -m pip install --disable-pip-version-check python-xlib Pillow six jsonschema
       - name: Run bounded GTK/X11 adapter preflight
         run: |
-          mkdir -p /tmp/gtk-adapter-2492
           Xvfb :99 -screen 0 640x360x24 -nolisten tcp -ac >/tmp/xvfb.log 2>&1 &
           export DISPLAY=:99
           .venv-gtk/bin/python research/integration/golden_v3_second_domain_2246_v1/gtk_adapter_runner.py --out /tmp/gtk-adapter-2492
