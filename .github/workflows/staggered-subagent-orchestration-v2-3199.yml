@@ -1,0 +1,19 @@
+name: staggered-subagent-orchestration-v2-3199
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ''research/coordination/staggered_subagent_orchestration_v2/**''
+      - ''.github/workflows/staggered-subagent-orchestration-v2-3199.yml''
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    container: python:3.12-slim
+    steps:
+      - uses: actions/checkout@v4
+      - run: mkdir -p /tmp/staggered-v2 && python research/coordination/staggered_subagent_orchestration_v2/run.py /tmp/staggered-v2
+      - run: python research/coordination/staggered_subagent_orchestration_v2/audit.py /tmp/staggered-v2 | tee /tmp/staggered-v2/audit.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: staggered-subagent-orchestration-v2-3199
+          path: /tmp/staggered-v2/
