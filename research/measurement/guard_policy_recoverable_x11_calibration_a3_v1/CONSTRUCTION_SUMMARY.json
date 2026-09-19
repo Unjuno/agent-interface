@@ -1,0 +1,51 @@
+{
+  "decision": "PASS_CONSTRUCTION_ELIGIBLE",
+  "formal_invocations": 0,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "cal_n": 64,
+  "calibration_params": {
+    "cg_ns": 83968.7265625,
+    "s": 1,
+    "f": 0,
+    "cy_stale_ns": 6798055.609375,
+    "cy_fresh_ns": 7233777.484375,
+    "cf_ns": 10261965.53125,
+    "cost_identification": {
+      "cy_stale": {
+        "bootstrap95_ns": [
+          6357609.528125,
+          7295961.7828125
+        ],
+        "negative_count": 0
+      },
+      "cy_fresh": {
+        "bootstrap95_ns": [
+          6642762.864453126,
+          7889560.997265625
+        ],
+        "negative_count": 0
+      },
+      "cf": {
+        "bootstrap95_ns": [
+          9697688.087890625,
+          10922210.97890625
+        ],
+        "negative_count": 0
+      }
+    }
+  },
+  "checks": {
+    "recoverability": true,
+    "terminal_neutral": true,
+    "cost_expectations_identified": true,
+    "s": 1,
+    "f": 0,
+    "resolved_tiers": 3,
+    "selector_disagreements": 0
+  },
+  "raw_sha256": "4cf44404d9f77eb173598e907d1dfbaffb4f9570cb0394030c9028bf30b078cc",
+  "primary_audit_sha256": "fbfb0a1d2751fd277a010b126f80ef05571a64f1db2013d308ad23b5962de2b3",
+  "independent_audit_sha256": "cae733c98e6b13b79599d7795c62c978c5b9bce7ca42beaf774909142a93e9c8"
+}
