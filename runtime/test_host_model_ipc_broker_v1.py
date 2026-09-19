@@ -13,6 +13,11 @@ class HostBrokerContractTest(unittest.TestCase):
         source = Path(__file__).with_name("host_model_ipc_broker_v1.py").read_text()
         self.assertIn('"authority_granted": False', source)
 
+    def test_broker_has_bounded_subprocess_timeout(self):
+        source = Path(__file__).with_name("host_model_ipc_broker_v1.py").read_text()
+        self.assertIn("HOST_MODEL_BROKER_TIMEOUT_S", source)
+        self.assertIn("TimeoutExpired", source)
+
 
 if __name__ == "__main__":
     unittest.main()
