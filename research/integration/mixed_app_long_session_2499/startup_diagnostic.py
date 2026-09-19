@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Startup prerequisite diagnostic for #2821 v6.
+"""Startup prerequisite diagnostic for #2821 v10.
 
 v6 fixes the v5 Inkscape invocation and records Chromium shim failures
 separately from a runnable browser. It performs no GUI input, model call, or
@@ -12,7 +12,7 @@ def resolve(name, extra=()):
     return shutil.which(name) or next((p for p in extra if os.path.exists(p)), None)
 
 def main():
-    root = tempfile.mkdtemp(prefix="mixed-startup-2821-v6-")
+    root = tempfile.mkdtemp(prefix="mixed-startup-2821-v10-")
     env = os.environ.copy()
     env.update(DISPLAY=DISPLAY, XAUTHORITY=os.path.join(root, "Xauthority"))
     open(env["XAUTHORITY"], "a").close()
