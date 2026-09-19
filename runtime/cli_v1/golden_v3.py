@@ -6,6 +6,7 @@ from .api import dispatch
 
 STATUSES={"invalid_request","backend_unavailable","runtime_failed","returned"}
 LIFECYCLE={"doctor","model_attempt","observation","dispatch","refusal","effect","repair","release","cleanup"}
+NESTED_REFUSAL_STATUSES={"refused","invalid_request","backend_unavailable"}
 
 def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None=None, lifecycle: list[str]|None=None) -> dict[str,Any]:
     status=result.get("status")
@@ -24,11 +25,21 @@ def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None
     task_success=nested.get("task_success")
     if type(task_success) is not bool:
         task_success=None
-    if cleanup is not None: mapped="cleanup_failed"
-    elif status in {"invalid_request","backend_unavailable"}: mapped="refused"
-    elif status=="runtime_failed": mapped="partial"
-    elif native_status=="refused": mapped="refused"
-    else: mapped="success" if completed and task_success is True else "partial"
+    if cleanup is not None:
+        mapped="cleanup_failed"
+    elif status in {"invalid_request","backend_unavailable"}:
+        mapped="refused"
+        completed=False
+        task_success=False
+    elif status=="runtime_failed":
+        mapped="partial"
+        task_success=False
+    elif native_status in NESTED_REFUSAL_STATUSES:
+        mapped="refused"
+        completed=False
+        task_success=False
+    else:
+        mapped="success" if completed and task_success is True else "partial"
     row={"schema":"golden-v3-result-v2","program_completed":completed,"task_success":task_success,
          "authority_granted":False,"status":mapped,"partial_effects":nested.get("partial_effects",[]),
          "cleanup_error":cleanup,"lifecycle":states,"usage":dict(usage if usage is not None else result.get("usage") or {}),
