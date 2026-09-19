@@ -11,10 +11,8 @@
     "PLAN.md": "97865d512328e1e1138f4e4732fc303901c966a9",
     "experiment.py": "4ce196b69271876f96da5be6d5e93473138ac1f7",
     "audit.py": "1ded1de9dc3df3b0365292957563c07d12750709",
-    "REPRODUCTION.md": "2e49b8a02a5708e0948f49e8576deca564edcbee",
-    "corruption_controls.py": "8e4c2f77d8b05d37e023b640bfe264699411c420",
-    "REPORT.md": "fb10702d5d4ed16bd96c349627dd70a9c88e7f9e",
-    "RESULT.json_before_manifest": "f3c389db635347f4e48b8b19c0aac5bd26c58fcd"
+    "REPRODUCTION.md": "ec3a487e73a491b6509c68de893b8de97f3fef78",
+    "corruption_controls.py": "8e4c2f77d8b05d37e023b640bfe264699411c420"
   },
   "observed": {
     "candidate_rows": 256,
@@ -25,5 +23,6 @@
     "tamper_controls": "4/4",
     "truncation_rejection": "1/1"
   },
-  "formal_boundary": "This manifest covers local Docker reproduction; it does not claim GUI/model/runtime authority or production transfer."
+  "formal_boundary": "This manifest covers local Docker reproduction; it does not claim GUI/model/runtime authority or production transfer.",
+  "manifest_scope": "Immutable source and control scripts plus observed outputs; REPORT.md and RESULT.json are narrative/metadata records and are intentionally excluded to avoid a self-referential hash cycle."
 }
