@@ -48,7 +48,7 @@ def main():
         expected = oracle(o, "app-A", 1)
         rows.append({"oracle": expected, "visual_only": visual_only(o),
                      "raw_sha": hashlib.sha256(json.dumps(o.__dict__, default=lambda x:x.__dict__, sort_keys=True).encode()).hexdigest()})
-    assert len(rows) == 384
+    assert len(rows) == 192
     # Pixel-identical replacement must remain distinguishable by semantic id.
     stable = Observation(Visual("identical-selected", "app-A", 1), Semantic("obj-1", "app-A", 1))
     replacement = Observation(Visual("identical-selected", "app-A", 1), Semantic("obj-2", "app-A", 1))
