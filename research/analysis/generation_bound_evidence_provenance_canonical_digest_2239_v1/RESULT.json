@@ -1,0 +1,28 @@
+{
+  "experiment": "generation_bound_evidence_provenance_canonical_digest_2239_v1",
+  "decision": "PASS_CONTAINER_PROVENANCE_COMPLETE_SCOPED",
+  "scope": "container-only generation-bound evidence provenance; no live X11 or model execution",
+  "parent_experiment": "research/analysis/generation_bound_evidence_container_successor_2166_v1/experiment.py",
+  "parent_blob_sha": "2bcb877a2fbd59b2a854122017ff2956d8866524",
+  "source_commit": "36f84315e8c8fae51eb844815c26aec97b8f2eaf",
+  "source_sha256": "0b01361fa2d62e37042d6d59caa9fd422b285666b3c96e53b45580e616319d83",
+  "image_digest": "python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "run_id": 35444857681,
+  "artifact_id": 10584313318,
+  "artifact_digest": "sha256:94e4b95e9eb341c624456629708a811e04f896159a8628098467267643f069eb",
+  "result_sha256": "b678363629ff8f4e1f585d517a205bc7fc11ae001839070d168aa0932725f738",
+  "independent_audit": "PASS",
+  "controls": {
+    "stale_control": "PASS",
+    "reuse_control": "PASS",
+    "provenance_control": "PASS"
+  },
+  "statuses": ["ENCODED", "OBSOLETE", "CACHE_HIT", "ENCODED"],
+  "counters": {"model": 0, "x11": 0, "input": 0},
+  "cases": 5,
+  "stdout_digest": "9d4e4bb50d9ed35bfba829f17a3b34fd6790c4152f2c0e74a07af8aeb5f317b4",
+  "notes": [
+    "Canonical Docker image digest form python@sha256:<digest> is accepted.",
+    "This is scoped container provenance evidence; it does not claim live UI or model success."
+  ]
+}

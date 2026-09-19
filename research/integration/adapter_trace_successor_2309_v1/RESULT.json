@@ -1,0 +1,32 @@
+{
+  "status": "PASS_SYNTHETIC_LIFECYCLE_ADAPTER_TRACE_SCOPED",
+  "issue": 2309,
+  "trace_events": 9,
+  "attempts_accounted": 9,
+  "authority_grants": 0,
+  "unknown_rejections": 0,
+  "cleanup_failures": 1,
+  "terminal_release_verified": true,
+  "task_success_distinct_from_program_completion": true,
+  "claims_excluded": [
+    "GUI",
+    "model",
+    "network",
+    "OS input",
+    "live task",
+    "latency",
+    "tokens",
+    "human tempo",
+    "production readiness"
+  ],
+  "verification": {
+    "workflow": "adapter-trace-successor-2309",
+    "run_id": 35445836055,
+    "native_audit": "PASS",
+    "python_3_12_slim_container_audit": "PASS",
+    "syntax_json_audit": "PASS"
+  },
+  "independent_audit": "PASS",
+  "workflow_run_id": 35445951475,
+  "workflow_conclusion": "success"
+}

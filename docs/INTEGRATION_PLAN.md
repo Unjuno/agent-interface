@@ -6,6 +6,29 @@ use the same path again. Research supplies evidence for design choices. Prioriti
 fewer avoidable tool boundaries, usable observations/results and recovery in the
 agent's own loop. The [receipt self-use example](../runtime/results/receipt-self-use-01/README.md)
 records the first concrete result-presentation improvement from this loop.
+The [composed exchange](../research/live_control/AGENT_EXCHANGE.md) now removes
+manual clock-request and steps-file assembly in that research path. Actual
+assistant use covered a viewed draft followed by correction and independent
+scoring, with the first rejected development attempt retained. This does not
+yet connect the golden semantic compiler to the native CLI.
+Its [review companion](../runtime/results/composed-review-01/README.md) returns
+the receipt and referenced image together, avoiding a separate host image read
+and WSL path conversion. This is a verified presentation path on retained data;
+live-tempo and model-token effects remain unmeasured.
+The [live Calc use](../runtime/results/calc-live-review-01/README.md) now connects
+these through `agent_exchange --review`. It passed independent saved-cell
+evaluation, while exposing delayed dialog pixels and 18–25 second outer gaps.
+Next address observation/result continuation and caller assembly; native input
+speed alone does not explain the remaining tempo gap.
+The [final-drain integration](../runtime/results/calc-final-drain-01/README.md)
+now reads an already-available independent result once after early saved-effect
+evidence. Actual Calc use returned evaluation in the action response; a missing
+result remains pending. It removes one outer continuation turn in this example,
+not a socket exchange or the remaining deliberation gaps.
+An [existing settle-step recipe](../runtime/results/calc-settle-self-use-01/README.md)
+also avoided the separate observe program in one actual Calc session. Keep this
+opt-in at expected GUI transitions: it adds native captures and cannot certify
+semantic completion. No runtime change or universal wait policy was introduced.
 
 The user's current direction is to concentrate this task on integration while
 other contributors continue benchmarks and experiments. Product Hunt publication

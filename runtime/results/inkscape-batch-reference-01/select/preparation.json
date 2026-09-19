@@ -1,0 +1,38 @@
+{
+  "command": {
+    "op": "submit",
+    "id": "reference-select-991076",
+    "expected_sequence": 1,
+    "valid_until_ns": 48855169279,
+    "decision_evidence": {
+      "delivery_id": "delivery:2",
+      "observation_sequence": 1,
+      "producer": "assistant"
+    },
+    "steps": [
+      {
+        "op": "pointer_click",
+        "x": 620,
+        "y": 391
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 120,
+        "timeout_ms": 600
+      }
+    ]
+  },
+  "image": {
+    "status": "image",
+    "sequence": 1,
+    "capture_ns": 8503170425,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/agent-reference-991076/001.png",
+    "relative_path": "001.png",
+    "sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "source_clock_ns": 43855169279,
+  "lease_ms": 5000,
+  "authority": "none; historical deadline, viewing and runtime admission remain required"
+}

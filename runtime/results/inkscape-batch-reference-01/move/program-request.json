@@ -1,0 +1,52 @@
+{
+  "after": 16,
+  "events": [
+    "effect_evidence",
+    "independent_evaluation"
+  ],
+  "timeout": 5,
+  "request_id": "program:cf1fcbf8599848228c08b1c2899363cd",
+  "read_request_id": "program:cf1fcbf8599848228c08b1c2899363cd",
+  "command": {
+    "op": "submit",
+    "id": "reference-move-991076",
+    "expected_sequence": 6,
+    "valid_until_ns": 66960308295,
+    "decision_evidence": {
+      "delivery_id": "delivery:14",
+      "observation_sequence": 6,
+      "producer": "assistant"
+    },
+    "steps": [
+      {
+        "op": "pointer_click",
+        "x": 550,
+        "y": 106
+      },
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "a"
+      },
+      {
+        "op": "text",
+        "text": "80"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "s"
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 120,
+        "timeout_ms": 600
+      }
+    ],
+    "finish_after": true
+  }
+}

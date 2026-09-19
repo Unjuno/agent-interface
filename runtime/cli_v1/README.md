@@ -47,3 +47,6 @@ execution result or original error. The CLI consequently exits nonzero. This
 connection cleanup does not replace the backend's input-release checks.
 
 Wayland-only Linux currently fails closed because no Wayland backend has been promoted. Linux/X11 requires the existing `python-xlib` dependency used by `x11-v1`.
+
+
+Golden-v3 boundary is provided by runtime.cli_v1.golden_v3.dispatch_golden_v3; it preserves the existing dispatch contract and is authority-neutral.

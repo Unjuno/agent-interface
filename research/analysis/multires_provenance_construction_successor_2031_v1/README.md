@@ -1,0 +1,1 @@
+# Multi-resolution provenance construction gate (#2031)\n\nFinite mapping check for candidate crops. Only candidate crops from the current source frame map target coordinates; missing-target, stale-source, and overview-only controls yield UNKNOWN. No model localization or byte reduction claim.\n
