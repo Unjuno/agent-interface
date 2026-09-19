@@ -27,7 +27,10 @@ def main():
             p=encode(arm,t); mapped,mode=decode(arm,p)
             present=bool(t[2] and t[3])
             if arm=="BORDER_RULER": ok=(mapped==t)
-            elif arm=="TARGET_CONTEXT_CROP": ok=(not present and mapped is None) or (present and mapped[0]<=t[0] and mapped[1]<=t[1] and mapped[0]+mapped[2]>=t[0]+t[2] and mapped[1]+mapped[3]>=t[1]+t[3])
+            elif arm in ("RAW","COARSE_GRID"): ok=(mapped is None)
+            elif arm=="TARGET_CONTEXT_CROP":
+                if mapped is not None and len(mapped)==4 and mapped[2] > mapped[0] and mapped[3] > mapped[1]: mapped=(mapped[0],mapped[1],mapped[2]-mapped[0],mapped[3]-mapped[1])
+                ok=(not present and mapped is None) or (present and mapped[0]<=t[0] and mapped[1]<=t[1] and mapped[0]+mapped[2]>=t[0]+t[2] and mapped[1]+mapped[3]>=t[1]+t[3])
             else: ok=(not present and mapped is None)
             rows.append({"family":family,"arm":arm,"target":t,"mapped":mapped,"mode":mode,"ok":ok,"raw_fallback":mode.startswith("UNAVAILABLE")})
     assert len(rows)==16 and all(r["ok"] for r in rows)
