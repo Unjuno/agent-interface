@@ -22,6 +22,8 @@ jobs:
           print("REPORT_SHA256", hashlib.sha256(data).hexdigest())
           PY
       - name: Run unit tests and score retained evidence
+        env:
+          PYTHONPATH: research/integration/live_adapter_effect_scorer_2246_v1
         run: |
           cd research/integration/live_adapter_effect_scorer_2246_v1
           python -m unittest discover -s . -t . -p 'test_*.py' -v
