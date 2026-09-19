@@ -1,4 +1,4 @@
-name: MAP01 recovery cover matched v2 formal 3189
+name: MAP01 recovery cover matched v2 formal 3202
 
 on:
   workflow_dispatch:
@@ -77,7 +77,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python research/doom/test_map01_recovery_cover_matched_v2_runner_3202.py
+          python research/doom/test_map01_recovery_cover_matched_v2_runner.py
           python research/doom/validate_map01_recovery_cover_matched_v2.py research/doom/map01_recovery_cover_matched_v2_prereg.json
 
       - name: Run one matched formal allocation
@@ -106,7 +106,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: recovery-cover-matched-v2-formal-3189-${{ github.run_id }}
+          name: recovery-cover-matched-v2-formal-3202-${{ github.run_id }}
           if-no-files-found: error
           retention-days: 30
           path: |
