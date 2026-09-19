@@ -1,4 +1,5 @@
-# Syntax-validated successor runner revision after run 35442587962.\n#!/usr/bin/env python3
+# Syntax-validated successor runner revision after run 35442587962.
+#!/usr/bin/env python3
 """Container/X11 typed-deadband successor: coast vs bounded recovery with task-relative cancellation.
 
 This is deliberately model-free: planner latency is simulated with a fixed sleep so
@@ -423,7 +424,8 @@ def main() -> None:
     ap.add_argument("--mode", choices=["coast", "recovery"])
     ap.add_argument("--decisions", type=int, default=6)
     ap.add_argument("--planner-wait", type=float, default=0.34)
-    ap.add_argument("--cover-budget", type=float, default=0.24)\n    ap.add_argument("--deadband", type=float, default=0.06)
+    ap.add_argument("--cover-budget", type=float, default=0.24)
+    ap.add_argument("--deadband", type=float, default=0.06)
     ap.add_argument("--pairs", type=int, default=3)
     ap.add_argument("--out", default="/tmp/container-x11-bounded-recovery-v3")
     a = ap.parse_args()
