@@ -4,7 +4,7 @@ from pathlib import Path
 
 EXPECTED = ["SETUP_DOCTOR","MODEL_ATTEMPT","OBSERVATION","GUARDED_DISPATCH","REFUSAL","USEFUL_EFFECT","STALE_INVALIDATION","REPAIR","TERMINAL_RELEASE","CLEANUP_FAILURE"]
 ROOT = Path(__file__).resolve().parent
-REPO = ROOT.parents[3]
+REPO = ROOT.parents[2]
 
 def git_blob_sha(path):
     return subprocess.check_output(["git", "hash-object", str(path)], cwd=REPO, text=True).strip()
