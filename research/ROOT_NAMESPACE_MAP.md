@@ -71,6 +71,10 @@ The directories below predate or sit outside the newer category structure. Their
 - [`observation_addressing_v1/`](observation_addressing_v1/)
 - [`visual_invalidation_discovery_v1/`](visual_invalidation_discovery_v1/)
 
+### Causality and temporal policy experiments
+
+- [`causality/`](causality/)
+
 ### OpenTTD support paths
 
 - [`openttd_oracle/`](openttd_oracle/)
