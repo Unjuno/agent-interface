@@ -2,17 +2,35 @@ name: Exact LP evidence order successor v2
 
 on:
   pull_request:
+    types: [opened, synchronize, ready_for_review]
     paths:
       - 'research/launch/lp_exact_evidence_order_2576_v2/**'
+      - 'site/index.html'
+      - 'site/media/**'
       - '.github/workflows/exact-lp-evidence-order-2576-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   exact-browser:
-    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    runs-on: ubuntu-24.04
     container:
       image: python:3.12-slim-bookworm@sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a
     steps:
-      - uses: actions/checkout@v4
+      - name: Sparse blobless checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            research/launch/lp_exact_evidence_order_2576_v2
+            site/index.html
+            site/media/golden-desktop-live-02-2x-h264.mp4
+            site/media/map01-astra-live-01-2x-h264.mp4
+          sparse-checkout-cone-mode: false
       - run: apt-get update && apt-get install -y --no-install-recommends chromium
       - run: python -m pip install --no-cache-dir playwright==1.57.0
       - run: python research/launch/lp_exact_evidence_order_2576_v2/experiment.py
