@@ -4,7 +4,7 @@ W,H=6,4; ROI=(1,1,4,3)
 
 def frame(value): return [[value for _ in range(W)] for _ in range(H)]
 def crop(p):
-    x0,y0,x1,y1=ROI; return [row[x0:x1] for row in p[y0:y1]
+    x0,y0,x1,y1=ROI; return [row[x0:x1] for row in p[y0:y1]]
 
 def capture_fixture():
     return [(0,frame(0)),(10,frame(0)),(20,frame(1)),(40,frame(1))]
