@@ -111,6 +111,8 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 ### Presentation and miscellaneous scoped work
 
+- [`gtk/`](gtk/) — GTK formal receipt contract preflights; construction checks do not establish live matrix acceptance.
+
 - [`launch/`](launch/) — public-evidence/launch presentation experiments.
 - [`experiments/`](experiments/) — small scoped experiments without a narrower established category.
 
