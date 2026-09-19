@@ -40,7 +40,8 @@ def translate(row):
     }
 
 def replay(fixture):
-    raw = json.dumps(fixture, sort_keys=True, separators=(",", ":"))
+    payload = {key: value for key, value in fixture.items() if key != "raw_sha256"}
+    raw = json.dumps(payload, sort_keys=True, separators=(",", ":"))
     raw_sha = hashlib.sha256(raw.encode()).hexdigest()
     if fixture.get("raw_sha256") != raw_sha:
         raise ValueError("FIXTURE_DIGEST_MISMATCH")
