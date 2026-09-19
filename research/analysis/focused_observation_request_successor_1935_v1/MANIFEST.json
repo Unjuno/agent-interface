@@ -1,0 +1,29 @@
+{
+  "status": "PASS_LOCAL_DOCKER_REPRODUCTION",
+  "container": {
+    "engine": "Docker Desktop",
+    "engine_version": "29.8.0",
+    "image": "python:3.11-slim",
+    "image_digest": "sha256:da047cb8f9d1d98e5c070f5300ba9f7274e33b8fc0e5be5ed88740aed1b95ba9"
+  },
+  "branch": "research/focused-observation-request-successor-1935",
+  "source_blobs": {
+    "PLAN.md": "97865d512328e1e1138f4e4732fc303901c966a9",
+    "experiment.py": "4ce196b69271876f96da5be6d5e93473138ac1f7",
+    "audit.py": "1ded1de9dc3df3b0365292957563c07d12750709",
+    "REPRODUCTION.md": "2e49b8a02a5708e0948f49e8576deca564edcbee",
+    "corruption_controls.py": "8e4c2f77d8b05d37e023b640bfe264699411c420",
+    "REPORT.md": "fb10702d5d4ed16bd96c349627dd70a9c88e7f9e",
+    "RESULT.json_before_manifest": "f3c389db635347f4e48b8b19c0aac5bd26c58fcd"
+  },
+  "observed": {
+    "candidate_rows": 256,
+    "candidate_valid": 16,
+    "candidate_rejected": 240,
+    "candidate_sha256": "5c2699e993fd163a1a01c72c3905b46c8f364e329a8ddef47c37bb713952b936",
+    "independent_audit": "PASS",
+    "tamper_controls": "4/4",
+    "truncation_rejection": "1/1"
+  },
+  "formal_boundary": "This manifest covers local Docker reproduction; it does not claim GUI/model/runtime authority or production transfer."
+}
