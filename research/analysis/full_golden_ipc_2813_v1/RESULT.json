@@ -1,0 +1,19 @@
+{
+  "issue": 2813,
+  "status": "STOP_DOCKER_STARTUP_TIMEOUT",
+  "entry_gate": "PASS_TASK1_ROUTE_PREFLIGHT",
+  "allocation": {
+    "attempts": 1,
+    "scope": "task-1 only",
+    "image": "agent-interface-golden-ipc-2705:20260920-wmctrl@sha256:7e4a3b6f3917baa9f153b4dfd011a4ea528a3d200a7a3d274aa9479900ee7b41",
+    "network": "none",
+    "resource_limits": {"cpus": 2, "memory": "3g"},
+    "docker_log_bytes": 0,
+    "ipc_request_created": false,
+    "gui_operations": 0,
+    "authority_granted": false
+  },
+  "stop_reason": "Docker run did not produce container output or an IPC request during the bounded observation window; the task-1 route did not start.",
+  "claims": {"task_1_effect": false, "model_compatibility": false, "six_task_route": false},
+  "next_entry_condition": "Diagnose Docker Desktop startup/daemon state locally, then use a separately recorded successor allocation; do not reinterpret this infrastructure stop as a route result."
+}
