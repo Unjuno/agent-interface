@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 96 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 97 retained result/failure directories</strong></summary>
 
 - [$name/](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [$name/](action_conditioned_routing_repair_successor_2059_v1/)
@@ -210,6 +210,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [$name/](temporal_contract_monitor_compilation_a3_v1/)
 - [$name/](temporal_contract_monitor_compilation_r0_v1/)
 - [$name/](temporal_observation_transfer_2013_v1/)
+- [$name/](temporal_query_specificity_2050_v1/)
 - [$name/](temporal_ring_disambiguation_2045_v1/)
 - [$name/](temporal_ring_provenance_repair_successor_2053_v1/)
 - [$name/](temporal_sample_cost_identifiability_v1/)
