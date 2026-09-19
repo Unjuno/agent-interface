@@ -21,7 +21,7 @@ def build_command(root: Path, prompt: str, image: Path, contract: str, workspace
         raise RuntimeError("STOP_DOCKER_BACKEND_UNCONFIGURED")
     if contract not in ("plain", "compiled"):
         raise ValueError("contract must be plain or compiled")
-    for value in (prompt, image, workspace, Path(ipc)):
+    for value in (runner, schema, instructions, prompt, image, workspace, Path(ipc)):
         if not Path(value).exists():
             raise FileNotFoundError(value)
     return [
