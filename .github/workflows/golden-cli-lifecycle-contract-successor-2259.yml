@@ -25,7 +25,7 @@ jobs:
           PY
       - name: Run path-safe audit in pinned container
         run: |
-          docker run --rm -v "$PWD:/work" -w /work python:3.12-slim             python research/integration/golden_cli_lifecycle_contract_successor_2259_v1/audit.py
+          docker run --rm -v "$PWD:/work" -w /work/research/integration/golden_cli_lifecycle_contract_successor_2259_v1 python:3.12-slim python audit.py
       - name: Compile and retain result
         run: |
           python3 -m py_compile research/integration/golden_cli_lifecycle_contract_successor_2259_v1/audit.py
