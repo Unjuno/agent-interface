@@ -274,6 +274,14 @@ class JsonSession:
         self.process.stdin.flush()
 
     def wait(self, predicate, timeout: float = 20.0) -> dict:
+        # A consumer may have observed an event at the planner-timer boundary
+        # before a later cleanup wait asks for the same terminal event. Reuse
+        # the immutable event log before blocking on the queue; this preserves
+        # the first terminal outcome instead of turning it into a false
+        # FAIL_SESSION_EVENT_TIMEOUT.
+        for row in self.events:
+            if predicate(row):
+                return row
         deadline = time.monotonic() + timeout
         while time.monotonic() < deadline:
             try:
