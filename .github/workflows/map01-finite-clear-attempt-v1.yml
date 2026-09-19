@@ -155,3 +155,37 @@ jobs:
           python research/doom/audit_map01_terminal_score_agreement_v1.py \
             "results-local/doom/$ALLOCATION_ID/runtime" \
             --out "results-local/doom/$ALLOCATION_ID/terminal-score-audit.json"
+
+      - name: Manifest immutable allocation evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence-manifest
+          {
+            echo "allocation_id=$ALLOCATION_ID"
+            echo "github_run_id=$GITHUB_RUN_ID"
+            echo "github_run_attempt=$GITHUB_RUN_ATTEMPT"
+            echo "github_sha=$GITHUB_SHA"
+          } > evidence-manifest/metadata.txt
+          : > evidence-manifest/result-sha256sums.txt
+          if [ -d "results-local/doom/$ALLOCATION_ID" ]; then
+            while IFS= read -r -d '' path; do
+              sha256sum "$path" >> evidence-manifest/result-sha256sums.txt
+            done < <(find "results-local/doom/$ALLOCATION_ID" -type f -print0 | sort -z)
+          fi
+
+      - name: Upload immutable allocation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ALLOCATION_ID }}-${{ github.run_id }}
+          if-no-files-found: warn
+          retention-days: 30
+          path: |
+            evidence-manifest/**
+            launch-owner.json
+            allocation-runs.json
+            runner-environment.txt
+            formal-audit.stdout
+            results-local/doom/${{ env.ALLOCATION_ID }}/**
