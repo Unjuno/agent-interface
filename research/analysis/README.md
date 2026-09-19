@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 73 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 74 retained result/failure directories</strong></summary>
 
 - [`anytime_fidelity_typed_admission_r0_v1/`](anytime_fidelity_typed_admission_r0_v1/)
 - [`belief_auto_recommit_semantic_boundary_r3_v1/`](belief_auto_recommit_semantic_boundary_r3_v1/)
@@ -182,6 +182,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`reusable_receipt_session_binding_v2/`](reusable_receipt_session_binding_v2/)
 - [`role_bound_ledger_lifetime_v1/`](role_bound_ledger_lifetime_v1/)
 - [`safe_probe_cost_optimal_tree_r1_v1/`](safe_probe_cost_optimal_tree_r1_v1/)
+- [`safe_probe_identification_successor_1716_v1/`](safe_probe_identification_successor_1716_v1/)
 - [`safe_probe_minimax_r0_v1/`](safe_probe_minimax_r0_v1/)
 - [`safety_plane_data_cutset_r0_v1/`](safety_plane_data_cutset_r0_v1/)
 - [`safety_watchdog_claim_sink_cutset_r1_a2_v1/`](safety_watchdog_claim_sink_cutset_r1_a2_v1/)
