@@ -64,7 +64,7 @@ jobs:
               raise SystemExit('STOP_OBSERVATION_NOT_EXACT')
           if not isinstance(observation.get('image'), str) or not observation['image']:
               raise SystemExit('STOP_OBSERVATION_IMAGE_ARTIFACT_MISSING')
-          if not isinstance(observation.get('context'), dict):
+          if not isinstance(observation.get('context'), (dict, list, tuple)) or not observation.get('context'):
               raise SystemExit('STOP_OBSERVATION_SOURCE_CONTEXT_MISSING')
           p.stdin.write(json.dumps({'op':'finish'})+'\\n'); p.stdin.flush()
           stdout, stderr=p.communicate(timeout=15)
