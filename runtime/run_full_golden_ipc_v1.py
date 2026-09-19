@@ -31,6 +31,9 @@ def main() -> int:
     implementation, client_type = demo.configure_research_modules(config, chromium)
     model.windows_path = lambda path: str(Path(path).resolve())
     preflight.windows_path = lambda path: str(Path(path).resolve())
+    # The Docker IPC route has no legacy Node/npm CLI. Keep preflight identity
+    # explicit and deterministic; the actual model endpoint is the host broker.
+    preflight.version = lambda _command: "container-host-ipc-v1"
     model.WINDOWS_PYTHON = python; preflight.WINDOWS_PYTHON = python
     implementation.OUT = args.out.resolve(); implementation.RuntimeClient = client_type
     args.out.mkdir(parents=True, exist_ok=False)
