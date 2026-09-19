@@ -1,0 +1,23 @@
+name: #3270 scorer replay gate repaired checkout
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay-gate:
+    timeout-minutes: 5
+    runs-on: ubuntu-24.04
+    container: python:3.12-slim
+    steps:
+      - name: Shallow checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Run deterministic replay gate
+        run: |
+          python -m unittest -v research/doom/test_map01_scorer_scheduler_replay_3270.py
