@@ -554,3 +554,9 @@ before its watch because release was unverified; it was not replayed. This is
 synchronous one-shot sampling after a program, not persistent monitoring or a
 semantic effect oracle. Full captures/receipts remain; no speed or token benefit
 is established. See [retained use and stop](../../runtime/results/native-visual-watch-01/README.md).
+
+The native harness now records read-only keymap/core-button samples after an
+action requiring recovery, before teardown, while preserving its failed result
+and sticky input refusal. Nine controlled private-Xvfb samples pass; the prior
+release failure was not reproduced or explained. See
+[release follow-up observation](../../runtime/results/native-release-observation-01/README.md).
