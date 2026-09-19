@@ -7,6 +7,8 @@ on:
       - 'runtime/cli_v1/**'
       - 'runtime/motor_state_v1/**'
       - 'runtime/selector_v1/**'
+      - 'runtime/core_v1/**'
+      - 'runtime/backends/**'
       - '.github/workflows/native-mcp-v1.yml'
   push:
     paths:
@@ -14,6 +16,8 @@ on:
       - 'runtime/cli_v1/**'
       - 'runtime/motor_state_v1/**'
       - 'runtime/selector_v1/**'
+      - 'runtime/core_v1/**'
+      - 'runtime/backends/**'
       - '.github/workflows/native-mcp-v1.yml'
 permissions:
   contents: read
