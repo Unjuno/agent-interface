@@ -1,6 +1,6 @@
 # Golden v3 to CLI adapter contract audit (#2203)
 
-Status: HOLD_PENDING_VALIDATOR
+Status: PASS_SCOPED_WITH_FAIL_CLOSED_CLI_BOUNDARY
 
 This additive audit freezes a pure mapping contract only. It does not modify
 runtime or golden desktop code and performs no model, GUI, network, input, or
@@ -27,11 +27,15 @@ Docker execution.
 | model attempt/usage | result `usage` field | retained, no CLI execution claim |
 | observation | receipt latest observation(s) | mapped as historical evidence |
 | dispatch | `dispatch` request/result | mapped, admission remains required |
-| refusal | `runtime_failed` or explicit refusal payload | fail closed unless typed reason retained |
+| refusal | explicit typed refusal only | mapped only when reason remains visible; otherwise HOLD/fail closed |
 | useful/partial effect | `result` plus `partial_effects` | retained; never inferred from process completion |
 | stale invalidation/repair | status `stale_invalidated`, lifecycle `repair` | retained; no freshness renewal |
 | release | lifecycle `release` | retained as evidence only |
 | cleanup failure | `runtime_failed` + `cleanup_error` | non-success, original result/error retained |
+
+CLI-only statuses `returned`, `runtime_failed`, `backend_unavailable`, and
+`invalid_request` are never silently coerced into a golden status. They remain
+diagnostic/non-success evidence or an explicit unmapped disposition.
 
 The validator rejects authority escalation, unknown states, cleanup promotion,
 missing partial-effects representation, and task/program conflation.
