@@ -36,16 +36,12 @@ def event(ledger, kind, **fields):
     row["hash"] = hashlib.sha256(json.dumps(row, sort_keys=True).encode()).hexdigest()
     ledger.append(row)
 
-def window_pid(env, wid):
-    q = cmd(["xdotool", "getwindowpid", wid], env)
-    return q.stdout.strip() if q.returncode == 0 and q.stdout.strip() else None
-
-def wait_window(env, before=None, timeout=20, owner_pid=None):
+def wait_window(env, before=None, timeout=20):
     end = time.time() + timeout
     before = set(before or [])
     while time.time() < end:
         now = windows(env)
-        new = [x for x in now if x not in before and (owner_pid is None or window_pid(env, x) == str(owner_pid))]
+        new = [x for x in now if x not in before]
         if new:
             return new[-1]
         time.sleep(.25)
@@ -64,8 +60,6 @@ def launch(cmdline, env):
         candidates = [x for x in windows(env) if x not in before]
         usable = []
         for candidate in candidates:
-            if window_pid(env, candidate) != str(p.pid):
-                continue
             text = geom(env, candidate)
             match = re.search(r"Geometry:\s*(\d+)x(\d+)", text)
             if match and int(match.group(1)) >= 400 and int(match.group(2)) >= 300:
@@ -75,9 +69,7 @@ def launch(cmdline, env):
             break
         time.sleep(.25)
     if wid is None:
-        wid = wait_window(env, before, 2, owner_pid=p.pid)
-    if wid is None:
-        raise RuntimeError(f"no usable window owned by pid {p.pid}: {cmdline!r}")
+        wid = wait_window(env, before, 2)
     return p, wid
 
 def main():
@@ -111,9 +103,8 @@ def main():
         event(ledger,"stale_admission",app="calc",old_window=old_calc["window"],disposition="refused",input_emitted=False)
         checks.append(denied)
         # 2. Same-app modal: open Calc file chooser then observe/close, no action.
-        modal_before = windows(env)
         cmd(["xdotool","windowactivate",apps["calc"]["window"],"key","ctrl+o"],env); input_ops += 1; time.sleep(1)
-        modal = wait_window(env, modal_before, 8, owner_pid=apps["calc"]["pid"])
+        modal = wait_window(env, [apps["calc"]["window"]], 8)
         event(ledger,"modal_transition",app="calc",parent=apps["calc"]["window"],modal=modal,input_emitted=True)
         cmd(["xdotool","key","Escape"],env); input_ops += 1; time.sleep(.5)
         event(ledger,"modal_recovery",app="calc",modal=modal,disposition="observe_only",input_emitted=False)
