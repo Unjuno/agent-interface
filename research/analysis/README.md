@@ -126,8 +126,10 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 0 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 2 retained result/failure directories</strong></summary>
 
+- [`attention_provenance_value_repair_successor_2039_v1/`](attention_provenance_value_repair_successor_2039_v1/)
+- [`composition_heldout_fixture_2068_v1/`](composition_heldout_fixture_2068_v1/)
 
 </details>
 
