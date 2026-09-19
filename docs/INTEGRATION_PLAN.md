@@ -62,6 +62,10 @@ with an inert backend. This establishes result interoperability, not visual
 guard interoperability or a new live performance result. The next bridge must
 still preserve visual target checks immediately before native pointer admission;
 copying a research alias to a native window ID is not sufficient.
+The newly reviewed [Issue #2337](https://github.com/Unjuno/agent-interface/issues/2337)
+requires that live bridge plus scored effects, fault handling, actual model usage
+availability and a held-out second workflow. It remains open: this result repair
+and the earlier research-route self-use do not satisfy that live integration gate.
 
 Starting repository revision: `2d78394e4128d9274030dcc52cf0957be2eb312d`.
 Use the existing [golden desktop v3 entry point](../runtime/golden-demo-v3.sh) and

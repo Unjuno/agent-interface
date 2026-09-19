@@ -58,8 +58,9 @@ Native refusal retains its error and returns `refused`. Unverified release does
 not count as completion. `status: success` requires both completion and an
 explicit positive task result, with no dispatch or cleanup failure.
 
-Cleanup failure sets `status: cleanup_failed` without erasing already reported
-completion or a supplied task result. Consumers must use `status` for overall
+Cleanup failure sets `status: cleanup_failed` and `task_success: false` without
+erasing already reported program completion; any supplied application result
+is preserved in `raw_dispatch`. Consumers must use `status` for overall
 success rather than either boolean alone. `raw_dispatch` retains the complete
 dispatch response, including native observations, release evidence and effects,
 even when the adapter cannot interpret it. The older `partial_effects` list is

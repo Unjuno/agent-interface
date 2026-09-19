@@ -33,6 +33,9 @@ def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None
          "authority_granted":False,"status":mapped,"partial_effects":nested.get("partial_effects",[]),
          "cleanup_error":cleanup,"lifecycle":states,"usage":dict(usage if usage is not None else result.get("usage") or {}),
          "native_status":native_status,"raw_dispatch":deepcopy(result)}
+    # Overall task success remains false after cleanup failure. The supplied
+    # application score and completed execution are still in raw_dispatch.
+    if cleanup is not None: row["task_success"]=False
     if "error" in result: row["diagnostic"]=result["error"]
     elif "error" in nested: row["diagnostic"]=nested["error"]
     return row

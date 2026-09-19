@@ -19,7 +19,8 @@ class GoldenV3AdapterTests(unittest.TestCase):
         row=adapt_dispatch_result({"status":"returned","result":{"program_completed":True,"task_success":True},"cleanup_error":"close"})
         self.assertEqual(row["status"],"cleanup_failed")
         self.assertTrue(row["program_completed"])
-        self.assertTrue(row["task_success"])
+        self.assertFalse(row["task_success"])
+        self.assertTrue(row["raw_dispatch"]["result"]["task_success"])
     def test_unknown_inputs_fail_closed(self):
         self.assertEqual(adapt_dispatch_result({"status":"mystery"})["adapter_error"],"UNKNOWN_STATUS")
         self.assertEqual(adapt_dispatch_result({"status":"returned"},lifecycle=["bogus"])["adapter_error"],"UNKNOWN_LIFECYCLE")

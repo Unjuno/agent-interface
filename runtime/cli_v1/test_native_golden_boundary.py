@@ -60,7 +60,7 @@ class NativeBoundaryTests(unittest.TestCase):
         row, backend = self.run_boundary(close_error=True)
         self.assertEqual(row["status"], "cleanup_failed")
         self.assertTrue(row["program_completed"])
-        self.assertIsNone(row["task_success"])
+        self.assertFalse(row["task_success"])
 
 
 class EvidenceRetentionTests(unittest.TestCase):
