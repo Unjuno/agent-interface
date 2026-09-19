@@ -256,3 +256,14 @@ independent workbook values were [116,476]. This removes host path conversion an
 a separate file-image read in presentation, while preserving the full native
 result and missing-image failures. Decision submission/waiting remain separate;
 no measured speed/token or total-turn reduction is established yet.
+
+
+[Native exchange self-use](../runtime/results/native-exchange-self-use-01/README.md)
+now joins submission, bounded waiting and exact-image presentation under the
+existing agent_exchange CLI for the private Calc harness. A normal stage returned
+the dialog in the same call; an intentional zero-wait stage resumed read-only
+without another program, and explicit finish returned the independent [116,476]
+score. Requests/replies use immutable slots and exact decision hashes. This closes
+the manual polling/presentation boundary in this bounded harness, not a public
+persistent transport or a matched speed/token result. Full response verbosity,
+server lifecycle reconciliation and transfer to other workloads remain open.
