@@ -20,6 +20,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y xvfb xdotool x11-utils inkscape libreoffice chromium
           python -m pip install pytest
+      - name: Install Python test dependency
+        run: python -m pip install --disable-pip-version-check --no-input pytest
       - name: Run contract test
         run: python -m pytest -q research/integration/mixed_app_identity_2666_live/test_identity_preflight.py
       - name: Run model-free live identity preflight
