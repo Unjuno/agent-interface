@@ -133,3 +133,14 @@ without input and its false task score retained. Twelve related local tests
 passed, including a real pipe subprocess, but successful primary live use through
 this relay is still unproven. Do not use a PTY or strip redraw codes and assume
 the response is intact. This candidate is not the default host integration.
+
+Follow-up: relay stdout now refuses a terminal before starting the SDK/server.
+The regression test uses a real PTY and verifies no allocation is created.
+[Primary pipe-preserved use](../../runtime/results/native-mcp-relay-pipe-01/README.md)
+then succeeded by redirecting stdout inside Linux to a fresh JSONL file and
+reading complete responses by explicit ID. The assistant sent instructions on
+stdin without per-decision files and viewed exact returned image blocks. Keep
+the prior paragraph as the failed first trial; successful single-stage use is
+now evidenced, but response-file reads, host integration and wider recovery
+remain open. Use LF shell scripts and exclusive output creation; never overwrite
+another connection's responses or retry an action when a read times out.

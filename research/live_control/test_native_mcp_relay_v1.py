@@ -12,6 +12,23 @@ from native_mcp_relay_v1 import Relay
 
 
 class RelayTests(unittest.IsolatedAsyncioTestCase):
+    @unittest.skipUnless(hasattr(os, 'openpty'), 'Linux PTY regression')
+    async def test_terminal_output_refuses_before_allocation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            master,slave=os.openpty()
+            try:
+                path=Path(tmp)/'allocation'
+                process=await asyncio.create_subprocess_exec(sys.executable,
+                    str(Path(__file__).with_name('native_mcp_relay_v1.py')),'--',
+                    '--allocation-directory',str(path),'--app','inkscape',
+                    stdin=asyncio.subprocess.DEVNULL,stdout=slave,stderr=asyncio.subprocess.PIPE)
+                _,stderr=await asyncio.wait_for(process.communicate(),timeout=10)
+                self.assertEqual(process.returncode,2)
+                self.assertIn(b'not a terminal',stderr)
+                self.assertFalse(path.exists())
+            finally:
+                os.close(master); os.close(slave)
+
     async def test_exact_content_and_duplicate_refusal(self):
         result = CallToolResult(content=[TextContent(type='text',text='{"status":"pending"}'),
             ImageContent(type='image',data='YWJj',mimeType='image/png')])
