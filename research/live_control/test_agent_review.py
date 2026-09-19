@@ -63,6 +63,15 @@ class ReviewTests(unittest.TestCase):
         self.assertEqual(result['image_status'], 'no_observation')
         self.assertEqual(result['receipt']['events'], self.rows)
 
+    def test_compact_review_preserves_image_and_expands_to_full_receipt(self):
+        from receipt_references import expand_receipt
+        self.write(outcome={'evidence': self.rows[-1]})
+        full = review(self.report, self.root)
+        compact = review(self.report, self.root, compact=True)
+        self.assertEqual(compact['image'], full['image'])
+        self.assertEqual(compact['image_reference'], full['image_reference'])
+        self.assertEqual(expand_receipt(compact['receipt']), full['receipt'])
+
 
 if __name__ == '__main__':
     unittest.main()

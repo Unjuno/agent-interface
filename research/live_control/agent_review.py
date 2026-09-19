@@ -13,13 +13,16 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from runtime.cli_v1.receipt import receipt_view
 
 
-def review(report_path, run_directory):
+def review(report_path, run_directory, *, compact=False):
     view = receipt_view(report_path)
     # Parse the same bytes whose digest is presented to the caller.
     data = Path(view['source']['path']).read_bytes()
     if hashlib.sha256(data).hexdigest() != view['source']['sha256']:
         raise ValueError('report changed during review')
     report = json.loads(data)
+    if compact:
+        from receipt_references import compact_receipt
+        view = compact_receipt(view)
     result = {'schema': 'agent-interface/review-v1', 'receipt': view,
               'image': None, 'authority': 'none'}
     try:
@@ -51,8 +54,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--report', required=True)
     parser.add_argument('--run-directory', required=True)
+    parser.add_argument('--compact', action='store_true', help='replace exact duplicate event copies with local references')
     args = parser.parse_args()
-    print(json.dumps(review(args.report, args.run_directory), allow_nan=False))
+    print(json.dumps(review(args.report, args.run_directory, compact=args.compact), allow_nan=False))
 
 
 if __name__ == '__main__':
