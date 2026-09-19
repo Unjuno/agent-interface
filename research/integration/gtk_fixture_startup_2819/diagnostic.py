@@ -9,7 +9,8 @@ def run(out: Path, timeout=8):
     try:
         socket=Path('/tmp/.X11-unix/X99')
         while not socket.exists() and xvfb.poll() is None and time.monotonic()-started<timeout: time.sleep(.02)
-        socket_ready=socket.exists()\n        env=dict(os.environ,DISPLAY=display)
+        socket_ready=socket.exists()
+        env=dict(os.environ,DISPLAY=display)
         fixture=subprocess.Popen([sys.executable,'research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py','--mode','useful','--meta',str(meta),'--effect',str(out/'effect.json'),'--events',str(out/'events.jsonl')],env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
         deadline=time.monotonic()+timeout
         while not meta.exists() and fixture.poll() is None and time.monotonic()<deadline: time.sleep(.02)
