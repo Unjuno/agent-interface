@@ -1,0 +1,1 @@
+# Selection identity successor #2018\n\nFinite standard-library-only oracle for semantic selection identity after visual guard rejection. Pixel-identical objects are distinguished only by a read-only semantic identity bound to surface and generation. Stale, unavailable, missing, or cross-surface evidence returns UNKNOWN. No GUI, model, network, input, or runtime authority.\n
