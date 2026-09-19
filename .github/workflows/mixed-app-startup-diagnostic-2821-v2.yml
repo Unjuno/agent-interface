@@ -19,7 +19,7 @@ jobs:
         run: |
           set +e
           mkdir -p "$RUNNER_TEMP/mixed-2821-diagnostic"
-          docker run --rm --network none -v "$GITHUB_WORKSPACE:/workspace:ro" -v "$RUNNER_TEMP/mixed-2821-diagnostic:/out" -w /workspace mixed-formal-2821:diagnostic --entrypoint python3 startup_diagnostic.py > "$RUNNER_TEMP/mixed-2821-diagnostic/result.json" 2> "$RUNNER_TEMP/mixed-2821-diagnostic/stderr.log"
+          docker run --rm --network none --entrypoint python3 -v "$GITHUB_WORKSPACE:/workspace:ro" -v "$RUNNER_TEMP/mixed-2821-diagnostic:/out" -w /workspace mixed-formal-2821:diagnostic startup_diagnostic.py > "$RUNNER_TEMP/mixed-2821-diagnostic/result.json" 2> "$RUNNER_TEMP/mixed-2821-diagnostic/stderr.log"
           printf '%s\n' "$?" > "$RUNNER_TEMP/mixed-2821-diagnostic/container_exit.txt"
           test -s "$RUNNER_TEMP/mixed-2821-diagnostic/result.json"
       - name: Upload diagnostic evidence
