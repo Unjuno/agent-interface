@@ -4,38 +4,38 @@ Status: HOLD_CI_RUNNER_UNAVAILABLE
 
 ## H/T/D/C/U
 
-- H: v7 pair-02 COAST_CONTROL's missed period is scheduler lateness, not missing terminal/event data.
-- T: Replay retained schedule/start timing in a pinned container using the production policy: emit one current sample, count overdue periods, never fabricate catch-up samples.
-- D: Preserve exact rows, container identity, output, source/result references, and CI disposition.
-- C: Deterministic replay PASS iff skipped periods are [0, 0, 1, 0, 0] over five retained rows and sample cardinality is unchanged. This is not an efficacy gate.
-- U: Do not run a fresh MAP01 allocation until replay and CI plumbing are complete.
+- H: The v7 pair-02 COAST_CONTROL missed period is a real scheduler-lateness observation, not a missing terminal/event record.
+- T: Replay the retained timing rows in a container, preserving the adapter policy: emit one current sample, count overdue periods, and never fabricate catch-up samples.
+- D: Retain the exact observed schedule/start rows, container command, output, and independent CI disposition.
+- C: PASS only for the deterministic replay gate when skipped periods are exactly [0, 0, 1, 0, 0] over the five retained rows and sample cardinality is unchanged. This is not an efficacy gate.
+- U: A fresh MAP01 allocation is not authorized until the replay gate and CI plumbing are complete.
 
-## Retained v7 observation
+## Retained observation
 
-Artifact 10591929720, pair-02/coast_control:
+From v7 artifact 10591929720, pair-02/coast_control:
 
-- 35 Hz, 138 samples
+- 35 Hz scorer, 138 samples
 - maximum interval 59.510392 ms
-- one missed sample period
+- exactly one missed_sample_periods
 - localized row: scheduled 208074242800, started 208105240031, lateness 30,997,231 ns
-- adjacent rows return to approximately 28.57 ms
+- neighboring rows resume at approximately 28.57 ms
 
 ## Container replay
 
 Image: python:3.12-alpine
 
+The replay used period 28,571,429 ns and the five retained schedule/start pairs.
+
 Output:
 
 OBSTAC_REPLAY_GATE PASS [0, 0, 1, 0, 0] 5
 
-Boundary replay also passed:
-
-OBSTAC_SCHEDULER_BOUNDARY PASS [('on-time', 0), ('one-period-overdue', 1), ('two-period-overdue', 2), ('boundary-before-next', 0)]
+Interpretation: the retained pattern is reproduced deterministically; one overdue period is accounted for and no synthetic sample is added.
 
 ## CI disposition
 
-- PR #3288 repaired workflow: merged as 860e3ec, but its checks were queued at merge.
-- Manual isolated run 35471911447, job 105974278434: queued.
-- Old blobless sparse-checkout runs are historical and were not rerun.
+- PR #3288 repaired workflow run 35471857847, job 105974123511: queued
+- Manual isolated run 35471911447, job 105974278434: queued
+- Old blobless sparse-checkout runs are retained but not reused or rerun.
 
-This is a scoped replay result plus infrastructure HOLD. It is not a MAP01 efficacy PASS.
+The CI state is an infrastructure HOLD, not a semantic failure and not a MAP01 efficacy result.
