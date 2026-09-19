@@ -24,6 +24,18 @@ This removes the caller request file only: native exchange still publishes its
 immutable request slot. After pending, submit exactly the committed decision
 with `resume:true` for read-only continuation; never resubmit it as a new action.
 An outer shell error alone is not evidence that input was absent.
+
+For a pending or retained request, you can omit the original decision and instead
+send `{"run_directory":"results-local/SESSION","stage":1,"resume":true,
+"decision_sha256":"SHA256_FROM_THE_COMMITTED_REQUEST"}`. Use the exact lowercase
+64-character digest returned by the pending response (or a verified retained
+request), not the image/report hash. This form is accepted only with resume=true
+and no decision. It reads the selected immutable request, verifies its digest and
+canonical bytes, then follows the existing source/reply checks and read-only
+wait. Missing/changed requests refuse; owner loss still requires reconciliation.
+It never creates a missing request, guesses the latest stage, or retries input.
+Full-decision resume remains supported. See
+[retained-response validation](../../runtime/results/native-resume-reference-01/README.md).
 The [primary-assistant stdin run](../../runtime/results/native-direct-stdin-01/README.md)
 completed the same Calc/Inkscape tasks without three caller-file creation calls.
 It is one ordered comparison, not a causal latency or token benefit result.
