@@ -24,7 +24,7 @@ GitHub Actions in this directory serve different purposes. They are grouped here
 - `runtime-preview-artifact-v1.yml`, `runtime-preview-artifact-v2.yml` — runtime-preview artifact workflows.
 
 ## Repository maintenance
-
+`r`n- `public-navigation.yml` — validates repository-relative links in the main public/navigation Markdown documents when those documents change.`r`n
 - `analysis-index.yml` — checks that the generated complete `research/analysis/` retained-result directory block matches every child with `REPORT.md` or `FORMAL_FAILURE.md`; refresh it with `python research/analysis/check_index.py --write`.
 - `research-workspace-index.yml` — checks that every top-level `research/` directory is reachable from `research/README.md` or `research/ROOT_NAMESPACE_MAP.md`.
 
