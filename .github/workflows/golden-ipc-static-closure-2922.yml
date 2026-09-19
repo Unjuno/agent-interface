@@ -27,3 +27,7 @@ jobs:
           python-version: '3.12'
       - name: Run static closure verifier
         run: python research/analysis/golden_ipc_transitive_closure_2922_v2/verify_static_closure.py
+      - name: Install no-GUI import dependencies
+        run: python -m pip install --disable-pip-version-check numpy pillow openpyxl python-xlib
+      - name: Run no-GUI import closure verifier
+        run: python research/analysis/golden_ipc_transitive_closure_2922_v2/verify_import_closure.py
