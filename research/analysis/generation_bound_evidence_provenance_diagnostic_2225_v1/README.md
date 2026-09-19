@@ -1,0 +1,3 @@
+# #2239 provenance diagnostic successor
+
+This is a diagnostic-only successor to #2225. It preserves every prior result and performs one fresh container execution solely to print expected/observed provenance fields. It does not claim PASS unless all fields are explicitly equal. No model, GUI, network, task input, or runtime transfer is used.\n\nH: the remaining mismatch can be localized to a specific provenance field.\nT: one container run, field-by-field diagnostics, and retained artifact.\nD: diagnostic PASS only when all equality checks pass; otherwise durable HOLD/FAIL.\nC: hash timing, image digest formatting, or source identity binding may differ.\nU: no task or model value claim.\n
