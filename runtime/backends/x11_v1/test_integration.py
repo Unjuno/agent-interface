@@ -22,6 +22,8 @@ def make_program(pid: str, *, seq=7, revision=3, expires=None, text="office"):
             {"op": "pointer_button", "button": "left", "down": True},
             {"op": "pointer_button", "button": "left", "down": False},
             {"op": "wait_update", "timeout_ms": 50},
+            {"op": "key_chord", "keys": ["Home"]},
+            {"op": "key_chord", "keys": ["SHIFT", "End"]},
             {"op": "text", "text": text},
             {"op": "key_chord", "keys": ["CTRL", "S"]},
             {"op": "wait_update", "timeout_ms": 40},
@@ -112,6 +114,14 @@ class X11IntegrationTests(unittest.TestCase):
         self.assertEqual(row["error"], "STALE_OBSERVATION")
         self.assertEqual(self.backend.emissions, before)
         self.assertFalse(self.effect.exists())
+
+    def test_supported_punctuation_has_exact_independent_effect(self):
+        payload = "a-._ A"
+        row = self.session.dispatch(make_program("punctuation", text=payload),
+                                    current_observation_seq=7, current_binding_revision=3)
+        self.assertEqual(row["status"], "completed")
+        self.assertEqual(json.loads(self.effect.read_text()), {"saved": True, "text": payload})
+        self.assertTrue(row["execution"]["releases"][-1]["verified"])
 
     def test_stale_binding_emits_zero_input(self):
         before = self.backend.emissions
