@@ -1,11 +1,11 @@
-name: MAP01 matched recovery entry gate 1866 r3
+name: MAP01 matched recovery entry gate 1866 r4
 on:
   push:
-    branches: ["research/map01-matched-recovery-entry-gate-1866-r3"]
+    branches: ["research/map01-matched-recovery-entry-gate-1866-r4"]
   pull_request:
     paths:
-      - "research/analysis/map01_matched_recovery_entry_gate_1866_r3/**"
-      - ".github/workflows/map01-matched-recovery-entry-gate-1866-r3.yml"
+      - "research/analysis/map01_matched_recovery_entry_gate_1866_r4/**"
+      - ".github/workflows/map01-matched-recovery-entry-gate-1866-r4.yml"
 jobs:
   gate:
     runs-on: ubuntu-24.04
@@ -15,13 +15,13 @@ jobs:
         env: { SHA: ${{ github.sha }} }
         run: |
           set -eu
-          mkdir -p research/analysis/map01_matched_recovery_entry_gate_1866_r3
+          mkdir -p research/analysis/map01_matched_recovery_entry_gate_1866_r4
           python - "${SHA}" <<'PY'
           import pathlib,sys,urllib.request
-          b=f"https://raw.githubusercontent.com/Unjuno/agent-interface/{sys.argv[1]}/research/analysis/map01_matched_recovery_entry_gate_1866_r3"
-          o=pathlib.Path("research/analysis/map01_matched_recovery_entry_gate_1866_r3")
+          b=f"https://raw.githubusercontent.com/Unjuno/agent-interface/{sys.argv[1]}/research/analysis/map01_matched_recovery_entry_gate_1866_r4"
+          o=pathlib.Path("research/analysis/map01_matched_recovery_entry_gate_1866_r4")
           with urllib.request.urlopen(b+"/gate.py",timeout=30) as r:(o/"gate.py").write_bytes(r.read())
           PY
-      - run: python -m py_compile research/analysis/map01_matched_recovery_entry_gate_1866_r3/gate.py
-      - working-directory: research/analysis/map01_matched_recovery_entry_gate_1866_r3
+      - run: python -m py_compile research/analysis/map01_matched_recovery_entry_gate_1866_r4/gate.py
+      - working-directory: research/analysis/map01_matched_recovery_entry_gate_1866_r4
         run: python gate.py
