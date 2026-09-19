@@ -38,6 +38,8 @@ def main() -> int:
         "terminal_count": len(terminals),
         "score_receipt_count": len(scores),
         "malformed_stdout_count": len(malformed),
+        "runner_failure": allocation.get("failure"),
+        "session_stderr_present": bool(allocation.get("session_stderr")),
         "controller_scope": "fixed bounded OS-input baseline; no model call",
         "claims_excluded": ["model competence", "general gameplay", "human speed", "token efficiency"],
     }
