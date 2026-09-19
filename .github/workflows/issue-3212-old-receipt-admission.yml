@@ -1,0 +1,19 @@
+name: issue 3212 old receipt admission
+on:
+  pull_request:
+    paths:
+      - research/chromium/issue-3212-old-receipt-admission-v1/**
+      - .github/workflows/issue-3212-old-receipt-admission.yml
+permissions:
+  contents: read
+jobs:
+  formal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Build fixture image
+        run: docker build -t old-receipt-admission:ci research/chromium/issue-3212-old-receipt-admission-v1
+      - name: Run three fresh allocations network-isolated
+        run: docker run --rm --network none old-receipt-admission:ci
