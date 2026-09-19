@@ -25,7 +25,7 @@ jobs:
             -e DISPLAY=:141 \
             -v "$RUNNER_TEMP/mixed-2499:/out" \
             mixed-app-formal-2821:offline-runtime \
-            > "$RUNNER_TEMP/mixed-2499/stdout.log" 2> "$RUNNER_TEMP/mixed-2499/stderr.log"
+            2> "$RUNNER_TEMP/mixed-2499/stderr.log" | tee "$RUNNER_TEMP/mixed-2499/stdout.log" > "$RUNNER_TEMP/mixed-2499/result.json"
           rc=$?
           if [ ! -s "$RUNNER_TEMP/mixed-2499/result.json" ]; then
             printf '%s\n' '{"decision":"STOP_MIXED_APP_LONG_SESSION","reason":"runtime image or formal runner produced no result","container_exit":'$rc'}' > "$RUNNER_TEMP/mixed-2499/result.json"
