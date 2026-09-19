@@ -1,0 +1,229 @@
+{
+  "allocation": "golden-v3-identity-20260920-a1",
+  "decision": "HOLD_IDENTITY_FAIL_CLOSED_NOT_PROVEN",
+  "display": ":0",
+  "rows": {
+    "source_mismatch": {
+      "current_binding_revision": 1,
+      "requested_binding_revision": 999,
+      "result": {
+        "authority_granted": false,
+        "cleanup_error": null,
+        "diagnostic": "STALE_BINDING",
+        "lifecycle": [
+          "dispatch"
+        ],
+        "native_status": "refused",
+        "partial_effects": [],
+        "program_completed": false,
+        "raw_dispatch": {
+          "result": {
+            "backend_emissions": 0,
+            "error": "STALE_BINDING",
+            "required_capabilities": [
+              "capture.frame",
+              "clock.monotonic",
+              "display.geometry",
+              "event.feedback",
+              "input.keyboard",
+              "input.pointer",
+              "input.release_all",
+              "input.text",
+              "window.focus"
+            ],
+            "status": "refused"
+          },
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "status": "returned"
+        },
+        "schema": "golden-v3-result-v2",
+        "status": "refused",
+        "task_success": false,
+        "usage": {}
+      },
+      "window_id": 4194307
+    },
+    "target_replacement": {
+      "old_window_id": 2097155,
+      "replacement_window_id": 2097155,
+      "result": {
+        "authority_granted": false,
+        "cleanup_error": null,
+        "lifecycle": [
+          "dispatch"
+        ],
+        "native_status": "completed",
+        "partial_effects": [],
+        "program_completed": true,
+        "raw_dispatch": {
+          "result": {
+            "admission": "accepted",
+            "execution": {
+              "completed_ops": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "emissions": 43,
+              "ended_ns": 23961719039130,
+              "observations": [
+                {
+                  "artifact": {
+                    "bytes": 4412,
+                    "height": 180,
+                    "mime_type": "image/png",
+                    "path": "/out/allocation-a3/target-replacement/capture/a8a64ce000754dfd9c2c53f45afe4681.png",
+                    "sha256": "14b02cc1fcadd36e14e936cea5ae21369f0f87d179038f338f346ea258376b5d",
+                    "source_raw_sha256": "eb3ee3a71851918c405b0b7abcd00e7b9d4d4bbd6fd6610487e882d18e63c756",
+                    "width": 400
+                  },
+                  "bytes": 288000,
+                  "capture_ended_ns": 23961716499870,
+                  "capture_started_ns": 23961716146863,
+                  "frame": "window_client",
+                  "height": 180,
+                  "native_window_id": 2097155,
+                  "region": [
+                    0,
+                    0,
+                    400,
+                    180
+                  ],
+                  "sha256": "eb3ee3a71851918c405b0b7abcd00e7b9d4d4bbd6fd6610487e882d18e63c756",
+                  "target": "fixture",
+                  "width": 400
+                }
+              ],
+              "program_emissions": 43,
+              "releases": [
+                {
+                  "buttons_down": [],
+                  "keys_down": [],
+                  "monotonic_ns": 23961719037463,
+                  "verified": true
+                }
+              ],
+              "started_ns": 23961610163966
+            },
+            "recovery_required": false,
+            "required_capabilities": [
+              "capture.frame",
+              "clock.monotonic",
+              "display.geometry",
+              "event.feedback",
+              "input.keyboard",
+              "input.pointer",
+              "input.release_all",
+              "input.text",
+              "window.focus"
+            ],
+            "status": "completed"
+          },
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "status": "returned"
+        },
+        "schema": "golden-v3-result-v2",
+        "status": "partial",
+        "task_success": null,
+        "usage": {}
+      }
+    },
+    "useful_control": {
+      "result": {
+        "authority_granted": false,
+        "cleanup_error": null,
+        "lifecycle": [
+          "dispatch"
+        ],
+        "native_status": "completed",
+        "partial_effects": [],
+        "program_completed": true,
+        "raw_dispatch": {
+          "result": {
+            "admission": "accepted",
+            "execution": {
+              "completed_ops": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "emissions": 35,
+              "ended_ns": 23961395263446,
+              "observations": [
+                {
+                  "artifact": {
+                    "bytes": 3867,
+                    "height": 180,
+                    "mime_type": "image/png",
+                    "path": "/out/allocation-a3/useful-control/capture/ecab510efdf1492a94c9f27f4502b29c.png",
+                    "sha256": "c6f93b4fe697d8201d0bee08b4b01718ef3ac1e755cb62195e5b420f7e5fb017",
+                    "source_raw_sha256": "229331af6e1b4f979996ad7121446e8ba8802183b2509258235a7882114cabe3",
+                    "width": 400
+                  },
+                  "bytes": 288000,
+                  "capture_ended_ns": 23961389539788,
+                  "capture_started_ns": 23961389071153,
+                  "frame": "window_client",
+                  "height": 180,
+                  "native_window_id": 2097155,
+                  "region": [
+                    0,
+                    0,
+                    400,
+                    180
+                  ],
+                  "sha256": "229331af6e1b4f979996ad7121446e8ba8802183b2509258235a7882114cabe3",
+                  "target": "fixture",
+                  "width": 400
+                }
+              ],
+              "program_emissions": 35,
+              "releases": [
+                {
+                  "buttons_down": [],
+                  "keys_down": [],
+                  "monotonic_ns": 23961395262362,
+                  "verified": true
+                }
+              ],
+              "started_ns": 23961285593807
+            },
+            "recovery_required": false,
+            "required_capabilities": [
+              "capture.frame",
+              "clock.monotonic",
+              "display.geometry",
+              "event.feedback",
+              "input.keyboard",
+              "input.pointer",
+              "input.release_all",
+              "input.text",
+              "window.focus"
+            ],
+            "status": "completed"
+          },
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "status": "returned"
+        },
+        "schema": "golden-v3-result-v2",
+        "status": "partial",
+        "task_success": null,
+        "usage": {}
+      },
+      "window_id": 2097155
+    }
+  },
+  "schema": "golden_v3_identity_fail_closed_result_v1"
+}
