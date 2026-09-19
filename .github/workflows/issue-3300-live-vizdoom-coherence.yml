@@ -1,0 +1,19 @@
+name: issue 3300 live ViZDoom coherence
+on:
+  pull_request:
+    paths:
+      - research/doom/issue-3300-live-vizdoom-coherence-v1/**
+      - .github/workflows/issue-3300-live-vizdoom-coherence.yml
+permissions:
+  contents: read
+jobs:
+  formal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Build pinned ViZDoom image
+        run: docker build -t issue-3300-vizdoom:ci research/doom/issue-3300-live-vizdoom-coherence-v1
+      - name: Run live coherence allocation network-isolated
+        run: docker run --rm --network none issue-3300-vizdoom:ci
