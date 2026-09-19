@@ -1,0 +1,3 @@
+# #2225 provenance audit successor
+
+H: provenance is complete when the exact parent source identity, source SHA-256, resolved container image digest, exact stdout, result SHA-256, and independent counters are retained and audited using module-relative paths.\n\nT: one fresh python:3.12-slim execution of the retained #2166 harness, followed by an independent audit from repository root.\n\nD: PASS_CONTAINER_PROVENANCE_COMPLETE_SCOPED only if all fields exist and controls pass.\n\nC: cwd-relative audit lookup can fail even when the scientific harness succeeds.\n\nU: no X11, PNG, model, task-input, runtime transfer, latency, or task-value claim.\n
