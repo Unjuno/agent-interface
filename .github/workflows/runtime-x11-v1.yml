@@ -11,6 +11,10 @@ on:
       - 'runtime/cli_v1/**'
       - 'research/live_control/native_handle_bridge_v1.py'
       - 'research/live_control/test_native_handle_bridge_v1.py'
+      - 'research/live_control/agent_review.py'
+      - 'research/live_control/test_agent_review.py'
+      - 'research/live_control/receipt_image.py'
+      - 'research/live_control/receipt_references.py'
       - '.github/workflows/runtime-x11-v1.yml'
   workflow_dispatch:
 
@@ -29,6 +33,11 @@ jobs:
             runtime/backends/x11_v1
             runtime/cli_v1
             runtime/selector_v1
+            runtime/motor_state_v1
+            research/live_control/agent_review.py
+            research/live_control/test_agent_review.py
+            research/live_control/receipt_image.py
+            research/live_control/receipt_references.py
             research/live_control/native_handle_bridge_v1.py
             research/live_control/test_native_handle_bridge_v1.py
             research/live_control/scoped_target_handle_v1.py
@@ -49,7 +58,7 @@ jobs:
       - name: Test experimental handle bridge boundary
         env:
           PYTHONPATH: research/live_control
-        run: python -m unittest -v test_native_handle_bridge_v1
+        run: python -m unittest -v test_native_handle_bridge_v1 test_agent_review
       - name: Run private Xvfb integration
         shell: bash
         run: |

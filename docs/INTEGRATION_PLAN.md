@@ -247,3 +247,12 @@ infrastructure stops before dedicated tests, so it is not evidence for promotion
 #2499 needs an actual persistent mixed-app trace rather than a union of earlier
 component runs; #2448 needs semantic/effect evidence beyond title cues. Preserve
 those gates while integrating useful, testable conditions into the common path.
+
+
+The existing result/image presenter now also accepts explicit native observations
+and feedback rows. In [actual Calc use](../runtime/results/native-review-self-use-01/README.md),
+the primary assistant saw three exact native frames and completed entry/save;
+independent workbook values were [116,476]. This removes host path conversion and
+a separate file-image read in presentation, while preserving the full native
+result and missing-image failures. Decision submission/waiting remain separate;
+no measured speed/token or total-turn reduction is established yet.
