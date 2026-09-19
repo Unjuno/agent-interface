@@ -160,3 +160,8 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 ### GTK research namespace
 
 - [`gtk/`](gtk/) — retained GTK/X11 fixture and adapter research paths; consult each child report for scope and disposition.
+
+### Recent additive namespaces
+
+- [`docker_ipc_schema_bridge_2818_v1/`](docker_ipc_schema_bridge_2818_v1/)
+- [`semantic_checkpoint_contract_2661_v1/`](semantic_checkpoint_contract_2661_v1/)
