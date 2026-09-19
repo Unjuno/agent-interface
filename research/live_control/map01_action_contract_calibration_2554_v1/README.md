@@ -1,0 +1,3 @@
+# MAP01 action-contract calibration construction (successor #2554)
+
+Construction-only calibration; it preserves #2472 and is not a formal crossed allocation. Fixed container `python:3.12-slim-bookworm@sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a`, `vizdoom==1.2.3`, freedoom2.wad/MAP01/PLAYER/RGB24. Five fresh arms (forward/use/left/right/noop) at 4 and 16 tics produced 10 rows. At 4 tics all arms were unchanged. At 16, forward changed position X, left/right changed angle, while use/noop stayed unchanged. This identifies a dwell boundary and authorizes a later formal allocation; it is not a model, GUI transport, authority, or production result.
