@@ -12,6 +12,36 @@ class BridgeResult:
     usage: dict[str, Any] | None
     reason: str | None = None
 
+def extract_schema_payload(jsonl: str) -> dict[str, Any]:
+    """Extract exactly one JSON agent message from Codex JSONL output.
+
+    Lifecycle events such as ``turn.completed`` are not schema payloads.
+    """
+    messages = []
+    for line in jsonl.splitlines():
+        if not line.strip():
+            continue
+        try:
+            event = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise ValueError("invalid_jsonl_event") from exc
+        item = event.get("item") if isinstance(event, dict) else None
+        if (event.get("type") == "item.completed" and isinstance(item, dict)
+                and item.get("type") == "agent_message"):
+            text = item.get("text")
+            if not isinstance(text, str):
+                raise ValueError("agent_message_text_required")
+            try:
+                payload = json.loads(text)
+            except json.JSONDecodeError as exc:
+                raise ValueError("agent_message_not_json") from exc
+            if not isinstance(payload, dict):
+                raise ValueError("schema_payload_object_required")
+            messages.append(payload)
+    if len(messages) != 1:
+        raise ValueError("exactly_one_schema_agent_message_required")
+    return messages[0]
+
 def validate_response(request: dict[str, Any], response: dict[str, Any]) -> BridgeResult:
     rid = request.get("request_id")
     if type(rid) is not str or not rid:

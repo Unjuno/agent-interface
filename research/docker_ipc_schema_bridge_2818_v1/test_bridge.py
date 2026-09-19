@@ -1,5 +1,5 @@
 import unittest
-from bridge import encode_request, validate_response
+from bridge import encode_request, extract_schema_payload, validate_response
 
 class BridgeTests(unittest.TestCase):
     def setUp(self):
@@ -15,5 +15,15 @@ class BridgeTests(unittest.TestCase):
     def test_request_encoding_requires_schema_hash(self):
         self.assertIn('"authority_granted": false', encode_request("r1", "a"*64, "probe"))
         with self.assertRaises(ValueError): encode_request("r1", "bad", "probe")
+    def test_jsonl_extracts_single_agent_message(self):
+        stream = '\n'.join([
+            '{"type":"thread.started","thread_id":"t"}',
+            '{"type":"item.completed","item":{"type":"agent_message","text":"{\\"answer\\":\\"ok\\"}"}}',
+            '{"type":"turn.completed","usage":{"output_tokens":1}}'])
+        self.assertEqual(extract_schema_payload(stream), {"answer": "ok"})
+    def test_lifecycle_only_or_multiple_messages_refuse(self):
+        with self.assertRaises(ValueError): extract_schema_payload('{"type":"turn.completed"}')
+        msg = '{"type":"item.completed","item":{"type":"agent_message","text":"{\\"x\\":1}"}}'
+        with self.assertRaises(ValueError): extract_schema_payload(msg + "\n" + msg)
 
 if __name__ == "__main__": unittest.main()
