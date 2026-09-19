@@ -16,7 +16,7 @@ def run(out: Path, timeout=8):
         alive=meta.exists() and fixture.poll() is None
         if fixture.poll() is None: fixture.terminate()
         fs,fe=fixture.communicate(timeout=5); xvfb.terminate(); xs,xe=xvfb.communicate(timeout=5)
-        result={'decision':'PASS_GTK_FIXTURE_STARTUP_DIAGNOSTIC' if socket.exists() and alive else 'STOP_GTK_FIXTURE_STARTUP','display':display,'x_socket_ready':socket.exists(),'meta_present':meta.exists(),'fixture_alive_at_meta':alive,'fixture_exit_code':fixture.returncode,'xvfb_exit_code':xvfb.returncode,'elapsed_ms':round((time.monotonic()-started)*1000,3),'fixture_stdout':fs,'fixture_stderr':fe,'xvfb_stdout':xs,'xvfb_stderr':xe}
+        result={'decision':'PASS_GTK_FIXTURE_STARTUP_DIAGNOSTIC' if socket_ready and alive else 'STOP_GTK_FIXTURE_STARTUP','display':display,'x_socket_ready':socket_ready,'meta_present':meta.exists(),'fixture_alive_at_meta':alive,'fixture_exit_code':fixture.returncode,'xvfb_exit_code':xvfb.returncode,'elapsed_ms':round((time.monotonic()-started)*1000,3),'fixture_stdout':fs,'fixture_stderr':fe,'xvfb_stdout':xs,'xvfb_stderr':xe}
         (out/'result.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
         return result
     finally:
