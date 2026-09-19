@@ -38,6 +38,6 @@ jobs:
       - name: Compile unified runtime surface
         run: python -m compileall -q runtime/cli_v1 runtime/selector_v1
       - name: Run CLI/API tests
-        run: python -m unittest -v runtime.cli_v1.test_cli runtime.selector_v1.test_selector
+        run: python -m unittest -v runtime.cli_v1.test_cli runtime.cli_v1.test_receipt runtime.selector_v1.test_selector
       - name: Run machine-readable doctor
         run: python -m runtime.cli_v1 doctor

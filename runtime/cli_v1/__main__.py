@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 
 from .api import dispatch, doctor
+from .receipt import receipt_view
 
 
 def _read_json(path: str):
@@ -24,6 +25,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(prog="agent-interface")
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("doctor")
+    view = sub.add_parser("receipt")
+    view.add_argument("--report", required=True)
+    view.add_argument("--raw", action="store_true")
     run = sub.add_parser("dispatch")
     run.add_argument("--program", required=True)
     run.add_argument("--targets", required=True)
@@ -34,6 +38,13 @@ def main() -> int:
 
     if args.command == "doctor":
         _emit(doctor())
+        return 0
+    if args.command == "receipt":
+        try:
+            _emit(receipt_view(args.report, raw=args.raw))
+        except (OSError, ValueError, TypeError) as error:
+            _emit({"schema": "agent-interface/receipt-view-v1", "status": "invalid_receipt", "error": str(error)})
+            return 2
         return 0
     try:
         program = _read_json(args.program)

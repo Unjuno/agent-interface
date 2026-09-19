@@ -2,9 +2,11 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
-Current priority (2026-09-13): follow [the updated goal](docs/CURRENT_GOAL.md).
-Establish an evolution ledger, audit failure classes/regressions, and define
-shared cross-domain evaluation before adding more local mechanisms. Use the
+Current priority (2026-09-19): [integrate one usable desktop path](docs/INTEGRATION_PLAN.md)
+from the existing components, following [the updated goal](docs/CURRENT_GOAL.md)
+and Issue #57. Other contributors continue research/benchmarks; this task focuses
+on setup, observation, guarded action, useful results and recovery through one
+coherent entry path. Use the
 [convergence review](research/evolution/freeze_criteria.md) to end discovery;
 the sections below remain a backlog, not automatic implementation instructions.
 ## Roadmap at a glance
