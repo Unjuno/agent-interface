@@ -11,6 +11,21 @@ class DockerBackendTest(unittest.TestCase):
         source = Path(__file__).with_name('docker_model_call_backend_v1.py').read_text()
         self.assertEqual(source.count('root.mkdir(parents=True, exist_ok=False)'), 1)
 
+    def test_missing_mount_stops_before_docker(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp); prompt=root/'p'; image=root/'i'; workspace=root/'w'; ipc=root/'ipc'
+            prompt.write_text('x'); image.write_text('x'); workspace.mkdir(); ipc.mkdir()
+            values={'AGENT_INTERFACE_DOCKER_RUNNER':str(root/'missing-runner'),'AGENT_INTERFACE_DOCKER_SCHEMA':str(prompt),'AGENT_INTERFACE_DOCKER_INSTRUCTIONS':str(prompt),'AGENT_INTERFACE_DOCKER_IMAGE':'test:local','AGENT_INTERFACE_DOCKER_IPC':str(ipc)}
+            old={k:os.environ.get(k) for k in values}
+            os.environ.update(values)
+            try:
+                with self.assertRaises(FileNotFoundError):
+                    build_command(root/'out', prompt, image, 'compiled', workspace)
+            finally:
+                for k,v in old.items():
+                    if v is None: os.environ.pop(k,None)
+                    else: os.environ[k]=v
+
     def test_unconfigured_stops_before_docker(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp); prompt=root/'p'; image=root/'i'; workspace=root/'w'; ipc=root/'ipc'
