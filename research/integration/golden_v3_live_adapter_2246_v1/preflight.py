@@ -6,6 +6,7 @@ ROOT=Path(__file__).resolve().parents[3]
 EXPECTED={
  "runtime/golden_desktop_demo_v3.py":"26db03b8400b03fbe5272bd4ae5ad9c3a82d31a2",
  "runtime/cli_v1/api.py":"f9dc26441c5f4ff9d7f57aa6a6a7b3849a1537d7",
+ "runtime/cli_v1/golden_v3.py":"b72fa2203c9b8be7a03e084cee1e43c239efe92a",
  "runtime/results/golden-desktop-app-server-v3-live-01/golden-report.json":"e168a9bdc84fc6b807f4e90806ec7c501da89689",
 }
 def blob_sha(data):
