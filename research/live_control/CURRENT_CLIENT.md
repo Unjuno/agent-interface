@@ -601,3 +601,13 @@ directional task. A subsequent primary-assistant run used a leading 50 ms
 caller-selected policy for that measured configuration, not app readiness
 acknowledgement, a new default, or a general performance claim. See
 [click-to-key evidence and recipe](../../runtime/results/native-key-boundary-01/README.md).
+
+Native guarded tails now accept an explicit `repeat` count on `key_chord`, e.g.
+`{"op":"key_chord","keys":["Right"],"repeat":18}`. The bridge expands it into
+ordinary press/release operations before admission; it adds no waits or retries.
+Counts are integers 1..126 and expanded tails fit the existing 128-op program
+limit (123 tail ops for click, 126 for keyboard). Other operations cannot carry
+repeat. This syntax belongs to the guarded bridge, not the public core opcode
+schema. A primary-assistant use saved x=86; the exact decision representation
+shrunk from 849 to 249 JSON bytes, with model tokens and latency unmeasured. See
+[key-repeat integration](../../runtime/results/native-key-repeat-01/README.md).

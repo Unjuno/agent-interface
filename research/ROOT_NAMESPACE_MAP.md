@@ -164,5 +164,6 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 
 ### Recent additive namespaces
 
+- [`verification/`](verification/)
 - [`docker_ipc_schema_bridge_2818_v1/`](docker_ipc_schema_bridge_2818_v1/)
 - [`semantic_checkpoint_contract_2661_v1/`](semantic_checkpoint_contract_2661_v1/)
