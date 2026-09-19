@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install test dependency
+        run: python -m pip install --disable-pip-version-check pytest
       - name: Run receipt auditor contract tests
         working-directory: research/integration/golden_v3_second_domain_2246_v1/formal_receipt_integrity_2740
         run: python -m pytest -q test_audit.py
