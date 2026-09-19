@@ -15,6 +15,7 @@ from append_checkpoint_v1 import load
 from durable_submit_v4 import initialize, run
 from received_continuation_v1 import start
 from received_exchange_v2 import request_once
+from source_pixel_transform_v1 import to_window_content
 
 
 HERE = Path(__file__).resolve().parent
@@ -105,11 +106,14 @@ class RuntimeClient:
             raise ValueError("prefix must normalize to a letter-led target alias")
         normalized = normalized[:25]
         aliases = {"field": normalized + "_field", "submit": normalized + "_submit"}
+        geometry = source.get("pointer_binding", {}).get("geometry")
         for kind in ("field", "submit"):
+            source_point = grounding[kind + "_point"]
+            content_point = to_window_content(source_point, geometry)
             row = self.submit("mint-" + aliases[kind], [{
                 "op": "target_handle_mint_from_point", "name": aliases[kind],
                 "coordinate_frame": "window_content", "source_sequence": source["sequence"],
-                "point": grounding[kind + "_point"],
+                "point": content_point,
                 "region_size": [24, 38] if kind == "field" else [24, 14],
                 "ttl_ms": 300000, "freshness_ms": 1500, "search_radius": 0,
                 "allowed_transformations": ["window_translation"],
