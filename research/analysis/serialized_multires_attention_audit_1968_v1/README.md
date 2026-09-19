@@ -1,0 +1,3 @@
+# Serialized multi-resolution attention audit (Issue #1968)
+
+This additive successor audits #1946/#1951 without changing their evidence. A deterministic fixture has two visually identical Save labels in distinct contexts. FULL and MULTI_RES packages use the same canonical serializer; exact recovery and contextual duplicate-label disambiguation pass, but the reduced package is 8 bytes larger (1160 vs 1152) when the authoritative raw fallback is retained. Decision: HOLD_NO_SIZE_GAIN. The 279-byte no-raw package cannot establish exact full-frame recovery. No model, GUI, network, or runtime claim.
