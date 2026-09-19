@@ -21,6 +21,13 @@ class X11BackendError(RuntimeError):
     pass
 
 
+class X11ExecutionError(X11BackendError):
+    """A stopped program whose completed prefix and release evidence survive."""
+    def __init__(self, execution):
+        self.execution = execution
+        super().__init__(execution["error"])
+
+
 class X11Backend:
     def __init__(self, display_name: str, targets: dict[str, int]):
         self.d = display.Display(display_name)
@@ -259,8 +266,21 @@ class X11Backend:
         observations: list[dict[str, Any]] = []
         releases: list[dict[str, Any]] = []
         started = time.monotonic_ns()
+        emissions_before = self.emissions
+        completed_ops = []
+        index = None
+
+        def evidence():
+            return {
+                "started_ns": started, "ended_ns": time.monotonic_ns(),
+                "emissions": self.emissions,
+                "program_emissions": self.emissions - emissions_before,
+                "observations": observations, "releases": releases,
+                "completed_ops": completed_ops,
+            }
+
         try:
-            for op in program["ops"]:
+            for index, op in enumerate(program["ops"]):
                 kind = op["op"]
                 if kind == "focus":
                     current_target = op["target"]
@@ -280,13 +300,15 @@ class X11Backend:
                 elif kind == "verify": pass
                 elif kind == "release_all": releases.append(self.release_all())
                 else: raise X11BackendError(f"unsupported op {kind}")
-        except Exception:
-            releases.append(self.release_all())
-            raise
-        return {
-            "started_ns": started,
-            "ended_ns": time.monotonic_ns(),
-            "emissions": self.emissions,
-            "observations": observations,
-            "releases": releases,
-        }
+                completed_ops.append(index)
+        except Exception as error:
+            try:
+                releases.append(self.release_all())
+            except Exception as release_error:
+                releases.append({"verified": False, "error": repr(release_error),
+                                 "monotonic_ns": time.monotonic_ns()})
+            partial = evidence()
+            partial.update(error=repr(error), failed_op=index,
+                           failed_op_effect="unknown; may have emitted partial input")
+            raise X11ExecutionError(partial) from error
+        return evidence()

@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from runtime.core_v1.contract import admit_program
-from .backend import X11Backend, X11BackendError
+from .backend import X11Backend, X11BackendError, X11ExecutionError
 
 
 class X11RuntimeSession:
@@ -50,7 +50,15 @@ class X11RuntimeSession:
                 "release": release,
             }
 
-        result = self.backend.execute(program)
+        try:
+            result = self.backend.execute(program)
+        except X11ExecutionError as error:
+            return {
+                "status": "execution_failed", "admission": "accepted",
+                "error": "BACKEND_EXECUTION_FAILED",
+                "required_capabilities": list(admission.required_capabilities),
+                "execution": error.execution,
+            }
         releases = result.get("releases", [])
         verified = bool(releases) and all(row.get("verified") for row in releases)
         return {
