@@ -1,0 +1,14 @@
+{
+  "decision": "STOP_INTEGRATED_EFFICIENCY_RUNNER",
+  "image": "mixed-formal-2992-debian@sha256:766abfd10382ab8b59ed793094a685481190f840d338b7bc4664ca162a2da619",
+  "network": "none",
+  "source_bundle": "research/live_control/run_integrated_efficiency_live_v1.py plus local imports from main",
+  "attempts": [
+    {"stage":"import", "error":"ModuleNotFoundError: No module named 'jsonschema'"},
+    {"stage":"host_dependency_mount", "dependency":"jsonschema==4.23.0", "error":"ModuleNotFoundError: No module named 'rpds.rpds'"},
+    {"stage":"pure_python_dependency_mount", "dependency":"jsonschema==4.17.3", "error":"ModuleNotFoundError: No module named 'pyrsistent'"}
+  ],
+  "allocation_started": false,
+  "model_calls": 0,
+  "gui_effects": 0
+}
