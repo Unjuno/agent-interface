@@ -1,33 +1,23 @@
+from __future__ import annotations
+import copy
 import unittest
-from .adapter import SCHEMA
-from .native_result import NativeResultError, motor_state_from_native_result
-
-def raw():
-    return {"result_id":"r1","target":{"surface_id":"surface-1","frame":"window-client"},"focus_confirmed":True,"ack_id":"ack-1","observation":{"observation_id":"obs-1","observed_pointer":{"x":1,"y":2}},"execution":{"transport_passed":True},"release":{"final_release_verified":True}}
-
-class NativeResultTests(unittest.TestCase):
-    def test_complete_result_maps_to_valid_state(self):
-        row=motor_state_from_native_result(raw()); self.assertEqual(row["schema"],SCHEMA); self.assertEqual(row["uncertainty"],"NONE")
-    def test_missing_ack_is_uncertain(self):
-        v=raw(); v.pop("ack_id"); row=motor_state_from_native_result(v); self.assertNotEqual(row["uncertainty"],"NONE"); self.assertEqual(row["input_ack"]["status"],"UNKNOWN")
-    def test_empty_pointer_is_uncertain(self):
-        v=raw(); v["observation"]["observed_pointer"]={}; self.assertNotEqual(motor_state_from_native_result(v)["uncertainty"],"NONE")
-    def test_null_pointer_is_uncertain(self):
-        v=raw(); v["observation"]["observed_pointer"]={"x":None,"y":2}; self.assertNotEqual(motor_state_from_native_result(v)["uncertainty"],"NONE")
-    def test_string_pointer_is_uncertain(self):
-        v=raw(); v["observation"]["observed_pointer"]={"x":"1","y":2}; self.assertNotEqual(motor_state_from_native_result(v)["uncertainty"],"NONE")
-    def test_bool_pointer_is_uncertain(self):
-        v=raw(); v["observation"]["observed_pointer"]={"x":True,"y":2}; self.assertNotEqual(motor_state_from_native_result(v)["uncertainty"],"NONE")
-    def test_large_integer_pointer_is_safe(self):
-        v=raw(); v["observation"]["observed_pointer"]={"x":10**309,"y":2}; self.assertEqual(motor_state_from_native_result(v)["uncertainty"],"NONE")
-    def test_missing_observation_is_uncertain(self):
-        v=raw(); v["observation"]=None; self.assertEqual(motor_state_from_native_result(v)["uncertainty"],"OS_UNCONFIRMED")
-    def test_release_error_precedes_verified_flag(self):
-        v=raw(); v["release"]={"error":"release_failed","final_release_verified":True}; self.assertEqual(motor_state_from_native_result(v)["release"]["status"],"FAILED")
-    def test_bad_revision_is_rejected(self):
-        v=raw(); v["binding_revision"]="1"
-        with self.assertRaises(NativeResultError): motor_state_from_native_result(v)
-    def test_authority_promotion_is_rejected(self):
-        v=raw(); v["extends_lease"]=True
-        with self.assertRaises(NativeResultError): motor_state_from_native_result(v)
+from .adapter import validate
+from .native_result import from_dispatch_result
+def context():
+    return {"state_id":"s1","owner_id":"o1","owner_revision":2,"observation_id":"obs1","surface_id":"surface1","coordinate_frame":"window_client","commanded_pointer":{"x":10,"y":20}}
+class NativeResultBridgeTests(unittest.TestCase):
+    def test_completed_release_is_valid_but_still_uncertain_about_os_observation(self):
+        result=from_dispatch_result({"result_id":"r1","status":"completed","admission":"accepted","execution":{"releases":[{"verified":True}]}},context=context())
+        self.assertEqual(result["accepted"],True); self.assertEqual(result["reason"],"ok"); self.assertEqual(result["state"]["uncertainty"],"OS_UNCONFIRMED"); self.assertEqual(result["state"]["release"]["status"],"VERIFIED_EMPTY"); self.assertEqual(result["state"]["input_ack"]["status"],"ACKED")
+    def test_missing_context_fails_closed_without_inventing_ids(self):
+        self.assertEqual(from_dispatch_result({"status":"completed"},context={}),{"accepted":False,"reason":"missing_context","uncertainty":"OS_UNCONFIRMED"})
+    def test_failed_or_unverified_release_remains_visible(self):
+        result=from_dispatch_result({"result_id":"r2","status":"release_unverified","admission":"accepted","execution":{"releases":[{"verified":False}]}},context=context())
+        self.assertEqual(result["accepted"],True); self.assertEqual(result["state"]["release"]["status"],"FAILED"); self.assertEqual(result["state"]["events"][0]["type"],"RELEASE_TRANSITION")
+    def test_does_not_mutate_context_or_grant_effect(self):
+        original=context(); frozen=copy.deepcopy(original); result=from_dispatch_result({"result_id":"r3","status":"refused"},context=original)
+        self.assertEqual(original,frozen); self.assertNotIn("task_effect",result["state"]); self.assertNotIn("authority",result["state"])
+    def test_validator_rejects_any_attempted_promotion(self):
+        result=from_dispatch_result({"result_id":"r4","status":"completed"},context=context()); result["state"]["authority"]={"lease":"extend"}
+        self.assertEqual(validate(result["state"]),(False,"unknown_or_authority_field"))
 if __name__=="__main__": unittest.main()

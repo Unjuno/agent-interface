@@ -1,0 +1,21 @@
+name: Native result MotorState bridge 2530
+on:
+  pull_request:
+    paths:
+      - 'runtime/motor_state_v1/**'
+      - '.github/workflows/native-result-motor-state-2530.yml'
+  push:
+    branches:
+      - 'research/native-result-motor-state-bridge-2530'
+    paths:
+      - 'runtime/motor_state_v1/**'
+      - '.github/workflows/native-result-motor-state-bridge-2530.yml'
+permissions:
+  contents: read
+jobs:
+  pure-bridge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run pure bridge tests in container
+        run: docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace python:3.12-slim python -m unittest -v runtime.motor_state_v1.test_adapter runtime.motor_state_v1.test_native_result
