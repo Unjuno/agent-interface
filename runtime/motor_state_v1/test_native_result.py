@@ -8,6 +8,7 @@ def raw():
         "result_id": "r1",
         "target": {"surface_id": "surface-1", "frame": "window-client"},
         "focus_confirmed": True,
+        "ack_id": "ack-1",
         "observation": {"observation_id": "obs-1", "observed_pointer": {"x": 1, "y": 2}},
         "execution": {"transport_passed": True},
         "release": {"final_release_verified": True},
@@ -19,6 +20,7 @@ class NativeResultTests(unittest.TestCase):
         row = motor_state_from_native_result(raw())
         self.assertEqual(row["schema"], SCHEMA)
         self.assertEqual(row["uncertainty"], "NONE")
+        self.assertEqual(row["input_ack"], {"id": "ack-1", "status": "ACKED"})
         self.assertEqual(row["release"]["status"], "VERIFIED_EMPTY")
 
     def test_missing_observation_is_uncertain_and_valid(self):
@@ -37,6 +39,19 @@ class NativeResultTests(unittest.TestCase):
         value = raw()
         value["observation"] = {"observation_id": "obs-1"}
         row = motor_state_from_native_result(value)
+        self.assertNotEqual(row["uncertainty"], "NONE")
+
+    def test_empty_pointer_cannot_emit_none(self):
+        value = raw()
+        value["observation"]["observed_pointer"] = {}
+        row = motor_state_from_native_result(value)
+        self.assertNotEqual(row["uncertainty"], "NONE")
+
+    def test_missing_ack_cannot_emit_acked_or_none(self):
+        value = raw()
+        del value["ack_id"]
+        row = motor_state_from_native_result(value)
+        self.assertEqual(row["input_ack"]["status"], "UNKNOWN")
         self.assertNotEqual(row["uncertainty"], "NONE")
 
     def test_release_error_precedes_verified_flag(self):
