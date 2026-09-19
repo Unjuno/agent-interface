@@ -1,0 +1,24 @@
+name: GTK receipt integrity contract
+
+on:
+  pull_request:
+    paths:
+      - "research/integration/golden_v3_second_domain_2246_v1/formal_receipt_integrity_2740/**"
+      - ".github/workflows/gtk-receipt-integrity-contract.yml"
+  push:
+    branches:
+      - "research/gtk-formal-receipt-integrity-2740"
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run receipt auditor contract tests
+        working-directory: research/integration/golden_v3_second_domain_2246_v1/formal_receipt_integrity_2740
+        run: python -m pytest -q test_audit.py
