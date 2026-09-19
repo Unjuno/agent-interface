@@ -28,7 +28,7 @@ def main():
         specs = [
             ("inkscape", resolve("inkscape"), ["--new"]),
             ("libreoffice", resolve("libreoffice"),
-             ["--norestore", "--nodefault", "--nolockcheck", "--calc"]),
+             ["--norestore", "--nolockcheck", "--calc"]),
             ("chromium", resolve("chromium", (
                 "/usr/lib/chromium/chromium",
                 "/usr/lib/chromium-browser/chromium-browser",
