@@ -1,4 +1,4 @@
-name: MAP01 v12 physical occupancy R1 successor r3
+name: MAP01 v12 physical occupancy R1 successor r4
 # r3 dependency/import gate audit: workflow-only synchronization marker
 
 on:
@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: map01-v12-physical-occupancy-r1-successor-r3
+  group: map01-v12-physical-occupancy-r1-successor-r4
   cancel-in-progress: false
 
 jobs:
@@ -53,15 +53,24 @@ jobs:
           MAP01_V12_ROOT: ${{ github.workspace }}/work/map01-r1/v12
         run: |
           python - <<'PY'
-          import runpy
+          import os
           import sys
           from pathlib import Path
-          Path("work/map01-r1/import-gate").mkdir(parents=True, exist_ok=True)
-          sys.argv = ["session_entry.py", "--out", "work/map01-r1/import-gate"]
-          runpy.run_path(
-              "research/doom/map01_v12_physical_occupancy_live_r1_v1/session_entry.py",
-              run_name="__map01_import_gate__",
-          )
+          source = Path(os.environ["MAP01_SOURCE_ROOT"]).resolve()
+          v12 = Path(os.environ["MAP01_V12_ROOT"]).resolve()
+          experiment = source / "research/doom/map01_v12_physical_occupancy_live_r1_v1"
+          for path in (
+              source / "research/live_control",
+              source / "research/observation_gating",
+              source / "research/doom",
+              v12,
+              experiment,
+          ):
+              sys.path.insert(0, str(path))
+          import doom_retained_input_backend_v3 as backend
+          from map01_v12_transition_owner import InputOwner
+          assert backend.InputOwner is not None
+          assert InputOwner is not None
           print("MAP01_IMPORT_BOUNDARY_PASS")
           PY
 
