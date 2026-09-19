@@ -77,3 +77,9 @@ def _legacy_call(root: Path, prompt: str, image: Path, contract: str, workspace:
     (root / "result.json").write_text(json.dumps(result, indent=2) + "\n",
                                        encoding="utf-8", newline="\n")
     return result
+
+
+# Stable public boundary consumed by the integrated-efficiency runner.  The
+# resolver keeps the legacy caller as the default while allowing an explicitly
+# configured backend module to replace it fail-closed.
+call = resolve(_legacy_call)
