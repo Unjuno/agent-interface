@@ -1,0 +1,49 @@
+name: MAP01 static gate argv repair
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-only-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Install dependency-qualified gate environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-numpy python3-openpyxl
+      - name: Run source-only argv contract check
+        run: |
+          mkdir -p work/map01-r1-argv-repair/gate
+          python research/analysis/map01_static_gate_argv_repair_2008_v1/check_gate.py \
+            | tee work/map01-r1-argv-repair/gate/RESULT.stdout
+      - name: Retain zero-science result
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          out = Path('work/map01-r1-argv-repair/RESULT.json')
+          out.write_text(json.dumps({
+              'task': 'MAP01-R1-STATIC-GATE-ARGV-REPAIR-2008-001',
+              'construction_invocations': 0,
+              'formal_invocations': 0,
+              'input_calls': 0,
+              'model_calls': 0,
+              'x11_calls': 0,
+          }, indent=2) + '\n')
+          PY
+      - name: Upload source-only evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: map01-static-gate-argv-repair-${{ github.run_id }}
+          path: work/map01-r1-argv-repair
+          if-no-files-found: error
