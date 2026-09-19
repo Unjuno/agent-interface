@@ -46,6 +46,21 @@ harness's concern.
 
 ## Managed startup
 
+Managed startup accepts `--text-gap-ms 0|2|10`, forwarding the existing research
+harness pacing policy. Default remains 0. For an explicitly paced Calc run add
+`--text-gap-ms 2`; allocation metadata reports the selected value and launch.json
+records it in the child argv. This is a launch-time choice, not a dynamic setting
+or automatic correction. Attach mode rejects it because the existing harness's
+policy cannot be changed by attaching another client.
+
+The [earlier Calc text experiment](../../runtime/results/native-calc-text-01/README.md)
+observed intermittent loss at zero gap and scoped success with explicit pacing.
+Managed startup previously omitted this option, preventing that policy from
+being selected through MCP. Passing it through closes that integration gap;
+it does not establish the cause of repeated-character loss or a universally
+safe delay. The harness still expands pacing into ordinary text/wait operations
+subject to existing admission and operation limits.
+
 For one new private Linux allocation, configure a fresh allocation directory
 whose parent exists and a Python interpreter with the harness dependencies:
 

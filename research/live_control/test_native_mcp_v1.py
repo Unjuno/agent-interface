@@ -19,7 +19,7 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
             allocation=Path(tmp)/'allocation'
             parameters=StdioServerParameters(command=sys.executable,args=[
                 str(Path(__file__).with_name('native_mcp_v1.py')),
-                '--allocation-directory',str(allocation),'--app','inkscape',
+                '--allocation-directory',str(allocation),'--app','inkscape','--text-gap-ms','2',
                 '--harness-python',str(Path(tmp)/'missing-python')],env=dict(os.environ))
             async with stdio_client(parameters) as (reader,writer):
                 async with ClientSession(reader,writer) as client:
@@ -30,7 +30,10 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(json.loads(status.content[0].text)['allocation']['status'],'not_started')
                     first=await client.call_tool('native_start',{'timeout':0})
                     self.assertEqual(json.loads(first.content[0].text)['allocation']['status'],'needs_review')
+                    self.assertEqual(json.loads(first.content[0].text)['allocation']['text_gap_ms'],2)
                     original=(allocation/'launch.json').read_bytes()
+                    argv=json.loads(original)['argv']
+                    self.assertEqual(argv[argv.index('--text-gap-ms')+1],'2')
                     modified=(allocation/'launch.json').stat().st_mtime_ns
                     again=await client.call_tool('native_start',{'timeout':0})
                     self.assertEqual(json.loads(again.content[0].text)['allocation']['status'],'needs_review')

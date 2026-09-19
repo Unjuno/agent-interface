@@ -176,6 +176,8 @@ if __name__ == '__main__':
     parser.add_argument('--seed',type=int,default=991116)
     parser.add_argument('--max-stages',type=int,default=4)
     parser.add_argument('--harness-python', help='Python with existing GUI harness dependencies')
+    parser.add_argument('--text-gap-ms', type=int, choices=(0,2,10), default=None,
+                        help='explicit existing harness text pacing policy (managed mode only; default 0)')
     args = parser.parse_args()
     allocation = None
     if args.allocation_directory:
@@ -183,7 +185,8 @@ if __name__ == '__main__':
             parser.error('--allocation-directory requires --app')
         from native_allocation_v1 import NativeAllocation
         allocation = NativeAllocation(args.allocation_directory,args.app,seed=args.seed,
-                                      max_stages=args.max_stages,python=args.harness_python)
-    elif args.app or args.harness_python:
-        parser.error('--app/--harness-python require --allocation-directory')
+                                      max_stages=args.max_stages,python=args.harness_python,
+                                      text_gap_ms=0 if args.text_gap_ms is None else args.text_gap_ms)
+    elif args.app or args.harness_python or args.text_gap_ms is not None:
+        parser.error('--app/--harness-python/--text-gap-ms require --allocation-directory')
     create_server(args.run_directory,allocation=allocation).run(transport='stdio')
