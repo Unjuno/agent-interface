@@ -1,5 +1,5 @@
+import hashlib
 import json
-import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -16,6 +16,11 @@ EXPECTED_ROLES = {
     "runtime/GOLDEN_DESKTOP_DEMO_V3.md": {"retained_result", "scope_limits"},
 }
 
+def git_blob_sha(path: Path) -> str:
+    data = path.read_bytes()
+    header = f"blob {len(data)}\\0".encode("ascii")
+    return hashlib.sha1(header + data).hexdigest()
+
 def main():
     r = json.loads((ROOT / "RESULT.json").read_text(encoding="utf-8"))
     m = json.loads((ROOT / "SOURCE_MANIFEST.json").read_text(encoding="utf-8"))
@@ -26,7 +31,7 @@ def main():
         path = REPO / source["path"]
         assert path.is_file(), source["path"]
         assert set(source["roles"]) == EXPECTED_ROLES[source["path"]]
-        actual = subprocess.check_output(["git", "hash-object", str(path)], text=True).strip()
+        actual = git_blob_sha(path)
         assert actual == source["blob_sha"], (source["path"], actual, source["blob_sha"])
     rows = r["rows_detail"]
     assert [x["state"] for x in rows] == EXPECTED
