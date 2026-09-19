@@ -1,0 +1,32 @@
+name: golden v3 cli lifecycle trace 2309
+on:
+  pull_request:
+    paths:
+      - "research/integration/golden_v3_cli_lifecycle_trace_2309_v1/**"
+      - ".github/workflows/golden-v3-cli-lifecycle-trace-2309.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    container: python:3.12-slim
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Compile
+        run: python -m py_compile research/integration/golden_v3_cli_lifecycle_trace_2309_v1/adapter.py research/integration/golden_v3_cli_lifecycle_trace_2309_v1/audit.py
+      - name: Native-equivalent trace
+        run: python research/integration/golden_v3_cli_lifecycle_trace_2309_v1/audit.py --mode native > native.json
+      - name: Container trace and agreement
+        run: python research/integration/golden_v3_cli_lifecycle_trace_2309_v1/audit.py --mode container > container.json && python -c "import json; a=json.load(open('native.json')); b=json.load(open('container.json')); assert a['digest']==b['digest']; assert a['mode']=='native' and b['mode']=='container'; print(json.dumps({'agreement':'PASS','digest':a['digest'],'rows':a['rows']}))"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: golden-v3-cli-lifecycle-trace-2309
+          path: |
+            native.json
+            container.json
