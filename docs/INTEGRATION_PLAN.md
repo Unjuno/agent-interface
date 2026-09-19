@@ -267,3 +267,11 @@ score. Requests/replies use immutable slots and exact decision hashes. This clos
 the manual polling/presentation boundary in this bounded harness, not a public
 persistent transport or a matched speed/token result. Full response verbosity,
 server lifecycle reconciliation and transfer to other workloads remain open.
+
+
+The [native observation-reference trial](../runtime/results/native-compact-self-use-01/README.md)
+adds optional exact deduplication to the existing presenter/exchange. Primary use
+with new values [360,125] succeeded. Same-report expansion and image equality
+passed; two reply text bodies shrank about 7-8%, but base64-inclusive transport
+shrunk less than 1%. Keep opt-in: this is modest byte evidence, not actual model
+usage or latency benefit. Cross-app transfer remains the larger outstanding step.

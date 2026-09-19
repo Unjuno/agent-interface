@@ -188,7 +188,7 @@ producer. The image remains a historical capture; it grants no input authority.
 
 A missing explicit observation returns `no_observation`. Broken references or
 identity mismatch return `needs_review` with the receipt preserved. No old image
-is substituted. `--compact` is not supported for native reports. See the
+is substituted. Optional native `--compact` is described below. See the
 [actual Calc use](../../runtime/results/native-review-self-use-01/README.md).
 
 
@@ -222,5 +222,24 @@ private single-owner research transport, not the promoted public API.
 The actual [Calc exchange run](../../runtime/results/native-exchange-self-use-01/README.md)
 includes normal combined action/image, intentional timeout/read-only resume,
 and independent saved-file evaluation. The response is a full native report;
-compact review is not supported. CLI exit alone is not a task-success signal:
+optional compact review is described below. CLI exit alone is not a task-success signal:
 inspect pending/error status or the explicit independent evaluation in the report.
+
+
+## Optional exact native observation references
+
+Use `agent_review --native --compact` or `agent_exchange --native --review compact`
+(or native request `compact:true`) to replace exact copies of the top-level
+`native_result.observation` with local references. The complete observation stays
+in the same receipt. `observation_references` lists the only JSON-pointer paths
+that are references; other reference-shaped values remain literal. A compact
+receipt declares `agent-interface/native-receipt-v1-observation-refs`.
+`expand_native_receipt` reconstructs the full receipt without a tool call.
+
+This compares complete observation objects, including identity and time; different
+captures are never merged just because pixels match. Errors and all guard checks
+remain. The image itself is unchanged. If reference overhead would not reduce
+serialized bytes, the ordinary receipt is returned. Default behavior remains full.
+The [fresh Calc run and paired byte comparison](../../runtime/results/native-compact-self-use-01/README.md)
+show a modest text reduction; actual model tokens, cost and performance benefits
+remain unmeasured.
