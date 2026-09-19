@@ -126,6 +126,10 @@ The table below summarizes major analytical chains and representative retained o
 - [`safety_watchdog_claim_sink_cutset_r1_a2_v1/`](safety_watchdog_claim_sink_cutset_r1_a2_v1/)
 - [`serialized_attention_duplicate_label_successor_1968_v1/`](serialized_attention_duplicate_label_successor_1968_v1/)
 
+- [`attention_budgeting_successor_1940_v1/`](attention_budgeting_successor_1940_v1/)
+- [`bounded_skew_context_join_successor_1218_v1/`](bounded_skew_context_join_successor_1218_v1/)
+- [`semantic_delta_successor_2000_v1/`](semantic_delta_successor_2000_v1/)
+
 </details>
 ## Complete retained result directory index
 
