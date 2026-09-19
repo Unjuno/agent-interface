@@ -1,7 +1,6 @@
 """Fail-closed source and authority preflight for successor #2337."""
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import subprocess
