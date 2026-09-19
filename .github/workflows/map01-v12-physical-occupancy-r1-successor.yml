@@ -1,4 +1,4 @@
-name: MAP01 v12 physical occupancy R1 successor r2
+name: MAP01 v12 physical occupancy R1 successor r3
 
 on:
   pull_request:
@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: map01-v12-physical-occupancy-r1-successor-r2
+  group: map01-v12-physical-occupancy-r1-successor-r3
   cancel-in-progress: false
 
 jobs:
@@ -53,6 +53,10 @@ jobs:
         run: |
           python - <<'PY'
           import runpy
+          import sys
+          from pathlib import Path
+          Path("work/map01-r1/import-gate").mkdir(parents=True, exist_ok=True)
+          sys.argv = ["session_entry.py", "--out", "work/map01-r1/import-gate"]
           runpy.run_path(
               "research/doom/map01_v12_physical_occupancy_live_r1_v1/session_entry.py",
               run_name="__map01_import_gate__",
