@@ -1,6 +1,12 @@
 name: public motor state package 2508 current main
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - runtime/motor_state_v1/native_result.py
+      - runtime/motor_state_v1/test_native_result.py
+      - runtime/motor_state_v1/adapter.py
+      - .github/workflows/public-motor-state-package-2508-current-main.yml
   push:
     paths:
       - runtime/motor_state_v1/native_result.py
