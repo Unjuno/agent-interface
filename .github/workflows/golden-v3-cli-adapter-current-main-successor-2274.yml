@@ -1,0 +1,29 @@
+name: golden v3 cli adapter current-main successor 2274
+on:
+  pull_request:
+    paths:
+      - "research/integration/golden_v3_cli_adapter_successor_2260_v1/**"
+      - ".github/workflows/golden-v3-cli-adapter-current-main-successor-2274.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    container: python:3.11-bookworm
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Compile fixture
+        run: python -m py_compile research/integration/golden_v3_cli_adapter_successor_2260_v1/adapter.py research/integration/golden_v3_cli_adapter_successor_2260_v1/audit.py
+      - name: Run independent replay audit
+        run: python research/integration/golden_v3_cli_adapter_successor_2260_v1/audit.py | tee adapter-replay-audit.txt
+      - name: Retain audit output
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-v3-cli-adapter-current-main-successor-2274
+          path: adapter-replay-audit.txt
