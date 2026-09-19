@@ -14,7 +14,8 @@ NODE_WSL = Path("/mnt/c/Program Files/nodejs/node.exe")
 CLI_WSL = Path("/mnt/c/Users/junny/AppData/Roaming/npm/node_modules/@openai/codex/bin/codex.js")
 NODE_ARG = r"C:\Program Files\nodejs\node.exe"
 CLI_ARG = r"C:\Users\junny\AppData\Roaming\npm\node_modules\@openai\codex\bin\codex.js"
-RUNNER = HERE / "target_handle_model_runner_v2.py"
+RUNNER = Path(os.environ.get("AGENT_INTERFACE_MODEL_RUNNER",
+                            str(HERE / "target_handle_model_runner_v2.py")))
 INSTRUCTIONS = HERE / "schema_preflight_responder_v1.txt"
 MODEL = "gpt-5.6-luna"
 EFFORT = "low"
@@ -38,7 +39,7 @@ def compatibility_identity(schema):
         "instructions_sha256": sha(INSTRUCTIONS), "cli_entry_sha256": sha(CLI_WSL),
         "cli_version": version([str(NODE_WSL), CLI_ARG, "--version"]),
         "node_version": version([str(NODE_WSL), "--version"]),
-        "request_shape": "target_handle_model_runner_v2:handle:no-image:output-schema"}
+        "request_shape": f"{RUNNER.name}:handle:no-image:output-schema"}
     encoded = json.dumps(identity, sort_keys=True, separators=(",", ":")).encode()
     return identity, hashlib.sha256(encoded).hexdigest()
 
