@@ -13,6 +13,7 @@ def main():
     parser.add_argument("--meta", type=Path, required=True)
     parser.add_argument("--effect", type=Path, required=True)
     parser.add_argument("--events", type=Path)
+    parser.add_argument("--mode", choices=["useful", "no_effect", "partial"], default="useful")
     args = parser.parse_args()
 
     window = Gtk.Window(title="AgentInterfaceGtkFixture")
@@ -33,9 +34,15 @@ def main():
 
     def save():
         value = entry.get_text()
-        args.effect.write_text(json.dumps({"saved": True, "text": value}, sort_keys=True) + "\n", encoding="utf-8")
+        if args.mode == "no_effect":
+            log_event("accepted_no_effect")
+            return False
+        receipt = {"saved": True, "text": value}
+        if args.mode == "partial":
+            receipt["collateral"] = "fixture-label"
+        args.effect.write_text(json.dumps(receipt, sort_keys=True) + "\n", encoding="utf-8")
         label.set_text("saved:" + value)
-        log_event("save")
+        log_event("save" if args.mode == "useful" else "partial_save")
         return False
 
     def key_press(_widget, event):
