@@ -6,10 +6,20 @@ import json
 from collections import Counter
 from pathlib import Path
 
+from runtime.motor_state_v1 import validate as validate_motor_state
+
 
 # Only routine records with retained raw evidence may leave the default view.
 # Unknown event types always remain visible.
 ROUTINE = {"observation", "command", "decision_evidence", "accepted", "step_started", "step_completed"}
+
+
+def _motor_state_validation(report: dict) -> dict:
+    """Expose validation evidence only; never turn receipt data into authority."""
+    if "motor_state" not in report:
+        return {"present": False, "accepted": False, "reason": "missing"}
+    accepted, reason = validate_motor_state(report["motor_state"])
+    return {"present": True, "accepted": accepted, "reason": reason}
 
 
 def receipt_view(path: str, *, raw: bool = False) -> dict:
@@ -33,7 +43,7 @@ def receipt_view(path: str, *, raw: bool = False) -> dict:
     latest = [r for r in observations if r["sequence"] == newest]
     visible = [r for r in records if r.get("event") not in ROUTINE]
     counts = Counter(str(r.get("event", "<missing>")) for r in records)
-    return {
+    result = {
         "schema": "agent-interface/receipt-view-v1",
         "authority": "none",
         "source": {"path": str(source), "sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)},
@@ -44,3 +54,5 @@ def receipt_view(path: str, *, raw: bool = False) -> dict:
         "omitted_from_view": len(records) - len(latest) - len(visible),
         "scope": "Historical receipt only. Earlier observations and routine records remain in source; use --raw for history. No input or freshness granted.",
     }
+    result["motor_state_validation"] = _motor_state_validation(report)
+    return result
