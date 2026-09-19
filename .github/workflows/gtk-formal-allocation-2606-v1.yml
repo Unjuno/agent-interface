@@ -1,6 +1,11 @@
 name: GTK bounded formal allocation #2606 v1
 
 on:
+  pull_request:
+    paths:
+      - ".github/workflows/gtk-formal-allocation-2606-v1.yml"
+      - "research/integration/**"
+      - "runtime/**"
   push:
     branches:
       - "research/gtk-formal-allocation-2606-v1"
