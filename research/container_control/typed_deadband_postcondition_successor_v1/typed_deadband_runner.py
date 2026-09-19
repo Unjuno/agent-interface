@@ -376,7 +376,8 @@ def run_experiment(root: Path, pairs: int, decisions: int, planner_wait_s: float
         "pairs": pairs,
         "decisions_per_arm": decisions,
         "planner_wait_s": planner_wait_s,
-        "cover_budget_s": cover_budget_s,\n        "deadband_abs": deadband_abs,
+        "cover_budget_s": cover_budget_s,
+        "deadband_abs": deadband_abs,
         "pair_results": all_pairs,
         "paired_recovery_minus_coast": {
             "unsafe_ms": unsafe_delta,
