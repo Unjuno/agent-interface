@@ -37,8 +37,8 @@ def motor_state_from_native_result(raw: Mapping[str, Any]) -> dict[str, Any]:
     ack_ok = isinstance(ack_id, str) and bool(ack_id)
     pointer_ok = (
         isinstance(observed, Mapping)
-        and isinstance(observed.get("x"), (int, float))
-        and isinstance(observed.get("y"), (int, float))
+        and type(observed.get("x")) in (int, float)
+        and type(observed.get("y")) in (int, float)
     )
     certainty_ok = isinstance(obs, Mapping) and pointer_ok and transport_ok and focus_ok and ack_ok
     uncertainty = "NONE" if certainty_ok else "FOCUS_UNKNOWN" if isinstance(obs, Mapping) else "OS_UNCONFIRMED"
