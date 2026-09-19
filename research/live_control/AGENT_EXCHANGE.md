@@ -190,3 +190,37 @@ A missing explicit observation returns `no_observation`. Broken references or
 identity mismatch return `needs_review` with the receipt preserved. No old image
 is substituted. `--compact` is not supported for native reports. See the
 [actual Calc use](../../runtime/results/native-review-self-use-01/README.md).
+
+
+## Submit, wait and review the private native harness
+
+Use `agent_exchange.py --native --request request.json` with an explicit object:
+
+```json
+{
+  "run_directory": "results-local/my-private-run",
+  "stage": 1,
+  "decision": {"source_sequence": 1, "point": [18, 108], "tail": [],
+               "expected_title": "sheet.xlsx — LibreOffice Calc"},
+  "timeout": 5
+}
+```
+
+Use only decisions grounded in the presented source. The existing Calc harness
+must already be running with a fresh output directory. This mode publishes one
+immutable stage request, waits up to the polling budget (0..30 seconds), then
+returns the correlated native report and image via the existing presenter.
+A reply is correlated by stage and hash of the exact committed decision bytes.
+
+On `pending`, input may have happened: keep the exact request, add `resume:true`,
+and call again to read only. A second submission refuses the occupied slot.
+A missing request on resume refuses instead of creating one. Never delete request
+slots to retry, reuse run directories, or infer that a timeout means no effect.
+The adapter cannot deduplicate across a restarted/mutated server. This is a
+private single-owner research transport, not the promoted public API.
+
+The actual [Calc exchange run](../../runtime/results/native-exchange-self-use-01/README.md)
+includes normal combined action/image, intentional timeout/read-only resume,
+and independent saved-file evaluation. The response is a full native report;
+compact review is not supported. CLI exit alone is not a task-success signal:
+inspect pending/error status or the explicit independent evaluation in the report.
