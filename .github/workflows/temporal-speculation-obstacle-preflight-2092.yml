@@ -4,6 +4,10 @@ on:
     paths:
       - research/measurement/temporal_speculation_obstacle_preflight_2092_v1/**
       - .github/workflows/temporal-speculation-obstacle-preflight-2092.yml
+  pull_request:
+    paths:
+      - research/measurement/temporal_speculation_obstacle_preflight_2092_v1/**
+      - .github/workflows/temporal-speculation-obstacle-preflight-2092.yml
   workflow_dispatch:
 jobs:
   preflight:
