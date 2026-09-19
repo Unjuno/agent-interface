@@ -258,3 +258,13 @@ checks ancestry and preserves that exact focus, rather than changing focus and
 invalidating its own handle. A stable child is accepted by read-only review and
 title-cue feedback; task effect still needs independent scoring. See the
 [retained failures and actual Inkscape use](../../runtime/results/native-inkscape-transfer-01/README.md).
+
+For the tested Inkscape shape-selection recipe, place an explicit
+`{"op":"wait_update","timeout_ms":50}` immediately after the guarded click and
+before dependent Right chords in the tail. A fixed 16-case comparison found
+exact saved geometry in 8/8 cases with this wait versus 4/8 without it; waiting
+only before save did not eliminate failures. Fresh primary use with seven chords
+also saved the expected x=64. This is a caller-selected recipe for that setup,
+not a global default, a minimum sufficient delay or a semantic readiness test.
+Keep the returned image and independent effect check. See
+[allocation, failures and actual use](../../runtime/results/native-inkscape-boundaries-01/README.md).

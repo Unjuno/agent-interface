@@ -286,3 +286,13 @@ same exchange/review path completed one rightward shape move/save. Independent
 SVG scoring found x 50 -> 84 with y/size unchanged. Uppercase-key refusal and
 pre-fix focus failure remain retained. The action was keyboard nudge, not drag;
 18 chords versus +34 SVG units is not an exact motor-delivery result.
+
+The [Inkscape input-boundary comparison](../runtime/results/native-inkscape-boundaries-01/README.md)
+keeps that precision failure and tests explicit waits at two distinct boundaries.
+After-click 50 ms yielded exact saved geometry in 8/8 allocated cases versus 4/8
+without it; a wait only before save was insufficient. Fresh primary use with an
+unallocated count of seven saved x=64 as expected. Integrate the existing explicit
+wait as a scoped usage recipe, without adding primitives or changing shared
+defaults. Other versions/loads, minimum sufficient delay and semantic readiness
+remain unmeasured. Newly inspected #2704 (crash replay) and #2706 (independent
+formal receipt emission) are not closed by this result.
