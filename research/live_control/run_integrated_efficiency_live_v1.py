@@ -216,6 +216,10 @@ def run_arm(arm, seed, workspace):
             row, cached, detail = run_task(client, arm, task, index, cached,
                                             workspace, OUT / "model-calls" / arm)
             rows.append(row); details.append(detail)
+            # Preserve each completed task before entering the next route. A
+            # later fail-closed reuse validation must not erase the prior
+            # task's adaptive outcome or evidence.
+            dump(OUT / "arms" / arm / "task-details.partial.json", details)
         independent = client.finish("finish-integrated-live-01-" + arm)
         final_history = records(client.runtime / "submission-history.jsonl")
         for row, detail in zip(rows, details):
