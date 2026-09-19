@@ -39,6 +39,7 @@ New work should normally use a category directory. Existing direct-root paths re
 ## Retained direct-root research families
 
 - [`session_handoff/`](session_handoff/)
+- [`gtk_fresh_post_effect_2673/`](gtk_fresh_post_effect_2673/)
 
 - [`x11/`](x11/)
 
