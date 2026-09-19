@@ -1,0 +1,63 @@
+{
+  "decision": "PASS_READINESS_CURRENTNESS_X11_COHERENT_CAPTURE_SCOPED",
+  "deterministic_gzip_bytes": 123473,
+  "deterministic_gzip_sha256": "4a5d6fe415723ea6660ad19b59736ed2bd6f9a721fac6cec54e00e2b7718ca20",
+  "errors": [],
+  "formal_invocations": 1,
+  "issue": 1464,
+  "raw_result_bytes": 1400892,
+  "raw_result_sha256": "48201c7f2c03ff9b4a5c4ff13c48345acd3bef66526f85c2be98189884ae6756",
+  "reruns": 0,
+  "summary": {
+    "coherent_generation_decode_unknown": 0,
+    "coherent_latency_ns": {
+      "max": 1065717,
+      "p50": 87459,
+      "p95": 141399,
+      "p99": 235499
+    },
+    "coherent_mismatch": 0,
+    "coherent_rows": 3200,
+    "directed_controls_pass": 8,
+    "directed_controls_total": 8,
+    "ordinary_authority_actions": 0,
+    "rows": 6400,
+    "scenarios": {
+      "hard": {
+        "coherent_effects": 0,
+        "coherent_mismatch": 0,
+        "coherent_n": 800,
+        "split_effects": 0,
+        "split_mismatch": 0,
+        "split_n": 800
+      },
+      "nonready": {
+        "coherent_effects": 0,
+        "coherent_mismatch": 0,
+        "coherent_n": 800,
+        "split_effects": 0,
+        "split_mismatch": 0,
+        "split_n": 800
+      },
+      "race": {
+        "coherent_effects": 0,
+        "coherent_mismatch": 0,
+        "coherent_n": 800,
+        "split_effects": 800,
+        "split_mismatch": 800,
+        "split_n": 800
+      },
+      "stable_valid": {
+        "coherent_effects": 800,
+        "coherent_mismatch": 0,
+        "coherent_n": 800,
+        "split_effects": 800,
+        "split_mismatch": 0,
+        "split_n": 800
+      }
+    },
+    "split_rows": 3200,
+    "task_input_actions": 0
+  },
+  "task": "READINESS-CURRENTNESS-X11-COHERENT-CAPTURE-20260918-001"
+}
