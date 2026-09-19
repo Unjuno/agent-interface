@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Mapping
 
 SCHEMA = "agent-interface/observation-recovery-v1"
-_ALLOWED_FIELDS = {"request_id","session_id","surface_id","freshness_seq","deadline_ms",
+_ALLOWED_FIELDS = {"schema","request_id","session_id","surface_id","freshness_seq","deadline_ms",
                    "want","rejected_action_id","reason"}
 _ALLOWED_WANT = {"focus","surface","geometry","motor","observation"}
 _REQUIRED_WANT = {"focus","surface","observation"}
