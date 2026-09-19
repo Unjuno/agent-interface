@@ -13,8 +13,12 @@ def cmd(argv, env, timeout=15):
     return subprocess.run(argv, env=env, text=True, capture_output=True,
                           timeout=timeout, check=False)
 
-def windows(env):
-    q = cmd(["xdotool", "search", "--onlyvisible", "--name", ".*"], env)
+def windows(env, pid=None):
+    argv = ["xdotool", "search", "--onlyvisible"]
+    if pid is not None:
+        argv += ["--pid", str(pid)]
+    argv += ["--name", ".*"]
+    q = cmd(argv, env)
     return sorted({x.strip() for x in q.stdout.splitlines() if x.strip()}, key=int)
 
 def active(env):
@@ -30,11 +34,11 @@ def event(ledger, kind, **fields):
     row["hash"] = hashlib.sha256(json.dumps(row, sort_keys=True).encode()).hexdigest()
     ledger.append(row)
 
-def wait_window(env, before=None, timeout=20):
+def wait_window(env, before=None, timeout=20, pid=None):
     end = time.time() + timeout
     before = set(before or [])
     while time.time() < end:
-        now = windows(env)
+        now = windows(env, pid)
         new = [x for x in now if x not in before]
         if new:
             return new[-1]
@@ -44,7 +48,7 @@ def wait_window(env, before=None, timeout=20):
 def launch(cmdline, env):
     p = subprocess.Popen(cmdline, env=env, stdout=subprocess.DEVNULL,
                          stderr=subprocess.DEVNULL)
-    wid = wait_window(env, windows(env), 25)
+    wid = wait_window(env, windows(env), 25, p.pid)
     return p, wid
 
 def main():
