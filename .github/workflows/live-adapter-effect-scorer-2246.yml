@@ -10,6 +10,7 @@ jobs:
     container:
       image: python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9
     steps:
+      - uses: actions/checkout@v4
       - name: Fetch pinned retained report
         env:
           REPORT_URL: https://raw.githubusercontent.com/Unjuno/agent-interface/39519f3f3e87626bf2ed6abe7f90e45f8b6878a3/runtime/results/golden-desktop-app-server-v3-live-01/golden-report.json
@@ -22,7 +23,9 @@ jobs:
           PY
       - name: Run unit tests and score retained evidence
         run: |
-          python -m unittest discover -s research/integration/live_adapter_effect_scorer_2246_v1 -t . -p 'test_*.py' -v
+          cd research/integration/live_adapter_effect_scorer_2246_v1
+          python -m unittest discover -s . -t . -p 'test_*.py' -v
+          cd ../../..
           python research/integration/live_adapter_effect_scorer_2246_v1/scorer.py /tmp/golden-report.json
       - name: Cleanup
         if: always()
