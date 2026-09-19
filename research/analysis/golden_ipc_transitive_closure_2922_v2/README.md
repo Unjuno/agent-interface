@@ -11,3 +11,7 @@ Decision vocabulary:
 - `HOLD_RUNTIME_READY_UNVERIFIED`: static closure passes but no runtime ready event has been produced.
 
 A static PASS is not a runtime or task-success claim.
+
+## CI evidence boundary
+
+The dedicated workflow runs this static verifier on pull requests touching the closure paths. A green workflow proves only declared filesystem closure; it does not prove runtime readiness or task execution.
