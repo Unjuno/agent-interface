@@ -63,6 +63,11 @@ def main():
                 raise RuntimeError("abstract display shadows a filesystem socket")
             display_name = ":" + number
         environment = dict(os.environ, DISPLAY=display_name, XAUTHORITY="")
+        # The private display is used by both the fixture and the dispatch
+        # facade.  Keep the parent process in the same display context; passing
+        # it only to the fixture makes selector_v1 reject the otherwise live
+        # X11 backend as NO_INTERACTIVE_DISPLAY.
+        os.environ.update({"DISPLAY": display_name, "XAUTHORITY": ""})
         with (root / "fixture.stderr").open("w") as stderr:
             fixture = subprocess.Popen([
                 sys.executable, "-m", "runtime.backends.x11_v1.fixture_app",

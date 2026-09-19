@@ -1,0 +1,63 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "guarded-5d3af75dda4a4c1d9ea973eb1ef76caf",
+  "source": {
+    "observation_seq": 2,
+    "binding_revision": 0
+  },
+  "authority": {
+    "lease_id": "native-x11-f780378654d34ecca5caf018632d1358",
+    "expires_at_ns": 7731521222311
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "fixture"
+    },
+    {
+      "op": "pointer_move",
+      "frame": "screen_physical_px",
+      "x": 160,
+      "y": 145
+    },
+    {
+      "op": "pointer_button",
+      "button": "left",
+      "down": true
+    },
+    {
+      "op": "pointer_button",
+      "button": "left",
+      "down": false
+    },
+    {
+      "op": "text",
+      "text": "docker2558"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "CTRL",
+        "S"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "observe",
+      "frame": "window_client",
+      "x": 0,
+      "y": 0,
+      "w": 400,
+      "h": 180
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}
