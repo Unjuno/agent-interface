@@ -1,46 +1,28 @@
-name: Native MCP adapter
+name: Native MCP v1
 on:
-  pull_request:
-    paths:
-      - 'research/live_control/native_mcp_v1.py'
-      - 'research/live_control/test_native_mcp_v1.py'
-      - 'research/live_control/requirements-native-mcp.txt'
-      - 'research/live_control/native_exchange_v1.py'
-      - 'research/live_control/agent_review.py'
-      - 'research/live_control/receipt_references.py'
-      - 'research/live_control/receipt_image.py'
-      - 'runtime/cli_v1/**'
-      - 'runtime/selector_v1/**'
-      - 'runtime/motor_state_v1/**'
-      - '.github/workflows/native-mcp-v1.yml'
   workflow_dispatch:
+  push:
+    paths:
+      - 'research/live_control/**'
+      - '.github/workflows/native-mcp-v1.yml'
 permissions:
   contents: read
 jobs:
-  stdio:
+  native-mcp:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout-cone-mode: false
+          fetch-depth: 1
           sparse-checkout: |
+            research/live_control
             runtime/cli_v1
-            runtime/selector_v1
             runtime/motor_state_v1
-            research/live_control/native_mcp_v1.py
-            research/live_control/test_native_mcp_v1.py
-            research/live_control/requirements-native-mcp.txt
-            research/live_control/native_exchange_v1.py
-            research/live_control/agent_review.py
-            research/live_control/receipt_references.py
-            research/live_control/receipt_image.py
+            runtime/selector_v1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install -r research/live_control/requirements-native-mcp.txt
-      - name: Exercise real stdio protocol with inert native fixture
-        env:
-          PYTHONPATH: .:research/live_control
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: python -m unittest -v test_native_mcp_v1
+      - name: Install dependencies
+        run: python -m pip install -r research/live_control/requirements-native-mcp.txt
+      - name: Run stdio adapter contract
+        run: python research/live_control/test_native_mcp_v1.py
