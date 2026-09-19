@@ -17,7 +17,7 @@ optional X11 image artifacts, read-only observation continuation, partial native
 execution/recovery evidence, and the release-telemetry audit successor. The
 portable runtime archive includes the public read-only observation module, and
 the cross-platform build, CLI, contract, and X11 integration checks pass. The
-analytical index is verified against 106 retained result/failure directories.
+analytical index is verified against 121 retained result/failure directories.
 
 This is a usable and auditable integration baseline, not a finished product
 release: visual-target admission, source identity at native input admission,
