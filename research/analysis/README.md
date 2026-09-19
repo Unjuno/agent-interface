@@ -128,6 +128,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <details>
 <summary><strong>Expand all 68 retained result/failure directories</strong></summary>
 
+- [nytime_fidelity_typed_admission_r0_v1/](anytime_fidelity_typed_admission_r0_v1/)
 - [`belief_auto_recommit_semantic_boundary_r3_v1/`](belief_auto_recommit_semantic_boundary_r3_v1/)
 - [`belief_recommit_epoch_aba_r2_v1/`](belief_recommit_epoch_aba_r2_v1/)
 - [`belief_repair_decision_lattice_r4_v1/`](belief_repair_decision_lattice_r4_v1/)
