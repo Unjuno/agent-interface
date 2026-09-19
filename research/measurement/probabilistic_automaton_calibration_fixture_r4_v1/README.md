@@ -13,6 +13,7 @@ Run:
 
 ```bash
 python research/measurement/probabilistic_automaton_calibration_fixture_r4_v1/experiment.py
+python research/measurement/probabilistic_automaton_calibration_fixture_r4_v1/audit.py
 ```
 
 The expected scoped result is PASS when the transition population is A=600,
@@ -20,3 +21,7 @@ B=400, the candidate dwell intervals are A=[11/3,4] and B=[3,4], and the
 completion-only comparator incorrectly estimates p(A)=2/3. This is calibration
 mechanics only: it makes no claim about GUI distributions, prediction quality,
 latency, authority, or deployment probabilities.
+
+`audit.py` independently recomputes counts and intervals from the visible
+ledger and applies four one-field corruption controls (next-state, censor
+status, horizon, and episode identity). Every corruption must be rejected.
