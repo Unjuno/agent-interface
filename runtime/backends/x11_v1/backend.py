@@ -64,7 +64,7 @@ class X11Backend:
             frames=("screen_physical_px", "window_client"),
             permissions=("x11-display-access",),
         )
-        row["capabilities"]["input.text"]["detail"] = "strict ASCII letters/digits/space/._-"
+        row["capabilities"]["input.text"]["detail"] = "strict ASCII letters/digits/space/._- plus layout-checked :/"
         return validate_backend_manifest(row)
 
     def monotonic_ns(self) -> int:
@@ -163,6 +163,21 @@ class X11Backend:
     def _text_plan(self, value: str) -> list[list[str]]:
         plan = []
         for ch in value:
+            if ch in ":/":
+                # Resolve the symbol from the live map. Do not assume a US
+                # physical key or silently type the unshifted neighbour.
+                code = self._keycode("colon" if ch == ":" else "slash")
+                symbol = ord(ch)
+                if self.d.keycode_to_keysym(code, 0) == symbol:
+                    keys = ["colon" if ch == ":" else "slash"]
+                elif self.d.keycode_to_keysym(code, 1) == symbol:
+                    keys = ["SHIFT", "colon" if ch == ":" else "slash"]
+                else:
+                    raise X11BackendError(f"unsupported text layout for {ch!r}")
+                for key in keys:
+                    self._keycode(key)
+                plan.append(keys)
+                continue
             if not (ch.isascii() and (ch.isalpha() or ch.isdigit() or ch in ".-_")):
                 if ch != " ":
                     raise X11BackendError(f"unsupported text character U+{ord(ch):04X}")
