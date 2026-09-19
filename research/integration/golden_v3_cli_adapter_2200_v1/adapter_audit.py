@@ -1,5 +1,5 @@
 import hashlib,json
-SOURCE_SHA = {'schema.json':'7fe3ad10ab69b0d8786d17ca854e65f90efd213b','runtime/cli_v1/api.py':'5674bd39e3cb2170095f476dac90e2a781f4f77a','runtime/cli_v1/receipt.py':'ebe71a2edfbb524a4288241686b969342a0bfcae','runtime/cli_v1/README.md':'8cafa39718f0d5d66cb73ade3bb99f0f1cce6d6','runtime/golden_desktop_demo_v3.py':'26db03b8400b03fbe5272bd4ae5ad9c3a82d31a2'}
+SOURCE_SHA = {'schema.json':'7fe3ad10ab69b0d8786d17ca854e65f90efd213b','runtime/cli_v1/api.py':'5674bd39e3cb2170095f476dac90e2a781f4f77a','runtime/cli_v1/receipt.py':'ebe71a2edfbb524a4288241686b969342a0bfcae','runtime/cli_v1/README.md':'8cafa39718f0d5d66cb73ade3aa99f0f1cce6d6','runtime/golden_desktop_demo_v3.py':'26db03b8400b03fbe5272bd4ae5ad9c3a82d31a2'}
 FIELDS={'schema':'derived','program_completed':'unverified','task_success':'unverified','authority_granted':'derived_guard','status':'unverified','partial_effects':'unverified','cleanup_error':'cli_source_backed','lifecycle':'documented_only','usage':'documented_only'}
 CLI_STATUSES={'returned','backend_unavailable','runtime_failed'}; GOLDEN_STATUSES={'success','partial','refused','stale_invalidated','cleanup_failed'}
 def classify(r):
