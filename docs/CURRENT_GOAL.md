@@ -10,6 +10,21 @@ See [the integration plan](INTEGRATION_PLAN.md). Earlier evidence and the broade
 human-tempo objective remain valid; Product Hunt publication is not proof of
 runtime completion.
 
+## Public integration state — 2026-09-19
+
+The public `main` branch now retains and integrates the native result boundary,
+optional X11 image artifacts, read-only observation continuation, partial native
+execution/recovery evidence, and the release-telemetry audit successor. The
+portable runtime archive includes the public read-only observation module, and
+the cross-platform build, CLI, contract, and X11 integration checks pass. The
+analytical index is verified against 106 retained result/failure directories.
+
+This is a usable and auditable integration baseline, not a finished product
+release: visual-target admission, source identity at native input admission,
+general application-effect detection, the full six-task live acceptance gate,
+and matched end-to-end benefit measurements remain open. Research branches and
+Draft PRs remain available for provenance and continued work.
+
 > **Preserve rich-model intent; localize the high-frequency refinement loop.**
 
 The project is not trying to replace Astra/a rich frontier model with a weaker local agent. The target is to let the rich model decide semantics/strategy, then let Agent Interface continue, refine, verify, and invalidate that intent locally while the rich model is reasoning elsewhere. Direct rich-model computer operation remains a first-class route.
