@@ -18,7 +18,7 @@ def emit(out):
     seq = 0
     for case, criticality, resource, release in CASES:
         for policy in POLICIES:
-            allowed = criticality == "low" or (policy == "CONDITION_STAGGER" and release == "ready") or (policy == "SERIAL_CRITICAL" and release == "ready")
+            allowed = criticality == "low" or policy in ("IMMEDIATE", "FIXED_STAGGER") or (policy == "CONDITION_STAGGER" and release == "ready") or (policy == "SERIAL_CRITICAL" and release == "ready")
             unsafe = allowed and release != "ready"
             disposition = "started" if allowed else ("expired" if release == "expired" else "deferred")
             effect = "useful" if allowed and case in ("independent_read", "postcondition_gate") else "none"
