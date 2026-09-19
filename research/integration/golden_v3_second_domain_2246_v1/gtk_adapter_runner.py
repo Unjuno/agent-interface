@@ -47,6 +47,9 @@ def main():
             raise RuntimeError("Xvfb did not return a display number")
         display_name = ":" + number
         env = dict(os.environ, DISPLAY=display_name)
+        # The fixture needs DISPLAY in its child environment, while the
+        # promoted selector also reads the runner process environment.
+        os.environ["DISPLAY"] = display_name
         fixture = subprocess.Popen(
             [sys.executable,
              "research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py",
