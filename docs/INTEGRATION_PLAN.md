@@ -66,6 +66,14 @@ The newly reviewed [Issue #2337](https://github.com/Unjuno/agent-interface/issue
 requires that live bridge plus scored effects, fault handling, actual model usage
 availability and a held-out second workflow. It remains open: this result repair
 and the earlier research-route self-use do not satisfy that live integration gate.
+An [actual native-adapter self-use](../runtime/results/native-result-self-use-01/README.md)
+now confirms the result seam on a private Tk desktop fixture: a stale program
+emitted no input, and a fresh one saved exact text with verified release. The
+first accepted run had no scored effect at teardown; the successor reads the
+independent result with a two-second bound and no input retry. All setup and task
+failures remain retained. This also exposes that native capture supplies only
+image metadata/hash: the harness still needs a separate assistant-visible PNG.
+Neither that observation seam nor visual-target revalidation is integrated yet.
 
 Starting repository revision: `2d78394e4128d9274030dcc52cf0957be2eb312d`.
 Use the existing [golden desktop v3 entry point](../runtime/golden-demo-v3.sh) and
