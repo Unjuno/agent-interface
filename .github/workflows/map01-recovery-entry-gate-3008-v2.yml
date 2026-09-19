@@ -1,0 +1,19 @@
+name: map01-recovery-entry-gate-3008-v2
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'research/analysis/map01_matched_recovery_entry_gate_3008_v2/**'
+      - '.github/workflows/map01-recovery-entry-gate-3008-v2.yml'
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: mkdir -p out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/native
+      - run: docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container
+      - run: docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/container
+      - uses: actions/upload-artifact@v4
+        with:
+          name: map01-recovery-entry-gate-3008-v2
+          path: out/
