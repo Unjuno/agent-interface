@@ -12,11 +12,13 @@ Additive research only. No shared runtime, GUI task input, gameplay, provider, o
 2. **Controlled Windows GUI acquisition** — Tk states captured through computer-use and native GDI client-pixel bytes.
 3. **Native GUI local training** — 120 clutter/occlusion frames, per-frame JSON receipts and SHA-256, 354-parameter CUDA CNN.
 4. **Native GUI gates** — provenance hash checks, stale/reordered receipt rejection, held-out unknown/yield.
+5. **Repeatability** — five deterministic split/model seeds on the provenance-verified native GUI dataset.
 
 ## Latest bounded results
 
 - clean native fixture: 120 frames, 120 unique hashes, CUDA CNN held-out accuracy 1.00, false positives 0
-- clutter/partial occlusion fixture: 120 frames, 120 unique hashes, held-out accuracy 0.975, false positives 0
+- clutter/partial occlusion fixture: 120 frames, 120 unique hashes, one split held-out accuracy 0.975, false positives 0
+- native GUI multi-seed: mean accuracy 0.995, minimum 0.975, aggregate false positives 0 across five runs
 - native GUI unknown/yield: negatives accept 0/21; positives accept 18, yield 1, reject 0
 - tampered receipt/frame replacement: rejected by hash gate
 - stale/reordered receipts: rejected by step gate
