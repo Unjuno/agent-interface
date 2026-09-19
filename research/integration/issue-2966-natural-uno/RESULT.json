@@ -1,0 +1,21 @@
+{
+  "task_id": "LO-NATURAL-CONTENTION-2966-20260920-01",
+  "issue": 2966,
+  "decision": "PASS_NATURAL_CONFLICT_BOUNDARY_SCOPED",
+  "image": "agent-interface-lo2966:20260920@sha256:551f399a59ec7bd238d22c11c5d53ee14a12be6ede6d5184e4320e6cf62a7944",
+  "network": "none",
+  "runner_sha256": "e4dbbe55c46d1ff155f3a45961518456400ef57fc0680b8e1cf113326eb42349",
+  "repetitions_per_arm": 3,
+  "rows": 12,
+  "arms": {
+    "stable": {"rows": 3, "outcomes": ["APPLIED"], "final": {"A": 1200, "B": 5000}},
+    "natural_AA": {"rows": 3, "outcomes": ["APPLIED", "CONFLICT_REJECTED"], "final": {"A": 1700, "B": 5000}},
+    "unrelated_B": {"rows": 3, "outcomes": ["APPLIED", "APPLIED"], "final": {"A": 1200, "B": 5500}},
+    "recovery": {"rows": 3, "outcomes": ["APPLIED", "CONFLICT_REJECTED", "APPLIED"], "final": {"A": 1200, "B": 5000}}
+  },
+  "typed_outcomes_only": true,
+  "stale_intended_effect_accepted": false,
+  "recovery_duplicate": false,
+  "forced_438_rows_pooled": false
+}
+
