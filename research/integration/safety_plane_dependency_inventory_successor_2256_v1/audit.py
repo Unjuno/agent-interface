@@ -29,6 +29,8 @@ def inventory(path: Path) -> dict:
             imports.append((node.module or "") + (":" + ",".join(a.name for a in node.names)))
         elif isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
             calls.append(node.func.attr)
+        elif isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
+            calls.append(node.func.id)
         elif isinstance(node, ast.ClassDef):
             classes.append(node.name)
     return {
