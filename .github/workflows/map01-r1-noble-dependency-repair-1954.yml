@@ -1,0 +1,75 @@
+name: MAP01 R1 Noble dependency repair
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout current main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Install Noble-compatible isolated dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb openbox xauth libgl1 libglu1-mesa libasound2t64
+          python -m pip download --only-binary=:all: --dest /tmp/map01-wheels 'vizdoom==1.3.0' pillow 'python-xlib' numpy
+          python -m pip install --no-index --find-links /tmp/map01-wheels 'vizdoom==1.3.0' pillow 'python-xlib' numpy
+
+      - name: Reconstruct retained v12 source
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+          sys.path.insert(0, str(Path('research/live_control/p0_live_causal_effect_x11_v1')))
+          from runner import reconstruct_v12
+          out = Path('work/map01-r1-repair/v12')
+          out.mkdir(parents=True, exist_ok=False)
+          paths = reconstruct_v12(Path('.'), out)
+          print({'input_owner': str(paths[0]), 'adapter': str(paths[1])})
+          PY
+
+      - name: Run frozen source preflight only
+        run: |
+          mkdir -p work/map01-r1-repair
+          python research/doom/map01_v12_physical_occupancy_live_r1_v1/preflight.py \
+            --source . --v12 work/map01-r1-repair/v12 \
+            | tee work/map01-r1-repair/PREFLIGHT.stdout
+
+      - name: Retain infrastructure result
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path('work/map01-r1-repair')
+          root.mkdir(parents=True, exist_ok=True)
+          result = {
+              'task': 'MAP01-R1-NOBLE-DEPENDENCY-REPAIR-1954-001',
+              'science_started': False,
+              'construction_invocations': 0,
+              'formal_invocations': 0,
+              'reruns': 0,
+              'replacements': 0,
+              'tuning': 0,
+              'scope': 'dependency installation, source reconstruction, and preflight only',
+          }
+          (root / 'RESULT.json').write_text(json.dumps(result, indent=2) + '\n')
+          PY
+
+      - name: Upload repair evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: map01-r1-noble-dependency-repair-${{ github.run_id }}
+          path: work/map01-r1-repair
+          if-no-files-found: error
+          retention-days: 30
