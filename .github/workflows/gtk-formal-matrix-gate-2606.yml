@@ -1,0 +1,15 @@
+name: GTK formal matrix gate #2606
+
+on:
+  pull_request:
+    paths:
+      - 'research/integration/golden_v3_second_domain_2246_v1/formal_matrix_2606/**'
+      - '.github/workflows/gtk-formal-matrix-gate-2606.yml'
+
+jobs:
+  contract-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run fixed-order evidence gate
+        run: python3 -m unittest research.integration.golden_v3_second_domain_2246_v1.formal_matrix_2606.test_matrix_gate
