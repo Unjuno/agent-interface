@@ -33,7 +33,7 @@ jobs:
           SDL_VIDEODRIVER: x11
         run: |
           set -euo pipefail
-          mkdir -p research/doom/map01_finite_clear_attempt_v1/results/run-${GITHUB_RUN_ID}
+          mkdir -p research/doom/map01_finite_clear_attempt_v1/results
           xvfb-run -a -s '-screen 0 1024x768x24' \
             python research/doom/map01_finite_clear_attempt_v1/run_attempt.py \
             --out research/doom/map01_finite_clear_attempt_v1/results/run-${GITHUB_RUN_ID} \
