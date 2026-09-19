@@ -22,5 +22,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: golden-ipc-3232-accounting-audit
-          path: $RUNNER_TEMP/golden-ipc-3232-accounting.json
+          path: ${{ runner.temp }}/golden-ipc-3232-accounting.json
           if-no-files-found: error
