@@ -591,32 +591,3 @@ tracked processes and successful cleanup attempts; it does not prove owner or
 descendant exit. Both an input-refused run and a completed, visually corrected
 Inkscape run are retained with fault tests in
 [native terminal cleanup](../../runtime/results/native-terminal-cleanup-01/README.md).
-
-Inkscape goals now expose the existing directional movement/geometry-preservation
-contract. `dx` is nominal screen-space drag distance, not an exact keyboard gain
-requirement. A fixed four-run click-to-key comparison (0/50/50/0 ms after click)
-saved x=84/86/86/84 after 18 Right chords from x=50; all four passed the existing
-directional task. A subsequent primary-assistant run used a leading 50 ms
-`wait_update` in the click tail and saved x=86 without correction. This is a
-caller-selected policy for that measured configuration, not app readiness
-acknowledgement, a new default, or a general performance claim. See
-[click-to-key evidence and recipe](../../runtime/results/native-key-boundary-01/README.md).
-
-Native guarded tails now accept an explicit `repeat` count on `key_chord`, e.g.
-`{"op":"key_chord","keys":["Right"],"repeat":18}`. The bridge expands it into
-ordinary press/release operations before admission; it adds no waits or retries.
-Counts are integers 1..126 and expanded tails fit the existing 128-op program
-limit (123 tail ops for click, 126 for keyboard). Other operations cannot carry
-repeat. This syntax belongs to the guarded bridge, not the public core opcode
-schema. A primary-assistant use saved x=86; the exact decision representation
-shrunk from 849 to 249 JSON bytes, with model tokens and latency unmeasured. See
-[key-repeat integration](../../runtime/results/native-key-repeat-01/README.md).
-
-For an explicitly final action, the native harness now accepts boolean
-`decision.finish_after=true`. The same response includes the action, last
-pre-cleanup reviewed image, independent evaluation and cleanup, then the private
-session ends even if task scoring fails. Omit it when another decision may be
-needed. This removes the separate finish request in one primary-assistant run,
-with identical native operations; invalid-flag and task-failure controls are
-retained. It is not automatic success detection or repair. See
-[native finish-after](../../runtime/results/native-finish-after-01/README.md).
