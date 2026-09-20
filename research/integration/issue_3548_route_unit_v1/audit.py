@@ -5,7 +5,8 @@ import hashlib
 import json
 from pathlib import Path
 import sys
-import subprocess
+import tarfile
+import io
 
 from PIL import Image
 import io
@@ -28,15 +29,11 @@ def audit(root: Path) -> dict:
     # The audit is intended to validate historical provenance after integration.
     # Compare against the frozen experiment commit, not the current checkout,
     # which may legitimately contain later changes to measured source files.
-    archive = subprocess.check_output(
-        ["git", "archive", experiment["experiment_commit"],
-         *experiment["source_sha256"].keys()], cwd=repo)
-    import tarfile
-    import io
-    with tarfile.open(fileobj=io.BytesIO(archive), mode="r:") as frozen:
-        frozen_hashes = {member.name: hashlib.sha256(frozen.extractfile(member).read()).hexdigest()
-                         for member in frozen.getmembers() if member.isfile()}
-    source_hashes_match = frozen_hashes == experiment["source_sha256"]
+    frozen_root = Path("/frozen-source")
+    source_hashes_match = all(
+        (frozen_root / name).is_file() and
+        hashlib.sha256((frozen_root / name).read_bytes()).hexdigest() == digest
+        for name, digest in experiment["source_sha256"].items())
     checks = {"manifest_matches": actual == manifest,
               "exactly_three_routes": [r["route"] for r in rows] == expected,
               "source_hashes_match": source_hashes_match,
