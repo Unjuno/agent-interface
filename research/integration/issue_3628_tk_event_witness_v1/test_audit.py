@@ -9,8 +9,13 @@ def key(keysym: str, state: int, stamp: int) -> dict[str, object]:
     return {"type": "2", "keysym": keysym, "state": state, "monotonic_ns": stamp}
 
 
-def effect(stamp: int = 30) -> dict[str, object]:
-    return {"saved": True, "text": "marker-123", "save_callback_monotonic_ns": stamp}
+def effect(stamp: int = 30, count: int = 1) -> list[dict[str, object]]:
+    return [{
+        "saved": True,
+        "text": "marker-123",
+        "save_callback_count": count,
+        "save_callback_monotonic_ns": stamp,
+    }]
 
 
 class AuditRowTests(unittest.TestCase):
@@ -43,11 +48,25 @@ class AuditRowTests(unittest.TestCase):
     def test_wrong_marker_or_missing_effect_is_rejected(self) -> None:
         chord = [key("Control_L", 0, 10), key("s", 4, 20)]
         self.assertFalse(audit_row(chord, effect(), "different-marker")["pass"])
-        self.assertFalse(audit_row(chord, None, "marker-123")["pass"])
+        self.assertFalse(audit_row(chord, [], "marker-123")["pass"])
 
     def test_effect_must_follow_key_witness(self) -> None:
         result = audit_row([key("Control_L", 0, 10), key("s", 4, 20)], effect(19), "marker-123")
         self.assertFalse(result["pass"])
+
+    def test_duplicate_effect_receipts_are_rejected(self) -> None:
+        events = [key("Control_L", 0, 10), key("s", 4, 20)]
+        self.assertFalse(audit_row(events, effect(30) + effect(31, count=2), "marker-123")["pass"])
+
+    def test_duplicate_callback_count_is_rejected(self) -> None:
+        events = [key("Control_L", 0, 10), key("s", 4, 20)]
+        self.assertFalse(audit_row(events, effect(30, count=2), "marker-123")["pass"])
+
+    def test_boolean_values_do_not_substitute_for_integer_receipts(self) -> None:
+        events = [key("Control_L", 0, 10), key("s", 4, 20)]
+        events[1]["state"] = True
+        self.assertFalse(audit_row(events, effect(), "marker-123")["pass"])
+        self.assertFalse(audit_row([key("Control_L", 0, 10), key("s", 4, 20)], effect(30, count=True), "marker-123")["pass"])
 
 
 if __name__ == "__main__":

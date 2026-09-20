@@ -15,21 +15,20 @@ def configure_fixture(root: tk.Tk, effect_path: Path, events_path: Path) -> tk.E
     entry.place(x=20, y=40, width=220, height=30)
     label = tk.Label(root, text="unsaved")
     label.place(x=20, y=90)
+    save_calls = 0
 
     def save(_event: tk.Event | None = None) -> str:
+        nonlocal save_calls
+        save_calls += 1
         value = entry.get()
-        effect_path.write_text(
-            json.dumps(
-                {
-                    "saved": True,
-                    "text": value,
-                    "save_callback_monotonic_ns": time.monotonic_ns(),
-                },
-                sort_keys=True,
-            )
-            + "\n",
-            encoding="utf-8",
-        )
+        with effect_path.open("a", encoding="utf-8") as stream:
+            receipt = {
+                "saved": True,
+                "text": value,
+                "save_callback_count": save_calls,
+                "save_callback_monotonic_ns": time.monotonic_ns(),
+            }
+            stream.write(json.dumps(receipt, sort_keys=True) + "\n")
         label.config(text="saved:" + value)
         return "break"
 

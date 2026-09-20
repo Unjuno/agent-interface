@@ -38,8 +38,8 @@ class TkBindtagOrderTests(unittest.TestCase):
             tag = "AgentInterfacePassiveKeyWitness"
             self.assertLess(meta_tags.index(tag), meta_tags.index(entry.winfo_class()))
             events = [json.loads(line) for line in events_path.read_text().splitlines()]
-            effect = json.loads(effect_path.read_text())
-            result = audit_row(events, effect, "marker-123")
+            effects = [json.loads(line) for line in effect_path.read_text().splitlines()]
+            result = audit_row(events, effects, "marker-123")
             self.assertTrue(result["pass"], result)
             self.assertEqual(result["control_keypresses"], 1)
             self.assertEqual(result["control_s_keypresses"], 1)
