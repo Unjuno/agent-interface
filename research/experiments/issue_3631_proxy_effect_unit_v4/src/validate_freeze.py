@@ -19,6 +19,8 @@ for rel, expected in manifest["files"].items():
 assert freeze["image_id"]=="sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27"
 assert freeze["platform"]=="linux/arm64"
 assert freeze["formal_output_path"]=="evidence/formal-04"
+assert freeze["preflight_output_path"]=="evidence/preflight-04"
+assert freeze["formal_invocations"]==1 and freeze["retries"]==0
 result={"preflight":"PASS","source_files":len(manifest["files"]),
         "source_commit":freeze["source_commit"],"preregistration_sha256":sha(prereg_bytes)}
 Path(os.environ["PREFLIGHT_OUTPUT"]).write_text(json.dumps(result,sort_keys=True,indent=2)+"\n")

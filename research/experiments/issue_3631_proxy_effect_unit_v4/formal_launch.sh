@@ -15,6 +15,8 @@ launch_script="${BASH_SOURCE[0]}"
 expected_launcher_sha="$(jq -r '.formal_launch_sha256' "${experiment_dir}/FREEZE.json")"
 actual_launcher_sha="$(shasum -a 256 "${launch_script}" | awk '{print $1}')"
 [[ "${actual_launcher_sha}" == "${expected_launcher_sha}" ]]
+[[ "$(jq -r '.formal_output_path' "${experiment_dir}/FREEZE.json")" == "evidence/formal-04" ]]
+[[ "$(jq -r '.preflight_output_path' "${experiment_dir}/FREEZE.json")" == "evidence/preflight-04" ]]
 [[ "$(docker image inspect "${image_id}" --format '{{.Id}} {{.Os}}/{{.Architecture}}')" == "${image_id} linux/arm64" ]]
 mkdir -p "${preflight_output}" "${formal_output}"
 [[ -z "$(find "${preflight_output}" -mindepth 1 -print -quit)" && -z "$(find "${formal_output}" -mindepth 1 -print -quit)" ]]
