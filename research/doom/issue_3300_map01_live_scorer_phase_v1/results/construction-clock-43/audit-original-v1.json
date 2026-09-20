@@ -1,0 +1,282 @@
+{
+  "decision": "PASS_CONSTRUCTION_ONLY_TIC_ENTRY_WITNESS",
+  "errors": [],
+  "formal_allocation": false,
+  "limitations": [
+    "The CLOCK_MONOTONIC sample is the first operation in a helper called at VIZ_Tic entry, not a hardware function-entry timestamp; call/clock-read latency is not bounded by this construction.",
+    "The trace file append happens after timestamp acquisition but still perturbs engine scheduling; it is not an uninstrumented formal distribution.",
+    "CLOCK_MONOTONIC is shared across processes on this Linux fixture; this does not establish portability or hard-real-time timing.",
+    "The three construction sessions do not fill the frozen 120-row schedule or authorize formal collection."
+  ],
+  "raw_sha256": "0064f4e5479c4d0b3969372f59773a67757f27dce3a6c01e963e6c883628858a",
+  "rows": [
+    {
+      "entry_count": 64,
+      "entry_interval_max_ns": 40229187,
+      "entry_interval_median_ns": 28462962,
+      "entry_interval_min_ns": 18687852,
+      "repetition": 0,
+      "scorer_getters": [
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 33083,
+          "elapsed_after_entry_ns": 14339668,
+          "following_viz_time": 59,
+          "getter": "get_episode_time",
+          "period_ns": 26893597,
+          "phase_fraction": 0.5332000773269563,
+          "preceding_viz_time": 58
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 5625,
+          "elapsed_after_entry_ns": 14419334,
+          "following_viz_time": 59,
+          "getter": "is_episode_finished",
+          "period_ns": 26893597,
+          "phase_fraction": 0.5361623437727575,
+          "preceding_viz_time": 58
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 4542,
+          "elapsed_after_entry_ns": 14441876,
+          "following_viz_time": 59,
+          "getter": "is_player_dead",
+          "period_ns": 26893597,
+          "phase_fraction": 0.5370005358524559,
+          "preceding_viz_time": 58
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 8375,
+          "elapsed_after_entry_ns": 14459168,
+          "following_viz_time": 59,
+          "getter": "get_game_variable",
+          "period_ns": 26893597,
+          "phase_fraction": 0.5376435141792301,
+          "preceding_viz_time": 58
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 2958,
+          "elapsed_after_entry_ns": 14490126,
+          "following_viz_time": 59,
+          "getter": "get_game_variable",
+          "period_ns": 26893597,
+          "phase_fraction": 0.5387946432007589,
+          "preceding_viz_time": 58
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 2500,
+          "elapsed_after_entry_ns": 14528417,
+          "following_viz_time": 59,
+          "getter": "get_ticrate",
+          "period_ns": 26893597,
+          "phase_fraction": 0.5402184393556578,
+          "preceding_viz_time": 58
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 2125,
+          "elapsed_after_entry_ns": 14541375,
+          "following_viz_time": 59,
+          "getter": "is_episode_timeout_reached",
+          "period_ns": 26893597,
+          "phase_fraction": 0.5407002640814466,
+          "preceding_viz_time": 58
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 6500,
+          "elapsed_after_entry_ns": 14556459,
+          "following_viz_time": 59,
+          "getter": "get_episode_time",
+          "period_ns": 26893597,
+          "phase_fraction": 0.5412611410812767,
+          "preceding_viz_time": 58
+        }
+      ]
+    },
+    {
+      "entry_count": 64,
+      "entry_interval_max_ns": 46719192,
+      "entry_interval_median_ns": 28370671,
+      "entry_interval_min_ns": 11333727,
+      "repetition": 1,
+      "scorer_getters": [
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 23791,
+          "elapsed_after_entry_ns": 8511327,
+          "following_viz_time": 60,
+          "getter": "get_episode_time",
+          "period_ns": 33193103,
+          "phase_fraction": 0.256418539718929,
+          "preceding_viz_time": 59
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 6667,
+          "elapsed_after_entry_ns": 8836533,
+          "following_viz_time": 60,
+          "getter": "is_episode_finished",
+          "period_ns": 33193103,
+          "phase_fraction": 0.2662159364853596,
+          "preceding_viz_time": 59
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 2500,
+          "elapsed_after_entry_ns": 8854908,
+          "following_viz_time": 60,
+          "getter": "is_player_dead",
+          "period_ns": 33193103,
+          "phase_fraction": 0.2667695153417865,
+          "preceding_viz_time": 59
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 6124,
+          "elapsed_after_entry_ns": 8865367,
+          "following_viz_time": 60,
+          "getter": "get_game_variable",
+          "period_ns": 33193103,
+          "phase_fraction": 0.26708461092052765,
+          "preceding_viz_time": 59
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 5125,
+          "elapsed_after_entry_ns": 8896700,
+          "following_viz_time": 60,
+          "getter": "get_game_variable",
+          "period_ns": 33193103,
+          "phase_fraction": 0.2680285720801698,
+          "preceding_viz_time": 59
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 2208,
+          "elapsed_after_entry_ns": 8930033,
+          "following_viz_time": 60,
+          "getter": "get_ticrate",
+          "period_ns": 33193103,
+          "phase_fraction": 0.2690327867207835,
+          "preceding_viz_time": 59
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 1500,
+          "elapsed_after_entry_ns": 8937699,
+          "following_viz_time": 60,
+          "getter": "is_episode_timeout_reached",
+          "period_ns": 33193103,
+          "phase_fraction": 0.2692637383133478,
+          "preceding_viz_time": 59
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 1333,
+          "elapsed_after_entry_ns": 8945408,
+          "following_viz_time": 60,
+          "getter": "get_episode_time",
+          "period_ns": 33193103,
+          "phase_fraction": 0.269495985355753,
+          "preceding_viz_time": 59
+        }
+      ]
+    },
+    {
+      "entry_count": 65,
+      "entry_interval_max_ns": 39629732,
+      "entry_interval_median_ns": 28696503.0,
+      "entry_interval_min_ns": 10713981,
+      "repetition": 2,
+      "scorer_getters": [
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 18291,
+          "elapsed_after_entry_ns": 26224226,
+          "following_viz_time": 60,
+          "getter": "get_episode_time",
+          "period_ns": 26230976,
+          "phase_fraction": 0.9997426706501504,
+          "preceding_viz_time": 59
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 3458,
+          "elapsed_after_entry_ns": 39291,
+          "following_viz_time": 61,
+          "getter": "is_episode_finished",
+          "period_ns": 32049942,
+          "phase_fraction": 0.0012259304556619791,
+          "preceding_viz_time": 60
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 2417,
+          "elapsed_after_entry_ns": 51374,
+          "following_viz_time": 61,
+          "getter": "is_player_dead",
+          "period_ns": 32049942,
+          "phase_fraction": 0.0016029358181053807,
+          "preceding_viz_time": 60
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 5166,
+          "elapsed_after_entry_ns": 66708,
+          "following_viz_time": 61,
+          "getter": "get_game_variable",
+          "period_ns": 32049942,
+          "phase_fraction": 0.0020813766215239953,
+          "preceding_viz_time": 60
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 2083,
+          "elapsed_after_entry_ns": 95791,
+          "following_viz_time": 61,
+          "getter": "get_game_variable",
+          "period_ns": 32049942,
+          "phase_fraction": 0.0029888041607064376,
+          "preceding_viz_time": 60
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 2042,
+          "elapsed_after_entry_ns": 127124,
+          "following_viz_time": 61,
+          "getter": "get_ticrate",
+          "period_ns": 32049942,
+          "phase_fraction": 0.0039664346350455175,
+          "preceding_viz_time": 60
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 1375,
+          "elapsed_after_entry_ns": 134249,
+          "following_viz_time": 61,
+          "getter": "is_episode_timeout_reached",
+          "period_ns": 32049942,
+          "phase_fraction": 0.004188743929708204,
+          "preceding_viz_time": 60
+        },
+        {
+          "bounded_by_entry_timestamps": true,
+          "call_span_ns": 1292,
+          "elapsed_after_entry_ns": 144415,
+          "following_viz_time": 61,
+          "getter": "get_episode_time",
+          "period_ns": 32049942,
+          "phase_fraction": 0.0045059363913981495,
+          "preceding_viz_time": 60
+        }
+      ]
+    }
+  ],
+  "schema": "source-instrumented-viz-tic-entry-audit-v1"
+}
