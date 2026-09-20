@@ -4,6 +4,8 @@ This directory contains committed runtime demonstration/result artifacts used by
 
 Current retained result namespaces include:
 
+- [`cli-retained-calc-01`](cli-retained-calc-01/README.md) — primary WSL CLI request/result retention and read-only recovery in Calc;
+
 - [`main-compact-calc-01`](main-compact-calc-01/README.md) — primary WSL Calc use
   through the integrated compact MCP response; retained record checks and the
   unresolved intermediate-image feedback boundary, not a performance comparison;
