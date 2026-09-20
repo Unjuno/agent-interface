@@ -75,7 +75,7 @@ def main():
         if out=='YIELD': rejected.append((x,y))
         else: accepted.append((x,y)); pred.append({'CONTINUE':0,'CORRECT':1,'WATCH':2}[out])
     accepted_y=torch.stack([y for _,y in accepted]); pred_t=torch.tensor(pred)
-    per_class={LABELS[c]:{'n':int((accepted_y==c).sum()),'correct':int(((accepted_y==c)&(pred_t==c)).sum()),'recall':float(((accepted_y==c)&(pred_t==c)).sum()/max(1,(accepted_y==c).sum()))} for c in range(3)}
+    per_class={LABELS[c]:{'n':int(((accepted_y==c)).sum()),'correct':int(((accepted_y==c)&(pred_t==c)).sum()),'recall':float(((accepted_y==c)&(pred_t==c)).sum()/max(1,(accepted_y==c).sum()))} for c in range(3)}
     false_correct=int(((pred_t==1)&(accepted_y!=1)).sum())
     bx,by=boundary_set(); b_out=[hybrid(META,x,model) for x in bx]
     invalid={'stale':hybrid({**META,'epoch':6},test_x[0],model),'unknown_intent':hybrid({**META,'intent':'other'},test_x[0],model),'outside':hybrid(META,torch.tensor([1.5,0.,0.,0.,.9,1.]),model),'nonfinite':hybrid(META,torch.tensor([float('nan'),0.,0.,0.,.9,1.]),model)}
@@ -88,3 +88,4 @@ def main():
       'invalid_routes':invalid,'all_invalid_yield':all(v=='YIELD' for v in invalid.values()),'scope':'synthetic proposal only; boundary/stale yield; no action authority'},indent=2,sort_keys=True))
 
 if __name__=='__main__': main()
+
