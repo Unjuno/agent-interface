@@ -51,6 +51,12 @@ It used seven MCP calls including startup, explicit finish and process status;
 it is correctness/recovery evidence, not a speedup. The earlier
 [wait-only keyboard failure](../../runtime/results/native-snapshot-calc-transfer-01/README.md)
 shows why wait_update alone is not a supported keyboard continuation.
+The MCP adapter now rejects an empty, wait-only or observation-only keyboard
+tail before publishing a request: keyboard actions must contain `text` or
+`key_chord`. Protocol tests verify that these refusals leave the request slot
+unused and the retained image readable, then allow a valid submission. This
+early input-presence check does not certify the remaining tail or runtime
+admission rules. It is not evidence of a new live GUI recovery trial.
 
 - `native_observe(stage)` reads the retained source image, without recapture.
   It includes `session_context` containing the recorded public goal and exchange

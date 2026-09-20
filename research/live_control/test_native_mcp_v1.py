@@ -149,6 +149,19 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     invalid = await client.call_tool('native_submit', {'stage':True,'decision':{},'timeout':0})
                     self.assertTrue(invalid.isError)
                     self.assertFalse((root/'request-1.json').exists())
+                    # Reject the actual wait-only failure before committing a request.
+                    for tail in ([], [{'op': 'wait_update', 'timeout_ms': 250}],
+                                 [{'op': 'observe'}]):
+                        invalid_keyboard = await client.call_tool('native_submit', {
+                            'stage': 1, 'decision': {'source_sequence': 1,
+                            'interaction': 'keyboard', 'point': [0, 0],
+                            'expected_title': 'fixture', 'tail': tail}, 'timeout': 0})
+                        self.assertTrue(invalid_keyboard.isError)
+                        self.assertIn('interaction=observe', invalid_keyboard.content[0].text)
+                        self.assertFalse((root/'request-1.json').exists())
+                    still_readable = await client.call_tool('native_observe', {'stage': 1})
+                    self.assertFalse(still_readable.isError)
+                    self.assertEqual(base64.b64decode(still_readable.content[1].data), pixels)
                     decision = {'source_sequence':1,'finish':True}
                     pending = await client.call_tool('native_submit', {'stage':1,'decision':decision,'timeout':0})
                     row = json.loads(pending.content[0].text)

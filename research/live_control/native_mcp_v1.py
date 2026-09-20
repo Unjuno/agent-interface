@@ -48,6 +48,10 @@ class NativeDecision(BaseModel):
             raise ValueError('choose finish or finish_after, not both')
         if not self.finish and (self.point is None or self.expected_title is None):
             raise ValueError('action requires point and expected_title')
+        if (not self.finish and self.interaction == 'keyboard'
+                and not any(op.get('op') in {'text', 'key_chord'} for op in self.tail)):
+            raise ValueError('keyboard requires explicit text or key_chord input; '
+                             'for a fresh image use only source_sequence and interaction=observe')
         return self
 
 
