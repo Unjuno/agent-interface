@@ -6,16 +6,38 @@ import json
 from itertools import islice, dropwhile
 from pathlib import Path
 import threading
-from typing import Literal
+from typing import Annotated, Literal
 import uuid
 
 from mcp.server.fastmcp import FastMCP
 from mcp.types import CallToolResult, ImageContent, TextContent
-from pydantic import StrictBool, StrictInt, StrictStr
+from pydantic import Field, StrictBool, StrictInt, StrictStr
 
 from .api import dispatch
 from .observe import observe
 from .review import present_result
+
+
+# Documentation metadata only: the public compiler and core remain the validators.
+# Keep dict forwarding intact, including extensions and malformed-request receipts.
+PublicProgram = Annotated[dict, Field(description=(
+    'Bounded agent-interface/program-v1 object. Required fields: '
+    'schema="agent-interface/program-v1", program_id (1..64 letters/digits/._-), '
+    'source={observation_seq: integer, binding_revision: integer}, '
+    'authority={lease_id: identifier, expires_at_ns: integer in the execution host monotonic clock}, '
+    'terminal={release_all_required: true}, and ops (ordered objects). '
+    'The caller must supply a valid current lease and matching source/binding assertions; '
+    'this server does not mint them. Begin with {"op":"focus","target":"configured-name"} '
+    'when input requires focus. Operation examples: {"op":"text","text":"abc","gap_ms":20}, '
+    '{"op":"key_chord","keys":["Left"],"repeat":2}, '
+    '{"op":"key_chord","keys":["CTRL","s"]}, '
+    '{"op":"observe","frame":"window_client","x":0,"y":0,"w":400,"h":180}. '
+    'Use the actual target and observed region; examples do not select them for you. '
+    'End with exactly one {"op":"release_all"}. Expanded ops must fit 128. '
+    'gap_ms is optional integer 0..1000; key_chord repeat is optional integer 1..126. '
+    'Observation captures once and does not pause for a model decision. '
+    'wait_update with timeout_ms is a fixed delay on X11, not a redraw acknowledgement.'
+))]
 
 
 def content(result, *, error=False, include_image=True):
@@ -113,7 +135,7 @@ def create_server(targets, output_directory, *, display_name=None):
         return await submit('observe', {'target': target, 'frame': frame, 'region': region}, compact)
 
     @server.tool()
-    async def interface_dispatch(program: dict, current_observation_seq: StrictInt,
+    async def interface_dispatch(program: PublicProgram, current_observation_seq: StrictInt,
                            current_binding_revision: StrictInt,
                            compact: StrictBool = False) -> CallToolResult:
         """Dispatch once through core admission. Include observe for an image; no implicit replay.

@@ -60,6 +60,13 @@ environment. With no explicit display, normal environment selection applies.
   include_image=true)` lists calls or reads a retained result without input or
   capture. See the result-retrieval section below.
 
+The dispatch tool advertises the program envelope, bounded operation examples and
+lease clock requirement in its `program` description. This is discovery metadata,
+not a new parser: dictionaries, extension fields and malformed-program receipts
+still pass through the existing public compiler and admission path. No lease or
+operation defaults are inserted. Schema size and model usability have not been
+benchmarked; this does not claim a token reduction.
+
 Programs, leases and current observation/binding values retain the public API's
 caller-supplied meaning. This adapter issues no source authority and is not a
 persistent desktop session manager. Each API call opens and closes its own
