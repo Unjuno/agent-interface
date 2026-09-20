@@ -53,6 +53,7 @@ def main():
     retired_targets = []
     stage = decision_hash = None
     terminal_reply = None
+    terminal_context = {}
 
     def save(name, value):
         (out/name).write_text(json.dumps(value, indent=2)+'\n')
@@ -98,6 +99,11 @@ def main():
             decision = json.loads(request_bytes)
             if decision['source_sequence'] != source['sequence']:
                 raise ValueError('decision must refer to exact presented source')
+            finish_after = decision.get('finish_after', False)
+            if type(finish_after) is not bool:
+                raise ValueError('finish_after must be boolean')
+            if finish_after and decision.get('finish') is True:
+                raise ValueError('choose finish or finish_after, not both')
             if decision.get('finish') is True:
                 break
             interaction = decision.get('interaction', 'click')
@@ -159,6 +165,10 @@ def main():
                 retired_targets.append((alias, offset))
             row['through_review_ns'] = time.monotonic_ns()
             save('actions.json', rows)
+            if finish_after:
+                terminal_context = {'action': row, 'observation': source,
+                                    'finish_mode': 'after_action'}
+                break
             publish(out/f'source-{stage+1}.json', encoded(source))
             publish(out/f'reply-{stage}.json', encoded({'status': 'boundary', 'stage': stage,
                 'decision_sha256': decision_hash, 'action': row, 'observation': source,
@@ -175,7 +185,8 @@ def main():
         save('evaluation.json', evaluation)
         evaluation = json.loads((out/'evaluation.json').read_text())
         terminal_reply = {'status': 'finished', 'stage': stage,
-            'decision_sha256': decision_hash, 'evaluation': evaluation, 'authority_granted': False}
+            'decision_sha256': decision_hash, 'evaluation': evaluation,
+            'authority_granted': False, **terminal_context}
         print(json.dumps({'evaluation': evaluation}), flush=True)
     except Exception:
         failure = traceback.format_exc()
@@ -183,7 +194,7 @@ def main():
         if decision_hash is not None and not (out/f'reply-{stage}.json').exists():
             terminal_reply = {'status': 'needs_review', 'stage': stage,
                 'decision_sha256': decision_hash, 'error': failure, 'actions': rows,
-                'authority_granted': False, 'task_success': None}
+                'authority_granted': False, 'task_success': None, **terminal_context}
         raise
     finally:
         cleanup = finish_allocation(out, workloads, bridge, session, terminal_reply)
