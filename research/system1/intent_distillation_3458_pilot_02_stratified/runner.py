@@ -49,8 +49,10 @@ def gate(meta,x):
 def boundary_set():
     rows=[]
     for i in range(256):
+        # Confidence boundary: low side WATCH, high side CORRECT.
         d=.25+(i%17)*.001
         rows.extend([[d,.2,.01,.02,.719,1.],[d,.2,.01,.02,.721,1.]])
+        # Position and speed boundaries around CONTINUE/CORRECT transitions.
         rows.extend([[.059,0.,.02,.02,.9,1.],[.061,0.,.02,.02,.9,1.]])
         rows.extend([[0.,0.,.059,.06,.9,1.],[0.,0.,.061,.06,.9,1.]])
     x=torch.tensor(rows,dtype=torch.float32)
