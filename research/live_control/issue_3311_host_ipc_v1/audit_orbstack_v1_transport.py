@@ -33,7 +33,7 @@ def verify_raw_manifest(root: Path) -> bool:
     try:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         actual = {
-            str(path.relative_to(root)): sha(path)
+            path.relative_to(root).as_posix(): sha(path)
             for path in sorted(root.rglob("*"))
             if path.is_file() and path not in {manifest_path, root / "audit.json"}
         }

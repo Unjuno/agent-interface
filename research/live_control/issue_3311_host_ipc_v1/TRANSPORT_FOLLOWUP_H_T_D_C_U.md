@@ -61,3 +61,9 @@ Verification: host contract suite 22/22; fixed-image OrbStack `--network none` u
 A second test review found the prior setup-failure regression duplicated the cleanup sequence instead of invoking the transport harness's cleanup path, and no automated test proved a modified raw file is rejected without changing the frozen manifest. The cleanup sequence is now shared by the round-trip harness and setup-failure regression. New manifest tests cover intact, tampered, missing and malformed manifests and assert the baseline bytes remain unchanged. The Docker IPC contract workflow now runs these hermetic regressions and watches the auditor/test paths.
 
 Verification: exact workflow test selection passes 19/19 on host; the OrbStack fake-CLI round trip separately passes 1/1; the pinned OrbStack `--network none` contract suite remains 22/22. Both historical bundles and a relocated copy each pass semantic and raw-integrity audit 14/14. `git diff --check` passes. No model/task/input call was made.
+
+### Windows manifest-path normalization correction
+
+Independent Windows re-audit found that host-native path rendering used backslashes for manifest keys, while the frozen JSON uses slash-separated relative paths. No raw evidence was changed. Manifest keys now use `Path.as_posix()`, the integrity regression uses a nested path, and the contract workflow includes a Windows-native Python job for the portable auditor tests.
+
+The previous portability statement is superseded for the Windows host until the new workflow job completes. On this OrbStack/macOS host, the hermetic auditor and broker-reap suite passes 19/19 in the pinned no-network image; the synthetic OrbStack transport round trip passes 1/1. The two unchanged historical bundles and a relocated Linux copy each audit 14/14. This tests exact bundle integrity and semantics only, not host Codex/model behavior.

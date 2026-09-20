@@ -16,11 +16,12 @@ class RawManifestAuditTest(unittest.TestCase):
     def test_manifest_detects_tampering_without_rewriting_baseline(self):
         with tempfile.TemporaryDirectory(prefix="3311-v1-manifest-") as temp:
             root = Path(temp)
-            captured = root / "container.stdout.txt"
+            captured = root / "ipc" / "container.stdout.txt"
+            captured.parent.mkdir()
             captured.write_text("original evidence\n", encoding="utf-8")
             manifest = root / "raw-sha256.json"
             manifest.write_text(json.dumps({
-                captured.name: hashlib.sha256(captured.read_bytes()).hexdigest(),
+                "ipc/container.stdout.txt": hashlib.sha256(captured.read_bytes()).hexdigest(),
             }, indent=2) + "\n", encoding="utf-8")
             original_manifest = manifest.read_bytes()
 
