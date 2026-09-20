@@ -1,18 +1,29 @@
 {
-  "disposition": "PASS_MULTI_SKILL_ROUTING_SCOPED",
-  "integrity": true,
-  "errors": [],
-  "rows_recomputed": 24576,
-  "routed_accuracy": {
-    "A": 0.959228515625,
-    "B": 0.926025390625,
-    "C": 0.94677734375
+  "disposition": "HOLD_PROTOCOL_DEVIATION",
+  "numericAndEvidenceAudit": {
+    "disposition": "PASS_MULTI_SKILL_ROUTING_SCOPED",
+    "integrity": true,
+    "errors": [],
+    "rows_recomputed": 24576,
+    "routed_accuracy": {
+      "A": 0.959228515625,
+      "B": 0.926025390625,
+      "C": 0.94677734375
+    },
+    "shared_sequential_accuracy": {
+      "A": 0.01904296875,
+      "B": 0.000244140625,
+      "C": 0.96142578125
+    },
+    "quality_gate": true
   },
-  "shared_sequential_accuracy": {
-    "A": 0.01904296875,
-    "B": 0.000244140625,
-    "C": 0.96142578125
+  "protocolDeviation": {
+    "issueDeclaredBasePretrainingUpdates": 400,
+    "sourceAndExecutedBasePretrainingUpdates": 120,
+    "discovered": "postformal",
+    "retries": 0,
+    "trainingRerun": false,
+    "reason": "The frozen #3701 runner source defines STEPS=120 and was preserved; Issue #3895 body specified 400 base updates. The executed allocation therefore fails issue-to-source treatment conformance."
   },
-  "quality_gate": true,
-  "scope": "Independent CPU auditor regenerated expected labels from seed 3444, recomputed all row-level metrics, verified complete initial/learned state payload hashes and unchanged frozen core tensor values. Runner assertions supplied exact round-trip/rollback booleans."
+  "scope": "Independent CPU audit validates row-level metrics and state payload evidence for the executed 120-step-base treatment; it does not cure the preregistration mismatch."
 }
