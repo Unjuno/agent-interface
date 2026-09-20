@@ -94,6 +94,16 @@ model live-use result or a performance comparison.
 
 ## Recover a retained result without resending input
 
+For an outcome-only check, use
+`interface_results(call_id="...", include_image=false)`. The default is `true`.
+When a retained image is available, the opt-out omits its native image block and
+adds `image_delivery="omitted_by_request"`; the image reference, outcome and raw
+receipt remain available. `image_status` still describes the retained image, not
+whether a block was sent. A later default lookup can return the same image.
+This option does not skip image validation, hide missing-image errors, refresh
+the screen or replay input. It controls delivery only; no model-token, cost or
+latency reduction has been measured. Call listings contain no images either way.
+
 Observe and dispatch result envelopes include `call_id`. Pass it directly to
 `interface_results(call_id=...)`; parsing `call_directory` or listing calls first
 is unnecessary when the original response is available. A retained result returns
