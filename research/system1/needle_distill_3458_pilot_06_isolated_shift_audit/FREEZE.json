@@ -1,0 +1,42 @@
+{
+  "schema": "needle-pilot-freeze-v1",
+  "issue": 3869,
+  "allocation": "needle-intent-distill-3458-pilot-06-isolated-shift-audit",
+  "branch": "research/needle-distill-3458-pilot-06-20260921",
+  "base_main_sha": "9ec29f742cd56d5a3ccdb193201e7ae5f5a77ae7",
+  "formal_invocations_allowed": 1,
+  "formal_started": false,
+  "preallocation_status": "READY_AFTER_DOCKER_CONSTRUCTION_AND_AUDIT_SMOKE_PASS",
+  "source_sha256": {
+    "runner.py": "0a1900f6125c0b3a253cac56b88459b43e48fe0104290273151b8697eef4f20e",
+    "audit.py": "57d966ac6c5f4ec8f8905b4df378465cf5ea126171ee0fdde3687118e8db2920",
+    "test_construction.py": "06bdb1b92808d65692c4080184ad9f9812d36cb3ab76cdc27616de051ecf425d",
+    "PREREGISTRATION.md": "c26cc23cc669745849d93f8a1b83a9ce0a10702bb620bbcc34c1a411299294dc",
+    "README.md": "ab558e8480e2a4be8e3038ec208d8563bd9825a9579a735f4033f55a62561e3c",
+    "Dockerfile": "2bfaf6a2c476c49782748f73918f90eefd2420cd6b02dcd8486c3afab3480090"
+  },
+  "container": {
+    "docker_server": "29.8.0",
+    "os_arch": "linux/amd64",
+    "image": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "python": "3.12.14",
+    "torch": "2.5.1+cpu",
+    "network_formal": "none",
+    "read_only_root": true,
+    "source_mount": "read-only",
+    "formal_evidence_mount": "dedicated writable output only",
+    "cpu_limit": 2,
+    "memory_limit": "4g",
+    "gpu": "not requested or used"
+  },
+  "execution": {
+    "seeds": [3467, 3468, 3469],
+    "device": "cpu",
+    "threads": 1,
+    "deterministic_algorithms": true,
+    "formal_output": "formal/formal-01/FORMAL_RESULT.json",
+    "audit_output": "audit/AUDIT.json",
+    "construction_checks": "4/4 passed in local Docker; independent-auditor negative-control smoke passed; no training"
+  }
+}
