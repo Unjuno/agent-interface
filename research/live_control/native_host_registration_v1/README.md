@@ -51,3 +51,28 @@ narrows the remaining gap to host registration/discovery/presentation, but does
 not prove which host condition prevents exposure. No app reload was attempted;
 do not infer that restarting will necessarily fix it. The reserved managed
 allocation is separate from this completed-run attachment.
+
+## Effective configuration scope, not a trust override
+
+CLI 0.153.4's generated protocol schema describes `config/read` with explicit
+cwd and includeLayers. A short-lived local app-server process was initialized
+only to read those layers; no thread, model turn, MCP allocation or input was
+started. `read_effective_config.py` records only layer identities, disabledReason
+and presence of the target server; unrelated settings and credentials are not
+retained. The helper closes its own process, not the desktop app or its daemon.
+
+`effective-config-layers.json` shows the parent project includes its `.codex`
+layer with disabledReason=null and the target server in effective configuration.
+The nested separate Git worktree includes only user/system layers and no target
+server. Although the user config has no matching explicit projects trust entry,
+the actual parent-layer result does not support diagnosing an untrusted-project
+block. No trust setting, global MCP setting or approval policy was changed.
+
+Official [MCP configuration documentation](https://developers.openai.com/ja-JP/docs/extend/mcp)
+states that project configuration applies to trusted projects; this is why the
+effective layer result matters more than assuming trust from one config key.
+This check used a separate read-only CLI app-server instance, not the active
+desktop host. Its success cannot establish which configuration snapshot or
+working directory the active host used to publish this conversation's tools.
+The model-callable tool gap therefore remains unresolved, narrowed to the host
+side. Do not repeatedly add duplicate registrations or broaden trust as a guess.
