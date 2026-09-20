@@ -1493,4 +1493,20 @@ real application surface with independently established complete/current
 facts, and measure acquisition cost separately from narrowing and terminal
 outcome. No cross-application or production claim follows from this fixture.
 
+### German XKB formula delivery to a focused X11 receiver — Issue #3794
+
+One pinned OrbStack linux/arm64 allocation passed three fresh standard-German
+XKB rows and one US control. All four focused InputOnly receivers decoded the
+candidate's exact `=B2*A2` KeyPress text, observed traces matched the frozen
+plan, unsupported trailing Euro was refused with zero events/emissions, and
+release state was empty. A separate no-network-container audit reported zero
+integrity errors and rejected five corruption probes; its early-STOP phase gate
+also passed. This is only an X11/XTEST-to-receiver component result: no Calc or
+other application/task effect, physical keyboard, IME/dead-key, layout breadth,
+latency, or product claim. The earlier #3792 harness STOP remains preserved
+without reinterpretation. See [formal result](research/issue_3784_focused_receiver_v1/RESULT.md),
+[raw evidence](research/issue_3784_focused_receiver_v1/results/formal-01/raw.json),
+[independent audit](research/issue_3784_focused_receiver_v1/results/audit-01/audit.json),
+and PR (to be added after evidence publication).
+
 </details>
