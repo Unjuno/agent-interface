@@ -84,6 +84,7 @@ only to a new host temp directory. These commands are for independent
 revalidation and are not a relabeling or retry of allocation 01.
 
 ```sh
+set -euo pipefail
 SOURCE_DIR="$PWD/research/integration/issue_3691_orbstack_docker_validation_v1/source_snapshot"
 AUDIT_OUTPUT_DIR="$(mktemp -d)"
 EXPECTED_STUDY_SHA256="$(jq -r '.study_freeze_sha256' "$SOURCE_DIR/EXPECTED_STUDY.json")"
@@ -99,4 +100,5 @@ docker --context orbstack run --rm --platform linux/arm64 --network none --read-
   --study-freeze FREEZE.json --expected-study-sha256 "$EXPECTED_STUDY_SHA256" \
   --output /out/cli.json | tee "$AUDIT_OUTPUT_DIR/cli.stdout.json"
 cmp "$AUDIT_OUTPUT_DIR/cli.json" "$AUDIT_OUTPUT_DIR/cli.stdout.json"
+jq -e '.status == "PASS_OFFLINE_STRUCTURAL_AUDIT" and (.errors | length == 0)' "$AUDIT_OUTPUT_DIR/cli.json"
 ```
