@@ -13,6 +13,23 @@ from runtime.distribution_v2.build import SOURCE_FILES, build
 
 class PublicReviewTests(unittest.TestCase):
 
+    def test_report_refs_without_compact_rejected_before_cli_operation(self):
+        from unittest.mock import patch
+        from contextlib import redirect_stderr
+        import io
+        from runtime.cli_v1.__main__ import main
+        for args in (
+                ['review', '--report', 'missing.json', '--run-directory', '.'],
+                ['observe', '--targets', 'missing.json', '--target', 'fixture',
+                 '--frame', 'window_client', '--region', '0', '0', '1', '1'],
+                ['dispatch', '--program', 'missing.json', '--targets', 'missing.json',
+                 '--current-observation-seq', '1', '--current-binding-revision', '0']):
+            with self.subTest(command=args[0]), patch.object(sys, 'argv', ['agent-interface', *args, '--report-refs']), redirect_stderr(io.StringIO()) as error:
+                with self.assertRaises(SystemExit) as stopped:
+                    main()
+                self.assertEqual(stopped.exception.code, 2)
+                self.assertIn('--report-refs requires --compact', error.getvalue())
+
     def test_received_duplicate_report_compacts_and_expands_exactly(self):
         from runtime.cli_v1.receipt_references import expand_receipt, REPORT_REF
         raw = json.dumps({'schema': 'agent-interface/runtime-dispatch-result-v1',
@@ -20,7 +37,10 @@ class PublicReviewTests(unittest.TestCase):
             'extension': {'payload': 'x' * 4000, 'report_ref': 'literal-value'}}).encode()
         with tempfile.TemporaryDirectory() as td:
             full = review_bytes(raw, td)
-            compact = review_bytes(raw, td, compact=True)
+            legacy = review_bytes(raw, td, compact=True)
+            self.assertNotEqual(legacy['receipt']['schema'], REPORT_REF)
+            self.assertEqual(expand_receipt(legacy['receipt']), full['receipt'])
+            compact = review_bytes(raw, td, compact=True, report_refs=True)
         self.assertEqual(compact['receipt']['schema'], REPORT_REF)
         self.assertEqual(expand_receipt(compact['receipt']), full['receipt'])
         self.assertEqual(compact['outcome_summary'], full['outcome_summary'])

@@ -71,7 +71,7 @@ def create_server(targets, output_directory, *, display_name=None):
         'Caller supplies current observation and binding values. Inspect action, image and cleanup '
         'outcomes separately. Never replay an uncertain action automatically.'))
 
-    def invoke(operation, kwargs, compact):
+    def invoke(operation, kwargs, compact, report_refs):
         call_id = None
         try:
             call_root = root / uuid.uuid4().hex
@@ -104,7 +104,7 @@ def create_server(targets, output_directory, *, display_name=None):
                 persistence_error = None
             except OSError as error:
                 persistence_error = repr(error)
-            result = present_result(report, call_root, compact=compact)
+            result = present_result(report, call_root, compact=compact, report_refs=report_refs)
             result['call_directory'] = str(call_root)
             result['call_id'] = call_id
             if persistence_error is not None:
@@ -116,11 +116,15 @@ def create_server(targets, output_directory, *, display_name=None):
                     calls[call_id]["state"] = "finished"
             lock.release()
 
-    async def submit(operation, kwargs, compact):
+    async def submit(operation, kwargs, compact, report_refs):
+        if report_refs and not compact:
+            return content({'status': 'invalid_request',
+                'error': 'report_refs requires compact=true',
+                'operation_invoked': False}, error=True)
         # Decide busy before scheduling a worker; thread-pool contention must not queue input.
         if not lock.acquire(blocking=False):
             return content({'status': 'busy', 'operation_invoked': False}, error=True)
-        worker = asyncio.create_task(asyncio.to_thread(invoke, operation, kwargs, compact))
+        worker = asyncio.create_task(asyncio.to_thread(invoke, operation, kwargs, compact, report_refs))
         workers.add(worker)
         def finished(task):
             workers.discard(task)
@@ -132,7 +136,7 @@ def create_server(targets, output_directory, *, display_name=None):
 
     @server.tool()
     async def interface_observe(target: StrictStr, frame: Literal['window_client', 'screen_physical_px'],
-                          region: list[StrictInt], compact: StrictBool = False) -> CallToolResult:
+                          region: list[StrictInt], compact: StrictBool = False, report_refs: StrictBool = False) -> CallToolResult:
         """Capture once without input; return receipt and native image block.
 
         Region is [x, y, width, height]. On X11, window_client coordinates are
@@ -142,12 +146,12 @@ def create_server(targets, output_directory, *, display_name=None):
         when an overlapping dialog is needed to interpret the target's state.
         A capture is not a redraw or task-completion acknowledgement.
         """
-        return await submit('observe', {'target': target, 'frame': frame, 'region': region}, compact)
+        return await submit('observe', {'target': target, 'frame': frame, 'region': region}, compact, report_refs)
 
     @server.tool()
     async def interface_dispatch(program: PublicProgram, current_observation_seq: StrictInt,
                            current_binding_revision: StrictInt,
-                           compact: StrictBool = False) -> CallToolResult:
+                           compact: StrictBool = False, report_refs: StrictBool = False) -> CallToolResult:
         """Dispatch once through core admission. Include observe for an image; no implicit replay.
 
         Sequence/binding values are caller assertions, not server-issued freshness.
@@ -155,19 +159,24 @@ def create_server(targets, output_directory, *, display_name=None):
         """
         return await submit('dispatch', {'program': program,
             'current_observation_seq': current_observation_seq,
-            'current_binding_revision': current_binding_revision}, compact)
+            'current_binding_revision': current_binding_revision}, compact, report_refs)
 
     @server.tool()
     async def interface_results(call_id: StrictStr | None = None,
                                 before_call_id: StrictStr | None = None,
                                 compact: StrictBool = False,
-                                include_image: StrictBool = True) -> CallToolResult:
+                                include_image: StrictBool = True,
+                                report_refs: StrictBool = False) -> CallToolResult:
         """List this server's calls or reread one retained result. Never dispatch or observe.
 
         A finished worker is not proof of task success. Unknown calls are not replayed.
         This registry lasts only for this server process; no restart recovery is implied.
         Set include_image=false to inspect metadata without resending a retained image.
         """
+        if report_refs and not compact:
+            return content({'status': 'invalid_request',
+                'error': 'report_refs requires compact=true',
+                'operation_invoked': False}, error=True)
         with calls_lock:
             if call_id is None:
                 # Most recent calls first, bounded; request details are available by ID.
@@ -201,7 +210,7 @@ def create_server(targets, output_directory, *, display_name=None):
         except (OSError, ValueError) as error:
             return content({'status': 'receipt_unavailable', 'call': record,
                 'error': repr(error), 'operation_invoked': False}, error=True)
-        result = await asyncio.to_thread(present_result, report, call_root, compact=compact)
+        result = await asyncio.to_thread(present_result, report, call_root, compact=compact, report_refs=report_refs)
         result.update(call_id=call_id, call_directory=str(call_root), retained_call=record,
                       operation_invoked=False)
         return content(result, include_image=include_image)

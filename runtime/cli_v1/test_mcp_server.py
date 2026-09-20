@@ -14,6 +14,32 @@ from runtime.cli_v1.mcp_server import create_server
 
 class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
 
+    async def test_report_references_require_explicit_opt_in_without_replay(self):
+        from runtime.cli_v1.receipt_references import REPORT_REF, expand_receipt
+        with tempfile.TemporaryDirectory() as td:
+            server = create_server({'fixture': 123}, td)
+            args = {'target': 'fixture', 'frame': 'window_client', 'region': [0, 0, 1, 1]}
+            report = {'status': 'returned', 'extension': 'x' * 4000}
+            with patch('runtime.cli_v1.mcp_server.observe', return_value=report) as observe:
+                for name, arguments in (('interface_observe', args), ('interface_results', {})):
+                    reply = await server.call_tool(name, dict(arguments, report_refs=True))
+                    row = json.loads(reply.content[0].text)
+                    self.assertEqual(row['status'], 'invalid_request')
+                    self.assertFalse(row['operation_invoked'])
+                observe.assert_not_called()
+                self.assertEqual(list(Path(td).iterdir()), [])
+                original = await server.call_tool('interface_observe', dict(args, compact=True))
+                old = json.loads(original.content[0].text)
+                self.assertNotEqual(old['receipt']['schema'], REPORT_REF)
+                retained = await server.call_tool('interface_results', {
+                    'call_id': old['call_id'], 'compact': True, 'report_refs': True})
+                new = json.loads(retained.content[0].text)
+                self.assertEqual(new['receipt']['schema'], REPORT_REF)
+                self.assertEqual(expand_receipt(new['receipt']), expand_receipt(old['receipt']))
+                self.assertEqual(new['outcome_summary'], old['outcome_summary'])
+                observe.assert_called_once()
+                self.assertNotIn('report_refs', observe.call_args.kwargs)
+
     async def test_retained_image_can_be_omitted_without_changing_result_or_replaying(self):
         with tempfile.TemporaryDirectory() as td:
             server = create_server({'fixture': 123}, td)

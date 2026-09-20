@@ -160,7 +160,7 @@ def _encoded(value):
     return json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False)
 
 
-def compact_receipt(view):
+def compact_receipt(view, *, report_refs=False):
     if view.get('schema') != 'agent-interface/receipt-view-v1':
         raise ValueError('receipt-view-v1 required')
     result = copy.deepcopy(view)
@@ -187,7 +187,7 @@ def compact_receipt(view):
     result['event_references'] = references
     result['reference_scope'] = 'Only listed JSON-pointer paths are references to complete objects in events[index]. No external lookup. Raw source remains authoritative.'
     source = view.get('source')
-    if (isinstance(source, dict) and isinstance(source.get('raw_report'), dict)
+    if (report_refs and isinstance(source, dict) and isinstance(source.get('raw_report'), dict)
             and not any(key in view for key in ('report_reference', 'reference_scope'))
             and _encoded(view['report']) == _encoded(source['raw_report'])):
         received = copy.deepcopy(view)
