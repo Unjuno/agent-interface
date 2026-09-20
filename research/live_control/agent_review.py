@@ -106,11 +106,7 @@ def review_native(report_path, run_directory, *, compact=False, recorded_run_dir
 
 def review(report_path, run_directory, *, compact=False):
     from runtime.cli_v1.review import review as runtime_review
-    result = runtime_review(report_path, run_directory)
-    if compact:
-        from receipt_references import compact_receipt
-        result['receipt'] = compact_receipt(result['receipt'])
-    return result
+    return runtime_review(report_path, run_directory, compact=compact)
 
 
 def main():

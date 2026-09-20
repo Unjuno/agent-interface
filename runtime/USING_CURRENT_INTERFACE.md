@@ -41,6 +41,14 @@ For an already saved report, review is read-only:
 python3 -m runtime.cli_v1 review --report /absolute/run/report.json --run-directory /absolute/run
 ```
 
+Add `--compact` to this read-only command to replace duplicate event objects with
+local references. It also accepts `--report -` for a complete response on stdin.
+The image, outcome summary and source digest are preserved. Consumers can use
+`runtime.cli_v1.receipt_references.expand_receipt` to reconstruct the original
+receipt view; only the explicitly listed reference paths are interpreted.
+This optional representation can add overhead to small receipts and has no
+measured model-token or cost benefit. The default representation is unchanged.
+
 The report and referenced image must be present at their recorded paths. The
 review operation does not recapture, focus a window or repeat an action. Native
 research reports use `agent_review.py --native` as described in the MCP guide.
