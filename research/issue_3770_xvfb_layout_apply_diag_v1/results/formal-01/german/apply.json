@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "setxkbmap",
+    "-display",
+    ":181",
+    "-verbose",
+    "10",
+    "-layout",
+    "de"
+  ],
+  "returncode": 0,
+  "stderr": "",
+  "stdout": "Setting verbose level to 10\nlocale is C\nWarning! Multiple definitions of keyboard layout\n         Using command line, ignoring X server\nTrying to load rules file ./rules/evdev...\nTrying to load rules file /usr/share/X11/xkb/rules/evdev...\nSuccess.\nApplied rules from evdev:\nrules:      evdev\nmodel:      pc105\nlayout:     de\nTrying to build keymap using the following components:\nkeycodes:   evdev+aliases(qwertz)\ntypes:      complete\ncompat:     complete\nsymbols:    pc+de+inet(evdev)\ngeometry:   pc(pc105)\n"
+}
