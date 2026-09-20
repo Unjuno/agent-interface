@@ -199,3 +199,11 @@ locates the stale-snapshot refresh at the action boundary in this fixture, but
 the action is not the no-intervention formal condition and provides no passive
 scorer phase distribution. See `results/construction-clock-46/`; formal rows
 remain 0/120.
+
+Run47 tested the narrower zero-tic refresh hypothesis. `advance_action(0)`
+returned quickly (0.093–0.386 ms) but left public API and exact scorer tic at 1
+in 3/3 sessions despite 57 contiguous internal engine tic entries in each.
+Independent audit: `HOLD_ZERO_TIC_ACTION_DID_NOT_REFRESH_SNAPSHOT`, zero errors.
+This rejects only the zero-tic refresh route; formal rows remain 0/120. See
+`results/construction-clock-47/` for H/T/D/C/U, Docker invocation, raw/audit,
+logs and hashes.
