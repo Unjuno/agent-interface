@@ -43,3 +43,8 @@ For lower-level local decision mechanics, route cost, TTC admission, typed evide
 - Research workspace map: [`../README.md`](../README.md)
 
 Read each child experiment for its allowed decision vocabulary, authority boundary, and scoped disposition.
+
+
+## Needle distillation successor
+
+- [`intent_distillation_3458_pilot_02_stratified/`](intent_distillation_3458_pilot_02_stratified/) — balanced class and boundary suite; disposition FAIL_BOUNDARY_FIDELITY.
