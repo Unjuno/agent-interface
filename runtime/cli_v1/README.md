@@ -303,7 +303,29 @@ A missing capture-directory is rejected before any execution. The default raw
 response remains unchanged when --review is omitted. Standalone review remains
 available for inspecting retained results later.
 
+### Compact received-report references
+
+With `--compact --report-refs` or MCP `compact=true, report_refs=true`, a received receipt whose `report` exactly
+duplicates `source.raw_report` may use `agent-interface/receipt-view-v3-report-ref`.
+Only `report` then contains `{"report_ref":"/source/raw_report"}`; the complete
+raw report remains in this same response. All other reference-shaped values are
+literal. Images, capture references, outcomes and raw source digests are unchanged.
+
+Use the matching version of `receipt_references.expand_receipt` to restore the
+original v1 receipt view. Existing `--compact` / `compact=true` alone preserves
+v1/v2 selection for older consumers. The additional report-reference flag requires
+compact mode and explicitly opts into the new decoder contract. File-based receipts without an
+embedded raw report keep the existing selection behavior. The smaller JSON
+candidate is selected only when it beats the original view; this is not a measured
+model-token, cost or latency reduction.
+
 ### Input release in reviewed dispatch results
+
+The shared `outcome_summary.failure_phase` preserves a recorded nonempty string
+such as `backend_initialization` for observation or dispatch failures. Missing or
+malformed values remain null; the phase is not inferred from an error message.
+It remains available if image presentation fails. A phase alone does not assert
+task effects, verified input release, or permission to retry the operation.
 
 CLI `--review` and public MCP expose `outcome_summary.input_release_verified`.
 For a refused dispatch, this includes its explicit `result.release` record in

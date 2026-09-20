@@ -8,25 +8,25 @@ from .receipt import receipt_view, receipt_bytes
 from .receipt_image import select_image
 
 
-def review(report_path, run_directory, *, compact=False):
+def review(report_path, run_directory, *, compact=False, report_refs=False):
     view = receipt_view(report_path)
     # Parse the same bytes whose digest is presented to the caller.
     data = Path(view['source']['path']).read_bytes()
     if hashlib.sha256(data).hexdigest() != view['source']['sha256']:
         raise ValueError('report changed during review')
-    return _review(data, view, run_directory, compact=compact)
+    return _review(data, view, run_directory, compact=compact, report_refs=report_refs)
 
 
-def review_bytes(data: bytes, run_directory, *, compact=False):
+def review_bytes(data: bytes, run_directory, *, compact=False, report_refs=False):
     """Review a complete received response without a temporary report file."""
-    return _review(data, receipt_bytes(data), run_directory, compact=compact)
+    return _review(data, receipt_bytes(data), run_directory, compact=compact, report_refs=report_refs)
 
 
-def present_result(report, run_directory, *, compact=False):
+def present_result(report, run_directory, *, compact=False, report_refs=False):
     """Shared transport presentation; a review error never discards the action result."""
     try:
         return review_bytes(json.dumps(report, allow_nan=False).encode('utf-8'),
-                            run_directory, compact=compact)
+                            run_directory, compact=compact, report_refs=report_refs)
     except Exception as error:
         return {'schema': 'agent-interface/review-v1', 'authority': 'none',
                 'image': None, 'image_status': 'needs_review',
@@ -97,6 +97,7 @@ def outcome_summary(report):
 
     summary = {'reported_status': text(report, 'status'),
                'error': text(report, 'error'),
+               'failure_phase': text(report, 'failure_phase'),
                'cleanup_error': text(report, 'cleanup_error')}
     if report.get('schema') == 'agent-interface/runtime-dispatch-result-v1':
         dispatch = report.get('result')
@@ -127,10 +128,12 @@ def outcome_summary(report):
     return summary
 
 
-def _review(data, view, run_directory, *, compact=False):
+def _review(data, view, run_directory, *, compact=False, report_refs=False):
+    if type(report_refs) is not bool or (report_refs and not compact):
+        raise ValueError('report_refs requires compact=True and must be a bool')
     if compact:
         from .receipt_references import compact_receipt
-        candidate = compact_receipt(view)
+        candidate = compact_receipt(view, report_refs=report_refs)
         encoded_size = lambda value: len(json.dumps(value, sort_keys=True, separators=(',', ':')).encode('utf-8'))
         if encoded_size(candidate) < encoded_size(view):
             view = candidate

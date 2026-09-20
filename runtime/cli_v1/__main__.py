@@ -23,11 +23,11 @@ def _emit(payload) -> None:
     sys.stdout.write(json.dumps(payload, sort_keys=True, separators=(",", ":")) + "\n")
 
 
-def _present_result(row, *, with_review, capture_directory, exit_code, compact=False):
+def _present_result(row, *, with_review, capture_directory, exit_code, compact=False, report_refs=False):
     if not with_review:
         _emit(row)
         return exit_code
-    presented = present_result(row, capture_directory, compact=compact)
+    presented = present_result(row, capture_directory, compact=compact, report_refs=report_refs)
     _emit(presented)
     return exit_code or (2 if presented['image_status'] == 'needs_review' else 0)
 
@@ -47,6 +47,7 @@ def main() -> int:
     read.add_argument("--display")
     read.add_argument("--review", action="store_true", help="return result and captured image together")
     read.add_argument("--compact", action="store_true", help="use smaller reversible receipt references with --review")
+    read.add_argument("--report-refs", action="store_true", help="allow v3 report references; requires --compact and a compatible decoder")
     view = sub.add_parser("receipt")
     view.add_argument("--report", required=True)
     view.add_argument("--raw", action="store_true")
@@ -54,6 +55,7 @@ def main() -> int:
     image_review.add_argument("--report", required=True)
     image_review.add_argument("--run-directory", required=True)
     image_review.add_argument("--compact", action="store_true", help="replace duplicate receipt events with reversible local references")
+    image_review.add_argument("--report-refs", action="store_true", help="allow v3 report references; requires --compact and a compatible decoder")
     run = sub.add_parser("dispatch")
     run.add_argument("--program", required=True)
     run.add_argument("--targets", required=True)
@@ -63,7 +65,10 @@ def main() -> int:
     run.add_argument("--capture-directory")
     run.add_argument("--review", action="store_true", help="return result and last captured image together")
     run.add_argument("--compact", action="store_true", help="use smaller reversible receipt references with --review")
+    run.add_argument("--report-refs", action="store_true", help="allow v3 report references; requires --compact and a compatible decoder")
     args = parser.parse_args()
+    if getattr(args, 'report_refs', False) and not args.compact:
+        parser.error('--report-refs requires --compact')
     if args.command in ('observe', 'dispatch') and args.compact and not args.review:
         parser.error("--compact requires --review")
     if getattr(args, "review", False) and not args.capture_directory:
@@ -74,8 +79,8 @@ def main() -> int:
         return 0
     if args.command == "review":
         try:
-            row = (review_bytes(sys.stdin.buffer.read(), args.run_directory, compact=args.compact) if args.report == "-"
-                   else review(args.report, args.run_directory, compact=args.compact))
+            row = (review_bytes(sys.stdin.buffer.read(), args.run_directory, compact=args.compact, report_refs=args.report_refs) if args.report == "-"
+                   else review(args.report, args.run_directory, compact=args.compact, report_refs=args.report_refs))
         except (OSError, ValueError, TypeError) as error:
             _emit({"schema": "agent-interface/review-v1", "status": "invalid_receipt", "error": str(error)})
             return 2
@@ -97,7 +102,7 @@ def main() -> int:
             _emit({"status": "invalid_request", "error": str(error)})
             return 2
         return _present_result(row, with_review=args.review, capture_directory=args.capture_directory,
-                               exit_code=0 if row["status"] == "returned" else 2, compact=args.compact)
+                               exit_code=0 if row["status"] == "returned" else 2, compact=args.compact, report_refs=args.report_refs)
     try:
         program = _read_json(args.program)
         targets = _read_json(args.targets)
@@ -113,7 +118,7 @@ def main() -> int:
         capture_directory=args.capture_directory,
     )
     code = 2 if row["status"] != "returned" else (0 if row["result"].get("status") == "completed" else 3)
-    return _present_result(row, with_review=args.review, capture_directory=args.capture_directory, exit_code=code, compact=args.compact)
+    return _present_result(row, with_review=args.review, capture_directory=args.capture_directory, exit_code=code, compact=args.compact, report_refs=args.report_refs)
 
 
 if __name__ == "__main__":
