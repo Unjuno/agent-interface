@@ -24,8 +24,8 @@
     "engine": "29.8.0",
     "image": "python:3.12-slim",
     "network": "none",
-    "input_mount": "read-only",
+    "mount": "frozen inputs read-only; output isolated",
     "retries": 0
   },
-  "inference": "The frozen auditor did not reject any of the five tested corruptions; finite controls do not prove all possible mutations are accepted."
+  "inference": "The frozen audit accepts the five tested mutations; this finite set does not prove all corruptions are accepted."
 }
