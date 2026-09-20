@@ -1,0 +1,38 @@
+{
+  "allocation": "issue3733-german-xkb-text-orbstack-formal-01",
+  "artifact_files_checked": 8,
+  "auditor_sha256": "f325d4ebf24d5c30740ef03b1f7b3b1f0356296bf5ab5c496a141e3f6e80fdb3",
+  "candidate_findings": [],
+  "corruption_challenges": [
+    {
+      "name": "drop_last_row",
+      "rejected": true
+    },
+    {
+      "name": "reorder_or_duplicate_rows",
+      "rejected": true
+    },
+    {
+      "name": "replace_candidate_source",
+      "rejected": true
+    },
+    {
+      "name": "forge_execution_without_trace",
+      "rejected": true
+    }
+  ],
+  "corruption_rejections": 4,
+  "disposition": "STOP_ENVIRONMENT_OR_SETUP",
+  "formal_raw_sha256": "c2de5a3851881e5935cbdba94f798b1338f0e578d021bb184ea22c808a28f6de",
+  "integrity_errors": [],
+  "rows": [
+    {
+      "case_id": "de-00",
+      "status": "STOP_SETUP_EXCEPTION"
+    }
+  ],
+  "runner_sha256": "ab3e1578b86869b5a891a9615b79499f83fdb3361ccc3c4dc8cf13da268fd466",
+  "schema": "agent-interface/issue-3733-independent-audit-v1",
+  "source_files_checked": 17,
+  "source_manifest_sha256": "b23c3ae2dce161fa89bc6a64cd8db7ad529a6353683d42a758d2e5def15b9b69"
+}
