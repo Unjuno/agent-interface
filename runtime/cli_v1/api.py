@@ -58,6 +58,12 @@ def dispatch(
         if compilation is not None:
             row['compilation'] = compilation
         return row
+    except Exception as error:
+        row = {"schema": SCHEMA_DISPATCH, "status": "runtime_failed", "error": repr(error),
+               "failure_phase": "backend_initialization"}
+        if compilation is not None:
+            row['compilation'] = compilation
+        return row
     row: dict[str, Any] = {}
     try:
         if capture_directory is not None:
