@@ -239,3 +239,78 @@ class RetainedAttemptTests(unittest.TestCase):
         self.assertEqual(code, 2)
         self.assertEqual(emit.call_args.args[0]['result']['status'], 'completed')
         self.assertNotIn('retention', report)
+
+
+    def test_failed_report_write_surfaces_partial_temp_residue_without_retry(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / 'run'
+            report = {'status': 'returned', 'result': {'status': 'completed'}}
+            call = Mock(return_value=report)
+            original_open = Path.open
+
+            class PartialWrite:
+                def __init__(self, stream):
+                    self.stream = stream
+                def __enter__(self):
+                    return self
+                def __exit__(self, *args):
+                    return self.stream.__exit__(*args)
+                def write(self, data):
+                    self.stream.write(data[:max(1, len(data) // 2)])
+                    raise OSError('injected report write failure')
+                def flush(self):
+                    return self.stream.flush()
+                def fileno(self):
+                    return self.stream.fileno()
+
+            def open_with_fault(path, *args, **kwargs):
+                stream = original_open(path, *args, **kwargs)
+                if path.name == '.report.json.tmp':
+                    return PartialWrite(stream)
+                return stream
+
+            with patch.object(Path, 'open', new=open_with_fault):
+                _, retention = invoke(call, {}, root, operation='dispatch')
+            call.assert_called_once()
+            self.assertTrue(retention['request_persisted'])
+            self.assertFalse(retention['report_persisted'])
+            self.assertFalse(retention['replay_allowed'])
+            before = {p.name: p.read_bytes() for p in root.iterdir()}
+            row = inspect_attempt(root)
+            self.assertEqual(row['status'], 'unknown_or_incomplete')
+            self.assertEqual(row['files']['report.json']['state'], 'missing')
+            self.assertFalse(row['replay_allowed'])
+            self.assertEqual(row['temporary_files'], ['.report.json.tmp'])
+            self.assertGreater(len(before['.report.json.tmp']), 0)
+            self.assertEqual(before, {p.name: p.read_bytes() for p in root.iterdir()})
+
+    def test_failed_report_fsync_surfaces_temp_residue_without_retry(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / 'run'
+            report = {'status': 'returned', 'result': {'status': 'completed'}}
+            call = Mock(return_value=report)
+            original_fsync = os.fsync
+            calls = 0
+
+            def fail_report_fsync(fd):
+                nonlocal calls
+                calls += 1
+                if calls == 2:
+                    raise OSError('injected report fsync failure')
+                return original_fsync(fd)
+
+            with patch('runtime.cli_v1.attempt.os.fsync', side_effect=fail_report_fsync):
+                _, retention = invoke(call, {}, root, operation='dispatch')
+            call.assert_called_once()
+            self.assertEqual(calls, 2)
+            self.assertTrue(retention['request_persisted'])
+            self.assertFalse(retention['report_persisted'])
+            self.assertFalse(retention['replay_allowed'])
+            before = {p.name: p.read_bytes() for p in root.iterdir()}
+            row = inspect_attempt(root)
+            self.assertEqual(row['status'], 'unknown_or_incomplete')
+            self.assertEqual(row['files']['report.json']['state'], 'missing')
+            self.assertFalse(row['replay_allowed'])
+            self.assertEqual(row['temporary_files'], ['.report.json.tmp'])
+            self.assertGreater(len(before['.report.json.tmp']), 0)
+            self.assertEqual(before, {p.name: p.read_bytes() for p in root.iterdir()})
