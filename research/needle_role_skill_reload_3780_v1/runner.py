@@ -56,8 +56,8 @@ def main():
         m=LoRA(base); m.load_state_dict(initial); train(m,x,labels(x,role),[m.a,m.b],ADAPTER_STEPS,LR_ADAPTER,SEED+offset); adapters[role]=m
     models={"A":base,**adapters}; roles={}
     for role,x in (("A",ea),("B",eb),("C",ec)):
-        with torch.no_grad(): roles[role]={"state":tensor_map(models[role]),"pred":models[role](x).argmax(-1).tolist(),"expected":labels(x,role).tolist()}
-    artifact={"schema":SCHEMA,"generation":SEED,"architecture":{"input":D,"hidden":H,"classes":C,"rank":RANK,"roles":["A","B","C"]},"tensors":{r:v["state"] for r,v in roles.items()}}
+        with torch.no_grad(): roles[role]={"state":tensor_map(models[role]),"pred":models[role](x).argmax(-1).tolist(),"expected":labels(x,role).tolist(),"inputs":x.tolist()}
+    artifact={"schema":SCHEMA,"generation":SEED,"architecture":{"input":D,"hidden":H,"classes":C,"rank":RANK,"roles":["A","B","C"]},"graph":{"nodes":[{"id":r,"version":r+"-v1"} for r in ("A","B","C")],"edges":[["A","B"],["B","C"]],"scope":"synthetic-fixture-v1"},"provenance":{"allocation":"needle-role-skill-cross-process-reload-v1","predecessor_issue":3780,"seed":SEED,"family":"synthetic-role-adapter-v1"},"tensors":{r:v["state"] for r,v in roles.items()}}
     artifact["payload_sha256"]=digest({k:v for k,v in artifact.items() if k!="payload_sha256"})
     for name,content in (("skill.json",artifact),("expected.json",{"seed":SEED,"roles":roles,"base_immutable":all(torch.equal(v,before[k]) for k,v in base.state_dict().items())})):
         with open(os.path.join(OUT,name),"w",encoding="utf-8") as f: json.dump(content,f,sort_keys=True,separators=(",",":"),allow_nan=False)
