@@ -11,5 +11,6 @@
 - Raw result SHA-256: `f0df0248ff5e754a91e93271d9784f08d06ae1e8ff349b5f82f0fd015eb42883`.
 - Preflight SHA-256: `d67c27e3c3c850d6bebe79f524b5f24b5f746d3e8e74ad5ab4a0455fb8e6a658`.
 - Audit SHA-256: `b8b2d3320e64ab8371e910b0f255298dd83ea265845d2fe15f4750244d8ce115`.
+- Separate post-result container readback audit recomputed all five gates directly from individual events (without trusting the runner check booleans): `PASS_POSTHOC_EVENT_RECOMPUTATION`, 0 errors. It independently confirms numeric Chromium XID reuse with PID 168→418, the stale refusal, and LibreOffice teardown return code 255. Auditor source SHA-256: `11a01934d168a23aac208ce5bb2bff6ef1287c8ea683b77f9b76a652e8102ab4`; receipt SHA-256: `01b0e6e108328def4b64dbf9d7133094c13ea89b32ab0a576913ba6913cd04a1`. This does not alter the formal source, result, preregistration, or original audit.
 
 This is a bounded model-free readiness/transition protocol result, not an Agent Interface integration or task-effect result.
