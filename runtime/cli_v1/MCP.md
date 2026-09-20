@@ -95,7 +95,11 @@ model live-use result or a performance comparison.
 ## Recover a retained result without resending input
 
 `interface_results()` lists the newest 20 calls issued by this running server,
-most recent first, with call IDs, operation names and worker states. Use
+most recent first, with call IDs, operation names and worker states. If
+`next_before_call_id` is non-null, pass it as `before_call_id` to read the next
+older page. Pages continue strictly before that ID even if newer calls arrive;
+new calls appear when listing from the beginning again. An unknown cursor is an
+error, not an empty history. Do not combine `call_id` and `before_call_id`. Use
 `interface_results(call_id="...")` to inspect a specific call and its original
 arguments. Running calls return `pending`; finished calls reread the saved report
 and return the common review envelope and any native image block. `compact=true`
