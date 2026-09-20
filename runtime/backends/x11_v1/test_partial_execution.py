@@ -10,6 +10,35 @@ from runtime.core_v1.test_contract import program
 
 
 class PartialExecutionTests(unittest.TestCase):
+    def test_wait_receipt_survives_later_failure_without_claiming_an_update(self):
+        from runtime.backends.x11_v1.backend import X11ExecutionError
+        backend = object.__new__(X11Backend)
+        backend.emissions = 0
+        backend.preflight = mock.Mock()
+        backend.text = mock.Mock(side_effect=OSError('input failure'))
+        backend.release_all = mock.Mock(return_value={'verified': True})
+        for interrupted in (False, True):
+            with mock.patch('runtime.backends.x11_v1.backend.time.sleep',
+                            side_effect=OSError('wait interrupted') if interrupted else None) as sleep:
+                with self.assertRaises(X11ExecutionError) as caught:
+                    backend.execute({'ops': [{'op': 'wait_update', 'timeout_ms': 25},
+                                             {'op': 'text', 'text': 'fault'}]})
+            evidence = caught.exception.execution
+            sleep.assert_called_once_with(.025)
+            self.assertEqual(evidence['completed_ops'], [] if interrupted else [0])
+            self.assertEqual(evidence['failed_op'], 0 if interrupted else 1)
+            self.assertEqual(evidence['observations'], [])
+            self.assertEqual(evidence['program_emissions'], 0)
+            self.assertEqual(len(evidence['waits']), 1)
+            wait = evidence['waits'][0]
+            self.assertEqual((wait['operation_index'], wait['requested_ms'], wait['kind']),
+                             (0, 25, 'fixed_delay'))
+            self.assertIs(wait['completed'], not interrupted)
+            self.assertIsNone(wait['update_observed'])
+            self.assertLessEqual(evidence['started_ns'], wait['started_ns'])
+            self.assertLessEqual(wait['started_ns'], wait['ended_ns'])
+            self.assertLessEqual(wait['ended_ns'], evidence['ended_ns'])
+
     def test_unverified_release_blocks_later_dispatch_before_backend_access(self):
         for releases in (None, [None], [], [{"verified": True}], [{"verified": False}], [{"verified": "true"}],
                          [{"verified": True, "keys_down": [], "buttons_down": ["left"]}]):
