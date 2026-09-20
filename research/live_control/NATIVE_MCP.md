@@ -184,3 +184,17 @@ At the final permitted stage, an action or explicit review without finish return
 `needs_review` after cleanup, retaining its final observation and action/review
 evidence. It does not publish an unusable next source. This is stage exhaustion,
 not task success; finish_after remains the explicit action-and-finish path.
+
+## Viewing relocated native evidence
+
+For an archived Linux run moved to another directory or host, use the read-only
+CLI with an explicit original root:
+
+```sh
+python3 research/live_control/agent_review.py --native --report /local/archive/reply-2.json --run-directory /local/archive --recorded-run-directory /original/container/run
+```
+
+Only the exact relative suffix below the declared original root is mapped. The
+original report bytes, digest and recorded image path are preserved; PNG hashes
+are still verified. No basename search or traversal is accepted. Mapping is
+historical only and is not exposed as fresh source authority in the MCP tools.
