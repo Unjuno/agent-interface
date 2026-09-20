@@ -5,5 +5,6 @@ This Docker Desktop allocation follows the environment STOP retained by parallel
 - [Frozen plan and H/T/D/C/U](PLAN.md)
 - [Exact Docker Desktop runbook](CONTAINER_RUN.md)
 - [Disposition and evidence](RESULT.md)
+- [SHA-256 manifest for sources and retained outputs](SHA256SUMS.txt)
 
 All source analysis is AST-only. The result is not evidence that the launcher or its transitive imports are safe to import or execute.
