@@ -27,3 +27,9 @@ The original transport result above is retained unchanged. A review of the new b
 One additive OrbStack rerun was performed with the same pinned Linux/arm64 image and `--network none`; its unique raw bundle is `evidence/20260920-v1-transport-audit-01/`. The separately executed `audit_orbstack_v1_transport.py` reports `PASS_V1_SYNTHETIC_TRANSPORT_ONLY` across 13 checks, including exact image ID, one authority-false request, asset hashes, fake host CLI identity, event sequence, process boundary, zero exit codes and empty stderr. `raw-sha256.json` covers retained run files. The updated targeted suite has 18 passing tests (17 unit/contract tests plus this OrbStack transport test).
 
 This remains synthetic transport-only evidence. No actual model call or compiled-schema endpoint validation was made; #3489's gate still requires #3487 merge and green latest-head CI before that one-shot test.
+
+## Addendum — current-main regression and failure-stage taxonomy (2026-09-20)
+
+After #3494 integrated the original v1 transport repair into main, the follow-up branch was merged with latest main without dropping #3494's `--once` exit-code regression. A further unit-only refinement now records request validation and distinguishes `HOST_BROKER_REQUEST_REFUSED`, `HOST_CLI_IDENTITY_UNAVAILABLE` / `HOST_CLI_IDENTITY_TIMEOUT`, and `HOST_BROKER_EXECUTABLE_UNAVAILABLE` at actual CLI spawn. Missing-schema and unavailable-identity regressions both assert that no model CLI spawn occurred.
+
+The post-merge targeted suite passes all 20 broker, bridge, runner, backend, and OrbStack transport tests; `compileall` and `git diff --check` pass. The raw transport bundle above remains the preserved pre-merge OrbStack run; it is not rewritten to pretend the later taxonomy change was in that experiment. Hosted checks for the current PR head remain queued, and the real #3489 endpoint gate is still unrun.

@@ -119,6 +119,33 @@ class HostBrokerContractTest(unittest.TestCase):
             self.assertEqual(record["stop_reason"], "HOST_BROKER_REQUEST_REFUSED")
             self.assertEqual(record["error_class"], "FileNotFoundError")
             self.assertFalse(record["host_cli_invoked"])
+            self.assertFalse(record["request_validated"])
+            self.assertFalse(record["host_cli_spawn_attempted"])
+
+    def test_cli_identity_failure_is_not_an_asset_refusal_or_spawn_failure(self):
+        import json
+        from unittest.mock import patch
+        from runtime.host_model_ipc_broker_v1 import serve
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); ipc = root / "ipc"; repo = root / "repo"
+            ipc.mkdir(); repo.mkdir(); (repo / "workspace").mkdir()
+            schema = repo / "schema.json"; schema.write_text('{}')
+            instructions = repo / "instructions.txt"; instructions.write_text("probe")
+            request = {"request_id":"identity-failure", "authority_granted":False,
+                "mode":"handle", "schema":"/repo/schema.json",
+                "schema_sha256":hashlib.sha256(schema.read_bytes()).hexdigest(),
+                "instructions":"/repo/instructions.txt",
+                "instructions_sha256":hashlib.sha256(instructions.read_bytes()).hexdigest(),
+                "working":"/repo/workspace", "image":None, "prompt":"probe"}
+            (ipc / "identity-failure.request.json").write_text(json.dumps(request))
+            with patch("runtime.host_model_ipc_broker_v1.executable_identity",
+                       side_effect=FileNotFoundError("codex absent")):
+                result = serve(ipc, repo, once=True)
+            record = json.loads((ipc / "identity-failure.broker.json").read_text())
+            self.assertEqual(result, 1)
+            self.assertEqual(record["stop_reason"], "HOST_CLI_IDENTITY_UNAVAILABLE")
+            self.assertTrue(record["request_validated"])
+            self.assertFalse(record["host_cli_invoked"])
             self.assertFalse(record["host_cli_spawn_attempted"])
 
     def test_once_preserves_child_exit_and_response_without_model_call(self):
