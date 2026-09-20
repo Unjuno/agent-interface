@@ -8,12 +8,18 @@ on:
       - 'runtime/cli_v1/**'
       - 'runtime/motor_state_v1/**'
       - 'runtime/selector_v1/**'
+      - 'runtime/core_v1/**'
+      - 'runtime/backends/**'
+      - 'runtime/distribution_v2/**'
       - '.github/workflows/runtime-cli-v1.yml'
   pull_request:
     paths:
       - 'runtime/cli_v1/**'
       - 'runtime/motor_state_v1/**'
       - 'runtime/selector_v1/**'
+      - 'runtime/core_v1/**'
+      - 'runtime/backends/**'
+      - 'runtime/distribution_v2/**'
       - '.github/workflows/runtime-cli-v1.yml'
 
 permissions:
@@ -34,6 +40,9 @@ jobs:
             runtime/cli_v1
             runtime/motor_state_v1
             runtime/selector_v1
+            runtime/core_v1
+            runtime/backends
+            runtime/distribution_v2
           sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
@@ -41,6 +50,6 @@ jobs:
       - name: Compile unified runtime surface
         run: python -m compileall -q runtime/cli_v1 runtime/motor_state_v1 runtime/selector_v1
       - name: Run CLI/API tests
-        run: python -m unittest -v runtime.cli_v1.test_cli runtime.cli_v1.test_observe runtime.cli_v1.test_golden_v3 runtime.cli_v1.test_receipt runtime.cli_v1.test_receipt_motor_state runtime.selector_v1.test_selector runtime.motor_state_v1.test_adapter
+        run: python -m unittest -v runtime.cli_v1.test_cli runtime.cli_v1.test_review runtime.cli_v1.test_observe runtime.cli_v1.test_golden_v3 runtime.cli_v1.test_receipt runtime.cli_v1.test_receipt_motor_state runtime.selector_v1.test_selector runtime.motor_state_v1.test_adapter
       - name: Run machine-readable doctor
         run: python -m runtime.cli_v1 doctor
