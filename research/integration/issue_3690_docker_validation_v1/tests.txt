@@ -1,1 +1,40 @@
-@work/issue3690-result/tests.txt
+Target commit: de9acd02b50fac4e9b8c46ed961d923181cbbece
+Image: python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9
+Container platform: linux/amd64 (platform.machine() == x86_64)
+Python: 3.12.14
+Host: OrbStack Docker 29.4.0, linux/aarch64
+Network: none
+Root filesystem: read-only
+Temporary filesystem: /tmp tmpfs
+Source mount: read-only
+
+Invocation 1 (one fresh container):
+docker run --rm --network none --platform linux/amd64 --read-only --tmpfs /tmp \
+  -v <exact-branch-source>/research/issue_3676_audit_hardening_v1:/work:ro \
+  -w /work -e PYTHONDONTWRITEBYTECODE=1 \
+  python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 \
+  python -m unittest -v test_audit.py
+Exit status: 0
+
+test_contradiction_and_noncanonical_trace_controls_rejected ... ok
+test_direct_and_documented_cli_routes_match ... ok
+test_original_raw_and_freeze_are_byte_bound ... ok
+test_prior_three_controls_still_rejected ... ok
+test_study_manifest_binds_exact_predecessor_raw_and_freeze ... ok
+
+Ran 5 tests in 0.292s
+OK
+
+Invocation 2 (separate fresh container):
+docker run --rm --network none --platform linux/amd64 --read-only --tmpfs /tmp \
+  -v <exact-branch-source>/research/issue_3676_audit_hardening_v1:/work:ro \
+  -v <isolated-output>:/out:rw -w /work -e PYTHONDONTWRITEBYTECODE=1 \
+  python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 \
+  python audit.py evidence/raw.json \
+    --freeze evidence/predecessor_FREEZE.json \
+    --study-freeze evidence/FREEZE.json \
+    --output /out/hardening_audit.json
+Exit status: 0
+Output summary: PASS_OFFLINE_STRUCTURAL_AUDIT; errors=[]; 21/21 mutations rejected.
+Output file SHA-256: e2ac7b32c1da563cbcd3cbea285ac5ace4f98d43b3cb9ea046d2bf6c1adbbbc0
+Output file is byte-identical to exact-head retained evidence/hardening_audit.json.

@@ -1,1 +1,46 @@
-@work/issue3690-result/source-manifest.json
+{
+  "schema": "issue3690-pinned-container-validation-v1",
+  "issue": "Unjuno/agent-interface#3690",
+  "target_source_pr": "Unjuno/agent-interface#3683",
+  "target_commit": "de9acd02b50fac4e9b8c46ed961d923181cbbece",
+  "decision": "PASS_PINNED_LINUX_AMD64_CONTAINER_VALIDATION_SCOPED",
+  "formal_xres_allocation": false,
+  "containers": {
+    "image": "python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "reported_machine": "x86_64",
+    "python": "3.12.14",
+    "host_runtime": "OrbStack Docker 29.4.0 on linux/aarch64",
+    "network": "none",
+    "root_read_only": true,
+    "tmpfs": ["/tmp"],
+    "source_mount_read_only": true,
+    "invocations": 2,
+    "test_suite_invocations": 1,
+    "raw_only_cli_invocations": 1
+  },
+  "frozen_inputs": {
+    "audit.py_sha256": "b03d7539e1d77c75a07cf3012b7f3614b8ad251eb1b7edcf6e9663e02b77a7f9",
+    "test_audit.py_sha256": "9cbec2bd644005f356af36cf395827e32525cd283c7face314f698eb8b21e8a9",
+    "study_FREEZE_sha256": "452decd0418db0f2b6ea8e0b823eb68cbb4e339cd532c2fbcccea5b990f1b22f",
+    "predecessor_FREEZE_sha256": "f40494b1be99fb1e68d7b09c498297df35a72c043740b5f09d3faec7e059acfe",
+    "predecessor_raw_sha256": "ccb9a75eefb7df73cb13dbc9191d33334fb672c2fd58fcc5fa32be998e182807",
+    "retained_hardening_audit_sha256": "e2ac7b32c1da563cbcd3cbea285ac5ace4f98d43b3cb9ea046d2bf6c1adbbbc0"
+  },
+  "observations": {
+    "unit_tests_passed": 5,
+    "unit_tests_total": 5,
+    "mutation_controls_rejected": 21,
+    "mutation_controls_total": 21,
+    "cli_status": "PASS_OFFLINE_STRUCTURAL_AUDIT",
+    "cli_errors": [],
+    "cli_output_matches_retained_byte_for_byte": true,
+    "cli_output_sha256": "e2ac7b32c1da563cbcd3cbea285ac5ace4f98d43b3cb9ea046d2bf6c1adbbbc0"
+  },
+  "result_artifacts": {
+    "RESULT.md_sha256": "5d6317d6cafdd5dd094fa7fbe0ae57ac5e9fc8ec904a2261e0b01904d53b40b2",
+    "tests.txt_sha256": "02039037c1aa2984058494a6dbb3a061cc7164ebe64b6f8b00054fbae53f1556",
+    "hardening_audit.json_sha256": "e2ac7b32c1da563cbcd3cbea285ac5ace4f98d43b3cb9ea046d2bf6c1adbbbc0"
+  },
+  "scope_limit": "The host is ARM64 OrbStack; the exact pinned image was executed as Linux/amd64 and reported x86_64. This is not native x86_64 hardware or Docker Desktop host-integration evidence."
+}
