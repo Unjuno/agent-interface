@@ -1509,4 +1509,8 @@ without reinterpretation. See [formal result](research/issue_3784_focused_receiv
 [independent audit](research/issue_3784_focused_receiver_v1/results/audit-01/audit.json),
 and PR (to be added after evidence publication).
 
+### Representation-bound proxy effect unit — Issue #3631
+
+One frozen OrbStack linux/arm64 allocation completed 28/28 rows across screenshot, proxy-image, structured-proxy, and hybrid arms. Each arm produced one exact synthetic 0→1 effect and refused/yielded on its six negative controls; XRes PID plus stable `/proc` start ticks bound the selected XID to its fixture process. Representation-derived coordinates and hashes reconciled, two-target ambiguity was established before dispatch with zero input/effect, and all release/cleanup checks passed. A separate read-only primary auditor returned `PASS_INDEPENDENT_AUDIT` with seven of seven corruption probes detected; a post-formal cross-binding audit recomputed state/representation/action correspondence for all 28 rows and passed. This closes only the deterministic GTK/Xvfb allocation: no arm superiority, model/human benefit, production authority, general GUI safety, or integrated desktop claim. See [the preregistration, raw rows, freeze, and audits](research/experiments/issue_3631_proxy_effect_unit_v4/README.md).
+
 </details>
