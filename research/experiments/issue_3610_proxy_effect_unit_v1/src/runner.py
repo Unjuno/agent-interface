@@ -177,7 +177,8 @@ def run_row(arm, case):
         if conn is not None:
             try: conn.close()
             except Exception: pass
-        time.sleep(0.03)
+        socket_deadline=time.monotonic()+2
+        while SOCKET.exists() and time.monotonic()<socket_deadline: time.sleep(0.02)
         row["socket_disappeared"] = not SOCKET.exists()
         eventfile = rowdir / "fixture-events.jsonl"
         row["fixture_events"] = [json.loads(line) for line in eventfile.read_text().splitlines()] if eventfile.exists() else []
