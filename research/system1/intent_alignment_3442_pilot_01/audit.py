@@ -7,7 +7,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
-RUNNER_SHA256 = "RUNNER_SHA256_TO_FILL"
+RUNNER_SHA256 = "83e59427cebcbffa3c7be76e89f4ffe483727cf4f87dc0efb54539b580724751"
 VOCAB = {"LEFT": 0, "RIGHT": 1, "WATCH": 2, "YIELD": 3}
 
 def expected_label(state, intent):
