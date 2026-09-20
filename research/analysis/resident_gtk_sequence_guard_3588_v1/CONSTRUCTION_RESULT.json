@@ -1,0 +1,16 @@
+{
+  "allocation_id": "issue3588-resident-gtk-sequence-guard-construction-01",
+  "decision": "PASS_CONSTRUCTION_PREFIX_ORACLE",
+  "trace_count": 9,
+  "prefix_count": 27,
+  "unit_tests": {"passed": 6, "total": 6},
+  "mutation_challenges": {"sequence_guard_removed": "detected", "state_before_sequence_validation": "detected", "future_revoke_batch_lookahead": "detected"},
+  "formal_gui_invocations": 0,
+  "candidate_main_commit": "e1d9c073cdaed1a5eedf602f5959d83d39804f2b",
+  "candidate_git_blob": "37bb7b271b099ccb10a594dbe00faa5bf618099b",
+  "candidate_sha256": "1f55427d0045b16d843f62cb5824c85a45b48fab3c1518fa3cade35296ec4efc",
+  "prefix_ledger_sha256": "3300e5696f1ea2d8188ad5c36766ff47dc2bdec7240c3f225becc5a1d4e648c3",
+  "audit_sha256": "6cea13aba0475d50e73946942345880e15c22ddb5bd67a2cd0c1cf3ddffd51fc",
+  "source_manifest_sha256": "cbf087768023068dc752c9cf579e5f494d02d373abbcb127ddc97aa30cf8bbb8",
+  "initial_construction_tool_error": "summary-print denominator TypeError after 6/6 unit tests and prefix output write; corrected denominator; subsequent full test-runner-auditor command exited 0"
+}
