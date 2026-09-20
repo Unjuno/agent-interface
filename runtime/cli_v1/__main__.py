@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from contextlib import redirect_stdout
 import json
 import sys
 from pathlib import Path
@@ -10,6 +11,13 @@ from .receipt import receipt_view
 from .review import review, review_bytes, present_result
 from .observe import observe
 from .attempt import invoke, inspect_attempt
+
+
+def _invoke_cli(*args, **kwargs):
+    # Some Python dependencies print diagnostics instead of using logging.
+    # Scope redirection to invocation; structured presentation stays on stdout.
+    with redirect_stdout(sys.stderr):
+        return invoke(*args, **kwargs)
 
 
 def _read_json(path: str):
@@ -118,7 +126,7 @@ def main() -> int:
         return 0
     if args.command == "observe":
         try:
-            row, retention = invoke(observe, dict(targets=_read_json(args.targets), target=args.target,
+            row, retention = _invoke_cli(observe, dict(targets=_read_json(args.targets), target=args.target,
                           frame=args.frame, region=args.region, capture_directory=args.capture_directory,
                           display_name=args.display), args.run_directory, operation='observe', timings=args.retention_timings)
         except (OSError, ValueError, TypeError) as error:
@@ -132,7 +140,7 @@ def main() -> int:
     except Exception as error:
         _emit({"schema": "agent-interface/runtime-dispatch-result-v1", "status": "invalid_request", "error": f"INVALID_JSON:{error}"})
         return 2
-    row, retention = invoke(dispatch, dict(
+    row, retention = _invoke_cli(dispatch, dict(
         program=program, targets=targets,
         current_observation_seq=args.current_observation_seq,
         current_binding_revision=args.current_binding_revision,
