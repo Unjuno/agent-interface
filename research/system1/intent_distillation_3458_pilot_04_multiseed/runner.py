@@ -49,7 +49,7 @@ def boundary_set():
         rows.extend([[d,.2,.01,.02,.719,1.],[d,.2,.01,.02,.721,1.]])
         rows.extend([[.059,0.,.02,.02,.9,1.],[.061,0.,.02,.02,.9,1.]])
         rows.extend([[0.,0.,.059,.06,.9,1.],[0.,0.,.061,.06,.9,1.]])
-    return torch.tensor(rows,dtype=torch.float32)
+    x=torch.tensor(rows,dtype=torch.float32); return x
 
 def percentile_ms(fn,rows):
     vals=[]
