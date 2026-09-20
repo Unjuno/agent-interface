@@ -19,10 +19,12 @@ class PortableDistributionTests(unittest.TestCase):
             td = Path(td)
             out = td/'runtime.pyz'
             build(root, out, td/'manifest.json', td/'sum')
-            doctor = subprocess.run([sys.executable, '-S', str(out), 'doctor'],
+            doctor = subprocess.run([sys.executable, '-S', str(out), 'doctor', '--check-dependencies'],
                                     cwd=td, capture_output=True, text=True)
             self.assertEqual(doctor.returncode, 0, doctor.stderr)
             self.assertEqual(json.loads(doctor.stdout)['schema'], 'agent-interface/runtime-doctor-v1')
+            self.assertTrue(all(row['discoverable'] is False for row in
+                                json.loads(doctor.stdout)['dependency_inventory']['modules']))
             mcp = subprocess.run([sys.executable, '-S', str(out), 'mcp', '--help'],
                                  cwd=td, capture_output=True, text=True)
             self.assertEqual(mcp.returncode, 2)
