@@ -146,6 +146,10 @@ These are research predecessors. Current promoted executable organization lives 
 - Do not move completed evidence solely to make the tree prettier; stable paths are part of the audit trail.
 - If an old mechanism is revisited, create a successor in the appropriate current category and link back to the retained source rather than rewriting the old directory.
 
+## Cross-engine JSONL framing replication
+
+- [`experiments/issue_3840_newline_frame_v2/`](experiments/issue_3840_newline_frame_v2/) — Issue #3840 Docker Desktop/Linux amd64 replication of the terminal-LF strict-prefix result; `RESULT.md` separates the corroborated row-level observation from the unresolved audit-provenance HOLD.
+
 ## Navigation check
 
 The canonical top-level workspace check is [`check_workspace_index.py`](check_workspace_index.py), documented in [`README.md`](README.md). It verifies that this retained namespace map and the current workspace map together cover every top-level research directory.
