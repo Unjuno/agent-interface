@@ -388,7 +388,7 @@ class NativeHandleBridgeTests(unittest.TestCase):
             bridge.store.resolve_point("old_target", [], None, None, 0)["status"],
             "MISSING")
         bridge.session.dispatch.assert_not_called()
-        bridge.backend.geometry.assert_called_once_with("app")
+        bridge.backend.geometry.assert_has_calls([mock.call("app"), mock.call("app")])
 
 
 if __name__ == "__main__":
