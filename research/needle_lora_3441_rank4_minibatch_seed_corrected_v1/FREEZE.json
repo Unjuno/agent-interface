@@ -1,0 +1,65 @@
+{
+  "schema": "issue-experiment-freeze-v1",
+  "issue": 3887,
+  "repository": "Unjuno/agent-interface",
+  "allocation": "needle-lora-3441-rank4-minibatch-seed-corrected-index-v1",
+  "branch": "research/needle-lora-rank4-minibatch-seed-3887-20260921",
+  "path": "research/needle_lora_3441_rank4_minibatch_seed_corrected_v1/",
+  "main_base_commit": "5bf75b7eaaee19a4f44b751b81d483a18864ec18",
+  "predecessor": {
+    "issue": 3851,
+    "pr": 3884,
+    "disposition": "STOP_RUNNER_INDEXING_FAILURE",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "c268ffdf6d7ab21c3e5fae92fc1d93a5c5f7cea0e399c05a85f483ae49268378",
+    "source_runner_git_blob": "8f0e15303315474e41097c2e46e651351112d32d"
+  },
+  "reference_3807_runner_path": "research/needle_lora_3441_rank4_online_multiseed_gpu_v1/runner.py",
+  "reference_3807_runner_git_blob": "18b6be0a175df957d838e188de4c7ca826b26af8",
+  "source_sha256": {
+    "SOURCE_RUNNER.py": "babbc44f868acc4eb159b71a0061ce9b57c690f2defbdbad885a7e828295e429",
+    "audit.py": "a9cd15a6b322218a692dcd9e5fc03266a4abd7ddb3acd79d08def645813f29cfa"
+  },
+  "H": "On the original #3807 seeds/data, replacing only rank-4 online minibatch RNG stream seed+35 with shared schedule seed+31 rescues held-out B accuracy; the stream is a candidate explanation, not an asserted cause.",
+  "T": {
+    "seeds": [
+      3451,
+      3452,
+      3453,
+      3454,
+      3455
+    ],
+    "data": "Exact #3807 frozen CUDA runner data generation, labels and task.",
+    "base": "8 features, hidden-16 tanh, 4 classes; 512 rows; 400 CUDA AdamW steps, LR .025.",
+    "model": "Rank-4 online LoRA; identical full initial state per seed; AdamW LR .04; seed+24 init; 16 one-at-a-time B rows in seed+30 order; 8 updates/arrival; batch size 32; 128 total steps.",
+    "arms": [
+      "rank4_legacy_seed35",
+      "rank4_shared_seed31"
+    ],
+    "mapping": "Sampler emits original support row IDs; index x_support and y_support directly by those IDs. Assert every sampled ID belongs to the revealed set. Never use an original row ID as an offset into compact seen[] storage.",
+    "schedule": "Balanced order L>S, S>L, L>S, S>L, L>S; per-arm generator reset to seed+35 or seed+31.",
+    "retention": "All 4096 heldout row predictions for both arms after arrivals 1..16, final metrics, timings, data and sampler hashes, routes, base integrity, initial equality, full-state snapshot/rollback."
+  },
+  "D": {
+    "pass": "PASS_SAMPLER_SEED_EXPLAINS_COLLAPSE_SCOPED only if legacy mean <=.10, shared arm >=.90 every seed, paired mean gain >=.50, p95 <=60ms, and every row-level/route/state/base/provenance/audit check passes.",
+    "hold": "HOLD_LEGACY_COLLAPSE_NOT_REPRODUCED if legacy mean >.10; no causal attribution.",
+    "fail": "FAIL_SAMPLER_SEED_NOT_SUFFICIENT if legacy collapse repeats but rescue gate fails; FAIL_ROUTE_OR_STATE_INTEGRITY on violations; typed STOP/HOLD on ambiguity.",
+    "invocationLimit": 1,
+    "retries": 0,
+    "tuning": 0
+  },
+  "C": {
+    "python": "3.11.9",
+    "torch": "2.5.1+cu121",
+    "cuda": "12.1",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "cublasWorkspaceConfig": ":4096:8",
+    "deterministic": true,
+    "tf32": false,
+    "minimumSystemFreeBytes": 1073741824,
+    "minimumGpuFreeBytes": 2147483648,
+    "execution": "local host CUDA; no container claim; Docker read-only only"
+  },
+  "U": "Five original synthetic seeds in one binary-factor family. Parent STOP had no online updates or held-out evaluation; reused seed design is not treated as independent replication. No real task, transfer, production safety/latency, or runtime-authority claim."
+}
+
