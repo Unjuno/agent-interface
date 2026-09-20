@@ -1,34 +1,25 @@
-# Integration status — Issue #3711 short-write construction
+# Integration status - Issue #3711 short-write construction
 
-Checked 2026-09-21 JST. The frozen source protocol in `PROTOCOL.md` is
-historical and unchanged; it says no result was claimed when written.
+Checked 2026-09-21 JST. `PROTOCOL.md` is frozen historical evidence; its original status line is unchanged.
 
-## Implementation and checks
+## Frozen source and implementation relationship
 
-- PR #3727 merged the short-write detection and regression changes to
-  `runtime/cli_v1/__main__.py` and `runtime/cli_v1/test_attempt.py`.
-- PR #3729 merged explicit flush handling and its regression; byte-preserving
-  recovery is still the intended behavior.
-- Windows and macOS `cli` jobs passed in both recorded workflows. The Ubuntu
-  `cli` job failed in both: 88 tests ran with three errors in
-  `runtime.selector_v1.test_selector.SelectorTests.test_explicit_display_selects_and_opens_same_x11_without_mutating_environment`.
-  Each error was `AttributeError: module 'runtime.backends' has no attribute
-  'x11_v1'` while the selector test patched that import path.
-- The failing jobs are [PR #3727 run](https://github.com/Unjuno/agent-interface/actions/runs/35527038747)
-  and [PR #3729 run](https://github.com/Unjuno/agent-interface/actions/runs/35527161406).
+The protocol pins these Git blobs:
+- `runtime/cli_v1/__main__.py`: `871600960dfb4404f3455d2df6b3d8686cf0cac9`
+- `runtime/cli_v1/test_attempt.py`: `cbc9d0c17ca3a4391593dcea00901083ceacffcb`
+- `runtime/cli_v1/attempt.py`: `de8041869d216014afe3322379fa2ce080367411`
 
-## Disposition and limits
+PR #3727 was based on `12f838151cc210c277e585f5c2fc8b837dedc55c`, where those same paths have blobs `a3dd52836bbfe1492c4b7ad5650ab1a58603c7e5`, `1fa20d0d757a4cb860231317ca5333600e4882cc`, and `70cc62b450c8b9c8aaa0db49b1e116388368fe4c`. Therefore #3727/#3729 are implementation successors on a different source baseline, not an execution of the exact frozen source. No exact-source construction PASS is established.
 
-The protocol required the full Runtime CLI workflow to pass on Ubuntu,
-Windows, and macOS. Because the Ubuntu job failed, that preregistered
-cross-platform construction gate is **not PASS**. The logs identify selector
-mock/import errors, not a reported short-write assertion failure; therefore
-they do not establish that the short-write behavior itself failed either.
-Keep the protocol result as `INCOMPLETE_CROSS_PLATFORM_CI` pending the Ubuntu
-test-import issue; do not infer a three-OS PASS from the merged implementation
-or from Windows/WSL results alone.
+## Terminal CI outcome
 
-This protocol covers a mocked short-write construction case, not an induced
-OS pipe truncation or live consumer disconnect. Issue #3711 remains open for
-its other gates. No local Docker, GUI, model, native input, or live-application
-allocation is claimed here.
+The required Runtime CLI workflow on the original candidate PR #3726 reached a terminal result:
+- Ubuntu run [35526981161](https://github.com/Unjuno/agent-interface/actions/runs/35526981161) ran 87 tests and ended with 3 errors in the pre-existing Linux selector test. Each error was `AttributeError: module 'runtime.backends' has no attribute 'x11_v1'`.
+- The focused `test_short_stdout_write_fails_once_and_keeps_retained_report` passed in that same Ubuntu log. Windows and macOS passed; the required all-platform gate did not.
+- Later #3727 and #3729 Ubuntu jobs also ended with selector import errors. They do not repair the frozen-source mismatch.
+
+Classify this allocation as `STOP_CI_INFRASTRUCTURE` with an independent source-identity STOP, not HOLD or `INCOMPLETE_CROSS_PLATFORM_CI`: the workflow is terminal, the focused assertion is not reported failed, and the candidate source differs from the frozen target. Do not retry or relabel later-source checks as exact-source validation.
+
+## Scope limits
+
+This is a mocked short-write construction case, not an induced OS pipe truncation or live consumer disconnect. The actual closed-pipe case is separately covered by merged PR #3723. Issue #3711 remains open for its other gates. No local Docker, GUI, model, native input, or live-application allocation is claimed.
