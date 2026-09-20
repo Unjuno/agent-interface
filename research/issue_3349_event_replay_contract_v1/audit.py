@@ -10,7 +10,8 @@ import types
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-EXPECTED_SOURCE_SHA256 = "4432a6188b5318dc552f050a26ff9e2a5d32bbf9"
+EXPECTED_GIT_BLOB = "4432a6188b5318dc552f050a26ff9e2a5d32bbf9"
+EXPECTED_SOURCE_SHA256 = "4e700b05c60626e73070eb6f5883d9341c8b1374996d45f08e5766fc6cb0f463"
 
 
 class SessionError(RuntimeError):
