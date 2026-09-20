@@ -4,6 +4,10 @@ from PIL import ImageStat
 from scoped_target_handle_v1 import TargetHandleStore as Previous
 
 
+class FlatTargetRefused(ValueError):
+    """Source texture refused before minting a handle or dispatching input."""
+
+
 class TargetHandleStore(Previous):
     def mint(self, name, coordinate_frame, box, observation, image, now_ns,
              ttl_ms=30000, freshness_ms=1000, search_radius=0,
@@ -16,7 +20,7 @@ class TargetHandleStore(Previous):
             raise ValueError("valid source region required")
         patch = image.crop((x, y, x + width, y + height))
         if patch.size != (width, height) or max(ImageStat.Stat(patch).stddev) < 8:
-            raise ValueError("visually flat target region refused")
+            raise FlatTargetRefused("visually flat target region refused")
         return super().mint(name, coordinate_frame, box, observation, image, now_ns,
                             ttl_ms, freshness_ms, search_radius,
                             allowed_transformations)
