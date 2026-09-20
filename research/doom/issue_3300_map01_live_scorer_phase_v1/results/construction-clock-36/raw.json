@@ -1,0 +1,742 @@
+[
+  {
+    "advancing_api_calls": 0,
+    "closed": true,
+    "elapsed_ns": 1507945363,
+    "final_api_tic": 1,
+    "game_args": "+viz_debug 2",
+    "initial_api_tic": 1,
+    "instrumentation": "engine VIZ_Tic debug level 2; stdout logging; no controller action",
+    "mode_readback": "Mode.ASYNC_SPECTATOR",
+    "repetition": 0,
+    "samples": [
+      {
+        "api_tic": 1,
+        "end_ns": 53384658495285,
+        "start_ns": 53384658493244
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53384709920042,
+        "start_ns": 53384709890960
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53384767861408,
+        "start_ns": 53384767823411
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53384824789086,
+        "start_ns": 53384824736589
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53384884555218,
+        "start_ns": 53384884498555
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53384944094281,
+        "start_ns": 53384944053283
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385002937885,
+        "start_ns": 53385002882847
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385062823511,
+        "start_ns": 53385062761014
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385121077942,
+        "start_ns": 53385120968574
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385172890800,
+        "start_ns": 53385172822721
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385227130264,
+        "start_ns": 53385227076642
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385286911520,
+        "start_ns": 53385286840774
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385346137810,
+        "start_ns": 53385346070606
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385406437161,
+        "start_ns": 53385406376873
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385460347852,
+        "start_ns": 53385460205235
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385513457133,
+        "start_ns": 53385513384262
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385570970317,
+        "start_ns": 53385570907279
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385630808237,
+        "start_ns": 53385630742824
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385692757447,
+        "start_ns": 53385692587957
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385749794284,
+        "start_ns": 53385749717955
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385809955935,
+        "start_ns": 53385809893063
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385868290320,
+        "start_ns": 53385868237323
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385928212318,
+        "start_ns": 53385928141155
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53385987631429,
+        "start_ns": 53385987570308
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53386046664522,
+        "start_ns": 53386046604609
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53386106850755,
+        "start_ns": 53386106787759
+      }
+    ],
+    "scorer_api_trace": [
+      {
+        "args": [],
+        "end_ns": 53386166965700,
+        "name": "get_episode_time",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53386166904412,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": 1
+      },
+      {
+        "args": [],
+        "end_ns": 53386167152689,
+        "name": "is_episode_finished",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53386167137606,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": false
+      },
+      {
+        "args": [],
+        "end_ns": 53386167184228,
+        "name": "is_player_dead",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53386167178437,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": false
+      },
+      {
+        "args": [
+          "KILLCOUNT"
+        ],
+        "end_ns": 53386167233934,
+        "name": "get_game_variable",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53386167216560,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": 0.0
+      },
+      {
+        "args": [
+          "DEATHCOUNT"
+        ],
+        "end_ns": 53386167297513,
+        "name": "get_game_variable",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53386167289972,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": 0.0
+      },
+      {
+        "args": [],
+        "end_ns": 53386167387383,
+        "name": "get_ticrate",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53386167381175,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": 35
+      },
+      {
+        "args": [],
+        "end_ns": 53386167415298,
+        "name": "is_episode_timeout_reached",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53386167409382,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": false
+      },
+      {
+        "args": [],
+        "end_ns": 53386167467586,
+        "name": "get_episode_time",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53386167451421,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": 1
+      }
+    ],
+    "scorer_end_ns": 53386167549957,
+    "scorer_return": {
+      "death_count": 0,
+      "episode_finished": false,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false,
+      "sample_ns": 53386167482419,
+      "schema": "independent-progress-sample-v2"
+    },
+    "scorer_start_ns": 53386166781086,
+    "scorer_status": "returned",
+    "setup": "initialized",
+    "ticrate_readback": 35,
+    "vizdoom_version": "1.3.0",
+    "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+  },
+  {
+    "advancing_api_calls": 0,
+    "closed": true,
+    "elapsed_ns": 1513157135,
+    "final_api_tic": 1,
+    "game_args": "+viz_debug 2",
+    "initial_api_tic": 1,
+    "instrumentation": "engine VIZ_Tic debug level 2; stdout logging; no controller action",
+    "mode_readback": "Mode.ASYNC_SPECTATOR",
+    "repetition": 1,
+    "samples": [
+      {
+        "api_tic": 1,
+        "end_ns": 53386521392453,
+        "start_ns": 53386521389745
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53386579046712,
+        "start_ns": 53386579031588
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53386630325394,
+        "start_ns": 53386630310186
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53386684498277,
+        "start_ns": 53386684473946
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53386743832352,
+        "start_ns": 53386743799063
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53386804342357,
+        "start_ns": 53386804282027
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53386862708823,
+        "start_ns": 53386862654535
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53386923290074,
+        "start_ns": 53386923224244
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53386978422609,
+        "start_ns": 53386978344530
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387039277051,
+        "start_ns": 53387039220346
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387095790211,
+        "start_ns": 53387095734548
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387149712110,
+        "start_ns": 53387149660363
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387206891689,
+        "start_ns": 53387206827235
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387258589055,
+        "start_ns": 53387258522184
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387312544660,
+        "start_ns": 53387312459831
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387364915818,
+        "start_ns": 53387364850280
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387423397944,
+        "start_ns": 53387423329073
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387483467392,
+        "start_ns": 53387482759059
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387533862585,
+        "start_ns": 53387533798547
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387584158659,
+        "start_ns": 53387584084080
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387640066897,
+        "start_ns": 53387639665171
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387694556221,
+        "start_ns": 53387694502057
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387749580095,
+        "start_ns": 53387749521807
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387803322338,
+        "start_ns": 53387803239801
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387860343427,
+        "start_ns": 53387860265265
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387917881109,
+        "start_ns": 53387917820113
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53387976211452,
+        "start_ns": 53387976153914
+      }
+    ],
+    "scorer_api_trace": [
+      {
+        "args": [],
+        "end_ns": 53388035124803,
+        "name": "get_episode_time",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53388035099429,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": 1
+      },
+      {
+        "args": [],
+        "end_ns": 53388035167050,
+        "name": "is_episode_finished",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53388035162967,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": false
+      },
+      {
+        "args": [],
+        "end_ns": 53388035175341,
+        "name": "is_player_dead",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53388035173591,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": false
+      },
+      {
+        "args": [
+          "KILLCOUNT"
+        ],
+        "end_ns": 53388035188841,
+        "name": "get_game_variable",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53388035182258,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": 0.0
+      },
+      {
+        "args": [
+          "DEATHCOUNT"
+        ],
+        "end_ns": 53388035226922,
+        "name": "get_game_variable",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53388035224297,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": 0.0
+      },
+      {
+        "args": [],
+        "end_ns": 53388035264711,
+        "name": "get_ticrate",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53388035262544,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": 35
+      },
+      {
+        "args": [],
+        "end_ns": 53388035298542,
+        "name": "is_episode_timeout_reached",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53388035291959,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": false
+      },
+      {
+        "args": [],
+        "end_ns": 53388035309208,
+        "name": "get_episode_time",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53388035307333,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": 1
+      }
+    ],
+    "scorer_end_ns": 53388035353081,
+    "scorer_return": {
+      "death_count": 0,
+      "episode_finished": false,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false,
+      "sample_ns": 53388035319291,
+      "schema": "independent-progress-sample-v2"
+    },
+    "scorer_start_ns": 53388034931773,
+    "scorer_status": "returned",
+    "setup": "initialized",
+    "ticrate_readback": 35,
+    "vizdoom_version": "1.3.0",
+    "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+  },
+  {
+    "advancing_api_calls": 0,
+    "closed": true,
+    "elapsed_ns": 1501359798,
+    "final_api_tic": 1,
+    "game_args": "+viz_debug 2",
+    "initial_api_tic": 1,
+    "instrumentation": "engine VIZ_Tic debug level 2; stdout logging; no controller action",
+    "mode_readback": "Mode.ASYNC_SPECTATOR",
+    "repetition": 2,
+    "samples": [
+      {
+        "api_tic": 1,
+        "end_ns": 53388374547620,
+        "start_ns": 53388374541662
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53388427968049,
+        "start_ns": 53388427934551
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53388488197737,
+        "start_ns": 53388488161697
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53388548333097,
+        "start_ns": 53388548262310
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53388606759935,
+        "start_ns": 53388606689064
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53388666931418,
+        "start_ns": 53388666866464
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53388726163458,
+        "start_ns": 53388726051256
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53388785085557,
+        "start_ns": 53388784991355
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53388845317662,
+        "start_ns": 53388845228334
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53388898792463,
+        "start_ns": 53388898738299
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53388958578802,
+        "start_ns": 53388958525181
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53389018980814,
+        "start_ns": 53389018924775
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53389076171725,
+        "start_ns": 53389076120187
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53389136236590,
+        "start_ns": 53389136186843
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53389190225151,
+        "start_ns": 53389190174238
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53389250237727,
+        "start_ns": 53389250169106
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53389304230039,
+        "start_ns": 53389304172875
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53389363448287,
+        "start_ns": 53389363382541
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53389420343383,
+        "start_ns": 53389420142312
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53389477284310,
+        "start_ns": 53389477260853
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53389534369894,
+        "start_ns": 53389534345896
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53389594519671,
+        "start_ns": 53389594487756
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53389651787703,
+        "start_ns": 53389651764329
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53389705133844,
+        "start_ns": 53389705085680
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53389764603953,
+        "start_ns": 53389764572121
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 53389820876128,
+        "start_ns": 53389820825256
+      }
+    ],
+    "scorer_api_trace": [
+      {
+        "args": [],
+        "end_ns": 53389877082848,
+        "name": "get_episode_time",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53389877057141,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": 1
+      },
+      {
+        "args": [],
+        "end_ns": 53389877159677,
+        "name": "is_episode_finished",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53389877152677,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": false
+      },
+      {
+        "args": [],
+        "end_ns": 53389877169718,
+        "name": "is_player_dead",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53389877167176,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": false
+      },
+      {
+        "args": [
+          "KILLCOUNT"
+        ],
+        "end_ns": 53389877191217,
+        "name": "get_game_variable",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53389877181676,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": 0.0
+      },
+      {
+        "args": [
+          "DEATHCOUNT"
+        ],
+        "end_ns": 53389877234297,
+        "name": "get_game_variable",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53389877231548,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": 0.0
+      },
+      {
+        "args": [],
+        "end_ns": 53389877273045,
+        "name": "get_ticrate",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53389877270712,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": 35
+      },
+      {
+        "args": [],
+        "end_ns": 53389877281503,
+        "name": "is_episode_timeout_reached",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53389877279461,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": false
+      },
+      {
+        "args": [],
+        "end_ns": 53389877286044,
+        "name": "get_episode_time",
+        "role": "exact_scorer_predicate",
+        "start_ns": 53389877284961,
+        "status": "ok",
+        "thread_id": 281473573161664,
+        "value": 1
+      }
+    ],
+    "scorer_end_ns": 53389877324584,
+    "scorer_return": {
+      "death_count": 0,
+      "episode_finished": false,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false,
+      "sample_ns": 53389877290669,
+      "schema": "independent-progress-sample-v2"
+    },
+    "scorer_start_ns": 53389876987229,
+    "scorer_status": "returned",
+    "setup": "initialized",
+    "ticrate_readback": 35,
+    "vizdoom_version": "1.3.0",
+    "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+  }
+]

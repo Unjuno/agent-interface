@@ -1,0 +1,39 @@
+{
+  "schema": "map01-perf-event-preflight-v1",
+  "formal_allocation": false,
+  "image_id": "sha256:8d984b04efe5bca7bd9b3808aac4f56bd273a6a1ada76cd51939253b874244ca",
+  "platform": "linux/arm64",
+  "kernel": "7.0.14-orbstack-00380-ga7e0a2dc9535",
+  "default_container": {
+    "perf_binary": false,
+    "bpftrace_binary": false,
+    "trace_cmd_binary": false,
+    "perf_event_paranoid": 2,
+    "tracefs_directory": "present but empty/read-only",
+    "uprobe_events_readable": false,
+    "seccomp_mode": 2,
+    "perf_event_open_self_software_cpu_clock": {
+      "result": "STOP",
+      "errno": 1,
+      "error": "Operation not permitted"
+    }
+  },
+  "container_with_cap_add_PERFMON": {
+    "perf_event_open_self_software_cpu_clock": {
+      "result": "PASS",
+      "fd": 3
+    },
+    "privileged": false,
+    "sys_admin_added": false
+  },
+  "target_resolution": {
+    "engine_executable": "/usr/local/lib/python3.11/site-packages/vizdoom/vizdoom",
+    "engine_sha256": "355235742626ed6152fa2ba8c2ddf82e03003b42033aa3d16baf22cbd317ec11",
+    "elf_symbol_scan": "No VIZ_Tic or MAP_TIC-related symbol found in .symtab/.dynsym of the running executable",
+    "hardware_breakpoint_on_engine": "not attempted; target address not resolved"
+  },
+  "docker_images": [
+    "issue-3300-map01-fixture-smoke:v2"
+  ],
+  "disposition": "HOLD_TARGET_ADDRESS_UNRESOLVED"
+}

@@ -1,0 +1,37 @@
+Construction-clock-40 exact invocation and provenance
+
+Runtime image: `agent-interface-map01-clock-strace:20260920`, image ID/digest `sha256:d10a05346967cfc40ad600eee29f3be02fecef61bd9235e290ce7dafdb5c2ff2`.
+Base image: `sha256:4320dd483b24ea91c1481f12fd5799c903d9daa99a517b994f607037098ea41d`; tracer package Debian `strace 6.1-0.1`.
+WAD: official Freedoom 2 v0.13.0, SHA-256 `a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b`.
+
+Exact command from the repository root:
+
+```sh
+docker run --rm --platform linux/arm64 --network none --read-only \
+  --workdir /tmp --tmpfs /tmp:rw,noexec,nosuid,size=128m \
+  -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/strace_phase_bracket_construction.py:/probe.py:ro" \
+  -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/runner.py:/opt/phase-probe/runner.py:ro" \
+  -v "$PWD/research/doom/session_map01_v13.py:/opt/phase-probe/session_map01_v13.py:ro" \
+  -v "$PWD/research/doom/map01_scorer_stdio_adapter_v1.py:/opt/phase-probe/map01_scorer_stdio_adapter_v1.py:ro" \
+  -v "$PWD/research/doom/main_thread_scorer_polling_v1.py:/opt/phase-probe/main_thread_scorer_polling_v1.py:ro" \
+  -v "$PWD/research/doom/independent_progress_clock_v2.py:/opt/phase-probe/independent_progress_clock_v2.py:ro" \
+  -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-40:/results" \
+  -v /tmp/agent-interface-3300-freedoom.rVM7UB/unpacked/freedoom-0.13.0/freedoom2.wad:/assets/freedoom2.wad:ro \
+  --entrypoint strace agent-interface-map01-clock-strace:20260920 \
+  -f --absolute-timestamps=unix,precision:ns -T -s 4096 \
+  -e trace=write,writev -o /results/strace.txt stdbuf -oL python -u /probe.py \
+  > research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-40/container.log 2>&1
+```
+
+Source hashes:
+- `strace_phase_bracket_construction.py`: `62b0e8068ed6ea48921579b6165474a14a3ad5e181d294706b73af8ba2587197`
+- `audit_strace_phase_construction.py`: `802c84735cd904d5cf4559c954502e4068eec0179cfaba1c433cf9455331d5ea`
+- `test_audit_strace_phase_construction.py`: `07763f20d94cf00e19ee35091325f977a3fca8459f2ea7aba3bf93f20d1c4e50`
+
+Raw SHA-256: `dd21bea1952ed72ecc999c83ef8a4a783e77b84aedaf65c85b380ee42f2044f3`.
+Container log SHA-256: `5ee0238e2fd1d8b9d974da00a5c3b1f6921df731b2c6270a0d98588979e159f7`.
+strace SHA-256: `904fcf5be04e29eefd18017880c0435eaa81e755f55071acabe6758722ff50a4`.
+Audit JSON SHA-256: `5507eca64f2cb2482d4489d155cf147965cc3ae61bdfde5b88c73549f45c079a` (both `audit.json` and `audit-v2.json`).
+Focused test suite SHA-256: `be1ef6f250ad8eac860795d8246ccacdbc4a80a6c83d8055673c70a2aa186a28` (`all-focused-tests.txt`). Initial suite output SHA-256: `b0101a44955bf03a948601b96b5d6e4e375be831c26391e87273c43df16798a6` (`tests.txt`, synthetic fixture failure preserved). Corrected isolated test output SHA-256: `c2e77699a1d7655f0ca748fc54cfc7c9c415f187b54c0dd8357a77771d971dff` (`tests-correction.txt`). Audit stdout SHA-256: `f3441eb70e16cd4c2ef0bac9b5f77a014f678bd8309344db9fedf1859e99b5ca`.
+
+The raw, stdout/stderr, syscall trace, audit variants, and both initial/corrected test outputs are retained verbatim. The synthetic test correction did not alter experiment raw data. Formal allocation remains 0/120.

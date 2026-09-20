@@ -1,5 +1,27 @@
 # Worker governing invariant — 2026-09-18
 
+## Explicit operating direction — validate Issue ideas by experiment (2026-09-21)
+
+The primary task is to test concrete ideas already posted in repository Issues.
+Do not substitute branch/PR cleanup, roadmap restatement, documentation-only
+work, or merging for an experiment. For each selected idea, state H/T/D/C/U,
+freeze the source and decision gates, and run the smallest meaningful first
+experimental rung in a local Docker/OrbStack container whenever feasible. Keep
+construction checks distinct from formal allocations; preserve raw PASS, FAIL,
+HOLD, STOP, and infrastructure evidence without retries or silent relabeling.
+If the exact experiment has already been performed, do not duplicate it: pick a
+genuinely different unresolved Issue hypothesis or a new successor allocation.
+
+Publish the executed experiment, raw artifacts, hashes, independent audit, and
+scope limits to `main` through a reviewable PR so an integration worker can
+inspect and independently revalidate it. The PR/merge is the evidence-delivery
+mechanism, not the research objective. A component or readiness PASS must not
+be promoted to integrated runtime, model, task-effect, or product success.
+
+This user direction takes precedence over the narrower integration-only
+wording immediately below for the current autonomous research task; the
+existing desktop integration and human-tempo objectives remain valid backlog.
+
 **Current task priority — user direction, 2026-09-19:** concentrate on integration
 while other contributors continue benchmark/research work. Complete one usable
 desktop path from setup and observation through guarded action, result and

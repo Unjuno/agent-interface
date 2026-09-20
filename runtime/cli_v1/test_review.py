@@ -13,6 +13,90 @@ from runtime.distribution_v2.build import SOURCE_FILES, build
 
 class PublicReviewTests(unittest.TestCase):
 
+    def test_recorded_failure_phase_survives_all_presentations(self):
+        from runtime.cli_v1.review import present_result
+        from unittest.mock import patch
+        for schema in ('agent-interface/runtime-dispatch-result-v1',
+                       'agent-interface/runtime-observation-v1'):
+            for phase in ('backend_initialization', 'future_recorded_phase', None, '', 1, True, {}):
+                report = {'schema': schema, 'status': 'runtime_failed',
+                          'error': 'initialization failed', 'failure_phase': phase}
+                expected = phase if isinstance(phase, str) and phase else None
+                with self.subTest(schema=schema, phase=phase), tempfile.TemporaryDirectory() as td:
+                    for options in ({}, {'compact': True}, {'compact': True, 'report_refs': True}):
+                        result = present_result(report, td, **options)
+                        self.assertEqual(result['outcome_summary']['failure_phase'], expected)
+                        self.assertEqual(result['outcome_summary']['error'], report['error'])
+                        self.assertIsNone(result['outcome_summary'].get('input_release_verified'))
+                    with patch('runtime.cli_v1.review.review_bytes', side_effect=ValueError('bad image')):
+                        fallback = present_result(report, td)
+                    self.assertEqual(fallback['outcome_summary']['failure_phase'], expected)
+                    self.assertEqual(fallback['raw_result'], report)
+
+    def test_report_refs_without_compact_rejected_before_cli_operation(self):
+        from unittest.mock import patch
+        from contextlib import redirect_stderr
+        import io
+        from runtime.cli_v1.__main__ import main
+        for args in (
+                ['review', '--report', 'missing.json', '--run-directory', '.'],
+                ['observe', '--targets', 'missing.json', '--target', 'fixture',
+                 '--frame', 'window_client', '--region', '0', '0', '1', '1'],
+                ['dispatch', '--program', 'missing.json', '--targets', 'missing.json',
+                 '--current-observation-seq', '1', '--current-binding-revision', '0']):
+            with self.subTest(command=args[0]), patch.object(sys, 'argv', ['agent-interface', *args, '--report-refs']), redirect_stderr(io.StringIO()) as error:
+                with self.assertRaises(SystemExit) as stopped:
+                    main()
+                self.assertEqual(stopped.exception.code, 2)
+                self.assertIn('--report-refs requires --compact', error.getvalue())
+
+    def test_received_duplicate_report_compacts_and_expands_exactly(self):
+        from runtime.cli_v1.receipt_references import expand_receipt, REPORT_REF
+        raw = json.dumps({'schema': 'agent-interface/runtime-dispatch-result-v1',
+            'status': 'returned', 'result': {'status': 'refused', 'error': 'BACKEND_CONSTRAINT'},
+            'extension': {'payload': 'x' * 4000, 'report_ref': 'literal-value'}}).encode()
+        with tempfile.TemporaryDirectory() as td:
+            full = review_bytes(raw, td)
+            legacy = review_bytes(raw, td, compact=True)
+            self.assertNotEqual(legacy['receipt']['schema'], REPORT_REF)
+            self.assertEqual(expand_receipt(legacy['receipt']), full['receipt'])
+            compact = review_bytes(raw, td, compact=True, report_refs=True)
+        self.assertEqual(compact['receipt']['schema'], REPORT_REF)
+        self.assertEqual(expand_receipt(compact['receipt']), full['receipt'])
+        self.assertEqual(compact['outcome_summary'], full['outcome_summary'])
+        self.assertEqual(compact['receipt']['source'], full['receipt']['source'])
+        self.assertLess(len(json.dumps(compact)), len(json.dumps(full)))
+        for field, value in (('report_reference', '/elsewhere'),
+                             ('report', {'report_ref': 'wrong'}),
+                             ('source', {})):
+            altered = dict(compact['receipt'], **{field: value})
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                expand_receipt(altered)
+
+    def test_refusal_release_is_summarized_without_hiding_other_evidence(self):
+        from runtime.cli_v1.review import outcome_summary
+        good = {'verified': True, 'keys_down': [], 'buttons_down': []}
+        for release, execution, expected in (
+            (good, {}, True),
+            ({'verified': False}, {}, False),
+            (dict(good, verified=1), {}, None),
+            (dict(good, keys_down=['CTRL']), {}, None),
+            (None, {}, None),
+            (good, {'releases': [{'verified': False}]}, False),
+            ({'verified': False}, {'releases': [good]}, False),
+            (good, {'releases': [None]}, None),
+            (good, {'releases': 'malformed'}, None),
+        ):
+            with self.subTest(release=release, execution=execution):
+                report = {'schema': 'agent-interface/runtime-dispatch-result-v1',
+                          'result': {'status': 'refused', 'error': 'BACKEND_CONSTRAINT',
+                                     'release': release, 'execution': execution}}
+                summary = outcome_summary(report)
+                self.assertIs(summary['input_release_verified'], expected)
+                self.assertEqual(summary['execution_status'], 'refused')
+                self.assertEqual(summary['execution_error'], 'BACKEND_CONSTRAINT')
+                self.assertIsNone(summary['recovery_required'])
+
     def test_release_summary_requires_all_records_and_preserves_unknown(self):
         from runtime.cli_v1.review import outcome_summary
         good = {'verified': True, 'keys_down': [], 'buttons_down': []}
