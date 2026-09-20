@@ -43,6 +43,13 @@ class NativeAllocation:
             return dict(base, status='terminal', pid=self.process.pid, returncode=code,
                         task_success=None, cleanup_verified=False, restart_allowed=False)
         owner = owner_state(self.run_directory)
+        if owner is not None and owner['state'] == 'terminal':
+            # Exit may become visible between poll and the owner-state read.
+            # Reap only if already available: no wait, restart, or guessed code.
+            code = self.process.poll()
+            if code is not None:
+                return dict(base, status='terminal', pid=self.process.pid, returncode=code,
+                            task_success=None, cleanup_verified=False, restart_allowed=False)
         if owner is not None and owner['state'] != 'live':
             return dict(base, status='needs_review', pid=self.process.pid, owner=owner,
                         restart_allowed=False)

@@ -135,3 +135,19 @@ terminal responses return unavailable. These are facts at read time, with
 `authority: none`, not scheduling instructions, new input permission or task
 success. Existing source/admission checks still govern the next primary decision.
 The server does not author or send it. No pending request is automatically replayed.
+
+## Managed process snapshot
+
+Managed `native_submit` and read-only `native_resume` responses include an
+`allocation` snapshot alongside the action receipt and image. A terminal process
+with an available exit code may make a separate `native_status` call unnecessary.
+A still-live process requires later status reconciliation; no completion is
+inferred. The original startup source is named `initial_source_stage` here so it
+cannot be mistaken for the next continuation stage.
+
+Snapshot failures return `allocation.status: needs_review` while retaining the
+action outcome and image. If the process exits between its first nonblocking poll
+and the owner-state read, status polls once more without waiting. Exit status does
+not establish task success or verified cleanup. This adds no background sensor,
+restart, input replay or automatic next decision. Attach-only responses do not
+include a managed allocation snapshot.
