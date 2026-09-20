@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/task/xres_guard_formal_3575.py", line 197, in <module>
+    main()
+  File "/task/xres_guard_formal_3575.py", line 78, in main
+    bridge = NativeHandleBridge(os.environ["DISPLAY"], {"fixture": p1_info["xid"]},
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/research/live_control/native_handle_bridge_v1.py", line 66, in __init__
+    self.backend.configure_capture_artifacts(self.out / "images")
+  File "/app/runtime/backends/x11_v1/backend.py", line 47, in configure_capture_artifacts
+    from .capture_artifacts import CaptureArtifacts
+ModuleNotFoundError: No module named 'runtime.backends.x11_v1.capture_artifacts'
