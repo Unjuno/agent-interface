@@ -121,6 +121,28 @@ class HostBrokerContractTest(unittest.TestCase):
             self.assertFalse(record["host_cli_invoked"])
             self.assertFalse(record["host_cli_spawn_attempted"])
 
+    def test_once_preserves_child_exit_and_response_without_model_call(self):
+        import json
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        from runtime.host_model_ipc_broker_v1 import serve
+        for code in (0, 7):
+            with self.subTest(code=code), tempfile.TemporaryDirectory() as temp:
+                root = Path(temp); ipc = root / 'ipc'; ipc.mkdir()
+                request = {'request_id': 'fixture', 'prompt': 'fixture'}
+                (ipc / 'fixture.request.json').write_text(json.dumps(request))
+                with patch('runtime.host_model_ipc_broker_v1.build_command', return_value=['inert']), \
+                     patch('runtime.host_model_ipc_broker_v1.executable_identity', return_value={'version': 'inert'}), \
+                     patch('runtime.host_model_ipc_broker_v1.subprocess.run', return_value=SimpleNamespace(
+                         returncode=code, stdout='fixture-response\n', stderr='')) as run:
+                    self.assertEqual(serve(ipc, root, once=True), code)
+                run.assert_called_once()
+                self.assertEqual((ipc / 'fixture.response.jsonl').read_text(), 'fixture-response\n')
+                record = json.loads((ipc / 'fixture.broker.json').read_text())
+                self.assertEqual(record['returncode'], code)
+                self.assertTrue(record['host_cli_invoked'])
+                self.assertFalse(record['authority_granted'])
+
 
 if __name__ == "__main__":
     unittest.main()
