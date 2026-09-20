@@ -35,3 +35,30 @@ Before execution, a read-only byte check found the historical
 `audit.py` defines 12. The old receipt is preserved. The fresh CLI output will
 report the current source's actual controls, and the discrepancy will be
 recorded rather than silently reconciling the old result.
+
+## Allocation 01 result
+
+**`PASS_ISSUE3691_CONTAINER_VALIDATION_SCOPED`** for the exact frozen PR #3697
+snapshot. The first fresh container ran all 8 unittest methods: 8/8 passed.
+The second fresh container ran the canonical CLI once and returned
+`PASS_OFFLINE_STRUCTURAL_AUDIT`, exit 0, `errors=[]`; all 12 controls defined
+by the current auditor were true. Captured stdout and `--output` JSON are
+byte-identical (SHA-256
+`cbc8060908aa9af371031b197febf90d7851e12223de9d5a43444f9bfa3579cc`).
+
+The older committed `artifacts/native_audit.json` remains unchanged at 11
+control keys and SHA-256
+`36e1e9c64c83be35eef3447d76d78d2f62adff257612184beef4162c5e1fb32a`. The
+current source defines and emits 12 controls, including
+`replacement_study_manifest`. Thus the new exact-source result passes its
+frozen gate while exposing a historical receipt/source-generation mismatch;
+do not rewrite the earlier receipt or claim it contained the twelfth control.
+
+Unit transcript SHA-256:
+`4fdafde3a3a87069472e5a5aa400fcf46260571ba63be7c8f16394678c0f8eb6`.
+Full outcome and container/cleanup receipts are in `RESULT.json` and
+`RUNLOG.md`; all bundle hashes are in `SHA256SUMS`.
+
+This validates only the finite offline audit suite and canonical CLI for the
+exact PR #3697 source commit. It does not prove arbitrary auditor completeness,
+revalidate XRes behavior, or integrate the candidate implementation itself.
