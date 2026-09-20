@@ -12,6 +12,9 @@ class Construction(unittest.TestCase):
   self.assertEqual(self.freeze["main_base_commit"],"5bf75b7eaaee19a4f44b751b81d483a18864ec18")
   self.assertEqual(self.freeze["predecessor"]["issue"],3851)
   self.assertIn("source_runner_git_blob",self.freeze["predecessor"])
+ def test_frozen_source_hashes(self):
+  for name,expected in self.freeze["source_sha256"].items():
+   self.assertEqual(hashlib.sha256((HERE/name).read_bytes()).hexdigest(),expected,name)
  def test_official_3807_runner_blob_and_rng(self):
   self.assertEqual(self.freeze["reference_3807_runner_git_blob"],"18b6be0a175df957d838e188de4c7ca826b26af8")
   self.assertIn("manual_seed(seed+31+rank)",self.baseline)
@@ -53,5 +56,4 @@ class Construction(unittest.TestCase):
   for x in ("requests.","urllib.","subprocess.","http://","https://","open("):
    self.assertNotIn(x,self.text)
 if __name__=="__main__":unittest.main(verbosity=2)
-
 
