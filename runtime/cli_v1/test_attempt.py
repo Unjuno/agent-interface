@@ -90,8 +90,9 @@ class RetainedAttemptTests(unittest.TestCase):
             args = ['agent-interface', 'dispatch', '--program', str(root / 'program.json'),
                     '--targets', str(root / 'targets.json'), '--current-observation-seq', '1',
                     '--current-binding-revision', '0', '--run-directory', str(run), '--review']
-            with patch.object(sys, 'argv', args), patch('runtime.cli_v1.__main__.dispatch', side_effect=backend) as call, \\
-                 patch('runtime.cli_v1.__main__._emit', side_effect=BrokenPipeError):
+            with (patch.object(sys, 'argv', args),
+                  patch('runtime.cli_v1.__main__.dispatch', side_effect=backend) as call,
+                  patch('runtime.cli_v1.__main__._emit', side_effect=BrokenPipeError)):
                 with self.assertRaises(BrokenPipeError):
                     main()
             call.assert_called_once()
@@ -119,9 +120,9 @@ class RetainedAttemptTests(unittest.TestCase):
             args = ['agent-interface', 'dispatch', '--program', str(root / 'program.json'),
                     '--targets', str(root / 'targets.json'), '--current-observation-seq', '1',
                     '--current-binding-revision', '0', '--run-directory', str(run)]
-            with patch.object(sys, 'argv', args), \\
-                 patch('runtime.cli_v1.__main__.dispatch', return_value=report) as call, \\
-                 patch('runtime.cli_v1.__main__.sys.stdout', output):
+            with (patch.object(sys, 'argv', args),
+                  patch('runtime.cli_v1.__main__.dispatch', return_value=report) as call,
+                  patch('runtime.cli_v1.__main__.sys.stdout', output)):
                 with self.assertRaisesRegex(BrokenPipeError, 'SHORT_STDOUT_WRITE'):
                     main()
 
