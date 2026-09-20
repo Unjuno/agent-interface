@@ -149,7 +149,7 @@ def one_seed(seed,dev):
             curves[name].append({"feedback_count":count,"route":"PROPOSE","role":name,
                                  "adapter_version":count,**metric(pred,y_b)})
     # Matched rank-4 batch reference receives all feedback before exactly 128 updates.
-    t0=time.perf_counter_ns();r4_batch.train()
+    sync(dev);t0=time.perf_counter_ns();r4_batch.train()
     g=torch.Generator(device="cpu").manual_seed(seed+32)
     for _ in range(NSUPPORT*STEPS_PER_ARRIVAL):
         ix=torch.randint(NSUPPORT,(32,),generator=g).to(dev)
@@ -171,6 +171,8 @@ def one_seed(seed,dev):
       "stale_epoch":dispatch("B_R4_ONLINE_02",15,16,"rank4_02",16,16,base,registry)[0],
       "wrong_version":dispatch("B_R4_ONLINE_02",16,16,"rank4_02",15,16,base,registry)[0],
       "missing_adapter":dispatch("B_R4_ONLINE_02",16,16,"rank4_02",16,16,base,{})[0],
+      "missing_adapter_id":dispatch("B_R4_ONLINE_02",16,16,None,16,16,base,registry)[0],
+      "missing_version":dispatch("B_R4_ONLINE_02",16,16,"rank4_02",None,16,base,registry)[0],
       "missing_epoch":dispatch("B_R4_ONLINE_02",None,16,"rank4_02",16,16,base,registry)[0]}
     snap=snapshot_gate(r4_02,r4_initial)
     return {"seed":seed,"expected_A":y_a,"expected_B":y_b,"final":final,"curves":curves,
