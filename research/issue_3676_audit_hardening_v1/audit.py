@@ -140,6 +140,18 @@ def audit(raw_path, freeze_path, study_freeze_path):
             ("reordered_transitions", lambda r: r["events"].__setitem__(slice(2, 5), [r["events"][3], r["events"][2], r["events"][4]])),
             ("unsupported_extra_field", lambda r: r["events"][0].__setitem__("extra", True)),
             ("missing_transition", lambda r: r["events"].pop(3)),
+            ("missing_identity_field", lambda r: r["events"][0]["identity"].pop("pid")),
+            ("unrecognized_top_level_field", lambda r: r.__setitem__("unrecognized", 1)),
+            ("boolean_final_emissions", lambda r: r.__setitem__("final_emissions", True)),
+            ("boolean_stale_emissions", lambda r: r["events"][3].__setitem__("emissions", False)),
+            ("boolean_click_emissions", lambda r: r["events"][4]["click"].__setitem__("emissions", True)),
+            ("boolean_effect_count", lambda r: r["events"][4]["effect"].__setitem__("count", True)),
+            ("boolean_pid", lambda r: r["events"][0]["identity"].__setitem__("pid", True)),
+            ("boolean_start_ticks", lambda r: r["events"][0]["identity"].__setitem__("start_ticks", True)),
+            ("boolean_xid", lambda r: r["events"][0]["identity"].__setitem__("xid", True)),
+            ("boolean_geometry_old", lambda r: r["events"][0]["identity"].__setitem__("geometry", [True, 80, 240, 160, 24])),
+            ("boolean_geometry_new", lambda r: r["events"][1]["identity"].__setitem__("geometry", [True, 80, 240, 160, 24])),
+            ("boolean_xres_version", lambda r: r["events"][0]["identity"]["xres"].__setitem__("xres_major", True)),
         )
         for label, mutate in changes:
             damaged = copy.deepcopy(raw)
