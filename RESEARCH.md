@@ -1458,4 +1458,10 @@ ten raw call plans record Luna-low, and a v2 retained audit passes Windows/WSL
 without rerun. Crop advances only as a conditional full-history replacement for
 a history-needed OpenTTD/Mindustry test; it is not promoted over current-only.
 
+
+
+### XRes process-incarnation guard for recycled XID aliases — Issue #3555
+
+One pinned linux/arm64/private-Xvfb allocation observed XRes 1.2 distinguishing p1 PID/start ticks from p2 after exact XID, geometry, and pixel reuse. The old alias failed closed with zero bridge/backend emissions and no p2 effect; a fresh alias produced the expected independent effect and verified release. The independent raw-only audit passed eight corruption controls. This is one experimental-wrapper allocation only. The exact freeze/source-manifest bytes are missing, so preregistration provenance remains incomplete; it is not promoted or a production/remote-X11 security claim. Preserve the initial audit STOP and the raw hash history. See [the detailed report](research/live_control/x11_xres_incarnation_guard_3555_v1/REPORT.md).
+
 </details>
