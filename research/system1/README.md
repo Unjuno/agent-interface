@@ -54,3 +54,8 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Hybrid Needle margin successor
 
 - [`intent_distillation_3458_pilot_03_hybrid/`](intent_distillation_3458_pilot_03_hybrid/) — scoped synthetic pass with deterministic boundary YIELD.
+
+
+## Multi-seed hybrid Needle successor
+
+- [`intent_distillation_3458_pilot_04_multiseed/`](intent_distillation_3458_pilot_04_multiseed/) — three-seed confirmatory synthetic result.
