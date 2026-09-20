@@ -34,3 +34,11 @@ parsed `result.json` are retained alongside the raw runner files. The existing
 plain/compiled semantic validators still run after schema validation; a schema
 PASS alone does not establish task correctness. Install the pinned validator in
 the Python environment invoking this backend as well as any preflight environment.
+
+The Docker adapter bounds its client wait to 90 seconds, matching the legacy
+caller's limit. It records `client-attempt.json` before invocation and a separate
+`client-result.json` after return or timeout. On timeout, each diagnostic stream
+retains at most its last 2,000 characters and the adapter stops without retry or
+fallback. A client timeout does not prove container or host-model termination:
+both are recorded as unknown. Inspect the original allocation before taking any
+further action; this adapter does not cancel remote execution or authorize replay.
