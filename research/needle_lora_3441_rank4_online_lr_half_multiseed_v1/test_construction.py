@@ -14,6 +14,8 @@ def run_construction():
  assert dispatch("B_R4_ONLINE_02",0,1,"rank4_02",1,1,base,registry)[0]=="YIELD"
  assert dispatch("B_R4_ONLINE_02",1,1,"rank4_02",0,1,base,registry)[0]=="YIELD"
  assert dispatch("B_MISSING",1,1,"bad",1,1,base,registry)[0]=="YIELD"
+ assert dispatch("B_R4_ONLINE_02",1,1,None,1,1,base,registry)[0]=="YIELD"
+ assert dispatch("B_R4_ONLINE_02",1,1,"rank4_02",None,1,base,registry)[0]=="YIELD"
  assert dispatch("B_R4_ONLINE_02",None,1,"rank4_02",1,1,base,registry)[0]=="YIELD"
  return "PASS_CONSTRUCTION_9"
 if __name__=="__main__":print(run_construction())
