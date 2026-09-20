@@ -24,6 +24,71 @@ class FakeSession:
 
 class ApiTests(unittest.TestCase):
 
+    def test_recorded_invalid_program_gets_bounded_detail_without_readmission(self):
+        from copy import deepcopy
+        from runtime.cli_v1.review import outcome_summary
+        base = {'schema':'agent-interface/program-v1', 'program_id':'validation-test',
+                'source':{'observation_seq':1, 'binding_revision':0},
+                'authority':{'lease_id':'test', 'expires_at_ns':100},
+                'terminal':{'release_all_required':True}, 'ops':[]}
+        valid = {'op':'observe','frame':'window_client','x':0,'y':0,'w':400,'h':180}
+        for op, expected in [
+            ({'op':'observe','frame':'window_client','region':[0,0,400,180]}, 'observe x must be int'),
+            ({'op':'observe','frame':'window_client','x':0,'y':0,'width':400,'height':180}, 'observe w must be int'),
+            ({'op':'private-caller-text-' * 100}, 'unsupported operation'),
+            (valid, None),
+        ]:
+            with self.subTest(expected=expected):
+                program = deepcopy(base)
+                program['ops'] = [{'op':'focus','target':'fixture'}, op, {'op':'release_all'}]
+                before = deepcopy(program)
+                refusal = {'status':'refused','error':'INVALID_PROGRAM','backend_emissions':0}
+                session = mock.Mock()
+                session.dispatch.return_value = refusal
+                with mock.patch('runtime.cli_v1.api.open_session', return_value=session):
+                    row = dispatch(program, {'fixture':1}, current_observation_seq=1,
+                                   current_binding_revision=0)
+                session.dispatch.assert_called_once()
+                session.backend.close.assert_called_once()
+                self.assertEqual(program, before)
+                self.assertEqual(refusal, {'status':'refused','error':'INVALID_PROGRAM','backend_emissions':0})
+                self.assertEqual(row['result']['error'], 'INVALID_PROGRAM')
+                self.assertEqual(row['result']['backend_emissions'], 0)
+                self.assertEqual(row['result'].get('detail'), expected)
+                self.assertEqual(outcome_summary(row)['execution_detail'], expected)
+                if expected is not None:
+                    self.assertEqual(row['result']['detail_source'], 'program_validation')
+                    self.assertEqual(row['result']['validation_operation_index'], 1)
+                    self.assertEqual(outcome_summary(row)['validation_operation_index'], 1)
+                    self.assertIsNone(outcome_summary(row)['failed_operation_index'])
+                else:
+                    self.assertNotIn('detail_source', row['result'])
+                    self.assertNotIn('validation_operation_index', row['result'])
+
+    def test_validation_location_maps_to_source_after_expansion(self):
+        from runtime.cli_v1.review import outcome_summary
+        base = {'schema':'agent-interface/program-v1', 'program_id':'location',
+                'source':{'observation_seq':1, 'binding_revision':0},
+                'authority':{'lease_id':'test', 'expires_at_ns':100},
+                'terminal':{'release_all_required':True}}
+        malformed = {'op':'observe','frame':'window_client','x':0,'y':0,'w':True,'h':10}
+        for prefix, index in [({'op':'key_chord','keys':['Left'],'repeat':3}, 3),
+                              ({'op':'text','text':'abc','gap_ms':20}, 5)]:
+            with self.subTest(prefix=prefix):
+                session = mock.Mock()
+                session.dispatch.return_value = {'status':'refused','error':'INVALID_PROGRAM'}
+                with mock.patch('runtime.cli_v1.api.open_session', return_value=session):
+                    row = dispatch(dict(base, ops=[prefix, malformed, {'op':'release_all'}]),
+                                   {'fixture':1}, current_observation_seq=1, current_binding_revision=0)
+                summary = outcome_summary(row)
+                self.assertEqual(summary['validation_operation_index'], index)
+                self.assertEqual(summary['validation_source_operation']['source_operation_index'], 1)
+                self.assertIsNone(summary['failed_source_operation'])
+                row['compilation']['operation_sources'] = []
+                self.assertIsNone(outcome_summary(row)['validation_source_operation'])
+                row['result']['validation_operation_index'] = True
+                self.assertIsNone(outcome_summary(row)['validation_operation_index'])
+
     def test_explicit_text_gap_compiles_before_backend_and_maps_character_failure(self):
         from runtime.cli_v1.review import outcome_summary
         session = FakeSession()
@@ -290,6 +355,40 @@ class CliTests(unittest.TestCase):
         data = json.loads(rows[0])
         self.assertEqual(data["schema"], "agent-interface/runtime-doctor-v1")
         self.assertFalse(data["side_effect_authority"])
+
+    def test_dependency_diagnostics_do_not_contaminate_retained_cli_json(self):
+        from runtime.cli_v1.__main__ import main
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            targets = root / 'targets.json'
+            targets.write_text('{"fixture":1}', encoding='utf-8')
+            program = root / 'program.json'
+            program.write_text('{}', encoding='utf-8')
+            for operation, extra, report in [
+                ('observe', ['--target', 'fixture', '--frame', 'window_client',
+                             '--region', '0', '0', '100', '100'], {'status': 'returned'}),
+                ('dispatch', ['--program', str(program), '--current-observation-seq', '1',
+                              '--current-binding-revision', '0'],
+                 {'status': 'returned', 'result': {'status': 'completed'}}),
+            ]:
+                with self.subTest(operation=operation):
+                    def noisy(**kwargs):
+                        print('dependency diagnostic')
+                        return report
+                    run = root / operation
+                    args = [operation, '--targets', str(targets), '--run-directory', str(run), *extra]
+                    stdout, stderr = io.StringIO(), io.StringIO()
+                    with mock.patch('runtime.cli_v1.__main__.' + operation, side_effect=noisy) as called, \
+                         mock.patch.object(sys, 'stdout', stdout), mock.patch.object(sys, 'stderr', stderr), \
+                         mock.patch.object(sys, 'argv', ['agent-interface', *args]):
+                        self.assertEqual(main(), 0)
+                    called.assert_called_once()
+                    self.assertEqual(stderr.getvalue(), 'dependency diagnostic\n')
+                    self.assertEqual(len(stdout.getvalue().splitlines()), 1)
+                    response = json.loads(stdout.getvalue())
+                    self.assertTrue(response.pop('retention')['report_persisted'])
+                    self.assertEqual(response, report)
+                    self.assertEqual(json.loads((run / 'report.json').read_bytes()), report)
 
     def test_malformed_json_is_nonzero_and_json_only(self):
         with tempfile.TemporaryDirectory() as td:

@@ -1,0 +1,31 @@
+{
+  "schema": "map01-live-scorer-phase-schedule-v1",
+  "nominal_tic_hz": 35,
+  "nominal_period_ns": 28571429,
+  "phase_offsets_ns": [
+    0,
+    7142857,
+    14285714,
+    19046619,
+    19047618,
+    19047619,
+    19047620,
+    19048619,
+    21428571,
+    28571428
+  ],
+  "repeats_per_stratum_offset": 4,
+  "strata": ["idle", "cpu_load", "delayed_read"],
+  "delayed_read_ns": 20000000,
+  "cpu_load_cycle_ns": 10000000,
+  "cpu_load_active_ns": 5000000,
+  "phase_probe_sleep_ns": 100000,
+  "phase_probe_warmup_edges": 8,
+  "phase_probe_timeout_ns": 5000000000,
+  "seed_base": 330000,
+  "session_timeout_tics": 600,
+  "production_scorer_calls_per_sample": 1,
+  "production_scorer_internal_retry_max": 3,
+  "expected_cases": 120,
+  "allocation_design": "Four episode-disjoint replications of ten fixed phase targets in each of three predeclared strata. Report empirical scheduled-row fractions only; no natural phase-probability claim."
+}

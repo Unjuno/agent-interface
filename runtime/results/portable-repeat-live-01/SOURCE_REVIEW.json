@@ -1,0 +1,24 @@
+{
+  "kind": "post_run_static_source_review",
+  "runtime_reexecution": false,
+  "source_files": [
+    {
+      "path": "runtime/backends/x11_v1/fixture_app.py",
+      "source_revision": "fb69cac2af4a8f6073a7afe5b54b1c7124bdf3fe",
+      "sha256": "5c681d1f9c7b7a223e40fb852881ed178c41c85c29c3dfb528ab365d16ad0264",
+      "bytes": 1734
+    },
+    {
+      "path": "runtime/backends/x11_v1/backend.py",
+      "source_revision": "fb69cac2af4a8f6073a7afe5b54b1c7124bdf3fe",
+      "sha256": "75912be5694ee2ca16c51b1dffe179e51f0c93f32c22d8ee47f43d8fc6d42877",
+      "bytes": 15045
+    }
+  ],
+  "findings": [
+    "X11 key_state and pointer_button call Display.sync after each XTEST input. This is server synchronization, not application redraw acknowledgement.",
+    "Fixture log_event opens, writes and closes its events file synchronously inside the Tk event callback for each key press or button press.",
+    "The retained owner launches the fixture with --events under /mnt/c. Logging and effect writes share the Windows-mounted result directory.",
+    "No callback duration, application event timestamp or matched logging-disabled control was measured; logging causality and useful-feedback latency remain unknown."
+  ]
+}
