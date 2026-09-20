@@ -1,0 +1,24 @@
+Construction pilot 03 — HOLD, not an audited result
+
+The full 13-row runner completed in pinned OrbStack Docker and emitted 12
+public-observation captures plus the candidate rows, capture index, allocation
+metadata, and sealed oracle. The independent auditor exited nonzero at its
+third-row prior-state assertion because this audit fixture incorrectly
+expected `effect_masked_12` to inherit state 14; the actual chain correctly
+records state 10 after `effect_unmasked_10`. The audit stopped there and did
+not independently reach the replacement case. This auditor defect must be
+corrected before formal freeze.
+
+Direct inspection of the retained candidate rows shows a second substantive
+issue: the old and replacement XCalc windows received the same XID after the
+first process exited, and the candidate therefore returned `SUPPRESS` for
+`target_replacement` when the intended disposition is `YIELD`. XID-only
+binding aliases a new native window after XID reuse. This observation is
+exploratory and unaudited; it is not a PASS or formal FAIL claim.
+
+Before formal-01, add caller-owned process-instance/window-generation identity
+to the binding, verify the new process and discovered window association, fix
+the independent auditor's prior-state expectation, then freeze all sources and
+gates. Do not change masks or thresholds in response to outcomes after formal
+execution. All raw pilot files are preserved unchanged in this directory;
+`RAW_SHA256SUMS.txt` binds them.

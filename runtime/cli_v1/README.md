@@ -332,6 +332,38 @@ A missing capture-directory is rejected before any execution. The default raw
 response remains unchanged when --review is omitted. Standalone review remains
 available for inspecting retained results later.
 
+### Inspecting interrupted retained attempts
+
+Run `python agent-interface-runtime.pyz attempt-status --run-directory RUN` to
+read a retained attempt without dispatch, observation, replay, or file changes.
+The `agent-interface/cli-attempt-status-v1` response includes request/report JSON
+and SHA-256 digests of the bytes read. `report_recorded` (exit 0) means both JSON
+records are readable, not that an action or task succeeded. Read the raw report
+outcome, and use `review --report RUN/report.json --run-directory RUN` for images.
+
+A missing report returns `unknown_or_incomplete` (exit 2). Neither a request nor
+an absent report proves whether input occurred. `process_state` remains `unknown`
+and `replay_allowed` is always false, including for recorded reports. An unreadable
+record or unavailable directory returns `invalid_record` (exit 2). An orphan
+report without a valid request remains incomplete. This is a local record reader,
+not report provenance validation or a process monitor.
+
+Known `.request.json.tmp` and `.report.json.tmp` residue is listed under
+`temporary_files`, preserved, and never promoted to a committed record. Reads of
+individual files are not an atomic snapshot of a concurrently changing directory;
+an incomplete observation may be inspected again without issuing any input.
+This does not promise power-loss durability or automatically repair failed writes.
+
+The CLI detects a stdout writer reporting fewer characters than requested and
+raises `INCOMPLETE_STDOUT_WRITE`. The retained report remains readable; do not
+repeat dispatch to recover its output. This detects a reported short write only:
+a downstream consumer may still truncate bytes after a writer accepts everything.
+Consumers must reject incomplete JSON and use retained read-only recovery.
+After a full write, the CLI explicitly flushes stdout before returning. A flush
+failure propagates without retrying the operation or changing the retained report.
+This follows the delivery proposal in [#3726](https://github.com/Unjuno/agent-interface/pull/3726);
+flush completion is not acknowledgement that the host or model received the result.
+
 ### Compact received-report references
 
 With `--compact --report-refs` or MCP `compact=true, report_refs=true`, a received receipt whose `report` exactly
