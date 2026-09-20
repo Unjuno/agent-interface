@@ -2,7 +2,7 @@
 
 Both commands ran through OrbStack Docker 29.4.0 on `linux/arm64`, using the digest-pinned image in `successor-02/FREEZE.json`, with `--network none`, `--read-only`, source mounted read-only, `--cap-drop ALL`, `no-new-privileges`, and a bounded tmpfs. The runner's result directory was the only writable bind mount. The independent auditor ran in a second fresh container.
 
-Runner command (from repository root; use a new empty output directory only for a newly identified allocation):
+Exact historical runner command for allocation 02 (from repository root). Do not repeat it under the same allocation identity; a new experiment requires a new preregistration, freeze, allocation id, and output path:
 
 ```sh
 docker run --rm --platform linux/arm64 --network none --read-only \
