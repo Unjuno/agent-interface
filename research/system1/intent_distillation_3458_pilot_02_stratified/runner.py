@@ -97,4 +97,3 @@ def main():
       'authority_gate':gates,'all_invalid_yield':all(v=='YIELD' for v in gates.values()),'scope':'synthetic proposals only; no action authority'},indent=2,sort_keys=True))
 
 if __name__=='__main__': main()
-
