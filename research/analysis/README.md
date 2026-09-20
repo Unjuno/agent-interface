@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 129 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 132 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
@@ -167,6 +167,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`guard_policy_calibration_identifiability_r1_v1/`](guard_policy_calibration_identifiability_r1_v1/)
 - [`independent_effect_evidence_successor_1295_v1/`](independent_effect_evidence_successor_1295_v1/)
 - [`interaction_consistency_product_lattice_r0_v1/`](interaction_consistency_product_lattice_r0_v1/)
+- [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
 - [`justification_bound_action_safe_r1_v1/`](justification_bound_action_safe_r1_v1/)
 - [`justification_graph_invalidation_r0_v1/`](justification_graph_invalidation_r0_v1/)
 - [`justification_graph_truth_maintenance_r0_v1/`](justification_graph_truth_maintenance_r0_v1/)
@@ -201,7 +202,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`real_source_adapter_admission_v1/`](real_source_adapter_admission_v1/)
 - [`real_source_role_adapter_registry_v1/`](real_source_role_adapter_registry_v1/)
 - [`register_automaton_dynamic_identity_r0_v1/`](register_automaton_dynamic_identity_r0_v1/)
+- [`resident_gtk_incremental_3518_v1/`](resident_gtk_incremental_3518_v1/)
 - [`resident_gtk_incremental_3518_v2/`](resident_gtk_incremental_3518_v2/)
+- [`resident_reactive_gtk_evidence_complete_3508_v1/`](resident_reactive_gtk_evidence_complete_3508_v1/)
 - [`resident_reactive_gui_predicate_2055_v1/`](resident_reactive_gui_predicate_2055_v1/)
 - [`resident_reactive_rung0_successor_2025_r3_v1/`](resident_reactive_rung0_successor_2025_r3_v1/)
 - [`resident_reactive_rung0_successor_2025_v1/`](resident_reactive_rung0_successor_2025_v1/)

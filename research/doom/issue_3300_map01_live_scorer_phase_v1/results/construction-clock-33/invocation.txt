@@ -1,0 +1,36 @@
+Construction-clock-33 exact invocation
+
+Host: OrbStack Docker Server 29.4.0; Linux/arm64.
+Image: agent-interface-map01-clock-review-fixed:20260920
+Image ID: sha256:4320dd483b24ea91c1481f12fd5799c903d9daa99a517b994f607037098ea41d.
+WAD: official Freedoom 0.13.0 freedoom2.wad, SHA-256
+a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b.
+Probe SHA-256: 4ae6ec6eb2e47daa0adb0df4503706157b729c3dc87568a63368dac78bf8fa22.
+Raw SHA-256: 833e3672b99446106117b73d0fd7a51f4cacd3b2dc6f826dbd31e84c1b8dd849.
+Docker timestamp log SHA-256: d55400e272d7b7ec4048d0f295a573244145c980bf79573c94106fcf062dee80.
+
+Exact command (from repository root; output directory existed before launch):
+
+docker run -d --name agent-interface-map01-clock33 --platform linux/arm64 \
+  --network none --read-only --workdir /tmp \
+  --tmpfs /tmp:rw,noexec,nosuid,size=128m \
+  -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/timestamped_engine_phase_construction.py:/probe.py:ro" \
+  -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/runner.py:/opt/phase-probe/runner.py:ro" \
+  -v "$PWD/research/doom/session_map01_v13.py:/opt/phase-probe/session_map01_v13.py:ro" \
+  -v "$PWD/research/doom/map01_scorer_stdio_adapter_v1.py:/opt/phase-probe/map01_scorer_stdio_adapter_v1.py:ro" \
+  -v "$PWD/research/doom/main_thread_scorer_polling_v1.py:/opt/phase-probe/main_thread_scorer_polling_v1.py:ro" \
+  -v "$PWD/research/doom/independent_progress_clock_v2.py:/opt/phase-probe/independent_progress_clock_v2.py:ro" \
+  -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-33:/results" \
+  -v /tmp/agent-interface-3300-freedoom.rVM7UB/unpacked/freedoom-0.13.0/freedoom2.wad:/assets/freedoom2.wad:ro \
+  --entrypoint sh agent-interface-map01-clock-review-fixed:20260920 \
+  -lc 'unset DISPLAY; stdbuf -oL python -u /probe.py'
+
+After the container exited, capture its timestamped Docker output with:
+
+docker logs --timestamps agent-interface-map01-clock33 > \
+  research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-33/container-timestamps.log
+
+This run's API probes each lasted about 0.2–0.3 ms, while `VIZ_Tic` events
+were roughly 20–45 ms apart in portions of the capture. The independent clock
+domain calibration was not recorded, so these timestamps do not establish
+scorer phase. Disposition is STOP, not a failed gameplay result.

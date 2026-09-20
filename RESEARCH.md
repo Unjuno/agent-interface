@@ -1470,8 +1470,47 @@ One pinned linux/arm64/private-Xvfb allocation observed XRes 1.2 distinguishing 
 
 A provenance-complete linux/arm64 OrbStack allocation restarted private Xvfb four times per pair and reproduced the same XID, root XID, KNOWN_NULL transient relation, geometry and 153,600-byte pixel buffer in all four pairs while XRes 1.2 LocalClientPID and `/proc` start ticks changed. The exact #881 typed validator returned `EXACT_MATCH` for all stale cross-generation identities; an opaque observation-side server-instance comparison rejected all four while preserving four same-generation exact matches. Independent raw-only audit passed 16 classification rows and 24 fail-closed negative controls; seven separate-copy corruption probes passed. This remains one deterministic fixture result, not a production token implementation, remote-X11 security proof, or action authority. The earlier #902 eight-row comment and #3555 provenance-incomplete record remain unchanged. See [the retained report](research/integration/typed_recovery_xserver_lifetime_v1/issue_3574_lifetime_01/evidence/REPORT.md).
 
+### Live observation-boundary certificate transfer — Issue #2918
+
+Allocation 05 passed its scoped, preregistered 12-case transfer in pinned
+OrbStack Docker linux/arm64: 11 public X11 `observe` receipts plus one
+zero-call ambiguous-target case; two unmasked transitions safely suppressed
+using the prior minimum certificate while phase-union/global-support controls
+would forward; the masked transition forwarded; and missing, contradictory,
+partial, stale, replaced, ambiguous, and intent-epoch-mismatched evidence all
+yielded. The independent pixel/terminal audit passed with zero unsafe
+suppressions. No input, real-app effect, model call, or observation-cost
+benefit was tested. Scope and raw evidence: [allocation 05 result](research/integration/issue_2918_live_certificate_v5/FORMAL_RESULT.json),
+[independent audit](research/integration/issue_2918_live_certificate_v5/independent_audit/independent_audit.json),
+and [PR #3760](https://github.com/Unjuno/agent-interface/pull/3760), merged at
+`6611ee71f3b6b65aaa7e11e3954b7c0b03cac843`.
+
+The predecessor import STOP, incomplete-lineage/audit-output HOLD, auditor
+code STOP, and overlapping-window capture HOLD remain separately retained in
+allocations 01–04; allocation 05 corrected the evidenced setup/fixture defects
+without modifying those records. Issue #2918 remains open: next test a held-out
+real application surface with independently established complete/current
+facts, and measure acquisition cost separately from narrowing and terminal
+outcome. No cross-application or production claim follows from this fixture.
+
+### German XKB formula delivery to a focused X11 receiver — Issue #3794
+
+One pinned OrbStack linux/arm64 allocation passed three fresh standard-German
+XKB rows and one US control. All four focused InputOnly receivers decoded the
+candidate's exact `=B2*A2` KeyPress text, observed traces matched the frozen
+plan, unsupported trailing Euro was refused with zero events/emissions, and
+release state was empty. A separate no-network-container audit reported zero
+integrity errors and rejected five corruption probes; its early-STOP phase gate
+also passed. This is only an X11/XTEST-to-receiver component result: no Calc or
+other application/task effect, physical keyboard, IME/dead-key, layout breadth,
+latency, or product claim. The earlier #3792 harness STOP remains preserved
+without reinterpretation. See [formal result](research/issue_3784_focused_receiver_v1/RESULT.md),
+[raw evidence](research/issue_3784_focused_receiver_v1/results/formal-01/raw.json),
+[independent audit](research/issue_3784_focused_receiver_v1/results/audit-01/audit.json),
+and PR (to be added after evidence publication).
+
 ### Representation-bound proxy effect unit — Issue #3631
 
-One frozen OrbStack linux/arm64 allocation completed 28/28 rows across screenshot, proxy-image, structured-proxy, and hybrid arms. Each arm produced one exact synthetic 0→1 effect and refused/yielded on its six negative controls; XRes PID plus stable `/proc` start ticks bound the selected XID to its fixture process. Representation-derived coordinates and hashes reconciled, two-target ambiguity was established before dispatch with zero input/effect, and all release/cleanup checks passed. A separate read-only primary auditor returned `PASS_INDEPENDENT_AUDIT` with seven of seven corruption probes detected; a post-formal cross-binding audit recomputed state/representation/action correspondence for all28 rows and passed. This closes only the deterministic GTK/Xvfb allocation: no arm superiority, model/human benefit, production authority, general GUI safety, or integrated desktop claim. See [the preregistration, raw rows, freeze, and audits](research/experiments/issue_3631_proxy_effect_unit_v4/README.md).
+One frozen OrbStack linux/arm64 allocation completed 28/28 rows across screenshot, proxy-image, structured-proxy, and hybrid arms. Each arm produced one exact synthetic 0→1 effect and refused/yielded on its six negative controls; XRes PID plus stable `/proc` start ticks bound the selected XID to its fixture process. Representation-derived coordinates and hashes reconciled, two-target ambiguity was established before dispatch with zero input/effect, and all release/cleanup checks passed. A separate read-only primary auditor returned `PASS_INDEPENDENT_AUDIT` with seven of seven corruption probes detected; a post-formal cross-binding audit recomputed state/representation/action correspondence for all 28 rows and passed. This closes only the deterministic GTK/Xvfb allocation: no arm superiority, model/human benefit, production authority, general GUI safety, or integrated desktop claim. See [the preregistration, raw rows, freeze, and audits](research/experiments/issue_3631_proxy_effect_unit_v4/README.md).
 
 </details>

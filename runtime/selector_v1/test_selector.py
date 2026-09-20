@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import sys
+import types
 import unittest
 from unittest import mock
 
@@ -12,13 +13,26 @@ class SelectorTests(unittest.TestCase):
     @unittest.skipUnless(sys.platform.startswith('linux'), 'actual Linux backend only')
     def test_explicit_display_selects_and_opens_same_x11_without_mutating_environment(self):
         for env in ({}, {'WAYLAND_DISPLAY': 'wayland-0'}, {'DISPLAY': ':88'}):
-            with self.subTest(env=env), mock.patch.dict(os.environ, env, clear=True), mock.patch(
-                    'runtime.backends.x11_v1.backend.X11Backend') as backend, mock.patch(
-                    'runtime.backends.x11_v1.session.X11RuntimeSession') as session:
+            backend_module = types.ModuleType('runtime.backends.x11_v1.backend')
+            backend_module.X11Backend = mock.Mock()
+            session_module = types.ModuleType('runtime.backends.x11_v1.session')
+            session_module.X11RuntimeSession = mock.Mock()
+            package_module = types.ModuleType('runtime.backends.x11_v1')
+            package_module.__path__ = []
+            package_module.backend = backend_module
+            package_module.session = session_module
+            modules = {
+                'runtime.backends.x11_v1': package_module,
+                'runtime.backends.x11_v1.backend': backend_module,
+                'runtime.backends.x11_v1.session': session_module,
+            }
+            with self.subTest(env=env), mock.patch.dict(os.environ, env, clear=True), mock.patch.dict(
+                    sys.modules, modules):
                 result = open_session({'fixture': 123}, display_name=':99')
-                backend.assert_called_once_with(':99', {'fixture': 123})
-                session.assert_called_once_with(backend.return_value)
-                self.assertIs(result, session.return_value)
+                backend_module.X11Backend.assert_called_once_with(':99', {'fixture': 123})
+                session_module.X11RuntimeSession.assert_called_once_with(
+                    backend_module.X11Backend.return_value)
+                self.assertIs(result, session_module.X11RuntimeSession.return_value)
                 self.assertEqual(dict(os.environ), env)
 
     def test_invalid_explicit_display_fails_before_backend_selection(self):
