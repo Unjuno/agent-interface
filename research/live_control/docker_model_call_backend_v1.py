@@ -7,6 +7,7 @@ container receipts as failures.
 from __future__ import annotations
 
 import os
+import json
 from pathlib import Path
 import subprocess
 
@@ -47,12 +48,23 @@ def call(root: Path, prompt: str, image: Path, contract: str, workspace: Path):
     prompt_path = root / "prompt.txt"
     prompt_path.write_text(prompt, encoding="utf-8", newline="\n")
     command = build_command(root, prompt_path, image, contract, workspace)
+    schema_path = Path(os.environ['AGENT_INTERFACE_DOCKER_SCHEMA'])
     completed = subprocess.run(command, capture_output=True, text=True, check=False)
+    (root / 'runner-stdout.txt').write_text(completed.stdout, encoding='utf-8')
+    (root / 'runner-stderr.txt').write_text(completed.stderr, encoding='utf-8')
     if completed.returncode != 0:
         raise RuntimeError("STOP_DOCKER_BACKEND_RUNNER:" + str(completed.returncode))
     receipt = root / "runner" / "process.json"
     events = root / "runner" / "events.jsonl"
     if not receipt.is_file() or not events.is_file():
         raise RuntimeError("STOP_DOCKER_BACKEND_MISSING_RECEIPT")
+    from runtime.docker_schema_preflight_v1 import validate_model_response
+    validation = validate_model_response(events, schema_path)
+    (root / 'schema-validation.json').write_text(
+        json.dumps(validation, indent=2) + '\n', encoding='utf-8')
+    if validation['status'] != 'PASS':
+        raise RuntimeError('STOP_DOCKER_BACKEND_OUTPUT:' + validation['status'])
     from integrated_efficiency_model_v1 import parse
-    return parse(root / "runner", contract)
+    result = parse(root / "runner", contract)
+    (root / 'result.json').write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
+    return result

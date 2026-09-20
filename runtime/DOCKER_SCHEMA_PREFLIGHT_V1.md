@@ -25,3 +25,12 @@ python -m unittest runtime.test_docker_schema_preflight_v1 -v
 These contract tests use synthetic event streams and do not start Docker, call a
 model, launch a GUI, or issue input. Actual Docker/host-IPC execution remains a
 separate gate under Issue #2849.
+
+The integrated-efficiency Docker backend also applies this validator to its
+retained events using the explicitly configured Docker schema before semantic
+contract parsing. A failed gate retains `schema-validation.json` and stops
+without parsing or retrying the model call. Runner stdout/stderr and successful
+parsed `result.json` are retained alongside the raw runner files. The existing
+plain/compiled semantic validators still run after schema validation; a schema
+PASS alone does not establish task correctness. Install the pinned validator in
+the Python environment invoking this backend as well as any preflight environment.
