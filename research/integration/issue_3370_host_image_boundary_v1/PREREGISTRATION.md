@@ -53,8 +53,18 @@ OrbStack build has digest
 
 `formal-02` reached the image handoff but its attached stdin closed at the tool
 boundary before the one decision could be returned; its cleanup and `STOP` are
-preserved. No action was submitted. For `formal-03`, the frozen client uses a
-dedicated `model-decision.json` file on the evidence mount as its one-shot input
-handoff and times out after five minutes. The host wrapper emits the exact MCP
-image bytes as a model image item directly, without a viewer transformation.
-This corrected input route is fixed before the new allocation is launched.
+preserved. No action was submitted. For `formal-03`, the client used a
+dedicated model-decision file on the evidence mount as its one-shot input
+handoff. The host wrapper emitted the exact MCP image bytes as a model image
+item directly, without a viewer transformation. Its first grounded click was
+refused as `visually_flat_source_region` with `input_dispatched=false`. The
+client then exited instead of keeping the same MCP session available for the
+bounded next decision. This run is STOP/FAIL for the task gate; preserve its
+image, decision, refusal and incomplete cleanup evidence.
+
+`formal-04` freezes a maximum of two decisions. Only that typed pre-dispatch
+refusal may lead to a second source-bound decision; at most one actual input
+action is permitted, and any second action is forbidden. The fresh allocation
+uses seed `991121`; its target point must be selected from that run's returned
+image, not copied coordinates. The client remains in the same MCP session after
+the allowed refusal and closes only after terminal status or an explicit STOP.

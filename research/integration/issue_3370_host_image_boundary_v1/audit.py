@@ -14,7 +14,8 @@ def need(condition, label):
 def read(name):
     return json.loads((root/name).read_text())
 
-source_sha = read('source-freeze.json')['main_sha']
+freeze = read('source-freeze.json')
+source_sha = freeze.get('source_main_sha', freeze.get('main_sha'))
 start = read('start.json')
 start_content = start.get('content', [])
 raw_start_image = [b for b in start_content if b.get('type') == 'image']
@@ -27,24 +28,38 @@ if raw_start_image:
          'start image SHA-256 identity')
 need(read('tools.json') == sorted(['native_observe','native_start','native_status','native_submit','native_resume']),
      'expected public tool inventory')
-decision = read('decision.json')
-need(decision.get('source_sequence') == 1, 'decision names returned image sequence')
-need(decision.get('finish_after') is True, 'one action is terminally bounded')
+decisions = [read(f'decision-{stage}.json') for stage in (1, 2)
+             if (root/f'decision-{stage}.json').exists()]
+need(1 <= len(decisions) <= 2, 'one action decision, with at most one bounded refusal recovery')
+for stage, decision in enumerate(decisions, 1):
+    source = read(f'allocation/run/source-{stage}.json')
+    need(decision.get('source_sequence') == source['sequence'],
+         f'decision {stage} names exact reviewed source sequence')
+need(bool(decisions) and decisions[-1].get('finish_after') is True,
+     'actual action decision is terminally bounded')
+if len(decisions) == 2:
+    first = read('allocation/run/reply-1.json')
+    refusal = first.get('target_refusal', {})
+    need(first.get('status') == 'boundary' and refusal.get('input_dispatched') is False
+         and refusal.get('action_attempted') is False,
+         'only pre-dispatch typed refusal may precede the action')
 need(read('client-result.json')['status'] == 'returned', 'client completed persistent session')
 need(read('client-result.json')['same_request_resume_count'] <= 10, 'bounded same-request resumes')
-submit = read('submit.json')
+final_stage = len(decisions)
+submit = read(f'submit-{final_stage}.json')
 submit_blocks = submit.get('content', [])
 need(not submit.get('isError', False), 'MCP submit returned without transport error')
 submit_meta = json.loads(next((b['text'] for b in submit_blocks if b.get('type') == 'text'), '{}'))
 need(len([b for b in submit_blocks if b.get('type') == 'image']) == 1,
      'one MCP submit feedback image block')
-reply = read('allocation/run/reply-1.json')
-need(reply.get('decision_sha256') == hashlib.sha256((root/'allocation/run/request-1.json').read_bytes()).hexdigest(),
-     'decision and immutable request identity')
+reply = read(f'allocation/run/reply-{final_stage}.json')
+need(reply.get('decision_sha256') == hashlib.sha256(
+     (root/f'allocation/run/request-{final_stage}.json').read_bytes()).hexdigest(),
+     'final decision and immutable request identity')
 need(reply.get('evaluation', {}).get('success') is True, 'independent task oracle succeeded')
 need(reply.get('cleanup', {}).get('status') == 'completed', 'harness cleanup completed')
 actions = read('allocation/run/actions.json')
-need(len(actions) == 1, 'exactly one native action')
+need(len(actions) == 1, 'exactly one native input action')
 if actions:
     exec_row = actions[0].get('result', {}).get('execution', {})
     releases = exec_row.get('releases', [])

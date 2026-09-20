@@ -14,6 +14,7 @@ from mcp.client.stdio import stdio_client
 
 ROOT = Path('/evidence')
 SERVER = '/workspace/research/live_control/native_mcp_v1.py'
+SEED = int(os.environ.get('ISSUE3370_SEED', '991120'))
 
 
 def save_response(name, result):
@@ -34,7 +35,7 @@ async def main():
     tools_path = ROOT/'tools.json'
     params = StdioServerParameters(command='/opt/mcp/bin/python', cwd='/workspace', args=[
         SERVER, '--allocation-directory', '/evidence/allocation', '--app', 'inkscape',
-        '--seed', '991120', '--max-stages', '2', '--harness-python', '/usr/bin/python3'],
+        '--seed', str(SEED), '--max-stages', '2', '--harness-python', '/usr/bin/python3'],
         env={**os.environ, 'PYTHONDONTWRITEBYTECODE': '1',
              'PYTHONPATH': '/workspace:/workspace/research/live_control',
              'HOME': '/tmp/host-image-home'})
@@ -60,7 +61,7 @@ async def main():
                     'sdk_entry_ns': start_entry, 'sdk_return_ns': start_return,
                     'content_count': len(start.content), 'image_blocks': images,
                     'image_sha256': hashlib.sha256(Path(images[0]['path']).read_bytes()).hexdigest(),
-                    'image_forwarding': 'raw MCP image block bytes saved without transform'},
+                    'image_forwarding': 'raw MCP image block bytes emitted as model image item without transform'},
                     indent=2, sort_keys=True)+'\n')
                 meta = json.loads(start.content[0].text)
                 context = meta.get('session_context', {})
@@ -74,22 +75,60 @@ async def main():
                     'source_sequence': source_sequence,
                     'image_path': images[0]['path'], 'image_sha256': __import__('hashlib').sha256(
                         Path(images[0]['path']).read_bytes()).hexdigest()}, sort_keys=True), flush=True)
-                decision_path = ROOT/'model-decision.json'
-                deadline = time.monotonic() + 300
-                while not decision_path.exists() and time.monotonic() < deadline:
-                    await asyncio.sleep(.1)
-                if not decision_path.exists():
-                    (ROOT/'client-result.json').write_text(json.dumps({
-                        'status': 'STOP_MODEL_DECISION_NOT_RECEIVED', 'tools': names}, indent=2)+'\n')
-                    return
-                decision = json.loads(decision_path.read_text())
-                (ROOT/'decision.json').write_text(json.dumps(decision, indent=2, sort_keys=True)+'\n')
-                submit_entry = time.monotonic_ns()
-                submit = await client.call_tool('native_submit', {
-                    'stage': 1, 'decision': decision, 'timeout': 30})
-                submit_return = time.monotonic_ns()
-                submit_payload, submit_images = save_response('submit.json', submit)
-                response_meta = json.loads(submit.content[0].text) if submit.content else {}
+                stage = 1
+                total_actions = 0
+                timings = []
+                while True:
+                    decision_path = ROOT/f'model-decision-{stage}.json'
+                    deadline = time.monotonic() + 300
+                    while not decision_path.exists() and time.monotonic() < deadline:
+                        await asyncio.sleep(.1)
+                    if not decision_path.exists():
+                        (ROOT/'client-result.json').write_text(json.dumps({
+                            'status': 'STOP_MODEL_DECISION_NOT_RECEIVED', 'stage': stage,
+                            'tool_names': names}, indent=2)+'\n')
+                        return
+                    if stage == 2 and (ROOT/'allocation/run/actions.json').exists():
+                        prior_actions = json.loads((ROOT/'allocation/run/actions.json').read_text())
+                        if prior_actions:
+                            (ROOT/'client-result.json').write_text(json.dumps({
+                                'status': 'STOP_SECOND_ACTION_FORBIDDEN', 'stage': stage,
+                                'prior_action_count': len(prior_actions)}, indent=2)+'\n')
+                            return
+                    decision = json.loads(decision_path.read_text())
+                    (ROOT/f'decision-{stage}.json').write_text(json.dumps(
+                        decision, indent=2, sort_keys=True)+'\n')
+                    submit_entry = time.monotonic_ns()
+                    submit = await client.call_tool('native_submit', {
+                        'stage': stage, 'decision': decision, 'timeout': 30})
+                    submit_return = time.monotonic_ns()
+                    submit_payload, submit_images = save_response(f'submit-{stage}.json', submit)
+                    response_meta = json.loads(submit.content[0].text) if submit.content else {}
+                    timings.append({'stage': stage, 'entry_ns': submit_entry,
+                                    'return_ns': submit_return})
+                    refusal = response_meta.get('receipt', {}).get('native_result', {}).get('target_refusal')
+                    if (response_meta.get('receipt', {}).get('native_result', {}).get('status') == 'boundary'
+                            and isinstance(refusal, dict)
+                            and refusal.get('input_dispatched') is False
+                            and refusal.get('action_attempted') is False
+                            and stage == 1 and len(submit_images) == 1):
+                        source_sequence = response_meta['receipt']['native_result']['observation']['sequence']
+                        (ROOT/'boundary-1.json').write_text(json.dumps({
+                            'reason': refusal.get('reason'), 'input_dispatched': False,
+                            'source_sequence': source_sequence, 'image': submit_images[0]},
+                            indent=2, sort_keys=True)+'\n')
+                        print(json.dumps({'event': 'READY_FOR_MODEL_DECISION',
+                            'tool_names': names, 'stage': 2, 'source_sequence': source_sequence,
+                            'public_goal': context.get('goal'),
+                            'image_path': submit_images[0]['path'],
+                            'image_sha256': hashlib.sha256(Path(submit_images[0]['path']).read_bytes()).hexdigest(),
+                            'prior_refusal': refusal.get('reason'),
+                            'prior_input_dispatched': False}, sort_keys=True), flush=True)
+                        stage = 2
+                        continue
+                    total_actions += len(json.loads((ROOT/'allocation/run/actions.json').read_text())) \
+                        if (ROOT/'allocation/run/actions.json').exists() else 0
+                    break
                 resumed = 0
                 while response_meta.get('status') == 'pending' and resumed < 10:
                     digest = response_meta.get('decision_sha256')
@@ -97,7 +136,7 @@ async def main():
                         break
                     resume_entry = time.monotonic_ns()
                     resumed_result = await client.call_tool('native_resume', {
-                        'stage': 1, 'decision_sha256': digest, 'timeout': 5})
+                        'stage': stage, 'decision_sha256': digest, 'timeout': 5})
                     resume_return = time.monotonic_ns()
                     save_response(f'resume-{resumed}.json', resumed_result)
                     response_meta = json.loads(resumed_result.content[0].text) if resumed_result.content else {}
@@ -106,14 +145,23 @@ async def main():
                             'return_ns': resume_return, 'index': resumed})+'\n')
                     resumed += 1
                 status_entry = time.monotonic_ns()
-                status = await client.call_tool('native_status', {})
+                status_polls = []
+                for _ in range(50):
+                    status = await client.call_tool('native_status', {})
+                    status_meta = json.loads(status.content[0].text) if status.content else {}
+                    status_polls.append(status_meta.get('allocation', {}).get('status'))
+                    if status_polls[-1] in ('terminal', 'needs_review'):
+                        break
+                    await asyncio.sleep(.1)
                 status_return = time.monotonic_ns()
                 status_payload, _ = save_response('status.json', status)
                 (ROOT/'client-result.json').write_text(json.dumps({
                     'status': 'returned', 'tool_names': names,
                     'submit_is_error': submit.isError, 'submit_metadata': response_meta,
                     'submit_image_blocks': submit_images, 'same_request_resume_count': resumed,
-                    'sdk': {'submit_entry_ns': submit_entry, 'submit_return_ns': submit_return,
+                    'decision_count': stage, 'action_count': total_actions,
+                    'status_polls': status_polls,
+                    'sdk': {'submits': timings,
                             'status_entry_ns': status_entry, 'status_return_ns': status_return},
                     'terminal': json.loads(status.content[0].text).get('allocation')
                         if status.content else None}, indent=2, sort_keys=True)+'\n')
