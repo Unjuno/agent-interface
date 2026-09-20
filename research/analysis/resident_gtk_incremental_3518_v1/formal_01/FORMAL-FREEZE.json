@@ -1,0 +1,37 @@
+{
+  "issue": 3518,
+  "allocation_01": {
+    "id": "issue3518-resident-gtk-incremental-01",
+    "status": "STOP-before-first-row",
+    "reason": "Pinned python3 entrypoint received duplicate python3 argument",
+    "rows": 0,
+    "evidence": "STOP-allocation-01.md"
+  },
+  "allocation_02": {
+    "id": "issue3518-resident-gtk-incremental-02",
+    "status": "completed-with-label-deviation",
+    "raw_embedded_id": "issue3518-resident-gtk-incremental-01",
+    "rows": 32,
+    "retry": false,
+    "expected_candidate_transport_counts": [1, 1, 0, 0, 1, 1, 1, 1],
+    "candidate_gui_title_counts": [1, 1, 0, 0, 1, 1, 1, 0],
+    "audit": "PASS",
+    "screen_pixel_delta_rows": 17,
+    "screen_delta_gate": "NOT-PASSED"
+  },
+  "environment": {
+    "runtime": "OrbStack Docker",
+    "image": "agent-interface-2972:20260920",
+    "image_id": "sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+    "platform": "linux/arm64",
+    "network": "none",
+    "source_mount": "read-only",
+    "formal_model_calls": 0
+  },
+  "sha256": {
+    "fixture.py": "ea8e0cd5586c243a2de65a86c8ba1258c3f804dc319ee6d36ecf4c59770d98fe",
+    "runner.py": "5ee6875b4f7e75adb655e989183bb0b660fbf3d4f3d9773b0114a3ccc5887bc6",
+    "rows.json": "8a43ea97920de3a9918ffd56520c4977a76d8334444337a4b556b3583ef242b2",
+    "audit_formal.py": "1235ff9a9655d42858ca931239098593ed123ae177d9a25ca2be38eeb5ab625b"
+  }
+}
