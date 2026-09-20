@@ -125,8 +125,10 @@ def audit(raw: dict[str, Any]) -> dict[str, Any]:
     # Preserve the claimed count while marking this binding gap as HOLD.
     if type(raw.get("input_operations")) is not int or raw.get("input_operations") != 3:
         errors.append("input_operations must be the integer 3 (bool is not accepted)")
-    if len(input_events) != 2 or [e.get("kind") for e in input_events] != input_kinds:
+    if len(input_events) != 3:
         holds.append("raw does not provide three independently countable input-operation receipts")
+    if [e.get("kind") for e in input_events] != input_kinds:
+        holds.append("input-emitting event kinds do not map one-to-one to the three reported operations")
     if type(raw.get("model_calls")) is not int or raw.get("model_calls") != 0:
         errors.append("model_calls must be integer zero")
     if type(raw.get("network_calls")) is not int or raw.get("network_calls") != 0:
