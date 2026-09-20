@@ -1,6 +1,7 @@
 import itertools
 import json
 import os
+import sys
 
 SOURCE_SHA256 = os.environ.get("FROZEN_RUNNER_SHA256", "UNPINNED")
 PHASES = ("RUNNING", "PAUSED", "REVOKED", "YIELDED")
@@ -155,5 +156,18 @@ def formal():
                          "not a Docker/container run", "no GUI, model, input, or authority execution"]}
     print(json.dumps(result, separators=(",", ":"), sort_keys=True))
 
+def construction_only():
+    checks = {
+        "stale_generation_rejected": dispatch("RUNNING","RESIDENT","BOUNDED_UPDATE",False,True,True) == "STALE_GENERATION",
+        "safe_point_required": dispatch("RUNNING","RESIDENT","BOUNDED_UPDATE",True,False,True) == "UPDATE_QUEUED_SAFE_POINT",
+        "nonconflicting_action_admitted": dispatch("RUNNING","FREE","PARALLEL_ONESHOT",True,False,True) == "PARALLEL_ACCEPTED",
+        "same_resource_waits": dispatch("RUNNING","RESIDENT","SAME_RESOURCE_ONESHOT",True,False,True) == "HANDOFF_QUEUED_SAFE_POINT",
+        "revoke_immediate": dispatch("RUNNING","RESIDENT","REVOKE",True,False,True) == "REVOKED_IMMEDIATE",
+        "stateful_fixture": all(stateful_traces()["checks"].values())
+    }
+    print(json.dumps({"mode":"CONSTRUCTION_ONLY","checks":checks,"passed":sum(checks.values()),"total":len(checks)},sort_keys=True))
+    if not all(checks.values()):
+        raise SystemExit(2)
+
 if __name__ == "__main__":
-    formal()
+    construction_only() if "--construction-only" in sys.argv else formal()
