@@ -296,3 +296,14 @@ retained result allow the caller to inspect the problem without replaying input.
 A missing capture-directory is rejected before any execution. The default raw
 response remains unchanged when --review is omitted. Standalone review remains
 available for inspecting retained results later.
+
+### Input release in reviewed dispatch results
+
+CLI `--review` and public MCP expose `outcome_summary.input_release_verified`.
+It is true only for a nonempty list of release records that all explicitly report
+`verified=true`, `keys_down=[]` and `buttons_down=[]`. Any explicit false record
+makes the summary false, even when another release succeeded. Missing, malformed
+or contradictory evidence is null unless an explicit failure is present.
+The raw records remain available. This summary does not clear `recovery_required`,
+assert task success, or verify backend/process termination; inspect those outcomes
+separately. It adds no observation, polling or input replay.

@@ -59,6 +59,25 @@ def _failure_source(report, failed):
             'occurrence_count': ops[index].get('repeat', 1)}
 
 
+def _input_release_verified(execution):
+    """Summarize retained release evidence without inferring missing state."""
+    releases = execution.get('releases')
+    if not isinstance(releases, list) or not releases:
+        return None
+    states = []
+    for row in releases:
+        if not isinstance(row, dict):
+            states.append(None)
+        elif row.get('verified') is False:
+            states.append(False)
+        elif (row.get('verified') is True and
+              row.get('keys_down') == [] and row.get('buttons_down') == []):
+            states.append(True)
+        else:
+            states.append(None)
+    return False if False in states else (True if all(s is True for s in states) else None)
+
+
 def outcome_summary(report):
     """Expose recorded statuses, never infer task success or absence of effects."""
     def text(row, name):
@@ -76,6 +95,7 @@ def outcome_summary(report):
         execution = execution if isinstance(execution, dict) else {}
         failed = execution.get('failed_op')
         summary.update(
+            input_release_verified=_input_release_verified(execution),
             failure_detail=text(execution, 'error'),
             failed_operation_index=failed if type(failed) is int and failed >= 0 else None,
             failed_operation_effect=text(execution, 'failed_op_effect'))
