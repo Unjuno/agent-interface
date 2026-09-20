@@ -1,0 +1,16 @@
+{
+  "schema": "issue-3188-audit-v3-allocation-stop-v1",
+  "allocation": "issue3188-audit-v3-control-schema-20260921-01",
+  "status": "STOP_TEST_HARNESS_IMPORT_ERROR",
+  "date": "2026-09-21",
+  "frozen_suite_attempts": 1,
+  "test_cases_started": 0,
+  "test_cases_completed": 0,
+  "error": "ImportError: loaders that define exec_module() must also define create_module()",
+  "interpretation": "The in-memory host harness failed while importing the frozen unittest module, before unittest discovery or any test case. This is a harness/setup STOP, not an auditor FAIL or PASS.",
+  "source_freeze_preserved": true,
+  "formal_02_raw_mutated": false,
+  "raw_sha256": "8460a9ca79611929cbd6d2f6930067a06c6f177e7da3287ad07d1b7f483cb324",
+  "same_allocation_retry": "prohibited",
+  "next_action": "Use a distinct successor allocation ID with a frozen loader that implements create_module and exec_module; keep auditor/test sources and decision gates byte-identical."
+}
