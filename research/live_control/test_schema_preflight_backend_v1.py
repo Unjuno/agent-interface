@@ -5,14 +5,56 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
-from types import SimpleNamespace
+from types import ModuleType, SimpleNamespace
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import schema_preflight_v1
 
+client_import_stub = ModuleType("integrated_efficiency_client_v1")
+client_import_stub.RuntimeClient = object
+with patch.dict(sys.modules, {"integrated_efficiency_client_v1": client_import_stub}):
+    import run_integrated_efficiency_live_v1
+
 
 class SchemaPreflightBackendTest(unittest.TestCase):
+    def test_six_task_runner_preflight_gate_consumes_selected_backend_receipt(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            output = root / "integrated-efficiency"
+            calls = []
+
+            def selected_backend(prompt, workspace, call_output, instructions, schema):
+                calls.append((prompt, workspace, call_output, instructions, schema))
+                call_output.mkdir(parents=True)
+                rows = [
+                    {"type": "thread.started", "thread_id": "synthetic-docker-preflight"},
+                    {"type": "turn.completed",
+                     "usage": {"input_tokens": 15, "output_tokens": 4}},
+                ]
+                (call_output / "events.jsonl").write_text(
+                    "".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
+                return SimpleNamespace(returncode=0, stdout=b"", stderr=b"")
+
+            identity = ({"requested_model": "synthetic-model",
+                         "requested_effort": "low"}, "synthetic-key")
+            with (
+                patch.object(run_integrated_efficiency_live_v1, "OUT", output),
+                patch.object(schema_preflight_v1, "compatibility_identity",
+                             return_value=identity),
+                patch.object(schema_preflight_v1, "run_preflight_call",
+                             side_effect=selected_backend),
+            ):
+                record = run_integrated_efficiency_live_v1.preflight_call("plain", "plain")
+
+            self.assertEqual(len(calls), 1)
+            self.assertEqual(calls[0][1], (output / "workspaces" / "plain").resolve())
+            self.assertEqual(calls[0][4], run_integrated_efficiency_live_v1.CONTRACTS["plain"][0])
+            self.assertEqual(record["call_id"], "synthetic-docker-preflight")
+            self.assertEqual(record["requested_model"], "synthetic-model")
+            self.assertEqual(record["usage"], {"input_tokens": 15, "output_tokens": 4})
+            self.assertEqual(record["model_visible_images"], 0)
+
     def test_docker_module_is_selected_for_task_call_and_schema_preflight(self):
         module_dir = str(Path(__file__).resolve().parent)
         env = os.environ.copy()
