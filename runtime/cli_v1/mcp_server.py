@@ -3,6 +3,7 @@ import argparse
 import asyncio
 from copy import deepcopy
 import json
+from itertools import islice, dropwhile
 from pathlib import Path
 import threading
 from typing import Literal
@@ -123,6 +124,7 @@ def create_server(targets, output_directory, *, display_name=None):
 
     @server.tool()
     async def interface_results(call_id: StrictStr | None = None,
+                                before_call_id: StrictStr | None = None,
                                 compact: StrictBool = False) -> CallToolResult:
         """List this server's calls or reread one retained result. Never dispatch or observe.
 
@@ -132,11 +134,24 @@ def create_server(targets, output_directory, *, display_name=None):
         with calls_lock:
             if call_id is None:
                 # Most recent calls first, bounded; request details are available by ID.
-                rows = list(calls.values())[-20:]
+                if before_call_id is not None and before_call_id not in calls:
+                    return content({'status': 'unknown_cursor', 'operation_invoked': False}, error=True)
+                ids = iter(reversed(calls))
+                if before_call_id is not None:
+                    ids = dropwhile(lambda item: item != before_call_id, ids)
+                    next(ids, None)  # Continue strictly before the previously returned ID.
+                page = list(islice(ids, 21))
+                rows = [calls[item] for item in page[:20]]
                 return content({'status': 'call_list', 'scope': 'current_server',
                     'total_calls': len(calls), 'calls': [
                         {key: row[key] for key in ('call_id', 'operation', 'state')}
-                        for row in reversed(rows)], 'operation_invoked': False})
+                        for row in rows],
+                    'next_before_call_id': page[19] if len(page) > 20 else None,
+                    'operation_invoked': False})
+            if before_call_id is not None:
+                return content({'status': 'invalid_request',
+                    'error': 'call_id and before_call_id are mutually exclusive',
+                    'operation_invoked': False}, error=True)
             record = deepcopy(calls.get(call_id))
         if record is None:
             return content({'status': 'unknown_call', 'operation_invoked': False}, error=True)
