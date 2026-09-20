@@ -6,7 +6,7 @@ Formal-02 is a fresh allocation; #3610 formal-01 remains an immutable STOP.
 - Construction unit tests include the actual runner's `wait_state(pid_hint=...)` signature and every AST callsite passing that keyword.
 - Formal launcher uses `set -euo pipefail`; it verifies launcher hash, exact local image ID/platform, source/preregistration/freeze bindings, test results, and a fresh empty formal output directory before runner invocation.
 - Construction GTK/Xvfb smoke is explicitly excluded from the 28 formal rows.
-- Formal result: pending one-shot allocation.
+- Formal runner: one invocation, 28 rows, row errors 0. Independent audit: HOLD; see `evidence/formal-02/REPORT.md`.
 
 ## Construction failures retained before freeze
 
