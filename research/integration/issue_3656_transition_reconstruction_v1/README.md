@@ -14,7 +14,7 @@ Audit-only successor for #3656 / #3652. It reads an exact retained copy of forma
 
 The independent recomputation derives all five transition predicates as true, but disposition is `HOLD_AUDIT_EVIDENCE_INCOMPLETE`: raw lacks an explicit Chromium old-window-absence receipt, an independently observed active-window value on Calc return, and an event-level third input-operation receipt (only two events carry `input_emitted: true`, although the top-level integer count is 3). `fresh_validation: true` is a runner-produced assertion, not an observation receipt. This does not reverse #3652's retained historical runner/audit result; it narrows what the raw alone can substantiate.
 
-Container infrastructure: `STOP_CONTAINER_UNAVAILABLE`. Docker Desktop's `com.docker.service` is stopped (`Manual`); `desktop-linux` could not connect. Tests therefore ran in local Windows Python, not a container. No GUI/formal allocation was attempted.
+Container infrastructure: `STOP_CONTAINER_UNAVAILABLE`. Docker Desktop's `com.docker.service` is stopped (`Manual`); `desktop-linux` could not connect, and service start was denied. The audit was run in local Windows Python and independently in WSL Ubuntu (not a container). On both: 12/12 tests pass; raw disposition is `HOLD_AUDIT_EVIDENCE_INCOMPLETE` with the same three missing receipts. No GUI/formal allocation was attempted.
 
 ## Reproduction
 

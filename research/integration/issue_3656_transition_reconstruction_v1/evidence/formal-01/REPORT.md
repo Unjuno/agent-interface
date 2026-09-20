@@ -8,4 +8,4 @@
 - Disposition: `HOLD_AUDIT_EVIDENCE_INCOMPLETE` due to absent `old_window_absent`, return `active_window`, and third event-level input-operation receipts. The top-level integer count is 3, but only two ledger events explicitly report `input_emitted: true`. No values were synthesized from `checks[]` or `fresh_validation`.
 - The check vector agrees with the recomputed predicates, but is only a consistency comparison.
 - Historical #3652 decision remains `HOLD_TASK_EFFECT_UNTESTED`; the predecessor PR and raw were not changed.
-- Infrastructure: `STOP_CONTAINER_UNAVAILABLE` (Docker Desktop service stopped and daemon unavailable). No GUI, input, model, network, or formal allocation performed.
+- Infrastructure: `STOP_CONTAINER_UNAVAILABLE` (Docker Desktop service stopped; daemon unavailable; service start denied). Audit was executed in Windows Python and independently in WSL Ubuntu, not in a container. Both yielded 12/12 mutation tests and the same three-item HOLD. No GUI, input, model, network, or formal allocation performed.
