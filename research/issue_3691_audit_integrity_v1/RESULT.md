@@ -37,7 +37,7 @@ Ran 6 tests in 0.090s
 OK
 ```
 
-Source SHA-256: audit.py `4c959fb83a4e7523ce50c5f33152b58bd5381776282ecbc6cd53447c1ef23ee9`; test_integrity.py `de5733a0a9ba60a8e23cfed9be406f229249db71d1f1a9b2198910f43d494c9f`. The retained raw and predecessor freeze hashes are listed above.
+Source SHA-256: audit.py `4c959fb83a4e7523ce50c5f33152b58bd5381776282ecbc6cd53447c1ef23ee9`; test_integrity.py `15dbc3167b3d39dc622944bdf770c2c3d12036d23d9079c8cb80fbb628a98105`. The retained raw and predecessor freeze hashes are listed above.
 
 ## Docker stop
 
@@ -58,3 +58,6 @@ A later mutation-control refinement changed the auditor source so the replacemen
 ## Fail-closed malformed-input regression
 
 The final native suite also supplies a JSON array as the raw root and as the study-manifest root. Both return `FAIL_AUDIT` with errors instead of leaking an exception. The final suite is 7/7 tests; final source digests are recorded in the updated `FREEZE.json`.
+
+
+The raw-only and freeze-only substitutions are tested separately: changed raw with the canonical freeze triggers only the raw-byte pin; canonical raw with replacement freeze triggers only the freeze-byte pin. Malformed root JSON and a malformed study-manifest root return structured FAIL results rather than raising. The final frozen suite remains 7/7.
