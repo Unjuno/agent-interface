@@ -65,7 +65,18 @@ def dispatch(
         return {"schema": SCHEMA_DISPATCH, "status": "invalid_request", "error": "PROGRAM_NOT_OBJECT"}
     compilation = None
     operations = program.get('ops')
-    if isinstance(operations, list) and any(isinstance(op, dict) and 'repeat' in op for op in operations):
+    if isinstance(operations, list) and any(isinstance(op, dict) and 'gap_ms' in op for op in operations):
+        from runtime.core_v1.sequence import expand_text_gaps
+        try:
+            expanded, sources = expand_text_gaps(operations)
+        except ValueError as error:
+            return {"schema": SCHEMA_DISPATCH, "status": "invalid_request",
+                    "error": "INVALID_TEXT_GAP", "detail": str(error)}
+        compilation = {'kind': 'bounded_text_gap', 'source_program': deepcopy(program),
+                       'operation_sources': sources}
+        program = deepcopy(program)
+        program['ops'] = expanded
+    elif isinstance(operations, list) and any(isinstance(op, dict) and 'repeat' in op for op in operations):
         from runtime.core_v1.sequence import expand_key_repeats
         try:
             expanded = expand_key_repeats(operations, max_ops=128)

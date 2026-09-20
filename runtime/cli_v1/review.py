@@ -37,6 +37,17 @@ def present_result(report, run_directory, *, compact=False):
 def _failure_source(report, failed):
     """Map a recorded failure only when the retained expansion is consistent."""
     compilation = report.get('compilation')
+    if isinstance(compilation, dict) and compilation.get('kind') == 'bounded_text_gap':
+        from runtime.core_v1.sequence import expand_text_gaps
+        try:
+            source = compilation['source_program']['ops']
+            _, mapping = expand_text_gaps(source)
+            if (json.dumps(mapping, sort_keys=True) != json.dumps(compilation['operation_sources'], sort_keys=True)
+                    or type(failed) is not int or not 0 <= failed < len(mapping)):
+                return None
+            return mapping[failed]
+        except (ValueError, TypeError, KeyError):
+            return None
     if not isinstance(compilation, dict) or compilation.get('kind') != 'bounded_key_repeat':
         return None
     source = compilation.get('source_program')
