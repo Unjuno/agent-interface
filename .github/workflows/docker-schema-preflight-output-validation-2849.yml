@@ -1,0 +1,29 @@
+name: Docker schema preflight output validation (#2849)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/docker-schema-preflight-output-validation-2849.yml'
+      - 'runtime/docker_schema_preflight_v1.py'
+      - 'runtime/test_docker_schema_preflight_v1.py'
+      - 'runtime/requirements-docker-schema-preflight.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  output-contract:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install schema validator
+        run: python -m pip install -r runtime/requirements-docker-schema-preflight.txt
+      - name: Run non-live schema output contract tests
+        run: python -m unittest runtime.test_docker_schema_preflight_v1 -v
