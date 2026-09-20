@@ -74,12 +74,13 @@ def dispatch(role,epoch,version,registry):
     return "PROPOSE",registry[role]
 
 def predict(role,model,registry,x,y):
-    decision,chosen=dispatch(role,EPOCH,VERSION,registry)
+    route_version=0 if role=="A" else VERSION
+    decision,chosen=dispatch(role,EPOCH,route_version,registry)
     if decision!="PROPOSE" or chosen is not model:raise RuntimeError("valid_route_mismatch:"+role)
     chosen.eval()
     with torch.no_grad():pred=chosen(x).argmax(-1).to("cpu").tolist()
     exp=y.to("cpu").tolist();packed=pack2(pred);correct=sum(a==b for a,b in zip(exp,pred))
-    return {"decision":decision,"requested_role":role,"selected_adapter":role,"epoch":EPOCH,"version":VERSION,
+    return {"decision":decision,"requested_role":role,"selected_adapter":role,"epoch":EPOCH,"version":route_version,
         "correct":correct,"n":len(exp),"accuracy":correct/len(exp),
         "predicted_b64":base64.b64encode(packed).decode(),"predicted_sha256":hashlib.sha256(packed).hexdigest()}
 
