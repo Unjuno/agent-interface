@@ -44,5 +44,15 @@ Issue #3628.
 - A first Xvfb test-harness attempt kept the Entry unmapped and observed no
   generated events. That harness-only failure is retained here; the test was
   corrected to map/focus the Entry and then exercised the fixture itself.
+- Supplemental WSL/Xvfb Python-Xlib XTest probes were construction-only, not
+  formal allocations. `construction-xtest-01` stopped before sending any input:
+  this Python-Xlib TranslateCoords reply exposes `x/y`, not `dst_x/dst_y`;
+  the fixture was reaped, with zero events/effects. `construction-xtest-02`
+  corrected that property access and sent the pointer/key sequence, but the
+  fixture recorded zero button/key events and no save receipt; it was reaped.
+  Both immutable result receipts and manifests are retained. These results
+  reject any claim that the direct XTest route was validated; they do not
+  affect the separately completed PR #3636 formal MCP allocations.
 - No MCP client, actual XTest/MCP input, container, OrbStack allocation, or
-  formal task was run. This is a Tk instrumentation construction result only.
+  formal task was run by these supplemental probes. This is a Tk instrumentation
+  construction result only.

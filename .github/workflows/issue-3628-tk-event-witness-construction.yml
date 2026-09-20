@@ -23,8 +23,10 @@ jobs:
       - name: Install isolated display dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install --yes python3-tk xvfb
+          sudo apt-get install --yes python3-tk python3-xlib xvfb
       - name: Compile construction sources
         run: python3 -m compileall -q research/integration/issue_3628_tk_event_witness_v1
       - name: Run witness and adversarial audit tests
         run: xvfb-run -a python3 -m unittest discover -s research/integration/issue_3628_tk_event_witness_v1 -v
+      - name: Run one-shot XTest construction probe
+        run: xvfb-run -a python3 research/integration/issue_3628_tk_event_witness_v1/probe_xtest.py research/integration/issue_3628_tk_event_witness_v1/evidence/ci-xtest-${{ github.run_id }}
