@@ -36,6 +36,13 @@ class PublicReviewTests(unittest.TestCase):
             self.assertEqual(base64.b64decode(row["image"]["data"]), pixels)
             self.assertEqual(row["receipt"]["report"]["status"], "failed")
             self.assertEqual(row["authority"], "none")
+            piped = subprocess.run([sys.executable, str(archive), "review", "--report", "-", "--run-directory", str(root)],
+                                   input=original, cwd=root, capture_output=True)
+            self.assertEqual(piped.returncode, 0, piped.stderr)
+            piped_row = json.loads(piped.stdout)
+            self.assertEqual(base64.b64decode(piped_row['image']['data']), pixels)
+            self.assertEqual(piped_row['receipt']['source']['sha256'], hashlib.sha256(original).hexdigest())
+            self.assertIsNone(piped_row['receipt']['source']['path'])
             png.unlink()
             missing = subprocess.run(command, cwd=root, capture_output=True, text=True)
             self.assertEqual(missing.returncode, 2)
@@ -104,6 +111,22 @@ class PublicReviewTests(unittest.TestCase):
             row = review(path, root)
             self.assertEqual(row["image_status"], "no_observation")
             self.assertEqual(row["receipt"]["report"]["result"]["error"], "stale")
+
+    def test_stdin_preserves_exact_byte_hash_and_full_history_without_file(self):
+        with tempfile.TemporaryDirectory() as td:
+            raw = b'{ "status": "failed", "records": [{"event":"command","id":"keep"}] }\n'
+            command = [sys.executable, '-m', 'runtime.cli_v1', 'review', '--report', '-', '--run-directory', td]
+            result = subprocess.run(command, input=raw, capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            row = json.loads(result.stdout)
+            source = row['receipt']['source']
+            self.assertIsNone(source['path'])
+            self.assertEqual(source['sha256'], hashlib.sha256(raw).hexdigest())
+            self.assertEqual(source['raw_report'], json.loads(raw))
+            self.assertEqual(list(Path(td).iterdir()), [])
+            bad = subprocess.run(command, input=b'{bad', capture_output=True)
+            self.assertEqual(bad.returncode, 2)
+            self.assertEqual(json.loads(bad.stdout)['status'], 'invalid_receipt')
 
     def test_newest_missing_image_never_falls_back_to_older_capture(self):
         with tempfile.TemporaryDirectory() as td:

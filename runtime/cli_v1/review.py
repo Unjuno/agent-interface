@@ -4,7 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from .receipt import receipt_view
+from .receipt import receipt_view, receipt_bytes
 from .receipt_image import select_image
 
 
@@ -14,6 +14,15 @@ def review(report_path, run_directory):
     data = Path(view['source']['path']).read_bytes()
     if hashlib.sha256(data).hexdigest() != view['source']['sha256']:
         raise ValueError('report changed during review')
+    return _review(data, view, run_directory)
+
+
+def review_bytes(data: bytes, run_directory):
+    """Review a complete received response without a temporary report file."""
+    return _review(data, receipt_bytes(data), run_directory)
+
+
+def _review(data, view, run_directory):
     report = json.loads(data)
     result = {'schema': 'agent-interface/review-v1', 'receipt': view,
               'image': None, 'authority': 'none'}

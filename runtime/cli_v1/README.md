@@ -156,3 +156,25 @@ asynchronous application update: it does not prove the final application state.
 ```sh
 python -m runtime.cli_v1 review --report dispatch-result.json --run-directory /absolute/run
 ```
+
+
+To pass a complete response without creating a report file, use `review --report -`.
+Python callers can pass the original bytes to `runtime.cli_v1.review.review_bytes`.
+The source digest covers the received bytes, not reserialized JSON. Since there
+is no retained source file, the full original parsed report is included under
+`receipt.source.raw_report`; source.path is null. Image validation is unchanged.
+This avoids a temporary report file, not image storage or model token costs.
+
+In bash, use pipefail so an upstream dispatch failure is not hidden by successful
+review. A review exit of 0 only means presentation succeeded:
+
+```sh
+set -o pipefail
+python -m runtime.cli_v1 observe --targets targets.json --target fixture \
+  --frame window_client --region 0 0 400 180 --capture-directory images |
+  python -m runtime.cli_v1 review --report - --run-directory .
+```
+
+Forward the JSON image block through the host's image-input mechanism; printing
+base64 text to the model is not image delivery. The portable zipapp accepts the
+same arguments. Stdin mode does not write a report, recapture, or replay input.

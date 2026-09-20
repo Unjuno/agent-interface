@@ -7,7 +7,7 @@ from pathlib import Path
 
 from .api import dispatch, doctor
 from .receipt import receipt_view
-from .review import review
+from .review import review, review_bytes
 from .observe import observe
 
 
@@ -54,7 +54,8 @@ def main() -> int:
         return 0
     if args.command == "review":
         try:
-            row = review(args.report, args.run_directory)
+            row = (review_bytes(sys.stdin.buffer.read(), args.run_directory) if args.report == "-"
+                   else review(args.report, args.run_directory))
         except (OSError, ValueError, TypeError) as error:
             _emit({"schema": "agent-interface/review-v1", "status": "invalid_receipt", "error": str(error)})
             return 2
