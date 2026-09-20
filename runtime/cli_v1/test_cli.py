@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 import json
+import io
+import hashlib
+import base64
 import subprocess
 import sys
 import tempfile
@@ -88,6 +91,67 @@ class ApiTests(unittest.TestCase):
 
 
 class CliTests(unittest.TestCase):
+    def test_inline_review_preserves_refusal_exit_and_dispatches_once(self):
+        from runtime.cli_v1.__main__ import main
+        with tempfile.TemporaryDirectory() as td:
+            args = ['agent-interface', 'dispatch', '--program', 'program.json', '--targets', 'targets.json',
+                    '--current-observation-seq', '0', '--current-binding-revision', '0',
+                    '--capture-directory', td, '--review']
+            raw = {'schema': 'agent-interface/runtime-dispatch-result-v1', 'status': 'returned',
+                   'result': {'status': 'refused', 'error': 'BACKEND_CONSTRAINT', 'detail': 'unmapped key RIGHT'}}
+            with mock.patch.object(sys, 'argv', args), mock.patch('runtime.cli_v1.__main__._read_json', return_value={}), \
+                 mock.patch('runtime.cli_v1.__main__.dispatch', return_value=raw) as dispatch_call, \
+                 mock.patch.object(sys, 'stdout', new_callable=io.StringIO) as output:
+                code = main()
+            self.assertEqual(code, 3)
+            dispatch_call.assert_called_once()
+            row = json.loads(output.getvalue())
+            self.assertEqual(row['outcome_summary']['execution_status'], 'refused')
+            self.assertEqual(row['receipt']['source']['raw_report'], raw)
+            self.assertEqual(list(Path(td).iterdir()), [])
+
+    def test_inline_presentation_failure_never_replays_or_loses_raw_result(self):
+        from runtime.cli_v1.__main__ import _present_result
+        raw = {'status': 'returned', 'result': {'status': 'completed'}}
+        with mock.patch('runtime.cli_v1.__main__.review_bytes', side_effect=ValueError('bad image')), \
+             mock.patch.object(sys, 'stdout', new_callable=io.StringIO) as output:
+            self.assertEqual(_present_result(raw, with_review=True, capture_directory='.', exit_code=0), 2)
+        row = json.loads(output.getvalue())
+        self.assertEqual(row['raw_result'], raw)
+        self.assertEqual(row['image_status'], 'needs_review')
+
+    def test_inline_observe_returns_exact_captured_image(self):
+        from runtime.cli_v1.__main__ import main
+        with tempfile.TemporaryDirectory() as td:
+            png = Path(td) / 'image.png'
+            pixels = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a9xkAAAAASUVORK5CYII=')
+            png.write_bytes(pixels)
+            raw = {'schema': 'agent-interface/runtime-observation-v1', 'status': 'returned',
+                   'observation_id': 'one', 'observation': {'sha256': 'raw', 'capture_started_ns': 12,
+                   'artifact': {'path': str(png), 'mime_type': 'image/png',
+                                'source_raw_sha256': 'raw', 'sha256': hashlib.sha256(pixels).hexdigest()}}}
+            args = ['agent-interface', 'observe', '--targets', 'targets.json', '--target', 'fixture',
+                    '--frame', 'window_client', '--region', '0', '0', '1', '1', '--capture-directory', td, '--review']
+            with mock.patch.object(sys, 'argv', args), mock.patch('runtime.cli_v1.__main__._read_json', return_value={}), \
+                 mock.patch('runtime.cli_v1.__main__.observe', return_value=raw) as observed, \
+                 mock.patch.object(sys, 'stdout', new_callable=io.StringIO) as output:
+                self.assertEqual(main(), 0)
+            observed.assert_called_once()
+            row = json.loads(output.getvalue())
+            self.assertEqual(base64.b64decode(row['image']['data']), pixels)
+            self.assertEqual(row['receipt']['source']['raw_report'], raw)
+
+    def test_inline_review_requires_capture_directory_before_read_or_input(self):
+        from runtime.cli_v1.__main__ import main
+        args = ['agent-interface', 'observe', '--targets', 'missing', '--target', 'fixture',
+                '--frame', 'window_client', '--region', '0', '0', '100', '100', '--review']
+        with mock.patch.object(sys, 'argv', args), mock.patch('runtime.cli_v1.__main__.observe') as observed, \
+             mock.patch.object(sys, 'stderr', new_callable=io.StringIO):
+            with self.assertRaises(SystemExit) as stopped:
+                main()
+            self.assertEqual(stopped.exception.code, 2)
+            observed.assert_not_called()
+
     def test_doctor_outputs_one_json_record(self):
         proc = subprocess.run([sys.executable, "-m", "runtime.cli_v1", "doctor"], capture_output=True, text=True, check=True)
         rows = proc.stdout.strip().splitlines()

@@ -23,6 +23,21 @@ def _emit(payload) -> None:
     sys.stdout.write(json.dumps(payload, sort_keys=True, separators=(",", ":")) + "\n")
 
 
+def _present_result(row, *, with_review, capture_directory, exit_code):
+    if not with_review:
+        _emit(row)
+        return exit_code
+    try:
+        presented = review_bytes(json.dumps(row).encode('utf-8'), capture_directory)
+    except (OSError, ValueError, TypeError) as error:
+        # Presentation failure cannot erase an already-issued action result.
+        presented = {'schema': 'agent-interface/review-v1', 'authority': 'none',
+                     'image': None, 'image_status': 'needs_review',
+                     'image_error': str(error), 'raw_result': row}
+    _emit(presented)
+    return exit_code or (2 if presented['image_status'] == 'needs_review' else 0)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(prog="agent-interface")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -34,6 +49,7 @@ def main() -> int:
     read.add_argument("--region", nargs=4, type=int, required=True, metavar=("X", "Y", "W", "H"))
     read.add_argument("--capture-directory")
     read.add_argument("--display")
+    read.add_argument("--review", action="store_true", help="return result and captured image together")
     view = sub.add_parser("receipt")
     view.add_argument("--report", required=True)
     view.add_argument("--raw", action="store_true")
@@ -47,7 +63,10 @@ def main() -> int:
     run.add_argument("--current-binding-revision", type=int, required=True)
     run.add_argument("--display")
     run.add_argument("--capture-directory")
+    run.add_argument("--review", action="store_true", help="return result and last captured image together")
     args = parser.parse_args()
+    if getattr(args, "review", False) and not args.capture_directory:
+        parser.error("--review requires --capture-directory")
 
     if args.command == "doctor":
         _emit(doctor())
@@ -76,8 +95,8 @@ def main() -> int:
         except (OSError, ValueError, TypeError) as error:
             _emit({"status": "invalid_request", "error": str(error)})
             return 2
-        _emit(row)
-        return 0 if row["status"] == "returned" else 2
+        return _present_result(row, with_review=args.review, capture_directory=args.capture_directory,
+                               exit_code=0 if row["status"] == "returned" else 2)
     try:
         program = _read_json(args.program)
         targets = _read_json(args.targets)
@@ -92,10 +111,8 @@ def main() -> int:
         display_name=args.display,
         capture_directory=args.capture_directory,
     )
-    _emit(row)
-    if row["status"] != "returned":
-        return 2
-    return 0 if row["result"].get("status") == "completed" else 3
+    code = 2 if row["status"] != "returned" else (0 if row["result"].get("status") == "completed" else 3)
+    return _present_result(row, with_review=args.review, capture_directory=args.capture_directory, exit_code=code)
 
 
 if __name__ == "__main__":
