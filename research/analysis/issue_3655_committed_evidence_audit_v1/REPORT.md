@@ -1,7 +1,9 @@
 # Issue #3655 — committed-bundle audit result
 
-**Data integrity:** `HOLD_COMMITTED_ARTIFACTS_INCOMPLETE`  
-**Container execution:** `STOP_CONTAINER_UNAVAILABLE`  
+**Data integrity:** `HOLD_COMMITTED_ARTIFACTS_INCOMPLETE`
+
+**Container execution:** `STOP_CONTAINER_UNAVAILABLE`
+
 **Formal allocation rerun:** no
 
 The audited source is the exact Git tree at main commit `6b3c5fd93671c87fa02065da64afb397e7cdf62c`. The audit read Git blobs directly, so Windows `autocrlf` did not affect the source bytes. It enumerated the 15-file #3642 experiment tree, then materialized the nine committed files under its `evidence/` subtree into a temporary directory and ran the exact committed `audit.py` blob.
