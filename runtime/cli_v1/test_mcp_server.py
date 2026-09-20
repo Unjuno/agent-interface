@@ -1,6 +1,8 @@
 import json
 import asyncio
 import threading
+import io
+from contextlib import redirect_stdout
 from pathlib import Path
 import tempfile
 import sys
@@ -11,6 +13,32 @@ from runtime.cli_v1.mcp_server import create_server
 
 
 class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_cli_and_mcp_preserve_identical_failed_presentation(self):
+        from runtime.cli_v1.__main__ import _present_result
+        with tempfile.TemporaryDirectory() as td:
+            server = create_server({'fixture': 123}, td)
+            raw = {'schema': 'agent-interface/runtime-dispatch-result-v1',
+                   'status': 'runtime_failed', 'cleanup_error': 'release uncertain',
+                   'result': {'status': 'execution_failed', 'recovery_required': True,
+                              'execution': {'failed_op': 1, 'failed_op_effect': 'unknown'}}}
+            for error in (ValueError('bad review'), RuntimeError('unexpected review error')):
+                with self.subTest(error=error), patch('runtime.cli_v1.review.review_bytes', side_effect=error), patch(
+                        'runtime.cli_v1.mcp_server.dispatch', return_value=raw) as dispatch:
+                    reply = await server.call_tool('interface_dispatch', {
+                        'program': {}, 'current_observation_seq': 0, 'current_binding_revision': 0})
+                    output = io.StringIO()
+                    with redirect_stdout(output):
+                        code = _present_result(raw, with_review=True, capture_directory=td, exit_code=2)
+                    mcp = json.loads(reply.content[0].text)
+                    mcp.pop('call_directory')
+                    self.assertEqual(len(reply.content), 1)
+                    mcp['image'] = None  # MCP carries images separately from its text metadata.
+                    self.assertEqual(mcp, json.loads(output.getvalue()))
+                    self.assertEqual(mcp['raw_result'], raw)
+                    self.assertTrue(mcp['outcome_summary']['recovery_required'])
+                    self.assertEqual(code, 2)
+                    dispatch.assert_called_once()
+
     async def test_cancelled_transport_keeps_worker_and_receipt_without_replay(self):
         with tempfile.TemporaryDirectory() as td:
             server = create_server({'fixture': 123}, td)
@@ -130,7 +158,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
             envelope = {'status': 'returned', 'image': {
                 'type': 'image', 'mimeType': 'image/png', 'data': 'YWJj'}}
             with patch('runtime.cli_v1.mcp_server.observe', return_value={'status': 'returned'}) as observe, patch(
-                    'runtime.cli_v1.mcp_server.review_bytes', return_value=envelope):
+                    'runtime.cli_v1.review.review_bytes', return_value=envelope):
                 reply = await server.call_tool('interface_observe', {
                     'target': 'fixture', 'frame': 'window_client', 'region': [0, 0, 10, 10]})
             observe.assert_called_once()
@@ -143,13 +171,13 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
         with tempfile.TemporaryDirectory() as td:
             server = create_server({'fixture': 123}, td)
             with patch('runtime.cli_v1.mcp_server.dispatch', side_effect=RuntimeError('uncertain')) as dispatch, patch(
-                    'runtime.cli_v1.mcp_server.review_bytes', side_effect=ValueError('review failed')):
+                    'runtime.cli_v1.review.review_bytes', side_effect=ValueError('review failed')):
                 reply = await server.call_tool('interface_dispatch', {
                     'program': {}, 'current_observation_seq': 0, 'current_binding_revision': 0})
             dispatch.assert_called_once()
             metadata = json.loads(reply.content[0].text)
-            self.assertEqual(metadata['raw_report']['effect_status'], 'unknown')
-            self.assertEqual(metadata['status'], 'needs_review')
+            self.assertEqual(metadata['raw_result']['effect_status'], 'unknown')
+            self.assertEqual(metadata['image_status'], 'needs_review')
 
     async def test_strict_arguments_refuse_before_backend(self):
         with tempfile.TemporaryDirectory() as td:

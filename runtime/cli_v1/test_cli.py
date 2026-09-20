@@ -158,7 +158,7 @@ class CliTests(unittest.TestCase):
     def test_inline_presentation_failure_never_replays_or_loses_raw_result(self):
         from runtime.cli_v1.__main__ import _present_result
         raw = {'status': 'returned', 'result': {'status': 'completed'}}
-        with mock.patch('runtime.cli_v1.__main__.review_bytes', side_effect=ValueError('bad image')), \
+        with mock.patch('runtime.cli_v1.review.review_bytes', side_effect=ValueError('bad image')), \
              mock.patch.object(sys, 'stdout', new_callable=io.StringIO) as output:
             self.assertEqual(_present_result(raw, with_review=True, capture_directory='.', exit_code=0), 2)
         row = json.loads(output.getvalue())

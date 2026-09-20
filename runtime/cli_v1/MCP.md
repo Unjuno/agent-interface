@@ -57,6 +57,13 @@ error after execution is reported alongside the action result; it never causes a
 retry. A review failure preserves the raw report. Requests/results may contain
 typed text and screenshots; choose an output directory suitable for that data.
 
+CLI and MCP share `review.present_result` for result presentation. If review
+itself raises, both return `schema=agent-interface/review-v1`,
+`image_status=needs_review`, `image_error`, `raw_result`, and `outcome_summary`.
+MCP adds its `call_directory` and any persistence error outside this common
+envelope. Direct API users may call the same helper. This replaces the initial
+MCP-only `status/review_error/raw_report` fallback, keeping the CLI fallback keys.
+
 Inspect action status, partial-effect uncertainty, cleanup and image status
 separately. A returned image is not a redraw or task-completion acknowledgement.
 Compact mode selects reversible event references only when their JSON is smaller;
