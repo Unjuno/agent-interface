@@ -165,3 +165,12 @@ and the audit correlated all 24 getter starts. This reduces one instrumentation
 cost but leaves compiler-prologue/clock-read uncertainty and scheduling
 perturbation unbounded; it is not formal phase evidence. See
 `results/construction-clock-43/`; formal rows remain 0/120.
+
+Run44 tested whether a kernel uprobe could remove that remaining userspace
+entry-latency uncertainty. The exact read-only probe in the pinned arm64 image
+found `perf_event_paranoid=2`, no mounted tracefs/debugfs or uprobe event
+control, and no `CAP_SYS_ADMIN`/`CAP_PERFMON`. No game was launched and no
+privilege escalation was attempted. Disposition:
+`STOP_KERNEL_UPROBE_UNAVAILABLE_IN_DEFAULT_CONTAINER`—an environment stop,
+not a scientific result. Formal rows remain 0/120. Probe and captured output
+hashes are in `results/construction-clock-44/invocation.txt`.
