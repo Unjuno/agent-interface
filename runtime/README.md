@@ -3,6 +3,8 @@
 This directory is reserved for the user-facing Agent Interface runtime.
 
 The project is still research-first, so experimental benchmark code remains under `research/`. Code moves here only when it represents the current promoted semantics rather than a one-off experiment.
+Start with [Using the current interface](USING_CURRENT_INTERFACE.md) for public action/image output, native continuation and local verification.
+
 ## Directory map
 
 | Path | Role |
