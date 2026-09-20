@@ -135,6 +135,8 @@ def route(skill: str, receipt: object, base: BasePolicy,
 def main() -> None:
     random.seed(SEED)
     torch.manual_seed(SEED)
+    torch.use_deterministic_algorithms(True)
+    torch.backends.cuda.matmul.allow_tf32 = False
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     if device.type == "cuda":
         torch.cuda.manual_seed_all(SEED)
