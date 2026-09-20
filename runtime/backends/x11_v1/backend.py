@@ -165,16 +165,18 @@ class X11Backend:
 
     def _text_plan(self, value: str) -> list[list[str]]:
         plan = []
+        symbols = {":": "colon", "/": "slash", "=": "equal", "*": "asterisk"}
         for ch in value:
-            if ch in ":/":
+            if ch in symbols:
                 # Resolve the symbol from the live map. Do not assume a US
                 # physical key or silently type the unshifted neighbour.
-                code = self._keycode("colon" if ch == ":" else "slash")
+                name = symbols[ch]
+                code = self._keycode(name)
                 symbol = ord(ch)
                 if self.d.keycode_to_keysym(code, 0) == symbol:
-                    keys = ["colon" if ch == ":" else "slash"]
+                    keys = [name]
                 elif self.d.keycode_to_keysym(code, 1) == symbol:
-                    keys = ["SHIFT", "colon" if ch == ":" else "slash"]
+                    keys = ["SHIFT", name]
                 else:
                     raise X11BackendError(f"unsupported text layout for {ch!r}")
                 for key in keys:

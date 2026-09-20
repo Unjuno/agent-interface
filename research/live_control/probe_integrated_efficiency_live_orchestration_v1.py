@@ -39,10 +39,10 @@ def main():
                     "requested_model": "synthetic-no-model",
                     "requested_effort": "none", "cost": None}
 
-        live.call_model = fake_call
         workspace = OUT / "workspaces" / arm
         workspace.mkdir()
-        arms[arm], independent[arm] = live.run_arm(arm, 991028, workspace)
+        arms[arm], independent[arm] = live.run_arm(
+            arm, 991028, workspace, model_call=fake_call)
     preflights = {arm: {"call_id": f"engineering:preflight:{arm}",
         "stage": "schema_preflight", "requested_model": "synthetic-no-model",
         "requested_effort": "none", "usage": dict(USAGE),

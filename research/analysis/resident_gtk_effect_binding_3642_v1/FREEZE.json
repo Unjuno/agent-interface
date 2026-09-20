@@ -1,0 +1,25 @@
+{
+  "schema": "issue-3642/freeze-v1",
+  "issue": 3642,
+  "allocation_id": "issue3642-gtk-effect-01",
+  "base_commit": "3bbb1523aaae7959adf131be6447334647acfcb3",
+  "container_image_id": "sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+  "platform": "linux/arm64",
+  "candidate_sha256": "f2bc10dff9c2d5fdc0b066ad1ca38b690d68b1b21488bcfffe96373f695486df",
+  "oracle_sha256": "fc1c15bbaeec5b94d01ed6b3b0c749525a72b2424f6cdd2d1d9d6c0089e82221",
+  "fixture_sha256": "290bfb1f67093364bea322d012c900a29d80945a84c3dc2c46ad26fec5afaaf8",
+  "runner_sha256": "e18637a7e30d4684377411fd42d1484cfbad05090c9579f85511ab229dd02079",
+  "auditor_sha256": "eab5a025116904937a0e660014282a7e7222c0e6885bd783130d274f583f7f90",
+  "fixture_predecessor_sha256": "97467cc1685b7a7bfecda3a789f82b9e1174e75bbdf7db431d789d04159c2150",
+  "events": [
+    {"kind":"obs","id":"valid-gen1","gen":1,"seq":1,"target":1,"value":true},
+    {"kind":"replace","id":"replace-gen2","gen":2,"seq":3,"target":2},
+    {"kind":"replace","id":"delayed-replace-gen1","gen":1,"seq":2,"target":1},
+    {"kind":"obs","id":"stale-gen1","gen":1,"seq":4,"target":1,"value":true},
+    {"kind":"obs","id":"valid-gen2","gen":2,"seq":5,"target":2,"value":true}
+  ],
+  "formal_allocations": 1,
+  "formal_retries": 0,
+  "expected_actions": [["emit","valid-gen1"],["invalidate",2,2],["refuse_control","replace",2],["refuse","stale-gen1"],["emit","valid-gen2"]],
+  "expected_gui_counts": [1,1,1,1,2]
+}

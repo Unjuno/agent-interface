@@ -1,0 +1,123 @@
+{
+  "after_state": {
+    "counter": 0,
+    "frame_bytes": 153600,
+    "frame_path": "rows/structured_proxy__macro_failure/after.raw",
+    "frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "height": 120,
+    "pid": 148,
+    "start_ticks": "5931045",
+    "status": "ok",
+    "title": "proxy-fixture:0:1",
+    "version": 1,
+    "width": 320,
+    "xid": 4194307
+  },
+  "arm": "structured_proxy",
+  "case": "macro_failure",
+  "current_state": {
+    "counter": 0,
+    "frame_bytes": 153600,
+    "frame_path": "rows/structured_proxy__macro_failure/pre_dispatch.raw",
+    "frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "height": 120,
+    "pid": 148,
+    "start_ticks": "5931045",
+    "status": "ok",
+    "title": "proxy-fixture:0:1",
+    "version": 1,
+    "width": 320,
+    "xid": 4194307
+  },
+  "decision": "YIELD_MACRO_FAILURE",
+  "emissions": 0,
+  "error": null,
+  "fixture_events": [
+    {
+      "count": 0,
+      "kind": "ready",
+      "pid": 148,
+      "version": 1
+    }
+  ],
+  "fixture_events_sha256": "b44bcf3f9ca168000331b80b900dc4cadaaceb650ba297f32a54701d5ccd4bcb",
+  "initial_state": {
+    "counter": 0,
+    "frame_bytes": 153600,
+    "frame_path": "rows/structured_proxy__macro_failure/before.raw",
+    "frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "height": 120,
+    "pid": 148,
+    "start_ticks": "5931045",
+    "status": "ok",
+    "title": "proxy-fixture:0:1",
+    "version": 1,
+    "width": 320,
+    "xid": 4194307
+  },
+  "input_ack": false,
+  "presentation": {
+    "arm": "structured_proxy",
+    "live_frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "structured_state": {
+      "counter": 0,
+      "target": "gtk-counter",
+      "version": 1
+    }
+  },
+  "process_exit_codes": {
+    "fixture_current": -15,
+    "xvfb": 0
+  },
+  "processes": [
+    {
+      "pid": 145,
+      "role": "xvfb",
+      "start_ticks": "5931043"
+    },
+    {
+      "pid": 148,
+      "role": "fixture",
+      "start_ticks": "5931045"
+    }
+  ],
+  "release_observation": {
+    "mask": 0,
+    "verified": true
+  },
+  "release_verified": true,
+  "reply": {
+    "after_state": {
+      "counter": 0,
+      "frame_bytes": 153600,
+      "frame_path": "rows/structured_proxy__macro_failure/after.raw",
+      "frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+      "height": 120,
+      "pid": 148,
+      "start_ticks": "5931045",
+      "status": "ok",
+      "title": "proxy-fixture:0:1",
+      "version": 1,
+      "width": 320,
+      "xid": 4194307
+    },
+    "decision": "YIELD_MACRO_FAILURE",
+    "emissions": 0,
+    "input_ack": false
+  },
+  "request": {
+    "operation": "increment",
+    "representation_arm": "structured_proxy",
+    "source_frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "source_token": {
+      "counter": 0,
+      "pid": 148,
+      "start_ticks": "5931045",
+      "title": "proxy-fixture:0:1",
+      "version": 1,
+      "xid": 4194307
+    }
+  },
+  "row_id": "structured_proxy__macro_failure",
+  "socket_disappeared": true
+}
