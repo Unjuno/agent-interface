@@ -12,7 +12,7 @@ JsonSession.wait scans all retained events before reading the queue. The contrac
 
 - H: replay is safe only when wait role and operation identity match; terminal-cleanup replay works while stale prelude accepted/rejected rows cannot satisfy fallback-submit waits.
 - T: matrix.py covers retained-terminal match, queued response, stale accepted/rejected prelude, duplicate terminal, wrong terminal ID, and unrelated retained event followed by queued response.
-- D: all expected-policy cases must pass and the frozen candidate's stale-prelude witness must be independently reproduced. That witness reproduces the bug; it is not a product PASS. Accepting stale/wrong-ID rows or one of duplicate terminals is a failure. Missing engine/image/runtime is STOP.
+- D: the independent policy oracle must return only matching role/ID rows and fail closed on duplicate terminal history. Candidate audit must reproduce its declared stale wrong-ID early return and first-of-duplicate behavior. This is a false-rejection/wait-boundary defect, not evidence of unsafe input admission. Missing engine/image/runtime is STOP.
 - C: offline event/wait contract only; no MAP01, ViZDoom, X11, input, model, or formal allocation.
 - U: no MAP01 recovery efficacy, scorer quality, live runtime safety, model utility, or formal allocation claim.
 
