@@ -92,6 +92,18 @@ class RetainedEvidenceAuditTest(unittest.TestCase):
                 self.assertEqual(report["disposition"], "PASS_V1_SYNTHETIC_TRANSPORT_ONLY")
                 self.assertTrue(all(report["checks"].values()), report["checks"])
 
+    def test_portable_sidecar_reports_match_current_auditor_checks(self):
+        root = Path(__file__).resolve().parent
+        names = ("20260920-v1-transport-audit-01", "20260920-v1-transport-audit-02",
+                 "20260920-v1-transport-audit-03")
+        for index, name in enumerate(names, start=1):
+            with self.subTest(bundle=name):
+                report = auditor.audit(root / "evidence" / name)
+                sidecar = json.loads((root / "audit-reports" /
+                                      f"20260920-portable-reaudit-0{index}.json").read_text())
+                self.assertEqual(sidecar["disposition"], report["disposition"])
+                self.assertEqual(sidecar["checks"], report["checks"])
+
     def test_audit_rejects_run_image_not_bound_to_inspected_image(self):
         source_root = Path(__file__).resolve().parent
         name = "20260920-v1-transport-audit-01"
