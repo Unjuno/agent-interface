@@ -14,6 +14,32 @@ from runtime.cli_v1.mcp_server import create_server
 
 class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
 
+    async def test_report_references_require_explicit_opt_in_without_replay(self):
+        from runtime.cli_v1.receipt_references import REPORT_REF, expand_receipt
+        with tempfile.TemporaryDirectory() as td:
+            server = create_server({'fixture': 123}, td)
+            args = {'target': 'fixture', 'frame': 'window_client', 'region': [0, 0, 1, 1]}
+            report = {'status': 'returned', 'extension': 'x' * 4000}
+            with patch('runtime.cli_v1.mcp_server.observe', return_value=report) as observe:
+                for name, arguments in (('interface_observe', args), ('interface_results', {})):
+                    reply = await server.call_tool(name, dict(arguments, report_refs=True))
+                    row = json.loads(reply.content[0].text)
+                    self.assertEqual(row['status'], 'invalid_request')
+                    self.assertFalse(row['operation_invoked'])
+                observe.assert_not_called()
+                self.assertEqual(list(Path(td).iterdir()), [])
+                original = await server.call_tool('interface_observe', dict(args, compact=True))
+                old = json.loads(original.content[0].text)
+                self.assertNotEqual(old['receipt']['schema'], REPORT_REF)
+                retained = await server.call_tool('interface_results', {
+                    'call_id': old['call_id'], 'compact': True, 'report_refs': True})
+                new = json.loads(retained.content[0].text)
+                self.assertEqual(new['receipt']['schema'], REPORT_REF)
+                self.assertEqual(expand_receipt(new['receipt']), expand_receipt(old['receipt']))
+                self.assertEqual(new['outcome_summary'], old['outcome_summary'])
+                observe.assert_called_once()
+                self.assertNotIn('report_refs', observe.call_args.kwargs)
+
     async def test_retained_image_can_be_omitted_without_changing_result_or_replaying(self):
         with tempfile.TemporaryDirectory() as td:
             server = create_server({'fixture': 123}, td)
@@ -112,13 +138,20 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
             targets.write_text('{"fixture":123}')
             params = StdioServerParameters(command=sys.executable, cwd=str(root), args=[
                 str(artifact), 'mcp', '--targets', str(targets),
-                '--output-directory', str(root/'calls')])
+                '--output-directory', str(root/'calls'), '--display', 'not-a-valid-display'])
             async with stdio_client(params) as (reader, writer):
                 async with ClientSession(reader, writer) as client:
                     await client.initialize()
                     listed = await client.list_tools()
                     self.assertEqual({tool.name for tool in listed.tools},
                                      {'interface_observe', 'interface_dispatch', 'interface_results'})
+                    dispatch_tool = next(t for t in listed.tools if t.name == 'interface_dispatch')
+                    program_schema = dispatch_tool.inputSchema['properties']['program']
+                    self.assertEqual(program_schema['type'], 'object')
+                    for term in ('agent-interface/program-v1', 'expires_at_ns',
+                                 'execution host monotonic clock', 'release_all',
+                                 'gap_ms', 'repeat', '128'):
+                        self.assertIn(term, program_schema['description'])
                     reply = await client.call_tool('interface_dispatch', {
                         'program': {}, 'current_observation_seq': -1, 'current_binding_revision': 0})
                     row = json.loads(reply.content[0].text)
@@ -130,6 +163,44 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(reread['outcome_summary'], row['outcome_summary'])
                     self.assertEqual(reread['call_id'], row['call_id'])
                     self.assertIs(reread['operation_invoked'], False)
+
+                    # Real packaged transport: choose v3 only on explicit reread.
+                    from runtime.cli_v1.receipt_references import REPORT_REF, expand_receipt
+                    for tool in listed.tools:
+                        option = tool.inputSchema['properties']['report_refs']
+                        self.assertEqual(option['type'], 'boolean')
+                        self.assertIs(option['default'], False)
+                    if sys.platform != 'linux':
+                        return  # The following control targets X11 initialization.
+                    failed = await client.call_tool('interface_dispatch', {
+                        'program': {'schema': 'agent-interface/program-v1',
+                            'program_id': 'portable-reference-control',
+                            'source': {'observation_seq': 1, 'binding_revision': 0},
+                            'authority': {'lease_id': 'no-input', 'expires_at_ns': 1},
+                            'terminal': {'release_all_required': True},
+                            'ops': [{'op': 'focus', 'target': 'fixture'},
+                                    {'op': 'text', 'text': 'price=13*7', 'gap_ms': 20},
+                                    {'op': 'release_all'}]},
+                        'current_observation_seq': 1, 'current_binding_revision': 0,
+                        'compact': True})
+                    default = json.loads(failed.content[0].text)
+                    self.assertNotEqual(default['receipt']['schema'], REPORT_REF)
+                    self.assertEqual(default['receipt']['source']['raw_report']['failure_phase'],
+                                     'backend_initialization')
+                    self.assertEqual(default['outcome_summary']['failure_phase'],
+                                     'backend_initialization')
+                    report_path = Path(default['call_directory'])/'report.json'
+                    original_bytes = report_path.read_bytes()
+                    referenced = await client.call_tool('interface_results', {
+                        'call_id': default['call_id'], 'compact': True, 'report_refs': True})
+                    referenced = json.loads(referenced.content[0].text)
+                    self.assertEqual(referenced['receipt']['schema'], REPORT_REF)
+                    self.assertEqual(expand_receipt(referenced['receipt']),
+                                     expand_receipt(default['receipt']))
+                    self.assertEqual(referenced['outcome_summary'], default['outcome_summary'])
+                    self.assertFalse(referenced['operation_invoked'])
+                    self.assertEqual(report_path.read_bytes(), original_bytes)
+                    self.assertEqual(len(list((root/'calls').glob('*/request.json'))), 2)
 
 
     async def test_cli_and_mcp_preserve_identical_failed_presentation(self):
@@ -242,6 +313,13 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     listed = await client.list_tools()
                     self.assertEqual({tool.name for tool in listed.tools},
                                      {'interface_observe', 'interface_dispatch', 'interface_results'})
+                    dispatch_tool = next(t for t in listed.tools if t.name == 'interface_dispatch')
+                    program_schema = dispatch_tool.inputSchema['properties']['program']
+                    self.assertEqual(program_schema['type'], 'object')
+                    for term in ('agent-interface/program-v1', 'expires_at_ns',
+                                 'execution host monotonic clock', 'release_all',
+                                 'gap_ms', 'repeat', '128'):
+                        self.assertIn(term, program_schema['description'])
                     reply = await client.call_tool('interface_dispatch', {
                         'program': {}, 'current_observation_seq': -1, 'current_binding_revision': 0})
                     row = json.loads(reply.content[0].text)

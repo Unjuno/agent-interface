@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/opt/phase-probe/runner.py", line 478, in <module>
+    main()
+  File "/opt/phase-probe/runner.py", line 426, in main
+    source_hashes = {name: hashlib.sha256((source_root / name).read_bytes()).hexdigest() for name in source_names}
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/phase-probe/runner.py", line 426, in <dictcomp>
+    source_hashes = {name: hashlib.sha256((source_root / name).read_bytes()).hexdigest() for name in source_names}
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/pathlib.py", line 1050, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/opt/phase-probe/Dockerfile'

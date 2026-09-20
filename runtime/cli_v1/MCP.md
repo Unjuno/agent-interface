@@ -49,16 +49,52 @@ opening the X11 connection, even when the MCP host does not forward `DISPLAY`.
 It takes precedence over an inherited display without changing the process-wide
 environment. With no explicit display, normal environment selection applies.
 
-- `interface_observe(target, frame, region, compact=false)` takes one explicit
+- `interface_observe(target, frame, region, compact=false, report_refs=false)` takes one explicit
   read-only capture. Region is `[x,y,width,height]` in the selected frame.
 - `interface_dispatch(program, current_observation_seq,
-  current_binding_revision, compact=false)` performs one public dispatch. Include
+  current_binding_revision, compact=false, report_refs=false)` performs one public dispatch. Include
   an `observe` operation if its result should contain an image. Explicit bounded
   key repetitions use the same public compiler and failure-source mapping.
 
 - `interface_results(call_id=null, before_call_id=null, compact=false,
-  include_image=true)` lists calls or reads a retained result without input or
+  include_image=true, report_refs=false)` lists calls or reads a retained result without input or
   capture. See the result-retrieval section below.
+
+All three tools keep v1/v2 receipt selection with `compact=true` alone.
+A consumer with the v3 decoder can explicitly set both `compact=true` and
+`report_refs=true` to allow a duplicate report to reference `source.raw_report`
+in the same response. `report_refs=true` without compact mode is rejected before
+operation scheduling. Images and outcomes are unchanged. A retained-result read
+can change the receipt format without capturing or replaying the operation.
+See [receipt formats](README.md#compact-received-report-references).
+
+The dispatch tool advertises the program envelope, bounded operation examples and
+lease clock requirement in its `program` description. This is discovery metadata,
+not a new parser: dictionaries, extension fields and malformed-program receipts
+still pass through the existing public compiler and admission path. No lease or
+operation defaults are inserted. Schema size and model usability have not been
+benchmarked; this does not claim a token reduction.
+
+### Choosing the observation frame on X11
+
+`window_client` reads the target's client drawable. Its region starts at that
+client's origin, excluding window decorations. An overlapping dialog belongs to
+another window and may appear as a black or missing area in this capture.
+Repeating the same window-client capture does not necessarily reveal the dialog.
+
+`screen_physical_px` reads the display at the explicitly supplied display
+coordinates. It includes the visible windows within that region, so it can show
+an overlapping dialog together with the application. Select the intended display
+region; the tool does not automatically widen the capture or discover its bounds.
+Do not reuse client-relative coordinates as display coordinates without conversion.
+These frame meanings also apply to `observe` operations inside a dispatch program.
+
+In [primary Calc use (#3667)](https://github.com/Unjuno/agent-interface/pull/3667),
+two window-client observations showed a black central area. A subsequent explicit
+screen observation revealed the Tip of the Day dialog and its OK button. This
+motivates the tool guidance; it is not automatic occlusion detection or a measured
+latency improvement. In either frame, an image may still precede the application's
+redraw, and reading a retained result does not capture a newer image.
 
 Programs, leases and current observation/binding values retain the public API's
 caller-supplied meaning. This adapter issues no source authority and is not a

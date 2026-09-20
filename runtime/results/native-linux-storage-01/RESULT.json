@@ -1,0 +1,200 @@
+{
+  "status": "STOP_RELEASE_UNVERIFIED",
+  "owner_tool_exit_code": 1,
+  "request_sha256": "54e1d94a8caca8904d1a43182565231750833611fad54701efbfd485a77435fa",
+  "action_result": {
+    "status": "release_unverified",
+    "admission": "accepted",
+    "required_capabilities": [
+      "display.geometry",
+      "input.pointer",
+      "input.release_all",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 72154459262107,
+      "ended_ns": 72154889728062,
+      "emissions": 3,
+      "program_emissions": 3,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [
+            "left"
+          ],
+          "verified": false,
+          "monotonic_ns": 72154889725411
+        }
+      ],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "recovery_required": true,
+    "guard_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 2,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "target_1",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "target_1",
+        "point": [
+          604,
+          391
+        ],
+        "observed_box": [
+          592,
+          384,
+          24,
+          14
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 2,
+        "valid_until_ns": 72155789446317,
+        "patch_sha256": "233b2a19b57ff4045acb8b051d630072c310ea0890e1181cc121492cbb8727db",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_focus",
+        "observation_sequence": 3,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "target_1",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "target_1",
+        "point": [
+          604,
+          391
+        ],
+        "observed_box": [
+          592,
+          384,
+          24,
+          14
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 3,
+        "valid_until_ns": 72155960250583,
+        "patch_sha256": "233b2a19b57ff4045acb8b051d630072c310ea0890e1181cc121492cbb8727db",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_move",
+        "observation_sequence": 4,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "target_1",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "target_1",
+        "point": [
+          604,
+          391
+        ],
+        "observed_box": [
+          592,
+          384,
+          24,
+          14
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 4,
+        "valid_until_ns": 72156164751943,
+        "patch_sha256": "233b2a19b57ff4045acb8b051d630072c310ea0890e1181cc121492cbb8727db",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_press",
+        "observation_sequence": 5,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "target_1",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "target_1",
+        "point": [
+          604,
+          391
+        ],
+        "observed_box": [
+          592,
+          384,
+          24,
+          14
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 5,
+        "valid_until_ns": 72156263280122,
+        "patch_sha256": "233b2a19b57ff4045acb8b051d630072c310ea0890e1181cc121492cbb8727db",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      }
+    ]
+  },
+  "cleanup": {
+    "descendants_verified": false,
+    "ended_ns": 72155036877547,
+    "errors": [],
+    "owner_exit_verified": false,
+    "processes": [
+      {
+        "pid": 26095,
+        "returncode": -9
+      },
+      {
+        "pid": 26099,
+        "returncode": 1
+      },
+      {
+        "pid": 26104,
+        "returncode": -15
+      }
+    ],
+    "schema": "agent-interface/native-cleanup-v1",
+    "scope": "artifact_copy_connections_and_tracked_processes",
+    "started_ns": 72154973425809,
+    "status": "completed",
+    "tracked_processes_terminal": true
+  },
+  "scope": "one Linux-artifact WSL allocation; no task completion, no retry, no latency comparison"
+}

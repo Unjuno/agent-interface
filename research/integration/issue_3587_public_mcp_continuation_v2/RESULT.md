@@ -49,6 +49,15 @@ presentation acknowledgement, model visibility/interpretation, latency,
 tokens/cost, human-tempo benefit, broad GUI reliability, or completion of
 #3370. Preserve #3587 as open.
 
+Separately, the repository native integration-check runner
+(`runtime/integration_checks/native.py`, used by
+`.github/workflows/native-mcp-v1.yml`) passed 65/65 tests in a second pinned,
+network-disabled OrbStack image with required dependencies. An earlier attempt
+in the smaller portable-MCP image ran 65 tests but had 28 dependency-import
+errors because NumPy was absent; the same unmodified suite then passed in the
+native-MCP image. This supplemental check does not override the formal
+raw-allocation audit.
+
 ## Preserved failures and reproduction
 
 - `evidence/formal-audit-invocation-stop.json` records the first frozen audit

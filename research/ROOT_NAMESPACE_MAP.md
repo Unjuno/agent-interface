@@ -28,7 +28,7 @@ New work should normally use a category directory. Existing direct-root paths re
 | Continuous / real-time DOOM control | [`doom/`](doom/) |
 | Observation/temporal representation | [`observation/`](observation/) |
 | Observation gating / exact delta transport | [`observation_gating/`](observation_gating/), [`observation_tiles/`](observation_tiles/) |
-| Fast bounded local decision research | [`system1/`](system1/), [`local_system1/`](local_system1/) |
+| Fast bounded local decision research | [`system1/`](system1/), [`local_system1/`](local_system1/), [`needle_lora_3441_pilot_03_router/`](needle_lora_3441_pilot_03_router/) |
 | Cross-domain transfer | [`cross_domain/`](cross_domain/) |
 | Coordination semantics | [`coordination/`](coordination/) |
 | Evaluation/convergence governance | [`benchmark_discovery/`](benchmark_discovery/), [`evolution/`](evolution/) |
@@ -40,6 +40,7 @@ New work should normally use a category directory. Existing direct-root paths re
 
 - [`session_handoff/`](session_handoff/)
 - [`gtk_fresh_post_effect_2673/`](gtk_fresh_post_effect_2673/)
+- [`results/`](results/) — retained native-handle result bundles; each bundle's report defines its scope and status.
 
 - [`x11/`](x11/)
 
@@ -166,5 +167,14 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 
 - [`chromium/`](chromium/) — retained Chromium live-control, identity, and recovery experiments; consult each child report for scope and disposition.
 - [`verification/`](verification/)
+- [`issue_3349_event_replay_contract_v1/`](issue_3349_event_replay_contract_v1/) — retained Issue #3349 replay-contract evidence.
+- [`issue_3676_audit_hardening_v1/`](issue_3676_audit_hardening_v1/) — retained Issue #3676 audit-hardening evidence.
+- [`issue_3691_manifest_root_v1/`](issue_3691_manifest_root_v1/) — retained Issue #3691 manifest-root reproduction record.
 - [`docker_ipc_schema_bridge_2818_v1/`](docker_ipc_schema_bridge_2818_v1/)
 - [`semantic_checkpoint_contract_2661_v1/`](semantic_checkpoint_contract_2661_v1/)
+
+
+### Needle / System-1 adapter research
+
+- [`needle_lora_3441_pilot_02/`](needle_lora_3441_pilot_02/) — retained global-adapter forgetting result.
+- [`needle_lora_3441_pilot_04_multiskill/`](needle_lora_3441_pilot_04_multiskill/) — retained Issue #3701 synthetic two-skill adapter-interference pilot; consult its README and FREEZE for evidence scope.

@@ -1,0 +1,34 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 151B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/agent-interface-map01-clock-entry-v2:20260920
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context:
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 4.57kB done
+#4 DONE 0.1s
+
+#5 [1/2] FROM docker.io/library/agent-interface-map01-clock-entry-v2:20260920@sha256:9a623562c180e5b3ff1e20a764d7a71cd7a0823bf5e97666d02472949b877770
+#5 resolve docker.io/library/agent-interface-map01-clock-entry-v2:20260920@sha256:9a623562c180e5b3ff1e20a764d7a71cd7a0823bf5e97666d02472949b877770 0.0s done
+#5 DONE 0.2s
+
+#6 [2/2] COPY probe.py /probe45.py
+#6 DONE 0.1s
+
+#7 exporting to image
+#7 exporting layers 0.1s done
+#7 exporting manifest sha256:cb84329faacdec74efa93c4cb93e40bae038e0f0ad88323735656a54c5e3c299 0.0s done
+#7 exporting config sha256:037288847785fdebb34ebf0379d2c5e2b6f3425a88ca4d903874d734edcb6b7e 0.0s done
+#7 exporting attestation manifest sha256:3ffdfebba58b7f83828cda4c1c82842f8fbe5a160fd1c297287eb3b9508e311d 0.0s done
+#7 exporting manifest list sha256:5ab343fa2b1bc743d52fd6b70ff1cc64447082e63a31af82dda260a77e8eab57 0.0s done
+#7 naming to docker.io/library/agent-interface-map01-clock-entry-v2:20260920-run45 done
+#7 unpacking to docker.io/library/agent-interface-map01-clock-entry-v2:20260920-run45 0.0s done
+#7 DONE 0.3s

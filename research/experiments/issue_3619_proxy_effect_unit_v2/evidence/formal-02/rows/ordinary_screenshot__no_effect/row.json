@@ -1,0 +1,120 @@
+{
+  "after_state": {
+    "counter": 0,
+    "frame_bytes": 153600,
+    "frame_path": "rows/ordinary_screenshot__no_effect/after.raw",
+    "frame_sha256": "718b87e0f3af0030b0fb0cd67f0c06045331b0934ce51872cb5eb01a89c3a015",
+    "height": 120,
+    "pid": 16,
+    "start_ticks": "5868508",
+    "status": "ok",
+    "title": "proxy-fixture:0:1",
+    "version": 1,
+    "width": 320,
+    "xid": 4194307
+  },
+  "arm": "ordinary_screenshot",
+  "case": "no_effect",
+  "current_state": {
+    "counter": 0,
+    "frame_bytes": 153600,
+    "frame_path": "rows/ordinary_screenshot__no_effect/pre_dispatch.raw",
+    "frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "height": 120,
+    "pid": 16,
+    "start_ticks": "5868508",
+    "status": "ok",
+    "title": "proxy-fixture:0:1",
+    "version": 1,
+    "width": 320,
+    "xid": 4194307
+  },
+  "decision": "YIELD_NO_APPLICATION_EFFECT",
+  "emissions": 1,
+  "error": null,
+  "fixture_events": [
+    {
+      "count": 0,
+      "kind": "ready",
+      "pid": 16,
+      "version": 1
+    },
+    {
+      "count": 0,
+      "effect_mode": "off",
+      "kind": "click_ack",
+      "version": 1
+    }
+  ],
+  "fixture_events_sha256": "743f7fe0b380982aa676d5f1ad7c36d2bce915f92174a8edc7f3fb25738cd41f",
+  "initial_state": {
+    "counter": 0,
+    "frame_bytes": 153600,
+    "frame_path": "rows/ordinary_screenshot__no_effect/before.raw",
+    "frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "height": 120,
+    "pid": 16,
+    "start_ticks": "5868508",
+    "status": "ok",
+    "title": "proxy-fixture:0:1",
+    "version": 1,
+    "width": 320,
+    "xid": 4194307
+  },
+  "input_ack": true,
+  "presentation": {
+    "arm": "ordinary_screenshot",
+    "live_frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669"
+  },
+  "process_exit_codes": {
+    "fixture_current": -15,
+    "xvfb": 0
+  },
+  "processes": [
+    {
+      "pid": 13,
+      "role": "xvfb",
+      "start_ticks": "5868505"
+    },
+    {
+      "pid": 16,
+      "role": "fixture",
+      "start_ticks": "5868508"
+    }
+  ],
+  "release_verified": false,
+  "reply": {
+    "after_state": {
+      "counter": 0,
+      "frame_bytes": 153600,
+      "frame_path": "rows/ordinary_screenshot__no_effect/after.raw",
+      "frame_sha256": "718b87e0f3af0030b0fb0cd67f0c06045331b0934ce51872cb5eb01a89c3a015",
+      "height": 120,
+      "pid": 16,
+      "start_ticks": "5868508",
+      "status": "ok",
+      "title": "proxy-fixture:0:1",
+      "version": 1,
+      "width": 320,
+      "xid": 4194307
+    },
+    "decision": "YIELD_NO_APPLICATION_EFFECT",
+    "emissions": 1,
+    "input_ack": true
+  },
+  "request": {
+    "operation": "increment",
+    "representation_arm": "ordinary_screenshot",
+    "source_frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "source_token": {
+      "counter": 0,
+      "pid": 16,
+      "start_ticks": "5868508",
+      "title": "proxy-fixture:0:1",
+      "version": 1,
+      "xid": 4194307
+    }
+  },
+  "row_id": "ordinary_screenshot__no_effect",
+  "socket_disappeared": true
+}

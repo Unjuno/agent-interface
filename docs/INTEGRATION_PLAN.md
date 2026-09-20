@@ -1,5 +1,45 @@
 # Integration priority — 2026-09-19
 
+## Production integration update — 2026-09-21
+
+Use this section for the current integration state; the dated accounts below
+remain historical evidence. Production main `2dff80852292cc82fd5c23a449c8244bea94bc25`
+includes the following delivered changes:
+
+- Public CLI opt-in `--run-directory` persists the request before calling the
+  API and the raw report before presentation ([#3716](https://github.com/Unjuno/agent-interface/pull/3716)).
+  [Retained Calc primary use](../runtime/results/cli-retained-calc-01/README.md)
+  records five attempts and saved formula/value 126. It is ordinary live use,
+  not a live output-failure trial.
+- `attempt-status` provides read-only request/report inspection, unknown or
+  incomplete outcomes, byte digests and explicit temporary-file residue
+  ([#3725](https://github.com/Unjuno/agent-interface/pull/3725)). It does not infer
+  process state, promote temporary files, authorize replay or claim task success.
+- Output checks detect reported short writes and flush after a full write
+  ([#3727](https://github.com/Unjuno/agent-interface/pull/3727),
+  [#3729](https://github.com/Unjuno/agent-interface/pull/3729)). Retained recovery
+  tests cover actual Linux closed pipes, abrupt child exit, failed report rename,
+  injected short writes and flush failures. Downstream delivery and power-loss
+  guarantees do not follow from these tests.
+
+The exact-main portable build passed comparison against all five historical
+Calc review responses, including images; stored bytes remained unchanged.
+Its [delivery record](https://github.com/Unjuno/agent-interface/issues/3711#issuecomment-5751554647)
+identifies source and artifact hashes. This is a local build, not a public release.
+Do not replace these changes with older short-write proposals or change their
+error contract without a compatibility reason. Keep #3711 open for its scoped
+completion audit rather than treating it as proof of general reliability.
+
+The next performance decision remains the matched final-wait comparison in
+[#3700](https://github.com/Unjuno/agent-interface/issues/3700). No result currently
+justifies increasing the default wait. The motivating intermediate image is
+preserved in [main compact Calc use](../runtime/results/main-compact-calc-01/README.md).
+Likewise [#3544](https://github.com/Unjuno/agent-interface/issues/3544) has no
+matched-model transport winner: retained image/metadata parity establishes
+feasibility, not token cost or speed. Prioritize integration of evidence that
+changes useful feedback, semantic completion or recovery in actual primary use.
+Continue excluding primary-agent sensor development and automatic input replay.
+
 ## Current integration decision — 2026-09-20
 
 The [managed MCP composition](../runtime/results/native-mcp-managed-01/README.md)
