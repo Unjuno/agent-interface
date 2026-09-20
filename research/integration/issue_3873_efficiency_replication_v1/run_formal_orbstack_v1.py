@@ -52,9 +52,13 @@ def main():
         "--read-only","--cpus=2","--memory=4g","--pids-limit=128",
         "--tmpfs","/tmp:rw,noexec,nosuid,size=128m","-v",f"{ROOT}:/repo:ro","-w","/repo",
         "--entrypoint","python3",OUTER_IMAGE,
-        str(HERE/"test_import_closure_v1.py")]
+        str(Path("/repo")/(HERE.relative_to(ROOT)/"test_import_closure_v1.py"))]
     closure=subprocess.run(closure_command,capture_output=True,text=True,timeout=60)
     if closure.returncode!=0 or "PASS_FORMAL_IMPORT_CLOSURE_NO_MODEL_CALLS" not in closure.stdout:
+        write(HERE/"evidence/formal-launch-precall-stop-01.json",{
+            "status":"STOP_PRECALL_IMPORT_CLOSURE_LAUNCH","returncode":closure.returncode,
+            "stdout":closure.stdout,"stderr":closure.stderr,"formal_output_created":False,
+            "host_model_calls":0,"retry_of_formal_allocation":False})
         raise SystemExit("STOP_FORMAL_IMPORT_CLOSURE:"+closure.stdout+closure.stderr)
     smoke=json.loads((HERE/"evidence/runner-smoke-v1/independent-audit.json").read_text())
     if smoke.get("status")!="PASS_RUNNER_COMMAND_SMOKE" or smoke.get("host_model_calls")!=0 or smoke.get("fake_ipc_requests")!=1:

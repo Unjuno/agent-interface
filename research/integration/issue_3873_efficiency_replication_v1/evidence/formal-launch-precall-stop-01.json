@@ -1,0 +1,8 @@
+{
+  "status": "STOP_PRECALL_IMPORT_CLOSURE_LAUNCH",
+  "cause": "The host absolute checkout path was passed inside the container instead of the /repo mount path.",
+  "formal_output_created": false,
+  "host_model_calls": 0,
+  "retry_of_formal_allocation": false,
+  "corrective_action": "Use /repo plus the repository-relative path for the pinned-container import-closure command; amend the source lock before any model call."
+}
