@@ -73,6 +73,20 @@ def stop_fixture(proc: subprocess.Popen) -> dict:
     return {"exit_code": proc.returncode, "stdout": stdout, "stderr": stderr}
 
 
+def find_mcp_child() -> dict | None:
+    for status_path in Path("/proc").glob("[0-9]*/status"):
+        try:
+            status = status_path.read_text(encoding="utf-8")
+            parent = next(line.split()[1] for line in status.splitlines()
+                          if line.startswith("PPid:"))
+            cmdline = (status_path.parent / "cmdline").read_bytes().replace(b"\0", b" ").decode()
+        except (OSError, StopIteration, UnicodeDecodeError):
+            continue
+        if int(parent) == os.getpid() and "runtime.cli_v1.mcp_server" in cmdline:
+            return {"pid": int(status_path.parent.name), "command": cmdline.strip()}
+    return None
+
+
 def persist_envelope(route_dir: Path, envelope: dict, start_ns: int, end_ns: int,
                      process_record: dict) -> dict:
     raw = json.dumps(envelope, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
@@ -180,6 +194,7 @@ async def run_mcp_async(route_dir: Path) -> dict:
         async with stdio_client(params) as (reader, writer):
             async with ClientSession(reader, writer) as client:
                 await client.initialize()
+                mcp_process = find_mcp_child()
                 tools = await client.list_tools()
                 listed = sorted(tool.name for tool in tools.tools)
                 if "interface_observe" not in listed:
@@ -200,11 +215,22 @@ async def run_mcp_async(route_dir: Path) -> dict:
                                "data_sha256": sha(base64.b64decode(block.data))})
         if envelope is None or image is None:
             raise RuntimeError("MCP did not return text metadata and a separate image block")
+        if reply.isError:
+            raise RuntimeError("MCP returned isError=true")
         envelope["image"] = image
-        write_json(route_dir / "mcp-blocks.json", blocks)
+        write_json(route_dir / "mcp-blocks.json", {"is_error": reply.isError, "blocks": blocks})
         write_json(route_dir / "mcp-tool-names.json", listed)
+        reaped = False
+        if mcp_process is not None:
+            deadline = time.monotonic() + 3
+            while time.monotonic() < deadline:
+                if not Path(f"/proc/{mcp_process['pid']}").exists():
+                    reaped = True
+                    break
+                time.sleep(0.02)
         return persist_envelope(route_dir, envelope, t0, t1,
-            {"kind": "stdio_mcp_subprocess", "pid": None, "tool_names": listed,
+            {"kind": "stdio_mcp_subprocess", "pid": mcp_process,
+             "child_reaped_after_transport_close": reaped, "tool_names": listed,
              "fixture": stop_fixture(fixture), "native_window_id": xid})
     finally:
         if fixture.poll() is None:
@@ -234,6 +260,7 @@ def main() -> int:
                 asyncio.run(run_mcp_async(EVIDENCE / "mcp"))]
         write_json(EVIDENCE / "comparison.json", rows)
         source_paths = ["research/integration/issue_3548_route_unit_v1/route_runner.py",
+            "research/integration/issue_3548_route_unit_v1/audit.py",
             "runtime/cli_v1/api.py", "runtime/cli_v1/observe.py",
             "runtime/cli_v1/review.py", "runtime/cli_v1/mcp_server.py",
             "runtime/cli_v1/__main__.py", "runtime/backends/x11_v1/backend.py",
@@ -241,6 +268,7 @@ def main() -> int:
         source_hashes = {name: sha((ROOT / name).read_bytes()) for name in source_paths}
         write_json(EVIDENCE / "experiment-manifest.json", {
             "source_commit": os.environ["AI3548_SOURCE_COMMIT"],
+            "experiment_commit": os.environ["AI3548_EXPERIMENT_COMMIT"],
             "image_id": os.environ["AI3548_IMAGE_ID"],
             "platform": subprocess.run(["uname", "-m"], capture_output=True,
                                          text=True, check=True).stdout.strip(),

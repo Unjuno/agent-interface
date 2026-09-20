@@ -22,8 +22,19 @@ def audit(root: Path) -> dict:
               for p in sorted(root.rglob("*")) if p.is_file() and p != manifest_path}
     rows = json.loads((root / "comparison.json").read_text(encoding="utf-8"))
     expected = ["api", "cli", "mcp"]
+    experiment = json.loads((root / "experiment-manifest.json").read_text(encoding="utf-8"))
+    repo = Path("/repo")
+    source_hashes_match = all(hashlib.sha256((repo / name).read_bytes()).hexdigest() == digest
+                              for name, digest in experiment["source_sha256"].items())
     checks = {"manifest_matches": actual == manifest,
-              "exactly_three_routes": [r["route"] for r in rows] == expected}
+              "exactly_three_routes": [r["route"] for r in rows] == expected,
+              "source_hashes_match": source_hashes_match,
+              "frozen_source_commit": len(experiment["source_commit"]) == 40,
+              "frozen_experiment_commit": len(experiment["experiment_commit"]) == 40,
+              "runtime_isolated": experiment["runtime_network"] == "none" and
+                  experiment["input_actions"] == 0 and experiment["model_calls"] == 0,
+              "mcp_version_pinned": experiment["versions"]["mcp"] == "1.30.0",
+              "linux_arm64": experiment["platform"] == "aarch64"}
     for row in rows:
         route = row["route"]
         checks[f"{route}_returned_capture"] = row["status"] == "returned" and row["image_status"] == "image"
@@ -46,12 +57,23 @@ def audit(root: Path) -> dict:
             dimensions == row["dimensions"])
         checks[f"{route}_fixture_reaped"] = row["process"]["fixture"]["exit_code"] == -15
         checks[f"{route}_exactly_one_attempt"] = row["attempt_count"] == 1
+        if route == "cli":
+            checks["cli_exit_zero"] = (row["process"].get("exit_code") == 0 and
+                (root / "cli/exit-code.txt").read_text().strip() == "0" and
+                not (root / "cli/stderr.txt").read_text().strip())
     checks["matching_pixel_hashes"] = len({r["pixel_sha256"] for r in rows}) == 1
     checks["matching_dimensions"] = len({tuple(r["dimensions"]) for r in rows}) == 1
     checks["mcp_exposes_observe"] = "interface_observe" in rows[2]["process"]["tool_names"]
-    checks["mcp_separate_png_block"] = ((root / "mcp/mcp-blocks.json").exists() and
+    mcp_blocks = json.loads((root / "mcp/mcp-blocks.json").read_text())
+    checks["mcp_separate_png_block"] = (not mcp_blocks["is_error"] and
         any(block.get("type") == "image" and block.get("mimeType") == "image/png"
-            for block in json.loads((root / "mcp/mcp-blocks.json").read_text())))
+            for block in mcp_blocks["blocks"]))
+    checks["mcp_image_block_matches_png"] = any(
+        block.get("type") == "image" and block.get("data_sha256") == rows[2]["png_sha256"]
+        for block in mcp_blocks["blocks"])
+    checks["mcp_child_identified_and_reaped"] = (
+        rows[2]["process"]["pid"] is not None and
+        rows[2]["process"]["child_reaped_after_transport_close"] is True)
     report = {"disposition": "PASS_UNIT_ROUTE_EQUIVALENCE" if all(checks.values()) else "FAIL_AUDIT",
         "scope": "one no-input X11 observation across public API, CLI and stdio MCP; no model/task or efficiency claim",
         "evidence_root": str(root), "checks": checks,
