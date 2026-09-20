@@ -1,4 +1,5 @@
 import json
+import builtins
 from pathlib import Path
 import sys
 import tempfile
@@ -191,6 +192,27 @@ class DockerSchemaPreflightAdapterTest(unittest.TestCase):
         self.events.write_text('[]\n', encoding="utf-8")
         self.assertEqual(validate_model_response(self.events, self.schema)["status"],
                          "STOP_MALFORMED_MODEL_RESPONSE")
+
+    def test_missing_referencing_dependency_stops_cleanly(self):
+        self.write_events('{"answer":"ok"}')
+        # Exercise the later reference-validator import, not the already handled
+        # first import of jsonschema and its transitive dependencies.
+        import jsonschema
+        self.assertTrue(callable(jsonschema.validators.validator_for))
+        original_import = builtins.__import__
+
+        def without_referencing(name, *args, **kwargs):
+            if name == "referencing" or name.startswith("referencing."):
+                raise ImportError("simulated missing optional validator dependency")
+            return original_import(name, *args, **kwargs)
+
+        with patch("builtins.__import__", side_effect=without_referencing):
+            result = validate_model_response(self.events, self.schema)
+            return_code, report = self.run_preflight('{"answer":"ok"}')
+        self.assertEqual(result["status"], "STOP_SCHEMA_VALIDATOR_UNAVAILABLE")
+        self.assertEqual(return_code, 1)
+        self.assertEqual(report["status"], "STOP_SCHEMA_VALIDATOR_UNAVAILABLE")
+        self.assertFalse(report["authority_granted"])
 
     def run_preflight(self, response_text):
         output = self.root / "output"
