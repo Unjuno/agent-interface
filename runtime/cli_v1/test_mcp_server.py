@@ -48,10 +48,12 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     'program': {}, 'current_observation_seq': 0, 'current_binding_revision': 0})
                 listing = json.loads((await server.call_tool('interface_results', {})).content[0].text)
                 self.assertEqual(listing['total_calls'], 1)
-                call_id = listing['calls'][0]['call_id']
+                call_id = json.loads(original.content[0].text)['call_id']
+                self.assertEqual(call_id, listing['calls'][0]['call_id'])
                 reread = json.loads((await server.call_tool('interface_results', {'call_id': call_id})).content[0].text)
                 self.assertEqual(reread['outcome_summary'], json.loads(original.content[0].text)['outcome_summary'])
                 self.assertIs(reread['operation_invoked'], False)
+                self.assertEqual(reread['call_id'], call_id)
                 self.assertEqual(reread['retained_call']['arguments']['program'], {})
                 unknown = await server.call_tool('interface_results', {'call_id': '../outside'})
                 self.assertTrue(unknown.isError)
@@ -92,9 +94,10 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(row['outcome_summary']['error'], 'INVALID_OBSERVATION_SEQ')
                     self.assertTrue(Path(row['call_directory']).is_relative_to(root/'calls'))
                     retained = await client.call_tool('interface_results', {
-                        'call_id': Path(row['call_directory']).name})
+                        'call_id': row['call_id']})
                     reread = json.loads(retained.content[0].text)
                     self.assertEqual(reread['outcome_summary'], row['outcome_summary'])
+                    self.assertEqual(reread['call_id'], row['call_id'])
                     self.assertIs(reread['operation_invoked'], False)
 
 
@@ -115,7 +118,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     with redirect_stdout(output):
                         code = _present_result(raw, with_review=True, capture_directory=td, exit_code=2)
                     mcp = json.loads(reply.content[0].text)
-                    mcp.pop('call_directory')
+                    self.assertEqual(mcp.pop('call_id'), Path(mcp.pop('call_directory')).name)
                     self.assertEqual(len(reply.content), 1)
                     mcp['image'] = None  # MCP carries images separately from its text metadata.
                     self.assertEqual(mcp, json.loads(output.getvalue()))
