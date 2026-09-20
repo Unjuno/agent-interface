@@ -1,0 +1,107 @@
+{
+  "allocation": "issue3733-german-xkb-text-orbstack-formal-02",
+  "artifact_sha256": {
+    "cases/de-00/after.query.txt": "96dcd186e6e9c7351e26f441282c38fed8bcb128a127ec68fc49d8343fd04c21",
+    "cases/de-00/after.server.xkb": "71e9bec0040c9689a16a03f5647d73aec9433d11db31c35fcc016826d757ffd7",
+    "cases/de-00/apply.log": "9e4b1786115c0687f968c51e397802dc22474f6d7e4edad1d14d676fde7fe341",
+    "cases/de-00/baseline.query.txt": "e02595744be18a1af0a06974b47e72ce96e9536b775a59af165aca9f09065747",
+    "cases/de-00/baseline.server.xkb": "0e0746bf5f507ac5d73d7614f65d4c1c6bafcebf64edff570957cc2ddc0a75e5",
+    "cases/de-00/fresh-client-map.json": "1df07ba6a77835970c09b984fe9e0286940a46d896b963fd2741e2afd783ed70",
+    "cases/de-00/xvfb.log": "7e8bd482a1d194c3fbc6b40b7ee1cb73794641aee10985e05e87173f9ae1aabc",
+    "raw.partial.json": "7793f4186b71e20b8b27b4e1ebe9bc9d4c46863defb10572599c519ac8a29221"
+  },
+  "candidate_blob": "9cae101a219348077668c8fc086acf8e13154afe",
+  "container_network": "none",
+  "disposition": "STOP",
+  "formal01_disposition": "STOP",
+  "formal01_raw_sha256": "c2de5a3851881e5935cbdba94f798b1338f0e578d021bb184ea22c808a28f6de",
+  "formal01_runtime_sha256": "78e2f789eefd99e48aa5befc776f6c099e0f5afc917d9db6998ad237aa09f119",
+  "image_ref": "agent-interface-2972@sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+  "platform": "linux/arm64",
+  "rows": [
+    {
+      "after": {
+        "core_map_changed": false,
+        "core_map_sha256": "23e87f0ecfc356b48e80b82b6aee607accd344988d69331ac9a4c71fac897f9c",
+        "fresh_client": true,
+        "layout": "de",
+        "modifier_map_changed": false,
+        "modifier_map_sha256": "a2cca44a80db87722170b256fb89aed9c226e6e84c721f274ae80c508023e30a",
+        "query_returncode": 0,
+        "server_changed": true,
+        "server_dump_returncode": 0,
+        "server_dump_sha256": "71e9bec0040c9689a16a03f5647d73aec9433d11db31c35fcc016826d757ffd7",
+        "symbol_levels": {
+          "*": {
+            "keycode": 17,
+            "keysym_name": "asterisk",
+            "level0": 56,
+            "level1": 42
+          },
+          "=": {
+            "keycode": 21,
+            "keysym_name": "equal",
+            "level0": 61,
+            "level1": 43
+          }
+        }
+      },
+      "apply": {
+        "argv": [
+          "setxkbmap",
+          "-layout",
+          "de"
+        ],
+        "returncode": 0,
+        "stderr": "",
+        "stdout": ""
+      },
+      "baseline": {
+        "core_map_sha256": "23e87f0ecfc356b48e80b82b6aee607accd344988d69331ac9a4c71fac897f9c",
+        "layout": "us",
+        "modifier_map_sha256": "a2cca44a80db87722170b256fb89aed9c226e6e84c721f274ae80c508023e30a",
+        "query_returncode": 0,
+        "server_dump_returncode": 0,
+        "server_dump_sha256": "0e0746bf5f507ac5d73d7614f65d4c1c6bafcebf64edff570957cc2ddc0a75e5",
+        "symbol_levels": {
+          "*": {
+            "keycode": 17,
+            "keysym_name": "asterisk",
+            "level0": 56,
+            "level1": 42
+          },
+          "=": {
+            "keycode": 21,
+            "keysym_name": "equal",
+            "level0": 61,
+            "level1": 43
+          }
+        }
+      },
+      "case_id": "de-00",
+      "display": ":151",
+      "extensions": {
+        "XKEYBOARD": true,
+        "XTEST": true
+      },
+      "requested_layout": "de",
+      "status": "STOP_SETUP_BLOCKED_NATIVE_XKB_APPLY",
+      "xvfb_log_sha256": "7e8bd482a1d194c3fbc6b40b7ee1cb73794641aee10985e05e87173f9ae1aabc",
+      "xvfb_pid": 6,
+      "xvfb_process": {
+        "pid": 6,
+        "reaped": true,
+        "returncode": 0,
+        "start_ticks": "1169994"
+      },
+      "xvfb_start_ticks": "1169994"
+    }
+  ],
+  "runner_sha256": "318be58b60d83db7c9888674e82afec6d5e346cf731200999d79f394e120be90",
+  "runtime": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "xlib": "(0, 33)"
+  },
+  "source_base": "76965311d899815174b5ed081ff439bd4533ef63",
+  "source_manifest_sha256": "a5472f0981214f9effbd97c34b1e9d97e87c299b59f7ab34072ab304e3deb3a8"
+}
