@@ -1,4 +1,5 @@
 import json
+import io
 import os
 from pathlib import Path
 import sys
@@ -13,6 +14,37 @@ from runtime.cli_v1.__main__ import _present_result
 
 
 class RetainedAttemptTests(unittest.TestCase):
+    def test_short_write_is_detected_and_read_only_recovery_preserves_report(self):
+        class ShortWriter(io.StringIO):
+            def write(self, text):
+                return super().write(text[:17])
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            run = root / 'attempt'
+            (root / 'program.json').write_text('{}')
+            (root / 'targets.json').write_text('{}')
+            report = {'status': 'returned', 'result': {'status': 'completed'}}
+            args = ['agent-interface', 'dispatch', '--program', str(root / 'program.json'),
+                    '--targets', str(root / 'targets.json'), '--current-observation-seq', '1',
+                    '--current-binding-revision', '0', '--run-directory', str(run)]
+            delivered = ShortWriter()
+            with patch.object(sys, 'argv', args), patch.object(sys, 'stdout', delivered), \
+                 patch('runtime.cli_v1.__main__.dispatch', return_value=report) as call:
+                with self.assertRaisesRegex(OSError, 'INCOMPLETE_STDOUT_WRITE'):
+                    main()
+            call.assert_called_once()
+            with self.assertRaises(json.JSONDecodeError):
+                json.loads(delivered.getvalue())
+            before = {p.name: p.read_bytes() for p in run.iterdir()}
+            recovered = subprocess.run([sys.executable, '-m', 'runtime.cli_v1',
+                                        'attempt-status', '--run-directory', str(run)],
+                                       cwd=Path(__file__).resolve().parents[2],
+                                       capture_output=True, check=True, timeout=15)
+            row = json.loads(recovered.stdout)
+            self.assertEqual(row['files']['report.json']['value'], report)
+            self.assertFalse(row['replay_allowed'])
+            self.assertEqual(before, {p.name: p.read_bytes() for p in run.iterdir()})
+
     def test_abrupt_exit_retains_unknown_attempt_without_replay(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td) / 'run'

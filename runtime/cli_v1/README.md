@@ -354,6 +354,12 @@ individual files are not an atomic snapshot of a concurrently changing directory
 an incomplete observation may be inspected again without issuing any input.
 This does not promise power-loss durability or automatically repair failed writes.
 
+The CLI detects a stdout writer reporting fewer characters than requested and
+raises `INCOMPLETE_STDOUT_WRITE`. The retained report remains readable; do not
+repeat dispatch to recover its output. This detects a reported short write only:
+a downstream consumer may still truncate bytes after a writer accepts everything.
+Consumers must reject incomplete JSON and use retained read-only recovery.
+
 ### Compact received-report references
 
 With `--compact --report-refs` or MCP `compact=true, report_refs=true`, a received receipt whose `report` exactly
