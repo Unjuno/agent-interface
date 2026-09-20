@@ -17,7 +17,7 @@ Frozen preregistration/source manifest: [PREREG.md](PREREG.md), [FREEZE.json](FR
 
 ## First formal outcome
 
-Exactly one formal enumeration ran in memory on Windows host Python 3.11.9 with `-B`; standard library only. It wrote no local files and used no Docker, CUDA, GUI, model, network or input action. The result contains all 576 rows and is retained in [RESULT.json](RESULT.json) (SHA-256 of the execution JSON line: `89a61d9427d347d70e686012c5c75ce3b0ad1a0929e4fae29dec603ee40019fc)).
+Exactly one formal enumeration ran in memory on Windows host Python 3.11.9 with `-B`; standard library only. It wrote no local files and used no Docker, CUDA, GUI, model, network or input action. The result contains all 576 rows and is retained in [RESULT.json](RESULT.json).
 
 The launch wrapper verified the fetched runner bytes against the frozen SHA before compiling them. Harness defect: the runner reads `FROZEN_RUNNER_SHA256` from the process environment, but the one-shot wrapper passed it as a Python global instead. The frozen source therefore fell back to `UNPINNED` in its output. The one formal allocation is spent; no rerun, edit, or relabeling.
 
