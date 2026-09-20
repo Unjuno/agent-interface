@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Construction-only checks for the frozen source-only audit classifier."""
+import ast
 import hashlib
 import json
 import os
@@ -37,6 +38,9 @@ def main():
                        for key in FILES}
     if source_hashes != expected_hashes:
         raise SystemExit("STOP_CONSTRUCTION_SOURCE_HASH_MISMATCH")
+    syntax_files = [FILES[key] for key in ("analyzer", "formal", "verifier", "construction")]
+    for filename in syntax_files:
+        ast.parse((source_root / filename).read_bytes(), filename=filename)
     tests = {
         "deferred": ("def f():\n    main()\n", 0, 0),
         "guarded": ("if __name__ == '__main__':\n    main()\n", 0, 1),
@@ -70,6 +74,7 @@ def main():
               "target_sha256": sha(target_bytes), "controls": rows,
               "target_unguarded_module_launches": launch,
               "source_hashes": source_hashes,
+              "audit_source_syntax_files_passed": syntax_files,
               "target_imported": False, "target_executed": False,
               "game_started": False, "model_calls": 0, "input_events": 0,
               "disposition": "CONSTRUCTION_PASS_ONLY"}
