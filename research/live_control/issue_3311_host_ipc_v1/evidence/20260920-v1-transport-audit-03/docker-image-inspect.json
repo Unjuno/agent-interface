@@ -1,0 +1,49 @@
+[
+    {
+        "Id": "sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916",
+        "RepoTags": [
+            "agent-interface-3311-runtime-v2:20260920"
+        ],
+        "RepoDigests": [
+            "agent-interface-3311-runtime-v2@sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-09-20T18:45:45.555852907+09:00",
+        "Config": {
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive"
+            ],
+            "WorkingDir": "/workspace",
+            "ArgsEscaped": true
+        },
+        "Architecture": "arm64",
+        "Os": "linux",
+        "Size": 1040265852,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:055ab12bd547e17a0630037f06a186cf405e3f61bb03a614562ca8f5ab52a8be",
+                "sha256:9cef6185c3373a374788bd2c78a684c3ba0412ab975f381f5e6717172fbb29d1",
+                "sha256:4b51ad165c043bcd8085f2561ac423188968c0a13b4aeef78dfc2d34079e5476",
+                "sha256:77044c1dc38f3455cf019e6c3d76b7a161474f35da92fb4fb37e55464c687369"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-09-20T09:45:46.146688268Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916",
+            "size": 856
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "k80zqitr30x6fyz5sb133sbzj",
+                    "CreatedAt": "2026-09-20T18:45:46.284967443+09:00"
+                }
+            ]
+        }
+    }
+]

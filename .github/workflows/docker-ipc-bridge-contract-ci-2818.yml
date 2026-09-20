@@ -8,6 +8,12 @@ on:
       - 'runtime/test_host_model_ipc_broker_v1.py'
       - 'runtime/test_docker_host_model_bridge_v1.py'
       - 'research/integration/docker_schema_preflight_bridge_2818_v1/**'
+      - 'research/live_control/issue_3311_host_ipc_v1/audit_orbstack_v1_transport.py'
+      - 'research/live_control/issue_3311_host_ipc_v1/test_audit_orbstack_v1_transport.py'
+      - 'research/live_control/issue_3311_host_ipc_v1/test_orbstack_v1_transport.py'
+      - 'research/live_control/issue_3311_host_ipc_v1/source-revisions.json'
+      - 'research/live_control/issue_3311_host_ipc_v1/evidence/**'
+      - 'research/live_control/issue_3311_host_ipc_v1/audit-reports/**'
 
 permissions:
   contents: read
@@ -15,8 +21,33 @@ permissions:
 jobs:
   contract:
     runs-on: ubuntu-latest
-    container: python:3.12-slim
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Run non-authoritative bridge and broker contract tests
-        run: python -m unittest runtime.test_docker_host_model_bridge_v1 runtime.test_host_model_ipc_broker_v1 -v
+        run: >-
+          python -m unittest
+          runtime.test_docker_host_model_bridge_v1
+          runtime.test_host_model_ipc_broker_v1
+          research.live_control.issue_3311_host_ipc_v1.test_audit_orbstack_v1_transport
+          research.live_control.issue_3311_host_ipc_v1.test_orbstack_v1_transport.OrbStackV1TransportTest.test_broker_is_reaped_when_image_inspect_fails
+          research.live_control.issue_3311_host_ipc_v1.test_orbstack_v1_transport.OrbStackV1TransportTest.test_broker_is_reaped_when_image_inspect_times_out
+          -v
+      - name: Audit each retained synthetic evidence bundle
+        run: python -m unittest research.live_control.issue_3311_host_ipc_v1.test_audit_orbstack_v1_transport.RetainedEvidenceAuditTest -v
+
+  evidence-audit-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify portable raw-manifest handling and retained evidence
+        run: python -m unittest research.live_control.issue_3311_host_ipc_v1.test_audit_orbstack_v1_transport -v
