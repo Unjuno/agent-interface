@@ -1,5 +1,29 @@
 {
   "baseline_errors": [],
-  "mutations": {"unexpected_event": [], "duplicate_stale": [], "contradictory_bridge": [], "reordered_transitions": [], "unsupported_field": []},
-  "cli": {"exit_code": 1, "stderr": "usage: audit.py RAW_JSON [--freeze FREEZE_JSON --output AUDIT_JSON]\\n", "stdout": ""}
+  "mutations": {
+    "mutate_xid": [
+      "identity mismatch: xid",
+      "XRes identity does not match fixture"
+    ],
+    "admit_stale": [
+      "stale alias was not refused before emission/effect"
+    ],
+    "hide_emission": [
+      "fresh positive-control evidence invalid"
+    ],
+    "unexpected_event": [],
+    "duplicate_stale": [],
+    "contradictory_bridge": [],
+    "reordered_transitions": [],
+    "missing_transition": [
+      "pre-input identity precondition not satisfied"
+    ],
+    "unsupported_field": []
+  },
+  "cli": {
+    "decision": "STOP_CLI_USAGE_ERROR",
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "usage: audit.py RAW_JSON [--freeze FREEZE_JSON --output AUDIT_JSON]"
+  }
 }
