@@ -169,3 +169,9 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`verification/`](verification/)
 - [`docker_ipc_schema_bridge_2818_v1/`](docker_ipc_schema_bridge_2818_v1/)
 - [`semantic_checkpoint_contract_2661_v1/`](semantic_checkpoint_contract_2661_v1/)
+
+
+### Needle / System-1 adapter research
+
+- [`needle_lora_3441_pilot_02/`](needle_lora_3441_pilot_02/) — retained global-adapter forgetting result.
+- [`needle_lora_3441_pilot_03_router/`](needle_lora_3441_pilot_03_router/) — successor task-keyed skill routing and snapshot rollback result.
