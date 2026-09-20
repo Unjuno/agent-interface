@@ -155,3 +155,15 @@ Main advanced four commits while hosted CI was queued. `git merge-tree` showed a
 **C** — Unique append-only bundle `evidence/20260920-v1-transport-audit-03/`; network disabled; fake CLI only; no GUI, real model, task, or input action. Bundles #01/#02 remain unchanged. This is transport validation only and does not pass #3489's real endpoint/schema gate or #3311's allocation.
 
 **U** — The latest-head hosted checks remain pending. After #3487 merges, #3489 still requires one separately frozen real host Codex CLI schema preflight; no retry or substitution is permitted.
+
+### Review follow-up: bind retained request to runner plan and reap one-shot broker (2026-09-20)
+
+**H** — A synthetic transport audit must prove the broker processed the same request fields emitted by the container runner, and a successful container return must not race the broker's final receipt/exit.
+
+**T** — Compare every shared semantic field (`request_id`, mode, prompt, working directory, image and digest, instructions and digest, schema and digest, authority flag) between retained `out/runner/plan.json` and the IPC request. Add a tampered-request regression. In the transport harness, wait up to 10 seconds for natural one-shot broker completion after container success; only terminate/kill in failure or timeout cleanup. Add a success-path regression. Include `audit-reports/**` in the workflow path filter and assert all three portable sidecars match the current auditor.
+
+**D** — All three immutable bundles pass the strengthened 17-check audit; their portable sidecars were regenerated outside the evidence roots and now match all checks. Host workflow-equivalent bridge/broker/audit/cleanup suite: 32/32. OrbStack 2.2.3 Linux/arm64, pinned image `sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916`, network disabled, read-only `/repo` and writable tmpfs `/tmp`: Git-independent audit/manifest/request-response/cleanup subset 9/9. `git diff --check` passes.
+
+**C** — No retained raw evidence bundle, request, or manifest was modified. Only portable derived audit sidecars were refreshed. The container image intentionally lacks Git, so source-history provenance and full retained-bundle audits remain host/CI-only; the focused container selection exercises Git-independent checks. No real model call, GUI, task, or input action occurred.
+
+**U** — Latest-head GitHub CI and review must pass before merge. #3489's single real host Codex schema preflight remains gated on that merge; #3311's six-task allocation remains unperformed.

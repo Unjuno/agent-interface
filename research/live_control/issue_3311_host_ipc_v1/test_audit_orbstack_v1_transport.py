@@ -168,5 +168,38 @@ class ResponseCorrelationTest(unittest.TestCase):
             self.assertFalse(auditor.response_matches_runner(Path(temp) / "missing", events))
 
 
+class RequestPlanCorrelationTest(unittest.TestCase):
+    def test_request_fields_must_match_runner_plan(self):
+        with tempfile.TemporaryDirectory(prefix="3311-v1-request-plan-") as temp:
+            root = Path(temp)
+            request = root / "request.json"
+            plan = root / "plan.json"
+            payload = {"request_id": "abc", "mode": "handle", "prompt": "same\\n",
+                "working": "/repo/workspace", "image": None, "image_sha256": None,
+                "instructions": "/repo/instructions.txt", "instructions_sha256": "i" * 64,
+                "schema": "/repo/schema.json", "schema_sha256": "s" * 64,
+                "authority_granted": False}
+            plan.write_text(json.dumps(payload))
+            request.write_text(json.dumps(payload))
+            self.assertTrue(auditor.request_matches_plan(request, plan))
+            request.write_text(json.dumps(dict(payload, prompt="different\\n")))
+            self.assertFalse(auditor.request_matches_plan(request, plan))
+            request.write_text("not-json\n")
+            self.assertFalse(auditor.request_matches_plan(request, plan))
+
+
+class CurrentAuditorSidecarTest(unittest.TestCase):
+    def test_three_portable_sidecars_match_all_current_checks(self):
+        root = Path(__file__).resolve().parent
+        for index in range(1, 4):
+            name = f"20260920-v1-transport-audit-0{index}"
+            with self.subTest(bundle=name):
+                report = auditor.audit(root / "evidence" / name)
+                sidecar = json.loads((root / "audit-reports" /
+                    f"20260920-portable-reaudit-0{index}.json").read_text())
+                self.assertEqual(sidecar["checks"], report["checks"])
+                self.assertEqual(sidecar["disposition"], report["disposition"])
+
+
 if __name__ == "__main__":
     unittest.main()

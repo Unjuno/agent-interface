@@ -77,6 +77,19 @@ def response_matches_runner(response_path: Path, runner_events: list[dict]) -> b
     return response_events == runner_events
 
 
+def request_matches_plan(request_path: Path, plan_path: Path) -> bool:
+    """Require request fields to match the runner plan's declared values."""
+    try:
+        request = json.loads(request_path.read_text(encoding="utf-8"))
+        plan = json.loads(plan_path.read_text(encoding="utf-8"))
+        return all(request[key] == plan[key] for key in (
+            "request_id", "mode", "prompt", "working", "image", "image_sha256",
+            "instructions", "instructions_sha256", "schema", "schema_sha256",
+            "authority_granted"))
+    except (OSError, json.JSONDecodeError, KeyError, TypeError):
+        return False
+
+
 def audit(root: Path) -> dict:
     root = root.resolve()
     manifest_matches = verify_raw_manifest(root)
@@ -112,6 +125,8 @@ def audit(root: Path) -> dict:
         "runner_reported_non_authority": process["authority_granted"] is False and process["boundary"] == "container-to-host-model-ipc",
         "synthetic_event_sequence": [event["type"] for event in events] == ["thread.started", "item.completed", "turn.completed"],
         "runner_events_match_broker_response": response_matches_runner(response_path, events),
+        "broker_request_matches_runner_plan": request_matches_plan(
+            request_files[0], root / "out/runner/plan.json"),
         "source_hashes_match": source["broker_sha256"] == git_source_sha(revision, "runtime/host_model_ipc_broker_v1.py") and source["runner_sha256"] == git_source_sha(revision, "research/live_control/container_host_model_ipc_runner_v1.py") and source["test_sha256"] == git_source_sha(revision, "research/live_control/issue_3311_host_ipc_v1/test_orbstack_v1_transport.py"),
         "stderr_empty": not (root / "container.stderr.txt").read_text().strip() and not (root / "broker.stderr.txt").read_text().strip(),
         "raw_manifest_matches": manifest_matches,

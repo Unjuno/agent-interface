@@ -30,6 +30,8 @@ IMAGE = "agent-interface-3311-runtime-v2:20260920"
 
 def _run_container_with_broker(broker, command, root):
     """Run setup/container and reap the one-shot broker on every exit path."""
+    container = None
+    succeeded = False
     try:
         image_info = subprocess.run(["docker", "--context", "orbstack", "image",
             "inspect", IMAGE], capture_output=True, text=True, check=True, timeout=15)
@@ -43,14 +45,22 @@ def _run_container_with_broker(broker, command, root):
             encoding="utf-8")
         container = subprocess.run(command, capture_output=True, text=True,
                                    check=False, timeout=30)
+        if container.returncode == 0:
+            broker_stdout, broker_stderr = broker.communicate(timeout=10)
+            succeeded = broker.returncode == 0
+            if not succeeded:
+                raise AssertionError("one-shot broker exited unsuccessfully after container success")
+        else:
+            broker_stdout = broker_stderr = ""
     finally:
-        if broker.poll() is None:
-            broker.terminate()
-        try:
-            broker_stdout, broker_stderr = broker.communicate(timeout=5)
-        except subprocess.TimeoutExpired:
-            broker.kill()
-            broker_stdout, broker_stderr = broker.communicate(timeout=5)
+        if not succeeded:
+            if broker.poll() is None:
+                broker.terminate()
+            try:
+                broker_stdout, broker_stderr = broker.communicate(timeout=5)
+            except subprocess.TimeoutExpired:
+                broker.kill()
+                broker_stdout, broker_stderr = broker.communicate(timeout=5)
     return container, broker_stdout, broker_stderr
 
 
@@ -75,6 +85,33 @@ class OrbStackV1TransportTest(unittest.TestCase):
                 with self.assertRaises(subprocess.TimeoutExpired):
                     _run_container_with_broker(broker, ["docker", "run"], Path(tmp))
         self.assertIsNotNone(broker.poll())
+
+    def test_success_waits_for_broker_natural_exit(self):
+        class Broker:
+            def __init__(self):
+                self.calls = []
+                self.returncode = 0
+
+            def poll(self):
+                self.calls.append("poll")
+                return 0
+
+            def communicate(self, timeout=None):
+                self.calls.append(("communicate", timeout))
+                return "done", ""
+
+        broker = Broker()
+        with tempfile.TemporaryDirectory(prefix="3311-v1-natural-exit-") as temp:
+            image = [{"Id": "sha256:" + "a" * 64}]
+            result = subprocess.CompletedProcess(["docker"], 0, "", "")
+            with patch("research.live_control.issue_3311_host_ipc_v1.test_orbstack_v1_transport.subprocess.run",
+                       side_effect=[subprocess.CompletedProcess(["docker"], 0,
+                           json.dumps(image), ""), result]):
+                container, stdout, stderr = _run_container_with_broker(
+                    broker, ["docker", "run", IMAGE], Path(temp))
+        self.assertEqual(container.returncode, 0)
+        self.assertEqual((stdout, stderr), ("done", ""))
+        self.assertEqual(broker.calls, [("communicate", 10)])
 
     def test_fake_cli_round_trip_over_shared_mounts(self):
         evidence_path = os.environ.get("AGENT_INTERFACE_3311_V1_EVIDENCE_DIR")
