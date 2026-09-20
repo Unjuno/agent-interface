@@ -35,7 +35,9 @@ def _present_result(row, *, with_review, capture_directory, exit_code, compact=F
 def main() -> int:
     parser = argparse.ArgumentParser(prog="agent-interface")
     sub = parser.add_subparsers(dest="command", required=True)
-    sub.add_parser("doctor")
+    diagnostic = sub.add_parser("doctor")
+    diagnostic.add_argument('--check-dependencies', action='store_true',
+                            help='inspect optional module discovery and installed versions without importing backends')
     read = sub.add_parser("observe")
     read.add_argument("--targets", required=True)
     read.add_argument("--target", required=True)
@@ -68,7 +70,7 @@ def main() -> int:
         parser.error("--review requires --capture-directory")
 
     if args.command == "doctor":
-        _emit(doctor())
+        _emit(doctor(check_dependencies=args.check_dependencies))
         return 0
     if args.command == "review":
         try:

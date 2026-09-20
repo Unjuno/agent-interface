@@ -11,15 +11,41 @@ SCHEMA_DOCTOR = "agent-interface/runtime-doctor-v1"
 SCHEMA_DISPATCH = "agent-interface/runtime-dispatch-result-v1"
 
 
-def doctor(*, platform: str | None = None, environ: Mapping[str, str] | None = None) -> dict[str, Any]:
+def doctor(*, platform: str | None = None, environ: Mapping[str, str] | None = None,
+           check_dependencies: bool = False) -> dict[str, Any]:
     plan = select_backend(platform=platform, environ=environ)
-    return {
+    result = {
         "schema": SCHEMA_DOCTOR,
         "selection": asdict(plan),
         "runtime_available": plan.available,
         "side_effect_authority": False,
         "note": "Selection is diagnostic only; backend manifest and core admission govern effect authority.",
     }
+    if check_dependencies:
+        from importlib.util import find_spec
+        from importlib.metadata import PackageNotFoundError, version
+        inventory = []
+        for module, distribution, purpose in (
+                ('Xlib', 'python-xlib', 'Linux/X11 backend'),
+                ('PIL', 'Pillow', 'X11 PNG capture'),
+                ('mcp', 'mcp', 'optional MCP transport')):
+            entry = {'module': module, 'distribution': distribution, 'purpose': purpose}
+            try:
+                entry['discoverable'] = find_spec(module) is not None
+            except Exception as error:
+                entry.update(discoverable=None, discovery_error=repr(error))
+            try:
+                entry['installed_version'] = version(distribution)
+            except PackageNotFoundError:
+                entry['installed_version'] = None
+            except Exception as error:
+                entry.update(installed_version=None, version_error=repr(error))
+            inventory.append(entry)
+        result['dependency_inventory'] = {
+            'scope': 'current_python_environment', 'modules': inventory,
+            'note': 'Discovery and package metadata only. Modules are not imported; no display, '
+                    'permission, native library or application readiness is verified.'}
+    return result
 
 
 def dispatch(
