@@ -52,6 +52,34 @@ class ReviewTests(unittest.TestCase):
             self.assertIsNone(row['image'])
             self.assertEqual(row['receipt']['native_result'], report)
 
+    def test_explicit_native_archive_mapping_preserves_original_receipt(self):
+        report = self.native_report()
+        report['native']['artifact']['path'] = '/retired-host/run/frame.png'
+        self.report.write_text(json.dumps(report))
+        original = self.report.read_bytes()
+        self.assertEqual(review_native(self.report, self.root)['image_status'], 'needs_review')
+        mapped = review_native(self.report, self.root, recorded_run_directory='/retired-host/run')
+        self.assertEqual(base64.b64decode(mapped['image']['data']), self.pixels)
+        self.assertEqual(mapped['receipt']['native_result'], report)
+        self.assertEqual(mapped['receipt']['source']['sha256'], hashlib.sha256(original).hexdigest())
+        self.assertEqual(self.report.read_bytes(), original)
+        self.assertEqual(mapped['archive_mapping']['recorded_image_path'], '/retired-host/run/frame.png')
+        self.assertEqual(mapped['archive_mapping']['authority'], 'none')
+
+    def test_archive_mapping_does_not_search_or_accept_escaping_references(self):
+        for origin, path in [('/retired-host/run', '/different/run/frame.png'),
+                             ('relative', '/retired-host/run/frame.png'),
+                             ('/retired-host/run', '/retired-host/run/../frame.png'),
+                             ('/retired-host/run', '/retired-host/run/missing/frame.png')]:
+            with self.subTest(origin=origin, path=path):
+                report = self.native_report()
+                report['native']['artifact']['path'] = path
+                self.report.write_text(json.dumps(report))
+                mapped = review_native(self.report, self.root, recorded_run_directory=origin)
+                self.assertEqual(mapped['image_status'], 'needs_review')
+                self.assertIsNone(mapped['image'])
+                self.assertEqual(mapped['receipt']['native_result'], report)
+
     def test_native_missing_feedback_image_does_not_use_previous_source(self):
         report = {'status': 'needs_review', 'error': 'BadWindow',
                   'source': self.native_report()}
@@ -101,6 +129,37 @@ class ReviewTests(unittest.TestCase):
             self.report.write_text(json.dumps(report))
             self.assertTrue(all(value is None for value in
                                 review_native(self.report, self.root)['outcome_summary'].values()))
+
+    def test_native_target_refusal_is_visible_without_claiming_action_success(self):
+        from receipt_references import expand_native_receipt
+        refusal = {'reason': 'visually_flat_source_region', 'input_dispatched': False,
+                   'action_attempted': False, 'finish_after_applied': False}
+        report = {'status': 'boundary', 'target_refusal': refusal,
+                  'observation': self.native_report()}
+        self.report.write_text(json.dumps(report))
+        for compact in (False, True):
+            row = review_native(self.report, self.root, compact=compact)
+            summary = row['outcome_summary']
+            self.assertEqual(summary['target_refusal'], refusal)
+            self.assertEqual(summary['reported_status'], 'boundary')
+            self.assertIsNone(summary['action_status'])
+            self.assertIsNone(summary['evaluation_success'])
+            self.assertEqual(base64.b64decode(row['image']['data']), self.pixels)
+            receipt = expand_native_receipt(row['receipt']) if compact else row['receipt']
+            self.assertEqual(receipt['native_result'], report)
+
+    def test_native_refusal_projection_does_not_coerce_or_infer_input_safety(self):
+        from agent_review import native_outcome_summary
+        for value in (None, 0, 1, 'false', [], {}):
+            summary = native_outcome_summary({'target_refusal': {
+                'reason': [], 'input_dispatched': value,
+                'action_attempted': value, 'finish_after_applied': value}})
+            self.assertTrue(all(v is None for v in summary['target_refusal'].values()))
+        for value in (True, False):
+            summary = native_outcome_summary({'target_refusal': {'input_dispatched': value}})
+            self.assertIs(summary['target_refusal']['input_dispatched'], value)
+        self.assertNotIn('target_refusal', native_outcome_summary({'target_refusal': 'invalid'}))
+        self.assertNotIn('target_refusal', native_outcome_summary({'actions': []}))
 
     def test_image_bytes_and_full_result_share_one_response(self):
         self.write()
