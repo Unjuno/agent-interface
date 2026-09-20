@@ -1,5 +1,5 @@
 """Successor allocation: task-keyed skill routing and immutable adapter snapshot."""
-import hashlib, io, json, random, statistics, time
+import copy, hashlib, io, json, random, statistics, time
 import torch
 from torch import nn
 
@@ -56,11 +56,13 @@ def main():
     base_state={k:v.detach().clone() for k,v in base.state_dict().items()}
     base_old=acc(base,ea,eya)
     adapter=LoRA(base).to(dev)
+    # A pre-update snapshot is the fail-safe rollback target.
     initial=io.BytesIO(); torch.save({k:v.detach().cpu().clone() for k,v in adapter.state_dict().items()},initial)
     initial_bytes=initial.getvalue(); initial_sha=hashlib.sha256(initial_bytes).hexdigest()
     update_ms=fit(adapter,xs,ys,STEPS,.04,SEED+11,dev)
     learned_bytes=io.BytesIO(); torch.save({k:v.detach().cpu().clone() for k,v in adapter.state_dict().items()},learned_bytes)
     learned_payload=learned_bytes.getvalue(); learned_sha=hashlib.sha256(learned_payload).hexdigest()
+    valid=True
     results={}
     for skill,x,y,meta in [('base',ea,eya,{'epoch':9}),('flip_x',eb,eyb,{'epoch':9,'adapter_version':1})]:
         decision,model=dispatch(skill,meta,9,base,adapter)
@@ -74,6 +76,7 @@ def main():
       'wrong_metadata':dispatch('flip_x',{'epoch':9},9,base,adapter)[0],
     }
     assert bad=={k:'YIELD' for k in bad}
+    # Byte round-trip and hash integrity check; then force rollback to initial snapshot.
     restored=torch.load(io.BytesIO(learned_payload),map_location=dev,weights_only=True)
     adapter.load_state_dict(restored)
     assert hashlib.sha256(learned_payload).hexdigest()==learned_sha
@@ -85,14 +88,14 @@ def main():
     assert all(torch.equal(base.state_dict()[k],v) for k,v in base_state.items())
     timings=[]
     for _ in range(5):
-        if dev.type=='cuda': torch.cuda.synchronize(dev)
+        torch.cuda.synchronize(dev) if dev.type=='cuda' else None
         t=time.perf_counter_ns()
         for _ in range(200): dispatch('flip_x',{'epoch':9,'adapter_version':1},9,base,adapter)
-        if dev.type=='cuda': torch.cuda.synchronize(dev)
+        torch.cuda.synchronize(dev) if dev.type=='cuda' else None
         timings.append((time.perf_counter_ns()-t)/200e6)
     print(json.dumps({
       'allocation':'needle-lora-3441-pilot-03-skill-router','seed':SEED,'device':{'type':str(dev),'name':torch.cuda.get_device_name(dev) if dev.type=='cuda' else '','torch':torch.__version__,'cuda':torch.version.cuda},
-      'metrics':{'pretrain_ms':pre_ms,'update_ms':update_ms,'base_old_accuracy':base_old,'global_adapter_accuracy':{'old':global_old,'new':global_new},'routed_accuracy':results,'rollback_new_skill_accuracy':rolled_new,'router_200_call_block_means_ms':timings,'router_block_mean_p50_ms':statistics.median(timings),'adapter_state_bytes':len(learned_payload),'initial_snapshot_sha256':initial_sha,'learned_snapshot_sha256':learned_sha},
+      'metrics':{'pretrain_ms':pre_ms,'update_ms':update_ms,'global_adapter_accuracy':{'old':global_old,'new':global_new},'routed_accuracy':results,'rollback_new_skill_accuracy':rolled_new,'router_200_call_block_means_ms':timings,'router_block_mean_p50_ms':statistics.median(timings),'adapter_state_bytes':len(learned_payload),'initial_snapshot_sha256':initial_sha,'learned_snapshot_sha256':learned_sha},
       'invalid_routes':bad,'snapshot_roundtrip_exact':True,'rollback_completed':True,'base_immutable':True,'scope':'synthetic only; dispatcher grants proposal selection only, not action authority'
     },indent=2,sort_keys=True))
 
