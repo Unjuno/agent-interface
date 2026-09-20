@@ -18,7 +18,7 @@ Run from a checkout containing the frozen commit:
 python research/analysis/issue_3655_committed_evidence_audit_v1/audit_committed_bundle.py
 ```
 
-The script uses Git objects as the canonical byte source, materializes the bundle in a temporary directory, and runs the predecessor's committed raw auditor there. The retained result is `evidence/audit_result.json`.
+The script uses Git objects as the canonical byte source, materializes the bundle in a temporary directory, and runs the predecessor's committed raw auditor there. It prints the full machine result to stdout and exits nonzero for the expected HOLD. `evidence/audit_result.json` is the retained human-reviewed summary from the same run, not a byte-for-byte capture of that stdout; compare its decision, missing paths, hashes, and nested auditor result rather than expecting identical JSON schemas.
 
 ## Result
 
