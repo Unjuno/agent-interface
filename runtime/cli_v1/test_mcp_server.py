@@ -14,6 +14,30 @@ from runtime.cli_v1.mcp_server import create_server
 
 class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
 
+    async def test_result_pages_are_stable_when_new_calls_arrive(self):
+        with tempfile.TemporaryDirectory() as td:
+            server = create_server({'fixture': 123}, td)
+            async def result(args):
+                return json.loads((await server.call_tool('interface_results', args)).content[0].text)
+            with patch('runtime.cli_v1.mcp_server.observe', return_value={'status': 'returned'}) as observe:
+                args = {'target': 'fixture', 'frame': 'window_client', 'region': [0,0,1,1]}
+                ids = []
+                for _ in range(23):
+                    reply = await server.call_tool('interface_observe', args)
+                    ids.append(Path(json.loads(reply.content[0].text)['call_directory']).name)
+                first = await result({})
+                self.assertEqual([r['call_id'] for r in first['calls']], list(reversed(ids))[:20])
+                await server.call_tool('interface_observe', args)
+                second = await result({'before_call_id': first['next_before_call_id']})
+                self.assertEqual([r['call_id'] for r in second['calls']], list(reversed(ids))[-3:])
+                self.assertIsNone(second['next_before_call_id'])
+                self.assertEqual((await result({'before_call_id': ids[0]}))['calls'], [])
+                self.assertEqual((await result({'before_call_id': 'missing'}))['status'], 'unknown_cursor')
+                self.assertEqual((await result({'call_id': ids[0], 'before_call_id': ids[1]}))['status'], 'invalid_request')
+                self.assertEqual(observe.call_count, 24)
+
+
+
     async def test_retained_results_never_repeat_backend_and_reject_unknown_ids(self):
         with tempfile.TemporaryDirectory() as td:
             server = create_server({'fixture': 123}, td)
