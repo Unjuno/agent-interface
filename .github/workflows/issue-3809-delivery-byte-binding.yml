@@ -47,8 +47,8 @@ jobs:
             --mount "type=bind,src=$src,dst=/src,readonly" \
             --mount "type=bind,src=$inputs,dst=/input,readonly" \
             --mount "type=bind,src=$out,dst=/out" \
-            --workdir /src "$image" \
-            bash -c 'python -B -m unittest -v test_audit.py && python -B audit.py /input /src/MANIFEST.json /out "$AUDIT_HEAD"' \
+            --workdir /src --entrypoint /bin/bash --env "AUDIT_HEAD=$AUDIT_HEAD" "$image" \
+            -c 'python -B -m unittest -v test_audit.py && python -B audit.py /input /src/MANIFEST.json /out "$AUDIT_HEAD"' \
             2>&1 | tee "$work/container.log"
           status=${PIPESTATUS[0]}
           set -e
