@@ -79,8 +79,15 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                 if not release.wait(5):
                     raise RuntimeError('test deadline')
                 return {'status': 'returned'}
+            from runtime.cli_v1.review import present_result
+            presented = threading.Event()
+            def present(*args, **kwargs):
+                result = present_result(*args, **kwargs)
+                presented.set()
+                return result
             args = {'program': {}, 'current_observation_seq': 0, 'current_binding_revision': 0}
-            with patch('runtime.cli_v1.mcp_server.dispatch', side_effect=delayed) as dispatch:
+            with patch('runtime.cli_v1.mcp_server.dispatch', side_effect=delayed) as dispatch, patch(
+                    'runtime.cli_v1.mcp_server.present_result', side_effect=present):
                 first = asyncio.create_task(server.call_tool('interface_dispatch', args))
                 try:
                     self.assertTrue(await asyncio.to_thread(entered.wait, 2))
@@ -91,10 +98,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertTrue(busy.isError)
                 finally:
                     release.set()
-                for _ in range(100):
-                    if list(Path(td).glob('*/report.json')):
-                        break
-                    await asyncio.sleep(.01)
+                self.assertTrue(await asyncio.to_thread(presented.wait, 2))
                 reports = list(Path(td).glob('*/report.json'))
                 self.assertEqual(len(reports), 1)
                 self.assertEqual(json.loads(reports[0].read_text()), {'status': 'returned'})
