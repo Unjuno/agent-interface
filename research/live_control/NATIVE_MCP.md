@@ -121,3 +121,17 @@ the full responses. This removes two explicit view calls in that run, not the
 shell/SDK bridge or decision-file boundary. It is an interim composition recipe,
 not automatic host registration or demonstrated latency/token savings. Preserve
 complete JSON output; truncation or split chunks must never trigger action replay.
+
+
+## Returned continuation reference
+
+At a completed stage boundary, `native_submit` and read-only `native_resume`
+include `continuation`. `source_available` carries the next stage, source
+sequence and exact source-file SHA-256 only after the retained next observation
+matches the delivered image identity. `already_submitted` means the next request
+slot is occupied; inspect that request rather than submitting again.
+`needs_review` reports missing/conflicting image/source or exhausted stage bounds;
+terminal responses return unavailable. These are facts at read time, with
+`authority: none`, not scheduling instructions, new input permission or task
+success. Existing source/admission checks still govern the next primary decision.
+The server does not author or send it. No pending request is automatically replayed.
