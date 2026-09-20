@@ -20,4 +20,3 @@ The independent audit ran in a second no-network container with evidence/source 
 ## Scope limit
 
 This establishes delivery for the exact backend, pinned image, Xvfb and standard German two-level XKB, using the combined `-noreset` plus connected explicit receiver setup. It does not isolate which of those conditions prevents reset. It does not establish Calc/task effect, physical German keyboard behavior, Compose/IME/dead keys/level-3, other layouts/backends, performance, or product success. The earlier #3784/#3791 STOP records remain unchanged and visible.
-
