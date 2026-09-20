@@ -44,6 +44,8 @@ if protocol["full_module_state_dict_tensor_roundtrip_verified"] is not False:
     fail("protocol_deviation_not_disclosed")
 if protocol["setup_time_measured"] is not False or protocol["per_row_predictions_retained"] is not False:
     fail("measurement_limits_not_disclosed")
+if protocol["valid_routes_evaluated_via_dispatcher"] is not False:
+    fail("dispatcher_measurement_limit_not_disclosed")
 if protocol["snapshot_scope"] != "adapter trainable tensors a/b only; full LoRA module state_dict was not included in snapshot payload":
     fail("snapshot_scope_mismatch")
 snapshots = result["measurements"]["snapshots"]
@@ -69,5 +71,7 @@ print(json.dumps({
     "recorded_shared_accuracy":reported_shared,
     "snapshot_scope":protocol["snapshot_scope"],
     "invalid_route_count":len(result["invalid_routes"]),
-    "setup_time_measured":False
+    "setup_time_measured":False,
+    "valid_routes_evaluated_via_dispatcher":protocol["valid_routes_evaluated_via_dispatcher"],
+    "accuracy_recomputed":False
 }, indent=2, sort_keys=True))
