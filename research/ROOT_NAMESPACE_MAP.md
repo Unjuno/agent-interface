@@ -180,6 +180,7 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`issue_3349_event_replay_contract_v1/`](issue_3349_event_replay_contract_v1/) — retained Issue #3349 replay-contract evidence.
 - [`issue_3676_audit_hardening_v1/`](issue_3676_audit_hardening_v1/) — retained Issue #3676 audit-hardening evidence.
 - [`issue_3691_manifest_root_v1/`](issue_3691_manifest_root_v1/) — retained Issue #3691 manifest-root reproduction record.
+- [`issue_3691_audit_integrity_v1/`](issue_3691_audit_integrity_v1/) — retained Issue #3691 independent-pin auditor construction; see `INTEGRATION_ADDENDUM.md` for the later exact-source #3722 result and remaining Docker Desktop gate.
 - [`needle_lora_3441_pilot_04_multiskill/`](needle_lora_3441_pilot_04_multiskill/) — retained Issue #3701 synthetic two-skill adapter-interference pilot.
 - [`docker_ipc_schema_bridge_2818_v1/`](docker_ipc_schema_bridge_2818_v1/)
 - [`semantic_checkpoint_contract_2661_v1/`](semantic_checkpoint_contract_2661_v1/)
