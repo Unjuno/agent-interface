@@ -1,0 +1,80 @@
+{
+  "schema": "issue-experiment-freeze-v1",
+  "issue": 3826,
+  "repository": "Unjuno/agent-interface",
+  "allocation": "needle-lora-rank4-online-lr-half-multiseed-v1",
+  "branch": "research/needle-lora-rank4-lr-half-3826-20260921",
+  "path": "research/needle_lora_3441_rank4_online_lr_half_multiseed_v1/",
+  "main_base_commit": "3fa567baa277d1bfdfe415e522b419e6414d7c26",
+  "source_sha256": {
+    "audit.py": "d7fd58db2bda3fb09faeaef2ae648e64825b507dd7f97e465af299c9b6f5378d",
+    "runner.py": "92e8d170f2add47d5ece656ecdf02d03d6ee693275c897a8b5aac90875ac6dc1",
+    "test_construction.py": "a9be80f59585fab1955bacdf208cd65db9376b486e3159908530ea4db11bc2bf"
+  },
+  "H": "Across fresh seeds 3461-3465, changing only rank-4 online LoRA adapter LR from .04 to .02 materially rescues online B quality versus paired rank-4 online .04, while preserving role A and rank-2 online controls, matched rank-4 batch performance, route/snapshot integrity, and update latency.",
+  "T": {
+    "seeds": [
+      3461,
+      3462,
+      3463,
+      3464,
+      3465
+    ],
+    "features": 8,
+    "hidden": 16,
+    "classes": 4,
+    "baseRows": 512,
+    "baseSteps": 400,
+    "supportRows": 16,
+    "heldoutRowsPerRole": 4096,
+    "onlineStepsPerArrival": 8,
+    "totalOnlineSteps": 128,
+    "arms": [
+      "rank2-online-lr-.04",
+      "rank4-online-lr-.04-collapse-control",
+      "rank4-online-lr-.02-intervention",
+      "rank4-batch-lr-.04"
+    ],
+    "dataSeeds": "seed+1 base; seed+2 support; seed+3 heldout A; seed+4 heldout B",
+    "rank4Initial": "rank4-online .04/.02 and batch arms load exact identical full initial state per seed",
+    "schedule": "same support order and precomputed per-feedback minibatch indices for all online arms",
+    "curves": "retain all 4096 B predictions at feedback counts 1..16 for each of three online arms per seed; auditor regenerates labels and recomputes all counts/accuracies",
+    "optimizer": "AdamW; base LR .025; rank2 online LR .04; rank4 online control .04; rank4 online intervention .02; rank4 batch .04",
+    "source_sha256": {
+      "audit.py": "d7fd58db2bda3fb09faeaef2ae648e64825b507dd7f97e465af299c9b6f5378d",
+      "runner.py": "92e8d170f2add47d5ece656ecdf02d03d6ee693275c897a8b5aac90875ac6dc1",
+      "test_construction.py": "a9be80f59585fab1955bacdf208cd65db9376b486e3159908530ea4db11bc2bf"
+    }
+  },
+  "D": {
+    "pass": "All five seeds A>=.90, rank2-online>=.90, rank4-online-LR.02>=.90; mean rank4-online-LR.02 exceeds paired LR.04 by >=.50; every LR.02 score within .03 of rank4-batch; intervention update p95<=60ms; all YIELD controls; complete 1..16 curves; exact intervention full-state snapshot roundtrip/rollback; immutable base; independent audit zero errors.",
+    "fail": "FAIL_LR_HALF_RESCUE for audited quality/latency miss; FAIL_ROUTE_OR_SNAPSHOT_INTEGRITY for integrity violation; typed STOP/HOLD for setup/output/audit ambiguity.",
+    "invocationLimit": 1,
+    "retries": 0,
+    "tuning": 0
+  },
+  "C": {
+    "python": "3.11.9",
+    "torch": "2.5.1+cu121",
+    "cuda": "12.1",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "cublasWorkspaceConfig": ":4096:8",
+    "deterministic": true,
+    "tf32": false,
+    "torchThreads": 1,
+    "observedSystemFreeBytes": 491250520064,
+    "observedGpuFreeMiB": 16177,
+    "dockerEngine": "linux/x86_64 available; read-only image inventory has no compatible CUDA/PyTorch 2.5.1+cu121 image; no pulls. Host-local installed CUDA is prescribed.",
+    "data": "synthetic in-memory only; no provider, network, GUI/input, action authority, runtime changes or local checkpoints",
+    "minimumSystemFreeBytes": 1073741824
+  },
+  "U": "Five fresh seeds in one binary-factor synthetic family only. No Astra feedback, broad transfer, GUI/task effect, production safety, concurrent training/inference, persistence or production-latency claim. Does not prove why the earlier LR=.04 collapse occurred or authorize runtime updates.",
+  "construction": {
+    "syntax": "PASS_SYNTAX",
+    "checks": "PASS_CONSTRUCTION_9",
+    "formalSteps": 0,
+    "formalStarted": false
+  },
+  "frozenAt": "2026-09-21",
+  "formalStarted": false
+}
