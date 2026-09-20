@@ -334,6 +334,19 @@ available for inspecting retained results later.
 
 ### Inspecting interrupted retained attempts
 
+For opt-in diagnosis, add `--retention-timings` to retained `observe` or
+`dispatch`. It requires `--run-directory` and adds `retention.timings_ns`:
+`request_persistence`, `api_call`, and `report_persistence`. These are monotonic
+durations in nanoseconds; an unstarted phase is null. Request persistence includes
+directory reservation and JSON serialization/write/flush/fsync/rename. API time
+includes everything inside the API call, not just native input. Result persistence
+includes its JSON publication. Exceptions still record the attempted phase.
+Preparation, process startup/imports, review/image presentation and stdout delivery
+are excluded. These intervals are not model-useful feedback or semantic completion.
+Raw reports remain unchanged. Timings are response metadata only and can be lost
+with stdout; `attempt-status` does not reconstruct them. The default adds no clock
+reads or timing fields. See the [motivating timing gap](../results/cli-current-calc-01/README.md#retained-timing-decomposition).
+
 Run `python agent-interface-runtime.pyz attempt-status --run-directory RUN` to
 read a retained attempt without dispatch, observation, replay, or file changes.
 The `agent-interface/cli-attempt-status-v1` response includes request/report JSON
