@@ -39,3 +39,14 @@ does not timestamp host presentation or model interpretation, compare against
 the saved-file/view-tool route, exercise no-image/delayed/stale/disconnect
 controls, expose provider token/cost usage, or establish latency benefit. The
 parent #3370 remains open for its full boundary gate.
+
+## Formal lineage / STOP record
+
+`formal-01` was a consumed allocation and stopped before producing an image:
+the container lacked `wmctrl`, required by `PrivateSession.windows()`. Its raw
+MCP response, launch logs and cleanup record are preserved under
+`evidence/formal-01/`; it is not a task trial and is not retried.
+The source recipe was amended additively to install `wmctrl`. The corrected
+OrbStack build has digest
+`sha256:cf02676f620c6679614a311c4baee4deceb135a37cae9d6e14c39a5e8e49001e`
+(`linux/arm64`). Its formal allocation receives a new identity, `formal-02`.
