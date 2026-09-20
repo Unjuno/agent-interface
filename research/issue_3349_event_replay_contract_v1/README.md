@@ -3,7 +3,7 @@
 Additive container contract matrix for stale-event replay defect documented in #3349.
 
 Frozen main source path: research/doom/map01_recovery_cover_matched_v2_runner_3202.py
-Git blob / required candidate SHA-256: 4432a6188b5318dc552f050a26ff9e2a5d32bbf9.
+Git blob ID: 4432a6188b5318dc552f050a26ff9e2a5d32bbf9. Raw source SHA-256: 4e700b05c60626e73070eb6f5883d9341c8b1374996d45f08e5766fc6cb0f463.
 The local checkout is on another research branch and omits that path. Materialize candidate.py from the exact GitHub blob; Docker build verifies its bytes.
 
 JsonSession.wait scans all retained events before reading the queue. The contract tests role/operation identity, stale accepted/rejected events, duplicate and wrong-ID terminal events, and a matching queued fallback response.
@@ -18,7 +18,7 @@ JsonSession.wait scans all retained events before reading the queue. The contrac
 
 ## Construction observations (host only)
 
-The standalone policy oracle passed its finite cases after two initial expectation defects were caught and corrected. This is a local Python construction check only, not Docker evidence or a formal result.
+The standalone policy oracle passed its finite cases after two initial expectation defects were caught and corrected. This is a local Python construction check only, not Docker evidence or a formal result. An initial hash-labeling defect (Git blob ID compared to raw SHA-256) was caught before container execution and corrected; see the distinct identifiers above.
 
 ## Container procedure
 
