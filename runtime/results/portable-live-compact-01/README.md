@@ -23,7 +23,7 @@ completion, or a human-tempo comparison. No model tokens or costs were measured.
 
 ## Reproduction boundary and retained evidence
 
-The archive SHA256 is 236b146fea68f54f213d522f159b264b37b48c1fec9f3e9fb10319b43c0d6206.
+The zipapp SHA256 is 236b146fea68f54f213d522f159b264b37b48c1fec9f3e9fb10319b43c0d6206.
 The retained zipapp BUILD.json/manifest pins every included source blob. The
 zipapp ran with its working directory outside the repository package root.
 The fixture and owner used the checked-out source; this is a synthetic fixture,
