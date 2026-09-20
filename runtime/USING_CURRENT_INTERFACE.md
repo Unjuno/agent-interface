@@ -61,6 +61,47 @@ The report and referenced image must be present at their recorded paths. The
 review operation does not recapture, focus a window or repeat an action. Native
 research reports use `agent_review.py --native` as described in the MCP guide.
 
+## Batch actions between decisions
+
+Use one public `dispatch` program for a finite sequence whose actions can all be
+chosen from the current observation. Operations execute in the supplied order;
+the model reviews the returned outcome before choosing another program.
+For example, after identifying and focusing an editable field, an operation
+fragment can move left three characters, insert text, save, capture, and release:
+
+```json
+[
+  {"op":"key_chord","keys":["Left"],"repeat":3},
+  {"op":"text","text":"-"},
+  {"op":"key_chord","keys":["CTRL","S"]},
+  {"op":"observe","frame":"window_client","x":0,"y":0,"w":400,"h":180},
+  {"op":"release_all"}
+]
+```
+
+This is an `ops` fragment, not a complete executable program. Supply the actual
+focused target, observed region, source/binding values and current lease using
+[the public program contract](cli_v1/README.md). The example region and shortcut
+must match the selected application. Public CLI, API and MCP dispatch share the
+same bounded key-repeat compiler: this five-instruction fragment expands to seven
+operations, and the complete program must fit 128 operations.
+
+Split a sequence when the next action depends on a new image: submit the first
+program, inspect its result, then choose the next. An `observe` inside a program
+records an image; it does not suspend the remaining operations for model judgment.
+A fixed wait also does not acknowledge application redraw or successful saving.
+Inspect the action outcome and image separately, requesting a fresh read-only
+observation when needed without repeating uncertain input.
+
+The public transport does not offer a durable queue, stack, priority scheduler or
+parallel cursors. An overlapping MCP request returns `busy` without executing;
+it is not an accepted queued action. Scheduling proposals such as
+[#2868](https://github.com/Unjuno/agent-interface/issues/2868) and transport routing
+[#3544](https://github.com/Unjuno/agent-interface/issues/3544) remain separate from
+this explicit ordered batch. Batching expresses several operations in one call;
+its effect on actual model tokens, useful-feedback latency and task correctness
+still requires a matched measurement.
+
 ## Native decision loop
 
 1. Start one explicitly managed allocation, or attach to an existing run. Read
