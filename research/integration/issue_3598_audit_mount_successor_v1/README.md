@@ -14,5 +14,5 @@ no-network raw reconstruction audit against the same read-only allocations.
 It creates no GUI, Xvfb, runtime, or input evidence.
 
 The exact #3595 startup failure is retained in `STOP_3595.json`. The
-hash-pinned preflight and one formal audit are separate; formal audit has not
-started at this preregistration commit.
+hash-pinned preflight and one formal audit are separate. Preflight passed in
+the pinned container; the single formal raw audit has not yet started.
