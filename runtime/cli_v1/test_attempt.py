@@ -88,7 +88,7 @@ class RetainedAttemptTests(unittest.TestCase):
                 self.assertFalse((run / 'report.json').exists())
                 return report
             args = ['agent-interface', 'dispatch', '--program', str(root / 'program.json'),
-            (root / 'targets.json').write_text('{"fixture":123}')
+                    '--targets', str(root / 'targets.json'), '--current-observation-seq', '1',
                     '--current-binding-revision', '0', '--run-directory', str(run), '--review']
             with (patch.object(sys, 'argv', args),
                   patch('runtime.cli_v1.__main__.dispatch', side_effect=backend) as call,
