@@ -221,63 +221,67 @@ def validate_program(program: dict[str, Any]) -> dict[str, Any]:
     held_buttons: set[str] = set()
 
     for index, op in enumerate(ops):
-        _need('repeat' not in op, 'repeat requires explicit expansion before core admission')
-        _need('gap_ms' not in op, 'gap_ms requires explicit expansion before core admission')
-        op_type = op.get("op")
-        _need(isinstance(op_type, str), f"op[{index}].op must be string")
-        if op_type == "focus":
-            _identifier(op.get("target"), "focus target")
-        elif op_type == "key_chord":
-            keys = op.get("keys")
-            _need(isinstance(keys, list) and 1 <= len(keys) <= 5, "invalid chord keys")
-            normalized = [_key(key) for key in keys]
-            _need(len(normalized) == len(set(normalized)), "duplicate key in chord")
-        elif op_type == "key_state":
-            key = _key(op.get("key"))
-            _need(type(op.get("down")) is bool, "key_state.down must be bool")
-            if op["down"]:
-                _need(key not in held_keys, f"key {key} already held")
-                held_keys.add(key)
+        try:
+            _need('repeat' not in op, 'repeat requires explicit expansion before core admission')
+            _need('gap_ms' not in op, 'gap_ms requires explicit expansion before core admission')
+            op_type = op.get("op")
+            _need(isinstance(op_type, str), f"op[{index}].op must be string")
+            if op_type == "focus":
+                _identifier(op.get("target"), "focus target")
+            elif op_type == "key_chord":
+                keys = op.get("keys")
+                _need(isinstance(keys, list) and 1 <= len(keys) <= 5, "invalid chord keys")
+                normalized = [_key(key) for key in keys]
+                _need(len(normalized) == len(set(normalized)), "duplicate key in chord")
+            elif op_type == "key_state":
+                key = _key(op.get("key"))
+                _need(type(op.get("down")) is bool, "key_state.down must be bool")
+                if op["down"]:
+                    _need(key not in held_keys, f"key {key} already held")
+                    held_keys.add(key)
+                else:
+                    _need(key in held_keys, f"key {key} released while not held")
+                    held_keys.remove(key)
+            elif op_type == "text":
+                text = op.get("text")
+                _need(isinstance(text, str) and len(text) <= 16384, "invalid text")
+            elif op_type == "pointer_move":
+                _need(op.get("frame") in COORDINATE_FRAMES, "invalid pointer frame")
+                _bounded_int(op.get("x"), "pointer x", -1_000_000, 1_000_000)
+                _bounded_int(op.get("y"), "pointer y", -1_000_000, 1_000_000)
+            elif op_type == "pointer_button":
+                button = op.get("button")
+                _need(button in BUTTONS, "invalid pointer button")
+                _need(type(op.get("down")) is bool, "pointer_button.down must be bool")
+                if op["down"]:
+                    _need(button not in held_buttons, f"button {button} already held")
+                    held_buttons.add(button)
+                else:
+                    _need(button in held_buttons, f"button {button} released while not held")
+                    held_buttons.remove(button)
+            elif op_type == "scroll":
+                _bounded_int(op.get("dx"), "scroll dx", -100_000, 100_000)
+                _bounded_int(op.get("dy"), "scroll dy", -100_000, 100_000)
+            elif op_type == "observe":
+                _need(op.get("frame") in COORDINATE_FRAMES, "invalid observe frame")
+                for field in ("x", "y"):
+                    _bounded_int(op.get(field), f"observe {field}", -1_000_000, 1_000_000)
+                for field in ("w", "h"):
+                    _bounded_int(op.get(field), f"observe {field}", 1, 1_000_000)
+            elif op_type == "wait_update":
+                _bounded_int(op.get("timeout_ms"), "wait_update.timeout_ms", 0, 60_000)
+            elif op_type == "verify":
+                predicate = op.get("predicate")
+                _need(isinstance(predicate, str) and 1 <= len(predicate) <= 512, "invalid verify predicate")
+            elif op_type == "release_all":
+                _need(len(op) == 1, "release_all has no arguments")
+                held_keys.clear()
+                held_buttons.clear()
             else:
-                _need(key in held_keys, f"key {key} released while not held")
-                held_keys.remove(key)
-        elif op_type == "text":
-            text = op.get("text")
-            _need(isinstance(text, str) and len(text) <= 16384, "invalid text")
-        elif op_type == "pointer_move":
-            _need(op.get("frame") in COORDINATE_FRAMES, "invalid pointer frame")
-            _bounded_int(op.get("x"), "pointer x", -1_000_000, 1_000_000)
-            _bounded_int(op.get("y"), "pointer y", -1_000_000, 1_000_000)
-        elif op_type == "pointer_button":
-            button = op.get("button")
-            _need(button in BUTTONS, "invalid pointer button")
-            _need(type(op.get("down")) is bool, "pointer_button.down must be bool")
-            if op["down"]:
-                _need(button not in held_buttons, f"button {button} already held")
-                held_buttons.add(button)
-            else:
-                _need(button in held_buttons, f"button {button} released while not held")
-                held_buttons.remove(button)
-        elif op_type == "scroll":
-            _bounded_int(op.get("dx"), "scroll dx", -100_000, 100_000)
-            _bounded_int(op.get("dy"), "scroll dy", -100_000, 100_000)
-        elif op_type == "observe":
-            _need(op.get("frame") in COORDINATE_FRAMES, "invalid observe frame")
-            for field in ("x", "y"):
-                _bounded_int(op.get(field), f"observe {field}", -1_000_000, 1_000_000)
-            for field in ("w", "h"):
-                _bounded_int(op.get(field), f"observe {field}", 1, 1_000_000)
-        elif op_type == "wait_update":
-            _bounded_int(op.get("timeout_ms"), "wait_update.timeout_ms", 0, 60_000)
-        elif op_type == "verify":
-            predicate = op.get("predicate")
-            _need(isinstance(predicate, str) and 1 <= len(predicate) <= 512, "invalid verify predicate")
-        elif op_type == "release_all":
-            _need(len(op) == 1, "release_all has no arguments")
-            held_keys.clear()
-            held_buttons.clear()
-        else:
-            raise ContractError(f"unsupported op {op_type}")
+                raise ContractError(f"unsupported op {op_type}")
+        except ContractError as error:
+            error.operation_index = index
+            raise
 
     _need(not held_keys and not held_buttons, "program terminates with held input")
     return program

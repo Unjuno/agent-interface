@@ -106,6 +106,7 @@ def outcome_summary(report):
         execution = dispatch.get('execution')
         execution = execution if isinstance(execution, dict) else {}
         failed = execution.get('failed_op')
+        invalid = dispatch.get('validation_operation_index')
         release_evidence = execution
         if dispatch.get('status') == 'refused' and 'release' in dispatch:
             # Backend preflight refusal retains its cleanup outside execution.
@@ -117,6 +118,10 @@ def outcome_summary(report):
         summary.update(
             input_release_verified=_input_release_verified(release_evidence),
             failure_detail=text(execution, 'error'),
+            validation_operation_index=(invalid if type(invalid) is int and 0 <= invalid < 128
+                                        and dispatch.get('status') == 'refused'
+                                        and dispatch.get('error') == 'INVALID_PROGRAM'
+                                        and dispatch.get('detail_source') == 'program_validation' else None),
             failed_operation_index=failed if type(failed) is int and failed >= 0 else None,
             failed_operation_effect=text(execution, 'failed_op_effect'))
         summary.update(execution_status=text(dispatch, 'status'),

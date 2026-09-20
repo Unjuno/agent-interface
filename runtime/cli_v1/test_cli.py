@@ -40,7 +40,7 @@ class ApiTests(unittest.TestCase):
         ]:
             with self.subTest(expected=expected):
                 program = deepcopy(base)
-                program['ops'] = [op, {'op':'release_all'}]
+                program['ops'] = [{'op':'focus','target':'fixture'}, op, {'op':'release_all'}]
                 before = deepcopy(program)
                 refusal = {'status':'refused','error':'INVALID_PROGRAM','backend_emissions':0}
                 session = mock.Mock()
@@ -58,8 +58,12 @@ class ApiTests(unittest.TestCase):
                 self.assertEqual(outcome_summary(row)['execution_detail'], expected)
                 if expected is not None:
                     self.assertEqual(row['result']['detail_source'], 'program_validation')
+                    self.assertEqual(row['result']['validation_operation_index'], 1)
+                    self.assertEqual(outcome_summary(row)['validation_operation_index'], 1)
+                    self.assertIsNone(outcome_summary(row)['failed_operation_index'])
                 else:
                     self.assertNotIn('detail_source', row['result'])
+                    self.assertNotIn('validation_operation_index', row['result'])
 
     def test_explicit_text_gap_compiles_before_backend_and_maps_character_failure(self):
         from runtime.cli_v1.review import outcome_summary
