@@ -137,6 +137,10 @@ def main():
                 observation_only = {'started_ns': started, 'ended_ns': time.monotonic_ns(),
                                     'input_dispatched': False, 'captures': 1,
                                     'window_review': review}
+                if stage >= args.max_stages:
+                    terminal_context = {'observation': source,
+                                        'observation_only': observation_only}
+                    raise RuntimeError('bounded action stages exhausted without explicit finish')
                 publish(out/f'source-{stage+1}.json', encoded(source))
                 publish(out/f'reply-{stage}.json', encoded({'status': 'boundary', 'stage': stage,
                     'decision_sha256': decision_hash, 'observation': source,
@@ -220,6 +224,9 @@ def main():
                 terminal_context = {'action': row, 'observation': source,
                                     'finish_mode': 'after_action'}
                 break
+            if stage >= args.max_stages:
+                terminal_context = {'action': row, 'observation': source}
+                raise RuntimeError('bounded action stages exhausted without explicit finish')
             publish(out/f'source-{stage+1}.json', encoded(source))
             publish(out/f'reply-{stage}.json', encoded({'status': 'boundary', 'stage': stage,
                 'decision_sha256': decision_hash, 'action': row, 'observation': source,
