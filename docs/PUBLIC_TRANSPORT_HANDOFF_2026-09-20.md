@@ -5,6 +5,22 @@ This supplements the [earlier integration snapshot](INTEGRATION_STATUS_2026-09-2
 It records usable integration surfaces and their limits, not a performance win
 or a completed product. Frozen research results keep their original scope.
 
+## Later integration update
+
+The snapshot above is historical. By main
+`04030a8310386b3e07f77a1b24999cb1da758c83`, public MCP also exposes retained
+result lookup and pagination (#3576, #3580), direct response call IDs (#3601),
+and optional image delivery for retained results (#3617). Public dispatch
+supports explicit bounded text pacing (#3589); outcome review separates verified
+input release from task success (#3571). The
+[current interface guide](../runtime/USING_CURRENT_INTERFACE.md) explains how to
+choose between retrieving an old result and taking a fresh observation.
+
+These integrations do not resolve the earlier measurement limits. The committed
+container continuation record [#3621](https://github.com/Unjuno/agent-interface/pull/3621)
+retains **HOLD_OR_FAIL**, including all three save-key event failures. It does
+not justify changing default waits or claiming useful-feedback latency gains.
+
 ## Available entry points
 
 | Entry point | Current behavior | Setup |
