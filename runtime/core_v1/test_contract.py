@@ -51,6 +51,12 @@ FULL = OFFICE_FLOOR
 
 
 class ProgramTests(unittest.TestCase):
+    def test_unexpanded_text_gap_cannot_be_silently_ignored(self):
+        request = program()
+        request['ops'].insert(-1, {'op': 'text', 'text': '300', 'gap_ms': 20})
+        with self.assertRaisesRegex(ValueError, 'gap_ms requires explicit expansion'):
+            validate_program(request)
+
     def test_unexpanded_repeat_cannot_be_silently_ignored(self):
         request = program()
         request['ops'].insert(-1, {'op': 'key_chord', 'keys': ['Right'], 'repeat': 3})

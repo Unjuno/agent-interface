@@ -222,6 +222,7 @@ def validate_program(program: dict[str, Any]) -> dict[str, Any]:
 
     for index, op in enumerate(ops):
         _need('repeat' not in op, 'repeat requires explicit expansion before core admission')
+        _need('gap_ms' not in op, 'gap_ms requires explicit expansion before core admission')
         op_type = op.get("op")
         _need(isinstance(op_type, str), f"op[{index}].op must be string")
         if op_type == "focus":

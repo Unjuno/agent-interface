@@ -1,0 +1,16 @@
+{
+  "allocation_id": "issue3580-xserver-lifetime-formal-01",
+  "formal_command": "docker run --rm --platform linux/arm64 --network none --read-only --workdir /candidate --tmpfs /tmp:rw,noexec,nosuid,size=64m -e OBSTAC_SOURCE_COMMIT=61311817969251b814cb00b568a75c91a3591d3e -e OBSTAC_IMAGE_ID=sha256:fa36aca92a682831d72b7e49bf05a9c6e31e68eadb06f3d2728360ceb1e9f6cb -v ./work/issue3572:/candidate:ro -v ./work/issue3572/FREEZE.json:/freeze.json:ro -v ./work/issue3572/source_manifest.json:/source_manifest.json:ro -v ./work/issue3572/issue3580-xserver-lifetime-formal-01:/evidence:rw sha256:fa36aca92a682831d72b7e49bf05a9c6e31e68eadb06f3d2728360ceb1e9f6cb python -B /candidate/lifetime_experiment.py",
+  "exit_code": 0,
+  "runner_output": {
+    "decision": "PASS_XSERVER_LIFETIME_BINDING_REQUIRED_SCOPED",
+    "pairs": 4,
+    "rows": 16,
+    "negative_controls": 28,
+    "result_sha256": "72e0da8649f1e95334116f14af1724a5d2cd7043d7978188b13df2f30a3b3bc9"
+  },
+  "formal_invocations": 1,
+  "reruns": 0,
+  "authority": 0,
+  "input_calls": 0
+}

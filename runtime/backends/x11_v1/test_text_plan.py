@@ -1,6 +1,7 @@
 import unittest
 from unittest import mock
 from runtime.backends.x11_v1.backend import X11Backend, X11BackendError
+from runtime.core_v1.sequence import expand_text_gaps
 
 
 class TextPlanTests(unittest.TestCase):
@@ -36,6 +37,37 @@ class TextPlanTests(unittest.TestCase):
         with self.assertRaises(X11BackendError):
             backend.text("abc-")
         backend.key_chord.assert_not_called()
+
+    def test_paced_text_preflights_all_characters_before_any_operation(self):
+        for value, message in (("abc-", "missing minus"),
+                               ("abc\u2603", "unsupported text character")):
+            with self.subTest(value=value):
+                backend = self.backend()
+                backend.emissions = 0
+                backend._target = mock.Mock()
+                backend.focus = mock.Mock()
+                backend.release_all = mock.Mock()
+
+                def keycode(name):
+                    if name == "minus":
+                        raise X11BackendError("missing minus")
+                    return 1
+
+                backend._keycode.side_effect = keycode
+                operations, _ = expand_text_gaps([
+                    {"op": "focus", "target": "fixture"},
+                    {"op": "text", "text": value, "gap_ms": 20},
+                    {"op": "release_all"},
+                ])
+                with mock.patch('runtime.backends.x11_v1.backend.time.sleep') as sleep:
+                    with self.assertRaisesRegex(X11BackendError, message):
+                        backend.execute({"ops": operations})
+                    sleep.assert_not_called()
+                backend._target.assert_called_once_with("fixture")
+                backend.focus.assert_not_called()
+                backend.key_chord.assert_not_called()
+                backend.release_all.assert_not_called()
+                self.assertEqual(backend.emissions, 0)
 
     def test_url_symbols_follow_live_keymap_levels(self):
         backend = self.backend()

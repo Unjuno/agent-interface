@@ -1464,4 +1464,10 @@ a history-needed OpenTTD/Mindustry test; it is not promoted over current-only.
 
 One pinned linux/arm64/private-Xvfb allocation observed XRes 1.2 distinguishing p1 PID/start ticks from p2 after exact XID, geometry, and pixel reuse. The old alias failed closed with zero bridge/backend emissions and no p2 effect; a fresh alias produced the expected independent effect and verified release. The independent raw-only audit passed eight corruption controls. This is one experimental-wrapper allocation only. The exact freeze/source-manifest bytes are missing, so preregistration provenance remains incomplete; it is not promoted or a production/remote-X11 security claim. Preserve the initial audit STOP and the raw hash history. See [the detailed report](research/live_control/x11_xres_incarnation_guard_3555_v1/REPORT.md).
 
+
+
+### X-server lifetime identity replication — Issue #3574
+
+A provenance-complete linux/arm64 OrbStack allocation restarted private Xvfb four times per pair and reproduced the same XID, root XID, KNOWN_NULL transient relation, geometry and 153,600-byte pixel buffer in all four pairs while XRes 1.2 LocalClientPID and `/proc` start ticks changed. The exact #881 typed validator returned `EXACT_MATCH` for all stale cross-generation identities; an opaque observation-side server-instance comparison rejected all four while preserving four same-generation exact matches. Independent raw-only audit passed 16 classification rows and 24 fail-closed negative controls; seven separate-copy corruption probes passed. This remains one deterministic fixture result, not a production token implementation, remote-X11 security proof, or action authority. The earlier #902 eight-row comment and #3555 provenance-incomplete record remain unchanged. See [the retained report](research/integration/typed_recovery_xserver_lifetime_v1/issue_3574_lifetime_01/evidence/REPORT.md).
+
 </details>
