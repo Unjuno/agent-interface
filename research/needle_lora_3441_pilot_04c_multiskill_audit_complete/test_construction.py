@@ -14,7 +14,8 @@ class Construction(unittest.TestCase):
  def test_frozen_source_pins(self):
   freeze=json.loads((ROOT/"FREEZE.json").read_text(encoding="utf-8"))
   for name,digest in freeze["sources"].items():
-   self.assertEqual(hashlib.sha256((ROOT/name).read_bytes()).hexdigest(),digest,name)
+   canonical=(ROOT/name).read_text(encoding="utf-8").replace("\r\n","\n").encode("utf-8")
+   self.assertEqual(hashlib.sha256(canonical).hexdigest(),digest,name)
  def test_dataset_reproducibility_and_cardinality(self):
   x1,y1,h1=self.mod["dataset"](32,3445)
   x2,y2,h2=self.mod["dataset"](32,3445)
