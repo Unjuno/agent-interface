@@ -11,10 +11,13 @@ from runtime.selector_v1.selector import BackendUnavailable, open_session, selec
 class SelectorTests(unittest.TestCase):
     @unittest.skipUnless(sys.platform.startswith('linux'), 'actual Linux backend only')
     def test_explicit_display_selects_and_opens_same_x11_without_mutating_environment(self):
+        from runtime.backends.x11_v1 import backend as x11_backend
+        from runtime.backends.x11_v1 import session as x11_session
+
         for env in ({}, {'WAYLAND_DISPLAY': 'wayland-0'}, {'DISPLAY': ':88'}):
-            with self.subTest(env=env), mock.patch.dict(os.environ, env, clear=True), mock.patch(
-                    'runtime.backends.x11_v1.backend.X11Backend') as backend, mock.patch(
-                    'runtime.backends.x11_v1.session.X11RuntimeSession') as session:
+            with self.subTest(env=env), mock.patch.dict(os.environ, env, clear=True), mock.patch.object(
+                    x11_backend, 'X11Backend') as backend, mock.patch.object(
+                    x11_session, 'X11RuntimeSession') as session:
                 result = open_session({'fixture': 123}, display_name=':99')
                 backend.assert_called_once_with(':99', {'fixture': 123})
                 session.assert_called_once_with(backend.return_value)
