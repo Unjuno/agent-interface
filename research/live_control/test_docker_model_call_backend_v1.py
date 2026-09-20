@@ -142,6 +142,56 @@ class DockerBackendTest(unittest.TestCase):
             self.assertEqual(result['runner_ns'], 20)
             self.assertIsNone(result['cost'])
 
+    def test_compiled_contract_passes_schema_gate_and_semantic_parser(self):
+        from integrated_efficiency_model_v1 import CONTRACTS
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)/'call'
+            answer = {
+                'format': 'compiled-form-grounding-v1',
+                'field': {'point_space': 'source_observation_pixels',
+                          'point': {'x': 10, 'y': 20},
+                          'motion_model': 'surface_origin_translation'},
+                'submit': {'point_space': 'source_observation_pixels',
+                           'point': {'x': 30, 'y': 40},
+                           'motion_model': 'surface_origin_translation'},
+                'method': {
+                    'first_action': 'enter_exact_token',
+                    'continue_when': 'field_pixels_changed_and_submit_revalidated',
+                    'second_action': 'activate_submit',
+                    'complete_when': 'submission_pixels_changed_then_independent_score',
+                },
+            }
+            def runner(*args, **kwargs):
+                retained = root/'runner'; retained.mkdir()
+                rows = [
+                    {'type': 'thread.started', 'thread_id': 'synthetic-compiled-call'},
+                    {'type': 'item.completed', 'item': {
+                        'type': 'agent_message', 'text': json.dumps(answer)}},
+                    {'type': 'turn.completed', 'usage': {
+                        'input_tokens': 11, 'output_tokens': 9}},
+                ]
+                (retained/'events.jsonl').write_text(
+                    ''.join(json.dumps(row)+'\n' for row in rows))
+                (retained/'process.json').write_text(json.dumps({
+                    'started_ns': 100, 'exited_ns': 150,
+                    'requested_model': 'synthetic', 'requested_effort': 'low'}))
+                return SimpleNamespace(returncode=0, stdout='', stderr='')
+
+            with patch.dict(os.environ, {
+                    'AGENT_INTERFACE_DOCKER_SCHEMA': str(CONTRACTS['compiled'][0])}), \
+                 patch('docker_model_call_backend_v1.build_command', return_value=['inert']), \
+                 patch('docker_model_call_backend_v1.subprocess.run', side_effect=runner) as run:
+                result = call(root, 'prompt', Path(temp)/'image', 'compiled', Path(temp))
+                run.assert_called_once()
+
+            self.assertEqual(json.loads((root/'schema-validation.json').read_text())['status'], 'PASS')
+            self.assertEqual(result['grounding']['field_point'], [10, 20])
+            self.assertEqual(result['grounding']['submit_point'], [30, 40])
+            self.assertEqual(result['grounding']['method'], answer['method'])
+            self.assertEqual(result['usage'], {'input_tokens': 11, 'output_tokens': 9})
+            self.assertEqual(result['call_id'], 'synthetic-compiled-call')
+            self.assertEqual(result['runner_ns'], 50)
+
     def test_call_owns_prompt_creation_and_builder_owns_output_creation(self):
         source = Path(__file__).with_name('docker_model_call_backend_v1.py').read_text()
         self.assertEqual(source.count('root.mkdir(parents=True, exist_ok=False)'), 1)
@@ -188,3 +238,4 @@ class DockerBackendTest(unittest.TestCase):
                     else: os.environ[k]=v
 
 if __name__=='__main__': unittest.main()
+
