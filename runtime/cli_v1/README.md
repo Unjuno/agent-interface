@@ -126,6 +126,12 @@ These changes replace v1's conflated success booleans; callers inspecting the
 schema must accept v2 explicitly. This adapter still does not perform visual
 target revalidation, compile guarded methods or obtain an application score.
 
+Usage is forwarded separately from dispatch outcome. `usage_status` is `reported`
+only when a nonempty usage mapping is present from the explicit adapter argument
+or the raw dispatch response; otherwise it is `unavailable`. An empty `usage`
+object is a compatibility placeholder, not a zero-token report. Accounting code
+must check `usage_status` before aggregating numeric fields.
+
 
 Read a retained prepared-exchange receipt together with its referenced PNG:
 
