@@ -7,12 +7,14 @@ preflight, GUI, task, or efficiency behavior.
 from __future__ import annotations
 
 import json
+import hashlib
 import os
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import unittest
+from contextlib import nullcontext
 
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -23,8 +25,13 @@ IMAGE = "agent-interface-3311-runtime-v2:20260920"
 
 class OrbStackV1TransportTest(unittest.TestCase):
     def test_fake_cli_round_trip_over_shared_mounts(self):
-        with tempfile.TemporaryDirectory(prefix="3311-v1-ipc-") as temp:
+        evidence_path = os.environ.get("AGENT_INTERFACE_3311_V1_EVIDENCE_DIR")
+        context = nullcontext(evidence_path) if evidence_path else tempfile.TemporaryDirectory(
+            prefix="3311-v1-ipc-")
+        with context as temp:
             root = Path(temp)
+            if evidence_path:
+                root.mkdir(parents=True, exist_ok=False)
             repo, ipc, out = root / "repo", root / "ipc", root / "out"
             workspace = repo / "workspace"
             workspace.mkdir(parents=True); ipc.mkdir(); out.mkdir()
@@ -60,11 +67,24 @@ class OrbStackV1TransportTest(unittest.TestCase):
                 "/code/runner.py", "/usr/bin/node", "/usr/bin/true", "/repo/prompt.txt",
                 "/repo/workspace", "/out/runner", "handle", "-",
                 "/repo/instructions.txt", "/repo/schema.json"]
+            image_info = subprocess.run(["docker", "--context", "orbstack", "image",
+                "inspect", IMAGE], capture_output=True, text=True, check=True)
+            (root / "docker-image-inspect.json").write_text(image_info.stdout, encoding="utf-8")
+            (root / "container-command.json").write_text(json.dumps(command, indent=2) + "\n",
+                encoding="utf-8")
             container = subprocess.run(command, capture_output=True, text=True,
                                        check=False, timeout=30)
             if broker.poll() is None:
                 broker.terminate()
             broker_stdout, broker_stderr = broker.communicate(timeout=5)
+            (root / "container.stdout.txt").write_text(container.stdout, encoding="utf-8")
+            (root / "container.stderr.txt").write_text(container.stderr, encoding="utf-8")
+            (root / "broker.stdout.txt").write_text(broker_stdout, encoding="utf-8")
+            (root / "broker.stderr.txt").write_text(broker_stderr, encoding="utf-8")
+            if evidence_path:
+                (root / "exit-codes.json").write_text(json.dumps({
+                    "container": container.returncode, "broker": broker.returncode,
+                }, indent=2) + "\n", encoding="utf-8")
             self.assertEqual(container.returncode, 0,
                 container.stderr + "\nBROKER=" + broker_stdout + broker_stderr)
             self.assertEqual(broker.returncode, 0, broker_stderr or broker_stdout)
@@ -89,6 +109,12 @@ class OrbStackV1TransportTest(unittest.TestCase):
             process = json.loads((out / "runner/process.json").read_text(encoding="utf-8"))
             self.assertFalse(process["authority_granted"])
             self.assertEqual(process["boundary"], "container-to-host-model-ipc")
+            if evidence_path:
+                (root / "source-sha256.json").write_text(json.dumps({
+                    "broker_sha256": hashlib.sha256((RUNTIME / "host_model_ipc_broker_v1.py").read_bytes()).hexdigest(),
+                    "runner_sha256": hashlib.sha256((LIVE / "container_host_model_ipc_runner_v1.py").read_bytes()).hexdigest(),
+                    "test_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                }, indent=2) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

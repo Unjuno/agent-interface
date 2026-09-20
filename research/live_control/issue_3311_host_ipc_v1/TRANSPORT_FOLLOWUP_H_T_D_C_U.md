@@ -19,3 +19,11 @@ Fake CLI only; unique temporary fixture paths; Linux/arm64 pinned image identity
 ## U — unresolved / stop conditions
 
 The current frozen schema preflight still uses a Windows-only CLI path. The next gate is to route a fresh no-image schema preflight through this same host-IPC boundary, record host CLI/runtime identity and usage, then validate the integrated desktop workflow in a separately frozen allocation. No conclusion about #3311's hypothesis is available until that new gate and independent task audit complete.
+
+## Addendum — reviewed diagnostics and retained rerun (2026-09-20)
+
+The original transport result above is retained unchanged. A review of the new broker code identified that missing IPC assets, which raise `OSError` subclasses, could be mislabeled as an unavailable host executable. The broker now distinguishes pre-invocation refusal, CLI identity timeout, and actual CLI spawn failure, and records whether a spawn was attempted. A regression test covers a missing schema and proves no CLI lookup/invocation occurs.
+
+One additive OrbStack rerun was performed with the same pinned Linux/arm64 image and `--network none`; its unique raw bundle is `evidence/20260920-v1-transport-audit-01/`. The separately executed `audit_orbstack_v1_transport.py` reports `PASS_V1_SYNTHETIC_TRANSPORT_ONLY` across 13 checks, including exact image ID, one authority-false request, asset hashes, fake host CLI identity, event sequence, process boundary, zero exit codes and empty stderr. `raw-sha256.json` covers retained run files. The updated targeted suite has 18 passing tests (17 unit/contract tests plus this OrbStack transport test).
+
+This remains synthetic transport-only evidence. No actual model call or compiled-schema endpoint validation was made; #3489's gate still requires #3487 merge and green latest-head CI before that one-shot test.

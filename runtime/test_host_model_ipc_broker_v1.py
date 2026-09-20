@@ -98,6 +98,29 @@ class HostBrokerContractTest(unittest.TestCase):
             self.assertFalse(record["host_cli_invoked"])
             self.assertTrue((ipc / "refused.response.jsonl").is_file())
 
+    def test_missing_asset_is_a_request_refusal_not_cli_failure(self):
+        import json
+        import os
+        from unittest.mock import patch
+        from runtime.host_model_ipc_broker_v1 import serve
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); ipc = root / "ipc"; repo = root / "repo"
+            ipc.mkdir(); repo.mkdir(); (repo / "workspace").mkdir()
+            request = {"request_id":"missing-schema", "authority_granted":False,
+                "mode":"handle", "schema":"/repo/missing-schema.json",
+                "schema_sha256":"0" * 64, "instructions":"/repo/instructions.txt",
+                "instructions_sha256":"0" * 64, "working":"/repo/workspace",
+                "image":None, "prompt":"probe"}
+            (ipc / "missing-schema.request.json").write_text(json.dumps(request))
+            with patch.dict(os.environ, {"CODEX_EXE":"codex-not-used"}):
+                result = serve(ipc, repo, once=True)
+            record = json.loads((ipc / "missing-schema.broker.json").read_text())
+            self.assertEqual(result, 1)
+            self.assertEqual(record["stop_reason"], "HOST_BROKER_REQUEST_REFUSED")
+            self.assertEqual(record["error_class"], "FileNotFoundError")
+            self.assertFalse(record["host_cli_invoked"])
+            self.assertFalse(record["host_cli_spawn_attempted"])
+
 
 if __name__ == "__main__":
     unittest.main()

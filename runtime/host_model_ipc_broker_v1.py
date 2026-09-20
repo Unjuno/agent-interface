@@ -109,10 +109,12 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                 continue
             started_ns = time.perf_counter_ns()
             host_cli_invoked = False
+            cli_spawn_attempted = False
             identity = None
             try:
                 args = build_command(request, repo, cli)
                 identity = executable_identity(cli)
+                cli_spawn_attempted = True
                 host_cli_invoked = True
                 completed = subprocess.run(args, input=request["prompt"] + "\n",
                                            text=True, encoding="utf-8", errors="replace",
@@ -121,25 +123,31 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                           "stderr": (completed.stderr or "")[-2000:],
                           "boundary": "host-local-codex-exe", "authority_granted": False,
                           "host_cli_invoked": host_cli_invoked,
+                          "host_cli_spawn_attempted": cli_spawn_attempted,
                           "host_cli_identity": identity,
                           "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                 response = completed.stdout or ""
             except subprocess.TimeoutExpired as exc:
                 broker = {"request_id": request_id, "returncode": None,
-                          "error_class": "TimeoutExpired", "stop_reason": "HOST_BROKER_SUBPROCESS_TIMEOUT",
+                          "error_class": "TimeoutExpired",
+                          "stop_reason": ("HOST_BROKER_SUBPROCESS_TIMEOUT" if cli_spawn_attempted
+                                          else "HOST_CLI_IDENTITY_TIMEOUT"),
                           "timeout_s": timeout_s, "stderr": str(exc)[-2000:],
                           "boundary": "host-local-codex-exe", "authority_granted": False,
                           "host_cli_invoked": host_cli_invoked,
+                          "host_cli_spawn_attempted": cli_spawn_attempted,
                           "host_cli_identity": identity,
                           "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                 response = ""
             except OSError as exc:
                 broker = {"request_id": request_id, "returncode": None,
                           "error_class": type(exc).__name__,
-                          "stop_reason": "HOST_BROKER_EXECUTABLE_UNAVAILABLE",
+                          "stop_reason": ("HOST_BROKER_EXECUTABLE_UNAVAILABLE" if cli_spawn_attempted
+                                          else "HOST_BROKER_REQUEST_REFUSED"),
                           "stderr": str(exc)[-2000:],
                           "boundary": "host-local-codex-exe", "authority_granted": False,
-                          "host_cli_invoked": False,
+                          "host_cli_invoked": host_cli_invoked,
+                          "host_cli_spawn_attempted": cli_spawn_attempted,
                           "host_cli_identity": identity,
                           "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                 response = ""
@@ -150,6 +158,7 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                           "stderr": str(exc)[-2000:],
                           "boundary": "host-local-codex-exe", "authority_granted": False,
                           "host_cli_invoked": False,
+                          "host_cli_spawn_attempted": cli_spawn_attempted,
                           "host_cli_identity": identity,
                           "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                 response = ""
