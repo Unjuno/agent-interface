@@ -20,6 +20,38 @@ Do not start a second harness or guess the newest run to attach. The host must
 forward image content blocks. This repository does not auto-edit host settings,
 install a plugin or add tools to the current Codex conversation.
 
+## Choose the operation by what you need now
+
+| Need | Call | Effect |
+| --- | --- | --- |
+| Start the configured private allocation | `native_start` (managed mode) | Starts once; later calls follow the same owner |
+| Reread a known source image | `native_observe(stage)` | Historical evidence only, no new capture |
+| Get a new image without keyboard/mouse input | `native_submit(stage, {source_sequence, interaction:"observe"})` | One read-only current-window review/capture; consumes a stage |
+| Act on a viewed image | `native_submit` with an explicit click/keyboard decision | Existing source guards and input admission apply |
+| Recover a pending committed response | `native_resume(stage, decision_sha256)` | Reads the exact request; never republishes input |
+| End after reviewing the result | `native_submit(stage, {source_sequence, finish:true})` | Evaluates and cleans up without more input |
+
+For fresh observation, include only `source_sequence` and `interaction` in the
+decision. Point, tail, finish flags and extension fields are rejected, even if
+empty or false. The source sequence comes from the last image you viewed and the
+stage from its valid continuation. Current-window review can follow focus back
+from a closed dialog on the private display; it never moves focus and revokes
+old target aliases. A capture is not a readiness or success assertion. Failure
+does not permit replay. Leave stage capacity for later input and explicit finish.
+
+After Save, inspect the returned image. If a dialog is still being painted,
+request a fresh observation instead of guessing a button or sending a dummy key.
+After confirming the visible format choice, inspect the sheet before finish if
+visual completion matters. `finish_after` closes the session after the action;
+it cannot leave the same session available for another visual check afterward.
+
+The [Calc visual-finish record](../../runtime/results/native-calc-visual-finish-01/README.md)
+contains this exact pattern with two input programs and two explicit observations.
+It used seven MCP calls including startup, explicit finish and process status;
+it is correctness/recovery evidence, not a speedup. The earlier
+[wait-only keyboard failure](../../runtime/results/native-snapshot-calc-transfer-01/README.md)
+shows why wait_update alone is not a supported keyboard continuation.
+
 - `native_observe(stage)` reads the retained source image, without recapture.
   It includes `session_context` containing the recorded public goal and exchange
   contract, with exact source hashes. Missing or malformed context stays explicit
@@ -29,9 +61,10 @@ install a plugin or add tools to the current Codex conversation.
   and guarded action execution. After pending/error, never retry submit.
   The tool schema describes source_sequence, point, expected_title, interaction,
   tail and strict boolean finish/finish_after. Action decisions need point/title;
-  finish=true needs only source_sequence. Malformed envelopes refuse before
+  finish=true needs only source_sequence; interaction=observe needs only
+  source_sequence and interaction. Malformed envelopes refuse before
   publication. Unspecified defaults are not inserted into the saved request;
-  extension fields remain available. Tail/runtime admission is still checked
+  extension fields remain available for action decisions. Tail/runtime admission is still checked
   by the existing harness and backend, not certified by this input schema.
 - `native_resume(stage, decision_sha256, timeout=5)` follows the existing
   read-only digest-bound path. It does not create a missing request.
@@ -86,7 +119,12 @@ select the latest stage: use native_observe with an explicit later stage.
 
 Use native_submit with finish_after for the final action, or finish for an
 explicit no-action finish. Then inspect the task result and cleanup receipt;
-native_status separately reports process termination. Exit code zero alone is
+managed submit/resume responses also contain a read-time allocation snapshot.
+If that snapshot is not terminal and process exit needs confirmation, use
+native_status on the same owner. No waiting for exit or restart is hidden in the
+snapshot. `initial_source_stage` in an action response describes startup, while
+`continuation.stage` describes the next available stage; they are not substitutes.
+Exit code zero alone is
 not task success or verified cleanup. Managed submission requires this server
 to own a live ready allocation.
 
@@ -123,6 +161,21 @@ SDK mcp1.30.0; transitive packages are not fully locked. Runtime core has no new
 mandatory dependency. A dedicated CI workflow tests only this optional adapter.
 Next gate: primary-assistant use through a host-registered tool on the same
 task/environment, with full content/image preservation and measured host costs.
+
+The [Windows-to-WSL host connection record](native_host_registration_v1/README.md)
+now verifies initialization, five-tool discovery and not_started status through
+the Windows MCP SDK. A project-scoped Codex configuration was recognized from
+its project root, but the active primary-assistant tool inventory still did not
+contain these tools. This is registration/transport evidence, not direct model
+use. A nested separate Git worktree did not see that project-root entry.
+
+The [call-boundary accounting](native_call_boundaries_v1/README.md) measured
+109.085 seconds overall with 4.674 seconds in SDK calls and 104.411 seconds
+between calls for one Calc session. Gaps include orchestration, image handling,
+deliberation and commentary; they are not model inference time alone. Do not
+attribute them to the configured feedback timeout or claim host latency/token
+savings before directly measuring those boundaries. Historical test counts below
+and above belong to their named trials, not a single current full-suite total.
 
 A [direct image-forwarding trial](../../runtime/results/native-mcp-direct-image-01/README.md)
 passes the actual MCP text/image blocks through orchestration without a separate
