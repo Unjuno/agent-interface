@@ -94,7 +94,8 @@ class RetainedEvidenceAuditTest(unittest.TestCase):
 
     def test_portable_sidecar_reports_match_current_auditor_checks(self):
         root = Path(__file__).resolve().parent
-        names = ("20260920-v1-transport-audit-01", "20260920-v1-transport-audit-02")
+        names = ("20260920-v1-transport-audit-01", "20260920-v1-transport-audit-02",
+                 "20260920-v1-transport-audit-03")
         for index, name in enumerate(names, start=1):
             with self.subTest(bundle=name):
                 report = auditor.audit(root / "evidence" / name)
