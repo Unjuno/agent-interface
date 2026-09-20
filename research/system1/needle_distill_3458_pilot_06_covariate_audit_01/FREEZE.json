@@ -1,0 +1,53 @@
+{
+  "schema": "needle-covariate-audit-freeze-v1",
+  "issue": 3892,
+  "allocation": "needle-3869-full-shift-covariate-audit-01",
+  "branch": "research/issue-3892-full-covariate-audit-20260921",
+  "base_main_sha": "cc9c500a339406c7de71df04c1d4b23f12fdbb09",
+  "source_commit": "eb85b2d4d7bcc4c4ebd84a0bbc5bb6f0dd750345",
+  "predecessor": {
+    "issue": 3869,
+    "pr": 3882,
+    "merge_commit": "f7d5cc8535995db0c36dd85d4b71877503bd0db8",
+    "result_path": "research/system1/needle_distill_3458_pilot_06_isolated_shift_audit/formal/formal-01/FORMAL_RESULT.json",
+    "result_git_blob_sha1": "d6259323e86dba3ae12f76765aed62ab9d78dfa8",
+    "result_sha256": "0878c39a68fe2abea218132b307ceff77df1e9a52291ba14186f2c8c423e37a7",
+    "frozen_runner_sha256": "0a1900f6125c0b3a253cac56b88459b43e48fe0104290273151b8697eef4f20e"
+  },
+  "source_sha256": {
+    "audit.py": "e139ae0bc123b27552540a4069a9b741edeb5af074e764d899c2a7bdeae1eaad",
+    "test_audit.py": "297d2c6da4a18c11cbdc9447abe44280f95e8c8e5bdf87d51176861959be14b6",
+    "PREREGISTRATION.md": "b05c7b0ad6d36390c797353134cba167f59d0e345c2a4a1289db44264597d726",
+    "ENVIRONMENT.json": "ec53499ececed58a1a2f325e97ec90622476580e9ab549ad073ac9463a8cb641",
+    "CONSTRUCTION.md": "74ddfa6cd2bdcc3f9c1e3f2e740b28512f951535dca51e18076de476279feaed"
+  },
+  "audit_formal_invocations_allowed": 1,
+  "audit_formal_invocations_before_freeze": 0,
+  "model_runner_invocations": 0,
+  "retries_allowed": 0,
+  "features_per_row": ["dx", "dy", "vx", "vy", "confidence", "visible"],
+  "feature_tolerance": 0.000001,
+  "expected_numeric_disposition": "FAIL_NEAR_BOUNDARY_SHIFT",
+  "container": {
+    "docker_engine": "29.8.0",
+    "context": "desktop-linux",
+    "platform": "linux/amd64",
+    "image": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "python": "3.12.14",
+    "torch": "2.5.1+cpu",
+    "device": "CPU only",
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "raw_input_mount": "read-only",
+    "audit_output_mount": "dedicated writable audit/formal-01 only",
+    "tmpfs": "64m",
+    "memory": "4g",
+    "cpus": 2,
+    "pids_limit": 64,
+    "manual_wall_time_bound_seconds": 900
+  },
+  "formal_command": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=64m --pids-limit 64 --memory 4g --cpus 2 --mount type=bind,source=C:/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-3/work/issue-3892-covariate-audit/research/system1/needle_distill_3458_pilot_06_covariate_audit_01,target=/src,readonly --mount type=bind,source=C:/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-3/work/issue-3892-covariate-audit/research/system1/needle_distill_3458_pilot_06_isolated_shift_audit/formal/formal-01/FORMAL_RESULT.json,target=/input/FORMAL_RESULT.json,readonly --mount type=bind,source=C:/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-3/work/issue-3892-covariate-audit/research/system1/needle_distill_3458_pilot_06_covariate_audit_01/audit/formal-01,target=/out --workdir /src needle-pilot05:local audit.py /input/FORMAL_RESULT.json --output /out/AUDIT.json",
+  "construction": "9/9 unittest; six-column corruption control 6/6; no raw input audit and no model training before freeze"
+}
