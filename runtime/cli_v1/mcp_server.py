@@ -14,7 +14,7 @@ from pydantic import StrictBool, StrictInt, StrictStr
 
 from .api import dispatch
 from .observe import observe
-from .review import review_bytes
+from .review import present_result
 
 
 def content(result, *, error=False):
@@ -70,11 +70,7 @@ def create_server(targets, output_directory, *, display_name=None):
                 persistence_error = None
             except OSError as error:
                 persistence_error = repr(error)
-            try:
-                result = review_bytes(data, call_root, compact=compact)
-            except Exception as error:
-                result = {'status': 'needs_review', 'review_error': repr(error),
-                          'raw_report': report, 'image': None}
+            result = present_result(report, call_root, compact=compact)
             result['call_directory'] = str(call_root)
             if persistence_error is not None:
                 result['persistence_error'] = persistence_error

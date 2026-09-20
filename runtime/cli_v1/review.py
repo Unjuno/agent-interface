@@ -22,6 +22,18 @@ def review_bytes(data: bytes, run_directory, *, compact=False):
     return _review(data, receipt_bytes(data), run_directory, compact=compact)
 
 
+def present_result(report, run_directory, *, compact=False):
+    """Shared transport presentation; a review error never discards the action result."""
+    try:
+        return review_bytes(json.dumps(report, allow_nan=False).encode('utf-8'),
+                            run_directory, compact=compact)
+    except Exception as error:
+        return {'schema': 'agent-interface/review-v1', 'authority': 'none',
+                'image': None, 'image_status': 'needs_review',
+                'image_error': str(error), 'raw_result': report,
+                'outcome_summary': outcome_summary(report)}
+
+
 def _failure_source(report, failed):
     """Map a recorded failure only when the retained expansion is consistent."""
     compilation = report.get('compilation')

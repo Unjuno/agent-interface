@@ -7,7 +7,7 @@ from pathlib import Path
 
 from .api import dispatch, doctor
 from .receipt import receipt_view
-from .review import review, review_bytes
+from .review import review, review_bytes, present_result
 from .observe import observe
 
 
@@ -27,13 +27,7 @@ def _present_result(row, *, with_review, capture_directory, exit_code, compact=F
     if not with_review:
         _emit(row)
         return exit_code
-    try:
-        presented = review_bytes(json.dumps(row).encode('utf-8'), capture_directory, compact=compact)
-    except (OSError, ValueError, TypeError) as error:
-        # Presentation failure cannot erase an already-issued action result.
-        presented = {'schema': 'agent-interface/review-v1', 'authority': 'none',
-                     'image': None, 'image_status': 'needs_review',
-                     'image_error': str(error), 'raw_result': row}
+    presented = present_result(row, capture_directory, compact=compact)
     _emit(presented)
     return exit_code or (2 if presented['image_status'] == 'needs_review' else 0)
 
