@@ -19,6 +19,6 @@ Both must return `FAIL_AUDIT_INTEGRITY`. These controls complement the merged ni
 
 - **H:** The merged auditor rejects semantically inconsistent focus and modal receipts even when event hashes and sequence numbers are recomputed.
 - **T:** Run `python test_semantic_mutations.py`. It reads the immutable `evidence/frozen_3652_formal01_raw.json`, creates corrupted copies only in a fresh temporary directory, and replays the frozen predecessor readback auditor. No GUI, model, network, or input.
-- **D:** PASS only if both new cases return `FAIL_AUDIT_INTEGRITY` under the new auditor, the untouched case remains HOLD, and the predecessor replay emits JSON receipts.
+- **D:** PASS only if both new cases return `FAIL_AUDIT_INTEGRITY` under the new auditor, the untouched case remains HOLD, the predecessor returns `PASS_POSTHOC_EVENT_RECOMPUTATION`/exit 0 on untouched raw, and returns `HOLD_POSTHOC_EVENT_RECOMPUTATION`/exit 1 on each semantic mutation. Missing or unexpected predecessor receipts fail the gate.
 - **C:** Same frozen raw SHA-256 and merged auditor; only two synthetic corrupted copies are new. The mutation implementation is in a separate file so the frozen source manifest remains valid.
 - **U:** This adds assurance only for these two event-field mutations; it does not create missing observations, retroactively upgrade the historical transitions, or establish runtime behavior. Docker Desktop is unavailable locally, so the bounded test runs in WSL Ubuntu, not a container.

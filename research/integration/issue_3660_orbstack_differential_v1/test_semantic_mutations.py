@@ -43,6 +43,11 @@ def main():
         "focus_active_wrong_resealed": "FAIL_AUDIT_INTEGRITY",
         "modal_parent_wrong_resealed": "FAIL_AUDIT_INTEGRITY",
     }
+    expected_predecessor = {
+        "untouched": (0, "PASS_POSTHOC_EVENT_RECOMPUTATION"),
+        "focus_active_wrong_resealed": (1, "HOLD_POSTHOC_EVENT_RECOMPUTATION"),
+        "modal_parent_wrong_resealed": (1, "HOLD_POSTHOC_EVENT_RECOMPUTATION"),
+    }
     results = {name: audit(value) for name, value in cases.items()}
     failures = [name for name, result in results.items() if result["decision"] != expected[name]]
 
@@ -67,6 +72,13 @@ def main():
                 "errors": old_result.get("errors", []),
             }
 
+    predecessor_failures = [
+        name for name, (exit_code, decision) in expected_predecessor.items()
+        if predecessor_results[name]["exit_code"] != exit_code
+        or predecessor_results[name]["decision"] != decision
+    ]
+    failures.extend(f"predecessor:{name}" for name in predecessor_failures)
+
     receipt = {
         "decision": "PASS_SEMANTIC_MUTATION_CONTROLS" if not failures else "FAIL_MUTATION_ACCEPTED",
         "frozen_raw_sha256": hashlib.sha256(RAW_PATH.read_bytes()).hexdigest(),
@@ -74,6 +86,10 @@ def main():
         "results": {name: {"decision": result["decision"], "errors": result["errors"], "gaps": result["gaps"]}
                     for name, result in results.items()},
         "mutant_sha256": mutant_hashes,
+        "expected_predecessor": {
+            name: {"exit_code": exit_code, "decision": decision}
+            for name, (exit_code, decision) in expected_predecessor.items()
+        },
         "predecessor_audit_replay": predecessor_results,
         "failures": failures,
     }
