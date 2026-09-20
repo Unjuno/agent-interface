@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 1106)
-Total output lines: 106
-
 {
   "schema": "needle-multiskill-freeze-v1",
   "issue": 3912,
@@ -8,6 +5,8 @@ Total output lines: 106
   "seed": 3914,
   "repository": "Unjuno/agent-interface",
   "mainBase": "8085e682f6363ec4cd95648e55c16dfca9049dd0",
+  "latestMainBeforeFormal": "fab3b392fb854696312a85a6b859a78369c3e737",
+  "mainAdvancedAfterBranchCreation": true,
   "branch": "research/needle-lora-3441-pilot-04d-20260921",
   "path": "research/needle_lora_3441_pilot_04d_multiskill_400base/",
   "predecessor": {
@@ -51,7 +50,23 @@ Total output lines: 106
       "aEval": "seed+4",
       "bEval": "seed+5",
       "cEval": "seed+6"
-   …106 tokens truncated…aining is corrected to exactly 400 optimizer updates; each B/C and shared adapter update remains 120. Dispatch returns the exact model scored. Retain every heldout row. Full module state_dict roundtrip/rollback exact."
+    },
+    "updateSeeds": {
+      "base": "seed+10",
+      "globalInit": "seed+11",
+      "bInit": "seed+12",
+      "cInit": "seed+13",
+      "globalB": "seed+20",
+      "globalC": "seed+21",
+      "adapterB": "seed+22",
+      "adapterC": "seed+23"
+    },
+    "arms": [
+      "base_A",
+      "routed_BC",
+      "shared_B_then_C"
+    ],
+    "details": "Same #3701 synthetic task and hyperparameters; fresh seed 3914; base pretraining is corrected to exactly 400 optimizer updates; each B/C and shared adapter update remains 120. Dispatch returns the exact model scored. Retain every heldout row. Full module state_dict roundtrip/rollback exact."
   },
   "D": {
     "pass": "PASS_MULTI_SKILL_ROUTING_SCOPED only if all routed A/B/C >=0.90; all invalid routes YIELD; base immutable; full module snapshot/rollback exact; independent auditor regenerates expected labels and recomputes every retained row metric; setup and four update timings separately recorded.",
