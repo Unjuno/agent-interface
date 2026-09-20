@@ -29,7 +29,7 @@ Construction on the collided predecessor branch (not formal rows): (1) an incorr
 
 ## C / Constraints
 
-Docker Desktop 28.5.1, Linux/amd64, cached `python:3.12-slim` image ID `sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9`. No pull, network disabled, read-only root and source, dedicated fresh evidence mount, 64 MiB tmpfs, 1 CPU, 768 MiB memory, 128 PID limit, all capabilities dropped, `no-new-privileges`. Only the audit scripts and the two source files are read. No workflow/launcher import or execution, game, model, GUI, input, runtime mutation, or Docker cleanup.
+Docker Desktop 28.5.1, current context `desktop-linux`, daemon name `docker-desktop`, Linux/x86_64; cached `python:3.12-slim` image ID `sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9` (linux/amd64). The immutable image-ID invocation was checked with `python --version` before freeze. No pull, network disabled, read-only root and source, dedicated fresh evidence mount, 64 MiB tmpfs, 1 CPU, 768 MiB memory, 128 PID limit, all capabilities dropped, `no-new-privileges`. Only the audit scripts and the two source files are read. No workflow/launcher import or execution, game, model, GUI, input, runtime mutation, or Docker cleanup.
 
 ## U / Limits
 

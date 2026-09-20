@@ -42,3 +42,5 @@ docker run --rm --pull=never --network none --read-only `
 Two preparatory commands on the collided predecessor branch stopped before target import (invalid entrypoint; malformed inline quoting). Their records are disclosed in [PLAN.md](PLAN.md). The Docker Desktop successor's own construction check is recorded separately at `results/construction-01/` and is not a formal row.
 
 Formal writes `formal_result.json`, `independent_audit.json`, verifier stdout/stderr, and `RESULT.json` to `/out`. Do not rerun if the command fails or the output is partial; preserve it and classify the observed STOP/FAIL.
+
+For the formal invocation, capture Docker stdout/stderr and `$LASTEXITCODE` to `docker-output.txt` and `docker-exit-code.txt` in the fresh formal output root after the process returns. Retain nonzero output as-is; do not invoke the command again. The exact issue freeze comment records the command, branch commit, local context, image ID, and all six input-source SHA-256 values.
