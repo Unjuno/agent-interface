@@ -18,8 +18,7 @@ Pinned-container test `construction_test.py` creates one private Xvfb, maps and 
 
 ## Freeze
 
-- Base: `f319d64a0de28ba765f86772123308e3d96baac2`
-- Runner SHA-256: `08e9292718e53534ab0b9f483e09fffab57bb1357d36dbe5b4b6fd40aa36a3ff`
-- Source manifest SHA-256: `22540dc84eb39df38566d42c025732024d586b9ca24ce72c7115d8e387997eea`
+- Base: `492279afebf6a0bafc31fb1e1558c53805761c0d`
+- Runner SHA-256: `bb202694699595887735b9121324b402751c5171087ad993853dde4cde2b1e9e`
+- Source manifest SHA-256: `a75320185da90945ebca6b442df4972b032c687c6f8710a5aa4856f41ddc9374`
 - Auditor is separately implemented and writes only to the audit output mount.
-

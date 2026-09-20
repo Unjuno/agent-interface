@@ -4,10 +4,10 @@ import json
 from pathlib import Path
 import sys
 
-BASE = "f319d64a0de28ba765f86772123308e3d96baac2"
+BASE = "492279afebf6a0bafc31fb1e1558c53805761c0d"
 IMAGE = "agent-interface-2972@sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27"
-RUNNER_SHA = "08e9292718e53534ab0b9f483e09fffab57bb1357d36dbe5b4b6fd40aa36a3ff"
-MANIFEST_SHA = "22540dc84eb39df38566d42c025732024d586b9ca24ce72c7115d8e387997eea"
+RUNNER_SHA = "bb202694699595887735b9121324b402751c5171087ad993853dde4cde2b1e9e"
+MANIFEST_SHA = "a75320185da90945ebca6b442df4972b032c687c6f8710a5aa4856f41ddc9374"
 MATRIX = [("de-01", "de"), ("de-02", "de"), ("de-03", "de"), ("us-control", "us")]
 FORMULA = "=B2*A2"
 

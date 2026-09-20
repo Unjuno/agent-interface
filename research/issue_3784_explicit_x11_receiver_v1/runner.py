@@ -14,7 +14,7 @@ from Xlib import X, XK, display
 from Xlib.ext import xtest
 
 ALLOCATION = "issue3784-explicit-x11-receiver-formal-01"
-BASE = "f319d64a0de28ba765f86772123308e3d96baac2"
+BASE = "492279afebf6a0bafc31fb1e1558c53805761c0d"
 IMAGE = "agent-interface-2972@sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27"
 FORMULA = "=B2*A2"
 UNSUPPORTED = "=B2*A2€"
