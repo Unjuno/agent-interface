@@ -25,18 +25,40 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Check out immutable historical evidence separately
+        uses: actions/checkout@v4
+        with:
+          ref: e3d04078d8d6d09fe3a3e33456b144c3d892adee
+          path: historical-source
+          persist-credentials: false
       - name: Test publication closure gates
         run: python -m unittest discover -s research/integration/issue_3370_delivery_publication_closure_v1 -p 'test_*.py' -v
       - name: Compile audit
         run: python -m py_compile research/integration/issue_3370_delivery_publication_closure_v1/audit.py research/integration/issue_3370_delivery_publication_closure_v1/test_audit.py
-      - name: Reconstruct frozen public evidence inventory
+      - name: Preserve the immutable historical HOLD regression
+        shell: bash
+        run: |
+          set +e
+          python research/integration/issue_3370_delivery_publication_closure_v1/audit.py \
+            --bundle historical-source/research/integration/issue_3370_delivery_comparison_v1 \
+            --output "$RUNNER_TEMP/issue-3602-historical-audit.json"
+          historical_status=$?
+          set -e
+          test "$historical_status" -eq 1
+          python -c 'import json,sys; r=json.load(open(sys.argv[1], encoding="utf-8")); expected={"evidence/direct_mcp_image/allocation/stderr.log", "evidence/direct_mcp_image/allocation/stdout.log", "evidence/direct_mcp_image/mcp-stderr.log", "evidence/saved_file_view_image/allocation/stderr.log", "evidence/saved_file_view_image/allocation/stdout.log", "evidence/saved_file_view_image/mcp-stderr.log"}; assert r["result"] == "HOLD_PUBLICATION_GAP"; assert r["manifest_entries"] == 99 and r["present_and_matching"] == 93; assert set(r["missing"]) == expected; assert not r["mismatched"] and not r["unlisted"] and not r["failures"]' "$RUNNER_TEMP/issue-3602-historical-audit.json"
+      - name: Audit the current candidate publication independently
         shell: bash
         run: |
           set +e
           python research/integration/issue_3370_delivery_publication_closure_v1/audit.py \
             --bundle research/integration/issue_3370_delivery_comparison_v1 \
-            --output "$RUNNER_TEMP/issue-3602-publication-audit.json"
-          status=$?
+            --output "$RUNNER_TEMP/issue-3602-current-audit.json"
+          current_status=$?
           set -e
-          test "$status" -eq 1
-          python -c 'import json,sys; r=json.load(open(sys.argv[1], encoding="utf-8")); expected={"evidence/direct_mcp_image/allocation/stderr.log", "evidence/direct_mcp_image/allocation/stdout.log", "evidence/direct_mcp_image/mcp-stderr.log", "evidence/saved_file_view_image/allocation/stderr.log", "evidence/saved_file_view_image/allocation/stdout.log", "evidence/saved_file_view_image/mcp-stderr.log"}; assert r["result"] == "HOLD_PUBLICATION_GAP"; assert r["manifest_entries"] == 99 and r["present_and_matching"] == 93; assert set(r["missing"]) == expected; assert not r["mismatched"] and not r["unlisted"] and not r["failures"]' "$RUNNER_TEMP/issue-3602-publication-audit.json"
+          python -c 'import json,sys; r=json.load(open(sys.argv[1], encoding="utf-8")); assert r["result"] in ("PASS_PUBLICATION_CLOSED", "HOLD_PUBLICATION_GAP"); assert r["manifest_entries"] == 99; assert r["present_and_matching"] + len(r["missing"]) == 99; assert not r["mismatched"] and not r["unlisted"] and not r["failures"]' "$RUNNER_TEMP/issue-3602-current-audit.json"
+          if [ "$current_status" -eq 0 ]; then
+            python -c 'import json,sys; assert json.load(open(sys.argv[1], encoding="utf-8"))["result"] == "PASS_PUBLICATION_CLOSED"' "$RUNNER_TEMP/issue-3602-current-audit.json"
+          else
+            test "$current_status" -eq 1
+          fi
+          cmp historical-source/research/integration/issue_3370_delivery_comparison_v1/evidence/manifest.json research/integration/issue_3370_delivery_comparison_v1/evidence/manifest.json
