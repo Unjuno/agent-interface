@@ -1,0 +1,31 @@
+{
+  "schema": "issue3691-docker-validation-manifest-v1",
+  "source_commit": "f823cbc77e87d2f9ff3456ddf49f2f819bbc340a",
+  "source_path": "research/issue_3691_audit_integrity_v1",
+  "source_sha256": {
+    "EXPECTED_STUDY.json": "5de1bcec9910046c04041ef87caac393f65eac0114c1108017955ac8a0017681",
+    "FREEZE.json": "b74f0662da1f0f84477857de2dbddf87371df7568fac6955dbac98c550cc0ea9",
+    "audit.py": "2852a352117c95dcca56dead2830b868ceeabd70cad72ee852f78d02a9cb852e",
+    "evidence/predecessor_FREEZE.json": "f40494b1be99fb1e68d7b09c498297df35a72c043740b5f09d3faec7e059acfe",
+    "evidence/raw.json": "ccb9a75eefb7df73cb13dbc9191d33334fb672c2fd58fcc5fa32be998e182807",
+    "test_integrity.py": "df18654ec0ce5fe138fc13aee394057cb745d81a4205e9f80911f705c322109e"
+  },
+  "container": {
+    "engine": "OrbStack Docker Engine 29.4.0",
+    "platform": "linux/arm64",
+    "python_image": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only"
+  },
+  "outcomes": {
+    "unit_tests": "PASS 8/8",
+    "fresh_container_cli": "PASS_OFFLINE_STRUCTURAL_AUDIT",
+    "cli_control_count": 12,
+    "cli_errors": []
+  },
+  "prior_artifact_drift": {
+    "artifacts/native_tests.txt": "reports 7/7; current frozen source ran 8/8",
+    "artifacts/native_audit.json": "11 controls; current CLI reports 12 including replacement_study_manifest"
+  }
+}
