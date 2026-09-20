@@ -291,6 +291,40 @@ class CliTests(unittest.TestCase):
         self.assertEqual(data["schema"], "agent-interface/runtime-doctor-v1")
         self.assertFalse(data["side_effect_authority"])
 
+    def test_dependency_diagnostics_do_not_contaminate_retained_cli_json(self):
+        from runtime.cli_v1.__main__ import main
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            targets = root / 'targets.json'
+            targets.write_text('{"fixture":1}', encoding='utf-8')
+            program = root / 'program.json'
+            program.write_text('{}', encoding='utf-8')
+            for operation, extra, report in [
+                ('observe', ['--target', 'fixture', '--frame', 'window_client',
+                             '--region', '0', '0', '100', '100'], {'status': 'returned'}),
+                ('dispatch', ['--program', str(program), '--current-observation-seq', '1',
+                              '--current-binding-revision', '0'],
+                 {'status': 'returned', 'result': {'status': 'completed'}}),
+            ]:
+                with self.subTest(operation=operation):
+                    def noisy(**kwargs):
+                        print('dependency diagnostic')
+                        return report
+                    run = root / operation
+                    args = [operation, '--targets', str(targets), '--run-directory', str(run), *extra]
+                    stdout, stderr = io.StringIO(), io.StringIO()
+                    with mock.patch('runtime.cli_v1.__main__.' + operation, side_effect=noisy) as called, \
+                         mock.patch.object(sys, 'stdout', stdout), mock.patch.object(sys, 'stderr', stderr), \
+                         mock.patch.object(sys, 'argv', ['agent-interface', *args]):
+                        self.assertEqual(main(), 0)
+                    called.assert_called_once()
+                    self.assertEqual(stderr.getvalue(), 'dependency diagnostic\n')
+                    self.assertEqual(len(stdout.getvalue().splitlines()), 1)
+                    response = json.loads(stdout.getvalue())
+                    self.assertTrue(response.pop('retention')['report_persisted'])
+                    self.assertEqual(response, report)
+                    self.assertEqual(json.loads((run / 'report.json').read_bytes()), report)
+
     def test_malformed_json_is_nonzero_and_json_only(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)

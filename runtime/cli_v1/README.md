@@ -379,6 +379,13 @@ flush completion is not acknowledgement that the host or model received the resu
 
 ### Caller recovery after missing or truncated output
 
+During CLI observe/dispatch invocation, Python-level dependency diagnostics
+written to stdout are redirected to stderr. The structured response is emitted
+on stdout after invocation. This covers printed Xlib warnings; it does not
+redirect native file-descriptor writes. The direct Python API is unchanged.
+The CLI entry point temporarily changes Python's process-wide stdout, so use
+separate CLI processes rather than calling `main()` concurrently in threads.
+
 Remember the fresh `--run-directory` before issuing an operation. Keep the full
 stdout bytes outside the model context and deliver images through the host's
 image channel. A host output limit can hide a response that was produced in full;
