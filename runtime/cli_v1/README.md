@@ -217,3 +217,10 @@ A close failure can coexist with completed execution and remains visible in
 `cleanup_error`. Missing or malformed fields are null, including unknown
 recovery_required. The summary does not infer task success, zero input effects,
 or permission to resend. The complete original result remains in the receipt.
+
+
+Partial execution failures also expose their recorded `failure_detail`,
+`failed_operation_index` and `failed_operation_effect`. The latter can explicitly
+state that partial input may already have occurred. It is not converted into a
+retry recommendation; absent/malformed evidence remains unknown. The completed
+prefix and release records remain in the full receipt for recovery decisions.

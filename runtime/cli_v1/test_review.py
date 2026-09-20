@@ -157,6 +157,25 @@ class PublicReviewTests(unittest.TestCase):
             self.assertIsNone(row['outcome_summary']['recovery_required'])
             self.assertEqual(row['receipt']['source']['raw_report'], payload)
 
+    def test_partial_failure_summary_preserves_uncertainty_without_retry_advice(self):
+        with tempfile.TemporaryDirectory() as td:
+            payload = {'schema': 'agent-interface/runtime-dispatch-result-v1', 'status': 'runtime_failed',
+                       'cleanup_error': 'close failed', 'result': {'status': 'execution_failed',
+                       'error': 'BACKEND_EXECUTION_FAILED', 'execution': {'error': 'after partial emission',
+                       'failed_op': 3, 'failed_op_effect': 'unknown; may have emitted partial input',
+                       'completed_ops': [0, 1, 2]}}}
+            for value, expected in ((3, 3), (False, None), (-1, None), ('3', None), (None, None)):
+                payload['result']['execution']['failed_op'] = value
+                row = review_bytes(json.dumps(payload).encode(), td)
+                summary = row['outcome_summary']
+                self.assertEqual(summary['failure_detail'], 'after partial emission')
+                self.assertEqual(summary['failed_operation_index'], expected)
+                self.assertEqual(summary['failed_operation_effect'], 'unknown; may have emitted partial input')
+                self.assertEqual(summary['cleanup_error'], 'close failed')
+                self.assertNotIn('retry', summary)
+                self.assertIsNone(summary['recovery_required'])
+                self.assertEqual(row['receipt']['source']['raw_report'], payload)
+
     def test_newest_missing_image_never_falls_back_to_older_capture(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
