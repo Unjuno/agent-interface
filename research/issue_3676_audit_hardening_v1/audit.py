@@ -125,7 +125,13 @@ def audit(raw_path, freeze_path, study_freeze_path):
     freeze_bytes = Path(freeze_path).read_bytes()
     raw = json.loads(raw_bytes)
     errors = errors_for(raw) + verify_source_hashes(study_freeze_path)
+    study_manifest = json.loads(Path(study_freeze_path).read_text(encoding="utf-8"))
+    raw_sha = hashlib.sha256(raw_bytes).hexdigest()
+    if raw_sha != study_manifest.get("predecessor_raw_sha256"):
+        errors.append("raw bytes do not match the frozen predecessor hash")
     freeze_sha = hashlib.sha256(freeze_bytes).hexdigest()
+    if freeze_sha != study_manifest.get("predecessor_freeze_sha256"):
+        errors.append("freeze bytes do not match the frozen predecessor hash")
     if raw.get("freeze_sha256") != freeze_sha:
         errors.append("raw result is not bound to supplied freeze manifest")
     controls = {}
