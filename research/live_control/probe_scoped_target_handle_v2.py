@@ -1,7 +1,7 @@
 """Regression for v2 low-information mint refusal."""
 from PIL import Image
 
-from scoped_target_handle_v2 import TargetHandleStore
+from scoped_target_handle_v2 import TargetHandleStore, FlatTargetRefused
 
 
 def observation():
@@ -16,7 +16,7 @@ def main():
     try:
         store.mint("flat", "window_content", [20, 20, 8, 8], observation(),
                    flat, 1_000_000_100)
-    except ValueError as error:
+    except FlatTargetRefused as error:
         assert str(error) == "visually flat target region refused"
     else:
         raise AssertionError("flat handle source accepted")
