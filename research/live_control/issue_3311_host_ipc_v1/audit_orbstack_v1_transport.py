@@ -88,10 +88,24 @@ def main() -> int:
     if len(sys.argv) not in (2, 4) or (len(sys.argv) == 4 and sys.argv[2] != "--output"):
         print(f"usage: {sys.argv[0]} EVIDENCE_DIR [--output REPORT.json]", file=sys.stderr)
         return 2
-    report = audit(Path(sys.argv[1]))
+    evidence_root = Path(sys.argv[1]).resolve()
+    report = audit(evidence_root)
     rendered = json.dumps(report, indent=2) + "\n"
-    if len(sys.argv) == 4:
-        Path(sys.argv[3]).write_text(rendered, encoding="utf-8")
+    if len(sys.argv) >= 4:
+        output_path = Path(sys.argv[3]).resolve()
+        try:
+            output_path.relative_to(evidence_root)
+        except ValueError:
+            pass
+        else:
+            print("audit output must be outside the immutable evidence root", file=sys.stderr)
+            return 2
+        manifest = evidence_root / "raw-sha256.json"
+        if output_path == manifest or output_path in evidence_root.rglob("*"):
+            print("audit output must not overwrite retained evidence", file=sys.stderr)
+            return 2
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(rendered, encoding="utf-8")
     print(rendered, end="")
     return 0 if report["disposition"].startswith("PASS_") else 1
 

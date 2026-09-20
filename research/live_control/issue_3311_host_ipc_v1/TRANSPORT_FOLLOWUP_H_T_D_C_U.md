@@ -71,3 +71,15 @@ The previous portability statement is superseded for the Windows host until the 
 ### Latest-main reconciliation (2026-09-20)
 
 Before merge readiness, fetched main at `7cda063936b89c3f0cd58c0ebd1b78497e0ad2b8` and merged its two intervening commits (#3502/#3507). The five-file native-exchange/result update had no conflicts with this transport/audit scope and remains intact. On the immediately preceding code head, the Windows job and an independent Windows replay of both bundles passed; the mainline merge changes neither. Re-ran the host 19-case CI selection, synthetic OrbStack roundtrip 1/1, and fixed-image `--network none` contract suite 22/22 successfully; `git diff --check` passes. This branch is still a prerequisite-only transport/evidence change; no schema endpoint or task allocation was run.
+
+### Review follow-up: immutable output and retained-bundle CI (2026-09-20)
+
+**H** — The independent auditor must never write into an evidence bundle it is validating, and PR CI must audit the actual checked-in #01/#02 bundles rather than only synthetic temporary manifests. The checkout used for source-history verification must contain revisions named by `source-revisions.json`.
+
+**T** — Reject `--output` anywhere under the evidence root and reject overwriting any existing retained path; allow a separate report path outside the root. Add direct audit assertions for both unchanged bundles and include `evidence/**` plus `source-revisions.json` in workflow path filters. Run auditor regressions on host and in the pinned OrbStack image with `--network none`; historical `git show` verification stays in host/CI checkout context.
+
+**D** — Local PASS: 5/5 auditor tests pass on host, including full 14-check independent audits of both bundles; the pinned OrbStack no-network image passes the 4 tests that do not require Git or a historical object database; pinned-image bridge/broker/setup-reap selection passes 17/17. `git diff --check` is clean. CI on the new head is pending.
+
+**C** — Bundles and frozen raw manifests were not modified. Explicit report output is refused inside the evidence tree (including existing raw paths) before writing; an external report path is allowed. The minimal runtime image has no Git, so container tests make no historical-source-provenance claim; full independent audits run in host/CI checkout context.
+
+**U** — Latest-head Linux and Windows jobs have not completed; merge remains gated on required checks. No host Codex/model invocation or schema-preflight attempt was made.
