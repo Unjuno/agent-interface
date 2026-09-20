@@ -7,10 +7,23 @@
   "original_audit_sha256": "fdce1b10b7c46381d41d1e0151476b548658de0354bd4ef3db0af3d33200e4dc",
   "baseline_errors": [],
   "mutations": {
+    "mutate_xid": [
+      "identity mismatch: xid",
+      "XRes identity does not match fixture"
+    ],
+    "admit_stale": [
+      "stale alias was not refused before emission/effect"
+    ],
+    "hide_emission": [
+      "fresh positive-control evidence invalid"
+    ],
     "unexpected_event": [],
     "duplicate_stale": [],
     "contradictory_bridge": [],
     "reordered_transitions": [],
+    "missing_transition": [
+      "pre-input identity precondition not satisfied"
+    ],
     "unsupported_field": []
   },
   "cli": {
@@ -22,10 +35,13 @@
   "environment": {
     "runtime": "local Docker Desktop",
     "engine": "29.8.0",
-    "image": "python:3.12-slim",
+    "context": "desktop-linux",
+    "image": "python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
     "network": "none",
-    "mount": "frozen inputs read-only; output isolated",
+    "frozen_inputs": "read-only",
+    "output": "isolated tmpfs",
     "retries": 0
   },
-  "inference": "The frozen audit accepts the five tested mutations; this finite set does not prove all corruptions are accepted."
+  "inference": "The frozen auditor rejects the three original controls and two required-transition failures but accepts all five targeted non-canonical/contradictory mutations; finite controls do not establish completeness."
 }
