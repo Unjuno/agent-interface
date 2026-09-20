@@ -2,13 +2,13 @@
 
 Status: `PASS_LOCAL_CONSTRUCTION; STOP_CONTAINER_VALIDATION`.
 
-The source-bound predecessor trace passes the hardened audit with status `PASS_OFFLINE_STRUCTURAL_AUDIT`, zero errors, and all 21 mutation controls rejected. The predecessor's three controls, eight structural mutations, and ten boolean/type mutations are rejected; direct-function and subprocess CLI output are identical. All four unittest methods passed in a fresh temporary verification directory on Windows CPython 3.12.10 after downloading the exact GitHub base64 blobs. The CLI verifies frozen source hashes before emitting a pass.
+The source-bound predecessor trace passes the hardened audit with status `PASS_OFFLINE_STRUCTURAL_AUDIT`, zero errors, and all 21 mutation controls rejected. The predecessor's three controls, eight structural mutations, and ten boolean/type mutations are rejected. A forged raw plus replacement freeze, with their internal raw-to-freeze hash made mutually consistent, is also rejected because both exact artifact byte hashes must match the study manifest. Direct-function and subprocess CLI output are identical. All five unittest methods passed in a fresh temporary verification directory on Windows CPython 3.12.10 after downloading the exact GitHub base64 blobs. The CLI verifies frozen source and predecessor artifact hashes before emitting a pass.
 
 Exact retained evidence hashes:
 
-- Study freeze: `450f2d05658d10b40ecb062569a4e5a5df66a42f34d2d0da68b3487077e95ca6`
-- Hardened auditor source: `769677e9fed97543ab20260301d88c432fd6abc02cd6220c75efaff55264c6b3`
-- Test source: `16a9d9eacb5d896833725ffc8ae2ac711296afe254b4ad0c80144d31f0f1e821`
+- Study freeze: `452decd0418db0f2b6ea8e0b823eb68cbb4e339cd532c2fbcccea5b990f1b22f`
+- Hardened auditor source: `b03d7539e1d77c75a07cf3012b7f3614b8ad251eb1b7edcf6e9663e02b77a7f9`
+- Test source: `9cbec2bd644005f356af36cf395827e32525cd283c7face314f698eb8b21e8a9`
 - Predecessor raw (unchanged): `ccb9a75eefb7df73cb13dbc9191d33334fb672c2fd58fcc5fa32be998e182807`
 - Predecessor freeze (unchanged): `f40494b1be99fb1e68d7b09c498297df35a72c043740b5f09d3faec7e059acfe`
 - Predecessor audit (unchanged): `fdce1b10b7c46381d41d1e0151476b548658de0354bd4ef3db0af3d33200e4dc`
