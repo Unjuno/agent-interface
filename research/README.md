@@ -89,6 +89,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 - `text_*` directories — text delivery, keymap, XKB, observation binding, and related robustness studies.
 - [`issue_3784_explicit_x11_receiver_v1/`](issue_3784_explicit_x11_receiver_v1/) — explicit X11 receiver formal allocation and retained STOP/audit evidence; consult RESULT.md for scope.
 - [`issue_3784_focused_receiver_v1/`](issue_3784_focused_receiver_v1/) — Issue #3794 frozen focused-receiver German XKB formula-delivery allocation; formal-01 and independent audit PASS within the documented scope.
+- [`issue_3784_explicit_x11_receiver_v2/`](issue_3784_explicit_x11_receiver_v2/) — corrected receiver-oracle successor; consult RESULT.md for the formal-02 baseline-parser STOP and audit scope.
 
 ### Application and domain studies
 
@@ -115,6 +116,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 - [`gtk/`](gtk/) — GTK formal receipt contract preflights; construction checks do not establish live matrix acceptance.
 - [`results/`](results/) — retained native-handle result bundles; consult each bundle's report for scope and status.
+- [`audits/`](audits/) — independent audit/review records retained separately from primary experiment artifacts; follow each record's source and allocation references.
 
 - [`launch/`](launch/) — public-evidence/launch presentation experiments.
 - [`experiments/`](experiments/) — small scoped experiments without a narrower established category.
