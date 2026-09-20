@@ -28,6 +28,10 @@ Construction timing on Windows 10 / Python 3.11.9 / PyTorch 2.5.1+cu121, CPU, on
 
 The frozen runner's result envelope contains the inherited literal allocation label `needle-role-graph-3775-v1`. The source SHA-256 above, preregistered successor identity, branch, and Issue #3780 identify this actual run; the embedded label is stale copy-forward metadata and must not be confused with unrelated repository item #3775. This discrepancy does not alter the packed rows or measured gates, but is retained explicitly as a provenance warning. Frozen runner/raw evidence are not edited.
 
+## Additional post-formal audit
+
+The frozen independent auditor reports `PASS_AUDIT_CONFIRMED_SCOPED`. A separate read-only audit v2 was subsequently added (its code and output are retained as `audit_v2.py` and `AUDIT_V2.json`); it additionally verifies the exact design tuple, duplicate-receipt first acceptance and repeated rejection, dispatch execution sequences, outer gzip/raw digest, and the disclosed stale allocation warning. It also returns `PASS_AUDIT_V2_CONFIRMED_SCOPED`, zero errors, with that warning listed.
+
 ## Environment and limits
 
 Docker was checked but its Linux engine pipe was absent; this was a host-CPU run, not container evidence. No Docker restart/repair, image pull, disk cleanup, GUI or input occurred.
