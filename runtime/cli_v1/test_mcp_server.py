@@ -119,6 +119,13 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     listed = await client.list_tools()
                     self.assertEqual({tool.name for tool in listed.tools},
                                      {'interface_observe', 'interface_dispatch', 'interface_results'})
+                    dispatch_tool = next(t for t in listed.tools if t.name == 'interface_dispatch')
+                    program_schema = dispatch_tool.inputSchema['properties']['program']
+                    self.assertEqual(program_schema['type'], 'object')
+                    for term in ('agent-interface/program-v1', 'expires_at_ns',
+                                 'execution host monotonic clock', 'release_all',
+                                 'gap_ms', 'repeat', '128'):
+                        self.assertIn(term, program_schema['description'])
                     reply = await client.call_tool('interface_dispatch', {
                         'program': {}, 'current_observation_seq': -1, 'current_binding_revision': 0})
                     row = json.loads(reply.content[0].text)
@@ -242,6 +249,13 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     listed = await client.list_tools()
                     self.assertEqual({tool.name for tool in listed.tools},
                                      {'interface_observe', 'interface_dispatch', 'interface_results'})
+                    dispatch_tool = next(t for t in listed.tools if t.name == 'interface_dispatch')
+                    program_schema = dispatch_tool.inputSchema['properties']['program']
+                    self.assertEqual(program_schema['type'], 'object')
+                    for term in ('agent-interface/program-v1', 'expires_at_ns',
+                                 'execution host monotonic clock', 'release_all',
+                                 'gap_ms', 'repeat', '128'):
+                        self.assertIn(term, program_schema['description'])
                     reply = await client.call_tool('interface_dispatch', {
                         'program': {}, 'current_observation_seq': -1, 'current_binding_revision': 0})
                     row = json.loads(reply.content[0].text)
