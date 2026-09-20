@@ -30,7 +30,7 @@ class RetainedAttemptTests(unittest.TestCase):
             (root / 'targets.json').write_text('{"fixture":123}')
             run = root / 'attempt'
             command = [sys.executable, str(archive), 'dispatch',
-            (root / 'targets.json').write_text('{"fixture":123}')
+                       '--program', str(root / 'program.json'), '--targets', str(root / 'targets.json'),
                        '--current-observation-seq', '-1', '--current-binding-revision', '0',
                        '--run-directory', str(run), '--review']
             with (root / 'stderr.txt').open('wb') as errors:
