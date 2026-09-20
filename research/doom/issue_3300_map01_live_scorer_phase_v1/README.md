@@ -174,3 +174,18 @@ privilege escalation was attempted. Disposition:
 `STOP_KERNEL_UPROBE_UNAVAILABLE_IN_DEFAULT_CONTAINER`—an environment stop,
 not a scientific result. Formal rows remain 0/120. Probe and captured output
 hashes are in `results/construction-clock-44/invocation.txt`.
+
+Run45 then tested the Issue's actual passive async-clock/scorer compatibility
+question in OrbStack Docker, with no `advance_action`/`make_action`/`set_action`.
+In three fresh instrumented MAP01 sessions, the engine's contiguous internal
+`VIZ_Tic` trace ran at median 34.012/35.260/35.433 Hz, but 118–119 passive
+`get_episode_time()` reads per session stayed at tic 1. The unchanged exact
+scorer returned after one coherent attempt in all 3/3 and its two tic getters
+also returned 1. A corrected second run retained all eight scorer getter calls
+per session; the final entry sample preceded scorer start by 14.54–19.99 ms,
+so phase remains unidentified. Independent audit:
+`PASS_CONSTRUCTION_ONLY_ENGINE_PROGRESS_API_TIC_STALE`, zero errors. This is
+direct construction evidence of an internal-engine/public-API clock mismatch,
+not the requested phase/span distribution. Formal allocation remains 0/120.
+See `results/construction-clock-45/` for the two preserved 3-session runs,
+import STOPs, raw traces, audit, Docker logs, invocation, hashes and H/T/D/C/U.
