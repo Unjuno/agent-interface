@@ -13,6 +13,30 @@ from runtime.distribution_v2.build import SOURCE_FILES, build
 
 class PublicReviewTests(unittest.TestCase):
 
+    def test_refusal_release_is_summarized_without_hiding_other_evidence(self):
+        from runtime.cli_v1.review import outcome_summary
+        good = {'verified': True, 'keys_down': [], 'buttons_down': []}
+        for release, execution, expected in (
+            (good, {}, True),
+            ({'verified': False}, {}, False),
+            (dict(good, verified=1), {}, None),
+            (dict(good, keys_down=['CTRL']), {}, None),
+            (None, {}, None),
+            (good, {'releases': [{'verified': False}]}, False),
+            ({'verified': False}, {'releases': [good]}, False),
+            (good, {'releases': [None]}, None),
+            (good, {'releases': 'malformed'}, None),
+        ):
+            with self.subTest(release=release, execution=execution):
+                report = {'schema': 'agent-interface/runtime-dispatch-result-v1',
+                          'result': {'status': 'refused', 'error': 'BACKEND_CONSTRAINT',
+                                     'release': release, 'execution': execution}}
+                summary = outcome_summary(report)
+                self.assertIs(summary['input_release_verified'], expected)
+                self.assertEqual(summary['execution_status'], 'refused')
+                self.assertEqual(summary['execution_error'], 'BACKEND_CONSTRAINT')
+                self.assertIsNone(summary['recovery_required'])
+
     def test_release_summary_requires_all_records_and_preserves_unknown(self):
         from runtime.cli_v1.review import outcome_summary
         good = {'verified': True, 'keys_down': [], 'buttons_down': []}
