@@ -60,3 +60,8 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Multi-seed hybrid Needle successor
 
 - [`intent_distillation_3458_pilot_04_multiseed/`](intent_distillation_3458_pilot_04_multiseed/) — three-seed confirmatory synthetic result.
+
+
+## Learned role-adapter graph
+
+- [`needle_role_graph_3780_compact_v1/`](needle_role_graph_3780_compact_v1/REPORT.md) — receipt-gated A→B→C LoRA role graph; scoped synthetic PASS with independent audit. #3778's separate output-capture STOP is preserved.
