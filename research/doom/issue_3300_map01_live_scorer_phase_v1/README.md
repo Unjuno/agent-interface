@@ -143,3 +143,17 @@ Audit: `HOLD_BOTH_ASYNC_MODES_PASSIVE_TICS_STATIC`, zero errors. This narrows
 the mode-specific hypothesis but does not change the formal issue's declared
 mode or resolve the missing passive phase witness. See
 `results/construction-clock-29/`.
+
+Runs 41–42 tested a new source-instrumented timing path. Against pinned
+ViZDoom 1.3.0 source, a minimal patch samples `CLOCK_MONOTONIC` at the first
+operation of a helper called at `VIZ_Tic` entry, before debug-log formatting,
+then appends `{pid, monotonic_ns, gametic, vizTime}`. Two independent
+three-session allocations returned the exact scorer and closed 3/3; corrected
+audits bracketed all 48 getter starts between successive engine clock samples.
+Construction-only getter phase positions and microsecond-scale spans are now
+observable without host/container clock conversion. This does not bound
+helper-call or clock-read latency, and the per-tic append perturbs scheduling.
+An append-only erratum narrows the initial overstrong “tic-entry witness” audit
+label. Formal phase accuracy and allocation remain unresolved (0/120); details,
+raw data, build recipe and failed/corrected audit history are retained under
+`results/construction-clock-41/` and `results/construction-clock-42/`.
