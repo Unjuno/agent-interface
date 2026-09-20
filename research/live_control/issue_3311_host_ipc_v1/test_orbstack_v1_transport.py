@@ -15,6 +15,7 @@ import sys
 import tempfile
 import unittest
 from contextlib import nullcontext
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -23,23 +24,36 @@ LIVE = ROOT / "research/live_control"
 IMAGE = "agent-interface-3311-runtime-v2:20260920"
 
 
+def _run_container_with_broker(broker, command, root):
+    """Run setup/container and reap the one-shot broker on every exit path."""
+    try:
+        image_info = subprocess.run(["docker", "--context", "orbstack", "image",
+            "inspect", IMAGE], capture_output=True, text=True, check=True)
+        (root / "docker-image-inspect.json").write_text(image_info.stdout, encoding="utf-8")
+        (root / "container-command.json").write_text(json.dumps(command, indent=2) + "\n",
+            encoding="utf-8")
+        container = subprocess.run(command, capture_output=True, text=True,
+                                   check=False, timeout=30)
+    finally:
+        if broker.poll() is None:
+            broker.terminate()
+        try:
+            broker_stdout, broker_stderr = broker.communicate(timeout=5)
+        except subprocess.TimeoutExpired:
+            broker.kill()
+            broker_stdout, broker_stderr = broker.communicate(timeout=5)
+    return container, broker_stdout, broker_stderr
+
+
 class OrbStackV1TransportTest(unittest.TestCase):
     def test_broker_is_reaped_when_image_inspect_fails(self):
         broker = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(60)"],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        try:
-            with self.assertRaises(subprocess.CalledProcessError):
-                subprocess.run(["docker", "--context", "orbstack", "image", "inspect",
-                    "agent-interface-image-that-does-not-exist"], check=True,
-                    capture_output=True, text=True, timeout=30)
-        finally:
-            if broker.poll() is None:
-                broker.terminate()
-            try:
-                broker.communicate(timeout=5)
-            except subprocess.TimeoutExpired:
-                broker.kill()
-                broker.communicate(timeout=5)
+        with tempfile.TemporaryDirectory(prefix="3311-v1-setup-fail-") as tmp:
+            with patch("research.live_control.issue_3311_host_ipc_v1.test_orbstack_v1_transport.subprocess.run",
+                       side_effect=subprocess.CalledProcessError(1, ["docker", "image", "inspect"])):
+                with self.assertRaises(subprocess.CalledProcessError):
+                    _run_container_with_broker(broker, ["docker", "run"], Path(tmp))
         self.assertIsNotNone(broker.poll())
 
     def test_fake_cli_round_trip_over_shared_mounts(self):
@@ -85,25 +99,8 @@ class OrbStackV1TransportTest(unittest.TestCase):
                 "/code/runner.py", "/usr/bin/node", "/usr/bin/true", "/repo/prompt.txt",
                 "/repo/workspace", "/out/runner", "handle", "-",
                 "/repo/instructions.txt", "/repo/schema.json"]
-            container = None
-            try:
-                image_info = subprocess.run(["docker", "--context", "orbstack", "image",
-                    "inspect", IMAGE], capture_output=True, text=True, check=True)
-                (root / "docker-image-inspect.json").write_text(image_info.stdout, encoding="utf-8")
-                (root / "container-command.json").write_text(json.dumps(command, indent=2) + "\n",
-                    encoding="utf-8")
-                container = subprocess.run(command, capture_output=True, text=True,
-                                           check=False, timeout=30)
-            finally:
-                if broker.poll() is None:
-                    broker.terminate()
-                try:
-                    broker_stdout, broker_stderr = broker.communicate(timeout=5)
-                except subprocess.TimeoutExpired:
-                    broker.kill()
-                    broker_stdout, broker_stderr = broker.communicate(timeout=5)
-            if container is None:
-                raise RuntimeError("OrbStack setup failed before container start; broker reaped")
+            container, broker_stdout, broker_stderr = _run_container_with_broker(
+                broker, command, root)
             (root / "container.stdout.txt").write_text(container.stdout, encoding="utf-8")
             (root / "container.stderr.txt").write_text(container.stderr, encoding="utf-8")
             (root / "broker.stdout.txt").write_text(broker_stdout, encoding="utf-8")

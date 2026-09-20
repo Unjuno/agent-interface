@@ -55,3 +55,9 @@ Also adopted the current-main #3498 broker implementation unchanged, then made t
 Codex review identified that the auditor could regenerate and overwrite `raw-sha256.json`, and that an image-inspect/setup exception could leave the `--once` broker alive. The auditor now reads the retained manifest and compares every captured raw file hash without writing into the bundle; audit reports remain explicit sidecar outputs. Both historical bundles still pass all semantic checks plus manifest verification. The transport test now places broker termination/reaping in `finally`, with kill escalation on reap timeout. A setup-failure regression confirms a broker process is reaped when image inspection fails.
 
 Verification: host contract suite 22/22; fixed-image OrbStack `--network none` unit/contract suite 22/22; host OrbStack transport and setup-reap tests 2/2; historical bundle audits 14/14 each; `compileall` and `git diff --check` pass. These checks use synthetic/failure fixtures only; no model call occurred.
+
+### CI and regression-test audit
+
+A second test review found the prior setup-failure regression duplicated the cleanup sequence instead of invoking the transport harness's cleanup path, and no automated test proved a modified raw file is rejected without changing the frozen manifest. The cleanup sequence is now shared by the round-trip harness and setup-failure regression. New manifest tests cover intact, tampered, missing and malformed manifests and assert the baseline bytes remain unchanged. The Docker IPC contract workflow now runs these hermetic regressions and watches the auditor/test paths.
+
+Verification: exact workflow test selection passes 19/19 on host; the OrbStack fake-CLI round trip separately passes 1/1; the pinned OrbStack `--network none` contract suite remains 22/22. Both historical bundles and a relocated copy each pass semantic and raw-integrity audit 14/14. `git diff --check` passes. No model/task/input call was made.

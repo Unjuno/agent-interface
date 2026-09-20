@@ -26,17 +26,25 @@ def git_source_sha(revision: str, repository_path: str) -> str:
     return hashlib.sha256(completed.stdout).hexdigest()
 
 
-def audit(root: Path) -> dict:
+def verify_raw_manifest(root: Path) -> bool:
+    """Compare retained raw files with the frozen manifest without writing."""
     root = root.resolve()
     manifest_path = root / "raw-sha256.json"
-    manifest = json.loads(manifest_path.read_text())
-    actual_manifest = {
-        str(path.relative_to(root)): sha(path)
-        for path in sorted(root.rglob("*"))
-        if path.is_file() and path.name != "raw-sha256.json"
-        and path.name != "audit.json"
-    }
-    manifest_matches = manifest == actual_manifest
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        actual = {
+            str(path.relative_to(root)): sha(path)
+            for path in sorted(root.rglob("*"))
+            if path.is_file() and path.name not in {"raw-sha256.json", "audit.json"}
+        }
+    except (OSError, json.JSONDecodeError):
+        return False
+    return manifest == actual
+
+
+def audit(root: Path) -> dict:
+    root = root.resolve()
+    manifest_matches = verify_raw_manifest(root)
     command = json.loads((root / "container-command.json").read_text())
     image = json.loads((root / "docker-image-inspect.json").read_text())[0]
     exit_codes = json.loads((root / "exit-codes.json").read_text())

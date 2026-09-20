@@ -8,6 +8,9 @@ on:
       - 'runtime/test_host_model_ipc_broker_v1.py'
       - 'runtime/test_docker_host_model_bridge_v1.py'
       - 'research/integration/docker_schema_preflight_bridge_2818_v1/**'
+      - 'research/live_control/issue_3311_host_ipc_v1/audit_orbstack_v1_transport.py'
+      - 'research/live_control/issue_3311_host_ipc_v1/test_audit_orbstack_v1_transport.py'
+      - 'research/live_control/issue_3311_host_ipc_v1/test_orbstack_v1_transport.py'
 
 permissions:
   contents: read
@@ -19,4 +22,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run non-authoritative bridge and broker contract tests
-        run: python -m unittest runtime.test_docker_host_model_bridge_v1 runtime.test_host_model_ipc_broker_v1 -v
+        run: >-
+          python -m unittest
+          runtime.test_docker_host_model_bridge_v1
+          runtime.test_host_model_ipc_broker_v1
+          research.live_control.issue_3311_host_ipc_v1.test_audit_orbstack_v1_transport
+          research.live_control.issue_3311_host_ipc_v1.test_orbstack_v1_transport.OrbStackV1TransportTest.test_broker_is_reaped_when_image_inspect_fails
+          -v
