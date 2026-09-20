@@ -24,6 +24,43 @@ class FakeSession:
 
 class ApiTests(unittest.TestCase):
 
+    def test_recorded_invalid_program_gets_bounded_detail_without_readmission(self):
+        from copy import deepcopy
+        from runtime.cli_v1.review import outcome_summary
+        base = {'schema':'agent-interface/program-v1', 'program_id':'validation-test',
+                'source':{'observation_seq':1, 'binding_revision':0},
+                'authority':{'lease_id':'test', 'expires_at_ns':100},
+                'terminal':{'release_all_required':True}, 'ops':[]}
+        valid = {'op':'observe','frame':'window_client','x':0,'y':0,'w':400,'h':180}
+        for op, expected in [
+            ({'op':'observe','frame':'window_client','region':[0,0,400,180]}, 'observe x must be int'),
+            ({'op':'observe','frame':'window_client','x':0,'y':0,'width':400,'height':180}, 'observe w must be int'),
+            ({'op':'private-caller-text-' * 100}, 'unsupported operation'),
+            (valid, None),
+        ]:
+            with self.subTest(expected=expected):
+                program = deepcopy(base)
+                program['ops'] = [op, {'op':'release_all'}]
+                before = deepcopy(program)
+                refusal = {'status':'refused','error':'INVALID_PROGRAM','backend_emissions':0}
+                session = mock.Mock()
+                session.dispatch.return_value = refusal
+                with mock.patch('runtime.cli_v1.api.open_session', return_value=session):
+                    row = dispatch(program, {'fixture':1}, current_observation_seq=1,
+                                   current_binding_revision=0)
+                session.dispatch.assert_called_once()
+                session.backend.close.assert_called_once()
+                self.assertEqual(program, before)
+                self.assertEqual(refusal, {'status':'refused','error':'INVALID_PROGRAM','backend_emissions':0})
+                self.assertEqual(row['result']['error'], 'INVALID_PROGRAM')
+                self.assertEqual(row['result']['backend_emissions'], 0)
+                self.assertEqual(row['result'].get('detail'), expected)
+                self.assertEqual(outcome_summary(row)['execution_detail'], expected)
+                if expected is not None:
+                    self.assertEqual(row['result']['detail_source'], 'program_validation')
+                else:
+                    self.assertNotIn('detail_source', row['result'])
+
     def test_explicit_text_gap_compiles_before_backend_and_maps_character_failure(self):
         from runtime.cli_v1.review import outcome_summary
         session = FakeSession()
