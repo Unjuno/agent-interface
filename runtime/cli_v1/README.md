@@ -224,3 +224,22 @@ Partial execution failures also expose their recorded `failure_detail`,
 state that partial input may already have occurred. It is not converted into a
 retry recommendation; absent/malformed evidence remains unknown. The completed
 prefix and release records remain in the full receipt for recovery decisions.
+
+
+For one-call result/image delivery, add `--review` to `observe` or `dispatch`,
+alongside `--capture-directory`. This returns the same review envelope directly,
+without another CLI process or temporary report file:
+
+```sh
+python -m runtime.cli_v1 observe --targets targets.json --target fixture \
+  --frame window_client --region 0 0 400 180 --capture-directory images --review
+```
+
+Dispatch still executes its program once; the flag only presents already
+captured images. Without an observe operation there may be no image. Input
+refusals and runtime failures keep their original nonzero exit codes even when
+review succeeds. If execution succeeded but presentation fails, exit 2 and the
+retained result allow the caller to inspect the problem without replaying input.
+A missing capture-directory is rejected before any execution. The default raw
+response remains unchanged when --review is omitted. Standalone review remains
+available for inspecting retained results later.
