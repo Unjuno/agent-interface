@@ -40,6 +40,15 @@ python -m runtime.cli_v1 dispatch \
 
 The CLI does not discover targets, rewrite leases/freshness, retry automatically, or grant authority. `doctor` is diagnostic only. `dispatch` delegates to `selector_v1`, then the promoted backend session, then `runtime/core_v1` admission.
 
+Use `doctor --check-dependencies` to list discovery status and installed package
+versions for python-xlib, Pillow and the optional MCP SDK in the current Python
+environment. This works through the portable CLI too. It does not import those
+modules, open a display, install anything or verify native-library compatibility.
+Missing packages and failed metadata inspection remain distinct. The existing
+`runtime_available` field describes backend selection only, not successful imports,
+permissions or application readiness. Fixture-specific dependencies such as GTK/GI
+are outside this public-runtime inventory and still need their own preflight.
+
 For a finite keyboard batch, public `dispatch` accepts `repeat` on a `key_chord`
 operation, for example `{"op":"key_chord","keys":["Right"],"repeat":18}`.
 It expands that instruction to 18 ordinary chords before opening the backend.
