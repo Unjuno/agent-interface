@@ -179,3 +179,8 @@ Arbitrary errors, exhausted capacity or failed review still terminate; no input
 is automatically retried. A refused action does not apply finish_after.
 The published Inkscape task now describes its directional saved-geometry score
 explicitly; nominal drag pixels are not an exact keyboard displacement target.
+
+At the final permitted stage, an action or explicit review without finish returns
+`needs_review` after cleanup, retaining its final observation and action/review
+evidence. It does not publish an unusable next source. This is stage exhaustion,
+not task success; finish_after remains the explicit action-and-finish path.

@@ -68,7 +68,8 @@ class NativeFinishAfterTests(unittest.TestCase):
                 def close(self):
                     events.append('bridge.close')
                     # Terminal reply must not be published before cleanup.
-                    if decisions[-1].get('finish_after') is True:
+                    if (decisions[-1].get('finish_after') is True
+                            or len(decisions) == max_stages):
                         assert not (out / f'reply-{len(decisions)}.json').exists()
                     if close_failure:
                         raise OSError('injected connection cleanup failure')
@@ -198,6 +199,25 @@ class NativeFinishAfterTests(unittest.TestCase):
         self.assertEqual(replies[0]['status'], 'needs_review')
         self.assertNotIn('mint', events)
         self.assertNotIn('input', events)
+
+    def test_last_stage_returns_terminal_evidence_without_unusable_source(self):
+        for last in ({'interaction': 'observe'}, self.action()):
+            with self.subTest(last=last):
+                replies, sources, events = self.exercise(
+                    [{'interaction': 'observe'}, last], max_stages=2,
+                    expected_error=RuntimeError)
+                self.assertEqual(replies[-1]['status'], 'needs_review')
+                self.assertIn('stages exhausted', replies[-1]['error'])
+                self.assertEqual(set(sources), {'source-1.json', 'source-2.json'})
+                self.assertEqual(replies[-1]['observation']['sequence'], 2)
+                self.assertEqual(replies[-1]['cleanup']['status'], 'completed')
+                self.assertNotIn('evaluate', events)
+                if last.get('interaction') == 'observe':
+                    self.assertFalse(replies[-1]['observation_only']['input_dispatched'])
+                    self.assertNotIn('input', events)
+                else:
+                    self.assertEqual(replies[-1]['action']['result']['status'], 'completed')
+                    self.assertEqual(events.count('input'), 1)
 
     def test_invalid_or_conflicting_flags_precede_mint(self):
         for decision in ({'finish_after': 'true'}, {'finish_after': 1},
