@@ -40,6 +40,21 @@ python -m runtime.cli_v1 dispatch \
 
 The CLI does not discover targets, rewrite leases/freshness, retry automatically, or grant authority. `doctor` is diagnostic only. `dispatch` delegates to `selector_v1`, then the promoted backend session, then `runtime/core_v1` admission.
 
+For a finite keyboard batch, public `dispatch` accepts `repeat` on a `key_chord`
+operation, for example `{"op":"key_chord","keys":["Right"],"repeat":18}`.
+It expands that instruction to 18 ordinary chords before opening the backend.
+Counts must be integers from 1 to 126; the entire expanded program, including
+focus, waits and final release, must fit the existing 128-operation limit.
+Repeating other operations is refused. Existing admission and source/lease checks
+still apply to the expanded program. Direct core callers must expand first;
+unexpanded `repeat` is rejected rather than silently executed once.
+
+The response's `compilation.source_program` preserves the original request and
+`compilation.operation_sources` maps each expanded operation index back to its
+original instruction index. Failure and observation indices refer to the expanded
+program. No waits, retries or asynchronous scheduling are inserted. A program
+without `repeat` keeps the original path and receives no compilation metadata.
+
 Each `dispatch` owns its one-shot session and closes its native backend connection
 when that backend exposes `close`, including after refusal or an execution error.
 A close failure returns `runtime_failed` with `cleanup_error`, preserving any

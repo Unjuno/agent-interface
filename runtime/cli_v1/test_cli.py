@@ -23,6 +23,51 @@ class FakeSession:
 
 
 class ApiTests(unittest.TestCase):
+    def test_key_repeat_expands_once_and_retains_source_mapping_on_failure(self):
+        from copy import deepcopy
+        from runtime.core_v1.test_contract import program as fixture_program
+        from runtime.core_v1.contract import validate_program
+        request = fixture_program()
+        request['ops'] = [{'op': 'focus', 'target': 'fixture'},
+                          {'op': 'key_chord', 'keys': ['Right'], 'repeat': 3},
+                          {'op': 'wait_update', 'timeout_ms': 0}, {'op': 'release_all'}]
+        original = deepcopy(request)
+        session = mock.Mock()
+        session.dispatch.return_value = {'status': 'execution_failed', 'execution': {'failed_op': 2}}
+        with mock.patch('runtime.cli_v1.api.open_session', return_value=session):
+            row = dispatch(request, {'fixture': 1}, current_observation_seq=7, current_binding_revision=3)
+        session.dispatch.assert_called_once()
+        expanded = session.dispatch.call_args.args[0]
+        validate_program(expanded)
+        self.assertEqual(expanded['ops'], [request['ops'][0]] +
+                         [{'op': 'key_chord', 'keys': ['Right']} for _ in range(3)] + request['ops'][2:])
+        self.assertEqual(expanded['source'], request['source'])
+        self.assertEqual(expanded['authority'], request['authority'])
+        self.assertEqual(row['compilation']['source_program'], original)
+        self.assertEqual(row['compilation']['operation_sources'], [0, 1, 1, 1, 2, 3])
+        self.assertEqual(row['result']['execution']['failed_op'], 2)
+        expanded['ops'][1]['keys'][0] = 'Left'
+        self.assertEqual(expanded['ops'][2]['keys'], ['Right'])
+        self.assertEqual(request, original)
+        session.backend.close.assert_called_once()
+
+    def test_invalid_repeat_and_expanded_capacity_refuse_before_backend(self):
+        bad = [[{'op': 'key_chord', 'keys': ['Right'], 'repeat': value}]
+               for value in (True, False, 0, -1, 1.5, '3', None, 127, 10**100)]
+        bad += [[{'op': kind, 'repeat': 2}] for kind in ('text', 'wait_update', 'pointer_button', 'release_all')]
+        full = [{'op': 'focus', 'target': 'fixture'},
+                {'op': 'key_chord', 'keys': ['Right'], 'repeat': 126}, {'op': 'release_all'}]
+        bad.append(full[:-1] + [{'op': 'wait_update', 'timeout_ms': 0}] + full[-1:])
+        with mock.patch('runtime.cli_v1.api.open_session') as open_backend:
+            for ops in bad:
+                row = dispatch({'ops': ops}, {'fixture': 1}, current_observation_seq=7, current_binding_revision=3)
+                self.assertEqual(row['error'], 'INVALID_KEY_REPEAT')
+            open_backend.assert_not_called()
+        session = FakeSession()
+        with mock.patch('runtime.cli_v1.api.open_session', return_value=session):
+            dispatch({'ops': full}, {'fixture': 1}, current_observation_seq=7, current_binding_revision=3)
+        self.assertEqual(len(session.calls[0][0]['ops']), 128)
+
     def test_capture_configuration_failure_closes_without_dispatch(self):
         session = mock.Mock()
         session.backend.configure_capture_artifacts.side_effect = OSError("not writable")
