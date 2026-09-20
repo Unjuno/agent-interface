@@ -43,11 +43,14 @@ jobs:
             runtime/selector_v1
             runtime/core_v1
             runtime/backends
+            runtime/backends/x11_v1
             runtime/distribution_v2
           sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Verify sparse checkout includes the X11 selector backend
+        run: python -c "from pathlib import Path; required = ['runtime/backends/x11_v1/__init__.py', 'runtime/backends/x11_v1/backend.py', 'runtime/backends/x11_v1/session.py']; missing = [p for p in required if not Path(p).is_file()]; assert not missing, 'missing sparse-checkout files: {}'.format(missing)"
       - name: Compile unified runtime surface
         run: python -m compileall -q runtime/cli_v1 runtime/motor_state_v1 runtime/selector_v1
       - name: Run CLI/API tests
