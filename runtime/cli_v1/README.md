@@ -49,6 +49,12 @@ Missing packages and failed metadata inspection remain distinct. The existing
 permissions or application readiness. Fixture-specific dependencies such as GTK/GI
 are outside this public-runtime inventory and still need their own preflight.
 
+X11 text accepts `=` and `*`, including in paced text such as
+`{"op":"text","text":"=A2*B2","gap_ms":20}`. These symbols, like `:` and `/`,
+are resolved from the live keymap's unshifted or shifted level. Unmapped symbols
+or unsupported levels are refused during whole-program preflight before input.
+This does not provide arbitrary Unicode or additional modifier-group support.
+
 For a finite keyboard batch, public `dispatch` accepts `repeat` on a `key_chord`
 operation, for example `{"op":"key_chord","keys":["Right"],"repeat":18}`.
 It expands that instruction to 18 ordinary chords before opening the backend.
