@@ -11,24 +11,68 @@ import sys
 import time
 
 
-def has_remote_schema_reference(value) -> bool:
-    if isinstance(value, dict):
-        for key in ("$ref", "$dynamicRef", "$recursiveRef"):
-            if key in value and (not isinstance(value[key], str)
-                                 or not value[key].startswith("#")):
-                return True
-        return any(has_remote_schema_reference(item) for item in value.values())
-    if isinstance(value, list):
-        return any(has_remote_schema_reference(item) for item in value)
+def _reject_non_json_constant(value):
+    raise ValueError("non-standard JSON constant: " + value)
+
+
+def has_remote_schema_reference(schema) -> bool:
+    """Inspect schema locations only; annotation/example values are instance data."""
+    if not isinstance(schema, dict):
+        return False
+    for key in ("$ref", "$dynamicRef", "$recursiveRef"):
+        if key in schema and (not isinstance(schema[key], str)
+                              or not schema[key].startswith("#")):
+            return True
+
+    single_schema_keys = (
+        "additionalItems", "additionalProperties", "unevaluatedItems",
+        "unevaluatedProperties", "propertyNames", "contains", "not",
+        "if", "then", "else", "contentSchema",
+    )
+    for key in single_schema_keys:
+        child = schema.get(key)
+        if isinstance(child, dict) and has_remote_schema_reference(child):
+            return True
+
+    schema_map_keys = (
+        "$defs", "definitions", "properties", "patternProperties",
+        "dependentSchemas",
+    )
+    for key in schema_map_keys:
+        children = schema.get(key)
+        if isinstance(children, dict) and any(
+                has_remote_schema_reference(child) for child in children.values()):
+            return True
+
+    for key in ("allOf", "anyOf", "oneOf"):
+        children = schema.get(key)
+        if isinstance(children, list) and any(
+                has_remote_schema_reference(child) for child in children):
+            return True
+
+    items = schema.get("items")
+    if isinstance(items, dict) and has_remote_schema_reference(items):
+        return True
+    if isinstance(items, list) and any(
+            has_remote_schema_reference(child) for child in items):
+        return True
+
+    # Draft 7 `dependencies` may contain either subschemas or property-name arrays.
+    dependencies = schema.get("dependencies")
+    if isinstance(dependencies, dict) and any(
+            has_remote_schema_reference(child) for child in dependencies.values()
+            if isinstance(child, dict)):
+        return True
     return False
 
 
 def validate_model_response(events_path: Path, schema_path: Path) -> dict:
     """Require one completed assistant JSON message to satisfy the supplied schema."""
     try:
-        events = [json.loads(line) for line in events_path.read_text(
-            encoding="utf-8").splitlines() if line.strip()]
-    except (OSError, UnicodeError, json.JSONDecodeError):
+        events = [json.loads(line, parse_constant=_reject_non_json_constant)
+                  for line in events_path.read_text(
+                      encoding="utf-8").splitlines() if line.strip()]
+    except (OSError, UnicodeError, json.JSONDecodeError, ValueError):
         return {"turns": 0, "messages": 0,
                 "status": "STOP_MALFORMED_MODEL_RESPONSE"}
     if any(not isinstance(event, dict) for event in events):
@@ -47,11 +91,14 @@ def validate_model_response(events_path: Path, schema_path: Path) -> dict:
     response_text = messages[0].get("text")
     if not isinstance(response_text, str):
         return {**result, "status": "STOP_INVALID_JSON_OUTPUT"}
-    response_bytes = response_text.encode("utf-8")
+    try:
+        response_bytes = response_text.encode("utf-8")
+    except UnicodeEncodeError:
+        return {**result, "status": "STOP_INVALID_JSON_OUTPUT"}
     result["response_sha256"] = hashlib.sha256(response_bytes).hexdigest()
     try:
-        instance = json.loads(response_text)
-    except (json.JSONDecodeError, UnicodeError):
+        instance = json.loads(response_text, parse_constant=_reject_non_json_constant)
+    except (json.JSONDecodeError, UnicodeError, ValueError):
         return {**result, "status": "STOP_INVALID_JSON_OUTPUT"}
 
     try:
@@ -60,7 +107,8 @@ def validate_model_response(events_path: Path, schema_path: Path) -> dict:
         return {**result, "status": "STOP_SCHEMA_VALIDATOR_UNAVAILABLE"}
 
     try:
-        schema = json.loads(schema_path.read_text(encoding="utf-8"))
+        schema = json.loads(schema_path.read_text(encoding="utf-8"),
+                            parse_constant=_reject_non_json_constant)
         if not isinstance(schema, dict):
             return {**result, "status": "STOP_INVALID_OUTPUT_SCHEMA"}
         if not isinstance(schema.get("$schema"), str):
@@ -71,7 +119,7 @@ def validate_model_response(events_path: Path, schema_path: Path) -> dict:
         if validator_class.META_SCHEMA.get("$id") != schema["$schema"]:
             return {**result, "status": "STOP_UNSUPPORTED_SCHEMA_DIALECT"}
         validator_class.check_schema(schema)
-    except (json.JSONDecodeError, OSError, UnicodeError,
+    except (json.JSONDecodeError, OSError, UnicodeError, ValueError,
             jsonschema.exceptions.SchemaError, KeyError, TypeError, ValueError):
         return {**result, "status": "STOP_INVALID_OUTPUT_SCHEMA"}
 

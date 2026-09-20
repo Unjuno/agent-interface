@@ -54,6 +54,26 @@ class DockerSchemaPreflightAdapterTest(unittest.TestCase):
         self.assertNotIn("do-not-copy", json.dumps(result))
         self.assertIn("schema_keyword", result)
 
+    def test_non_finite_json_constants_are_rejected(self):
+        self.schema.write_text(json.dumps({
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+        }), encoding="utf-8")
+        for value in ("NaN", "Infinity", "-Infinity"):
+            with self.subTest(value=value):
+                self.write_events(value)
+                self.assertEqual(
+                    validate_model_response(self.events, self.schema)["status"],
+                    "STOP_INVALID_JSON_OUTPUT")
+
+    def test_ref_like_value_inside_const_is_not_a_schema_reference(self):
+        self.schema.write_text(json.dumps({
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "const": {"$ref": "literal-data"},
+        }), encoding="utf-8")
+        self.write_events('{"$ref":"literal-data"}')
+        self.assertEqual(validate_model_response(self.events, self.schema)["status"],
+                         "PASS")
+
     def test_current_integrated_efficiency_schemas_accept_valid_outputs(self):
         live_control = Path(__file__).resolve().parents[1] / "research" / "live_control"
         method = {
