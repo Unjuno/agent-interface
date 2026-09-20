@@ -315,6 +315,7 @@ def run_case(case_id: str, requested_layout: str, number: int, out: Path) -> dic
                 pass
         row["xvfb_process"] = stop_process(xvfb, xvfb_log)
         row["xvfb_log_sha256"] = sha((case_dir / "xvfb.log").read_bytes())
+    return row
 
 
 def main() -> int:
