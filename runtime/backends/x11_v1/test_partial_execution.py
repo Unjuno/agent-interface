@@ -83,7 +83,10 @@ class PartialExecutionTests(unittest.TestCase):
                 self.assertEqual(evidence["program_emissions"], 2)
                 self.assertIn("unknown", evidence["failed_op_effect"])
                 self.assertIn("partial emission", evidence["error"])
-                self.assertEqual(evidence["observations"], [{"sha256": "earlier-observation"}])
+                self.assertEqual(evidence["observations"], [{"sha256": "earlier-observation", "operation_index": 1}])
+                self.assertLess(evidence["observations"][0]["operation_index"], evidence["completed_ops"][-1])
+                self.assertLess(evidence["observations"][0]["operation_index"], evidence["failed_op"])
+                self.assertEqual(backend.capture.return_value, {"sha256": "earlier-observation"})
                 self.assertEqual(evidence["releases"][-1]["verified"], not release_fails)
                 if release_fails:
                     self.assertIn("release failed", evidence["releases"][-1]["error"])

@@ -7,6 +7,7 @@ from pathlib import Path
 
 from .api import dispatch, doctor
 from .receipt import receipt_view
+from .review import review, review_bytes
 from .observe import observe
 
 
@@ -36,6 +37,9 @@ def main() -> int:
     view = sub.add_parser("receipt")
     view.add_argument("--report", required=True)
     view.add_argument("--raw", action="store_true")
+    image_review = sub.add_parser("review")
+    image_review.add_argument("--report", required=True)
+    image_review.add_argument("--run-directory", required=True)
     run = sub.add_parser("dispatch")
     run.add_argument("--program", required=True)
     run.add_argument("--targets", required=True)
@@ -48,6 +52,15 @@ def main() -> int:
     if args.command == "doctor":
         _emit(doctor())
         return 0
+    if args.command == "review":
+        try:
+            row = (review_bytes(sys.stdin.buffer.read(), args.run_directory) if args.report == "-"
+                   else review(args.report, args.run_directory))
+        except (OSError, ValueError, TypeError) as error:
+            _emit({"schema": "agent-interface/review-v1", "status": "invalid_receipt", "error": str(error)})
+            return 2
+        _emit(row)
+        return 2 if row["image_status"] == "needs_review" else 0
     if args.command == "receipt":
         try:
             _emit(receipt_view(args.report, raw=args.raw))

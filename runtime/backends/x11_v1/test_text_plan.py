@@ -10,6 +10,15 @@ class TextPlanTests(unittest.TestCase):
         backend.key_chord = mock.Mock()
         return backend
 
+    def test_uppercase_arrow_refusal_explains_canonical_name_without_emission(self):
+        backend = object.__new__(X11Backend)
+        backend.d = mock.Mock()
+        backend.d.keysym_to_keycode.return_value = 0
+        with mock.patch('runtime.backends.x11_v1.backend.xtest.fake_input') as emitted:
+            with self.assertRaisesRegex(X11BackendError, 'use Right'):
+                backend._keycode('RIGHT')
+            emitted.assert_not_called()
+
     def test_supported_punctuation_uses_x_keysym_names_and_shift(self):
         backend = self.backend()
         backend.text("a-._ A")
