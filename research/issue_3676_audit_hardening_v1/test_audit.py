@@ -61,6 +61,22 @@ class StrictAuditTests(unittest.TestCase):
             mutate(changed)
             self.assertTrue(audit.errors_for(changed))
 
+    def test_study_manifest_binds_exact_predecessor_raw_and_freeze(self):
+        with tempfile.TemporaryDirectory() as temp:
+            raw_path = Path(temp) / "raw.json"
+            freeze_path = Path(temp) / "freeze.json"
+            fake_freeze = b'{"replacement":"manifest"}\\n'
+            changed = copy.deepcopy(self.raw)
+            for identity in (changed["events"][0]["identity"], changed["events"][1]["identity"]):
+                identity["pixel_sha256"] = "0" * 64
+            changed["freeze_sha256"] = hashlib.sha256(fake_freeze).hexdigest()
+            raw_path.write_text(json.dumps(changed), encoding="utf-8")
+            freeze_path.write_bytes(fake_freeze)
+            result = audit.audit(raw_path, freeze_path, STUDY_FREEZE_PATH)
+            self.assertEqual(result["status"], "FAIL_AUDIT")
+            self.assertIn("raw bytes do not match the frozen predecessor hash", result["errors"])
+            self.assertIn("freeze bytes do not match the frozen predecessor hash", result["errors"])
+
     def test_direct_and_documented_cli_routes_match(self):
         direct = audit.audit(RAW_PATH, FREEZE_PATH, STUDY_FREEZE_PATH)
         with tempfile.TemporaryDirectory() as temp:
