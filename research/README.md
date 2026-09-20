@@ -89,6 +89,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 - `text_*` directories — text delivery, keymap, XKB, observation binding, and related robustness studies.
 - [`issue_3784_explicit_x11_receiver_v1/`](issue_3784_explicit_x11_receiver_v1/) — explicit X11 receiver formal allocation and retained STOP/audit evidence; consult RESULT.md for scope.
 - [`issue_3784_explicit_x11_receiver_v3/`](issue_3784_explicit_x11_receiver_v3/) — construction-gated German XKB receiver experiment; consult RESULT.md for the formal-03 scoped delivery result.
+- [`issue_3784_explicit_x11_receiver_v2/`](issue_3784_explicit_x11_receiver_v2/) — corrected receiver-oracle successor; consult RESULT.md for the formal-02 baseline-parser STOP and audit scope.
 
 ### Application and domain studies
 
