@@ -34,7 +34,7 @@ class Construction(unittest.TestCase):
   self.assertIn("torch.save(learned,buf)",self.text)
   self.assertIn("io.BytesIO()",self.text)
  def test_cuda_determinism_preflight(self):
-  for token in ("torch.cuda.is_available()","torch.use_deterministic_algorithms(True)","allow_tf32=False","manual_seed_all(seed+24)"):
+  for token in ("torch.cuda.is_available()","CUBLAS_WORKSPACE_CONFIG","torch.__version__","torch.use_deterministic_algorithms(True)","allow_tf32=False","manual_seed_all(seed+24)"):
    self.assertIn(token,self.text)
  def test_balanced_order_and_full_curves(self):
   self.assertIn("if index%2:arm_specs.reverse()",self.text)
@@ -44,6 +44,7 @@ class Construction(unittest.TestCase):
  def test_routes_snapshot_and_one_entrypoint(self):
   self.assertIn('"invalid_routes":invalid',self.text)
   self.assertIn("roundtrip_exact",self.text);self.assertIn("rollback_exact",self.text)
+  self.assertIn('route_version=0 if role=="A" else VERSION',self.text)
   self.assertEqual(self.text.count('if __name__=="__main__":main()'),1)
   self.assertEqual(self.freeze["D"]["invocationLimit"],1)
 if __name__=="__main__":unittest.main(verbosity=2)
