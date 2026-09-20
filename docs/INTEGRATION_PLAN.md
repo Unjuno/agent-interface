@@ -11,6 +11,18 @@ Keep actual GUI/task/performance evidence separate from contract-test results;
 do not relabel a local test pass as a completed research experiment. Sensor
 research remains outside this integration work.
 
+## External explicit-review evidence checkpoint — 2026-09-20
+
+[PR #3468 audit reproduction](../research/live_control/external_explicit_review_integration_v1/README.md)
+matched all 16 published checks from immutable source bytes and separately
+matched the embedded positive-control effect to its effect file. Retain explicit
+review/rebinding in guarded-handle paths; do not infer implicit XID reuse safety
+or promote the experimental bridge from this result. #3465 stopped before any
+decision on control-channel EOF, so no edge-action success is available there.
+This integrates external evidence into the decision record without new sensor
+work or a new GUI experiment. #59's unresolved real-time/model-latency problem
+remains open; public CLI integration is not evidence that it has been solved.
+
 ## Public interface integration checkpoint — 2026-09-20
 
 The public CLI now supports retained receipt/image review for prepared exchanges,
