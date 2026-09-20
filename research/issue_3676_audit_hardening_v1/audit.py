@@ -23,6 +23,10 @@ def _exact_keys(value, expected):
     return isinstance(value, dict) and set(value) == expected
 
 
+def _exact_int(value, minimum=0):
+    return type(value) is int and value >= minimum
+
+
 def errors_for(result):
     errors = []
     if not _exact_keys(result, TOP_KEYS):
@@ -43,9 +47,22 @@ def errors_for(result):
             errors.append("fixture_ready schema mismatch")
             continue
         identity = row["identity"]
-        if not _exact_keys(identity["xres"], XRES_KEYS):
+        if any(not _exact_int(identity[key], 1) for key in ("pid", "start_ticks", "xid")):
+            errors.append("identity numeric types/ranges invalid")
+        geometry = identity["geometry"]
+        if not isinstance(geometry, list) or len(geometry) != 5 or any(not _exact_int(part) for part in geometry):
+            errors.append("geometry numeric types invalid")
+        digest = identity["pixel_sha256"]
+        if not isinstance(digest, str) or len(digest) != 64 or any(char not in "0123456789abcdef" for char in digest):
+            errors.append("pixel digest malformed")
+        xres = identity["xres"]
+        if not _exact_keys(xres, XRES_KEYS):
             errors.append("XRes schema mismatch")
-        elif identity["xres"]["xid"] != identity["xid"] or identity["xres"]["pid"] != identity["pid"]:
+        elif any(not _exact_int(xres[key]) for key in XRES_KEYS):
+            errors.append("XRes numeric types/ranges invalid")
+        elif xres["xres_major"] != 1 or xres["xres_minor"] != 2:
+            errors.append("XRes protocol version mismatch")
+        elif xres["xid"] != identity["xid"] or xres["pid"] != identity["pid"]:
             errors.append("XRes identity mismatch")
 
     old, new = (row.get("identity", {}) for row in events[:2])
@@ -63,7 +80,7 @@ def errors_for(result):
     if not _exact_keys(stale, {"event", "admitted", "bridge_called", "would_call_bridge", "emissions", "effect_exists"}):
         errors.append("stale-admission schema mismatch")
     elif (stale["admitted"] is not False or stale["bridge_called"] is not False
-          or stale["would_call_bridge"] is not False or stale["emissions"] != 0
+          or stale["would_call_bridge"] is not False or type(stale["emissions"]) is not int or stale["emissions"] != 0
           or stale["effect_exists"] is not False):
         errors.append("stale alias was not refused before emission/effect")
     if not _exact_keys(fresh, {"event", "admitted", "bridge_called", "click", "effect"}):
@@ -71,11 +88,11 @@ def errors_for(result):
     else:
         click, effect = fresh["click"], fresh["effect"]
         if not _exact_keys(click, {"emissions", "button1_down_after"}) or (
-            click.get("emissions") != 1 or click.get("button1_down_after") is not False
+            type(click.get("emissions")) is not int or click.get("emissions") != 1 or click.get("button1_down_after") is not False
         ):
             errors.append("fresh click evidence invalid")
         if not _exact_keys(effect, {"count", "pid"}) or (
-            effect.get("count") != 1 or effect.get("pid") != new.get("pid")
+            type(effect.get("count")) is not int or effect.get("count") != 1 or effect.get("pid") != new.get("pid")
         ):
             errors.append("fresh effect evidence invalid")
         if fresh["admitted"] is not True or fresh["bridge_called"] is not True:
@@ -85,7 +102,7 @@ def errors_for(result):
         errors.append("allocation mismatch")
     if result["status"] != "PASS_SCOPED_STALE_REFUSAL_AND_FRESH_CONTROL":
         errors.append("runner status mismatch")
-    if result["final_emissions"] != 1:
+    if type(result["final_emissions"]) is not int or result["final_emissions"] != 1:
         errors.append("final emission count mismatch")
     if not isinstance(result["freeze_sha256"], str) or len(result["freeze_sha256"]) != 64:
         errors.append("freeze digest malformed")
