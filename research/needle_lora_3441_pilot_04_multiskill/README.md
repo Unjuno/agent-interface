@@ -4,7 +4,7 @@ Successor to #3441 pilots 01–03. This is a synthetic component experiment only
 
 ## Observed metrics and disposition
 
-The single Windows-host RTX 3080 Laptop GPU run (PyTorch 2.5.1+cu121, CUDA 12.1) observed the metrics below; Docker Desktop was unavailable, so this is not a container result. The formal disposition is **HOLD_PROTOCOL_DEVIATION**, not PASS: a pre-allocation Issue #3701 clarification required tensor-by-tensor equality for every full module state_dict tensor, but the frozen snapshot saved only trainable adapter tensors `a`/`b` (the shared base was checked separately for immutability). Adapter setup time was also not isolated, and a parallel same-issue branch recorded a separate pre-update CUBLAS STOP. Details are in [DISPOSITION_AMENDMENT.md](DISPOSITION_AMENDMENT.md).
+The single Windows-host RTX 3080 Laptop GPU run (PyTorch 2.5.1+cu121, CUDA 12.1) observed the metrics below; Docker Desktop was unavailable, so this is not a container result. The formal disposition is **HOLD_PROTOCOL_DEVIATION**, not PASS: a pre-allocation Issue #3701 clarification required tensor-by-tensor equality for every full module state_dict tensor, but the frozen snapshot saved only trainable adapter tensors `a`/`b` (the shared base was checked separately for immutability). Valid-route accuracy was computed by calling the base/adapter models directly, not by evaluating the model returned by `dispatch()`; only invalid routes exercised the dispatcher. Adapter setup time was also not isolated, and a parallel same-issue branch recorded a separate pre-update CUBLAS STOP. Details are in [DISPOSITION_AMENDMENT.md](DISPOSITION_AMENDMENT.md).
 
 | Held-out skill | Explicit per-skill route | One shared adapter after sequential B→C updates |
 |---|---:|---:|
@@ -12,7 +12,7 @@ The single Windows-host RTX 3080 Laptop GPU run (PyTorch 2.5.1+cu121, CUDA 12.1)
 | B | 0.9492 | 0.0007 |
 | C | 0.9150 | 0.9370 |
 
-Reported routed accuracies exceed the 0.90 threshold, and reported shared-control B falls below 0.90. Six invalid routes yielded; the frozen base remained tensor-identical. Adapter trainable tensors in each snapshot round-tripped and rolled back tensor-exactly. These observed results do not satisfy the full state_dict clarification, so they do not justify a formal PASS.
+Reported routed accuracies exceed the 0.90 threshold, and reported shared-control B falls below 0.90. Six invalid routes yielded; the frozen base remained tensor-identical. Adapter trainable tensors in each snapshot round-tripped and rolled back tensor-exactly. These observed results do not satisfy the full state_dict clarification, and valid-route dispatch was not tested, so they do not justify a formal PASS.
 
 Recorded training: base pretrain 247.95 ms; separate B/C adapter updates 141.22/140.30 ms; shared adapter B/C updates 146.95/131.29 ms. Each adapter has 40 trainable parameters and snapshot payloads were 1,496 bytes. Adapter setup time was not measured. Dispatcher-only median was 0.0001375 ms/call, excluding inference and model loading. CUDA peak allocated was 69,009,408 bytes.
 
@@ -25,6 +25,6 @@ Recorded training: base pretrain 247.95 ms; separate B/C adapter updates 141.22/
 
 ## Interpretation and limits
 
-Treat the accuracy values as contemporaneous runner output, not independently recomputed evidence. This remains a supplemental held result until a reviewable successor addresses the full-state snapshot requirement without repeating this no-retry allocation.
+Treat the accuracy values as contemporaneous runner output, not independently recomputed evidence. Valid-route scores bypassed dispatch(), so they do not verify route-to-model selection. This remains a supplemental held result until a reviewable successor addresses the full-state snapshot requirement without repeating this no-retry allocation.
 
 The recorded shared-adapter B competence collapsed after sequential C updates and A competence was also lost; separately routed aggregate scores met the numeric threshold. Because the full-state snapshot condition was not established, these metrics remain supplemental observations rather than a formal pass. They are consistent with per-skill routing helping on this synthetic seed, but do not establish realistic skill transfer, robust continual learning, multi-user concurrency, crash-safe persistence, model-load performance, runtime integration, GUI usefulness, or action safety.
