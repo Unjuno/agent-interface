@@ -99,13 +99,19 @@ class RetainedAttemptTests(unittest.TestCase):
 
     def test_short_stdout_write_fails_once_and_keeps_retained_report(self):
         class ShortWriter:
-            def __init__(self):
+            def __init__(self, run):
+                self.run = run
                 self.calls = 0
                 self.payload = ""
+                self.request_before = None
+                self.report_before = None
+                self.flushed = False
 
             def write(self, value):
                 self.calls += 1
                 self.payload = value
+                self.request_before = (self.run / 'request.json').read_bytes()
+                self.report_before = (self.run / 'report.json').read_bytes()
                 return len(value) - 1
 
             def flush(self):
@@ -120,7 +126,7 @@ class RetainedAttemptTests(unittest.TestCase):
             args = ['agent-interface', 'dispatch', '--program', str(root / 'program.json'),
                     '--targets', str(root / 'targets.json'), '--current-observation-seq', '1',
                     '--current-binding-revision', '0', '--run-directory', str(run)]
-            writer = ShortWriter()
+            writer = ShortWriter(run)
             with patch.object(sys, 'argv', args), \
                  patch('runtime.cli_v1.__main__.dispatch', return_value=report) as call, \
                  patch.object(sys, 'stdout', writer):
@@ -128,12 +134,11 @@ class RetainedAttemptTests(unittest.TestCase):
                     main()
             call.assert_called_once()
             self.assertEqual(writer.calls, 1)
-            request = (run / 'request.json').read_bytes()
-            retained = (run / 'report.json').read_bytes()
-            self.assertEqual(json.loads(retained), report)
-            self.assertEqual(json.loads(request)['operation'], 'dispatch')
-            self.assertEqual((run / 'request.json').read_bytes(), request)
-            self.assertEqual((run / 'report.json').read_bytes(), retained)
+            self.assertFalse(writer.flushed)
+            self.assertEqual(json.loads(writer.report_before), report)
+            self.assertEqual(json.loads(writer.request_before)['operation'], 'dispatch')
+            self.assertEqual((run / 'request.json').read_bytes(), writer.request_before)
+            self.assertEqual((run / 'report.json').read_bytes(), writer.report_before)
 
     def test_report_write_failure_preserves_outcome_and_unknown_exception(self):
         with tempfile.TemporaryDirectory() as td:
