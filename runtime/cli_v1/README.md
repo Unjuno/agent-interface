@@ -307,3 +307,30 @@ or contradictory evidence is null unless an explicit failure is present.
 The raw records remain available. This summary does not clear `recovery_required`,
 assert task success, or verify backend/process termination; inspect those outcomes
 separately. It adds no observation, polling or input replay.
+
+### Explicit paced text
+
+Public dispatch accepts `{"op":"text","text":"300","gap_ms":20}`. It compiles
+this to text `3`, a 20 ms `wait_update`, text `0`, another 20 ms wait, and text `0`.
+There is no leading/trailing wait. `gap_ms` is an integer from 0 to 1000; zero
+keeps the text as one operation. Omit the field to preserve existing behavior.
+This is opt-in pacing, not automatic correction, redraw detection or retry.
+The caller chooses the interval; no universally effective interval is claimed.
+The motivating Calc record is [#3582](https://github.com/Unjuno/agent-interface/pull/3582).
+
+Expansion occurs before opening the backend. The complete expanded program must
+fit 128 operations, including focus, waits and release; oversized programs are
+rejected, never truncated or split into multiple dispatches. Ordinary backend
+preflight, text support, source/binding and lease checks still apply. Pacing can
+increase elapsed time and consume the caller's lease. `repeat` and `gap_ms` cannot
+be combined on one instruction; separate key repetitions can coexist in a program.
+Direct core callers must expand first; unexpanded gap fields are refused.
+
+A program containing gaps retains `compilation.kind=bounded_text_gap`, the original
+source program and an operation-source map. Reviewed failures identify the
+zero-based `source_operation_index`, `character_index` (Unicode code-point index)
+and `phase` (`text` or `gap_before_character`). Unsplit zero-gap/empty text has a
+null character index. Other operations use one-based `expanded_occurrence`.
+Malformed mappings produce null, and partial-effect uncertainty remains unchanged.
+A character location does not authorize retrying the remainder of an uncertain
+operation. The same program syntax works through CLI, Python API and public MCP.
