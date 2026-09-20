@@ -1,7 +1,7 @@
 {
   "disposition": "PASS_V1_SYNTHETIC_TRANSPORT_ONLY",
   "scope": "synthetic CLI transport; not a real model call, schema endpoint, GUI, task, or efficiency result",
-  "evidence_root": "/private/tmp/3311-v1-broker-integrity/research/live_control/issue_3311_host_ipc_v1/evidence/20260920-v1-transport-audit-01",
+  "evidence_root": "C:\\wt-3311-json-types\\research\\live_control\\issue_3311_host_ipc_v1\\evidence\\20260920-v1-transport-audit-01",
   "checks": {
     "orbstack_context": true,
     "network_disabled": true,
@@ -17,6 +17,7 @@
     "synthetic_event_sequence": true,
     "runner_events_match_broker_response": true,
     "broker_request_matches_runner_plan": true,
+    "receipts_match_request_and_exit_codes": true,
     "source_hashes_match": true,
     "stderr_empty": true,
     "raw_manifest_matches": true

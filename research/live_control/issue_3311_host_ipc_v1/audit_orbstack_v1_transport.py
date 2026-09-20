@@ -82,10 +82,35 @@ def request_matches_plan(request_path: Path, plan_path: Path) -> bool:
     try:
         request = json.loads(request_path.read_text(encoding="utf-8"))
         plan = json.loads(plan_path.read_text(encoding="utf-8"))
-        return all(request[key] == plan[key] for key in (
+        return all(type(request[key]) is type(plan[key]) and request[key] == plan[key]
+                   for key in (
             "request_id", "mode", "prompt", "working", "image", "image_sha256",
             "instructions", "instructions_sha256", "schema", "schema_sha256",
             "authority_granted"))
+    except (OSError, json.JSONDecodeError, KeyError, TypeError):
+        return False
+
+
+def receipt_matches_request(request: dict, broker: dict, process: dict,
+                            plan_path: Path, exit_codes: dict) -> bool:
+    """Bind broker/runner receipts and exit codes to the originating request."""
+    try:
+        plan = json.loads(plan_path.read_text(encoding="utf-8"))
+        request_id = request["request_id"]
+        return (
+            type(broker["request_id"]) is type(request_id)
+            and broker["request_id"] == request_id
+            and type(process["request_id"]) is type(request_id)
+            and process["request_id"] == request_id
+            and type(process["mode"]) is type(plan["mode"])
+            and process["mode"] == plan["mode"]
+            and type(process["exit_code"]) is int
+            and process["exit_code"] == exit_codes["container"]
+            and type(exit_codes["container"]) is int
+            and type(broker["returncode"]) is int
+            and broker["returncode"] == exit_codes["broker"]
+            and type(exit_codes["broker"]) is int
+        )
     except (OSError, json.JSONDecodeError, KeyError, TypeError):
         return False
 
@@ -127,6 +152,8 @@ def audit(root: Path) -> dict:
         "runner_events_match_broker_response": response_matches_runner(response_path, events),
         "broker_request_matches_runner_plan": request_matches_plan(
             request_files[0], root / "out/runner/plan.json"),
+        "receipts_match_request_and_exit_codes": receipt_matches_request(
+            request, broker, process, root / "out/runner/plan.json", exit_codes),
         "source_hashes_match": source["broker_sha256"] == git_source_sha(revision, "runtime/host_model_ipc_broker_v1.py") and source["runner_sha256"] == git_source_sha(revision, "research/live_control/container_host_model_ipc_runner_v1.py") and source["test_sha256"] == git_source_sha(revision, "research/live_control/issue_3311_host_ipc_v1/test_orbstack_v1_transport.py"),
         "stderr_empty": not (root / "container.stderr.txt").read_text().strip() and not (root / "broker.stderr.txt").read_text().strip(),
         "raw_manifest_matches": manifest_matches,
