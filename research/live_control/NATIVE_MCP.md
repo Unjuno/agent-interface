@@ -58,6 +58,14 @@ from a closed dialog on the private display; it never moves focus and revokes
 old target aliases. A capture is not a readiness or success assertion. Failure
 does not permit replay. Leave stage capacity for later input and explicit finish.
 
+For `finish:true`, include only `source_sequence` and `finish`. Explicit action,
+tail, watch or other fields are rejected even when empty, false or null. This
+prevents an intended Save from being silently discarded by an early finish.
+To execute an action and then close, use an action decision with `finish_after:true`.
+MCP rejects mixed finish requests before publication and leaves the slot unused;
+the direct file harness also refuses them before input or evaluation, then cleans
+up. A file request already published is immutable and must not be resubmitted.
+
 After Save, inspect the returned image. If a dialog is still being painted,
 request a fresh observation instead of guessing a button or sending a dummy key.
 After confirming the visible format choice, inspect the sheet before finish if

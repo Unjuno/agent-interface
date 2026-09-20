@@ -124,6 +124,8 @@ def main():
             if finish_after and decision.get('finish') is True:
                 raise ValueError('choose finish or finish_after, not both')
             if decision.get('finish') is True:
+                if set(decision) - {'source_sequence', 'finish'}:
+                    raise ValueError('finish accepts only source_sequence and finish; use finish_after for an action')
                 break
             interaction = decision.get('interaction', 'click')
             if interaction == 'observe':

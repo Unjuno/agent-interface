@@ -224,6 +224,19 @@ class NativeFinishAfterTests(unittest.TestCase):
         self.assertEqual(replies[0]['cleanup']['status'], 'needs_review')
 
 
+    def test_finish_with_action_fields_never_silently_evaluates(self):
+        for extra in ({'tail': [{'op': 'key_chord', 'keys': ['CTRL', 's']}]},
+                      {'tail': []}, {'point': [600, 378]}, {'interaction': 'click'},
+                      {'finish_after': False}, {'unknown': None}):
+            with self.subTest(extra=extra):
+                replies, sources, events = self.exercise(
+                    [dict(finish=True, **extra)], expected_error=ValueError)
+                self.assertEqual(replies[0]['status'], 'needs_review')
+                self.assertNotIn('evaluate', events)
+                self.assertNotIn('mint', events)
+                self.assertNotIn('input', events)
+                self.assertEqual(sources, ['source-1.json'])
+
     def test_flat_refusal_returns_new_boundary_then_explicit_action(self):
         from scoped_target_handle_v2 import FlatTargetRefused
         replies, sources, events = self.exercise(

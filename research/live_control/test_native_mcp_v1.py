@@ -150,6 +150,16 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertTrue(invalid.isError)
                     self.assertFalse((root/'request-1.json').exists())
                     # Reject the actual wait-only failure before committing a request.
+                    for extra in ({'tail': [{'op': 'key_chord', 'keys': ['CTRL', 's']}]},
+                                  {'tail': []}, {'point': [0, 0]}, {'interaction': 'click'},
+                                  {'expected_title': 'fixture'}, {'finish_after': False},
+                                  {'watch_regions': []}, {'unknown': None}):
+                        mixed_finish = await client.call_tool('native_submit', {
+                            'stage': 1, 'decision': dict(source_sequence=1, finish=True, **extra),
+                            'timeout': 0})
+                        self.assertTrue(mixed_finish.isError)
+                        self.assertIn('finish accepts only', mixed_finish.content[0].text)
+                        self.assertFalse((root/'request-1.json').exists())
                     for tail in ([], [{'op': 'wait_update', 'timeout_ms': 250}],
                                  [{'op': 'observe'}]):
                         invalid_keyboard = await client.call_tool('native_submit', {

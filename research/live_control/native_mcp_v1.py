@@ -46,6 +46,10 @@ class NativeDecision(BaseModel):
             return self
         if self.finish and self.finish_after:
             raise ValueError('choose finish or finish_after, not both')
+        if self.finish:
+            if set(self.model_dump(exclude_unset=True)) - {'source_sequence', 'finish'}:
+                raise ValueError('finish accepts only source_sequence and finish; use finish_after for an action')
+            return self
         if not self.finish and (self.point is None or self.expected_title is None):
             raise ValueError('action requires point and expected_title')
         if (not self.finish and self.interaction == 'keyboard'
