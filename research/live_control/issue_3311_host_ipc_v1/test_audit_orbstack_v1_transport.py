@@ -84,7 +84,8 @@ class RetainedEvidenceAuditTest(unittest.TestCase):
     def test_both_retained_transport_bundles_pass_independent_audit(self):
         root = Path(__file__).resolve().parent
         evidence = root / "evidence"
-        names = ("20260920-v1-transport-audit-01", "20260920-v1-transport-audit-02")
+        names = ("20260920-v1-transport-audit-01", "20260920-v1-transport-audit-02",
+                 "20260920-v1-transport-audit-03")
         for name in names:
             with self.subTest(bundle=name):
                 report = auditor.audit(evidence / name)

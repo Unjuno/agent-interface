@@ -143,3 +143,15 @@ Main advanced four commits while hosted CI was queued. `git merge-tree` showed a
 **C** — Historical `evidence/**` and `raw-sha256.json` remain unchanged. The adversarial copy is temporary. Container validation uses the pinned Linux/arm64 image with `/repo` read-only and network disabled; source-history checks run in the host/CI checkout because the minimal runtime image intentionally has no Git. The evidence remains fake-CLI transport only.
 
 **U** — This repairs the auditor's event-lineage gap; it does not exercise a real host Codex call or establish schema endpoint compatibility. Per #3489, that one-shot model preflight remains gated on #3487 merge and required latest-head CI green. #3311's formal cold/warm/invalidation/repair allocation remains separately unperformed.
+
+### Fresh OrbStack v1 transport rerun after audit correction (2026-09-20)
+
+**H** — After binding runner output to the broker response, one fresh OrbStack Linux/arm64 `--network none` shared-volume roundtrip using the inspected immutable image ID will produce one non-authoritative synthetic response whose bytes are exactly the events consumed by the runner.
+
+**T** — Ran exactly one `test_fake_cli_round_trip_over_shared_mounts` execution from the host against `agent-interface-3311-runtime-v2:20260920` (`sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916`). The runner used the shared `/repo`, `/ipc`, and `/out` mounts; the fake host CLI emitted a synthetic stream. Captured one request, broker receipt, response JSONL, runner event/process records, exact Docker command and inspect result; froze a 19-file raw SHA-256 manifest and bound source provenance to commit `637fe0c9dd30ec333966ad225324d10e8286b3f6`.
+
+**D** — OrbStack roundtrip PASS (1/1); independent post-run audit PASS with all 16 checks, including image-ID binding, exact broker-response/runner-event equality, source hashes, and raw manifest. Container and broker exit codes are both zero; request authority is false.
+
+**C** — Unique append-only bundle `evidence/20260920-v1-transport-audit-03/`; network disabled; fake CLI only; no GUI, real model, task, or input action. Bundles #01/#02 remain unchanged. This is transport validation only and does not pass #3489's real endpoint/schema gate or #3311's allocation.
+
+**U** — The latest-head hosted checks remain pending. After #3487 merges, #3489 still requires one separately frozen real host Codex CLI schema preflight; no retry or substitution is permitted.
