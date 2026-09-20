@@ -1,8 +1,10 @@
 """Independent read-only audit for #3791 formal-02."""
 import hashlib,json,re,sys
 from pathlib import Path
-BASE="f5f9ff842fd061e6e1eb2f43a17cc7785b807fc7"
+BASE="bbbe1a1f94d58a00638fb42482caaa6f17921197"
 IMAGE="agent-interface-2972@sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27"
+RUNNER_SHA="TO_BE_FROZEN"
+MANIFEST_SHA="TO_BE_FROZEN"
 MATRIX=[("de-01","de"),("de-02","de"),("de-03","de"),("us-control","us")]
 FORMULA="=B2*A2"
 def sha(b):return hashlib.sha256(b).hexdigest()
@@ -23,8 +25,8 @@ def main():
     if raw.get("allocation")!="issue3784-explicit-x11-receiver-formal-02":errors.append("ALLOCATION")
     if raw.get("base_commit")!=BASE or m.get("base_commit")!=BASE:errors.append("BASE")
     if raw.get("image")!=IMAGE:errors.append("IMAGE")
-    if raw.get("runner_sha256")!=sha(runner):errors.append("RUNNER_BINDING")
-    if raw.get("source_manifest_sha256")!=sha(mbytes):errors.append("MANIFEST_BINDING")
+    if raw.get("runner_sha256")!=sha(runner) or sha(runner)!=RUNNER_SHA:errors.append("RUNNER_BINDING")
+    if raw.get("source_manifest_sha256")!=sha(mbytes) or sha(mbytes)!=MANIFEST_SHA:errors.append("MANIFEST_BINDING")
     if m.get("candidate_blob")!="9cae101a219348077668c8fc086acf8e13154afe":errors.append("CANDIDATE_BLOB")
     for p,e in m.get("files",{}).items():
         b=(source/p).read_bytes()

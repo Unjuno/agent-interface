@@ -6,7 +6,7 @@ from Xlib import X, XK, display
 from Xlib.ext import xtest
 
 ALLOCATION = "issue3784-explicit-x11-receiver-formal-02"
-BASE = "f5f9ff842fd061e6e1eb2f43a17cc7785b807fc7"
+BASE = "bbbe1a1f94d58a00638fb42482caaa6f17921197"
 IMAGE = "agent-interface-2972@sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27"
 FORMULA, UNSUPPORTED = "=B2*A2", "=B2*A2€"
 ROOT = Path(__file__).resolve().parent
