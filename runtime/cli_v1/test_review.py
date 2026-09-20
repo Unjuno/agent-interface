@@ -12,6 +12,26 @@ from runtime.distribution_v2.build import SOURCE_FILES, build
 
 
 class PublicReviewTests(unittest.TestCase):
+
+    def test_release_summary_requires_all_records_and_preserves_unknown(self):
+        from runtime.cli_v1.review import outcome_summary
+        good = {'verified': True, 'keys_down': [], 'buttons_down': []}
+        cases = [(None, None), ([], None), ([good], True),
+                 ([good, {'verified': False}], False),
+                 ([{'verified': False}, good], False),
+                 ([good, {}], None), ([dict(good, verified=1)], None),
+                 ([dict(good, keys_down=['CTRL'])], None), ([False], None)]
+        for releases, expected in cases:
+            with self.subTest(releases=releases):
+                report = {'schema': 'agent-interface/runtime-dispatch-result-v1',
+                          'result': {'status': 'completed', 'recovery_required': True,
+                                     'execution': {'releases': releases}}}
+                summary = outcome_summary(report)
+                self.assertIs(summary['input_release_verified'], expected)
+                self.assertIs(summary['recovery_required'], True)
+                self.assertEqual(summary['execution_status'], 'completed')
+
+
     def test_compact_review_chooses_smaller_lossless_receipt(self):
         from runtime.cli_v1.receipt_references import expand_receipt
         with tempfile.TemporaryDirectory() as td:
