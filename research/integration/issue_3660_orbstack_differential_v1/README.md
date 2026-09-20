@@ -21,7 +21,7 @@ The committed `evidence/reconstruction.json`, mutation receipt and individual mu
 
 ## Result
 
-`HOLD_AUDIT_EVIDENCE_INCOMPLETE` for reconstruction of all five predecessor claims; `PASS_MUTATION_CONTROLS` for the independent auditor's eight integrity mutations. The unmodified input passes structural checks, but three claim-level receipts are absent: modal owner and disappearance, an actually exercised/receipted Chromium stale-generation admission, and active-window plus fresh Calc role resolution on return. The experiment therefore does not turn #3652's reported 5/5 into an independently supported PASS. It also does not invalidate the historical formal result; it narrows what the retained raw independently proves.
+`HOLD_AUDIT_EVIDENCE_INCOMPLETE` for reconstruction of all five predecessor claims; `PASS_MUTATION_CONTROLS` for the independent auditor's nine integrity mutations. The unmodified input passes structural checks, but four claim-level receipts are absent: modal owner and disappearance, an actually exercised/receipted Chromium stale-generation admission, active-window plus fresh Calc role resolution on return, and an event-level receipt for the third input operation. The experiment therefore does not turn #3652's reported 5/5 into an independently supported PASS. It also does not invalidate the historical formal result; it narrows what the retained raw independently proves.
 
 The unchanged predecessor readback audit was separately replayed in the same pinned container and again emitted `PASS_POSTHOC_EVENT_RECOMPUTATION`; see `evidence/predecessor-audit-replay.json`. The stricter reconstruction and mutation controls explain why that receipt does not close the evidence gaps.
 

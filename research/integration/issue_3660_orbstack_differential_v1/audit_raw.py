@@ -41,6 +41,9 @@ def audit(raw):
         errors.append("event_count_mismatch")
     if raw.get("input_operations") != 3 or type(raw.get("input_operations")) is not int:
         errors.append("input_operation_count_mismatch")
+    marked_input_events = sum(1 for e in events if isinstance(e, dict) and e.get("input_emitted") is True)
+    if marked_input_events != raw.get("input_operations"):
+        gaps.append("event_level_input_operation_receipt_count_mismatch")
     if raw.get("formal_invocations") != 1 or type(raw.get("formal_invocations")) is not int:
         errors.append("formal_invocation_count_mismatch")
     if raw.get("retries") != 0 or type(raw.get("retries")) is not int:

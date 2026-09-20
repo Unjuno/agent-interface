@@ -16,7 +16,7 @@ A strict auditor implemented independently of the #3652 runner can reject re-sea
 
 - `PASS_MUTATION_CONTROLS`: untouched raw receives either a scoped PASS supported by all required receipts or a specific HOLD for missing receipts; every altered mutant is rejected as integrity failure.
 - `FAIL_AUDIT_MUTATION_ACCEPTED`: any altered mutant is accepted as a valid reconstruction.
-- `HOLD_AUDIT_EVIDENCE_INCOMPLETE`: untouched raw is structurally intact but the modal owner/disappearance, Chromium generation-aware stale-admission, or fresh Calc return evidence is missing.
+- `HOLD_AUDIT_EVIDENCE_INCOMPLETE`: untouched raw is structurally intact but the event-level third-input-operation receipt, modal owner/disappearance, Chromium generation-aware stale-admission, or fresh Calc return evidence is missing.
 - `FAIL_AUDIT_INTEGRITY`: malformed protocol order/cardinality, event hashes, operation count, identity binding, or cleanup.
 
 ## C — controls and scope

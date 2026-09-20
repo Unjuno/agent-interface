@@ -3,7 +3,7 @@
 ## Disposition
 
 - Mutation-control gate: **PASS_MUTATION_CONTROLS** — nine altered copies were rejected, including re-sealed reorder, re-sealed extra event, input counts 2/4/bool, role identity mismatch, stale identity accepted, cleanup survivor, and runner booleans changed to all false.
-- Raw reconstruction gate: **HOLD_AUDIT_EVIDENCE_INCOMPLETE** — zero structural integrity errors on the untouched raw, but three transition claims cannot be independently reconstructed from retained receipts.
+- Raw reconstruction gate: **HOLD_AUDIT_EVIDENCE_INCOMPLETE** — zero structural integrity errors on the untouched raw, but four receipt gaps prevent independent reconstruction of all five transition claims.
 - Predecessor formal outcome remains unchanged: `HOLD_TASK_EFFECT_UNTESTED`, one formal invocation, zero retries. This allocation did not launch apps or emit UI input.
 
 ## H/T/D/C/U
@@ -21,8 +21,8 @@
 - Frozen result raw SHA-256 (literal bytes): `f0df0248ff5e754a91e93271d9784f08d06ae1e8ff349b5f82f0fd015eb42883` (7,644 bytes).
 - Predecessor readback source SHA-256: `11a01934d168a23aac208ce5bb2bff6ef1287c8ea683b77f9b76a652e8102ab4`.
 - Replayed predecessor receipt SHA-256: `01b0e6e108328def4b64dbf9d7133094c13ea89b32ab0a576913ba6913cd04a1`; decision `PASS_POSTHOC_EVENT_RECOMPUTATION`.
-- Independent reconstruction receipt SHA-256: `59237d8d04ce7e27dbde38312427c634296ca0ba35665b3f5596622d969d6d2d`.
-- Final mutation receipt SHA-256 (includes direct predecessor-auditor differential replay): `c4af881baa48da3041d4a47a4bc9afc0d4fac5271792eac2e2e9b0941b8c095e`.
+- Independent reconstruction receipt SHA-256: `0b414e025ac7137a0e33beb25ced36296af009e644ffa06239fc341cecc84b43`.
+- Final mutation receipt SHA-256 (includes direct predecessor-auditor differential replay): `1dfb08941cc8e8a05d6170bf13200cd2ce79d0fe8b4f31861fc22671397f4cc5`.
 - Pinned image confirmed locally with `docker image inspect`: exact digest above, Linux/arm64.
 
 The first container invocation used the image's empty entrypoint and attempted `python`, which is absent from PATH; no process started and no data changed. After read-only inspection confirmed `/usr/bin/python3`, the declared audit commands ran successfully. This is retained as a harness invocation correction, not a semantic failure or retry of a formal allocation.
@@ -38,6 +38,7 @@ The exact retained predecessor `audit_readback.py` was run against each of the s
 1. Modal: raw records an XID after Ctrl+O and repeats it after Escape, but no owner/parent identity proof or observation that the modal disappeared.
 2. Chromium replacement: the numeric XID was reused and PID/generation changed; a `refused` disposition is recorded, but the raw does not show the generation-aware admission function being invoked with the old identity or an independently retained old-window disappearance receipt.
 3. Calc return: `fresh_validation: true` is a runner-authored boolean; no fresh role resolver output or independently recorded active-window value is present.
+4. Input accounting: top-level `input_operations` is 3, but only two ledger events carry `input_emitted: true`; the geometry-changing input has no event-level operation receipt.
 
 ## Integration handoff
 
