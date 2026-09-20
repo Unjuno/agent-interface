@@ -130,7 +130,16 @@ def errors_for(result):
 
 def verify_source_hashes(study, source_dir):
     errors = []
-    for relative, expected in study.get("source_sha256", {}).items():
+    if type(study) is not dict:
+        return ["study manifest must be an object"]
+    sources = study.get("source_sha256")
+    expected_names = {"audit.py", "test_integrity.py"}
+    if type(sources) is not dict or set(sources) != expected_names:
+        return ["source hash manifest schema mismatch"]
+    for relative, expected in sources.items():
+        if type(expected) is not str or re.fullmatch(r"[0-9a-f]{64}", expected) is None:
+            errors.append(f"source hash malformed: {relative}")
+            continue
         path = source_dir / relative
         if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != expected:
             errors.append(f"source hash mismatch: {relative}")
@@ -146,12 +155,21 @@ def audit(raw_path, freeze_path, study_freeze_path):
     except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
         return {"status": "FAIL_AUDIT", "errors": [f"invalid JSON: {exc}"], "corruption_controls_rejected": {}}
     errors = errors_for(raw)
-    if hashlib.sha256(raw_bytes).hexdigest() != study.get("predecessor_raw_sha256"):
+    if type(study) is not dict:
+        return {"status": "FAIL_AUDIT", "errors": errors + ["study manifest must be an object"],
+                "corruption_controls_rejected": {}}
+    expected_raw = study.get("predecessor_raw_sha256")
+    expected_freeze = study.get("predecessor_freeze_sha256")
+    if type(expected_raw) is not str or re.fullmatch(r"[0-9a-f]{64}", expected_raw) is None:
+        errors.append("predecessor raw hash malformed")
+    elif hashlib.sha256(raw_bytes).hexdigest() != expected_raw:
         errors.append("raw bytes do not match frozen predecessor hash")
-    if hashlib.sha256(freeze_bytes).hexdigest() != study.get("predecessor_freeze_sha256"):
+    if type(expected_freeze) is not str or re.fullmatch(r"[0-9a-f]{64}", expected_freeze) is None:
+        errors.append("predecessor freeze hash malformed")
+    elif hashlib.sha256(freeze_bytes).hexdigest() != expected_freeze:
         errors.append("freeze bytes do not match frozen predecessor hash")
     errors.extend(verify_source_hashes(study, Path(__file__).resolve().parent))
-    if raw.get("freeze_sha256") != hashlib.sha256(freeze_bytes).hexdigest():
+    if type(raw) is dict and raw.get("freeze_sha256") != hashlib.sha256(freeze_bytes).hexdigest():
         errors.append("raw result is not bound to supplied predecessor freeze")
     controls = {}
     if not errors:
