@@ -56,6 +56,10 @@ environment. With no explicit display, normal environment selection applies.
   an `observe` operation if its result should contain an image. Explicit bounded
   key repetitions use the same public compiler and failure-source mapping.
 
+- `interface_results(call_id=null, before_call_id=null, compact=false,
+  include_image=true)` lists calls or reads a retained result without input or
+  capture. See the result-retrieval section below.
+
 Programs, leases and current observation/binding values retain the public API's
 caller-supplied meaning. This adapter issues no source authority and is not a
 persistent desktop session manager. Each API call opens and closes its own

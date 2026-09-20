@@ -61,6 +61,30 @@ The report and referenced image must be present at their recorded paths. The
 review operation does not recapture, focus a window or repeat an action. Native
 research reports use `agent_review.py --native` as described in the MCP guide.
 
+## Retrieve an outcome or request a fresh image
+
+Public MCP offers three tools: `interface_dispatch`, `interface_observe`, and
+`interface_results`. Choose the next call according to what is missing:
+
+| Situation | Next call | Meaning |
+|---|---|---|
+| An action response arrived, but you need its outcome again | `interface_results(call_id="...", include_image=false)` using the returned `call_id` | Reads the retained receipt without delivering its image block or issuing input |
+| The action response was lost | `interface_results()`, then look up a candidate ID and compare its retained arguments | Finds calls in this server process; a match still needs caller interpretation |
+| The action image is old and you need the current screen | `interface_observe(...)` with the actual target, frame and region | Takes a new read-only capture; it does not repeat the action |
+| You want the original image again | `interface_results(call_id="...")` | Returns the retained image, not a new capture |
+
+Listings return the newest 20 calls. Use `next_before_call_id` as
+`before_call_id` to inspect older pages. A running call returns `pending`;
+`finished` means the worker ended, not that the task succeeded. Missing reports
+and unknown IDs remain explicit errors. Do not resend uncertain input to recover
+a receipt. The registry lasts only for the current server process.
+
+Image delivery and image availability are separate: `include_image=false` leaves
+`image_status`, the image reference and action outcome available, and still
+validates the retained image. It does not establish token or latency savings.
+See [MCP result retrieval](cli_v1/MCP.md#recover-a-retained-result-without-resending-input)
+for the complete lifecycle and failure contract.
+
 ## Batch actions between decisions
 
 Use one public `dispatch` program for a finite sequence whose actions can all be
@@ -85,6 +109,15 @@ focused target, observed region, source/binding values and current lease using
 must match the selected application. Public CLI, API and MCP dispatch share the
 same bounded key-repeat compiler: this five-instruction fragment expands to seven
 operations, and the complete program must fit 128 operations.
+
+For applications where the caller deliberately chooses paced typing, a text
+operation may specify `{"op":"text","text":"300","gap_ms":20}`. This expands
+to three character operations and two 20-ms waits, with no leading or trailing
+wait. The interval is an integer from 0 to 1000 ms; it is optional, and no
+application-independent optimal interval has been established. Expanded text,
+key repetitions and all other operations together must fit the 128-operation
+limit. Waits consume the caller's lease. See the
+[public text pacing contract](cli_v1/README.md) for validation and source mapping.
 
 Split a sequence when the next action depends on a new image: submit the first
 program, inspect its result, then choose the next. An `observe` inside a program
