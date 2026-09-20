@@ -19,6 +19,7 @@ class ReconstructionTests(unittest.TestCase):
         self.assertEqual(result["error_count"], 0)
         self.assertIn("Chromium old-window-absence receipt is missing", result["holds"])
         self.assertIn("active-window observation at Calc return is missing", result["holds"])
+        self.assertIn("raw does not provide three independently countable input-operation receipts", result["holds"])
         self.assertFalse(result["runner_checks_used_as_evidence"])
 
     def test_extra_event_rejected(self):
