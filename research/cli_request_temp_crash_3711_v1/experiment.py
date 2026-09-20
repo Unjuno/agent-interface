@@ -7,7 +7,7 @@ import subprocess
 import sys
 from unittest.mock import Mock
 
-EXPECTED_ATTEMPT_SHA256 = "70cc62b450c8b9c8aaa0db49b1e116388368fe4c"
+EXPECTED_ATTEMPT_GIT_BLOB_SHA1 = "70cc62b450c8b9c8aaa0db49b1e116388368fe4c"
 CHILD = r'''
 import os
 import sys
@@ -137,6 +137,7 @@ def main():
         "allocation": "issue3752-request-temp-crash-01",
         "disposition": disposition,
         "source_sha256": observed_source_sha256,
+        "source_git_blob_sha1": observed_source_git_blob_sha1,
         "runner_sha256": sha(Path(__file__).read_bytes()),
         "child_exit_code": child.returncode,
         "backend_marker_exists": marker.exists(),
