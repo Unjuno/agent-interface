@@ -130,6 +130,8 @@ def outcome_summary(report):
                        recovery_required=recovery if type(recovery) is bool else None)
         if 'compilation' in report:
             summary['failed_source_operation'] = _failure_source(report, failed)
+            summary['validation_source_operation'] = _failure_source(
+                report, summary['validation_operation_index'])
     return summary
 
 

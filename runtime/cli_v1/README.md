@@ -403,6 +403,9 @@ an individual operation, `result.validation_operation_index` and the review's
 that compiled program. Global errors such as a wrong schema have no operation
 index. This is distinct from `failed_operation_index`, which refers to an
 execution failure; a static refusal does not imply an operation was executed.
+When retained repeat/text-gap expansion metadata can be reconstructed,
+`outcome_summary.validation_source_operation` also identifies the original
+source operation. Missing or inconsistent mappings produce no source location.
 If the program passes static validation, the API adds no program diagnostic:
 the refusal may concern the backend manifest. Unsupported operation names are
 not echoed. Input text and full programs are not added to this diagnostic.
