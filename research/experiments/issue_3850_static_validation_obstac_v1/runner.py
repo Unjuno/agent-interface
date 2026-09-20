@@ -9,7 +9,7 @@ OUT = Path('/work/out')
 COMMIT = '4d51fccac55433570bc714cfaf21c88531fe325d'
 TREE = '7fae16c1766a36376d6c49f49a7fb0e68f93cb0d'
 IMAGE = 'sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9'
-FREEZE = 'd8cc8f36b1423c6a84bdcee4034c669d4e694b1e4c2a77c482e87a075f181861'
+FREEZE = '15af12fe44fd33d269ce42a485cd0d6b6c9e94070a4dd633bca0cc543f0629a5'
 FILES = {
     'runtime/cli_v1/api.py': 'c402025700481d5cc0ba600f39bc83136be173f0',
     'runtime/cli_v1/review.py': '839ed09a749d675b18c317704a123e18e695c97f',
