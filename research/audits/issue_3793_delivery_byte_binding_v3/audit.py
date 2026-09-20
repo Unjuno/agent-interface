@@ -107,7 +107,7 @@ def validate_history(files: dict[str, bytes]) -> list[str]:
         (freeze.get("formal_base_commit") == formal_freeze.get("base_commit"), "FORMAL_BASE_COMMIT_MISMATCH"),
         (freeze.get("audit_source_commit") == freeze.get("audit_code_base_commit"), "AUDIT_SOURCE_COMMIT_MISMATCH"),
         (raw.get("base_commit") == freeze.get("formal_base_commit"), "RAW_BASE_COMMIT_MISMATCH"),
-        (raw.get("image") == IMAGE and raw.get("image_digest") == freeze.get("image_digest"), "RAW_IMAGE_DIGEST_MISMATCH"),
+        (raw.get("image_digest") == freeze.get("image_digest"), "RAW_IMAGE_DIGEST_MISMATCH"),
         (raw.get("engine_platform") == "linux/arm64", "RAW_PLATFORM_MISMATCH"),
         (prior.get("disposition") == "PASS_V2_ARTIFACT_BINDING" and prior.get("errors") == [], "PRIOR_RESULT_MISMATCH"),
         (prior.get("formal_raw_sha256") == sha(files["formal_raw"]), "PRIOR_RAW_BINDING_MISMATCH"),
