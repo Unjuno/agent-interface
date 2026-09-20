@@ -237,6 +237,35 @@ class PublicReviewTests(unittest.TestCase):
                 self.assertIsNone(summary['recovery_required'])
                 self.assertEqual(row['receipt']['source']['raw_report'], payload)
 
+    def test_repeat_failure_maps_to_original_instruction_without_replay(self):
+        from copy import deepcopy
+        from runtime.cli_v1.review import outcome_summary
+        payload = {'schema': 'agent-interface/runtime-dispatch-result-v1', 'status': 'returned',
+                   'result': {'status': 'execution_failed', 'execution': {
+                       'failed_op': 2, 'failed_op_effect': 'unknown'}},
+                   'compilation': {'kind': 'bounded_key_repeat', 'source_program': {'ops': [
+                       {'op': 'focus', 'target': 'fixture'},
+                       {'op': 'key_chord', 'keys': ['Left'], 'repeat': 3},
+                       {'op': 'release_all'}]}, 'operation_sources': [0, 1, 1, 1, 2]}}
+        original = deepcopy(payload)
+        summary = outcome_summary(payload)
+        self.assertEqual(summary['failed_source_operation'], {
+            'source_operation_index': 1, 'occurrence': 2, 'occurrence_count': 3})
+        self.assertEqual(summary['failed_operation_index'], 2)
+        self.assertEqual(summary['failed_operation_effect'], 'unknown')
+        self.assertEqual(payload, original)
+        for failed in (None, False, -1, 5, '2'):
+            changed = deepcopy(payload)
+            changed['result']['execution']['failed_op'] = failed
+            self.assertIsNone(outcome_summary(changed)['failed_source_operation'])
+        for mapping in ([0, 1, 2, 1, 2], [False, 1, 1, 1, 2], [0], None):
+            changed = deepcopy(payload)
+            changed['compilation']['operation_sources'] = mapping
+            self.assertIsNone(outcome_summary(changed)['failed_source_operation'])
+        changed = deepcopy(payload)
+        changed['compilation']['source_program']['ops'][1]['repeat'] = 10**10
+        self.assertIsNone(outcome_summary(changed)['failed_source_operation'])
+
     def test_newest_missing_image_never_falls_back_to_older_capture(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)

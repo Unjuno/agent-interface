@@ -55,6 +55,15 @@ original instruction index. Failure and observation indices refer to the expande
 program. No waits, retries or asynchronous scheduling are inserted. A program
 without `repeat` keeps the original path and receives no compilation metadata.
 
+For compiled programs, the review outcome summary also includes
+`failed_source_operation`: a zero-based `source_operation_index`, a one-based
+`occurrence`, and `occurrence_count`. For example, failure in the second of three
+Left chords identifies occurrence 2 of the original repeated instruction.
+This field is null when there is no recorded failure or the retained mapping is
+missing, malformed, or inconsistent with the source program. The expanded failure
+index and partial-effect uncertainty remain visible. This historical mapping does
+not establish that retrying the instruction is safe or authorize input replay.
+
 Each `dispatch` owns its one-shot session and closes its native backend connection
 when that backend exposes `close`, including after refusal or an execution error.
 A close failure returns `runtime_failed` with `cleanup_error`, preserving any

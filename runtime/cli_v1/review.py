@@ -22,6 +22,31 @@ def review_bytes(data: bytes, run_directory, *, compact=False):
     return _review(data, receipt_bytes(data), run_directory, compact=compact)
 
 
+def _failure_source(report, failed):
+    """Map a recorded failure only when the retained expansion is consistent."""
+    compilation = report.get('compilation')
+    if not isinstance(compilation, dict) or compilation.get('kind') != 'bounded_key_repeat':
+        return None
+    source = compilation.get('source_program')
+    ops = source.get('ops') if isinstance(source, dict) else None
+    mapping = compilation.get('operation_sources')
+    if not isinstance(ops, list) or not isinstance(mapping, list):
+        return None
+    from runtime.core_v1.sequence import expand_key_repeats
+    try:
+        expand_key_repeats(ops, max_ops=128)
+    except ValueError:
+        return None
+    expected = [index for index, op in enumerate(ops) for _ in range(op.get('repeat', 1))]
+    if (any(type(index) is not int for index in mapping) or mapping != expected or
+            type(failed) is not int or not 0 <= failed < len(mapping)):
+        return None
+    index = mapping[failed]
+    return {'source_operation_index': index,
+            'occurrence': failed - mapping.index(index) + 1,
+            'occurrence_count': ops[index].get('repeat', 1)}
+
+
 def outcome_summary(report):
     """Expose recorded statuses, never infer task success or absence of effects."""
     def text(row, name):
@@ -46,6 +71,8 @@ def outcome_summary(report):
                        execution_error=text(dispatch, 'error'),
                        execution_detail=text(dispatch, 'detail'),
                        recovery_required=recovery if type(recovery) is bool else None)
+        if 'compilation' in report:
+            summary['failed_source_operation'] = _failure_source(report, failed)
     return summary
 
 
