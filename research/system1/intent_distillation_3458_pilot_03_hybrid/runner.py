@@ -88,4 +88,3 @@ def main():
       'invalid_routes':invalid,'all_invalid_yield':all(v=='YIELD' for v in invalid.values()),'scope':'synthetic proposal only; boundary/stale yield; no action authority'},indent=2,sort_keys=True))
 
 if __name__=='__main__': main()
-
