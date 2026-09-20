@@ -16,6 +16,8 @@ The construction allocation `formal-05b63c13820e` and its seven adversarial cont
 
 The new audit evaluates the passive event witness exactly once in order and uses the fixture effect file as a separate oracle. It does not promote event logs alone to proof of effect. The seven preflight negative controls separately reject missing, duplicated, reversed, wrong-key, no-effect, and no-event evidence.
 
+The committed raw manifest contains 95 canonical evidence files (407,148 bytes). An earlier packaging mistake introduced an 89-file nested duplicate tree; all duplicate files were byte-identical to canonical paths. The follow-up cleanup removes the tracked duplicate copies only; canonical raw evidence remains unchanged, and the manifest now covers canonical files only.
+
 ## Supplemental validation boundaries
 
 The attempted native-image unittest command did not reach unittest: that image has a fixed entrypoint to an unrelated `/workspace/research/live_control/native_mcp_v1.py`, absent from this checkout. A portable-image invocation with its entrypoint explicitly set to Python reached the requested suite, but all 9 tests were skipped because this invocation did not provide `DISPLAY`; this is recorded as NOT RUN/skip, not a suite PASS. The three formal MCP/Xvfb allocations and the 102-check raw audit are the validation for this issue's gate.
