@@ -85,6 +85,39 @@ def publish(path, data):
         Path(name).unlink(missing_ok=True)
 
 
+def continuation(root, stage, max_stages, displayed):
+    """Describe a verified retained next source, never permission to issue input."""
+    base = {'authority':'none'}
+    report = displayed['receipt']['native_result']
+    if report.get('status') != 'boundary':
+        return dict(base, status='unavailable', reason='not_a_stage_boundary')
+    next_stage = stage + 1
+    if next_stage > max_stages:
+        return dict(base, status='needs_review', reason='stage_bound_exhausted')
+    if (root/f'request-{next_stage}.json').exists():
+        return dict(base, status='already_submitted', stage=next_stage,
+                    reason='inspect_existing_request_do_not_submit_again')
+    if displayed.get('image_status') != 'image':
+        return dict(base, status='needs_review', reason='returned_image_unavailable')
+    try:
+        data = (root/f'source-{next_stage}.json').read_bytes()
+        source = json.loads(data)
+        if (not isinstance(source, dict) or type(source.get('sequence')) is not int
+                or source['sequence'] < 1 or source != report.get('observation')):
+            raise ValueError('next source differs from returned observation')
+        reference = displayed.get('image_reference')
+        if (not isinstance(reference, dict) or type(reference.get('sequence')) is not int
+                or reference['sequence'] != source['sequence']
+                or reference.get('capture_ns') != source.get('capture_ns')
+                or reference.get('sha256') != source['native']['artifact']['sha256']):
+            raise ValueError('next source differs from delivered image reference')
+    except (OSError, ValueError, TypeError, KeyError) as error:
+        return dict(base, status='needs_review', reason=str(error))
+    return dict(base, status='source_available', stage=next_stage,
+                source_sequence=source['sequence'], source_sha256=hashlib.sha256(data).hexdigest(),
+                scope='retained source at read time; existing source/admission checks still apply')
+
+
 def run(run_directory, stage, decision=None, *, timeout=5, resume=False, compact=False,
         decision_sha256=None):
     started = time.monotonic_ns()
@@ -140,6 +173,7 @@ def run(run_directory, stage, decision=None, *, timeout=5, resume=False, compact
             report = displayed['receipt']['native_result']
             if report.get('stage') != stage or report.get('decision_sha256') != digest:
                 raise ValueError('reply does not match the committed request; do not replay')
+            displayed['continuation'] = continuation(root, stage, max_stages, displayed)
             displayed['exchange'] = {'submission_committed': True, 'resumed_read_only': resume,
                                      'started_ns': started, 'committed_ns': committed,
                                      'returned_ns': time.monotonic_ns()}
