@@ -1,10 +1,10 @@
 """Independent read-only audit for #3791 formal-02."""
 import hashlib,json,re,sys
 from pathlib import Path
-BASE="bbbe1a1f94d58a00638fb42482caaa6f17921197"
+BASE="d685f881cb5050bc42b6b96007978df9f532fe78"
 IMAGE="agent-interface-2972@sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27"
-RUNNER_SHA="TO_BE_FROZEN"
-MANIFEST_SHA="TO_BE_FROZEN"
+RUNNER_SHA="ffe1b5d081775c511de50a0a626b6e43ff6f4e094069b3d40baa9e33b334246b"
+MANIFEST_SHA="196fae86bcd15993d76a217457f7aa2922bd94f1b623c9dde2d843da62621431"
 MATRIX=[("de-01","de"),("de-02","de"),("de-03","de"),("us-control","us")]
 FORMULA="=B2*A2"
 def sha(b):return hashlib.sha256(b).hexdigest()
