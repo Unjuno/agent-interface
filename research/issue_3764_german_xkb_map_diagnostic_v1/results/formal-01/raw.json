@@ -1,0 +1,55 @@
+{
+  "allocation": "issue3733-german-xkb-map-diagnostic-formal-01",
+  "artifact_sha256": {
+    "german/before.query.txt": "e02595744be18a1af0a06974b47e72ce96e9536b775a59af165aca9f09065747",
+    "german/before.xkbcomp.txt": "0e0746bf5f507ac5d73d7614f65d4c1c6bafcebf64edff570957cc2ddc0a75e5",
+    "german/xvfb.log": "7e8bd482a1d194c3fbc6b40b7ee1cb73794641aee10985e05e87173f9ae1aabc",
+    "us-control/before.query.txt": "e02595744be18a1af0a06974b47e72ce96e9536b775a59af165aca9f09065747",
+    "us-control/before.xkbcomp.txt": "0e0746bf5f507ac5d73d7614f65d4c1c6bafcebf64edff570957cc2ddc0a75e5",
+    "us-control/xvfb.log": "7e8bd482a1d194c3fbc6b40b7ee1cb73794641aee10985e05e87173f9ae1aabc"
+  },
+  "base_commit": "e9198a1c74ef4ca2759e92c4539b10dbe3a20ba8",
+  "disposition": "STOP",
+  "image": "agent-interface-2972@sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+  "network": "none",
+  "platform": "linux/arm64",
+  "rows": [
+    {
+      "case": "german",
+      "display": ":161",
+      "error": "FileNotFoundError:[Errno 2] No such file or directory: 'xmodmap'",
+      "extensions": {
+        "XKEYBOARD": true,
+        "XTEST": true
+      },
+      "requested_layout": "de",
+      "status": "STOP_SETUP",
+      "xvfb_log_sha256": "7e8bd482a1d194c3fbc6b40b7ee1cb73794641aee10985e05e87173f9ae1aabc",
+      "xvfb_pid": 6,
+      "xvfb_process": {
+        "pid": 6,
+        "reaped": true,
+        "returncode": 0
+      }
+    },
+    {
+      "case": "us-control",
+      "display": ":162",
+      "error": "FileNotFoundError:[Errno 2] No such file or directory: 'xmodmap'",
+      "extensions": {
+        "XKEYBOARD": true,
+        "XTEST": true
+      },
+      "requested_layout": "us",
+      "status": "STOP_SETUP",
+      "xvfb_log_sha256": "7e8bd482a1d194c3fbc6b40b7ee1cb73794641aee10985e05e87173f9ae1aabc",
+      "xvfb_pid": 19,
+      "xvfb_process": {
+        "pid": 19,
+        "reaped": true,
+        "returncode": 0
+      }
+    }
+  ],
+  "xlib_version": "(0, 33)"
+}
