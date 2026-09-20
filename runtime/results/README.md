@@ -4,6 +4,10 @@ This directory contains committed runtime demonstration/result artifacts used by
 
 Current retained result namespaces include:
 
+- [`main-compact-calc-01`](main-compact-calc-01/README.md) — primary WSL Calc use
+  through the integrated compact MCP response; retained record checks and the
+  unresolved intermediate-image feedback boundary, not a performance comparison;
+
 - `golden-desktop-live-*` — earlier golden desktop runs;
 - `golden-desktop-app-server-v2-live-*` — app-server v2 retained run(s);
 - `golden-desktop-app-server-v3-live-*` — app-server v3 retained run(s).
