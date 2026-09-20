@@ -141,9 +141,12 @@ def delivery_errors(accepted: bytes, delivered: bytes, raw: dict) -> list[str]:
 
 
 def main() -> int:
-    if len(sys.argv) != 4:
-        raise SystemExit("usage: audit.py INPUT_ROOT MANIFEST_PATH OUTPUT_ROOT")
-    input_root, manifest_path, output_root = map(Path, sys.argv[1:])
+    if len(sys.argv) != 5:
+        raise SystemExit("usage: audit.py INPUT_ROOT MANIFEST_PATH OUTPUT_ROOT AUDIT_SOURCE_COMMIT")
+    input_root, manifest_path, output_root = map(Path, sys.argv[1:4])
+    audit_source_commit = sys.argv[4]
+    if len(audit_source_commit) != 40 or any(c not in "0123456789abcdef" for c in audit_source_commit):
+        raise SystemExit("invalid audit source commit")
     manifest, files, errors = load_inputs(input_root, manifest_path)
     if not errors:
         errors.extend(bind_frozen_history(files))
@@ -188,7 +191,7 @@ def main() -> int:
         "allocation": manifest.get("allocation"),
         "disposition": disposition,
         "frozen_pr_head": FROZEN_HEAD,
-        "audit_source_commit": manifest.get("audit_source_commit"),
+        "audit_source_commit": audit_source_commit,
         "image": IMAGE,
         "platform": platform.machine(),
         "network": "none",
@@ -223,7 +226,8 @@ def main() -> int:
         "errors": errors,
     }
     result["result_sha256"] = canonical_sha(result)
-    output_root.mkdir(parents=True, exist_ok=False)
+    if not output_root.is_dir() or any(output_root.iterdir()):
+        raise SystemExit("STOP_OUTPUT_NOT_EMPTY_OR_MISSING")
     (output_root / "RESULT.json").write_text(json.dumps(result, sort_keys=True, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(result, sort_keys=True))
     return 0 if disposition == "PASS_AUDIT_BINDING_SCOPED" else 1
