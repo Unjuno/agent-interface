@@ -97,6 +97,38 @@ class RetainedAttemptTests(unittest.TestCase):
             call.assert_called_once()
             self.assertEqual(json.loads((run / 'report.json').read_text()), report)
 
+    def test_short_stdout_write_keeps_exact_report_and_never_reinvokes(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            (root / 'program.json').write_text('{}')
+            (root / 'targets.json').write_text('{"fixture":123}')
+            run = root / 'attempt'
+            report = {'schema': 'agent-interface/runtime-dispatch-result-v1',
+                      'status': 'returned', 'result': {'status': 'completed'}}
+
+            class ShortWriter:
+                def __init__(self):
+                    self.accepted = ''
+                def write(self, text):
+                    self.accepted += text[:max(1, len(text) // 2)]
+                    return len(self.accepted)
+
+            output = ShortWriter()
+            args = ['agent-interface', 'dispatch', '--program', str(root / 'program.json'),
+                    '--targets', str(root / 'targets.json'), '--current-observation-seq', '1',
+                    '--current-binding-revision', '0', '--run-directory', str(run)]
+            with patch.object(sys, 'argv', args), \\
+                 patch('runtime.cli_v1.__main__.dispatch', return_value=report) as call, \\
+                 patch('runtime.cli_v1.__main__.sys.stdout', output):
+                with self.assertRaisesRegex(BrokenPipeError, 'SHORT_STDOUT_WRITE'):
+                    main()
+
+            call.assert_called_once()
+            self.assertTrue(output.accepted)
+            self.assertLess(len(output.accepted), len(json.dumps(report, sort_keys=True, separators=(',', ':')) + '\\n'))
+            self.assertEqual(json.loads((run / 'report.json').read_bytes()), report)
+            self.assertTrue((run / 'request.json').is_file())
+
     def test_report_write_failure_preserves_outcome_and_unknown_exception(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td) / 'run'
