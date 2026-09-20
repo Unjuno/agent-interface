@@ -5,7 +5,11 @@ Intended command (attempt 1):
 docker run --rm --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=8m -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-51:/probe:ro" --entrypoint sh agent-interface-map01-clock-counter-v1:20260920 -c 'gcc -O2 -Wall -Wextra -o /tmp/pmu_probe /probe/pmu_probe.c && /tmp/pmu_probe'
 Observed STOP: probe binary could not execute on noexec tmpfs; no PMU instruction was run.
 
-Corrected command (attempt 2): same command with `/tmp:rw,exec,nosuid,size=8m`. Docker client returned `error waiting for container: unexpected EOF`; no stdout/stderr from the probe was captured and the Docker API socket was temporarily absent. A later no-op container plus Docker info read succeeded; see runtime-smoke.log. In keeping with the preregistered stop boundary, the PMU read was not repeated.
+Corrected command (attempt 2):
+docker run --rm --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,exec,nosuid,size=8m -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-51:/probe:ro" --entrypoint sh agent-interface-map01-clock-counter-v1:20260920 -c 'gcc -O2 -Wall -Wextra -o /tmp/pmu_probe /probe/pmu_probe.c && /tmp/pmu_probe'
+Docker client returned `error waiting for container: unexpected EOF`; no stdout/stderr from the probe was captured and the Docker API socket was temporarily absent. The later no-op recovery check was:
+docker run --rm --platform linux/arm64 --network none --read-only --entrypoint true agent-interface-map01-clock-counter-v1:20260920 && docker info --format '{{.ServerVersion}} {{.OSType}}/{{.Architecture}}' > research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-51/runtime-smoke.log
+It succeeded. In keeping with the preregistered stop boundary, the PMU read was not repeated.
 
 No WAD/game mounted or started; no capabilities added; no formal output path mounted. Audit command:
 python3 research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-51/audit51.py research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-51/preflight.log research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-51/preflight-attempt-02.log research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-51/runtime-smoke.log
