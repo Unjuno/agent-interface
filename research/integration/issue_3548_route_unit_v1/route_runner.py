@@ -23,10 +23,10 @@ from runtime.cli_v1.observe import observe
 from runtime.cli_v1.review import present_result
 
 
-EVIDENCE = Path(os.environ["AI3548_EVIDENCE"]).resolve()
+EVIDENCE = Path(os.environ.get("AI3548_EVIDENCE_DIR", os.environ.get("AI3548_EVIDENCE"))).resolve()
 TARGET_NAME = "fixture"
 FRAME = "window_client"
-REGION = [0, 0, 500, 260]
+REGION = json.loads(os.environ.get("AI3548_REGION", "[0,0,500,260]"))
 MESSAGE = "ISSUE 3548\nSame read-only observation target\nNo input is sent."
 
 
@@ -278,6 +278,7 @@ def main() -> int:
                          "python-xlib": __import__("importlib.metadata", fromlist=["version"]).version("python-xlib")},
             "source_sha256": source_hashes,
             "runtime_network": "none",
+            "requested_region": REGION,
             "input_actions": 0,
             "model_calls": 0})
         manifest = {path.relative_to(EVIDENCE).as_posix(): sha(path.read_bytes())

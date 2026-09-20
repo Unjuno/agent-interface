@@ -48,13 +48,15 @@ def audit(root: Path) -> dict:
         checks[f"{route}_returned_capture"] = row["status"] == "returned" and row["image_status"] == "image"
         checks[f"{route}_no_authority"] = (row["side_effect_authority"] is False and
             row["input_dispatched"] is False)
+        expected_region = experiment["requested_region"]
         checks[f"{route}_request_semantics"] = (row["request"]["target"] == "fixture" and
-            row["request"]["frame"] == "window_client" and row["request"]["region"] == [0, 0, 500, 260])
+            row["request"]["frame"] == "window_client" and row["request"]["region"] == expected_region)
         checks[f"{route}_capture_matches_request"] = (row["observation"]["target"] == row["request"]["target"] and
             row["observation"]["native_window_id"] == row["request"]["native_window_id"] and
             row["observation"]["frame"] == row["request"]["frame"] and
             row["observation"]["region"] == row["request"]["region"] and
-            row["observation"]["width"] == 500 and row["observation"]["height"] == 260 and
+            row["observation"]["width"] == expected_region[2] and
+            row["observation"]["height"] == expected_region[3] and
             row["observation"]["artifact_source_raw_sha256"] == row["observation"]["raw_pixel_sha256"])
         png = (root / route / "image.png").read_bytes()
         with Image.open(io.BytesIO(png)) as image:
