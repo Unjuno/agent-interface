@@ -11,6 +11,36 @@ Keep actual GUI/task/performance evidence separate from contract-test results;
 do not relabel a local test pass as a completed research experiment. Sensor
 research remains outside this integration work.
 
+## Public interface integration checkpoint — 2026-09-20
+
+The public CLI now supports retained receipt/image review for prepared exchanges,
+public observation responses and dispatch captures. It is included in the
+portable zipapp; research receipt review calls the shared implementation.
+`review --report -` accepts complete received bytes without a temporary report
+file, retaining the exact source digest and full parsed history. These are
+presentation/assembly improvements, not measured token or latency gains.
+
+Actual WSL evidence covers [visible public observations](../runtime/results/public-observe-review-isolation-01/README.md),
+[the committed-source zipapp](../runtime/results/public-portable-review-01/README.md),
+and [last dispatch capture selection](../runtime/results/public-dispatch-review-01/README.md).
+Latest local shared checks passed 111 tests; Windows distribution/review passed 8.
+These fixed fixture checks do not replace primary-assistant application trials.
+Next product work should use the integrated route on an application task and
+retain action/result boundaries; do not add another equivalent receipt transport.
+
+Reviewed new external work: #3462 restores two existing raw journals. On this
+branch the files were empty; source 49fc8865f18fd4bf334d72a15354d9902d71169b
+contains 6,013,386 bytes and 173 valid JSONL rows per file. Both exactly match
+existing SHA256.json digest c214266c34edcc948266551d750fbb64dbc9845c219e33dee1bd65e16727cffe.
+Restore those bytes only, preserving the old manifest and reported outcomes.
+This is evidence repair, not a rerun or independent validation of task success.
+
+Queue #2995 is merged but its changed files remain REPORT.md and RESULT.json
+only; local inspection still lacks candidate source and raw producer evidence.
+Needle #3458 remains an experiment proposal. Neither supplies an inspected
+implementation ready for adoption in this integration pass. #3370 still records
+unmeasured host presentation/model-usage boundaries. Sensor work stays external.
+
 ## Current integration decision — 2026-09-20
 
 The [managed MCP composition](../runtime/results/native-mcp-managed-01/README.md)
