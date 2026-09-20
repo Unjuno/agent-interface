@@ -1,0 +1,28 @@
+{
+  "allocation": "issue-3896-dockerdesktop-import-boundary-audit-01",
+  "base_main": "fab3b392fb854696312a85a6b859a78369c3e737",
+  "historical_source_commit": "8652f6a3527d55610185d1103b87d5d9fd8fa985",
+  "docker": {
+    "context": "desktop-linux",
+    "server": "28.5.1",
+    "platform": "linux/amd64",
+    "image": "python:3.12-slim",
+    "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9"
+  },
+  "source_blobs": {
+    "inputs/import_gate.py": "43f3737879f8283220e87871cdae30335605a145",
+    "inputs/session_entry.py": "aad69e7dc70d6e072d74619d2be6239eed22ac15"
+  },
+  "files": [
+    {"path": "inputs/import_gate.py", "sha256": "51bf284a9d94001052f3c2b3e7733b954fab807c8b013a231f875f68baadb01a"},
+    {"path": "inputs/session_entry.py", "sha256": "c1398bdd30577c85f9aa6e6d93259dbd4e45bed3ee628d90524c2ad0e918b0ad"},
+    {"path": "runner.py", "sha256": "04d6612d8ea73d003c00b95fc48eb7b1d1adf757f0f7180e93d2e2042796c866"},
+    {"path": "audit_independent.py", "sha256": "35d21387be4c6588da38dd82785cf28a6ded2240399906e5018a8e5c95ecb336"},
+    {"path": "run_formal.ps1", "sha256": "e3786e82b6b29df3ccbd1f5229347e16c5bbd8e44c77a385452f9fe4b4e3d3cf"}
+  ],
+  "notes": [
+    "Historical files are exact frozen text snapshots and are never imported, compiled, or executed.",
+    "One Docker container invocation executes both candidate and independent audit.",
+    "Host unit tests are construction checks; no formal allocation has yet run."
+  ]
+}

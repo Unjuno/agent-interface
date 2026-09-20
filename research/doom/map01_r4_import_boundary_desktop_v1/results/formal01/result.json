@@ -1,0 +1,281 @@
+{
+  "allocation": "issue-3896-dockerdesktop-import-boundary-audit-01",
+  "controls": {
+    "class_body": {
+      "actual": [
+        "main"
+      ],
+      "expected": [
+        "main"
+      ],
+      "pass": true
+    },
+    "conditional_top_level": {
+      "actual": [
+        "ready",
+        "main"
+      ],
+      "expected": [
+        "ready",
+        "main"
+      ],
+      "pass": true
+    },
+    "decorator": {
+      "actual": [
+        "decorate"
+      ],
+      "expected": [
+        "decorate"
+      ],
+      "pass": true
+    },
+    "default_argument": {
+      "actual": [
+        "build"
+      ],
+      "expected": [
+        "build"
+      ],
+      "pass": true
+    },
+    "deferred_function": {
+      "actual": [],
+      "expected": [],
+      "pass": true
+    },
+    "direct_top_level": {
+      "actual": [
+        "main"
+      ],
+      "expected": [
+        "main"
+      ],
+      "pass": true
+    },
+    "lambda_body": {
+      "actual": [],
+      "expected": [],
+      "pass": true
+    },
+    "main_guard": {
+      "actual": [
+        "main"
+      ],
+      "expected": [
+        "main"
+      ],
+      "pass": true
+    }
+  },
+  "counts": {
+    "construction": 0,
+    "formal": 0,
+    "game": 0,
+    "input": 0,
+    "model": 0,
+    "target_execution": 0,
+    "target_import": 0
+  },
+  "import_gate_module_calls": [
+    {
+      "call": "resolve",
+      "context": "module",
+      "line": 5
+    },
+    {
+      "call": "Path",
+      "context": "module",
+      "line": 5
+    },
+    {
+      "call": "parse",
+      "context": "module",
+      "line": 8
+    },
+    {
+      "call": "read_text",
+      "context": "module",
+      "line": 8
+    },
+    {
+      "call": "str",
+      "context": "module",
+      "line": 8
+    },
+    {
+      "call": "compile",
+      "context": "module",
+      "line": 9
+    },
+    {
+      "call": "str",
+      "context": "module",
+      "line": 9
+    },
+    {
+      "call": "walk",
+      "context": "conditional_top_level",
+      "line": 11
+    },
+    {
+      "call": "isinstance",
+      "context": "conditional_top_level",
+      "line": 12
+    },
+    {
+      "call": "isinstance",
+      "context": "conditional_top_level",
+      "line": 13
+    },
+    {
+      "call": "isinstance",
+      "context": "conditional_top_level",
+      "line": 13
+    },
+    {
+      "call": "append",
+      "context": "conditional_top_level",
+      "line": 15
+    },
+    {
+      "call": "type",
+      "context": "conditional_top_level",
+      "line": 18
+    },
+    {
+      "call": "str",
+      "context": "conditional_top_level",
+      "line": 18
+    },
+    {
+      "call": "print",
+      "context": "module",
+      "line": 19
+    },
+    {
+      "call": "dumps",
+      "context": "module",
+      "line": 19
+    },
+    {
+      "call": "exit",
+      "context": "conditional_top_level",
+      "line": 21
+    }
+  ],
+  "inputs": {
+    "import_gate.py": "51bf284a9d94001052f3c2b3e7733b954fab807c8b013a231f875f68baadb01a",
+    "session_entry.py": "c1398bdd30577c85f9aa6e6d93259dbd4e45bed3ee628d90524c2ad0e918b0ad"
+  },
+  "python": "3.12.14 (main, Sep 19 2026, 01:04:57) [GCC 14.2.0]",
+  "status": "PASS_STATIC_IMPORT_BOUNDARY_SCOPED",
+  "target_disposition": "REFUSE_UNGUARDED_MODULE_LAUNCH",
+  "target_module_calls": [
+    {
+      "call": "resolve",
+      "context": "module",
+      "line": 4
+    },
+    {
+      "call": "Path",
+      "context": "module",
+      "line": 4
+    },
+    {
+      "call": "resolve",
+      "context": "module",
+      "line": 4
+    },
+    {
+      "call": "Path",
+      "context": "module",
+      "line": 4
+    },
+    {
+      "call": "resolve",
+      "context": "module",
+      "line": 4
+    },
+    {
+      "call": "Path",
+      "context": "module",
+      "line": 4
+    },
+    {
+      "call": "insert",
+      "context": "conditional_top_level",
+      "line": 6
+    },
+    {
+      "call": "str",
+      "context": "conditional_top_level",
+      "line": 6
+    },
+    {
+      "call": "insert",
+      "context": "module",
+      "line": 10
+    },
+    {
+      "call": "str",
+      "context": "module",
+      "line": 10
+    },
+    {
+      "call": "main",
+      "context": "module",
+      "line": 18
+    },
+    {
+      "call": "Path",
+      "context": "conditional_top_level",
+      "line": 22
+    },
+    {
+      "call": "index",
+      "context": "conditional_top_level",
+      "line": 22
+    },
+    {
+      "call": "exists",
+      "context": "conditional_top_level",
+      "line": 23
+    },
+    {
+      "call": "loads",
+      "context": "conditional_top_level",
+      "line": 24
+    },
+    {
+      "call": "read_text",
+      "context": "conditional_top_level",
+      "line": 24
+    },
+    {
+      "call": "sha",
+      "context": "conditional_top_level",
+      "line": 25
+    },
+    {
+      "call": "sha",
+      "context": "conditional_top_level",
+      "line": 26
+    },
+    {
+      "call": "sha",
+      "context": "conditional_top_level",
+      "line": 27
+    },
+    {
+      "call": "write_text",
+      "context": "conditional_top_level",
+      "line": 28
+    },
+    {
+      "call": "dumps",
+      "context": "conditional_top_level",
+      "line": 28
+    }
+  ]
+}
