@@ -23,6 +23,32 @@ class FakeSession:
 
 
 class ApiTests(unittest.TestCase):
+    def test_dependency_inventory_distinguishes_missing_unknown_and_metadata(self):
+        from importlib.metadata import PackageNotFoundError
+        with mock.patch('importlib.util.find_spec', side_effect=[None, object(), ValueError('finder failed')]), mock.patch(
+                'importlib.metadata.version', side_effect=[PackageNotFoundError('python-xlib'), '10.2.0', OSError('metadata failed')]), mock.patch(
+                'runtime.cli_v1.api.open_session') as opened:
+            row = doctor(platform='linux', environ={'DISPLAY': ':99'}, check_dependencies=True)
+        opened.assert_not_called()
+        inventory = row['dependency_inventory']
+        self.assertEqual(inventory['scope'], 'current_python_environment')
+        xlib, pillow, mcp = inventory['modules']
+        self.assertIs(xlib['discoverable'], False)
+        self.assertIsNone(xlib['installed_version'])
+        self.assertIs(pillow['discoverable'], True)
+        self.assertEqual(pillow['installed_version'], '10.2.0')
+        self.assertIsNone(mcp['discoverable'])
+        self.assertIn('finder failed', mcp['discovery_error'])
+        self.assertIn('metadata failed', mcp['version_error'])
+        self.assertTrue(row['runtime_available'])  # Existing field is selection, not readiness.
+        self.assertFalse(row['side_effect_authority'])
+
+    def test_default_doctor_does_not_inspect_optional_dependencies(self):
+        with mock.patch('importlib.util.find_spec') as discover:
+            row = doctor(platform='win32', environ={})
+        discover.assert_not_called()
+        self.assertNotIn('dependency_inventory', row)
+
     def test_initialization_error_returns_receipt_and_preserves_repeat_source(self):
         request = {'ops': [{'op': 'key_chord', 'keys': ['Left'], 'repeat': 3}]}
         for error in (OSError('connection refused'), OverflowError('invalid display'), RuntimeError('setup')):

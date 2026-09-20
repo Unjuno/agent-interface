@@ -10,6 +10,11 @@ in the CLI guide. Launch from a repository checkout or use the portable zipapp's
 explicit `mcp` mode. For Linux/X11, run in WSL or Linux with python-xlib
 and Pillow installed in that same environment and an existing display.
 
+Before host setup, run `python -m runtime.cli_v1 doctor --check-dependencies`
+or `python agent-interface-runtime.pyz doctor --check-dependencies` with the
+same interpreter the host will launch. Module discovery is not a live connection
+check; separately verify the target/display and any application dependencies.
+
 Configure the MCP host to launch the equivalent of:
 
 ```sh
