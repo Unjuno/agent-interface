@@ -41,6 +41,12 @@ tokens/cost, or establish latency/speed benefit. Full Issue #3370 remains open.
 The result is component-level evidence for later integration workers to
 revalidate, not a general host image boundary guarantee.
 
+The PR branch also syncs current main `43788ecfe745cb2d893420d0c00f04a4575eaafc`
+after experiment closure. Against that integrated tree, OrbStack reran 48 tests
+covering the native MCP adapter, finish-after harness, core program contract,
+and X11 backend text plan; all passed. The retained evidence remains bound to
+the earlier frozen experiment source SHA above.
+
 ## Trial ledger
 
 | Trial | Outcome | Preserved finding |
