@@ -1,0 +1,35 @@
+{
+  "arm": "ordinary_screenshot",
+  "case": "stale_version",
+  "decision": null,
+  "emissions": 0,
+  "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+  "fixture_events": [],
+  "fixture_events_sha256": null,
+  "input_ack": false,
+  "process_exit_codes": {
+    "fixture_current": -15,
+    "xvfb": 0
+  },
+  "processes": [
+    {
+      "pid": 15,
+      "role": "xvfb",
+      "start_ticks": "5815310"
+    },
+    {
+      "pid": 18,
+      "role": "fixture",
+      "start_ticks": "5815313"
+    }
+  ],
+  "release_verified": false,
+  "reply": {
+    "after_state": null,
+    "decision": null,
+    "emissions": 0,
+    "input_ack": false
+  },
+  "row_id": "ordinary_screenshot__stale_version",
+  "socket_disappeared": true
+}
