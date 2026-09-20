@@ -1,11 +1,12 @@
 {
   "disposition": "PASS_V1_SYNTHETIC_TRANSPORT_ONLY",
   "scope": "synthetic CLI transport; not a real model call, schema endpoint, GUI, task, or efficiency result",
-  "evidence_root": "/private/tmp/3311-v1-broker-integrity/research/live_control/issue_3311_host_ipc_v1/evidence/20260920-v1-transport-audit-01",
+  "evidence_root": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface\\work\\pr3487-followup\\research\\live_control\\issue_3311_host_ipc_v1\\evidence\\20260920-v1-transport-audit-01",
   "checks": {
     "orbstack_context": true,
     "network_disabled": true,
     "image_id_pinned": true,
+    "run_image_matches_inspect": true,
     "container_exit_zero": true,
     "broker_exit_zero": true,
     "one_non_authoritative_request": true,
@@ -13,8 +14,10 @@
     "broker_identity_matches_fake_cli": true,
     "broker_reported_success": true,
     "runner_reported_non_authority": true,
+    "broker_response_matches_runner_events": true,
     "synthetic_event_sequence": true,
     "source_hashes_match": true,
-    "stderr_empty": true
+    "stderr_empty": true,
+    "raw_manifest_matches": true
   }
 }

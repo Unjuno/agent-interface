@@ -112,6 +112,35 @@ class RetainedEvidenceAuditTest(unittest.TestCase):
             self.assertEqual(report["checks"]["run_image_matches_inspect"], False)
             self.assertEqual(report["disposition"], "FAIL_AUDIT")
 
+    def test_audit_rejects_broker_response_that_differs_from_runner_events(self):
+        source_root = Path(__file__).resolve().parent
+        name = "20260920-v1-transport-audit-01"
+        with tempfile.TemporaryDirectory(prefix="3311-v1-response-binding-") as temp:
+            package = Path(temp) / source_root.name
+            evidence = package / "evidence"
+            evidence.mkdir(parents=True)
+            shutil.copy2(source_root / "source-revisions.json", package / "source-revisions.json")
+            target = evidence / name
+            shutil.copytree(source_root / "evidence" / name, target)
+            request_path = next((target / "ipc").glob("*.request.json"))
+            request = json.loads(request_path.read_text())
+            response_path = target / "ipc" / f"{request['request_id']}.response.jsonl"
+            response = [json.loads(line) for line in response_path.read_text().splitlines()]
+            response[1]["item"]["text"] = "tampered response"
+            response_path.write_text("".join(json.dumps(event) + "\n" for event in response))
+
+            manifest = {}
+            for path in sorted(target.rglob("*")):
+                if path.is_file() and path.name not in {"raw-sha256.json", "audit.json"}:
+                    relative = path.relative_to(target).as_posix()
+                    manifest[relative] = hashlib.sha256(path.read_bytes()).hexdigest()
+            (target / "raw-sha256.json").write_text(json.dumps(manifest, indent=2) + "\n")
+
+            report = auditor.audit(target)
+            self.assertTrue(report["checks"]["raw_manifest_matches"])
+            self.assertFalse(report["checks"]["broker_response_matches_runner_events"])
+            self.assertEqual(report["disposition"], "FAIL_AUDIT")
+
 
 if __name__ == "__main__":
     unittest.main()

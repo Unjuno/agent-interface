@@ -78,6 +78,8 @@ def audit(root: Path) -> dict:
     request = json.loads(request_files[0].read_text())
     request_id = request["request_id"]
     broker = json.loads((root / "ipc" / f"{request_id}.broker.json").read_text())
+    response = [json.loads(line) for line in
+                (root / "ipc" / f"{request_id}.response.jsonl").read_text().splitlines()]
     process = json.loads((root / "out/runner/process.json").read_text())
     events = [json.loads(line) for line in
               (root / "out/runner/events.jsonl").read_text().splitlines()]
@@ -99,6 +101,7 @@ def audit(root: Path) -> dict:
         "broker_identity_matches_fake_cli": Path(cli_path).name == "fake-codex" and broker["host_cli_identity"]["sha256"] == sha(root / "fake-codex") and broker["host_cli_identity"]["version"] == "codex fake-transport-v1",
         "broker_reported_success": broker["returncode"] == 0 and broker["host_cli_invoked"] is True and broker["authority_granted"] is False,
         "runner_reported_non_authority": process["authority_granted"] is False and process["boundary"] == "container-to-host-model-ipc",
+        "broker_response_matches_runner_events": response == events,
         "synthetic_event_sequence": [event["type"] for event in events] == ["thread.started", "item.completed", "turn.completed"],
         "source_hashes_match": source["broker_sha256"] == git_source_sha(revision, "runtime/host_model_ipc_broker_v1.py") and source["runner_sha256"] == git_source_sha(revision, "research/live_control/container_host_model_ipc_runner_v1.py") and source["test_sha256"] == git_source_sha(revision, "research/live_control/issue_3311_host_ipc_v1/test_orbstack_v1_transport.py"),
         "stderr_empty": not (root / "container.stderr.txt").read_text().strip() and not (root / "broker.stderr.txt").read_text().strip(),
