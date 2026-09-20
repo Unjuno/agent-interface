@@ -336,7 +336,7 @@ class NativeHandleBridgeTests(unittest.TestCase):
         def geometry(target):
             if bridge.backend.targets[target].id == 10:
                 raise X11BackendError("BadDrawable: stale original drawable")
-            return SimpleNamespace(x=4, y=5, width=80, height=60)
+            return {"x": 4, "y": 5, "width": 80, "height": 60}
 
         bridge.backend.geometry = mock.Mock(side_effect=geometry)
 
