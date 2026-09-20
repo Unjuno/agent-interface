@@ -11,7 +11,7 @@ from unittest.mock import patch
 
 class NativeFinishAfterTests(unittest.TestCase):
     def exercise(self, decisions, *, task_success=True, action_status='completed',
-                 close_failure=False, expected_error=None):
+                 close_failure=False, expected_error=None, max_stages=4):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             out = root / 'out'
@@ -59,8 +59,8 @@ class NativeFinishAfterTests(unittest.TestCase):
                 def close(self):
                     events.append('bridge.close')
                     # Terminal reply must not be published before cleanup.
-                    if decisions[0].get('finish_after') is True:
-                        assert not (out / 'reply-1.json').exists()
+                    if decisions[-1].get('finish_after') is True:
+                        assert not (out / f'reply-{len(decisions)}.json').exists()
                     if close_failure:
                         raise OSError('injected connection cleanup failure')
 
@@ -95,7 +95,8 @@ class NativeFinishAfterTests(unittest.TestCase):
 
             with patch.object(subject, 'NativeHandleBridge', Bridge), \
                  patch.object(subject.time, 'sleep', supply_request), \
-                 patch.object(sys, 'argv', ['harness', '--app', 'inkscape', '--out', str(out)]), \
+                 patch.object(sys, 'argv', ['harness', '--app', 'inkscape', '--out', str(out),
+                                            '--max-stages', str(max_stages)]), \
                  patch('builtins.print'):
                 if expected_error:
                     with self.assertRaises(expected_error): subject.main()
@@ -117,6 +118,15 @@ class NativeFinishAfterTests(unittest.TestCase):
         self.assertEqual(replies[0]['observation']['sequence'], 2)
         self.assertEqual(replies[0]['cleanup']['status'], 'completed')
         self.assertEqual(events, ['mint', 'input', 'evaluate', 'bridge.close', 'session.close'])
+
+    def test_finish_after_on_last_permitted_stage(self):
+        replies,sources,events=self.exercise(
+            [self.action(),self.action(finish_after=True)],max_stages=2)
+        self.assertEqual([r['status'] for r in replies],['boundary','finished'])
+        self.assertEqual(set(sources),{'source-1.json','source-2.json'})
+        self.assertEqual(events.count('input'),2)
+        self.assertEqual(events.count('evaluate'),1)
+        self.assertEqual(replies[-1]['cleanup']['status'],'completed')
 
     def test_default_and_false_still_wait_for_explicit_finish(self):
         for extra in ({}, {'finish_after': False}):
