@@ -189,3 +189,13 @@ direct construction evidence of an internal-engine/public-API clock mismatch,
 not the requested phase/span distribution. Formal allocation remains 0/120.
 See `results/construction-clock-45/` for the two preserved 3-session runs,
 import STOPs, raw traces, audit, Docker logs, invocation, hashes and H/T/D/C/U.
+
+Run46 then tested the exact action boundary as a construction intervention.
+Across three new sessions, passive API/scorer tic remained 1; one empty
+`advance_action(1)` made the public API and exact scorer jump to tic 55 in 3/3.
+The independent internal trace ended at tic 58 and measured 34.724–35.669 Hz.
+Audit: `PASS_CONSTRUCTION_ONLY_ACTION_BOUNDARY_CATCHUP`, zero errors. This
+locates the stale-snapshot refresh at the action boundary in this fixture, but
+the action is not the no-intervention formal condition and provides no passive
+scorer phase distribution. See `results/construction-clock-46/`; formal rows
+remain 0/120.
