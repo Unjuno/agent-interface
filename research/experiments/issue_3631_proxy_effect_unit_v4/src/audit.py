@@ -143,6 +143,8 @@ def main():
     if digest(manifest_bytes)!=raw.get("source_manifest_sha256"):errors.append("manifest hash mismatch")
     if digest(prereg)!=raw.get("preregistration_sha256"):errors.append("preregistration hash mismatch")
     if frozen.get("source_commit")!=raw.get("source_commit") or frozen.get("image_id")!=raw.get("image_id"):errors.append("freeze/runtime identity mismatch")
+    if frozen.get("preregistration_sha256")!=digest(prereg) or frozen.get("source_manifest_sha256")!=digest(manifest_bytes):errors.append("freeze preregistration/manifest binding mismatch")
+    if digest(Path("/formal_launch.sh").read_bytes())!=frozen.get("formal_launch_sha256"):errors.append("launcher freeze hash mismatch")
     for name,want in manifest.get("files",{}).items():
         if not (SRC/name).is_file() or digest((SRC/name).read_bytes())!=want:errors.append(f"frozen source mismatch: {name}")
     controls=challenge(raw)
