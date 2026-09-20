@@ -91,3 +91,27 @@ The shared integration runner includes API forwarding, strict argument checks,
 duplicate-call exclusion, persistence/review failures, and real stdio discovery
 with a rejected no-GUI request. These are transport/contract checks, not a primary
 model live-use result or a performance comparison.
+
+## Recover a retained result without resending input
+
+`interface_results()` lists the newest 20 calls issued by this running server,
+most recent first, with call IDs, operation names and worker states. Use
+`interface_results(call_id="...")` to inspect a specific call and its original
+arguments. Running calls return `pending`; finished calls reread the saved report
+and return the common review envelope and any native image block. `compact=true`
+uses the existing reversible review projection. Neither form invokes a backend.
+
+After a lost response, match the retained arguments to the intended request before
+interpreting the result. The call ID is a lookup reference, not an idempotency key
+or permission to resubmit. A finished worker does not establish task success.
+Missing or unreadable reports return `receipt_unavailable`; unknown IDs return
+`unknown_call`. No action is replayed to fill a gap. Missing images retain the
+normal review failure and original action outcome.
+
+Only IDs created in this server process can be read; arbitrary filesystem paths
+and prior-server calls are not accepted. A server restart loses this in-memory
+index, while on-disk receipts remain for explicit file review. Calls do not expire
+from the index during the process lifetime; deployments should account for its
+memory use. This is result retrieval, not automatic restart recovery or polling
+of application state. Current `operation_invoked=false` describes the retrieval
+call, not whether the retained original call emitted input.

@@ -36,6 +36,8 @@ def create_server(targets, output_directory, *, display_name=None):
     root.mkdir(parents=True, exist_ok=True)
     lock = threading.Lock()
     workers = set()
+    calls = {}
+    calls_lock = threading.Lock()
     server = FastMCP('Agent Interface public one-shot API', instructions=(
         'Configured target names: ' + json.dumps(sorted(targets)) + '. '
         'Each call owns one backend session. No source/lease is issued by this server. '
@@ -43,9 +45,14 @@ def create_server(targets, output_directory, *, display_name=None):
         'outcomes separately. Never replay an uncertain action automatically.'))
 
     def invoke(operation, kwargs, compact):
+        call_id = None
         try:
             call_root = root / uuid.uuid4().hex
             call_root.mkdir(exist_ok=False)
+            call_id = call_root.name
+            with calls_lock:
+                calls[call_id] = {"call_id": call_id, "operation": operation,
+                                  "state": "running", "arguments": deepcopy(kwargs)}
             # Serialize before calling the backend. A persistence failure here sends no input.
             request = {'operation': operation, 'arguments': kwargs, 'targets': targets,
                        'display_name': display_name}
@@ -76,6 +83,9 @@ def create_server(targets, output_directory, *, display_name=None):
                 result['persistence_error'] = persistence_error
             return content(result)
         finally:
+            if call_id is not None:
+                with calls_lock:
+                    calls[call_id]["state"] = "finished"
             lock.release()
 
     async def submit(operation, kwargs, compact):
@@ -110,6 +120,39 @@ def create_server(targets, output_directory, *, display_name=None):
         return await submit('dispatch', {'program': program,
             'current_observation_seq': current_observation_seq,
             'current_binding_revision': current_binding_revision}, compact)
+
+    @server.tool()
+    async def interface_results(call_id: StrictStr | None = None,
+                                compact: StrictBool = False) -> CallToolResult:
+        """List this server's calls or reread one retained result. Never dispatch or observe.
+
+        A finished worker is not proof of task success. Unknown calls are not replayed.
+        This registry lasts only for this server process; no restart recovery is implied.
+        """
+        with calls_lock:
+            if call_id is None:
+                # Most recent calls first, bounded; request details are available by ID.
+                rows = list(calls.values())[-20:]
+                return content({'status': 'call_list', 'scope': 'current_server',
+                    'total_calls': len(calls), 'calls': [
+                        {key: row[key] for key in ('call_id', 'operation', 'state')}
+                        for row in reversed(rows)], 'operation_invoked': False})
+            record = deepcopy(calls.get(call_id))
+        if record is None:
+            return content({'status': 'unknown_call', 'operation_invoked': False}, error=True)
+        if record['state'] != 'finished':
+            return content({'status': 'pending', 'call': record, 'operation_invoked': False})
+        call_root = root / call_id  # Only IDs minted and held by this server are accepted.
+        try:
+            report = json.loads(await asyncio.to_thread((call_root / 'report.json').read_text,
+                                                       encoding='utf-8'))
+        except (OSError, ValueError) as error:
+            return content({'status': 'receipt_unavailable', 'call': record,
+                'error': repr(error), 'operation_invoked': False}, error=True)
+        result = await asyncio.to_thread(present_result, report, call_root, compact=compact)
+        result.update(call_directory=str(call_root), retained_call=record,
+                      operation_invoked=False)
+        return content(result)
 
     return server
 
