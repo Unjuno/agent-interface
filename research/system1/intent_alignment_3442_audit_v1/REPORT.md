@@ -1,7 +1,7 @@
 # Formal audit result — Issue #3849 / predecessor #3442
 
-Allocation: intent-aligned-system1-3442-audit-localdocker-01  
-Formal invocation: 1; retries: 0  
+Allocation: intent-aligned-system1-3442-audit-localdocker-01
+Formal invocation: 1; retries: 0
 Frozen source commit: 6a1b33e (branch `research/issue-3849-intent-audit-docker-v1`)
 
 ## H / T / D / C / U
