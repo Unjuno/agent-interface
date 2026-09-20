@@ -14,6 +14,37 @@ from runtime.cli_v1.mcp_server import create_server
 
 class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
 
+    async def test_retained_image_can_be_omitted_without_changing_result_or_replaying(self):
+        with tempfile.TemporaryDirectory() as td:
+            server = create_server({'fixture': 123}, td)
+            envelope = {'image_status': 'image', 'image_reference': {'sha256': 'retained'},
+                        'outcome_summary': {'execution_status': 'completed'},
+                        'image': {'type': 'image', 'mimeType': 'image/png', 'data': 'YWJj'}}
+            with patch('runtime.cli_v1.mcp_server.observe', return_value={'status': 'returned'}) as observe, \
+                 patch('runtime.cli_v1.mcp_server.present_result', return_value=envelope):
+                original = await server.call_tool('interface_observe', {
+                    'target': 'fixture', 'frame': 'window_client', 'region': [0,0,10,10]})
+                call_id = json.loads(original.content[0].text)['call_id']
+                raw_before = Path(td, call_id, 'report.json').read_bytes()
+                omitted = await server.call_tool('interface_results', {
+                    'call_id': call_id, 'include_image': False})
+                self.assertEqual(len(omitted.content), 1)
+                row = json.loads(omitted.content[0].text)
+                self.assertEqual(row['image_delivery'], 'omitted_by_request')
+                self.assertEqual(row['image_reference'], envelope['image_reference'])
+                self.assertEqual(row['outcome_summary'], envelope['outcome_summary'])
+                self.assertFalse(row['operation_invoked'])
+                self.assertNotIn('YWJj', omitted.content[0].text)
+                included = await server.call_tool('interface_results', {'call_id': call_id})
+                self.assertEqual(included.content[1].data, 'YWJj')
+                self.assertNotIn('image_delivery', json.loads(included.content[0].text))
+                self.assertEqual(Path(td, call_id, 'report.json').read_bytes(), raw_before)
+                observe.assert_called_once()
+                for invalid in ('false', 0):
+                    with self.assertRaises(Exception):
+                        await server.call_tool('interface_results', {
+                            'call_id': call_id, 'include_image': invalid})
+
     async def test_result_pages_are_stable_when_new_calls_arrive(self):
         with tempfile.TemporaryDirectory() as td:
             server = create_server({'fixture': 123}, td)

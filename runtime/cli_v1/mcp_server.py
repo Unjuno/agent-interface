@@ -18,11 +18,13 @@ from .observe import observe
 from .review import present_result
 
 
-def content(result, *, error=False):
+def content(result, *, error=False, include_image=True):
     metadata = dict(result)
     image = metadata.pop('image', None)
+    if image is not None and not include_image:
+        metadata['image_delivery'] = 'omitted_by_request'
     blocks = [TextContent(type='text', text=json.dumps(metadata, allow_nan=False))]
-    if image is not None:
+    if image is not None and include_image:
         blocks.append(ImageContent(**image))
     return CallToolResult(content=blocks, isError=error)
 
@@ -126,11 +128,13 @@ def create_server(targets, output_directory, *, display_name=None):
     @server.tool()
     async def interface_results(call_id: StrictStr | None = None,
                                 before_call_id: StrictStr | None = None,
-                                compact: StrictBool = False) -> CallToolResult:
+                                compact: StrictBool = False,
+                                include_image: StrictBool = True) -> CallToolResult:
         """List this server's calls or reread one retained result. Never dispatch or observe.
 
         A finished worker is not proof of task success. Unknown calls are not replayed.
         This registry lasts only for this server process; no restart recovery is implied.
+        Set include_image=false to inspect metadata without resending a retained image.
         """
         with calls_lock:
             if call_id is None:
@@ -168,7 +172,7 @@ def create_server(targets, output_directory, *, display_name=None):
         result = await asyncio.to_thread(present_result, report, call_root, compact=compact)
         result.update(call_id=call_id, call_directory=str(call_root), retained_call=record,
                       operation_invoked=False)
-        return content(result)
+        return content(result, include_image=include_image)
 
     return server
 
