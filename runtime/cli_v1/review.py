@@ -35,6 +35,13 @@ def outcome_summary(report):
         dispatch = report.get('result')
         dispatch = dispatch if isinstance(dispatch, dict) else {}
         recovery = dispatch.get('recovery_required')
+        execution = dispatch.get('execution')
+        execution = execution if isinstance(execution, dict) else {}
+        failed = execution.get('failed_op')
+        summary.update(
+            failure_detail=text(execution, 'error'),
+            failed_operation_index=failed if type(failed) is int and failed >= 0 else None,
+            failed_operation_effect=text(execution, 'failed_op_effect'))
         summary.update(execution_status=text(dispatch, 'status'),
                        execution_error=text(dispatch, 'error'),
                        execution_detail=text(dispatch, 'detail'),
