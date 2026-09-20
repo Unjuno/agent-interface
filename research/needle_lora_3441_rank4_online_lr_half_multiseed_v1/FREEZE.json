@@ -7,9 +7,9 @@
   "path": "research/needle_lora_3441_rank4_online_lr_half_multiseed_v1/",
   "main_base_commit": "3fa567baa277d1bfdfe415e522b419e6414d7c26",
   "source_sha256": {
-    "audit.py": "d7fd58db2bda3fb09faeaef2ae648e64825b507dd7f97e465af299c9b6f5378d",
-    "runner.py": "92e8d170f2add47d5ece656ecdf02d03d6ee693275c897a8b5aac90875ac6dc1",
-    "test_construction.py": "a9be80f59585fab1955bacdf208cd65db9376b486e3159908530ea4db11bc2bf"
+    "audit.py": "202c55dbd214358c896f055069859a64c3cd84007c543230b5ffc935434a2e7f",
+    "runner.py": "8a5f3b2be5b544617bb211a345524dd43a81e8b9fb7faddab9c51828b7233652",
+    "test_construction.py": "7f6d9f54d30ffdb368ed98d65b1270f54a198b59dcf52c24a6e2b4e88d35fdd4"
   },
   "H": "Across fresh seeds 3461-3465, changing only rank-4 online LoRA adapter LR from .04 to .02 materially rescues online B quality versus paired rank-4 online .04, while preserving role A and rank-2 online controls, matched rank-4 batch performance, route/snapshot integrity, and update latency.",
   "T": {
@@ -76,5 +76,6 @@
     "formalStarted": false
   },
   "frozenAt": "2026-09-21",
-  "formalStarted": false
+  "formalStarted": false,
+  "latest_preallocation_commit": "5cb9ff8ff88c7167bcd161d576850c7e3200c2b2"
 }
