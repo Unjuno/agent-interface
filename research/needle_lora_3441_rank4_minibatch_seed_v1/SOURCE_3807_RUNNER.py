@@ -174,10 +174,16 @@ def one_seed(seed,index):
 
 def main():
     if not torch.cuda.is_available():raise RuntimeError("STOP_GPU_UNAVAILABLE")
+    if __import__("os").environ.get("CUBLAS_WORKSPACE_CONFIG")!=":4096:8":raise RuntimeError("STOP_CUBLAS_WORKSPACE_CONFIG")
+    if torch.__version__!="2.5.1+cu121" or torch.version.cuda!="12.1":raise RuntimeError("STOP_TORCH_CUDA_VERSION")
     torch.set_num_threads(1);torch.use_deterministic_algorithms(True)
     torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False
     torch.backends.cudnn.deterministic=True;torch.backends.cudnn.benchmark=False
-    device=torch.device("cuda:0");torch.cuda.synchronize(device);torch.cuda.reset_peak_memory_stats(device)
+    device=torch.device("cuda:0")
+    if torch.cuda.get_device_name(device)!="NVIDIA GeForce RTX 3080 Laptop GPU":raise RuntimeError("STOP_GPU_IDENTITY")
+    free_bytes,_=torch.cuda.mem_get_info(device)
+    if free_bytes<2*1024**3:raise RuntimeError("STOP_GPU_MEMORY_LOW")
+    torch.cuda.synchronize(device);torch.cuda.reset_peak_memory_stats(device)
     records=[one_seed(seed,i) for i,seed in enumerate(SEEDS)]
     torch.cuda.synchronize(device)
     out={"allocation":"needle-lora-3441-rank4-minibatch-seed-paired-v1",
