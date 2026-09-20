@@ -137,6 +137,11 @@ class DockerSchemaPreflightAdapterTest(unittest.TestCase):
         self.assertEqual(validate_model_response(self.events, self.schema)["status"],
                          "STOP_MALFORMED_MODEL_RESPONSE")
 
+    def test_non_object_event_row_is_stop(self):
+        self.events.write_text('[]\n', encoding="utf-8")
+        self.assertEqual(validate_model_response(self.events, self.schema)["status"],
+                         "STOP_MALFORMED_MODEL_RESPONSE")
+
     def run_preflight(self, response_text):
         output = self.root / "output"
         arguments = ["docker_schema_preflight_v1.py", "--runner", str(self.root / "runner.py"),

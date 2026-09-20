@@ -31,6 +31,9 @@ def validate_model_response(events_path: Path, schema_path: Path) -> dict:
     except (OSError, UnicodeError, json.JSONDecodeError):
         return {"turns": 0, "messages": 0,
                 "status": "STOP_MALFORMED_MODEL_RESPONSE"}
+    if any(not isinstance(event, dict) for event in events):
+        return {"turns": 0, "messages": 0,
+                "status": "STOP_MALFORMED_MODEL_RESPONSE"}
     turns = [event for event in events if event.get("type") == "turn.completed"]
     messages = [event["item"] for event in events
                 if event.get("type") == "item.completed"
