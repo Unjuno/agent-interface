@@ -137,6 +137,25 @@ class HostBrokerContractTest(unittest.TestCase):
             self.assertEqual(record["stop_reason"], "HOST_BROKER_EXECUTABLE_UNAVAILABLE")
             self.assertFalse(record["host_cli_invoked"])
 
+    def test_invalid_prompt_is_refused_before_identity_or_launch(self):
+        import json
+        from unittest.mock import patch
+        from runtime.host_model_ipc_broker_v1 import serve
+        for fields in ({}, {'prompt': None}, {'prompt': 12}):
+            with self.subTest(fields=fields), tempfile.TemporaryDirectory() as temp:
+                root = Path(temp); ipc = root / 'ipc'; ipc.mkdir()
+                (ipc / 'fixture.request.json').write_text(json.dumps(
+                    dict(request_id='fixture', **fields)))
+                with patch('runtime.host_model_ipc_broker_v1.build_command', return_value=['inert']), \
+                     patch('runtime.host_model_ipc_broker_v1.executable_identity') as identity, \
+                     patch('runtime.host_model_ipc_broker_v1.subprocess.run') as run:
+                    self.assertEqual(serve(ipc, root, once=True), 1)
+                identity.assert_not_called()
+                run.assert_not_called()
+                record = json.loads((ipc / 'fixture.broker.json').read_text())
+                self.assertEqual(record['stop_reason'], 'HOST_BROKER_REQUEST_REFUSED')
+                self.assertFalse(record['host_cli_invoked'])
+
     def test_subprocess_os_error_remains_cli_unavailable(self):
         import json
         from unittest.mock import patch
@@ -170,6 +189,7 @@ class HostBrokerContractTest(unittest.TestCase):
                          returncode=code, stdout='fixture-response\n', stderr='')) as run:
                     self.assertEqual(serve(ipc, root, once=True), code)
                 run.assert_called_once()
+                self.assertEqual(run.call_args.kwargs["input"], "fixture\n")
                 self.assertEqual((ipc / 'fixture.response.jsonl').read_text(), 'fixture-response\n')
                 record = json.loads((ipc / 'fixture.broker.json').read_text())
                 self.assertEqual(record['returncode'], code)

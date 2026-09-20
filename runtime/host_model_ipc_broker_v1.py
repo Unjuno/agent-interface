@@ -112,6 +112,9 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
             identity = None
             try:
                 args = build_command(request, repo, cli)
+                prompt = request["prompt"]
+                if not isinstance(prompt, str):
+                    raise ValueError("host IPC prompt must be text")
             except Exception as exc:
                 # Path, asset and request validation happen before any CLI work.
                 broker = {"request_id": request_id, "returncode": None,
@@ -137,7 +140,7 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                 else:
                     host_cli_invoked = True
                     try:
-                        completed = subprocess.run(args, input=request["prompt"] + "\n",
+                        completed = subprocess.run(args, input=prompt + "\n",
                                                    text=True, encoding="utf-8", errors="replace",
                                                    capture_output=True, check=False, timeout=timeout_s)
                     except subprocess.TimeoutExpired as exc:
