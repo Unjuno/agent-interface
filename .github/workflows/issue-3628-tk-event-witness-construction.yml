@@ -1,0 +1,30 @@
+name: Issue 3628 passive Tk event witness construction
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/issue-3628-tk-event-witness-construction.yml
+      - research/integration/issue_3628_tk_event_witness_v1/**
+  push:
+    branches:
+      - research/issue-3628-passive-tk-key-event-witness-v1
+    paths:
+      - .github/workflows/issue-3628-tk-event-witness-construction.yml
+      - research/integration/issue_3628_tk_event_witness_v1/**
+
+permissions:
+  contents: read
+
+jobs:
+  tk-construction:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install isolated display dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes python3-tk xvfb
+      - name: Compile construction sources
+        run: python3 -m compileall -q research/integration/issue_3628_tk_event_witness_v1
+      - name: Run witness and adversarial audit tests
+        run: xvfb-run -a python3 -m unittest discover -s research/integration/issue_3628_tk_event_witness_v1 -v
