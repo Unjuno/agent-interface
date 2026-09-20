@@ -233,12 +233,13 @@ def audit(payload, raw_bytes):
 
         expected_boundary = boundary_rows().tolist()
         actual_boundary = record.get("boundary", [])
+        expected_boundary_y = teacher(torch.tensor(expected_boundary, dtype=torch.float32)).tolist()
         if len(actual_boundary) != 1536:
             errors.append(where + ":boundary_count")
         else:
-            for i, (raw, expected) in enumerate(zip(actual_boundary, expected_boundary)):
+            for i, (raw, expected, expected_y) in enumerate(zip(actual_boundary, expected_boundary, expected_boundary_y)):
                 if compare_vector(raw.get("x", []), expected): errors.append(f"{where}:boundary_features:{i}")
-                if raw.get("reason") != "YIELD_BOUNDARY" or raw.get("proposal") is not None:
+                if raw.get("y") != expected_y or raw.get("reason") != "YIELD_BOUNDARY" or raw.get("proposal") is not None:
                     errors.append(f"{where}:boundary_decision:{i}")
 
         expected_invalid = [
@@ -252,7 +253,8 @@ def audit(payload, raw_bytes):
         if len(invalid) != 5:
             errors.append(where + ":invalid_control_count")
         for actual, (case, meta, expected_x, expected_reason) in zip(invalid, expected_invalid):
-            if actual.get("case") != case or actual.get("meta") != meta or actual.get("reason") != expected_reason:
+            if (actual.get("case") != case or actual.get("meta") != meta
+                    or actual.get("reason") != expected_reason or actual.get("proposal") is not None):
                 errors.append(where + ":invalid_control_fields:" + case)
             actual_x = actual.get("x", [])
             for i, (a, e) in enumerate(zip(actual_x, expected_x)):
