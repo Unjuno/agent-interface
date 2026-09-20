@@ -190,6 +190,8 @@ def compact_receipt(view):
 
 def expand_receipt(view):
     """Reconstruct the original v1 view, interpreting only declared ref paths."""
+    if view.get('schema') == 'agent-interface/receipt-view-v1':
+        return copy.deepcopy(view)
     if view.get('schema') != 'agent-interface/receipt-view-v2-event-refs':
         raise ValueError('event-reference receipt required')
     result = copy.deepcopy(view)

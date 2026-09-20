@@ -23,12 +23,12 @@ def _emit(payload) -> None:
     sys.stdout.write(json.dumps(payload, sort_keys=True, separators=(",", ":")) + "\n")
 
 
-def _present_result(row, *, with_review, capture_directory, exit_code):
+def _present_result(row, *, with_review, capture_directory, exit_code, compact=False):
     if not with_review:
         _emit(row)
         return exit_code
     try:
-        presented = review_bytes(json.dumps(row).encode('utf-8'), capture_directory)
+        presented = review_bytes(json.dumps(row).encode('utf-8'), capture_directory, compact=compact)
     except (OSError, ValueError, TypeError) as error:
         # Presentation failure cannot erase an already-issued action result.
         presented = {'schema': 'agent-interface/review-v1', 'authority': 'none',
@@ -50,6 +50,7 @@ def main() -> int:
     read.add_argument("--capture-directory")
     read.add_argument("--display")
     read.add_argument("--review", action="store_true", help="return result and captured image together")
+    read.add_argument("--compact", action="store_true", help="use smaller reversible receipt references with --review")
     view = sub.add_parser("receipt")
     view.add_argument("--report", required=True)
     view.add_argument("--raw", action="store_true")
@@ -65,7 +66,10 @@ def main() -> int:
     run.add_argument("--display")
     run.add_argument("--capture-directory")
     run.add_argument("--review", action="store_true", help="return result and last captured image together")
+    run.add_argument("--compact", action="store_true", help="use smaller reversible receipt references with --review")
     args = parser.parse_args()
+    if args.command in ('observe', 'dispatch') and args.compact and not args.review:
+        parser.error("--compact requires --review")
     if getattr(args, "review", False) and not args.capture_directory:
         parser.error("--review requires --capture-directory")
 
@@ -97,7 +101,7 @@ def main() -> int:
             _emit({"status": "invalid_request", "error": str(error)})
             return 2
         return _present_result(row, with_review=args.review, capture_directory=args.capture_directory,
-                               exit_code=0 if row["status"] == "returned" else 2)
+                               exit_code=0 if row["status"] == "returned" else 2, compact=args.compact)
     try:
         program = _read_json(args.program)
         targets = _read_json(args.targets)
@@ -113,7 +117,7 @@ def main() -> int:
         capture_directory=args.capture_directory,
     )
     code = 2 if row["status"] != "returned" else (0 if row["result"].get("status") == "completed" else 3)
-    return _present_result(row, with_review=args.review, capture_directory=args.capture_directory, exit_code=code)
+    return _present_result(row, with_review=args.review, capture_directory=args.capture_directory, exit_code=code, compact=args.compact)
 
 
 if __name__ == "__main__":
