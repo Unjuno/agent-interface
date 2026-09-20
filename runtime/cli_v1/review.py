@@ -68,6 +68,11 @@ def _review(data, view, run_directory):
                 'image': artifact.get('path')}]}, run_directory)
             selected.pop('sequence')
             selected.update(native_reference)
+            # Copy only recorded facts from this selected capture. Missing fields
+            # remain absent; historical coordinates never grant input authority.
+            selected['recorded_capture'] = {key: native[key] for key in (
+                'target', 'native_window_id', 'frame', 'region', 'width', 'height',
+                'capture_started_ns', 'capture_ended_ns') if key in native}
             if selected['sha256'] != artifact.get('sha256'):
                 raise ValueError('runtime image sha256 mismatch')
         else:

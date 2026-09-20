@@ -90,6 +90,8 @@ class PublicReviewTests(unittest.TestCase):
                 "artifact": {"mime_type": "image/png", "path": str(png),
                              "sha256": hashlib.sha256(pixels).hexdigest(),
                              "source_raw_sha256": "raw"}}
+            capture.update(target="fixture", native_window_id=42, frame="window_client",
+                           region=[20, 75, 180, 45], width=180, height=45)
             payload = {"schema": "agent-interface/runtime-dispatch-result-v1", "status": "returned",
                        "result": {"status": "execution_failed", "execution": {
                            "error": "late failure", "observations": [capture, capture]}}}
@@ -98,6 +100,11 @@ class PublicReviewTests(unittest.TestCase):
             row = review(path, root)
             self.assertEqual(row["image_status"], "image")
             self.assertEqual(row["image_reference"]["execution_observation_index"], 1)
+            self.assertEqual(row['image_reference']['recorded_capture']['region'], [20, 75, 180, 45])
+            self.assertEqual(row['image_reference']['recorded_capture']['frame'], 'window_client')
+            self.assertEqual(row['image_reference']['recorded_capture']['native_window_id'], 42)
+            self.assertNotIn('capture_ended_ns', row['image_reference']['recorded_capture'])
+            self.assertEqual(row['image_reference']['authority'], 'none')
             self.assertNotIn("sequence", row["image_reference"])
             self.assertEqual(row["receipt"]["report"]["result"]["status"], "execution_failed")
             for last in ({"artifact_error": "encoding failed"}, None, {}):

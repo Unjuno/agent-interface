@@ -188,3 +188,13 @@ each application's response to individual key events; verify the observed or
 saved effect when exact displacement matters. See the actual-use record in
 runtime/results/public-inkscape-use-01 for a three-key request with a smaller
 saved displacement than the nominal six units.
+
+
+For public observation/dispatch images, `image_reference.recorded_capture`
+exposes the selected capture's recorded target, native window ID, coordinate
+frame, region, dimensions and capture clocks when present. Missing fields are
+omitted. These values come from that same capture, not an earlier full-screen
+image or the current desktop. For example, a region `[20,75,180,45]` in
+`window_client` means the 180x45 image was captured starting at window-local
+(20,75). The field is historical metadata, not revalidated target binding or
+permission to send input; do not assume the window has remained unchanged.
