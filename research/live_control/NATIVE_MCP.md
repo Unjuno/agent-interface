@@ -29,6 +29,13 @@ input. Both saved tasks passed; nine MCP calls included four input programs and
 two observations. This extends application coverage, not a speed or general
 success-rate claim.
 
+Input completion does not certify each application update. The retained
+[key-delivery discrepancy](native_key_delivery_discrepancy_v1/README.md) shows
+identical six-Right programs and 19-emission receipts with different saved
+displacements. Their directional tasks passed, but exact repeated-key effects
+remain unverified. Inspect returned images and task outcomes before proceeding;
+do not infer an application acknowledgement from `completed_ops` alone.
+
 | Need | Call | Effect |
 | --- | --- | --- |
 | Start the configured private allocation | `native_start` (managed mode) | Starts once; later calls follow the same owner |
