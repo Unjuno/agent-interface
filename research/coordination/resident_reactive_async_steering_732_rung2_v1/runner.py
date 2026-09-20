@@ -120,11 +120,18 @@ def stateful_traces():
                        "post_revoke_not_actionable": after == "TERMINAL_PROGRAM"}}
 
 def naive_negative_controls():
-    # Deliberately unsafe comparison examples, not an alternative authority policy.
+    # Deliberately unsafe reference behavior, evaluated on frozen counterexamples.
+    delayed_update = {"expected_generation": 1, "current_generation": 2}
+    pointer_conflict = {"resident_owner": True, "safe_point": False}
+    revoke_request = {"current_generation": 2, "expected_generation": 2,
+                      "safe_point": False}
+    naive_accepts_every_message = True
+    naive_handoff_without_safe_point = pointer_conflict["resident_owner"] and not pointer_conflict["safe_point"]
+    naive_defers_revoke = revoke_request["current_generation"] == revoke_request["expected_generation"] and not revoke_request["safe_point"]
     return {
-        "stale_generation_admitted": True,
-        "same_resource_off_safe_point_overlaps": True,
-        "revoke_waits_for_safe_point": True
+        "stale_generation_admitted": naive_accepts_every_message and delayed_update["expected_generation"] != delayed_update["current_generation"],
+        "same_resource_off_safe_point_overlaps": naive_handoff_without_safe_point,
+        "revoke_waits_for_safe_point": naive_defers_revoke
     }
 
 def formal():
