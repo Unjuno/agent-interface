@@ -40,7 +40,7 @@ class ApiTests(unittest.TestCase):
         ]:
             with self.subTest(expected=expected):
                 program = deepcopy(base)
-                program['ops'] = [op, {'op':'release_all'}]
+                program['ops'] = [{'op':'focus','target':'fixture'}, op, {'op':'release_all'}]
                 before = deepcopy(program)
                 refusal = {'status':'refused','error':'INVALID_PROGRAM','backend_emissions':0}
                 session = mock.Mock()
@@ -58,8 +58,36 @@ class ApiTests(unittest.TestCase):
                 self.assertEqual(outcome_summary(row)['execution_detail'], expected)
                 if expected is not None:
                     self.assertEqual(row['result']['detail_source'], 'program_validation')
+                    self.assertEqual(row['result']['validation_operation_index'], 1)
+                    self.assertEqual(outcome_summary(row)['validation_operation_index'], 1)
+                    self.assertIsNone(outcome_summary(row)['failed_operation_index'])
                 else:
                     self.assertNotIn('detail_source', row['result'])
+                    self.assertNotIn('validation_operation_index', row['result'])
+
+    def test_validation_location_maps_to_source_after_expansion(self):
+        from runtime.cli_v1.review import outcome_summary
+        base = {'schema':'agent-interface/program-v1', 'program_id':'location',
+                'source':{'observation_seq':1, 'binding_revision':0},
+                'authority':{'lease_id':'test', 'expires_at_ns':100},
+                'terminal':{'release_all_required':True}}
+        malformed = {'op':'observe','frame':'window_client','x':0,'y':0,'w':True,'h':10}
+        for prefix, index in [({'op':'key_chord','keys':['Left'],'repeat':3}, 3),
+                              ({'op':'text','text':'abc','gap_ms':20}, 5)]:
+            with self.subTest(prefix=prefix):
+                session = mock.Mock()
+                session.dispatch.return_value = {'status':'refused','error':'INVALID_PROGRAM'}
+                with mock.patch('runtime.cli_v1.api.open_session', return_value=session):
+                    row = dispatch(dict(base, ops=[prefix, malformed, {'op':'release_all'}]),
+                                   {'fixture':1}, current_observation_seq=1, current_binding_revision=0)
+                summary = outcome_summary(row)
+                self.assertEqual(summary['validation_operation_index'], index)
+                self.assertEqual(summary['validation_source_operation']['source_operation_index'], 1)
+                self.assertIsNone(summary['failed_source_operation'])
+                row['compilation']['operation_sources'] = []
+                self.assertIsNone(outcome_summary(row)['validation_source_operation'])
+                row['result']['validation_operation_index'] = True
+                self.assertIsNone(outcome_summary(row)['validation_operation_index'])
 
     def test_explicit_text_gap_compiles_before_backend_and_maps_character_failure(self):
         from runtime.cli_v1.review import outcome_summary

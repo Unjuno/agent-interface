@@ -64,6 +64,17 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+### Issue #3849 — independent audit of retained #3442 intent-alignment result
+
+The [audit report](research/system1/intent_alignment_3442_audit_v1/REPORT.md)
+reconstructs 1,024 held-out paired rows, labels, categorical predictions and
+predictive metrics from the retained synthetic CPU result. It reproduces the
+original `HOLD_OR_FAIL_GATE_MISS`; three predictive gates remain false. The
+stale/unknown YIELD and matched PROPOSE controls are checked against stored
+aggregate gate counts rather than replayed, and p95 is recomputed from stored
+latency samples rather than measured anew. This is posthoc evidence auditing,
+not runtime/model-benefit or control-path validation.
+
 ### Issue #3850 — bounded static validation detail, Obstac facade allocation
 
 The [retained experiment](research/experiments/issue_3850_static_validation_obstac_v1/RESULT.md)
