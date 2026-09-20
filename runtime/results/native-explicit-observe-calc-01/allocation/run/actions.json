@@ -1,0 +1,485 @@
+[
+  {
+    "stage": 1,
+    "interaction": "keyboard",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "event.feedback",
+        "input.keyboard",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 32672457439148,
+        "ended_ns": 32672534000615,
+        "emissions": 20,
+        "program_emissions": 20,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 32672533997442
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ]
+      },
+      "recovery_required": false,
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 2,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            48,
+            190
+          ],
+          "observed_box": [
+            36,
+            183,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 2,
+          "valid_until_ns": 32673883843629,
+          "patch_sha256": "0e9ec5a4a6ea973b83614685315e202730c43e30ce71f2dabc2c42b84fa4fd79",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 3,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            48,
+            190
+          ],
+          "observed_box": [
+            36,
+            183,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 3,
+          "valid_until_ns": 32673958378649,
+          "patch_sha256": "0e9ec5a4a6ea973b83614685315e202730c43e30ce71f2dabc2c42b84fa4fd79",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "started_ns": 32672364163409,
+    "feedback": {
+      "status": "needs_review",
+      "task_success": null,
+      "authority_granted": false,
+      "input_dispatched": false,
+      "expected_title": "sheet.xlsx \u2014 LibreOffice Calc",
+      "rejected_titles": [],
+      "samples": [
+        {
+          "known_ns": 32672544463458,
+          "title": "sheet.xlsx \u2014 LibreOffice Calc",
+          "binding": {
+            "focus": 8389124,
+            "surface": 8389124,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          }
+        }
+      ],
+      "started_ns": 32672543090539,
+      "observation": {
+        "sequence": 4,
+        "binding_revision": 0,
+        "capture_ns": 32672545059887,
+        "pointer_binding": {
+          "focus": 8389124,
+          "surface": 8389124,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "0d2c252fb338d094d66399f7ae48b8358cc704b13404ec5336b055660b0bd1e2",
+          "width": 1280,
+          "height": 800,
+          "target": "app",
+          "native_window_id": 8389124,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 32672545059887,
+          "capture_ended_ns": 32672550948580,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-explicit-observe-calc-01/run/bridge/images/12e85ef792374062b1cc97ad9dcd0d01.png",
+            "sha256": "f62ca967e173edea184d0f6caa208d3ff1cdea07db804591932c8ed273d6e252",
+            "bytes": 56973,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "0d2c252fb338d094d66399f7ae48b8358cc704b13404ec5336b055660b0bd1e2"
+          }
+        }
+      },
+      "title": "sheet.xlsx \u2014 LibreOffice Calc",
+      "after_title": "sheet.xlsx \u2014 LibreOffice Calc",
+      "ended_ns": 32672605906519
+    },
+    "ended_ns": 32672611138695,
+    "window_review": {
+      "status": "reviewed",
+      "authority_granted": false,
+      "input_dispatched": false,
+      "previous_scope": "native-x11:5799b46eaaeb49bab936a0c88b482640",
+      "previous_binding_revision": 0,
+      "binding_revision": 1,
+      "scope": "native-x11:3861b3fcd08b40c387bd398b7db9b5d5",
+      "previous_window_id": 8389124,
+      "requested_window_id": 8390610,
+      "started_ns": 32672617453976,
+      "observation": {
+        "sequence": 5,
+        "binding_revision": 1,
+        "capture_ns": 32672618143693,
+        "pointer_binding": {
+          "focus": 8390610,
+          "surface": 8390610,
+          "geometry": [
+            386,
+            322,
+            507,
+            174
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "7e4c932fa25a576ea23537591c2049966324008314a1aa955711f44ecbcab406",
+          "width": 1280,
+          "height": 800,
+          "target": "app",
+          "native_window_id": 8390610,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 32672618143693,
+          "capture_ended_ns": 32672623661155,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-explicit-observe-calc-01/run/bridge/images/ba2135a518114971b79d53ddc985a9d5.png",
+            "sha256": "942b1ffa7f444aa76e8c9bece221b4b8bce16f9ac64a46ee9dea5dd9d4eccc76",
+            "bytes": 59597,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "7e4c932fa25a576ea23537591c2049966324008314a1aa955711f44ecbcab406"
+          }
+        }
+      },
+      "ended_ns": 32672679217499
+    },
+    "through_review_ns": 32672682898942
+  },
+  {
+    "stage": 3,
+    "interaction": "click",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "display.geometry",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 32705718274025,
+        "ended_ns": 32705926127054,
+        "emissions": 23,
+        "program_emissions": 3,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 32705926123582
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "recovery_required": false,
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 7,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_3",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_3",
+          "point": [
+            783,
+            463
+          ],
+          "observed_box": [
+            771,
+            456,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 7,
+          "valid_until_ns": 32707142608487,
+          "patch_sha256": "efcfe569150c7a518408a1f4d6d5e2dd73d5c9128fbeebc614c61cdad68fd394",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 8,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_3",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_3",
+          "point": [
+            783,
+            463
+          ],
+          "observed_box": [
+            771,
+            456,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 8,
+          "valid_until_ns": 32707218947930,
+          "patch_sha256": "efcfe569150c7a518408a1f4d6d5e2dd73d5c9128fbeebc614c61cdad68fd394",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 9,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_3",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_3",
+          "point": [
+            783,
+            463
+          ],
+          "observed_box": [
+            771,
+            456,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 9,
+          "valid_until_ns": 32707284851045,
+          "patch_sha256": "efcfe569150c7a518408a1f4d6d5e2dd73d5c9128fbeebc614c61cdad68fd394",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 10,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_3",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_3",
+          "point": [
+            783,
+            463
+          ],
+          "observed_box": [
+            771,
+            456,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 10,
+          "valid_until_ns": 32707355832560,
+          "patch_sha256": "efcfe569150c7a518408a1f4d6d5e2dd73d5c9128fbeebc614c61cdad68fd394",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "started_ns": 32705637986729,
+    "feedback": {
+      "status": "needs_review",
+      "task_success": null,
+      "authority_granted": false,
+      "input_dispatched": false,
+      "expected_title": "sheet.xlsx \u2014 LibreOffice Calc",
+      "rejected_titles": [],
+      "samples": [],
+      "started_ns": 32705936602208,
+      "error": "BadWindow(<Xlib.display._BaseDisplay object at 0x73ec54f4ab10>, b'\\x00\\x03\\xa8\\x00\\xd2\\x07\\x80\\x00\\x00\\x00\\x14\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00')",
+      "ended_ns": 32705937360050
+    },
+    "ended_ns": 32705943281938,
+    "window_review": {
+      "status": "reviewed",
+      "authority_granted": false,
+      "input_dispatched": false,
+      "previous_scope": "native-x11:3861b3fcd08b40c387bd398b7db9b5d5",
+      "previous_binding_revision": 1,
+      "binding_revision": 2,
+      "scope": "native-x11:b7b0bf54776a4889a32ac4f37f386df6",
+      "previous_window_id": 8390610,
+      "requested_window_id": 8389124,
+      "started_ns": 32705956310888,
+      "observation": {
+        "sequence": 11,
+        "binding_revision": 2,
+        "capture_ns": 32705957555996,
+        "pointer_binding": {
+          "focus": 8389124,
+          "surface": 8389124,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "1f3d8a606972828e5a325c97bcd0e84446e8e1b82203e23f4011a87fd7ea4866",
+          "width": 1280,
+          "height": 800,
+          "target": "app",
+          "native_window_id": 8389124,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 32705957555996,
+          "capture_ended_ns": 32705965674456,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-explicit-observe-calc-01/run/bridge/images/9028ae44121a41e29b88aff493fe2370.png",
+            "sha256": "2c1cd054b9a1ae1c13bcd3430f249035397a252610f14d5f227af8326c318586",
+            "bytes": 75292,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "1f3d8a606972828e5a325c97bcd0e84446e8e1b82203e23f4011a87fd7ea4866"
+          }
+        }
+      },
+      "ended_ns": 32706035707578
+    },
+    "through_review_ns": 32706041599674
+  }
+]
