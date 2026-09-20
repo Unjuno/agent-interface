@@ -16,6 +16,7 @@ SOURCE_FILES = (
     "runtime/core_v1/__init__.py",
     "runtime/core_v1/backend.py",
     "runtime/core_v1/contract.py",
+    "runtime/core_v1/sequence.py",
     "runtime/core_v1/doctor.py",
     "runtime/core_v1/platform_probe.py",
     "runtime/selector_v1/__init__.py",

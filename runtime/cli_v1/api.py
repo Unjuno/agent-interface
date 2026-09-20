@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict
+from copy import deepcopy
 from typing import Any, Mapping
 
 from runtime.selector_v1 import BackendUnavailable, open_session, select_backend
@@ -36,10 +37,27 @@ def dispatch(
         return {"schema": SCHEMA_DISPATCH, "status": "invalid_request", "error": "INVALID_BINDING_REVISION"}
     if not isinstance(program, dict):
         return {"schema": SCHEMA_DISPATCH, "status": "invalid_request", "error": "PROGRAM_NOT_OBJECT"}
+    compilation = None
+    operations = program.get('ops')
+    if isinstance(operations, list) and any(isinstance(op, dict) and 'repeat' in op for op in operations):
+        from runtime.core_v1.sequence import expand_key_repeats
+        try:
+            expanded = expand_key_repeats(operations, max_ops=128)
+        except ValueError as error:
+            return {"schema": SCHEMA_DISPATCH, "status": "invalid_request",
+                    "error": "INVALID_KEY_REPEAT", "detail": str(error)}
+        compilation = {'kind': 'bounded_key_repeat', 'source_program': deepcopy(program),
+                       'operation_sources': [index for index, op in enumerate(operations)
+                                             for _ in range(op.get('repeat', 1))]}
+        program = deepcopy(program)
+        program['ops'] = expanded
     try:
         session = open_session(targets, display_name=display_name)
     except BackendUnavailable as error:
-        return {"schema": SCHEMA_DISPATCH, "status": "backend_unavailable", "error": str(error)}
+        row = {"schema": SCHEMA_DISPATCH, "status": "backend_unavailable", "error": str(error)}
+        if compilation is not None:
+            row['compilation'] = compilation
+        return row
     row: dict[str, Any] = {}
     try:
         if capture_directory is not None:
@@ -66,4 +84,6 @@ def dispatch(
                 row["status"] = "runtime_failed"
                 row.setdefault("error", "BACKEND_CLOSE_FAILED")
                 row["cleanup_error"] = repr(error)
+    if compilation is not None:
+        row['compilation'] = compilation
     return row

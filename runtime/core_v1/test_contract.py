@@ -51,6 +51,12 @@ FULL = OFFICE_FLOOR
 
 
 class ProgramTests(unittest.TestCase):
+    def test_unexpanded_repeat_cannot_be_silently_ignored(self):
+        request = program()
+        request['ops'].insert(-1, {'op': 'key_chord', 'keys': ['Right'], 'repeat': 3})
+        with self.assertRaisesRegex(ValueError, 'repeat requires explicit expansion'):
+            validate_program(request)
+
     def test_valid_program(self):
         self.assertEqual(validate_program(program()), program())
 
