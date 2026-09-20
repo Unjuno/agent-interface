@@ -37,7 +37,7 @@ Ran 6 tests in 0.090s
 OK
 ```
 
-Source SHA-256: audit.py `2ef6f8badae3c10616c134078a0e7addcc0c410afc8ae5f4b2bc4058dae96d1c2`; test_integrity.py `4885466ee6fd5e8440d9c0fbad7e50120d81f645c1dc20a5a7fcc28a744f7891`. The retained raw and predecessor freeze hashes are listed above.
+Source SHA-256: audit.py `2ef6f8badae3c10616c134078a0e7addc0c410afc8ae5f4b2bc4058dae96d1c2`; test_integrity.py `4885466ee6fd5e8440d9c0fbad7e50120d81f645c1dc20a5a7fcc28a744f7891`. The retained raw and predecessor freeze hashes are listed above.
 
 ## Docker stop
 
