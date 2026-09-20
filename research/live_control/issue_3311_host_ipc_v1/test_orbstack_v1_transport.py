@@ -32,7 +32,7 @@ def _run_container_with_broker(broker, command, root):
     """Run setup/container and reap the one-shot broker on every exit path."""
     try:
         image_info = subprocess.run(["docker", "--context", "orbstack", "image",
-            "inspect", IMAGE], capture_output=True, text=True, check=True)
+            "inspect", IMAGE], capture_output=True, text=True, check=True, timeout=15)
         inspected_image = json.loads(image_info.stdout)[0]
         if command.count(IMAGE) != 1:
             raise AssertionError("expected one image tag placeholder in docker run command")
@@ -62,6 +62,17 @@ class OrbStackV1TransportTest(unittest.TestCase):
             with patch("research.live_control.issue_3311_host_ipc_v1.test_orbstack_v1_transport.subprocess.run",
                        side_effect=subprocess.CalledProcessError(1, ["docker", "image", "inspect"])):
                 with self.assertRaises(subprocess.CalledProcessError):
+                    _run_container_with_broker(broker, ["docker", "run"], Path(tmp))
+        self.assertIsNotNone(broker.poll())
+
+    def test_broker_is_reaped_when_image_inspect_times_out(self):
+        broker = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(60)"],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        with tempfile.TemporaryDirectory(prefix="3311-v1-inspect-timeout-") as tmp:
+            timeout = subprocess.TimeoutExpired(["docker", "image", "inspect"], 15)
+            with patch("research.live_control.issue_3311_host_ipc_v1.test_orbstack_v1_transport.subprocess.run",
+                       side_effect=timeout):
+                with self.assertRaises(subprocess.TimeoutExpired):
                     _run_container_with_broker(broker, ["docker", "run"], Path(tmp))
         self.assertIsNotNone(broker.poll())
 

@@ -107,3 +107,15 @@ Main advanced through #3513/#3514 while hosted Linux CI was queued. `git merge-t
 **C** — Raw #01/#02 bundle files and their original hashes remain untouched. The adversarial modified bundle exists only in a temporary directory and proves the image-binding check fails while the copy's regenerated raw manifest remains valid. No model, GUI, or task action occurred.
 
 **U** — One exploratory attempt to run the nested OrbStack roundtrip test from inside the minimal runtime image failed because that image has no Docker CLI/daemon. This is an environment limitation, not an IPC/image-binding test failure; the real OrbStack roundtrip was run from the host and passed. Latest-head hosted CI/review still required; no #3489 call was made.
+
+### Review follow-up: bound the image-inspect setup call (2026-09-20)
+
+**H** — Image inspection must be bounded so a stalled Docker/OrbStack endpoint cannot prevent the transport harness's `finally` cleanup from reaping its one-shot broker.
+
+**T** — Add a finite 15-second timeout to image inspection and simulate `TimeoutExpired` while a broker is live; require the original timeout to propagate and the broker to be terminal after cleanup. Include the regression in the Linux contract workflow and rerun OrbStack/network-isolated selections.
+
+**D** — PASS locally: the complete host workflow-equivalent bridge/broker/audit/setup selection passes 24/24, including image-binding adversarial audit and the timed-out-inspect broker reap. OrbStack host roundtrip/setup selection passes 3/3; the pinned OrbStack `--network none` contract/review selection passes 31/31, including both broker reaping paths. `git diff --check` passes.
+
+**C** — The timeout is bounded at the Docker client call; the pre-existing `finally` cleanup terminates then escalates to kill/reap. No retained historical evidence was modified; no model, GUI, or task was run.
+
+**U** — Latest-head hosted Linux/Windows workflows and fresh review remain pending. #3489 remains gated on #3487 merge and green CI.
