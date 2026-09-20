@@ -2,7 +2,7 @@
 import base64,gzip,hashlib,json,math,statistics
 import torch
 SEEDS=(3461,3462,3463,3464,3465);N=4096
-YIELDS={"unknown_role":"YIELD","stale_epoch":"YIELD","wrong_version":"YIELD","missing_adapter":"YIELD","missing_epoch":"YIELD"}
+YIELDS={"unknown_role":"YIELD","stale_epoch":"YIELD","wrong_version":"YIELD","missing_adapter":"YIELD","missing_adapter_id":"YIELD","missing_version":"YIELD","missing_epoch":"YIELD"}
 CURVE_ARMS=("rank2_online","rank4_online_04","rank4_online_02")
 def regen(seed):
  def data(n,s):
