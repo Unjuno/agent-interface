@@ -8,18 +8,18 @@ from .receipt import receipt_view, receipt_bytes
 from .receipt_image import select_image
 
 
-def review(report_path, run_directory):
+def review(report_path, run_directory, *, compact=False):
     view = receipt_view(report_path)
     # Parse the same bytes whose digest is presented to the caller.
     data = Path(view['source']['path']).read_bytes()
     if hashlib.sha256(data).hexdigest() != view['source']['sha256']:
         raise ValueError('report changed during review')
-    return _review(data, view, run_directory)
+    return _review(data, view, run_directory, compact=compact)
 
 
-def review_bytes(data: bytes, run_directory):
+def review_bytes(data: bytes, run_directory, *, compact=False):
     """Review a complete received response without a temporary report file."""
-    return _review(data, receipt_bytes(data), run_directory)
+    return _review(data, receipt_bytes(data), run_directory, compact=compact)
 
 
 def outcome_summary(report):
@@ -49,7 +49,13 @@ def outcome_summary(report):
     return summary
 
 
-def _review(data, view, run_directory):
+def _review(data, view, run_directory, *, compact=False):
+    if compact:
+        from .receipt_references import compact_receipt
+        candidate = compact_receipt(view)
+        encoded_size = lambda value: len(json.dumps(value, sort_keys=True, separators=(',', ':')).encode('utf-8'))
+        if encoded_size(candidate) < encoded_size(view):
+            view = candidate
     report = json.loads(data)
     result = {'schema': 'agent-interface/review-v1', 'receipt': view,
               'image': None, 'authority': 'none', 'outcome_summary': outcome_summary(report)}

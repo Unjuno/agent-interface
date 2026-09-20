@@ -41,6 +41,21 @@ For an already saved report, review is read-only:
 python3 -m runtime.cli_v1 review --report /absolute/run/report.json --run-directory /absolute/run
 ```
 
+Add `--compact` to this read-only command to replace duplicate event objects with
+local references. It also accepts `--report -` for a complete response on stdin.
+The image, outcome summary and source digest are preserved. Consumers can use
+`runtime.cli_v1.receipt_references.expand_receipt` to reconstruct the original
+receipt view; only the explicitly listed reference paths are interpreted.
+The reviewer selects references only when their serialized JSON is smaller;
+otherwise it keeps the original view. The expansion helper accepts either form.
+This byte-size comparison is not a measurement of model tokens or cost.
+The default representation is unchanged.
+
+For an immediate response, `observe` and `dispatch` accept `--review --compact`
+together with `--capture-directory`. This projects the same operation's result;
+there is no second observation, dispatch or file-review command. `--compact`
+without `--review` is rejected before reading requests or calling a backend.
+
 The report and referenced image must be present at their recorded paths. The
 review operation does not recapture, focus a window or repeat an action. Native
 research reports use `agent_review.py --native` as described in the MCP guide.
@@ -67,6 +82,15 @@ A typed target refusal can return a new image while stage capacity remains. Read
 At capacity exhaustion, the terminal `needs_review` reply retains the final
 observation and cleanup result, and publishes no unusable next source. Process
 exit, action completion, cleanup and task evaluation are separate facts.
+
+When recorded verification flags exist, `outcome_summary.cleanup_verification`
+projects `tracked_processes_terminal`, `owner_exit_verified` and
+`descendants_verified` separately. A `cleanup_status` of `completed` only says the
+cleanup routine completed; it does not establish that every descendant exited.
+Only explicit booleans are projected; missing or malformed flags are `null`.
+The original cleanup receipt is preserved. The managed `allocation` object is a
+process snapshot: its `task_success: null` does not override a recorded
+`evaluation_success: true`, and a zero process exit code does not prove task success.
 
 ## Validate an integration
 
