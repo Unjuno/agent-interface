@@ -1,0 +1,71 @@
+{
+  "action_emissions": 0,
+  "actual_rows": 36,
+  "allocation": "o3-live-receipt-transport-2692-v1-live-oracle-20260921-02",
+  "case_counts": {
+    "authority_bearing": 4,
+    "complete_current": 4,
+    "contradictory_effect_binding": 4,
+    "focus_window_change": 4,
+    "generation_mismatch": 4,
+    "malformed_receipt": 4,
+    "missing_region": 4,
+    "partial_coverage": 4,
+    "stale_frame": 4
+  },
+  "container_image_id": "sha256:8c37d3a0ff21d1205a00c567fd184184816ab00d81292cb0feee7be92d572f64",
+  "container_platform": "linux/arm64",
+  "display": ":100",
+  "expected_rows": 36,
+  "fixture_returncodes": [
+    null,
+    null
+  ],
+  "input_events": 0,
+  "model_calls": 0,
+  "network": "none",
+  "schema": "issue-2692-live-transport-allocation-v1",
+  "surfaces": {
+    "surface_a": {
+      "pid": 9,
+      "regions": {
+        "entry": [
+          16,
+          16,
+          380,
+          36
+        ],
+        "status": [
+          16,
+          80,
+          380,
+          32
+        ]
+      },
+      "surface": "surface_a",
+      "title": "O3Transport-surface_a",
+      "xid": 4194307
+    },
+    "surface_b": {
+      "pid": 10,
+      "regions": {
+        "entry": [
+          16,
+          16,
+          380,
+          36
+        ],
+        "status": [
+          16,
+          80,
+          380,
+          32
+        ]
+      },
+      "surface": "surface_b",
+      "title": "O3Transport-surface_b",
+      "xid": 2097155
+    }
+  },
+  "xvfb_returncode": null
+}
