@@ -1,0 +1,25 @@
+name: Resident GTK incremental construction 3518
+
+on:
+  pull_request:
+    paths:
+      - "research/analysis/resident_gtk_incremental_3518_v1/**"
+      - ".github/workflows/resident-gtk-incremental-3518.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  construction:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run causal event policy unit tests
+        working-directory: research/analysis/resident_gtk_incremental_3518_v1
+        run: python -m unittest -v
+      - name: Run independent expected-trace audit
+        working-directory: research/analysis/resident_gtk_incremental_3518_v1
+        run: python audit_construction.py
