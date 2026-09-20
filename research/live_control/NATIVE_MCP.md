@@ -151,3 +151,13 @@ and the owner-state read, status polls once more without waiting. Exit status do
 not establish task success or verified cleanup. This adds no background sensor,
 restart, input replay or automatic next decision. Attach-only responses do not
 include a managed allocation snapshot.
+
+## Request validation
+
+`native_start`, `native_submit` and `native_resume` accept only numeric wait
+seconds in 0..30. Strings, booleans and out-of-range values are rejected before
+allocation or request publication. Zero performs a nonblocking poll.
+A finish-only decision contains exactly `source_sequence` and `finish: true`.
+Additional fields, even empty/default-valued action fields, are rejected so an
+intended action cannot be silently ignored. Use `finish_after` with an explicit
+action when both action and termination are intended.
