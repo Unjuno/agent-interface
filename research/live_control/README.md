@@ -11,6 +11,7 @@
 | Current Linux research caller | [CURRENT_CLIENT.md](CURRENT_CLIENT.md) |
 | Project evidence ledger | [../../RESEARCH.md](../../RESEARCH.md) |
 | Retained raw result artifacts | [results/README.md](results/README.md) |
+| Recycled-XID process-incarnation guard (Issue #3555; scoped, provenance-limited) | [XRes guard report](x11_xres_incarnation_guard_3555_v1/REPORT.md) |
 | Implemented live-control surface | [What is implemented](#what-is-implemented) |
 | Reproduction notes | [Reproduce](#reproduce) |
 
