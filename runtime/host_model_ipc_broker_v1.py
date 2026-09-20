@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 from pathlib import PurePosixPath
+import shutil
 import subprocess
 import time
 
@@ -35,6 +36,30 @@ def sha(path: str) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def executable_identity(command: str) -> dict:
+    resolved = shutil.which(command)
+    if resolved is None:
+        candidate = Path(command)
+        if candidate.is_file():
+            resolved = str(candidate)
+        else:
+            raise FileNotFoundError("configured host executable not found: " + command)
+    canonical = str(Path(resolved).resolve())
+    version = subprocess.run([resolved, "--version"], capture_output=True,
+        text=True, check=True, timeout=15).stdout.strip()
+    identity = {"path": canonical, "sha256": sha(canonical), "version": version}
+    node = shutil.which("node")
+    if node:
+        node_path = str(Path(node).resolve())
+        node_version = subprocess.run([node, "--version"], capture_output=True,
+            text=True, check=True, timeout=15).stdout.strip()
+        identity["node"] = {"path": node_path, "sha256": sha(node_path),
+                             "version": node_version}
+    else:
+        identity["node"] = None
+    return identity
 
 
 def build_command(request: dict, repo: Path, cli: str) -> list[str]:
@@ -84,8 +109,10 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                 continue
             started_ns = time.perf_counter_ns()
             host_cli_invoked = False
+            identity = None
             try:
                 args = build_command(request, repo, cli)
+                identity = executable_identity(cli)
                 host_cli_invoked = True
                 completed = subprocess.run(args, input=request["prompt"] + "\n",
                                            text=True, encoding="utf-8", errors="replace",
@@ -94,6 +121,7 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                           "stderr": (completed.stderr or "")[-2000:],
                           "boundary": "host-local-codex-exe", "authority_granted": False,
                           "host_cli_invoked": host_cli_invoked,
+                          "host_cli_identity": identity,
                           "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                 response = completed.stdout or ""
             except subprocess.TimeoutExpired as exc:
@@ -102,6 +130,7 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                           "timeout_s": timeout_s, "stderr": str(exc)[-2000:],
                           "boundary": "host-local-codex-exe", "authority_granted": False,
                           "host_cli_invoked": host_cli_invoked,
+                          "host_cli_identity": identity,
                           "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                 response = ""
             except OSError as exc:
@@ -111,6 +140,7 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                           "stderr": str(exc)[-2000:],
                           "boundary": "host-local-codex-exe", "authority_granted": False,
                           "host_cli_invoked": False,
+                          "host_cli_identity": identity,
                           "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                 response = ""
             except Exception as exc:
@@ -120,6 +150,7 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                           "stderr": str(exc)[-2000:],
                           "boundary": "host-local-codex-exe", "authority_granted": False,
                           "host_cli_invoked": False,
+                          "host_cli_identity": identity,
                           "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                 response = ""
             (ipc / f"{request_id}.response.jsonl").write_text(

@@ -36,6 +36,8 @@ class OrbStackV1TransportTest(unittest.TestCase):
                 "#!/usr/bin/env python3\n"
                 "import json, os, sys\n"
                 "a=sys.argv\n"
+                "if a[1:] == ['--version']:\n"
+                " print('codex fake-transport-v1'); raise SystemExit(0)\n"
                 "schema=a[a.index('--output-schema')+1]\n"
                 "work=a[a.index('-C')+1]\n"
                 "instructions=next(v.split('=',1)[1] for v in a if v.startswith('model_instructions_file='))\n"
@@ -75,6 +77,11 @@ class OrbStackV1TransportTest(unittest.TestCase):
             broker_record = json.loads((ipc / f"{request['request_id']}.broker.json").read_text())
             self.assertEqual(broker_record["returncode"], 0)
             self.assertTrue(broker_record["host_cli_invoked"])
+            self.assertEqual(broker_record["host_cli_identity"]["version"],
+                             "codex fake-transport-v1")
+            self.assertEqual(broker_record["host_cli_identity"]["path"], str(fake.resolve()))
+            self.assertEqual(len(broker_record["host_cli_identity"]["sha256"]), 64)
+            self.assertIsNotNone(broker_record["host_cli_identity"]["node"])
             events = [json.loads(line) for line in
                       (out / "runner/events.jsonl").read_text(encoding="utf-8").splitlines()]
             self.assertEqual([row["type"] for row in events],
