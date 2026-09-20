@@ -1,12 +1,31 @@
-Warning: truncated output (original token count: 257)
-Total output lines: 31
-
 {
   "schema": "issue3912-independent-audit-v1",
   "allocation": "needle-lora-3441-pilot-04d-multiskill-400base",
   "disposition": "PASS_MULTI_SKILL_ROUTING_SCOPED",
   "integrity": true,
-  "errors": []…157 tokens truncated…-stdout.json>",
+  "errors": [],
+  "rows_recomputed": 24576,
+  "parameters": {
+    "seed": 3914,
+    "base_updates": 400,
+    "adapter_updates_each": 120,
+    "heldout_rows_per_skill": 4096
+  },
+  "routed_accuracy": {
+    "A": 0.970458984375,
+    "B": 0.95361328125,
+    "C": 0.93603515625
+  },
+  "shared_sequential_accuracy": {
+    "A": 0.05029296875,
+    "B": 0.000244140625,
+    "C": 0.91259765625
+  },
+  "mean_routed_BC_minus_shared_BC": 0.4884033203125,
+  "interference_threshold": 0.1,
+  "quality_gate": true,
+  "formal_stdout_sha256": "e932a3d3cd1c0796f10149a7b4805f4b1812547bf94c95fd1067f4f6a2fa516d",
+  "audit_command": "py -3.11 -B audit.py <formal-stdout.json>",
   "audit_exit_code": 0,
   "scope": "Independent CPU row/data/state-evidence audit of one synthetic local-GPU allocation; not an independent reproduction of training or predictions."
 }
