@@ -15,6 +15,15 @@ from native_exchange_v1 import encoded
 
 
 class MCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_observe_decision_has_no_input_fields_or_implicit_defaults(self):
+        from native_mcp_v1 import NativeDecision
+        decision = {'source_sequence': 4, 'interaction': 'observe'}
+        self.assertEqual(NativeDecision.model_validate(decision).model_dump(exclude_unset=True), decision)
+        for extra in ({'tail': []}, {'finish': False}, {'finish_after': True},
+                      {'point': [0, 0]}, {'watch_regions': []}, {'unknown': True}):
+            with self.subTest(extra=extra), self.assertRaises(ValueError):
+                NativeDecision.model_validate(dict(decision, **extra))
+
     async def test_managed_reply_snapshot_never_replaces_task_result_or_replays(self):
         from native_mcp_v1 import create_server
         with tempfile.TemporaryDirectory() as tmp:
@@ -152,7 +161,7 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                             self.assertTrue(refused.isError)
                             self.assertIn('timeout', refused.content[0].text)
                             self.assertFalse((root/'request-1.json').exists())
-                    # A finish request must never silently discard an action.
+                    # Reject the actual wait-only failure before committing a request.
                     for extra in ({'tail': [{'op': 'key_chord', 'keys': ['CTRL', 's']}]},
                                   {'tail': []}, {'point': [0, 0]}, {'interaction': 'click'},
                                   {'expected_title': 'fixture'}, {'finish_after': False},
@@ -163,6 +172,18 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                         self.assertTrue(mixed_finish.isError)
                         self.assertIn('finish accepts only', mixed_finish.content[0].text)
                         self.assertFalse((root/'request-1.json').exists())
+                    for tail in ([], [{'op': 'wait_update', 'timeout_ms': 250}],
+                                 [{'op': 'observe'}]):
+                        invalid_keyboard = await client.call_tool('native_submit', {
+                            'stage': 1, 'decision': {'source_sequence': 1,
+                            'interaction': 'keyboard', 'point': [0, 0],
+                            'expected_title': 'fixture', 'tail': tail}, 'timeout': 0})
+                        self.assertTrue(invalid_keyboard.isError)
+                        self.assertIn('interaction=observe', invalid_keyboard.content[0].text)
+                        self.assertFalse((root/'request-1.json').exists())
+                    still_readable = await client.call_tool('native_observe', {'stage': 1})
+                    self.assertFalse(still_readable.isError)
+                    self.assertEqual(base64.b64decode(still_readable.content[1].data), pixels)
                     decision = {'source_sequence':1,'finish':True}
                     pending = await client.call_tool('native_submit', {'stage':1,'decision':decision,'timeout':0})
                     row = json.loads(pending.content[0].text)

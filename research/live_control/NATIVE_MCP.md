@@ -161,3 +161,21 @@ A finish-only decision contains exactly `source_sequence` and `finish: true`.
 Additional fields, even empty/default-valued action fields, are rejected so an
 intended action cannot be silently ignored. Use `finish_after` with an explicit
 action when both action and termination are intended.
+
+## Explicit fresh review and target refusal
+
+To inspect a newly painted frame without input, submit a decision containing
+only `source_sequence` and `interaction: "observe"`. This consumes a stage and
+returns one fresh capture of the currently focused managed window, using the
+existing read-only window handoff. It never focuses, mints a target or sends
+input. The next decision must use the returned source; prior aliases are revoked.
+Keyboard continuation requires explicit text or key_chord operations; a wait-only
+tail is rejected before publication.
+
+A typed visually-flat target refusal before dispatch may return a fresh boundary
+when stage capacity remains. Its `target_refusal` describes the recorded failure;
+it is not action completion. Choose a new decision from the returned image.
+Arbitrary errors, exhausted capacity or failed review still terminate; no input
+is automatically retried. A refused action does not apply finish_after.
+The published Inkscape task now describes its directional saved-geometry score
+explicitly; nominal drag pixels are not an exact keyboard displacement target.

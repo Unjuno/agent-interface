@@ -27,11 +27,19 @@ def native_outcome_summary(report):
         return value if isinstance(value, str) and value else None
 
     success = field('evaluation', 'success')
-    return {'reported_status': status('status'),
+    summary = {'reported_status': status('status'),
             'evaluation_success': success if type(success) is bool else None,
             'action_status': status('action', 'result', 'status'),
             'feedback_status': status('action', 'feedback', 'status'),
             'cleanup_status': status('cleanup', 'status')}
+    if isinstance(field('target_refusal'), dict):
+        # A boundary is not action completion. Project the recorded refusal,
+        # without deriving input safety or success from a missing action row.
+        summary['target_refusal'] = {'reason': status('target_refusal', 'reason')}
+        for key in ('input_dispatched', 'action_attempted', 'finish_after_applied'):
+            value = field('target_refusal', key)
+            summary['target_refusal'][key] = value if type(value) is bool else None
+    return summary
 
 
 def review_native(report_path, run_directory, *, compact=False):
