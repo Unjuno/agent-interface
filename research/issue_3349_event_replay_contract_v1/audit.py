@@ -32,21 +32,25 @@ def run():
         expected = case["expected_disposition"]
         candidate = candidate_first_match(case["events"], case["queue"], predicate_name)
         if candidate is not None and candidate.get("id") != wanted_id:
-            candidate_disposition = "stale_or_wrong_identity"
+            candidate_disposition = "stale_wrong_identity_returned"
         elif candidate is None:
             candidate_disposition = "wait"
         elif expected == "ambiguous_duplicate":
             candidate_disposition = "returned_first_ambiguous"
         else:
             candidate_disposition = "return"
-        correct = (
-            candidate_disposition == expected
-            or (expected == "return" and candidate_disposition == "return")
-        )
+        if case["name"] in {"stale_accepted_prelude", "stale_rejected_prelude"}:
+            expected_candidate = "stale_wrong_identity_returned"
+        elif case["name"] == "duplicate_terminal_history":
+            expected_candidate = "returned_first_ambiguous"
+        else:
+            expected_candidate = expected
+        correct = candidate_disposition == expected_candidate
         outcomes.append({
             "case": case["name"],
             "expected": expected,
             "candidate": candidate_disposition,
+            "expected_candidate_observation": expected_candidate,
             "pass": correct,
         })
     witness = candidate_first_match(
@@ -56,9 +60,10 @@ def run():
     result = {
         "candidate_source_sha256": source_sha,
         "cases": outcomes,
-        "candidate_accepts_stale_prelude": reproduced,
-        "independent_audit": "PASS" if all(x["pass"] for x in outcomes) and reproduced else "FAIL",
-        "interpretation": "behavioral contract only; no MAP01, GUI, model, or formal allocation",
+        "candidate_returns_stale_prelude": reproduced,
+        "audit": "PASS_REPRODUCES_DECLARED_CANDIDATE_BEHAVIOR" if all(x["pass"] for x in outcomes) and reproduced else "FAIL_AUDIT",
+        "candidate_disposition": "FAIL_MERGED_REPLAY_SCOPE_BUG" if reproduced else "NOT_REPRODUCED",
+        "interpretation": "wrong-ID early return / false rejection or wait interruption; not an unsafe input admission; no MAP01, GUI, model, or formal allocation",
     }
     return result
 
