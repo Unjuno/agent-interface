@@ -7,6 +7,7 @@ import subprocess
 import time
 
 from jsonschema import Draft202012Validator, SchemaError
+from model_call_backend_v1 import resolve_preflight_call, resolve_preflight_identity
 
 HERE = Path(__file__).resolve().parent
 WINDOWS_PYTHON = Path("/mnt/c/Users/junny/AppData/Local/Programs/Python/Python312/python.exe")
@@ -33,15 +34,28 @@ def version(command):
     return subprocess.run(command, capture_output=True, text=True, check=True).stdout.strip()
 
 
-def compatibility_identity(schema):
+def _legacy_compatibility_identity(schema, instructions=INSTRUCTIONS):
     identity = {"schema_sha256": sha(schema), "requested_model": MODEL,
         "requested_effort": EFFORT, "runner_sha256": sha(RUNNER),
-        "instructions_sha256": sha(INSTRUCTIONS), "cli_entry_sha256": sha(CLI_WSL),
+        "instructions_sha256": sha(instructions), "cli_entry_sha256": sha(CLI_WSL),
         "cli_version": version([str(NODE_WSL), CLI_ARG, "--version"]),
         "node_version": version([str(NODE_WSL), "--version"]),
         "request_shape": f"{RUNNER.name}:handle:no-image:output-schema"}
     encoded = json.dumps(identity, sort_keys=True, separators=(",", ":")).encode()
     return identity, hashlib.sha256(encoded).hexdigest()
+
+
+compatibility_identity = resolve_preflight_identity(_legacy_compatibility_identity)
+
+
+def _legacy_preflight_call(prompt, workspace, output, instructions, schema):
+    command = [str(WINDOWS_PYTHON), windows_path(RUNNER), NODE_ARG, CLI_ARG,
+        windows_path(prompt), windows_path(workspace), windows_path(output), "handle", "-",
+        windows_path(instructions), windows_path(schema)]
+    return subprocess.run(command, capture_output=True, timeout=90)
+
+
+run_preflight_call = resolve_preflight_call(_legacy_preflight_call)
 
 
 def local_schema_status(schema):
@@ -58,7 +72,8 @@ def preflight(schema, cache_dir, result_dir, workspace):
     result_dir = Path(result_dir).resolve(); workspace = Path(workspace).resolve()
     result_dir.mkdir(parents=True, exist_ok=False); cache_dir.mkdir(parents=True, exist_ok=True)
     local_status, local_error = local_schema_status(schema)
-    identity, key = compatibility_identity(schema); cache_path = cache_dir / f"{key}.json"
+    identity, key = compatibility_identity(schema, INSTRUCTIONS)
+    cache_path = cache_dir / f"{key}.json"
     base = {"compatibility_key": key, "identity": identity, "schema": str(schema),
             "local_schema_status": local_status, "local_schema_error": local_error}
     if cache_path.exists():
@@ -83,25 +98,34 @@ def preflight(schema, cache_dir, result_dir, workspace):
     prompt.write_text("Schema compatibility probe. Produce any object accepted by the supplied schema.",
                       encoding="utf-8", newline="\n")
     call = result_dir / "model-call"; started = time.perf_counter_ns()
-    command = [str(WINDOWS_PYTHON), windows_path(RUNNER), NODE_ARG, CLI_ARG,
-        windows_path(prompt), windows_path(workspace), windows_path(call), "handle", "-",
-        windows_path(INSTRUCTIONS), windows_path(schema)]
-    completed = subprocess.run(command, capture_output=True, timeout=90)
+    completed = run_preflight_call(prompt, workspace, call, INSTRUCTIONS, schema)
     elapsed_ms = (time.perf_counter_ns() - started) / 1e6
     (result_dir / "runner-stdout.txt").write_bytes(completed.stdout)
     (result_dir / "runner-stderr.txt").write_bytes(completed.stderr)
-    events = [json.loads(line) for line in (call / "events.jsonl").read_text(encoding="utf-8").splitlines()]
+    events_path = call / "events.jsonl"
+    events_error = None
+    try:
+        events = [json.loads(line) for line in events_path.read_text(
+            encoding="utf-8").splitlines() if line.strip()]
+    except (OSError, UnicodeError, json.JSONDecodeError):
+        events = []
+        events_error = "MISSING_OR_MALFORMED_EVENTS"
     turns = [row for row in events if row.get("type") == "turn.completed"]
     failures = [row for row in events if row.get("type") in ("error", "turn.failed")]
-    if completed.returncode == 0 and len(turns) == 1:
+    if completed.returncode == 0 and len(turns) == 1 and turns[0].get("usage") is not None:
         endpoint_status, endpoint_error, usage = "ENDPOINT_COMPATIBLE", None, turns[0]["usage"]
     elif completed.returncode != 0 and failures:
         endpoint_status, endpoint_error, usage = "ENDPOINT_INCOMPATIBLE", failures[-1], None
     else:
-        endpoint_status, endpoint_error, usage = "PREFLIGHT_FAILED", {"returncode": completed.returncode}, None
+        endpoint_status, endpoint_error, usage = "PREFLIGHT_FAILED", {
+            "returncode": completed.returncode,
+            "events_status": events_error or "UNEXPECTED_EVENT_COUNTS_OR_USAGE",
+        }, None
     result = {**base, "cache_hit": False, "endpoint_status": endpoint_status,
         "endpoint_error": endpoint_error, "usage": usage, "model_call_performed": True,
         "elapsed_ms": elapsed_ms, "cost": None,
         "scope": "actual no-GUI endpoint compatibility call; no semantic-quality or task claim"}
-    cache_record = {**result, "observed_at_unix_ns": time.time_ns()}
-    dump(cache_path, cache_record); dump(result_dir / "preflight-result.json", result); return result
+    if endpoint_status != "PREFLIGHT_FAILED":
+        cache_record = {**result, "observed_at_unix_ns": time.time_ns()}
+        dump(cache_path, cache_record)
+    dump(result_dir / "preflight-result.json", result); return result

@@ -8,9 +8,125 @@ import tempfile
 import unittest
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from docker_model_call_backend_v1 import build_command, call
+from docker_model_call_backend_v1 import (build_command, build_preflight_command,
+    call, preflight_call, preflight_identity)
 
 class DockerBackendTest(unittest.TestCase):
+    def test_task_command_selects_schema_and_instructions_per_contract(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)
+            runner=root/'runner.py'; image=root/'image.png'; prompt=root/'prompt.txt'; workspace=root/'workspace'; ipc=root/'ipc'
+            plain_schema=root/'plain-schema.json'; compiled_schema=root/'compiled-schema.json'
+            plain_instructions=root/'plain-instructions.txt'; compiled_instructions=root/'compiled-instructions.txt'
+            for path in (runner,image,prompt,plain_schema,compiled_schema,plain_instructions,compiled_instructions):
+                path.write_text('x')
+            workspace.mkdir(); ipc.mkdir()
+            values={
+                'AGENT_INTERFACE_DOCKER_RUNNER':str(runner),
+                'AGENT_INTERFACE_DOCKER_IMAGE':'pinned-image@sha256:abcd',
+                'AGENT_INTERFACE_DOCKER_IPC':str(ipc),
+                'AGENT_INTERFACE_DOCKER_SCHEMA_PLAIN':str(plain_schema),
+                'AGENT_INTERFACE_DOCKER_SCHEMA_COMPILED':str(compiled_schema),
+                'AGENT_INTERFACE_DOCKER_INSTRUCTIONS_PLAIN':str(plain_instructions),
+                'AGENT_INTERFACE_DOCKER_INSTRUCTIONS_COMPILED':str(compiled_instructions),
+            }
+            with patch.dict(os.environ, values):
+                plain=build_command(root/'plain-output',prompt,image,'plain',workspace)
+                compiled=build_command(root/'compiled-output',prompt,image,'compiled',workspace)
+            self.assertIn(f'{plain_schema.resolve()}:/repo/schema.json:ro', plain)
+            self.assertIn(f'{plain_instructions.resolve()}:/repo/instructions.txt:ro', plain)
+            self.assertNotIn(f'{compiled_schema.resolve()}:/repo/schema.json:ro', plain)
+            self.assertIn(f'{compiled_schema.resolve()}:/repo/schema.json:ro', compiled)
+            self.assertIn(f'{compiled_instructions.resolve()}:/repo/instructions.txt:ro', compiled)
+            self.assertNotIn(f'{plain_schema.resolve()}:/repo/schema.json:ro', compiled)
+
+    def test_preflight_command_uses_handle_mode_without_image(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)
+            runner=root/'runner.py'; instructions=root/'instructions.txt'
+            prompt=root/'prompt.txt'; schema=root/'schema.json'; workspace=root/'workspace'
+            ipc=root/'ipc'; output=root/'result'/'model-call'
+            for path in (runner, instructions, prompt, schema): path.write_text('x')
+            workspace.mkdir(); ipc.mkdir(); output.parent.mkdir()
+            values={
+                'AGENT_INTERFACE_DOCKER_RUNNER':str(runner),
+                'AGENT_INTERFACE_DOCKER_INSTRUCTIONS':str(instructions),
+                'AGENT_INTERFACE_DOCKER_IMAGE':'pinned-image@sha256:abcd',
+                'AGENT_INTERFACE_DOCKER_IPC':str(ipc),
+            }
+            with patch.dict(os.environ, values):
+                command=build_preflight_command(output,prompt,workspace,instructions,schema)
+                self.assertEqual(command[1:5], ['run','--rm','--network','none'])
+                self.assertIn('handle', command)
+                self.assertIn('-', command)
+                self.assertNotIn('coordinate', command)
+                self.assertNotIn('/repo/image.png', command)
+                self.assertEqual(command[-4:],
+                                 ['handle','-','/repo/instructions.txt','/repo/schema.json'])
+
+    def test_preflight_cache_identity_includes_container_image(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp); runner=root/'runner'; instructions=root/'instructions'
+            other_instructions=root/'other-instructions'
+            schema=root/'schema'; ipc=root/'ipc'
+            for path in (runner,instructions,schema): path.write_text('x')
+            other_instructions.write_text('changed schema-preflight instructions')
+            ipc.mkdir()
+            common={
+                'AGENT_INTERFACE_DOCKER_RUNNER':str(runner),
+                'AGENT_INTERFACE_DOCKER_INSTRUCTIONS':str(instructions),
+                'AGENT_INTERFACE_DOCKER_IPC':str(ipc),
+            }
+            with patch.dict(os.environ,{**common,'AGENT_INTERFACE_DOCKER_IMAGE':'image:a'}):
+                identity_a,key_a=preflight_identity(schema,instructions)
+            with patch.dict(os.environ,{**common,'AGENT_INTERFACE_DOCKER_IMAGE':'image:b'}):
+                identity_b,key_b=preflight_identity(schema,instructions)
+            with patch.dict(os.environ,{**common,'AGENT_INTERFACE_DOCKER_IMAGE':'image:a'}):
+                _identity_c,key_c=preflight_identity(schema,other_instructions)
+            self.assertNotEqual(key_a,key_b)
+            self.assertNotEqual(key_a,key_c)
+            self.assertEqual(identity_a['model_boundary'],'container-to-host-model-ipc')
+
+    def test_preflight_timeout_records_unknown_remote_state_without_retry(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp); result=root/'result'; result.mkdir()
+            output=result/'model-call'
+            command=['inert']
+            with patch('docker_model_call_backend_v1.build_preflight_command',return_value=command), \
+                 patch('docker_model_call_backend_v1.subprocess.run',
+                       side_effect=subprocess.TimeoutExpired(command,90,output=b'partial')) as run:
+                with self.assertRaisesRegex(RuntimeError,'STOP_DOCKER_PREFLIGHT_TIMEOUT'):
+                    preflight_call(root/'prompt',root/'workspace',output,
+                                   root/'instructions',root/'schema')
+                run.assert_called_once()
+            attempt=json.loads((result/'preflight-client-attempt.json').read_text())
+            receipt=json.loads((result/'preflight-client-result.json').read_text())
+            self.assertEqual(attempt['mode'],'handle')
+            self.assertEqual(receipt['container_state'],'unknown')
+            self.assertEqual(receipt['host_model_state'],'unknown')
+            self.assertFalse(receipt['retry_performed'])
+            self.assertEqual((result/'preflight-runner-stdout.txt').read_text(),'partial')
+
+    def test_preflight_call_records_one_successful_handle_invocation(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp); result=root/'result'; result.mkdir()
+            output=result/'model-call'
+            completed=SimpleNamespace(returncode=0,stdout=b'out',stderr=b'err')
+            with patch('docker_model_call_backend_v1.build_preflight_command',
+                       return_value=['docker','run','handle','-']), \
+                 patch('docker_model_call_backend_v1.subprocess.run',
+                       return_value=completed) as run:
+                actual=preflight_call(root/'prompt',root/'workspace',output,
+                                      root/'instructions',root/'schema')
+            run.assert_called_once_with(['docker','run','handle','-'],capture_output=True,
+                                        check=False,timeout=90)
+            self.assertIs(actual,completed)
+            attempt=json.loads((result/'preflight-client-attempt.json').read_text())
+            receipt=json.loads((result/'preflight-client-result.json').read_text())
+            self.assertIsNone(attempt['image'])
+            self.assertEqual(receipt['status'],'returned')
+            self.assertEqual(receipt['returncode'],0)
+
     def test_real_local_client_timeout_reaps_only_its_direct_child(self):
         children = []
         popen = subprocess.Popen
@@ -238,4 +354,3 @@ class DockerBackendTest(unittest.TestCase):
                     else: os.environ[k]=v
 
 if __name__=='__main__': unittest.main()
-

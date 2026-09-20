@@ -5,7 +5,8 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from model_call_backend_v1 import resolve
+from model_call_backend_v1 import (resolve, resolve_preflight_call,
+                                   resolve_preflight_identity)
 
 
 class BackendSeamTest(unittest.TestCase):
@@ -36,6 +37,30 @@ class BackendSeamTest(unittest.TestCase):
         os.environ["AGENT_INTERFACE_MODEL_BACKEND"] = "unknown"
         with self.assertRaisesRegex(RuntimeError, "STOP_MODEL_BACKEND_UNSUPPORTED"):
             resolve(lambda: None)
+
+    def test_legacy_preflight_transport_and_identity_are_defaults(self):
+        call = object()
+        identity = object()
+        self.assertIs(resolve_preflight_call(call), call)
+        self.assertIs(resolve_preflight_identity(identity), identity)
+
+    def test_module_backend_must_implement_both_preflight_contracts(self):
+        module = types.ModuleType("test_backend_module")
+        module.call = lambda *args, **kwargs: "selected"
+        module.preflight_call = lambda *args, **kwargs: "preflight"
+        module.preflight_identity = lambda schema: ({"schema": str(schema)}, "key")
+        sys.modules[module.__name__] = module
+        os.environ["AGENT_INTERFACE_MODEL_BACKEND"] = "module"
+        os.environ["AGENT_INTERFACE_MODEL_CALL_MODULE"] = module.__name__
+        self.assertIs(resolve_preflight_call(lambda: None), module.preflight_call)
+        self.assertIs(resolve_preflight_identity(lambda: None), module.preflight_identity)
+
+        del module.preflight_call
+        with self.assertRaisesRegex(RuntimeError, "STOP_MODEL_BACKEND_MISSING_PREFLIGHT_CALL"):
+            resolve_preflight_call(lambda: None)
+        del module.preflight_identity
+        with self.assertRaisesRegex(RuntimeError, "STOP_MODEL_BACKEND_MISSING_PREFLIGHT_IDENTITY"):
+            resolve_preflight_identity(lambda: None)
 
 
 if __name__ == "__main__":
