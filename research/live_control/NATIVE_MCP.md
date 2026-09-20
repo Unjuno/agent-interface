@@ -64,8 +64,11 @@ dispatched and `finish_after` was not applied: the requested action never ran.
 Review this image before submitting a new decision. The refused request remains
 immutable and consumes its stage; it is never replayed. Other minting errors,
 failed window review, and a refusal at the final stage remain terminal. The
-texture threshold is unchanged. Harness tests cover these branches; live GUI
-recovery with this new behavior has not yet been verified. The earlier
+texture threshold is unchanged. Harness tests cover these branches. The
+[native-target-recovery-01](../../runtime/results/native-target-recovery-01/README.md)
+WSL trial returned a fresh image after refusal, accepted a new primary-authored
+edge target, and completed move/save with one input program and no restart.
+This is one recovery example, not a latency or general success-rate claim. The earlier
 `native-validation-recovery-01` record retains the original terminal failure.
 
 - `native_observe(stage)` reads the retained source image, without recapture.
