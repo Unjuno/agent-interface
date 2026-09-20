@@ -15,6 +15,7 @@ The project is still research-first, so experimental benchmark code remains unde
 | [`backends/`](backends/) | Native X11, Win32, and Quartz backend candidates; see each backend's README for its evidence boundary. |
 | [`distribution_v1/`](distribution_v1/) | Standalone doctor/bootstrap distribution work. |
 | [`distribution_v2/`](distribution_v2/) | Portable unified runtime zipapp work. |
+| [`integration_checks/`](integration_checks/) | Shared local/CI checks for native integration; runs in WSL without Docker or model-host tool discovery. |
 | [`results/`](results/) | Retained runtime-result artifacts where applicable. |
 | `golden_desktop_*`, `golden-demo-*`, `setup-golden-demo*` | Current golden desktop demonstration runners, audits, preregistration, and reports. |
 

@@ -1,5 +1,16 @@
 # Integration priority — 2026-09-19
 
+## Product integration execution
+
+Prioritize integrating ideas already supported by retained experiments into the
+usable interface. Use WSL or Docker for development; run the shared
+[native integration checks](../runtime/integration_checks/README.md) locally when
+remote CI is unavailable. Docker availability or direct tool publication in one
+model host is not a prerequisite for continuing implementation and integration.
+Keep actual GUI/task/performance evidence separate from contract-test results;
+do not relabel a local test pass as a completed research experiment. Sensor
+research remains outside this integration work.
+
 ## Current integration decision — 2026-09-20
 
 The [managed MCP composition](../runtime/results/native-mcp-managed-01/README.md)
