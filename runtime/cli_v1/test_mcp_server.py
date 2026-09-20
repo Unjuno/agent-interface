@@ -187,6 +187,8 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertNotEqual(default['receipt']['schema'], REPORT_REF)
                     self.assertEqual(default['receipt']['source']['raw_report']['failure_phase'],
                                      'backend_initialization')
+                    self.assertEqual(default['outcome_summary']['failure_phase'],
+                                     'backend_initialization')
                     report_path = Path(default['call_directory'])/'report.json'
                     original_bytes = report_path.read_bytes()
                     referenced = await client.call_tool('interface_results', {

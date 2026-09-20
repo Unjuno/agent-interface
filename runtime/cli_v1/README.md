@@ -321,6 +321,12 @@ model-token, cost or latency reduction.
 
 ### Input release in reviewed dispatch results
 
+The shared `outcome_summary.failure_phase` preserves a recorded nonempty string
+such as `backend_initialization` for observation or dispatch failures. Missing or
+malformed values remain null; the phase is not inferred from an error message.
+It remains available if image presentation fails. A phase alone does not assert
+task effects, verified input release, or permission to retry the operation.
+
 CLI `--review` and public MCP expose `outcome_summary.input_release_verified`.
 For a refused dispatch, this includes its explicit `result.release` record in
 addition to any `result.execution.releases`. Backend preflight refusal can retain
