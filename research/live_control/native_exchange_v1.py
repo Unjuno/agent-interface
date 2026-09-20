@@ -169,13 +169,17 @@ def run(run_directory, stage, decision=None, *, timeout=5, resume=False, compact
     deadline = time.monotonic() + timeout
     while True:
         if reply.exists():
+            reply_seen = time.monotonic_ns()
             displayed = review_native(reply, root, compact=compact)
+            review_completed = time.monotonic_ns()
             report = displayed['receipt']['native_result']
             if report.get('stage') != stage or report.get('decision_sha256') != digest:
                 raise ValueError('reply does not match the committed request; do not replay')
             displayed['continuation'] = continuation(root, stage, max_stages, displayed)
             displayed['exchange'] = {'submission_committed': True, 'resumed_read_only': resume,
                                      'started_ns': started, 'committed_ns': committed,
+                                     'reply_seen_ns': reply_seen,
+                                     'review_completed_ns': review_completed,
                                      'returned_ns': time.monotonic_ns()}
             return displayed
         owner = owner_state(root)
