@@ -92,6 +92,36 @@ class SchemaPreflightBackendTest(unittest.TestCase):
             self.assertTrue(result["model_call_performed"])
             self.assertTrue((root / "result" / "preflight-result.json").is_file())
 
+    def test_non_object_event_row_is_retained_as_preflight_failure(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            schema = root / "schema.json"
+            schema.write_text(json.dumps({
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+            }), encoding="utf-8")
+            workspace = root / "workspace"
+            workspace.mkdir()
+
+            def malformed_transport(prompt, working, output, instructions, selected_schema):
+                output.mkdir(parents=True)
+                (output / "events.jsonl").write_text('["not", "an", "event"]\n',
+                                                     encoding="utf-8")
+                return SimpleNamespace(returncode=0, stdout=b"", stderr=b"")
+
+            identity = ({"transport": "test-module"}, "key")
+            with patch.object(schema_preflight_v1, "compatibility_identity",
+                              return_value=identity), \
+                 patch.object(schema_preflight_v1, "run_preflight_call",
+                              side_effect=malformed_transport):
+                result = schema_preflight_v1.preflight(
+                    schema, root / "cache", root / "result", workspace)
+
+            self.assertEqual(result["endpoint_status"], "PREFLIGHT_FAILED")
+            self.assertEqual(result["endpoint_error"]["events_status"], "NON_OBJECT_EVENT_ROW")
+            self.assertTrue((root / "result" / "preflight-result.json").is_file())
+            self.assertEqual(list((root / "cache").glob("*.json")), [])
+
 
 if __name__ == "__main__":
     unittest.main()

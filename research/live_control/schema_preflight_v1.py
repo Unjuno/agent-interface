@@ -110,6 +110,9 @@ def preflight(schema, cache_dir, result_dir, workspace):
     except (OSError, UnicodeError, json.JSONDecodeError):
         events = []
         events_error = "MISSING_OR_MALFORMED_EVENTS"
+    if any(not isinstance(row, dict) for row in events):
+        events = []
+        events_error = "NON_OBJECT_EVENT_ROW"
     turns = [row for row in events if row.get("type") == "turn.completed"]
     failures = [row for row in events if row.get("type") in ("error", "turn.failed")]
     if completed.returncode == 0 and len(turns) == 1 and turns[0].get("usage") is not None:
