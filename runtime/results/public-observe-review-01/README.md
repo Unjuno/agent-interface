@@ -20,3 +20,6 @@ transport route, not intended fixture rendering, application task success,
 latency improvement or token savings. Fixture drawing visibility remains
 unresolved. Raw observation and review remain unchanged, including their
 original runtime paths; this archive is not a new live observation.
+
+The repeated attempt-2 diagnostic log is retained as lossless gzip to avoid
+adding 90,000 repetitive lines to source review. Decompressed SHA-256: `c7e9b7bf9684b3d4d8552713f14581f2a59b493461572b50539851e89220e8b6`.
