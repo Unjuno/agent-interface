@@ -139,7 +139,6 @@ def reconstruct(raw_bytes: bytes, expected_sha256: str = EXPECTED_RAW_SHA256) ->
         "negative_controls": len(controls),
         "negative_controls_hold": len(controls),
         "rows": len(vectors) + len(controls),
-        "current_snapshot": "HOLD",
         "errors": [],
     }
 
