@@ -1,5 +1,6 @@
 import os
 import json
+import subprocess
 from types import SimpleNamespace
 from unittest.mock import patch
 from pathlib import Path
@@ -10,6 +11,32 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from docker_model_call_backend_v1 import build_command, call
 
 class DockerBackendTest(unittest.TestCase):
+    def test_client_timeout_retains_uncertainty_without_retry_or_parse(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)/'call'
+            def expire(*args, **kwargs):
+                self.assertEqual(kwargs['timeout'], 90)
+                self.assertTrue((root/'client-attempt.json').is_file())
+                raise subprocess.TimeoutExpired(['inert'], 90,
+                    output=b'x'*2500+b'last', stderr=b'partial error')
+            with patch.dict(os.environ, {'AGENT_INTERFACE_DOCKER_SCHEMA': 'unused',
+                                         'AGENT_INTERFACE_MODEL_BACKEND': 'legacy'}), \
+                 patch('docker_model_call_backend_v1.build_command', return_value=['inert']), \
+                 patch('docker_model_call_backend_v1.subprocess.run', side_effect=expire) as run, \
+                 patch('integrated_efficiency_model_v1.parse') as parse:
+                with self.assertRaisesRegex(RuntimeError, 'STOP_DOCKER_BACKEND_TIMEOUT'):
+                    call(root, 'prompt', Path(temp)/'image', 'plain', Path(temp))
+                run.assert_called_once()
+                parse.assert_not_called()
+            receipt = json.loads((root/'client-result.json').read_text())
+            self.assertEqual(receipt['container_state'], 'unknown')
+            self.assertEqual(receipt['host_model_state'], 'unknown')
+            self.assertFalse(receipt['retry_performed'])
+            self.assertIsNone(receipt['returncode'])
+            self.assertEqual(len((root/'runner-stdout.txt').read_text()), 2000)
+            self.assertTrue((root/'runner-stdout.txt').read_text().endswith('last'))
+            self.assertFalse((root/'result.json').exists())
+
     def test_call_validates_output_before_semantic_parse_without_retry(self):
         for answer, valid in (({"answer": "ok"}, True), ({"answer": "wrong"}, False)):
             with self.subTest(answer=answer), tempfile.TemporaryDirectory() as temp:
@@ -54,6 +81,34 @@ class DockerBackendTest(unittest.TestCase):
                 validation = json.loads((output/'schema-validation.json').read_text())
                 self.assertEqual(validation['status'], 'PASS' if valid else 'STOP_SCHEMA_OUTPUT_INVALID')
                 self.assertEqual((output/'runner-stdout.txt').read_text(), 'runner output')
+
+    def test_actual_semantic_parser_preserves_grounding_and_usage(self):
+        from integrated_efficiency_model_v1 import CONTRACTS
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)/'call'
+            answer = {'format': 'plain-form-points-v1',
+                      'field': {'point_space': 'source_observation_pixels', 'point': {'x': 10, 'y': 20}},
+                      'submit': {'point_space': 'source_observation_pixels', 'point': {'x': 30, 'y': 40}}}
+            def runner(*args, **kwargs):
+                retained = root/'runner'; retained.mkdir()
+                rows = [{'type': 'thread.started', 'thread_id': 'synthetic-call'},
+                        {'type': 'item.completed', 'item': {'type': 'agent_message', 'text': json.dumps(answer)}},
+                        {'type': 'turn.completed', 'usage': {'input_tokens': 7, 'output_tokens': 3}}]
+                (retained/'events.jsonl').write_text(''.join(json.dumps(row)+'\n' for row in rows))
+                (retained/'process.json').write_text(json.dumps({
+                    'started_ns': 10, 'exited_ns': 30, 'requested_model': 'synthetic',
+                    'requested_effort': 'low'}))
+                return SimpleNamespace(returncode=0, stdout='', stderr='')
+            with patch.dict(os.environ, {'AGENT_INTERFACE_DOCKER_SCHEMA': str(CONTRACTS['plain'][0])}), \
+                 patch('docker_model_call_backend_v1.build_command', return_value=['inert']), \
+                 patch('docker_model_call_backend_v1.subprocess.run', side_effect=runner) as run:
+                result = call(root, 'prompt', Path(temp)/'image', 'plain', Path(temp))
+                run.assert_called_once()
+            self.assertEqual(result['grounding'], {'field_point': [10,20], 'submit_point': [30,40]})
+            self.assertEqual(result['usage'], {'input_tokens': 7, 'output_tokens': 3})
+            self.assertEqual(result['call_id'], 'synthetic-call')
+            self.assertEqual(result['runner_ns'], 20)
+            self.assertIsNone(result['cost'])
 
     def test_call_owns_prompt_creation_and_builder_owns_output_creation(self):
         source = Path(__file__).with_name('docker_model_call_backend_v1.py').read_text()
