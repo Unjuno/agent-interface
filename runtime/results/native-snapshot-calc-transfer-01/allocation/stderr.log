@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/research/live_control/run_native_calc_self_use_v1.py", line 213, in <module>
+    main()
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/research/live_control/run_native_calc_self_use_v1.py", line 127, in main
+    result = dispatch(alias, offset,
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/research/live_control/native_handle_bridge_v1.py", line 293, in keyboard
+    return self._run_guarded(alias, offset, tail=tail, activate=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/research/live_control/native_handle_bridge_v1.py", line 314, in _run_guarded
+    raise ValueError('keyboard continuation requires explicit keyboard input')
+ValueError: keyboard continuation requires explicit keyboard input
