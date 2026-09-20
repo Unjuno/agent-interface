@@ -109,69 +109,65 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                 continue
             started_ns = time.perf_counter_ns()
             host_cli_invoked = False
-            request_validated = False
-            cli_spawn_attempted = False
             identity = None
             try:
                 args = build_command(request, repo, cli)
-                request_validated = True
-                identity = executable_identity(cli)
-                cli_spawn_attempted = True
-                host_cli_invoked = True
-                completed = subprocess.run(args, input=request["prompt"] + "\n",
-                                           text=True, encoding="utf-8", errors="replace",
-                                           capture_output=True, check=False, timeout=timeout_s)
-                broker = {"request_id": request_id, "returncode": completed.returncode,
-                          "stderr": (completed.stderr or "")[-2000:],
-                          "boundary": "host-local-codex-exe", "authority_granted": False,
-                          "host_cli_invoked": host_cli_invoked,
-                          "request_validated": request_validated,
-                          "host_cli_spawn_attempted": cli_spawn_attempted,
-                          "host_cli_identity": identity,
-                          "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
-                response = completed.stdout or ""
-            except subprocess.TimeoutExpired as exc:
-                broker = {"request_id": request_id, "returncode": None,
-                          "error_class": "TimeoutExpired",
-                          "stop_reason": ("HOST_BROKER_SUBPROCESS_TIMEOUT" if cli_spawn_attempted
-                                          else "HOST_CLI_IDENTITY_TIMEOUT" if request_validated
-                                          else "HOST_BROKER_REQUEST_REFUSED"),
-                          "timeout_s": timeout_s, "stderr": str(exc)[-2000:],
-                          "boundary": "host-local-codex-exe", "authority_granted": False,
-                          "host_cli_invoked": host_cli_invoked,
-                          "request_validated": request_validated,
-                          "host_cli_spawn_attempted": cli_spawn_attempted,
-                          "host_cli_identity": identity,
-                          "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
-                response = ""
-            except OSError as exc:
-                broker = {"request_id": request_id, "returncode": None,
-                          "error_class": type(exc).__name__,
-                          "stop_reason": ("HOST_BROKER_EXECUTABLE_UNAVAILABLE" if cli_spawn_attempted
-                                          else "HOST_CLI_IDENTITY_UNAVAILABLE" if request_validated
-                                          else "HOST_BROKER_REQUEST_REFUSED"),
-                          "stderr": str(exc)[-2000:],
-                          "boundary": "host-local-codex-exe", "authority_granted": False,
-                          "host_cli_invoked": False,
-                          "request_validated": request_validated,
-                          "host_cli_spawn_attempted": cli_spawn_attempted,
-                          "host_cli_identity": identity,
-                          "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
-                response = ""
+                prompt = request["prompt"]
+                if not isinstance(prompt, str):
+                    raise ValueError("host IPC prompt must be text")
             except Exception as exc:
+                # Path, asset and request validation happen before any CLI work.
                 broker = {"request_id": request_id, "returncode": None,
                           "error_class": type(exc).__name__,
-                          "stop_reason": ("HOST_CLI_IDENTITY_UNAVAILABLE"
-                                          if request_validated and identity is None
-                                          else "HOST_BROKER_REQUEST_REFUSED"),
+                          "stop_reason": "HOST_BROKER_REQUEST_REFUSED",
                           "stderr": str(exc)[-2000:],
                           "boundary": "host-local-codex-exe", "authority_granted": False,
-                          "host_cli_invoked": False,
-                          "request_validated": request_validated,
-                          "host_cli_spawn_attempted": cli_spawn_attempted,
-                          "host_cli_identity": identity,
+                          "host_cli_invoked": False, "host_cli_identity": identity,
                           "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                 response = ""
+            else:
+                try:
+                    identity = executable_identity(cli)
+                except OSError as exc:
+                    broker = {"request_id": request_id, "returncode": None,
+                              "error_class": type(exc).__name__,
+                              "stop_reason": "HOST_BROKER_EXECUTABLE_UNAVAILABLE",
+                              "stderr": str(exc)[-2000:],
+                              "boundary": "host-local-codex-exe", "authority_granted": False,
+                              "host_cli_invoked": False, "host_cli_identity": None,
+                              "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
+                    response = ""
+                else:
+                    host_cli_invoked = True
+                    try:
+                        completed = subprocess.run(args, input=prompt + "\n",
+                                                   text=True, encoding="utf-8", errors="replace",
+                                                   capture_output=True, check=False, timeout=timeout_s)
+                    except subprocess.TimeoutExpired as exc:
+                        broker = {"request_id": request_id, "returncode": None,
+                                  "error_class": "TimeoutExpired",
+                                  "stop_reason": "HOST_BROKER_SUBPROCESS_TIMEOUT",
+                                  "timeout_s": timeout_s, "stderr": str(exc)[-2000:],
+                                  "boundary": "host-local-codex-exe", "authority_granted": False,
+                                  "host_cli_invoked": True, "host_cli_identity": identity,
+                                  "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
+                        response = ""
+                    except OSError as exc:
+                        broker = {"request_id": request_id, "returncode": None,
+                                  "error_class": type(exc).__name__,
+                                  "stop_reason": "HOST_BROKER_EXECUTABLE_UNAVAILABLE",
+                                  "stderr": str(exc)[-2000:],
+                                  "boundary": "host-local-codex-exe", "authority_granted": False,
+                                  "host_cli_invoked": True, "host_cli_identity": identity,
+                                  "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
+                        response = ""
+                    else:
+                        broker = {"request_id": request_id, "returncode": completed.returncode,
+                                  "stderr": (completed.stderr or "")[-2000:],
+                                  "boundary": "host-local-codex-exe", "authority_granted": False,
+                                  "host_cli_invoked": True, "host_cli_identity": identity,
+                                  "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
+                        response = completed.stdout or ""
             (ipc / f"{request_id}.response.jsonl").write_text(
                 response, encoding="utf-8", newline="\n")
             (ipc / f"{request_id}.broker.json").write_text(

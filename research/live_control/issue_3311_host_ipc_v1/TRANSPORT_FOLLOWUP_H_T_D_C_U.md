@@ -37,3 +37,9 @@ The post-merge targeted suite passes all 20 broker, bridge, runner, backend, and
 ### Spawn-failure semantics check
 
 Added one more inert regression: when the validated request reaches the subprocess spawn boundary but the executable disappears, the broker records `HOST_BROKER_EXECUTABLE_UNAVAILABLE`, `host_cli_spawn_attempted=true`, and `host_cli_invoked=false`. Latest host suite: 21/21 passed including OrbStack round trip. Latest fixed-image OrbStack `--network none` unit run: 20/20 passed (the nested-Docker round trip is excluded there and separately retained above). These are contract/setup validations only; no model or task call occurred.
+
+## Addendum — current-main reconciliation and retained rerun (2026-09-20)
+
+Main then integrated the broader prompt/framing and broker failure-stage repair in #3498. That current-main implementation and its tests supersede the overlapping local taxonomy edits above; the branch adopts #3498 rather than duplicating it. The #3498-based targeted suite passes 22 tests including the real OrbStack fake-CLI transport test.
+
+A fresh, separate OrbStack run against that current-main broker is retained at `evidence/20260920-v1-transport-audit-02/`. It uses the same exact Linux/arm64 image and `--network none`; the independent audit again reports `PASS_V1_SYNTHETIC_TRANSPORT_ONLY` across all 13 checks. The original #01 bundle and its audit remain untouched. Both runs are synthetic-only and do not satisfy #3489's real model/schema endpoint gate.
