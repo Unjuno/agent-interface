@@ -1,6 +1,6 @@
 # Prechecks and construction log
 
-Allocation: `issue3555-xres-guard-orbstack-v2-formal-01` (formal allocation not yet run at this log's initial commit).
+Allocation: `issue3555-xres-guard-orbstack-v2-formal-01` (see final outcome in `REPORT.md`).
 
 ## Environment
 
@@ -24,3 +24,7 @@ Allocation: `issue3555-xres-guard-orbstack-v2-formal-01` (formal allocation not 
 - One formal allocation, no retries. Preserve raw stdout/stderr and `raw.json` exactly.
 - Independently audit raw event rows and run corruption challenges. STOP before any input if reuse/geometry/pixel/PID/start-tick preconditions fail. If stale admission occurs, suppress the fresh positive control and retain FAIL.
 - Confirm cleanup and button release. One scoped PASS does not establish product integration.
+
+## Formal allocation audit invocation disposition
+
+The first separate-container auditor CLI invocation returned only its usage string because the frozen CLI argument-count check expected the wrong `argv` length. It did not alter `raw.json`, launch input, or rerun the formal runner. The unchanged frozen audit implementation was then invoked through its Python `main(raw, freeze, output)` entry point in a second network-disabled container. That produced `PASS_INDEPENDENT_AUDIT`, zero errors, and rejected all three corruption controls. The initial invocation failure remains documented here; the successful audit is preserved as `artifacts/formal_01/audit.json`.
