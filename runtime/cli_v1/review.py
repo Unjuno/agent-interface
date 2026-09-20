@@ -22,10 +22,30 @@ def review_bytes(data: bytes, run_directory):
     return _review(data, receipt_bytes(data), run_directory)
 
 
+def outcome_summary(report):
+    """Expose recorded statuses, never infer task success or absence of effects."""
+    def text(row, name):
+        value = row.get(name)
+        return value if isinstance(value, str) and value else None
+
+    summary = {'reported_status': text(report, 'status'),
+               'error': text(report, 'error'),
+               'cleanup_error': text(report, 'cleanup_error')}
+    if report.get('schema') == 'agent-interface/runtime-dispatch-result-v1':
+        dispatch = report.get('result')
+        dispatch = dispatch if isinstance(dispatch, dict) else {}
+        recovery = dispatch.get('recovery_required')
+        summary.update(execution_status=text(dispatch, 'status'),
+                       execution_error=text(dispatch, 'error'),
+                       execution_detail=text(dispatch, 'detail'),
+                       recovery_required=recovery if type(recovery) is bool else None)
+    return summary
+
+
 def _review(data, view, run_directory):
     report = json.loads(data)
     result = {'schema': 'agent-interface/review-v1', 'receipt': view,
-              'image': None, 'authority': 'none'}
+              'image': None, 'authority': 'none', 'outcome_summary': outcome_summary(report)}
     try:
         native = None
         native_reference = {}

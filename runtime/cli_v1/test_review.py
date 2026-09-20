@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from runtime.cli_v1.review import review
+from runtime.cli_v1.review import review, review_bytes
 from runtime.distribution_v2.build import SOURCE_FILES, build
 
 
@@ -135,6 +135,27 @@ class PublicReviewTests(unittest.TestCase):
             bad = subprocess.run(command, input=b'{bad', capture_output=True)
             self.assertEqual(bad.returncode, 2)
             self.assertEqual(json.loads(bad.stdout)['status'], 'invalid_receipt')
+
+    def test_outcome_summary_separates_returned_from_refused_and_preserves_unknown(self):
+        with tempfile.TemporaryDirectory() as td:
+            payload = {'schema': 'agent-interface/runtime-dispatch-result-v1', 'status': 'returned',
+                       'result': {'status': 'refused', 'error': 'BACKEND_CONSTRAINT',
+                                  'detail': 'unmapped key RIGHT', 'recovery_required': False}}
+            row = review_bytes(json.dumps(payload).encode(), td)
+            summary = row['outcome_summary']
+            self.assertEqual(summary['reported_status'], 'returned')
+            self.assertEqual(summary['execution_status'], 'refused')
+            self.assertEqual(summary['execution_detail'], 'unmapped key RIGHT')
+            self.assertIs(summary['recovery_required'], False)
+            self.assertNotIn('task_success', summary)
+            payload.update(status='runtime_failed', cleanup_error='close failed')
+            payload['result'] = {'status': 'completed', 'recovery_required': 'false'}
+            row = review_bytes(json.dumps(payload).encode(), td)
+            self.assertEqual(row['outcome_summary']['reported_status'], 'runtime_failed')
+            self.assertEqual(row['outcome_summary']['execution_status'], 'completed')
+            self.assertEqual(row['outcome_summary']['cleanup_error'], 'close failed')
+            self.assertIsNone(row['outcome_summary']['recovery_required'])
+            self.assertEqual(row['receipt']['source']['raw_report'], payload)
 
     def test_newest_missing_image_never_falls_back_to_older_capture(self):
         with tempfile.TemporaryDirectory() as td:
