@@ -1,0 +1,51 @@
+{
+  "allocation_id": "issue3555-xres-guard-formal-02",
+  "audit": "PASS_INDEPENDENT_RAW_RECONSTRUCTION",
+  "candidate_decision": "PASS_GENERATION_GUARD_REJECTED_STALE_ALIAS",
+  "corruption_controls": [
+    {
+      "detected": true,
+      "mutated_disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "xid-mismatch"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "same-pid"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "emission-not-zero"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "effect-present"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "missing-fresh-control"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "unverified-release"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "held-button-release"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "FAIL_GENERATION_GUARD_DID_NOT_REJECT_STALE_ALIAS",
+      "name": "false-pass-on-failure"
+    }
+  ],
+  "freeze_sha256_embedded_in_raw": "4100c858b729e970a701808fcf9964ae1131efe3ccc8bf0c58db5369b546eb74",
+  "independent_decision": "PASS_GENERATION_GUARD_REJECTED_STALE_ALIAS",
+  "raw_sha256": "39aee2c0614a411aefe602b9d9e7ae910b9aa5cc59796b209ca176909acd101d",
+  "source_manifest_sha256_embedded_in_raw": "7af1514fea3ec5746bcf5d7aae9d72debaf996810a7d8a9ec01451ef2c68e177"
+}
