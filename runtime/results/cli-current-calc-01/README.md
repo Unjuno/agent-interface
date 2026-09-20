@@ -48,3 +48,26 @@ Owner exited 0. Tracked Calc launcher/Openbox/Xvfb returned 255/0/0 during
 cleanup, and recorded process-group member paths were absent afterward.
 Full descendant closure was not verified; the retained document lock file is
 not proof of a gracefully closed application. No Docker repair or restart occurred.
+
+## Retained timing decomposition
+
+`python timing.py` reads the same immutable archive and checks that execution,
+wait and capture timestamps fit within their recorded same-host call spans.
+It performs no application operation and does not alter the evidence archive.
+
+The input/save call took 1140.338 ms: 352.836 ms before the execution interval,
+669.885 ms inside it, and 117.617 ms afterward. Recorded fixed waits totaled
+576.582 ms (570 ms requested, including 520 ms text pacing and 50 ms final wait).
+The capture interval was 18.644 ms. Capture and waits are subintervals of
+execution, not additional time to add to it. The before/after intervals combine
+startup, imports, admission, persistence, presentation and transport; these
+records cannot attribute the 470.453 ms remainder to one of those components.
+
+From first observation issuance to final observation return, the client span is
+76505.509 ms, with 2830.979 ms inside CLI calls and 73674.530 ms between them.
+This includes startup-dialog handling and primary tool/image interactions, so it
+is not a ready-sheet task latency or an isolated model-time measurement. The
+saved record does not timestamp host image availability or first useful model
+feedback. Do not compare this span with a different task/model/route as a speed
+effect. It reinforces measuring caller/host boundaries before attributing the
+tempo gap to native input or changing default waits.
