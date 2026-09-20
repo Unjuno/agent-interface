@@ -118,6 +118,7 @@ class HostBrokerContractTest(unittest.TestCase):
             self.assertEqual(record["stop_reason"], "HOST_BROKER_REQUEST_REFUSED")
             self.assertEqual(record["error_class"], "FileNotFoundError")
             self.assertFalse(record["host_cli_invoked"])
+            self.assertFalse(record["host_cli_spawn_attempted"])
 
     def test_identity_probe_os_error_is_executable_unavailable_not_request_refusal(self):
         import json
@@ -136,6 +137,7 @@ class HostBrokerContractTest(unittest.TestCase):
             record = json.loads((ipc / "fixture.broker.json").read_text())
             self.assertEqual(record["stop_reason"], "HOST_BROKER_EXECUTABLE_UNAVAILABLE")
             self.assertFalse(record["host_cli_invoked"])
+            self.assertFalse(record["host_cli_spawn_attempted"])
 
     def test_invalid_prompt_is_refused_before_identity_or_launch(self):
         import json
@@ -155,6 +157,7 @@ class HostBrokerContractTest(unittest.TestCase):
                 record = json.loads((ipc / 'fixture.broker.json').read_text())
                 self.assertEqual(record['stop_reason'], 'HOST_BROKER_REQUEST_REFUSED')
                 self.assertFalse(record['host_cli_invoked'])
+                self.assertFalse(record['host_cli_spawn_attempted'])
 
     def test_subprocess_os_error_remains_cli_unavailable(self):
         import json
@@ -171,7 +174,27 @@ class HostBrokerContractTest(unittest.TestCase):
             record = json.loads((ipc / "fixture.broker.json").read_text())
             self.assertEqual(record["stop_reason"], "HOST_BROKER_EXECUTABLE_UNAVAILABLE")
             self.assertEqual(record["error_class"], "FileNotFoundError")
+            self.assertFalse(record["host_cli_invoked"])
+            self.assertTrue(record["host_cli_spawn_attempted"])
+
+    def test_subprocess_timeout_reports_invoked_and_spawn_attempted(self):
+        import json
+        import subprocess
+        from unittest.mock import patch
+        from runtime.host_model_ipc_broker_v1 import serve
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); ipc = root / "ipc"; ipc.mkdir()
+            (ipc / "fixture.request.json").write_text(json.dumps(
+                {"request_id":"fixture", "prompt":"fixture"}))
+            with patch("runtime.host_model_ipc_broker_v1.build_command", return_value=["codex"]), \
+                 patch("runtime.host_model_ipc_broker_v1.executable_identity", return_value={"version":"fixture"}), \
+                 patch("runtime.host_model_ipc_broker_v1.subprocess.run",
+                       side_effect=subprocess.TimeoutExpired("codex", 1)):
+                self.assertEqual(serve(ipc, root, once=True), 1)
+            record = json.loads((ipc / "fixture.broker.json").read_text())
+            self.assertEqual(record["stop_reason"], "HOST_BROKER_SUBPROCESS_TIMEOUT")
             self.assertTrue(record["host_cli_invoked"])
+            self.assertTrue(record["host_cli_spawn_attempted"])
 
     def test_once_preserves_child_exit_and_response_without_model_call(self):
         import json
@@ -194,6 +217,7 @@ class HostBrokerContractTest(unittest.TestCase):
                 record = json.loads((ipc / 'fixture.broker.json').read_text())
                 self.assertEqual(record['returncode'], code)
                 self.assertTrue(record['host_cli_invoked'])
+                self.assertTrue(record['host_cli_spawn_attempted'])
                 self.assertFalse(record['authority_granted'])
 
 

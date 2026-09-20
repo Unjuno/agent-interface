@@ -24,6 +24,7 @@ SOURCE_FILES = (
     "runtime/cli_v1/api.py",
     "runtime/cli_v1/receipt.py",
     "runtime/cli_v1/review.py",
+    "runtime/cli_v1/receipt_references.py",
     "runtime/cli_v1/receipt_image.py",
     "runtime/cli_v1/observe.py",
     "runtime/cli_v1/golden_v3.py",
