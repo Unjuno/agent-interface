@@ -40,6 +40,35 @@ python -m runtime.cli_v1 dispatch \
 
 The CLI does not discover targets, rewrite leases/freshness, retry automatically, or grant authority. `doctor` is diagnostic only. `dispatch` delegates to `selector_v1`, then the promoted backend session, then `runtime/core_v1` admission.
 
+### Retain a CLI attempt before delivering stdout
+
+For `observe` or `dispatch`, optionally specify `--run-directory /absolute/new-run`.
+Its parent must exist and the run directory must not exist. The CLI records
+`request.json` before invoking the API, puts captures under `images/`, and saves
+the original `report.json` before review or stdout delivery. Do not combine this
+option with `--capture-directory`. `--review --compact --report-refs` remains
+available; the run directory supplies the capture location required by review.
+
+Read an existing report without another operation:
+
+```sh
+python -m runtime.cli_v1 review --report /absolute/new-run/report.json --run-directory /absolute/new-run
+```
+
+The returned `retention` metadata distinguishes request and report persistence.
+An unusable/existing destination prevents invocation. Report persistence failure
+after invocation keeps the original outcome in stdout, reports a persistence
+error and makes the exit status nonzero. A presentation or broken stdout failure
+does not remove an already saved raw report. Files are flushed and fsynced before
+atomic publication; this is not a power-loss or filesystem-durability guarantee.
+Temporary files can remain after a write failure.
+
+A request with no complete report means an unknown outcome: the API may have
+run. Neither request existence nor the directory name establishes completion or
+authorizes replay. There is no automatic resume/retry. Argument parsing and JSON
+loading happen before attempt reservation. With this option omitted, existing
+CLI behavior is unchanged and stdout is not automatically retained.
+
 Use `doctor --check-dependencies` to list discovery status and installed package
 versions for python-xlib, Pillow and the optional MCP SDK in the current Python
 environment. This works through the portable CLI too. It does not import those
