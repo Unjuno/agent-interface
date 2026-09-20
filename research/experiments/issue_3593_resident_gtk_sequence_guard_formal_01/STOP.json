@@ -1,0 +1,9 @@
+{
+  "allocation_id": "issue3588-resident-gtk-sequence-guard-formal-01",
+  "decision": "STOP_BEFORE_FORMAL_INVOCATION",
+  "formal_invocations": 0,
+  "retries": 0,
+  "reason": "Runner launched the fixture from /src/fixture.py, but the frozen source layout placed it at /src/formal/fixture.py. Detected during final static review before invoking the formal runner. No GTK comparison row was run and no result inference is permitted.",
+  "predecessor_freeze_sha256": "944105637faa3ba3af5c226ef9362c81d0f0b074303a2e53d9b741bcbd3ef3d8",
+  "successor_allocation": "issue3588-resident-gtk-sequence-guard-formal-02"
+}
