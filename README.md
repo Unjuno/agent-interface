@@ -52,6 +52,7 @@ flowchart LR
 | Analysis vs experiment workflow | [Research method](docs/RESEARCH_METHOD.md) |
 | Relationship between evidence, runtime, and release | [Evidence map](docs/EVIDENCE_MAP.md) |
 | Use the current action/image interface | [Current interface guide](runtime/USING_CURRENT_INTERFACE.md) |
+| Public API/CLI/MCP integration and remaining gaps | [Public transport handoff](docs/PUBLIC_TRANSPORT_HANDOFF_2026-09-20.md) |
 | Runnable construction preview | [Runtime](runtime/README.md) |
 | User-facing release boundary | [Release contract](release/README.md) |
 

@@ -2,7 +2,8 @@
 
 For the current public CLI, portable distribution, direct primary-use results
 and remaining integration gaps, see the
-[2026-09-20 integration snapshot](INTEGRATION_STATUS_2026-09-20.md).
+[public transport handoff](PUBLIC_TRANSPORT_HANDOFF_2026-09-20.md), which also links
+the earlier [2026-09-20 integration snapshot](INTEGRATION_STATUS_2026-09-20.md).
 The dated historical narrative below retains its original evidence scope.
 
 Status date: 2026-09-14. This is an evidence-based progress map, not a release
