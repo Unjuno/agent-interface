@@ -106,7 +106,7 @@ def intent_gate(proposal_intent, proposal_intent_version, current_intent, curren
 def construction_only():
     torch.set_num_threads(1)
     x = states(SEED_TRAIN, 8)
-    i = torch.arange(2, dtype=torch.long).repeat(4)
+    i = torch.arange(2, dtype=torch.long).repeat(8)
     y = teacher(x.repeat_interleave(2, dim=0), i)
     model = Needle()
     shape = tuple(model(inputs(x.repeat_interleave(2, dim=0), i, True)).shape)
