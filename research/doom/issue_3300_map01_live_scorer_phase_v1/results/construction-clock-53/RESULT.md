@@ -35,7 +35,7 @@ The result narrows the next question: determine from the frozen MAP01 live-sessi
 - Raw full trace: `raw.json`, SHA-256 `0abb28cca7b6e8a6d92ebe6923ee49cf067952593c7cae39220337059d461819`.
 - Independent audit: `audit.json`, SHA-256 `565a83fbd6224494cd3494f4c00328fbbbed15e5a432982bf19550c09f049f45`.
 - Runner: `map01_clock_drive_probe.py`, SHA-256 `86cc32e098738e3f5c3a52d823a9f8b27e60fd1d9ccd683590a8c64d0365191d`.
-- Auditor: `audit_map01_clock_drive_probe.py`, SHA-256 `59f827ef9fe73fbb0a70546f35d1f442dd6ebb8403e24eca9bf59754eb8a33a3`.
+- Auditor: `audit_map01_clock_drive_probe.py`, SHA-256 `9c03d2471de2b2e05dcd020ac5120635b5bd2e976d0df4ea58144c5b8341ec25`.
 - Exact in-image session/scorer sources: `session_map01_v13.py` SHA-256 `1a6da676db9c6b2aa61ccf0f600a1565395e906736bb07a50b2006e100d7ca98`; `independent_progress_clock_v2.py` SHA-256 `3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613`; `map01_scorer_stdio_adapter_v1.py` SHA-256 `0ba57b240b37d04042915d243d149a1bb65ac689732dfc8e48fb60e880f0198a`.
 - Fixture manifest `e57e21fd6d85d4b0720b3b3d5a52ad538fde45c50c58651ff754638f93f182e`; save `cc5302aa9cda3960248733caa96da1b53adcc4b6a1a2dcfb80675650c9350401`; Freedoom WAD `a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b`.
 

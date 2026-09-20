@@ -45,6 +45,18 @@ for condition in raw.get("conditions", []):
             trace[1].get("result") and not trace[2].get("result") and not trace[6].get("result")
         ):
             errors.append(f"{name}:score_reconstruction:{index}")
+        returned = sample.get("scorer_return", {})
+        reconstructed = {
+            "kill_count": int(trace[3].get("result", -1)),
+            "death_count": int(trace[4].get("result", -1)),
+            "episode_finished": bool(trace[1].get("result")),
+            "player_dead": bool(trace[2].get("result")),
+            "map_exit": bool(trace[1].get("result") and not trace[2].get("result") and not trace[6].get("result")),
+        }
+        if any(returned.get(key) != value for key, value in reconstructed.items()):
+            errors.append(f"{name}:returned_fields_not_reconstructed:{index}")
+        if not (sample.get("scorer_start_ns", 0) <= returned.get("sample_ns", -1) <= sample.get("scorer_end_ns", 0)):
+            errors.append(f"{name}:sample_timestamp_outside_outer_call:{index}")
         if sample.get("scorer_start_ns", 0) > trace[0].get("start_ns", 0):
             errors.append(f"{name}:scorer_start_order:{index}")
         if sample.get("scorer_end_ns", 0) < trace[-1].get("end_ns", 0):
