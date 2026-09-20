@@ -158,6 +158,7 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 
 - [`cli_fault_residue_3711_revalidation_v1/`](cli_fault_residue_3711_revalidation_v1/) — Issue #3711 report-temp fault revalidation protocol; see its linked PR/evidence for current matrix status.
 - [`needle_lora_3441_online_stream_v1/`](needle_lora_3441_online_stream_v1/) — Issue #3769 streamed online LoRA successor; scoped host-CPU metrics and limits are in its report.
+- [`needle_online_lora_skill_stream_v1/`](needle_online_lora_skill_stream_v1/) — Issue #3911 fresh-process online LoRA/AdamW snapshot-resume experiment; state equivalence passed but strict logit and update-latency gates failed. Formal traces and auditor correction are retained.
 - [`needle_role_graph_3780_compact_v1/`](needle_role_graph_3780_compact_v1/) — Issue #3780 compact receipt-gated role-adapter graph evidence; scoped synthetic PASS plus provenance warning.
 - [`needle_lora_3441_rank4_online_multiseed_v1/`](needle_lora_3441_rank4_online_multiseed_v1/) — Issue #3790 frozen CPU rank-capacity study; its single formal attempt stopped before held-out metrics, documented in `STOP_RUN.json`.
 - [`needle_lora_3441_rank4_online_multiseed_gpu_v1/`](needle_lora_3441_rank4_online_multiseed_gpu_v1/) — Issues #3807/#3819 rank-capacity GPU raw result; final rank-4 online accuracy FAIL is preserved, with the missing learning-curve HOLD noted in #3822.
