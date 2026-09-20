@@ -157,3 +157,11 @@ An append-only erratum narrows the initial overstrong “tic-entry witness” au
 label. Formal phase accuracy and allocation remain unresolved (0/120); details,
 raw data, build recipe and failed/corrected audit history are retained under
 `results/construction-clock-41/` and `results/construction-clock-42/`.
+
+Run43 replaces the per-tic append syscall with an in-memory source trace flushed
+once at engine exit, while sampling `CLOCK_MONOTONIC` directly as the first C
+statement in `VIZ_Tic`. A fresh three-session Docker allocation completed 3/3
+and the audit correlated all 24 getter starts. This reduces one instrumentation
+cost but leaves compiler-prologue/clock-read uncertainty and scheduling
+perturbation unbounded; it is not formal phase evidence. See
+`results/construction-clock-43/`; formal rows remain 0/120.
