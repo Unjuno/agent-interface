@@ -1,0 +1,31 @@
+{
+  "issue": 3518,
+  "stage": "construction_only",
+  "allocation_id": null,
+  "base_main_commit": "6b1720ef57a3b1b372a3eb08481f887785159ceb",
+  "image": {
+    "reference": "agent-interface-3311-runtime-v2:20260920",
+    "digest": "sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916",
+    "platform": "linux/arm64"
+  },
+  "network": "none",
+  "source_mount": "read-only at /src",
+  "formal_gui_allocation": false,
+  "formal_model_calls": 0,
+  "tests": {
+    "command": "python3 -m unittest -v",
+    "passed": 5,
+    "failed": 0
+  },
+  "independent_audit": {
+    "command": "python3 audit_construction.py",
+    "passed_rows": 5,
+    "failed_rows": 0,
+    "imports_candidate": false
+  },
+  "candidate_sha256": {
+    "policies.py": "1f55427d0045b16d843f62cb5824c85a45b48fab3c1518fa3cade35296ec4efc",
+    "test_policies.py": "5b246dc5393249a5f21eefae007ddbbb658b4ff6dfcb76d779e25acdd93b2670",
+    "audit_construction.py": "5c6411c43c0096366c1834b047066613c87691a1b74ec81c1be2ff90790587a6"
+  }
+}
