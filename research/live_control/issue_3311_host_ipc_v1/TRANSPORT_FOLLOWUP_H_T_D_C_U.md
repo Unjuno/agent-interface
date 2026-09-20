@@ -33,3 +33,7 @@ This remains synthetic transport-only evidence. No actual model call or compiled
 After #3494 integrated the original v1 transport repair into main, the follow-up branch was merged with latest main without dropping #3494's `--once` exit-code regression. A further unit-only refinement now records request validation and distinguishes `HOST_BROKER_REQUEST_REFUSED`, `HOST_CLI_IDENTITY_UNAVAILABLE` / `HOST_CLI_IDENTITY_TIMEOUT`, and `HOST_BROKER_EXECUTABLE_UNAVAILABLE` at actual CLI spawn. Missing-schema and unavailable-identity regressions both assert that no model CLI spawn occurred.
 
 The post-merge targeted suite passes all 20 broker, bridge, runner, backend, and OrbStack transport tests; `compileall` and `git diff --check` pass. The raw transport bundle above remains the preserved pre-merge OrbStack run; it is not rewritten to pretend the later taxonomy change was in that experiment. Hosted checks for the current PR head remain queued, and the real #3489 endpoint gate is still unrun.
+
+### Spawn-failure semantics check
+
+Added one more inert regression: when the validated request reaches the subprocess spawn boundary but the executable disappears, the broker records `HOST_BROKER_EXECUTABLE_UNAVAILABLE`, `host_cli_spawn_attempted=true`, and `host_cli_invoked=false`. Latest host suite: 21/21 passed including OrbStack round trip. Latest fixed-image OrbStack `--network none` unit run: 20/20 passed (the nested-Docker round trip is excluded there and separately retained above). These are contract/setup validations only; no model or task call occurred.

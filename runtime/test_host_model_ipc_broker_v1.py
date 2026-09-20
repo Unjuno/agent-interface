@@ -148,6 +148,34 @@ class HostBrokerContractTest(unittest.TestCase):
             self.assertFalse(record["host_cli_invoked"])
             self.assertFalse(record["host_cli_spawn_attempted"])
 
+    def test_cli_spawn_oserror_is_not_reported_as_invoked(self):
+        import json
+        from unittest.mock import patch
+        from runtime.host_model_ipc_broker_v1 import serve
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); ipc = root / "ipc"; repo = root / "repo"
+            ipc.mkdir(); repo.mkdir(); (repo / "workspace").mkdir()
+            schema = repo / "schema.json"; schema.write_text('{}')
+            instructions = repo / "instructions.txt"; instructions.write_text("probe")
+            request = {"request_id":"spawn-failure", "authority_granted":False,
+                "mode":"handle", "schema":"/repo/schema.json",
+                "schema_sha256":hashlib.sha256(schema.read_bytes()).hexdigest(),
+                "instructions":"/repo/instructions.txt",
+                "instructions_sha256":hashlib.sha256(instructions.read_bytes()).hexdigest(),
+                "working":"/repo/workspace", "image":None, "prompt":"probe"}
+            (ipc / "spawn-failure.request.json").write_text(json.dumps(request))
+            with patch("runtime.host_model_ipc_broker_v1.executable_identity",
+                       return_value={"version":"inert"}), \
+                 patch("runtime.host_model_ipc_broker_v1.subprocess.run",
+                       side_effect=FileNotFoundError("executable disappeared")):
+                result = serve(ipc, repo, once=True)
+            record = json.loads((ipc / "spawn-failure.broker.json").read_text())
+            self.assertEqual(result, 1)
+            self.assertEqual(record["stop_reason"], "HOST_BROKER_EXECUTABLE_UNAVAILABLE")
+            self.assertTrue(record["request_validated"])
+            self.assertFalse(record["host_cli_invoked"])
+            self.assertTrue(record["host_cli_spawn_attempted"])
+
     def test_once_preserves_child_exit_and_response_without_model_call(self):
         import json
         from types import SimpleNamespace

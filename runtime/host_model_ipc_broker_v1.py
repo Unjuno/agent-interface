@@ -152,7 +152,7 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                                           else "HOST_BROKER_REQUEST_REFUSED"),
                           "stderr": str(exc)[-2000:],
                           "boundary": "host-local-codex-exe", "authority_granted": False,
-                          "host_cli_invoked": host_cli_invoked,
+                          "host_cli_invoked": False,
                           "request_validated": request_validated,
                           "host_cli_spawn_attempted": cli_spawn_attempted,
                           "host_cli_identity": identity,
