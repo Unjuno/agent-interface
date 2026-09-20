@@ -5,7 +5,7 @@ from pathlib import Path
 from Xlib import X, XK, display
 
 ALLOCATION="issue3784-explicit-x11-receiver-formal-03"
-BASE="1355ff9c0e89e04887e7dd3a08aaa93c7b650df0"
+BASE="8e82c5bf25d63c70c188d972cdf320533bf4b310"
 IMAGE="agent-interface-2972@sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27"
 FORMULA="=B2*A2";UNSUPPORTED="=B2*A2€";ROOT=Path(__file__).resolve().parent
 def sha(b):return hashlib.sha256(b).hexdigest()

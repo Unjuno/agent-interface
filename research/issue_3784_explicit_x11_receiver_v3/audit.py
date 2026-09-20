@@ -1,9 +1,9 @@
 """Independent audit of Issue #3796 construction and formal evidence."""
 import hashlib,json,re,sys
 from pathlib import Path
-BASE="1355ff9c0e89e04887e7dd3a08aaa93c7b650df0"
+BASE="8e82c5bf25d63c70c188d972cdf320533bf4b310"
 IMAGE="agent-interface-2972@sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27"
-RUNNER_SHA="TO_BE_FROZEN";MANIFEST_SHA="TO_BE_FROZEN"
+RUNNER_SHA="2d43c9eca291171007525c24bd9830c77b539f53782ccba42a96eb9deca82532";MANIFEST_SHA="44c5b93c95b89e8425e68cdfcef6d51af42a15cf83cfba277fbc14b70ca178bb"
 MATRIX=[("de-01","de"),("de-02","de"),("de-03","de"),("us-control","us")];FORMULA="=B2*A2"
 def sha(b):return hashlib.sha256(b).hexdigest()
 def blob(b):return hashlib.sha1(b"blob "+str(len(b)).encode()+b"\0"+b).hexdigest()

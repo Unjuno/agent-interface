@@ -16,3 +16,11 @@
 
 The construction test is not formal evidence. It creates fresh private X servers, proves the explicit InputOnly receiver control, applies German while a client remains connected, checks server query/dump and a fresh Xlib map change, and verifies the independent US control is unchanged. Formal may start only after this complete test passes in the pinned image.
 
+## Freeze record
+
+- Base main: `8e82c5bf25d63c70c188d972cdf320533bf4b310`
+- Candidate backend blob: `9cae101a219348077668c8fc086acf8e13154afe`
+- Runner SHA-256: `2d43c9eca291171007525c24bd9830c77b539f53782ccba42a96eb9deca82532`
+- Source manifest SHA-256: `44c5b93c95b89e8425e68cdfcef6d51af42a15cf83cfba277fbc14b70ca178bb`
+- Auditor SHA-256: `8c8c4ce296820df45a950e99dbf245ced190244c80ced4dda1a2eb8e88a56938`
+- Construction test SHA-256: `60327c7cde14950e9d62a59a85d5bcbd3198e354f24ce7b765aecddf5ba1cc32`
