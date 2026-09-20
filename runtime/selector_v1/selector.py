@@ -62,7 +62,12 @@ def open_session(targets: Mapping[str, int], *, display_name: str | None = None)
     thereby create a false support result.
     """
     registry = validate_targets(targets)
-    plan = select_backend()
+    selection_env = dict(os.environ)
+    if display_name is not None:
+        if not isinstance(display_name, str) or not display_name.strip():
+            raise BackendUnavailable("explicit display must be a nonempty string")
+        selection_env["DISPLAY"] = display_name
+    plan = select_backend(environ=selection_env)
     if not plan.available or plan.backend_id is None:
         raise BackendUnavailable(plan.reason)
 
