@@ -138,7 +138,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
             targets.write_text('{"fixture":123}')
             params = StdioServerParameters(command=sys.executable, cwd=str(root), args=[
                 str(artifact), 'mcp', '--targets', str(targets),
-                '--output-directory', str(root/'calls')])
+                '--output-directory', str(root/'calls'), '--display', 'not-a-valid-display'])
             async with stdio_client(params) as (reader, writer):
                 async with ClientSession(reader, writer) as client:
                     await client.initialize()
@@ -163,6 +163,42 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(reread['outcome_summary'], row['outcome_summary'])
                     self.assertEqual(reread['call_id'], row['call_id'])
                     self.assertIs(reread['operation_invoked'], False)
+
+                    # Real packaged transport: choose v3 only on explicit reread.
+                    from runtime.cli_v1.receipt_references import REPORT_REF, expand_receipt
+                    for tool in listed.tools:
+                        option = tool.inputSchema['properties']['report_refs']
+                        self.assertEqual(option['type'], 'boolean')
+                        self.assertIs(option['default'], False)
+                    if sys.platform != 'linux':
+                        return  # The following control targets X11 initialization.
+                    failed = await client.call_tool('interface_dispatch', {
+                        'program': {'schema': 'agent-interface/program-v1',
+                            'program_id': 'portable-reference-control',
+                            'source': {'observation_seq': 1, 'binding_revision': 0},
+                            'authority': {'lease_id': 'no-input', 'expires_at_ns': 1},
+                            'terminal': {'release_all_required': True},
+                            'ops': [{'op': 'focus', 'target': 'fixture'},
+                                    {'op': 'text', 'text': 'price=13*7', 'gap_ms': 20},
+                                    {'op': 'release_all'}]},
+                        'current_observation_seq': 1, 'current_binding_revision': 0,
+                        'compact': True})
+                    default = json.loads(failed.content[0].text)
+                    self.assertNotEqual(default['receipt']['schema'], REPORT_REF)
+                    self.assertEqual(default['receipt']['source']['raw_report']['failure_phase'],
+                                     'backend_initialization')
+                    report_path = Path(default['call_directory'])/'report.json'
+                    original_bytes = report_path.read_bytes()
+                    referenced = await client.call_tool('interface_results', {
+                        'call_id': default['call_id'], 'compact': True, 'report_refs': True})
+                    referenced = json.loads(referenced.content[0].text)
+                    self.assertEqual(referenced['receipt']['schema'], REPORT_REF)
+                    self.assertEqual(expand_receipt(referenced['receipt']),
+                                     expand_receipt(default['receipt']))
+                    self.assertEqual(referenced['outcome_summary'], default['outcome_summary'])
+                    self.assertFalse(referenced['operation_invoked'])
+                    self.assertEqual(report_path.read_bytes(), original_bytes)
+                    self.assertEqual(len(list((root/'calls').glob('*/request.json'))), 2)
 
 
     async def test_cli_and_mcp_preserve_identical_failed_presentation(self):

@@ -49,16 +49,24 @@ opening the X11 connection, even when the MCP host does not forward `DISPLAY`.
 It takes precedence over an inherited display without changing the process-wide
 environment. With no explicit display, normal environment selection applies.
 
-- `interface_observe(target, frame, region, compact=false)` takes one explicit
+- `interface_observe(target, frame, region, compact=false, report_refs=false)` takes one explicit
   read-only capture. Region is `[x,y,width,height]` in the selected frame.
 - `interface_dispatch(program, current_observation_seq,
-  current_binding_revision, compact=false)` performs one public dispatch. Include
+  current_binding_revision, compact=false, report_refs=false)` performs one public dispatch. Include
   an `observe` operation if its result should contain an image. Explicit bounded
   key repetitions use the same public compiler and failure-source mapping.
 
 - `interface_results(call_id=null, before_call_id=null, compact=false,
-  include_image=true)` lists calls or reads a retained result without input or
+  include_image=true, report_refs=false)` lists calls or reads a retained result without input or
   capture. See the result-retrieval section below.
+
+All three tools keep v1/v2 receipt selection with `compact=true` alone.
+A consumer with the v3 decoder can explicitly set both `compact=true` and
+`report_refs=true` to allow a duplicate report to reference `source.raw_report`
+in the same response. `report_refs=true` without compact mode is rejected before
+operation scheduling. Images and outcomes are unchanged. A retained-result read
+can change the receipt format without capturing or replaying the operation.
+See [receipt formats](README.md#compact-received-report-references).
 
 The dispatch tool advertises the program envelope, bounded operation examples and
 lease clock requirement in its `program` description. This is discovery metadata,
