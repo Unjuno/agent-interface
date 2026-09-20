@@ -54,6 +54,14 @@ cleanup["ledger"][-1]["processes"][0]["remaining_pids"] = [99999]
 cleanup["cleanup_processes"][0]["remaining_pids"] = [99999]
 cases["cleanup_survivor_mutation"] = seal(cleanup)
 
+focus = copy.deepcopy(raw)
+next(e for e in focus["ledger"] if e["kind"] == "focus_drift")["active"] = raw["apps"]["calc"]["window"]
+cases["focus_active_wrong_resealed"] = seal(focus)
+
+modal = copy.deepcopy(raw)
+next(e for e in modal["ledger"] if e["kind"] == "modal_transition")["parent"] = raw["apps"]["inkscape"]["window"]
+cases["modal_parent_wrong_resealed"] = seal(modal)
+
 results = {name: audit(value) for name, value in cases.items()}
 expected = {"untouched": "HOLD_AUDIT_EVIDENCE_INCOMPLETE"}
 expected["runner_booleans_false"] = "HOLD_AUDIT_EVIDENCE_INCOMPLETE"
