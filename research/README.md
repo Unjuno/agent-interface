@@ -87,6 +87,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 - [`container_control/`](container_control/) — containerized control work.
 - [`control_codec/`](control_codec/) — control-codec experiments.
 - `text_*` directories — text delivery, keymap, XKB, observation binding, and related robustness studies.
+- [`issue_3784_explicit_x11_receiver_v1/`](issue_3784_explicit_x11_receiver_v1/) — explicit X11 receiver formal allocation and retained STOP/audit evidence; consult RESULT.md for scope.
 
 ### Application and domain studies
 
