@@ -246,3 +246,12 @@ Together with run49's one control session whose snapshot reached tic 2, this
 shows passive API progression varies across sessions. Formal remains 0/120.
 See `results/construction-clock-50/` for raw rows, per-session logs, invocation,
 H/T/D/C/U, audit and hashes.
+
+Run51 attempted a no-game PMU-counter preflight for a higher-resolution
+alternative to run48's 24 MHz CNTVCT. The first invocation stopped because the
+isolated tmpfs was `noexec`; the corrected invocation then lost the Docker API
+with `unexpected EOF`. A later no-op container confirmed OrbStack recovered,
+but no PMU data were captured and the probe was not repeated. Disposition:
+`STOP_RUNTIME_DISCONNECTED_DURING_PREFLIGHT`—PMCCNTR availability remains
+unknown, not disproven. No game or formal row ran; evidence is under
+`results/construction-clock-51/`.
