@@ -67,8 +67,12 @@ def main():
     source = Path(os.environ["SOURCE_ROOT"]).resolve()
     output = Path(sys.argv[1]).resolve()
     attempt_source = source / "runtime/cli_v1/attempt.py"
-    observed_source_sha256 = sha(attempt_source.read_bytes())
-    if observed_source_sha256 != EXPECTED_ATTEMPT_SHA256:
+    attempt_bytes = attempt_source.read_bytes()
+    observed_source_sha256 = sha(attempt_bytes)
+    observed_source_git_blob_sha1 = hashlib.sha1(
+        b"blob " + str(len(attempt_bytes)).encode("ascii") + b"\0" + attempt_bytes
+    ).hexdigest()
+    if observed_source_git_blob_sha1 != EXPECTED_ATTEMPT_GIT_BLOB_SHA1:
         raise SystemExit("STOP_FROZEN_SOURCE_MISMATCH")
     if output.exists() and any(output.iterdir()):
         raise SystemExit("STOP_OUTPUT_NOT_EMPTY")
@@ -137,6 +141,7 @@ def main():
         "allocation": "issue3752-request-temp-crash-01",
         "disposition": disposition,
         "source_sha256": observed_source_sha256,
+        "source_git_blob_sha1": observed_source_git_blob_sha1,
         "source_git_blob_sha1": observed_source_git_blob_sha1,
         "runner_sha256": sha(Path(__file__).read_bytes()),
         "child_exit_code": child.returncode,
