@@ -9,7 +9,7 @@ OUT = Path('/work/out')
 COMMIT = '4d51fccac55433570bc714cfaf21c88531fe325d'
 TREE = '7fae16c1766a36376d6c49f49a7fb0e68f93cb0d'
 IMAGE = 'sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9'
-FREEZE = '3005671c861c574ed675cee084946ffe979c9848154a1edbbe03f999ba69f455'
+FREEZE = 'd8cc8f36b1423c6a84bdcee4034c669d4e694b1e4c2a77c482e87a075f181861'
 FILES = {
     'runtime/cli_v1/api.py': 'c402025700481d5cc0ba600f39bc83136be173f0',
     'runtime/cli_v1/review.py': '839ed09a749d675b18c317704a123e18e695c97f',
@@ -88,10 +88,13 @@ def main():
         rows.append({'case':name, 'input_sha256':sha(json.dumps(program,sort_keys=True).encode()),
                      'returned':result, 'dispatch_count':1, 'close_count':1,
                      'backend_emissions':0, 'input_unchanged':True})
+    kind = os.environ.get('OBSTAC_RUN_KIND')
+    assert kind in ('construction', 'formal')
     raw = {'schema':'issue-3850-obstac-raw-v1','source_commit':COMMIT,
-           'source_manifest':source_manifest,'rows':rows,'formal':True}
+           'source_tree':TREE,'source_manifest':source_manifest,'rows':rows,
+           'formal':kind == 'formal','kind':kind}
     data = (json.dumps(raw, sort_keys=True, separators=(',',':'))+'\n').encode()
-    (OUT/'raw.json').write_bytes(data)
+    (OUT/('construction.json' if kind == 'construction' else 'raw.json')).write_bytes(data)
     print(json.dumps({'rows':len(rows),'raw_sha256':sha(data),'status':'ROWS_COMPLETE'}))
 
 
