@@ -15,7 +15,7 @@ Disposition: `PASS_CONSTRUCTION_SCOPED`; no OrbStack gate or formal v4 allocatio
 - Base commit: `416851ab768c3c1f9add71ea3d63fe8b32fd95f3`.
 - Driver SHA-256: `286bd8d595abd4cedd5e862ae72ad215378db0d6006102ca9ad33392c83e8c3f`.
 - Worker SHA-256: `550bb7cfe7a389876a88aa5ffae9c0bedb1044fc36abf1c7611187c687a09fc1`.
-- Independent auditor SHA-256: `7274b18d65d580cbba1e7df728f82dce7ddfd384fd0e546f3b90a727bba1ab60`.
+- Independent auditor SHA-256 (summary/raw cross-check hardening): `b794404ebaeb6af7caf8293702a83fed43e989084e9b0ec80f41a4aa0cdc77b2`.
 - Production Lease source SHA-256: `e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f`.
 - Raw SHA-256: `171e4630d3dfa38677748eaf2300cb7974fe58d61c0e98f8cea96d412aaa6a4a`.
 - Result SHA-256: `fabf7edf68e28a35c68d8b2e2465e5d4e63fb5a68888ab0098df0b3e5562dc22`.

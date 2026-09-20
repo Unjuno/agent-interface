@@ -32,6 +32,15 @@ def audit(root: Path, repo: Path) -> dict:
     need(result.get("classification") == "CONSTRUCTION_ONLY_DOCKER_DESKTOP", "scope label")
     need(result.get("clock_samples") == len(clocks) == 41, "clock denominator")
     need([row.get("i") for row in clocks] == list(range(41)), "ordered unique clock indices")
+    expected_clock_bounds = {
+        "min_lower_ns": min(row["offset_lower_ns"] for row in clocks),
+        "max_lower_ns": max(row["offset_lower_ns"] for row in clocks),
+        "min_upper_ns": min(row["offset_upper_ns"] for row in clocks),
+        "max_upper_ns": max(row["offset_upper_ns"] for row in clocks),
+        "max_bound_width_ns": max(row["bound_width_ns"] for row in clocks),
+        "median_roundtrip_ns": sorted(row["roundtrip_ns"] for row in clocks)[len(clocks)//2],
+    }
+    need(result.get("clock_bounds") == expected_clock_bounds, "clock summary/raw agreement")
 
     for row in clocks:
         low, high = row["offset_lower_ns"], row["offset_upper_ns"]
@@ -41,6 +50,16 @@ def audit(root: Path, repo: Path) -> dict:
         need(row["offset_upper_ns"] == row["received_ns"] - row["h_send_ns"], "upper-bound equation")
 
     need(set(controls) == {"live-25s", "expired", "over-30s", "delayed-under-20s"}, "control set")
+    summary_controls = result.get("controls")
+    need(type(summary_controls) is list and len(summary_controls) == len(controls),
+         "control summary denominator")
+    for summary in summary_controls:
+        control_id = summary.get("id") if type(summary) is dict else None
+        need(control_id in controls, "control summary identity")
+        raw_control = {key: value for key, value in controls[control_id].items() if key != "kind"}
+        need(summary == raw_control, f"control summary/raw agreement: {control_id}")
+    need({row.get("id") for row in summary_controls} == set(controls),
+         "control summary unique identities")
     live, expired, over, delayed = (controls[key] for key in
                                    ("live-25s", "expired", "over-30s", "delayed-under-20s"))
     need(live["outcome"] == "accepted" and live["container_request_sent"] is True, "live lease")
