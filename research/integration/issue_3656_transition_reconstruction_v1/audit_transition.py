@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -15,11 +16,18 @@ EXPECTED_KINDS = [
     "process_cleanup",
 ]
 ROLES = {"inkscape": "4194311", "calc": "8389413", "chromium": "6291459"}
+EXPECTED_RAW_SHA256 = "f0df0248ff5e754a91e93271d9784f08d06ae1e8ff349b5f82f0fd015eb42883"
 
 
-def audit(raw: dict[str, Any]) -> dict[str, Any]:
+def audit(raw: dict[str, Any], raw_sha256: str | None = None) -> dict[str, Any]:
     errors: list[str] = []
     holds: list[str] = []
+    if raw_sha256 is None:
+        holds.append("exact raw byte digest was not supplied to the audit")
+    elif raw_sha256 != EXPECTED_RAW_SHA256:
+        holds.append("raw byte digest does not match the frozen #3656 formal-01 bytes")
+    if raw.get("issue") != 3652 or raw.get("allocation_id") != "issue2499-readiness-successor-3652-formal-01":
+        errors.append("raw issue/allocation identity mismatch")
     events = raw.get("ledger")
     if not isinstance(events, list):
         events = []
@@ -155,14 +163,14 @@ def audit(raw: dict[str, Any]) -> dict[str, Any]:
 
 
 def main(path: str) -> int:
-    raw_bytes = Path(path).read_bytes()
+    raw_bytes = sys.stdin.buffer.read() if path == "-" else Path(path).read_bytes()
+    raw_sha256 = hashlib.sha256(raw_bytes).hexdigest()
     raw = json.loads(raw_bytes)
-    result = audit(raw)
-    result["raw_sha256"] = hashlib.sha256(raw_bytes).hexdigest()
+    result = audit(raw, raw_sha256)
+    result["raw_sha256"] = raw_sha256
     print(json.dumps(result, sort_keys=True, indent=2))
     return 0 if result["decision"] == "PASS_AUDIT_RECONSTRUCTION_SCOPED" else 1
 
 
 if __name__ == "__main__":
-    import sys
     raise SystemExit(main(sys.argv[1]))

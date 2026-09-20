@@ -4,7 +4,7 @@ import json
 import unittest
 from pathlib import Path
 
-from audit_transition import audit
+from audit_transition import EXPECTED_RAW_SHA256, audit
 
 RAW_PATH = Path(__file__).parent / "evidence" / "formal-01" / "result.json"
 
@@ -26,7 +26,16 @@ class ReconstructionTests(unittest.TestCase):
         self.assertIn("Chromium old-window-absence receipt is missing", result["holds"])
         self.assertIn("active-window observation at Calc return is missing", result["holds"])
         self.assertIn("raw does not provide three independently countable input-operation receipts", result["holds"])
+        self.assertIn("exact raw byte digest was not supplied to the audit", result["holds"])
         self.assertFalse(result["runner_checks_used_as_evidence"])
+
+    def test_unbound_or_wrong_raw_digest_never_passes(self):
+        raw = fixture()
+        self.assertNotEqual(audit(raw)["decision"], "PASS_AUDIT_RECONSTRUCTION_SCOPED")
+        result = audit(raw, "0" * 64)
+        self.assertIn("raw byte digest does not match the frozen #3656 formal-01 bytes", result["holds"])
+        self.assertEqual(EXPECTED_RAW_SHA256, "f0df0248ff5e754a91e93271d9784f08d06ae1e8ff349b5f82f0fd015eb42883")
+        self.assertNotEqual(result["decision"], "PASS_AUDIT_RECONSTRUCTION_SCOPED")
 
     def test_extra_event_rejected(self):
         raw = fixture()
