@@ -208,3 +208,12 @@ calling a frame "after the action": later input may have changed the application
 Standalone observe and older receipts omit operation_index; it is not inferred.
 A capture at the last observe operation still does not prove asynchronous work
 has finished. Existing frozen records remain unchanged.
+
+
+`review.outcome_summary` puts recorded statuses and errors beside the image.
+For dispatch, `reported_status: returned` can coexist with `execution_status:
+refused`; `execution_error` and `execution_detail` retain its recorded reason.
+A close failure can coexist with completed execution and remains visible in
+`cleanup_error`. Missing or malformed fields are null, including unknown
+recovery_required. The summary does not infer task success, zero input effects,
+or permission to resend. The complete original result remains in the receipt.
