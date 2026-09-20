@@ -7,7 +7,7 @@ Allocation: `issue3555-xres-guard-orbstack-v2-formal-01` (see final outcome in `
 - OrbStack engine: 29.4.0, Linux/arm64.
 - Pinned base: `agent-interface-3311-runtime-v2:20260920@sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916`.
 - Derived image contains Xvfb, XRes 1.2 client library, Python Xlib/Tk/Pillow, xdotool; formal execution is network-disabled.
-- Archived independent-allocation path: `research/live_control/x11_xres_incarnation_guard_3555_v2/formal-05-independent-issue3662/` (original allocation paths and frozen bytes remain unchanged inside the package).
+- Additive path: `research/live_control/x11_xres_incarnation_guard_3555_v2/`.
 
 ## Construction dispositions
 

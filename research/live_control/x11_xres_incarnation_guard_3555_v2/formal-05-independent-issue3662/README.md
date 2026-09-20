@@ -8,24 +8,16 @@ On a private Linux/arm64 Xvfb server, a new client process can inherit the exact
 
 ## Evidence and status
 
-`PRECHECKS.md` preserves construction failures and pre-input gates. `REPORT.md` records this distinct formal allocation and scope; raw event data, positive-control effect, and independent audit are in `artifacts/formal_01/`. The package is nested under `formal-05-independent-issue3662/` solely to preserve it beside the already merged formal-04 without collisions; the allocation's historical ID remains unchanged.
+`PRECHECKS.md` preserves construction failures and pre-input gates. The formal raw result and independent audit are stored alongside it after the single allocation. Never overwrite predecessor v1 evidence.
 
 ## Reproduction
 
-The commands below describe the historical allocation setup only; they are not safe to rerun from this archived package. The frozen output path `artifacts/formal_01/` now contains retained raw evidence. Do not overwrite it. Any future experiment must use a new successor allocation and a new, initially absent output path and freeze.
-
-Historical image build command from the repository root (pinned base image required):
+Build from the repository root with the pinned base image available locally:
 
 ```sh
-docker build --network=default -f research/live_control/x11_xres_incarnation_guard_3555_v2/formal-05-independent-issue3662/Dockerfile -t issue3662-xres-v2:formal research/live_control/x11_xres_incarnation_guard_3555_v2/formal-05-independent-issue3662
+docker build --network=default -f research/live_control/x11_xres_incarnation_guard_3555_v2/Dockerfile -t issue3662-xres-v2:formal .
 ```
 
-For a future successor only, run after new source/image hashes, engine metadata, and output allocation are frozen. Use `--network none`, private Xvfb, read-only source, and a dedicated writable output directory. Mount that successor directory at `/work/repo` and invoke `python3 /work/repo/src/formal_runner.py` once. Then run its frozen audit routine in a separate network-disabled container, with the freeze manifest hash bound to the raw result:
-
-```sh
-python3 -c 'import audit; raise SystemExit(audit.main("/work/out/raw.json", "/work/repo/FREEZE.json", "/work/out/audit.json"))'
-```
-
-Do not rerun a failed formal allocation; open a successor issue if the failure yields a testable correction. The auditor's CLI argument-count check is incorrect; the direct entry point above is the invocation used for this allocation.
+Run only after source/image hashes, engine metadata, and output allocation are frozen. The formal container must use `--network none`, private Xvfb, read-only source, and a dedicated writable output directory. Start exactly one Xvfb and invoke `python3 /work/src/formal_runner.py` once. Then run `python3 /work/src/audit.py /work/out/raw.json` in a separate network-disabled container. Do not rerun a failed formal allocation; open a successor issue if the failure yields a testable correction.
 
 The transition PASS concerns only stale-alias refusal before any bridge/native click and one fresh positive-control button effect with button release verified. It does not test arbitrary applications, remote X11, model/provider behavior, or broad desktop integration.
