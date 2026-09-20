@@ -218,3 +218,17 @@ errors. But this VM's counter quantum is 41.67 ns and getter intervals are
 the ±1 ns boundary neighbors cannot be distinguished and formal remains 0/120.
 See `results/construction-clock-48/` for disassembly, complete invocation,
 failures, raw phase bounds, audit and hashes.
+
+Run49 compared the run48 per-tic CNTVCT/clock/ring-buffer build against the
+same pinned ViZDoom 1.3.0 source rebuilt without that patch. Four alternating
+fresh-session pairs (8 × 6 s passive ASYNC_SPECTATOR sessions) completed in
+OrbStack Docker. Independent audit: `PASS_CONSTRUCTION_ONLY_CPU_COST_COMPARISON`,
+8 rows, zero errors. Paired process-CPU/wall-time differences were positive in
+2/4 pairs and negative in 2/4; median difference −0.000110 (fractional CPU),
+so this small construction sample detects no consistent CPU-cost increase.
+One control session's public API tic moved from 1 to 2 while all instrumented
+sessions stayed at 1; the uninstrumented engine's tic rate was not independently
+observable. This is not evidence that scheduling perturbation is absent, nor a
+phase witness. Formal allocation remains 0/120. Full paired raw rows, both
+images, build/failed-attempt logs, invocation, audit and hashes are under
+`results/construction-clock-49/`.
