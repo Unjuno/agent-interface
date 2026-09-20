@@ -9,7 +9,7 @@ from .api import dispatch, doctor
 from .receipt import receipt_view
 from .review import review, review_bytes, present_result
 from .observe import observe
-from .attempt import invoke
+from .attempt import invoke, inspect_attempt
 
 
 def _read_json(path: str):
@@ -38,6 +38,8 @@ def _present_result(row, *, with_review, capture_directory, exit_code, compact=F
 def main() -> int:
     parser = argparse.ArgumentParser(prog="agent-interface")
     sub = parser.add_subparsers(dest="command", required=True)
+    attempt_status = sub.add_parser('attempt-status', help='inspect retained attempt files without input or replay')
+    attempt_status.add_argument('--run-directory', required=True)
     diagnostic = sub.add_parser("doctor")
     diagnostic.add_argument('--check-dependencies', action='store_true',
                             help='inspect optional module discovery and installed versions without importing backends')
@@ -86,6 +88,10 @@ def main() -> int:
     if args.command == "doctor":
         _emit(doctor(check_dependencies=args.check_dependencies))
         return 0
+    if args.command == 'attempt-status':
+        row = inspect_attempt(args.run_directory)
+        _emit(row)
+        return 0 if row['status'] == 'report_recorded' else 2
     if args.command == "review":
         try:
             row = (review_bytes(sys.stdin.buffer.read(), args.run_directory, compact=args.compact, report_refs=args.report_refs) if args.report == "-"
