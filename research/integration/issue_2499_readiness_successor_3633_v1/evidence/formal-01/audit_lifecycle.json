@@ -1,0 +1,47 @@
+{
+  "decision": "HOLD_PROCESS_LIFECYCLE_UNVERIFIED",
+  "interpretation": "The GUI identity observations and original raw bytes remain valid, but the frozen cleanup evidence does not follow every visible app owner PID; overall acceptance is HOLD.",
+  "launched_pids": {
+    "chromium": 118,
+    "inkscape": 11,
+    "libreoffice": 66
+  },
+  "missing_owner_lifecycle_apps": [
+    "libreoffice"
+  ],
+  "process_lifecycle": {
+    "chromium": {
+      "launch_process_pid": 118,
+      "owner_lifecycle_recorded": true,
+      "same_pid": true,
+      "tracked_launch_reaped": true,
+      "tracked_launch_returncode": 0,
+      "window_owner_pid": 118
+    },
+    "inkscape": {
+      "launch_process_pid": 11,
+      "owner_lifecycle_recorded": true,
+      "same_pid": true,
+      "tracked_launch_reaped": true,
+      "tracked_launch_returncode": -15,
+      "window_owner_pid": 11
+    },
+    "libreoffice": {
+      "launch_process_pid": 66,
+      "owner_lifecycle_recorded": false,
+      "same_pid": false,
+      "tracked_launch_reaped": true,
+      "tracked_launch_returncode": 255,
+      "window_owner_pid": 95
+    }
+  },
+  "raw_digest_verified": true,
+  "raw_sha256": "2cbba7489555d241ea3a6fe136e73fccde267726092a33d438e424ce42d55bf7",
+  "review": "post-formal adversarial lifecycle-coverage check",
+  "visible_window_owner_pids": {
+    "chromium": 118,
+    "inkscape": 11,
+    "libreoffice": 95
+  },
+  "x_socket_absent": true
+}

@@ -26,6 +26,19 @@ def main() -> int:
         return "break"
 
     entry.bind("<ButtonPress-1>", lambda _event: entry.focus_force(), add="+")
+    # A passive per-widget audit bindtag runs before the Entry class binding.
+    # Returning None preserves normal Tk event propagation and the save chord.
+    audit_tag = "AgentInterfacePassiveAudit"
+    bindtags = list(entry.bindtags())
+    bindtags.insert(bindtags.index("Entry"), audit_tag)
+    entry.bindtags(tuple(bindtags))
+
+    def passive_key_audit(event):
+        if args.events is not None:
+            with args.events.open("a", encoding="utf-8") as f:
+                f.write(json.dumps({"type": str(event.type), "keysym": getattr(event, "keysym", None), "char": getattr(event, "char", ""), "state": getattr(event, "state", 0), "widget": str(event.widget), "bindtag": audit_tag}, sort_keys=True) + "\n")
+
+    root.bind_class(audit_tag, "<KeyPress>", passive_key_audit, add="+")
     root.bind_all("<Control-s>", save)
 
     def log_event(event):

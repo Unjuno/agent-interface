@@ -142,6 +142,8 @@ def validate_model_response(events_path: Path, schema_path: Path) -> dict:
     try:
         from referencing.exceptions import Unresolvable
         error = next(iter(_offline_validator(validator_class, schema).iter_errors(instance)), None)
+    except ImportError:
+        return {**result, "status": "STOP_SCHEMA_VALIDATOR_UNAVAILABLE"}
     except (ValueError, TypeError, Unresolvable):
         return {**result, "status": "STOP_INVALID_OUTPUT_SCHEMA"}
     if error is not None:
