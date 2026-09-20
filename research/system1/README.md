@@ -49,3 +49,8 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Needle distillation successor
 
 - [`intent_distillation_3458_pilot_02_stratified/`](intent_distillation_3458_pilot_02_stratified/) — balanced class and boundary suite; disposition FAIL_BOUNDARY_FIDELITY.
+
+
+## Hybrid Needle margin successor
+
+- [`intent_distillation_3458_pilot_03_hybrid/`](intent_distillation_3458_pilot_03_hybrid/) — scoped synthetic pass with deterministic boundary YIELD.
