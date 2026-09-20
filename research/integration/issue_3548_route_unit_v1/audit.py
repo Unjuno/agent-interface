@@ -24,8 +24,15 @@ def audit(root: Path) -> dict:
     expected = ["api", "cli", "mcp"]
     experiment = json.loads((root / "experiment-manifest.json").read_text(encoding="utf-8"))
     repo = Path("/repo")
-    source_hashes_match = all(hashlib.sha256((repo / name).read_bytes()).hexdigest() == digest
-                              for name, digest in experiment["source_sha256"].items())
+    # The audit is intended to validate historical provenance after integration.
+    # Compare against the frozen experiment commit, not the current checkout,
+    # which may legitimately contain later changes to measured source files.
+    import subprocess
+    source_hashes_match = all(
+        hashlib.sha256(subprocess.check_output(
+            ["git", "show", f'{experiment["experiment_commit"]}:{name}'], cwd=repo
+        )).hexdigest() == digest
+        for name, digest in experiment["source_sha256"].items())
     checks = {"manifest_matches": actual == manifest,
               "exactly_three_routes": [r["route"] for r in rows] == expected,
               "source_hashes_match": source_hashes_match,
