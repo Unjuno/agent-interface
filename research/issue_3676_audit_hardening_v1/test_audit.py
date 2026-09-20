@@ -45,6 +45,16 @@ class StrictAuditTests(unittest.TestCase):
             lambda r: r["events"].pop(3),
             lambda r: r["events"][0]["identity"].pop("pid"),
             lambda r: r.__setitem__("unrecognized", 1),
+            lambda r: r.__setitem__("final_emissions", True),
+            lambda r: r["events"][3].__setitem__("emissions", False),
+            lambda r: r["events"][4]["click"].__setitem__("emissions", True),
+            lambda r: r["events"][4]["effect"].__setitem__("count", True),
+            lambda r: r["events"][0]["identity"].__setitem__("pid", True),
+            lambda r: r["events"][0]["identity"].__setitem__("start_ticks", True),
+            lambda r: r["events"][0]["identity"].__setitem__("xid", True),
+            lambda r: r["events"][0]["identity"].__setitem__("geometry", [True, 80, 240, 160, 24]),
+            lambda r: r["events"][1]["identity"].__setitem__("geometry", [True, 80, 240, 160, 24]),
+            lambda r: r["events"][0]["identity"]["xres"].__setitem__("xres_major", True),
         )
         for mutate in changes:
             changed = copy.deepcopy(self.raw)
