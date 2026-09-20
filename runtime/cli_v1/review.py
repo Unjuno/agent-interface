@@ -18,7 +18,32 @@ def review(report_path, run_directory):
     result = {'schema': 'agent-interface/review-v1', 'receipt': view,
               'image': None, 'authority': 'none'}
     try:
-        selected = select_image(report, run_directory)
+        native = None
+        if report.get('schema') == 'agent-interface/runtime-observation-v1':
+            native = report.get('observation')
+            if native is None:
+                result['image_status'] = 'no_observation'
+                return result
+            if not isinstance(native, dict):
+                raise ValueError('invalid runtime observation')
+            artifact = native.get('artifact')
+            if not isinstance(artifact, dict):
+                raise ValueError('runtime observation has no PNG artifact')
+            if (artifact.get('mime_type') != 'image/png' or
+                    not isinstance(native.get('sha256'), str) or
+                    artifact.get('source_raw_sha256') != native['sha256']):
+                raise ValueError('runtime capture identity mismatch')
+            # The public observation has an ID, not an exchange sequence.
+            # Use a local singleton selector index; never expose it as sequence.
+            selected = select_image({'records': [{'event': 'observation',
+                'sequence': 1, 'capture_ns': native.get('capture_started_ns'),
+                'image': artifact.get('path')}]}, run_directory)
+            selected.pop('sequence')
+            selected['observation_id'] = report.get('observation_id')
+            if selected['sha256'] != artifact.get('sha256'):
+                raise ValueError('runtime image sha256 mismatch')
+        else:
+            selected = select_image(report, run_directory)
         if selected['status'] != 'image':
             result['image_status'] = 'no_observation'
             return result

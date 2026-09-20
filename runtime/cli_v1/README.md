@@ -136,4 +136,8 @@ or unavailable/conflicting image; a valid receipt is retained when its image
 cannot be read. Exit 0 means presentation succeeded, not that the task succeeded.
 This is historical evidence: no new capture, input, completion inference or
 sensor registration occurs. Native research reports use the research adapter;
-this command accepts the existing prepared-exchange receipt format.
+this command accepts prepared-exchange receipts and public `runtime-observation-v1`
+responses. Save `observe` output to JSON, then pass that file to `review`.
+For public observations, the PNG hash and source-raw hash must match the
+capture artifact. The original observation ID is retained; no exchange sequence
+is invented. A cleanup failure remains visible even if its captured image is readable.

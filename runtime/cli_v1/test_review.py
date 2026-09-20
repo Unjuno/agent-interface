@@ -1,5 +1,6 @@
 import base64
 import json
+import hashlib
 import subprocess
 import sys
 import tempfile
@@ -42,6 +43,35 @@ class PublicReviewTests(unittest.TestCase):
             self.assertEqual(row["image_status"], "needs_review")
             self.assertEqual(row["receipt"]["report"]["error"], "timeout")
             self.assertEqual(report.read_bytes(), original)
+
+    def test_public_observation_image_identity_and_cleanup_failure_survive(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            png = root / "frame.png"
+            pixels = b"\x89PNG\r\n\x1a\n"
+            png.write_bytes(pixels)
+            report = root / "report.json"
+            observation = {"sha256": "raw", "capture_started_ns": 12,
+                "artifact": {"mime_type": "image/png", "path": str(png),
+                             "sha256": hashlib.sha256(pixels).hexdigest(),
+                             "source_raw_sha256": "raw"}}
+            payload = {"schema": "agent-interface/runtime-observation-v1",
+                       "observation_id": "capture-id", "status": "observation_failed",
+                       "cleanup_error": "close failed", "observation": observation}
+            report.write_text(json.dumps(payload))
+            row = review(report, root)
+            self.assertEqual(base64.b64decode(row["image"]["data"]), pixels)
+            self.assertEqual(row["image_reference"]["observation_id"], "capture-id")
+            self.assertNotIn("sequence", row["image_reference"])
+            self.assertEqual(row["receipt"]["report"]["cleanup_error"], "close failed")
+            for field in ("sha256", "source_raw_sha256"):
+                original = observation["artifact"][field]
+                observation["artifact"][field] = "wrong"
+                report.write_text(json.dumps(payload))
+                refused = review(report, root)
+                self.assertEqual(refused["image_status"], "needs_review")
+                self.assertIsNone(refused["image"])
+                observation["artifact"][field] = original
 
     def test_newest_missing_image_never_falls_back_to_older_capture(self):
         with tempfile.TemporaryDirectory() as td:
