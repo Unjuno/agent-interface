@@ -31,6 +31,28 @@ class ReviewTests(unittest.TestCase):
                                         'sha256': hashlib.sha256(self.pixels).hexdigest(),
                                         'source_raw_sha256': 'raw-hash'}}}
 
+    def test_public_dispatch_is_visible_through_research_review(self):
+        capture = self.native_report()['native']
+        capture['operation_index'] = 3
+        payload = {'schema': 'agent-interface/runtime-dispatch-result-v1',
+                   'status': 'returned', 'result': {'status': 'execution_failed',
+                   'execution': {'error': 'late failure', 'observations': [capture]}}}
+        self.report.write_text(json.dumps(payload))
+        original = self.report.read_bytes()
+        for compact in (False, True):
+            row = review(self.report, self.root, compact=compact)
+            self.assertEqual(base64.b64decode(row['image']['data']), self.pixels)
+            self.assertEqual(row['image_reference']['execution_observation_index'], 0)
+            self.assertEqual(row['image_reference']['recorded_capture']['operation_index'], 3)
+            self.assertEqual(row['receipt']['report']['result']['status'], 'execution_failed')
+        self.png.unlink()
+        for compact in (False, True):
+            row = review(self.report, self.root, compact=compact)
+            self.assertEqual(row['image_status'], 'needs_review')
+            self.assertIsNone(row['image'])
+            self.assertEqual(row['receipt']['report']['result']['execution']['error'], 'late failure')
+        self.assertEqual(self.report.read_bytes(), original)
+
     def test_native_observation_and_feedback_keep_exact_bytes_and_identity(self):
         observation = self.native_report()
         for report in [observation, {'status': 'needs_review', 'observation': observation,
