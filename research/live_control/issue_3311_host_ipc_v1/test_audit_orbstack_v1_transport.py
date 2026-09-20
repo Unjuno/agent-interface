@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import shutil
 import sys
 import tempfile
 import unittest
@@ -80,6 +81,36 @@ class RetainedEvidenceAuditTest(unittest.TestCase):
                 report = auditor.audit(evidence / name)
                 self.assertEqual(report["disposition"], "PASS_V1_SYNTHETIC_TRANSPORT_ONLY")
                 self.assertTrue(all(report["checks"].values()), report["checks"])
+
+    def test_audit_rejects_run_image_not_bound_to_inspected_image(self):
+        source_root = Path(__file__).resolve().parent
+        name = "20260920-v1-transport-audit-01"
+        with tempfile.TemporaryDirectory(prefix="3311-v1-image-binding-") as temp:
+            package = Path(temp) / source_root.name
+            evidence = package / "evidence"
+            evidence.mkdir(parents=True)
+            shutil.copy2(source_root / "source-revisions.json", package / "source-revisions.json")
+            target = evidence / name
+            shutil.copytree(source_root / "evidence" / name, target)
+            command_path = target / "container-command.json"
+            command = json.loads(command_path.read_text())
+            image_ref = auditor.docker_run_image_reference(command)
+            self.assertEqual(image_ref, "agent-interface-3311-runtime-v2:20260920")
+            command[command.index(image_ref)] = "other-image:unrelated"
+            command_path.write_text(json.dumps(command, indent=2) + "\n")
+
+            manifest = {}
+            for path in sorted(target.rglob("*")):
+                if path.is_file() and path.name not in {"raw-sha256.json", "audit.json"}:
+                    relative = path.relative_to(target).as_posix()
+                    manifest[relative] = hashlib.sha256(path.read_bytes()).hexdigest()
+            (target / "raw-sha256.json").write_text(json.dumps(manifest, indent=2) + "\n")
+
+            report = auditor.audit(target)
+            self.assertEqual(report["checks"]["image_id_pinned"], True)
+            self.assertEqual(report["checks"]["raw_manifest_matches"], True)
+            self.assertEqual(report["checks"]["run_image_matches_inspect"], False)
+            self.assertEqual(report["disposition"], "FAIL_AUDIT")
 
 
 if __name__ == "__main__":

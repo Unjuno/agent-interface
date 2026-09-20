@@ -26,6 +26,31 @@ def git_source_sha(revision: str, repository_path: str) -> str:
     return hashlib.sha256(completed.stdout).hexdigest()
 
 
+def docker_run_image_reference(command: list[str]) -> str | None:
+    """Return the image reference consumed by the docker run command."""
+    value_options = {
+        "-e", "--env", "-v", "--volume", "--network", "--entrypoint",
+        "-w", "--workdir", "--name", "--user", "--platform", "--mount",
+        "-p", "--publish", "--cpus", "--memory",
+    }
+    try:
+        index = command.index("run") + 1
+    except ValueError:
+        return None
+    while index < len(command):
+        token = command[index]
+        if token == "--":
+            return command[index + 1] if index + 1 < len(command) else None
+        if token in value_options:
+            index += 2
+            continue
+        if token.startswith("-"):
+            index += 1
+            continue
+        return token
+    return None
+
+
 def verify_raw_manifest(root: Path) -> bool:
     """Compare retained raw files with the frozen manifest without writing."""
     root = root.resolve()
@@ -60,10 +85,13 @@ def audit(root: Path) -> dict:
     revisions_path = root.parents[1] / "source-revisions.json"
     revision = json.loads(revisions_path.read_text())[root.name]
     cli_path = broker["host_cli_identity"]["path"].replace("\\", "/")
+    run_image = docker_run_image_reference(command)
+    inspected_refs = set(image.get("RepoTags") or []) | set(image.get("RepoDigests") or []) | {image.get("Id")}
     checks = {
         "orbstack_context": command[command.index("--context") + 1] == "orbstack",
         "network_disabled": command[command.index("--network") + 1] == "none",
         "image_id_pinned": image["Id"] == "sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916",
+        "run_image_matches_inspect": run_image in inspected_refs,
         "container_exit_zero": exit_codes["container"] == 0,
         "broker_exit_zero": exit_codes["broker"] == 0,
         "one_non_authoritative_request": len(request_files) == 1 and request["authority_granted"] is False,

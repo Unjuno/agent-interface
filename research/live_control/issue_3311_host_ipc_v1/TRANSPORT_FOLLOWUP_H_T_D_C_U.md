@@ -95,3 +95,15 @@ Main advanced through #3513/#3514 while hosted Linux CI was queued. `git merge-t
 **C** — Main's receipt changes are independent of raw transport evidence; both raw bundles and frozen hashes remain untouched. No model, GUI, or task call occurred.
 
 **U** — These tests are local and do not replace latest-head hosted CI. Main is now at `7d12e7afc1b1db163b74a54a821658c8c867e5c7`; push and wait for fresh required Linux/Windows results before merge. #3489 remains gated; no host Codex preflight was attempted.
+
+### Review follow-up: bind Docker run image to inspected identity (2026-09-20)
+
+**H** — A retained `docker image inspect` record is insufficient if the captured `docker run` command names a different image. The auditor must parse the image argument consumed by `docker run` and bind it to that exact inspect object's immutable ID/tag/digest; new runs should execute the inspected immutable image ID directly.
+
+**T** — Add an independent `run_image_matches_inspect` check; construct a disposable copy of an unchanged retained bundle, change only its image argument, regenerate only the copy's manifest, and require audit failure despite the pinned inspect ID and a valid raw manifest. Change the OrbStack test harness to replace its tag placeholder with the inspected `Id`, save that exact command, and assert the recorded image argument equals the inspected ID. Never rewrite the historical #01/#02 bundles.
+
+**D** — Host test selection passes 23/23, including both preserved-bundle audits, full rehashed-tamper rejection, and the live OrbStack fake-CLI roundtrip. Pinned OrbStack `--network none` Docker-independent selection passes 30/30. `git diff --check` is clean. The retained legacy bundles each continue to pass the strengthened cross-reference audit through their frozen tag in `RepoTags`/`RepoDigests`; future runs use the immutable image ID.
+
+**C** — Raw #01/#02 bundle files and their original hashes remain untouched. The adversarial modified bundle exists only in a temporary directory and proves the image-binding check fails while the copy's regenerated raw manifest remains valid. No model, GUI, or task action occurred.
+
+**U** — One exploratory attempt to run the nested OrbStack roundtrip test from inside the minimal runtime image failed because that image has no Docker CLI/daemon. This is an environment limitation, not an IPC/image-binding test failure; the real OrbStack roundtrip was run from the host and passed. Latest-head hosted CI/review still required; no #3489 call was made.

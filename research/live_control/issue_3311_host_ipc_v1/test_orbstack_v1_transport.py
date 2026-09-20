@@ -17,6 +17,10 @@ import unittest
 from contextlib import nullcontext
 from unittest.mock import patch
 
+from research.live_control.issue_3311_host_ipc_v1.audit_orbstack_v1_transport import (
+    docker_run_image_reference,
+)
+
 
 ROOT = Path(__file__).resolve().parents[3]
 RUNTIME = ROOT / "runtime"
@@ -29,6 +33,11 @@ def _run_container_with_broker(broker, command, root):
     try:
         image_info = subprocess.run(["docker", "--context", "orbstack", "image",
             "inspect", IMAGE], capture_output=True, text=True, check=True)
+        inspected_image = json.loads(image_info.stdout)[0]
+        if command.count(IMAGE) != 1:
+            raise AssertionError("expected one image tag placeholder in docker run command")
+        command = list(command)
+        command[command.index(IMAGE)] = inspected_image["Id"]
         (root / "docker-image-inspect.json").write_text(image_info.stdout, encoding="utf-8")
         (root / "container-command.json").write_text(json.dumps(command, indent=2) + "\n",
             encoding="utf-8")
@@ -101,6 +110,9 @@ class OrbStackV1TransportTest(unittest.TestCase):
                 "/repo/instructions.txt", "/repo/schema.json"]
             container, broker_stdout, broker_stderr = _run_container_with_broker(
                 broker, command, root)
+            recorded_command = json.loads((root / "container-command.json").read_text())
+            inspected = json.loads((root / "docker-image-inspect.json").read_text())[0]
+            self.assertEqual(docker_run_image_reference(recorded_command), inspected["Id"])
             (root / "container.stdout.txt").write_text(container.stdout, encoding="utf-8")
             (root / "container.stderr.txt").write_text(container.stderr, encoding="utf-8")
             (root / "broker.stdout.txt").write_text(broker_stdout, encoding="utf-8")
