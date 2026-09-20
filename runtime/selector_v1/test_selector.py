@@ -9,6 +9,26 @@ from runtime.selector_v1.selector import BackendUnavailable, open_session, selec
 
 
 class SelectorTests(unittest.TestCase):
+    @unittest.skipUnless(sys.platform.startswith('linux'), 'actual Linux backend only')
+    def test_explicit_display_selects_and_opens_same_x11_without_mutating_environment(self):
+        for env in ({}, {'WAYLAND_DISPLAY': 'wayland-0'}, {'DISPLAY': ':88'}):
+            with self.subTest(env=env), mock.patch.dict(os.environ, env, clear=True), mock.patch(
+                    'runtime.backends.x11_v1.backend.X11Backend') as backend, mock.patch(
+                    'runtime.backends.x11_v1.session.X11RuntimeSession') as session:
+                result = open_session({'fixture': 123}, display_name=':99')
+                backend.assert_called_once_with(':99', {'fixture': 123})
+                session.assert_called_once_with(backend.return_value)
+                self.assertIs(result, session.return_value)
+                self.assertEqual(dict(os.environ), env)
+
+    def test_invalid_explicit_display_fails_before_backend_selection(self):
+        for value in ('', ' ', False, 99):
+            with self.subTest(value=value), mock.patch(
+                    'runtime.selector_v1.selector.select_backend') as select:
+                with self.assertRaises(BackendUnavailable):
+                    open_session({'fixture': 123}, display_name=value)
+                select.assert_not_called()
+
     def test_linux_x11_selected_only_with_display(self):
         row = select_backend("linux", {"DISPLAY": ":99"})
         self.assertTrue(row.available)

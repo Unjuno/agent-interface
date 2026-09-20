@@ -26,6 +26,11 @@ refreshed automatically. Do not reuse an ID after its target lifecycle changes.
 The host must actually start this server and expose its tools; writing this
 configuration alone does not establish availability in an existing conversation.
 
+On Linux, an explicit `--display` is used both for backend selection and for
+opening the X11 connection, even when the MCP host does not forward `DISPLAY`.
+It takes precedence over an inherited display without changing the process-wide
+environment. With no explicit display, normal environment selection applies.
+
 - `interface_observe(target, frame, region, compact=false)` takes one explicit
   read-only capture. Region is `[x,y,width,height]` in the selected frame.
 - `interface_dispatch(program, current_observation_seq,
