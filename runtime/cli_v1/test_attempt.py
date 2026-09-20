@@ -14,6 +14,36 @@ from runtime.cli_v1.__main__ import _present_result
 
 
 class RetainedAttemptTests(unittest.TestCase):
+    def test_opt_in_phase_timings_preserve_raw_report_and_default(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            report = {'status': 'runtime_failed', 'effect_status': 'unknown'}
+            call = Mock(return_value=report)
+            with patch('runtime.cli_v1.attempt.time.monotonic_ns',
+                       side_effect=[10, 30, 40, 90, 100, 170]):
+                actual, retention = invoke(call, {}, root / 'timed', operation='dispatch', timings=True)
+            call.assert_called_once()
+            self.assertEqual(retention['timings_ns'], {
+                'request_persistence': 20, 'api_call': 50, 'report_persistence': 70})
+            self.assertEqual(actual, report)
+            with patch('runtime.cli_v1.attempt.time.monotonic_ns', side_effect=AssertionError('unexpected clock')):
+                _, default = invoke(Mock(return_value=report), {}, root / 'default', operation='dispatch')
+            self.assertNotIn('timings_ns', default)
+            self.assertEqual((root / 'timed/report.json').read_bytes(),
+                             (root / 'default/report.json').read_bytes())
+
+    def test_timing_failure_phases_do_not_invent_unstarted_work(self):
+        with tempfile.TemporaryDirectory() as td:
+            call = Mock()
+            with patch('runtime.cli_v1.attempt.time.monotonic_ns', side_effect=[10, 35]):
+                _, retention = invoke(call, {}, Path(td), operation='dispatch', timings=True)
+            call.assert_not_called()
+            self.assertEqual(retention['timings_ns'], {
+                'request_persistence': 25, 'api_call': None, 'report_persistence': None})
+            with self.assertRaises(ValueError):
+                invoke(call, {}, None, operation='dispatch', timings=True)
+            call.assert_not_called()
+
     def test_flush_failure_surfaces_after_report_retention_without_retry(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td) / 'attempt'
