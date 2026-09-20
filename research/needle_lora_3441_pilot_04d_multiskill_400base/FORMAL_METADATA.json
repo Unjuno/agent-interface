@@ -1,0 +1,24 @@
+Warning: truncated output (original token count: 647)
+Total output lines: 57
+
+{
+  "schema": "issue3912-formal-metadata-v1",
+  "issue": 3912,
+  "allocation": "needle-lora-3441-pilot-04d-multiskill-400base",
+  "formal_invocations": 1,
+  "retries": 0,
+  "tuning": 0,
+  "started_after_freeze_and_construction_tests": true,
+  "date_local": "2026-09-21",
+  "execution": {
+    "host": …497 tokens truncated…   "passed": 9,
+    "failed": 0,
+    "formal_optimizer_updates": 0
+  },
+  "audit_corruption_tests": {
+    "command": "py -3.11 -B research/needle_lora_3441_pilot_04d_multiskill_400base/test_audit.py",
+    "passed": 4,
+    "failed": 0
+  },
+  "overall_disposition": "PASS_MULTI_SKILL_ROUTING_SCOPED"
+}
