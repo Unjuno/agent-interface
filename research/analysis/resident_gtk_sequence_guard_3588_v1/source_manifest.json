@@ -1,0 +1,23 @@
+{
+  "schema": "issue3588-construction-source-manifest-v1",
+  "upstream_main_commit": "e1d9c073cdaed1a5eedf602f5959d83d39804f2b",
+  "candidate_source": {
+    "path": "research/analysis/resident_gtk_incremental_3518_v2/policies.py",
+    "git_blob": "37bb7b271b099ccb10a594dbe00faa5bf618099b",
+    "local_sha256": "1f55427d0045b16d843f62cb5824c85a45b48fab3c1518fa3cade35296ec4efc"
+  },
+  "image": {
+    "id": "sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916",
+    "platform": "linux/arm64"
+  },
+  "files": {
+    "audit_prefixes.py": "bcdebbd7cd2b11630efb5f6a111eba008b62f60e11c1917a17a2f0eeffd0e635",
+    "oracle.py": "fc1c15bbaeec5b94d01ed6b3b0c749525a72b2424f6cdd2d1d9d6c0089e82221",
+    "policies_guarded.py": "f2bc10dff9c2d5fdc0b066ad1ca38b690d68b1b21488bcfffe96373f695486df",
+    "policies_original.py": "1f55427d0045b16d843f62cb5824c85a45b48fab3c1518fa3cade35296ec4efc",
+    "run_prefixes.py": "f3c1a32bc101f935f95f567be559c8f9fce470be6aa136354be16fe37203badf",
+    "test_sequence_guard.py": "26d9ee577bea895f9dbf2ee1bb046b2fa5070b44fa5a260ed9e913e0a0a1e1f7",
+    "traces.py": "ff124c1676a2473a663cb9c9cd64a471f295f7605f5b0fc7e9712159bf723327"
+  },
+  "scope": "Construction-only causal prefix replay; no GUI fixture/model/input invocation."
+}
