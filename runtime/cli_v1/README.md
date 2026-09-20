@@ -397,7 +397,15 @@ instead takes `--region X Y W H`.
 
 The diagnostic follows the existing refusal; it does not change admission,
 execute again, grant authority or repair the program. It describes the compiled
-program after repeat/text-gap expansion and currently has no operation index.
+program after repeat/text-gap expansion. When the failure occurs while validating
+an individual operation, `result.validation_operation_index` and the review's
+`outcome_summary.validation_operation_index` identify its zero-based index in
+that compiled program. Global errors such as a wrong schema have no operation
+index. This is distinct from `failed_operation_index`, which refers to an
+execution failure; a static refusal does not imply an operation was executed.
+When retained repeat/text-gap expansion metadata can be reconstructed,
+`outcome_summary.validation_source_operation` also identifies the original
+source operation. Missing or inconsistent mappings produce no source location.
 If the program passes static validation, the API adds no program diagnostic:
 the refusal may concern the backend manifest. Unsupported operation names are
 not echoed. Input text and full programs are not added to this diagnostic.
