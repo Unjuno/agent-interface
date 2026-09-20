@@ -71,6 +71,24 @@ class AuditIntegrityTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             audit._load(b'{"final_emissions":1,"final_emissions":true}')
 
+    def test_malformed_roots_and_manifest_schema_fail_closed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = root / "study.json"
+            manifest.write_text(json.dumps(study_manifest()), encoding="utf-8")
+            freeze = root / "freeze.json"
+            freeze.write_bytes(PREDECESSOR_FREEZE.read_bytes())
+            raw = root / "raw.json"
+            raw.write_text("[]", encoding="utf-8")
+            raw_result = audit.audit(raw, freeze, manifest)
+            self.assertEqual(raw_result["status"], "FAIL_AUDIT")
+            self.assertTrue(raw_result["errors"])
+            raw.write_bytes(RAW.read_bytes())
+            manifest.write_text("[]", encoding="utf-8")
+            manifest_result = audit.audit(raw, freeze, manifest)
+            self.assertEqual(manifest_result["status"], "FAIL_AUDIT")
+            self.assertTrue(manifest_result["errors"])
+
     def test_replacement_raw_and_freeze_are_rejected_by_manifest_binding(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
