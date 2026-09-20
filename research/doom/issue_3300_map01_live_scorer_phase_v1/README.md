@@ -255,3 +255,14 @@ but no PMU data were captured and the probe was not repeated. Disposition:
 `STOP_RUNTIME_DISCONNECTED_DURING_PREFLIGHT`—PMCCNTR availability remains
 unknown, not disproven. No game or formal row ran; evidence is under
 `results/construction-clock-51/`.
+
+Run52 extended the uninstrumented exact-scorer check to passive wait durations
+0.5/2/6/10/14/20 s, one fresh session each. All 6/6 stayed at public API tic 1
+through the 20 s cell, `is_episode_finished` stayed false, final tic remained
+1, and the exact scorer returned six coherent `[1,1]` brackets. Independent
+audit: `PASS_CONSTRUCTION_ONLY_UNINSTRUMENTED_SCORER_TIMECOURSE`, zero errors.
+This rules out a simple short-wait explanation in these cells, but still does
+not show whether the uninstrumented engine advanced internally; run49's single
+tic=2 control remains discordant. No phase/failure-rate claim; formal remains
+0/120. See `results/construction-clock-52/` for H/T/D/C/U, raw traces, logs,
+invocation, audit and hashes.
