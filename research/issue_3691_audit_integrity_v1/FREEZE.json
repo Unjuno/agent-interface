@@ -9,19 +9,19 @@
   "predecessor_pr": 3687,
   "H": "The merged #3676 auditor reports PASS for replacement raw/freeze evidence that conflicts with recorded predecessor hashes, and accepts JSON booleans in integer-count fields.",
   "T": "Preserve the predecessor artifacts, reproduce these escapes, add exact artifact-hash binding and strict JSON types, rerun original mutation controls and direct/CLI equivalence; run tests in local Docker with network none and separate-container CLI.",
-  "D": "Native construction gate: canonical frozen evidence passes; replacement artifacts, bool-as-int counts, duplicate JSON keys, old mutation controls are rejected; six local tests pass. Docker gate remains independently required for container PASS.",
+  "D": "Native construction gate: canonical frozen evidence passes; replacement artifacts, bool-as-int counts, malformed roots/manifests, duplicate JSON keys, and old mutation controls are rejected; seven local tests pass. Docker gate remains independently required for container PASS.",
   "C": "Offline auditor only. No X11, GUI, input, models, network access, or rerun of the #3675 formal allocation.",
   "U": "Finite adversarial coverage only; no arbitrary auditor completeness or XRes/runtime product claim.",
   "predecessor_raw_sha256": "ccb9a75eefb7df73cb13dbc9191d33334fb672c2fd58fcc5fa32be998e182807",
   "predecessor_freeze_sha256": "f40494b1be99fb1e68d7b09c498297df35a72c043740b5f09d3faec7e059acfe",
   "source_sha256": {
-    "audit.py": "4c959fb83a4e7523ce50c5f33152b58bd5381776282ecbc6cd53447c1ef23ee9",
-    "test_integrity.py": "4885466ee6fd5e8440d9c0fbad7e50120d81f645c1dc20a5a7fcc28a744f7891"
+    "audit.py": "0956b13a9e98c504c870096507b9428acae0510a27903d0eccb0f730af35c579",
+    "test_integrity.py": "de5733a0a9ba60a8e23cfed9be406f229249db71d1f1a9b2198910f43d494c9f"
   },
   "native_construction": {
     "status": "PASS",
     "python": "3.11.9",
-    "tests": "6/6",
+    "tests": "7/7",
     "network": "not used"
   },
   "docker_validation": {
