@@ -72,7 +72,7 @@ def _review(data, view, run_directory):
             # remain absent; historical coordinates never grant input authority.
             selected['recorded_capture'] = {key: native[key] for key in (
                 'target', 'native_window_id', 'frame', 'region', 'width', 'height',
-                'capture_started_ns', 'capture_ended_ns') if key in native}
+                'capture_started_ns', 'capture_ended_ns', 'operation_index') if key in native}
             if selected['sha256'] != artifact.get('sha256'):
                 raise ValueError('runtime image sha256 mismatch')
         else:

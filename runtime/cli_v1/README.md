@@ -198,3 +198,13 @@ image or the current desktop. For example, a region `[20,75,180,45]` in
 `window_client` means the 180x45 image was captured starting at window-local
 (20,75). The field is historical metadata, not revalidated target binding or
 permission to send input; do not assume the window has remained unchanged.
+
+
+New X11 dispatch captures include zero-based `operation_index`, also forwarded
+in `image_reference.recorded_capture`. This indexes the submitted program's
+`ops`, whereas `execution_observation_index` indexes only its retained images.
+Compare it with the program and completed/failed operation evidence before
+calling a frame "after the action": later input may have changed the application.
+Standalone observe and older receipts omit operation_index; it is not inferred.
+A capture at the last observe operation still does not prove asynchronous work
+has finished. Existing frozen records remain unchanged.

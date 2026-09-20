@@ -311,7 +311,8 @@ class X11Backend:
                 elif kind == "scroll": self.scroll(op["dx"], op["dy"])
                 elif kind == "observe":
                     if current_target is None: raise X11BackendError("observe requires focused target")
-                    observations.append(self.capture(current_target, op["frame"], op["x"], op["y"], op["w"], op["h"]))
+                    captured = self.capture(current_target, op["frame"], op["x"], op["y"], op["w"], op["h"])
+                    observations.append(dict(captured, operation_index=index))
                 elif kind == "wait_update": time.sleep(op["timeout_ms"] / 1000.0)
                 elif kind == "verify": pass
                 elif kind == "release_all": releases.append(self.release_all())

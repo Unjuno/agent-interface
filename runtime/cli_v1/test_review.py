@@ -91,7 +91,7 @@ class PublicReviewTests(unittest.TestCase):
                              "sha256": hashlib.sha256(pixels).hexdigest(),
                              "source_raw_sha256": "raw"}}
             capture.update(target="fixture", native_window_id=42, frame="window_client",
-                           region=[20, 75, 180, 45], width=180, height=45)
+                           region=[20, 75, 180, 45], width=180, height=45, operation_index=4)
             payload = {"schema": "agent-interface/runtime-dispatch-result-v1", "status": "returned",
                        "result": {"status": "execution_failed", "execution": {
                            "error": "late failure", "observations": [capture, capture]}}}
@@ -104,6 +104,7 @@ class PublicReviewTests(unittest.TestCase):
             self.assertEqual(row['image_reference']['recorded_capture']['frame'], 'window_client')
             self.assertEqual(row['image_reference']['recorded_capture']['native_window_id'], 42)
             self.assertNotIn('capture_ended_ns', row['image_reference']['recorded_capture'])
+            self.assertEqual(row['image_reference']['recorded_capture']['operation_index'], 4)
             self.assertEqual(row['image_reference']['authority'], 'none')
             self.assertNotIn("sequence", row["image_reference"])
             self.assertEqual(row["receipt"]["report"]["result"]["status"], "execution_failed")
