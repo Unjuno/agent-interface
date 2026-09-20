@@ -2,7 +2,7 @@ import itertools
 import json
 import sys
 
-RUNNER_SHA256 = "a283b3b84102d8c12130f9dc8a20f91f627a641374e2d344aa9e4e90094637bd"
+RUNNER_SHA256 = "4d3899db4908fb0898a9c35e4ef075a9f478834420b85ef55b5e087b602fadc7"
 
 def oracle(phase, owner, command, generation_match, safe_point, in_bounds):
     if not generation_match:
