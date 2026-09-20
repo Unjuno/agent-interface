@@ -4,7 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import threading
-from typing import Literal
+from typing import Annotated, Literal
 
 from mcp.server.fastmcp import FastMCP
 from mcp.types import CallToolResult, ImageContent, TextContent
@@ -12,6 +12,10 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, Stri
 
 from agent_review import review_native
 from native_exchange_v1 import run
+
+
+WaitSeconds = Annotated[StrictInt | StrictFloat, Field(ge=0, le=30,
+    description="Finite wait seconds in 0..30; zero polls without waiting. No strings or booleans.")]
 
 
 class NativeDecision(BaseModel):
@@ -26,8 +30,8 @@ class NativeDecision(BaseModel):
         description='Observed [x,y] in screen physical pixels; required for click and keyboard context binding.')
     expected_title: StrictStr | None = Field(default=None,
         description='Expected application title for feedback; required for an action, not a task success assertion.')
-    interaction: Literal['click','keyboard'] = Field(default='click',
-        description='click then tail, or keyboard-only tail with the same visual context checks.')
+    interaction: Literal['click','keyboard','observe'] = Field(default='click',
+        description='click then tail, keyboard-only tail, or observe for one fresh capture without input; observe consumes a stage.')
     tail: list[dict] = Field(default_factory=list, description=(
         'Explicit ordered native operations. Examples: {"op":"text","text":"190"}, '
         '{"op":"key_chord","keys":["CTRL","s"]}, '
@@ -40,10 +44,22 @@ class NativeDecision(BaseModel):
 
     @model_validator(mode='after')
     def complete_decision(self):
+        if self.interaction == 'observe':
+            if set(self.model_dump(exclude_unset=True)) - {'source_sequence', 'interaction'}:
+                raise ValueError('observe accepts only source_sequence and interaction; no input or finish flags')
+            return self
         if self.finish and self.finish_after:
             raise ValueError('choose finish or finish_after, not both')
+        if self.finish:
+            if set(self.model_dump(exclude_unset=True)) - {'source_sequence', 'finish'}:
+                raise ValueError('finish accepts only source_sequence and finish; use finish_after for an action')
+            return self
         if not self.finish and (self.point is None or self.expected_title is None):
             raise ValueError('action requires point and expected_title')
+        if (not self.finish and self.interaction == 'keyboard'
+                and not any(op.get('op') in {'text', 'key_chord'} for op in self.tail)):
+            raise ValueError('keyboard requires explicit text or key_chord input; '
+                             'for a fresh image use only source_sequence and interaction=observe')
         return self
 
 
@@ -90,6 +106,19 @@ def create_server(run_directory, *, allocation=None):
     server = FastMCP('Agent Interface native research session')
     lock = threading.Lock()
 
+    def with_process_snapshot(result):
+        # Do not wait for exit, retry input, or let a polling error hide its receipt.
+        if allocation is not None:
+            try:
+                state = dict(allocation.status())
+                if 'source_stage' in state:
+                    state['initial_source_stage'] = state.pop('source_stage')
+            except Exception as error:
+                state = {'status': 'needs_review', 'error': str(error), 'authority': 'none',
+                         'scope': 'process snapshot unavailable; action result retained'}
+            result['allocation'] = state
+        return result
+
     def invoke(operation):
         # One bound run, no concurrent submit/resume processing or automatic retry.
         with lock:
@@ -103,7 +132,7 @@ def create_server(run_directory, *, allocation=None):
 
     if allocation is not None:
         @server.tool(structured_output=False)
-        def native_start(timeout: float = 5) -> CallToolResult:
+        def native_start(timeout: WaitSeconds = 5) -> CallToolResult:
             """Start the configured research allocation once, or wait on that same process.
 
             Starting/timeout is not permission to restart. Ready returns stage1
@@ -141,29 +170,34 @@ def create_server(run_directory, *, allocation=None):
         return invoke(observe)
 
     @server.tool(structured_output=False)
-    def native_submit(stage: StrictInt, decision: NativeDecision, timeout: float = 5) -> CallToolResult:
+    def native_submit(stage: StrictInt, decision: NativeDecision, timeout: WaitSeconds = 5) -> CallToolResult:
         """Submit one explicit decision against its viewed source_sequence.
 
         Uses existing guarded click/keyboard tail and immutable stage publication.
         Never retry submit after timeout/error. Pending returns decision_sha256:
         use native_resume. Task success is separate from input completion.
+        Managed responses include a process snapshot; it may still be live.
+        interaction=observe requests one fresh capture without input; include only
+        source_sequence and interaction. It consumes a stage and does not finish.
+        It reviews the currently focused window on the private display and revokes
+        old target aliases, like the existing post-action handoff; it never focuses.
         """
         def submit():
             if allocation is not None and allocation.status()['status'] != 'ready':
                 raise ValueError('managed input requires this server to own a live ready allocation')
-            return run(root, stage, decision.model_dump(mode='json', exclude_unset=True),
-                       timeout=timeout, compact=True)
+            return with_process_snapshot(run(root, stage, decision.model_dump(mode='json', exclude_unset=True),
+                       timeout=timeout, compact=True))
         return invoke(submit)
 
     @server.tool(structured_output=False)
-    def native_resume(stage: StrictInt, decision_sha256: str, timeout: float = 5) -> CallToolResult:
+    def native_resume(stage: StrictInt, decision_sha256: str, timeout: WaitSeconds = 5) -> CallToolResult:
         """Read/wait for an exact committed request without publishing input.
 
         Supply the original pending response's stage and SHA256. Missing/changed
         requests refuse. Owner loss requires reconciliation, never restart/replay.
         """
-        return invoke(lambda: run(root, stage, resume=True, decision_sha256=decision_sha256,
-                                  timeout=timeout, compact=True))
+        return invoke(lambda: with_process_snapshot(run(root, stage, resume=True, decision_sha256=decision_sha256,
+                                  timeout=timeout, compact=True)))
     return server
 
 

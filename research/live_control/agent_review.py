@@ -10,7 +10,6 @@ from receipt_image import select_image
 
 # Direct script execution and import from the research client are both supported.
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from runtime.cli_v1.receipt import receipt_view
 
 
 def native_outcome_summary(report):
@@ -28,11 +27,19 @@ def native_outcome_summary(report):
         return value if isinstance(value, str) and value else None
 
     success = field('evaluation', 'success')
-    return {'reported_status': status('status'),
+    summary = {'reported_status': status('status'),
             'evaluation_success': success if type(success) is bool else None,
             'action_status': status('action', 'result', 'status'),
             'feedback_status': status('action', 'feedback', 'status'),
             'cleanup_status': status('cleanup', 'status')}
+    if isinstance(field('target_refusal'), dict):
+        # A boundary is not action completion. Project the recorded refusal,
+        # without deriving input safety or success from a missing action row.
+        summary['target_refusal'] = {'reason': status('target_refusal', 'reason')}
+        for key in ('input_dispatched', 'action_attempted', 'finish_after_applied'):
+            value = field('target_refusal', key)
+            summary['target_refusal'][key] = value if type(value) is bool else None
+    return summary
 
 
 def review_native(report_path, run_directory, *, compact=False):
@@ -77,39 +84,11 @@ def review_native(report_path, run_directory, *, compact=False):
 
 
 def review(report_path, run_directory, *, compact=False):
-    view = receipt_view(report_path)
-    # Parse the same bytes whose digest is presented to the caller.
-    data = Path(view['source']['path']).read_bytes()
-    if hashlib.sha256(data).hexdigest() != view['source']['sha256']:
-        raise ValueError('report changed during review')
-    report = json.loads(data)
+    from runtime.cli_v1.review import review as runtime_review
+    result = runtime_review(report_path, run_directory)
     if compact:
         from receipt_references import compact_receipt
-        view = compact_receipt(view)
-    result = {'schema': 'agent-interface/review-v1', 'receipt': view,
-              'image': None, 'authority': 'none'}
-    try:
-        selected = select_image(report, run_directory)
-        if selected['status'] != 'image':
-            result['image_status'] = 'no_observation'
-            return result
-        recorded = report.get('image')
-        if isinstance(recorded, dict) and recorded.get('status') == 'image':
-            for field in ('sequence', 'capture_ns', 'path', 'sha256'):
-                if recorded.get(field) != selected[field]:
-                    raise ValueError('report image identity mismatch: ' + field)
-        image_bytes = Path(selected['path']).read_bytes()
-        if hashlib.sha256(image_bytes).hexdigest() != selected['sha256']:
-            raise ValueError('image changed during review')
-        if not image_bytes.startswith(b'\x89PNG\r\n\x1a\n'):
-            raise ValueError('referenced file is not a PNG')
-        result['image'] = {'type': 'image', 'mimeType': 'image/png',
-                           'data': base64.b64encode(image_bytes).decode('ascii')}
-        result['image_reference'] = selected
-        result['image_status'] = 'image'
-    except Exception as error:
-        # An unavailable image must never erase the action result or replay it.
-        result.update(image_status='needs_review', image_error=str(error))
+        result['receipt'] = compact_receipt(result['receipt'])
     return result
 
 

@@ -31,6 +31,28 @@ class ReviewTests(unittest.TestCase):
                                         'sha256': hashlib.sha256(self.pixels).hexdigest(),
                                         'source_raw_sha256': 'raw-hash'}}}
 
+    def test_public_dispatch_is_visible_through_research_review(self):
+        capture = self.native_report()['native']
+        capture['operation_index'] = 3
+        payload = {'schema': 'agent-interface/runtime-dispatch-result-v1',
+                   'status': 'returned', 'result': {'status': 'execution_failed',
+                   'execution': {'error': 'late failure', 'observations': [capture]}}}
+        self.report.write_text(json.dumps(payload))
+        original = self.report.read_bytes()
+        for compact in (False, True):
+            row = review(self.report, self.root, compact=compact)
+            self.assertEqual(base64.b64decode(row['image']['data']), self.pixels)
+            self.assertEqual(row['image_reference']['execution_observation_index'], 0)
+            self.assertEqual(row['image_reference']['recorded_capture']['operation_index'], 3)
+            self.assertEqual(row['receipt']['report']['result']['status'], 'execution_failed')
+        self.png.unlink()
+        for compact in (False, True):
+            row = review(self.report, self.root, compact=compact)
+            self.assertEqual(row['image_status'], 'needs_review')
+            self.assertIsNone(row['image'])
+            self.assertEqual(row['receipt']['report']['result']['execution']['error'], 'late failure')
+        self.assertEqual(self.report.read_bytes(), original)
+
     def test_native_observation_and_feedback_keep_exact_bytes_and_identity(self):
         observation = self.native_report()
         for report in [observation, {'status': 'needs_review', 'observation': observation,
@@ -101,6 +123,37 @@ class ReviewTests(unittest.TestCase):
             self.report.write_text(json.dumps(report))
             self.assertTrue(all(value is None for value in
                                 review_native(self.report, self.root)['outcome_summary'].values()))
+
+    def test_native_target_refusal_is_visible_without_claiming_action_success(self):
+        from receipt_references import expand_native_receipt
+        refusal = {'reason': 'visually_flat_source_region', 'input_dispatched': False,
+                   'action_attempted': False, 'finish_after_applied': False}
+        report = {'status': 'boundary', 'target_refusal': refusal,
+                  'observation': self.native_report()}
+        self.report.write_text(json.dumps(report))
+        for compact in (False, True):
+            row = review_native(self.report, self.root, compact=compact)
+            summary = row['outcome_summary']
+            self.assertEqual(summary['target_refusal'], refusal)
+            self.assertEqual(summary['reported_status'], 'boundary')
+            self.assertIsNone(summary['action_status'])
+            self.assertIsNone(summary['evaluation_success'])
+            self.assertEqual(base64.b64decode(row['image']['data']), self.pixels)
+            receipt = expand_native_receipt(row['receipt']) if compact else row['receipt']
+            self.assertEqual(receipt['native_result'], report)
+
+    def test_native_refusal_projection_does_not_coerce_or_infer_input_safety(self):
+        from agent_review import native_outcome_summary
+        for value in (None, 0, 1, 'false', [], {}):
+            summary = native_outcome_summary({'target_refusal': {
+                'reason': [], 'input_dispatched': value,
+                'action_attempted': value, 'finish_after_applied': value}})
+            self.assertTrue(all(v is None for v in summary['target_refusal'].values()))
+        for value in (True, False):
+            summary = native_outcome_summary({'target_refusal': {'input_dispatched': value}})
+            self.assertIs(summary['target_refusal']['input_dispatched'], value)
+        self.assertNotIn('target_refusal', native_outcome_summary({'target_refusal': 'invalid'}))
+        self.assertNotIn('target_refusal', native_outcome_summary({'actions': []}))
 
     def test_image_bytes_and_full_result_share_one_response(self):
         self.write()

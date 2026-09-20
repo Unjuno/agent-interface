@@ -135,3 +135,52 @@ terminal responses return unavailable. These are facts at read time, with
 `authority: none`, not scheduling instructions, new input permission or task
 success. Existing source/admission checks still govern the next primary decision.
 The server does not author or send it. No pending request is automatically replayed.
+
+## Managed process snapshot
+
+Managed `native_submit` and read-only `native_resume` responses include an
+`allocation` snapshot alongside the action receipt and image. A terminal process
+with an available exit code may make a separate `native_status` call unnecessary.
+A still-live process requires later status reconciliation; no completion is
+inferred. The original startup source is named `initial_source_stage` here so it
+cannot be mistaken for the next continuation stage.
+
+Snapshot failures return `allocation.status: needs_review` while retaining the
+action outcome and image. If the process exits between its first nonblocking poll
+and the owner-state read, status polls once more without waiting. Exit status does
+not establish task success or verified cleanup. This adds no background sensor,
+restart, input replay or automatic next decision. Attach-only responses do not
+include a managed allocation snapshot.
+
+## Request validation
+
+`native_start`, `native_submit` and `native_resume` accept only numeric wait
+seconds in 0..30. Strings, booleans and out-of-range values are rejected before
+allocation or request publication. Zero performs a nonblocking poll.
+A finish-only decision contains exactly `source_sequence` and `finish: true`.
+Additional fields, even empty/default-valued action fields, are rejected so an
+intended action cannot be silently ignored. Use `finish_after` with an explicit
+action when both action and termination are intended.
+
+## Explicit fresh review and target refusal
+
+To inspect a newly painted frame without input, submit a decision containing
+only `source_sequence` and `interaction: "observe"`. This consumes a stage and
+returns one fresh capture of the currently focused managed window, using the
+existing read-only window handoff. It never focuses, mints a target or sends
+input. The next decision must use the returned source; prior aliases are revoked.
+Keyboard continuation requires explicit text or key_chord operations; a wait-only
+tail is rejected before publication.
+
+A typed visually-flat target refusal before dispatch may return a fresh boundary
+when stage capacity remains. Its `target_refusal` describes the recorded failure;
+it is not action completion. Choose a new decision from the returned image.
+Arbitrary errors, exhausted capacity or failed review still terminate; no input
+is automatically retried. A refused action does not apply finish_after.
+The published Inkscape task now describes its directional saved-geometry score
+explicitly; nominal drag pixels are not an exact keyboard displacement target.
+
+At the final permitted stage, an action or explicit review without finish returns
+`needs_review` after cleanup, retaining its final observation and action/review
+evidence. It does not publish an unusable next source. This is stage exhaustion,
+not task success; finish_after remains the explicit action-and-finish path.
