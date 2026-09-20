@@ -146,7 +146,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
     result = audit(args.raw_json, args.freeze, args.study_freeze)
     rendered = json.dumps(result, sort_keys=True, indent=2) + "\n"
-    args.output.write_text(rendered, encoding="utf-8")
+    args.output.write_text(rendered, encoding="utf-8", newline="\n")
     print(rendered, end="")
     return 0 if not result["errors"] else 1
 
