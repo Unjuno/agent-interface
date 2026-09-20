@@ -40,6 +40,7 @@ New work should normally use a category directory. Existing direct-root paths re
 
 - [`session_handoff/`](session_handoff/)
 - [`gtk_fresh_post_effect_2673/`](gtk_fresh_post_effect_2673/)
+- [`results/`](results/) — retained native-handle result bundles; each bundle's report defines its scope and status.
 
 - [`x11/`](x11/)
 
