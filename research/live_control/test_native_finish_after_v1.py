@@ -11,13 +11,15 @@ from unittest.mock import patch
 
 class NativeFinishAfterTests(unittest.TestCase):
     def exercise(self, decisions, *, task_success=True, action_status='completed',
-                 close_failure=False, expected_error=None, max_stages=4):
+                 close_failure=False, expected_error=None, max_stages=4, inspect_goal=None,
+                 focus_within=True, review_status='reviewed', mint_errors=()):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             out = root / 'out'
             output = root / 'shape.svg'; output.write_text('inert saved fixture')
             events = []
             remaining = iter(decisions)
+            pending_mint_errors = iter(mint_errors)
 
             class Session:
                 name = ':inert'
@@ -38,6 +40,9 @@ class NativeFinishAfterTests(unittest.TestCase):
 
                 def mint(self, *args, **kwargs):
                     events.append('mint')
+                    error = next(pending_mint_errors, None)
+                    if error is not None:
+                        raise error
                     return [12, 7]
 
                 def click(self, *args, **kwargs):
@@ -50,10 +55,14 @@ class NativeFinishAfterTests(unittest.TestCase):
                     return {'status': 'matched'}
 
                 def _focus_within_target(self):
-                    return True
+                    return focus_within
+
+                def focused_client_window(self):
+                    return 2
 
                 def review_window(self, window):
-                    return {'status': 'reviewed', 'observation': {
+                    assert window == (1 if focus_within else 2)
+                    return {'status': review_status, 'observation': {
                         'sequence': 2, 'native': {'artifact': {'path': 'inert-final.png'}}}}
 
                 def close(self):
@@ -88,6 +97,8 @@ class NativeFinishAfterTests(unittest.TestCase):
 
             def supply_request(_seconds):
                 stage = len(list(out.glob('request-*.json'))) + 1
+                if inspect_goal is not None:
+                    inspect_goal(json.loads((out / 'goal.json').read_text()))
                 decision = next(remaining)  # Unexpected extra wait is a test failure.
                 source = json.loads((out / f'source-{stage}.json').read_text())
                 subject.publish(out / f'request-{stage}.json', subject.encoded(
@@ -119,6 +130,22 @@ class NativeFinishAfterTests(unittest.TestCase):
         self.assertEqual(replies[0]['cleanup']['status'], 'completed')
         self.assertEqual(events, ['mint', 'input', 'evaluate', 'bridge.close', 'session.close'])
 
+    def test_directional_task_is_public_before_first_decision(self):
+        seen = []
+        def inspect(goal):
+            task = goal['task']
+            self.assertEqual(task['kind'], 'move_right_preserve_geometry')
+            self.assertEqual(task['coordinate_frame'], 'svg_user_units')
+            self.assertEqual(task['dx_meaning'], 'nominal_drag_screen_px_not_exact_keyboard_displacement')
+            self.assertEqual((task['x_greater_than'], task['y'], task['width'], task['height']),
+                             (50.5, 50, 40, 30))
+            self.assertEqual(task['geometry_tolerance_exclusive'], 0.1)
+            self.assertIsNone(task['transform'])
+            self.assertEqual(task['save_format'], 'svg')
+            seen.append(goal)
+        self.exercise([self.action(finish_after=True)], inspect_goal=inspect)
+        self.assertEqual(len(seen), 1)
+
     def test_finish_after_on_last_permitted_stage(self):
         replies,sources,events=self.exercise(
             [self.action(),self.action(finish_after=True)],max_stages=2)
@@ -139,6 +166,38 @@ class NativeFinishAfterTests(unittest.TestCase):
         replies, _, _ = self.exercise([self.action(finish_after=True)], task_success=False)
         self.assertEqual(replies[0]['status'], 'finished')
         self.assertIs(replies[0]['evaluation']['success'], False)
+
+    def test_explicit_observation_neither_mints_nor_dispatches_input(self):
+        replies, sources, events = self.exercise([{'interaction': 'observe'}, {'finish': True}])
+        self.assertEqual([r['status'] for r in replies], ['boundary', 'finished'])
+        self.assertEqual(set(sources), {'source-1.json', 'source-2.json'})
+        self.assertEqual(replies[0]['observation_only']['captures'], 1)
+        self.assertFalse(replies[0]['observation_only']['input_dispatched'])
+        self.assertNotIn('action', replies[0])
+        self.assertNotIn('input', events)
+        self.assertNotIn('mint', events)
+
+    def test_observation_rejects_hidden_input_fields(self):
+        replies, _, events = self.exercise([{'interaction': 'observe', 'tail': []}],
+                                            expected_error=ValueError)
+        self.assertEqual(replies[0]['status'], 'needs_review')
+        self.assertNotIn('mint', events)
+
+    def test_observation_reviews_changed_focus_without_input(self):
+        replies, _, events = self.exercise([{'interaction': 'observe'}, {'finish': True}],
+                                            focus_within=False)
+        self.assertEqual(replies[0]['observation']['sequence'], 2)
+        self.assertEqual(replies[0]['observation_only']['window_review']['status'], 'reviewed')
+        self.assertNotIn('mint', events)
+        self.assertNotIn('input', events)
+
+    def test_observation_failed_window_review_never_publishes_next_source(self):
+        replies, sources, events = self.exercise([{'interaction': 'observe'}],
+            focus_within=False, review_status='needs_review', expected_error=RuntimeError)
+        self.assertEqual(sources, ['source-1.json'])
+        self.assertEqual(replies[0]['status'], 'needs_review')
+        self.assertNotIn('mint', events)
+        self.assertNotIn('input', events)
 
     def test_invalid_or_conflicting_flags_precede_mint(self):
         for decision in ({'finish_after': 'true'}, {'finish_after': 1},
@@ -165,5 +224,55 @@ class NativeFinishAfterTests(unittest.TestCase):
         self.assertEqual(replies[0]['cleanup']['status'], 'needs_review')
 
 
-if __name__ == '__main__':
+    def test_finish_with_action_fields_never_silently_evaluates(self):
+        for extra in ({'tail': [{'op': 'key_chord', 'keys': ['CTRL', 's']}]},
+                      {'tail': []}, {'point': [600, 378]}, {'interaction': 'click'},
+                      {'finish_after': False}, {'unknown': None}):
+            with self.subTest(extra=extra):
+                replies, sources, events = self.exercise(
+                    [dict(finish=True, **extra)], expected_error=ValueError)
+                self.assertEqual(replies[0]['status'], 'needs_review')
+                self.assertNotIn('evaluate', events)
+                self.assertNotIn('mint', events)
+                self.assertNotIn('input', events)
+                self.assertEqual(sources, ['source-1.json'])
+
+    def test_flat_refusal_returns_new_boundary_then_explicit_action(self):
+        from scoped_target_handle_v2 import FlatTargetRefused
+        replies, sources, events = self.exercise(
+            [self.action(finish_after=True), self.action(finish_after=True)],
+            mint_errors=[FlatTargetRefused('visually flat target region refused')], max_stages=2)
+        self.assertEqual([r['status'] for r in replies], ['boundary', 'finished'])
+        refusal = replies[0]['target_refusal']
+        self.assertFalse(refusal['input_dispatched'])
+        self.assertFalse(refusal['action_attempted'])
+        self.assertFalse(refusal['finish_after_applied'])
+        self.assertEqual(events.count('input'), 1)
+        self.assertEqual(set(sources), {'source-1.json', 'source-2.json'})
+
+    def test_arbitrary_mint_error_does_not_continue(self):
+        replies, sources, events = self.exercise([self.action()],
+            mint_errors=[ValueError('unknown mint failure')], expected_error=ValueError)
+        self.assertEqual(replies[0]['status'], 'needs_review')
+        self.assertEqual(sources, ['source-1.json'])
+        self.assertNotIn('input', events)
+
+    def test_flat_refusal_at_stage_limit_does_not_publish_next_source(self):
+        from scoped_target_handle_v2 import FlatTargetRefused
+        replies, sources, events = self.exercise([self.action(), self.action()], max_stages=2,
+            mint_errors=[None, FlatTargetRefused('flat')], expected_error=FlatTargetRefused)
+        self.assertEqual(replies[1]['status'], 'needs_review')
+        self.assertEqual(set(sources), {'source-1.json', 'source-2.json'})
+        self.assertEqual(events.count('input'), 1)
+
+    def test_failed_review_after_refusal_stays_terminal(self):
+        from scoped_target_handle_v2 import FlatTargetRefused
+        replies, sources, events = self.exercise([self.action()],
+            mint_errors=[FlatTargetRefused('flat')], review_status='refused', expected_error=RuntimeError)
+        self.assertEqual(replies[0]['status'], 'needs_review')
+        self.assertEqual(sources, ['source-1.json'])
+        self.assertNotIn('input', events)
+
+
+if __name__ == "__main__":
     unittest.main()
