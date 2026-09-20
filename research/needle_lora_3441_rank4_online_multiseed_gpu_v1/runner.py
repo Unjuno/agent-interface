@@ -87,7 +87,7 @@ def one_seed(seed,device):
             seen=feedback_order.copy(); t0=time.perf_counter_ns()
             for _ in range(NSUPPORT*PER_FEEDBACK):
                 ix=torch.randint(len(seen),(32,),generator=rng).to(device); ids=torch.tensor(seen,device=device)
-                loss=nn.functional.cross_entropy(m(xb[ids[ix]]),yb[ids[ix]));opt.zero_grad(set_to_none=True);loss.backward();opt.step()
+                loss=nn.functional.cross_entropy(m(xb[ids[ix]]),yb[ids[ix]]);opt.zero_grad(set_to_none=True);loss.backward();opt.step()
             lat=[(time.perf_counter_ns()-t0)/1e6]
         else:
             for row in feedback_order:
