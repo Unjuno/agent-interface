@@ -10,15 +10,17 @@
   "network": "none",
   "controls": [
     "unexpected event",
+    "duplicate transition",
     "duplicate stale-admission transition",
     "would_call_bridge contradiction",
     "missing or reordered transition",
     "unsupported fields",
     "original three corruption controls",
-    "direct and documented CLI equivalence"
+    "direct and documented CLI equivalence",
+    "boolean substitutions for counts and identity integers"
   ],
   "source_sha256": {
-    "audit.py": "5c0902eb6270c91847801f0919e4ba160bc535321c14db415b2583c1638e724b",
-    "test_audit.py": "0066dae870b60d030c062b8ac01e26b58cfcc5c91f998a95f51e08d225b14ce1"
+    "audit.py": "769677e9fed97543ab20260301d88c432fd6abc02cd6220c75efaff55264c6b3",
+    "test_audit.py": "16a9d9eacb5d896833725ffc8ae2ac711296afe254b4ad0c80144d31f0f1e821"
   }
 }
