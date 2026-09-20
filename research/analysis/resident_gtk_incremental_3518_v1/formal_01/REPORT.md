@@ -2,7 +2,7 @@
 
 ## Disposition
 
-**PASS, narrowly, for the predeclared synthetic event-policy and GUI-title effect gate; allocation identity has a recorded metadata deviation.** The first registered attempt (#01) stopped before any row because of a Docker ENTRYPOINT invocation error; it was retained and not retried. Successor #02 ran once and yielded 32/32 rows; the independent audit passed. The runner's embedded allocation string mistakenly remained `...-01`, so raw rows alone do not establish #02 identity. Attribution rests on the preregistered #02 GitHub comment, its exact unchanged source hashes, the sole subsequent Docker execution, and this explicit deviation; do not silently relabel the raw log.
+**HOLD for the full formal GUI gate.** The policy-count and GTK-title sub-gates passed their independent fixed oracle, but allocation #02 has material evidence gaps: the runner's embedded ID says #01; full-screen pixel hashes differ in only 17/32 rows; raw image captures are not retained; and process termination/cleanup is performed with `terminate()+wait()` but its exit/PID evidence is not recorded in the ledger or independently audited. Do not treat this as a formal GUI PASS. The first registered attempt (#01) stopped before any row because of a Docker ENTRYPOINT invocation error; it was retained and not retried. Successor #02 ran once and yielded 32/32 rows; no retry/tuning was done. Attribution rests on the #02 preregistration, exact unchanged source hashes, the sole subsequent Docker execution, and these explicit deviations; do not silently relabel the raw log.
 
 ## Result
 
@@ -12,7 +12,7 @@ Independent fixed-oracle audit: PASS, exact 32-row matrix, expected counts, posi
 
 ## Important qualification
 
-Only 17/32 before/after X11 root-image hashes differed, although 24 rows recorded a positive GTK title/count effect. This indicates the full-screen pixel-delta field is not a reliable per-row GUI-effect witness under this capture timing. The independent audit verifies the recorded hashes are self-consistent, not that pixel delta should equal task effect. The effect claim above relies on the GTK window title/count readback; pixel-delta completeness is **not passed** and warrants a successor capture-timing improvement before stronger visual assertions.
+Only 17/32 before/after X11 root-image hashes differed, although 24 rows recorded a positive GTK title/count effect. The full-screen pixel-delta field is not a reliable per-row GUI-effect witness under this capture timing. The independent audit verifies recorded hashes are self-consistent, not that pixel delta should equal task effect. GTK title/count readback supports the narrower fixture-state observation only. Raw before/after images and process exit/PID cleanup evidence are absent; these gates are **not passed** and require a newly preregistered successor capture implementation.
 
 No real Codex GUI, MCP event stream, model, user task, accessibility path, latency, safety, production reliability, or task success was tested. Historical #3511/#3508 evidence is unchanged.
 

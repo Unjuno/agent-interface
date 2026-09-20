@@ -9,15 +9,17 @@
   },
   "allocation_02": {
     "id": "issue3518-resident-gtk-incremental-02",
-    "status": "completed-with-label-deviation",
+    "status": "HOLD-formal-GUI-gate",
     "raw_embedded_id": "issue3518-resident-gtk-incremental-01",
     "rows": 32,
     "retry": false,
     "expected_candidate_transport_counts": [1, 1, 0, 0, 1, 1, 1, 1],
     "candidate_gui_title_counts": [1, 1, 0, 0, 1, 1, 1, 0],
-    "audit": "PASS",
+    "independent_policy_audit": "PASS",
     "screen_pixel_delta_rows": 17,
-    "screen_delta_gate": "NOT-PASSED"
+    "screen_delta_gate": "NOT-PASSED",
+    "raw_before_after_images": false,
+    "process_exit_pid_cleanup_ledger": false
   },
   "environment": {
     "runtime": "OrbStack Docker",
