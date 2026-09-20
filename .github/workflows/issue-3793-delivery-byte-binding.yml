@@ -49,5 +49,5 @@ jobs:
             --mount "type=bind,src=$inputs,dst=/input,readonly" \
             --mount "type=bind,src=$out,dst=/out" \
             --workdir /src "$image" \
-            python -B audit.py /input /src/MANIFEST.json /out
+            python -B audit.py /input /src/MANIFEST.json /out "$AUDIT_HEAD"
           cat "$out/RESULT.json" | tee -a "$GITHUB_STEP_SUMMARY"
