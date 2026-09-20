@@ -1,0 +1,65 @@
+{
+  "allocation": "OBSTAC_3430_ALLOCATION_02",
+  "issue": 3430,
+  "decision": "HOLD_DECOY_EFFECT_UNVERIFIED",
+  "scope": "fresh isolated GUI allocation and exact-byte audit; no production admission path",
+  "container": {
+    "image": "issue3419-multiwindow:20260920",
+    "image_id": "sha256:6274b31351429a9cd2385f76c75c2df9f817c3dca6d285f4cd8ccceb88d8d1ad",
+    "network": "none",
+    "allocation_exit": 0,
+    "audit_image": "python:3.12-slim",
+    "audit_exit": 0
+  },
+  "raw": {
+    "path": "raw.jsonl",
+    "bytes": 831,
+    "rows": 4,
+    "sha256": "f6dfe6d61b24e4c5f5daa52a80e70e90c602cd4b38cdfb7a870399627d540c87",
+    "encoding": "UTF-8, compact sorted-key JSON per line, LF after every row"
+  },
+  "audit": {
+    "result": "HOLD_DECOY_EFFECT_UNVERIFIED",
+    "byte_gate": true,
+    "old_generation_differs": true,
+    "old_xid_reused_by_decoy": true,
+    "stale_attempt_no_p2_effect": true,
+    "decoy_effect_confirmed": false,
+    "p2_unchanged_by_decoy": true,
+    "p2_positive_effect": true
+  },
+  "sources": {
+    "runner_sha256": "d33683b3b2599c112c41de4e256e4f8f12c96f415ed1e0364b5133aec6be1c0b",
+    "initial_auditor_sha256": "cbee297fb16e626cd5c769daac6856ee3016536e9882ae24759ab519d320721f",
+    "report_auditor_sha256": "f0580e148f780a5cc111b1d17c7886d2c62adb3c3bce7cbe389cadb5debd1d08"
+  },
+  "observed": {
+    "old": {
+      "generation": 1,
+      "pid": 9,
+      "xid": 2097155
+    },
+    "p2": {
+      "generation": 2,
+      "pid": 138,
+      "xid": 4194307
+    },
+    "decoy": {
+      "generation": 2,
+      "pid": 139,
+      "xid": 2097155
+    },
+    "old_send_returncode": 0,
+    "decoy_send_returncode": 0,
+    "p2_send_returncode": 0,
+    "decoy_effect": false,
+    "p2_effect": true
+  },
+  "excluded_claims": [
+    "production receipt-admission proof",
+    "cross-application reliability",
+    "human tempo",
+    "product readiness",
+    "end-to-end benefit"
+  ]
+}
