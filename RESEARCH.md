@@ -64,6 +64,18 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+### Issue #3850 — bounded static validation detail, Obstac facade allocation
+
+The [retained experiment](research/experiments/issue_3850_static_validation_obstac_v1/RESULT.md)
+ran one four-row Linux/arm64 OrbStack allocation against the exact open PR
+#3853 head. The two observed malformed observe shapes returned bounded field
+diagnostics after `INVALID_PROGRAM`; valid-program refusal was not mislabeled,
+and unsupported caller text was not echoed. The independent raw-only audit
+passed all four retained rows. Scope is limited to the public dispatch facade
+with a mocked refusing session: `backend_emissions=0` is the mock's recorded
+value, not live native-backend evidence. User/model recovery benefit, actual
+native emission behavior and operation-index diagnostics remain untested.
+
 ### MAP01 admission-to-physical-input audit supplement
 
 The [v2 offline audit supplement](research/doom/map01_v12_physical_occupancy_audit_v2/README.md)
