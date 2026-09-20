@@ -75,6 +75,7 @@ def main() -> int:
     proc: subprocess.Popen[bytes] | None = None
     d: display.Display | None = None
     error: str | None = None
+    fixture_signal: int | None = None
     effect_rows: list[dict[str, object]] = []
     event_rows: list[dict[str, object]] = []
     audit: dict[str, object] | None = None
@@ -158,6 +159,7 @@ def main() -> int:
             except subprocess.TimeoutExpired:
                 proc.kill()
                 proc.wait(timeout=3)
+            fixture_signal = proc.returncode
         fixture_log.close()
 
     result = {
@@ -170,6 +172,7 @@ def main() -> int:
         "effect_receipt_count": len(effect_rows),
         "audit": audit,
         "fixture_exit_code": None if proc is None else proc.returncode,
+        "fixture_terminated_by_probe": fixture_signal == -15,
         "fixture_reaped": proc is None or proc.poll() is not None,
         "error": error,
     }
