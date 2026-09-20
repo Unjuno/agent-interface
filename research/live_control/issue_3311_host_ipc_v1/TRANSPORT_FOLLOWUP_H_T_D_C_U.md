@@ -131,3 +131,15 @@ Main advanced four commits while hosted CI was queued. `git merge-tree` showed a
 **C** — All tests are deterministic or synthetic/failure-boundary tests; no real model, GUI task, or authority-bearing input ran. Raw #01/#02 bundles and manifests remain unchanged. The earlier attempted broad distribution suite inside the minimal image failed only because `git` is absent there; the host distribution suite and the correct Git-independent OrbStack selection passed.
 
 **U** — Latest-head hosted CI must be rerun after this main sync and the branch pushed; review comments must be refreshed. #3489 is still gated, so no host Codex schema call was made.
+
+### Review follow-up: correlate broker response and runner events (2026-09-20)
+
+**H** — A retained transport PASS must demonstrate that the exact event stream returned over the shared-volume IPC response is the stream consumed and retained by the container runner; refreshing the raw manifest alone must not conceal a semantic mismatch.
+
+**T** — Add an independent exact JSONL event comparison between `<request_id>.response.jsonl` and `out/runner/events.jsonl`, failing closed for a missing or malformed response. Add a host adversarial retained-bundle test that changes the broker response, regenerates only the temporary copy's manifest, and requires audit failure; add a Git-independent unit test for match, mismatch, malformed, and missing response cases. Re-audit both immutable retained bundles and regenerate their existing portable sidecar reports.
+
+**D** — Both original OrbStack transport bundles pass the updated independent audit with response correlation and immutable raw-manifest checks. The deliberately modified temporary copy fails `runner_events_match_broker_response` even though its regenerated test manifest matches. The full host workflow-equivalent suite and the pinned OrbStack `--network none` Docker-independent suite are recorded in the PR validation update; no bundle bytes were changed.
+
+**C** — Historical `evidence/**` and `raw-sha256.json` remain unchanged. The adversarial copy is temporary. Container validation uses the pinned Linux/arm64 image with `/repo` read-only and network disabled; source-history checks run in the host/CI checkout because the minimal runtime image intentionally has no Git. The evidence remains fake-CLI transport only.
+
+**U** — This repairs the auditor's event-lineage gap; it does not exercise a real host Codex call or establish schema endpoint compatibility. Per #3489, that one-shot model preflight remains gated on #3487 merge and required latest-head CI green. #3311's formal cold/warm/invalidation/repair allocation remains separately unperformed.

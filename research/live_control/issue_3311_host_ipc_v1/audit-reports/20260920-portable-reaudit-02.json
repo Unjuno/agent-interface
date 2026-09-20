@@ -6,6 +6,7 @@
     "orbstack_context": true,
     "network_disabled": true,
     "image_id_pinned": true,
+    "run_image_matches_inspect": true,
     "container_exit_zero": true,
     "broker_exit_zero": true,
     "one_non_authoritative_request": true,
@@ -14,7 +15,9 @@
     "broker_reported_success": true,
     "runner_reported_non_authority": true,
     "synthetic_event_sequence": true,
+    "runner_events_match_broker_response": true,
     "source_hashes_match": true,
-    "stderr_empty": true
+    "stderr_empty": true,
+    "raw_manifest_matches": true
   }
 }

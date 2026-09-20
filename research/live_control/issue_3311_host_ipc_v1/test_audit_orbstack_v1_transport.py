@@ -14,6 +14,15 @@ from research.live_control.issue_3311_host_ipc_v1 import audit_orbstack_v1_trans
 from research.live_control.issue_3311_host_ipc_v1.audit_orbstack_v1_transport import verify_raw_manifest
 
 
+def _refresh_raw_manifest_for_test(root: Path) -> None:
+    manifest = {
+        path.relative_to(root).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in sorted(root.rglob("*"))
+        if path.is_file() and path.name not in {"raw-sha256.json", "audit.json"}
+    }
+    (root / "raw-sha256.json").write_text(json.dumps(manifest, indent=2) + "\n")
+
+
 class RawManifestAuditTest(unittest.TestCase):
     def test_manifest_detects_tampering_without_rewriting_baseline(self):
         with tempfile.TemporaryDirectory(prefix="3311-v1-manifest-") as temp:
@@ -99,18 +108,51 @@ class RetainedEvidenceAuditTest(unittest.TestCase):
             command[command.index(image_ref)] = "other-image:unrelated"
             command_path.write_text(json.dumps(command, indent=2) + "\n")
 
-            manifest = {}
-            for path in sorted(target.rglob("*")):
-                if path.is_file() and path.name not in {"raw-sha256.json", "audit.json"}:
-                    relative = path.relative_to(target).as_posix()
-                    manifest[relative] = hashlib.sha256(path.read_bytes()).hexdigest()
-            (target / "raw-sha256.json").write_text(json.dumps(manifest, indent=2) + "\n")
+            _refresh_raw_manifest_for_test(target)
 
             report = auditor.audit(target)
             self.assertEqual(report["checks"]["image_id_pinned"], True)
             self.assertEqual(report["checks"]["raw_manifest_matches"], True)
             self.assertEqual(report["checks"]["run_image_matches_inspect"], False)
             self.assertEqual(report["disposition"], "FAIL_AUDIT")
+
+    def test_audit_correlates_runner_events_with_broker_response(self):
+        source_root = Path(__file__).resolve().parent
+        name = "20260920-v1-transport-audit-01"
+        with tempfile.TemporaryDirectory(prefix="3311-v1-response-binding-") as temp:
+            package = Path(temp) / source_root.name
+            evidence = package / "evidence"
+            evidence.mkdir(parents=True)
+            shutil.copy2(source_root / "source-revisions.json", package / "source-revisions.json")
+            target = evidence / name
+            shutil.copytree(source_root / "evidence" / name, target)
+
+            response_path = next((target / "ipc").glob("*.response.jsonl"))
+            response = [json.loads(line) for line in response_path.read_text().splitlines()]
+            response[1]["item"]["text"] = "tampered response, manifest refreshed"
+            response_path.write_text("".join(json.dumps(row) + "\n" for row in response))
+            _refresh_raw_manifest_for_test(target)
+
+            report = auditor.audit(target)
+            self.assertTrue(report["checks"]["raw_manifest_matches"])
+            self.assertFalse(report["checks"]["runner_events_match_broker_response"])
+            self.assertEqual(report["disposition"], "FAIL_AUDIT")
+
+
+class ResponseCorrelationTest(unittest.TestCase):
+    def test_response_must_exactly_match_runner_events(self):
+        with tempfile.TemporaryDirectory(prefix="3311-v1-response-events-") as temp:
+            path = Path(temp) / "response.jsonl"
+            events = [
+                {"type": "thread.started", "thread_id": "synthetic"},
+                {"type": "turn.completed", "usage": {"input_tokens": 1}},
+            ]
+            path.write_text("".join(json.dumps(row) + "\n" for row in events))
+            self.assertTrue(auditor.response_matches_runner(path, events))
+            self.assertFalse(auditor.response_matches_runner(path, events[:1]))
+            path.write_text("not-json\n")
+            self.assertFalse(auditor.response_matches_runner(path, events))
+            self.assertFalse(auditor.response_matches_runner(Path(temp) / "missing", events))
 
 
 if __name__ == "__main__":

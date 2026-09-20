@@ -67,6 +67,16 @@ def verify_raw_manifest(root: Path) -> bool:
     return manifest == actual
 
 
+def response_matches_runner(response_path: Path, runner_events: list[dict]) -> bool:
+    """Require the runner's retained events to equal the broker's IPC response."""
+    try:
+        response_events = [json.loads(line) for line in
+                           response_path.read_text(encoding="utf-8").splitlines()]
+    except (OSError, json.JSONDecodeError):
+        return False
+    return response_events == runner_events
+
+
 def audit(root: Path) -> dict:
     root = root.resolve()
     manifest_matches = verify_raw_manifest(root)
@@ -81,6 +91,7 @@ def audit(root: Path) -> dict:
     process = json.loads((root / "out/runner/process.json").read_text())
     events = [json.loads(line) for line in
               (root / "out/runner/events.jsonl").read_text().splitlines()]
+    response_path = root / "ipc" / f"{request_id}.response.jsonl"
     source = json.loads((root / "source-sha256.json").read_text())
     revisions_path = root.parents[1] / "source-revisions.json"
     revision = json.loads(revisions_path.read_text())[root.name]
@@ -100,6 +111,7 @@ def audit(root: Path) -> dict:
         "broker_reported_success": broker["returncode"] == 0 and broker["host_cli_invoked"] is True and broker["authority_granted"] is False,
         "runner_reported_non_authority": process["authority_granted"] is False and process["boundary"] == "container-to-host-model-ipc",
         "synthetic_event_sequence": [event["type"] for event in events] == ["thread.started", "item.completed", "turn.completed"],
+        "runner_events_match_broker_response": response_matches_runner(response_path, events),
         "source_hashes_match": source["broker_sha256"] == git_source_sha(revision, "runtime/host_model_ipc_broker_v1.py") and source["runner_sha256"] == git_source_sha(revision, "research/live_control/container_host_model_ipc_runner_v1.py") and source["test_sha256"] == git_source_sha(revision, "research/live_control/issue_3311_host_ipc_v1/test_orbstack_v1_transport.py"),
         "stderr_empty": not (root / "container.stderr.txt").read_text().strip() and not (root / "broker.stderr.txt").read_text().strip(),
         "raw_manifest_matches": manifest_matches,
