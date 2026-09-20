@@ -6,6 +6,18 @@ from runtime.cli_v1.observe import observe
 
 
 class ObserveTests(unittest.TestCase):
+    def test_initialization_exception_returns_observation_failure_without_retry(self):
+        for error in (OSError('connection refused'), OverflowError('invalid display'), RuntimeError('setup')):
+            with self.subTest(error=error), mock.patch(
+                    'runtime.cli_v1.observe.open_session', side_effect=error) as opened:
+                row = self.call()
+                opened.assert_called_once()
+                self.assertEqual(row['status'], 'observation_failed')
+                self.assertEqual(row['failure_phase'], 'backend_initialization')
+                self.assertEqual(row['error'], repr(error))
+                self.assertFalse(row['input_dispatched'])
+                self.assertNotIn('observation', row)
+
     def call(self, **options):
         return observe({"fixture": 42}, target="fixture", frame="window_client",
                        region=options.pop("region", [0, 0, 400, 180]), **options)

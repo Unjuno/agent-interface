@@ -23,6 +23,22 @@ class FakeSession:
 
 
 class ApiTests(unittest.TestCase):
+    def test_initialization_error_returns_receipt_and_preserves_repeat_source(self):
+        request = {'ops': [{'op': 'key_chord', 'keys': ['Left'], 'repeat': 3}]}
+        for error in (OSError('connection refused'), OverflowError('invalid display'), RuntimeError('setup')):
+            with self.subTest(error=error), mock.patch(
+                    'runtime.cli_v1.api.open_session', side_effect=error) as opened:
+                row = dispatch(request, {'fixture': 123},
+                               current_observation_seq=1, current_binding_revision=0)
+                opened.assert_called_once()
+                self.assertEqual(row['status'], 'runtime_failed')
+                self.assertEqual(row['failure_phase'], 'backend_initialization')
+                self.assertEqual(row['error'], repr(error))
+                self.assertEqual(row['compilation']['source_program'], request)
+                self.assertEqual(row['compilation']['operation_sources'], [0, 0, 0])
+                self.assertNotIn('result', row)
+                self.assertNotIn('cleanup_verified', row)
+
     def test_key_repeat_expands_once_and_retains_source_mapping_on_failure(self):
         from copy import deepcopy
         from runtime.core_v1.test_contract import program as fixture_program

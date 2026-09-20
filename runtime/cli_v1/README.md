@@ -66,6 +66,11 @@ not establish that retrying the instruction is safe or authorize input replay.
 
 Each `dispatch` owns its one-shot session and closes its native backend connection
 when that backend exposes `close`, including after refusal or an execution error.
+If backend construction raises before returning a session, `dispatch` returns
+`runtime_failed` and `observe` returns `observation_failed`, both with the original
+exception text and `failure_phase=backend_initialization`. No retry is made and no
+cleanup success is inferred for a session that was never returned. Expected
+selection/dependency refusals continue to use `backend_unavailable`.
 A close failure returns `runtime_failed` with `cleanup_error`, preserving any
 execution result or original error. The CLI consequently exits nonzero. This
 connection cleanup does not replace the backend's input-release checks.
