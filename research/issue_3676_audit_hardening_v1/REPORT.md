@@ -17,3 +17,16 @@ Exact retained evidence hashes:
 Docker Desktop was installed but its service remained `Stopped/Manual`; `Start-Service` could not open the service, and `docker info` returned no daemon metadata. No container was launched. Therefore the planned separate-container validation is STOP, not PASS; no formal allocation or X11/input work was run.
 
 This does not repeat the OrbStack allocation, does not alter the predecessor raw/freeze/audit, and does not establish XRes guard correctness beyond the predecessor scope. Docker Desktop is installed, but the daemon did not become available on this host; no container test was run. Separate-process/container validation remains outstanding.
+
+## Chronological addendum — exact-source container validation
+
+PR #3773 later validated this report's final source commit
+`de9acd02b50fac4e9b8c46ed961d923181cbbece` in two fresh, network-disabled
+Linux/amd64 containers. The retained result is 5/5 tests passed, 21/21
+mutation controls rejected, and a byte-identical raw-only CLI result. The
+immutable source manifest, transcript, and outputs are in
+`research/integration/issue_3690_docker_validation_v1/` on `main`. The host
+was OrbStack on ARM64; this does not satisfy the distinct Docker Desktop
+host-integration gate, which remains open. The earlier local STOP above is
+historical and unchanged; the addendum records the later, separately scoped
+validation.
