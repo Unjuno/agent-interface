@@ -105,15 +105,19 @@ def intent_gate(proposal_intent, proposal_intent_version, current_intent, curren
 
 def construction_only():
     torch.set_num_threads(1)
-    x = states(SEED_TRAIN, 8)
-    i = torch.arange(2, dtype=torch.long).repeat(8)
-    y = teacher(x.repeat_interleave(2, dim=0), i)
+    x = torch.tensor([[0.0, 0.0, 0.10, 1.0],
+                      [0.0, 0.0, 0.10, 1.0],
+                      [-0.8, 0.0, 0.10, 1.0],
+                      [0.0, 0.0, 0.95, 1.0]], dtype=torch.float32)
+    i = torch.tensor([0, 1, 0, 1], dtype=torch.long)
+    y = teacher(x, i)
     model = Needle()
-    shape = tuple(model(inputs(x.repeat_interleave(2, dim=0), i, True)).shape)
+    shape = tuple(model(inputs(x, i, True)).shape)
+    paired = states(SEED_TRAIN, 8).repeat_interleave(2, dim=0)
     tests = {
-        "label_vocab": set(y.tolist()) == {0, 1, 2, 3},
-        "output_shape": shape == (16, 4),
-        "paired_state_order": torch.equal(x.repeat_interleave(2, dim=0)[::2], x.repeat_interleave(2, dim=0)[1::2]),
+        "label_vocab": y.tolist() == [0, 1, 2, 3],
+        "output_shape": shape == (4, 4),
+        "paired_state_order": torch.equal(paired[::2], paired[1::2]),
         "matched_context_proposes": intent_gate("target-left-v1", 1, "target-left-v1", 1, 7, 7) == "PROPOSE",
         "stale_intent_yields": intent_gate("target-left-v1", 1, "target-left-v1", 2, 7, 7) == "YIELD",
         "stale_evidence_yields": intent_gate("target-left-v1", 1, "target-left-v1", 1, 7, 8) == "YIELD",
