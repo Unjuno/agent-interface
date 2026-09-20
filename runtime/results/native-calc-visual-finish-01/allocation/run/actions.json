@@ -1,0 +1,443 @@
+[
+  {
+    "stage": 1,
+    "interaction": "keyboard",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "event.feedback",
+        "input.keyboard",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 33027799412581,
+        "ended_ns": 33027886309987,
+        "emissions": 20,
+        "program_emissions": 20,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 33027886306318
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ]
+      },
+      "recovery_required": false,
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 2,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            48,
+            190
+          ],
+          "observed_box": [
+            36,
+            183,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 2,
+          "valid_until_ns": 33029230764523,
+          "patch_sha256": "0e9ec5a4a6ea973b83614685315e202730c43e30ce71f2dabc2c42b84fa4fd79",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 3,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            48,
+            190
+          ],
+          "observed_box": [
+            36,
+            183,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 3,
+          "valid_until_ns": 33029299880341,
+          "patch_sha256": "0e9ec5a4a6ea973b83614685315e202730c43e30ce71f2dabc2c42b84fa4fd79",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "started_ns": 33027705779071,
+    "feedback": {
+      "status": "needs_review",
+      "task_success": null,
+      "authority_granted": false,
+      "input_dispatched": false,
+      "expected_title": "sheet.xlsx \u2014 LibreOffice Calc",
+      "rejected_titles": [],
+      "samples": [
+        {
+          "known_ns": 33027898113762,
+          "title": "sheet.xlsx \u2014 LibreOffice Calc",
+          "binding": {
+            "focus": 8389124,
+            "surface": 8389124,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          }
+        }
+      ],
+      "started_ns": 33027896371281,
+      "error": "X11BackendError('binding changed during native capture')",
+      "ended_ns": 33027944792523
+    },
+    "ended_ns": 33027948256245,
+    "window_review": {
+      "status": "reviewed",
+      "authority_granted": false,
+      "input_dispatched": false,
+      "previous_scope": "native-x11:c40fc2b3e8ab42cfb8fe45e380c37418",
+      "previous_binding_revision": 0,
+      "binding_revision": 1,
+      "scope": "native-x11:efdd611c46f147f4af7046f9e01953a9",
+      "previous_window_id": 8389124,
+      "requested_window_id": 8390610,
+      "started_ns": 33027954396393,
+      "observation": {
+        "sequence": 4,
+        "binding_revision": 1,
+        "capture_ns": 33027954876795,
+        "pointer_binding": {
+          "focus": 8390610,
+          "surface": 8390610,
+          "geometry": [
+            386,
+            322,
+            507,
+            174
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "38c37b24d60d7eefe59621289f2d4296449c7f2ef4b502ef3b1dd1f2d9d50d0f",
+          "width": 1280,
+          "height": 800,
+          "target": "app",
+          "native_window_id": 8390610,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 33027954876795,
+          "capture_ended_ns": 33027959603295,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-calc-visual-finish-01/run/bridge/images/e3347da1c47343f281faedebe15d5e0b.png",
+            "sha256": "9dbcc37bfff858b750a7f68c1629760f14d54a16b98354f2b9975566bbf74362",
+            "bytes": 61257,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "38c37b24d60d7eefe59621289f2d4296449c7f2ef4b502ef3b1dd1f2d9d50d0f"
+          }
+        }
+      },
+      "ended_ns": 33028012655265
+    },
+    "through_review_ns": 33028016116236
+  },
+  {
+    "stage": 3,
+    "interaction": "click",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "display.geometry",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 33064048779003,
+        "ended_ns": 33064242422662,
+        "emissions": 23,
+        "program_emissions": 3,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 33064242419351
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "recovery_required": false,
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 6,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_3",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_3",
+          "point": [
+            783,
+            463
+          ],
+          "observed_box": [
+            771,
+            456,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 6,
+          "valid_until_ns": 33065473378853,
+          "patch_sha256": "efcfe569150c7a518408a1f4d6d5e2dd73d5c9128fbeebc614c61cdad68fd394",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 7,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_3",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_3",
+          "point": [
+            783,
+            463
+          ],
+          "observed_box": [
+            771,
+            456,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 7,
+          "valid_until_ns": 33065549218238,
+          "patch_sha256": "efcfe569150c7a518408a1f4d6d5e2dd73d5c9128fbeebc614c61cdad68fd394",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 8,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_3",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_3",
+          "point": [
+            783,
+            463
+          ],
+          "observed_box": [
+            771,
+            456,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 8,
+          "valid_until_ns": 33065617002097,
+          "patch_sha256": "efcfe569150c7a518408a1f4d6d5e2dd73d5c9128fbeebc614c61cdad68fd394",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 9,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_3",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_3",
+          "point": [
+            783,
+            463
+          ],
+          "observed_box": [
+            771,
+            456,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 9,
+          "valid_until_ns": 33065676839346,
+          "patch_sha256": "efcfe569150c7a518408a1f4d6d5e2dd73d5c9128fbeebc614c61cdad68fd394",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "started_ns": 33063968404578,
+    "feedback": {
+      "status": "needs_review",
+      "task_success": null,
+      "authority_granted": false,
+      "input_dispatched": false,
+      "expected_title": "sheet.xlsx \u2014 LibreOffice Calc",
+      "rejected_titles": [],
+      "samples": [],
+      "started_ns": 33064250657161,
+      "error": "BadWindow(<Xlib.display._BaseDisplay object at 0x7598759aecf0>, b'\\x00\\x03\\xa6\\x00\\xd2\\x07\\x80\\x00\\x00\\x00\\x14\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00')",
+      "ended_ns": 33064251492572
+    },
+    "ended_ns": 33064257074756,
+    "window_review": {
+      "status": "reviewed",
+      "authority_granted": false,
+      "input_dispatched": false,
+      "previous_scope": "native-x11:3bd689c759084b7d99e891042cc919c7",
+      "previous_binding_revision": 2,
+      "binding_revision": 3,
+      "scope": "native-x11:7bc29e3d69f94e6b895585ff7749ac20",
+      "previous_window_id": 8390610,
+      "requested_window_id": 8389124,
+      "started_ns": 33064267794017,
+      "observation": {
+        "sequence": 10,
+        "binding_revision": 3,
+        "capture_ns": 33064269905890,
+        "pointer_binding": {
+          "focus": 8389124,
+          "surface": 8389124,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "3911003493a6e148ce314d5e02e44c68b844ab3992c32ab6039d84f86908888e",
+          "width": 1280,
+          "height": 800,
+          "target": "app",
+          "native_window_id": 8389124,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 33064269905890,
+          "capture_ended_ns": 33064276459956,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-calc-visual-finish-01/run/bridge/images/454b909e1260429687a901b224842f46.png",
+            "sha256": "733a1b7d153793d92c3e29d1be6194ddd608d3b0356433331fc7c089e0d87bf7",
+            "bytes": 71883,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "3911003493a6e148ce314d5e02e44c68b844ab3992c32ab6039d84f86908888e"
+          }
+        }
+      },
+      "ended_ns": 33064332727904
+    },
+    "through_review_ns": 33064337967309
+  }
+]
