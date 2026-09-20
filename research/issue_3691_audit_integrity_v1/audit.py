@@ -170,8 +170,13 @@ def audit(raw_path, freeze_path, study_freeze_path):
             changed = copy.deepcopy(raw)
             mutate(changed)
             controls[name] = bool(errors_for(changed))
-        controls["replacement_raw"] = hashlib.sha256(raw_bytes + b" ").hexdigest() != study.get("predecessor_raw_sha256")
-        controls["replacement_freeze"] = hashlib.sha256(freeze_bytes + b" ").hexdigest() != study.get("predecessor_freeze_sha256")
+        replacement = copy.deepcopy(raw)
+        replacement["events"][0]["identity"]["pixel_sha256"] = "0" * 64
+        replacement["events"][1]["identity"]["pixel_sha256"] = "0" * 64
+        replacement_bytes = json.dumps(replacement, sort_keys=True).encode("utf-8")
+        controls["replacement_raw"] = hashlib.sha256(replacement_bytes).hexdigest() != study.get("predecessor_raw_sha256")
+        replacement_freeze = freeze_bytes + b" "
+        controls["replacement_freeze"] = hashlib.sha256(replacement_freeze).hexdigest() != study.get("predecessor_freeze_sha256")
         if not all(controls.values()):
             errors.append("a frozen corruption control escaped rejection")
     return {"status": "PASS_OFFLINE_STRUCTURAL_AUDIT" if not errors else "FAIL_AUDIT",
