@@ -27,7 +27,7 @@ The preregistered failure gate is met: distinct process identity, same XID/geome
 
 ## Audit and retained evidence
 
-A separate network-none auditor reconstructed the disposition, checked freeze/source-manifest identities, exact retained PNG manifest and pixel identity, cleanup/release receipts, and five corruption controls.
+A separate network-none auditor reconstructed the disposition, checked freeze/source-manifest identities, exact retained PNG manifest and pixel identity, cleanup/release receipts, and five corruption controls. The ten PNG files in this run were byte-identical; one representative full-screen PNG is retained as base64 in `identical_screen_capture.png.base64`. (The independent 240×160 window bytes are represented by the two equal hashes in raw.json.)
 
 - Raw record SHA-256: `3e678ebc161b2fa52e7dfa80f23a10eb556cc71e0c0d78ecb1532b11eda0e400`
 - Audit SHA-256: `b657fdae455ab658c0432e55da59c231897fe68fe6a977aaed7ad74f92928c3b`
