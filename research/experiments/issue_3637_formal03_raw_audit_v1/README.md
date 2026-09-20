@@ -12,12 +12,11 @@ This successor independently re-adjudicates the merged #3626 formal-03 record wi
 
 ## Reproduce
 
-From the repository root, after installing the already-declared `research/requirements.txt` dependency:
+From the repository root, after installing the already-declared `research/requirements.txt` dependency. The committed frozen manifest already exists; do not run manifest capture as part of normal reproduction:
 
 ```bash
-python research/experiments/issue_3637_formal03_raw_audit_v1/src/audit.py --capture-manifest --input-commit 961f14b836e549ca5f6cfb6bf3ef4b470e91b1b5
 python research/experiments/issue_3637_formal03_raw_audit_v1/src/audit.py
 python -m unittest discover -s research/experiments/issue_3637_formal03_raw_audit_v1/src -v
 ```
 
-The first command is a one-time, exclusive manifest capture from the merged main commit; it refuses to overwrite an existing manifest. Later runs verify that exact frozen path list and its Git blob hashes. The first exploratory audit against Windows checkout bytes is preserved as `evidence/audit_result.json` and `evidence/predecessor_artifact_manifest.json`; it returned HOLD because checkout line-ending conversion changed hashes. The corrected audit reads predecessor evidence from Git blobs, not the Windows checkout. The contact sheet is a human-readable rendering of those hash-verified raw pixels; it is not a new GUI observation.
+The `--capture-manifest` option is only for a one-time setup when deliberately creating a new manifest at a separate, nonexistent path; it refuses to overwrite an existing manifest. For example, use `--manifest /tmp/issue-3637-manifest.json` and then pass that same path to the audit command. Do not capture over the committed manifest. The first exploratory audit against Windows checkout bytes is preserved as `evidence/audit_result.json` and `evidence/predecessor_artifact_manifest.json`; it returned HOLD because checkout line-ending conversion changed hashes. The corrected audit reads predecessor evidence from Git blobs, not the Windows checkout. The contact sheet is a human-readable rendering of those hash-verified raw pixels; it is not a new GUI observation.
