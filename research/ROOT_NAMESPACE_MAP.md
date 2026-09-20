@@ -21,6 +21,7 @@ New work should normally use a category directory. Existing direct-root paths re
 | Research scope | Preferred location |
 |---|---|
 | Analytical proof / exact derivation / identifiability | [`analysis/`](analysis/) |
+| Offline audit and provenance review bundles | [`audits/`](audits/) |
 | Scoped quantitative/formal semantics | [`measurement/`](measurement/) |
 | Cross-component composition | [`integration/`](integration/) |
 | Safe overlap / phase scheduling / concurrency | [`concurrency/`](concurrency/) |
@@ -41,6 +42,7 @@ New work should normally use a category directory. Existing direct-root paths re
 - [`session_handoff/`](session_handoff/)
 - [`gtk_fresh_post_effect_2673/`](gtk_fresh_post_effect_2673/)
 - [`results/`](results/) — retained native-handle result bundles; each bundle's report defines its scope and status.
+- [`audits/`](audits/) — retained independent audit/review bundles; use the referenced source snapshot and allocation to interpret each result.
 
 - [`x11/`](x11/)
 
@@ -166,10 +168,16 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 ### Recent additive namespaces
 
 - [`chromium/`](chromium/) — retained Chromium live-control, identity, and recovery experiments; consult each child report for scope and disposition.
+- [`cli_fault_residue_3711_revalidation_v1/`](cli_fault_residue_3711_revalidation_v1/) — retained Issue #3711 CLI fault-residue revalidation; consult its report for exact scope and disposition.
+- [`issue_3733_german_xkb_text_orbstack_v3/`](issue_3733_german_xkb_text_orbstack_v3/) — retained Issue #3733 German XKB formula-delivery experiment and immutable formal/audit evidence; consult its preregistration and result disposition before making claims.
+- [`issue_3784_explicit_x11_receiver_v1/`](issue_3784_explicit_x11_receiver_v1/) — Issue #3784 explicit InputOnly receiver experiment; formal-01 stopped at its receiver-control oracle, so German formula delivery remains untested.
+- [`issue_3784_explicit_x11_receiver_v2/`](issue_3784_explicit_x11_receiver_v2/) — Issue #3791 corrected-receiver successor; formal-02 stopped at the baseline layout parser, so candidate delivery remains untested.
+- [`needle_lora_3441_online_stream_v1/`](needle_lora_3441_online_stream_v1/) — retained Issue #3441 online-stream needle LoRA experiment; consult its report for exact scope and disposition.
 - [`verification/`](verification/)
 - [`issue_3349_event_replay_contract_v1/`](issue_3349_event_replay_contract_v1/) — retained Issue #3349 replay-contract evidence.
 - [`issue_3676_audit_hardening_v1/`](issue_3676_audit_hardening_v1/) — retained Issue #3676 audit-hardening evidence.
 - [`issue_3691_manifest_root_v1/`](issue_3691_manifest_root_v1/) — retained Issue #3691 manifest-root reproduction record.
+- [`needle_lora_3441_pilot_04_multiskill/`](needle_lora_3441_pilot_04_multiskill/) — retained Issue #3701 synthetic two-skill adapter-interference pilot.
 - [`docker_ipc_schema_bridge_2818_v1/`](docker_ipc_schema_bridge_2818_v1/)
 - [`semantic_checkpoint_contract_2661_v1/`](semantic_checkpoint_contract_2661_v1/)
 
@@ -178,3 +186,10 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 
 - [`needle_lora_3441_pilot_02/`](needle_lora_3441_pilot_02/) — retained global-adapter forgetting result.
 - [`needle_lora_3441_pilot_04_multiskill/`](needle_lora_3441_pilot_04_multiskill/) — retained Issue #3701 synthetic two-skill adapter-interference pilot; consult its README and FREEZE for evidence scope.
+
+
+### Recent direct-root evidence
+
+- [`cli_fault_residue_3711_revalidation_v1/`](cli_fault_residue_3711_revalidation_v1/) — retained Issue #3711 report-temp fault revalidation.
+- [`needle_lora_3441_online_stream_v1/`](needle_lora_3441_online_stream_v1/) — retained Issue #3769 streamed online role-adapter experiment.
+- [`needle_role_graph_3780_compact_v1/`](needle_role_graph_3780_compact_v1/) — retained Issue #3780 role-adapter graph result and audits.

@@ -32,6 +32,7 @@ This is a navigation view, not a mandatory runtime pipeline. Individual studies 
 | Last-effect receipt | [`map01_last_effect_receipt_v1/`](map01_last_effect_receipt_v1/) |
 | Last-effect representation | [`map01_last_effect_representation_v1/`](map01_last_effect_representation_v1/), [`map01_last_effect_representation_v31_r2/`](map01_last_effect_representation_v31_r2/) |
 | Intent-preserving Needle distillation | [intent_distillation_3458_pilot_01/](intent_distillation_3458_pilot_01/) |
+| Online role-adapter update | [needle_lora_3441_online_stream_v1/](../needle_lora_3441_online_stream_v1/) — host-CPU online run; both online and batch misses the 0.90 gate; not container or runtime evidence. |
 | Representation collision / ambiguity | [`map01_representation_collision_v1/`](map01_representation_collision_v1/) |
 
 For lower-level local decision mechanics, route cost, TTC admission, typed evidence, and useful-work-per-frontier-boundary studies, use [`../local_system1/`](../local_system1/).
@@ -59,3 +60,8 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Multi-seed hybrid Needle successor
 
 - [`intent_distillation_3458_pilot_04_multiseed/`](intent_distillation_3458_pilot_04_multiseed/) — three-seed confirmatory synthetic result.
+
+
+## Learned role-adapter graph
+
+- [`needle_role_graph_3780_compact_v1/`](../needle_role_graph_3780_compact_v1/REPORT.md) — receipt-gated A→B→C LoRA role graph; scoped synthetic PASS with independent audit and an explicit provenance-label warning. #3778's separate output-capture STOP is preserved.
