@@ -1,11 +1,8 @@
-# Native MCP container preparation — execution unverified
+# Native MCP container recipe
 
 This recipe prepares the existing private X11 harness and optional MCP adapter
-for an isolated container. It has not been built or run in this task. The active
-Docker version query returned no server result; Docker processes existing is
-not evidence of a functioning engine. The user instructed this task to continue
-WSL integration without restarting Docker. Existing WSL results do not satisfy
-the container execution gate in issue #3352.
+for an isolated container. The GUI harness calls `wmctrl` from
+`PrivateSession.windows()`, so that package is an explicit runtime dependency.
 
 Build from the repository root when an engine is available:
 
@@ -47,9 +44,6 @@ a cleanup guarantee. Never repeat a submit to recover a missing response.
 No automatic cleanup/removal command is provided because failed-run evidence
 must be preserved before deciding what to remove.
 
-H: this environment may reproduce the existing managed pacing integration.
-T: pending actual image build and primary-agent GUI use.
-D: preparation source only; no container trace or image digest exists yet.
-C: HOLD_EXECUTION_UNVERIFIED, not a completed experiment or merge-gate PASS.
-U: build compatibility, private X11 execution, image delivery, shutdown and
-container-versus-WSL behavior remain unverified.
+Record each build/run as a separate immutable evidence identity. A build failure,
+missing GUI dependency, or incomplete cleanup is a STOP/HOLD result, not a task
+success. Do not reuse a consumed allocation after failure.

@@ -1,0 +1,58 @@
+{
+  "allocation": "needle-lora-3441-pilot-02",
+  "outcome": "FAIL_OLD_SKILL_PRESERVATION",
+  "source_sha256": "8B5C23E187465037A291E180E8002FA6BBDE0E1CB80373868EA7CA046AE066FF",
+  "environment": {
+    "device": "RTX 3080 Laptop GPU, 16 GiB",
+    "torch": "2.5.1+cu121",
+    "cuda": "12.1",
+    "execution": "Windows host GPU fallback; Docker STOP (content-store blob I/O)"
+  },
+  "allocation": {
+    "seed": 3441,
+    "features": 8,
+    "hidden": 16,
+    "classes": 4,
+    "support_rows": 16,
+    "heldout_rows_per_skill": 4096,
+    "adapt_steps": 120,
+    "lora_rank": 2
+  },
+  "measurements": {
+    "pretrain_ms": 644.9873,
+    "base_accuracy_old": 0.9685,
+    "base_accuracy_new_before_update": 0.01782,
+    "lora_update_ms": 134.4858,
+    "lora_trainable_parameters": 40,
+    "lora_accuracy_new": 0.922607,
+    "lora_accuracy_old": 0.043457,
+    "full_finetune_update_ms": 122.8997,
+    "full_finetune_trainable_parameters": 212,
+    "full_finetune_accuracy_new": 0.27295,
+    "full_finetune_accuracy_old": 0.67212,
+    "latency_summary": {
+      "blocks": 5,
+      "synchronized_calls_per_block": 200,
+      "p50_of_block_means_ms": 0.14594,
+      "maximum_of_block_means_ms": 0.181478,
+      "p95_interpretation": "not statistically meaningful; only five block means"
+    },
+    "cuda_peak_memory_bytes": null,
+    "cuda_memory_status": "unavailable on Windows WDDM"
+  },
+  "gates": {
+    "matching_intent_scope_epoch": "PROPOSE",
+    "stale_epoch": "YIELD",
+    "wrong_intent": "YIELD",
+    "wrong_scope": "YIELD",
+    "base_immutable": true,
+    "preregistered_both_skill_accuracy_at_least_0_90": false
+  },
+  "scope_limits": [
+    "single synthetic four-class task and seed",
+    "no GUI, vision, action authority, or real-time deployment",
+    "no adapter snapshot serialization/reload/rollback validation",
+    "host execution is not container verification",
+    "raw device-level output file was not retained; values transcribed from the contemporaneous GitHub issue record"
+  ]
+}

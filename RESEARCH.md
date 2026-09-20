@@ -1464,4 +1464,33 @@ a history-needed OpenTTD/Mindustry test; it is not promoted over current-only.
 
 One pinned linux/arm64/private-Xvfb allocation observed XRes 1.2 distinguishing p1 PID/start ticks from p2 after exact XID, geometry, and pixel reuse. The old alias failed closed with zero bridge/backend emissions and no p2 effect; a fresh alias produced the expected independent effect and verified release. The independent raw-only audit passed eight corruption controls. This is one experimental-wrapper allocation only. The exact freeze/source-manifest bytes are missing, so preregistration provenance remains incomplete; it is not promoted or a production/remote-X11 security claim. Preserve the initial audit STOP and the raw hash history. See [the detailed report](research/live_control/x11_xres_incarnation_guard_3555_v1/REPORT.md).
 
+
+
+### X-server lifetime identity replication — Issue #3574
+
+A provenance-complete linux/arm64 OrbStack allocation restarted private Xvfb four times per pair and reproduced the same XID, root XID, KNOWN_NULL transient relation, geometry and 153,600-byte pixel buffer in all four pairs while XRes 1.2 LocalClientPID and `/proc` start ticks changed. The exact #881 typed validator returned `EXACT_MATCH` for all stale cross-generation identities; an opaque observation-side server-instance comparison rejected all four while preserving four same-generation exact matches. Independent raw-only audit passed 16 classification rows and 24 fail-closed negative controls; seven separate-copy corruption probes passed. This remains one deterministic fixture result, not a production token implementation, remote-X11 security proof, or action authority. The earlier #902 eight-row comment and #3555 provenance-incomplete record remain unchanged. See [the retained report](research/integration/typed_recovery_xserver_lifetime_v1/issue_3574_lifetime_01/evidence/REPORT.md).
+
+### Live observation-boundary certificate transfer — Issue #2918
+
+Allocation 05 passed its scoped, preregistered 12-case transfer in pinned
+OrbStack Docker linux/arm64: 11 public X11 `observe` receipts plus one
+zero-call ambiguous-target case; two unmasked transitions safely suppressed
+using the prior minimum certificate while phase-union/global-support controls
+would forward; the masked transition forwarded; and missing, contradictory,
+partial, stale, replaced, ambiguous, and intent-epoch-mismatched evidence all
+yielded. The independent pixel/terminal audit passed with zero unsafe
+suppressions. No input, real-app effect, model call, or observation-cost
+benefit was tested. Scope and raw evidence: [allocation 05 result](research/integration/issue_2918_live_certificate_v5/FORMAL_RESULT.json),
+[independent audit](research/integration/issue_2918_live_certificate_v5/independent_audit/independent_audit.json),
+and [PR #3760](https://github.com/Unjuno/agent-interface/pull/3760), merged at
+`6611ee71f3b6b65aaa7e11e3954b7c0b03cac843`.
+
+The predecessor import STOP, incomplete-lineage/audit-output HOLD, auditor
+code STOP, and overlapping-window capture HOLD remain separately retained in
+allocations 01–04; allocation 05 corrected the evidenced setup/fixture defects
+without modifying those records. Issue #2918 remains open: next test a held-out
+real application surface with independently established complete/current
+facts, and measure acquisition cost separately from narrowing and terminal
+outcome. No cross-application or production claim follows from this fixture.
+
 </details>

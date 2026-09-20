@@ -23,6 +23,50 @@ class FakeSession:
 
 
 class ApiTests(unittest.TestCase):
+
+    def test_explicit_text_gap_compiles_before_backend_and_maps_character_failure(self):
+        from runtime.cli_v1.review import outcome_summary
+        session = FakeSession()
+        source = {'ops': [{'op':'text','text':'300','gap_ms':20},
+                          {'op':'key_chord','keys':['Left'],'repeat':2}, {'op':'release_all'}]}
+        with mock.patch('runtime.cli_v1.api.open_session', return_value=session):
+            row = dispatch(source, {'app':1}, current_observation_seq=1, current_binding_revision=0)
+        ops = session.calls[0][0]['ops']
+        self.assertEqual(ops[:5], [{'op':'text','text':'3'}, {'op':'wait_update','timeout_ms':20},
+            {'op':'text','text':'0'}, {'op':'wait_update','timeout_ms':20}, {'op':'text','text':'0'}])
+        self.assertEqual(len(ops), 8)
+        self.assertEqual(source['ops'][0]['text'], '300')
+        row['result'] = {'status':'execution_failed','execution':{'failed_op':4}}
+        self.assertEqual(outcome_summary(row)['failed_source_operation'],
+            {'source_operation_index':0,'character_index':2,'phase':'text'})
+        row['result']['execution']['failed_op'] = 3
+        self.assertEqual(outcome_summary(row)['failed_source_operation']['phase'], 'gap_before_character')
+        row['compilation']['operation_sources'][0]['source_operation_index'] = False
+        self.assertIsNone(outcome_summary(row)['failed_source_operation'])
+
+    def test_text_gap_invalid_or_oversized_never_opens_backend(self):
+        for op in ({'op':'text','text':'abc','gap_ms':True},
+                   {'op':'text','text':'abc','gap_ms':-1},
+                   {'op':'text','text':'abc','gap_ms':1001},
+                   {'op':'text','text':'x'*65,'gap_ms':20},
+                   {'op':'key_chord','keys':['Left'],'gap_ms':20},
+                   {'op':'text','text':'abc','gap_ms':20,'repeat':2}):
+            with self.subTest(op=op), mock.patch('runtime.cli_v1.api.open_session') as opened:
+                result = dispatch({'ops':[op]}, {'app':1}, current_observation_seq=1, current_binding_revision=0)
+                self.assertEqual(result['error'], 'INVALID_TEXT_GAP')
+                opened.assert_not_called()
+
+    def test_text_gap_zero_empty_and_capacity_are_bounded(self):
+        from runtime.core_v1.sequence import expand_text_gaps
+        for text in ('', 'abc'):
+            ops, _ = expand_text_gaps([{'op':'text','text':text,'gap_ms':0}])
+            self.assertEqual(ops, [{'op':'text','text':text}])
+        ops, _ = expand_text_gaps([{'op':'text','text':'x'*64,'gap_ms':20},{'op':'release_all'}])
+        self.assertEqual(len(ops),128)
+        with self.assertRaises(ValueError):
+            expand_text_gaps([{'op':'focus','target':'app'},{'op':'text','text':'x'*64,'gap_ms':20},{'op':'release_all'}])
+
+
     def test_dependency_inventory_distinguishes_missing_unknown_and_metadata(self):
         from importlib.metadata import PackageNotFoundError
         with mock.patch('importlib.util.find_spec', side_effect=[None, object(), ValueError('finder failed')]), mock.patch(

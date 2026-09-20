@@ -31,6 +31,7 @@ This is a navigation view, not a mandatory runtime pipeline. Individual studies 
 | Latency-aware exit | [`latency_aware_exit_v1/`](latency_aware_exit_v1/), [`latency_aware_exit_v2/`](latency_aware_exit_v2/) |
 | Last-effect receipt | [`map01_last_effect_receipt_v1/`](map01_last_effect_receipt_v1/) |
 | Last-effect representation | [`map01_last_effect_representation_v1/`](map01_last_effect_representation_v1/), [`map01_last_effect_representation_v31_r2/`](map01_last_effect_representation_v31_r2/) |
+| Intent-preserving Needle distillation | [intent_distillation_3458_pilot_01/](intent_distillation_3458_pilot_01/) |
 | Representation collision / ambiguity | [`map01_representation_collision_v1/`](map01_representation_collision_v1/) |
 
 For lower-level local decision mechanics, route cost, TTC admission, typed evidence, and useful-work-per-frontier-boundary studies, use [`../local_system1/`](../local_system1/).
@@ -43,3 +44,18 @@ For lower-level local decision mechanics, route cost, TTC admission, typed evide
 - Research workspace map: [`../README.md`](../README.md)
 
 Read each child experiment for its allowed decision vocabulary, authority boundary, and scoped disposition.
+
+
+## Needle distillation successor
+
+- [`intent_distillation_3458_pilot_02_stratified/`](intent_distillation_3458_pilot_02_stratified/) — balanced class and boundary suite; disposition FAIL_BOUNDARY_FIDELITY.
+
+
+## Hybrid Needle margin successor
+
+- [`intent_distillation_3458_pilot_03_hybrid/`](intent_distillation_3458_pilot_03_hybrid/) — scoped synthetic pass with deterministic boundary YIELD.
+
+
+## Multi-seed hybrid Needle successor
+
+- [`intent_distillation_3458_pilot_04_multiseed/`](intent_distillation_3458_pilot_04_multiseed/) — three-seed confirmatory synthetic result.

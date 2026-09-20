@@ -1,0 +1,10 @@
+{
+  "allocation_id": "issue3588-resident-gtk-sequence-guard-formal-02",
+  "decision": "STOP_AFTER_RUNNER_START_BEFORE_ANY_ROW",
+  "formal_invocations": 1,
+  "retries": 0,
+  "completed_rows": 0,
+  "reason": "Container launched /src/formal/runner.py with workdir /src, but Python placed /src/formal on sys.path and did not resolve the sibling candidate module policies_original. No GTK/Xvfb experimental row started and no result inference is permitted.",
+  "predecessor_freeze_sha256": "0c929325900de56396cd1b5500851f63a44170fd7ab0e2fd88da5232f631b906",
+  "successor_allocation": "issue3588-resident-gtk-sequence-guard-formal-03"
+}

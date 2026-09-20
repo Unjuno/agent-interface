@@ -1,0 +1,235 @@
+{
+  "artifact": "agent-interface-runtime.pyz",
+  "bytes": 150637,
+  "entries": [
+    "BUILD.json",
+    "SUPPORT.json",
+    "__main__.py",
+    "runtime/__init__.py",
+    "runtime/backends/__init__.py",
+    "runtime/backends/quartz_v1/__init__.py",
+    "runtime/backends/quartz_v1/backend.py",
+    "runtime/backends/quartz_v1/session.py",
+    "runtime/backends/win32_v1/__init__.py",
+    "runtime/backends/win32_v1/backend.py",
+    "runtime/backends/win32_v1/session.py",
+    "runtime/backends/x11_v1/__init__.py",
+    "runtime/backends/x11_v1/backend.py",
+    "runtime/backends/x11_v1/capture_artifacts.py",
+    "runtime/backends/x11_v1/session.py",
+    "runtime/cli_v1/__init__.py",
+    "runtime/cli_v1/__main__.py",
+    "runtime/cli_v1/api.py",
+    "runtime/cli_v1/golden_v3.py",
+    "runtime/cli_v1/mcp_server.py",
+    "runtime/cli_v1/observe.py",
+    "runtime/cli_v1/receipt.py",
+    "runtime/cli_v1/receipt_image.py",
+    "runtime/cli_v1/receipt_references.py",
+    "runtime/cli_v1/review.py",
+    "runtime/core_v1/__init__.py",
+    "runtime/core_v1/backend.py",
+    "runtime/core_v1/contract.py",
+    "runtime/core_v1/doctor.py",
+    "runtime/core_v1/platform_probe.py",
+    "runtime/core_v1/sequence.py",
+    "runtime/motor_state_v1/__init__.py",
+    "runtime/motor_state_v1/adapter.py",
+    "runtime/selector_v1/__init__.py",
+    "runtime/selector_v1/selector.py"
+  ],
+  "schema": "agent-interface/portable-runtime-manifest-v1",
+  "sha256": "ed1fde53d1635960e146e4d765ab0658aef67a25c73863b399f092fd1f637140",
+  "source_files": [
+    {
+      "bytes": 823,
+      "path": "runtime/core_v1/__init__.py",
+      "sha256": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0"
+    },
+    {
+      "bytes": 741,
+      "path": "runtime/core_v1/backend.py",
+      "sha256": "5f5959de391dee682c740baf1007f8bf8c74308d379efed2021fba660b5e9d68"
+    },
+    {
+      "bytes": 13963,
+      "path": "runtime/core_v1/contract.py",
+      "sha256": "8f272b7ec451d2f0502ee17abadb4983007b4088f0be55d9293c244873c1b599"
+    },
+    {
+      "bytes": 1012,
+      "path": "runtime/core_v1/sequence.py",
+      "sha256": "3d48261d2312c7b30ded1eff92d6465270161054ef4a7a016ad614946602eb43"
+    },
+    {
+      "bytes": 798,
+      "path": "runtime/core_v1/doctor.py",
+      "sha256": "e27852838e13d5bc8317fc0dbad7255b4deb6db209cf75ab981441f0f64b4098"
+    },
+    {
+      "bytes": 1898,
+      "path": "runtime/core_v1/platform_probe.py",
+      "sha256": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e"
+    },
+    {
+      "bytes": 275,
+      "path": "runtime/selector_v1/__init__.py",
+      "sha256": "66bc2fcb2797b108cd739b1c000352932dbdd7a16c186c1104cd8d26d0645881"
+    },
+    {
+      "bytes": 4297,
+      "path": "runtime/selector_v1/selector.py",
+      "sha256": "7f3db522b2250fcd3d8960c87b1d87ad078bf1b2b565900b4210836f6b7ca764"
+    },
+    {
+      "bytes": 112,
+      "path": "runtime/cli_v1/__init__.py",
+      "sha256": "db74b6ecfe6f9d70380d54af7998d358f027f6110b10efd5113f7c850ee0bac7"
+    },
+    {
+      "bytes": 5671,
+      "path": "runtime/cli_v1/__main__.py",
+      "sha256": "850e8aa777600d6a3d4ec84bb50cb338eb35c7f0e0e25da1117cd2ce6ec70385"
+    },
+    {
+      "bytes": 5715,
+      "path": "runtime/cli_v1/api.py",
+      "sha256": "edb7fbb714afe0ffe0525aa8e7751938088073501dfb711738daa36563433d72"
+    },
+    {
+      "bytes": 5935,
+      "path": "runtime/cli_v1/mcp_server.py",
+      "sha256": "9a71b210ee528e56b1ee7821d72e90895ce05d2edfe9b46e479b7372549a8fbe"
+    },
+    {
+      "bytes": 3236,
+      "path": "runtime/cli_v1/receipt.py",
+      "sha256": "ae6e7932bcef1c2d2c02e952277dc4c52f16e1a392d98e8652ef45097ff44a26"
+    },
+    {
+      "bytes": 9698,
+      "path": "runtime/cli_v1/review.py",
+      "sha256": "3819ff12d93ae9e40852449d840ce2b8a1389f94233b9e3ac8df88267a0ed652"
+    },
+    {
+      "bytes": 10413,
+      "path": "runtime/cli_v1/receipt_references.py",
+      "sha256": "acfd4833397a1b8850133530efb4a1f05c17c28463a6970a07a9516bfaeb85c6"
+    },
+    {
+      "bytes": 2228,
+      "path": "runtime/cli_v1/receipt_image.py",
+      "sha256": "4b99864eac19df75b4a0e2095e242eb0109e9581cc4914113227719607e41564"
+    },
+    {
+      "bytes": 2455,
+      "path": "runtime/cli_v1/observe.py",
+      "sha256": "0c5e5eff2129cdb8719f8ecd0e94a9d95fcd0270a3238d6441c605ad022413d9"
+    },
+    {
+      "bytes": 5204,
+      "path": "runtime/cli_v1/golden_v3.py",
+      "sha256": "4325c6e5b662adaa36138dc2f895d31938541a8e030e59b096c60521bb424d5d"
+    },
+    {
+      "bytes": 123,
+      "path": "runtime/motor_state_v1/__init__.py",
+      "sha256": "61e7dd102392a0655d7c633a01ffbaf96461255f99ff1572bd7eeab1237ca002"
+    },
+    {
+      "bytes": 2537,
+      "path": "runtime/motor_state_v1/adapter.py",
+      "sha256": "4580ca919d5d7150fb4c11024d7fdb6e2feb726f1afdf5f5752f95fac147aa64"
+    },
+    {
+      "bytes": 224,
+      "path": "runtime/backends/x11_v1/__init__.py",
+      "sha256": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b"
+    },
+    {
+      "bytes": 15045,
+      "path": "runtime/backends/x11_v1/backend.py",
+      "sha256": "75912be5694ee2ca16c51b1dffe179e51f0c93f32c22d8ee47f43d8fc6d42877"
+    },
+    {
+      "bytes": 1617,
+      "path": "runtime/backends/x11_v1/capture_artifacts.py",
+      "sha256": "22f557ab45ae27a4c27e3c4f0c35a677a3fca82a48cbb3adda83e52384175e9a"
+    },
+    {
+      "bytes": 3938,
+      "path": "runtime/backends/x11_v1/session.py",
+      "sha256": "70ffb0167a70efcf629221c8236dd19ba9fbc2ff3ffc18454f13a0f656b86a93"
+    },
+    {
+      "bytes": 215,
+      "path": "runtime/backends/win32_v1/__init__.py",
+      "sha256": "0a21627e9fd4e50a9418335422d45d9ae89f598678ca0ddccc1edc7a4ef5a12b"
+    },
+    {
+      "bytes": 20448,
+      "path": "runtime/backends/win32_v1/backend.py",
+      "sha256": "4cf87d6cecab9a84c4e9cdce83adbe8b58f93227eb64526740c029342bbdd6dd"
+    },
+    {
+      "bytes": 2367,
+      "path": "runtime/backends/win32_v1/session.py",
+      "sha256": "7e81a5b5cec01dc43da7a0ff4acebd0dd33bd67b9dd7c600ced431f61166af77"
+    },
+    {
+      "bytes": 222,
+      "path": "runtime/backends/quartz_v1/__init__.py",
+      "sha256": "6184cb0c7d87edb25dc12ccfec87a4ae15f367c278e39246b38c2ec5c655c906"
+    },
+    {
+      "bytes": 17266,
+      "path": "runtime/backends/quartz_v1/backend.py",
+      "sha256": "a265b6501f5de3cc3e9fce7c037e36db39716f7dbaac5f5bdc69289081d85866"
+    },
+    {
+      "bytes": 1763,
+      "path": "runtime/backends/quartz_v1/session.py",
+      "sha256": "bd8fee0f5d36fce746d97a998ffd77f6b9b16f83d067a0009799614f3c2a35bd"
+    }
+  ],
+  "source_revision": "79bd0410e7baac734be2190a9ae7200f91b5c940",
+  "support": {
+    "automatic_permission_escalation": false,
+    "automatic_target_discovery": false,
+    "optional_dependencies": {
+      "mcp_stdio": [
+        "mcp==1.30.0"
+      ],
+      "x11_png_artifacts": [
+        "Pillow"
+      ]
+    },
+    "promoted_backends": {
+      "linux_x11": {
+        "backend_id": "x11-v1",
+        "extra_dependency": "python-xlib",
+        "target_kind": "x11_window_id"
+      },
+      "macos": {
+        "backend_id": "quartz-v1",
+        "extra_dependency": null,
+        "permissions": [
+          "Accessibility",
+          "Screen Recording"
+        ],
+        "target_kind": "pid"
+      },
+      "windows": {
+        "backend_id": "win32-v1",
+        "extra_dependency": null,
+        "target_kind": "hwnd"
+      }
+    },
+    "python_minimum": "3.12",
+    "schema": "agent-interface/portable-runtime-support-v1",
+    "wayland": {
+      "promoted": false,
+      "reason": "WAYLAND_BACKEND_NOT_PROMOTED"
+    }
+  }
+}

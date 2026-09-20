@@ -1,0 +1,67 @@
+{
+  "audit": "PASS_INDEPENDENT_LIFETIME_AUDIT",
+  "candidate_decision": "PASS_XSERVER_LIFETIME_BINDING_REQUIRED_SCOPED",
+  "corruption_controls": [
+    {
+      "detected": true,
+      "mutated_disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "row-dropped"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "row-duplicated"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "STOP_OR_HOLD_AUDIT",
+      "name": "xid-mutated"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "STOP_OR_HOLD_AUDIT",
+      "name": "same-token"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "STOP_OR_HOLD_AUDIT",
+      "name": "authority-escalated"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "STOP_OR_HOLD_AUDIT",
+      "name": "socket-lifecycle-removed"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "STOP_OR_HOLD_AUDIT",
+      "name": "runner-decision-forged"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "STOP_OR_HOLD_AUDIT",
+      "name": "issued-receipt-removed"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "STOP_OR_HOLD_AUDIT",
+      "name": "forged-pass-over-lifetime-escape",
+      "reasons": [
+        "rep 0 cross_generation_stale LIFETIME_BOUND: lifetime-bound acceptance mismatch",
+        "rep 1 cross_generation_stale LIFETIME_BOUND: lifetime-bound acceptance mismatch",
+        "rep 2 cross_generation_stale LIFETIME_BOUND: lifetime-bound acceptance mismatch",
+        "rep 3 cross_generation_stale LIFETIME_BOUND: lifetime-bound acceptance mismatch"
+      ]
+    }
+  ],
+  "errors": [],
+  "freeze_sha256": "f2ddfb7587661e65cc7848de00546d803df1ffa30186db58475572f4afebe6ad",
+  "independent_decision": "PASS_XSERVER_LIFETIME_BINDING_REQUIRED_SCOPED",
+  "negative_control_count": 28,
+  "pair_count": 4,
+  "raw_sha256": "371dc836a911537fadb417cbee0f2631ca13f53a07f885b451f559046172bbb6",
+  "result_sha256_verified": true,
+  "row_count": 16,
+  "source_files_verified": true,
+  "source_manifest_sha256": "bf2c917fa6cadd42aac285ab8c786442bb537d1b27867556b0222f1a52b4e3f0"
+}

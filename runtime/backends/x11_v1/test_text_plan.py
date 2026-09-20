@@ -1,6 +1,7 @@
 import unittest
 from unittest import mock
 from runtime.backends.x11_v1.backend import X11Backend, X11BackendError
+from runtime.core_v1.sequence import expand_text_gaps
 
 
 class TextPlanTests(unittest.TestCase):
@@ -37,6 +38,42 @@ class TextPlanTests(unittest.TestCase):
             backend.text("abc-")
         backend.key_chord.assert_not_called()
 
+    def test_paced_text_preflights_all_characters_before_any_operation(self):
+        for value, message in (("abc-", "missing minus"),
+                               ("abc\u2603", "unsupported text character"),
+                               ("=A2*B2\u2603", "unsupported text character")):
+            with self.subTest(value=value):
+                backend = self.backend()
+                backend.emissions = 0
+                backend._target = mock.Mock()
+                backend.focus = mock.Mock()
+                backend.release_all = mock.Mock()
+                backend.d = mock.Mock()
+                backend.d.keycode_to_keysym.side_effect = lambda code, level: {
+                    (13, 0): ord("="), (17, 0): ord("8"), (17, 1): ord("*")
+                }.get((code, level), 0)
+
+                def keycode(name):
+                    if name == "minus":
+                        raise X11BackendError("missing minus")
+                    return {"equal": 13, "asterisk": 17}.get(name, 1)
+
+                backend._keycode.side_effect = keycode
+                operations, _ = expand_text_gaps([
+                    {"op": "focus", "target": "fixture"},
+                    {"op": "text", "text": value, "gap_ms": 20},
+                    {"op": "release_all"},
+                ])
+                with mock.patch('runtime.backends.x11_v1.backend.time.sleep') as sleep:
+                    with self.assertRaisesRegex(X11BackendError, message):
+                        backend.execute({"ops": operations})
+                    sleep.assert_not_called()
+                backend._target.assert_called_once_with("fixture")
+                backend.focus.assert_not_called()
+                backend.key_chord.assert_not_called()
+                backend.release_all.assert_not_called()
+                self.assertEqual(backend.emissions, 0)
+
     def test_url_symbols_follow_live_keymap_levels(self):
         backend = self.backend()
         backend.d = mock.Mock()
@@ -54,6 +91,28 @@ class TextPlanTests(unittest.TestCase):
         with self.assertRaises(X11BackendError):
             backend.text("http:")
         backend.key_chord.assert_not_called()
+
+    def test_formula_symbols_follow_unshifted_or_shifted_live_mapping(self):
+        for symbol, name in (("=", "equal"), ("*", "asterisk")):
+            for selected_level in (0, 1):
+                with self.subTest(symbol=symbol, selected_level=selected_level):
+                    backend = self.backend()
+                    backend.d = mock.Mock()
+                    backend.d.keycode_to_keysym.side_effect = (
+                        lambda code, level: ord(symbol) if level == selected_level else ord("x"))
+                    backend.text(symbol)
+                    expected = [name] if selected_level == 0 else ["SHIFT", name]
+                    backend.key_chord.assert_called_once_with(expected)
+
+    def test_formula_symbol_in_unsupported_level_emits_no_prefix(self):
+        for symbol in ("=", "*"):
+            with self.subTest(symbol=symbol):
+                backend = self.backend()
+                backend.d = mock.Mock()
+                backend.d.keycode_to_keysym.return_value = 0
+                with self.assertRaisesRegex(X11BackendError, "unsupported text layout"):
+                    backend.text("12" + symbol)
+                backend.key_chord.assert_not_called()
 
 
 if __name__ == '__main__':
