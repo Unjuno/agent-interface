@@ -23,7 +23,7 @@ from runtime.cli_v1.observe import observe
 from runtime.cli_v1.review import present_result
 
 
-EVIDENCE = Path(os.environ["AI3548_EVIDENCE"]).resolve()
+EVIDENCE = Path(os.environ.get("AI3548_EVIDENCE_DIR", os.environ.get("AI3548_EVIDENCE"))).resolve()
 TARGET_NAME = "fixture"
 FRAME = "window_client"
 REGION = [0, 0, 500, 260]
