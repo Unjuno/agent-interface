@@ -303,6 +303,21 @@ A missing capture-directory is rejected before any execution. The default raw
 response remains unchanged when --review is omitted. Standalone review remains
 available for inspecting retained results later.
 
+### Compact received-report references
+
+With `--compact` or MCP `compact=true`, a received receipt whose `report` exactly
+duplicates `source.raw_report` may use `agent-interface/receipt-view-v3-report-ref`.
+Only `report` then contains `{"report_ref":"/source/raw_report"}`; the complete
+raw report remains in this same response. All other reference-shaped values are
+literal. Images, capture references, outcomes and raw source digests are unchanged.
+
+Use the matching version of `receipt_references.expand_receipt` to restore the
+original v1 receipt view. Older consumers that only understand v1/v2 should keep
+compact mode off until their decoder is updated. File-based receipts without an
+embedded raw report keep the existing selection behavior. The smaller JSON
+candidate is selected only when it beats the original view; this is not a measured
+model-token, cost or latency reduction.
+
 ### Input release in reviewed dispatch results
 
 CLI `--review` and public MCP expose `outcome_summary.input_release_verified`.

@@ -13,6 +13,26 @@ from runtime.distribution_v2.build import SOURCE_FILES, build
 
 class PublicReviewTests(unittest.TestCase):
 
+    def test_received_duplicate_report_compacts_and_expands_exactly(self):
+        from runtime.cli_v1.receipt_references import expand_receipt, REPORT_REF
+        raw = json.dumps({'schema': 'agent-interface/runtime-dispatch-result-v1',
+            'status': 'returned', 'result': {'status': 'refused', 'error': 'BACKEND_CONSTRAINT'},
+            'extension': {'payload': 'x' * 4000, 'report_ref': 'literal-value'}}).encode()
+        with tempfile.TemporaryDirectory() as td:
+            full = review_bytes(raw, td)
+            compact = review_bytes(raw, td, compact=True)
+        self.assertEqual(compact['receipt']['schema'], REPORT_REF)
+        self.assertEqual(expand_receipt(compact['receipt']), full['receipt'])
+        self.assertEqual(compact['outcome_summary'], full['outcome_summary'])
+        self.assertEqual(compact['receipt']['source'], full['receipt']['source'])
+        self.assertLess(len(json.dumps(compact)), len(json.dumps(full)))
+        for field, value in (('report_reference', '/elsewhere'),
+                             ('report', {'report_ref': 'wrong'}),
+                             ('source', {})):
+            altered = dict(compact['receipt'], **{field: value})
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                expand_receipt(altered)
+
     def test_refusal_release_is_summarized_without_hiding_other_evidence(self):
         from runtime.cli_v1.review import outcome_summary
         good = {'verified': True, 'keys_down': [], 'buttons_down': []}

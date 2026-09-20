@@ -4,6 +4,7 @@ import json
 
 NATIVE_REFS = 'agent-interface/native-receipt-v1-observation-refs'
 NATIVE_MULTI_REFS = 'agent-interface/native-receipt-v2-observation-refs'
+REPORT_REF = 'agent-interface/receipt-view-v3-report-ref'
 
 
 def compact_native_receipt(view):
@@ -185,6 +186,16 @@ def compact_receipt(view):
     result['schema'] = 'agent-interface/receipt-view-v2-event-refs'
     result['event_references'] = references
     result['reference_scope'] = 'Only listed JSON-pointer paths are references to complete objects in events[index]. No external lookup. Raw source remains authoritative.'
+    source = view.get('source')
+    if (isinstance(source, dict) and isinstance(source.get('raw_report'), dict)
+            and not any(key in view for key in ('report_reference', 'reference_scope'))
+            and _encoded(view['report']) == _encoded(source['raw_report'])):
+        received = copy.deepcopy(view)
+        received.update(schema=REPORT_REF, report={'report_ref': '/source/raw_report'},
+            report_reference='/source/raw_report',
+            reference_scope='Only report refers to the complete source.raw_report in this response. All other reference-shaped values are literal.')
+        if len(_encoded(received).encode('utf-8')) < len(_encoded(result).encode('utf-8')):
+            return received
     return result
 
 
@@ -192,6 +203,19 @@ def expand_receipt(view):
     """Reconstruct the original v1 view, interpreting only declared ref paths."""
     if view.get('schema') == 'agent-interface/receipt-view-v1':
         return copy.deepcopy(view)
+    if view.get('schema') == REPORT_REF:
+        source = view.get('source')
+        if (view.get('report_reference') != '/source/raw_report'
+                or view.get('report') != {'report_ref': '/source/raw_report'}
+                or not isinstance(source, dict) or not isinstance(source.get('raw_report'), dict)
+                or not isinstance(view.get('reference_scope'), str)):
+            raise ValueError('invalid received report reference')
+        result = copy.deepcopy(view)
+        result['report'] = copy.deepcopy(source['raw_report'])
+        result['schema'] = 'agent-interface/receipt-view-v1'
+        result.pop('report_reference')
+        result.pop('reference_scope')
+        return result
     if view.get('schema') != 'agent-interface/receipt-view-v2-event-refs':
         raise ValueError('event-reference receipt required')
     result = copy.deepcopy(view)
