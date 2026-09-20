@@ -119,6 +119,24 @@ class HostBrokerContractTest(unittest.TestCase):
             self.assertEqual(record["error_class"], "FileNotFoundError")
             self.assertFalse(record["host_cli_invoked"])
 
+    def test_identity_probe_os_error_is_executable_unavailable_not_request_refusal(self):
+        import json
+        from unittest.mock import patch
+        from runtime.host_model_ipc_broker_v1 import serve
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); ipc = root / "ipc"; ipc.mkdir()
+            (ipc / "fixture.request.json").write_text(json.dumps(
+                {"request_id":"fixture", "prompt":"fixture"}))
+            with patch("runtime.host_model_ipc_broker_v1.build_command", return_value=["codex"]), \
+                 patch("runtime.host_model_ipc_broker_v1.executable_identity",
+                       side_effect=FileNotFoundError("missing host executable")), \
+                 patch("runtime.host_model_ipc_broker_v1.subprocess.run") as run:
+                self.assertEqual(serve(ipc, root, once=True), 1)
+            run.assert_not_called()
+            record = json.loads((ipc / "fixture.broker.json").read_text())
+            self.assertEqual(record["stop_reason"], "HOST_BROKER_EXECUTABLE_UNAVAILABLE")
+            self.assertFalse(record["host_cli_invoked"])
+
     def test_subprocess_os_error_remains_cli_unavailable(self):
         import json
         from unittest.mock import patch
