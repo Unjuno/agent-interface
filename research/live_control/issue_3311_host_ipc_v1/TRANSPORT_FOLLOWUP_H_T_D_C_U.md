@@ -83,3 +83,15 @@ Before merge readiness, fetched main at `7cda063936b89c3f0cd58c0ebd1b78497e0ad2b
 **C** — Bundles and frozen raw manifests were not modified. Explicit report output is refused inside the evidence tree (including existing raw paths) before writing; an external report path is allowed. The minimal runtime image has no Git, so container tests make no historical-source-provenance claim; full independent audits run in host/CI checkout context.
 
 **U** — Latest-head Linux and Windows jobs have not completed; merge remains gated on required checks. No host Codex/model invocation or schema-preflight attempt was made.
+
+### Current-main reconciliation after #3513/#3514 (2026-09-20)
+
+Main advanced through #3513/#3514 while hosted Linux CI was queued. `git merge-tree` showed an automatic, conflict-free merge; the commits add lossless receipt references and compact public CLI review. The complete main update is merged into this branch without changing either frozen transport bundle.
+
+**H/T** — Revalidate both the #3487 transport/audit contracts and the newly integrated public CLI receipt-review behavior after combining the histories.
+
+**D** — PASS locally: host selection passes 31/31; the pinned OrbStack image with `--network none` passes 30/30. Host selection includes both retained evidence audits and their historical source `git show` checks. The container selection includes broker, bridge, auditor path-safety/manifest tests, cleanup regression and public CLI review tests; historical-source audits remain in the checkout environment because the runtime image intentionally has no Git. `git diff --check` is clean.
+
+**C** — Main's receipt changes are independent of raw transport evidence; both raw bundles and frozen hashes remain untouched. No model, GUI, or task call occurred.
+
+**U** — These tests are local and do not replace latest-head hosted CI. Main is now at `7d12e7afc1b1db163b74a54a821658c8c867e5c7`; push and wait for fresh required Linux/Windows results before merge. #3489 remains gated; no host Codex preflight was attempted.
