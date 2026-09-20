@@ -306,6 +306,9 @@ available for inspecting retained results later.
 ### Input release in reviewed dispatch results
 
 CLI `--review` and public MCP expose `outcome_summary.input_release_verified`.
+For a refused dispatch, this includes its explicit `result.release` record in
+addition to any `result.execution.releases`. Backend preflight refusal can retain
+release evidence without starting execution; the summary still reports `refused`.
 It is true only for a nonempty list of release records that all explicitly report
 `verified=true`, `keys_down=[]` and `buttons_down=[]`. Any explicit false record
 makes the summary false, even when another release succeeded. Missing, malformed
