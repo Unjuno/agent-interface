@@ -17,6 +17,7 @@ SRC = Path(__file__).resolve().parent
 OUT = Path(os.environ["OUT_DIR"])
 EFFECT = OUT / "effect.json"
 FIXTURE = SRC / "fixture_window.py"
+FREEZE_SHA256 = os.environ["FREEZE_SHA256"]
 events = []
 emissions = 0
 
@@ -124,12 +125,13 @@ def main():
             raise RuntimeError("fresh-control task effect missing")
         result = {"allocation": "issue3555-xres-guard-orbstack-v2-formal-01",
                   "status": "PASS_SCOPED_STALE_REFUSAL_AND_FRESH_CONTROL",
-                  "events": events, "final_emissions": emissions}
+                  "events": events, "final_emissions": emissions,
+                  "freeze_sha256": FREEZE_SHA256}
     except Exception as exc:
         status = "STOP_BEFORE_INPUT" if str(exc).startswith("STOP_BEFORE_INPUT:") else "FAIL_OR_STOP"
         result = {"allocation": "issue3555-xres-guard-orbstack-v2-formal-01",
                   "status": status, "error": repr(exc), "events": events,
-                  "final_emissions": emissions}
+                  "final_emissions": emissions, "freeze_sha256": FREEZE_SHA256}
     finally:
         cleanup(first, second)
     (OUT / "raw.json").write_text(json.dumps(result, sort_keys=True, indent=2) + "\n")

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Independent offline audit. Does not import candidate guard or runner."""
 import copy
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -50,9 +51,13 @@ def errors_for(result):
     return errors
 
 
-def main(path):
+def main(path, freeze_path=None, output_path=None):
     raw = json.loads(Path(path).read_text())
     errors = errors_for(raw)
+    if freeze_path is not None:
+        freeze_sha = hashlib.sha256(Path(freeze_path).read_bytes()).hexdigest()
+        if raw.get("freeze_sha256") != freeze_sha:
+            errors.append("raw result is not bound to supplied freeze manifest")
     controls = {}
     if not errors:
         for label, change in (
@@ -67,9 +72,20 @@ def main(path):
             errors.append("corruption challenge escaped independent checks")
     audit = {"status": "PASS_INDEPENDENT_AUDIT" if not errors else "FAIL_AUDIT",
              "errors": errors, "corruption_controls_rejected": controls}
-    print(json.dumps(audit, sort_keys=True))
+    rendered = json.dumps(audit, sort_keys=True, indent=2) + "\n"
+    if output_path is not None:
+        Path(output_path).write_text(rendered)
+    print(rendered, end="")
     return 0 if not errors else 1
 
 
 if __name__ == "__main__":
-    raise SystemExit(main(sys.argv[1]))
+    if len(sys.argv) not in (2, 4):
+        raise SystemExit("usage: audit.py RAW_JSON [--freeze FREEZE_JSON --output AUDIT_JSON]")
+    freeze_arg = sys.argv.index("--freeze") if "--freeze" in sys.argv else None
+    output_arg = sys.argv.index("--output") if "--output" in sys.argv else None
+    if freeze_arg is None and output_arg is None:
+        raise SystemExit(main(sys.argv[1]))
+    if freeze_arg is None or output_arg is None:
+        raise SystemExit("both --freeze and --output are required")
+    raise SystemExit(main(sys.argv[1], sys.argv[freeze_arg + 1], sys.argv[output_arg + 1]))
