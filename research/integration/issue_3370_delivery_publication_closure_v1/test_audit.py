@@ -2,10 +2,12 @@
 import hashlib
 import json
 from pathlib import Path
+import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
-from audit import audit
+from audit import audit, main
 
 
 class PublicationClosureAuditTest(unittest.TestCase):
@@ -83,6 +85,11 @@ class PublicationClosureAuditTest(unittest.TestCase):
         (self.evidence / "manifest.json").write_text(json.dumps(manifest))
         result = audit(self.bundle)
         self.assertEqual(result["result"], "HOLD_MANIFEST_INVALID")
+
+    def test_cli_refuses_to_write_inside_frozen_bundle(self):
+        with patch.object(sys, "argv", ["audit.py", "--bundle", str(self.bundle),
+                                         "--output", str(self.evidence / "audit.json")]):
+            self.assertEqual(main(), 2)
 
 
 if __name__ == "__main__":

@@ -59,9 +59,9 @@ six missing, zero mismatches, and zero unlisted files.
 
 ## Verification
 
-- `python -m unittest -v test_audit` — 6/6 passed. Cases cover complete
+- `python -m unittest -v test_audit` — 8/8 passed. Cases cover complete
   closure, missing files, digest drift, unlisted files, parent traversal, and
-  duplicate paths.
+  duplicate paths, invalid schema, and refusal to write inside frozen evidence.
 - `python audit.py --bundle <frozen-evidence> --output <separate-receipt>` —
   expected exit 1 with `HOLD_PUBLICATION_GAP` on the frozen public tree.
 - Frozen #3599 `audit.py` run on the same 93-file reconstruction — exit 0,

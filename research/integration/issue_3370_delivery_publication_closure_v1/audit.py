@@ -75,7 +75,12 @@ def audit(bundle: Path) -> dict:
             result["failures"].append(f"manifest path is not a regular in-bundle file: {name}")
             invalid = True
             continue
-        content = resolved.read_bytes()
+        try:
+            content = resolved.read_bytes()
+        except OSError as exc:
+            result["failures"].append(f"manifest path cannot be read: {name} ({type(exc).__name__})")
+            invalid = True
+            continue
         actual_hash = hashlib.sha256(content).hexdigest()
         if len(content) != expected_bytes or actual_hash != expected_hash:
             result["mismatched"].append({
@@ -117,9 +122,18 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True,
                         help="write the audit receipt outside the frozen evidence tree")
     args = parser.parse_args()
+    bundle = args.bundle.resolve()
+    output = args.output.resolve()
+    try:
+        output.relative_to(bundle)
+    except ValueError:
+        pass
+    else:
+        print("audit output must be outside the frozen bundle", file=sys.stderr)
+        return 2
     result = audit(args.bundle)
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(result, sort_keys=True))
     return 0 if result["result"] == "PASS_PUBLICATION_CLOSED" else 1
 
