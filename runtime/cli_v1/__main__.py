@@ -21,7 +21,11 @@ def _read_json(path: str):
 
 
 def _emit(payload) -> None:
-    sys.stdout.write(json.dumps(payload, sort_keys=True, separators=(",", ":")) + "\n")
+    text = json.dumps(payload, sort_keys=True, separators=(",", ":")) + "\n"
+    written = sys.stdout.write(text)
+    if written != len(text):
+        raise OSError(f"short stdout write: {written} of {len(text)} characters")
+    sys.stdout.flush()
 
 
 def _present_result(row, *, with_review, capture_directory, exit_code, compact=False, report_refs=False, retention=None):
