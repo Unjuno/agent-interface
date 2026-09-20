@@ -28,6 +28,9 @@ def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None
     task_success=nested.get("task_success")
     if type(task_success) is not bool:
         task_success=None
+    usage_value=usage if usage is not None else result.get("usage")
+    usage_fields=dict(usage_value) if isinstance(usage_value, Mapping) else {}
+    usage_status="reported" if usage_fields else "unavailable"
     if delivery == "confirmed_partial":
         mapped="partial"
     elif delivery is not None and delivery not in AMBIGUOUS_DELIVERY_VALUES | KNOWN_DELIVERY_VALUES:
@@ -57,7 +60,8 @@ def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None
         mapped="success" if completed and task_success is True else "partial"
     row={"schema":"golden-v3-result-v2","program_completed":completed,"task_success":task_success,
          "authority_granted":False,"status":mapped,"partial_effects":nested.get("partial_effects",[]),
-         "cleanup_error":cleanup,"lifecycle":states,"usage":dict(usage if usage is not None else result.get("usage") or {}),
+         "cleanup_error":cleanup,"lifecycle":states,"usage":usage_fields,
+         "usage_status":usage_status,
          "native_status":native_status,"raw_dispatch":deepcopy(result)}
     # Overall task success remains false after cleanup failure. The supplied
     # application score and completed execution are still in raw_dispatch.
@@ -72,9 +76,12 @@ def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None
     return row
 
 def _reject(reason:str,result:dict[str,Any],usage:Mapping[str,Any]|None)->dict[str,Any]:
+    usage_value=usage if usage is not None else result.get("usage")
+    usage_fields=dict(usage_value) if isinstance(usage_value, Mapping) else {}
     return {"schema":"golden-v3-result-v2","program_completed":False,"task_success":None,
             "authority_granted":False,"status":"refused","partial_effects":[],"cleanup_error":None,
-            "lifecycle":[],"usage":dict(usage if usage is not None else result.get("usage") or {}),
+            "lifecycle":[],"usage":usage_fields,
+            "usage_status":"reported" if usage_fields else "unavailable",
             "adapter_error":reason,"diagnostic":result.get("error"),
             "native_status":None,"raw_dispatch":deepcopy(result)}
 

@@ -74,6 +74,7 @@ class EvidenceRetentionTests(unittest.TestCase):
     def test_explicit_empty_usage_does_not_fall_back_to_other_usage(self):
         row = adapt_dispatch_result({"status": "returned", "usage": {"input": 3}}, usage={})
         self.assertEqual(row["usage"], {})
+        self.assertEqual(row["usage_status"], "unavailable")
 
 
 if __name__ == "__main__":
