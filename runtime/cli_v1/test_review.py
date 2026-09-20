@@ -13,6 +13,26 @@ from runtime.distribution_v2.build import SOURCE_FILES, build
 
 class PublicReviewTests(unittest.TestCase):
 
+    def test_recorded_failure_phase_survives_all_presentations(self):
+        from runtime.cli_v1.review import present_result
+        from unittest.mock import patch
+        for schema in ('agent-interface/runtime-dispatch-result-v1',
+                       'agent-interface/runtime-observation-v1'):
+            for phase in ('backend_initialization', 'future_recorded_phase', None, '', 1, True, {}):
+                report = {'schema': schema, 'status': 'runtime_failed',
+                          'error': 'initialization failed', 'failure_phase': phase}
+                expected = phase if isinstance(phase, str) and phase else None
+                with self.subTest(schema=schema, phase=phase), tempfile.TemporaryDirectory() as td:
+                    for options in ({}, {'compact': True}, {'compact': True, 'report_refs': True}):
+                        result = present_result(report, td, **options)
+                        self.assertEqual(result['outcome_summary']['failure_phase'], expected)
+                        self.assertEqual(result['outcome_summary']['error'], report['error'])
+                        self.assertIsNone(result['outcome_summary'].get('input_release_verified'))
+                    with patch('runtime.cli_v1.review.review_bytes', side_effect=ValueError('bad image')):
+                        fallback = present_result(report, td)
+                    self.assertEqual(fallback['outcome_summary']['failure_phase'], expected)
+                    self.assertEqual(fallback['raw_result'], report)
+
     def test_report_refs_without_compact_rejected_before_cli_operation(self):
         from unittest.mock import patch
         from contextlib import redirect_stderr

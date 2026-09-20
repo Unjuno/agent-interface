@@ -97,6 +97,7 @@ def outcome_summary(report):
 
     summary = {'reported_status': text(report, 'status'),
                'error': text(report, 'error'),
+               'failure_phase': text(report, 'failure_phase'),
                'cleanup_error': text(report, 'cleanup_error')}
     if report.get('schema') == 'agent-interface/runtime-dispatch-result-v1':
         dispatch = report.get('result')
