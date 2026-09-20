@@ -61,6 +61,10 @@ admission rules. It is not evidence of a new live GUI recovery trial.
 A typed flat-source target refusal during minting now returns a fresh image and
 the next stage when capacity remains. `target_refusal` records that no input was
 dispatched and `finish_after` was not applied: the requested action never ran.
+The same recorded refusal fields appear in `outcome_summary.target_refusal`, so
+compact callers can distinguish a decision boundary from successful input.
+Unknown or malformed booleans stay null; absence of an action is never taken as
+proof that no input ran. The complete receipt remains available and unchanged.
 Review this image before submitting a new decision. The refused request remains
 immutable and consumes its stage; it is never replayed. Other minting errors,
 failed window review, and a refusal at the final stage remain terminal. The
