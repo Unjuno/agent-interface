@@ -26,7 +26,7 @@ class RawReconstructionTests(unittest.TestCase):
         self.assertEqual(result["status"], "PASS_RAW_RECONSTRUCTION")
         self.assertEqual(result["rows"], 37)
         self.assertEqual(result["authorize"], 1)
-        self.assertEqual(result["current_snapshot"], "HOLD")
+        self.assertNotIn("current_snapshot", result)
 
     def test_all_frozen_inputs_match(self):
         modes = audit_raw.verify_frozen_inputs(REPO_ROOT)
