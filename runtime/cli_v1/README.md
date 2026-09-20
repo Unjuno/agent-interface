@@ -141,3 +141,18 @@ responses. Save `observe` output to JSON, then pass that file to `review`.
 For public observations, the PNG hash and source-raw hash must match the
 capture artifact. The original observation ID is retained; no exchange sequence
 is invented. A cleanup failure remains visible even if its captured image is readable.
+
+
+`review` also accepts `runtime-dispatch-result-v1` responses. It presents the
+last entry in `result.execution.observations`, in the backend's execution order,
+and preserves its zero-based `execution_observation_index`. It never invents an
+exchange sequence. Capture identity and PNG hash checks are the same as for
+public observation responses. A refusal with no capture reports no_observation;
+a failed/missing final capture reports needs_review rather than showing an older
+frame. The complete execution status, partial effects, releases and cleanup errors
+remain in the receipt. The last captured frame may precede later input or an
+asynchronous application update: it does not prove the final application state.
+
+```sh
+python -m runtime.cli_v1 review --report dispatch-result.json --run-directory /absolute/run
+```

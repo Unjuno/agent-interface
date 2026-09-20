@@ -73,6 +73,38 @@ class PublicReviewTests(unittest.TestCase):
                 self.assertIsNone(refused["image"])
                 observation["artifact"][field] = original
 
+    def test_dispatch_last_capture_missing_or_invalid_never_uses_earlier_image(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            png = root / "frame.png"
+            pixels = b"\x89PNG\r\n\x1a\n"
+            png.write_bytes(pixels)
+            capture = {"sha256": "raw", "capture_started_ns": 12,
+                "artifact": {"mime_type": "image/png", "path": str(png),
+                             "sha256": hashlib.sha256(pixels).hexdigest(),
+                             "source_raw_sha256": "raw"}}
+            payload = {"schema": "agent-interface/runtime-dispatch-result-v1", "status": "returned",
+                       "result": {"status": "execution_failed", "execution": {
+                           "error": "late failure", "observations": [capture, capture]}}}
+            path = root / "report.json"
+            path.write_text(json.dumps(payload))
+            row = review(path, root)
+            self.assertEqual(row["image_status"], "image")
+            self.assertEqual(row["image_reference"]["execution_observation_index"], 1)
+            self.assertNotIn("sequence", row["image_reference"])
+            self.assertEqual(row["receipt"]["report"]["result"]["status"], "execution_failed")
+            for last in ({"artifact_error": "encoding failed"}, None, {}):
+                payload["result"]["execution"]["observations"] = [capture, last]
+                path.write_text(json.dumps(payload))
+                row = review(path, root)
+                self.assertEqual(row["image_status"], "needs_review")
+                self.assertIsNone(row["image"])
+            payload["result"] = {"status": "refused", "error": "stale"}
+            path.write_text(json.dumps(payload))
+            row = review(path, root)
+            self.assertEqual(row["image_status"], "no_observation")
+            self.assertEqual(row["receipt"]["report"]["result"]["error"], "stale")
+
     def test_newest_missing_image_never_falls_back_to_older_capture(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)

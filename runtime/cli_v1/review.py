@@ -19,8 +19,27 @@ def review(report_path, run_directory):
               'image': None, 'authority': 'none'}
     try:
         native = None
-        if report.get('schema') == 'agent-interface/runtime-observation-v1':
+        native_reference = {}
+        schema = report.get('schema')
+        if schema == 'agent-interface/runtime-observation-v1':
             native = report.get('observation')
+            native_reference = {'observation_id': report.get('observation_id')}
+        elif schema == 'agent-interface/runtime-dispatch-result-v1':
+            dispatch = report.get('result', {})
+            if not isinstance(dispatch, dict):
+                raise ValueError('invalid dispatch result')
+            execution = dispatch.get('execution', {})
+            if not isinstance(execution, dict):
+                raise ValueError('invalid dispatch execution')
+            observations = execution.get('observations', [])
+            if not isinstance(observations, list) or any(not isinstance(o, dict) for o in observations):
+                raise ValueError('invalid dispatch observations')
+            if observations:
+                # Backend execution appends observations in program order.
+                # Preserve the list index; no synthetic exchange sequence.
+                native = observations[-1]
+                native_reference = {'execution_observation_index': len(observations) - 1}
+        if schema in ('agent-interface/runtime-observation-v1', 'agent-interface/runtime-dispatch-result-v1'):
             if native is None:
                 result['image_status'] = 'no_observation'
                 return result
@@ -33,13 +52,13 @@ def review(report_path, run_directory):
                     not isinstance(native.get('sha256'), str) or
                     artifact.get('source_raw_sha256') != native['sha256']):
                 raise ValueError('runtime capture identity mismatch')
-            # The public observation has an ID, not an exchange sequence.
+            # Public captures do not carry an exchange sequence.
             # Use a local singleton selector index; never expose it as sequence.
             selected = select_image({'records': [{'event': 'observation',
                 'sequence': 1, 'capture_ns': native.get('capture_started_ns'),
                 'image': artifact.get('path')}]}, run_directory)
             selected.pop('sequence')
-            selected['observation_id'] = report.get('observation_id')
+            selected.update(native_reference)
             if selected['sha256'] != artifact.get('sha256'):
                 raise ValueError('runtime image sha256 mismatch')
         else:
@@ -50,7 +69,7 @@ def review(report_path, run_directory):
         recorded = report.get('image')
         if isinstance(recorded, dict) and recorded.get('status') == 'image':
             for field in ('sequence', 'capture_ns', 'path', 'sha256'):
-                if recorded.get(field) != selected[field]:
+                if recorded.get(field) != selected.get(field):
                     raise ValueError('report image identity mismatch: ' + field)
         image_bytes = Path(selected['path']).read_bytes()
         if hashlib.sha256(image_bytes).hexdigest() != selected['sha256']:
