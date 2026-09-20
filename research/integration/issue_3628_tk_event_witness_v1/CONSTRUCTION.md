@@ -39,20 +39,31 @@ Issue #3628.
   pass. The test imports `configure_fixture` directly, maps and focuses the
   Entry, injects a synthetic Control_L then Control-modified s KeyPress, and
   verifies the event witness and save effect. The ten raw-audit controls pass.
+- Recovery validation in a network-disabled, read-only Xvfb container ran
+  `test_audit`, `test_tk_order`, and `test_evidence_manifest` — 12/12 pass.
+  The new manifest test checks exact file-set equality, byte length and
+  SHA-256 for all four direct-XTest attempts.
 - Windows Python: 10/10 raw-audit tests pass; the X11/Tk event test is skipped
   by design. `compileall` and `git diff --check` pass.
 - A first Xvfb test-harness attempt kept the Entry unmapped and observed no
   generated events. That harness-only failure is retained here; the test was
   corrected to map/focus the Entry and then exercised the fixture itself.
-- Supplemental WSL/Xvfb Python-Xlib XTest probes were construction-only, not
-  formal allocations. `construction-xtest-01` stopped before sending any input:
-  this Python-Xlib TranslateCoords reply exposes `x/y`, not `dst_x/dst_y`;
-  the fixture was reaped, with zero events/effects. `construction-xtest-02`
-  corrected that property access and sent the pointer/key sequence, but the
-  fixture recorded zero button/key events and no save receipt; it was reaped.
-  Both immutable result receipts and manifests are retained. These results
-  reject any claim that the direct XTest route was validated; they do not
-  affect the separately completed PR #3636 formal MCP allocations.
-- No MCP client, actual XTest/MCP input, container, OrbStack allocation, or
-  formal task was run by these supplemental probes. This is a Tk instrumentation
-  construction result only.
+- Supplemental WSL/Xvfb Python-Xlib XTest attempts are construction-only, not
+  formal allocations. Attempts 01–03 stopped before producing a chord/effect:
+  01 used a nonexistent `dst_x` attribute, 02 timed out with zero key/button
+  events and no effect receipt, and 03 used a nonexistent `query_pointer`
+  attribute. All three fixture children were reaped and their failure receipts
+  are retained. Attempt 04 acquired/verified X input focus and recorded 12
+  fixture events, one ordered Control_L + Control-modified `s` witness, and
+  one exact `m3628test` save-effect receipt. Its stored audit says PASS; an
+  independent recomputation from the committed event/effect JSONL matches it.
+  This is one successful direct-XTest construction attempt, not a formal
+  allocation and not a public-MCP delivery claim.
+- Each attempt manifest declared a zero-byte `fixture.log`, but those four
+  files were absent from the source Git tree. This successor adds exactly
+  zero-byte files matching the manifest-declared size and empty SHA-256; it
+  does not synthesize log text or prove the original fixture process created
+  them. `RECOVERY_NOTE_2026-09-21.md` records that limitation.
+- No new XTest experiment, public-MCP allocation, or formal task was run during
+  this recovery. The separately completed three-allocation result remains in
+  merged PR #3636.
