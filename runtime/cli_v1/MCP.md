@@ -94,6 +94,11 @@ model live-use result or a performance comparison.
 
 ## Recover a retained result without resending input
 
+Observe and dispatch result envelopes include `call_id`. Pass it directly to
+`interface_results(call_id=...)`; parsing `call_directory` or listing calls first
+is unnecessary when the original response is available. A retained result returns
+the same ID. This identifies a server call, not a fresh image or successful task.
+
 `interface_results()` lists the newest 20 calls issued by this running server,
 most recent first, with call IDs, operation names and worker states. If
 `next_before_call_id` is non-null, pass it as `before_call_id` to read the next

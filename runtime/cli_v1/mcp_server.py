@@ -80,6 +80,7 @@ def create_server(targets, output_directory, *, display_name=None):
                 persistence_error = repr(error)
             result = present_result(report, call_root, compact=compact)
             result['call_directory'] = str(call_root)
+            result['call_id'] = call_id
             if persistence_error is not None:
                 result['persistence_error'] = persistence_error
             return content(result)
@@ -165,7 +166,7 @@ def create_server(targets, output_directory, *, display_name=None):
             return content({'status': 'receipt_unavailable', 'call': record,
                 'error': repr(error), 'operation_invoked': False}, error=True)
         result = await asyncio.to_thread(present_result, report, call_root, compact=compact)
-        result.update(call_directory=str(call_root), retained_call=record,
+        result.update(call_id=call_id, call_directory=str(call_root), retained_call=record,
                       operation_invoked=False)
         return content(result)
 
