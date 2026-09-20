@@ -1,4 +1,4 @@
-# Issue #3370 — single direct-host-image task unit
+# Issue #3370 — direct-host-image bounded Inkscape task unit
 
 ## H/T/D/C/U
 
@@ -68,3 +68,13 @@ action is permitted, and any second action is forbidden. The fresh allocation
 uses seed `991121`; its target point must be selected from that run's returned
 image, not copied coordinates. The client remains in the same MCP session after
 the allowed refusal and closes only after terminal status or an explicit STOP.
+`formal-04` avoided the flat-region refusal and accepted the click/key/save
+program with verified empty release, but the saved SVG remained at x=50 and
+the independent task oracle returned `success=false`. This is a formal FAIL,
+not a presentation-boundary pass. The feedback image shows the object selected,
+while the UI still said no changes needed saving. The current task runner
+therefore preregisters `formal-05` as a fresh allocation (seed `991122`) with a
+50 ms post-click settle, 18 explicit Right key chords, a 50 ms pre-save settle,
+Ctrl+S and 300 ms post-save wait, all in one `native_submit` and one input
+action. No second action follows; exact saved geometry and empty release remain
+hard gates. These pacing and key-count choices are fixed before launch.
