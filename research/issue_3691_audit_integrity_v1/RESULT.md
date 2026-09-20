@@ -44,3 +44,9 @@ Source SHA-256: audit.py `2ef6f8badae3c10616c134078a0e7addc0c410afc8ae5f4b2bc405
 A local Docker invocation failed before container creation with a Docker Desktop content-store I/O error on a referenced SHA-256 blob. Follow-up diagnostics found the `desktop-linux` engine pipe absent and `com.docker.service` in Manual/Stopped state. Starting Docker Desktop as the current user did not restore the engine; starting the service was denied because the service could not be opened. No image pull, storage modification, or container execution occurred. This is a bounded infrastructure STOP, not a test FAIL or PASS.
 
 Docker gate still required: run the exact suite once in a network-disabled container with read-only source, then invoke the auditor in a second fresh container after the engine/image store is healthy.
+
+## Construction QA trail
+
+The first CLI attempt was correctly fail-closed with `source hash mismatch: audit.py`: the study manifest contained a one-character transcription error in the source digest. After correcting the manifest to the independently measured source SHA-256, the same CLI command was rerun against the unchanged predecessor inputs and passed. This is recorded as a construction-manifest QA failure followed by a corrected native construction PASS; it is not Docker validation.
+
+The retained CLI output is `artifacts/native_audit.json`, SHA-256 `36e1e9c64c83be35eef3447d76d78d2f62adff257612184beef4162c5e1fb32a`. It reports `PASS_OFFLINE_STRUCTURAL_AUDIT`, `errors=[]`, and all 11 listed corruption controls rejected.
