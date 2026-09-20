@@ -116,7 +116,9 @@ class ReviewTests(unittest.TestCase):
         report = {'status': 'finished', 'evaluation': {'success': True},
                   'action': {'result': {'status': 'completed'},
                              'feedback': {'status': 'needs_review', 'error': 'BadWindow'}},
-                  'cleanup': {'status': 'completed'}, 'observation': self.native_report()}
+                  'cleanup': {'status': 'completed', 'tracked_processes_terminal': True,
+                              'owner_exit_verified': False, 'descendants_verified': False},
+                  'observation': self.native_report()}
         report['observation']['native']['artifact']['sha256'] = 'damaged'
         self.report.write_text(json.dumps(report))
         original = self.report.read_bytes()
@@ -125,7 +127,9 @@ class ReviewTests(unittest.TestCase):
         self.assertEqual(full['outcome_summary'], {
             'reported_status': 'finished', 'evaluation_success': True,
             'action_status': 'completed', 'feedback_status': 'needs_review',
-            'cleanup_status': 'completed'})
+            'cleanup_status': 'completed', 'cleanup_verification': {
+                'tracked_processes_terminal': True, 'owner_exit_verified': False,
+                'descendants_verified': False}})
         self.assertEqual(compact['outcome_summary'], full['outcome_summary'])
         self.assertEqual(expand_native_receipt(compact['receipt']), full['receipt'])
         self.assertEqual(full['receipt']['native_result'], report)
@@ -151,6 +155,17 @@ class ReviewTests(unittest.TestCase):
             self.report.write_text(json.dumps(report))
             self.assertTrue(all(value is None for value in
                                 review_native(self.report, self.root)['outcome_summary'].values()))
+
+    def test_cleanup_verification_requires_explicit_booleans(self):
+        from agent_review import native_outcome_summary
+        for value in (None, 0, 1, 'true', [], {}):
+            summary = native_outcome_summary({'cleanup': {
+                'status': 'completed', 'tracked_processes_terminal': value}})
+            self.assertEqual(summary['cleanup_verification'], {
+                'tracked_processes_terminal': None, 'owner_exit_verified': None,
+                'descendants_verified': None})
+        for cleanup in (None, [], {}, {'status': 'completed'}):
+            self.assertNotIn('cleanup_verification', native_outcome_summary({'cleanup': cleanup}))
 
     def test_native_target_refusal_is_visible_without_claiming_action_success(self):
         from receipt_references import expand_native_receipt

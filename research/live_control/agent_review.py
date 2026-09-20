@@ -32,6 +32,13 @@ def native_outcome_summary(report):
             'action_status': status('action', 'result', 'status'),
             'feedback_status': status('action', 'feedback', 'status'),
             'cleanup_status': status('cleanup', 'status')}
+    cleanup_keys = ('tracked_processes_terminal', 'owner_exit_verified', 'descendants_verified')
+    cleanup = field('cleanup')
+    if isinstance(cleanup, dict) and any(key in cleanup for key in cleanup_keys):
+        # Completion of the cleanup routine does not prove the process tree exited.
+        summary['cleanup_verification'] = {
+            key: cleanup.get(key) if type(cleanup.get(key)) is bool else None
+            for key in cleanup_keys}
     if isinstance(field('target_refusal'), dict):
         # A boundary is not action completion. Project the recorded refusal,
         # without deriving input safety or success from a missing action row.

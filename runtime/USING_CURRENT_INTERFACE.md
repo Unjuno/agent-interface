@@ -68,6 +68,15 @@ At capacity exhaustion, the terminal `needs_review` reply retains the final
 observation and cleanup result, and publishes no unusable next source. Process
 exit, action completion, cleanup and task evaluation are separate facts.
 
+When recorded verification flags exist, `outcome_summary.cleanup_verification`
+projects `tracked_processes_terminal`, `owner_exit_verified` and
+`descendants_verified` separately. A `cleanup_status` of `completed` only says the
+cleanup routine completed; it does not establish that every descendant exited.
+Only explicit booleans are projected; missing or malformed flags are `null`.
+The original cleanup receipt is preserved. The managed `allocation` object is a
+process snapshot: its `task_success: null` does not override a recorded
+`evaluation_success: true`, and a zero process exit code does not prove task success.
+
 ## Validate an integration
 
 Follow [the shared check instructions](integration_checks/README.md) for a single
