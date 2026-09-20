@@ -146,3 +146,10 @@ Some harnesses inject real GUI input. Use an isolated X session or disposable co
 A research directory should keep its benchmark/source, preregistration where applicable, raw result, audit, environment, and negative results close enough that a claim can be traced back to the experiment.
 
 A directory existing here does **not** mean its mechanism is promoted. Negative results, stopped allocations, superseded harnesses, and scoped passes are intentionally retained.
+
+
+### Recent direct-root evidence
+
+- [`cli_fault_residue_3711_revalidation_v1/`](cli_fault_residue_3711_revalidation_v1/) — Issue #3711 report-temp fault revalidation protocol; see its linked PR/evidence for current matrix status.
+- [`needle_lora_3441_online_stream_v1/`](needle_lora_3441_online_stream_v1/) — Issue #3769 streamed online LoRA successor; scoped host-CPU metrics and limits are in its report.
+- [`needle_role_graph_3780_compact_v1/`](needle_role_graph_3780_compact_v1/) — Issue #3780 compact receipt-gated role-adapter graph evidence; scoped synthetic PASS plus provenance warning.
