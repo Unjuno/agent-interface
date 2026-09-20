@@ -6,7 +6,8 @@
       "queue": [],
       "predicate_event": "terminal",
       "expected_id": "A",
-      "expected_disposition": "return"
+      "expected_disposition": "return",
+      "expected_candidate_behavior": "return"
     },
     {
       "name": "matching_queued_fallback_response",
@@ -14,7 +15,8 @@
       "queue": [{"event": "accepted", "id": "fallback"}],
       "predicate_event": "accepted",
       "expected_id": "fallback",
-      "expected_disposition": "return"
+      "expected_disposition": "return",
+      "expected_candidate_behavior": "return"
     },
     {
       "name": "stale_accepted_prelude",
@@ -22,7 +24,8 @@
       "queue": [],
       "predicate_event": "accepted",
       "expected_id": "fallback",
-      "expected_disposition": "wait"
+      "expected_disposition": "wait",
+      "expected_candidate_behavior": "stale_wrong_identity_returned"
     },
     {
       "name": "stale_rejected_prelude",
@@ -30,7 +33,8 @@
       "queue": [],
       "predicate_event": "rejected",
       "expected_id": "fallback",
-      "expected_disposition": "wait"
+      "expected_disposition": "wait",
+      "expected_candidate_behavior": "stale_wrong_identity_returned"
     },
     {
       "name": "duplicate_terminal_history",
@@ -38,7 +42,8 @@
       "queue": [],
       "predicate_event": "terminal",
       "expected_id": "A",
-      "expected_disposition": "ambiguous_duplicate"
+      "expected_disposition": "ambiguous_duplicate",
+      "expected_candidate_behavior": "returned_first_ambiguous"
     },
     {
       "name": "wrong_terminal_identifier",
@@ -46,7 +51,8 @@
       "queue": [],
       "predicate_event": "terminal",
       "expected_id": "A",
-      "expected_disposition": "wait"
+      "expected_disposition": "wait",
+      "expected_candidate_behavior": "stale_wrong_identity_returned"
     },
     {
       "name": "unrelated_retained_then_queued_response",
@@ -54,7 +60,8 @@
       "queue": [{"event": "accepted", "id": "fallback"}],
       "predicate_event": "accepted",
       "expected_id": "fallback",
-      "expected_disposition": "return"
+      "expected_disposition": "return",
+      "expected_candidate_behavior": "return"
     }
   ]
 }

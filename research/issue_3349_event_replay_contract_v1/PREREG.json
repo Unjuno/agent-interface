@@ -1,0 +1,52 @@
+{
+  "schema": "issue-experiment-prereg-v1",
+  "issue": 3349,
+  "allocation_id": "issue3349-event-replay-formal-01",
+  "preregistered_at_utc": "2026-09-20T17:16:34Z",
+  "repository": "Unjuno/agent-interface",
+  "branch": "research/issue-3349-event-replay-contract-v1",
+  "pre_registration_parent": "9307a27258e0fd74f869e14d6dfc7dcfad220a77",
+  "current_main": "a08935cc6efb73322e247b519fbd9d63a7b2741f",
+  "hypothesis": "JsonSession.wait's unconditional retained-history scan can return a wrong-operation response or an ambiguous duplicate terminal before the caller checks identity; it should fail the Issue #3349 bounded contract matrix while an independent role/identity-bound policy oracle passes.",
+  "test": "Run the exact frozen JsonSession.wait AST method against all seven frozen event/queue cases. Separately recompute the role+identifier policy in the formal container and independently reproduce both candidate and policy outcomes in a second fresh container using read-only formal results.",
+  "decision": {
+    "candidate_bug_reproduced": "FAIL_MERGED_REPLAY_SCOPE_BUG",
+    "audit_pass": "PASS_REPRODUCES_DECLARED_CANDIDATE_BEHAVIOR",
+    "independent_pass": "PASS_INDEPENDENT_REPLAY_CONTRACT_AUDIT",
+    "failure": "Any case differs from preregistered observed candidate behavior, policy expectation, or exact source hash; any stale or wrong-identifier response is counted as contract failure, not as unsafe input admission.",
+    "stop": "Image/source/runtime/provenance failure before or during container execution; preserve STOP and do not retry this allocation."
+  },
+  "controls": [
+    {"case": "matching_retained_terminal", "policy": "return", "candidate": "return"},
+    {"case": "matching_queued_fallback_response", "policy": "return", "candidate": "return"},
+    {"case": "stale_accepted_prelude", "policy": "wait", "candidate": "stale_wrong_identity_returned"},
+    {"case": "stale_rejected_prelude", "policy": "wait", "candidate": "stale_wrong_identity_returned"},
+    {"case": "duplicate_terminal_history", "policy": "ambiguous_duplicate", "candidate": "returned_first_ambiguous"},
+    {"case": "wrong_terminal_identifier", "policy": "wait", "candidate": "stale_wrong_identity_returned"},
+    {"case": "unrelated_retained_then_queued_response", "policy": "return", "candidate": "return"}
+  ],
+  "source_sha256": {
+    "candidate.py": "4e700b05c60626e73070eb6f5883d9341c8b1374996d45f08e5766fc6cb0f463",
+    "cases.json": "9f247fc58a25487f58e6ccbd4bfe8afda913248eff2395691c572d18eb6bec74",
+    "matrix.py": "424309b2ae7d3f645efb98c41a786e81836559e16f60cfc84fd6c172e6df8ded",
+    "audit.py": "f5da278185c67bc3211c69020da344eb681a740754218ed953636600f182ff25",
+    "independent_verify.py": "d73bf50e1e0933968c8b86de4ac25685e5fe24a4c9b2bff5bf5d5b3ec1616a4a",
+    "Dockerfile": "edc537a1e7d7232c07355412679c8cb5132fca614f50c90496388f76a91a39ec",
+    "Dockerfile.independent": "c544106b1d22987128c928afb206cc4d4596de58fab6806ca4ba025833a92119"
+  },
+  "candidate_git_blob": "4432a6188b5318dc552f050a26ff9e2a5d32bbf9",
+  "container": {
+    "engine": "OrbStack Docker Engine 29.4.0",
+    "platform": "linux/arm64",
+    "base_image": "python:3.12.10-slim-bookworm@sha256:fd95fa221297a88e1cf49c55ec1828edd7c5a428187e67b5d1805692d11588db",
+    "build_network": "none",
+    "run_network": "none",
+    "rootfs": "read-only",
+    "source": "baked into digest-pinned image",
+    "formal_output": "results/formal-01/RESULT.json",
+    "independent_output": "results/independent-01/INDEPENDENT.json"
+  },
+  "formal_invocations": 1,
+  "independent_container_invocations": 1,
+  "retry_policy": "No formal rerun, no replacement allocation, no host result substitution. Construction-only image build is permitted before the single formal invocation."
+}

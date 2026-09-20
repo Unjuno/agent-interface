@@ -33,3 +33,17 @@ Source/test harness prepared. Formal container run is STOP_NOT_RUN_DOCKER_DESKTO
 
 No retries or formal MAP01 allocation are part of this contract harness.
 
+## Follow-up formal allocation (separate from the preserved 2026-09-20 STOP)
+
+Issue #3349 is still open. A second OrbStack environment was available on
+2026-09-20. Before formal execution, allocation `issue3349-event-replay-formal-01`
+was frozen in `PREREG.json`; it pins the exact candidate/source hashes, current
+main, seven per-case candidate and contract outcomes, Docker base image and
+no-retry decision gates. The prior Docker-Desktop STOP above remains historical
+evidence and is not overwritten or relabeled.
+
+The frozen run uses a writable output mount only; source/root filesystems are
+read-only, container networking is disabled, and no MAP01, game, X11, OS input,
+model, or application is started. Formal evidence is written under `results/`
+and independently recomputed in a second fresh container.
+

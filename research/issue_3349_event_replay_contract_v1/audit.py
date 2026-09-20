@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import ast
+import argparse
 import hashlib
 import json
 import queue
@@ -94,13 +95,7 @@ def run():
             else "return"
         )
         policy_pass = policy_disposition == expected
-        candidate_matches_declared = (
-            candidate_disposition == "stale_wrong_identity_returned"
-            if case["name"] in {"stale_accepted_prelude", "stale_rejected_prelude"}
-            else candidate_disposition == "returned_first_ambiguous"
-            if case["name"] == "duplicate_terminal_history"
-            else candidate_disposition == expected
-        )
+        candidate_matches_declared = candidate_disposition == case["expected_candidate_behavior"]
         outcomes.append({
             "case": case["name"],
             "expected": expected,
@@ -110,10 +105,8 @@ def run():
             "policy_pass": policy_pass,
             "candidate_behavior_matches_declared": candidate_matches_declared,
         })
-    reproduced = all(
-        row["candidate_behavior_matches_declared"] for row in outcomes
-    ) and any(
-        row["case"] == "stale_accepted_prelude" and row["frozen_candidate"] == "stale_wrong_identity_returned"
+    reproduced = all(row["candidate_behavior_matches_declared"] for row in outcomes) and any(
+        row["frozen_candidate"] in {"stale_wrong_identity_returned", "returned_first_ambiguous"}
         for row in outcomes
     )
     passed = all(row["policy_pass"] and row["candidate_behavior_matches_declared"] for row in outcomes)
@@ -127,6 +120,10 @@ def run():
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
     rendered = json.dumps(run(), sort_keys=True, indent=2) + "\n"
-    (ROOT / "audit-result.json").write_text(rendered, encoding="utf-8")
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(rendered, encoding="utf-8")
     print(rendered, end="")
