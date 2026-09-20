@@ -32,3 +32,19 @@ docker run --rm --platform linux/amd64 --network none --read-only \
 ```
 
 The output must be archived under a fresh, allocation-specific evidence path only after the one-shot run and independent review. Never mount a committed result directory as `/out`.
+
+## Independent audit command
+
+Auditor: `audit.py`, Git blob SHA-1 `46915fdf2d095af2c737f0761241bc67400b36f1`. Run in a **second fresh container** only after the runner has completed and its output is preserved. The output mount must be writable for `audit.json`; all formal evidence inputs are read-only from the auditor's perspective.
+
+```sh
+docker run --rm --platform linux/amd64 --network none --read-only \
+  --tmpfs /tmp:rw,exec,size=64m --pids-limit 16 --memory 256m --cpus 1 \
+  --cap-drop ALL --security-opt no-new-privileges \
+  --mount type=bind,source="$PWD",target=/src,readonly \
+  --mount type=bind,source="$output",target=/out \
+  python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 \
+  python /src/research/cli_request_temp_crash_3711_v1/audit.py /out /src
+```
+
+The current result remains `STOP_LOCAL_CAPACITY_BEFORE_ALLOCATION`; neither command has been run.
