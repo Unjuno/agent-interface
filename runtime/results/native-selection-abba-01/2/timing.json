@@ -1,0 +1,51 @@
+{
+  "trace_sha256": "bd86390bb561c9f301bea7cf5920e80e4ed52144aa81fb021a660276176ed24a",
+  "calls": [
+    {
+      "id": 1,
+      "tool": "native_start",
+      "sdk_ms": 4299.145387,
+      "nested_descriptive_phases": {}
+    },
+    {
+      "id": 2,
+      "tool": "native_submit",
+      "sdk_ms": 592.950349,
+      "nested_descriptive_phases": {
+        "execution_ms": 190.531578,
+        "feedback_ms": 63.794426
+      }
+    },
+    {
+      "id": 3,
+      "tool": "native_submit",
+      "sdk_ms": 543.950875,
+      "nested_descriptive_phases": {
+        "execution_ms": 69.245366,
+        "feedback_ms": 121.939825
+      }
+    },
+    {
+      "id": 4,
+      "tool": "native_status",
+      "sdk_ms": 2.99235,
+      "nested_descriptive_phases": {}
+    }
+  ],
+  "span_ms": 32844.883014,
+  "inside_sdk_ms": 5439.038961,
+  "between_calls_ms": 27405.844053,
+  "between_call_gaps_ms": [
+    7906.87934,
+    7738.99189,
+    11759.972823
+  ],
+  "scope": "single sequential same-clock trace, not matched performance comparison",
+  "unmeasured": [
+    "model-visible image arrival",
+    "model reasoning duration",
+    "model tokens/cost",
+    "host transport decomposition",
+    "human baseline"
+  ]
+}

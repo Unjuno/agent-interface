@@ -1,0 +1,41 @@
+{
+  "trace_sha256": "b924975a002e1578efc94dee32d3e5c571d7138bb34c508e823f47680b3ffde9",
+  "calls": [
+    {
+      "id": 1,
+      "tool": "native_start",
+      "sdk_ms": 4252.452049,
+      "nested_descriptive_phases": {}
+    },
+    {
+      "id": 2,
+      "tool": "native_submit",
+      "sdk_ms": 749.00673,
+      "nested_descriptive_phases": {
+        "execution_ms": 196.292396,
+        "feedback_ms": 115.110262
+      }
+    },
+    {
+      "id": 3,
+      "tool": "native_status",
+      "sdk_ms": 2.812802,
+      "nested_descriptive_phases": {}
+    }
+  ],
+  "span_ms": 19894.138151,
+  "inside_sdk_ms": 5004.271581,
+  "between_calls_ms": 14889.86657,
+  "between_call_gaps_ms": [
+    6487.444418,
+    8402.422152
+  ],
+  "scope": "single sequential same-clock trace, not matched performance comparison",
+  "unmeasured": [
+    "model-visible image arrival",
+    "model reasoning duration",
+    "model tokens/cost",
+    "host transport decomposition",
+    "human baseline"
+  ]
+}
