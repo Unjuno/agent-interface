@@ -6,12 +6,52 @@ import sys
 import tempfile
 import unittest
 import zipfile
+from unittest import mock
 from pathlib import Path
 
 from runtime.distribution_v2.build import FIXED_TIME, GENERATED, SOURCE_FILES, SUPPORT, build
 
 
 class PortableDistributionTests(unittest.TestCase):
+    def test_build_pins_source_even_when_head_moves_between_files(self):
+        from runtime.distribution_v2 import build as builder
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            def git(*args):
+                return subprocess.check_output(['git', '-C', str(root), *args], stderr=subprocess.STDOUT).decode().strip()
+            git('init')
+            for value in ('old', 'new'):
+                for name in ('a.py', 'b.py'):
+                    (root/name).write_text(value)
+                git('add', 'a.py', 'b.py')
+                git('-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid', 'commit', '-m', value)
+                if value == 'old': old = git('rev-parse', 'HEAD')
+            pinned = git('rev-parse', 'HEAD')
+            original = builder._source_bytes
+            def read(path, rel, revision):
+                data = original(path, rel, revision)
+                if rel == 'a.py':
+                    git('update-ref', 'HEAD', old, pinned)
+                return data
+            with mock.patch.object(builder, 'SOURCE_FILES', ('a.py', 'b.py')), \
+                 mock.patch.object(builder, '_source_bytes', side_effect=read):
+                result = build(root, root/'out.pyz', root/'manifest.json', root/'sums')
+            self.assertEqual(git('rev-parse', 'HEAD'), old)
+            self.assertEqual(result['source_revision'], pinned)
+            with zipfile.ZipFile(root/'out.pyz') as archive:
+                self.assertEqual(archive.read('a.py'), b'new')
+                self.assertEqual(archive.read('b.py'), b'new')
+                self.assertEqual(json.loads(archive.read('BUILD.json'))['source_revision'], pinned)
+
+    def test_missing_commit_does_not_fall_back_to_working_files(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            (root/'.git').mkdir()
+            with self.assertRaises(RuntimeError):
+                build(root, root/'out.pyz', root/'manifest.json', root/'sums')
+            self.assertFalse((root/'out.pyz').exists())
+            self.assertFalse((root/'manifest.json').exists())
+
     def test_build_is_byte_deterministic_and_doctor_runs(self):
         root = Path(__file__).resolve().parents[2]
         with tempfile.TemporaryDirectory() as td:

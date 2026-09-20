@@ -20,10 +20,15 @@ python -m runtime.distribution_v2.build \
   --sums results-local/my-runtime/sha256.txt
 ```
 
-The builder reads committed `HEAD` when the source has `.git`; uncommitted edits
-are not packaged. Keep the manifest and checksum beside the executable. `BUILD.json`
-inside the archive records each included source file's digest. This is a local
-build, not publication of a GitHub Release.
+The builder resolves committed `HEAD` once when the source has `.git`, then reads
+every included source file from that object ID even if the branch moves during
+the build. Uncommitted source edits are not packaged. The manifest and internal
+`BUILD.json` record `source_revision` and each included source file's digest.
+This revision identifies the included files, not uncommitted builder settings.
+For a source directory without Git, `source_revision` is null and the per-file
+hashes describe the files read; no commit pin is claimed. A failed Git lookup
+does not fall back to working files. Keep the manifest and checksum beside the
+executable. This is a local build, not publication of a GitHub Release.
 
 For a Windows-managed checkout, run the builder with Windows Python/Git, then
 run the resulting `.pyz` with WSL Python for Linux/X11. Linux Git cannot resolve
