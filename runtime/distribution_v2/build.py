@@ -24,6 +24,7 @@ SOURCE_FILES = (
     "runtime/cli_v1/__init__.py",
     "runtime/cli_v1/__main__.py",
     "runtime/cli_v1/api.py",
+    "runtime/cli_v1/mcp_server.py",
     "runtime/cli_v1/receipt.py",
     "runtime/cli_v1/review.py",
     "runtime/cli_v1/receipt_references.py",
@@ -47,7 +48,20 @@ SOURCE_FILES = (
 GENERATED = {
     "runtime/__init__.py": b"\n",
     "runtime/backends/__init__.py": b"\n",
-    "__main__.py": b"from runtime.cli_v1.__main__ import main\nraise SystemExit(main())\n",
+    "__main__.py": b'''import sys
+if len(sys.argv) > 1 and sys.argv[1] == "mcp":
+    del sys.argv[1]
+    try:
+        from runtime.cli_v1.mcp_server import main
+    except ModuleNotFoundError as error:
+        if error.name != "mcp" and not error.name.startswith("mcp."):
+            raise
+        print("MCP mode requires optional dependency mcp==1.30.0 in this Python environment.", file=sys.stderr)
+        raise SystemExit(2)
+else:
+    from runtime.cli_v1.__main__ import main
+raise SystemExit(main())
+''',
 }
 
 SUPPORT = {
@@ -61,7 +75,7 @@ SUPPORT = {
     "wayland": {"promoted": False, "reason": "WAYLAND_BACKEND_NOT_PROMOTED"},
     "automatic_target_discovery": False,
     "automatic_permission_escalation": False,
-    "optional_dependencies": {"x11_png_artifacts": ["Pillow"]},
+    "optional_dependencies": {"x11_png_artifacts": ["Pillow"], "mcp_stdio": ["mcp==1.30.0"]},
 }
 
 

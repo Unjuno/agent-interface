@@ -13,6 +13,37 @@ from runtime.cli_v1.mcp_server import create_server
 
 
 class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_portable_stdio_runs_outside_checkout(self):
+        from mcp import ClientSession, StdioServerParameters
+        from mcp.client.stdio import stdio_client
+        from runtime.distribution_v2.build import SOURCE_FILES, build
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            source = root/'source'
+            repository = Path(__file__).resolve().parents[2]
+            for name in SOURCE_FILES:
+                target = source/name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes((repository/name).read_bytes())
+            artifact = root/'runtime.pyz'
+            build(source, artifact, root/'manifest.json', root/'sum')
+            targets = root/'targets.json'
+            targets.write_text('{"fixture":123}')
+            params = StdioServerParameters(command=sys.executable, cwd=str(root), args=[
+                str(artifact), 'mcp', '--targets', str(targets),
+                '--output-directory', str(root/'calls')])
+            async with stdio_client(params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    listed = await client.list_tools()
+                    self.assertEqual({tool.name for tool in listed.tools},
+                                     {'interface_observe', 'interface_dispatch'})
+                    reply = await client.call_tool('interface_dispatch', {
+                        'program': {}, 'current_observation_seq': -1, 'current_binding_revision': 0})
+                    row = json.loads(reply.content[0].text)
+                    self.assertEqual(row['outcome_summary']['error'], 'INVALID_OBSERVATION_SEQ')
+                    self.assertTrue(Path(row['call_directory']).is_relative_to(root/'calls'))
+
     async def test_cli_and_mcp_preserve_identical_failed_presentation(self):
         from runtime.cli_v1.__main__ import _present_result
         with tempfile.TemporaryDirectory() as td:

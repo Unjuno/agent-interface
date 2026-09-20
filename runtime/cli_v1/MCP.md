@@ -5,9 +5,9 @@ to an MCP host. It returns metadata as text and the selected PNG as a separate
 image block, so the host need not parse base64 out of CLI text. It launches no
 model, application, display or research allocation.
 
-Use a repository checkout and a Python environment with `mcp==1.30.0`, plus the
-backend dependencies listed in the CLI guide. The portable zipapp does not yet
-include this optional server. For Linux/X11, run in WSL or Linux with python-xlib
+Use a Python environment with `mcp==1.30.0`, plus the backend dependencies listed
+in the CLI guide. Launch from a repository checkout or use the portable zipapp's
+explicit `mcp` mode. For Linux/X11, run in WSL or Linux with python-xlib
 and Pillow installed in that same environment and an existing display.
 
 Configure the MCP host to launch the equivalent of:
@@ -19,7 +19,20 @@ python -m runtime.cli_v1.mcp_server \
   --display :99
 ```
 
-Set the host's working directory to the repository root. `targets.json` is a
+The equivalent portable command works outside a checkout:
+
+```sh
+python /absolute/agent-interface-runtime.pyz mcp \
+  --targets /absolute/targets.json \
+  --output-directory /absolute/session-receipts \
+  --display :99
+```
+
+The archive includes the adapter, not its third-party dependencies. Ordinary CLI
+commands do not import MCP. Missing MCP dependencies affect only `mcp` mode.
+
+For module launch, set the host's working directory to the repository root.
+For portable launch, use the absolute archive path. `targets.json` is a
 nonempty mapping such as `{"editor":12345}`, with the actual native window ID
 selected by the caller. IDs are loaded once at startup, not discovered or
 refreshed automatically. Do not reuse an ID after its target lifecycle changes.

@@ -64,6 +64,21 @@ Requirements:
 
 The archive does not discover targets or request permissions automatically.
 
+## Optional MCP mode
+
+The same archive can expose the public APIs through stdio when its Python
+environment has `mcp==1.30.0` and the selected backend dependencies:
+
+```sh
+python agent-interface-runtime.pyz mcp --targets /absolute/targets.json \
+  --output-directory /absolute/session-receipts --display :99
+```
+
+See the [public MCP guide](../cli_v1/MCP.md) for host setup, result handling and
+lifecycle limits. MCP is imported only when this explicit mode is selected;
+ordinary CLI commands remain usable without the SDK. This entry point does not
+choose a transport automatically or imply a token/latency advantage over CLI/API.
+
 
 For an explicit X11 target, return the capture and its image in one invocation:
 

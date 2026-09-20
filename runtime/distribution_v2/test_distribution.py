@@ -13,6 +13,22 @@ from runtime.distribution_v2.build import FIXED_TIME, GENERATED, SOURCE_FILES, S
 
 
 class PortableDistributionTests(unittest.TestCase):
+    def test_cli_remains_usable_without_optional_mcp_dependency(self):
+        root = Path(__file__).resolve().parents[2]
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            out = td/'runtime.pyz'
+            build(root, out, td/'manifest.json', td/'sum')
+            doctor = subprocess.run([sys.executable, '-S', str(out), 'doctor'],
+                                    cwd=td, capture_output=True, text=True)
+            self.assertEqual(doctor.returncode, 0, doctor.stderr)
+            self.assertEqual(json.loads(doctor.stdout)['schema'], 'agent-interface/runtime-doctor-v1')
+            mcp = subprocess.run([sys.executable, '-S', str(out), 'mcp', '--help'],
+                                 cwd=td, capture_output=True, text=True)
+            self.assertEqual(mcp.returncode, 2)
+            self.assertIn('optional dependency mcp==1.30.0', mcp.stderr)
+            self.assertEqual(mcp.stdout, '')
+
     def test_build_pins_source_even_when_head_moves_between_files(self):
         from runtime.distribution_v2 import build as builder
         with tempfile.TemporaryDirectory() as td:
