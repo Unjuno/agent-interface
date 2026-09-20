@@ -46,3 +46,24 @@ public runtime change is introduced. Keep as draft until applicable formal gates
 The archive contains all 46 files from all three attempts. manifest.json and
 archive.json record file hashes/lengths and archive identity. Every archived
 entry was checked. Preserve all three attempts; do not rerun them in place.
+
+## H/T/D/C/U
+
+- **H:** The primary can select the rectangle, make the requested six-Right
+  transfer and save through public MCP; the explicit final observation adds
+  confirmation but no new information beyond action 2's visible saved state.
+- **T:** One WSL/Xvfb Inkscape session through SDK stdio, with three sequential
+  startup attempts. Attempt 3 used explicit X11 backend and byte-valued WM-name
+  decoding; it does not isolate which change resolved attempt 2's discovery
+  failure. No input replay.
+- **D:** The archived attempt-3 SVG verifies `x=62`, `y=50`, `width=40`,
+  `height=30`; action receipts report completed and input release verified.
+  The archive digest matches and all 46 manifest entries match exact sizes and
+  hashes. Tracked cleanup is retained; descendants remain unverified.
+- **C:** One WSL/Xvfb functional-use case with explicit 50-ms waits and an extra
+  observation. Source/binding labels and leases are caller supplied. No
+  matched timing comparison, host registration, or model acknowledgement.
+- **U:** The formal container/adoption gate remains open. No default-delay,
+  latency, cost, broad GUI reliability, or general task-completion claim follows
+  from this single scoped transfer. Keep the formal gate separate from this
+  retained WSL evidence.
