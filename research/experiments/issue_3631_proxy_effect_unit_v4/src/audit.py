@@ -6,6 +6,7 @@ from pathlib import Path
 
 OUT=Path("/evidence")
 SRC=Path("/src")
+AUDIT_OUT=Path("/audit")
 ARMS=("ordinary_screenshot","proxy_image","structured_proxy","hybrid")
 CASES=("positive","no_effect","stale_version","target_replaced","unavailable","ambiguous","macro_failure")
 DECISIONS={"positive":"COMPLETED","no_effect":"YIELD_NO_APPLICATION_EFFECT",
@@ -42,6 +43,7 @@ def validate(raw):
     if observed!=expected or len(observed)!=len(rows):errors.append("matrix denominator/identity mismatch")
     if raw.get("issue")!=3631 or raw.get("allocation_id")!="issue3631-proxy-effect-unit-formal-04":errors.append("allocation identity mismatch")
     if raw.get("canonical_output_path")!="evidence/formal-04":errors.append("canonical evidence path mismatch")
+    if raw.get("image_id")!="sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27" or raw.get("platform")!="linux/arm64":errors.append("runtime image/platform mismatch")
     if raw.get("formal_invocations")!=1 or raw.get("retries")!=0:errors.append("formal one-shot count mismatch")
     for row in rows:
         label=f'{row.get("arm")}/{row.get("case")}'; case=row.get("case")
@@ -133,12 +135,12 @@ def challenge(raw):
 
 def main():
     raw_bytes=(OUT/"raw.json").read_bytes();raw=json.loads(raw_bytes);errors=validate(raw)
-    frozen=json.loads((SRC/"FREEZE.json").read_text());manifest=json.loads((SRC/"SOURCE_MANIFEST.json").read_text())
-    prereg=(SRC/"PREREGISTRATION.md").read_bytes()
+    frozen=json.loads(Path("/freeze.json").read_text());manifest_bytes=Path("/source_manifest.json").read_bytes();manifest=json.loads(manifest_bytes)
+    prereg=Path("/preregistration.md").read_bytes()
     claimed=raw.get("result_sha256");payload=dict(raw);payload.pop("result_sha256",None)
     if digest(json.dumps(payload,sort_keys=True,separators=(",",":")).encode())!=claimed:errors.append("raw self-hash mismatch")
-    if digest((SRC/"FREEZE.json").read_bytes())!=raw.get("freeze_sha256"):errors.append("freeze hash mismatch")
-    if digest((SRC/"SOURCE_MANIFEST.json").read_bytes())!=raw.get("source_manifest_sha256"):errors.append("manifest hash mismatch")
+    if digest(Path("/freeze.json").read_bytes())!=raw.get("freeze_sha256"):errors.append("freeze hash mismatch")
+    if digest(manifest_bytes)!=raw.get("source_manifest_sha256"):errors.append("manifest hash mismatch")
     if digest(prereg)!=raw.get("preregistration_sha256"):errors.append("preregistration hash mismatch")
     if frozen.get("source_commit")!=raw.get("source_commit") or frozen.get("image_id")!=raw.get("image_id"):errors.append("freeze/runtime identity mismatch")
     for name,want in manifest.get("files",{}).items():
@@ -146,7 +148,7 @@ def main():
     controls=challenge(raw)
     if not all(c["detected"] for c in controls):errors.append("independent corruption challenge escaped")
     result={"decision":"PASS_INDEPENDENT_AUDIT" if not errors else "HOLD_OR_FAIL_INDEPENDENT_AUDIT","rows":len(raw.get("rows",[])),"raw_sha256":digest(raw_bytes),"errors":errors,"corruption_controls":controls}
-    (OUT/"audit.json").write_text(json.dumps(result,sort_keys=True,indent=2)+"\n");print(json.dumps(result,sort_keys=True))
+    (AUDIT_OUT/"audit.json").write_text(json.dumps(result,sort_keys=True,indent=2)+"\n");print(json.dumps(result,sort_keys=True))
     if errors:raise SystemExit(1)
 
 if __name__=="__main__":main()
