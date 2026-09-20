@@ -1,1 +1,20 @@
-{"issue":3851,"allocation":"needle-lora-3441-rank4-minibatch-seed-paired-v1","formal_invocations":1,"exit_code":1,"stdout_bytes":0,"stdout_sha256":"E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855","stderr_bytes":9788,"stderr_sha256":"C268FFDF6D7AB21C3E5FAE92FC1D93A5C5F7CEA0E399C05A85F483AE49268378","base_steps_seed3451":400,"successful_online_optimizer_steps":0,"heldout_evaluations":0,"first_feedback_order_row":4,"failure":"IndexError/ CUDA IndexKernel out of bounds: ids has length 1 but sampler row ID 4 is applied as its index; no retry","disposition":"STOP_RUNNER_INDEXING_FAILURE"}
+{
+  "issue": 3851,
+  "allocation": "needle-lora-3441-rank4-minibatch-seed-paired-v1",
+  "formal_invocations": 1,
+  "exit_code": 1,
+  "stdout_bytes": 0,
+  "stdout_sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+  "stderr_source_bytes": 9786,
+  "stderr_text_chars": 9788,
+  "stderr_source_sha256": "C268FFDF6D7AB21C3E5FAE92FC1D93A5C5F7CEA0E399C05A85F483AE49268378",
+  "stderr_raw_base64_utf8_sha256": "82F4DF7D93E97D68B851A392444AFB9096EB7E4CE707F20662F327CC1190F08F",
+  "stderr_raw_base64_github_blob": "7715cb271b2abdb1b15eb386596e4b9a04bfaee2",
+  "base_steps_seed3451": 400,
+  "successful_online_optimizer_steps": 0,
+  "heldout_evaluations": 0,
+  "first_feedback_order_row": 4,
+  "failure": "CUDA IndexKernel out-of-bounds before first online optimizer step: one-element seen-row index tensor was indexed by original support row ID 4",
+  "disposition": "STOP_RUNNER_INDEXING_FAILURE",
+  "retries": 0
+}
