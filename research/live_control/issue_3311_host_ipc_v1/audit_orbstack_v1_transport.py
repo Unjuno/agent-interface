@@ -4,6 +4,8 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import re
+import subprocess
 import sys
 
 
@@ -13,6 +15,15 @@ def sha(path: Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def git_source_sha(revision: str, repository_path: str) -> str:
+    if not re.fullmatch(r"[0-9a-f]{40}", revision):
+        raise ValueError("source revision must be a full lowercase commit SHA")
+    repo = Path(__file__).resolve().parents[3]
+    completed = subprocess.run(["git", "show", f"{revision}:{repository_path}"],
+                               cwd=repo, capture_output=True, check=True)
+    return hashlib.sha256(completed.stdout).hexdigest()
 
 
 def audit(root: Path) -> dict:
@@ -29,6 +40,9 @@ def audit(root: Path) -> dict:
     events = [json.loads(line) for line in
               (root / "out/runner/events.jsonl").read_text().splitlines()]
     source = json.loads((root / "source-sha256.json").read_text())
+    revisions_path = root.parents[1] / "source-revisions.json"
+    revision = json.loads(revisions_path.read_text())[root.name]
+    cli_path = broker["host_cli_identity"]["path"].replace("\\", "/")
     checks = {
         "orbstack_context": command[command.index("--context") + 1] == "orbstack",
         "network_disabled": command[command.index("--network") + 1] == "none",
@@ -37,11 +51,11 @@ def audit(root: Path) -> dict:
         "broker_exit_zero": exit_codes["broker"] == 0,
         "one_non_authoritative_request": len(request_files) == 1 and request["authority_granted"] is False,
         "request_asset_hashes_match": request["schema_sha256"] == sha(root / "repo/schema.json") and request["instructions_sha256"] == sha(root / "repo/instructions.txt"),
-        "broker_identity_matches_fake_cli": broker["host_cli_identity"]["path"] == str((root / "fake-codex").resolve()) and broker["host_cli_identity"]["sha256"] == sha(root / "fake-codex") and broker["host_cli_identity"]["version"] == "codex fake-transport-v1",
+        "broker_identity_matches_fake_cli": Path(cli_path).name == "fake-codex" and broker["host_cli_identity"]["sha256"] == sha(root / "fake-codex") and broker["host_cli_identity"]["version"] == "codex fake-transport-v1",
         "broker_reported_success": broker["returncode"] == 0 and broker["host_cli_invoked"] is True and broker["authority_granted"] is False,
         "runner_reported_non_authority": process["authority_granted"] is False and process["boundary"] == "container-to-host-model-ipc",
         "synthetic_event_sequence": [event["type"] for event in events] == ["thread.started", "item.completed", "turn.completed"],
-        "source_hashes_match": source["broker_sha256"] == sha(root.parents[4] / "runtime/host_model_ipc_broker_v1.py") and source["runner_sha256"] == sha(root.parents[4] / "research/live_control/container_host_model_ipc_runner_v1.py") and source["test_sha256"] == sha(root.parents[4] / "research/live_control/issue_3311_host_ipc_v1/test_orbstack_v1_transport.py"),
+        "source_hashes_match": source["broker_sha256"] == git_source_sha(revision, "runtime/host_model_ipc_broker_v1.py") and source["runner_sha256"] == git_source_sha(revision, "research/live_control/container_host_model_ipc_runner_v1.py") and source["test_sha256"] == git_source_sha(revision, "research/live_control/issue_3311_host_ipc_v1/test_orbstack_v1_transport.py"),
         "stderr_empty": not (root / "container.stderr.txt").read_text().strip() and not (root / "broker.stderr.txt").read_text().strip(),
     }
     return {
@@ -53,17 +67,14 @@ def audit(root: Path) -> dict:
 
 
 def main() -> int:
-    if len(sys.argv) != 2:
-        print(f"usage: {sys.argv[0]} EVIDENCE_DIR", file=sys.stderr)
+    if len(sys.argv) not in (2, 4) or (len(sys.argv) == 4 and sys.argv[2] != "--output"):
+        print(f"usage: {sys.argv[0]} EVIDENCE_DIR [--output REPORT.json]", file=sys.stderr)
         return 2
     report = audit(Path(sys.argv[1]))
-    root = Path(sys.argv[1]).resolve()
-    manifest = {str(path.relative_to(root)): sha(path) for path in sorted(root.rglob("*"))
-                if path.is_file() and path.name not in {"audit.json", "raw-sha256.json"}}
-    (root / "raw-sha256.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    report["raw_sha256_manifest"] = "raw-sha256.json"
-    (root / "audit.json").write_text(json.dumps(report, indent=2) + "\n")
-    print(json.dumps(report, indent=2))
+    rendered = json.dumps(report, indent=2) + "\n"
+    if len(sys.argv) == 4:
+        Path(sys.argv[3]).write_text(rendered, encoding="utf-8")
+    print(rendered, end="")
     return 0 if report["disposition"].startswith("PASS_") else 1
 
 

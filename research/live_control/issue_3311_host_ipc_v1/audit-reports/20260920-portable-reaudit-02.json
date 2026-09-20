@@ -1,0 +1,20 @@
+{
+  "disposition": "PASS_V1_SYNTHETIC_TRANSPORT_ONLY",
+  "scope": "synthetic CLI transport; not a real model call, schema endpoint, GUI, task, or efficiency result",
+  "evidence_root": "/private/tmp/3311-v1-broker-integrity/research/live_control/issue_3311_host_ipc_v1/evidence/20260920-v1-transport-audit-02",
+  "checks": {
+    "orbstack_context": true,
+    "network_disabled": true,
+    "image_id_pinned": true,
+    "container_exit_zero": true,
+    "broker_exit_zero": true,
+    "one_non_authoritative_request": true,
+    "request_asset_hashes_match": true,
+    "broker_identity_matches_fake_cli": true,
+    "broker_reported_success": true,
+    "runner_reported_non_authority": true,
+    "synthetic_event_sequence": true,
+    "source_hashes_match": true,
+    "stderr_empty": true
+  }
+}
