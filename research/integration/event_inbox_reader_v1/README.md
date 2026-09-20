@@ -4,6 +4,24 @@ Issue #3876. This is an experimental, explicit read API for the existing
 `interactive_v17` / `DeliveryLedger` prepared `delivered.jsonl` format. It is
 not enabled in the production CLI, MCP server or portable distribution.
 
+An explicit experimental command is available from the repository root:
+
+```sh
+python -m research.integration.event_inbox_reader_v1 --stream /owned/run/delivered.jsonl --stream-id owned-run-epoch-1
+python -m research.integration.event_inbox_reader_v1 --stream /owned/run/delivered.jsonl --stream-id owned-run-epoch-1 --cursor /owned/cursor.json
+```
+
+The host saves the returned `next_cursor` object separately after handling the
+response. This command does not write a cursor or modify the stream. An omitted
+cursor starts at the beginning; it is not a recovery fallback. Use the same
+owner-assigned stream identity only within that run. If stdout is lost, reading
+again with the same cursor repeats records without repeating any actions.
+The response is one JSON line. Exit 0 includes incomplete tails and page limits;
+inspect `tail_state`. Exit 2 indicates a blocked record or read failure. A blocked
+response can contain earlier valid records and a cursor before the bad record;
+a read failure supplies no next cursor. Do not discard pending records or reset
+the cursor to hide either condition. Cursor files are bounded to 4096 bytes.
+
 `read_pending(path, stream_id=..., cursor=..., max_records=32, max_bytes=1048576)`
 returns complete newline-terminated records, in original order, and a next read
 cursor. The caller assigns a new stream identity for each owned run/epoch and

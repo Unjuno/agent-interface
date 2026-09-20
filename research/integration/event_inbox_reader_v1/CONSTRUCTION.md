@@ -50,6 +50,18 @@ strict. The initial Docker check passed. These are component checks, not a full
 interactive_v17 run, GUI/model delivery, producer-restart recovery, durability,
 concurrent rewriting or performance evidence.
 
+The subsequent explicit host command check (`ai-passive-host-01`, exit 0)
+replaces the test-only reader subprocess with the documented module CLI. It
+passes the same five-process scenario and stream hash. Container
+`ai-passive-host-tests-01` passed all six unit/CLI test methods, including
+unchanged input files, repeated reads, persisted cursor reuse, null/malformed/
+oversized cursor rejection, structured stdout and exit codes. A primary agent
+invocation (`ai-passive-host-selfuse-01`) read the first two generated records
+through that command and received `tail_state=limit` and `next_sequence=3`.
+This is direct command use on component-generated records, not live GUI feedback.
+All three containers use the pinned image and offline read-only source settings
+above. This candidate still has no automatic host wakeup or production emitter.
+
 Disposition: experimental candidate for review. Before runtime promotion,
 decide the host API and lifecycle for explicit read cursors and owner-assigned
 stream epochs. ACK/compaction and

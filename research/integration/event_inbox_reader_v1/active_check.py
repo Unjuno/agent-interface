@@ -5,7 +5,6 @@ import json
 from pathlib import Path
 import sys
 
-from research.integration.event_inbox_reader_v1.reader import read_pending
 from research.live_control.delivery_ledger_v2 import DeliveryLedger
 
 MODULE = 'research.integration.event_inbox_reader_v1.active_check'
@@ -29,19 +28,18 @@ def producer(root):
     print('complete', flush=True)
 
 
-def reader(root):
-    cursor_path = root / 'cursor.json'
-    cursor = json.loads(cursor_path.read_text()) if cursor_path.exists() else None
-    print(json.dumps(read_pending(root / 'delivered.jsonl', stream_id=STREAM,
-                                  cursor=cursor)))
-
-
 async def check(root):
     root.mkdir(parents=True, exist_ok=False)
     children = []
     async def spawn(mode):
+        command = [sys.executable, '-m', MODULE, mode, str(root)]
+        if mode == 'read':
+            command = [sys.executable, '-m', MODULE.rsplit('.', 1)[0],
+                       '--stream', str(root / 'delivered.jsonl'), '--stream-id', STREAM]
+            if (root / 'cursor.json').exists():
+                command += ['--cursor', str(root / 'cursor.json')]
         child = await asyncio.create_subprocess_exec(
-            sys.executable, '-m', MODULE, mode, str(root),
+            *command,
             stdin=asyncio.subprocess.PIPE, stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE)
         children.append(child)
@@ -102,8 +100,6 @@ if __name__ == '__main__':
     root = Path(directory)
     if mode == 'produce':
         producer(root)
-    elif mode == 'read':
-        reader(root)
     elif mode == 'check':
         asyncio.run(check(root))
     else:
