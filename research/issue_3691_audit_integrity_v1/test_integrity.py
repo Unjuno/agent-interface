@@ -94,6 +94,8 @@ class AuditIntegrityTests(unittest.TestCase):
             root = Path(directory)
             raw = copy.deepcopy(self.raw)
             freeze = root / "freeze.json"
+            canonical_freeze = root / "canonical-freeze.json"
+            canonical_freeze.write_bytes(PREDECESSOR_FREEZE.read_bytes())
             freeze.write_bytes(b'{"replacement":true}\n')
             raw["freeze_sha256"] = hashlib.sha256(freeze.read_bytes()).hexdigest()
             raw["events"][0]["identity"]["pixel_sha256"] = "0" * 64
@@ -106,6 +108,19 @@ class AuditIntegrityTests(unittest.TestCase):
             self.assertEqual(result["status"], "FAIL_AUDIT")
             self.assertIn("raw bytes do not match frozen predecessor hash", result["errors"])
             self.assertIn("freeze bytes do not match frozen predecessor hash", result["errors"])
+
+            raw_only = copy.deepcopy(self.raw)
+            raw_only["events"][0]["identity"]["pixel_sha256"] = "0" * 64
+            raw_only["events"][1]["identity"]["pixel_sha256"] = "0" * 64
+            raw_path.write_text(json.dumps(raw_only), encoding="utf-8")
+            raw_only_result = audit.audit(raw_path, canonical_freeze, manifest)
+            self.assertIn("raw bytes do not match frozen predecessor hash", raw_only_result["errors"])
+            self.assertNotIn("freeze bytes do not match frozen predecessor hash", raw_only_result["errors"])
+
+            raw_path.write_bytes(RAW.read_bytes())
+            freeze_only_result = audit.audit(raw_path, freeze, manifest)
+            self.assertNotIn("raw bytes do not match frozen predecessor hash", freeze_only_result["errors"])
+            self.assertIn("freeze bytes do not match frozen predecessor hash", freeze_only_result["errors"])
 
     def test_exact_raw_freeze_and_direct_cli_routes_agree(self):
         with tempfile.TemporaryDirectory() as directory:
