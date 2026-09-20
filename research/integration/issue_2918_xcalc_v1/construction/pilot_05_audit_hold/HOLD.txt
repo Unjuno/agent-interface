@@ -1,0 +1,34 @@
+Construction pilot 05 — HOLD, runner complete, audit/configuration incomplete
+
+The runner completed 13 rows and 12 public observation calls. The audit
+process stopped before evaluating rows because `value_from_png` had been
+changed to return three values while one caller still unpacked only two
+(`ValueError: too many values to unpack (expected 2)`). This is an auditor
+implementation defect, not an experiment result.
+
+The corruption-control test was also configured incorrectly: its writable
+output directory was nested under the read-only raw-input directory. It began
+recursive copies until the filesystem rejected an overlong path. The raw runner
+files and captures are retained here; the malformed recursive-copy output was
+moved out of this evidence bundle and is not treated as input data. No
+corruption-control result or independent audit PASS is claimed for pilot 05.
+
+The auditor unpacking and output-isolation guard were fixed before formal
+freeze. The runner itself completed; the audit and corruption controls had not
+yet passed at the time of this initial HOLD.
+
+An additive follow-up audit against the same immutable pilot-05 raw, using a
+separate report directory, advanced past the return-arity fix and stopped at
+`NameError: name 'PHASE_SUPPORT' is not defined`. The independent auditor must
+define its phase support table locally (without importing candidate/compiler
+code) before the final rehearsal.
+
+Follow-up: after fixing the return-arity caller and defining the independent
+phase-support table locally, the read-only audit completed on this retained
+runner output with `PASS_XCALC_LIVE_CERTIFICATE_TRANSFER_SCOPED` (13 rows, 12
+captures, 3 FORWARD, 2 SUPPRESS, 8 YIELD, 0 unsafe suppressions). The three
+corruption controls also rejected wrong disposition, missing row, and mutated
+capture pixel with `AssertionError` on clean staged copies; the original pilot
+raw stayed unchanged. These follow-up outputs are `FOLLOWUP_AUDIT.json` and
+`FOLLOWUP_CORRUPTION_CONTROLS.json`. This remains construction/rehearsal data,
+not the preregistered formal allocation.
