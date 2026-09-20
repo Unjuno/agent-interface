@@ -119,3 +119,15 @@ Main advanced through #3513/#3514 while hosted Linux CI was queued. `git merge-t
 **C** — The timeout is bounded at the Docker client call; the pre-existing `finally` cleanup terminates then escalates to kill/reap. No retained historical evidence was modified; no model, GUI, or task was run.
 
 **U** — Latest-head hosted Linux/Windows workflows and fresh review remain pending. #3489 remains gated on #3487 merge and green CI.
+
+### Current-main reconciliation after #3517/#3519/#3520/#3522 (2026-09-20)
+
+Main advanced four commits while hosted CI was queued. `git merge-tree` showed a clean automatic merge, including the overlapping host-CLI identity boundary from #3517; latest main was merged and its behavior retained. The new broker identity-probe timeout/nonzero regressions are now included in the combined suite.
+
+**H/T** — Verify the transport/auditor/setup guards together with main's identity receipts, X11 partial-execution behavior, CLI review, and portable archive source pinning after reconciliation.
+
+**D** — PASS locally: exact Linux workflow-equivalent selection 26/26 on host (including source-history audits); pinned OrbStack `--network none` broker/bridge, path-safe auditor tests, two setup cleanup cases, and public CLI review selection 33/33; OrbStack X11 partial-execution tests 4/4; host portable distribution tests 5/5. Historical source-audit tests run on host because the minimal image has no Git. `git diff --check` is clean.
+
+**C** — All tests are deterministic or synthetic/failure-boundary tests; no real model, GUI task, or authority-bearing input ran. Raw #01/#02 bundles and manifests remain unchanged. The earlier attempted broad distribution suite inside the minimal image failed only because `git` is absent there; the host distribution suite and the correct Git-independent OrbStack selection passed.
+
+**U** — Latest-head hosted CI must be rerun after this main sync and the branch pushed; review comments must be refreshed. #3489 is still gated, so no host Codex schema call was made.
