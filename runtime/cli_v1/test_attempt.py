@@ -97,6 +97,44 @@ class RetainedAttemptTests(unittest.TestCase):
             call.assert_called_once()
             self.assertEqual(json.loads((run / 'report.json').read_text()), report)
 
+    def test_short_stdout_write_fails_once_and_keeps_retained_report(self):
+        class ShortWriter:
+            def __init__(self):
+                self.calls = 0
+                self.payload = ""
+
+            def write(self, value):
+                self.calls += 1
+                self.payload = value
+                return len(value) - 1
+
+            def flush(self):
+                self.flushed = True
+
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            run = root / 'run'
+            (root / 'program.json').write_text('{}')
+            (root / 'targets.json').write_text('{"fixture":123}')
+            report = {'status': 'returned', 'result': {'status': 'completed', 'value': 17}}
+            args = ['agent-interface', 'dispatch', '--program', str(root / 'program.json'),
+                    '--targets', str(root / 'targets.json'), '--current-observation-seq', '1',
+                    '--current-binding-revision', '0', '--run-directory', str(run)]
+            writer = ShortWriter()
+            with patch.object(sys, 'argv', args), \
+                 patch('runtime.cli_v1.__main__.dispatch', return_value=report) as call, \
+                 patch.object(sys, 'stdout', writer):
+                with self.assertRaisesRegex(OSError, 'short stdout write'):
+                    main()
+            call.assert_called_once()
+            self.assertEqual(writer.calls, 1)
+            request = (run / 'request.json').read_bytes()
+            retained = (run / 'report.json').read_bytes()
+            self.assertEqual(json.loads(retained), report)
+            self.assertEqual(json.loads(request)['operation'], 'dispatch')
+            self.assertEqual((run / 'request.json').read_bytes(), request)
+            self.assertEqual((run / 'report.json').read_bytes(), retained)
+
     def test_report_write_failure_preserves_outcome_and_unknown_exception(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td) / 'run'
