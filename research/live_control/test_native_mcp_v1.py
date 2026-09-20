@@ -77,6 +77,10 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertTrue({'native_start','native_status'} <= {t.name for t in listed.tools})
                     status=await client.call_tool('native_status',{})
                     self.assertEqual(json.loads(status.content[0].text)['allocation']['status'],'not_started')
+                    for bad_timeout in (True, False, '0', '5', -1, 31, None):
+                        refused = await client.call_tool('native_start', {'timeout': bad_timeout})
+                        self.assertTrue(refused.isError)
+                        self.assertFalse(allocation.exists())
                     first=await client.call_tool('native_start',{'timeout':0})
                     self.assertEqual(json.loads(first.content[0].text)['allocation']['status'],'needs_review')
                     self.assertEqual(json.loads(first.content[0].text)['allocation']['text_gap_ms'],2)
@@ -149,6 +153,14 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     invalid = await client.call_tool('native_submit', {'stage':True,'decision':{},'timeout':0})
                     self.assertTrue(invalid.isError)
                     self.assertFalse((root/'request-1.json').exists())
+                    for bad_timeout in (True, False, '0', '5', -1, 31, None):
+                        for tool, arguments in (
+                            ('native_submit', {'stage': 1, 'decision': {'source_sequence': 1, 'finish': True}}),
+                            ('native_resume', {'stage': 1, 'decision_sha256': '0' * 64})):
+                            refused = await client.call_tool(tool, dict(arguments, timeout=bad_timeout))
+                            self.assertTrue(refused.isError)
+                            self.assertIn('timeout', refused.content[0].text)
+                            self.assertFalse((root/'request-1.json').exists())
                     # Reject the actual wait-only failure before committing a request.
                     for extra in ({'tail': [{'op': 'key_chord', 'keys': ['CTRL', 's']}]},
                                   {'tail': []}, {'point': [0, 0]}, {'interaction': 'click'},

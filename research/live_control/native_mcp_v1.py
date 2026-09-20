@@ -4,7 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import threading
-from typing import Literal
+from typing import Annotated, Literal
 
 from mcp.server.fastmcp import FastMCP
 from mcp.types import CallToolResult, ImageContent, TextContent
@@ -12,6 +12,10 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, Stri
 
 from agent_review import review_native
 from native_exchange_v1 import run
+
+
+WaitSeconds = Annotated[StrictInt | StrictFloat, Field(ge=0, le=30,
+    description="Finite wait seconds in 0..30; zero polls without waiting. No strings or booleans.")]
 
 
 class NativeDecision(BaseModel):
@@ -128,7 +132,7 @@ def create_server(run_directory, *, allocation=None):
 
     if allocation is not None:
         @server.tool(structured_output=False)
-        def native_start(timeout: float = 5) -> CallToolResult:
+        def native_start(timeout: WaitSeconds = 5) -> CallToolResult:
             """Start the configured research allocation once, or wait on that same process.
 
             Starting/timeout is not permission to restart. Ready returns stage1
@@ -166,7 +170,7 @@ def create_server(run_directory, *, allocation=None):
         return invoke(observe)
 
     @server.tool(structured_output=False)
-    def native_submit(stage: StrictInt, decision: NativeDecision, timeout: float = 5) -> CallToolResult:
+    def native_submit(stage: StrictInt, decision: NativeDecision, timeout: WaitSeconds = 5) -> CallToolResult:
         """Submit one explicit decision against its viewed source_sequence.
 
         Uses existing guarded click/keyboard tail and immutable stage publication.
@@ -186,7 +190,7 @@ def create_server(run_directory, *, allocation=None):
         return invoke(submit)
 
     @server.tool(structured_output=False)
-    def native_resume(stage: StrictInt, decision_sha256: str, timeout: float = 5) -> CallToolResult:
+    def native_resume(stage: StrictInt, decision_sha256: str, timeout: WaitSeconds = 5) -> CallToolResult:
         """Read/wait for an exact committed request without publishing input.
 
         Supply the original pending response's stage and SHA256. Missing/changed

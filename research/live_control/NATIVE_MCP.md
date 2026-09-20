@@ -22,6 +22,12 @@ install a plugin or add tools to the current Codex conversation.
 
 ## Choose the operation by what you need now
 
+`timeout` on start, submit and resume is a finite numeric duration in 0..30
+seconds. Zero polls without waiting. Strings, booleans, null and out-of-range
+values are rejected at the MCP boundary before allocation or request publication;
+they are not coerced into a different wait. A timeout after a valid submission
+still requires read-only resume, never input replay.
+
 The [two-application integration record](../../runtime/results/native-multiapp-integration-01/README.md)
 exercises this path across Inkscape, Calc and a save-format dialog in one WSL
 allocation. Each focus transition is reviewed before the primary authors the next
