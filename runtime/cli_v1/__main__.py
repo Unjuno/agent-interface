@@ -9,6 +9,7 @@ from .api import dispatch, doctor
 from .receipt import receipt_view
 from .review import review, review_bytes, present_result
 from .observe import observe
+from .attempt import invoke
 
 
 def _read_json(path: str):
@@ -23,13 +24,15 @@ def _emit(payload) -> None:
     sys.stdout.write(json.dumps(payload, sort_keys=True, separators=(",", ":")) + "\n")
 
 
-def _present_result(row, *, with_review, capture_directory, exit_code, compact=False, report_refs=False):
-    if not with_review:
-        _emit(row)
-        return exit_code
-    presented = present_result(row, capture_directory, compact=compact, report_refs=report_refs)
+def _present_result(row, *, with_review, capture_directory, exit_code, compact=False, report_refs=False, retention=None):
+    presented = (present_result(row, capture_directory, compact=compact, report_refs=report_refs)
+                 if with_review else dict(row))
+    if retention is not None:
+        presented['retention'] = retention
+        if not retention['report_persisted']:
+            exit_code = exit_code or 2
     _emit(presented)
-    return exit_code or (2 if presented['image_status'] == 'needs_review' else 0)
+    return exit_code or (2 if with_review and presented['image_status'] == 'needs_review' else 0)
 
 
 def main() -> int:
@@ -44,6 +47,7 @@ def main() -> int:
     read.add_argument("--frame", choices=("window_client", "screen_physical_px"), required=True)
     read.add_argument("--region", nargs=4, type=int, required=True, metavar=("X", "Y", "W", "H"))
     read.add_argument("--capture-directory")
+    read.add_argument("--run-directory", help="reserve a fresh directory for request, raw result and images")
     read.add_argument("--display")
     read.add_argument("--review", action="store_true", help="return result and captured image together")
     read.add_argument("--compact", action="store_true", help="use smaller reversible receipt references with --review")
@@ -63,10 +67,15 @@ def main() -> int:
     run.add_argument("--current-binding-revision", type=int, required=True)
     run.add_argument("--display")
     run.add_argument("--capture-directory")
+    run.add_argument("--run-directory", help="reserve a fresh directory for request, raw result and images")
     run.add_argument("--review", action="store_true", help="return result and last captured image together")
     run.add_argument("--compact", action="store_true", help="use smaller reversible receipt references with --review")
     run.add_argument("--report-refs", action="store_true", help="allow v3 report references; requires --compact and a compatible decoder")
     args = parser.parse_args()
+    if args.command in ('observe', 'dispatch') and args.run_directory:
+        if args.capture_directory:
+            parser.error('--run-directory owns images; do not combine with --capture-directory')
+        args.capture_directory = str(Path(args.run_directory).absolute() / 'images')
     if getattr(args, 'report_refs', False) and not args.compact:
         parser.error('--report-refs requires --compact')
     if args.command in ('observe', 'dispatch') and args.compact and not args.review:
@@ -95,30 +104,28 @@ def main() -> int:
         return 0
     if args.command == "observe":
         try:
-            row = observe(_read_json(args.targets), target=args.target, frame=args.frame,
-                          region=args.region, capture_directory=args.capture_directory,
-                          display_name=args.display)
+            row, retention = invoke(observe, dict(targets=_read_json(args.targets), target=args.target,
+                          frame=args.frame, region=args.region, capture_directory=args.capture_directory,
+                          display_name=args.display), args.run_directory, operation='observe')
         except (OSError, ValueError, TypeError) as error:
             _emit({"status": "invalid_request", "error": str(error)})
             return 2
         return _present_result(row, with_review=args.review, capture_directory=args.capture_directory,
-                               exit_code=0 if row["status"] == "returned" else 2, compact=args.compact, report_refs=args.report_refs)
+                               exit_code=0 if row["status"] == "returned" else 2, compact=args.compact, report_refs=args.report_refs, retention=retention)
     try:
         program = _read_json(args.program)
         targets = _read_json(args.targets)
     except Exception as error:
         _emit({"schema": "agent-interface/runtime-dispatch-result-v1", "status": "invalid_request", "error": f"INVALID_JSON:{error}"})
         return 2
-    row = dispatch(
-        program,
-        targets,
+    row, retention = invoke(dispatch, dict(
+        program=program, targets=targets,
         current_observation_seq=args.current_observation_seq,
         current_binding_revision=args.current_binding_revision,
-        display_name=args.display,
-        capture_directory=args.capture_directory,
-    )
+        display_name=args.display, capture_directory=args.capture_directory),
+        args.run_directory, operation='dispatch')
     code = 2 if row["status"] != "returned" else (0 if row["result"].get("status") == "completed" else 3)
-    return _present_result(row, with_review=args.review, capture_directory=args.capture_directory, exit_code=code, compact=args.compact, report_refs=args.report_refs)
+    return _present_result(row, with_review=args.review, capture_directory=args.capture_directory, exit_code=code, compact=args.compact, report_refs=args.report_refs, retention=retention)
 
 
 if __name__ == "__main__":

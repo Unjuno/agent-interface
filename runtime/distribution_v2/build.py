@@ -24,6 +24,7 @@ SOURCE_FILES = (
     "runtime/cli_v1/__init__.py",
     "runtime/cli_v1/__main__.py",
     "runtime/cli_v1/api.py",
+    "runtime/cli_v1/attempt.py",
     "runtime/cli_v1/mcp_server.py",
     "runtime/cli_v1/receipt.py",
     "runtime/cli_v1/review.py",
