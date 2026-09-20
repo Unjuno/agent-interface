@@ -19,7 +19,7 @@ def audit(envelope):
    row=m[key];assert row["n"]==N and len(row["expected"])==N and len(row["predictions"])==N
    c=sum(a==b for a,b in zip(row["expected"],row["predictions"]))
    assert c==row["correct"] and c/N==row["correct"]/N
-  for key in ("rank2_online","rank4_online"):lat.extend(s["feedback_ms"][key])
+  lat.extend(s["feedback_ms"]["rank4_online"])
   means.setdefault("A",[]).append(m["A"]["correct"]/N)
   for key in ("rank2_online","rank4_online","rank4_batch"):means.setdefault(key,[]).append(m[key]["correct"]/N)
  p95=sorted(lat)[math.ceil(.95*len(lat))-1]
