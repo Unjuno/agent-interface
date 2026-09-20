@@ -1,6 +1,6 @@
 {
   "audit": "FAIL",
-  "auditor": "independent JavaScript oracle; no runner import",
+  "auditor": "postformal independent JavaScript oracle; does not import runner",
   "runner_sha256": "UNPINNED",
   "rows_recomputed": 576,
   "unique_cases": 576,
@@ -29,7 +29,10 @@
     "stale_generation_admitted": true
   },
   "errors": [
-    "runner_hash"
+    "runner_source_sha256"
   ],
-  "decision": "HOLD"
+  "decision": "HOLD",
+  "auditor_source_path": "postformal_audit.js",
+  "auditor_source_sha256": "9b330997db8373708ef62f0a355e3f2ffe0f6118bca076ff1d1864ba51310e3b",
+  "auditor_timing": "Authored after the formal output because runner metadata was unpinned; not part of the preregistered frozen auditor."
 }
