@@ -386,6 +386,22 @@ redirect native file-descriptor writes. The direct Python API is unchanged.
 The CLI entry point temporarily changes Python's process-wide stdout, so use
 separate CLI processes rather than calling `main()` concurrently in threads.
 
+For a recorded `refused / INVALID_PROGRAM` result, the public dispatch API also
+checks the compiled program against the static contract. If that check fails,
+`result.detail` explains the first failure (at most 256 characters), with
+`detail_source=program_validation`. Review exposes it as
+`outcome_summary.execution_detail`. For example, an operation using
+`width/height` instead of `w/h` reports `observe w must be int`. An `observe`
+**operation** uses `frame, x, y, w, h`; the standalone CLI `observe` command
+instead takes `--region X Y W H`.
+
+The diagnostic follows the existing refusal; it does not change admission,
+execute again, grant authority or repair the program. It describes the compiled
+program after repeat/text-gap expansion and currently has no operation index.
+If the program passes static validation, the API adds no program diagnostic:
+the refusal may concern the backend manifest. Unsupported operation names are
+not echoed. Input text and full programs are not added to this diagnostic.
+
 Remember the fresh `--run-directory` before issuing an operation. Keep the full
 stdout bytes outside the model context and deliver images through the host's
 image channel. A host output limit can hide a response that was produced in full;
