@@ -33,3 +33,7 @@ The stale p1 alias was refused as `PROCESS_INCARNATION_MISMATCH`; `bridge.click`
 - **03 — HOLD_AUDIT:** candidate gate and audits labeled PASS, but both purported p1 and p2 pixel reads happened after p2 reused the same XID. The p1 pixel precondition was therefore not established. Raw and original audits are retained unchanged; the post-run reassessment records the limitation.
 
 See [REPORT.md](REPORT.md), [formal-04 raw evidence](formal-04/raw.json), and the [independent audits](independent-audit/formal-04/).
+
+## Independent allocation 05 — Issue #3662
+
+A separate OrbStack/private-Xvfb allocation and its frozen raw/audit are retained at [formal-05-independent-issue3662](formal-05-independent-issue3662/). Its freeze, source, allocation ID, raw, and audit hashes differ from formal-04; see its `REPORT.md` for the bounded result and the initial auditor-CLI usage failure. The historical `artifacts/formal_01/` output path is occupied by immutable evidence, so do not rerun this package in place. The archived freeze/reproduction instructions are historical; any new run requires a successor allocation, a new output path, and a new freeze. This evidence does not widen the one-fixture scope or promote the guard to runtime policy.
