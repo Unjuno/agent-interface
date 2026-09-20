@@ -127,7 +127,7 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
             else:
                 host_cli_invoked = True
                 try:
-                    completed = subprocess.run(args, input=request["prompt"] + "\\n",
+                    completed = subprocess.run(args, input=request["prompt"] + "\n",
                                                text=True, encoding="utf-8", errors="replace",
                                                capture_output=True, check=False, timeout=timeout_s)
                 except subprocess.TimeoutExpired as exc:
