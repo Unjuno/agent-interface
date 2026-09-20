@@ -5,7 +5,9 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from runtime.docker_schema_preflight_v1 import main, validate_model_response
+from runtime.docker_schema_preflight_v1 import (
+    _offline_validator, main, validate_model_response,
+)
 
 
 class DockerSchemaPreflightAdapterTest(unittest.TestCase):
@@ -136,6 +138,34 @@ class DockerSchemaPreflightAdapterTest(unittest.TestCase):
         self.write_events('{"answer":"ok"}')
         self.assertEqual(validate_model_response(self.events, self.schema)["status"],
                          "STOP_REMOTE_SCHEMA_REFERENCE")
+
+    def test_prefix_items_remote_reference_is_rejected(self):
+        self.schema.write_text(json.dumps({
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "prefixItems": [{"$ref": "https://example.invalid/item"}],
+        }), encoding="utf-8")
+        self.write_events("[{}]")
+        self.assertEqual(validate_model_response(self.events, self.schema)["status"],
+                         "STOP_REMOTE_SCHEMA_REFERENCE")
+
+    def test_validator_registry_refuses_unlisted_remote_retrieval(self):
+        import jsonschema
+        from referencing.exceptions import NoSuchResource, Unresolvable
+        schema = {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$ref": "https://example.invalid/not-cached",
+        }
+        validator_class = jsonschema.validators.validator_for(schema)
+
+        def refuse(uri):
+            raise NoSuchResource(ref=uri)
+
+        with patch("runtime.docker_schema_preflight_v1._deny_remote_retrieval",
+                   side_effect=refuse) as deny:
+            validator = _offline_validator(validator_class, schema)
+            with self.assertRaises(Unresolvable):
+                list(validator.iter_errors({}))
+        deny.assert_called_once_with("https://example.invalid/not-cached")
 
     def test_local_reference_must_resolve(self):
         self.schema.write_text(json.dumps({

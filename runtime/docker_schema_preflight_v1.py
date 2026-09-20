@@ -50,6 +50,11 @@ def has_remote_schema_reference(schema) -> bool:
                 has_remote_schema_reference(child) for child in children):
             return True
 
+    prefix_items = schema.get("prefixItems")
+    if isinstance(prefix_items, list) and any(
+            has_remote_schema_reference(child) for child in prefix_items):
+        return True
+
     items = schema.get("items")
     if isinstance(items, dict) and has_remote_schema_reference(items):
         return True
@@ -64,6 +69,17 @@ def has_remote_schema_reference(schema) -> bool:
             if isinstance(child, dict)):
         return True
     return False
+
+
+def _deny_remote_retrieval(uri):
+    from referencing.exceptions import NoSuchResource
+    raise NoSuchResource(ref=uri)
+
+
+def _offline_validator(validator_class, schema):
+    """Build a validator whose registry cannot retrieve remote resources."""
+    from referencing import Registry
+    return validator_class(schema, registry=Registry(retrieve=_deny_remote_retrieval))
 
 
 def validate_model_response(events_path: Path, schema_path: Path) -> dict:
@@ -125,7 +141,7 @@ def validate_model_response(events_path: Path, schema_path: Path) -> dict:
 
     try:
         from referencing.exceptions import Unresolvable
-        error = next(iter(validator_class(schema).iter_errors(instance)), None)
+        error = next(iter(_offline_validator(validator_class, schema).iter_errors(instance)), None)
     except (ValueError, TypeError, Unresolvable):
         return {**result, "status": "STOP_INVALID_OUTPUT_SCHEMA"}
     if error is not None:

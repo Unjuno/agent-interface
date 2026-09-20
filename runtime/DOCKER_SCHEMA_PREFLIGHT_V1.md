@@ -6,8 +6,9 @@ one completed turn and exactly one `agent_message`, whose text parses as JSON an
 passes the supplied JSON Schema. The schema is selected using its declared
 `$schema` dialect; malformed schemas, undeclared/unsupported dialects, remote
 references, and unavailable validation dependencies stop explicitly. Local
-references are resolved from the supplied schema only; the validator never
-fetches remote schema content.
+references are resolved from the supplied schema only. The validator's
+`referencing.Registry` also has an explicit retrieval callback that refuses all
+external fetches, independent of the structural remote-reference precheck.
 
 The retained report includes the actual usage object when present and a SHA-256
 of the model-response text. Invalid responses retain only the validator keyword
