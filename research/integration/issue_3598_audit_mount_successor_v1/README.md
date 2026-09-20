@@ -11,7 +11,9 @@ This is a new audit-only successor after two preserved outcomes:
 Neither predecessor is changed or upgraded. #3598 reuses the exact hash-pinned
 #3595 auditor, mounts the complete parent directory at `/parent`, and runs one
 no-network raw reconstruction audit against the same read-only allocations.
-It creates no GUI, Xvfb, runtime, or input evidence.
+The mount preflight and audit-only reconstruction passed; see `RESULT.md` and
+the hash-covered output bundle. It creates no GUI, Xvfb, runtime, or input
+evidence.
 
 The exact #3595 startup failure is retained in `STOP_3595.json`. The
 hash-pinned preflight and one formal audit are separate. Preflight passed in
