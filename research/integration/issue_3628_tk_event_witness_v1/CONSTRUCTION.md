@@ -32,7 +32,7 @@ Issue #3628.
 
 - The unchanged production fixture blob is `2198b203ca360607c649810bf3f4acacb5362fde`
   at both embedded source revision `02b6efb970e66f2169c01c49b1fa6a4ebb5e23f2`
-  and tested main `7748f8c7128041321d35b7515f3172e84bc96ebe`.
+  and tested main `961f14b836e549ca5f6cfb6bf3ef4b470e91b1b5`.
 - WSL Ubuntu 24.04.4 / Python 3.12.3 / Tk 8.6 / Xvfb:
   `xvfb-run -a python3 -m unittest discover -s
   research/integration/issue_3628_tk_event_witness_v1 -v` — 11/11
