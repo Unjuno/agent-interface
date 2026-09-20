@@ -139,6 +139,52 @@ class HostBrokerContractTest(unittest.TestCase):
             self.assertFalse(record["host_cli_invoked"])
             self.assertFalse(record["host_cli_spawn_attempted"])
 
+    def test_identity_probe_timeout_writes_receipt_without_task_launch(self):
+        import json
+        import subprocess
+        from unittest.mock import patch
+        from runtime.host_model_ipc_broker_v1 import serve
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); ipc = root / "ipc"; ipc.mkdir()
+            (ipc / "fixture.request.json").write_text(json.dumps(
+                {"request_id":"fixture", "prompt":"fixture"}))
+            with patch("runtime.host_model_ipc_broker_v1.build_command", return_value=["codex"]), \
+                 patch("runtime.host_model_ipc_broker_v1.executable_identity",
+                       side_effect=subprocess.TimeoutExpired("codex", 15)), \
+                 patch("runtime.host_model_ipc_broker_v1.subprocess.run") as run:
+                self.assertEqual(serve(ipc, root, once=True), 1)
+            run.assert_not_called()
+            record = json.loads((ipc / "fixture.broker.json").read_text())
+            self.assertEqual(record["stop_reason"], "HOST_BROKER_IDENTITY_PROBE_TIMEOUT")
+            self.assertTrue(record["identity_probe_attempted"])
+            self.assertFalse(record["host_cli_invoked"])
+            self.assertFalse(record["host_cli_spawn_attempted"])
+            self.assertEqual((ipc / "fixture.response.jsonl").read_text(), "")
+
+    def test_identity_probe_nonzero_writes_receipt_without_task_launch(self):
+        import json
+        import subprocess
+        from unittest.mock import patch
+        from runtime.host_model_ipc_broker_v1 import serve
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); ipc = root / "ipc"; ipc.mkdir()
+            (ipc / "fixture.request.json").write_text(json.dumps(
+                {"request_id":"fixture", "prompt":"fixture"}))
+            failure = subprocess.CalledProcessError(9, ["codex", "--version"], stderr="probe failed")
+            with patch("runtime.host_model_ipc_broker_v1.build_command", return_value=["codex"]), \
+                 patch("runtime.host_model_ipc_broker_v1.executable_identity", side_effect=failure), \
+                 patch("runtime.host_model_ipc_broker_v1.subprocess.run") as run:
+                self.assertEqual(serve(ipc, root, once=True), 9)
+            run.assert_not_called()
+            record = json.loads((ipc / "fixture.broker.json").read_text())
+            self.assertEqual(record["stop_reason"], "HOST_BROKER_IDENTITY_PROBE_FAILED")
+            self.assertEqual(record["returncode"], 9)
+            self.assertEqual(record["stderr"], "probe failed")
+            self.assertTrue(record["identity_probe_attempted"])
+            self.assertFalse(record["host_cli_invoked"])
+            self.assertFalse(record["host_cli_spawn_attempted"])
+            self.assertEqual((ipc / "fixture.response.jsonl").read_text(), "")
+
     def test_invalid_prompt_is_refused_before_identity_or_launch(self):
         import json
         from unittest.mock import patch

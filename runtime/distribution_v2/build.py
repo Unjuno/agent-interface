@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import subprocess
 import zipfile
 from pathlib import Path
@@ -63,10 +64,24 @@ SUPPORT = {
 }
 
 
-def _source_bytes(root: Path, rel: str) -> bytes:
-    if (root / ".git").exists():
+def _source_revision(root: Path) -> str | None:
+    if not (root / ".git").exists():
+        return None
+    try:
+        value = subprocess.check_output(
+            ["git", "-C", str(root), "rev-parse", "--verify", "HEAD^{commit}"],
+            stderr=subprocess.STDOUT).decode('ascii').strip()
+        if not re.fullmatch(r'[0-9a-f]{40}|[0-9a-f]{64}', value):
+            raise ValueError('full commit object ID required')
+        return value
+    except (OSError, subprocess.CalledProcessError, ValueError) as error:
+        raise RuntimeError('cannot pin committed build source') from error
+
+
+def _source_bytes(root: Path, rel: str, revision: str | None) -> bytes:
+    if revision is not None:
         try:
-            return subprocess.check_output(["git", "-C", str(root), "show", f"HEAD:{rel}"], stderr=subprocess.STDOUT)
+            return subprocess.check_output(["git", "-C", str(root), "show", f"{revision}:{rel}"], stderr=subprocess.STDOUT)
         except (OSError, subprocess.CalledProcessError) as error:
             detail = getattr(error, "output", b"")
             if isinstance(detail, bytes):
@@ -85,16 +100,18 @@ def _info(name: str) -> zipfile.ZipInfo:
 
 
 def build(root: Path, out: Path, manifest_out: Path, sums_out: Path) -> dict:
+    revision = _source_revision(root)
     entries: dict[str, bytes] = dict(GENERATED)
     source_manifest = []
     for rel in SOURCE_FILES:
-        data = _source_bytes(root, rel)
+        data = _source_bytes(root, rel, revision)
         entries[rel] = data
         source_manifest.append({"path": rel, "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()})
     support_bytes = (json.dumps(SUPPORT, indent=2, sort_keys=True) + "\n").encode()
     entries["SUPPORT.json"] = support_bytes
     build_meta = {
         "schema": SCHEMA,
+        "source_revision": revision,
         "source_files": source_manifest,
         "generated_entries": sorted(GENERATED),
         "support_sha256": hashlib.sha256(support_bytes).hexdigest(),
@@ -112,6 +129,7 @@ def build(root: Path, out: Path, manifest_out: Path, sums_out: Path) -> dict:
     raw = out.read_bytes()
     result = {
         "schema": "agent-interface/portable-runtime-manifest-v1",
+        "source_revision": revision,
         "artifact": out.name,
         "bytes": len(raw),
         "sha256": hashlib.sha256(raw).hexdigest(),
