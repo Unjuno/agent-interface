@@ -207,3 +207,14 @@ Independent audit: `HOLD_ZERO_TIC_ACTION_DID_NOT_REFRESH_SNAPSHOT`, zero errors.
 This rejects only the zero-tic refresh route; formal rows remain 0/120. See
 `results/construction-clock-47/` for H/T/D/C/U, Docker invocation, raw/audit,
 logs and hashes.
+
+Run48 tested an AArch64 `CNTVCT_EL0` measurement path: the pinned engine's
+`VIZ_Tic()` object begins with `MRS CNTVCT_EL0`, and exact scorer getters were
+bracketed by the same hardware counter. Three sessions yielded 24/24 fully
+bracketed getters and 34.62–35.10 Hz engine entry rates while public API tic
+stayed at 1. Audit: `PASS_CONSTRUCTION_ONLY_CNTVCT_PHASE_INTERVALS`, zero
+errors. But this VM's counter quantum is 41.67 ns and getter intervals are
+0.375–41.333 μs; uninstrumented scheduling effects also remain unbounded. Thus
+the ±1 ns boundary neighbors cannot be distinguished and formal remains 0/120.
+See `results/construction-clock-48/` for disassembly, complete invocation,
+failures, raw phase bounds, audit and hashes.
