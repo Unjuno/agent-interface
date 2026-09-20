@@ -35,7 +35,7 @@ def verify_raw_manifest(root: Path) -> bool:
         actual = {
             str(path.relative_to(root)): sha(path)
             for path in sorted(root.rglob("*"))
-            if path.is_file() and path.name not in {"raw-sha256.json", "audit.json"}
+            if path.is_file() and path not in {manifest_path, root / "audit.json"}
         }
     except (OSError, json.JSONDecodeError):
         return False
