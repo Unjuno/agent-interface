@@ -13,6 +13,30 @@ from runtime.cli_v1.mcp_server import create_server
 
 
 class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
+
+    async def test_retained_results_never_repeat_backend_and_reject_unknown_ids(self):
+        with tempfile.TemporaryDirectory() as td:
+            server = create_server({'fixture': 123}, td)
+            with patch('runtime.cli_v1.mcp_server.dispatch', return_value={
+                    'schema': 'agent-interface/runtime-dispatch-result-v1',
+                    'status': 'returned', 'result': {'status': 'completed'}}) as dispatch:
+                original = await server.call_tool('interface_dispatch', {
+                    'program': {}, 'current_observation_seq': 0, 'current_binding_revision': 0})
+                listing = json.loads((await server.call_tool('interface_results', {})).content[0].text)
+                self.assertEqual(listing['total_calls'], 1)
+                call_id = listing['calls'][0]['call_id']
+                reread = json.loads((await server.call_tool('interface_results', {'call_id': call_id})).content[0].text)
+                self.assertEqual(reread['outcome_summary'], json.loads(original.content[0].text)['outcome_summary'])
+                self.assertIs(reread['operation_invoked'], False)
+                self.assertEqual(reread['retained_call']['arguments']['program'], {})
+                unknown = await server.call_tool('interface_results', {'call_id': '../outside'})
+                self.assertTrue(unknown.isError)
+                Path(td, call_id, 'report.json').unlink()
+                missing = await server.call_tool('interface_results', {'call_id': call_id})
+                self.assertEqual(json.loads(missing.content[0].text)['status'], 'receipt_unavailable')
+                dispatch.assert_called_once()
+
+
     async def test_portable_stdio_runs_outside_checkout(self):
         from mcp import ClientSession, StdioServerParameters
         from mcp.client.stdio import stdio_client
@@ -37,12 +61,18 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     await client.initialize()
                     listed = await client.list_tools()
                     self.assertEqual({tool.name for tool in listed.tools},
-                                     {'interface_observe', 'interface_dispatch'})
+                                     {'interface_observe', 'interface_dispatch', 'interface_results'})
                     reply = await client.call_tool('interface_dispatch', {
                         'program': {}, 'current_observation_seq': -1, 'current_binding_revision': 0})
                     row = json.loads(reply.content[0].text)
                     self.assertEqual(row['outcome_summary']['error'], 'INVALID_OBSERVATION_SEQ')
                     self.assertTrue(Path(row['call_directory']).is_relative_to(root/'calls'))
+                    retained = await client.call_tool('interface_results', {
+                        'call_id': Path(row['call_directory']).name})
+                    reread = json.loads(retained.content[0].text)
+                    self.assertEqual(reread['outcome_summary'], row['outcome_summary'])
+                    self.assertIs(reread['operation_invoked'], False)
+
 
     async def test_cli_and_mcp_preserve_identical_failed_presentation(self):
         from runtime.cli_v1.__main__ import _present_result
@@ -91,6 +121,11 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                 first = asyncio.create_task(server.call_tool('interface_dispatch', args))
                 try:
                     self.assertTrue(await asyncio.to_thread(entered.wait, 2))
+                    listed = json.loads((await server.call_tool('interface_results', {})).content[0].text)
+                    call_id = listed['calls'][0]['call_id']
+                    pending = json.loads((await server.call_tool('interface_results', {'call_id': call_id})).content[0].text)
+                    self.assertEqual(pending['status'], 'pending')
+                    self.assertEqual(pending['call']['arguments'], args)
                     first.cancel()
                     with self.assertRaises(asyncio.CancelledError):
                         await first
@@ -102,6 +137,13 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                 reports = list(Path(td).glob('*/report.json'))
                 self.assertEqual(len(reports), 1)
                 self.assertEqual(json.loads(reports[0].read_text()), {'status': 'returned'})
+                for _ in range(100):
+                    reread = json.loads((await server.call_tool('interface_results', {'call_id': call_id})).content[0].text)
+                    if reread.get('status') != 'pending':
+                        break
+                    await asyncio.sleep(.01)
+                self.assertEqual(reread['outcome_summary']['reported_status'], 'returned')
+                self.assertIs(reread['operation_invoked'], False)
                 dispatch.assert_called_once()
 
     async def test_overlapping_call_is_rejected_without_queueing_input(self):
@@ -141,7 +183,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     await client.initialize()
                     listed = await client.list_tools()
                     self.assertEqual({tool.name for tool in listed.tools},
-                                     {'interface_observe', 'interface_dispatch'})
+                                     {'interface_observe', 'interface_dispatch', 'interface_results'})
                     reply = await client.call_tool('interface_dispatch', {
                         'program': {}, 'current_observation_seq': -1, 'current_binding_revision': 0})
                     row = json.loads(reply.content[0].text)
