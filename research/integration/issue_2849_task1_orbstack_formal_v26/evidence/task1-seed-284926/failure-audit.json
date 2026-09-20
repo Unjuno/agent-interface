@@ -1,0 +1,24 @@
+{
+  "issue": 2849,
+  "seed": 284926,
+  "status": "STOP_OR_FAIL_TASK1_SCOPED",
+  "failure_boundary": "nested IPC response accounting rejected a valid assistant result because it also contained a completed error-kind item",
+  "facts": {
+    "task_ready_and_token_allocated": true,
+    "host_codex_cli_invoked": true,
+    "host_codex_returncode": 0,
+    "host_model_calls": 1,
+    "ipc_request_response_broker_counts": [1, 1, 1],
+    "response_turn_completed_count": 1,
+    "assistant_agent_message_count": 1,
+    "item_completed_error_count": 1,
+    "nested_runner_rejected_response": true,
+    "runtime_model_calls_recorded": 0,
+    "task_submission_count": 0,
+    "input_releases_verified": true,
+    "authority_granted": false,
+    "retry_performed": false
+  },
+  "interpretation": "One authorized image-backed host Codex call was consumed and returned valid schema-shaped assistant JSON, but the main nested IPC runner required exactly one item.completed of any kind and rejected the additional error-kind item. No task action or submission followed.",
+  "scope": "one task-1/layout-A/cold/plain allocation only; not six-task acceptance"
+}
