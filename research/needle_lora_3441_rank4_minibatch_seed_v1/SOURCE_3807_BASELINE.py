@@ -118,5 +118,3 @@ def main():
     raw=json.dumps(rawobj,sort_keys=True,separators=(",",":")).encode(); blob=gzip.compress(raw,mtime=0)
     print(json.dumps({"sha256":hashlib.sha256(raw).hexdigest(),"raw_bytes":len(raw),"gzip_b64":base64.b64encode(blob).decode(),"summary":{"seeds":[{"seed":r["seed"],"rank2":r["metrics"]["rank2_online"]["correct"]/NTEST,"rank4_online":r["metrics"]["rank4_online"]["correct"]/NTEST,"rank4_batch":r["metrics"]["rank4_batch"]["correct"]/NTEST} for r in rows]}},sort_keys=True,separators=(",",":")))
 if __name__=="__main__":main()
-
-
