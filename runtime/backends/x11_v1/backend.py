@@ -123,7 +123,9 @@ class X11Backend:
             keysym = XK.string_to_keysym(key.lower())
         code = self.d.keysym_to_keycode(keysym)
         if not code:
-            raise X11BackendError(f"unmapped key {key}")
+            suggestions = {"RIGHT": "Right", "LEFT": "Left", "UP": "Up", "DOWN": "Down"}
+            hint = f"; X11 keysym names are case-sensitive, use {suggestions[key]}" if key in suggestions else ""
+            raise X11BackendError(f"unmapped key {key}{hint}")
         return code
 
     def key_state(self, key: str, down: bool) -> None:

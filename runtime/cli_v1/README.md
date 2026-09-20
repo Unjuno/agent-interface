@@ -178,3 +178,13 @@ python -m runtime.cli_v1 observe --targets targets.json --target fixture \
 Forward the JSON image block through the host's image-input mechanism; printing
 base64 text to the model is not image delivery. The portable zipapp accepts the
 same arguments. Stdin mode does not write a report, recapture, or replay input.
+
+
+X11 key names follow case-sensitive X keysyms: use `Right`, `Left`, `Up`,
+`Down`. The explicit aliases `CTRL`, `SHIFT`, `ALT`, `ENTER`, `TAB`, `ESC`,
+and `SPACE` are supported. Uppercase arrow names are refused before input and
+now report the canonical spelling. A completed program does not acknowledge
+each application's response to individual key events; verify the observed or
+saved effect when exact displacement matters. See the actual-use record in
+runtime/results/public-inkscape-use-01 for a three-key request with a smaller
+saved displacement than the nominal six units.
