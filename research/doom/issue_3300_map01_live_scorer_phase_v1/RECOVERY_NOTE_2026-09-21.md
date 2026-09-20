@@ -9,11 +9,14 @@ before later run commits). The source branch head at review time was
 The source head contains later result directories for runs57, 59, and 60, but
 21 tracked files in those directories are one-line `@work/...` references,
 not the referenced JSON, Python, or Markdown payloads. The paths do not resolve
-inside the repository snapshot. Therefore those records are not treated as
-auditable results and are excluded here; no result, STOP, or failure is
-reconstructed from their names alone. The source PR/branch remains available
-for a later attempt to recover the original payloads. Run58 is not present in
-the source result-directory inventory and no claim is made about it.
+inside the repository snapshot. Run57 also has a 960-byte binary and a failed-
+attempt binary copy without the missing raw record, manifest, runner, or audit
+that would bind them to an experiment; these orphaned files are excluded too.
+Therefore those records are not treated as auditable results and no result,
+STOP, or failure is reconstructed from their names alone. The source PR/branch
+remains available for a later attempt to recover the original payloads. Run58
+is not present in the source result-directory inventory and no claim is made
+about it.
 
 Checks on the imported snapshot:
 
