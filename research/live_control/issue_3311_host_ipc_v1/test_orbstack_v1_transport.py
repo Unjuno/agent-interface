@@ -24,6 +24,24 @@ IMAGE = "agent-interface-3311-runtime-v2:20260920"
 
 
 class OrbStackV1TransportTest(unittest.TestCase):
+    def test_broker_is_reaped_when_image_inspect_fails(self):
+        broker = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(60)"],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            with self.assertRaises(subprocess.CalledProcessError):
+                subprocess.run(["docker", "--context", "orbstack", "image", "inspect",
+                    "agent-interface-image-that-does-not-exist"], check=True,
+                    capture_output=True, text=True, timeout=30)
+        finally:
+            if broker.poll() is None:
+                broker.terminate()
+            try:
+                broker.communicate(timeout=5)
+            except subprocess.TimeoutExpired:
+                broker.kill()
+                broker.communicate(timeout=5)
+        self.assertIsNotNone(broker.poll())
+
     def test_fake_cli_round_trip_over_shared_mounts(self):
         evidence_path = os.environ.get("AGENT_INTERFACE_3311_V1_EVIDENCE_DIR")
         context = nullcontext(evidence_path) if evidence_path else tempfile.TemporaryDirectory(
@@ -67,16 +85,25 @@ class OrbStackV1TransportTest(unittest.TestCase):
                 "/code/runner.py", "/usr/bin/node", "/usr/bin/true", "/repo/prompt.txt",
                 "/repo/workspace", "/out/runner", "handle", "-",
                 "/repo/instructions.txt", "/repo/schema.json"]
-            image_info = subprocess.run(["docker", "--context", "orbstack", "image",
-                "inspect", IMAGE], capture_output=True, text=True, check=True)
-            (root / "docker-image-inspect.json").write_text(image_info.stdout, encoding="utf-8")
-            (root / "container-command.json").write_text(json.dumps(command, indent=2) + "\n",
-                encoding="utf-8")
-            container = subprocess.run(command, capture_output=True, text=True,
-                                       check=False, timeout=30)
-            if broker.poll() is None:
-                broker.terminate()
-            broker_stdout, broker_stderr = broker.communicate(timeout=5)
+            container = None
+            try:
+                image_info = subprocess.run(["docker", "--context", "orbstack", "image",
+                    "inspect", IMAGE], capture_output=True, text=True, check=True)
+                (root / "docker-image-inspect.json").write_text(image_info.stdout, encoding="utf-8")
+                (root / "container-command.json").write_text(json.dumps(command, indent=2) + "\n",
+                    encoding="utf-8")
+                container = subprocess.run(command, capture_output=True, text=True,
+                                           check=False, timeout=30)
+            finally:
+                if broker.poll() is None:
+                    broker.terminate()
+                try:
+                    broker_stdout, broker_stderr = broker.communicate(timeout=5)
+                except subprocess.TimeoutExpired:
+                    broker.kill()
+                    broker_stdout, broker_stderr = broker.communicate(timeout=5)
+            if container is None:
+                raise RuntimeError("OrbStack setup failed before container start; broker reaped")
             (root / "container.stdout.txt").write_text(container.stdout, encoding="utf-8")
             (root / "container.stderr.txt").write_text(container.stderr, encoding="utf-8")
             (root / "broker.stdout.txt").write_text(broker_stdout, encoding="utf-8")

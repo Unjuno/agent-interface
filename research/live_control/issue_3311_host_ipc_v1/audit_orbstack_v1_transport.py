@@ -28,6 +28,15 @@ def git_source_sha(revision: str, repository_path: str) -> str:
 
 def audit(root: Path) -> dict:
     root = root.resolve()
+    manifest_path = root / "raw-sha256.json"
+    manifest = json.loads(manifest_path.read_text())
+    actual_manifest = {
+        str(path.relative_to(root)): sha(path)
+        for path in sorted(root.rglob("*"))
+        if path.is_file() and path.name != "raw-sha256.json"
+        and path.name != "audit.json"
+    }
+    manifest_matches = manifest == actual_manifest
     command = json.loads((root / "container-command.json").read_text())
     image = json.loads((root / "docker-image-inspect.json").read_text())[0]
     exit_codes = json.loads((root / "exit-codes.json").read_text())
@@ -57,6 +66,7 @@ def audit(root: Path) -> dict:
         "synthetic_event_sequence": [event["type"] for event in events] == ["thread.started", "item.completed", "turn.completed"],
         "source_hashes_match": source["broker_sha256"] == git_source_sha(revision, "runtime/host_model_ipc_broker_v1.py") and source["runner_sha256"] == git_source_sha(revision, "research/live_control/container_host_model_ipc_runner_v1.py") and source["test_sha256"] == git_source_sha(revision, "research/live_control/issue_3311_host_ipc_v1/test_orbstack_v1_transport.py"),
         "stderr_empty": not (root / "container.stderr.txt").read_text().strip() and not (root / "broker.stderr.txt").read_text().strip(),
+        "raw_manifest_matches": manifest_matches,
     }
     return {
         "disposition": "PASS_V1_SYNTHETIC_TRANSPORT_ONLY" if all(checks.values()) else "FAIL_AUDIT",
