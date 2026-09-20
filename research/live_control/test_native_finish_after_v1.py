@@ -228,12 +228,21 @@ class NativeFinishAfterTests(unittest.TestCase):
                 self.assertEqual(events, ['bridge.close', 'session.close'])
 
     def test_failed_input_is_not_evaluated_or_replayed(self):
-        replies, _, events = self.exercise([self.action(finish_after=True)],
-            action_status='refused', expected_error=RuntimeError)
-        self.assertEqual(replies[0]['status'], 'needs_review')
-        self.assertNotIn('evaluation', replies[0])
-        self.assertNotIn('evaluate', events)
-        self.assertEqual(events.count('input'), 1)
+        from agent_review import native_outcome_summary
+        for status in ('refused', 'release_unverified'):
+            with self.subTest(status=status):
+                replies, sources, events = self.exercise([self.action(finish_after=True)],
+                    action_status=status, expected_error=RuntimeError)
+                terminal = replies[0]
+                self.assertEqual(terminal['status'], 'needs_review')
+                self.assertEqual(terminal['action'], terminal['actions'][0])
+                self.assertEqual(native_outcome_summary(terminal)['action_status'], status)
+                self.assertEqual(terminal['cleanup']['status'], 'completed')
+                self.assertNotIn('observation', terminal)
+                self.assertNotIn('evaluation', terminal)
+                self.assertNotIn('evaluate', events)
+                self.assertEqual(events.count('input'), 1)
+                self.assertEqual(sources, ['source-1.json'])
 
     def test_cleanup_failure_preserves_action_image_and_evaluation(self):
         replies, _, _ = self.exercise([self.action(finish_after=True)],
