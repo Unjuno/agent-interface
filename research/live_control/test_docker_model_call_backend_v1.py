@@ -11,6 +11,38 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from docker_model_call_backend_v1 import build_command, call
 
 class DockerBackendTest(unittest.TestCase):
+    def test_real_local_client_timeout_reaps_only_its_direct_child(self):
+        children = []
+        popen = subprocess.Popen
+        def tracked_popen(*args, **kwargs):
+            child = popen(*args, **kwargs)
+            children.append(child)
+            return child
+
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)/'call'
+            # Exercise subprocess.run's real timeout/kill/wait path using only
+            # an owned Python sleeper, never Docker or a host-model process.
+            command = [sys.executable, '-c', 'import time; time.sleep(30)']
+            with patch.dict(os.environ, {'AGENT_INTERFACE_DOCKER_SCHEMA': 'unused'}), \
+                 patch('docker_model_call_backend_v1.build_command', return_value=command), \
+                 patch('docker_model_call_backend_v1.CLIENT_TIMEOUT_SECONDS', 0.2), \
+                 patch('subprocess.Popen', side_effect=tracked_popen):
+                try:
+                    with self.assertRaisesRegex(RuntimeError, 'STOP_DOCKER_BACKEND_TIMEOUT'):
+                        call(root, 'prompt', Path(temp)/'image', 'plain', Path(temp))
+                    self.assertEqual(len(children), 1)
+                    self.assertIsNotNone(children[0].returncode)
+                    receipt = json.loads((root/'client-result.json').read_text())
+                    self.assertEqual(receipt['container_state'], 'unknown')
+                    self.assertEqual(receipt['host_model_state'], 'unknown')
+                    self.assertFalse((root/'result.json').exists())
+                finally:
+                    for child in children:
+                        if child.poll() is None:
+                            child.kill()
+                        child.wait(timeout=5)
+
     def test_client_timeout_retains_uncertainty_without_retry_or_parse(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)/'call'
