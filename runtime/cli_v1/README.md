@@ -377,6 +377,46 @@ failure propagates without retrying the operation or changing the retained repor
 This follows the delivery proposal in [#3726](https://github.com/Unjuno/agent-interface/pull/3726);
 flush completion is not acknowledgement that the host or model received the result.
 
+### Caller recovery after missing or truncated output
+
+Remember the fresh `--run-directory` before issuing an operation. Keep the full
+stdout bytes outside the model context and deliver images through the host's
+image channel. A host output limit can hide a response that was produced in full;
+do not infer another dispatch is needed from missing model-visible text.
+
+If the producer is still running, continue observing that same process handle.
+When inspecting a retained attempt, use the original directory, without another
+`dispatch` or `observe`:
+
+```sh
+python agent-interface-runtime.pyz attempt-status --run-directory "$RUN"
+# Only after inspecting status=report_recorded:
+python agent-interface-runtime.pyz review \
+  --report "$RUN/report.json" --run-directory "$RUN" --compact --report-refs
+```
+
+| Inspection result | Caller action |
+| --- | --- |
+| `report_recorded` | Inspect the outcome and release evidence; use `review` to recover the recorded capture. This does not mean task success. |
+| `unknown_or_incomplete` | Preserve uncertainty. Inspect the same process handle or reread the same attempt; a missing report does not prove input was absent. |
+| `invalid_record` | Inspect the reported file/error; retain the existing directory and do not replace it with a new execution. |
+
+Recovered images are historical captures. If the last capture shows an
+intermediate state such as Saving, a later, explicitly chosen observation can
+check the current screen after recovery. `review` itself does not refresh the
+screen, wait for application completion, or extend input authority. If its
+response also exceeds the host output limit, inspect the retained result/image
+through the host's file and image facilities instead of repeating the action.
+
+The [retained caller experiment](../../research/experiments/issue_3808_cli_caller_recovery_v1/RESULT.md)
+used a synthetic dispatch and a relay that accepted 341 bytes but delivered 37.
+The producer exited 0; read-only status/review recovered the retained report,
+with one dispatch and unchanged attempt files. This supports that recovery path,
+not every transport failure. JSON parsing alone does not establish byte-complete
+delivery; the [terminal-newline successor](https://github.com/Unjuno/agent-interface/issues/3814)
+tracks a strict prefix that can remain valid JSON. No automatic replay or general
+delivery guarantee follows from either producer exit status or parse success.
+
 ### Compact received-report references
 
 With `--compact --report-refs` or MCP `compact=true, report_refs=true`, a received receipt whose `report` exactly
