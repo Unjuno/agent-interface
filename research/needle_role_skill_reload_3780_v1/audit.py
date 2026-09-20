@@ -7,7 +7,7 @@ def main():
     for key,name in (("runner_sha256","runner.py"),("loader_sha256","loader.py"),("preregistration_sha256","PREREGISTRATION.md")):
         if hashlib.sha256((source/name).read_bytes()).hexdigest()!=freeze.get(key): errors.append("freeze:"+name)
     for seed in freeze["seeds"]:
-        d=f"{root}/seed-{seed}"; artifact=json.load(open(d+"/skill.json",encoding="utf-8")); expected=json.load(open(d+"/expected.json",encoding="utf-8"))
+        d=f"{root}/seed-{seed}"; artifact=json.load(open(d+"/builder/skill.json",encoding="utf-8")); expected=json.load(open(d+"/builder/expected.json",encoding="utf-8"))
         payload=artifact.pop("payload_sha256",None)
         if payload!=hashlib.sha256(canonical(artifact)).hexdigest(): errors.append(f"{seed}:artifact_digest")
         artifact["payload_sha256"]=payload
@@ -20,8 +20,8 @@ def main():
             acc=sum(a==b for a,b in zip(pred,gold))/4096
             if acc<.90: errors.append(f"{seed}:{role}:competence")
             if len(set(pred))<2: errors.append(f"{seed}:{role}:collapsed")
-        for run in ("load-1","load-2"):
-            loaded=json.load(open(f"{d}/{run}.json",encoding="utf-8"))
+        for run in ("load1","load2"):
+            loaded=json.load(open(f"{d}/{run}/loader.json",encoding="utf-8"))
             if loaded.get("predictions")!= {r:x["pred"] for r,x in expected["roles"].items()}: errors.append(f"{seed}:{run}:prediction_mismatch")
             if loaded.get("accepted") is not True: errors.append(f"{seed}:{run}:not_loaded")
             graphs=loaded.get("graphs",[])
