@@ -4,7 +4,7 @@ Date: 2026-09-21 Asia/Tokyo
 
 ## Decision
 
-- Native construction: `PASS` (6/6 tests; Python 3.11.9).
+- Native construction: `PASS` (7/7 tests; Python 3.11.9).
 - Local Docker validation: `STOP_DOCKER_ENGINE_UNAVAILABLE`.
 - Overall Issue gate: incomplete; do not treat native tests as the required container result.
 
@@ -37,7 +37,7 @@ Ran 6 tests in 0.090s
 OK
 ```
 
-Source SHA-256: audit.py `4c959fb83a4e7523ce50c5f33152b58bd5381776282ecbc6cd53447c1ef23ee9`; test_integrity.py `4885466ee6fd5e8440d9c0fbad7e50120d81f645c1dc20a5a7fcc28a744f7891`. The retained raw and predecessor freeze hashes are listed above.
+Source SHA-256: audit.py `4c959fb83a4e7523ce50c5f33152b58bd5381776282ecbc6cd53447c1ef23ee9`; test_integrity.py `de5733a0a9ba60a8e23cfed9be406f229249db71d1f1a9b2198910f43d494c9f`. The retained raw and predecessor freeze hashes are listed above.
 
 ## Docker stop
 
@@ -53,3 +53,8 @@ The retained CLI output is `artifacts/native_audit.json`, SHA-256 `36e1e9c64c83b
 
 
 A later mutation-control refinement changed the auditor source so the replacement-raw self-check now hashes a concrete JSON fixture with both pixel digests altered. The frozen digest was refreshed only after this edit. The immediate stale-freeze CLI attempt correctly stopped with a source-hash mismatch; after updating the manifest, the unchanged-fixture CLI again passed with all 11 controls true. The latest six-test transcript remains in `artifacts/native_tests.txt`; the CLI JSON is unchanged and retains SHA-256 `36e1e9c64c83be35eef3447d76d78d2f62adff257612184beef4162c5e1fb32a`.
+
+
+## Fail-closed malformed-input regression
+
+The final native suite also supplies a JSON array as the raw root and as the study-manifest root. Both return `FAIL_AUDIT` with errors instead of leaking an exception. The final suite is 7/7 tests; final source digests are recorded in the updated `FREEZE.json`.
