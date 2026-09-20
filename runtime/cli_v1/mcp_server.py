@@ -36,6 +36,8 @@ PublicProgram = Annotated[dict, Field(description=(
     'End with exactly one {"op":"release_all"}. Expanded ops must fit 128. '
     'gap_ms is optional integer 0..1000; key_chord repeat is optional integer 1..126. '
     'Observation captures once and does not pause for a model decision. '
+    'On X11, window_client uses target-client coordinates and may omit overlapping dialogs; '
+    'screen_physical_px uses display coordinates and includes other visible windows in the explicit region. '
     'wait_update with timeout_ms is a fixed delay on X11, not a redraw acknowledgement.'
 ))]
 
@@ -131,7 +133,15 @@ def create_server(targets, output_directory, *, display_name=None):
     @server.tool()
     async def interface_observe(target: StrictStr, frame: Literal['window_client', 'screen_physical_px'],
                           region: list[StrictInt], compact: StrictBool = False) -> CallToolResult:
-        """Capture one explicit region without input; return receipt and native image block."""
+        """Capture once without input; return receipt and native image block.
+
+        Region is [x, y, width, height]. On X11, window_client coordinates are
+        relative to the target client; overlapping dialogs may be absent or black.
+        screen_physical_px coordinates are relative to the display and include
+        other visible windows in that region. Choose an explicit screen region
+        when an overlapping dialog is needed to interpret the target's state.
+        A capture is not a redraw or task-completion acknowledgement.
+        """
         return await submit('observe', {'target': target, 'frame': frame, 'region': region}, compact)
 
     @server.tool()
