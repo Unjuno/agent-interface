@@ -50,3 +50,11 @@ The source recipe was amended additively to install `wmctrl`. The corrected
 OrbStack build has digest
 `sha256:cf02676f620c6679614a311c4baee4deceb135a37cae9d6e14c39a5e8e49001e`
 (`linux/arm64`). Its formal allocation receives a new identity, `formal-02`.
+
+`formal-02` reached the image handoff but its attached stdin closed at the tool
+boundary before the one decision could be returned; its cleanup and `STOP` are
+preserved. No action was submitted. For `formal-03`, the frozen client uses a
+dedicated `model-decision.json` file on the evidence mount as its one-shot input
+handoff and times out after five minutes. The host wrapper emits the exact MCP
+image bytes as a model image item directly, without a viewer transformation.
+This corrected input route is fixed before the new allocation is launched.

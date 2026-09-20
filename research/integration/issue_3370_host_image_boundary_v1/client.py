@@ -74,12 +74,15 @@ async def main():
                     'source_sequence': source_sequence,
                     'image_path': images[0]['path'], 'image_sha256': __import__('hashlib').sha256(
                         Path(images[0]['path']).read_bytes()).hexdigest()}, sort_keys=True), flush=True)
-                line = await asyncio.to_thread(sys.stdin.readline)
-                if not line:
+                decision_path = ROOT/'model-decision.json'
+                deadline = time.monotonic() + 300
+                while not decision_path.exists() and time.monotonic() < deadline:
+                    await asyncio.sleep(.1)
+                if not decision_path.exists():
                     (ROOT/'client-result.json').write_text(json.dumps({
                         'status': 'STOP_MODEL_DECISION_NOT_RECEIVED', 'tools': names}, indent=2)+'\n')
                     return
-                decision = json.loads(line)
+                decision = json.loads(decision_path.read_text())
                 (ROOT/'decision.json').write_text(json.dumps(decision, indent=2, sort_keys=True)+'\n')
                 submit_entry = time.monotonic_ns()
                 submit = await client.call_tool('native_submit', {
