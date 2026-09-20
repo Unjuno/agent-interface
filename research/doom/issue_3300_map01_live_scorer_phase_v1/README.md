@@ -232,3 +232,17 @@ observable. This is not evidence that scheduling perturbation is absent, nor a
 phase witness. Formal allocation remains 0/120. Full paired raw rows, both
 images, build/failed-attempt logs, invocation, audit and hashes are under
 `results/construction-clock-49/`.
+
+Run50 then applied the exact current-main scorer to six fresh sessions of
+run49's uninstrumented ViZDoom control image. All six passive 1.5 s pre-windows
+and 0.5 s post-windows stayed at API tic 1; the unchanged scorer returned in
+6/6 with its exact eight-getter order and `[1,1]` tic brackets. The independent
+audit also reconstructed each returned score from raw getters and checked
+source/WAD/binary identity, timing windows and cleanup:
+`PASS_CONSTRUCTION_ONLY_UNINSTRUMENTED_EXACT_SCORER`, 6 rows, zero errors.
+This is direct scorer evidence on the uninstrumented build, but no independent
+engine edge was observable; it does not establish phase or formal reliability.
+Together with run49's one control session whose snapshot reached tic 2, this
+shows passive API progression varies across sessions. Formal remains 0/120.
+See `results/construction-clock-50/` for raw rows, per-session logs, invocation,
+H/T/D/C/U, audit and hashes.
