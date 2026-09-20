@@ -1,0 +1,61 @@
+{
+  "cases": [
+    {
+      "name": "matching_retained_terminal",
+      "events": [{"event": "terminal", "id": "A"}],
+      "queue": [],
+      "predicate_event": "terminal",
+      "expected_id": "A",
+      "expected_disposition": "return"
+    },
+    {
+      "name": "matching_queued_fallback_response",
+      "events": [],
+      "queue": [{"event": "accepted", "id": "fallback"}],
+      "predicate_event": "accepted",
+      "expected_id": "fallback",
+      "expected_disposition": "return"
+    },
+    {
+      "name": "stale_accepted_prelude",
+      "events": [{"event": "accepted", "id": "prelude"}],
+      "queue": [],
+      "predicate_event": "accepted",
+      "expected_id": "fallback",
+      "expected_disposition": "wait"
+    },
+    {
+      "name": "stale_rejected_prelude",
+      "events": [{"event": "rejected", "id": "prelude"}],
+      "queue": [],
+      "predicate_event": "rejected",
+      "expected_id": "fallback",
+      "expected_disposition": "wait"
+    },
+    {
+      "name": "duplicate_terminal_history",
+      "events": [{"event": "terminal", "id": "A"}, {"event": "terminal", "id": "A"}],
+      "queue": [],
+      "predicate_event": "terminal",
+      "expected_id": "A",
+      "expected_disposition": "ambiguous_duplicate"
+    },
+    {
+      "name": "wrong_terminal_identifier",
+      "events": [{"event": "terminal", "id": "other"}],
+      "queue": [],
+      "predicate_event": "terminal",
+      "expected_id": "A",
+      "expected_disposition": "wait"
+    },
+    {
+      "name": "unrelated_retained_then_queued_response",
+      "events": [{"event": "observation", "sequence": 5}],
+      "queue": [{"event": "accepted", "id": "fallback"}],
+      "predicate_event": "accepted",
+      "expected_id": "fallback",
+      "expected_disposition": "return"
+    }
+  ]
+}
+
