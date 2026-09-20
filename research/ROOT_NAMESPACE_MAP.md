@@ -177,3 +177,4 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 ### Needle / System-1 adapter research
 
 - [`needle_lora_3441_pilot_02/`](needle_lora_3441_pilot_02/) — retained global-adapter forgetting result.
+- [`needle_lora_3441_pilot_04_multiskill/`](needle_lora_3441_pilot_04_multiskill/) — retained Issue #3701 synthetic two-skill adapter-interference pilot; consult its README and FREEZE for evidence scope.
