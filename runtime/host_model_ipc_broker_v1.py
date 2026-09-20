@@ -131,6 +131,30 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
             else:
                 try:
                     identity = executable_identity(cli)
+                except subprocess.TimeoutExpired as exc:
+                    broker = {"request_id": request_id, "returncode": None,
+                              "error_class": "TimeoutExpired",
+                              "stop_reason": "HOST_BROKER_IDENTITY_PROBE_TIMEOUT",
+                              "timeout_s": exc.timeout, "stderr": str(exc)[-2000:],
+                              "boundary": "host-local-codex-exe", "authority_granted": False,
+                              "host_cli_invoked": False,
+                              "host_cli_spawn_attempted": host_cli_spawn_attempted,
+                              "host_cli_identity": None,
+                              "identity_probe_attempted": True,
+                              "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
+                    response = ""
+                except subprocess.CalledProcessError as exc:
+                    broker = {"request_id": request_id, "returncode": exc.returncode,
+                              "error_class": type(exc).__name__,
+                              "stop_reason": "HOST_BROKER_IDENTITY_PROBE_FAILED",
+                              "stderr": (exc.stderr or "")[-2000:],
+                              "boundary": "host-local-codex-exe", "authority_granted": False,
+                              "host_cli_invoked": False,
+                              "host_cli_spawn_attempted": host_cli_spawn_attempted,
+                              "host_cli_identity": None,
+                              "identity_probe_attempted": True,
+                              "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
+                    response = ""
                 except OSError as exc:
                     broker = {"request_id": request_id, "returncode": None,
                               "error_class": type(exc).__name__,
@@ -140,6 +164,7 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                               "host_cli_invoked": False,
                               "host_cli_spawn_attempted": host_cli_spawn_attempted,
                               "host_cli_identity": None,
+                              "identity_probe_attempted": True,
                               "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                     response = ""
                 else:
@@ -157,6 +182,7 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                                   "host_cli_invoked": True,
                                   "host_cli_spawn_attempted": host_cli_spawn_attempted,
                                   "host_cli_identity": identity,
+                                  "identity_probe_attempted": True,
                                   "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                         response = ""
                     except OSError as exc:
@@ -168,6 +194,7 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                                   "host_cli_invoked": False,
                                   "host_cli_spawn_attempted": host_cli_spawn_attempted,
                                   "host_cli_identity": identity,
+                                  "identity_probe_attempted": True,
                                   "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                         response = ""
                     else:
@@ -177,6 +204,7 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                                   "host_cli_invoked": True,
                                   "host_cli_spawn_attempted": host_cli_spawn_attempted,
                                   "host_cli_identity": identity,
+                                  "identity_probe_attempted": True,
                                   "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                         response = completed.stdout or ""
             (ipc / f"{request_id}.response.jsonl").write_text(
