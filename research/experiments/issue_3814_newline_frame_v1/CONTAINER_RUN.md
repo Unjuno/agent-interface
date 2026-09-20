@@ -1,10 +1,15 @@
 # Formal-01 setup-failure record
 
-Base main: `c215b11fc9609ec02810a22317c926374f399858`  
-Docker Engine: Docker Desktop 28.5.1, Linux/amd64  
-Image: `python@sha256:44ff437bba879d4941b710a369a8f19266aea34b29002807f0c487fabc9eec9b`  
-Network: disabled  
-Source/root: read-only  
+Base main: `c215b11fc9609ec02810a22317c926374f399858`
+
+Docker Engine: Docker Desktop 28.5.1, Linux/amd64
+
+Image: `python@sha256:44ff437bba879d4941b710a369a8f19266aea34b29002807f0c487fabc9eec9b`
+
+Network: disabled
+
+Source/root: read-only
+
 Output: fresh host directory, separate from source
 
 The exact formal command was run once. It omitted `-e PYTHONPATH=/source`:
