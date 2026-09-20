@@ -21,6 +21,7 @@ New work should normally use a category directory. Existing direct-root paths re
 | Research scope | Preferred location |
 |---|---|
 | Analytical proof / exact derivation / identifiability | [`analysis/`](analysis/) |
+| Offline audit and provenance review bundles | [`audits/`](audits/) |
 | Scoped quantitative/formal semantics | [`measurement/`](measurement/) |
 | Cross-component composition | [`integration/`](integration/) |
 | Safe overlap / phase scheduling / concurrency | [`concurrency/`](concurrency/) |
