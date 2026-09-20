@@ -20,10 +20,17 @@ def expected_label(state, intent):
         return 2
     return 0 if err < 0 else 1
 
+class AuditNeedle(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(nn.Linear(6, 32), nn.Tanh(),
+                                 nn.Linear(32, 32), nn.Tanh(),
+                                 nn.Linear(32, 4))
+    def forward(self, x):
+        return self.net(x)
+
 def make_model(weights):
-    model = nn.Sequential(nn.Linear(6, 32), nn.Tanh(),
-                          nn.Linear(32, 32), nn.Tanh(),
-                          nn.Linear(32, 4)).cpu()
+    model = AuditNeedle().cpu()
     state = {k: torch.tensor(v, dtype=torch.float32) for k, v in weights.items()}
     model.load_state_dict(state, strict=True)
     model.eval()
