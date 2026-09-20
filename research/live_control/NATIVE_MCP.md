@@ -22,6 +22,13 @@ install a plugin or add tools to the current Codex conversation.
 
 ## Choose the operation by what you need now
 
+The [two-application integration record](../../runtime/results/native-multiapp-integration-01/README.md)
+exercises this path across Inkscape, Calc and a save-format dialog in one WSL
+allocation. Each focus transition is reviewed before the primary authors the next
+input. Both saved tasks passed; nine MCP calls included four input programs and
+two observations. This extends application coverage, not a speed or general
+success-rate claim.
+
 | Need | Call | Effect |
 | --- | --- | --- |
 | Start the configured private allocation | `native_start` (managed mode) | Starts once; later calls follow the same owner |
