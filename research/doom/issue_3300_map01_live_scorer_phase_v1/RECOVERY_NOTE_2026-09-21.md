@@ -17,7 +17,8 @@ the source result-directory inventory and no claim is made about it.
 
 Checks on the imported snapshot:
 
-- `python3 -m unittest -q test_audit`: 17 tests passed.
+- `python3 -m unittest -q`: 27 tests passed across the imported audit modules;
+  the core `test_audit` suite contains 17 of these.
 - Run53's retained audit has no errors, marks `formal_allocation: false`, and
   its `raw_sha256` matches the committed raw JSON.
 - Run54 preflight JSON and run55 comparison JSON parse successfully; their
