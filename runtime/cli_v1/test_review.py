@@ -43,6 +43,18 @@ class PublicReviewTests(unittest.TestCase):
             self.assertEqual(base64.b64decode(piped_row['image']['data']), pixels)
             self.assertEqual(piped_row['receipt']['source']['sha256'], hashlib.sha256(original).hexdigest())
             self.assertIsNone(piped_row['receipt']['source']['path'])
+            from runtime.cli_v1.receipt_references import expand_receipt
+            for compact_command, input_bytes, expected in (
+                    (command + ['--compact'], None, row),
+                    ([sys.executable, str(archive), 'review', '--report', '-',
+                      '--run-directory', str(root), '--compact'], original, piped_row)):
+                compact_run = subprocess.run(compact_command, input=input_bytes,
+                                             cwd=root, capture_output=True)
+                self.assertEqual(compact_run.returncode, 0, compact_run.stderr)
+                compact = json.loads(compact_run.stdout)
+                self.assertEqual(expand_receipt(compact['receipt']), expected['receipt'])
+                self.assertEqual(compact['image'], expected['image'])
+                self.assertEqual(compact['outcome_summary'], expected['outcome_summary'])
             png.unlink()
             missing = subprocess.run(command, cwd=root, capture_output=True, text=True)
             self.assertEqual(missing.returncode, 2)
@@ -50,6 +62,11 @@ class PublicReviewTests(unittest.TestCase):
             self.assertEqual(row["image_status"], "needs_review")
             self.assertEqual(row["receipt"]["report"]["error"], "timeout")
             self.assertEqual(report.read_bytes(), original)
+            compact_missing = subprocess.run(command + ['--compact'], cwd=root, capture_output=True)
+            self.assertEqual(compact_missing.returncode, 2)
+            compact_row = json.loads(compact_missing.stdout)
+            self.assertEqual(expand_receipt(compact_row['receipt']), row['receipt'])
+            self.assertIsNone(compact_row['image'])
 
     def test_public_observation_image_identity_and_cleanup_failure_survive(self):
         with tempfile.TemporaryDirectory() as td:

@@ -56,6 +56,7 @@ def main() -> int:
     image_review = sub.add_parser("review")
     image_review.add_argument("--report", required=True)
     image_review.add_argument("--run-directory", required=True)
+    image_review.add_argument("--compact", action="store_true", help="replace duplicate receipt events with reversible local references")
     run = sub.add_parser("dispatch")
     run.add_argument("--program", required=True)
     run.add_argument("--targets", required=True)
@@ -73,8 +74,8 @@ def main() -> int:
         return 0
     if args.command == "review":
         try:
-            row = (review_bytes(sys.stdin.buffer.read(), args.run_directory) if args.report == "-"
-                   else review(args.report, args.run_directory))
+            row = (review_bytes(sys.stdin.buffer.read(), args.run_directory, compact=args.compact) if args.report == "-"
+                   else review(args.report, args.run_directory, compact=args.compact))
         except (OSError, ValueError, TypeError) as error:
             _emit({"schema": "agent-interface/review-v1", "status": "invalid_receipt", "error": str(error)})
             return 2
