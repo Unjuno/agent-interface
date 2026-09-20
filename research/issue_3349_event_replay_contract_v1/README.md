@@ -47,3 +47,34 @@ read-only, container networking is disabled, and no MAP01, game, X11, OS input,
 model, or application is started. Formal evidence is written under `results/`
 and independently recomputed in a second fresh container.
 
+### Formal outcome — allocation 01
+
+- Candidate result: `FAIL_MERGED_REPLAY_SCOPE_BUG` reproduced in all declared
+  candidate-behavior cases; the contract auditor itself returned
+  `PASS_REPRODUCES_DECLARED_CANDIDATE_BEHAVIOR`.
+- Contract policy: all 7/7 expected dispositions passed.
+- Reproduced candidate defects: stale accepted prelude returned ID `prelude`
+  instead of waiting for `fallback`; stale rejected prelude did the same; a
+  wrong-ID terminal returned ID `other`; duplicate matching terminal history
+  returned the first row rather than an ambiguous disposition.
+- Compatible controls: exact retained terminal and matching queued fallback
+  response returned; an unrelated retained observation did not hide a matching
+  queued fallback response.
+- Independent second-container result:
+  `PASS_INDEPENDENT_REPLAY_CONTRACT_AUDIT`, 7 cases, zero errors. Its formal
+  result input was mounted read-only.
+- Formal runner and independent verifier both exited 0. Both containers were
+  `--rm`; post-run image-filtered container census returned no rows.
+- Formal JSON SHA-256:
+  `4cb959b20ad6339e0918819c49c38941b3c20157beead9b35352a7d09267adef`.
+  Independent JSON SHA-256:
+  `d1deeb0fc372b2d4bbe5787bbff139f51dee185f00dc0b95469ff74b7af02451`.
+- This demonstrates a wrong-ID early return / false rejection or wait
+  interruption at the event-wait contract. It is not evidence of unsafe input
+  admission and does not establish MAP01 recovery efficacy or live runtime
+  safety. No runtime fix is included in this experiment record.
+
+Exact commands, allocation limits, image identities, and process-cleanup
+evidence are in `RUNLOG.md`. `SHA256SUMS` covers the frozen inputs, harness,
+and both machine-readable result receipts.
+
