@@ -1,0 +1,70 @@
+{
+  "schema": "needle-pilot07-shift-augmentation-freeze-v1",
+  "issue": 3918,
+  "allocation": "needle-intent-distill-3458-pilot-07-targeted-shift-augmentation",
+  "branch": "research/needle-pilot07-shift-augmentation-20260921",
+  "additive_path": "research/system1/needle_distill_3458_pilot_07_shift_augmentation/",
+  "base_main_sha": "cb2445ad77d31b089eb4e43780b377c6eb054fd5",
+  "formal_freeze_parent_sha": "cb2445ad77d31b089eb4e43780b377c6eb054fd5",
+  "predecessor": {
+    "issue": 3869,
+    "pilot06_result_sha256": "0878c39a68fe2abea218132b307ceff77df1e9a52291ba14186f2c8c423e37a7",
+    "pilot06_disposition": "FAIL_NEAR_BOUNDARY_SHIFT",
+    "correct_recall_by_seed": [0.1866825208, 0.0257985258, 0.3006060606]
+  },
+  "seeds": [3470, 3471, 3472],
+  "paired_arms": ["balanced_control", "targeted_augmented"],
+  "training_contract": {
+    "architecture": "6->16->16->3 tanh MLP",
+    "optimizer": "AdamW",
+    "learning_rate": 0.008,
+    "steps_per_arm_seed": 700,
+    "batch_size": 64,
+    "total_optimizer_steps": 4200,
+    "same_initial_weights_per_seed": true,
+    "same_minibatch_index_stream_per_seed": true,
+    "only_treatment_change": "replace 1024 of 2048 CORRECT training rows with near-boundary rows"
+  },
+  "data_seed_map": {
+    "balanced_training_class_c": "seed+10+c",
+    "targeted_training_shifted_correct": "seed+40",
+    "held_out_shift_suite_class_c": "seed+100+c",
+    "held_out_iid_suite_class_c": "seed+200+c",
+    "latency_probe": "balanced_class(1,2000,seed+300)"
+  },
+  "source_sha256": {
+    "runner.py": "5264bc0d5c3d9cf4a6804f2db9814490ad7a17f549c59f4e03d235bff9d4bf9a",
+    "audit.py": "387de3d97cad23a9073ddc031fe5efd6095ff5dd8d1c2e3b8b0a0519463056b0",
+    "formal.py": "f800a40272b01764ba6e3e39df7eab10087af9065c0373b02ec7d1647b71c080",
+    "test_construction.py": "9bb58d2e7d870e64af29b9b85f43468d88568f6480c4d80fbbbe668bb2231ed7",
+    "test_audit.py": "5f73e678e9502a62d5678c8ce33d31137cc4995d76cad4984fb73b0f0c533c61",
+    "PREREGISTRATION.md": "ad9edc5b83e14ff25ed7a1c2ee341c6781f3f8b86ca1e8f1ad8805497a5af1e3",
+    "README.md": "1142c3d5d24a56799367c4cd22724a5e02168e0cd68e78b6002d31e00a61890e",
+    "ENVIRONMENT.json": "f4612bc45397522c12b99d3ca3fa906c1162c07d8a90d13abacbdac73bb4dbcb",
+    "CONSTRUCTION.md": "fb41b9237d157f9498433b6324da86aae495afa455d96a1011ee24f6c94c9372"
+  },
+  "formal_invocations_allowed": 1,
+  "formal_invocations_before_freeze": 0,
+  "retries_allowed": 0,
+  "construction": "11/11 Docker unit tests pass on 2026-09-21; source syntax validated by imports/tests; no model training in construction",
+  "container": {
+    "docker_engine": "Docker Desktop 29.8.0",
+    "context": "desktop-linux",
+    "platform": "linux/amd64",
+    "image": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "python": "3.12.14",
+    "torch": "2.5.1+cpu",
+    "device": "CPU only",
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "output_mount": "dedicated writable formal-01",
+    "tmpfs": "64m",
+    "memory": "4g",
+    "cpus": 2,
+    "pids_limit": 64,
+    "wall_time_limit_seconds": 900
+  },
+  "formal_command": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=64m --pids-limit 64 --memory 4g --cpus 2 --mount type=bind,source=C:/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-3/work/issue-3918-pilot07/research/system1/needle_distill_3458_pilot_07_shift_augmentation,target=/src,readonly --mount type=bind,source=C:/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-3/work/issue-3918-pilot07-output/formal-01,target=/out --workdir /src needle-pilot05:local -B formal.py --out /out"
+}
