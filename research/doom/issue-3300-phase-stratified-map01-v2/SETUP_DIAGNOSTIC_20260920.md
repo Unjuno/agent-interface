@@ -26,3 +26,5 @@ Therefore the container can load the private fixture and run the scorer, but the
 ## Container identity
 
 OrbStack image ID `sha256:8d984b04efe5bca7bd9b3808aac4f56bd273a6a1ada76cd51939253b874244ca` (`linux/arm64`); runner and current-main source are in the neighboring construction path. This image is only a diagnostic image; it is not frozen for formal allocation.
+
+Exact main/source/runtime/fixture digests and tic controls are summarized in `setup_manifest.json`.
