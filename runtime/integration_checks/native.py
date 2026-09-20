@@ -10,7 +10,7 @@ import time
 
 ROOT = Path(__file__).resolve().parents[2]
 SUITES = {
-    'protocol': ['test_agent_review', 'test_native_exchange_v1', 'test_native_mcp_v1',
+    'protocol': ['runtime.cli_v1.test_review', 'test_agent_review', 'test_native_exchange_v1', 'test_native_mcp_v1',
                  'test_native_allocation_v1', 'test_native_mcp_relay_v1'],
     'harness': ['test_native_finish_after_v1', 'test_native_cleanup_v1',
                 'test_native_handle_bridge_v1', 'test_native_tail_v1'],

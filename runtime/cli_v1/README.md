@@ -116,3 +116,24 @@ only a forwarded field: an empty list is not proof that no input occurred.
 These changes replace v1's conflated success booleans; callers inspecting the
 schema must accept v2 explicitly. This adapter still does not perform visual
 target revalidation, compile guarded methods or obtain an application score.
+
+
+Read a retained prepared-exchange receipt together with its referenced PNG:
+
+```sh
+python -m runtime.cli_v1 review --report report.json --run-directory /absolute/run
+# The portable runtime supports the same command:
+python agent-interface-runtime.pyz review --report report.json --run-directory /absolute/run
+```
+
+The JSON response contains the receipt view and an image block (`type`,
+`mimeType`, base64 `data`) that a host can forward to its model image input.
+It selects the newest referenced observation, including terminal review, and
+checks path containment, capture identity and PNG signature. It never falls
+back to an older frame when the newest image is missing. `image_status` is
+`image`, `no_observation`, or `needs_review`. Exit 2 signals an invalid receipt
+or unavailable/conflicting image; a valid receipt is retained when its image
+cannot be read. Exit 0 means presentation succeeded, not that the task succeeded.
+This is historical evidence: no new capture, input, completion inference or
+sensor registration occurs. Native research reports use the research adapter;
+this command accepts the existing prepared-exchange receipt format.
