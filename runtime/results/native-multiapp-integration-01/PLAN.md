@@ -1,0 +1,1 @@
+Source 9a4f94417. One WSL calc-inkscape allocation seed991126 max8 gap2. Primary views public tasks and images, moves/saves Inkscape, explicitly switches to Calc and fills/saves public cells. Image-led decisions only; no restart/replay or sensors. Finish after visual review when feasible. Retain both evaluator outcomes and negative feedback. Not a matched latency experiment.
