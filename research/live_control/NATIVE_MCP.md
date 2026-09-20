@@ -22,6 +22,16 @@ install a plugin or add tools to the current Codex conversation.
 
 ## Choose the operation by what you need now
 
+For independent inspection of copied Linux run evidence, the read-only
+`agent_review.py --native` CLI accepts `--recorded-run-directory` with the exact
+original absolute run root, alongside the copied `--run-directory` and report.
+Only that explicit path prefix is relocated. Image containment, capture identity
+and hashes are still checked; the raw receipt and its original path/hash remain
+unchanged. No basename search or fallback to another frame occurs. The response
+marks `archive_mapping` as historical evidence with no input authority. Runtime
+MCP tools do not expose this option. This enables archive viewing, not live
+session continuation or an independent-audit PASS.
+
 `timeout` on start, submit and resume is a finite numeric duration in 0..30
 seconds. Zero polls without waiting. Strings, booleans, null and out-of-range
 values are rejected at the MCP boundary before allocation or request publication;

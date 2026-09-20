@@ -3,7 +3,7 @@ import argparse
 import base64
 import hashlib
 import json
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import sys
 
 from receipt_image import select_image
@@ -43,7 +43,7 @@ def native_outcome_summary(report):
     return summary
 
 
-def review_native(report_path, run_directory, *, compact=False):
+def review_native(report_path, run_directory, *, compact=False, recorded_run_directory=None):
     """Present an explicit native observation/feedback without recapturing it."""
     path = Path(report_path).resolve(strict=True)
     data = path.read_bytes()
@@ -67,9 +67,23 @@ def review_native(report_path, run_directory, *, compact=False):
         if (artifact['source_raw_sha256'] != native['sha256'] or
                 observation['capture_ns'] != native['capture_started_ns']):
             raise ValueError('native capture identity mismatch')
+        image_path = artifact['path']
+        if recorded_run_directory is not None:
+            # Explicit Linux archive mapping only. Never rewrite the signed/hashed
+            # receipt or search for an image by basename. Runtime calls omit this.
+            origin = PurePosixPath(recorded_run_directory)
+            recorded = PurePosixPath(image_path)
+            if (not origin.is_absolute() or not recorded.is_absolute()
+                    or '..' in origin.parts or '..' in recorded.parts):
+                raise ValueError('absolute Linux archive roots without traversal required')
+            relative = recorded.relative_to(origin)
+            image_path = str(Path(run_directory).resolve(strict=True).joinpath(*relative.parts))
+            result['archive_mapping'] = {'recorded_run_directory': str(origin),
+                'recorded_image_path': artifact['path'], 'authority': 'none',
+                'scope': 'explicit historical relocation; no fresh observation or input authority'}
         selected = select_image({'records': [{'event': 'observation',
             'sequence': observation['sequence'], 'capture_ns': observation['capture_ns'],
-            'image': artifact['path']}]}, run_directory)
+            'image': image_path}]}, run_directory)
         image_bytes = Path(selected['path']).read_bytes()
         digest = hashlib.sha256(image_bytes).hexdigest()
         if digest != artifact['sha256'] or digest != selected['sha256']:
@@ -127,8 +141,12 @@ def main():
     parser.add_argument('--run-directory', required=True)
     parser.add_argument('--compact', action='store_true', help='replace exact duplicate event copies with local references')
     parser.add_argument('--native', action='store_true', help='present an exact native observation or feedback report')
+    parser.add_argument('--recorded-run-directory', help='explicit original Linux run root for read-only native archive viewing')
     args = parser.parse_args()
-    result = (review_native(args.report, args.run_directory, compact=args.compact) if args.native else
+    if args.recorded_run_directory and not args.native:
+        parser.error('--recorded-run-directory requires --native')
+    result = (review_native(args.report, args.run_directory, compact=args.compact,
+                           recorded_run_directory=args.recorded_run_directory) if args.native else
               review(args.report, args.run_directory, compact=args.compact))
     print(json.dumps(result, allow_nan=False))
 

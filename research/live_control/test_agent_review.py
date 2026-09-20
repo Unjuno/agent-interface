@@ -52,6 +52,34 @@ class ReviewTests(unittest.TestCase):
             self.assertIsNone(row['image'])
             self.assertEqual(row['receipt']['native_result'], report)
 
+    def test_explicit_native_archive_mapping_preserves_original_receipt(self):
+        report = self.native_report()
+        report['native']['artifact']['path'] = '/retired-host/run/frame.png'
+        self.report.write_text(json.dumps(report))
+        original = self.report.read_bytes()
+        self.assertEqual(review_native(self.report, self.root)['image_status'], 'needs_review')
+        mapped = review_native(self.report, self.root, recorded_run_directory='/retired-host/run')
+        self.assertEqual(base64.b64decode(mapped['image']['data']), self.pixels)
+        self.assertEqual(mapped['receipt']['native_result'], report)
+        self.assertEqual(mapped['receipt']['source']['sha256'], hashlib.sha256(original).hexdigest())
+        self.assertEqual(self.report.read_bytes(), original)
+        self.assertEqual(mapped['archive_mapping']['recorded_image_path'], '/retired-host/run/frame.png')
+        self.assertEqual(mapped['archive_mapping']['authority'], 'none')
+
+    def test_archive_mapping_does_not_search_or_accept_escaping_references(self):
+        for origin, path in [('/retired-host/run', '/different/run/frame.png'),
+                             ('relative', '/retired-host/run/frame.png'),
+                             ('/retired-host/run', '/retired-host/run/../frame.png'),
+                             ('/retired-host/run', '/retired-host/run/missing/frame.png')]:
+            with self.subTest(origin=origin, path=path):
+                report = self.native_report()
+                report['native']['artifact']['path'] = path
+                self.report.write_text(json.dumps(report))
+                mapped = review_native(self.report, self.root, recorded_run_directory=origin)
+                self.assertEqual(mapped['image_status'], 'needs_review')
+                self.assertIsNone(mapped['image'])
+                self.assertEqual(mapped['receipt']['native_result'], report)
+
     def test_native_missing_feedback_image_does_not_use_previous_source(self):
         report = {'status': 'needs_review', 'error': 'BadWindow',
                   'source': self.native_report()}
