@@ -109,6 +109,7 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                 continue
             started_ns = time.perf_counter_ns()
             host_cli_invoked = False
+            host_cli_spawn_attempted = False
             identity = None
             try:
                 args = build_command(request, repo, cli)
@@ -122,7 +123,9 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                           "stop_reason": "HOST_BROKER_REQUEST_REFUSED",
                           "stderr": str(exc)[-2000:],
                           "boundary": "host-local-codex-exe", "authority_granted": False,
-                          "host_cli_invoked": False, "host_cli_identity": identity,
+                          "host_cli_invoked": False,
+                          "host_cli_spawn_attempted": host_cli_spawn_attempted,
+                          "host_cli_identity": identity,
                           "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                 response = ""
             else:
@@ -134,11 +137,13 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                               "stop_reason": "HOST_BROKER_EXECUTABLE_UNAVAILABLE",
                               "stderr": str(exc)[-2000:],
                               "boundary": "host-local-codex-exe", "authority_granted": False,
-                              "host_cli_invoked": False, "host_cli_identity": None,
+                              "host_cli_invoked": False,
+                              "host_cli_spawn_attempted": host_cli_spawn_attempted,
+                              "host_cli_identity": None,
                               "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                     response = ""
                 else:
-                    host_cli_invoked = True
+                    host_cli_spawn_attempted = True
                     try:
                         completed = subprocess.run(args, input=prompt + "\n",
                                                    text=True, encoding="utf-8", errors="replace",
@@ -149,7 +154,9 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                                   "stop_reason": "HOST_BROKER_SUBPROCESS_TIMEOUT",
                                   "timeout_s": timeout_s, "stderr": str(exc)[-2000:],
                                   "boundary": "host-local-codex-exe", "authority_granted": False,
-                                  "host_cli_invoked": True, "host_cli_identity": identity,
+                                  "host_cli_invoked": True,
+                                  "host_cli_spawn_attempted": host_cli_spawn_attempted,
+                                  "host_cli_identity": identity,
                                   "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                         response = ""
                     except OSError as exc:
@@ -158,14 +165,18 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                                   "stop_reason": "HOST_BROKER_EXECUTABLE_UNAVAILABLE",
                                   "stderr": str(exc)[-2000:],
                                   "boundary": "host-local-codex-exe", "authority_granted": False,
-                                  "host_cli_invoked": True, "host_cli_identity": identity,
+                                  "host_cli_invoked": False,
+                                  "host_cli_spawn_attempted": host_cli_spawn_attempted,
+                                  "host_cli_identity": identity,
                                   "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                         response = ""
                     else:
                         broker = {"request_id": request_id, "returncode": completed.returncode,
                                   "stderr": (completed.stderr or "")[-2000:],
                                   "boundary": "host-local-codex-exe", "authority_granted": False,
-                                  "host_cli_invoked": True, "host_cli_identity": identity,
+                                  "host_cli_invoked": True,
+                                  "host_cli_spawn_attempted": host_cli_spawn_attempted,
+                                  "host_cli_identity": identity,
                                   "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                         response = completed.stdout or ""
             (ipc / f"{request_id}.response.jsonl").write_text(
