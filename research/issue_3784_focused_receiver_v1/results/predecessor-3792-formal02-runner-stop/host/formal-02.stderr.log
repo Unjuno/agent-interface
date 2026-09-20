@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/src/research/issue_3784_explicit_x11_receiver_v2/runner.py", line 393, in main
+    if row.get("status", "").startswith("STOP_"):
+       ^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
