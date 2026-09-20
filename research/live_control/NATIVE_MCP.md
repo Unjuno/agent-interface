@@ -58,6 +58,16 @@ unused and the retained image readable, then allow a valid submission. This
 early input-presence check does not certify the remaining tail or runtime
 admission rules. It is not evidence of a new live GUI recovery trial.
 
+A typed flat-source target refusal during minting now returns a fresh image and
+the next stage when capacity remains. `target_refusal` records that no input was
+dispatched and `finish_after` was not applied: the requested action never ran.
+Review this image before submitting a new decision. The refused request remains
+immutable and consumes its stage; it is never replayed. Other minting errors,
+failed window review, and a refusal at the final stage remain terminal. The
+texture threshold is unchanged. Harness tests cover these branches; live GUI
+recovery with this new behavior has not yet been verified. The earlier
+`native-validation-recovery-01` record retains the original terminal failure.
+
 - `native_observe(stage)` reads the retained source image, without recapture.
   It includes `session_context` containing the recorded public goal and exchange
   contract, with exact source hashes. Missing or malformed context stays explicit

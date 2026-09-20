@@ -12,6 +12,7 @@ from native_exchange_v1 import publish, encoded, current_owner_identity
 from native_visual_watch_v1 import NativeVisualWatch
 from native_release_observation_v1 import observe_release_failure
 from native_cleanup_v1 import finish_allocation
+from scoped_target_handle_v2 import FlatTargetRefused
 
 
 def paced_text_tail(ops, gap_ms):
@@ -148,7 +149,26 @@ def main():
                      if 'watch_regions' in decision else None)
             started = time.monotonic_ns()
             alias = f'target_{stage}'
-            offset = bridge.mint(alias, source['sequence'], decision['point'], region_size=(24, 14))
+            try:
+                offset = bridge.mint(alias, source['sequence'], decision['point'], region_size=(24, 14))
+            except FlatTargetRefused as error:
+                # Only this typed, pre-dispatch refusal may continue. Never retry
+                # input, broaden to arbitrary ValueError, or override stage bounds.
+                if stage >= args.max_stages:
+                    raise
+                review = review_current_window(bridge)
+                if review['status'] != 'reviewed':
+                    raise RuntimeError('window review failed after target refusal') from error
+                source = review['observation']
+                publish(out/f'source-{stage+1}.json', encoded(source))
+                publish(out/f'reply-{stage}.json', encoded({'status': 'boundary', 'stage': stage,
+                    'decision_sha256': decision_hash, 'observation': source,
+                    'target_refusal': {'reason': 'visually_flat_source_region',
+                        'input_dispatched': False, 'action_attempted': False,
+                        'finish_after_applied': False, 'window_review': review,
+                        'recovery': 'Review the returned image and choose a new decision; no input was replayed.'},
+                    'authority_granted': False, 'task_success': None}))
+                continue
             dispatch = bridge.click if interaction == 'click' else bridge.keyboard
             result = dispatch(alias, offset,
                                   tail=paced_text_tail(decision.get('tail', []), args.text_gap_ms))

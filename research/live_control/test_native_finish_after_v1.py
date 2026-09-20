@@ -12,13 +12,14 @@ from unittest.mock import patch
 class NativeFinishAfterTests(unittest.TestCase):
     def exercise(self, decisions, *, task_success=True, action_status='completed',
                  close_failure=False, expected_error=None, max_stages=4, inspect_goal=None,
-                 focus_within=True, review_status='reviewed'):
+                 focus_within=True, review_status='reviewed', mint_errors=()):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             out = root / 'out'
             output = root / 'shape.svg'; output.write_text('inert saved fixture')
             events = []
             remaining = iter(decisions)
+            pending_mint_errors = iter(mint_errors)
 
             class Session:
                 name = ':inert'
@@ -39,6 +40,9 @@ class NativeFinishAfterTests(unittest.TestCase):
 
                 def mint(self, *args, **kwargs):
                     events.append('mint')
+                    error = next(pending_mint_errors, None)
+                    if error is not None:
+                        raise error
                     return [12, 7]
 
                 def click(self, *args, **kwargs):
@@ -220,5 +224,42 @@ class NativeFinishAfterTests(unittest.TestCase):
         self.assertEqual(replies[0]['cleanup']['status'], 'needs_review')
 
 
-if __name__ == '__main__':
+    def test_flat_refusal_returns_new_boundary_then_explicit_action(self):
+        from scoped_target_handle_v2 import FlatTargetRefused
+        replies, sources, events = self.exercise(
+            [self.action(finish_after=True), self.action(finish_after=True)],
+            mint_errors=[FlatTargetRefused('visually flat target region refused')], max_stages=2)
+        self.assertEqual([r['status'] for r in replies], ['boundary', 'finished'])
+        refusal = replies[0]['target_refusal']
+        self.assertFalse(refusal['input_dispatched'])
+        self.assertFalse(refusal['action_attempted'])
+        self.assertFalse(refusal['finish_after_applied'])
+        self.assertEqual(events.count('input'), 1)
+        self.assertEqual(set(sources), {'source-1.json', 'source-2.json'})
+
+    def test_arbitrary_mint_error_does_not_continue(self):
+        replies, sources, events = self.exercise([self.action()],
+            mint_errors=[ValueError('unknown mint failure')], expected_error=ValueError)
+        self.assertEqual(replies[0]['status'], 'needs_review')
+        self.assertEqual(sources, ['source-1.json'])
+        self.assertNotIn('input', events)
+
+    def test_flat_refusal_at_stage_limit_does_not_publish_next_source(self):
+        from scoped_target_handle_v2 import FlatTargetRefused
+        replies, sources, events = self.exercise([self.action(), self.action()], max_stages=2,
+            mint_errors=[None, FlatTargetRefused('flat')], expected_error=FlatTargetRefused)
+        self.assertEqual(replies[1]['status'], 'needs_review')
+        self.assertEqual(set(sources), {'source-1.json', 'source-2.json'})
+        self.assertEqual(events.count('input'), 1)
+
+    def test_failed_review_after_refusal_stays_terminal(self):
+        from scoped_target_handle_v2 import FlatTargetRefused
+        replies, sources, events = self.exercise([self.action()],
+            mint_errors=[FlatTargetRefused('flat')], review_status='refused', expected_error=RuntimeError)
+        self.assertEqual(replies[0]['status'], 'needs_review')
+        self.assertEqual(sources, ['source-1.json'])
+        self.assertNotIn('input', events)
+
+
+if __name__ == "__main__":
     unittest.main()
