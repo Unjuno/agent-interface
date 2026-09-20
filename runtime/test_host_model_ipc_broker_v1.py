@@ -98,6 +98,44 @@ class HostBrokerContractTest(unittest.TestCase):
             self.assertFalse(record["host_cli_invoked"])
             self.assertTrue((ipc / "refused.response.jsonl").is_file())
 
+    def test_missing_asset_is_a_request_refusal_not_cli_outage(self):
+        import json
+        from runtime.host_model_ipc_broker_v1 import serve
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); ipc = root / "ipc"; repo = root / "repo"
+            ipc.mkdir(); repo.mkdir()
+            request = {"request_id":"missing", "prompt":"fixture", "authority_granted":False,
+                "mode":"handle", "schema":"/repo/missing-schema.json",
+                "instructions":"/repo/missing-instructions.txt", "working":"/repo"}
+            (ipc / "missing.request.json").write_text(json.dumps(request))
+            with patch("runtime.host_model_ipc_broker_v1.executable_identity") as identity, \\
+                 patch("runtime.host_model_ipc_broker_v1.subprocess.run") as run:
+                self.assertEqual(serve(ipc, repo, once=True), 1)
+            identity.assert_not_called()
+            run.assert_not_called()
+            record = json.loads((ipc / "missing.broker.json").read_text())
+            self.assertEqual(record["stop_reason"], "HOST_BROKER_REQUEST_REFUSED")
+            self.assertEqual(record["error_class"], "FileNotFoundError")
+            self.assertFalse(record["host_cli_invoked"])
+
+    def test_subprocess_os_error_remains_cli_unavailable(self):
+        import json
+        from unittest.mock import patch
+        from runtime.host_model_ipc_broker_v1 import serve
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); ipc = root / "ipc"; ipc.mkdir()
+            (ipc / "fixture.request.json").write_text(json.dumps(
+                {"request_id":"fixture", "prompt":"fixture"}))
+            with patch("runtime.host_model_ipc_broker_v1.build_command", return_value=["missing-cli"]), \\
+                 patch("runtime.host_model_ipc_broker_v1.executable_identity", return_value={"version":"fixture"}), \\
+                 patch("runtime.host_model_ipc_broker_v1.subprocess.run", side_effect=FileNotFoundError("missing CLI")):
+                self.assertEqual(serve(ipc, root, once=True), 1)
+            record = json.loads((ipc / "fixture.broker.json").read_text())
+            self.assertEqual(record["stop_reason"], "HOST_BROKER_EXECUTABLE_UNAVAILABLE")
+            self.assertEqual(record["error_class"], "FileNotFoundError")
+            self.assertTrue(record["host_cli_invoked"])
+
     def test_once_preserves_child_exit_and_response_without_model_call(self):
         import json
         from types import SimpleNamespace
