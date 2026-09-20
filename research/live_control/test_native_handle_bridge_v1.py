@@ -331,5 +331,49 @@ class NativeHandleBridgeTests(unittest.TestCase):
         bridge.check.assert_not_called()
 
 
+    def test_stale_drawable_recovery_uses_read_only_discovery_then_explicit_review(self):
+        bridge = self.review_bridge(focus=31, captured_focus=31)
+        bridge.backend.geometry = mock.Mock(
+            side_effect=X11BackendError("BadDrawable: stale original drawable"))
+        bridge.backend.root = mock.Mock()
+        bridge.backend.root.get_full_property.return_value = SimpleNamespace(
+            format=32, value=[30])
+
+        # The old anchor is genuinely unreadable. Recovery must not keep asking
+        # its geometry while discovering the currently focused managed client.
+        with self.assertRaisesRegex(X11BackendError, "BadDrawable"):
+            bridge._binding()
+        parent = SimpleNamespace(id=30)
+        child = SimpleNamespace(
+            id=31, query_tree=lambda: SimpleNamespace(parent=parent))
+        bridge.backend.d.get_input_focus.return_value.focus = child
+        self.assertEqual(bridge.focused_client_window(), 30)
+        bridge.backend.geometry.assert_called_once()
+        self.assertEqual(bridge.backend.targets["app"].id, 10)
+        self.assertEqual(bridge.session.dispatch.call_count, 0)
+        bridge.observe.assert_not_called()
+
+        # Rebinding is a separate explicit caller choice. It rotates the
+        # binding scope and clears the old observation/handle source.
+        previous_scope = bridge.scope
+        row = bridge.review_window(30)
+        self.assertEqual(row["status"], "reviewed")
+        self.assertFalse(row["authority_granted"])
+        self.assertFalse(row["input_dispatched"])
+        self.assertEqual(bridge.backend.targets["app"].id, 30)
+        self.assertEqual(bridge.binding_revision, 1)
+        self.assertNotEqual(bridge.scope, previous_scope)
+        self.assertEqual(list(bridge.history), [8])
+        with self.assertRaises(KeyError):
+            bridge.mint("new_target", 7, [1, 1])
+        with self.assertRaises(ValueError):
+            bridge.mint("old_target", 8, [1, 1])
+        self.assertEqual(
+            bridge.store.resolve_point("old_target", [], None, None, 0)["status"],
+            "MISSING")
+        bridge.session.dispatch.assert_not_called()
+        bridge.backend.geometry.assert_called_once()
+
+
 if __name__ == "__main__":
     unittest.main()
