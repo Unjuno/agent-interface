@@ -62,3 +62,41 @@ Full outcome and container/cleanup receipts are in `RESULT.json` and
 This validates only the finite offline audit suite and canonical CLI for the
 exact PR #3697 source commit. It does not prove arbitrary auditor completeness,
 revalidate XRes behavior, or integrate the candidate implementation itself.
+
+## Self-contained reviewed source snapshot
+
+The original source commit `f823cbc77e87d2f9ff3456ddf49f2f819bbc340a` was
+referenced through draft PR #3697 and was not in `main` when this validation
+merged. To keep this result reproducible even if that branch changes or
+disappears, `source_snapshot/` now carries a byte-identical copy of the entire
+13-file source/evidence tree from that commit, including historical native
+receipts and result notes (not just the files required by the frozen test and
+CLI). Every file matches the original checkout byte-for-byte; hashes are
+included in the top-level `SHA256SUMS`. Historical inconsistencies remain
+preserved rather than normalized.
+This is evidence packaging only; no test or CLI was rerun and no frozen source
+or result was edited.
+
+For an independent reviewer reproduction, run from the repository root with
+OrbStack selected. The first command runs the test suite in one disposable
+container; the second runs the canonical CLI in a fresh container and writes
+only to a new host temp directory. These commands are for independent
+revalidation and are not a relabeling or retry of allocation 01.
+
+```sh
+SOURCE_DIR="$PWD/research/integration/issue_3691_orbstack_docker_validation_v1/source_snapshot"
+AUDIT_OUTPUT_DIR="$(mktemp -d)"
+EXPECTED_STUDY_SHA256="$(jq -r '.study_freeze_sha256' "$SOURCE_DIR/EXPECTED_STUDY.json")"
+IMAGE="python:3.12.10-slim-bookworm@sha256:fd95fa221297a88e1cf49c55ec1828edd7c5a428187e67b5d1805692d11588db"
+
+docker --context orbstack run --rm --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,nosuid,size=64m \
+  -v "$SOURCE_DIR:/src:ro" -w /src -e PYTHONDONTWRITEBYTECODE=1 \
+  "$IMAGE" python -m unittest -v test_integrity.py
+
+docker --context orbstack run --rm --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,nosuid,size=64m \
+  -v "$SOURCE_DIR:/src:ro" -v "$AUDIT_OUTPUT_DIR:/out:rw" -w /src -e PYTHONDONTWRITEBYTECODE=1 \
+  "$IMAGE" python audit.py evidence/raw.json --freeze evidence/predecessor_FREEZE.json \
+  --study-freeze FREEZE.json --expected-study-sha256 "$EXPECTED_STUDY_SHA256" \
+  --output /out/cli.json | tee "$AUDIT_OUTPUT_DIR/cli.stdout.json"
+cmp "$AUDIT_OUTPUT_DIR/cli.json" "$AUDIT_OUTPUT_DIR/cli.stdout.json"
+```
