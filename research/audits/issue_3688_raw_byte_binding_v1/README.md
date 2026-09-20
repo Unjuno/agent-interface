@@ -16,6 +16,8 @@ The exact #3676 Git-object copies are under `inputs/`. Their expected SHA-256 va
 
 `PASS_RAW_BYTE_BINDING`. One frozen matrix ran once in pinned OrbStack Docker; no X server, GUI, input, or model was started. The exact original raw passed structural audit. All seven tamper variants were rejected before structural PASS in both direct and CLI routes, and the two route outputs matched for all eight cases. A fresh second container independently reconstructed all cases and returned `PASS_INDEPENDENT_RAW_BYTE_AUDIT` with zero errors. Full receipts, mutation copies, run commands, image IDs, hashes, and audit-tool startup failures are retained in `EVIDENCE.md`, `AUDIT_ATTEMPTS.md`, `results/`, and `independent/`.
 
+An additional integration-time rerun of the independent verifier (not the formal matrix) also passed all eight receipts in a fresh read-only OrbStack container; see the hash-bound [integration revalidation record](EVIDENCE.md#integration-revalidation-2026-09-20-1722-utc).
+
 ## Scope boundary
 
 This verifies byte provenance for one retained offline audit bundle and seven bounded tamper cases. It does not rerun or invalidate the #3675 OrbStack/XRes experiment and does not imply complete arbitrary-tamper resistance.

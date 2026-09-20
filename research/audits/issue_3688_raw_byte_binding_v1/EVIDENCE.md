@@ -34,9 +34,15 @@ Direct and CLI JSON were equal in 8/8 cases. CLI exit was 0 only for the exact o
 Reproduction from repository root:
 
 ```sh
+AUDIT_OUTPUT_DIR="$(mktemp -d)"
 docker --context orbstack build --network none -f research/audits/issue_3688_raw_byte_binding_v1/Dockerfile -t issue-3688-raw-byte-binding:formal .
-docker --context orbstack run --rm --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m -v "$PWD/research/audits/issue_3688_raw_byte_binding_v1/inputs:/inputs:ro" -v "$PWD/research/audits/issue_3688_raw_byte_binding_v1/results:/out:rw" issue-3688-raw-byte-binding:formal@sha256:8c37d3a0ff21d1205a00c567fd184184816ab00d81292cb0feee7be92d572f64 python3 /work/test_raw_byte_binding.py /inputs /out
+docker --context orbstack run --rm --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m -v "$PWD/research/audits/issue_3688_raw_byte_binding_v1/inputs:/inputs:ro" -v "$AUDIT_OUTPUT_DIR:/out:rw" issue-3688-raw-byte-binding:formal@sha256:8c37d3a0ff21d1205a00c567fd184184816ab00d81292cb0feee7be92d572f64 python3 /work/test_raw_byte_binding.py /inputs /out
+printf 'Fresh audit outputs retained at %s\n' "$AUDIT_OUTPUT_DIR"
 ```
+
+Use a fresh empty output directory on every reproduction. The committed
+`results/` tree is evidence input and must not be mounted as the writable
+runner output.
 
 ## Independent second-container audit
 
@@ -47,3 +53,15 @@ Final independent image: `sha256:35cae705c82c653e5a98b2f40a0827e443e68e03b318414
 ## Scope
 
 This is offline provenance validation for the exact retained #3675/#3676 evidence and the finite mutations listed above. It is not another XRes/X11 allocation and does not claim general audit completeness or product/default-runtime readiness.
+
+## Integration revalidation (2026-09-20 17:22 UTC)
+
+An integration worker independently reran the retained v2 receipt verifier in
+a fresh OrbStack container, without rerunning the formal mutation matrix. The
+container was Linux/arm64 from image
+`sha256:35cae705c82c653e5a98b2f40a0827e443e68e03b3184140eb877db1f7b693f5`,
+with `--network none`, a read-only root filesystem, read-only `/inputs` and
+`/formal` mounts, and a dedicated writable `/out` mount. It returned
+`PASS_INDEPENDENT_RAW_BYTE_AUDIT`, eight reconstructed cases, and zero errors.
+The retained stdout JSON is `independent/integration_review_20260921.json`
+(SHA-256 `abd3b83b96e7f4c92aff106c808e36ca8d2ea2a3f2d50f6e62fec978f1df2f51`).
