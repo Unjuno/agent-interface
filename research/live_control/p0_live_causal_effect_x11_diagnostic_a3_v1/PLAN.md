@@ -1,1 +1,0 @@
-# #1310 diagnostic A3\n\nExact #1301 science/lifetime harness is retained. Only per-child diagnostic persistence and failure-tolerant aggregation change. Construction2; formal12 only if construction is scientifically complete; formal1/reruns0.\n

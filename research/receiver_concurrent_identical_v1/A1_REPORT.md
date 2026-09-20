@@ -1,9 +1,0 @@
-# A1 retained incomplete outcome
-
-Allocation `receiver-concurrent-identical-20260916-a1` consumed the frozen 30-case schedule once. The outer execution command was terminated by its 30 s supervision limit after 21 complete first cases. Case c022 had only DB initialization/request creation and no worker ready/event/output evidence; c023-c030 never started. The allocation is **INCOMPLETE_SUPERVISION_TIMEOUT**, not a scientific PASS. No case was rerun.
-
-The 21 complete first cases independently audit 21/21. Every completed row has exactly one durable effect and one durable decision, equal APPLIED receipts at both concurrent callers, one `new_effects=1` and one historical path, both receive calls entered before the first commit, zero worker/process lock errors, and a later fresh-process replay that is historical with zero new effect. Descriptive completed-prefix owner split is a=11, b=10. Median call-entry skew is 45.778 us (max 173.607 us); median transaction-start skew is 1.132727 ms. These prefix values are not promoted because the finite block did not complete.
-
-A separate audit-harness issue was exposed after interruption: frozen `test_audit.py` sets the first row's A `new_effects` to 1. In A1, A already owned the first effect, so that mutation was a no-op and the mutation-driver asserted failure. The independent `audit.py` itself is not shown unsound by this: posthoc guaranteed non-no-op versions of all seven corruption classes are rejected 7/7. Preserve the frozen test driver unchanged; a successor may fix only the mutation generator before a new allocation.
-
-Next allocation must use a new identity. It may change only supervision/execution chunking and the mutation-driver no-op; receiver.py, worker.py, run.py measurement semantics, audit.py gates, request, SQLite timeout, and 30-case concurrent hypothesis remain unchanged.
