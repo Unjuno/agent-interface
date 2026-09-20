@@ -1,10 +1,19 @@
 """Readiness construction gate; does not run formal transitions or input."""
-import json, os, subprocess
+import json, os, subprocess, tempfile, time
 from pathlib import Path
 
-timeout=60
-run=subprocess.run(["/usr/bin/python3","-B","/src/identity_reference.py"],
-                   text=True,capture_output=True,timeout=timeout,check=False)
+root=Path(tempfile.mkdtemp(prefix="readiness-preflight-"))
+env=os.environ.copy(); env.update(DISPLAY=":158",HOME=str(root),XAUTHORITY=str(root/"Xauthority"))
+xvfb=subprocess.Popen(["Xvfb",":158","-screen","0","1600x1000x24"],env=env,
+                      stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
+try:
+    time.sleep(.5)
+    timeout=60
+    run=subprocess.run(["/usr/bin/python3","-B","/src/identity_reference.py"],env=env,
+                       text=True,capture_output=True,timeout=timeout,check=False)
+finally:
+    xvfb.terminate()
+    xvfb.wait(timeout=5)
 if run.returncode!=0:
     raise SystemExit(f"STOP_IDENTITY_PREFLIGHT:{run.returncode}:{run.stderr[-1200:]}")
 result=json.loads(run.stdout)
