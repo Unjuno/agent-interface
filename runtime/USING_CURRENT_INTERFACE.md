@@ -46,8 +46,15 @@ local references. It also accepts `--report -` for a complete response on stdin.
 The image, outcome summary and source digest are preserved. Consumers can use
 `runtime.cli_v1.receipt_references.expand_receipt` to reconstruct the original
 receipt view; only the explicitly listed reference paths are interpreted.
-This optional representation can add overhead to small receipts and has no
-measured model-token or cost benefit. The default representation is unchanged.
+The reviewer selects references only when their serialized JSON is smaller;
+otherwise it keeps the original view. The expansion helper accepts either form.
+This byte-size comparison is not a measurement of model tokens or cost.
+The default representation is unchanged.
+
+For an immediate response, `observe` and `dispatch` accept `--review --compact`
+together with `--capture-directory`. This projects the same operation's result;
+there is no second observation, dispatch or file-review command. `--compact`
+without `--review` is rejected before reading requests or calling a backend.
 
 The report and referenced image must be present at their recorded paths. The
 review operation does not recapture, focus a window or repeat an action. Native

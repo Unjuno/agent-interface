@@ -52,7 +52,10 @@ def outcome_summary(report):
 def _review(data, view, run_directory, *, compact=False):
     if compact:
         from .receipt_references import compact_receipt
-        view = compact_receipt(view)
+        candidate = compact_receipt(view)
+        encoded_size = lambda value: len(json.dumps(value, sort_keys=True, separators=(',', ':')).encode('utf-8'))
+        if encoded_size(candidate) < encoded_size(view):
+            view = candidate
     report = json.loads(data)
     result = {'schema': 'agent-interface/review-v1', 'receipt': view,
               'image': None, 'authority': 'none', 'outcome_summary': outcome_summary(report)}

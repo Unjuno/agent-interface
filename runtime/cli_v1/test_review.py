@@ -12,6 +12,50 @@ from runtime.distribution_v2.build import SOURCE_FILES, build
 
 
 class PublicReviewTests(unittest.TestCase):
+    def test_compact_review_chooses_smaller_lossless_receipt(self):
+        from runtime.cli_v1.receipt_references import expand_receipt
+        with tempfile.TemporaryDirectory() as td:
+            event = {'event': 'independent_evaluation', 'success': False, 'reason': 'x' * 2000}
+            for report, schema in (({'status': 'failed'}, 'agent-interface/receipt-view-v1'),
+                    ({'status': 'failed', 'records': [event], 'outcome': event},
+                     'agent-interface/receipt-view-v2-event-refs')):
+                raw = json.dumps(report).encode()
+                full = review_bytes(raw, td)
+                compact = review_bytes(raw, td, compact=True)
+                self.assertEqual(compact['receipt']['schema'], schema)
+                self.assertEqual(expand_receipt(compact['receipt']), full['receipt'])
+                self.assertLessEqual(len(json.dumps(compact, sort_keys=True, separators=(',', ':'))),
+                                     len(json.dumps(full, sort_keys=True, separators=(',', ':'))))
+
+    def test_live_compact_review_preserves_failure_and_calls_backend_once(self):
+        from unittest.mock import patch
+        from runtime.cli_v1 import __main__ as cli
+        with tempfile.TemporaryDirectory() as td:
+            payload = {'schema': 'agent-interface/runtime-dispatch-result-v1',
+                       'status': 'returned', 'result': {'status': 'execution_failed',
+                       'recovery_required': True, 'execution': {'completed_ops': [0]}}}
+            cases = [('dispatch', ['--program', 'p', '--targets', 't',
+                      '--current-observation-seq', '1', '--current-binding-revision', '0'], payload, 3),
+                     ('observe', ['--targets', 't', '--target', 'app', '--frame', 'window_client',
+                      '--region', '0', '0', '10', '10'], {'status': 'capture_failed'}, 2)]
+            for command, arguments, result, code in cases:
+                argv = ['agent-interface', command, *arguments, '--review', '--compact', '--capture-directory', td]
+                with patch.object(sys, 'argv', argv), patch.object(cli, '_read_json', return_value={}), \
+                     patch.object(cli, command, return_value=result) as backend, patch.object(cli, '_emit') as emit:
+                    self.assertEqual(cli.main(), code)
+                    backend.assert_called_once()
+                    returned = emit.call_args.args[0]
+                    self.assertEqual(returned['receipt']['source']['raw_report'], result)
+                    self.assertEqual(returned['outcome_summary']['reported_status'], result['status'])
+                with patch.object(sys, 'argv', ['agent-interface', command, *arguments, '--compact']), \
+                     patch.object(cli, command) as backend, patch.object(cli, '_read_json') as read, \
+                     patch('sys.stderr'):
+                    with self.assertRaises(SystemExit) as error:
+                        cli.main()
+                    self.assertEqual(error.exception.code, 2)
+                    backend.assert_not_called()
+                    read.assert_not_called()
+
     def test_portable_cli_returns_exact_image_and_preserves_failed_receipt(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
