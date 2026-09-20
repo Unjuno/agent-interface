@@ -1,0 +1,35 @@
+{
+  "audit": "FAIL",
+  "auditor": "independent JavaScript oracle; no runner import",
+  "runner_sha256": "UNPINNED",
+  "rows_recomputed": 576,
+  "unique_cases": 576,
+  "outcome_counts": {
+    "STALE_GENERATION": 288,
+    "PARAM_OUT_OF_BOUNDS": 6,
+    "UPDATE_QUEUED_SAFE_POINT": 3,
+    "UPDATE_APPLIED": 3,
+    "PARALLEL_ACCEPTED": 4,
+    "SAME_RESOURCE_ACCEPTED": 4,
+    "NOT_PAUSED": 12,
+    "REVOKED_IMMEDIATE": 24,
+    "UNKNOWN_COMMAND": 24,
+    "RESOURCE_BUSY": 16,
+    "HANDOFF_QUEUED_SAFE_POINT": 2,
+    "HANDOFF_READY": 2,
+    "NOT_RUNNING": 36,
+    "RESUME_QUEUED_SAFE_POINT": 6,
+    "RESUMED": 2,
+    "TERMINAL_PROGRAM": 144
+  },
+  "stateful_trace_events": 10,
+  "negative_controls": {
+    "revoke_waits_for_safe_point": true,
+    "same_resource_off_safe_point_overlaps": true,
+    "stale_generation_admitted": true
+  },
+  "errors": [
+    "runner_hash"
+  ],
+  "decision": "HOLD"
+}
