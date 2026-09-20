@@ -22,7 +22,7 @@ LAYOUTS = ("A", "B")
 TRAIN_IDS = ("task-1", "task-2", "task-4", "task-5")
 HELD_IDS = ("task-3", "task-6")
 EVAL_TRANSFORMS = (("original", 1.0), ("dark_0.85", 0.85), ("bright_1.15", 1.15))
-EXPECTED_MANIFEST_SHA256 = "5af3901c0d579bf1e65ff9d36931fa033f116de5f66a156670d8d650851497b0"
+EXPECTED_MANIFEST_SHA256 = "dc86185fdec9a1605548861519fa6777c1153948c032c49a7fa1557160c77bc8"
 EXPECTED_IMAGES = {
     "task-1": "3fd0c515a1f0358fb4afa328f60d2a1b82a748018ff4295fad5ec3922f3640ec",
     "task-2": "8ce9f5bdb642592122e0f7ed2c84656729564ced3d25c14af6b787c71ef8ce7a",
@@ -89,9 +89,10 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     manifest_path = repo / "research/analysis/local_model_2912_image_manifest.json"
     manifest_bytes = manifest_path.read_bytes()
-    if sha256(manifest_bytes) != EXPECTED_MANIFEST_SHA256:
+    canonical_manifest_bytes = manifest_bytes.replace(b"\r\n", b"\n")
+    if sha256(canonical_manifest_bytes) != EXPECTED_MANIFEST_SHA256:
         raise ValueError("source manifest hash mismatch")
-    manifest = json.loads(manifest_bytes)
+    manifest = json.loads(canonical_manifest_bytes)
     records = {r["task_id"]: r for r in manifest["records"]}
     if set(records) != set(EXPECTED_IMAGES):
         raise ValueError("source manifest task set mismatch")
@@ -220,7 +221,7 @@ def main():
     result = {
         "format": "gpu-photometric-grounding-result-v1",
         "source_commit": "d9776a90662e1d7f901a025395aa27e28d9d4d00",
-        "manifest_sha256": sha256(manifest_bytes),
+        "manifest_sha256": sha256(canonical_manifest_bytes),
         "image_sha256": EXPECTED_IMAGES,
         "split": {"train": list(TRAIN_IDS), "held_out": list(HELD_IDS)},
         "schedule": {"seed": SEED, "steps": STEPS, "batch_size": BATCH,

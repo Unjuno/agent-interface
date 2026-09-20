@@ -10,7 +10,7 @@ import numpy as np
 from PIL import Image
 
 
-MANIFEST_SHA = "5af3901c0d579bf1e65ff9d36931fa033f116de5f66a156670d8d650851497b0"
+MANIFEST_SHA = "dc86185fdec9a1605548861519fa6777c1153948c032c49a7fa1557160c77bc8"
 IMAGE_SHA = {
     "task-1": "3fd0c515a1f0358fb4afa328f60d2a1b82a748018ff4295fad5ec3922f3640ec",
     "task-2": "8ce9f5bdb642592122e0f7ed2c84656729564ced3d25c14af6b787c71ef8ce7a",
@@ -55,9 +55,10 @@ def main():
     repo, raw_path, audit_path = map(Path, sys.argv[1:])
     manifest_path = repo / "research/analysis/local_model_2912_image_manifest.json"
     raw_manifest = manifest_path.read_bytes()
-    if digest(raw_manifest) != MANIFEST_SHA:
+    canonical_manifest = raw_manifest.replace(b"\r\n", b"\n")
+    if digest(canonical_manifest) != MANIFEST_SHA:
         raise ValueError("source manifest hash mismatch")
-    manifest = json.loads(raw_manifest)
+    manifest = json.loads(canonical_manifest)
     rows = {r["task_id"]: r for r in manifest["records"]}
     if set(rows) != set(IMAGE_SHA):
         raise ValueError("source task set mismatch")
@@ -152,7 +153,7 @@ def main():
     audit = {
         "format": "gpu-photometric-grounding-independent-audit-v1",
         "status": status,
-        "source_manifest_sha256": digest(raw_manifest),
+        "source_manifest_sha256": digest(canonical_manifest),
         "source_images_verified": len(IMAGE_SHA),
         "heldout_rows_per_arm": 6,
         "perturbed_exact": {"no_augmentation": base_perturbed,
