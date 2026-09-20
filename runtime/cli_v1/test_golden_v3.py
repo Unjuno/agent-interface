@@ -6,7 +6,17 @@ from runtime.cli_v1.golden_v3 import adapt_dispatch_result,dispatch_golden_v3
 class GoldenV3AdapterTests(unittest.TestCase):
     def test_returned_requires_both_task_and_program_success(self):
         row=adapt_dispatch_result({"status":"returned","result":{"program_completed":True,"task_success":True,"partial_effects":[]}},usage={"input":3},lifecycle=["dispatch","effect","release","cleanup"])
-        self.assertEqual(row["status"],"success"); self.assertEqual(row["usage"],{"input":3}); self.assertFalse(row["authority_granted"])
+        self.assertEqual(row["status"],"success"); self.assertEqual(row["usage"],{"input":3}); self.assertEqual(row["usage_status"],"reported"); self.assertFalse(row["authority_granted"])
+
+    def test_missing_usage_is_unavailable_not_an_empty_zero_record(self):
+        row=adapt_dispatch_result({"status":"returned","result":{"program_completed":True}})
+        self.assertEqual(row["usage"],{})
+        self.assertEqual(row["usage_status"],"unavailable")
+
+    def test_dispatch_usage_is_reported_when_present(self):
+        row=adapt_dispatch_result({"status":"returned","usage":{"input_tokens":0,"output_tokens":0}})
+        self.assertEqual(row["usage"],{"input_tokens":0,"output_tokens":0})
+        self.assertEqual(row["usage_status"],"reported")
     def test_effect_success_without_task_success_is_partial(self):
         row=adapt_dispatch_result({"status":"returned","result":{"program_completed":True,"task_success":False,"partial_effects":["save"]}})
         self.assertEqual(row["status"],"partial"); self.assertEqual(row["partial_effects"],["save"])
@@ -22,7 +32,9 @@ class GoldenV3AdapterTests(unittest.TestCase):
         self.assertFalse(row["task_success"])
         self.assertTrue(row["raw_dispatch"]["result"]["task_success"])
     def test_unknown_inputs_fail_closed(self):
-        self.assertEqual(adapt_dispatch_result({"status":"mystery"})["adapter_error"],"UNKNOWN_STATUS")
+        rejected=adapt_dispatch_result({"status":"mystery"})
+        self.assertEqual(rejected["adapter_error"],"UNKNOWN_STATUS")
+        self.assertEqual(rejected["usage_status"],"unavailable")
         self.assertEqual(adapt_dispatch_result({"status":"returned"},lifecycle=["bogus"])["adapter_error"],"UNKNOWN_LIFECYCLE")
     def test_public_wrapper_preserves_dispatch_boundary(self):
         raw={"status":"returned","result":{"program_completed":True,"task_success":True}}
