@@ -112,7 +112,8 @@
     "no runtime integration, concurrent updates, crash durability, GUI, or action authority",
     "no per-row predictions/logits retained; aggregates cannot be independently recomputed",
     "adapter setup duration not measured",
-    "parallel same-issue attempt on the other branch ended before optimizer steps; distinct STOP evidence remains intact"
+    "parallel same-issue attempt on the other branch ended before optimizer steps; distinct STOP evidence remains intact",
+    "valid-route scoring bypassed the dispatcher; invalid-route YIELD behavior was tested"
   ],
   "protocol_audit": {
     "routed_accuracy_gate_observed": true,
@@ -121,7 +122,9 @@
     "full_module_state_dict_tensor_roundtrip_verified": false,
     "setup_time_measured": false,
     "per_row_predictions_retained": false,
-    "final_disposition_reason": "Pre-allocation issue clarification required every state_dict tensor to be tensor-compared. The frozen runner round-tripped only trainable adapter tensors a/b (base separately checked immutable), so the declared full state_dict condition cannot be claimed. Setup duration was also not isolated. Retained aggregates pass numeric routing/interference thresholds, but formal PASS is withheld."
+    "final_disposition_reason": "Pre-allocation issue clarification required every state_dict tensor to be tensor-compared. The frozen runner round-tripped only trainable adapter tensors a/b (base separately checked immutable), so the declared full state_dict condition cannot be claimed. Setup duration was also not isolated. Retained aggregates pass numeric routing/interference thresholds, but formal PASS is withheld. Valid-route accuracy was also computed by direct model calls rather than invoking dispatch() and evaluating its returned model, so successful dispatch-to-model selection is not established.",
+    "valid_routes_evaluated_via_dispatcher": false,
+    "routed_accuracy_measurement": "direct base/adapter model calls; dispatch() was exercised for invalid-route controls only"
   },
   "related_attempts": [
     {
