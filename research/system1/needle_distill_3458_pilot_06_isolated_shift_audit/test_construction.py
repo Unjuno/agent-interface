@@ -2,6 +2,7 @@
 import torch
 
 import runner
+import audit
 
 
 def test_seed_and_shapes():
@@ -45,8 +46,17 @@ def test_external_gate_fails_closed_without_training():
 def test_boundary_suite_constructs_exact_count():
     rows = runner.boundary_rows()
     assert rows.shape == (1536, 6)
+    assert all(audit.expected_reason(runner.META, x.tolist()) == "YIELD_BOUNDARY" for x in rows)
     model = runner.Needle()
     assert all(runner.proposal(runner.META, x, model) == (None, "YIELD_BOUNDARY") for x in rows)
+
+
+def test_independent_baseline_reconstruction():
+    for cls in (0, 2):
+        seed = 3467 + 100 + cls
+        expected = runner.balanced_class(cls, 1024, seed).tolist()
+        actual = audit.balanced_class_for_audit(cls, 1024, seed)
+        assert all(torch.equal(torch.tensor(a), torch.tensor(b)) for a, b in zip(actual, expected))
 
 
 if __name__ == "__main__":
@@ -54,4 +64,5 @@ if __name__ == "__main__":
     test_shift_is_near_threshold_and_in_envelope()
     test_external_gate_fails_closed_without_training()
     test_boundary_suite_constructs_exact_count()
-    print("construction-only checks passed: 4/4; no training/formal allocation")
+    test_independent_baseline_reconstruction()
+    print("construction-only checks passed: 5/5; no training/formal allocation")

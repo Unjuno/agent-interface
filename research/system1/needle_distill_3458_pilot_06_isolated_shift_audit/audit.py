@@ -38,11 +38,10 @@ def expected_reason(meta, x):
     return "PROPOSAL"
 
 
-def balanced_class_for_audit(label_id, row_index, seed):
+def balanced_class_for_audit(label_id, n, seed):
     """Rebuild baseline controls independently with the frozen generator equations."""
     import torch
     g = torch.Generator().manual_seed(seed)
-    n = row_index + 1
     if label_id == 0:
         xy = (torch.rand(n, 2, generator=g) - .5) * .08
         velocity = (torch.rand(n, 2, generator=g) - .5) * .08
@@ -53,7 +52,7 @@ def balanced_class_for_audit(label_id, row_index, seed):
         velocity = (torch.rand(n, 2, generator=g) - .5) * .8
         confidence = .72 * torch.rand(n, 1, generator=g)
         visible = torch.randint(0, 2, (n, 1), generator=g).float()
-    return torch.cat([xy, velocity, confidence, visible], 1)[row_index].tolist()
+    return torch.cat([xy, velocity, confidence, visible], 1).tolist()
 
 
 def summarize(rows):
@@ -123,6 +122,13 @@ def audit(result):
             suite = seed_result.get(suite_name, {})
             if suite.get("name") != suite_name or len(suite.get("rows", [])) != 3072:
                 errors.append(f"seed {sid}: {suite_name} shape mismatch")
+            baseline_controls = {}
+            baseline_control_index = {0: 0, 2: 0}
+            if suite_name == "near_boundary_shift":
+                baseline_controls = {
+                    cls: balanced_class_for_audit(cls, 1024, sid + 100 + cls)
+                    for cls in (0, 2)
+                }
             for j, row in enumerate(suite.get("rows", [])):
                 x = row.get("x", [])
                 if len(x) != 6 or any(not math.isfinite(float(v)) for v in x):
@@ -136,7 +142,8 @@ def audit(result):
                     if not .071 <= abs(x[0]) <= .149 or abs(x[1]) > .10 or max(abs(x[2]), abs(x[3])) > .05:
                         errors.append(f"seed {sid}: shifted CORRECT row {j} outside preregistered covariate shift")
                 if suite_name == "near_boundary_shift" and actual_y in (0, 2):
-                    baseline_x = balanced_class_for_audit(actual_y, j, sid + 100 + actual_y)
+                    baseline_x = baseline_controls[actual_y][baseline_control_index[actual_y]]
+                    baseline_control_index[actual_y] += 1
                     if any(abs(float(a) - float(b)) > 1e-7 for a, b in zip(x, baseline_x)):
                         errors.append(f"seed {sid}: shifted control class {actual_y} row {j} differs from baseline generator")
                 if row.get("reason") != reason:
@@ -162,7 +169,10 @@ def audit(result):
             errors.append(f"seed {sid}: boundary count mismatch")
         for j, row in enumerate(bounds):
             x = row.get("x", [])
-            if row.get("y") != label(x) or row.get("reason") != "YIELD_BOUNDARY" or row.get("proposal") is not None:
+            boundary_reason = expected_reason({"intent": "track_target", "scope": "local-servo", "epoch": 7}, x)
+            if (len(x) != 6 or any(not math.isfinite(float(v)) for v in x)
+                    or row.get("y") != label(x) or boundary_reason != "YIELD_BOUNDARY"
+                    or row.get("reason") != boundary_reason or row.get("proposal") is not None):
                 errors.append(f"seed {sid}: boundary row {j} not correctly yielded/audited")
         invalid = seed_result.get("invalid_controls", [])
         expected_invalid = [
@@ -177,7 +187,15 @@ def audit(result):
         else:
             for j, (got, expected) in enumerate(zip(invalid, expected_invalid)):
                 case, meta, x, reason = expected
-                if got.get("case") != case or got.get("meta") != meta or got.get("x") != x:
+                got_x = got.get("x", [])
+                x_matches = len(got_x) == len(x)
+                if x_matches:
+                    for actual, expected_value in zip(got_x, x):
+                        if expected_value == "NaN":
+                            x_matches &= actual == "NaN"
+                        else:
+                            x_matches &= isinstance(actual, (int, float)) and abs(float(actual) - float(expected_value)) <= 1e-6
+                if got.get("case") != case or got.get("meta") != meta or not x_matches:
                     errors.append(f"seed {sid}: invalid control {j} raw input mismatch")
                 numeric_x = [float("nan") if v == "NaN" else v for v in x]
                 if got.get("reason") != expected_reason(meta, numeric_x) or got.get("reason") != reason or got.get("proposal") is not None:

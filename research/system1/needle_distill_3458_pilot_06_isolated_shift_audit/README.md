@@ -1,6 +1,7 @@
 # Needle pilot-06 — isolated near-boundary shift and auditable controls
 
-Issue: https://github.com/Unjuno/agent-interface/issues/3869  
+Issue: https://github.com/Unjuno/agent-interface/issues/3869
+
 Allocation: `needle-intent-distill-3458-pilot-06-isolated-shift-audit`
 
 This successor corrects two review-discovered design/evidence defects in pilot-05 without changing its retained FAIL. Only the CORRECT covariate shifts; CONTINUE/WATCH are identical balanced generator controls. Raw invalid-control metadata and features are stored so the independent auditor can recompute their outcomes.
@@ -10,3 +11,14 @@ Read `PREREGISTRATION.md` for H/T/D/C/U, gates and limits. Formal evidence, audi
 ## Reproduction
 
 Use cached image `needle-pilot05:local`; never pull or prune. Run one construction check before freeze, then one formal invocation and one independent audit, all network-isolated and read-only except for dedicated output mounts. The formal directory must be new and empty. See `PREREGISTRATION.md` and `ENVIRONMENT.json` for exact limits. A PASS is synthetic-only and authority-neutral.
+
+The construction-only invocation used the equivalent of:
+
+```powershell
+docker run --rm --network none --read-only --cpus=2 --memory=4g `
+  --tmpfs /tmp:rw,noexec,nosuid,size=128m `
+  -v "${PWD}/research/system1/needle_distill_3458_pilot_06_isolated_shift_audit:/src:ro" `
+  needle-pilot05:local -c "import sys; sys.path.insert(0, '/src'); import test_construction as t; t.test_seed_and_shapes(); t.test_shift_is_near_threshold_and_in_envelope(); t.test_external_gate_fails_closed_without_training(); t.test_boundary_suite_constructs_exact_count(); t.test_independent_baseline_reconstruction()"
+```
+
+The one-shot formal command writes to its mounted evidence volume; the auditor then receives that volume read-only and a separate writable audit directory. These invocations have already been consumed for this allocation. Do not replay them as a retry; create a successor Issue, branch, path, fresh seeds, and preregistration for any replication.
