@@ -182,6 +182,8 @@ def main():
             rows.append(row)
             save('actions.json', rows)
             if result['status'] != 'completed':
+                # Preserve this stage's returned failure for the terminal summary.
+                terminal_context = {'action': row}
                 if result.get('recovery_required') is True:
                     row['release_observation'] = observe_release_failure(bridge.backend)
                     save('actions.json', rows)
