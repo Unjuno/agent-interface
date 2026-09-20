@@ -30,7 +30,9 @@ only these tests; GUI use, effect scoring and performance evidence are separate.
 
 The Native MCP GitHub workflow calls this same script and uploads the result and
 logs even on a failed test run. Suite membership has one source of truth here,
-including key-repeat expansion/capacity checks and lossless receipt-reference
+including public read-only observation (initialization/capture/close failures and
+no input dispatch), explicit-display backend selection without environment
+mutation, key-repeat expansion/capacity checks and lossless receipt-reference
 round trips. Reference-shaped literal data, unknown fields, booleans versus
 numbers, and malformed reference chains remain covered. Two interpreters are optional;
 CI uses a single installed environment. No sensor development is included.
