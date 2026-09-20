@@ -67,7 +67,8 @@ def update_steps(model, opt, x, y, indices, rng):
     model.train()
     for _ in range(ONLINE_STEPS_PER_FEEDBACK):
         ix = torch.randint(len(indices), (32,), generator=rng)
-        batch_ix = indices[ix]
+        index_tensor = torch.as_tensor(indices, dtype=torch.long)
+        batch_ix = index_tensor[ix]
         loss = nn.functional.cross_entropy(model(x[batch_ix]), y[batch_ix])
         opt.zero_grad(set_to_none=True)
         loss.backward()
