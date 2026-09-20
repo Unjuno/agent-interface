@@ -105,8 +105,16 @@ def outcome_summary(report):
         execution = dispatch.get('execution')
         execution = execution if isinstance(execution, dict) else {}
         failed = execution.get('failed_op')
+        release_evidence = execution
+        if dispatch.get('status') == 'refused' and 'release' in dispatch:
+            # Backend preflight refusal retains its cleanup outside execution.
+            # Combine records: a successful refusal cleanup must not conceal an
+            # earlier failed or malformed release record.
+            releases = execution.get('releases', [])
+            releases = releases if isinstance(releases, list) else [None]
+            release_evidence = {'releases': [*releases, dispatch['release']]}
         summary.update(
-            input_release_verified=_input_release_verified(execution),
+            input_release_verified=_input_release_verified(release_evidence),
             failure_detail=text(execution, 'error'),
             failed_operation_index=failed if type(failed) is int and failed >= 0 else None,
             failed_operation_effect=text(execution, 'failed_op_effect'))
