@@ -146,12 +146,19 @@ def verify_source_hashes(study, source_dir):
     return errors
 
 
-def audit(raw_path, freeze_path, study_freeze_path):
+def audit(raw_path, freeze_path, study_freeze_path, expected_study_sha256):
     raw_bytes = Path(raw_path).read_bytes()
     freeze_bytes = Path(freeze_path).read_bytes()
+    study_bytes = Path(study_freeze_path).read_bytes()
+    if type(expected_study_sha256) is not str or re.fullmatch(r"[0-9a-f]{64}", expected_study_sha256) is None:
+        return {"status": "FAIL_AUDIT", "errors": ["expected study-manifest SHA-256 is missing or malformed"],
+                "corruption_controls_rejected": {}}
+    if hashlib.sha256(study_bytes).hexdigest() != expected_study_sha256:
+        return {"status": "FAIL_AUDIT", "errors": ["study manifest bytes do not match independently pinned digest"],
+                "corruption_controls_rejected": {}}
     try:
         raw = _load(raw_bytes)
-        study = _load(Path(study_freeze_path).read_bytes())
+        study = _load(study_bytes)
     except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
         return {"status": "FAIL_AUDIT", "errors": [f"invalid JSON: {exc}"], "corruption_controls_rejected": {}}
     errors = errors_for(raw)
@@ -195,6 +202,11 @@ def audit(raw_path, freeze_path, study_freeze_path):
         controls["replacement_raw"] = hashlib.sha256(replacement_bytes).hexdigest() != study.get("predecessor_raw_sha256")
         replacement_freeze = freeze_bytes + b" "
         controls["replacement_freeze"] = hashlib.sha256(replacement_freeze).hexdigest() != study.get("predecessor_freeze_sha256")
+        replacement_manifest = copy.deepcopy(study)
+        replacement_manifest["predecessor_raw_sha256"] = hashlib.sha256(replacement_bytes).hexdigest()
+        replacement_manifest["predecessor_freeze_sha256"] = hashlib.sha256(replacement_freeze).hexdigest()
+        replacement_manifest_bytes = json.dumps(replacement_manifest, sort_keys=True).encode("utf-8")
+        controls["replacement_study_manifest"] = hashlib.sha256(replacement_manifest_bytes).hexdigest() != expected_study_sha256
         if not all(controls.values()):
             errors.append("a frozen corruption control escaped rejection")
     return {"status": "PASS_OFFLINE_STRUCTURAL_AUDIT" if not errors else "FAIL_AUDIT",
@@ -206,9 +218,10 @@ def main(argv=None):
     parser.add_argument("raw_json", type=Path)
     parser.add_argument("--freeze", required=True, type=Path)
     parser.add_argument("--study-freeze", required=True, type=Path)
+    parser.add_argument("--expected-study-sha256", required=True)
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args(argv)
-    result = audit(args.raw_json, args.freeze, args.study_freeze)
+    result = audit(args.raw_json, args.freeze, args.study_freeze, args.expected_study_sha256)
     rendered = json.dumps(result, sort_keys=True, indent=2) + "\n"
     args.output.write_text(rendered, encoding="utf-8", newline="\n")
     print(rendered, end="")
