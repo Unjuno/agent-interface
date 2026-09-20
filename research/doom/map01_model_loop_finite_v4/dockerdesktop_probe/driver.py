@@ -5,8 +5,10 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import queue
 import subprocess
 import sys
+import threading
 import time
 
 
@@ -19,6 +21,7 @@ def main() -> int:
     parser.add_argument("--repo", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--image", required=True)
+    parser.add_argument("--response-timeout-seconds", type=float, default=5.0)
     args = parser.parse_args()
     out = args.out.resolve()
     out.mkdir(parents=True, exist_ok=False)
@@ -34,16 +37,33 @@ def main() -> int:
               "python", "-u", "/repo/research/doom/map01_model_loop_finite_v4/dockerdesktop_probe/worker.py"]
     proc = subprocess.Popen(docker, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE, text=True, bufsize=1)
+    responses: queue.Queue[str | None] = queue.Queue()
+
+    def read_responses() -> None:
+        assert proc.stdout
+        for response in proc.stdout:
+            responses.put(response)
+        responses.put(None)
+
+    reader = threading.Thread(target=read_responses, daemon=True)
+    reader.start()
     raw: list[dict] = []
+    failure: str | None = None
+    exit_code: int | None = None
+    stderr = ""
 
     def exchange(payload: dict) -> tuple[int, int, dict]:
-        assert proc.stdin and proc.stdout
+        assert proc.stdin
         before = time.perf_counter_ns()
         proc.stdin.write(json.dumps(payload, separators=(",", ":")) + "\n")
         proc.stdin.flush()
-        line = proc.stdout.readline()
+        try:
+            line = responses.get(timeout=args.response_timeout_seconds)
+        except queue.Empty as exc:
+            proc.kill()
+            raise TimeoutError("container response timed out") from exc
         after = time.perf_counter_ns()
-        if not line:
+        if line is None:
             raise RuntimeError("container worker exited without a response")
         return before, after, json.loads(line)
 
@@ -104,14 +124,30 @@ def main() -> int:
         lease_control("over-30s", now + 31_000_000_000)
         now = time.perf_counter_ns()
         lease_control("delayed-under-20s", now + 25_000_000_000, delay_s=6.0)
+    except Exception as exc:
+        failure = f"{type(exc).__name__}: {exc}"
     finally:
-        if proc.stdin:
+        if proc.stdin and not proc.stdin.closed:
             proc.stdin.close()
         try:
-            _, stderr = proc.communicate(timeout=10)
+            exit_code = proc.wait(timeout=10)
         except subprocess.TimeoutExpired:
             proc.kill()
-            _, stderr = proc.communicate()
+            exit_code = proc.wait()
+        if proc.stderr:
+            stderr = proc.stderr.read()
+        reader.join(timeout=2)
+
+    if failure is not None or exit_code != 0:
+        (out / "raw.jsonl").write_text("".join(
+            json.dumps(row, sort_keys=True) + "\n" for row in raw))
+        stop = {"classification": "STOP_CONTAINER_OR_EXCHANGE",
+                "failure": failure, "container_exit_code": exit_code,
+                "stderr": stderr, "clock_samples": len(samples),
+                "worker_sha256": worker_hash, "lease_source_sha256": lease_hash}
+        (out / "STOP.json").write_text(json.dumps(stop, indent=2, sort_keys=True) + "\n")
+        print(json.dumps(stop, indent=2))
+        return 2
 
     result = {
         "schema": "issue-3880-dockerdesktop-construction-v1",
@@ -120,6 +156,7 @@ def main() -> int:
         "image": args.image,
         "worker_sha256": worker_hash,
         "lease_source_sha256": lease_hash,
+        "container_exit_code": exit_code,
         "clock_samples": len(samples),
         "clock_bounds": {
             "min_lower_ns": min(row["offset_lower_ns"] for row in samples),

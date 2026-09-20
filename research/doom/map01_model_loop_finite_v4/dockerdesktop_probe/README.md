@@ -1,6 +1,6 @@
 # Issue #3880 — Docker Desktop construction probe
 
-Status: construction-only host/container clock and lease transport probe. This is **not** the preregistered OrbStack gate or the MAP01 allocation. It does not consume seed 990623.
+Status: construction-only host/container clock and lease transport probe. This is **not** the preregistered OrbStack gate or the MAP01 allocation. It does not consume seed 990623. The measured control outcomes pass semantic reconstruction, but the first driver did not retain the Docker CLI child exit code, so the overall retained disposition is `HOLD_CONTAINER_EXIT_UNRECORDED`.
 
 ## H / T / D / C / U
 
@@ -19,3 +19,5 @@ python driver.py --repo <checkout-root> --out <new-empty-output-directory> --ima
 ```
 
 The driver creates the output directory exclusively and writes `raw.jsonl`, `result.json`, and `SHA256SUMS`. It never retries a failed invocation. Preserve a failed output as-is and classify it as STOP/HOLD; do not reuse its output path.
+
+The published driver has since been hardened: each response has a bounded timeout, Docker/container nonzero exit is rejected, and partial raw plus `STOP.json` are retained on failure. The original allocation is **not** rerun with the hardened driver; its missing exit status remains a hold.

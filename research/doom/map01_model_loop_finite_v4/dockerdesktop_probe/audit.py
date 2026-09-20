@@ -1,4 +1,4 @@
-"""Independent raw-only audit for one Docker Desktop construction result."""
+"""Independent raw/result audit for one Docker Desktop construction result."""
 from __future__ import annotations
 
 import argparse
@@ -28,7 +28,11 @@ def audit(root: Path, repo: Path) -> dict:
     result = json.loads(result_bytes)
     rows = [json.loads(line) for line in raw_bytes.splitlines()]
     clocks = [row for row in rows if row.get("kind") == "clock"]
-    controls = {row.get("id"): row for row in rows if row.get("kind") == "lease"}
+    lease_rows = [row for row in rows if row.get("kind") == "lease"]
+    need(len(lease_rows) == 4, "lease-control row count")
+    lease_ids = [row.get("id") for row in lease_rows]
+    need(len(lease_ids) == len(set(lease_ids)), "duplicate lease-control id")
+    controls = {row["id"]: row for row in lease_rows}
     need(result.get("classification") == "CONSTRUCTION_ONLY_DOCKER_DESKTOP", "scope label")
     need(result.get("clock_samples") == len(clocks) == 41, "clock denominator")
     need([row.get("i") for row in clocks] == list(range(41)), "ordered unique clock indices")
@@ -79,11 +83,19 @@ def audit(root: Path, repo: Path) -> dict:
     lease = repo / "research/live_control/lease.py"
     need(sha256(worker.read_bytes()) == result["worker_sha256"], "worker source hash")
     need(sha256(lease.read_bytes()) == result["lease_source_sha256"], "Lease source hash")
+    process_exit = result.get("container_exit_code")
+    disposition = ("HOLD_CONTAINER_EXIT_UNRECORDED" if process_exit is None else
+                   "PASS_CONSTRUCTION_SCOPED" if type(process_exit) is int and process_exit == 0 else
+                   "FAIL_CONTAINER_NONZERO_EXIT" if type(process_exit) is int else
+                   "FAIL_CONTAINER_EXIT_CODE_INVALID")
     checks = {}
     for name, payload in (("raw.jsonl", raw_bytes), ("result.json", result_bytes)):
         checks[name] = sha256(payload)
-    return {"disposition": "PASS_CONSTRUCTION_SCOPED", "clock_rows": len(clocks),
-            "lease_controls": sorted(controls), "errors": [], "sha256": checks}
+    return {"disposition": disposition,
+            "semantic_disposition": "PASS_CONTROLS_AND_CLOCKS_SCOPED",
+            "container_exit_code": process_exit,
+            "clock_rows": len(clocks), "lease_controls": sorted(controls),
+            "errors": [], "sha256": checks}
 
 
 def main() -> int:
@@ -93,8 +105,9 @@ def main() -> int:
     args = parser.parse_args()
     result = audit(args.out.resolve(), args.repo.resolve())
     payload = json.dumps(result, indent=2, sort_keys=True) + "\n"
-    (args.out / "audit.json").write_text(payload)
-    files = [args.out / name for name in ("raw.jsonl", "result.json", "audit.json")]
+    (args.out / "audit-followup.json").write_text(payload)
+    files = [args.out / name for name in
+             ("raw.jsonl", "result.json", "audit.json", "audit-followup.json")]
     (args.out / "SHA256SUMS").write_text("".join(
         f"{sha256(path.read_bytes())}  {path.name}\n" for path in files))
     print(payload, end="")
