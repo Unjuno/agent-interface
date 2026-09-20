@@ -100,6 +100,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 ### Reliability, concurrency, ownership, and commit semantics
 
+- [`experiments/issue_3840_newline_frame_v2/`](experiments/issue_3840_newline_frame_v2/) — Issue #3840 Docker Desktop/Linux amd64 terminal-LF replication; scoped false-success observation, row-level cross-check, and explicit audit-provenance HOLD are recorded in RESULT.md.
 - [`concurrency/`](concurrency/) — phase-level overlap, shared-resource conflicts, and serialized-actuator concurrency studies.
 - `receiver_*`, `external_effect_*`, `outbox_*`, `staged_*`, and `exact_runtime_*` directories — effect/commit/recovery semantics.
 - `git_*` directories — Git/reference concurrency and atomicity experiments.
