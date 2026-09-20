@@ -49,7 +49,11 @@ def summarize(rows):
         by_class[name] = {
             "n": len(actual), "accepted": len(acc), "coverage": len(acc) / max(1, len(actual)),
             "recall": sum(r["proposal"] == name for r in acc) / max(1, len(acc)),
-}
+        }
+    false_correct = sum(r["proposal"] == "CORRECT" and r["y"] != 1 for r in accepted)
+    return {"n": n, "accepted": len(accepted), "accuracy": correct / max(1, len(accepted)),
+            "by_class": by_class, "false_correct": false_correct,
+            "false_correct_rate": false_correct / max(1, len(accepted))}
 
 
 class AuditNeedle(nn.Module):
@@ -76,10 +80,6 @@ def reconstruct_model(state):
     model.load_state_dict(tensors, strict=True)
     model.eval()
     return model
-    false_correct = sum(r["proposal"] == "CORRECT" and r["y"] != 1 for r in accepted)
-    return {"n": n, "accepted": len(accepted), "accuracy": correct / max(1, len(accepted)),
-            "by_class": by_class, "false_correct": false_correct,
-            "false_correct_rate": false_correct / max(1, len(accepted))}
 
 
 def audit(result):
