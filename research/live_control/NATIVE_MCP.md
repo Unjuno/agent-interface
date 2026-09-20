@@ -35,6 +35,11 @@ identical six-Right programs and 19-emission receipts with different saved
 displacements. Their directional tasks passed, but exact repeated-key effects
 remain unverified. Inspect returned images and task outcomes before proceeding;
 do not infer an application acknowledgement from `completed_ops` alone.
+The subsequent [four-run ABBA comparison](../../runtime/results/native-selection-abba-01/README.md)
+kept source, app, seed, pacing and initial pixels fixed: combined and separated
+selection both produced x62 twice. The prior x60 discrepancy did not reproduce.
+This does not justify mandatory selection splitting or new default delays;
+splitting added a submission/image boundary without a demonstrated accuracy gain.
 
 | Need | Call | Effect |
 | --- | --- | --- |
