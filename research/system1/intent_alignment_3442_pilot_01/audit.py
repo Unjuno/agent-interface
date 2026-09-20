@@ -72,6 +72,14 @@ def audit(obj):
 
     state_t = torch.tensor(states, dtype=torch.float32)
     intent_t = torch.tensor(intents, dtype=torch.long)
+    gtest = torch.Generator(device="cpu").manual_seed(344202)
+    tp = 2.4 * torch.rand(512, generator=gtest) - 1.2
+    tv = 0.8 * torch.rand(512, generator=gtest) - 0.4
+    ta = torch.rand(512, generator=gtest)
+    ts = (torch.rand(512, generator=gtest) > 0.08).float()
+    expected_test_states = torch.stack([tp, tv, ta, ts], dim=1).repeat_interleave(2, dim=0)
+    if not torch.equal(state_t, expected_test_states):
+        errors.append("test_split_generation_mismatch")
     bits = F.one_hot(intent_t, num_classes=2).float()
     base_x = torch.cat([state_t, torch.zeros_like(bits)], dim=1)
     cond_x = torch.cat([state_t, bits], dim=1)
