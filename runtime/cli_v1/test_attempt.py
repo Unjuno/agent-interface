@@ -27,7 +27,7 @@ class RetainedAttemptTests(unittest.TestCase):
             archive = root / 'runtime.pyz'
             build(source, archive, root / 'manifest.json', root / 'sha256.txt')
             (root / 'program.json').write_text('{}')
-            (root / 'targets.json').write_text('{"fixture":123}')
+            (root / 'targets.json').write_text('{\"fixture\":123}')
             run = root / 'attempt'
             command = [sys.executable, str(archive), 'dispatch',
                        '--program', str(root / 'program.json'), '--targets', str(root / 'targets.json'),
@@ -78,7 +78,7 @@ class RetainedAttemptTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td); run = root / 'run'
             (root / 'program.json').write_text('{}')
-            (root / 'targets.json').write_text('{"fixture":123}')
+            (root / 'targets.json').write_text('{\"fixture\":123}')
             report = {'schema': 'agent-interface/runtime-dispatch-result-v1',
                       'status': 'runtime_failed', 'error': 'partial input',
                       'result': {'recovery_required': True}}
@@ -90,7 +90,7 @@ class RetainedAttemptTests(unittest.TestCase):
             args = ['agent-interface', 'dispatch', '--program', str(root / 'program.json'),
                     '--targets', str(root / 'targets.json'), '--current-observation-seq', '1',
                     '--current-binding-revision', '0', '--run-directory', str(run), '--review']
-            with patch.object(sys, 'argv', args), patch('runtime.cli_v1.__main__.dispatch', side_effect=backend) as call, \
+            with patch.object(sys, 'argv', args), patch('runtime.cli_v1.__main__.dispatch', side_effect=backend) as call, \\
                  patch('runtime.cli_v1.__main__._emit', side_effect=BrokenPipeError):
                 with self.assertRaises(BrokenPipeError):
                     main()
@@ -101,7 +101,7 @@ class RetainedAttemptTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
             (root / 'program.json').write_text('{}')
-            (root / 'targets.json').write_text('{"fixture":123}')
+            (root / 'targets.json').write_text('{\"fixture\":123}')
             run = root / 'attempt'
             report = {'schema': 'agent-interface/runtime-dispatch-result-v1',
                       'status': 'returned', 'result': {'status': 'completed'}}
@@ -109,7 +109,9 @@ class RetainedAttemptTests(unittest.TestCase):
             class ShortWriter:
                 def __init__(self):
                     self.accepted = ''
+                    self.attempted = 0
                 def write(self, text):
+                    self.attempted = len(text)
                     self.accepted += text[:max(1, len(text) // 2)]
                     return len(self.accepted)
 
@@ -125,7 +127,7 @@ class RetainedAttemptTests(unittest.TestCase):
 
             call.assert_called_once()
             self.assertTrue(output.accepted)
-            self.assertLess(len(output.accepted), len(json.dumps(report, sort_keys=True, separators=(',', ':')) + '\\n'))
+            self.assertLess(len(output.accepted), output.attempted)
             self.assertEqual(json.loads((run / 'report.json').read_bytes()), report)
             self.assertTrue((run / 'request.json').is_file())
 
