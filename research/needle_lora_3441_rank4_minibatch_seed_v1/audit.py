@@ -32,6 +32,13 @@ def main():
         initial_hashes=rec.get("initial_adapter_sha256",{})
         if set(initial_hashes)!={"legacy","shared"} or any(len(v)!=64 for v in initial_hashes.values()) or len(set(initial_hashes.values()))!=1:seed_errors.append("initial_state_sha")
         seed_values={}
+        ax=torch.randn(4096,8,generator=torch.Generator(device="cpu").manual_seed(seed+3))
+        expected_a=((ax[:,0]>0).long()*2+(ax[:,1]>0).long()).tolist()
+        am=metrics.get("A",{});ap=am.get("predictions",[])
+        if am.get("expected")!=expected_a or len(ap)!=4096:seed_errors.append("A:rows_or_expected")
+        else:
+            ac=sum(a==b for a,b in zip(expected_a,ap))
+            if am.get("correct")!=ac or am.get("n")!=4096 or am.get("decision")!="PROPOSE" or am.get("requested_role")!="A" or am.get("version")!=0:seed_errors.append("A:final_metric_or_route")
         for arm in ("legacy","shared"):
             metric=metrics.get(arm,{})
             x=torch.randn(4096,8,generator=torch.Generator(device="cpu").manual_seed(seed+4)); labels=1-(x[:,0]>0).long();labels=labels*2+(x[:,1]>0).long();expected=labels.tolist()

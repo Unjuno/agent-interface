@@ -28,9 +28,12 @@ class FrozenContract(unittest.TestCase):
         # Small one-seed contract fixture: construction/audit only, not model training.
         seed=3451
         expected_by_seed={}
+        expected_a_by_seed={}
         for current_seed in (3451,3452,3453,3454,3455):
             x=__import__("torch").randn(4096,8,generator=__import__("torch").Generator(device="cpu").manual_seed(current_seed+4))
             expected_by_seed[current_seed]=((1-(x[:,0]>0).long())*2+(x[:,1]>0).long()).tolist()
+            xa=__import__("torch").randn(4096,8,generator=__import__("torch").Generator(device="cpu").manual_seed(current_seed+3))
+            expected_a_by_seed[current_seed]=((xa[:,0]>0).long()*2+(xa[:,1]>0).long()).tolist()
         arms={}; timing={}; snapshots={}
         for arm in ("legacy","shared"):
             expected=expected_by_seed[seed]
@@ -43,7 +46,7 @@ class FrozenContract(unittest.TestCase):
             snapshots[arm]={"roundtrip_exact":True,"rollback_exact":True,"initial_sha256":"a"*64,"learned_sha256":"b"*64}
         rec={"seed":seed,"feedback_order":list(range(16)),"metrics":arms,"timing_ms":timing,"snapshots":snapshots,"base_immutable":True,"identical_adapter_starts":True,"initial_adapter_sha256":{"legacy":"c"*64,"shared":"c"*64},"invalid_routes":{"unknown_role":"YIELD","stale_epoch":"YIELD","wrong_version":"YIELD","missing_adapter":"YIELD"}}
         result={"allocation":"needle-lora-3441-rank4-minibatch-rng-paired-v1","environment":{"python":"3.11.9","torch":"2.5.1+cu121","cuda":"12.1","device":"NVIDIA GeForce RTX 3080 Laptop GPU","cublas_workspace_config":":4096:8","torch_threads":1,"deterministic":True},"seeds":[]}
-        result["seeds"]=[dict(rec,seed=s,metrics={arm:{**value,"expected":expected_by_seed[s],"expected_b":expected_by_seed[s],"predictions":expected_by_seed[s],"correct":4096,"predictions_by_arrival":[{**row,"expected":expected_by_seed[s],"predictions":expected_by_seed[s]} for row in value["predictions_by_arrival"]]} for arm,value in arms.items()},feedback_order=list(range(16)),initial_adapter_sha256={"legacy":"c"*64,"shared":"c"*64}) for s in (3451,3452,3453,3454,3455)]
+        result["seeds"]=[dict(rec,seed=s,metrics={**{arm:{**value,"expected":expected_by_seed[s],"expected_b":expected_by_seed[s],"predictions":expected_by_seed[s],"correct":4096,"predictions_by_arrival":[{**row,"expected":expected_by_seed[s],"predictions":expected_by_seed[s]} for row in value["predictions_by_arrival"]]} for arm,value in arms.items()},"A":{"expected":expected_a_by_seed[s],"predictions":expected_a_by_seed[s],"correct":4096,"n":4096,"decision":"PROPOSE","requested_role":"A","version":0}},feedback_order=list(range(16)),initial_adapter_sha256={"legacy":"c"*64,"shared":"c"*64}) for s in (3451,3452,3453,3454,3455)]
         def invoke(obj,break_envelope=False):
             raw=json.dumps(obj,sort_keys=True,separators=(",",":")).encode()
             env={"sha256":("0"*64 if break_envelope else hashlib.sha256(raw).hexdigest()),"gzip_b64":base64.b64encode(gzip.compress(raw,mtime=0)).decode()}
