@@ -53,3 +53,6 @@ research/live_control/prepare_delayed_effect_v*.py whitespace=-blank-at-eof
 research/live_control/probe_delayed_effect_decisions_v1.py whitespace=-blank-at-eof
 research/live_control/results/recovery-pair4-01/A/runtime/openttd.cfg -whitespace
 research/live_control/results/recovery-pair4-01/B/runtime/openttd.cfg -whitespace
+
+# Preserve exact source and formal evidence bytes for Issue #3814 across hosts.
+research/experiments/issue_3814_newline_frame_v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
