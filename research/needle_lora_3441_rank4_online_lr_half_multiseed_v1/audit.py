@@ -52,9 +52,11 @@ def audit(envelope):
    assert rows[-1]["predictions"]==f[{"rank2_online":"B_R2_ONLINE","rank4_online_04":"B_R4_ONLINE_04","rank4_online_02":"B_R4_ONLINE_02"}[arm]]["predictions"]
    ts=s["feedback_ms"][arm];assert len(ts)==16 and all(isinstance(x,(int,float)) and x>=0 for x in ts)
    if arm=="rank4_online_02":lat.extend(ts)
-  for name in ("rank2_online","rank4_online_04","rank4_online_02"):
-   assert len(s["setup_ms"][name]) if False else True
-  assert s["batch_128_updates_ms"]>=0
+  for name in ("rank2_online","rank4_online_04","rank4_online_02","rank4_batch_04","rank4_template",
+               "rank2_online_optimizer","rank4_online_04_optimizer","rank4_online_02_optimizer","rank4_batch_04_optimizer"):
+   value=s["setup_ms"][name]
+   assert isinstance(value,(int,float)) and value>=0
+  assert isinstance(s["batch_128_updates_ms"],(int,float)) and s["batch_128_updates_ms"]>=0
  p95=sorted(lat)[math.ceil(.95*len(lat))-1]
  lift=statistics.mean(means["rank4_online_02"])-statistics.mean(means["rank4_online_04"])
  within_batch=all(abs(a-b)<=.03 for a,b in zip(means["rank4_online_02"],means["rank4_batch_04"]))
