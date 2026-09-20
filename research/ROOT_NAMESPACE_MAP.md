@@ -28,7 +28,7 @@ New work should normally use a category directory. Existing direct-root paths re
 | Continuous / real-time DOOM control | [`doom/`](doom/) |
 | Observation/temporal representation | [`observation/`](observation/) |
 | Observation gating / exact delta transport | [`observation_gating/`](observation_gating/), [`observation_tiles/`](observation_tiles/) |
-| Fast bounded local decision research | [`system1/`](system1/), [`local_system1/`](local_system1/) |
+| Fast bounded local decision research | [`system1/`](system1/), [`local_system1/`](local_system1/), [`needle_lora_3441_pilot_03_router/`](needle_lora_3441_pilot_03_router/) |
 | Cross-domain transfer | [`cross_domain/`](cross_domain/) |
 | Coordination semantics | [`coordination/`](coordination/) |
 | Evaluation/convergence governance | [`benchmark_discovery/`](benchmark_discovery/), [`evolution/`](evolution/) |
@@ -169,9 +169,3 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`verification/`](verification/)
 - [`docker_ipc_schema_bridge_2818_v1/`](docker_ipc_schema_bridge_2818_v1/)
 - [`semantic_checkpoint_contract_2661_v1/`](semantic_checkpoint_contract_2661_v1/)
-
-
-### Needle / System-1 adapter research
-
-- [`needle_lora_3441_pilot_02/`](needle_lora_3441_pilot_02/) — retained global-adapter forgetting result.
-- [`needle_lora_3441_pilot_03_router/`](needle_lora_3441_pilot_03_router/) — successor task-keyed skill routing and snapshot rollback result.
