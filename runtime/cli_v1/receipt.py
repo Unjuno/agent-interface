@@ -25,6 +25,11 @@ def _motor_state_validation(report: dict) -> dict:
 def receipt_view(path: str, *, raw: bool = False) -> dict:
     source = Path(path).resolve(strict=True)
     data = source.read_bytes()
+    return receipt_bytes(data, raw=raw, source_path=str(source))
+
+
+def receipt_bytes(data: bytes, *, raw: bool = False, source_path: str | None = None) -> dict:
+    """Present exact received bytes; retain all history when no source file exists."""
     report = json.loads(data)
     if not isinstance(report, dict):
         raise ValueError("receipt must be an object")
@@ -46,7 +51,7 @@ def receipt_view(path: str, *, raw: bool = False) -> dict:
     result = {
         "schema": "agent-interface/receipt-view-v1",
         "authority": "none",
-        "source": {"path": str(source), "sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)},
+        "source": {"path": source_path, "sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)},
         "report": {k: v for k, v in report.items() if k != "records"},
         "latest_observations": latest,
         "events": visible,
@@ -54,5 +59,9 @@ def receipt_view(path: str, *, raw: bool = False) -> dict:
         "omitted_from_view": len(records) - len(latest) - len(visible),
         "scope": "Historical receipt only. Earlier observations and routine records remain in source; use --raw for history. No input or freshness granted.",
     }
+    if source_path is None:
+        result['source']['kind'] = 'received_bytes'
+        result['source']['raw_report'] = report
+        result['scope'] = 'Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.'
     result["motor_state_validation"] = _motor_state_validation(report)
     return result

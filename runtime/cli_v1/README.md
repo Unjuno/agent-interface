@@ -116,3 +116,130 @@ only a forwarded field: an empty list is not proof that no input occurred.
 These changes replace v1's conflated success booleans; callers inspecting the
 schema must accept v2 explicitly. This adapter still does not perform visual
 target revalidation, compile guarded methods or obtain an application score.
+
+
+Read a retained prepared-exchange receipt together with its referenced PNG:
+
+```sh
+python -m runtime.cli_v1 review --report report.json --run-directory /absolute/run
+# The portable runtime supports the same command:
+python agent-interface-runtime.pyz review --report report.json --run-directory /absolute/run
+```
+
+The JSON response contains the receipt view and an image block (`type`,
+`mimeType`, base64 `data`) that a host can forward to its model image input.
+It selects the newest referenced observation, including terminal review, and
+checks path containment, capture identity and PNG signature. It never falls
+back to an older frame when the newest image is missing. `image_status` is
+`image`, `no_observation`, or `needs_review`. Exit 2 signals an invalid receipt
+or unavailable/conflicting image; a valid receipt is retained when its image
+cannot be read. Exit 0 means presentation succeeded, not that the task succeeded.
+This is historical evidence: no new capture, input, completion inference or
+sensor registration occurs. Native research reports use the research adapter;
+this command accepts prepared-exchange receipts and public `runtime-observation-v1`
+responses. Save `observe` output to JSON, then pass that file to `review`.
+For public observations, the PNG hash and source-raw hash must match the
+capture artifact. The original observation ID is retained; no exchange sequence
+is invented. A cleanup failure remains visible even if its captured image is readable.
+
+
+`review` also accepts `runtime-dispatch-result-v1` responses. It presents the
+last entry in `result.execution.observations`, in the backend's execution order,
+and preserves its zero-based `execution_observation_index`. It never invents an
+exchange sequence. Capture identity and PNG hash checks are the same as for
+public observation responses. A refusal with no capture reports no_observation;
+a failed/missing final capture reports needs_review rather than showing an older
+frame. The complete execution status, partial effects, releases and cleanup errors
+remain in the receipt. The last captured frame may precede later input or an
+asynchronous application update: it does not prove the final application state.
+
+```sh
+python -m runtime.cli_v1 review --report dispatch-result.json --run-directory /absolute/run
+```
+
+
+To pass a complete response without creating a report file, use `review --report -`.
+Python callers can pass the original bytes to `runtime.cli_v1.review.review_bytes`.
+The source digest covers the received bytes, not reserialized JSON. Since there
+is no retained source file, the full original parsed report is included under
+`receipt.source.raw_report`; source.path is null. Image validation is unchanged.
+This avoids a temporary report file, not image storage or model token costs.
+
+In bash, use pipefail so an upstream dispatch failure is not hidden by successful
+review. A review exit of 0 only means presentation succeeded:
+
+```sh
+set -o pipefail
+python -m runtime.cli_v1 observe --targets targets.json --target fixture \
+  --frame window_client --region 0 0 400 180 --capture-directory images |
+  python -m runtime.cli_v1 review --report - --run-directory .
+```
+
+Forward the JSON image block through the host's image-input mechanism; printing
+base64 text to the model is not image delivery. The portable zipapp accepts the
+same arguments. Stdin mode does not write a report, recapture, or replay input.
+
+
+X11 key names follow case-sensitive X keysyms: use `Right`, `Left`, `Up`,
+`Down`. The explicit aliases `CTRL`, `SHIFT`, `ALT`, `ENTER`, `TAB`, `ESC`,
+and `SPACE` are supported. Uppercase arrow names are refused before input and
+now report the canonical spelling. A completed program does not acknowledge
+each application's response to individual key events; verify the observed or
+saved effect when exact displacement matters. See the actual-use record in
+[the retained Inkscape use record](https://github.com/Unjuno/agent-interface/blob/873ecdafd/runtime/results/public-inkscape-use-01/README.md) for a three-key request with a smaller
+saved displacement than the nominal six units.
+
+
+For public observation/dispatch images, `image_reference.recorded_capture`
+exposes the selected capture's recorded target, native window ID, coordinate
+frame, region, dimensions and capture clocks when present. Missing fields are
+omitted. These values come from that same capture, not an earlier full-screen
+image or the current desktop. For example, a region `[20,75,180,45]` in
+`window_client` means the 180x45 image was captured starting at window-local
+(20,75). The field is historical metadata, not revalidated target binding or
+permission to send input; do not assume the window has remained unchanged.
+
+
+New X11 dispatch captures include zero-based `operation_index`, also forwarded
+in `image_reference.recorded_capture`. This indexes the submitted program's
+`ops`, whereas `execution_observation_index` indexes only its retained images.
+Compare it with the program and completed/failed operation evidence before
+calling a frame "after the action": later input may have changed the application.
+Standalone observe and older receipts omit operation_index; it is not inferred.
+A capture at the last observe operation still does not prove asynchronous work
+has finished. Existing frozen records remain unchanged.
+
+
+`review.outcome_summary` puts recorded statuses and errors beside the image.
+For dispatch, `reported_status: returned` can coexist with `execution_status:
+refused`; `execution_error` and `execution_detail` retain its recorded reason.
+A close failure can coexist with completed execution and remains visible in
+`cleanup_error`. Missing or malformed fields are null, including unknown
+recovery_required. The summary does not infer task success, zero input effects,
+or permission to resend. The complete original result remains in the receipt.
+
+
+Partial execution failures also expose their recorded `failure_detail`,
+`failed_operation_index` and `failed_operation_effect`. The latter can explicitly
+state that partial input may already have occurred. It is not converted into a
+retry recommendation; absent/malformed evidence remains unknown. The completed
+prefix and release records remain in the full receipt for recovery decisions.
+
+
+For one-call result/image delivery, add `--review` to `observe` or `dispatch`,
+alongside `--capture-directory`. This returns the same review envelope directly,
+without another CLI process or temporary report file:
+
+```sh
+python -m runtime.cli_v1 observe --targets targets.json --target fixture \
+  --frame window_client --region 0 0 400 180 --capture-directory images --review
+```
+
+Dispatch still executes its program once; the flag only presents already
+captured images. Without an observe operation there may be no image. Input
+refusals and runtime failures keep their original nonzero exit codes even when
+review succeeds. If execution succeeded but presentation fails, exit 2 and the
+retained result allow the caller to inspect the problem without replaying input.
+A missing capture-directory is rejected before any execution. The default raw
+response remains unchanged when --review is omitted. Standalone review remains
+available for inspecting retained results later.
