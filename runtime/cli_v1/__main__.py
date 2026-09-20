@@ -25,6 +25,7 @@ def _emit(payload) -> None:
     written = sys.stdout.write(text)
     if written != len(text):
         raise OSError('INCOMPLETE_STDOUT_WRITE')
+    sys.stdout.flush()
 
 
 def _present_result(row, *, with_review, capture_directory, exit_code, compact=False, report_refs=False, retention=None):

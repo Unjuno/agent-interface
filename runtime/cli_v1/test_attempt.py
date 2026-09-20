@@ -14,6 +14,26 @@ from runtime.cli_v1.__main__ import _present_result
 
 
 class RetainedAttemptTests(unittest.TestCase):
+    def test_flush_failure_surfaces_after_report_retention_without_retry(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / 'attempt'
+            report = {'status': 'returned', 'result': {'status': 'completed'}}
+            backend = Mock(return_value=report)
+            retained_report, retention = invoke(backend, {}, root, operation='dispatch')
+            before = {p.name: p.read_bytes() for p in root.iterdir()}
+            writer = Mock()
+            writer.write.side_effect = lambda value: len(value)
+            writer.flush.side_effect = BrokenPipeError('buffered delivery failed')
+            with patch.object(sys, 'stdout', writer):
+                with self.assertRaisesRegex(BrokenPipeError, 'buffered delivery failed'):
+                    _present_result(retained_report, with_review=False, capture_directory=None,
+                                    exit_code=0, retention=retention)
+            backend.assert_called_once()
+            writer.write.assert_called_once()
+            writer.flush.assert_called_once()
+            self.assertEqual(inspect_attempt(root)['files']['report.json']['value'], report)
+            self.assertEqual(before, {p.name: p.read_bytes() for p in root.iterdir()})
+
     def test_short_write_is_detected_and_read_only_recovery_preserves_report(self):
         class ShortWriter(io.StringIO):
             def write(self, text):

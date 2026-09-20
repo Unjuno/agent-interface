@@ -359,6 +359,10 @@ raises `INCOMPLETE_STDOUT_WRITE`. The retained report remains readable; do not
 repeat dispatch to recover its output. This detects a reported short write only:
 a downstream consumer may still truncate bytes after a writer accepts everything.
 Consumers must reject incomplete JSON and use retained read-only recovery.
+After a full write, the CLI explicitly flushes stdout before returning. A flush
+failure propagates without retrying the operation or changing the retained report.
+This follows the delivery proposal in [#3726](https://github.com/Unjuno/agent-interface/pull/3726);
+flush completion is not acknowledgement that the host or model received the result.
 
 ### Compact received-report references
 
