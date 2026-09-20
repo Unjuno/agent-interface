@@ -7,12 +7,70 @@ import tempfile
 import unittest
 from unittest.mock import Mock, patch
 
-from runtime.cli_v1.attempt import invoke, _write_json
+from runtime.cli_v1.attempt import invoke, _write_json, inspect_attempt
 from runtime.cli_v1.__main__ import main
 from runtime.cli_v1.__main__ import _present_result
 
 
 class RetainedAttemptTests(unittest.TestCase):
+    def test_abrupt_exit_retains_unknown_attempt_without_replay(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / 'run'
+            script = ('import os, sys; from runtime.cli_v1.attempt import invoke; '
+                      'invoke(lambda **kw: os._exit(23), {}, sys.argv[1], operation="dispatch")')
+            child = subprocess.run([sys.executable, '-c', script, str(root)],
+                                   cwd=Path(__file__).resolve().parents[2], timeout=15)
+            self.assertEqual(child.returncode, 23)
+            before = (root / 'request.json').read_bytes()
+            with patch('runtime.cli_v1.__main__.dispatch') as dispatch, \
+                 patch('runtime.cli_v1.__main__.observe') as observe, \
+                 patch.object(sys, 'argv', ['agent-interface', 'attempt-status', '--run-directory', str(root)]), \
+                 patch('runtime.cli_v1.__main__._emit') as emit:
+                self.assertEqual(main(), 2)
+            dispatch.assert_not_called()
+            observe.assert_not_called()
+            row = emit.call_args.args[0]
+            self.assertEqual(row['status'], 'unknown_or_incomplete')
+            self.assertEqual(row['process_state'], 'unknown')
+            self.assertFalse(row['replay_allowed'])
+            self.assertEqual(row['files']['report.json']['state'], 'missing')
+            self.assertEqual((root / 'request.json').read_bytes(), before)
+            retry = Mock()
+            invoke(retry, {}, root, operation='dispatch')
+            retry.assert_not_called()
+
+    def test_failed_report_replace_surfaces_residue_without_modifying_it(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / 'run'
+            original_replace = os.replace
+            def replace(source, destination):
+                if destination.name == 'report.json':
+                    raise OSError('injected replace failure')
+                return original_replace(source, destination)
+            call = Mock(return_value={'status': 'runtime_failed', 'effect_status': 'unknown'})
+            with patch('runtime.cli_v1.attempt.os.replace', side_effect=replace):
+                _, retention = invoke(call, {}, root, operation='dispatch')
+            call.assert_called_once()
+            self.assertFalse(retention['report_persisted'])
+            before = {p.name: p.read_bytes() for p in root.iterdir()}
+            row = inspect_attempt(root)
+            self.assertEqual(row['status'], 'unknown_or_incomplete')
+            self.assertEqual(row['temporary_files'], ['.report.json.tmp'])
+            self.assertEqual(before, {p.name: p.read_bytes() for p in root.iterdir()})
+
+    def test_recorded_failure_is_not_claimed_as_task_completion(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / 'run'
+            report = {'status': 'runtime_failed', 'effect_status': 'unknown'}
+            invoke(Mock(return_value=report), {}, root, operation='dispatch')
+            row = inspect_attempt(root)
+            self.assertEqual(row['status'], 'report_recorded')
+            self.assertEqual(row['files']['report.json']['value'], report)
+            self.assertFalse(row['replay_allowed'])
+            (root / 'report.json').write_text('{')
+            self.assertEqual(inspect_attempt(root)['status'], 'invalid_record')
+            self.assertEqual(inspect_attempt(root / 'missing')['status'], 'invalid_record')
+
     @unittest.skipUnless(sys.platform == 'linux', 'Linux pipe transport control')
     def test_portable_report_survives_actual_closed_stdout_pipe(self):
         from runtime.distribution_v2.build import SOURCE_FILES, build
@@ -58,6 +116,11 @@ class RetainedAttemptTests(unittest.TestCase):
                              'INVALID_OBSERVATION_SEQ')
             self.assertEqual((run / 'report.json').read_bytes(), original)
             self.assertEqual((run / 'request.json').read_bytes(), request)
+            inspected = subprocess.run([sys.executable, str(archive), 'attempt-status',
+                                        '--run-directory', str(run)], cwd=root,
+                                       capture_output=True, check=True, timeout=15)
+            self.assertEqual(json.loads(inspected.stdout)['status'], 'report_recorded')
+            self.assertEqual((run / 'report.json').read_bytes(), original)
 
     def test_setup_failure_never_calls_api_or_overwrites_existing_run(self):
         with tempfile.TemporaryDirectory() as td:
