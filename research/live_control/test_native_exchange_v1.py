@@ -80,6 +80,14 @@ class NativeExchangeTests(unittest.TestCase):
             'evaluation': {'success': False}}))
         resumed = run(self.root, 1, self.decision, timeout=0, resume=True)
         self.assertTrue(resumed['exchange']['resumed_read_only'])
+        timing = resumed['exchange']
+        boundaries = [timing[key] for key in ('started_ns', 'committed_ns',
+                      'reply_seen_ns', 'review_completed_ns', 'returned_ns')]
+        self.assertTrue(all(type(value) is int for value in boundaries))
+        self.assertEqual(boundaries, sorted(boundaries))
+        self.assertGreaterEqual(timing['reply_seen_ns'], first['returned_ns'])
+        self.assertNotIn('reply_seen_ns', first)
+
         self.assertFalse(resumed['receipt']['native_result']['evaluation']['success'])
         self.assertEqual(resumed['image_status'], 'no_observation')
         self.assertEqual(path.read_bytes(), original)

@@ -198,3 +198,14 @@ Only the exact relative suffix below the declared original root is mapped. The
 original report bytes, digest and recorded image path are preserved; PNG hashes
 are still verified. No basename search or traversal is accepted. Mapping is
 historical only and is not exposed as fresh source authority in the MCP tools.
+
+## Reply timing boundaries
+
+Completed exchange results include `reply_seen_ns` (the reply file was detected)
+and `review_completed_ns` (receipt/image validation and projection completed),
+between the existing committed/returned timestamps. All are local monotonic
+timestamps for this call, including a read-only resume. They are not the original
+action timestamps, reply publication time or the time the model saw the image.
+Pending results do not invent these boundaries. The review interval includes
+file reads, identity checks and image encoding; transport and model rendering
+after the return remain outside it. No polling interval or input behavior changes.
