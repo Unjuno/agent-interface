@@ -65,6 +65,7 @@ class X11Backend:
             permissions=("x11-display-access",),
         )
         row["capabilities"]["input.text"]["detail"] = "strict ASCII letters/digits/space/._- plus layout-checked :/"
+        row["capabilities"]["event.feedback"]["detail"] = "wait_update is a fixed delay; verify is a no-op; neither proves redraw or task effect"
         return validate_backend_manifest(row)
 
     def monotonic_ns(self) -> int:
@@ -281,6 +282,7 @@ class X11Backend:
         current_target: str | None = None
         observations: list[dict[str, Any]] = []
         releases: list[dict[str, Any]] = []
+        waits: list[dict[str, Any]] = []
         started = time.monotonic_ns()
         emissions_before = self.emissions
         completed_ops = []
@@ -292,6 +294,7 @@ class X11Backend:
                 "emissions": self.emissions,
                 "program_emissions": self.emissions - emissions_before,
                 "observations": observations, "releases": releases,
+                "waits": waits,
                 "completed_ops": completed_ops,
             }
 
@@ -313,7 +316,16 @@ class X11Backend:
                     if current_target is None: raise X11BackendError("observe requires focused target")
                     captured = self.capture(current_target, op["frame"], op["x"], op["y"], op["w"], op["h"])
                     observations.append(dict(captured, operation_index=index))
-                elif kind == "wait_update": time.sleep(op["timeout_ms"] / 1000.0)
+                elif kind == "wait_update":
+                    wait = {"operation_index": index, "requested_ms": op["timeout_ms"],
+                            "started_ns": time.monotonic_ns(), "completed": False,
+                            "kind": "fixed_delay", "update_observed": None}
+                    waits.append(wait)
+                    try:
+                        time.sleep(op["timeout_ms"] / 1000.0)
+                        wait["completed"] = True
+                    finally:
+                        wait["ended_ns"] = time.monotonic_ns()
                 elif kind == "verify": pass
                 elif kind == "release_all": releases.append(self.release_all())
                 else: raise X11BackendError(f"unsupported op {kind}")

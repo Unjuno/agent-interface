@@ -96,6 +96,15 @@ This gives callers the continuation primitive for delayed rendering. The caller
 still chooses when another observation is useful and whether its pixels prove
 the intended effect; repeated observation is not an implicit completion test.
 
+On X11, `wait_update` currently performs a fixed sleep, and `verify` performs no
+verification. Neither establishes redraw completion or application success.
+Execution receipts include `waits` with operation index, requested milliseconds,
+local monotonic start/end, and whether the sleep completed. `update_observed`
+remains null because this operation does not observe an update. Interrupted
+waits and prior waits survive in partial-failure receipts. These intervals measure
+backend waiting only, not model waiting or time to useful feedback. The operation
+does not add captures, poll application state, or repeat input.
+
 
 Golden-v3 boundary is provided by runtime.cli_v1.golden_v3.dispatch_golden_v3; it preserves the existing dispatch contract and is authority-neutral.
 
