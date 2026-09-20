@@ -8,8 +8,9 @@ The task was to enter and save `portable-3514` in the existing Tk integration fi
 
 The CLI returned exit 0, all ten operations completed and input release verified.
 The independent fixture file contains `{"saved":true,"text":"portable-3514"}`.
-The action's PNG nevertheless still showed an empty entry and `unsaved`. The
-primary agent did not replay input. One explicit read-only observation returned
+The action's PNG nevertheless still showed an empty entry and did not show a
+status label. The separate initial PNG showed `unsaved`. The primary agent did
+not replay input. One explicit read-only observation returned
 the visible text and `saved:portable-3514`. This run confirms the combined result
 route works, while retaining the counterexample that action completion plus a
 captured image does not prove the image reflects the saved effect.
