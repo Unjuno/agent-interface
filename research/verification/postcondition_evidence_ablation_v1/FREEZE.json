@@ -1,0 +1,49 @@
+{
+  "allocation": "postcondition-evidence-ablation-20260922-01",
+  "base_main": "b2457b746a6df06f6536585dfe2ab937aff639f4",
+  "child_cases": 24,
+  "commands": [
+    "python run.py",
+    "python audit.py",
+    "python controls.py"
+  ],
+  "construction_exit": 0,
+  "construction_stderr_sha256": "7b3710378173fbfedeebc6009173ea40821cc3535274e2df69a0ffd19b1e3f70",
+  "docker_cli": null,
+  "execution_environment": "provided execution container; no Docker image identity available",
+  "formal_invocations_allowed": 1,
+  "gui_input_calls": 0,
+  "issue": 3951,
+  "legacy_git_blob": "0cd6b755cf54d8c01b254b2f8ee52610a29410f2",
+  "legacy_original_path": "research/verification/known_postcondition_boundary_v1/experiment.py",
+  "model_calls": 0,
+  "network_calls": 0,
+  "output_path": "formal/postcondition-evidence-ablation-20260922-01",
+  "paired_evaluations": 72,
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "python_executable": "/opt/pyvenv/bin/python",
+  "python_executable_sha256": "17b78e0a93175e86f9ac03141924fd7a7f0c0c52e66b34bfa0de20ffef989df1",
+  "source_git_blobs": {
+    "PLAN.md": "35327ecaa86c877b8ff034c8af36f98d41cd9d5b",
+    "audit.py": "48cc261e4120c258e901a6ec1fe71c85224d6c2a",
+    "candidate.py": "27fe11e2ef0313f6a36cf753948d7d99c3bed5e6",
+    "controls.py": "9cca982f4bb28bc6b528759dfc098b0f1190cda4",
+    "legacy.py": "0cd6b755cf54d8c01b254b2f8ee52610a29410f2",
+    "producer.py": "162e304d86d1d3bb02ce05bb9b877a2347ddb580",
+    "run.py": "847f76a28062fad61e8b68733f38ebd9d3bf45b9",
+    "schedule.json": "847cc4cf946e6d9b1eb56e7b1e60b8c5f9a8b872",
+    "test_construction.py": "707f886b4b99fa435e8c9a5c0930f62d9434f362"
+  },
+  "source_sha256": {
+    "PLAN.md": "aee9ac85eb8a20f497e95af61aa34feab920a226fe18a621e6b1c588483b188b",
+    "audit.py": "f7c890c0560428faa26dbae9d0a8a92360912387900d5dc4cbebe51aa1316f0d",
+    "candidate.py": "988dc03ac712269a20da3460aa9d1101c1a5c0049e72ef993715de2bb2826eea",
+    "controls.py": "5083f989c6bde97e9f3576c0633cfa7755cf29de6b6ecd842e9f878febd6b09d",
+    "legacy.py": "35a2990bb89eed8ccaa7ff11b082d5e49285570424c704734cdc877ef4519fd1",
+    "producer.py": "759e1eabfc40216b56aa3e2486a0f6525ebd3cf876da8c56bd69449d56b4af99",
+    "run.py": "a2783ca825ee677dcb8cf82bcad8e0c9006588bbabd95aa0911e7ec7fb767f03",
+    "schedule.json": "0176c80cd8a7fc89851d973c7a608376f332428584c8ee5af64a1ca1fa25884a",
+    "test_construction.py": "2db1d8d14608a633f423047000c0c81735fd1d5b76b99f905bb1ef9e19310869"
+  }
+}
