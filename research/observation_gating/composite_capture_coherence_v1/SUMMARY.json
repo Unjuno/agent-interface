@@ -1,0 +1,106 @@
+{
+  "actor_count": 48,
+  "all_actor_exits_zero": true,
+  "all_sources_unchanged": true,
+  "allocation": "composite-capture-coherence-20260922-01",
+  "audit": "PASS_RAW_AUDIT",
+  "audit_exit": 0,
+  "cases": 24,
+  "controls_rejected": 13,
+  "controls_total": 13,
+  "decision": "PASS_COMPOSITE_CAPTURE_COHERENCE_SCOPED",
+  "errors": [],
+  "formal_exit": 0,
+  "formal_invocations": 1,
+  "formal_retries": 0,
+  "raw_bytes": 3352631,
+  "raw_sha256": "e5f0aea94203035be3ed52fd589b8f008b16d1a86dc2ffea98b48768fd5e8e56",
+  "rows": [
+    {
+      "coherent": 3,
+      "matches_final": 3,
+      "n": 3,
+      "policy": "SEQUENTIAL_ROI",
+      "schedule": "STABLE_A",
+      "source_rgb_bytes_each": [
+        1536
+      ]
+    },
+    {
+      "coherent": 3,
+      "matches_final": 3,
+      "n": 3,
+      "policy": "SEQUENTIAL_ROI",
+      "schedule": "UPDATE_BEFORE",
+      "source_rgb_bytes_each": [
+        1536
+      ]
+    },
+    {
+      "coherent": 0,
+      "matches_final": 0,
+      "n": 3,
+      "policy": "SEQUENTIAL_ROI",
+      "schedule": "UPDATE_BETWEEN",
+      "source_rgb_bytes_each": [
+        1536
+      ]
+    },
+    {
+      "coherent": 3,
+      "matches_final": 0,
+      "n": 3,
+      "policy": "SEQUENTIAL_ROI",
+      "schedule": "UPDATE_AFTER",
+      "source_rgb_bytes_each": [
+        1536
+      ]
+    },
+    {
+      "coherent": 3,
+      "matches_final": 3,
+      "n": 3,
+      "policy": "ONE_FRAME_CROPS",
+      "schedule": "STABLE_A",
+      "source_rgb_bytes_each": [
+        12288
+      ]
+    },
+    {
+      "coherent": 3,
+      "matches_final": 3,
+      "n": 3,
+      "policy": "ONE_FRAME_CROPS",
+      "schedule": "UPDATE_BEFORE",
+      "source_rgb_bytes_each": [
+        12288
+      ]
+    },
+    {
+      "coherent": 3,
+      "matches_final": 0,
+      "n": 3,
+      "policy": "ONE_FRAME_CROPS",
+      "schedule": "UPDATE_BETWEEN",
+      "source_rgb_bytes_each": [
+        12288
+      ]
+    },
+    {
+      "coherent": 3,
+      "matches_final": 0,
+      "n": 3,
+      "policy": "ONE_FRAME_CROPS",
+      "schedule": "UPDATE_AFTER",
+      "source_rgb_bytes_each": [
+        12288
+      ]
+    }
+  ],
+  "sequential_disposition": "FAIL_MIXED_CAPTURE_PRESENTATION",
+  "server_exits": [
+    0,
+    0,
+    0
+  ]
+}
