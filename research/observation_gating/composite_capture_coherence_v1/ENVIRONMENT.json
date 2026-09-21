@@ -1,0 +1,29 @@
+{
+  "build_command": "gcc -std=c11 -O2 -Wall -Wextra -Werror actor.c -o actor -lX11",
+  "clock": "CLOCK_MONOTONIC / time.monotonic_ns; diagnostic only",
+  "compiler": "gcc (Debian 14.2.0-19) 14.2.0",
+  "container_image": null,
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "docker_cli": null,
+  "executables_libraries_sha256": {
+    "/lib/x86_64-linux-gnu/libX11.so.6": "b03e563b316b8b53c7988f0ee91d6656cc425538e00947a8b14482d179e80099",
+    "/lib/x86_64-linux-gnu/libc.so.6": "fa430b8f298f817a266046af84a77533185ad6fc4406c7d3787b5a0a0c207826",
+    "/lib/x86_64-linux-gnu/libxcb.so.1": "a1cde2cec9b7b8b38e4cca450c55c63651efb80a2458d76964b56b763043f533",
+    "/opt/pyvenv/bin/python": "17b78e0a93175e86f9ac03141924fd7a7f0c0c52e66b34bfa0de20ffef989df1",
+    "/usr/bin/Xvfb": "4efd5850f0d98c587195ef77be92916dd1578fb725ddd1b2d95d232042813c5e",
+    "/usr/bin/gcc": "a23ecab8ff08f09ad8c80602c2c5df7f49e09c25905cb8975902e101bf72635f"
+  },
+  "input_calls": 0,
+  "machine": "x86_64",
+  "model_calls": 0,
+  "network_requests_in_experiment": 0,
+  "notes": "Provided execution container, no Docker/OrbStack identity. Xvfb TCP-disabled; not a network namespace isolation claim.",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]"
+}
