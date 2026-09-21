@@ -1,0 +1,147 @@
+{
+  "allocation": "byte-budget-batched-20260922-02",
+  "batches": 6,
+  "cases_per_batch": 2,
+  "commands": [
+    [
+      "python",
+      "-B",
+      "launch.py",
+      "--out",
+      "/mnt/data/issue3999/formal-02",
+      "--index",
+      "0",
+      "--mode",
+      "formal",
+      "--freeze",
+      "FREEZE.json"
+    ],
+    [
+      "python",
+      "-B",
+      "launch.py",
+      "--out",
+      "/mnt/data/issue3999/formal-02",
+      "--index",
+      "1",
+      "--mode",
+      "formal",
+      "--freeze",
+      "FREEZE.json"
+    ],
+    [
+      "python",
+      "-B",
+      "launch.py",
+      "--out",
+      "/mnt/data/issue3999/formal-02",
+      "--index",
+      "2",
+      "--mode",
+      "formal",
+      "--freeze",
+      "FREEZE.json"
+    ],
+    [
+      "python",
+      "-B",
+      "launch.py",
+      "--out",
+      "/mnt/data/issue3999/formal-02",
+      "--index",
+      "3",
+      "--mode",
+      "formal",
+      "--freeze",
+      "FREEZE.json"
+    ],
+    [
+      "python",
+      "-B",
+      "launch.py",
+      "--out",
+      "/mnt/data/issue3999/formal-02",
+      "--index",
+      "4",
+      "--mode",
+      "formal",
+      "--freeze",
+      "FREEZE.json"
+    ],
+    [
+      "python",
+      "-B",
+      "launch.py",
+      "--out",
+      "/mnt/data/issue3999/formal-02",
+      "--index",
+      "5",
+      "--mode",
+      "formal",
+      "--freeze",
+      "FREEZE.json"
+    ]
+  ],
+  "construction_cases": 2,
+  "construction_controls": 13,
+  "formal_batches_before_freeze": 0,
+  "issue": 3999,
+  "predecessor_commit": "298e9a196cae3d73800ba3a278aadb6325c90ac8",
+  "sources": {
+    "ENVIRONMENT.json": {
+      "bytes": 530,
+      "git_blob": "0773e4aaf40cffc33ea271af132ecd79ea9a16ea",
+      "sha256": "abd7b0dde7cd14f6b059459ceabf5eab21031f65fe43f27b7fb99e0a2c1951d6"
+    },
+    "PLAN.md": {
+      "bytes": 6013,
+      "git_blob": "6eb1c1f2b1ec89ae58fd5fa1ab5f3437dee50a65",
+      "sha256": "029b89c4354aa24834a034601b59cae2e20390517a45b808752b3f8fcbfd4b75"
+    },
+    "audit.py": {
+      "bytes": 11547,
+      "git_blob": "30375af5fb4b3da5256c92eae5fbbed8dfcf9bb8",
+      "sha256": "b560d3540d54811b93adc81b400fe1d5c4d99e3c361df2cb594a09f1c9057983"
+    },
+    "batch.py": {
+      "bytes": 3820,
+      "git_blob": "ba0514faa6c74299418004c5c8acab4add42a34c",
+      "sha256": "2aebee7df8c8f63e433ffdd7fdc2d224481ca0198e20e5fc250490f22ddbb21c"
+    },
+    "batch_controls.py": {
+      "bytes": 1866,
+      "git_blob": "87f9ddee0aabcfcf5c9992d6261b6b67622efb68",
+      "sha256": "4eabc834b4bf8bd7d246b5a84e424191ffdcde34c289deb256333851558a35c5"
+    },
+    "launch.py": {
+      "bytes": 3129,
+      "git_blob": "122dd84be02e7345660973d3f0b9591c0db34bcf",
+      "sha256": "bad96c09cebf96eb786a096217c014ad0e3012b3498dc94b7416efa445f2d8a3"
+    },
+    "run.py": {
+      "bytes": 7919,
+      "git_blob": "064bdfbd30eb098ab18c38ea42b2533cfc87736e",
+      "sha256": "1ffb9270aec8abf033d3dd89f21af2e227b18317330690bb5c61953178a38c70"
+    },
+    "test_audit.py": {
+      "bytes": 3527,
+      "git_blob": "7b84518765dec98859ae19b80a7b6c4d2519dab3",
+      "sha256": "6ecc4149cd6ad8b97b19660e72e5282d7a8a175ac57ae913e6fa3f91f32a972f"
+    },
+    "upstream/__main__.py": {
+      "bytes": 1753,
+      "git_blob": "1a97a659113666ccaa254ab2bf5dc0306e217015",
+      "sha256": "61486b4a063374f1794f5f4db22715901d64ff151693f22e23fc628faccf7b9b"
+    },
+    "upstream/ledger.py": {
+      "bytes": 2027,
+      "git_blob": "fb50be9d4d821a7836e6a0158c53a983f0f91df5",
+      "sha256": "9aba4584cc23457ccee0554b8dd6a0bd26ebbf9e35098975d7ea99f35e7c28b9"
+    },
+    "upstream/reader.py": {
+      "bytes": 3689,
+      "git_blob": "ea72c166c2cea511ea91031dfbb14563fe4e3245",
+      "sha256": "5917fdbda5b2d3dbef5856ba9cc5c8463a07022ad8a31113ec3fdf9b21034240"
+    }
+  }
+}
