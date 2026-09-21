@@ -1,0 +1,87 @@
+{
+  "accepted_synthetic_events": 72,
+  "allocation": "local-gap-clock-20260922-01",
+  "completed": 72,
+  "corruption_rejected": 11,
+  "duration_seconds": 198.890932805,
+  "elapsed_min_notice_age_ms": 80.172813,
+  "elapsed_unique_gap_first_notices": 27,
+  "formal_invocations": 1,
+  "formal_reruns": 0,
+  "freeze_sha256": "25d4ce8abf3b7e234a25fd881b316fbb6e3d8bb53983780c5a2ca7be38de9283",
+  "github_issue_created": false,
+  "github_main_modified": false,
+  "github_pr_created": false,
+  "github_publication": "BLOCKED_TOOL_WRITE_UNAVAILABLE",
+  "gui_task_input": 0,
+  "journal_exchanges": 906,
+  "late_arrival": {
+    "ELAPSED_80MS": {
+      "cases": 9,
+      "cases_with_notice": 0,
+      "exact_contiguous_drains": 9
+    },
+    "OBS_COUNT_3": {
+      "cases": 9,
+      "cases_with_notice": 3,
+      "exact_contiguous_drains": 9
+    }
+  },
+  "model_calls": 0,
+  "permanent_gap_latency": [
+    {
+      "max_ms": 12.247539,
+      "median_ms": 9.899649,
+      "min_ms": 9.7549,
+      "n": 3,
+      "policy": "OBS_COUNT_3",
+      "profile": "fast"
+    },
+    {
+      "max_ms": 120.064516,
+      "median_ms": 120.063474,
+      "min_ms": 119.999558,
+      "n": 3,
+      "policy": "OBS_COUNT_3",
+      "profile": "slow"
+    },
+    {
+      "max_ms": 159.615598,
+      "median_ms": 150.210049,
+      "min_ms": 150.002235,
+      "n": 3,
+      "policy": "OBS_COUNT_3",
+      "profile": "paused"
+    },
+    {
+      "max_ms": 95.011421,
+      "median_ms": 80.874554,
+      "min_ms": 80.172813,
+      "n": 3,
+      "policy": "ELAPSED_80MS",
+      "profile": "fast"
+    },
+    {
+      "max_ms": 121.917902,
+      "median_ms": 120.301353,
+      "min_ms": 119.922967,
+      "n": 3,
+      "policy": "ELAPSED_80MS",
+      "profile": "slow"
+    },
+    {
+      "max_ms": 140.698432,
+      "median_ms": 140.273929,
+      "min_ms": 139.431427,
+      "n": 3,
+      "policy": "ELAPSED_80MS",
+      "profile": "paused"
+    }
+  ],
+  "planned": 72,
+  "runner_exit": 0,
+  "source_files_verified": 20,
+  "source_mismatches": [],
+  "status": "PASS_LOCAL_CLOCK_BOUNDARY_SCOPED",
+  "worker_processes": 144
+}
