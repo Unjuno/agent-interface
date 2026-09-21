@@ -1,0 +1,52 @@
+{
+  "allocation": "staggered-start-claim-batched-20260922-01",
+  "base_main": "b2457b746a6df06f6536585dfe2ab937aff639f4",
+  "batch_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "batch_invocations": 9,
+  "batch_size": 6,
+  "command_template": "/opt/pyvenv/bin/python /mnt/data/issue3946/batched-study/batch_driver.py --index {i}",
+  "construction": {
+    "prefix_guard_checks": 8,
+    "worker_cases_reused_as_excluded_construction": 18
+  },
+  "execution_source_root": "/mnt/data/issue3946/batched-study",
+  "formal_allocations": 1,
+  "formal_output": "/mnt/data/issue3946/batched-formal-01",
+  "frozen_utc": "2026-09-21T19:36:54.422938+00:00",
+  "git_blobs": {
+    "ENVIRONMENT.json": "cfbe566d656f489eef2d2abb1a1a0e14a4cee5bb",
+    "PREREGISTRATION.md": "2eb1751c144b5a94f6593c682fd54dfc6b54d2d8",
+    "audit.py": "f8461b40e1413d28d5697c7c464ef15b177dd090",
+    "batch_audit.py": "ac312a3228c5b59aa34bbc634ff22bdf727f39df",
+    "batch_driver.py": "e410b48a2eb3aa713a2389d6dc0c5e409a0938f1",
+    "run.py": "57346cf4a55fe89b1c150252ea2d986e4493dcdc",
+    "test_audit.py": "7a5c89b3304732c7897225a5bd8ba13a358c537e",
+    "test_batch.py": "77a6c47ad05b418fd7b5d1e98390448ecc9bcbf0",
+    "worker.py": "0b32121bfd1aaaf9769fe7cf4ef54487593b43a6"
+  },
+  "issue": 3963,
+  "predecessor_issue": 3946,
+  "predecessor_source_commit": "bdc7364ff6830a042acf70153842a75767951c8d",
+  "reruns": 0,
+  "sha256": {
+    "ENVIRONMENT.json": "7b988d0f2edb11dfc6df23cc03c1255dc5c47d1b7504ebcf7081e1945c3d87a0",
+    "PREREGISTRATION.md": "cd0d120f8ffadf121712a219bf868c05dc0f1bd961015b4c927b316d4ab02fc0",
+    "audit.py": "2f50c26310ed5c61486e160d419798bc8375443ebaf088dbc50637149e9c6904",
+    "batch_audit.py": "e8594bd82444646817044fea28e1648cd659e247323b6191160778fb92a70dba",
+    "batch_driver.py": "b80e5518f188b4a00a98cbdb7f8b89d2b1dd8706cc8e9771f34bc3e9f93aed2c",
+    "run.py": "4f34045795b28f1ad0ca3e874a96fa4fea8894064cd314cda11b6862448e3318",
+    "test_audit.py": "b71f0b2d3cc1920b727cdf9543c0329d255249faa09979b5ff9d91937fd46b06",
+    "test_batch.py": "6dac64fb8541759ef53701d2e111f1e10bc37ab583274cebfb09a9083d42ba8b",
+    "worker.py": "9e8e3c4213e55fad7859271f37e4141865f0144d8954ee1fcf90cc4cc1d91f54"
+  }
+}
