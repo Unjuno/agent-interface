@@ -1,0 +1,27 @@
+{
+  "checks": [
+    {
+      "command": [
+        "audit.py",
+        "formal-01"
+      ],
+      "returncode": 0,
+      "stderr_empty": true,
+      "stdout_exact": true
+    },
+    {
+      "command": [
+        "test_audit.py",
+        "--formal",
+        "formal-01"
+      ],
+      "returncode": 0,
+      "stderr_empty": true,
+      "stdout_exact": true
+    }
+  ],
+  "formal_reruns": 0,
+  "packaging": "4 exact base64 text segments; compressed/decoded/member hashes unchanged",
+  "restored_files": 24,
+  "unpack_returncode": 0
+}
