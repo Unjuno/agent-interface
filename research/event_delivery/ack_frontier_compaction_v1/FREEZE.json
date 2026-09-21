@@ -1,0 +1,36 @@
+{
+  "schema": "ack-frontier-freeze-v1",
+  "issue": 4026,
+  "allocation": "ack-frontier-4026-20260922-01",
+  "formal_cases": 48,
+  "formal_operations": 228,
+  "retries": 0,
+  "files": {
+    "CHANGES.diff": "dce13a9eae92e87ced6a6039af19dde1d962593861f5e9621c75c2dfc8de9465",
+    "ENVIRONMENT.json": "2008b537f719beaa6e8859e612110e0a264b8b0058bf75f66ee87cb5d0b5cf5b",
+    "PLAN.json": "b369f0de06edf7e97ddaa6794b35373c052de86446d00fbb8bd0fccf57af0e15",
+    "PREREGISTRATION.md": "deda31d508b4c8e305a73b4fa3456236824446fcd62722149cf41785d56db6a0",
+    "PROVENANCE.json": "c15561c62a0e03c55f75877afc64c9bbd71530a8891c9b5cce68ece582163aef",
+    "audit.py": "61b3d47bbdd67e7c134bf4dd26cd5b756b2980d8828adfaa55aad5dc925dc4d4",
+    "bounded.py": "ba2f4fa1381036c27ff54a446b3f07c8f4139782bd35dd70f2064b7a447e7e5d",
+    "frontier.py": "12e2470844226f862ad6837ea4daadcf540ff8c2b8616ea64c7d3a95a582ce72",
+    "legacy.py": "7dbe43bc27ccc0d6f19b33c01e438aecd68c33753c512963d8697a426c5d35c6",
+    "predecessor_742.py": "cda1e355b9d9078dced0a97304701f1b7c4e13227c09da59636f6df41859b203",
+    "run.py": "5b0aae0182edf7e1632ce842f5f3c6a824b85f770e78e390cbb782ff6acf3150",
+    "test_contract.py": "c316cb6e767dc17bb1426f9e3ed9847ad4ebab7c68fc358dfa0e6277c3c7efe4",
+    "worker.py": "c6d87af9c6ec3d99e692b8c4cae206f9cfb5ec76c8771b33e38183e774a77144"
+  },
+  "command": [
+    "/opt/pyvenv/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "/mnt/data/ack4026/study/run.py",
+    "/mnt/data/ack4026/study/formal-01"
+  ],
+  "supervisor_timeout_seconds": 30,
+  "container_call_timeout_seconds": 45,
+  "construction_cases_excluded": 24,
+  "gate": "PASS_ACK_FRONTIER_COMPACTION_BOUNDARY_SCOPED",
+  "no_model_gui_network": true
+}
