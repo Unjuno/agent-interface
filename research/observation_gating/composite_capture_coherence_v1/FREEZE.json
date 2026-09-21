@@ -1,0 +1,54 @@
+{
+  "allocation": "composite-capture-coherence-20260922-01",
+  "audit_command": [
+    "python",
+    "-B",
+    "audit.py",
+    "formal-01",
+    "--out",
+    "AUDIT.json"
+  ],
+  "base_main": "b2457b746a6df06f6536585dfe2ab937aff639f4",
+  "command": [
+    "python",
+    "-B",
+    "run.py",
+    "--out",
+    "formal-01"
+  ],
+  "construction": {
+    "first": "STOP before cases, inherited DISPLAY equality overconstraint; raw and old sources preserved",
+    "second": "8/8 complete, audit and12/12 controls passed, no composite raster yet",
+    "third": "8/8 complete with exact32x16 composite raster;10 unit methods and13/13 controls passed; excluded"
+  },
+  "external_child_timeout_s": 30,
+  "formal_cases": 24,
+  "formal_invocations_allowed": 1,
+  "formal_output_absent_before_freeze": true,
+  "formal_started": false,
+  "gate": "24 exact cases; sequential between mixed3/3; one-frame coherent12/12; all raw/source/process/crop/neutrality gates; audit0 errors and13/13 corruption controls",
+  "issue": 3983,
+  "paired_comparisons": 12,
+  "repetitions": 3,
+  "scope": "Software core-X11, private Xvfb. Coherence is not freshness. No input/model/network request. No Docker/OrbStack/image equivalence.",
+  "source_git_blobs": {
+    "ENVIRONMENT.json": "7354e89592fd6abb5ec4167708e8909a422d4d73",
+    "PLAN.json": "05cb36979253a2a7f646c031696d7beb5f7e1668",
+    "actor": "2126875e97d33ec9015e0437cffc2667373d23c7",
+    "actor.c": "56e37c72556f01d601c8d5436437735dc3881302",
+    "audit.py": "2f3fc05c9e1119784fe939ea8e7688ccf5b966c0",
+    "compose.py": "6e7c5518be63169dba705d4166aca92023668139",
+    "run.py": "19ead3c36f68a7ca863007d6932b166a75dc6d57",
+    "test_unit.py": "450dcfddc0c1005a4386b640daae0d20712a1f9d"
+  },
+  "source_sha256": {
+    "ENVIRONMENT.json": "69df39db4c0ce425584fbb29eb2ff500fd660a9bd04ba37d3840e6b818f09033",
+    "PLAN.json": "e0039dc6fac8f1cf98b4e3ec96eb7abeec2b36536fbe7f3e7387679c471007a6",
+    "actor": "d1a8ee223143445f453de3dfd670a44b3c738cb472476d4175118ac61c8a5335",
+    "actor.c": "1f22409bf75ab1f37abf7a2b0814c10611ebd188fc188f95ef4eaf4cba2de6e3",
+    "audit.py": "6e7f715872cdb40cef4868d8fb7ec7220e6c1eb6f66cbfe29043e7bfdcc6d123",
+    "compose.py": "941e1c8b99390573ec01c8c8d8d204caf2f6c3b9a878cc8b3315cebb81782bb8",
+    "run.py": "0eb9c752003875f99c318f6914c379be038de9fb70f3b5b90939c62808370f71",
+    "test_unit.py": "02fdb812eddfde12fb07479dcfddcc33e9f28d8e4fa14580117f810ac22ea76b"
+  }
+}
