@@ -1,22 +1,24 @@
 # Validation-completion age (#4010)
 
-Premeasurement source freeze for one 21-case private-X11 read-only allocation.
-See PLAN.md and FREEZE.json. No formal result is claimed by this commit.
-All files are additive research scope; no shared runtime is promoted.
+Result: **PASS_VALIDATION_COMPLETION_AGE_BOUNDARY_SCOPED**,21/21 cases,
+zero retries; independent audit errors0,12/12 corruption controls rejected.
+See [REPORT.md](REPORT.md) for evidence, limits and audit-only reproduction,
+[PLAN.md](PLAN.md) for the premeasurement H/T/D/C/U and conditional proof,
+and [FREEZE.json](FREEZE.json) for exact source and binary identities.
 
-The unchanged native acquisition source is native.c. The exact locally compiled
-Linux x86_64 helper is retained losslessly as native.so.xz (compressed SHA256
-3d3178710bbfe17f05b9f00ec22ce49da6e649306655868566e3510206b5b155).
-For audit-only source checking, decompress it to native.so and compare its
-SHA256 to FREEZE.json; the audit does not load or execute this library.
-Do not execute it on an incompatible ABI or rerun a consumed allocation.
+The old FRAME_FRESH label means fresh at receipt. The candidate additionally
+qualifies a recorded post-validation sample; neither implies unchanged scene,
+action authority, later model consumption, or general GUI success. All6 delayed
+validation cases refused at the later sample;3 prompt changed-scene controls
+were still age-qualified, explicitly demonstrating the semantic-currentness limit.
 
-The legacy FRAME_FRESH label means fresh at receipt. The candidate additionally
-records freshness at a post-validation clock sample, never action authority,
-semantic currentness, or a promise about later model use. Verification delay is
-explicitly injected, not a measured normal hash cost or causal GIL mechanism.
+Readable Python/C source is accompanied by lossless native.so.xz and four raw
+evidence fragments. [ARCHIVE.json](ARCHIVE.json) binds all fragments and their
+84-file evidence archive. Use unpack_evidence.py with a NEW destination, then
+run audit.py and the unit tests; these operations do not launch an experiment.
+Do not execute the consumed formal allocation or use Python -O for its auditor.
 
-Construction failures and the old 13/32 HOLD are retained locally and will be
-reported separately; construction/raw-result publication is not yet complete.
-The earlier complete archive remains a conversation attachment, not claimed
-hosted here. Parents #2117/#2789 and the broad ROADMAP remain open.
+Earlier construction failures and the previous13/32 performance HOLD remain
+unaltered. This bundle contains the earlier receipts and selected examples,
+not the full old performance archive. No shared runtime or parent acceptance
+is promoted. #2117/#2789 and the broad roadmap remain open.
