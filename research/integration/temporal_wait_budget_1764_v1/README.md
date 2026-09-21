@@ -7,7 +7,9 @@ It is **retrospective publication, not GitHub preregistration or a new formal ru
 The original REPORT.md and all 163 archived files are unchanged, including their
 historically true BLOCKED_GITHUB_WRITE and no-remote-Issue statements. This dated
 2026-09-22 delivery note supersedes those statements only for publication status.
-No source/threshold/result is repaired and no old allocation is repeated.
+No temporal source/threshold/result is repaired and its allocation is not repeated.
+The subsequent unintended legacy GTK CI invocations are separately retained in
+ci_incident/; they are not part of, or evidence for, the temporal study.
 
 Parent #1764 remains its scoped finite-monitor result; #22/#2789's broader
 application/model acceptance is not established. The supplied Linux x86_64
@@ -83,7 +85,10 @@ The one remaining integration question is whether the selected real producer
 can supply a verifiable complete event prefix in a declared time domain. Do not
 add another timer wrapper or rerun this fixture to substitute for that endpoint.
 
-Only this new research namespace is changed. No shared runtime, workflow,
-predecessor files or broad roadmap status is modified. The earlier 40-case
+The original evidence publication changed only this new research namespace.
+A subsequent CI incident required an additional engineering repair: three legacy
+GTK allocation workflows are now manual-dispatch-only, with unchanged job bodies
+and a new source-only regression. See CI_DELIVERY_INCIDENT.md. No runtime,
+predecessor science or broad roadmap status is modified. The earlier 40-case
 property study remains separately re-audited locally, not pooled and not claimed
 fully published by this capsule.
