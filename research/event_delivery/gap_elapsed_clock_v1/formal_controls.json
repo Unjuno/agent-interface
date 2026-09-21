@@ -1,0 +1,97 @@
+{
+  "baseline": "PASS_LOCAL_CLOCK_BOUNDARY_SCOPED",
+  "controls": [
+    {
+      "errors": [
+        "allocation: case directories",
+        "local-gap-clock-20260922-01-r0-permanent-fast-OBS_COUNT_3: [Errno 2] No such file or directory: '/tmp/gap-audit-control-zk9i85e6/missing_case/local-gap-clock-20260922-01-r0-permanent-fast-OBS_COUNT_3/case.json'"
+      ],
+      "mutation": "missing_case",
+      "rejected": true,
+      "status": "FAIL_LOCAL_AUDIT_OR_GATE"
+    },
+    {
+      "errors": [
+        "local-gap-clock-20260922-01-r0-permanent-fast-OBS_COUNT_3: request order/id"
+      ],
+      "mutation": "missing_journal_row",
+      "rejected": true,
+      "status": "FAIL_LOCAL_AUDIT_OR_GATE"
+    },
+    {
+      "errors": [
+        "local-gap-clock-20260922-01-r0-permanent-fast-OBS_COUNT_3: request order/id"
+      ],
+      "mutation": "duplicate_request_id",
+      "rejected": true,
+      "status": "FAIL_LOCAL_AUDIT_OR_GATE"
+    },
+    {
+      "errors": [
+        "allocation: invocation cardinality"
+      ],
+      "mutation": "boolean_invocation_count",
+      "rejected": true,
+      "status": "FAIL_LOCAL_AUDIT_OR_GATE"
+    },
+    {
+      "errors": [
+        "local-gap-clock-20260922-01-r0-permanent-fast-OBS_COUNT_3: policy or receipt mismatch 2/0"
+      ],
+      "mutation": "boolean_observation_count",
+      "rejected": true,
+      "status": "FAIL_LOCAL_AUDIT_OR_GATE"
+    },
+    {
+      "errors": [
+        "local-gap-clock-20260922-01-r0-permanent-fast-OBS_COUNT_3: policy or receipt mismatch 4/0"
+      ],
+      "mutation": "authority_upgrade",
+      "rejected": true,
+      "status": "FAIL_LOCAL_AUDIT_OR_GATE"
+    },
+    {
+      "errors": [
+        "local-gap-clock-20260922-01-r0-permanent-fast-OBS_COUNT_3: policy or receipt mismatch 4/0"
+      ],
+      "mutation": "receipt_identity_change",
+      "rejected": true,
+      "status": "FAIL_LOCAL_AUDIT_OR_GATE"
+    },
+    {
+      "errors": [
+        "local-gap-clock-20260922-01-r0-permanent-fast-OBS_COUNT_3: after state 2"
+      ],
+      "mutation": "implicit_ack_advance",
+      "rejected": true,
+      "status": "FAIL_LOCAL_AUDIT_OR_GATE"
+    },
+    {
+      "errors": [
+        "local-gap-clock-20260922-01-r0-permanent-fast-OBS_COUNT_3: process exits"
+      ],
+      "mutation": "lost_process_exit",
+      "rejected": true,
+      "status": "FAIL_LOCAL_AUDIT_OR_GATE"
+    },
+    {
+      "errors": [
+        "local-gap-clock-20260922-01-r0-permanent-fast-OBS_COUNT_3: final database hash"
+      ],
+      "mutation": "database_byte_change",
+      "rejected": true,
+      "status": "FAIL_LOCAL_AUDIT_OR_GATE"
+    },
+    {
+      "errors": [
+        "local-gap-clock-20260922-01-r0-permanent-fast-OBS_COUNT_3: JSONL framing"
+      ],
+      "mutation": "missing_terminal_lf",
+      "rejected": true,
+      "status": "FAIL_LOCAL_AUDIT_OR_GATE"
+    }
+  ],
+  "original_evidence_modified": false,
+  "planned": 11,
+  "rejected": 11
+}
