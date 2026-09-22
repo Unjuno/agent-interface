@@ -3,8 +3,12 @@
   "base_main": "3f79994b4dda589951e2ddfe062215bb4a944d70",
   "formal_rows": 0,
   "source_sha256": {
-    "study.py": "eca0a310391000acec305d23bce402d6cb032fad110ac403b3bda2c0e616523d",
-    "audit.py": "c116ee35f1610d414e3b43f5fcf1938258aae81727192f4121fe76f7da59b527"
+    "study.py": "c9a30205a0165cf8e233afa98e7152fe2c432ce6edfa316b61112bc8d2986263",
+    "audit.py": "bf3a3f55577b1c5a79bdffe5a8fcbdd35b3b74cd3737bfca0910cd4cd09eaae5"
+  },
+  "source_git_blobs": {
+    "study.py": "f0eacdbe9d33cc43917ef698b1a0c7ea1aa0fb38",
+    "audit.py": "8684dea18765a254c0cfbca1ca6ac2e6ca54591e"
   },
   "environment": {
     "python": "3.13.5",
@@ -14,5 +18,6 @@
     "display": "private Xvfb, TCP disabled, explicit temporary Xauthority"
   },
   "issue": 4136,
-  "formal_reruns": 0
+  "formal_reruns": 0,
+  "correction": "The initial FREEZE recorded pre-public local hashes. Remote source readback occurred before formal execution; these hashes bind the actual published bytes. Scientific schedule/gates are unchanged."
 }
