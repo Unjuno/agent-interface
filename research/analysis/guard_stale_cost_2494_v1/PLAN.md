@@ -1,0 +1,5 @@
+# #2494 same-route guard calibration — prospective allocation
+
+H/T/D/C/U follows Issue comment 5770964964. Formal population: 48 primary episodes (3 policies × fresh/stale × 8 reps) plus 4 separately labelled stale ACT_CENSOR controls. Reps 0–3 calibration, 4–7 evaluation. `p` is controlled-population incidence only. Costs use one `time.monotonic_ns()` clock domain: c_y = decision_start→yield snapshot completion for REFUSE_CONTROL; c_f = stale action_start→verified native recovery end for complete ACT_CONTROL only. Censored rows never enter c_f.
+
+PASS_GUARD_POLICY_CALIBRATION_SCOPED requires 52 unique rows, all process/cleanup gates, oracle reconstructed from target XID/center, no oracle field in selector input, non-zero evaluation support for p/c_y_stale/c_y_fresh/c_f, complete stale ACT recovery, four ACT_CENSOR rows still wrong at their 30 ms horizons and excluded from c_f, calibration/evaluation disjointness, and raw audit success. No threshold optimization or deployment probability claim.
