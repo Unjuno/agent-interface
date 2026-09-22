@@ -1,5 +1,5 @@
 {
-  "schema": "text-dispatch-placement-publication-v2",
+  "schema": "text-dispatch-placement-publication-v3",
   "issue": 4091,
   "public_preregistration": false,
   "historical_allocation": "text-dispatch-placement-8c61-20260922-01",
@@ -17,37 +17,37 @@
       {
         "index": 0,
         "bytes": 12000,
-        "sha256": "f541213b8f4ff7390f3185ef58028288059223311a9d71f9d86c233b359ce0ba",
+        "sha256": "21f7ddb1ff56285dfc8cfa7d5f9c7a619a8839d977584a7b199e3aca6a258396",
         "text_files": ["formal.part00.b64"]
       },
       {
         "index": 1,
         "bytes": 12000,
-        "sha256": "27315611861cce85da1df8154b244fee8493657c8fcf91ecc7aad5fb38e50e21",
+        "sha256": "d1c0e257ab6620043091547070abc9602562c37845f7005c8b4a8a04cd954bad",
         "text_files": ["formal.part01.b64"]
       },
       {
         "index": 2,
         "bytes": 12000,
-        "sha256": "9e37213647301326384f66d4a071dcb69f550cbc41c22a6f6b11d5cc3e768697",
+        "sha256": "0dbaf76a476ee094a28fd0204ee88462ab5908410b0c19055fd560032f8a5f89",
         "text_files": ["formal.part02.b64"]
       },
       {
         "index": 3,
         "bytes": 12000,
-        "sha256": "0e2a32b060ea09f35e2297fd8640ed8cce8abd8cd87486ff10951a27208c60f0",
+        "sha256": "9c3319739ace8c6707c2eb8ce92abe150d57fe4f0538641fdc1397ade90212ea",
         "text_files": ["formal.part03.b64"]
       },
       {
         "index": 4,
         "bytes": 12000,
-        "sha256": "bfb8198a7ecdddfc5ae1063865c272519381bfd93446d44405b45101ee12a5c8",
+        "sha256": "fc2b868d960044ca0e61bd544769c3a5b4e2e7399b89bae95db0ac7fc28867d6",
         "text_files": ["formal.part04.b64"]
       },
       {
         "index": 5,
         "bytes": 12000,
-        "sha256": "ed9430adcf61181ca9bd28ccc4c645713254afd5f6ea7f2fc8951fcb76dc7041",
+        "sha256": "b2447bf8e006eca0b477e997fec581a2cfe52ea9885d42bcde979175c6718044",
         "text_files": [
           "formal.part05a.b64",
           "formal.part05b0.b64",
@@ -59,7 +59,7 @@
       {
         "index": 6,
         "bytes": 5356,
-        "sha256": "78f6fb83ace4bcf8570f89ff82dc6c711ef1c2830339614870b396212f601931",
+        "sha256": "5cd5c2b8ccbce3d4bf014943c5fe0ba02d3271dcf0a3ceada1919f6cf96e6be2",
         "text_files": ["formal.part06.b64"]
       }
     ]
@@ -77,7 +77,8 @@
     },
     "FREEZE.json": {
       "bytes": 1535,
-      "sha256": "15352b3db133778553e12a0b6c854678d2e059ad34216b3316af932710e0cf7e"
+      "sha256": "15352b3db133778553e12a0b6c854678d2e059ad34216b3316af932710e0cf7e",
+      "git_blob": "c46580d8769dea17e6705f288c5126dd9484ba15"
     }
   },
   "original_full_bundle": {
@@ -87,9 +88,16 @@
     "github_hosted": false,
     "note": "Retained as the original conversation/local bundle; this PR hosts the complete 244-file formal capsule."
   },
-  "publication_incident": {
-    "classification": "REJECTED_TRUNCATED_TRANSFER",
-    "scientific_rerun": false,
-    "note": "Two oversized publication-only Base64 transfers failed exact blob readback and were removed before review; fixed-size parts above read back exactly."
-  }
+  "publication_incidents": [
+    {
+      "classification": "REJECTED_TRUNCATED_TRANSFER",
+      "scientific_rerun": false,
+      "note": "Oversized publication-only Base64 writes failed exact blob readback and were removed before review."
+    },
+    {
+      "classification": "REJECTED_PUBLICATION_MANIFEST_PART_HASHES",
+      "scientific_rerun": false,
+      "note": "A local restore check caught incorrect per-part SHA fields in publication manifest v2 before PR creation; v3 uses SHA256 recomputed from the actual binary parts and the archive SHA was unchanged."
+    }
+  ]
 }
