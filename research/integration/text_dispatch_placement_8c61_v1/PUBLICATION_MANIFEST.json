@@ -1,66 +1,95 @@
 {
-  "archive": {
-    "bytes": 829700,
-    "file_members": 402,
+  "schema": "text-dispatch-placement-publication-v2",
+  "issue": 4091,
+  "public_preregistration": false,
+  "historical_allocation": "text-dispatch-placement-8c61-20260922-01",
+  "historical_source_main": "2308b8301d69b7089a2e0636486736ed59b61537",
+  "formal_cases": 36,
+  "formal_reruns": 0,
+  "scientific_disposition": "PASS_DISPATCH_PLACEMENT_BOUNDARY_SCOPED",
+  "formal_capsule": {
+    "bytes": 77356,
+    "sha256": "2e4321b2af1a48c6d4043545bdaa3749213f765772bf902020d764b37620634a",
+    "members_total": 284,
+    "file_members": 244,
     "format": "tar.xz",
-    "members_total": 469,
-    "parts": [
+    "binary_parts": [
       {
-        "bytes": 210000,
-        "name": "evidence.part01.bin",
-        "sha256": "344d4e343af9cb0d6a3b209f3b01c3ada4f4cc7bbacd6c2cf1456586382a3caf"
+        "index": 0,
+        "bytes": 12000,
+        "sha256": "f541213b8f4ff7390f3185ef58028288059223311a9d71f9d86c233b359ce0ba",
+        "text_files": ["formal.part00.b64"]
       },
       {
-        "bytes": 210000,
-        "name": "evidence.part02.bin",
-        "sha256": "8884cc1858d4df457b3e1cc39a09a482fd3e052ad2a079e8568ca45fb4233158"
+        "index": 1,
+        "bytes": 12000,
+        "sha256": "27315611861cce85da1df8154b244fee8493657c8fcf91ecc7aad5fb38e50e21",
+        "text_files": ["formal.part01.b64"]
       },
       {
-        "bytes": 210000,
-        "name": "evidence.part03.bin",
-        "sha256": "147f028869ed6bff2f0e37acb13eecfed50bd2f5e031f7663e6b49528bf257c7"
+        "index": 2,
+        "bytes": 12000,
+        "sha256": "9e37213647301326384f66d4a071dcb69f550cbc41c22a6f6b11d5cc3e768697",
+        "text_files": ["formal.part02.b64"]
       },
       {
-        "bytes": 199700,
-        "name": "evidence.part04.bin",
-        "sha256": "53cad60cd2248bc69ea76b2fee3aef86a6fb0978bf24359887e6f9dac9f2d31d"
+        "index": 3,
+        "bytes": 12000,
+        "sha256": "0e2a32b060ea09f35e2297fd8640ed8cce8abd8cd87486ff10951a27208c60f0",
+        "text_files": ["formal.part03.b64"]
+      },
+      {
+        "index": 4,
+        "bytes": 12000,
+        "sha256": "bfb8198a7ecdddfc5ae1063865c272519381bfd93446d44405b45101ee12a5c8",
+        "text_files": ["formal.part04.b64"]
+      },
+      {
+        "index": 5,
+        "bytes": 12000,
+        "sha256": "ed9430adcf61181ca9bd28ccc4c645713254afd5f6ea7f2fc8951fcb76dc7041",
+        "text_files": [
+          "formal.part05a.b64",
+          "formal.part05b0.b64",
+          "formal.part05b1.b64",
+          "formal.part05b2.b64",
+          "formal.part05b3.b64"
+        ]
+      },
+      {
+        "index": 6,
+        "bytes": 5356,
+        "sha256": "78f6fb83ace4bcf8570f89ff82dc6c711ef1c2830339614870b396212f601931",
+        "text_files": ["formal.part06.b64"]
       }
-    ],
-    "sha256": "e459f3cdd9fa847e141b73acc0dec950506e556a5db3ae98a20e9ac752c50264"
+    ]
   },
   "direct_files": {
+    "REPORT.md": {
+      "bytes": 12571,
+      "sha256": "126f218a86dd7f1c79eb78979a7c53b16f28974aa1105f4d532272c409c68a32",
+      "git_blob": "6bc211d6ccfcb56bedab9cc54c645b16e4ab34ec"
+    },
     "AUDIT.json": {
       "bytes": 7502,
-      "sha256": "d6a99c101609ef089b01adf0a8369759b56f74e76b489bd45d7a5dba9554024a"
+      "sha256": "d6a99c101609ef089b01adf0a8369759b56f74e76b489bd45d7a5dba9554024a",
+      "git_blob": "dc2cd7fa93e145c9fdaa4cad23b3f35cb8200f7e"
     },
     "FREEZE.json": {
       "bytes": 1535,
       "sha256": "15352b3db133778553e12a0b6c854678d2e059ad34216b3316af932710e0cf7e"
-    },
-    "README.md": {
-      "bytes": 1242,
-      "sha256": "fb5c88bd15abeb0b8a06f65ba55362b4623cceeca4f66dd8a5b96a92a00be375"
-    },
-    "REPORT.md": {
-      "bytes": 12571,
-      "sha256": "126f218a86dd7f1c79eb78979a7c53b16f28974aa1105f4d532272c409c68a32"
-    },
-    "unpack_evidence.py": {
-      "bytes": 1463,
-      "sha256": "4ce2165337ab1a60c1cf201c1d466b72cd72768a85ff340624910cd32682861e"
     }
   },
-  "formal_cases": 36,
-  "formal_reruns": 0,
-  "historical_allocation": "text-dispatch-placement-8c61-20260922-01",
-  "historical_source_main": "2308b8301d69b7089a2e0636486736ed59b61537",
-  "issue": 4091,
-  "original_zip": {
+  "original_full_bundle": {
     "bytes": 1455212,
     "members": 402,
-    "sha256": "0be5f5f01cde3c3806c849a01d59b31d2ff20762972650dcb98ab23819371760"
+    "sha256": "0be5f5f01cde3c3806c849a01d59b31d2ff20762972650dcb98ab23819371760",
+    "github_hosted": false,
+    "note": "Retained as the original conversation/local bundle; this PR hosts the complete 244-file formal capsule."
   },
-  "public_preregistration": false,
-  "schema": "text-dispatch-placement-publication-v1",
-  "scientific_disposition": "PASS_DISPATCH_PLACEMENT_BOUNDARY_SCOPED"
+  "publication_incident": {
+    "classification": "REJECTED_TRUNCATED_TRANSFER",
+    "scientific_rerun": false,
+    "note": "Two oversized publication-only Base64 transfers failed exact blob readback and were removed before review; fixed-size parts above read back exactly."
+  }
 }
