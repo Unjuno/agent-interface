@@ -1,0 +1,47 @@
+{
+  "base_main_at_issue": "3d348fed98a778b2e5e89a8fc9d1cba7c0fa29e4",
+  "branch": "research/sqlite-schema-readset-reprepare-20260922",
+  "construction_audit_pass": true,
+  "construction_corruption_controls": "8/8 rejected",
+  "construction_rows_poolable": 0,
+  "formal_cases_planned": 48,
+  "formal_invocations_before_freeze": 0,
+  "formal_invocations_planned": 1,
+  "git_blobs": {
+    "ENVIRONMENT.json": "a8f8ea69d884065dd7e7c8e5756fde0d7579595b",
+    "PLAN.md": "edccff39ebfd050b1835e1f4c6ddababbc1105dd",
+    "audit.py": "a77c742ff29f959d3c10d6f8c07df101d0832b74",
+    "corruption.py": "25a77d75c475331fdd9ce1078199b3ffed5b5c7b",
+    "manifest.py": "7c72b3b06fcee1769086a09b6ec05be137ec813c",
+    "study.py": "07ad364ccbafb30b8b227955168662cd520d3241"
+  },
+  "issue": 4114,
+  "main_at_preformal_recheck": "74d0ebb63c880fc5818bc4bbe6bb0c6b08579d39",
+  "policies": [
+    "STALE_METADATA",
+    "LIFETIME_UNION",
+    "SCHEMA_SCOPED_REPLACE"
+  ],
+  "postfreeze_tuning_allowed": false,
+  "repetitions": 2,
+  "replacements_allowed": false,
+  "reruns_allowed": false,
+  "scenarios": [
+    "STABLE_A_NONE",
+    "RETARGET_B_NONE",
+    "RETARGET_B_MUTATE_B",
+    "RETARGET_B_MUTATE_A",
+    "UNRELATED_SCHEMA_A_MUTATE_A",
+    "UNRELATED_SCHEMA_A_MUTATE_B",
+    "RETARGET_B_EXECUTE_BACK_A_MUTATE_B",
+    "RETARGET_B_EXECUTE_BACK_A_MUTATE_A"
+  ],
+  "sources": {
+    "ENVIRONMENT.json": "5738243068a38b69f827222bd5a5d213f1db89e195cc940653df571fd74ac8bf",
+    "PLAN.md": "a46bf339785fecc23d02507444a7ab2dad87c71e577204e9d3243f57433f3b12",
+    "audit.py": "086b338ad640d6c3e85f4d556eb5fedcf1d10add8528c700907343094aeef921",
+    "corruption.py": "9c1c9cbff23b37f99af6833f168988f9244bac4e167641212a1267961b71ebe6",
+    "manifest.py": "e19485bdaa07d03e87c9f70a77517b76af35bbc22cdce0e566ebd36bc97d1d8c",
+    "study.py": "12cde7e394ab95ad3f99a596fd3582d17cdc5b85b716effbb4a5a5f10ebaca73"
+  }
+}
