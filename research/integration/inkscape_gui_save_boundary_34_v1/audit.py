@@ -31,6 +31,7 @@ def shape(b):
 
 def raster_bounds(raw,color):
     if len(raw)!=1024*768*3:raise ValueError('RGB_SIZE')
+    # Independent search by byte pattern, with explicit RGB alignment and ROI.
     needle=bytes(color);i=-1;xs=[];ys=[]
     while True:
         i=raw.find(needle,i+1)
