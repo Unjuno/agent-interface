@@ -70,6 +70,7 @@ class App:
             cmd=['xmessage','-title',self.title,'-geometry','320x120+20+20','-buttons','OK:0',text]
         self.proc=subprocess.Popen(cmd,env=env,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
         w=find_window(self.d,self.title,1.5)
+        # two stable captures bound visual settle without long sleeps
         last=None
         for _ in range(20):
             c=capture(w); h=sha(c['data'])
@@ -120,9 +121,11 @@ def one_case(kind,case,out,idx):
     try:
         app=App(kind,disp,tmp,f'{idx:02d}')
         app.set_state('READY',False)
+        # Live-generated semantic effect signature.
         app.set_state('EFFECT',True); effect_cap=app.cap(); effect_sig=sha(effect_cap['data'])
         rec['effect_signature_sha256']=effect_sig
         rec['effect_signature_generation']=app.gen
+        # return to READY for schedule baseline
         app.set_state('READY',False)
         req_gen,req_xid,_=app.current(); rec['request_generation']=req_gen; rec['request_window_id']=req_xid; rec['request_ns']=now()
         frame=None; capture_effect=False; malformed=False; timeout_before=False; timeout_after=False
@@ -145,6 +148,7 @@ def one_case(kind,case,out,idx):
             app.set_state('EFFECT',True); req_gen,req_xid,_=app.current(); rec['request_generation']=req_gen; rec['request_window_id']=req_xid; rec['request_ns']=now(); frame=app.cap(); capture_effect=True; time.sleep(.03); app.set_state('NONE',False)
         if frame is not None:
             cap_gen=app.gen
+            # For stale/delayed, captured generation is request generation, not later current generation.
             if case in ('stale_after_newer','delayed_verifier'): cap_gen=rec['request_generation']
             rec.update({'capture_generation':cap_gen,'capture_window_id':frame['xid'],'capture_t0_ns':frame['t0_ns'],'capture_t1_ns':frame['t1_ns'],'expected_bytes':len(frame['data']),'capture_effect':capture_effect})
             data=frame['data'][:-13] if malformed and len(frame['data'])>13 else frame['data']
@@ -157,6 +161,7 @@ def one_case(kind,case,out,idx):
         ret_gen,ret_xid,_=app.current(); rec['return_generation']=ret_gen; rec['return_window_id']=ret_xid; rec['return_ns']=now()
         rec['candidate']=verdict_candidate(rec,effect_sig); rec['oracle']=verdict_oracle(rec); rec['naive']=verdict_naive(rec,effect_sig)
         rec['events']=app.events
+        # remove raw bytes from json
         rec.pop('frame_data',None)
         rec['finished_ns']=now(); writej(out/'result.json',rec)
         return rec
