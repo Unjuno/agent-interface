@@ -1,0 +1,53 @@
+{
+  "allocation": "exact-crop-partial-recompute-1663-20260922-03",
+  "batches": [
+    {
+      "batch": 0,
+      "reps": [
+        0,
+        1,
+        2
+      ],
+      "workload": "METADATA"
+    },
+    {
+      "batch": 1,
+      "reps": [
+        0,
+        1,
+        2
+      ],
+      "workload": "ROI"
+    },
+    {
+      "batch": 2,
+      "reps": [
+        0,
+        1,
+        2
+      ],
+      "workload": "IMAGE"
+    }
+  ],
+  "case_source_changed": false,
+  "changed_factor": "outer_serialization_only",
+  "construction_rerun": false,
+  "gates_changed": false,
+  "new_output": "formal-03",
+  "parent_freeze_sha256": "c3b6a5cdc5665a3160c0508ebaf5cddb6b12a5faec16a0b5ab5a99680beda8f2",
+  "prior_allocation": "exact-crop-partial-recompute-1663-20260922-02",
+  "prior_complete_cases": 7,
+  "prior_disposition": "STOP_EXTERNAL_EXECUTION_ENVELOPE",
+  "prior_partial_cases": 1,
+  "prior_rows_eligible_for_pooling": 0,
+  "rules": {
+    "pool_prior_rows": false,
+    "post_result_tuning": false,
+    "replacement": false,
+    "same_allocation_retry": false
+  },
+  "schedule_changed": false,
+  "schema": "exact-crop-partial-recompute-allocation-delta-v1",
+  "scientific_source_changed": false,
+  "stop_rule": "Any nonzero child or missing batch terminal receipt stops allocation; later batches do not start."
+}
