@@ -57,10 +57,24 @@ with tarfile.open(fileobj=io.BytesIO(archive), mode="r:xz") as tf:
     dest.mkdir()
     tf.extractall(dest, filter="data")
 
+for row in manifest["launch_receipts"]:
+    source = ROOT / row["source"]
+    data = source.read_bytes()
+    if len(data) != row["bytes"]:
+        die(f"launch byte count mismatch: {row['source']}")
+    if hashlib.sha256(data).hexdigest() != row["sha256"]:
+        die(f"launch sha256 mismatch: {row['source']}")
+    target = dest / row["target"]
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if target.exists():
+        die(f"launch target already exists: {row['target']}")
+    target.write_bytes(data)
+
 print(json.dumps({
-    "status": "PASS_FORMAL_CAPSULE_RETENTION_ONLY",
-    "sha256": capsule["sha256"],
-    "members_total": len(members),
-    "file_members": sum(member.isfile() for member in members),
+    "status": "PASS_FORMAL_REVIEW_SET_RETENTION_ONLY",
+    "capsule_sha256": capsule["sha256"],
+    "capsule_file_members": capsule["file_members"],
+    "launch_files": len(manifest["launch_receipts"]),
+    "review_files": capsule["file_members"] + len(manifest["launch_receipts"]),
     "destination": str(dest),
 }, sort_keys=True))
