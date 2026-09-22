@@ -1,0 +1,56 @@
+{
+  "allocation": "checkpoint-ack-outcome-20260922-02",
+  "batch_count": 15,
+  "batch_size": 6,
+  "branch": "research/checkpoint-ack-outcome-3992-20260922",
+  "construction": {
+    "allocation1_process_cases": 6,
+    "allocation1_recovery_units": 8,
+    "excluded": true,
+    "formal_rows": 0,
+    "v2_wrapper_status": "PASS",
+    "v2_wrapper_tests": 5
+  },
+  "expected_decision_counts": {
+    "BYTES_ONLY/ADVANCE": 27,
+    "BYTES_ONLY/HOLD": 3,
+    "COMMIT_RECEIPT_BOUND/ADVANCE": 9,
+    "COMMIT_RECEIPT_BOUND/HOLD": 21,
+    "EXIT_OR_BYTES/ADVANCE": 21,
+    "EXIT_OR_BYTES/HOLD": 9
+  },
+  "expected_unsafe_advances": {
+    "BYTES_ONLY": 18,
+    "COMMIT_RECEIPT_BOUND": 0,
+    "EXIT_OR_BYTES": 15
+  },
+  "formal_batches_started": 0,
+  "formal_case_count": 90,
+  "formal_case_rows_started": 0,
+  "issue": 4111,
+  "predecessor_allocation": "checkpoint-ack-outcome-20260922-01",
+  "predecessor_disposition": "STOP_EXTERNAL_EXECUTION_TIMEOUT",
+  "predecessor_rows_complete": 9,
+  "predecessor_rows_pooled": 0,
+  "reruns_permitted": false,
+  "schema": "checkpoint-ack-freeze-v2",
+  "scientific_plan_sha256": "068f7bf7041573251793ccd27a6f9e60450171847b3a129c7aa9a8720cc109f7",
+  "allocation_delta_plan_sha256": "18239bbed5df3ccafbfd8f6c43acb477da1a03745208c774d54ffb8bc7f472eb",
+  "sha256": {
+    "BATCH_PLAN.json": "d42d1091089a2cd56083dc34366827eae1b73ff1c70e98a125dc06f1091cdf91",
+    "ENVIRONMENT.json": "584ba29d7ed1e31e26e126fb72df7f04b265819d530e185f40a3f679443f2bc0",
+    "PLAN.md": "068f7bf7041573251793ccd27a6f9e60450171847b3a129c7aa9a8720cc109f7",
+    "PLAN_V2.md": "18239bbed5df3ccafbfd8f6c43acb477da1a03745208c774d54ffb8bc7f472eb",
+    "audit.py": "8b019cf6d6fef8ca169f32a843ee47cae407717a7499a6e0e81b7ebbf9972c04",
+    "batch.py": "6839fd2b72324bea72ed85b7b608e52f95f3a097268fa1ddc8fb8a0afcf80847",
+    "common.py": "4dccde206ddec7d72b7d7f8a35a87672292890589246b3eeb2d623cf58d836dc",
+    "controls.py": "e36f0d5b36e43a423beef35de64d7464a43a7c0b454fd8a59f4c9b870b6bcb89",
+    "finalize_v2.py": "ee532580a641268aa68ce20cb520baa24ff6298aae263cc951fec9d3f4910298",
+    "recovery.py": "36cefa90ad170a17da5f88519bf9e7cdd26ffb85af29c4fe3208f2aca8b237ca",
+    "run.py": "d3b2d91929ac52127ad6dae4bd412a26ffce9c99676ecc002c6ba3d7388cd593",
+    "test_batches.py": "a58b522df6df996c52839107bae10103c66939a262b686fac7e9df64eaf67b29",
+    "test_recovery.py": "d3265f542334e4e7cded5abfe0cd338f57b64e4464ff7d815f4194185d51ba3a",
+    "worker.py": "57fcd72d9a6ac8a38a0dc68032b6faaf09447455acae86290c629c95ed9f5ad3"
+  },
+  "source_main": "4b116a0c7e133dd89431da54a5e65d30e03a3659"
+}
