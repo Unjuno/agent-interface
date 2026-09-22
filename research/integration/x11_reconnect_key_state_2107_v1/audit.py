@@ -14,8 +14,10 @@ for p in sorted(root.glob('case*/case.json')):
  ck(type(d['old_down']) is bool and type(d['actual_boot_down']) is bool,f'{p}:bools')
  dec=[x['result']['decision'] for x in d['decisions'] if x.get('result')]
  ck(bool(dec),f'{p}:decision')
+ # scientifically expected outcomes
  s=d['scenario']; pol=d['policy']; val=d['final_value']
- if s in ('STABLE_UP','RECONNECTED_PRESS_RELEASE'): ck(val=='b',f'{p}:positive:{val}')
+ if s in ('STABLE_UP','RECONNECTED_PRESS_RELEASE'):
+  ck(val=='b',f'{p}:positive:{val}')
  if s=='DISCONNECT_PRESS':
   if pol=='CARRY_OLD_STATE': ck(val=='B',f'{p}:carry_press:{val}')
   else: ck(val=='b',f'{p}:reboot_press:{val}')
@@ -26,6 +28,7 @@ for p in sorted(root.glob('case*/case.json')):
   ck(val=='' and dec[-1]=='UNKNOWN' and not d['task_input'],f'{p}:unknown')
  if pol=='REBOOTSTRAP_ON_RECONNECT' and s not in ('NO_BOOTSTRAP','WRONG_EPOCH_BOOTSTRAP'):
   ck(d['bootstrap_packet']['epoch']==d['epoch'],f'{p}:epoch')
+# denominator and distributions
 ck(len(rows)==24,f'rows:{len(rows)}')
 from collections import Counter
 cnt=Counter((d['scenario'],d['policy']) for d in rows)
