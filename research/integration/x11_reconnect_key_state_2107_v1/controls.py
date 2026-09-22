@@ -2,9 +2,11 @@
 import json,shutil,subprocess,sys,tempfile
 from pathlib import Path
 HERE=Path(__file__).resolve().parent
-SRC=Path(sys.argv[1]); AUD=HERE/'audit.py'
+SRC=Path(sys.argv[1])
+AUD=HERE/'audit.py'
 def run(root):
- r=subprocess.run([sys.executable,'-B',str(AUD),str(root)],capture_output=True,text=True,timeout=10); return r.returncode,r.stdout,r.stderr
+ r=subprocess.run([sys.executable,'-B',str(AUD),str(root)],capture_output=True,text=True,timeout=10)
+ return r.returncode,r.stdout,r.stderr
 def edit(root,rel,fn):
  p=root/rel; d=json.loads(p.read_text()); fn(d); p.write_text(json.dumps(d,indent=2,sort_keys=True))
 mutations=[
@@ -25,7 +27,8 @@ out=[]
 for name,mut in mutations:
  with tempfile.TemporaryDirectory(prefix='rk-control-') as td:
   cp=Path(td)/'formal'; shutil.copytree(SRC,cp)
-  rc0,so0,se0=run(cp); intact=rc0==0
+  rc0,so0,se0=run(cp)
+  intact=rc0==0
   mut(cp); rc,so,se=run(cp)
   out.append({'name':name,'intact_pass':intact,'mutation_rejected':rc!=0,'mutated_rc':rc})
 res={'status':'PASS_COPIED_EVIDENCE_CONTROLS' if all(x['intact_pass'] and x['mutation_rejected'] for x in out) else 'FAIL_CONTROLS','count':len(out),'controls':out}
