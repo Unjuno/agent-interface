@@ -997,7 +997,8 @@ z9vc*}M;sF&9}L{XjZiI&f+f^V!V}vp#Yn&3H?V0oZ-PUaC@S|1>}IJuy111}cn59#
 zPWj+T4j5$!vNdCKB2jr&V&fG5JbbuuWORlm(t*#o8y(x+GS3y4>L7Je7hsenu#o6J
 z1nU^1?~})Hqu$^+tkNIJ?$6jdicwY1rRnXFq*-^oGK%_u7#vmKn(bur3TIr-51BK9
 z+O@Y4K{qwiAnh+$xKgIrl>V~taivn?*ue1&Jx1PCgW1@w@bf>O<=<1rA{HZ-K$3-A
-z6qpgN&-}l+n}<C4E*O}O?W4KSgTND)OHtwyBsFNK00~Qg**~;;Pd@UwG;3R}XGN~4zK@$RbY@w@amDFo>LK>U9#m}Y6saIb8OAo<h9n>l<6@#N{_Y-AY4G{<-6Q$Hg{Smr<
+z6qpgN&-}l+n}<C4E*O}O?W4KSgTND)OHtwyBsFNK00~Qg**~;;Pd@UwG;3R}XGN~4
+zK@$RbY@w@amDFo>LK>U9#m}Y6saIb8OAo<h9n>l<6@#N{_Y-AY4G{<-6Q$Hg{Smr<
 zPl{A-*ZFV?s}|>pNH$G&UXXo{u{GpIdsE6qpn3eyZ7VMxVUSl(EBrkGGBtYb)Rfxg
 z$&C6hB*-gTzyzT7EA{3&n60NhbpWW+3lhvS5$Qc9k}Vex8tO?Z5IRw5c#EpuZYt>F
 zi%F<GQ{ASe4_lo4e1dUWD_~KHHa_5uOJR{<X8E@2Sh%AD1|pMmy?>HClYwSeR9bp+
@@ -1996,5 +1997,6 @@ index 0000000..69e5a79
 +    sys.stdout.buffer.write(enc(result))
 +    return 2 if result['status'] == 'STORAGE_CAPACITY' else 3 if result['status'].startswith('STOP') else 0
 +
-++if __name__ == '__main__':
++
++if __name__ == '__main__':
 +    raise SystemExit(main())
