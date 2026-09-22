@@ -1,0 +1,70 @@
+name: issue-4103-postformal-audit
+
+on:
+  pull_request:
+    types: [synchronize]
+    paths:
+      - '.github/workflows/issue-4103-postformal-audit.yml'
+      - 'research/measurement/o2_golden_v3_transfer_4092_v1/**'
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  audit:
+    if: github.head_ref == 'research/o2-golden-v3-transfer-20260922'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout review head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 1
+
+      - name: Download immutable first-outcome artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: issue4103-o2-golden-transfer
+          path: retained
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 35683716387
+
+      - name: Reconstruct expected host-receipt location
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(cat retained/FORMAL_CONTAINER_EXIT.host)" = "0"
+          test -f retained/formal-01/END.json
+          cp retained/FORMAL_CONTAINER_EXIT.host retained/formal-01/FORMAL_CONTAINER_EXIT.host
+          sha256sum retained/FORMAL_CONTAINER_EXIT.host retained/formal-01/FORMAL_CONTAINER_EXIT.host
+
+      - name: Build pinned integration image
+        run: docker build -f runtime/integration_checks/Dockerfile -t agent-interface-o2-transfer:4103-postaudit .
+
+      - name: Run unchanged frozen auditor only
+        id: audit
+        shell: bash
+        run: |
+          set -u
+          mkdir -p postformal
+          set +e
+          docker run --rm --network none --read-only             --tmpfs /tmp:rw,nosuid,nodev             --entrypoint python             -e AGENT_INTERFACE_ROOT=/src -e PYTHONHASHSEED=0             -v "$PWD:/src:ro" -v "$PWD/retained:/out:ro"             agent-interface-o2-transfer:4103-postaudit             -B /src/research/measurement/o2_golden_v3_transfer_4092_v1/audit.py             --root /out/formal-01 --controls             > postformal/POSTFORMAL_AUDIT.json 2> postformal/POSTFORMAL_AUDIT.stderr
+          RC=$?
+          printf '%s\n' "$RC" > postformal/POSTFORMAL_AUDIT_EXIT.host
+          echo "audit_rc=$RC" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Upload audit-only outcome
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue4103-postformal-audit
+          path: postformal
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Require audit pass
+        if: always()
+        run: test '${{ steps.audit.outputs.audit_rc }}' = '0'
