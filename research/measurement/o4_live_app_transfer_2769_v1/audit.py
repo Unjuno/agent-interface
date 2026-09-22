@@ -23,6 +23,7 @@ for idx,r0 in enumerate(rows):
     if r['candidate'].startswith('LOCAL_'): local+=1
     if r['case'] in ('stale_after_newer','timeout_before','timeout_after','replacement','malformed','delayed_verifier') and r['candidate'].startswith('LOCAL_'): unsafe+=1
     if r['case'] in ('stale_after_newer','timeout_after','replacement','malformed','delayed_verifier') and r['naive'].startswith('LOCAL_'): naive_unsafe+=1
+    # app-side effect provenance must exist for every stateful case
     if r['case']!='timeout_before' and not r.get('events'): errors.append(f'events:{idx}')
 summary={'status':'PASS_RAW_AUDIT' if not errors else 'FAIL_RAW_AUDIT','errors':errors,'rows':len(rows),'candidate_local':local,'candidate_unsafe_local':unsafe,'naive_unsafe_local':naive_unsafe,'candidate_oracle_mismatch':sum(r['candidate']!=r['oracle'] for r in rows)}
 print(json.dumps(summary,sort_keys=True));
