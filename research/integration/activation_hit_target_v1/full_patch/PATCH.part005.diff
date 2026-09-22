@@ -1,0 +1,1000 @@
++|---|---:|---:|---:|---:|
++| CLICK_THEN_TYPE | 4 | 4 | 4 | 8 |
++| POST_FOCUS | 4 | 0 | 4 | 8 |
++| HIT_AND_FOCUS | 4 | 0 | 2 | 8 |
++| NO_TASK_INPUT | 0 | 0 | 0 | 2 |
++
++All three recipes preserved both clear and unrelated-cover positives: target A became `7`, B stayed empty, and the counter stayed zero. The two controls remained blank.
++
++With a cover already present at the hit check, CLICK_THEN_TYPE clicked the ordinary Button and typed into B; POST_FOCUS prevented the B text but retained that Button effect; HIT_AND_FOCUS refused before button-down and preserved both entries/counter. With the cover introduced AFTER the hit check, all three recipes clicked the Button. The two recipient-checking recipes still prevented the wrong text, but neither undid or prevented the callback.
++
++The target Entry retained its exact native XID and root geometry throughout. The separate X connection's pointer-child walk and Tk's independent containing-window query agreed. All terminal native keymaps/buttons were neutral. Neither unchanged geometry nor successful release established the absence of a collateral application effect.
++
++## Conditional argument
++
++The clear and covered observations agree on target identity and geometry but disagree on the actual pointer hit child and resulting Button callback. Thus target identity/geometry alone is insufficient for this recovery choice in the observed fixture. A post-click recipient check occurs after an ordinary Button can commit its callback; refusing the later key does not roll back that prior effect. A before-click hit check works only for the tested states stable between that observation and click. COVER_AFTER is the explicit remaining counterexample, not a failed case removed to improve the result.
++
++The documentation's distinction is consistent with the observation: Tk's `winfo containing` selects the highest stacked sibling at a point, while `winfo viewable` only establishes that the widget and its ancestors are mapped. The live implementation evidence is on Tk 8.6.16; the consulted online manual is 8.6.18. The retained installed class bindings and native traces, not an assumption of version equality, ground this allocation.
++
++## Exact scope and sources
++
++- Source intake main: `2308b8301d69b7089a2e0636486736ed59b61537`.
++- Closing read of main: `33e86e997d02b769af17a3f03f6035c68927da6e`; the new namespace returned 404 there. This is a bounded noncollision check, not knowledge of unpushed work.
++- Full unchanged backend Git blob: `9cae101a219348077668c8fc086acf8e13154afe`; SHA256 `3429a422e61ecb8b1f1f278540d0696842d8197d7967803e01bc8d9453bcb4a8`.
++- Local preformal source commit: `28cd462abb4380ed93d2484be9202cf26aad7f97`. This is an isolated local Git root, NOT a descendant of upstream main and NOT published.
++- Local freeze SHA256: `038ed3ad71ac52e5adf83433440fb7818bc3db9ce61de5e6a1dfe059ef7c7a1e`.
++- Original formal AUDIT.json SHA256: `4fec833d445258dea5d4c84f60034001661230312b63c9f09a804e045d0bd52a`.
++
++The loader omits one unused core-manifest import; all backend method bodies remain exact. Direct backend focus, geometry, pointer and key methods are exercised. Public CLI/MCP, core admission, the full execute path, leases, automatic semantic target discovery, and real model decision-making are not exercised. Do not promote this as an integrated desktop PASS.
++
++Provided Linux x86_64 execution container, CPython 3.13.5, Tcl/Tk 8.6.16, Python-Xlib 0.15, private authenticated TCP-disabled Xvfb 640x360x24. Docker/OrbStack image attestation is unavailable here, not globally unavailable. No installation, model/provider, external experiment network, host desktop, clipboard, or user documents. No performance or token benefit was measured.
++
++## Retained engineering failures
++
++CONSTRUCTION.zip preserves all four excluded construction invocations and prior source versions. Construction 01 stopped before any click or key because old Python-Xlib did not use the initial wildcard Xauthority entry; the Tk application itself connected. Server and app termination evidence is retained. Construction 02 passed one clear smoke case after adding an exact local-family entry for the same generated cookie. Construction 03 passed the 12-cell matrix. Construction 04 repeated that excluded matrix with opaque session IDs and raw stdin/stdout retention, then passed the raw audit and 12 mutation controls. None of these cases contributes to the formal denominator. The initial public-source direct download failed at DNS (curl exit 6); source was obtained with GitHub MCP and manually materialized with exact whole-blob verification.
++
++No old formal result was edited, rerun or replaced. The previous conversation's scheduler bundles remain unchanged and are not inputs to this GUI experiment. Their original SHA256 identities are retained in INTAKE.json and checked at delivery.
++
++## Integration decision and remaining unknowns
++
++Reject `click succeeded -> intended recipient restored without collateral effect` as an unconditional caller rule. A post-click recipient gate protects subsequent keyboard routing only. A native hit check adds useful before-click evidence but does not provide atomicity. Keep the two observations, actual button/key emissions, release, and application effects separate in the caller's result vocabulary.
++
++The component handoff to #55/#57/#2789 is a bounded support constraint for the click recipe investigated in #4036. It does not authorize moving/removing the cover, blind retyping, Undo, or automatic retry. Cooperative same-app native siblings and a stable fixture between declared barriers are important assumptions. Foreign overlays, grabs, missing focus APIs, disabled/populated targets, IME, selection, concurrent changes after the final focus check, arbitrary toolkits, and model usefulness remain unknown. No population reliability estimate, calibrated combined timing uncertainty, or production default follows.
++
++## Delivery
++
++`STOP_PUBLICATION_NO_WRITE_CAPABILITY`: the current GitHub connector exposes read operations only; directory search found only the already installed GitHub connector, and this environment has no authenticated gh/token route. No remote Issue, branch, PR, merge or deletion was performed. ISSUE_PROPOSAL.md and PR_DRAFT.md are unposted delivery drafts. Source and gates were frozen locally, not publicly preregistered. Preserve that chronology on any later publication.
++
++Readable source, all first raw outcomes, native image bytes, construction failures, exact process receipts, independent checker and copied-evidence controls are included. Packaging and restoration are read-only validation, not formal reruns. The global ROADMAP and all broader acceptance boundaries remain open.
++
++## Primary references
++
++- https://github.com/Unjuno/agent-interface/issues/55
++- https://github.com/Unjuno/agent-interface/issues/4036
++- https://github.com/Unjuno/agent-interface/pull/4053
++- https://github.com/Unjuno/agent-interface/issues/2789
++- https://github.com/Unjuno/agent-interface/blob/2308b8301d69b7089a2e0636486736ed59b61537/runtime/backends/x11_v1/backend.py
++- https://www.tcl-lang.org/man/tcl8.6/TkCmd/winfo.htm
+diff --git a/research/integration/activation_hit_target_v1/REPORT_JA.md b/research/integration/activation_hit_target_v1/REPORT_JA.md
+new file mode 100644
+index 0000000..00483c1
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/REPORT_JA.md
+@@ -0,0 +1,109 @@
++# クリックによる入力先復旧：遮蔽された対象への誤クリックを分離する
++
++## 1. 結論
++
++**正式26ケースを完了し、`PASS_ACTIVATION_HIT_TARGET_BOUNDARY_SCOPED` を得た。** このPASSは境界仮説の確認であり、一般に安全な復旧方式の採用判定ではない。
++
++クリック後に入力先を確認すると、別のEntryへの文字入力は止められた。しかし、その確認より前に、遮蔽したButtonのコールバックが既に実行されていた。クリック前の実際のヒット対象も確認する方式は、先に存在する遮蔽を拒否したが、確認後に遮蔽を追加する2ケースではButton効果を防げなかった。
++
++「文字を送らなかった」「最後にキーやボタンが解放された」は「アプリケーションに副作用がなかった」と同義ではない。
++
++## 2. リポジトリ確認と課題選択
++
++開始時mainは `2308b8301d69b7089a2e0636486736ed59b61537`、終了前の確認では `33e86e997d02b769af17a3f03f6035c68927da6e`。README、CURRENT_GOAL、ROADMAP、最近のopen/closed Issue、PR、branch二頁、対象語検索をGitHub MCPで確認した。これは取得時点の限定確認であり、全Issue履歴や未公開作業の不存在を証明しない。
++
++閉じた#55は、履歴上の対象証拠と現在の入力対象を分け、確認と入力の非原子性を明示している。#4036／PR #4053は通常クリックによる空Entryの入力先復旧を測定したが、遮蔽されたウィジェットは適用範囲外だった。今回の変更要因は同一アプリ内の兄弟Buttonによる遮蔽であり、旧30ケースの再実行ではない。
++
++追加専用pathは `research/integration/activation_hit_target_v1/`。対応するbranch／Issue検索に一致はなく、終了前mainで同pathは404だった。他エージェントの入力復旧、文字列継続、修飾キー、クリップボード、監視の作業は変更していない。前回のスケジューラ成果物8件もハッシュ一致を再確認し、今回のGUI測定には使用していない。
++
++## 3. H／T／D／C／U
++
++| 区分 | 事前固定した内容 |
++|---|---|
++| H：仮説 | 対象EntryのIDと幾何情報が同じでも、遮蔽したButtonが実際のクリック先になり得る。事後の入力先確認は後続文字だけを止める。事前ヒット確認は既存遮蔽を拒否するが、確認後の変化には原子性を与えない。 |
++| T：検証 | 3方式、4状態、2反復の24ケースと、ボタン・キーを送らない対照2ケース。正式割当 `activation-hit-target-20260922-01`。新規アプリ26プロセスを9・9・8ケースの3固定バッチで一度ずつ実行。 |
++| D：合否 | 全26ケースと全実終了証跡、固定結果表、ID・幾何・入力・効果・解放・ソースの一致、別実装監査エラー0、証拠変更12種類の検出を必要条件とした。未知や欠落はPASSに置換しない。 |
++| C：制約 | 協力的な単一Tkアプリ、通常Entry／Button、既知の対象ID・幾何、明示的な状態変更の順序。同一プロセスの兄弟ウィジェットだけを扱う。確認と入力は原子的ではない。 |
++| U：未確定 | 別プロセスの覆い、ポインターgrab、異なるtoolkit、文字選択・IME・無効ウィジェット、事後確認後の変化、モデル判断、速度・token便益、一般的信頼性は未測定。物理計測の合成不確かさや包含係数は推定していない。 |
++
++ソース・判定表・監査器は正式実行前にローカルで固定した。**GitHubへの公開事前登録ではない。** 構築デバッグを正式分母へ混ぜず、正式再実行・ケース差し替え・除外・事後閾値変更はいずれも0。
++
++## 4. 実装・環境の前提
++
++提供Linux x86_64実行コンテナ、CPython 3.13.5、Tcl/Tk 8.6.16、Python-Xlib 0.15、640×360・24bitの私有Xvfbを使用。TCP無効と専用認証を設定し、認証cookieは終了時に削除した。Docker／OrbStackのイメージ同一性は取得できず、その再現実験とは扱わない。CPU周波数やホスト負荷は固定していないが、性能ベンチマークも行っていない。
++
++X11Backend全ソースはGit blob `9cae101a219348077668c8fc086acf8e13154afe`、SHA-256 `3429a422e61ecb8b1f1f278540d0696842d8197d7967803e01bc8d9453bcb4a8` と一致。ローダーは未使用のcore-manifest importだけを省き、メソッド本体を変更していない。focus・geometry・pointer・keyの直接呼出しを検証したのであり、公開CLI／MCP・core admission・lease・全execute経路の統合PASSではない。
++
++モデル／provider呼出し、パッケージ導入、外部ネットワークを使う実験、ユーザーのデスクトップ・文書・クリップボード操作はない。入力効果は新規の私有テストアプリに限られる。
++
++## 5. 正式結果
++
++初期の内部入力先はEntry B、意図した対象はEntry A。覆うButtonの通常コールバックは無害なカウンターと色マーカーを更新する。文字は通常のネイティブ入力によってのみ挿入され、IPCによる文字挿入やcallbackの直接実行はしない。
++
++| 方式 | ケース | 正しいAへの文字 | 誤ったBへの文字 | 不要なButton効果 |
++|---|---:|---:|---:|---:|
++| CLICK_THEN_TYPE：クリックして入力 | 8 | 4 | 4 | 4 |
++| POST_FOCUS：クリック後に入力先確認 | 8 | 4 | 0 | 4 |
++| HIT_AND_FOCUS：事前ヒット＋事後入力先確認 | 8 | 4 | 0 | 2 |
++| NO_TASK_INPUT：ボタン・キーなし | 2 | 0 | 0 | 0 |
++
++対照2件も共通のfocus・ポインター移動は実行している。「OS入力ゼロ」の対照ではない。
++
++遮蔽なしと無関係な場所のButtonでは、全方式がAへ正確に `7` を入力し、Bとカウンターを保全した。ヒット確認時点で既に遮蔽がある場合、新方式だけがボタン押下前に拒否した。確認後に遮蔽を加えた場合は全方式でButtonが作動し、新方式と事後確認方式は後続文字だけを拒否した。
++
++新方式の残る2件の不要効果は除外も隠蔽もしていない。したがって「復旧クリックそのものの安全性を解決した」という結論は誤りである。
++
++### 条件付きの説明
++
++対象IDと位置・寸法が一致するclear／covered状態で、実際のポインターヒット先とButton効果が異なった。そのため、この情報だけでは当該復旧クリック先を同定できない。Buttonコールバックは事後の入力先確認より前に起きており、後続の文字を拒否しても先行効果は取り消されない。事前確認は当該時点を検査するだけなので、その後の遮蔽追加を排除しない。
++
++これは保持した26ケースにおける機構の説明であり、あらゆるGUI状態への完全証明ではない。2反復は有限条件の網羅であって、自然発生率・成功確率の推定ではない。
++
++### 変数・フィールドと単位
++
++| フィールド | 意味 | SI単位 | 定義・条件 | 型 |
++|---|---|---|---|---|
++| target／surface／hit／focus | 意図対象・表面・実ヒット先・内部入力先 | 1 | 正のXID。入力先不在はnull | 整数スカラー／null |
++| geometry | root上の位置と幅・高さ | 1（論理pixelでありmではない） | x,y整数、幅・高さ正。このfixtureの対象は200×40 | 整数4成分レコード |
++| captured_ns／decided_ns | 観測・判断時点 | s（保存はns） | 同一コンテナの単調時計、非負整数 | 整数スカラー |
++| counter | 通常Buttonコールバック回数 | 1 | 初期0、通常callbackだけで増加 | 整数スカラー |
++| allow | fixtureの次ステップ適格性 | 1 | 真／偽。製品の入力権限ではない | Boolean |
++
++単位確認：ID・pixel座標・効果回数と時間を混同していない。Xサーバーのミリ秒イベント時刻からホストのナノ秒を減算していない。解放確認はXサーバーの論理状態であり、物理HIDの計測ではない。
++
++## 6. 監査・失敗の保存
++
++別実装・別プロセスのraw-only監査：3,094チェック、エラー0。全26アプリ、3 Xvfb、3バッチrunnerの実終了コード0を保存した。全端点でkeymapとbutton状態は中立。7単体テストと、実証拠のコピーを変更する12種類の検出試験を通過した。同一著者による別実装であり、独立した人間の査読ではない。
++
++追加の読み取り専用再検査では、不要callback10件すべてが事後snapshotおよび文字判断より前だった。これは `ORDER_RECHECK.json` の事後検査として保存し、凍結監査器や結果を改変していない。
++
++構築01は旧Python-Xlibの認証レコード解釈で停止し、クリック・キー実行前の証拠を保存した。同じcookieにローカルfamilyレコードを追加した構築02でclear確認が通過。構築03は12条件、構築04は識別子・raw IPC保存を強化した同12条件を確認した。すべて除外構築として旧ソースとともに `CONSTRUCTION.zip` に保存した。初回の直接ソース取得はDNSエラーで停止し、その記録も保持。GitHub MCPで取得後、全ファイルのGit object hashを照合した。
++
++## 7. 配布と未完了工程
++
++凍結SHA-256：`038ed3ad71ac52e5adf83433440fb7818bc3db9ce61de5e6a1dfe059ef7c7a1e`
++
++正式AUDIT SHA-256：`4fec833d445258dea5d4c84f60034001661230312b63c9f09a804e045d0bd52a`
++
++ローカルbranch `research/activation-hit-target-20260922` はupstreamの子孫ではない独立root。patchは上記追加pathだけを含む。空の一時Gitリポジトリへの適用確認はupstreamへの適用やCIではない。
++
++**`STOP_PUBLICATION_NO_WRITE_CAPABILITY`：この接続ではGitHubの書込み操作がなく、認証済みgh／token経路もない。** Issue・remote branch・PRの作成、merge、branch削除はいずれも0。`ISSUE_PROPOSAL.md`／`PR_DRAFT.md` は未投稿の案であり、公開済みとは扱わない。将来の公開は「ローカル事前固定済み実験の事後GitHub公開」と記録する。
++
++実行済み工程は、課題・衝突確認、除外構築、ローカル固定、正式3バッチ、別実装監査、証拠と引継ぎ資料の作成。公開・レビュー・upstream CI・main反映は未実施。リポジトリ全体のROADMAPおよび#55/#57/#2789の広範な受入境界を完了扱いにはしない。
++
++## 8. 応用・転用と次の問い
++
++HCIではfocus復旧操作の副作用、並行システムでは確認と利用の間の変化、ソフトウェア検証・計測では操作・解放・アプリ効果の別々の証拠という3分野に対応する。いずれも転用上の設計制約であって、他分野での実測結果ではない。
++
++次に考える問い：入力先復旧のための操作自体が状態を変える場合、復旧の成否と、その操作が残した効果をどの証拠で別々に判定すべきか。
++
++## 一次参照
++
++- https://github.com/Unjuno/agent-interface/issues/55
++- https://github.com/Unjuno/agent-interface/issues/4036
++- https://github.com/Unjuno/agent-interface/pull/4053
++- https://github.com/Unjuno/agent-interface/issues/2789
++- https://github.com/Unjuno/agent-interface/blob/2308b8301d69b7089a2e0636486736ed59b61537/runtime/backends/x11_v1/backend.py
++- https://www.tcl-lang.org/man/tcl8.6/TkCmd/winfo.htm
++
++Tkオンライン文書は8.6.18、実測は8.6.16。版同一性を仮定せず、保持したインストール済みbindingとnative記録を根拠にしている。
+diff --git a/research/integration/activation_hit_target_v1/SHA256SUMS.json b/research/integration/activation_hit_target_v1/SHA256SUMS.json
+new file mode 100644
+index 0000000..09d2f8a
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/SHA256SUMS.json
+@@ -0,0 +1,1118 @@
++{
++  "AUDIT.json": {
++    "bytes": 5354,
++    "sha256": "4fec833d445258dea5d4c84f60034001661230312b63c9f09a804e045d0bd52a"
++  },
++  "CONSTRUCTION.zip": {
++    "bytes": 317635,
++    "sha256": "362b6da9e7acf41e533c406054fc3139e0eb8e1b95c3717080631fdbb6250ac9"
++  },
++  "CONTROLS.json": {
++    "bytes": 1903,
++    "sha256": "d5cb3b0661085a5357b4f895e764e03e2ca8fc174f4b30b86c480f2e57bb81ce"
++  },
++  "ENVIRONMENT.json": {
++    "bytes": 1132,
++    "sha256": "6a0e2b60641497092e0cb6d6ba5a9e0e1bad54f17d5031408631627002ef85b6"
++  },
++  "FREEZE.json": {
++    "bytes": 1325,
++    "sha256": "038ed3ad71ac52e5adf83433440fb7818bc3db9ce61de5e6a1dfe059ef7c7a1e"
++  },
++  "INTAKE.json": {
++    "bytes": 1664,
++    "sha256": "19dc760d6efa506329005d437312a24116d3de2336cfb2236b817735fb864cf4"
++  },
++  "ISSUE_PROPOSAL.md": {
++    "bytes": 1621,
++    "sha256": "5f45c6d92a15fa406e136e1f3bebfecd40be8f6c5e9fffb72ce62afc88fe3065"
++  },
++  "ORDER_RECHECK.json": {
++    "bytes": 1823,
++    "sha256": "b4e78bec9cae37a56de8e137ff9f021c482865c3ecf230c5147bdcc30bee240b"
++  },
++  "PLAN.md": {
++    "bytes": 10441,
++    "sha256": "c05684dd64811b0b7b1f07f61be11d6f7b36c48d3bd3a8ada71c7a9305faf48c"
++  },
++  "PR_DRAFT.md": {
++    "bytes": 1471,
++    "sha256": "ec778117c0faad442d2f717de47ba0c4ebc6a620ab74083b6596154fd1b6227c"
++  },
++  "README.md": {
++    "bytes": 2257,
++    "sha256": "6ec1e13e8abd6728f990aeaaa45b0ac4064dc55d7da05d4eab5f3078c036feac"
++  },
++  "READ_ONLY_RECHECK.json": {
++    "bytes": 1547,
++    "sha256": "2fd100dcc7b1141e8343942230f2eb5658cb605f5e26b411850683cae1c46584"
++  },
++  "REPORT.md": {
++    "bytes": 8202,
++    "sha256": "f4011bafde65b1fa4f7d3e7551d0c92ea39b736d3ac9bfdb5ac42b2ca6ac7f87"
++  },
++  "REPORT_JA.md": {
++    "bytes": 11892,
++    "sha256": "b2e5b5a1747dbaa78334aa9494f0b42c27624d804a2fe66adb16c77ad1b602b5"
++  },
++  "TEST.stderr": {
++    "bytes": 593,
++    "sha256": "2a1174ce3f19601137f07b9be79ce015baecbf9ae9d024eb7722e0cd4f28279f"
++  },
++  "TEST.stdout": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "UPSTREAM-APACHE-2.0.txt": {
++    "bytes": 11358,
++    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
++  },
++  "app.py": {
++    "bytes": 4980,
++    "sha256": "102e0d7584463ffb52e35a91d71696ae691a228be88081454a95c7f88c9d006d"
++  },
++  "audit.py": {
++    "bytes": 12659,
++    "sha256": "4cdfc6ddada8551dd6d6e2d7389a228ab3bf6f59934b6a6bf9e266549352b2d7"
++  },
++  "backend.py": {
++    "bytes": 15074,
++    "sha256": "3429a422e61ecb8b1f1f278540d0696842d8197d7967803e01bc8d9453bcb4a8"
++  },
++  "controls.py": {
++    "bytes": 3382,
++    "sha256": "b99f4d44196be49184ea34e37f943945d2754bfb044bd518e08b6f22883dcaa4"
++  },
++  "examples/cover-before-comparison.png": {
++    "bytes": 10001,
++    "sha256": "996e0dfb34c864a5849c66048e2b6049118e324ec677c3fa2d22cefda90b5441"
++  },
++  "launch.py": {
++    "bytes": 1136,
++    "sha256": "1960d4eacb7b014e0f67c74b10dd19f46dd5211c9aba1b3b7aa6a56d4bcf05f6"
++  },
++  "load_backend.py": {
++    "bytes": 832,
++    "sha256": "cfc89e0e926bc6b4f3feae68d26235d7da810e064604fbddfeb9566d663cab43"
++  },
++  "policy.py": {
++    "bytes": 1300,
++    "sha256": "9d2fe1684b655a8c9077f9e86043ee15acd992d568d76b170d218a59be806c03"
++  },
++  "results/formal-batch-00.execution.json": {
++    "bytes": 382,
++    "sha256": "bf9c76b9a046b196b9950d423c35c0ab4b1596c6993888d17a9983691a2f634c"
++  },
++  "results/formal-batch-00.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-00.stdout": {
++    "bytes": 743,
++    "sha256": "3c2b456bdaa584f946dace8e082c7b0858fc4085bb3be89b9bfa2323b5fb1a8a"
++  },
++  "results/formal-batch-00/END.json": {
++    "bytes": 4771,
++    "sha256": "59fd390ed8ae40955468875e302f9410cd18bbc15bcfd876745b384a84af42fe"
++  },
++  "results/formal-batch-00/START.json": {
++    "bytes": 772,
++    "sha256": "7094306cf51fdd1aeb17feabc55ef8b81f69348b79f5fbfb1561fc3cf93a6df8"
++  },
++  "results/formal-batch-00/case-00/after.ximage.zlib": {
++    "bytes": 4898,
++    "sha256": "62f9864301af119f479841c03f4a0435f8f66987926bf23bb5ae161d408043d9"
++  },
++  "results/formal-batch-00/case-00/app-events.jsonl": {
++    "bytes": 4950,
++    "sha256": "bac649bc546eaf8be7c86d35f992b2a69581d88690bcf1843c5e4569bd7adfb8"
++  },
++  "results/formal-batch-00/case-00/app-final.json": {
++    "bytes": 439,
++    "sha256": "7db29b8a791c1f3ff327a7d061b3681c4be01f22fb2f4d2ea6b06bb6c000e1b6"
++  },
++  "results/formal-batch-00/case-00/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-00/case-00/app.stdin": {
++    "bytes": 277,
++    "sha256": "2438ec3e8dff926c1c86c1bd9ed584e566fc969cbb9b39b024d9556518595286"
++  },
++  "results/formal-batch-00/case-00/app.stdout": {
++    "bytes": 4153,
++    "sha256": "e5fdf2bbc40aef5a0cfba07cdef5d7b0d15c5b166f8b44d8114bae03deb7b066"
++  },
++  "results/formal-batch-00/case-00/before.ximage.zlib": {
++    "bytes": 4485,
++    "sha256": "06cd214a84335a1ad4ffa6084421e8287006ea434db16e7845ff99e1c5fbc3b1"
++  },
++  "results/formal-batch-00/case-00/record.json": {
++    "bytes": 13285,
++    "sha256": "514bc83f7ea00f38f23ca6db3c20d49836855a3a14e00006fedc642c56535d13"
++  },
++  "results/formal-batch-00/case-00/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-00/case-01/after.ximage.zlib": {
++    "bytes": 4898,
++    "sha256": "62f9864301af119f479841c03f4a0435f8f66987926bf23bb5ae161d408043d9"
++  },
++  "results/formal-batch-00/case-01/app-events.jsonl": {
++    "bytes": 4950,
++    "sha256": "3f8d38323ca26cf19cb85edb4a585491c0c7a24ca90a46381d8b44b5d5b063b3"
++  },
++  "results/formal-batch-00/case-01/app-final.json": {
++    "bytes": 439,
++    "sha256": "142e86983f0e117d3d1e2252ff5863e1cd690c0399ee834357250b0866fbbe75"
++  },
++  "results/formal-batch-00/case-01/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-00/case-01/app.stdin": {
++    "bytes": 277,
++    "sha256": "2438ec3e8dff926c1c86c1bd9ed584e566fc969cbb9b39b024d9556518595286"
++  },
++  "results/formal-batch-00/case-01/app.stdout": {
++    "bytes": 4153,
++    "sha256": "9703000da87cecf906e4769d5ed7fe1017c02694b66325d9f91eaafed3e5ec58"
++  },
++  "results/formal-batch-00/case-01/before.ximage.zlib": {
++    "bytes": 4485,
++    "sha256": "06cd214a84335a1ad4ffa6084421e8287006ea434db16e7845ff99e1c5fbc3b1"
++  },
++  "results/formal-batch-00/case-01/record.json": {
++    "bytes": 13280,
++    "sha256": "15c604659c006518380583b7d65a3899d5b407f3b074a1790afd7b8269a58202"
++  },
++  "results/formal-batch-00/case-01/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-00/case-02/after.ximage.zlib": {
++    "bytes": 4898,
++    "sha256": "62f9864301af119f479841c03f4a0435f8f66987926bf23bb5ae161d408043d9"
++  },
++  "results/formal-batch-00/case-02/app-events.jsonl": {
++    "bytes": 4950,
++    "sha256": "75147c7a2c2ffd9dd4570e3d1e31d1f0977c2c1ab69fe3c78201779d1c072978"
++  },
++  "results/formal-batch-00/case-02/app-final.json": {
++    "bytes": 439,
++    "sha256": "5255e23fcee88d204ff73848e97390f52e998139ea7a9f87ac9dd8d3a497151f"
++  },
++  "results/formal-batch-00/case-02/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-00/case-02/app.stdin": {
++    "bytes": 277,
++    "sha256": "2438ec3e8dff926c1c86c1bd9ed584e566fc969cbb9b39b024d9556518595286"
++  },
++  "results/formal-batch-00/case-02/app.stdout": {
++    "bytes": 4153,
++    "sha256": "f932db631359830edd880806ec094a2fc149480213d52a22bdc841d9d866b1d9"
++  },
++  "results/formal-batch-00/case-02/before.ximage.zlib": {
++    "bytes": 4485,
++    "sha256": "06cd214a84335a1ad4ffa6084421e8287006ea434db16e7845ff99e1c5fbc3b1"
++  },
++  "results/formal-batch-00/case-02/record.json": {
++    "bytes": 13283,
++    "sha256": "9babade6e6e1ce3e567111fb1ebeb686e5317e1a36875bd2a61ca2e0eb7972eb"
++  },
++  "results/formal-batch-00/case-02/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-00/case-03/after.ximage.zlib": {
++    "bytes": 5925,
++    "sha256": "06029670c107bfd436ef687791e713f8c23334fba866e7ef0a97b4e3c226b9f6"
++  },
++  "results/formal-batch-00/case-03/app-events.jsonl": {
++    "bytes": 5437,
++    "sha256": "d05572cbf68a9450d138923d79f286227743b30ec486fc86b56006fe5dc052a3"
++  },
++  "results/formal-batch-00/case-03/app-final.json": {
++    "bytes": 442,
++    "sha256": "55f8a5305ee620be7e9fa527a632c9d86448a2674368b733f9812d1bae986388"
++  },
++  "results/formal-batch-00/case-03/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-00/case-03/app.stdin": {
++    "bytes": 320,
++    "sha256": "7c2c92f2dc142b6c9ae9d78bb2e47ad8b52169da54f2d2a0fbce3ca9d0bb7c09"
++  },
++  "results/formal-batch-00/case-03/app.stdout": {
++    "bytes": 4639,
++    "sha256": "862bf653fc110c68652a3ad2f973973e0113cf8f4fed80e09e336c5026541389"
++  },
++  "results/formal-batch-00/case-03/before.ximage.zlib": {
++    "bytes": 5757,
++    "sha256": "310b2596b8522e5d1465fd6c571b03ce005b9c80834aebecd53112bc0f4e475f"
++  },
++  "results/formal-batch-00/case-03/record.json": {
++    "bytes": 13918,
++    "sha256": "5a895e15ca00cdcabc6085ad3e43ff7214cfd2f6521b2c941d3cd41bb6d264e7"
++  },
++  "results/formal-batch-00/case-03/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-00/case-04/after.ximage.zlib": {
++    "bytes": 5579,
++    "sha256": "fb4d73e44961d0cb819bb20f9beb776f58c0368a5f010e24e94d9f15ac2ddaa9"
++  },
++  "results/formal-batch-00/case-04/app-events.jsonl": {
++    "bytes": 4623,
++    "sha256": "85adcf90109eff06e247bdbf99dc2833a6094e2b35d52322d0bd355d28a5db36"
++  },
++  "results/formal-batch-00/case-04/app-final.json": {
++    "bytes": 441,
++    "sha256": "133ef5ca718d97b948e25f115a901ef9b82cd91035f45a363ccd0c4f7412d902"
++  },
++  "results/formal-batch-00/case-04/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-00/case-04/app.stdin": {
++    "bytes": 268,
++    "sha256": "fe435ee4f8b6c624f59c03c05a3c9068d0da69174eb6ea5be99360697b6dc484"
++  },
++  "results/formal-batch-00/case-04/app.stdout": {
++    "bytes": 4172,
++    "sha256": "1f15ff72f3f0f3b0fd163dc74947d0bf47a6893b730304f7b0895b173e6e33aa"
++  },
++  "results/formal-batch-00/case-04/before.ximage.zlib": {
++    "bytes": 5757,
++    "sha256": "310b2596b8522e5d1465fd6c571b03ce005b9c80834aebecd53112bc0f4e475f"
++  },
++  "results/formal-batch-00/case-04/record.json": {
++    "bytes": 13183,
++    "sha256": "0b3a0481ec16bf6e356bb6b99e888ddac282c56e07f50839755658bd987c21ea"
++  },
++  "results/formal-batch-00/case-04/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-00/case-05/after.ximage.zlib": {
++    "bytes": 5757,
++    "sha256": "310b2596b8522e5d1465fd6c571b03ce005b9c80834aebecd53112bc0f4e475f"
++  },
++  "results/formal-batch-00/case-05/app-events.jsonl": {
++    "bytes": 3768,
++    "sha256": "5758c62e764a56c1779e511304550b230f947cea2d3cc1720e6f56837c8787c8"
++  },
++  "results/formal-batch-00/case-05/app-final.json": {
++    "bytes": 441,
++    "sha256": "b029ed8e93588b85db8393aefb917d7ae5d9321a073089859ead6da655034478"
++  },
++  "results/formal-batch-00/case-05/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-00/case-05/app.stdin": {
++    "bytes": 208,
++    "sha256": "6afdcad246a4d14e56f9e7bda9a898d071d6f8bec42dd1024d1d0c5dc1b9e033"
++  },
++  "results/formal-batch-00/case-05/app.stdout": {
++    "bytes": 3708,
++    "sha256": "ad9a5a8c7a90045fcdc1c6a608031752bf9dd301b94325b60e466937de1c6735"
++  },
++  "results/formal-batch-00/case-05/before.ximage.zlib": {
++    "bytes": 5757,
++    "sha256": "310b2596b8522e5d1465fd6c571b03ce005b9c80834aebecd53112bc0f4e475f"
++  },
++  "results/formal-batch-00/case-05/record.json": {
++    "bytes": 11794,
++    "sha256": "55a0cb5c31c73c49da759c06336c2cf31abca081e7a3de6bfb9a4615562c07e0"
++  },
++  "results/formal-batch-00/case-05/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-00/case-06/after.ximage.zlib": {
++    "bytes": 5925,
++    "sha256": "06029670c107bfd436ef687791e713f8c23334fba866e7ef0a97b4e3c226b9f6"
++  },
++  "results/formal-batch-00/case-06/app-events.jsonl": {
++    "bytes": 5437,
++    "sha256": "765dc5fa30a5cc32ba4b2774a5306e1a21e8d4231dbe92957723659bcde81c50"
++  },
++  "results/formal-batch-00/case-06/app-final.json": {
++    "bytes": 442,
++    "sha256": "59964b77a17a45f9a8d839cf293502ce3d102af34bbdacf07a7ddf00eaaf288f"
++  },
++  "results/formal-batch-00/case-06/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-00/case-06/app.stdin": {
++    "bytes": 320,
++    "sha256": "a59b1ec06b4b8db0c95ddcafb721cb53438861bd0a3ee060749c847720fdc6e1"
++  },
++  "results/formal-batch-00/case-06/app.stdout": {
++    "bytes": 4635,
++    "sha256": "e535c21958d16e32d327744fa740d0fef967dc55e024287ae9e74aee759bc523"
++  },
++  "results/formal-batch-00/case-06/before.ximage.zlib": {
++    "bytes": 5757,
++    "sha256": "310b2596b8522e5d1465fd6c571b03ce005b9c80834aebecd53112bc0f4e475f"
++  },
++  "results/formal-batch-00/case-06/record.json": {
++    "bytes": 13909,
++    "sha256": "500b0f495b16a8f5f22d14646fb5ecf89c227aef4045f8d13c6198c264493626"
++  },
++  "results/formal-batch-00/case-06/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-00/case-07/after.ximage.zlib": {
++    "bytes": 5579,
++    "sha256": "fb4d73e44961d0cb819bb20f9beb776f58c0368a5f010e24e94d9f15ac2ddaa9"
++  },
++  "results/formal-batch-00/case-07/app-events.jsonl": {
++    "bytes": 4623,
++    "sha256": "70400916ab4c130ad535a333259fe27cb1bb835007b2be7f155ef1e030f569de"
++  },
++  "results/formal-batch-00/case-07/app-final.json": {
++    "bytes": 441,
++    "sha256": "929c089b419e0737e96aa2996216d6a4a543980ee7142d729bb1511d60ef8d28"
++  },
++  "results/formal-batch-00/case-07/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-00/case-07/app.stdin": {
++    "bytes": 268,
++    "sha256": "c221378bca1874dd8154960a8511d062defde8713f3ac4235799d0cf57215c28"
++  },
++  "results/formal-batch-00/case-07/app.stdout": {
++    "bytes": 4168,
++    "sha256": "aa8d2445e75c63228c44a872f30e248ede8bc9d07d003d9e95425abbb0ac2643"
++  },
++  "results/formal-batch-00/case-07/before.ximage.zlib": {
++    "bytes": 5757,
++    "sha256": "310b2596b8522e5d1465fd6c571b03ce005b9c80834aebecd53112bc0f4e475f"
++  },
++  "results/formal-batch-00/case-07/record.json": {
++    "bytes": 13174,
++    "sha256": "08351bf2238304d6cdab217f15dfa2a62c186b6fc503850d6d1702be971bd807"
++  },
++  "results/formal-batch-00/case-07/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-00/case-08/after.ximage.zlib": {
++    "bytes": 5579,
++    "sha256": "fb4d73e44961d0cb819bb20f9beb776f58c0368a5f010e24e94d9f15ac2ddaa9"
++  },
++  "results/formal-batch-00/case-08/app-events.jsonl": {
++    "bytes": 4623,
++    "sha256": "2fd1b996b48312bc435f814966d801f075cf91293326e2c3ccb95fb3a4ec2e05"
++  },
++  "results/formal-batch-00/case-08/app-final.json": {
++    "bytes": 441,
++    "sha256": "76143350db26161e207b967cf5c3053a604a3275877add973018c5973df37228"
++  },
++  "results/formal-batch-00/case-08/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-00/case-08/app.stdin": {
++    "bytes": 268,
++    "sha256": "c221378bca1874dd8154960a8511d062defde8713f3ac4235799d0cf57215c28"
++  },
++  "results/formal-batch-00/case-08/app.stdout": {
++    "bytes": 4168,
++    "sha256": "ce718d6ee2bb53be56581438fdcef18d5801c788cebdd2e090c5d0b89fc42821"
++  },
++  "results/formal-batch-00/case-08/before.ximage.zlib": {
++    "bytes": 5757,
++    "sha256": "310b2596b8522e5d1465fd6c571b03ce005b9c80834aebecd53112bc0f4e475f"
++  },
++  "results/formal-batch-00/case-08/record.json": {
++    "bytes": 13177,
++    "sha256": "a03ee2587e38bdb8d902bf95dc35560a7060b1d077b0c94a005ec75b50f90bc2"
++  },
++  "results/formal-batch-00/case-08/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-00/xvfb.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-01.execution.json": {
++    "bytes": 382,
++    "sha256": "cd08738aecaa93c2b67b773d040c485d66a037091027811bed052858fa350e89"
++  },
++  "results/formal-batch-01.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-01.stdout": {
++    "bytes": 753,
++    "sha256": "75acf2284e9dd9df4829f3fed20188cec4c5c80dcc9c8ceb351168471d37fd73"
++  },
++  "results/formal-batch-01/END.json": {
++    "bytes": 4769,
++    "sha256": "e7c9b25a2174ff0eda2b1d801a8d15f9393381d611196f0a5c097160424e4d64"
++  },
++  "results/formal-batch-01/START.json": {
++    "bytes": 774,
++    "sha256": "f4cc14a66097dd08c6f55ebdf20dbe9d381d0df5c147c2822654dc69f713ad56"
++  },
++  "results/formal-batch-01/case-09/after.ximage.zlib": {
++    "bytes": 6451,
++    "sha256": "902d196a123d41ef4c2ea0b1405b0ccb0af89f281dd7aefd65a069f12b8698c5"
++  },
++  "results/formal-batch-01/case-09/app-events.jsonl": {
++    "bytes": 5263,
++    "sha256": "4dc1e2a4da71f6b33684ae31a7a5c8d4b0a7ca49ebe9100d6f61488a12107c4b"
++  },
++  "results/formal-batch-01/case-09/app-final.json": {
++    "bytes": 438,
++    "sha256": "7ee0942b136d9ec32a56e80ba574b4b7da333082e7424f2a8f0b38e8b6ab99fa"
++  },
++  "results/formal-batch-01/case-09/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-01/case-09/app.stdin": {
++    "bytes": 323,
++    "sha256": "01e2769a245da235672d76e6e714f97fbc0926fc11e53789c97aa36ea395d8f7"
++  },
++  "results/formal-batch-01/case-09/app.stdout": {
++    "bytes": 4606,
++    "sha256": "d43d6b18ffebbbfec876e1c4a93865a3aa132b994f1800b306cd38834fcd306d"
++  },
++  "results/formal-batch-01/case-09/before.ximage.zlib": {
++    "bytes": 6055,
++    "sha256": "c657a8cb66e2bd1a3bb52f35cacb523ce3100211a4a193d6d0a5b0c5f8276ef6"
++  },
++  "results/formal-batch-01/case-09/record.json": {
++    "bytes": 13865,
++    "sha256": "329677909660f9017f88c3888ae955d5c5c7e4ae39033bdc77ee09fbbf40866d"
++  },
++  "results/formal-batch-01/case-09/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-01/case-10/after.ximage.zlib": {
++    "bytes": 6451,
++    "sha256": "902d196a123d41ef4c2ea0b1405b0ccb0af89f281dd7aefd65a069f12b8698c5"
++  },
++  "results/formal-batch-01/case-10/app-events.jsonl": {
++    "bytes": 5263,
++    "sha256": "599d14aa90525976c1b2f5afa2db54d258fa4a5b03d91516b53463a0e396106e"
++  },
++  "results/formal-batch-01/case-10/app-final.json": {
++    "bytes": 438,
++    "sha256": "72f18dfbdd6e16393dfef94340ce8c5fae10332a115d670cf99f7e5c59f633f6"
++  },
++  "results/formal-batch-01/case-10/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-01/case-10/app.stdin": {
++    "bytes": 323,
++    "sha256": "01e2769a245da235672d76e6e714f97fbc0926fc11e53789c97aa36ea395d8f7"
++  },
++  "results/formal-batch-01/case-10/app.stdout": {
++    "bytes": 4607,
++    "sha256": "466cc3274d4bf830e6e6ae21c56cfee50a417da930a04960c3b54debb197018b"
++  },
++  "results/formal-batch-01/case-10/before.ximage.zlib": {
++    "bytes": 6055,
++    "sha256": "c657a8cb66e2bd1a3bb52f35cacb523ce3100211a4a193d6d0a5b0c5f8276ef6"
++  },
++  "results/formal-batch-01/case-10/record.json": {
++    "bytes": 13862,
++    "sha256": "a0c90a1315095c93df9a3ad9b7b1ed2836542e53e6fc002a436ff7a73b02fb7f"
++  },
++  "results/formal-batch-01/case-10/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-01/case-11/after.ximage.zlib": {
++    "bytes": 6451,
++    "sha256": "902d196a123d41ef4c2ea0b1405b0ccb0af89f281dd7aefd65a069f12b8698c5"
++  },
++  "results/formal-batch-01/case-11/app-events.jsonl": {
++    "bytes": 5263,
++    "sha256": "f91ca5af4554eaca647520b1026d9643e6f8bc56e6f8e49f10aa1caaa119bc93"
++  },
++  "results/formal-batch-01/case-11/app-final.json": {
++    "bytes": 438,
++    "sha256": "14794ce42c23df671252675a2b1044e56d61b77b8437de09b74d360eaf14fb56"
++  },
++  "results/formal-batch-01/case-11/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-01/case-11/app.stdin": {
++    "bytes": 323,
++    "sha256": "01e2769a245da235672d76e6e714f97fbc0926fc11e53789c97aa36ea395d8f7"
++  },
++  "results/formal-batch-01/case-11/app.stdout": {
++    "bytes": 4607,
++    "sha256": "514097fe23a9bdba64e680cae9051d2d5bd26b4a2976c150912f4107b8a439de"
++  },
++  "results/formal-batch-01/case-11/before.ximage.zlib": {
++    "bytes": 6055,
++    "sha256": "c657a8cb66e2bd1a3bb52f35cacb523ce3100211a4a193d6d0a5b0c5f8276ef6"
++  },
++  "results/formal-batch-01/case-11/record.json": {
++    "bytes": 13865,
++    "sha256": "9501d789f9eab73a8cd1226ef39f33befef68d716833ce238904d1df2efb884f"
++  },
++  "results/formal-batch-01/case-11/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-01/case-12/after.ximage.zlib": {
++    "bytes": 4898,
++    "sha256": "62f9864301af119f479841c03f4a0435f8f66987926bf23bb5ae161d408043d9"
++  },
++  "results/formal-batch-01/case-12/app-events.jsonl": {
++    "bytes": 4950,
++    "sha256": "5b85bffdf84e7bbd2b3c1f2e5d1ccbd1e5a0719c6141d39cd541367f0a74e232"
++  },
++  "results/formal-batch-01/case-12/app-final.json": {
++    "bytes": 439,
++    "sha256": "2356da1a0b8dc38f51a00cb0aea2a5d5ce807190fa34e40e6c7ef820ae7cc557"
++  },
++  "results/formal-batch-01/case-12/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-01/case-12/app.stdin": {
++    "bytes": 277,
++    "sha256": "2438ec3e8dff926c1c86c1bd9ed584e566fc969cbb9b39b024d9556518595286"
++  },
++  "results/formal-batch-01/case-12/app.stdout": {
++    "bytes": 4153,
++    "sha256": "60afa7483200667b69bd4559f74b9cf17551f14984c2d1894c0e0ad30cf607f0"
++  },
++  "results/formal-batch-01/case-12/before.ximage.zlib": {
++    "bytes": 4485,
++    "sha256": "06cd214a84335a1ad4ffa6084421e8287006ea434db16e7845ff99e1c5fbc3b1"
++  },
++  "results/formal-batch-01/case-12/record.json": {
++    "bytes": 13281,
++    "sha256": "741844cc601b206b36a8be99ff9cb58470e44212bb9f78438976f971d301ccb0"
++  },
++  "results/formal-batch-01/case-12/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-01/case-13/after.ximage.zlib": {
++    "bytes": 4898,
++    "sha256": "62f9864301af119f479841c03f4a0435f8f66987926bf23bb5ae161d408043d9"
++  },
++  "results/formal-batch-01/case-13/app-events.jsonl": {
++    "bytes": 4950,
++    "sha256": "8b443118e62a1889813fd0fa1761c6226c914de72ad62a08dcfd0642b46f28d9"
++  },
++  "results/formal-batch-01/case-13/app-final.json": {
++    "bytes": 439,
++    "sha256": "973c37473b421123d20b6affbe46ed43bf75f0d2e8f911b5f353db035f062d0b"
++  },
++  "results/formal-batch-01/case-13/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-01/case-13/app.stdin": {
++    "bytes": 277,
++    "sha256": "2438ec3e8dff926c1c86c1bd9ed584e566fc969cbb9b39b024d9556518595286"
++  },
++  "results/formal-batch-01/case-13/app.stdout": {
++    "bytes": 4153,
++    "sha256": "22298de5eb7df0a01cf1bc88c8a22bd9c85de9b5be73fe06418d68ab3c231581"
++  },
++  "results/formal-batch-01/case-13/before.ximage.zlib": {
++    "bytes": 4485,
++    "sha256": "06cd214a84335a1ad4ffa6084421e8287006ea434db16e7845ff99e1c5fbc3b1"
++  },
++  "results/formal-batch-01/case-13/record.json": {
++    "bytes": 13284,
++    "sha256": "3402c13647723519d0aaa96903a844ac3917be5c052b6420b00b087079e84c8f"
++  },
++  "results/formal-batch-01/case-13/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-01/case-14/after.ximage.zlib": {
++    "bytes": 4898,
++    "sha256": "62f9864301af119f479841c03f4a0435f8f66987926bf23bb5ae161d408043d9"
++  },
++  "results/formal-batch-01/case-14/app-events.jsonl": {
++    "bytes": 4950,
++    "sha256": "53b747cb4ab9df3e3f406e9f60916ec9ceb439428bfae0355328be332e330003"
++  },
++  "results/formal-batch-01/case-14/app-final.json": {
++    "bytes": 439,
++    "sha256": "af6c31b53ffd6fef53820e680f5e2823569d8dbf9be9754c72a869f046795eca"
++  },
++  "results/formal-batch-01/case-14/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-01/case-14/app.stdin": {
++    "bytes": 277,
++    "sha256": "2438ec3e8dff926c1c86c1bd9ed584e566fc969cbb9b39b024d9556518595286"
++  },
++  "results/formal-batch-01/case-14/app.stdout": {
++    "bytes": 4153,
++    "sha256": "0362eb3128112e502a7b46676977128d0cd44f19e1c00d806dd112427e3ca2e0"
++  },
++  "results/formal-batch-01/case-14/before.ximage.zlib": {
++    "bytes": 4485,
++    "sha256": "06cd214a84335a1ad4ffa6084421e8287006ea434db16e7845ff99e1c5fbc3b1"
++  },
++  "results/formal-batch-01/case-14/record.json": {
++    "bytes": 13286,
++    "sha256": "22205221751dc3b1191ebaa4a8f61d573a773a5e861e998d4fb036e0d6df3d4c"
++  },
++  "results/formal-batch-01/case-14/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-01/case-15/after.ximage.zlib": {
++    "bytes": 5579,
++    "sha256": "fb4d73e44961d0cb819bb20f9beb776f58c0368a5f010e24e94d9f15ac2ddaa9"
++  },
++  "results/formal-batch-01/case-15/app-events.jsonl": {
++    "bytes": 4623,
++    "sha256": "cbb28c18ddd07d4b41a3bfbc76ae3e06e9b6e8844c959949dfc4efd23b5f3128"
++  },
++  "results/formal-batch-01/case-15/app-final.json": {
++    "bytes": 441,
++    "sha256": "1ff471793c9e717167d42ca991255c21bd710a155e11c0f7e93d30ac6fa11fee"
++  },
++  "results/formal-batch-01/case-15/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-01/case-15/app.stdin": {
++    "bytes": 268,
++    "sha256": "fe435ee4f8b6c624f59c03c05a3c9068d0da69174eb6ea5be99360697b6dc484"
++  },
++  "results/formal-batch-01/case-15/app.stdout": {
++    "bytes": 4172,
++    "sha256": "d4c42d4875845bb40e3f2fe0f378e3b01e1fe09148e9aecc461dbf3c4fe687a3"
++  },
++  "results/formal-batch-01/case-15/before.ximage.zlib": {
++    "bytes": 5757,
++    "sha256": "310b2596b8522e5d1465fd6c571b03ce005b9c80834aebecd53112bc0f4e475f"
++  },
++  "results/formal-batch-01/case-15/record.json": {
++    "bytes": 13184,
++    "sha256": "9ff618b2e6d521ec64953e8d8305b0dff8230a6f54764a2ba1a1f6c7ac390767"
++  },
++  "results/formal-batch-01/case-15/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-01/case-16/after.ximage.zlib": {
++    "bytes": 5757,
++    "sha256": "310b2596b8522e5d1465fd6c571b03ce005b9c80834aebecd53112bc0f4e475f"
++  },
++  "results/formal-batch-01/case-16/app-events.jsonl": {
++    "bytes": 3768,
++    "sha256": "4f5a9df64e330ad0fb821269a83756d792062d7ce465c285dbcf31692493e74a"
++  },
++  "results/formal-batch-01/case-16/app-final.json": {
++    "bytes": 441,
++    "sha256": "71dfb155605fc0cb532fec1b9ff9c6848834fc6503e5cbb9b36160024f5e774d"
++  },
++  "results/formal-batch-01/case-16/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-01/case-16/app.stdin": {
++    "bytes": 208,
++    "sha256": "6afdcad246a4d14e56f9e7bda9a898d071d6f8bec42dd1024d1d0c5dc1b9e033"
++  },
++  "results/formal-batch-01/case-16/app.stdout": {
++    "bytes": 3708,
++    "sha256": "63d17a98dd2d4f9b5b145bd608211f4dcd4303b3eb9812a935a28f20dd365930"
++  },
++  "results/formal-batch-01/case-16/before.ximage.zlib": {
++    "bytes": 5757,
++    "sha256": "310b2596b8522e5d1465fd6c571b03ce005b9c80834aebecd53112bc0f4e475f"
++  },
++  "results/formal-batch-01/case-16/record.json": {
++    "bytes": 11795,
++    "sha256": "aa442790cde3bd8d34baebc5e99729f26071cf5d4f56ed9f738432fcfabcba90"
++  },
++  "results/formal-batch-01/case-16/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-01/case-17/after.ximage.zlib": {
++    "bytes": 5925,
++    "sha256": "06029670c107bfd436ef687791e713f8c23334fba866e7ef0a97b4e3c226b9f6"
++  },
++  "results/formal-batch-01/case-17/app-events.jsonl": {
++    "bytes": 5437,
++    "sha256": "08e9c26006f9668e6b6bf08dca76537f70f16d93076086ec1ad7e42eb8d512cd"
++  },
++  "results/formal-batch-01/case-17/app-final.json": {
++    "bytes": 442,
++    "sha256": "dd94d69c7b71a0099c97a663af2383dc3a0198ee20a3506e148a4ac22d2b55f6"
++  },
++  "results/formal-batch-01/case-17/app.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-01/case-17/app.stdin": {
++    "bytes": 320,
++    "sha256": "7c2c92f2dc142b6c9ae9d78bb2e47ad8b52169da54f2d2a0fbce3ca9d0bb7c09"
++  },
++  "results/formal-batch-01/case-17/app.stdout": {
++    "bytes": 4639,
++    "sha256": "b3a0266915a47831c98ab5420f3146e220cc92c7df1e6c6eead973a26107e800"
++  },
++  "results/formal-batch-01/case-17/before.ximage.zlib": {
++    "bytes": 5757,
++    "sha256": "310b2596b8522e5d1465fd6c571b03ce005b9c80834aebecd53112bc0f4e475f"
++  },
++  "results/formal-batch-01/case-17/record.json": {
++    "bytes": 13919,
++    "sha256": "5f541f55b64bc75d82ecc26745aac6b9ec3aa68c73d7b663adf06d96278a763b"
++  },
++  "results/formal-batch-01/case-17/tk-bindings.json": {
++    "bytes": 323,
++    "sha256": "6930645057b15b377dda97d985a229f8e0b342eada5897c2732ea9c9c2097504"
++  },
++  "results/formal-batch-01/xvfb.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-02.execution.json": {
++    "bytes": 382,
++    "sha256": "0d8d90193520802bb50e66acea7ec353eb0a2baa0ca23c6c852029af6c19c99e"
++  },
++  "results/formal-batch-02.stderr": {
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "results/formal-batch-02.stdout": {
++    "bytes": 668,
++    "sha256": "9c1bff7687c057f6f12a8489c5ef6873161e500c5397b99d90f8eb16c46cbcbc"
++  },
++  "results/formal-batch-02/END.json": {
++    "bytes": 4282,
++    "sha256": "676edb8c8bae94c1af2da27ac79b562d0af02d11313a6da76bbbf4d0ae462488"
++  },
++  "results/formal-batch-02/START.json": {
++    "bytes": 707,
++    "sha256": "7c0455042179f2f92f0f95d6a5c9509a2bba8d24b280fb28b8a33916afa7aa7d"
++  },
++  "results/formal-batch-02/case-18/after.ximage.zlib": {
++    "bytes": 5579,
++    "sha256": "fb4d73e44961d0cb819bb20f9beb776f58c0368a5f010e24e94d9f15ac2ddaa9"
++  },
++  "results/formal-batch-02/case-18/app-events.jsonl": {
