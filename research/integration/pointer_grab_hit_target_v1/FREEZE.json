@@ -8,7 +8,9 @@
   },
   "source_git_blobs": {
     "study.py": "f0eacdbe9d33cc43917ef698b1a0c7ea1aa0fb38",
-    "audit.py": "8684dea18765a254c0cfbca1ca6ac2e6ca54591e"
+    "audit.py": "8684dea18765a254c0cfbca1ca6ac2e6ca54591e",
+    "controls.py": "8f90672f4de4ad6bc12d55bf876ef85254a7e3c2",
+    "supervisor.py": "bc0ad2524d04db6bcb01d36db2cb338a9d4e3765"
   },
   "environment": {
     "python": "3.13.5",
@@ -19,5 +21,12 @@
   },
   "issue": 4136,
   "formal_reruns": 0,
-  "correction": "The initial FREEZE recorded pre-public local hashes. Remote source readback occurred before formal execution; these hashes bind the actual published bytes. Scientific schedule/gates are unchanged."
+  "correction": "The initial FREEZE recorded pre-public local hashes. Remote source readback occurred before formal execution; these hashes bind the actual published bytes. Scientific schedule/gates are unchanged.",
+  "execution_contract": {
+    "formal_command": "python -B supervisor.py FORMAL_OUTPUT",
+    "display": ":93",
+    "outer_timeout_s": 45,
+    "xvfb_cleanup": "intentional SIGTERM, reaped, socket removed; return code 0 or -SIGTERM accepted",
+    "corruption_controls": 9
+  }
 }
