@@ -1,0 +1,21 @@
+{
+  "issue": 3930,
+  "allocation": "semantic-abort-ack-20260922-01",
+  "intake_main": "b2457b746a6df06f6536585dfe2ab937aff639f4",
+  "scenarios": ["complete", "applied", "request_only", "timeout", "unsupported", "stale_receipt"],
+  "repetitions": 3,
+  "order": "repetition-major, listed scenario order",
+  "rows": 18,
+  "ack_wait_ns": 30000000,
+  "render_drain_seconds": 0.02,
+  "formal_reruns": 0,
+  "scope": "Private Xvfb / Tk / XTEST, application-specific disable protocol, no model or production runtime",
+  "gates": {
+    "complete": {"callbacks": 1, "presses": 1, "releases": 1, "claim": "COMPLETION_UNVERIFIED"},
+    "applied": {"callbacks": 0, "presses": 1, "releases": 1, "claim": "APPLICATION_ABORT_APPLIED"},
+    "request_only": {"callbacks": 1, "presses": 1, "releases": 1, "claim": "QUERY_EFFECT"},
+    "timeout": {"callbacks": 1, "presses": 1, "releases": 1, "claim": "QUERY_EFFECT"},
+    "unsupported": {"callbacks": 0, "presses": 0, "releases": 0, "claim": "REFUSED_UNSUPPORTED"},
+    "stale_receipt": {"callbacks": 1, "presses": 1, "releases": 1, "claim": "QUERY_EFFECT"}
+  }
+}

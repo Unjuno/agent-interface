@@ -1,0 +1,7 @@
+# Excluded construction record
+
+No construction row is a formal row. Attempts01/02 stopped before task input: Python-Xlib0.15 requires a matching local address/display Xauthority record; Inkscape1.4 does not support --new-instance. Retained both sources/stops; changed local auth record and used --app-id-tag from actual --help.
+
+Attempt03 exercised Move/Save but color measurement included dock swatches; narrowed the declared canvas ROI before formal. Attempts04-07 established expected live effects, but an initial auditor incorrectly required top-level focus rather than recorded descendant focus. Attempt08 captured pre-selection rendering. All are preserved, not made formal passes. Revision02 adds actual focus ancestry and a pre-action selected-rectangle readiness check after a longer setup wait. Attempts09/10 and the independent raw-only audit pass. The wait is not application effect evidence; pixel readiness is explicitly required before task actions. No scientific threshold was tuned from formal results (formal count0).
+
+Teardown intentionally SIGTERMs only owned processes after final snapshots. Inkscape exits-15; Xvfb and Openbox exit0. This is declared cleanup, not successful application normal exit or a crash-recovery experiment. Input neutrality is queried separately before teardown. No cookie or font binary is included. Generated cache directories are omitted from the construction package; all scientific/raw snapshots and app preferences are retained.
