@@ -2,6 +2,7 @@ import json,pathlib,subprocess,tempfile,shutil,sys
 src=pathlib.Path(sys.argv[1]); aud=pathlib.Path(__file__).with_name('audit.py')
 raw=json.loads((src/'RAW.json').read_text())
 mut=[]
+# mutations that must make audit fail
 for name,fn in [
  ('drop',lambda x:x['rows'].pop()),
  ('dup',lambda x:x['rows'].__setitem__(1,x['rows'][0])),
