@@ -1,0 +1,29 @@
+{
+  "aggregate_command": "python -B aggregate.py . formal-02",
+  "allocation": "entity-track-live-20260922-02",
+  "audit_command": "python -B audit.py formal-02 --mutations",
+  "batch_commands": [
+    "python -B batch_runner.py 0 formal-02-batch-0",
+    "python -B batch_runner.py 1 formal-02-batch-1",
+    "python -B batch_runner.py 2 formal-02-batch-2",
+    "python -B batch_runner.py 3 formal-02-batch-3"
+  ],
+  "delta": "execution serialization only: 4 immutable batches x12 cases + aggregation",
+  "formal_state": "0/4 batches before freeze",
+  "issue": 4121,
+  "predecessor_allocation": "entity-track-live-20260922-01",
+  "predecessor_disposition": "STOP_OUTER_EXECUTION_TIMEOUT / HOLD_FORMAL_INCOMPLETE",
+  "reruns": 0,
+  "science_source_unchanged_from_allocation01": true,
+  "sha256": {
+    "PLAN.md": "19c6df1b17283bd4d97ee8e79e7de76079719df901d25b39fe034335f702281e",
+    "aggregate.py": "e4a186ca1e320b36a4d9ab2d066876e59c82da021d94f9e51d5b85808a58600e",
+    "audit.py": "96489b9288c5093b75e631620f59ebde1395211a26c598101db57bf1a95f7927",
+    "batch-construction-tests.txt": "531698a2d47a6f94bbde98f3754507a248939f3e36251b691259c1420c23693e",
+    "batch_runner.py": "63908d90404d22a43dd6cfc7143c50a5131827d7e0b14909e4c702c1ac1a0c60",
+    "environment.json": "cf972424fa1b57a89955d00b9e1fabdf5e044afcba4657a682342ef3d959154e",
+    "fixture.py": "6ecb536211217141426bf139f07260264e43fae08591c5b368dd184ba2f5a827",
+    "study.py": "19854d70989dadffaa0083cfed59f8f5a08141676c56042a1a2231ed4974b318",
+    "test_study.py": "2129771f6ebf925e5f2b42247284c3e5aa27982daeda60cc91232ea4bc9ceeab"
+  }
+}
