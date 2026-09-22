@@ -27,6 +27,6 @@ Evidence summary:
 
 Read `PLAN.md`, `REPORT.md`, `AUDIT.json`, and `CASE_SUMMARY.json`.
 
-The complete review capsule is in `CAPSULE.b64`; decode with standard base64, then verify SHA-256 `a8b46d37c2c8c6cf7cd6fb8aec0e4e194c4216b5e5ced5acd342edf631faa207`. It contains the exact readable source/audit/summary files listed in `CAPSULE_MANIFEST.md`. It intentionally excludes the large per-case SQLite/raw directory tree from GitHub publication in this PR; the local full bundle remains separately retained and the published case summary/audit binds the formal denominator and result.
+The review capsule is in `CAPSULE.b64`; decode with standard base64, then verify SHA-256 `f66860d2cc821550969e556bc158531f57e80cc71c5d85a38e3af303dc02fa2d`. It contains the exact readable source/audit/summary files listed in `CAPSULE_MANIFEST.md`. It intentionally excludes the large per-case SQLite/raw directory tree from GitHub publication in this PR. The separately retained full 531-member local ZIP is SHA-256 `18b157aaaaf1200f16b687c5029072f9d90823957187751d5e4a6040ef84f6df`; publication scope and scientific evidence completeness remain distinct.
 
 Do not rerun the consumed formal allocation merely to obtain public preregistration. Any new experiment requires a new prospective scope and allocation identity.
