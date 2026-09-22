@@ -1,0 +1,34 @@
+{
+  "allocation": "o4-live-app-transfer-2769-20260922-01",
+  "base": "5337efa0394d2c0e4a6d5cb8010f177caf042681",
+  "branch": "research/o4-live-app-transfer-2769-20260922-v1",
+  "construction_eligible": "construction-07 4 rows mismatch0",
+  "construction_failures_preserved": [
+    "construction-01 outer tool timeout",
+    "construction-03 XAUTHORITY missing",
+    "construction-04/05 capture path errors",
+    "construction-06 gzip mtime API error"
+  ],
+  "decision": {
+    "candidate_oracle_mismatch": 0,
+    "corruption_rejected_min": 8,
+    "formal_invocations": 1,
+    "pass": "PASS_O4_X11_PIXEL_VERIFY_LIVE_TRANSFER_SCOPED",
+    "raw_audit_errors": 0,
+    "replacements": 0,
+    "reruns": 0,
+    "tuning": 0,
+    "unsafe_candidate_local": 0
+  },
+  "formal_invocations_before_freeze": 0,
+  "formal_rows": 18,
+  "path": "research/measurement/o4_live_app_transfer_2769_v1",
+  "source_sha256": {
+    "ENVIRONMENT.json": "b07534d641d355088554457c3076d59fcf2b6ed0cad35ec6e7cee051e315c719",
+    "PLAN.md": "5fbe167e91889aefa5dd18ea50f97fb67132222992621103189ff0cc84ca384d",
+    "SCHEDULE.json": "ab30f1b930496f5950689b10c75060aec37817c8876ee7b443f1ac2d6d7c823f",
+    "audit.py": "0fa3f7a8fbc9975317956a9935288a2bf9215a850ff7aaaac56231b5ac5c0c3e",
+    "controls.py": "09451a7de02b2cfc499785cd20f7cba92eae60cb21e5a2c30c1197898e1ea0cb",
+    "study.py": "ff6b96edea82a020b3b3ae1ed2b87ee5436c1e208ffb719f50bae4405aeee1c9"
+  }
+}
