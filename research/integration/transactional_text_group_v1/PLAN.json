@@ -7,55 +7,190 @@
   "allocation_id": "transactional-text-group-16-formal01",
   "batches": {
     "0": [
-      {"policy": "STEPWISE_BASELINE", "schedule": "SUCCESS"},
-      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "SUCCESS"},
-      {"policy": "GROUP_REVISION_BOUND", "schedule": "SUCCESS"},
-      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_BEFORE_EFFECT"},
-      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_BEFORE_EFFECT"},
-      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_BEFORE_EFFECT"},
-      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_AFTER_STEP1"},
-      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_AFTER_STEP1"},
-      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_AFTER_STEP1"},
-      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"},
-      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"},
-      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"},
-      {"policy": "STEPWISE_BASELINE", "schedule": "COMPENSATION_UNAVAILABLE"},
-      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "COMPENSATION_UNAVAILABLE"},
-      {"policy": "GROUP_REVISION_BOUND", "schedule": "COMPENSATION_UNAVAILABLE"}
+      {
+        "policy": "STEPWISE_BASELINE",
+        "schedule": "SUCCESS"
+      },
+      {
+        "policy": "GROUP_BLIND_COMPENSATION",
+        "schedule": "SUCCESS"
+      },
+      {
+        "policy": "GROUP_REVISION_BOUND",
+        "schedule": "SUCCESS"
+      },
+      {
+        "policy": "STEPWISE_BASELINE",
+        "schedule": "FAIL_BEFORE_EFFECT"
+      },
+      {
+        "policy": "GROUP_BLIND_COMPENSATION",
+        "schedule": "FAIL_BEFORE_EFFECT"
+      },
+      {
+        "policy": "GROUP_REVISION_BOUND",
+        "schedule": "FAIL_BEFORE_EFFECT"
+      },
+      {
+        "policy": "STEPWISE_BASELINE",
+        "schedule": "FAIL_AFTER_STEP1"
+      },
+      {
+        "policy": "GROUP_BLIND_COMPENSATION",
+        "schedule": "FAIL_AFTER_STEP1"
+      },
+      {
+        "policy": "GROUP_REVISION_BOUND",
+        "schedule": "FAIL_AFTER_STEP1"
+      },
+      {
+        "policy": "STEPWISE_BASELINE",
+        "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"
+      },
+      {
+        "policy": "GROUP_BLIND_COMPENSATION",
+        "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"
+      },
+      {
+        "policy": "GROUP_REVISION_BOUND",
+        "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"
+      },
+      {
+        "policy": "STEPWISE_BASELINE",
+        "schedule": "COMPENSATION_UNAVAILABLE"
+      },
+      {
+        "policy": "GROUP_BLIND_COMPENSATION",
+        "schedule": "COMPENSATION_UNAVAILABLE"
+      },
+      {
+        "policy": "GROUP_REVISION_BOUND",
+        "schedule": "COMPENSATION_UNAVAILABLE"
+      }
     ],
     "1": [
-      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_BEFORE_EFFECT"},
-      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_AFTER_STEP1"},
-      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_AFTER_STEP1"},
-      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_AFTER_STEP1"},
-      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"},
-      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"},
-      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"},
-      {"policy": "STEPWISE_BASELINE", "schedule": "COMPENSATION_UNAVAILABLE"},
-      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "COMPENSATION_UNAVAILABLE"},
-      {"policy": "GROUP_REVISION_BOUND", "schedule": "COMPENSATION_UNAVAILABLE"},
-      {"policy": "STEPWISE_BASELINE", "schedule": "SUCCESS"},
-      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "SUCCESS"},
-      {"policy": "GROUP_REVISION_BOUND", "schedule": "SUCCESS"},
-      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_BEFORE_EFFECT"},
-      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_BEFORE_EFFECT"}
+      {
+        "policy": "GROUP_REVISION_BOUND",
+        "schedule": "FAIL_BEFORE_EFFECT"
+      },
+      {
+        "policy": "STEPWISE_BASELINE",
+        "schedule": "FAIL_AFTER_STEP1"
+      },
+      {
+        "policy": "GROUP_BLIND_COMPENSATION",
+        "schedule": "FAIL_AFTER_STEP1"
+      },
+      {
+        "policy": "GROUP_REVISION_BOUND",
+        "schedule": "FAIL_AFTER_STEP1"
+      },
+      {
+        "policy": "STEPWISE_BASELINE",
+        "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"
+      },
+      {
+        "policy": "GROUP_BLIND_COMPENSATION",
+        "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"
+      },
+      {
+        "policy": "GROUP_REVISION_BOUND",
+        "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"
+      },
+      {
+        "policy": "STEPWISE_BASELINE",
+        "schedule": "COMPENSATION_UNAVAILABLE"
+      },
+      {
+        "policy": "GROUP_BLIND_COMPENSATION",
+        "schedule": "COMPENSATION_UNAVAILABLE"
+      },
+      {
+        "policy": "GROUP_REVISION_BOUND",
+        "schedule": "COMPENSATION_UNAVAILABLE"
+      },
+      {
+        "policy": "STEPWISE_BASELINE",
+        "schedule": "SUCCESS"
+      },
+      {
+        "policy": "GROUP_BLIND_COMPENSATION",
+        "schedule": "SUCCESS"
+      },
+      {
+        "policy": "GROUP_REVISION_BOUND",
+        "schedule": "SUCCESS"
+      },
+      {
+        "policy": "STEPWISE_BASELINE",
+        "schedule": "FAIL_BEFORE_EFFECT"
+      },
+      {
+        "policy": "GROUP_BLIND_COMPENSATION",
+        "schedule": "FAIL_BEFORE_EFFECT"
+      }
     ],
     "2": [
-      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"},
-      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"},
-      {"policy": "STEPWISE_BASELINE", "schedule": "COMPENSATION_UNAVAILABLE"},
-      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "COMPENSATION_UNAVAILABLE"},
-      {"policy": "GROUP_REVISION_BOUND", "schedule": "COMPENSATION_UNAVAILABLE"},
-      {"policy": "STEPWISE_BASELINE", "schedule": "SUCCESS"},
-      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "SUCCESS"},
-      {"policy": "GROUP_REVISION_BOUND", "schedule": "SUCCESS"},
-      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_BEFORE_EFFECT"},
-      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_BEFORE_EFFECT"},
-      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_BEFORE_EFFECT"},
-      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_AFTER_STEP1"},
-      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_AFTER_STEP1"},
-      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_AFTER_STEP1"},
-      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"}
+      {
+        "policy": "GROUP_BLIND_COMPENSATION",
+        "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"
+      },
+      {
+        "policy": "GROUP_REVISION_BOUND",
+        "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"
+      },
+      {
+        "policy": "STEPWISE_BASELINE",
+        "schedule": "COMPENSATION_UNAVAILABLE"
+      },
+      {
+        "policy": "GROUP_BLIND_COMPENSATION",
+        "schedule": "COMPENSATION_UNAVAILABLE"
+      },
+      {
+        "policy": "GROUP_REVISION_BOUND",
+        "schedule": "COMPENSATION_UNAVAILABLE"
+      },
+      {
+        "policy": "STEPWISE_BASELINE",
+        "schedule": "SUCCESS"
+      },
+      {
+        "policy": "GROUP_BLIND_COMPENSATION",
+        "schedule": "SUCCESS"
+      },
+      {
+        "policy": "GROUP_REVISION_BOUND",
+        "schedule": "SUCCESS"
+      },
+      {
+        "policy": "STEPWISE_BASELINE",
+        "schedule": "FAIL_BEFORE_EFFECT"
+      },
+      {
+        "policy": "GROUP_BLIND_COMPENSATION",
+        "schedule": "FAIL_BEFORE_EFFECT"
+      },
+      {
+        "policy": "GROUP_REVISION_BOUND",
+        "schedule": "FAIL_BEFORE_EFFECT"
+      },
+      {
+        "policy": "STEPWISE_BASELINE",
+        "schedule": "FAIL_AFTER_STEP1"
+      },
+      {
+        "policy": "GROUP_BLIND_COMPENSATION",
+        "schedule": "FAIL_AFTER_STEP1"
+      },
+      {
+        "policy": "GROUP_REVISION_BOUND",
+        "schedule": "FAIL_AFTER_STEP1"
+      },
+      {
+        "policy": "STEPWISE_BASELINE",
+        "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"
+      }
     ]
   },
   "branch": "research/transactional-text-group-16-20260922",
