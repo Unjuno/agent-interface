@@ -17,11 +17,13 @@ def audit_rows(raws):
       r=rec['result'];
       if r.get('case_id')!=cid or r.get('policy')!=pol or r.get('scenario')!=sc: errors.append(f'identity:{cid}'); continue
       ops=r['operations']; final=r['final']; resolution=r['resolution']; shared=r['shared']
+      # receipt authority is always neutral
       for op in ops:
         if op.get('authority')!='none' or op.get('input_dispatched') is not False: errors.append(f'authority:{cid}')
       if sc=='STALE_EPOCH_ACK' and ops[0]['status']!='refused_stale_epoch': errors.append(f'stale_accept:{cid}')
       if sc=='OVER_PREFIX_ACK' and ops[0]['status']!='refused_invalid_prefix': errors.append(f'over_accept:{cid}')
       if sc=='DUPLICATE_ACK_PAGE1' and len(ops)==2 and ops[1]['status']!='duplicate': errors.append(f'duplicate_nonidempotent:{cid}')
+      # expected candidate safety
       if pol=='ACK_REFCOUNT_GC':
         if any(not x['available'] or x['actual_sha256']!=x['sha'] for x in resolution): errors.append(f'candidate_unresolved:{cid}')
         blobs={x[0] for x in final['blobs']}
