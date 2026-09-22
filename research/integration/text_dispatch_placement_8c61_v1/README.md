@@ -14,26 +14,22 @@ This directory publishes an already completed local allocation. It is **retrospe
 
 PRE_CLASS checks the same edit-context predicate after the controlled widget callback and immediately before ordinary Tk Entry insertion. Its eight refusals preserve an unresolved partial state; they are not repaired/completed tasks. Every formal case still emits, receives and releases the native `c` key. The refusal blocks application insertion, not OS emission.
 
-See `REPORT.md` for H/T/D/C/U and limits. `REPORT.md` and `AUDIT.json` are byte-exact copies of the retained local files; `FREEZE.json` retains the local preformal source/gate hashes.
+See `REPORT.md` for H/T/D/C/U and limits. `REPORT.md`, `AUDIT.json` and `FREEZE.json` are byte-exact retained files.
 
-## Formal evidence capsule
+## Formal review set
 
-The complete formal denominator and frozen sources are retained losslessly in a 244-file tar.xz capsule:
+The publication reconstructs the complete formal raw/source denominator needed by the frozen raw-only auditor:
 
-- 36 formal app cases in two immutable batches;
-- all source files used by the formal run;
-- raw journals/effect snapshots/pixels/stdout/stderr;
-- actual app/Xvfb/batch/supervisor exits;
-- PLAN, INTAKE, ENVIRONMENT, FREEZE, REPORT and AUDIT;
-- retention verifier and unit tests.
+- a 244-file tar.xz capsule containing both 18-case formal batches, frozen sources, journals/effects/pixels/stdout/stderr, app/Xvfb exits, plan/environment/freeze/report/audit and unit tests;
+- six byte-exact outer batch-launch receipts restored by `unpack_evidence.py`.
 
-The 77,356-byte capsule SHA256 is
+The capsule is 77,356 bytes, SHA256
 `2e4321b2af1a48c6d4043545bdaa3749213f765772bf902020d764b37620634a`.
-It is represented as seven binary parts. Because one publication call could not safely carry the fifth Base64 string, binary part 5 is itself represented by five smaller text files. `PUBLICATION_MANIFEST.json` binds every decoded part and the final capsule.
+Seven binary parts are represented by eleven Base64 transport files; binary part 5 is subdivided because larger publication calls failed exact readback. `PUBLICATION_MANIFEST.json` binds every decoded part, every outer launch file and the final capsule.
 
-Two oversized publication-only transfer attempts failed exact readback and were removed. No scientific source/result changed and no formal case was rerun.
+Two oversized publication-only transfers were rejected and removed. A first publication manifest also contained incorrect per-part digest fields; the local restore gate rejected it before PR creation. Both incidents changed only delivery metadata. No experimental source/result changed and no formal case was rerun.
 
-The original 402-member conversation/local bundle is recorded by hash in the manifest but is not claimed GitHub-hosted by this PR; construction and predecessor-history details remain truthfully documented in the report.
+The original 402-member conversation/local bundle (construction plus predecessor history included) is recorded by hash but is not claimed GitHub-hosted by this PR.
 
 ## Read-only verification
 
@@ -42,11 +38,18 @@ Use a fresh destination:
 ```sh
 python -B unpack_evidence.py /tmp/text-dispatch-4091
 cd /tmp/text-dispatch-4091
-python -B verify_retention.py
 python -B source/audit.py --root . --mode formal --controls
 python -B source/test_gate.py
+cmp AUDIT.json /tmp/text-dispatch-4091-audit.json  # if audit output was redirected here
 ```
 
-Do **not** rerun the consumed formal runner.
+For an explicit byte comparison:
+
+```sh
+python -B source/audit.py --root . --mode formal --controls > /tmp/text-dispatch-4091-audit.json
+cmp AUDIT.json /tmp/text-dispatch-4091-audit.json
+```
+
+Do **not** rerun the consumed formal runner. The historical full-bundle retention verifier inside the capsule expects the unhosted 402-member full bundle and is not a review command for this reduced publication set.
 
 This is research evidence only. It changes no shared runtime/default and establishes no arbitrary GUI atomicity, model/task benefit, performance gain, product readiness, or repository-wide roadmap completion.
