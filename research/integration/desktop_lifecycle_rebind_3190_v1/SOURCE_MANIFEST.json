@@ -1,0 +1,11 @@
+{
+  "schema": "agent-interface/desktop-lifecycle-rebind-source-v1",
+  "issue": 3190,
+  "base_main": "74d0ebb63c880fc5818bc4bbe6bb0c6b08579d39",
+  "sources": [
+    {"path":"runtime/golden_desktop_demo_v3.py","blob_sha":"26db03b8400b03fbe5272bd4ae5ad9c3a82d31a2","roles":["doctor","run_live","schema"]},
+    {"path":"runtime/cli_v1/api.py","blob_sha":"47193afd3bdb5e8bef91bf539f74f180ce9b9406","roles":["doctor","dispatch","cleanup"]},
+    {"path":"runtime/core_v1/__init__.py","blob_sha":"659531954db218d4c04849fe937df80ad1fcf495","roles":["admission","release"]},
+    {"path":"runtime/GOLDEN_DESKTOP_DEMO_V3.md","blob_sha":"940213efdcb582d6c7399d0cd1f0afc3fecb1c4a","roles":["retained_result","scope_limits"]}
+  ]
+}
