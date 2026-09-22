@@ -8,6 +8,13 @@ The result is scoped application evidence. It does not promote runtime code.
 The originating run used actual private-X11/XTEST input, not the public Agent
 Interface CLI/API/MCP/core admission path.
 
-The complete retained evidence is published as content-addressed archive parts
-in this directory. Do not rerun consumed formal allocation IDs merely to review
-the result; use the retained raw-only auditor after reconstructing the archive.
+The exact executed raw-only auditor and the inherited #2076 reducer are
+published here. The complete 723-member raw/source/construction study remains
+the unchanged conversation attachment named in the publication note, with its
+byte length and SHA-256 fixed there and in PR #4095. **A checkout of this branch
+alone is not sufficient for complete byte-level replay.** This limitation is
+intentional and must not be hidden or restated as full in-repository retention.
+
+Do not rerun the consumed formal allocation merely to review this delivery.
+A new live replication requires a separately identified, prospectively frozen
+allocation.
