@@ -1,15 +1,45 @@
 {
   "by_policy": {
-    "CANDIDATE_SET": {"cases": 16, "success": 2, "wrong": 0, "yield": 14},
-    "ENTITY_TRACK": {"cases": 16, "success": 10, "wrong": 0, "yield": 6},
-    "SINGLE_FRAME_FIRST": {"cases": 16, "success": 6, "wrong": 8, "yield": 2}
+    "CANDIDATE_SET": {
+      "cases": 16,
+      "success": 2,
+      "wrong": 0,
+      "yield": 14
+    },
+    "ENTITY_TRACK": {
+      "cases": 16,
+      "success": 10,
+      "wrong": 0,
+      "yield": 6
+    },
+    "SINGLE_FRAME_FIRST": {
+      "cases": 16,
+      "success": 6,
+      "wrong": 8,
+      "yield": 2
+    }
   },
   "checks": 584,
   "decision": "FAIL_AUDIT_OR_GATE",
   "errors": [],
-  "gates": [true,true,true,false,true,true,true,true],
+  "gates": [
+    true,
+    true,
+    true,
+    false,
+    true,
+    true,
+    true,
+    true
+  ],
   "mutations": {
-    "decision": true, "duplicate_case": true, "missing_case": true, "raw_hash": true,
-    "scenario": true, "state": false, "terminal": true, "wrong_flag": true
+    "decision": true,
+    "duplicate_case": true,
+    "missing_case": true,
+    "raw_hash": true,
+    "scenario": true,
+    "state": false,
+    "terminal": true,
+    "wrong_flag": true
   }
 }
