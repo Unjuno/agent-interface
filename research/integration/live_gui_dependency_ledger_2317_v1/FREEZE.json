@@ -1,0 +1,27 @@
+{
+  "allocation_id": "issue2317-live-gui-dependency-ledger-20260922-01",
+  "expected": {
+    "CORE_TYPED": "admit STABLE/FOCUS_CHANGED/APP_RESTARTED only; 4 residual unsafe effects",
+    "DIRECT_VALUES": "admit all 12; 10 changed-state unsafe effects",
+    "GUI_COMPLETE": "admit STABLE only; zero changed-state effects"
+  },
+  "formal_cases": 0,
+  "formal_invocations": 0,
+  "formal_reruns": 0,
+  "policies": ["DIRECT_VALUES","CORE_TYPED","GUI_COMPLETE"],
+  "postfreeze_tuning": 0,
+  "repetitions": 2,
+  "scenarios": ["STABLE","GUARD_CHANGED","ALIAS_CHANGED","MEMBERSHIP_CHANGED","FOCUS_CHANGED","APP_RESTARTED"],
+  "schema": "agent-interface/live-gui-dependency-ledger-freeze-v1",
+  "source_sha256": {
+    "BATCH_PLAN.json": "66e4654fdf46c86ea681c3ad7086031ab90ec58dd4205375e3546b00e0183c2c",
+    "CONSTRUCTION.md": "e6fafe094b71462c24ce3a5f88deba180e950e9e4591b7c54ac6ba9d1ec2db7e",
+    "ENVIRONMENT.json": "466cc57b59d294b4a4343174eb8268ddd48e3b4f10f9c966831599968bb0524a",
+    "PLAN.md": "49b33f4852d14b7a7945632fac88df83a5a20f525b909320a268515e8368e029",
+    "adapter.py": "7de55dcbce84307a2ee8c50fca60e97a36e10c9a965c5c26edbc2180d370dd65",
+    "app.py": "427b59e512ab553422f7baab376be8991de4105df3a2a8a812095e4954d00666",
+    "audit.py": "2c33dcd8493eec054d710969e94513b5bda83578247157408a4d8265c3ad1b92",
+    "key.py": "50f9a035ad6fcae001c397a23dd2e7e6c74e31e163520096f6afe3a0f35f3a6a",
+    "run.py": "70431e405048b65cf49ad525ee4977f0b74ec0b004adc94a5c496b376ba8ac5b"
+  }
+}
