@@ -1,0 +1,24 @@
+{
+  "allocation": "exact-crop-partial-recompute-1663-20260922-03",
+  "audit_v2_controls_pass": true,
+  "audit_v2_errors": [],
+  "contract_decision": "PASS_EXACT_CROP_PARTIAL_RECOMPUTE_CONTRACT_SCOPED",
+  "cost_decision": "PASS_EXACT_CROP_PARTIAL_RECOMPUTE_COST_SCOPED",
+  "formal_reruns": 0,
+  "issue": 4083,
+  "metadata_cpu_ratio_median": 0.04502332534163235,
+  "requests": 216,
+  "retained_stops": [
+    "allocation-01 STOP_OUTPUT_PATH_PREEXISTED_EMPTY (0 cases)",
+    "allocation-02 STOP_EXTERNAL_EXECUTION_ENVELOPE (7 complete, 1 partial, 1 unstarted; no pooling)",
+    "audit-v1 STOP_AUDITOR_EXECUTION_ENVELOPE (no verdict)"
+  ],
+  "schema": "exact-crop-partial-recompute-result-v1",
+  "scientific_cases": 9,
+  "scope": "Synthetic deterministic PNG fixture; exact crop verifier; no GUI/model/input/production claim.",
+  "workload_summary": {
+    "METADATA": {"cpu_ratio_min": 0.041947210864027674, "cpu_ratio_median": 0.04502332534163235, "cpu_ratio_max": 0.04889895044561641, "candidate_pattern": "frame 1 recompute/23 reuse; crop 1/23; 24 artifact version checks"},
+    "ROI": {"cpu_ratio_min": 0.04641911011244673, "cpu_ratio_median": 0.05152167670050227, "cpu_ratio_max": 0.051895183576997746, "candidate_pattern": "frame 1/23; crop 4/20; 24 artifact version checks"},
+    "IMAGE": {"cpu_ratio_min": 0.10885646181585204, "cpu_ratio_median": 0.10937362236804353, "cpu_ratio_max": 0.11571857407763145, "candidate_pattern": "frame 4/20; crop 4/20; 24 artifact version checks"}
+  }
+}
