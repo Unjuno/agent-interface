@@ -1,0 +1,28 @@
+{
+  "archive_bytes": 15684,
+  "archive_sha256": "33f01182dbe3e26266f8296432e849cbcec9f94464683b0a8995b366d651289d",
+  "audit": {
+    "candidate_local": 6,
+    "candidate_oracle_mismatch": 0,
+    "candidate_unsafe_local": 0,
+    "errors": [],
+    "naive_unsafe_local": 10,
+    "rows": 18,
+    "status": "PASS_RAW_AUDIT"
+  },
+  "b64_sha256": "a0d77f6344678bf00b5acf44a3c4f0a23ea4c3bd93ff0aa74f2fd4b7c93edaaf",
+  "controls": {
+    "controls": [["drop", true], ["dup", true], ["candidate", true], ["oracle", true], ["return_gen", true], ["capture_effect", true], ["timeout", true], ["window", false]],
+    "rejected": 7,
+    "total": 8
+  },
+  "controls_v2": {
+    "controls": [["drop", true], ["dup", true], ["candidate", true], ["oracle", true], ["return_lineage", true], ["capture_effect", true], ["timeout", true], ["expected_bytes", true]],
+    "rejected": 8,
+    "total": 8,
+    "version": "v2_postformal_readonly"
+  },
+  "formal_exit": "0",
+  "members": 64,
+  "raw_sha256": "ec5938107008fc355f41caa721112d20b2c5d987f821934a5ef4927c7ef22756"
+}
