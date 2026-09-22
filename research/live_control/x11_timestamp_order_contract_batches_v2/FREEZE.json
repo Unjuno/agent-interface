@@ -5,11 +5,51 @@
     "/opt/pyvenv/bin/python -B audit.py formal-02",
     "/opt/pyvenv/bin/python -B audit.py formal-02 --controls"
   ],
-  "batch_case_indices": [[0,1,2,3,4,5],[6,7,8,9,10,11],[12,13,14,15,16,17],[18,19,20,21,22,23]],
+  "batch_case_indices": [
+    [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    [
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  ],
   "batch_internal_deadline_s": 38,
   "construction": {
     "all_exit_zero": true,
-    "case_durations_ns": [2733238193,2187254571,2434175541,2210613146,2257369898,2209639244],
+    "case_durations_ns": [
+      2733238193,
+      2187254571,
+      2434175541,
+      2210613146,
+      2257369898,
+      2209639244
+    ],
     "cases": 6,
     "max_case_duration_ns": 2733238193,
     "receipt_sha256": "7e048673cfa6dc09505c278b2c5ef22aa7fb921bb70bfb2ba9cac26b70e8ec3a",
@@ -30,24 +70,48 @@
   "replacements": 0,
   "reruns": 0,
   "science_source_identity": {
-    "actor.py": {"byte_identical":true,"v1_sha256":"65a018e97362009fef25cb4a52a3330fdb81172fce78fb3fa0113ef875609d16","v2_sha256":"65a018e97362009fef25cb4a52a3330fdb81172fce78fb3fa0113ef875609d16"},
-    "audit.py": {"byte_identical":true,"v1_sha256":"80a27c364527bcdcf4cc951eabfc17abfbf50461fa93469a856f7364727b7173","v2_sha256":"80a27c364527bcdcf4cc951eabfc17abfbf50461fa93469a856f7364727b7173"},
-    "case.py": {"byte_identical":true,"v1_sha256":"e6077c2d0259791e9b0111dcb2cf9265b60793c934bb3da70b729dca4fc013ed","v2_sha256":"e6077c2d0259791e9b0111dcb2cf9265b60793c934bb3da70b729dca4fc013ed"},
-    "policies.py": {"byte_identical":true,"v1_sha256":"8ebfcd0ba3bb10eef3fea52dac5b0785bf01cd02a1e8d53aa795a5715e2db848","v2_sha256":"8ebfcd0ba3bb10eef3fea52dac5b0785bf01cd02a1e8d53aa795a5715e2db848"},
-    "test_policies.py": {"byte_identical":true,"v1_sha256":"8ffe20fe2b9a61bc3ea7807dd00822a5486ff84d08a8d79c9e16585a2b3bdc3f","v2_sha256":"8ffe20fe2b9a61bc3ea7807dd00822a5486ff84d08a8d79c9e16585a2b3bdc3f"},
-    "upstream_monitor.py": {"byte_identical":true,"v1_sha256":"a0ba7d82aa452b6f4e2ad53b77cba1776dd4865ce6f24111002994c99d4f0ffb","v2_sha256":"a0ba7d82aa452b6f4e2ad53b77cba1776dd4865ce6f24111002994c99d4f0ffb"}
+    "actor.py": {
+      "byte_identical": true,
+      "v1_sha256": "65a018e97362009fef25cb4a52a3330fdb81172fce78fb3fa0113ef875609d16",
+      "v2_sha256": "65a018e97362009fef25cb4a52a3330fdb81172fce78fb3fa0113ef875609d16"
+    },
+    "audit.py": {
+      "byte_identical": true,
+      "v1_sha256": "80a27c364527bcdcf4cc951eabfc17abfbf50461fa93469a856f7364727b7173",
+      "v2_sha256": "80a27c364527bcdcf4cc951eabfc17abfbf50461fa93469a856f7364727b7173"
+    },
+    "case.py": {
+      "byte_identical": true,
+      "v1_sha256": "e6077c2d0259791e9b0111dcb2cf9265b60793c934bb3da70b729dca4fc013ed",
+      "v2_sha256": "e6077c2d0259791e9b0111dcb2cf9265b60793c934bb3da70b729dca4fc013ed"
+    },
+    "policies.py": {
+      "byte_identical": true,
+      "v1_sha256": "8ebfcd0ba3bb10eef3fea52dac5b0785bf01cd02a1e8d53aa795a5715e2db848",
+      "v2_sha256": "8ebfcd0ba3bb10eef3fea52dac5b0785bf01cd02a1e8d53aa795a5715e2db848"
+    },
+    "test_policies.py": {
+      "byte_identical": true,
+      "v1_sha256": "8ffe20fe2b9a61bc3ea7807dd00822a5486ff84d08a8d79c9e16585a2b3bdc3f",
+      "v2_sha256": "8ffe20fe2b9a61bc3ea7807dd00822a5486ff84d08a8d79c9e16585a2b3bdc3f"
+    },
+    "upstream_monitor.py": {
+      "byte_identical": true,
+      "v1_sha256": "a0ba7d82aa452b6f4e2ad53b77cba1776dd4865ce6f24111002994c99d4f0ffb",
+      "v2_sha256": "a0ba7d82aa452b6f4e2ad53b77cba1776dd4865ce6f24111002994c99d4f0ffb"
+    }
   },
   "sources": {
-    "ENVIRONMENT.json":"da4fbd99b28966a9db54ec12e7cdf22d438830e7479e56bdb0d36bf1603e2821",
-    "PLAN.md":"b604d6e01dab26347e1914cf24565d79fd6028a7650f9ac2d7c875045b75e8bd",
-    "actor.py":"65a018e97362009fef25cb4a52a3330fdb81172fce78fb3fa0113ef875609d16",
-    "aggregate.py":"bec9db1d8e9b5691c06fe1ebc1dd525b5e2b67ba1abf84459b7c023c84c94784",
-    "audit.py":"80a27c364527bcdcf4cc951eabfc17abfbf50461fa93469a856f7364727b7173",
-    "case.py":"e6077c2d0259791e9b0111dcb2cf9265b60793c934bb3da70b729dca4fc013ed",
-    "policies.py":"8ebfcd0ba3bb10eef3fea52dac5b0785bf01cd02a1e8d53aa795a5715e2db848",
-    "run_batch.py":"aa114f9d5f36528a15456c5d9596f21d832838677bf5aef57f1d9001426a3cf7",
-    "test_policies.py":"8ffe20fe2b9a61bc3ea7807dd00822a5486ff84d08a8d79c9e16585a2b3bdc3f",
-    "upstream_monitor.py":"a0ba7d82aa452b6f4e2ad53b77cba1776dd4865ce6f24111002994c99d4f0ffb"
+    "ENVIRONMENT.json": "da4fbd99b28966a9db54ec12e7cdf22d438830e7479e56bdb0d36bf1603e2821",
+    "PLAN.md": "b604d6e01dab26347e1914cf24565d79fd6028a7650f9ac2d7c875045b75e8bd",
+    "actor.py": "65a018e97362009fef25cb4a52a3330fdb81172fce78fb3fa0113ef875609d16",
+    "aggregate.py": "bec9db1d8e9b5691c06fe1ebc1dd525b5e2b67ba1abf84459b7c023c84c94784",
+    "audit.py": "80a27c364527bcdcf4cc951eabfc17abfbf50461fa93469a856f7364727b7173",
+    "case.py": "e6077c2d0259791e9b0111dcb2cf9265b60793c934bb3da70b729dca4fc013ed",
+    "policies.py": "8ebfcd0ba3bb10eef3fea52dac5b0785bf01cd02a1e8d53aa795a5715e2db848",
+    "run_batch.py": "aa114f9d5f36528a15456c5d9596f21d832838677bf5aef57f1d9001426a3cf7",
+    "test_policies.py": "8ffe20fe2b9a61bc3ea7807dd00822a5486ff84d08a8d79c9e16585a2b3bdc3f",
+    "upstream_monitor.py": "a0ba7d82aa452b6f4e2ad53b77cba1776dd4865ce6f24111002994c99d4f0ffb"
   },
   "tuning": 0
 }
