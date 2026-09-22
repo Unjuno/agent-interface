@@ -102,6 +102,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 - [`experiments/issue_3840_newline_frame_v2/`](experiments/issue_3840_newline_frame_v2/) — Issue #3840 Docker Desktop/Linux amd64 terminal-LF replication; scoped false-success observation, row-level cross-check, and explicit audit-provenance HOLD are recorded in RESULT.md.
 - [`concurrency/`](concurrency/) — phase-level overlap, shared-resource conflicts, and serialized-actuator concurrency studies.
+- [`event_delivery/`](event_delivery/) — retained event-delivery, gap, ACK, and notification-boundary studies.
 - `receiver_*`, `external_effect_*`, `outbox_*`, `staged_*`, and `exact_runtime_*` directories — effect/commit/recovery semantics.
 - `git_*` directories — Git/reference concurrency and atomicity experiments.
 - [`coordination/`](coordination/) and [`orchestration/`](orchestration/) — retained coordination/orchestration evidence.
@@ -162,3 +163,4 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 - [`needle_role_graph_3780_compact_v1/`](needle_role_graph_3780_compact_v1/) — Issue #3780 compact receipt-gated role-adapter graph evidence; scoped synthetic PASS plus provenance warning.
 - [`needle_lora_3441_rank4_online_multiseed_v1/`](needle_lora_3441_rank4_online_multiseed_v1/) — Issue #3790 frozen CPU rank-capacity study; its single formal attempt stopped before held-out metrics, documented in `STOP_RUN.json`.
 - [`needle_lora_3441_rank4_online_multiseed_gpu_v1/`](needle_lora_3441_rank4_online_multiseed_gpu_v1/) — Issues #3807/#3819 rank-capacity GPU raw result; final rank-4 online accuracy FAIL is preserved, with the missing learning-curve HOLD noted in #3822.
+- [`needle_lora_3441_pilot_04d_multiskill_400base/`](needle_lora_3441_pilot_04d_multiskill_400base/) — retained direct-root Needle multi-skill pilot evidence; use its own report for exact scientific disposition and scope.
