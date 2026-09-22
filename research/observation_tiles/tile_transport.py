@@ -61,7 +61,7 @@ class Encoder:
                         tile = b[y:y+size, x:x+size]
                         if not np.array_equal(tile, a[y:y+size, x:x+size]):
                             h, w = tile.shape[:2]
-                            pieces.extend((TILE.pack(x, y, w, h), tile.tobytes()))
+                            pieces.extend((TILE.pack(x, y, w, h), np.ascontiguousarray(tile).tobytes()))
                             changed += 1
                 tile_meta = dict(meta, kind="tiles", count=changed)
                 candidate = packet(tile_meta, b"".join(pieces))
