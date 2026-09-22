@@ -24,6 +24,7 @@ def main():
     arc=META['archive']
     if len(data)!=arc['bytes'] or sha256(data)!=arc['sha256']:
         raise SystemExit('archive mismatch')
+    # bounded metadata check before extraction
     raw=lzma.decompress(data)
     a.out.mkdir(parents=True)
     tmp=a.out.parent/(a.out.name+'.tar')
