@@ -23,7 +23,8 @@ def main():
                          'send_event':bool(e.send_event),'sequence_number':e.sequence_number,
                          'observed_ns':now}
                     raw.append(r)
-                    if e.type not in (X.FocusIn, X.FocusOut) or e.window.id != windows['A'].id                        or e.mode != X.NotifyNormal or e.detail != X.NotifyNonlinear or e.send_event:
+                    if e.type not in (X.FocusIn, X.FocusOut) or e.window.id != windows['A'].id \
+                       or e.mode != X.NotifyNormal or e.detail != X.NotifyNonlinear or e.send_event:
                         raise ValueError('unexpected native event')
                     s = sessions['A']; seq[s] += 1
                     records.append({'session':s,'seq':seq[s],
