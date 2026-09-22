@@ -1,0 +1,41 @@
+name: Mindustry v160.2 asset acquisition #2624
+
+on:
+  push:
+    branches:
+      - acquire/mindustry-v1602-2624-20260922
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Download official pinned asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          url='https://github.com/Anuken/Mindustry/releases/download/v160.2/Mindustry.jar'
+          curl --fail --location --retry 3 --retry-delay 2 --output Mindustry.jar "$url"
+          test "$(stat -c %s Mindustry.jar)" = '87022576'
+          echo '7f210295dfffb4c17b582b27bab41f4dde83f557f00f0877572fdac943f40539  Mindustry.jar' | sha256sum --check -
+          {
+            echo 'source_url='"$url"
+            echo 'size='$(stat -c %s Mindustry.jar)
+            echo 'sha256='$(sha256sum Mindustry.jar | awk '{print $1}')
+            echo 'asset_id=559668837'
+            echo 'tag=v160.2'
+          } > acquisition.txt
+      - name: Upload exact asset
+        uses: actions/upload-artifact@v4
+        with:
+          name: mindustry-v1602-pinned-2624
+          path: |
+            Mindustry.jar
+            acquisition.txt
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
