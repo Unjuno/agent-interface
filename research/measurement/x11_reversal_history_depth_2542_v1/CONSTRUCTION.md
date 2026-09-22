@@ -1,12 +1,16 @@
 # Construction — excluded
 
-Formal0/reruns0. Disjoint ages40/110/175 and phases0.5/33.5/66.5/99.5 only.
+Construction only; formal0/reruns0.
 
-- trajectories24 / frames120
-- H3 legacy disagreements0
-- H3 wrong0 / H5 wrong0
-- max |point error| 0.496500 px
-- Xvfb exit0; socket/auth cleanup verified
-- separate raw construction audit errors[]
+- trajectories: 24
+- frames: 120
+- H3 legacy disagreements: 0
+- H3 wrong: 0
+- H5 wrong: 0
+- max |point error|: 0.496500000000 px
+- Xvfb return: 0
+- socket removed: True
+- auth removed: True
+- raw-only construction audit errors: []
 
-Final unit tests: 9/9 PASS. No formal-age/phase row was generated before this freeze.
+Metrics are excluded ages 40/110/175 ms only. No formal age/phase row has been generated.
