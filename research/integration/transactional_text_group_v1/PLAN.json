@@ -1,0 +1,73 @@
+{
+  "C": "Cooperative Tk fixture with authored revision and primary/collateral oracle; not a generic GUI transaction or production ABI.",
+  "D": "PASS_TRANSACTIONAL_GROUP_COMPENSATION_BOUNDARY_SCOPED requires all45 rows, success and fail-before controls, scoped compensation only on unchanged history, blind comparator wrong-compensation counterexamples in all intervening-edit cells, revision-bound refusal with unresolved task, no compensation when history unavailable, neutral final input, process/source integrity, raw-only audit and >=10 rehashed semantic corruption controls per batch.",
+  "H": "A bounded two-step GUI group can distinguish COMMITTED, ABORTED_NO_EFFECT, ABORTED_COMPENSATED and ABORTED_PARTIAL when compensation is separately admitted against current history; blind Undo after an intervening edit can falsely compensate the primary state while destroying collateral external input.",
+  "T": "Three policies x five schedules x three fresh repetitions =45 fresh Tk processes on private Xvfb, real XTEST task/external input, no model/provider/network/user desktop. Three immutable 15-case batches, one invocation each.",
+  "U": "No same-model benefit, tokens, latency, natural failure probability, crash durability, arbitrary app, cross-platform or product claim.",
+  "allocation_id": "transactional-text-group-16-formal01",
+  "batches": {
+    "0": [
+      {"policy": "STEPWISE_BASELINE", "schedule": "SUCCESS"},
+      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "SUCCESS"},
+      {"policy": "GROUP_REVISION_BOUND", "schedule": "SUCCESS"},
+      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_BEFORE_EFFECT"},
+      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_BEFORE_EFFECT"},
+      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_BEFORE_EFFECT"},
+      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_AFTER_STEP1"},
+      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_AFTER_STEP1"},
+      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_AFTER_STEP1"},
+      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"},
+      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"},
+      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"},
+      {"policy": "STEPWISE_BASELINE", "schedule": "COMPENSATION_UNAVAILABLE"},
+      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "COMPENSATION_UNAVAILABLE"},
+      {"policy": "GROUP_REVISION_BOUND", "schedule": "COMPENSATION_UNAVAILABLE"}
+    ],
+    "1": [
+      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_BEFORE_EFFECT"},
+      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_AFTER_STEP1"},
+      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_AFTER_STEP1"},
+      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_AFTER_STEP1"},
+      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"},
+      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"},
+      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"},
+      {"policy": "STEPWISE_BASELINE", "schedule": "COMPENSATION_UNAVAILABLE"},
+      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "COMPENSATION_UNAVAILABLE"},
+      {"policy": "GROUP_REVISION_BOUND", "schedule": "COMPENSATION_UNAVAILABLE"},
+      {"policy": "STEPWISE_BASELINE", "schedule": "SUCCESS"},
+      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "SUCCESS"},
+      {"policy": "GROUP_REVISION_BOUND", "schedule": "SUCCESS"},
+      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_BEFORE_EFFECT"},
+      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_BEFORE_EFFECT"}
+    ],
+    "2": [
+      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"},
+      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"},
+      {"policy": "STEPWISE_BASELINE", "schedule": "COMPENSATION_UNAVAILABLE"},
+      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "COMPENSATION_UNAVAILABLE"},
+      {"policy": "GROUP_REVISION_BOUND", "schedule": "COMPENSATION_UNAVAILABLE"},
+      {"policy": "STEPWISE_BASELINE", "schedule": "SUCCESS"},
+      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "SUCCESS"},
+      {"policy": "GROUP_REVISION_BOUND", "schedule": "SUCCESS"},
+      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_BEFORE_EFFECT"},
+      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_BEFORE_EFFECT"},
+      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_BEFORE_EFFECT"},
+      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_AFTER_STEP1"},
+      {"policy": "GROUP_BLIND_COMPENSATION", "schedule": "FAIL_AFTER_STEP1"},
+      {"policy": "GROUP_REVISION_BOUND", "schedule": "FAIL_AFTER_STEP1"},
+      {"policy": "STEPWISE_BASELINE", "schedule": "FAIL_AFTER_STEP1_WITH_INTERVENING_EDIT"}
+    ]
+  },
+  "branch": "research/transactional-text-group-16-20260922",
+  "cases_per_batch": 15,
+  "commands": [
+    "python run.py --mode formal --batch 0 --out formal/batch00 > formal/batch00.stdout.json 2> formal/batch00.stderr.txt",
+    "python run.py --mode formal --batch 1 --out formal/batch01 > formal/batch01.stdout.json 2> formal/batch01.stderr.txt",
+    "python run.py --mode formal --batch 2 --out formal/batch02 > formal/batch02.stdout.json 2> formal/batch02.stderr.txt"
+  ],
+  "formal_batches": 3,
+  "formal_retries": 0,
+  "intake_main": "08bd6c40d81a48b116883594188919139c4e7b84",
+  "path": "research/integration/transactional_text_group_v1/",
+  "total_cases": 45
+}
