@@ -1,0 +1,24 @@
+{
+  "cases": 9,
+  "checks": 657,
+  "contract_decision": "PASS_EXACT_CROP_PARTIAL_RECOMPUTE_CONTRACT_SCOPED",
+  "controls": [
+    {"name":"missing_case","rejected":true},
+    {"name":"duplicate_case","rejected":true},
+    {"name":"result","rejected":true},
+    {"name":"authority","rejected":true},
+    {"name":"contract","rejected":true},
+    {"name":"counters","rejected":true},
+    {"name":"schema","rejected":true},
+    {"name":"case_exit","rejected":true},
+    {"name":"batch_exit","rejected":true},
+    {"name":"allocation_end","rejected":true}
+  ],
+  "controls_pass": true,
+  "cost_decision": "PASS_EXACT_CROP_PARTIAL_RECOMPUTE_COST_SCOPED",
+  "errors": [],
+  "metadata_cpu_ratio_median": 0.04502332534163235,
+  "metadata_cpu_ratios": [0.04889895044561641,0.041947210864027674,0.04502332534163235],
+  "requests": 216,
+  "schema": "exact-crop-partial-recompute-audit-v2"
+}
