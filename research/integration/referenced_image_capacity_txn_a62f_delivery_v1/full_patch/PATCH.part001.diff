@@ -997,7 +997,8 @@ index 0000000..f2d2a6c
 +06db4417c7c3b1a52e693483448c587a765c6ae63f8a180eebcc5fecdd632869  evidence/construction-r1/construction-r1-ROOM-ATOMIC_PAGE/stream.jsonl
 +b2b2e65018f6568bd881018bf21a157b17ba4d86d6b65b540a68f902933580f9  evidence/construction-r1/construction-r1-ROOM-ATOMIC_PAGE/tail.cursor.json
 +e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  evidence/construction-r1/construction-r1-ROOM-ATOMIC_PAGE/tail.stderr
-+72e5f26f0858791c3d4ccf59ef085721263b0ed350fff9cfbe5ddc92d06aa51f  evidence/construction-r1/construction-r1-ROOM-ATOMIC_PAGE/tail.stdout+84ea166140fcb5de927db2c0aeecc9b8ce5d6778ceeae4a30208fa593240726c  evidence/construction-r1/construction-r1-ROOM-META_THEN_OBJECTS/after_first.db
++72e5f26f0858791c3d4ccf59ef085721263b0ed350fff9cfbe5ddc92d06aa51f  evidence/construction-r1/construction-r1-ROOM-ATOMIC_PAGE/tail.stdout
++84ea166140fcb5de927db2c0aeecc9b8ce5d6778ceeae4a30208fa593240726c  evidence/construction-r1/construction-r1-ROOM-META_THEN_OBJECTS/after_first.db
 +e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  evidence/construction-r1/construction-r1-ROOM-META_THEN_OBJECTS/after_first.stderr
 +e3cd67ceee7732484fe7fb8a952fe7d9045ad119de6896287f7c8f61e51d85b9  evidence/construction-r1/construction-r1-ROOM-META_THEN_OBJECTS/after_first.stdout
 +84ea166140fcb5de927db2c0aeecc9b8ce5d6778ceeae4a30208fa593240726c  evidence/construction-r1/construction-r1-ROOM-META_THEN_OBJECTS/after_recovery.db
@@ -1996,7 +1997,8 @@ index 0000000..5d452a4
 +        return json.loads(out)
 +    def worker(name, op, *args, codes=(0,)):
 +        return call(name,[sys.executable,'-I','-S','-B',ROOT/'worker.py',op,d,*args],codes=codes)
-+    def read(name, cursor=None, count=2):+        args=[sys.executable,'-S','-B','-m','research.integration.event_inbox_reader_v1',
++    def read(name, cursor=None, count=2):
++        args=[sys.executable,'-S','-B','-m','research.integration.event_inbox_reader_v1',
 +              '--stream',d/'stream.jsonl','--stream-id',d.name,'--max-records',str(count)]
 +        if cursor is not None:
 +            f=d/(name+'.cursor.json');f.write_bytes(enc(cursor));args+=['--cursor',f]
@@ -2995,7 +2997,8 @@ z+#`OdUG{B3@79TMkaw9@m}-Uzuc)&SwKJa@`~t>U`BfJ$(EHpV!n~B$9Y$5%VBpvC
 zyop}YgJ<b1%S2nR7kT1_!dcPf6?1uWijn28#J)<jH#M_`=xc^M+gIGfe5A6~mum59
 za=52}yxLeIms%uxc3r{(6W{%n6y@T3w0MaNQHLG`39n<v)~h>gnmiD56mJ8%&z1}D
 z3t5gjReCNEjF5b#ip91fP#-Df(#%Wfi&4`^%Cw!xgfXEK&V7kn9aogrrL_0w$vGTg
-zbq6UIn$IdJe?3*f=^Po*(tO5-k?=L~8_k}SC=wZrz1!ErR?839#7m9r&Id2cr;u|^z&&Dkky@fvWpf~XK_u4YHWJ6>i#mZ_sq$%nPC@P76falMoHPe9H%ZSeB68!;FJ_dM!
+zbq6UIn$IdJe?3*f=^Po*(tO5-k?=L~8_k}SC=wZrz1!ErR?839#7m9r&Id2cr;u|^
+z&&Dkky@fvWpf~XK_u4YHWJ6>i#mZ_sq$%nPC@P76falMoHPe9H%ZSeB68!;FJ_dM!
 zc8=V<6@E-SC#P<;BB=Ww$L4xoF==jE^p$Ukp8u${y2(*%dPqBbwi2TMca(<QkQPer
 z7himi*s*Ty@!bTt<it-%tD;&|4R;ebh=A0-d`Fx&{SS-jbGq)rZSZZ~O~Vk$&+mFL
 z_UpE>x3kVCl_sp~x<EOI*GME%SMkV21J+z|(B6~h-!}g4$?nsdhOBU3x9KEs0=m$4
@@ -3994,7 +3997,8 @@ z7<>AV{8lw^mEz?_mTZXtjmT`dZQH857J*W$&hxXh!g#^6)3*w5Qz)`1<5@#`cKA+L
 z9(@-oC5d~g<~p@1z&b5?Otg>P$!7ph2UwZ!YJLKG0ZAI1P^t*D$+t>@HLs+KqH5j6
 zSOsaCKS}1^02+gGDq^8}&F?LcT`rjE7{`(~yua#oY*Fk#_{8u#t_Z5@`&~E6QybjC
 z^AU%P7=b^Qsrfu4)stq+aYQx4N@UMYU)eJx@nPsz#ZX8A*?WK2`W8cH<Eu8bI_BEo
-zzB#A`jaF;v+c|a&uibBcP`5L7R*KltAZU?zyDMUC3Rv{4Zr;ajeVkS(${!M?026?GzYd(``+mLoG(tf?*Y0fJp*(Fg-J`fCt+Bf_QfKo9@d@UHf{+eW(O01uxQ3{wNz;S^I
+zzB#A`jaF;v+c|a&uibBcP`5L7R*KltAZU?zyDMUC3Rv{4Zr;ajeVkS(${!M?026?G
+zYd(``+mLoG(tf?*Y0fJp*(Fg-J`fCt+Bf_QfKo9@d@UHf{+eW(O01uxQ3{wNz;S^I
 z3sr^CoeRke_mgaSKL7KsZI0LZ_%8v)i^!|K4%)Tv+oS%0%hc^Bmt?C_<ykqGE(bHZ
 zb~5;cT2MZivMfpp^%WsA(1aWW-o#%J?;%W<rqA>yJuIU!T>r-->>FjEg<wyRgi#kx
 zn5<WK<ia77>8*u<f0`O(UJ4$WWtFF8TRGp;;}A5jWRq`+dgUs`oiif<*-oyX?F?yi
