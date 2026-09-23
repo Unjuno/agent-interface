@@ -172,6 +172,8 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 ### Recent additive namespaces
 
 - [`audits/`](audits/) — retained audit-only evidence bundles; currently includes the scoped #3688 exact raw-byte-binding audit and its independent revalidation.
+- [`event_delivery/`](event_delivery/) — retained event-delivery timing/gap/deadline research; consult each child result for scope and disposition.
+- [`needle_lora_3441_pilot_04d_multiskill_400base/`](needle_lora_3441_pilot_04d_multiskill_400base/) — retained Needle multiskill 400-base evidence; consult its own report/audit for scope and disposition.
 - [`chromium/`](chromium/) — retained Chromium live-control, identity, and recovery experiments; consult each child report for scope and disposition.
 - [`cli_fault_residue_3711_revalidation_v1/`](cli_fault_residue_3711_revalidation_v1/) — retained Issue #3711 CLI fault-residue revalidation; consult its report for exact scope and disposition.
 - [`issue_3733_german_xkb_text_orbstack_v3/`](issue_3733_german_xkb_text_orbstack_v3/) — retained Issue #3733 German XKB formula-delivery experiment and immutable formal/audit evidence; consult its preregistration and result disposition before making claims.
