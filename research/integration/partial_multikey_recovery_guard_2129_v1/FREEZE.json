@@ -2,6 +2,18 @@
   "allocation": "partial-multikey-recovery-2129-20260923-01",
   "audit_command": "python3 audit.py formal",
   "controls_command": "python3 controls.py formal",
+  "environment": {
+    "formal_batches": 3,
+    "formal_cases_per_batch": 10,
+    "machine": "x86_64",
+    "network_used_by_experiment": false,
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "python_xlib": "0.15",
+    "tk": 8.6,
+    "xauthority": "/dev/null",
+    "xvfb": "/usr/bin/Xvfb"
+  },
   "formal_commands": [
     "python3 runner.py formal 0 formal/batch0",
     "python3 runner.py formal 1 formal/batch1",
