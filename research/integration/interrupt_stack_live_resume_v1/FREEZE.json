@@ -2,8 +2,16 @@
   "allocation": "interrupt-stack-live-resume-4222-20260923-01",
   "audit_command": "python -B audit.py formal --reps 0 1 --freeze FREEZE.json --out AUDIT.json && python -B controls.py",
   "batches": [
-    {"display_base": 800, "rep": 0, "rows": 12},
-    {"display_base": 820, "rep": 1, "rows": 12}
+    {
+      "display_base": 800,
+      "rep": 0,
+      "rows": 12
+    },
+    {
+      "display_base": 820,
+      "rep": 1,
+      "rows": 12
+    }
   ],
   "construction": {
     "construction-01": "STOP_XAUTH_PARENT_MISWIRE",
@@ -16,10 +24,20 @@
   ],
   "formal_reruns": 0,
   "formal_rows_before_freeze": 0,
-  "policies": ["POP_ONLY","EVIDENCE_BOUND_RESUME"],
+  "policies": [
+    "POP_ONLY",
+    "EVIDENCE_BOUND_RESUME"
+  ],
   "post_freeze_tuning": 0,
   "replacements": 0,
-  "scenarios": ["NORMAL","TARGET_REPLACED","QUEUE_CHANGED","SOURCE_STALE","PENDING_UNKNOWN","TASK_CANCELED"],
+  "scenarios": [
+    "NORMAL",
+    "TARGET_REPLACED",
+    "QUEUE_CHANGED",
+    "SOURCE_STALE",
+    "PENDING_UNKNOWN",
+    "TASK_CANCELED"
+  ],
   "source_sha256": {
     "ENVIRONMENT.json": "44b18482f24fee6f264fb2f208792cfca0e339c482e46825a15d82bdf91e042f",
     "PLAN.md": "65dbaba3434104b771c92387261ae1bf754c9ff5f41823a26209100a28a4f179",
