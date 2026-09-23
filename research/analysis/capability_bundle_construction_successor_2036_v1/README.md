@@ -1,1 +1,0 @@
-# Capability bundle construction gate (#2036)\n\nFinite provenance check for capability-gated observation bundles. Only EVIDENCE items with timestamps and allowed source families are emitted; omitted, unsupported, summary-only, and disallowed families are excluded. No model utility or action authority claim.\n

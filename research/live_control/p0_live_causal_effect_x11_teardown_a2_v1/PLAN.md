@@ -1,1 +1,0 @@
-# #1301 teardown A2\n\nScientific H/T/D/C/U are inherited exactly from #1287. The only factor is teardown ownership: exact #1287 science runner runs inside a per-session child while the outer supervisor owns Xvfb and terminates it only after child exit.\n\nSource-first; construction2 then formal12 only under explicit #60 lease; formal1/reruns0.\n

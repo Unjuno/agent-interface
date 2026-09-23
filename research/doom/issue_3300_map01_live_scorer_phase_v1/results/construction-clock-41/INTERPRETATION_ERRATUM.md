@@ -1,5 +1,0 @@
-# Construction-clock-41 audit-label narrowing
-
-The first corrected auditor emitted `PASS_CONSTRUCTION_ONLY_TIC_ENTRY_WITNESS` and marked getter positions as `bounded_by_entry_timestamps`. That wording overstates the instrument: `VIZ_Tic` first calls a helper, and the helper then calls `clock_gettime(CLOCK_MONOTONIC)`. The captured integer is a same-clock sample shortly after function entry, not the exact entry edge; helper-call and clock-read latency were not bounded.
-
-Preserve the original raw and audit outputs. The v1 auditor source is SHA-256 `f74ec2e54eaf4d8d9b4474a0722aa4a2d6cbc9816228dc6751bf716eb1b2fe6c`; the v2 source is hash-bound in the run invocations. `audit-corrected-v2.json` instead reports `PASS_CONSTRUCTION_ONLY_ENTRY_CLOCK_CORRELATION` and `between_entry_clock_samples`. It still supports a construction-only phase-position diagnostic relative to those clock samples, but it is not an independently bounded formal edge witness. Run42's v1 result was regenerated from its unchanged raw using the preserved v1 auditor baked into the hash-identified image and is retained separately. Formal allocation remains 0/120.

@@ -1,7 +1,0 @@
-Construction-only evidence before allocation 01:
-- OrbStack Docker 29.4.0, image sha256:0e35cdb51a82e59d359ec09b85ce835d9217a1eab65b68ce1871c9b0a85014c9, linux/arm64.
-- Read-only source/root compile and import check passed when Python was run with -B.
-- Synthetic 520x160 PNG test passed: initial #1904 minimum mask ES, prior-mask unmasked reuse -> SUPPRESS, expired observation -> YIELD.
-- An earlier xvfb-run construction smoke hung with Xvfb alive but no Python process; stopped that disposable container. It was not a formal allocation.
-- A later explicit-Xvfb public-observe smoke returned status=returned, XID=2097152, raw SHA-256 093db3e4c12c5b00b7a6346b2d04eacbab6297d2327b21fb357018c8a805e57c, PNG SHA-256 42b4e1146561c6a1f8ab5ac7c67d1a944fed30131ec8f8904ce441dd31c6b867, sampled pixel (0,180,0), side_effect_authority=false, input_dispatched=false.
-- The full preregistered allocation later STOPped before fixture creation: Python's import path omitted /repo. It made zero public API observations and emitted no formal result files. This setup STOP is preserved in FORMAL_RESULT.json and was not retried.

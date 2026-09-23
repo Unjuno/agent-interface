@@ -1,3 +1,0 @@
-# #2247 canonical digest provenance successor
-
-H: provenance completion passes when Docker's canonical image-inspect digest form is retained exactly.\n\nT: one fresh python:3.12-slim run, exact parent blob/source/result/stdout/image digest retention, and independent audit.\n\nD: PASS_CONTAINER_PROVENANCE_COMPLETE_SCOPED only if every field and counter is independently checked.\n\nC: image digest formatting must not be normalized into a different identity.\n\nU: no X11, PNG, model, task, latency, or production claim.\n

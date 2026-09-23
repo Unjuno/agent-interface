@@ -1,5 +1,0 @@
-Frozen independent auditor command (one attempt):
-
-docker --context orbstack run --rm --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m -e PYTHONDONTWRITEBYTECODE=1 -v "$PWD:/repo:ro" -v /tmp/issue2918-formal-v2.797wSL:/out:ro -w /repo issue-3548-route-unit:20260920 python3 -B research/integration/issue_2918_live_certificate_v1/audit_live_allocation.py /out
-
-Exit code: 1. The auditor evaluated its assertions through the final report assembly, then could not write `/out/independent_audit.json` because the evidence mount was read-only. It was not rerun. On subsequent read-only inspection, the auditor's coverage was also found insufficient: it did not enforce full capture/binding/epoch lineage for the target-replacement and intent-mismatch cases, and the frozen runner omitted those rows' artifact SHA fields. Therefore this allocation remains HOLD even though no earlier auditor assertion raised.

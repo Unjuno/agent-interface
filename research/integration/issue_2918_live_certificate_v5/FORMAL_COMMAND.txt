@@ -1,3 +1,0 @@
-docker --context orbstack run --rm --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=128m -e PYTHONDONTWRITEBYTECODE=1 -e PYTHONPATH=/repo -e OUT=/out -v "$PWD:/repo:ro" -v /tmp/issue2918-formal-v5.OA00wc:/out:rw -w /repo --entrypoint /bin/sh issue-3548-route-unit:20260920 -lc 'Xvfb :99 -screen 0 1280x800x24 -nolisten tcp >/tmp/xvfb2918.log 2>&1 & xp=$!; trap "kill $xp 2>/dev/null || true" EXIT; export DISPLAY=:99; n=0; while [ $n -lt 50 ] && ! xdpyinfo >/dev/null 2>&1; do sleep 0.1; n=$((n+1)); done; xdpyinfo >/dev/null; python3 -B research/integration/issue_2918_live_certificate_v5/run_live_allocation.py'
-
-Exit code 0; retained JSON reports 12 cases.

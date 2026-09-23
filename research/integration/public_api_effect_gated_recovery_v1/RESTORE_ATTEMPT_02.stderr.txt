@@ -1,9 +1,0 @@
-Traceback (most recent call last):
-  File "/mnt/data/ai4120/study/unpack.py", line 33, in <module>
-    if __name__=='__main__': main()
-                             ~~~~^^
-  File "/mnt/data/ai4120/study/unpack.py", line 16, in main
-    raw=lzma.decompress(data,format=lzma.FORMAT_XZ,memlimit=64*1024*1024)
-  File "/usr/lib/python3.13/lzma.py", line 351, in decompress
-    res = decomp.decompress(data)
-_lzma.LZMAError: Memory usage limit exceeded
