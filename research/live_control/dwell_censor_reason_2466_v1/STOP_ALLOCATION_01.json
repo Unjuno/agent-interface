@@ -1,0 +1,17 @@
+{
+  "additional_harness_finding": "Frozen clock origin was process start before Tk/worker initialization; retained prefix shows intended 170ms HORIZON_LATE effects could remain unobserved at the nominal 220ms M. Scientific decision table is therefore not interpretable from this allocation even aside from incomplete denominator.",
+  "allocation": "dwell-censor-reason-2466-20260923-01",
+  "case_dirs_present": 25,
+  "complete_case_dirs": 25,
+  "disposition": "STOP_EXTERNAL_EXECUTION_TIMEOUT",
+  "end_present": false,
+  "formal_invocations": 1,
+  "last_complete_case": "case-024-TK_CALLBACK-NORMAL-GENERIC_CENSOR-r1",
+  "note": "Outer container tool timed out at 30s. Allocation consumed; no rerun/resume/pooling. Prefix is biased and non-scientific for the 48-case gate.",
+  "outer_exit_receipt_present": false,
+  "planned_cases": 48,
+  "remaining_experiment_processes": 0,
+  "rows_aggregate_present": false,
+  "successor_rule": "Any continuation must use a fresh allocation, move the dwell clock origin to post-ready scheduling, and prospectively batch execution. Old rows remain excluded.",
+  "xvfb_exit_present": false
+}
