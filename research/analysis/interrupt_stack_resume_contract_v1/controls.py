@@ -10,11 +10,11 @@ changes={
  'source_fresh':lambda p:p['rows'][95]['state'].__setitem__('source_fresh',False),
  'queue_same':lambda p:p['rows'][95]['state'].__setitem__('queue_version_same',False),
  'target_same':lambda p:p['rows'][95]['state'].__setitem__('target_identity_same',False),
- 'pending_result':lambda p:p['rows'][95]['state'].__setitem__('pending_result','UNKNOWN'),
- 'candidate_decision':lambda p:p['rows'][95]['outputs']['EVIDENCE_BOUND_RESUME'].__setitem__('decision','REPLAN_QUEUE'),
- 'candidate_resume_flag':lambda p:p['rows'][95]['outputs']['EVIDENCE_BOUND_RESUME'].__setitem__('resume_eligible',False),
+ 'pending_result':lambda p:p['rows'][94]['state'].__setitem__('pending_result','UNKNOWN'),
+ 'candidate_decision':lambda p:p['rows'][94]['outputs']['EVIDENCE_BOUND_RESUME'].__setitem__('decision','REPLAN_QUEUE'),
+ 'candidate_resume_flag':lambda p:p['rows'][94]['outputs']['EVIDENCE_BOUND_RESUME'].__setitem__('resume_eligible',False),
  'authority':lambda p:p['rows'][95]['outputs']['EVIDENCE_BOUND_RESUME'].__setitem__('input_authority',True),
- 'truth':lambda p:p['rows'][95].__setitem__('safe_resume_truth',False),
+ 'truth':lambda p:p['rows'][94].__setitem__('safe_resume_truth',False),
  'formal_invocations':lambda p:p.__setitem__('formal_invocations',2),
 }
 result={}
