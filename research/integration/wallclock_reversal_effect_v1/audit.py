@@ -40,6 +40,7 @@ def row_errors(r):
     if foreign.get('admitted') is not False: e.append('foreign_binding')
     adm=r.get('admission',{}); created=r.get('decision_created_ns'); checked=r.get('admission_checked_ns')
     should_admit = dec in ('LEFT','RIGHT') and isinstance(created,int) and isinstance(checked,int) and 0 <= checked-created <= FRESH_NS
+    # Correct identity is used for the actual admission. Candidate cross-epoch yields UNKNOWN before this point.
     if bool(adm.get('admitted')) != should_admit: e.append('admission')
     if should_admit and adm.get('direction')!=dr: e.append('admission_direction')
     inp=r.get('input_events',[]); snap=r.get('app_snapshot',{}); journal=snap.get('journal',[])

@@ -37,6 +37,7 @@ def fixture(scenario,rep,base_ns):
     epoch='epoch-A'; session=f'session-{scenario.lower()}-r{rep}'
     if scenario in ('RIGHT_RECENT_REVERSAL','LEFT_RECENT_REVERSAL'):
         post=1 if scenario.startswith('RIGHT') else -1
+        # reversal at -75 ms; newest/middle straddle symmetrically, preceding interval is full old direction
         rel=[-25_000_000,-125_000_000,-225_000_000]
         r=-75_000_000
     elif scenario in ('RIGHT_AGE200','LEFT_AGE200'):
@@ -80,6 +81,7 @@ def run_case(root,scenario,rep,display_no,phase):
         if any(before.values()): raise RuntimeError('KEY_NOT_NEUTRAL_BEFORE')
         base=time.perf_counter_ns(); session,epoch,post,records=fixture(scenario,rep,base)
         decision=decide(records,session_id=session,window_id=winid); created=time.perf_counter_ns()
+        # Pure binding probe must fail closed and never dispatch input.
         foreign=admit(decision,now_ns=created,decision_created_ns=created,session_id=session+'-foreign',epoch=epoch,window_id=winid+1)
         if foreign.get('admitted'): raise RuntimeError('FOREIGN_BINDING_ADMITTED')
         if scenario=='CROSS_EPOCH_OR_STALE' and rep==1:
