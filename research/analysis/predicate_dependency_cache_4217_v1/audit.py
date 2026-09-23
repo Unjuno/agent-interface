@@ -48,6 +48,7 @@ def audit(root_path,formal_path):
     if obj.get('cache_evaluator_calls')+obj.get('cache_hits')!=52: errors.append('call_accounting')
     if obj.get('cache_hits',0)<8: errors.append('reuse_value')
     if rows and not all(rows[1]['events'][p]['hit'] for p in PRED): errors.append('unrelated_change_not_reused')
+    # Frozen directed controls: relevant changes must invalidate specified predicates.
     required_misses={2:['FORM_COMPLETE'],3:['FORM_COMPLETE'],4:list(PRED),5:list(PRED),6:['MODAL_BLOCKING'],7:list(PRED),8:list(PRED),9:['RECOVERY_NEEDED'],10:['TARGET_MATCH'],11:['TARGET_MATCH']}
     for idx,preds in required_misses.items():
         for p in preds:
