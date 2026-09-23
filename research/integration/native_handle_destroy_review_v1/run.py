@@ -68,6 +68,17 @@ def drain_observer(d, bound_xid, timeout=3):
         time.sleep(.01)
     return None,rows
 
+def activate_managed(env, xid, bridge, timeout=4.0):
+    end=time.monotonic()+timeout
+    attempts=[]
+    while time.monotonic()<end:
+        p=subprocess.run(['wmctrl','-ia',hex(int(xid))],env=env,text=True,capture_output=True,check=False)
+        attempts.append({'returncode':p.returncode,'stdout':p.stdout,'stderr':p.stderr})
+        time.sleep(0.04)
+        if bridge._focus_within_target(int(xid)):
+            return {'status':'FOCUSED_WITHIN_TARGET','attempts':attempts}
+    raise RuntimeError('WM_ACTIVATION_FAILED '+json.dumps(attempts[-5:],sort_keys=True))
+
 def one_session(index,out):
     display_n=230+index
     disp=f':{display_n}'
@@ -92,7 +103,7 @@ def one_session(index,out):
         observer.sync()
         # Exact current bridge.
         bridge=NativeHandleBridge(disp,{'fixture':xid},'fixture',out/'bridge')
-        send(actor,{'op':'focus'})
+        row['activate_w1']=activate_managed(env,xid,bridge)
         obs=bridge.observe(); geo=bridge.backend.geometry('fixture')
         point=[geo['x']+120,geo['y']+80]
         offset=bridge.mint('old',obs['sequence'],point,region_size=(24,38))
@@ -117,7 +128,7 @@ def one_session(index,out):
         # Replacement from the SAME actor, deliberately reusing freed client XID.
         c2=send(actor,{'op':'create_reuse'}); row['w2']=c2
         if not c2['ok'] or c2['xid']!=xid: raise RuntimeError('SAME_XID_REUSE_MISSING')
-        send(actor,{'op':'focus'}); time.sleep(.05)
+        row['activate_w2']=activate_managed(env,xid,bridge)
         # Existing exact review machinery owns scope/revision transition.
         prev_scope=bridge.scope; prev_rev=bridge.binding_revision
         review=bridge.review_window(xid)

@@ -48,7 +48,7 @@ def create_window(d, reuse=None):
                            event_mask=X.ExposureMask|X.ButtonPressMask|X.ButtonReleaseMask|X.StructureNotifyMask)
     win.set_wm_name('issue4221-native-review')
     win.set_wm_class('issue4221','Issue4221')
-    win.map(); d.sync(); wait_viewable(win,d); time.sleep(0.05)
+    win.map(); d.sync(); time.sleep(0.05)
     # Non-flat, deterministic content around the click/mint location.
     gc1=win.create_gc(foreground=0x202040); gc2=win.create_gc(foreground=0xcc3030); gc3=win.create_gc(foreground=0x30cc50)
     win.fill_rectangle(gc1,0,0,W,H)
@@ -57,7 +57,7 @@ def create_window(d, reuse=None):
     for i in range(0,160,16):
         win.fill_rectangle(gc2 if (i//16)%2==0 else gc3,20+i%180,20+(i*3)%110,8,8)
     d.sync(); time.sleep(0.08)
-    win.set_input_focus(X.RevertToParent,X.CurrentTime); d.sync(); time.sleep(0.05)
+    time.sleep(0.03)
     return win
 
 def main():
