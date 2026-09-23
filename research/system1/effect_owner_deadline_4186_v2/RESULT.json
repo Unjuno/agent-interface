@@ -1,0 +1,23 @@
+{
+  "allocation": "effect-owner-deadline-4195-20260923-02",
+  "decision": "PASS_EFFECT_OWNER_DEADLINE_SCOPED",
+  "formal_rows": 36,
+  "formal_slices": 12,
+  "rows_per_slice": 3,
+  "slice_reruns": 0,
+  "replacements": 0,
+  "post_freeze_tuning": false,
+  "audit_errors": [],
+  "controls_rejected": 12,
+  "results": {
+    "APP_CHECK_ONLY": {"short_ontime_effects": 6, "long_late_effects": 6, "long_refusals": 0},
+    "SINK_POSTHOC_CHECK": {"short_ontime_effects": 6, "long_late_effects": 6, "long_refusals": 0, "long_posthoc_late": 6},
+    "SINK_PRECOMMIT_DEADLINE": {"short_ontime_effects": 6, "long_late_effects": 0, "long_refusals": 6}
+  },
+  "predecessor": {
+    "allocation": "effect-owner-deadline-4195-20260923-01",
+    "disposition": "STOP_EXTERNAL_EXECUTION_TIMEOUT",
+    "pooled_rows": 0
+  },
+  "authority": false
+}
