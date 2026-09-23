@@ -20,12 +20,18 @@
     "unsafe": "FAIL_SOURCE_LIFETIME_TOO_SHORT",
     "unsafe_expected_failures": 4
   },
-  "formal_batches": [1,2],
+  "formal_batches": [
+    1,
+    2
+  ],
   "formal_cases": 20,
   "formal_started": false,
   "intake_main": "665339328f808c63e3ca3bc83169264038d399c6",
   "issue": 4190,
-  "policies": ["RELEASE_AFTER_READ","RELEASE_AFTER_DURABLE"],
+  "policies": [
+    "RELEASE_AFTER_READ",
+    "RELEASE_AFTER_DURABLE"
+  ],
   "reruns_allowed": 0,
   "schema": "referenced-image-source-lifetime-crash-freeze-v1",
   "source_sha256": {
