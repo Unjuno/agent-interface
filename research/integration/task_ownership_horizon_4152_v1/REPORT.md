@@ -26,7 +26,7 @@ This is one prospectively source-frozen private-X11/Tk allocation. Construction-
 - formal receipts SHA-256: `df7097d21aeb5543b95d39f03c0fe9aec446e74dd4ea611d16947e9bf697964f`
 - 3 frozen test methods pass after formal; 10 copied-evidence corruption controls reject; frozen source hash mismatches 0.
 
-`EVIDENCE.tar.xz.b64` plus `EVIDENCE_INFO.json` retains the complete formal evidence as one hash-bound lossless archive. `restore.py` only restores/verifies data and refuses an existing destination; it does not execute the consumed formal allocation.
+`EVIDENCE.part00..03.b64` plus `EVIDENCE_INFO.json` retains the complete formal evidence as one hash-bound lossless archive. `restore.py` only restores/verifies data and refuses an existing destination; it does not execute the consumed formal allocation.
 
 ## Integration meaning
 
