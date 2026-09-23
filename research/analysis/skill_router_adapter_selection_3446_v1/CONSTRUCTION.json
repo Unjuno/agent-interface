@@ -1,13 +1,69 @@
 {
   "mode": "construction",
   "rows": [
-    {"candidate":{"adapter_id":"browser","grants_authority":false,"kind":"ROUTE"},"case_id":"CON_BROWSER"},
-    {"candidate":{"adapter_id":"file","grants_authority":false,"kind":"ROUTE"},"case_id":"CON_FILE"},
-    {"candidate":{"adapter_id":"gui","grants_authority":false,"kind":"ROUTE"},"case_id":"CON_GUI"},
-    {"candidate":{"grants_authority":false,"kind":"YIELD","reason":"MULTI_SCOPE"},"case_id":"CON_MULTI"},
-    {"candidate":{"grants_authority":false,"kind":"YIELD","reason":"NO_ELIGIBLE"},"case_id":"CON_STALE"},
-    {"candidate":{"grants_authority":false,"kind":"YIELD","reason":"NO_ELIGIBLE"},"case_id":"CON_UNAVAILABLE"},
-    {"candidate":{"grants_authority":false,"kind":"YIELD","reason":"NO_ELIGIBLE"},"case_id":"CON_INTERFERENCE"},
-    {"candidate":{"grants_authority":false,"kind":"YIELD","reason":"NO_ELIGIBLE"},"case_id":"CON_LOW"}
+    {
+      "candidate": {
+        "adapter_id": "browser",
+        "grants_authority": false,
+        "kind": "ROUTE"
+      },
+      "case_id": "CON_BROWSER"
+    },
+    {
+      "candidate": {
+        "adapter_id": "file",
+        "grants_authority": false,
+        "kind": "ROUTE"
+      },
+      "case_id": "CON_FILE"
+    },
+    {
+      "candidate": {
+        "adapter_id": "gui",
+        "grants_authority": false,
+        "kind": "ROUTE"
+      },
+      "case_id": "CON_GUI"
+    },
+    {
+      "candidate": {
+        "grants_authority": false,
+        "kind": "YIELD",
+        "reason": "MULTI_SCOPE"
+      },
+      "case_id": "CON_MULTI"
+    },
+    {
+      "candidate": {
+        "grants_authority": false,
+        "kind": "YIELD",
+        "reason": "NO_ELIGIBLE"
+      },
+      "case_id": "CON_STALE"
+    },
+    {
+      "candidate": {
+        "grants_authority": false,
+        "kind": "YIELD",
+        "reason": "NO_ELIGIBLE"
+      },
+      "case_id": "CON_UNAVAILABLE"
+    },
+    {
+      "candidate": {
+        "grants_authority": false,
+        "kind": "YIELD",
+        "reason": "NO_ELIGIBLE"
+      },
+      "case_id": "CON_INTERFERENCE"
+    },
+    {
+      "candidate": {
+        "grants_authority": false,
+        "kind": "YIELD",
+        "reason": "NO_ELIGIBLE"
+      },
+      "case_id": "CON_LOW"
+    }
   ]
 }
