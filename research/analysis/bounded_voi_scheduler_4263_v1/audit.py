@@ -31,6 +31,7 @@ def audit(obj):
     if v.get('wrong')!=0 or v.get('yield_errors')!=0: errors.append('VOI_CORRECTNESS')
     if v.get('deadline_miss',1)>b1.get('deadline_miss',0) or v.get('deadline_miss',1)>b2.get('deadline_miss',0): errors.append('VOI_DEADLINE')
     if not (v.get('weighted_cost',1e9)<b1.get('weighted_cost',-1) and v.get('weighted_cost',1e9)<b2.get('weighted_cost',-1)): errors.append('VOI_COST')
+    # Support-shift must yield under every policy.
     for p in POLICIES:
         by={r.get('id'):r for r in obj.get('results',{}).get(p,{}).get('rows',[])}
         if by.get('shiftL',{}).get('decision')!='YIELD' or by.get('shiftR',{}).get('decision')!='YIELD': errors.append(f'{p}:SHIFT_YIELD')
