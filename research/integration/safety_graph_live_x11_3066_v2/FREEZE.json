@@ -1,0 +1,21 @@
+{
+  "allocation": "safety-graph-live-x11-3066-20260923-01",
+  "configs": ["bare", "openbox"],
+  "construction": {
+    "construction_01": "STOP_PREFORMAL_STARTUP_DEADLINE_AND_XAUTH_OBSERVER",
+    "construction_02": "HARNESS_EXCEPTION_AFTER_VALID_ACTION_NO_FORMAL",
+    "construction_02b": "PASS_CONSTRUCTION_ELIGIBLE_EXCLUDED"
+  },
+  "deadline_ms": 150,
+  "formal_cases": 14,
+  "formal_invocations_before_freeze": 0,
+  "formal_reruns_before_freeze": 0,
+  "grace_ms": 50,
+  "schedules": ["normal","ipc_delay","display_stall","owner_death","target_replacement","cleanup_failure","unknown_dependency"],
+  "source_sha256": {
+    "PLAN.md": "ff5c77ac395749ee233389f2e3b445382e40dd7e7e08911eec69dfe1e12e3c85",
+    "run_live.py": "08eda838499bab2721882678d3ba93c0c475f560f2fe125c5288ee9521bcec2b",
+    "audit.py": "24f27c3baec57626545a40b1e8ff9ae1322f962b75f63885fe1aa9a5c46a95fc",
+    "controls.py": "7ebd7f06cf4b83a54c1520529af42e1f48c03a074a858a56c0eb42a91858fb55"
+  }
+}
