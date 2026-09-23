@@ -1,0 +1,49 @@
+name: issue4242-native-destroy-generation-formal
+on:
+  pull_request:
+    types: [opened]
+permissions:
+  contents: read
+jobs:
+  formal:
+    if: github.event.pull_request.head.ref == 'research/native-handle-destroy-generation-20260923'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Install bounded X11 dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb openbox
+          python -m pip install --disable-pip-version-check python-xlib==0.33 Pillow==11.3.0
+      - name: Execute single formal allocation
+        run: |
+          set -euo pipefail
+          OUT="$RUNNER_TEMP/issue4242-formal"
+          python research/integration/native_handle_destroy_generation_v1/experiment.py "$OUT" > "$RUNNER_TEMP/formal.stdout" 2> "$RUNNER_TEMP/formal.stderr"
+          printf '%s\n' "$?" > "$RUNNER_TEMP/FORMAL_EXIT"
+          python research/integration/native_handle_destroy_generation_v1/audit.py "$OUT/RAW.json" "$RUNNER_TEMP/AUDIT.json" > "$RUNNER_TEMP/audit.stdout" 2> "$RUNNER_TEMP/audit.stderr"
+          printf '%s\n' "$?" > "$RUNNER_TEMP/AUDIT_EXIT"
+          python research/integration/native_handle_destroy_generation_v1/controls.py "$OUT/RAW.json" > "$RUNNER_TEMP/controls.stdout" 2> "$RUNNER_TEMP/controls.stderr"
+          printf '%s\n' "$?" > "$RUNNER_TEMP/CONTROLS_EXIT"
+          cp "$OUT/RAW.json" "$RUNNER_TEMP/RAW.json"
+      - name: Retain formal evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue4242-formal-first-outcome
+          path: |
+            ${{ runner.temp }}/RAW.json
+            ${{ runner.temp }}/AUDIT.json
+            ${{ runner.temp }}/FORMAL_EXIT
+            ${{ runner.temp }}/AUDIT_EXIT
+            ${{ runner.temp }}/CONTROLS_EXIT
+            ${{ runner.temp }}/formal.stdout
+            ${{ runner.temp }}/formal.stderr
+            ${{ runner.temp }}/audit.stdout
+            ${{ runner.temp }}/audit.stderr
+            ${{ runner.temp }}/controls.stdout
+            ${{ runner.temp }}/controls.stderr
+          if-no-files-found: warn
