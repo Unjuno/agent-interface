@@ -20,7 +20,7 @@ def wait_viewable(w,d,timeout=3.0):
 
 class App:
     def __init__(self,dpy):
-        self.d=display.Display(dpy); self.root=self.d.screen().root; self.window=None
+        self.d=display.Display(dpy); self.root=self.d.screen().root; self.window=None; self.effect=0
     def create(self,reuse=None):
         if reuse is not None:
             mask=self.d.display.info.resource_id_mask
@@ -41,6 +41,14 @@ class App:
         w.set_input_focus(X.RevertToParent,X.CurrentTime); self.d.sync()
         self.window=w
         return w.id
+    def drain_effect(self):
+        count=0
+        self.d.sync(); time.sleep(.03)
+        while self.d.pending_events():
+            e=self.d.next_event()
+            if e.type==X.ButtonPress: count += 1
+        self.effect += count
+        return count
     def pixels(self):
         g=self.window.get_geometry()
         im=self.window.get_image(0,0,g.width,g.height,X.ZPixmap,0xffffffff)
