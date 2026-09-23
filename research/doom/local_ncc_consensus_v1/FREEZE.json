@@ -1,0 +1,43 @@
+{
+  "bands": 5,
+  "consensus_tolerance_px": 2,
+  "decision": {
+    "fail": "candidate >2px/unknown on identifiable case or false control identification",
+    "hold": "global parallax wrong <2 with other integrity valid",
+    "pass": "global parallax wrong >=2; candidate all rigid/parallax <=2px; controls UNKNOWN; rigid nonworse; verifier/source integrity"
+  },
+  "formal_cases": [
+    "rigid_p80",
+    "rigid_n70",
+    "rigid_p165",
+    "rigid_n175",
+    "parallax_a",
+    "parallax_b",
+    "parallax_c",
+    "parallax_d",
+    "unrelated",
+    "low_texture"
+  ],
+  "formal_invocations_allowed": 1,
+  "formal_reruns_allowed": 0,
+  "formal_seeds": [416301,416302,416303,416304,416305,416306,416307,416308,416309,416310],
+  "issue": 4163,
+  "min_consensus_bands": 3,
+  "min_corr": 0.2,
+  "min_margin": 0.02,
+  "path": "research/doom/local_ncc_consensus_v1",
+  "publication_base": "118b385697a03be6452249bf2a0111718d7535c2",
+  "search_limit_px": 240,
+  "source_sha256": {
+    "PLAN.md": "fe7e705d35e5afcbceea8c0bef031e215a283951e6ee37adc1e6a16bb6d688ef",
+    "SOURCE_SHA256.txt": "361d866ac8ff08bd0e3411da3139f8569143438dc23e3edea3d9d787f660f2e6",
+    "cases.py": "826bff88881b0952605c47bb0c617215bf225d114aeedbdff6ba2787fd407384",
+    "environment.json": "372148b1a489193881cbb715a672d74e2dc07a0e2a1f1e482562ab98e7c28b11",
+    "model.py": "98f9adc9e43022626f0aef473f9e5c1e21da72869dcb5c62df6fe3fe3acf2234",
+    "run_experiment.py": "bcf52bc78264d8642610fd0fd5844c5e92821e1a7d505c45a915263211461bdc",
+    "test_model.py": "c4598b1d913ebc1303a012563a10b18717f9982c7af2f8558adaddfa3a917c4a",
+    "verify.py": "006ad381a4910719b8fb7462dc833147e4ce7758c5aa0794f95464e116408140"
+  },
+  "stop_gate_px": 34,
+  "task": "LOCAL-NCC-CONSENSUS-20260923-001"
+}
