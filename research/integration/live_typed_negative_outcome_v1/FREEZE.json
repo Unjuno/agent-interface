@@ -1,0 +1,45 @@
+{
+  "allocation": "live-typed-negative-outcome-20260923-01",
+  "construction": {
+    "01": "STOP_XAUTHORITY",
+    "02": "STOP_CLEANUP_PROTOCOL",
+    "03": "PASS_9_ROWS_AUDIT_10_CONTROLS",
+    "04": "PASS_SUPERVISOR_9_ROWS_AUDIT_10_CONTROLS"
+  },
+  "decision": "per PLAN.md and Issue #4230",
+  "decision_snapshot_ms": 100,
+  "environment": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5",
+    "python_xlib": "0.15",
+    "tk": "8.6",
+    "xvfb": "/usr/bin/Xvfb"
+  },
+  "formal_cases": 27,
+  "formal_invocations": 0,
+  "issue": 4230,
+  "repetitions": 3,
+  "replacements": 0,
+  "reruns": 0,
+  "scenarios": [
+    "SUCCESS",
+    "IN_PROGRESS",
+    "BLOCKED",
+    "AUTHORITY_REQUIRED",
+    "TARGET_NOT_FOUND",
+    "CAPABILITY_UNSUPPORTED",
+    "IMPOSSIBLE_UNDER_CONSTRAINTS",
+    "FAILED_UNKNOWN",
+    "CONFLICT"
+  ],
+  "source_sha256": {
+    "app.py": "4d77d42e43b1907a879e808d55c4e352d8b21ab41e92ce52c6a8c80ea4a9f6e2",
+    "audit.py": "3a48a08d2ad46b66ba5759cc455322b3c99d6003b774831cd22b286da57d53f9",
+    "execute.py": "13c8ad275757de5df66d053329b27b448db98e92e2d03ef448e36284eccb53a3",
+    "policy.py": "45f13674c50a6fce0e63cedd0d3c4854a5f1f5c7abfd302aaa58734051b1520d",
+    "run.py": "0092064b69b82991dd71a2716eddae4850848cf9ea289cfc093fe5dfc78a340e",
+    "test_policy.py": "f7314b7b19becfbeff9830a678342bdb7f8416ee404736ffcebc36a618e2fc0c"
+  },
+  "supervisor_timeout_s": 60,
+  "tuning": 0
+}
