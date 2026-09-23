@@ -14,6 +14,7 @@ WRONG_LOSS=100.0
 YIELD_LOSS=8.0
 MISS_LOSS=30.0
 
+# Development states: weight, correct terminal, deadline, observations.
 DEV=[
  {'id':'easyL','w':24,'truth':'L','deadline':12,'obs':{'CHEAP':'L','ROI':'L','SPECIALIST':'L','RICH':'L'}},
  {'id':'easyR','w':24,'truth':'R','deadline':12,'obs':{'CHEAP':'R','ROI':'R','SPECIALIST':'R','RICH':'R'}},
@@ -27,6 +28,7 @@ DEV=[
  {'id':'ambR','w':2,'truth':'YIELD','deadline':12,'obs':{'CHEAP':'D','ROI':'D','SPECIALIST':'D','RICH':'D'}},
 ]
 
+# Evaluation adds distribution shift: some A cases no longer resolve via ROI, but SPECIALIST does.
 EVAL=[]
 def add(id,w,truth,deadline,cheap,roi,spec,rich,block):
     EVAL.append({'id':id,'w':w,'truth':truth,'deadline':deadline,'block':block,'obs':{'CHEAP':cheap,'ROI':roi,'SPECIALIST':spec,'RICH':rich}})
@@ -43,6 +45,7 @@ add('lateR',3,'YIELD',6,'C','C','R','R','late')
 add('amb1',6,'YIELD',12,'D','D','D','D','ambiguous')
 add('amb2',6,'YIELD',12,'D','D','D','D','ambiguous')
 
+# Normalize development weights.
 DEVW=sum(s['w'] for s in DEV)
 
 def compatible(state, hist):
@@ -72,6 +75,7 @@ def expected_action_value(hist, elapsed, action, deadline):
     post=posterior(hist)
     by=defaultdict(list)
     for s,p in post: by[s['obs'][action]].append((s,p))
+    # Expected terminal risk after one more observation, no recursive lookahead.
     er=0.0
     for o,rows in by.items():
         mass=sum(p for _,p in rows)
@@ -82,11 +86,14 @@ def expected_action_value(hist, elapsed, action, deadline):
 
 def voi_policy(state):
     hist=[]; elapsed=0.0; cost=0.0; acts=[]
+    # Always start with CHEAP if feasible.
     for step in range(4):
         term, risks=best_terminal(hist)
         base=risk=risks[term]
         if step>0 and base<=0.0:
             return term,cost,elapsed,acts,False
+        # Choose feasible unused action with greatest expected risk reduction per cost,
+        # but only if positive net value versus terminal now.
         cands=[]
         for a,m in ACTIONS.items():
             if a in acts: continue
