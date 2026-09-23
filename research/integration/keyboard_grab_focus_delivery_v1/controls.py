@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, shutil, sys, tempfile
+import copy, json, shutil, sys, tempfile
 from pathlib import Path
 import audit
 
