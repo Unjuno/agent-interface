@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 132 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 134 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
@@ -165,6 +165,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`generation_bound_evidence_2047_v1/`](generation_bound_evidence_2047_v1/)
 - [`guard_policy_break_even_r0_v1/`](guard_policy_break_even_r0_v1/)
 - [`guard_policy_calibration_identifiability_r1_v1/`](guard_policy_calibration_identifiability_r1_v1/)
+- [`guard_stale_cost_2494_v1/`](guard_stale_cost_2494_v1/)
 - [`independent_effect_evidence_successor_1295_v1/`](independent_effect_evidence_successor_1295_v1/)
 - [`interaction_consistency_product_lattice_r0_v1/`](interaction_consistency_product_lattice_r0_v1/)
 - [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
@@ -174,6 +175,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`layered_lifetime_admission_r0_v1/`](layered_lifetime_admission_r0_v1/)
 - [`live_two_tier_applicability_v1/`](live_two_tier_applicability_v1/)
 - [`local_relevance_gating_preflight_2188_v1/`](local_relevance_gating_preflight_2188_v1/)
+- [`map01_matched_causal_task_effect_r4_v1/`](map01_matched_causal_task_effect_r4_v1/)
 - [`map01_task_effect_cross_record_ledger_a2_v1/`](map01_task_effect_cross_record_ledger_a2_v1/)
 - [`map01_useful_occupied_control_identifiability_v1/`](map01_useful_occupied_control_identifiability_v1/)
 - [`map01_v12_plan_step_lineage_r0_v1/`](map01_v12_plan_step_lineage_r0_v1/)
