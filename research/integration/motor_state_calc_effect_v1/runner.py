@@ -81,14 +81,7 @@ def keydown(d,k):
  raw=d.query_keymap(); return bool(raw[k//8]&(1<<(k%8)))
 
 def helper_source():
- return """import tkinter as tk,sys
-from pathlib import Path
-out=Path(sys.argv[1]); r=tk.Tk(); r.title('MotorStateHelper'); e=tk.Entry(r,width=30); e.pack(padx=20,pady=20)
-def dump(ev=None): out.write_text(e.get())
-e.bind('<KeyRelease>',dump)
-r.after(300,lambda:(r.focus_force(),e.focus_force()))
-r.mainloop()
-"""
+ return """import tkinter as tk,sys\nfrom pathlib import Path\nout=Path(sys.argv[1]); r=tk.Tk(); r.title('MotorStateHelper'); e=tk.Entry(r,width=30); e.pack(padx=20,pady=20)\ndef dump(ev=None): out.write_text(e.get())\ne.bind('<KeyRelease>',dump)\nr.after(300,lambda:(r.focus_force(),e.focus_force()))\nr.mainloop()\n"""
 
 def uno_read(port,script):
  p=subprocess.run(['/usr/bin/python3',str(script),str(port)],capture_output=True,text=True,timeout=4)
