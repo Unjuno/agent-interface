@@ -1,0 +1,72 @@
+{
+  "all_ok": true,
+  "cases": 8,
+  "formal_cases": 0,
+  "rows": [
+    {
+      "calc_value": "",
+      "decision": "REFUSE_OBSERVER_UNAVAILABLE",
+      "grab_ns": null,
+      "helper_text": "",
+      "policy": "JIT_THEN_SEND",
+      "scenario": "OBSERVER_UNAVAILABLE"
+    },
+    {
+      "calc_value": "7",
+      "decision": "ACT",
+      "grab_ns": null,
+      "helper_text": "",
+      "policy": "JIT_THEN_SEND",
+      "scenario": "STABLE"
+    },
+    {
+      "calc_value": "",
+      "decision": "ACT",
+      "grab_ns": null,
+      "helper_text": "7",
+      "policy": "JIT_THEN_SEND",
+      "scenario": "TRANSFER_AFTER_CHECK_BEFORE_INPUT"
+    },
+    {
+      "calc_value": "",
+      "decision": "REFUSE_FOCUS_MISMATCH",
+      "grab_ns": null,
+      "helper_text": "",
+      "policy": "JIT_THEN_SEND",
+      "scenario": "TRANSFER_BEFORE_CHECK"
+    },
+    {
+      "calc_value": "",
+      "decision": "REFUSE_OBSERVER_UNAVAILABLE",
+      "grab_ns": null,
+      "helper_text": "",
+      "policy": "ORDERED_ADMISSION",
+      "scenario": "OBSERVER_UNAVAILABLE"
+    },
+    {
+      "calc_value": "7",
+      "decision": "ACT",
+      "grab_ns": 419090,
+      "helper_text": "",
+      "policy": "ORDERED_ADMISSION",
+      "scenario": "STABLE"
+    },
+    {
+      "calc_value": "7",
+      "decision": "ACT",
+      "grab_ns": 303365,
+      "helper_text": "",
+      "policy": "ORDERED_ADMISSION",
+      "scenario": "TRANSFER_AFTER_CHECK_BEFORE_INPUT"
+    },
+    {
+      "calc_value": "",
+      "decision": "REFUSE_FOCUS_MISMATCH",
+      "grab_ns": 374392,
+      "helper_text": "",
+      "policy": "ORDERED_ADMISSION",
+      "scenario": "TRANSFER_BEFORE_CHECK"
+    }
+  ],
+  "schema": "agent-interface/motor-state-jit-admission-construction-v1"
+}
