@@ -92,7 +92,7 @@ def main():
         app=App(d); xid1=app.create(); pix1=app.pixels()
         bridge=NativeHandleBridge(d,{'app':xid1},'app',out/'bridge')
         obs1=bridge.observe(); g=bridge.backend.geometry('app')
-        point=[g['x']+110,g['y']+70]
+        point=[g['x']+20,g['y']+70]
         off=bridge.mint('old',obs1['sequence'],point)
         xid_destroyed,events=app.destroy_with_event(d)
         xid2=app.create(reuse=xid1); pix2=app.pixels()
