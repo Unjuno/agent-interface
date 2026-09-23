@@ -245,6 +245,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`temporal_ring_disambiguation_2045_v1/`](temporal_ring_disambiguation_2045_v1/)
 - [`temporal_ring_provenance_repair_successor_2053_v1/`](temporal_ring_provenance_repair_successor_2053_v1/)
 - [`temporal_sample_cost_identifiability_v1/`](temporal_sample_cost_identifiability_v1/)
+- [`tiny_predicate_specialist_4218_v1/`](tiny_predicate_specialist_4218_v1/)
 - [`transactional_belief_action_safe_a2_v1/`](transactional_belief_action_safe_a2_v1/)
 - [`transactional_belief_action_safe_r0_v1/`](transactional_belief_action_safe_r0_v1/)
 - [`transactional_belief_action_safe_r1_batched_v1/`](transactional_belief_action_safe_r1_batched_v1/)
