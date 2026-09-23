@@ -1,0 +1,21 @@
+{
+  "controls": [
+    {"errors":["decision_mismatch","row_authority"],"name":"authority","rejected":true},
+    {"errors":["candidate_semantic","decision_mismatch","unknown_collapse"],"name":"unknown","rejected":true},
+    {"errors":["decision_mismatch","premature_activation"],"name":"premature","rejected":true},
+    {"errors":["decision_mismatch","missing_invalidation_STALE_ACTIVATION_RECEIPT"],"name":"stale","rejected":true},
+    {"errors":["decision_mismatch","missing_invalidation_SUPPORT_VERSION_CHANGE"],"name":"support","rejected":true},
+    {"errors":["decision_mismatch","missing_invalidation_PRODUCER_GENERATION_CHANGE"],"name":"generation","rejected":true},
+    {"errors":["decision_mismatch","regression_activated"],"name":"regression","rejected":true},
+    {"errors":["decision_mismatch","novel_fallback"],"name":"novel","rejected":true},
+    {"errors":["decision_mismatch","new_version_recovery"],"name":"new_version","rejected":true},
+    {"errors":["decision_mismatch","general_reduction"],"name":"calls","rejected":true},
+    {"errors":["decision_mismatch","graph"],"name":"graph","rejected":true},
+    {"errors":["case_denominator","decision_mismatch","duplicate_case"],"name":"duplicate_case","rejected":true},
+    {"errors":["decision_mismatch"],"name":"decision","rejected":true}
+  ],
+  "pass": true,
+  "rejected": 13,
+  "schema": "versioned-predicate-specialist-switch-controls-v1",
+  "total": 13
+}
