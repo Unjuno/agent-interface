@@ -26,6 +26,18 @@ def snapshot(win):
     return {'width':int(geo.width),'height':int(geo.height),'bytes':len(raw),
             'sha256':hashlib.sha256(raw).hexdigest()}
 
+def wait_viewable(win, d, timeout=3.0):
+    end=time.monotonic()+timeout
+    while time.monotonic()<end:
+        try:
+            attrs=win.get_attributes()
+            if int(attrs.map_state)==X.IsViewable:
+                return
+        except Exception:
+            pass
+        d.sync(); time.sleep(0.02)
+    raise TimeoutError('WINDOW_NOT_VIEWABLE')
+
 def create_window(d, reuse=None):
     root=d.screen().root
     if reuse is not None:
@@ -36,7 +48,7 @@ def create_window(d, reuse=None):
                            event_mask=X.ExposureMask|X.ButtonPressMask|X.ButtonReleaseMask|X.StructureNotifyMask)
     win.set_wm_name('issue4221-native-review')
     win.set_wm_class('issue4221','Issue4221')
-    win.map(); d.sync(); time.sleep(0.12)
+    win.map(); d.sync(); wait_viewable(win,d); time.sleep(0.05)
     # Non-flat, deterministic content around the click/mint location.
     gc1=win.create_gc(foreground=0x202040); gc2=win.create_gc(foreground=0xcc3030); gc3=win.create_gc(foreground=0x30cc50)
     win.fill_rectangle(gc1,0,0,W,H)
