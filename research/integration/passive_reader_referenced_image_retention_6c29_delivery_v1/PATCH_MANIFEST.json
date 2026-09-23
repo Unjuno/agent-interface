@@ -1,0 +1,114 @@
+{
+  "schema": "agent-interface/referenced-image-retention-patch-delivery-v1",
+  "source_zip": {
+    "filename": "agent-interface-continuation-handoff.zip",
+    "sha256": "9d0817ad3b5a84cef2985f26ef7369529fea18cc4ec014516addc996cf085bf1",
+    "bytes": 1364403
+  },
+  "patch": {
+    "sha256": "92f3fedfb97e67daf5dec128182d54c595cafa68bae83d488c6167db61fe5455",
+    "bytes": 814758,
+    "lines": 3750,
+    "files_added": 66,
+    "existing_files_modified": 0,
+    "files_deleted": 0,
+    "target_namespace": "research/integration/passive_reader_referenced_image_retention_6c29_v1/"
+  },
+  "parts": [
+    {
+      "path": "full_patch/part-00.patchpart",
+      "bytes": 54957,
+      "sha256": "437bc8819c9e498aff9030db3f5a31de99ce9fad4928221f7e525464c3ccf2e7"
+    },
+    {
+      "path": "full_patch/part-01.patchpart",
+      "bytes": 54959,
+      "sha256": "46a05f7366e82d80864dabee4aa941044d25795bd5148ec395298b1100d46580"
+    },
+    {
+      "path": "full_patch/part-02.patchpart",
+      "bytes": 44052,
+      "sha256": "0b7117ccdb4b23e3f0299e06464a082663fde10369c4ed1b44433ebc63a0ebfa"
+    },
+    {
+      "path": "full_patch/part-03.patchpart",
+      "bytes": 49068,
+      "sha256": "28935c33468e6b513855f3c73e0f34aa83eca0baebd8f6a1e0b530eab7b03acc"
+    },
+    {
+      "path": "full_patch/part-04.patchpart",
+      "bytes": 49068,
+      "sha256": "09824472da1c5fceb56184e45cc3b85d3ec0d8b0a49f145ebc07e750c3fdc5e0"
+    },
+    {
+      "path": "full_patch/part-05.patchpart",
+      "bytes": 49068,
+      "sha256": "eb77c175a64b840774bb2130eaad87eafede983b5ee4612bc2e4ba4aeb034fe5"
+    },
+    {
+      "path": "full_patch/part-06.patchpart",
+      "bytes": 49068,
+      "sha256": "94bee2a6f62d89f0bc18d1b64e27d349b1687e241b5254e84d7b861304d46abf"
+    },
+    {
+      "path": "full_patch/part-07.patchpart",
+      "bytes": 49068,
+      "sha256": "90722fb496af97d25bdb862f3f54cd9f9f8c6bad47cd25528359bb2a148dc86b"
+    },
+    {
+      "path": "full_patch/part-08.patchpart",
+      "bytes": 49068,
+      "sha256": "b7643c9181f708e16493ed94665b4d225169b2146d66ab82a03feea7462c8e73"
+    },
+    {
+      "path": "full_patch/part-09.patchpart",
+      "bytes": 49068,
+      "sha256": "b6abbe6d72f5580b0041cb298784720c09add69329bc715f4f9df35873f280f4"
+    },
+    {
+      "path": "full_patch/part-10.patchpart",
+      "bytes": 49068,
+      "sha256": "783e8dffacb9e3ebe2b9d06d21ee10f545f99ab1e8c5baa058ed8179c55c3d2e"
+    },
+    {
+      "path": "full_patch/part-11.patchpart",
+      "bytes": 49068,
+      "sha256": "10a0b040949e7ba4f86ae00869289e9ca55f63fefb4660777938e2cda154504a"
+    },
+    {
+      "path": "full_patch/part-12.patchpart",
+      "bytes": 49068,
+      "sha256": "73f54170263d0f318c3a08fe845cb2030b2690a2a8397bcd003d9245c43da3cf"
+    },
+    {
+      "path": "full_patch/part-13.patchpart",
+      "bytes": 49068,
+      "sha256": "067772a11883f058c47c38ceb8e37ffbf6621ae74d4ab5752d796bdcfdff785e"
+    },
+    {
+      "path": "full_patch/part-14.patchpart",
+      "bytes": 49068,
+      "sha256": "1c97cd9cbf53db5e425468d33426aafc0006f55c3bd8981445c9f20883ffbfb3"
+    },
+    {
+      "path": "full_patch/part-15.patchpart",
+      "bytes": 54975,
+      "sha256": "5b14be6f5a65f14791cd10146aefc722b2fab637f772d3f17650d69622df674a"
+    },
+    {
+      "path": "full_patch/part-16.patchpart",
+      "bytes": 16999,
+      "sha256": "66d233b5c001e814d2e91253dbc9be4b1d2b83b2907441525cb596184045cc40"
+    }
+  ],
+  "scientific": {
+    "disposition": "PASS_REFERENCED_IMAGE_RETENTION_SCOPED",
+    "formal_cases": 24,
+    "formal_reruns": 0,
+    "subprocesses": 138,
+    "audit_errors": 0,
+    "corruption_controls_rejected": 10,
+    "freeze_sha256": "3015361ad7c448751140c4d0429054f4a001e772d50c4872a6b05bd22203f979"
+  },
+  "publication_scope": "retrospective delivery of the 24-case first rung only; does not resolve #4064 second-rung raw/source HOLD"
+}
