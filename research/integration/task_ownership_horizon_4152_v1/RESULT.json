@@ -2,7 +2,20 @@
   "allocation": "task-ownership-horizon-4152-20260923-01",
   "audit_errors": [],
   "audit_sha256": "9e5e4130bf345081ca62ee0bee9bbe01e582c6f1f8bb7168909f5ff8ea8d3dfd",
-  "case_returncodes": [0,0,0,0,0,0,0,0,0,0,0,0],
+  "case_returncodes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
   "decision": "PASS_TASK_OWNERSHIP_HORIZON_SCOPED",
   "evidence_archive_bytes": 5360,
   "evidence_archive_sha256": "5d20763b7e2a0c251fb8d3b5ae90427d5e610d4a294740d910cfe5f4f897eaeb",
@@ -12,14 +25,38 @@
   "formal_invocations": 1,
   "invalidated": {
     "EXPLICIT_OWNERSHIP_HORIZON": {
-      "clicks": [1,1,1],
-      "effects": [1,1,1],
-      "stops": ["OWNERSHIP_INVALIDATED","OWNERSHIP_INVALIDATED","OWNERSHIP_INVALIDATED"]
+      "clicks": [
+        1,
+        1,
+        1
+      ],
+      "effects": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        "OWNERSHIP_INVALIDATED",
+        "OWNERSHIP_INVALIDATED",
+        "OWNERSHIP_INVALIDATED"
+      ]
     },
     "NO_OWNERSHIP_HORIZON": {
-      "clicks": [1,1,1],
-      "effects": [1,1,1],
-      "stops": ["YIELD_BOUNDARY","YIELD_BOUNDARY","YIELD_BOUNDARY"]
+      "clicks": [
+        1,
+        1,
+        1
+      ],
+      "effects": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        "YIELD_BOUNDARY",
+        "YIELD_BOUNDARY",
+        "YIELD_BOUNDARY"
+      ]
     }
   },
   "receipts_sha256": "df7097d21aeb5543b95d39f03c0fe9aec446e74dd4ea611d16947e9bf697964f",
@@ -28,14 +65,38 @@
   "schema": "task-ownership-result-v1",
   "stable": {
     "EXPLICIT_OWNERSHIP_HORIZON": {
-      "clicks": [3,3,3],
-      "effects": [3,3,3],
-      "stops": ["TASK_COMPLETE","TASK_COMPLETE","TASK_COMPLETE"]
+      "clicks": [
+        3,
+        3,
+        3
+      ],
+      "effects": [
+        3,
+        3,
+        3
+      ],
+      "stops": [
+        "TASK_COMPLETE",
+        "TASK_COMPLETE",
+        "TASK_COMPLETE"
+      ]
     },
     "NO_OWNERSHIP_HORIZON": {
-      "clicks": [1,1,1],
-      "effects": [1,1,1],
-      "stops": ["YIELD_BOUNDARY","YIELD_BOUNDARY","YIELD_BOUNDARY"]
+      "clicks": [
+        1,
+        1,
+        1
+      ],
+      "effects": [
+        1,
+        1,
+        1
+      ],
+      "stops": [
+        "YIELD_BOUNDARY",
+        "YIELD_BOUNDARY",
+        "YIELD_BOUNDARY"
+      ]
     }
   },
   "tuning": 0
