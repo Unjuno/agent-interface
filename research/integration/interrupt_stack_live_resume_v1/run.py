@@ -69,6 +69,7 @@ def run_case(root,policy,scenario,rep,display_num):
     try:
         kc_a=type_char(d,'a'); pre=wait_value(sock,'a','a')
         shown=ipc(sock,'show_interrupt')['snapshot']; saved=dict(shown)
+        # frame is saved at interrupt opening; interrupt resolution itself may later change only the resolved bit.
         if scenario=='TARGET_REPLACED': ipc(sock,'replace_target')
         elif scenario=='QUEUE_CHANGED': ipc(sock,'queue_changed')
         elif scenario=='SOURCE_STALE': ipc(sock,'source_stale')
@@ -83,7 +84,7 @@ def run_case(root,policy,scenario,rep,display_num):
         neutral_a=not key_state(d,kc_a); neutral_b=True if kc_b is None else (not key_state(d,kc_b))
         task_success=(final['a']=='ab' and final['b']=='' and final['target_id']==saved['target_id'])
         unsafe_resume=(decision=='RESUME' and scenario not in ('NORMAL',))
-        ipc(sock,'close')
+        close_resp=ipc(sock,'close')
         app_out=app.stdout.read(); app_err=app.stderr.read(); app_rc=app.wait(timeout=3)
         d.close(); xvfb.terminate(); xvfb_rc=xvfb.wait(timeout=3); xvfb_err=xvfb.stderr.read()
         row={'case_id':cid,'policy':policy,'scenario':scenario,'rep':rep,'display':display_num,
