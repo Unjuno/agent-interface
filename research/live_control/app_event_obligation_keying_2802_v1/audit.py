@@ -43,6 +43,7 @@ def check(doc):
         if r.get('candidate')!=o or r.get('candidate_prefix')!=op: errs.append(f'candidate:{s}')
         if r.get('unsafe')!=u or r.get('unsafe_prefix')!=up: errs.append(f'unsafe_record:{s}')
         if s in FALSE_PREFIX_EXPECTED:
+            # count any prefix where unsafe is SATISFIED while candidate is not
             if any(a=='SATISFIED' and b!='SATISFIED' for a,b in zip(up,op)): false_prefix[s]+=1
         fs=r.get('final_state') or {}
         expected_o1='DONE' if s in {'BOTH_COMPLETE','WRONG_B_THEN_RIGHT','INTERLEAVED_COMPLETE'} else 'READY'
