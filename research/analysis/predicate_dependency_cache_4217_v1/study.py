@@ -22,6 +22,7 @@ class State:
     values: dict
 
 def evaluate(predicate: str, s: State) -> str:
+    # Any unavailable declared dependency or stale source makes the semantic fact UNKNOWN.
     if not s.source_current:
         return "UNKNOWN"
     for key in PREDICATES[predicate]:
