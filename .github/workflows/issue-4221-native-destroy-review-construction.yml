@@ -1,0 +1,61 @@
+name: Issue 4221 Native Bridge Construction
+on:
+  pull_request:
+    types: [opened]
+    branches: [main]
+    paths:
+      - 'research/integration/native_handle_destroy_review_v1/**'
+      - '.github/workflows/issue-4221-native-destroy-review-construction.yml'
+permissions:
+  contents: read
+jobs:
+  construction:
+    if: github.event.pull_request.head.ref == 'research/native-handle-destroy-review-20260923'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 1
+      - name: Build pinned construction image
+        run: |
+          set -euo pipefail
+          docker build -f research/integration/native_handle_destroy_review_v1/Dockerfile -t issue4221-construction:${GITHUB_SHA} .
+          docker image inspect issue4221-construction:${GITHUB_SHA} > "$RUNNER_TEMP/image-inspect.json"
+      - name: Static construction tests
+        run: |
+          set -euo pipefail
+          docker run --rm --network none --read-only \
+            -v "$GITHUB_WORKSPACE:/src:ro" -w /src/research/integration/native_handle_destroy_review_v1 \
+            issue4221-construction:${GITHUB_SHA} python -B -m unittest -v test_construction.py
+      - name: Exact-source live construction
+        run: |
+          set -euo pipefail
+          OUT="$RUNNER_TEMP/construction-01"
+          mkdir -p "$OUT"
+          set +e
+          docker run --rm --network none \
+            --tmpfs /tmp:rw,nosuid,nodev,size=256m \
+            -v "$GITHUB_WORKSPACE:/src:ro" -v "$OUT:/out:rw" -w /src \
+            issue4221-construction:${GITHUB_SHA} \
+            python -B research/integration/native_handle_destroy_review_v1/run.py --mode construction --sessions 1 --out /out/run \
+            >"$OUT/container.stdout" 2>"$OUT/container.stderr"
+          RC=$?
+          set -e
+          printf '%s\n' "$RC" > "$OUT/CONTAINER_EXIT.host"
+          cat "$OUT/container.stdout"
+          cat "$OUT/container.stderr" >&2
+          test "$RC" -eq 0
+          docker run --rm --network none --read-only \
+            -v "$GITHUB_WORKSPACE:/src:ro" -v "$OUT:/out:rw" -w /src \
+            issue4221-construction:${GITHUB_SHA} \
+            python -B research/integration/native_handle_destroy_review_v1/audit.py /out/run/RAW.json --mode construction --sessions 1 --out /out/CONSTRUCTION_AUDIT.json
+      - name: Retain construction artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue4221-construction-01
+          path: |
+            ${{ runner.temp }}/construction-01
+            ${{ runner.temp }}/image-inspect.json
+          if-no-files-found: warn
