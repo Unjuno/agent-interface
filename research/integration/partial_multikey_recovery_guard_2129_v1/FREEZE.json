@@ -1,0 +1,20 @@
+{
+  "allocation": "partial-multikey-recovery-2129-20260923-01",
+  "audit_command": "python3 audit.py formal",
+  "controls_command": "python3 controls.py formal",
+  "formal_commands": [
+    "python3 runner.py formal 0 formal/batch0",
+    "python3 runner.py formal 1 formal/batch1",
+    "python3 runner.py formal 2 formal/batch2"
+  ],
+  "formal_rows": 0,
+  "issue": 4265,
+  "schema": "partial-multikey-recovery-freeze-v1",
+  "source_sha256": {
+    "PLAN.md": "ba078db289585a6e7b626a67981a1dfe05b2b2e7ad2440db660eb61bb8b1b93b",
+    "app.py": "d6335473cab4e79e78fc2eac1e61237cb34d30390e9c7f260627c78f3d6bee42",
+    "audit.py": "0f98297b017079fe28cc06ab5a03ffb2e6c7ce81cc8d31e45249d75641532989",
+    "controls.py": "488cf2c00fe30b94948cd86e466ce5176004ae473268ad9454272bc6fc443b96",
+    "runner.py": "61ae2734c28968e37894c32d1a11cd0d667cd2f9696b021a5839772018bca2f0"
+  }
+}
