@@ -2,6 +2,7 @@ from __future__ import annotations
 import hashlib,json,sys
 from pathlib import Path
 PRED={"FORM_COMPLETE":("form","required_set"),"MODAL_BLOCKING":("modal",),"RECOVERY_NEEDED":("last_effect","error"),"TARGET_MATCH":("target",)}
+
 def ev(p,s):
     if not s['source_current']: return 'UNKNOWN'
     for k in PRED[p]:
@@ -10,6 +11,7 @@ def ev(p,s):
     if p=='MODAL_BLOCKING':return 'TRUE' if s['values']['modal'] else 'FALSE'
     if p=='RECOVERY_NEEDED':return 'TRUE' if (not s['values']['last_effect']) or s['values']['error'] else 'FALSE'
     if p=='TARGET_MATCH':return 'TRUE' if s['values']['target'] else 'FALSE'
+
 def graph(v):
     if any(v[p]=='UNKNOWN' for p in ('MODAL_BLOCKING','TARGET_MATCH','FORM_COMPLETE','RECOVERY_NEEDED')):return 'YIELD_UNKNOWN'
     if v['MODAL_BLOCKING']=='TRUE':return 'YIELD_MODAL'
@@ -17,8 +19,10 @@ def graph(v):
     if v['FORM_COMPLETE']=='FALSE':return 'CONTINUE_FILL'
     if v['RECOVERY_NEEDED']=='TRUE':return 'RECOVER'
     return 'SUBMIT_READY'
+
 def expected_key(p,s):
     return {'predicate_id':p,'intent_version':s['intent_version'],'producer_version':s['producer_version'],'source_generation':s['source_generation'],'source_current':s['source_current'],'dependency_generations':{k:s['generations'].get(k) for k in PRED[p]}}
+
 def audit(root_path,formal_path):
     root=Path(root_path); obj=json.loads(Path(formal_path).read_text()); errors=[]; checks=0
     freeze=json.loads((root/'FREEZE.json').read_text())
@@ -27,7 +31,7 @@ def audit(root_path,formal_path):
         if hashlib.sha256((root/name).read_bytes()).hexdigest()!=dig: errors.append('source_hash:'+name)
     rows=obj.get('rows',[]); checks+=1
     if len(rows)!=13: errors.append('row_count')
-    mismatches=0
+    all_hits=0; mismatches=0
     for i,row in enumerate(rows):
         s=row.get('state',{}); full={p:ev(p,s) for p in PRED}; cached=row.get('cached',{})
         checks+=8
@@ -42,6 +46,7 @@ def audit(root_path,formal_path):
             e=events.get(p,{})
             if e.get('cache_key')!=expected_key(p,s): errors.append(f'{i}:{p}:key')
             if type(e.get('hit')) is not bool: errors.append(f'{i}:{p}:hit_type')
+            if e.get('hit'): all_hits+=1
     checks+=8
     if obj.get('predicate_count')!=4 or obj.get('state_count')!=13: errors.append('counts')
     if obj.get('full_recompute_calls')!=52: errors.append('full_calls')

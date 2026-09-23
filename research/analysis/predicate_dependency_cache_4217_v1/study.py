@@ -21,6 +21,7 @@ class State:
     generations: dict
     values: dict
 
+
 def evaluate(predicate: str, s: State) -> str:
     # Any unavailable declared dependency or stale source makes the semantic fact UNKNOWN.
     if not s.source_current:
@@ -38,6 +39,7 @@ def evaluate(predicate: str, s: State) -> str:
         return "TRUE" if bool(s.values["target"]) else "FALSE"
     raise KeyError(predicate)
 
+
 def graph(vals: dict[str, str]) -> str:
     required=("MODAL_BLOCKING","TARGET_MATCH","FORM_COMPLETE","RECOVERY_NEEDED")
     if any(vals[p] == "UNKNOWN" for p in required): return "YIELD_UNKNOWN"
@@ -46,6 +48,7 @@ def graph(vals: dict[str, str]) -> str:
     if vals["FORM_COMPLETE"] == "FALSE": return "CONTINUE_FILL"
     if vals["RECOVERY_NEEDED"] == "TRUE": return "RECOVER"
     return "SUBMIT_READY"
+
 
 def key(predicate: str, s: State):
     return {
@@ -56,6 +59,7 @@ def key(predicate: str, s: State):
       "source_current": s.source_current,
       "dependency_generations": {k:s.generations.get(k) for k in PREDICATES[predicate]},
     }
+
 
 def trace() -> list[State]:
     G=dict(form=1,required_set=1,modal=1,last_effect=1,error=1,target=1,toolbar=1)
@@ -81,6 +85,7 @@ def trace() -> list[State]:
     add("UNRELATED_TOOLBAR_AGAIN", iv=2,pv=2,sg=2,g={"toolbar":3},v={"toolbar":2})
     return rows
 
+
 def run():
     states=trace(); cache={}; rows=[]; calls=0; hits=0; misses=0; reasons={}
     for s in states:
@@ -90,7 +95,8 @@ def run():
             k=key(p,s); prior=cache.get(p)
             t0=time.perf_counter_ns()
             if prior is not None and prior["key"] == k and all(x is not None for x in k["dependency_generations"].values()) and s.source_current:
-                val=prior["value"]; hit=True; reason="HIT"; hits+=1
+                val=prior["value"]; hit=True; reason="HIT"
+                hits+=1
             else:
                 val=evaluate(p,s); calls+=1; hit=False; misses+=1
                 if prior is None: reason="COLD"
