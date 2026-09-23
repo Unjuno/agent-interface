@@ -92,7 +92,8 @@ def one_session(index,out):
     row={'session':index,'display':disp,'formal_alias_attempts':0,'fresh_attempts':0,'source_blobs':verify_sources()}
     try:
         row['actor_ready']=readj(actor)
-        c1=send(actor,{'op':'create'}); assert c1['ok']
+        c1=send(actor,{'op':'create'}); row['create_w1']=c1
+        if not c1.get('ok'): raise RuntimeError('ACTOR_CREATE_W1_FAILED '+json.dumps(c1,sort_keys=True))
         xid=c1['xid']; row['w1']=c1
         # Independent observer: root diagnostics and exact bound-client structure events.
         observer=display.Display(disp)
@@ -104,6 +105,9 @@ def one_session(index,out):
         # Exact current bridge.
         bridge=NativeHandleBridge(disp,{'fixture':xid},'fixture',out/'bridge')
         row['activate_w1']=activate_managed(env,xid,bridge)
+        s1=send(actor,{'op':'snapshot'}); row['snapshot_w1']=s1
+        if not s1.get('ok'): raise RuntimeError('ACTOR_SNAPSHOT_W1_FAILED '+json.dumps(s1,sort_keys=True))
+        c1['snapshot']=s1['snapshot']
         obs=bridge.observe(); geo=bridge.backend.geometry('fixture')
         point=[geo['x']+120,geo['y']+80]
         offset=bridge.mint('old',obs['sequence'],point,region_size=(24,38))
@@ -126,9 +130,13 @@ def one_session(index,out):
         row['stale_pre_review']={'result':stale_pre,'emissions_before':before,'emissions_after':bridge.backend.emissions,
                                  'effect_before':e0,'effect_after':e1}
         # Replacement from the SAME actor, deliberately reusing freed client XID.
-        c2=send(actor,{'op':'create_reuse'}); row['w2']=c2
-        if not c2['ok'] or c2['xid']!=xid: raise RuntimeError('SAME_XID_REUSE_MISSING')
+        c2=send(actor,{'op':'create_reuse'}); row['create_w2']=c2; row['w2']=c2
+        if not c2.get('ok'): raise RuntimeError('ACTOR_CREATE_W2_FAILED '+json.dumps(c2,sort_keys=True))
+        if c2['xid']!=xid: raise RuntimeError('SAME_XID_REUSE_MISSING')
         row['activate_w2']=activate_managed(env,xid,bridge)
+        s2=send(actor,{'op':'snapshot'}); row['snapshot_w2']=s2
+        if not s2.get('ok'): raise RuntimeError('ACTOR_SNAPSHOT_W2_FAILED '+json.dumps(s2,sort_keys=True))
+        c2['snapshot']=s2['snapshot']
         # Existing exact review machinery owns scope/revision transition.
         prev_scope=bridge.scope; prev_rev=bridge.binding_revision
         review=bridge.review_window(xid)

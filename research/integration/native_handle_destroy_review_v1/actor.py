@@ -73,7 +73,7 @@ def main():
                 win=create_window(d,cmd.get('reuse_xid'))
                 old_id=win.id
                 effects=[]
-                emit({'ok':True,'op':op,'xid':int(win.id),'snapshot':snapshot(win)})
+                emit({'ok':True,'op':op,'xid':int(win.id)})
             elif op=='focus':
                 win.set_input_focus(X.RevertToParent,X.CurrentTime); d.sync(); time.sleep(0.03)
                 f=d.get_input_focus().focus
@@ -89,7 +89,7 @@ def main():
             elif op=='create_reuse':
                 win=create_window(d,old_id)
                 effects=[]
-                emit({'ok':True,'op':op,'xid':int(win.id),'requested_xid':int(old_id),'snapshot':snapshot(win)})
+                emit({'ok':True,'op':op,'xid':int(win.id),'requested_xid':int(old_id)})
             elif op=='close':
                 if win is not None:
                     try: win.destroy(); d.sync()
