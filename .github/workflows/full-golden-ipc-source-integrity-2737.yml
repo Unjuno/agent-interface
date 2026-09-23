@@ -1,0 +1,26 @@
+name: Full golden IPC source integrity audit
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "research/analysis/full_golden_ipc_2737_v1/RESULT.json"
+      - "research/live_control/**"
+      - "runtime/host_model_ipc_broker_v1.py"
+      - ".github/workflows/full-golden-ipc-source-integrity-2737.yml"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit retained source hashes
+        run: |
+          set -o pipefail
+          python3 research/analysis/full_golden_ipc_2737_v1/audit_source_hashes.py | tee "$RUNNER_TEMP/full-golden-ipc-source-integrity.json"
+      - name: Upload integrity receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-golden-ipc-source-integrity-2737
+          path: ${{ runner.temp }}/full-golden-ipc-source-integrity.json
+          if-no-files-found: error

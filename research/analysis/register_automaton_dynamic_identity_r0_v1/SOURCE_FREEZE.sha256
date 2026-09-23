@@ -1,0 +1,15 @@
+# #1826 source freeze before formal execution
+task: REGISTER-AUTOMATON-DYNAMIC-IDENTITY-R0-20260919-001
+branch: research/register-automaton-dynamic-identity-1826
+base: c5f15e7c254d36a1f8ab29b364b6430a6925eb36
+formal_invocations_before_freeze: 0
+retained_formal_reruns_before_freeze: 0
+development_dry_runs: non-retained; used only to debug audit mechanics
+
+sha256  path  git_blob_sha1
+1ef214af4f6aaebb0391ba5a1c9c1a0c235966a224caf2ecd81a680bc7e03768  PLAN.md  b8ee18e061cf774fa2a28cc6611d3a2b00189a90
+f992bc79417b33a1d6503eb3879bfbf7ea325220ef3d874ac42afc92165cd977  PROOF.md  0d1706fc54ad57473f8147aff58d9235360f48a3
+e3d6dd8f583d04a8741cdb9c4f777b19b5463b42adc1831a7737ea3500ff4cf8  formal.py  a56edda3f61624ee1b7d59f46c964dbc65cdb5b1
+3085209bd963d13e58550285ee585c650a71f0261d03aa756232491d33f6bf8e  audit.py  c5bea3ceb421175132c1cb3f19ce5c7e6827a7d4
+
+Remote GitHub blob readback matched every locally computed Git blob SHA before formal execution.

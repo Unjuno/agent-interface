@@ -1,0 +1,53 @@
+{
+  "baseline": {
+    "audit_pass": false,
+    "decision": "HOLD_NO_LATENCY_DISCRIMINATOR",
+    "errors": [
+      "large_current_delta"
+    ]
+  },
+  "controls": [
+    {
+      "adds_error": true,
+      "errors": [
+        "current_hits",
+        "large_current_delta"
+      ],
+      "mutation": "current_hits"
+    },
+    {
+      "adds_error": true,
+      "errors": [
+        "temporal_hits",
+        "large_current_delta"
+      ],
+      "mutation": "temporal_hits"
+    },
+    {
+      "adds_error": true,
+      "errors": [
+        "formal_invocations",
+        "large_current_delta"
+      ],
+      "mutation": "formal_invocations"
+    },
+    {
+      "adds_error": true,
+      "errors": [
+        "large_current_delta",
+        "forbidden_actions"
+      ],
+      "mutation": "authority_grants"
+    },
+    {
+      "adds_error": true,
+      "errors": [
+        "large_current_delta",
+        "live_effect"
+      ],
+      "mutation": "live_effect"
+    }
+  ],
+  "rejected": 5,
+  "total": 5
+}

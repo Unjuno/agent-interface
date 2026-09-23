@@ -1,0 +1,71 @@
+{
+  "checks": {
+    "caller_visible_rows_present": true,
+    "final_effect_oracle_present": true,
+    "leakage_free_split": false,
+    "operation_classes": false,
+    "operation_target_oracle": false,
+    "positive_rows": false,
+    "semantic_negative_rows": false,
+    "target_alternatives": false,
+    "yield_or_no_local_action_negatives": false
+  },
+  "decision": "BLOCKED_DATA",
+  "failed_requirements": [
+    "positive_rows",
+    "semantic_negative_rows",
+    "operation_classes",
+    "target_alternatives",
+    "yield_or_no_local_action_negatives",
+    "operation_target_oracle",
+    "leakage_free_split"
+  ],
+  "formal_invocation": 1,
+  "gui_actions": 0,
+  "model_calls": 0,
+  "observed": {
+    "caller_visible_source_rows": 6,
+    "independent_final_effect_oracle": true,
+    "independent_operation_target_semantic_oracle": false,
+    "independent_split_units": 1,
+    "operation_classes": [
+      "TYPE_TEXT_THEN_SUBMIT"
+    ],
+    "positive_rows": 6,
+    "semantic_negative_rows": 0,
+    "stale_binding_negative_events": 1,
+    "stale_binding_negative_is_operation_label": false,
+    "target_alternatives_per_operation": 1,
+    "target_roles": [
+      "field",
+      "submit"
+    ],
+    "yield_or_no_local_action_negative_rows": 0
+  },
+  "provider_calls": 0,
+  "reruns": 0,
+  "scope": "retained Golden Desktop v3 census only; no model inference or task input",
+  "sources": {
+    "audit": {
+      "git_blob": "40d0f7c40ef7930661af192549e557192f361094",
+      "path": "runtime/results/golden-desktop-app-server-v3-live-01/audit.json"
+    },
+    "golden_doc": {
+      "git_blob": "940213efdcb582d6c7399d0cd1f0afc3fecb1c4a",
+      "path": "runtime/GOLDEN_DESKTOP_DEMO_V3.md"
+    },
+    "golden_report": {
+      "git_blob": "e168a9bdc84fc6b807f4e90806ec7c501da89689",
+      "path": "runtime/results/golden-desktop-app-server-v3-live-01/golden-report.json"
+    },
+    "run_source": {
+      "git_blob": "af12b8bbdf11c2c2c9f92fba94646cdc1357f7d8",
+      "path": "research/live_control/run_integrated_efficiency_live_v1.py"
+    },
+    "task_details": {
+      "git_blob": "021bb3e12182560e6704894e33dc2f2b7e3cf27e",
+      "path": "runtime/results/golden-desktop-app-server-v3-live-01/arms/persistent/task-details.json"
+    }
+  },
+  "task_input_actions": 0
+}

@@ -1,0 +1,12 @@
+{
+  "postformal_audit_only": true,
+  "primary_not_rerun": true,
+  "primary_recorded_decision": "HOLD_REPRESENTATION_NOT_SUFFICIENT",
+  "primary_exact_membership": 96,
+  "primary_literal_conflicts": 4,
+  "recomputed_literal_conflicts": 4,
+  "alpha_normalized_conflicts": 0,
+  "finding": "FAIL_INTEGRITY_COLLISION_NORMALIZATION",
+  "reason": "Primary conflict metric compared literal target/payload argument identities across rows, contrary to the frozen rule that opaque argument values are not decision keys. The primary rule itself scored 96/96 exact; no scientific promotion is allowed from this allocation.",
+  "integrity_review_sha256": "8d329c7d7cad0ddd19c1322a0a78894aae36cfbcc528fecf0293217bc951962d"
+}

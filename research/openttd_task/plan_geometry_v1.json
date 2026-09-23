@@ -1,0 +1,17 @@
+{
+  "study": "openttd-task-geometry-01",
+  "seed": 991002,
+  "setup": "select first flat buildable 3x2 rectangle whose full 7x6 guard and +6,+3 viewport offset fit the 64x64 map; signs A/C and X; no roads constructed",
+  "viewport": "before saving, scroll to tile x+6,y+3 rather than the target midpoint so target appears at a new screen position",
+  "save": "OpenTTD console save through XTEST keyboard, before model or task-controller use",
+  "restore": "two fresh private X11/game processes load the byte-pinned save with observer-only script",
+  "gates": [
+    "new target tile contract differs from [678,679,680]",
+    "restored target coordinates, guard, tiles and connections match setup",
+    "dynamic guarded scorer reports incomplete target, clear forbidden row and unchanged surroundings",
+    "source save bytes unchanged",
+    "all owned processes released"
+  ],
+  "scope": "task preparation/reset and geometry calibration; no model call, shared-runtime task control, speed or generalization claim"
+}
+

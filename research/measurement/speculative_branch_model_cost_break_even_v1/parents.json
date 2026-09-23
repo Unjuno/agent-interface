@@ -1,0 +1,12 @@
+{
+  "source_blobs": {
+    "k2_summary": "cec7c4a48cddf8ed4e9845c6a454b36c769326c0",
+    "k1_summary": "96098fa35bbc13de189581d97eb332efac22b4be",
+    "local_cost_result": "83fda0abdd2a0c5a7e410bd6f23870394d302e62",
+    "model_probe2_audit": "d5f136d5a2ed92690fdce054e362aaf37a7c476e"
+  },
+  "k2": {"decision":"HOLD_NO_LATENCY_DISCRIMINATOR","temporal_mean_ms":5.8027,"formal_invocations":1,"reruns":0},
+  "k1": {"decision":"PASS_TEMPORAL_SPECULATION_K1_BUDGET_SCOPED","temporal_mean_ms":13.62925,"formal_invocations":1,"reruns":0},
+  "local_marginal_ns": {"mean":59019.20322,"p50":52169,"p95":104828,"p99":219330,"n":100000},
+  "full_boundary_reference": {"source":"model-boundary-probe-02","local_agent_message_arrival_seconds":4.9053379,"observed_model_identity":null,"causal_for_same_generation_incremental_cost":false}
+}

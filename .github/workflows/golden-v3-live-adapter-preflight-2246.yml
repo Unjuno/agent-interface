@@ -1,0 +1,15 @@
+name: golden-v3-live-adapter-preflight-2246
+on:
+  pull_request:
+    paths:
+      - "research/integration/golden_v3_live_adapter_2246_v1/**"
+      - ".github/workflows/golden-v3-live-adapter-preflight-2246.yml"
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m py_compile research/integration/golden_v3_live_adapter_2246_v1/preflight.py
+      - run: python research/integration/golden_v3_live_adapter_2246_v1/preflight.py

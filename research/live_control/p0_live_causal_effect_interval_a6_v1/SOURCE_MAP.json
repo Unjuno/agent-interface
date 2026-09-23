@@ -1,0 +1,33 @@
+{
+  "task": "P0-LIVE-CAUSAL-EFFECT-INTERVAL-A6-20260918-001",
+  "issue": 1340,
+  "branch": "research/p0-live-causal-effect-interval-a6-20260918-001",
+  "base_main": "dbfb20ad0af51fc69dd3664762c39cf3c6f85c84",
+  "scientific_change": "replace only #988 occupancy_only duration materialization with #1328 interval-union helper",
+  "source_git_blob": {
+    "temporal_candidate.py": "8a44d0566701ee0cb5e7fadecbb7ee1f1a168a17",
+    "science_runner.py": "041b7cf1caba64f2bd1eabeee27b50d8b2b1ab0f",
+    "case_child.py": "27fede8c80942823b9c0df04e5fa39637880efaa",
+    "supervisor.py": "e440a35f156a7dc3351d865bff83be90f5393bc5",
+    "schedule.json": "38cea73de293782a4f5a22bca5428c33f223442e",
+    "PLAN.md": "530dcf85bf2b1053a1690736a5da9ebec112a4a8",
+    "AUTHORIZATION.json": "16a1a0f0bae9bd80278ddca6fbd777049c0f9dbc"
+  },
+  "pinned_parent_blobs": {
+    "base_science_runner.py": "d8c509a55fe5363dc5211aebe510a720e964f7f3",
+    "base_case_child.py": "27fede8c80942823b9c0df04e5fa39637880efaa",
+    "base_supervisor.py": "3ef3f84702a239bb797b43d396235fafffa318d7",
+    "#988_parent_candidate.py": "0482cf4c08b8c04d524a3eac11b798f07f0e0524",
+    "#1328_interval_candidate.py": "289b58e1f0afeffbf453a4c577cf3f61c3013154"
+  },
+  "pre_live_evidence": {
+    "#1328": "PASS_OCCUPANCY_INTERVAL_UNION_EQUIVALENT_SCOPED",
+    "#1339": "PASS_INTERVAL_HELPER_LIVE_BOUNDARY_DRYRUN_SCOPED",
+    "#1339_primary_150ms_elapsed_ns": 92318,
+    "#1339_primary_peak_tracemalloc_bytes": 888,
+    "#1339_scale_mismatch_count": 0
+  },
+  "live_sessions": 0,
+  "formal_invocations": 0,
+  "reruns": 0
+}

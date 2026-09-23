@@ -1,0 +1,125 @@
+{
+  "cases": [
+    {
+      "id": "r1-immediate",
+      "rep": 1,
+      "signal_after_ms": 800,
+      "strategy": "immediate"
+    },
+    {
+      "id": "r1-wait_reap",
+      "rep": 1,
+      "signal_after_ms": 800,
+      "strategy": "wait_reap"
+    },
+    {
+      "id": "r2-wait_reap",
+      "rep": 2,
+      "signal_after_ms": 800,
+      "strategy": "wait_reap"
+    },
+    {
+      "id": "r2-immediate",
+      "rep": 2,
+      "signal_after_ms": 800,
+      "strategy": "immediate"
+    },
+    {
+      "id": "r3-immediate",
+      "rep": 3,
+      "signal_after_ms": 800,
+      "strategy": "immediate"
+    },
+    {
+      "id": "r3-wait_reap",
+      "rep": 3,
+      "signal_after_ms": 800,
+      "strategy": "wait_reap"
+    },
+    {
+      "id": "r4-wait_reap",
+      "rep": 4,
+      "signal_after_ms": 800,
+      "strategy": "wait_reap"
+    },
+    {
+      "id": "r4-immediate",
+      "rep": 4,
+      "signal_after_ms": 800,
+      "strategy": "immediate"
+    },
+    {
+      "id": "r5-immediate",
+      "rep": 5,
+      "signal_after_ms": 800,
+      "strategy": "immediate"
+    },
+    {
+      "id": "r5-wait_reap",
+      "rep": 5,
+      "signal_after_ms": 800,
+      "strategy": "wait_reap"
+    },
+    {
+      "id": "r6-wait_reap",
+      "rep": 6,
+      "signal_after_ms": 800,
+      "strategy": "wait_reap"
+    },
+    {
+      "id": "r6-immediate",
+      "rep": 6,
+      "signal_after_ms": 800,
+      "strategy": "immediate"
+    },
+    {
+      "id": "r7-immediate",
+      "rep": 7,
+      "signal_after_ms": 800,
+      "strategy": "immediate"
+    },
+    {
+      "id": "r7-wait_reap",
+      "rep": 7,
+      "signal_after_ms": 800,
+      "strategy": "wait_reap"
+    },
+    {
+      "id": "r8-wait_reap",
+      "rep": 8,
+      "signal_after_ms": 800,
+      "strategy": "wait_reap"
+    },
+    {
+      "id": "r8-immediate",
+      "rep": 8,
+      "signal_after_ms": 800,
+      "strategy": "immediate"
+    }
+  ],
+  "decision_gate": {
+    "all_input_release_verified": true,
+    "immediate_overwrite_min": 1,
+    "no_same_id_reruns": true,
+    "wait_reap_final_b": "8/8"
+  },
+  "fixtures": {
+    "fixtures/a.mkv": "52bfa3db4e9ec283a2b3afebaea6fd20e47cfc521203a022f6df8e87e06663fe",
+    "fixtures/b.mkv": "2fa5d984184f6fed0ca59cee13bcaf8c0c7f8e9f07c63f209cc41ec6a6c03875",
+    "fixtures/b.ppm": "cd8a164e4a23b4285d16a3e12aa4a2299d67e5de039f888c35013e9b3d52592e",
+    "fixtures/expected.json": "5fbcc142b7d2a8fabcc2c37f7dd1d2f5322cd24c96ec53dd6c022b758a904584"
+  },
+  "hypothesis": "Reap-gated retry prevents predecessor overwrite; stop request alone does not.",
+  "limits": "one FFmpeg build/host/output path; reap covers only tracked process; no descendants/network/power-loss/exactly-once claim",
+  "publication_base": "87c50f9492e88421584dd1832195d828ea1d35e5",
+  "question": "Does same-target retry before predecessor reap permit a late predecessor overwrite?",
+  "schema": "producer-quiescence-plan-v1",
+  "sources": {
+    "research/cross_domain/producer_quiescence_v1/audit.py": "d588df5cc7db96f055ba4a3857b607637ac4f025b5bb9dcfa6a0c5b9fd3108ee",
+    "research/cross_domain/producer_quiescence_v1/bench.py": "2eba1b89a1be3a90108d5ec2bae38f6c709fbf02710437992293e564f11a8332",
+    "research/cross_domain/producer_quiescence_v1/contract.py": "9150c21d67da8d25541696de45405a6f9f8c306a333e80badfa287b4fcdd0039",
+    "research/cross_domain/producer_quiescence_v1/test_contract.py": "5f3596efb4f8b728ad8351ff60bbf971e5b2ff9b8a7550fcf1fb033bbe89a9f0",
+    "research/cross_domain/producer_quiescence_v1/worker.py": "1d5911ea2eb91ebc5390594d226fd4236a8dbf448266aebc9cbe8bc6a582d354"
+  },
+  "task": "O3-PRODUCER-QUIESCENCE-20260916-001"
+}

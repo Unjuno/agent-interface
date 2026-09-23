@@ -1,0 +1,33 @@
+{
+  "sources": {
+    "probe_post_release_stop_v1.py": "d572d78a7eb22f78a1c537cda050bdcab0f14d4c3e4449f0f633436a8e5afed8",
+    "executor_v7.py": "06fc0bf5a626b23a4cbd7eae53478f98ac75a3ac0c3ea3f92645d8293ad82839",
+    "executor_v8.py": "96c6e59762adf0e21978d2f2b0c2cbfb6108055a3bdf9fde42c9e809e4c533f4",
+    "post_release_observation_v1.py": "41ead44af79f5c022433963f3cf2f7fdc91a0b11d034aed0916fc99ef130bc49",
+    "post_release_observation_v2.py": "d53cf8ca86d4a932467313da8ac7400748511792c7da60b1d365caf246b01be7",
+    "lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47"
+  },
+  "cases": [
+    [
+      "capture",
+      "cancel"
+    ],
+    [
+      "output",
+      "cancel"
+    ],
+    [
+      "before_collect",
+      "cancel"
+    ],
+    [
+      "capture",
+      "close"
+    ],
+    [
+      "output",
+      "close"
+    ]
+  ],
+  "scope": "Synthetic gates in real worker threads. Probe releases every gate; not X11, actual pipe saturation, or a hard capture timeout."
+}

@@ -1,0 +1,566 @@
+[
+  {
+    "stage": 1,
+    "interaction": "click",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 30310100744015,
+        "ended_ns": 30310373546478,
+        "emissions": 15,
+        "program_emissions": 15,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 30310373544023
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      "recovery_required": false,
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 2,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            600,
+            378
+          ],
+          "observed_box": [
+            588,
+            371,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 2,
+          "valid_until_ns": 30311522919200,
+          "patch_sha256": "76ac6bd058a2208782137a8edcdd3b74b817b9f6371a5910ef82c670b1c26ff1",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 3,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            600,
+            378
+          ],
+          "observed_box": [
+            588,
+            371,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 3,
+          "valid_until_ns": 30311601358966,
+          "patch_sha256": "76ac6bd058a2208782137a8edcdd3b74b817b9f6371a5910ef82c670b1c26ff1",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 4,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            600,
+            378
+          ],
+          "observed_box": [
+            588,
+            371,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 4,
+          "valid_until_ns": 30311675128995,
+          "patch_sha256": "76ac6bd058a2208782137a8edcdd3b74b817b9f6371a5910ef82c670b1c26ff1",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 5,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            600,
+            378
+          ],
+          "observed_box": [
+            588,
+            371,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 5,
+          "valid_until_ns": 30311748831842,
+          "patch_sha256": "76ac6bd058a2208782137a8edcdd3b74b817b9f6371a5910ef82c670b1c26ff1",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "started_ns": 30310006535741,
+    "feedback": {
+      "status": "matched",
+      "task_success": null,
+      "authority_granted": false,
+      "input_dispatched": false,
+      "expected_title": "*shape.svg - Inkscape",
+      "rejected_titles": [],
+      "samples": [
+        {
+          "known_ns": 30310384975286,
+          "title": "*shape.svg - Inkscape",
+          "binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          }
+        }
+      ],
+      "started_ns": 30310384162656,
+      "observation": {
+        "sequence": 6,
+        "binding_revision": 0,
+        "capture_ns": 30310385433814,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "ebb1fa5a7f3aedc8d01fa6071f1b7d62faa449179b13c356515388d97463fc6f",
+          "width": 1280,
+          "height": 800,
+          "target": "app",
+          "native_window_id": 6291463,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 30310385433814,
+          "capture_ended_ns": 30310390670859,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-mcp-finish-restored-01/run/bridge/images/f0b90da71ec94c718aaf7950f064c71c.png",
+            "sha256": "8b96fbb254e561b746c4ad8d42f7e3a2cc9c432befb6d8f110ebcb8a33350641",
+            "bytes": 55609,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "ebb1fa5a7f3aedc8d01fa6071f1b7d62faa449179b13c356515388d97463fc6f"
+          }
+        }
+      },
+      "title": "*shape.svg - Inkscape",
+      "after_title": "*shape.svg - Inkscape",
+      "ended_ns": 30310458783570
+    },
+    "ended_ns": 30310464810093,
+    "window_review": {
+      "status": "reviewed",
+      "authority_granted": false,
+      "input_dispatched": false,
+      "previous_scope": "native-x11:c3e6be04858146afbc944f848b82faf1",
+      "previous_binding_revision": 0,
+      "binding_revision": 1,
+      "scope": "native-x11:129cf73b8ee349f2bd3f85e0daeff59a",
+      "previous_window_id": 6291463,
+      "requested_window_id": 6291463,
+      "started_ns": 30310470578289,
+      "observation": {
+        "sequence": 7,
+        "binding_revision": 1,
+        "capture_ns": 30310471078731,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "55bf72eb033ba4aed1cd61040f73d98e75807bfa9b47253f651d5131c3ea4c42",
+          "width": 1280,
+          "height": 800,
+          "target": "app",
+          "native_window_id": 6291463,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 30310471078731,
+          "capture_ended_ns": 30310477032834,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-mcp-finish-restored-01/run/bridge/images/3b7591386dd1497bb1a9877a1f971c4f.png",
+            "sha256": "30826bd40601b412dfa60537a4279980c014e2491ae9faca69aa5272c1d9f2e6",
+            "bytes": 55856,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "55bf72eb033ba4aed1cd61040f73d98e75807bfa9b47253f651d5131c3ea4c42"
+          }
+        }
+      },
+      "ended_ns": 30310539491482
+    },
+    "through_review_ns": 30310545310887
+  },
+  {
+    "stage": 2,
+    "interaction": "keyboard",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "event.feedback",
+        "input.keyboard",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 30334235706589,
+        "ended_ns": 30334359945379,
+        "emissions": 43,
+        "program_emissions": 28,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 30334359943072
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "recovery_required": false,
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 8,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_2",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_2",
+          "point": [
+            614,
+            378
+          ],
+          "observed_box": [
+            602,
+            371,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 8,
+          "valid_until_ns": 30335669307689,
+          "patch_sha256": "4da9b4d2f0222054648c3115712ba3fa098743c16df2b53392f5ff45b203141f",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 9,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_2",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_2",
+          "point": [
+            614,
+            378
+          ],
+          "observed_box": [
+            602,
+            371,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 9,
+          "valid_until_ns": 30335736257244,
+          "patch_sha256": "4da9b4d2f0222054648c3115712ba3fa098743c16df2b53392f5ff45b203141f",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "started_ns": 30334165164098,
+    "feedback": {
+      "status": "matched",
+      "task_success": null,
+      "authority_granted": false,
+      "input_dispatched": false,
+      "expected_title": "shape.svg - Inkscape",
+      "rejected_titles": [],
+      "samples": [
+        {
+          "known_ns": 30334380733174,
+          "title": "*shape.svg - Inkscape",
+          "binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          }
+        },
+        {
+          "known_ns": 30334431997212,
+          "title": "shape.svg - Inkscape",
+          "binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          }
+        }
+      ],
+      "started_ns": 30334379372845,
+      "observation": {
+        "sequence": 10,
+        "binding_revision": 1,
+        "capture_ns": 30334432611216,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "783206c67fbf9b86ea1441ae9cf1e4ed5d5d9387c9d1bc5befa54fae394e3e4d",
+          "width": 1280,
+          "height": 800,
+          "target": "app",
+          "native_window_id": 6291463,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 30334432611216,
+          "capture_ended_ns": 30334439639057,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-mcp-finish-restored-01/run/bridge/images/52147029a4744fd3aa65a4a491874beb.png",
+            "sha256": "368e9e262c56c34c5cc45af9e4c0c6598ec64271643c1c5fa2c626fec3108120",
+            "bytes": 55676,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "783206c67fbf9b86ea1441ae9cf1e4ed5d5d9387c9d1bc5befa54fae394e3e4d"
+          }
+        }
+      },
+      "title": "shape.svg - Inkscape",
+      "after_title": "shape.svg - Inkscape",
+      "ended_ns": 30334502940404
+    },
+    "ended_ns": 30334506724510,
+    "window_review": {
+      "status": "reviewed",
+      "authority_granted": false,
+      "input_dispatched": false,
+      "previous_scope": "native-x11:129cf73b8ee349f2bd3f85e0daeff59a",
+      "previous_binding_revision": 1,
+      "binding_revision": 2,
+      "scope": "native-x11:0385e8f86b9e411c8d073f929f81336b",
+      "previous_window_id": 6291463,
+      "requested_window_id": 6291463,
+      "started_ns": 30334512334975,
+      "observation": {
+        "sequence": 11,
+        "binding_revision": 2,
+        "capture_ns": 30334513018029,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "783206c67fbf9b86ea1441ae9cf1e4ed5d5d9387c9d1bc5befa54fae394e3e4d",
+          "width": 1280,
+          "height": 800,
+          "target": "app",
+          "native_window_id": 6291463,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 30334513018029,
+          "capture_ended_ns": 30334519229151,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-mcp-finish-restored-01/run/bridge/images/2670bdf5b5224f82b92d536a9c5c202b.png",
+            "sha256": "368e9e262c56c34c5cc45af9e4c0c6598ec64271643c1c5fa2c626fec3108120",
+            "bytes": 55676,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "783206c67fbf9b86ea1441ae9cf1e4ed5d5d9387c9d1bc5befa54fae394e3e4d"
+          }
+        }
+      },
+      "ended_ns": 30334573045206
+    },
+    "through_review_ns": 30334577006893
+  }
+]

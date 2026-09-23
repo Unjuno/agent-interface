@@ -1,0 +1,65 @@
+{
+  "schema": "map01_threat_fixture_v2_prereg_v1",
+  "allocation_id": "map01-threat-fixture-v2-build-01",
+  "purpose": "create and retain one model-free reproducible MAP01 state outside the exact v1 threat fixture for the future v31 typed-soft-context transfer test",
+  "parent": {
+    "id": "map01-threat-contact-v1",
+    "manifest": "research/doom/fixtures/map01-threat-contact-v1/fixture.json",
+    "episode_tic": 1263
+  },
+  "fixed_continuation": [
+    {
+      "kind": "commands",
+      "commands": [
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        }
+      ]
+    },
+    {
+      "kind": "coast",
+      "duration_ms": 750
+    }
+  ],
+  "command": [
+    "wsl",
+    "bash",
+    "-lc",
+    "cd \"/mnt/c/Users/junny/Documents/New project/agent-interface\" && PYTHONPATH=_vizdoom python3 research/doom/build_map01_threat_fixture_v2.py --out results-local/doom/map01-threat-fixture-v2-build-01 --fixture-out results-local/doom/fixtures/map01-threat-contact-v2-dev-01.png --parent-manifest research/doom/fixtures/map01-threat-contact-v1/fixture.json --seed 990619"
+  ],
+  "allocation_limit": "run exactly once and retain the first outcome whether viable or failed; no adaptive continuation or retry",
+  "input_contract": "same X11 Executor and semantic compiler; setup-only save; no model calls, action vector, pause, automap, labels or hidden game state for action selection",
+  "candidate_pass": {
+    "parent_hashes_match": true,
+    "fresh_episode_tic_strictly_greater_than_parent": true,
+    "source_frame_hash_differs_from_parent": true,
+    "all_programs_complete_with_verified_empty_release": true,
+    "model_calls": 0,
+    "exact_health_extraction": "observed and >=1",
+    "manual_visible_threat": "source frame visibly contains at least one enemy",
+    "fresh_process_reload": "manifest/save hashes and loaded episode tic match candidate"
+  },
+  "candidate_failure_policy": "retain any failed exposure, load, release, hash, health, death or terminal result and do not substitute a second continuation",
+  "scope": "fixture feasibility only; no v31 planner run, gameplay, reliability, speed, token or MAP01-clear claim",
+  "source_sha256": {
+    "research/doom/session_map01_v8.py": "627fc4b8bfa172b2cb198f7d8c991f4847c5164b24539114b51b6b07150bb385",
+    "research/doom/build_map01_threat_fixture_v2.py": "f87bb4ced9408f0bda741c3a75260f8b9da216563e55128e11a792e5c6b635f5",
+    "research/doom/map01_overlap_controller_v31.py": "fd0ac048a2ec05898fcde74a7f3d29421231013e1ec9a19fbb379d03a9740799",
+    "research/doom/map01_cover_policy_schema_v5.json": "453a1d1d47a2becb4fa916c86224b55566adec44cdc1d919cff8a4edfac6fd5e",
+    "research/doom/fixtures/map01-threat-contact-v1/fixture.json": "e86632589f5195a1ef40de4e7024e80c2b801f00d2869f595e3d62366b6bea88",
+    "research/doom/fixtures/map01-threat-contact-v1/save.png": "69cee13301c825e3fe0f41298927ee9fb4a0b003b055a18ee3bdba712b9b7d31",
+    "research/live_control/session_v8.py": "508bc5441a08d7e403b1ec84cc08fd10d7d5f92f3f41549ef8af79f5b5de0943",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "research/live_control/coast_backend_v1.py": "fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "audit_byte_identical": true,
+  "byte_equal": true,
+  "checks": [
+    {
+      "command": [
+        "python",
+        "-I",
+        "-S",
+        "-B",
+        "test_audit.py"
+      ],
+      "exit": 0,
+      "stderr_sha256": "5dde446ac7bdde32c861c5dfbe128a2343a425bda33fca4bdd60022cb29b3b8d",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "python",
+        "-I",
+        "-S",
+        "-B",
+        "audit.py",
+        "--input",
+        "formal-01",
+        "--out",
+        "/mnt/data/publication/f3a1-RECHECK.json"
+      ],
+      "exit": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "a31f2dbccd592af1d8dac00a0eb6bef62b5d18f82244c82c59c465ceded3bfc2"
+    }
+  ],
+  "file_count": 369,
+  "formal_reruns": 0,
+  "packaging_controls": {
+    "absolute_member_part": {
+      "no_output_mutation": true,
+      "refused": true,
+      "returncode": 1
+    },
+    "changed_part": {
+      "no_output_mutation": true,
+      "refused": true,
+      "returncode": 1
+    },
+    "missing_part": {
+      "no_output_mutation": true,
+      "refused": true,
+      "returncode": 1
+    },
+    "occupied_destination": {
+      "no_output_mutation": true,
+      "refused": true,
+      "returncode": 1
+    },
+    "reordered_parts": {
+      "no_output_mutation": true,
+      "refused": true,
+      "returncode": 1
+    },
+    "wrong_expanded_hash": {
+      "no_output_mutation": true,
+      "refused": true,
+      "returncode": 1
+    },
+    "wrong_file_count": {
+      "no_output_mutation": true,
+      "refused": true,
+      "returncode": 1
+    }
+  }
+}

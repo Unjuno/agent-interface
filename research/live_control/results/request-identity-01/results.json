@@ -1,0 +1,16 @@
+{
+  "rejections": {
+    "expired-attempt": {
+      "sequence": 2,
+      "reason": "intent validity expired"
+    },
+    "invalid-attempt": {
+      "sequence": 3,
+      "reason": "unsupported operation"
+    }
+  },
+  "same_action_distinct_requests": true,
+  "replay_no_resend": true,
+  "conflict_and_reserved_rejected": true,
+  "subsequent_saved_task": true
+}

@@ -1,0 +1,512 @@
+# Unified runtime CLI/API v1
+
+This is the model/vendor-neutral local entry point over promoted Agent Interface backends.
+
+For a retained `prepared_exchange` action report, inspect the result and latest
+observation without printing the full routine event history:
+
+```bash
+python -m runtime.cli_v1 receipt --report /path/to/report.json
+python -m runtime.cli_v1 receipt --report /path/to/report.json --raw
+```
+
+The default view retains every top-level report field, the full latest
+observation(s), terminal/evaluation/error events and all unknown event types.
+It moves older observations and routine command/admission/step records out of
+the view, keeping their counts and the raw report's path/SHA-256. `--raw` returns
+the complete parsed report. Use raw history when intermediate states matter.
+This is an opt-in historical result view, not a live stream reducer or a new
+observation; it neither sends input nor renews a lease. Reading succeeds with
+exit code 0 even when the report describes a failed task: inspect its status and
+outcome. Malformed receipts return `invalid_receipt` and exit code 2.
+
+An [actual assistant XTerm run](../results/receipt-self-use-01/README.md) records
+the motivating truncated output and the subsequent use of this view. Byte counts
+there are not model-token or performance measurements.
+
+```bash
+python -m runtime.cli_v1 doctor
+python -m runtime.cli_v1 dispatch \
+  --program program.json \
+  --targets targets.json \
+  --current-observation-seq 7 \
+  --current-binding-revision 3
+```
+
+`targets.json` remains explicit native target identity:
+- Linux/X11: X11 window IDs;
+- Windows: HWNDs;
+- macOS: PIDs.
+
+The CLI does not discover targets, rewrite leases/freshness, retry automatically, or grant authority. `doctor` is diagnostic only. `dispatch` delegates to `selector_v1`, then the promoted backend session, then `runtime/core_v1` admission.
+
+### Retain a CLI attempt before delivering stdout
+
+For `observe` or `dispatch`, optionally specify `--run-directory /absolute/new-run`.
+Its parent must exist and the run directory must not exist. The CLI records
+`request.json` before invoking the API, puts captures under `images/`, and saves
+the original `report.json` before review or stdout delivery. Do not combine this
+option with `--capture-directory`. `--review --compact --report-refs` remains
+available; the run directory supplies the capture location required by review.
+
+Read an existing report without another operation:
+
+```sh
+python -m runtime.cli_v1 review --report /absolute/new-run/report.json --run-directory /absolute/new-run
+```
+
+The returned `retention` metadata distinguishes request and report persistence.
+An unusable/existing destination prevents invocation. Report persistence failure
+after invocation keeps the original outcome in stdout, reports a persistence
+error and makes the exit status nonzero. A presentation or broken stdout failure
+does not remove an already saved raw report. Files are flushed and fsynced before
+atomic publication; this is not a power-loss or filesystem-durability guarantee.
+Temporary files can remain after a write failure.
+
+A request with no complete report means an unknown outcome: the API may have
+run. Neither request existence nor the directory name establishes completion or
+authorizes replay. There is no automatic resume/retry. Argument parsing and JSON
+loading happen before attempt reservation. With this option omitted, existing
+CLI behavior is unchanged and stdout is not automatically retained.
+
+Use `doctor --check-dependencies` to list discovery status and installed package
+versions for python-xlib, Pillow and the optional MCP SDK in the current Python
+environment. This works through the portable CLI too. It does not import those
+modules, open a display, install anything or verify native-library compatibility.
+Missing packages and failed metadata inspection remain distinct. The existing
+`runtime_available` field describes backend selection only, not successful imports,
+permissions or application readiness. Fixture-specific dependencies such as GTK/GI
+are outside this public-runtime inventory and still need their own preflight.
+
+X11 text accepts `=` and `*`, including in paced text such as
+`{"op":"text","text":"=A2*B2","gap_ms":20}`. These symbols, like `:` and `/`,
+are resolved from the live keymap's unshifted or shifted level. Unmapped symbols
+or unsupported levels are refused during whole-program preflight before input.
+This does not provide arbitrary Unicode or additional modifier-group support.
+
+For a finite keyboard batch, public `dispatch` accepts `repeat` on a `key_chord`
+operation, for example `{"op":"key_chord","keys":["Right"],"repeat":18}`.
+It expands that instruction to 18 ordinary chords before opening the backend.
+Counts must be integers from 1 to 126; the entire expanded program, including
+focus, waits and final release, must fit the existing 128-operation limit.
+Repeating other operations is refused. Existing admission and source/lease checks
+still apply to the expanded program. Direct core callers must expand first;
+unexpanded `repeat` is rejected rather than silently executed once.
+
+The response's `compilation.source_program` preserves the original request and
+`compilation.operation_sources` maps each expanded operation index back to its
+original instruction index. Failure and observation indices refer to the expanded
+program. No waits, retries or asynchronous scheduling are inserted. A program
+without `repeat` keeps the original path and receives no compilation metadata.
+
+For compiled programs, the review outcome summary also includes
+`failed_source_operation`: a zero-based `source_operation_index`, a one-based
+`occurrence`, and `occurrence_count`. For example, failure in the second of three
+Left chords identifies occurrence 2 of the original repeated instruction.
+This field is null when there is no recorded failure or the retained mapping is
+missing, malformed, or inconsistent with the source program. The expanded failure
+index and partial-effect uncertainty remain visible. This historical mapping does
+not establish that retrying the instruction is safe or authorize input replay.
+
+Each `dispatch` owns its one-shot session and closes its native backend connection
+when that backend exposes `close`, including after refusal or an execution error.
+If backend construction raises before returning a session, `dispatch` returns
+`runtime_failed` and `observe` returns `observation_failed`, both with the original
+exception text and `failure_phase=backend_initialization`. No retry is made and no
+cleanup success is inferred for a session that was never returned. Expected
+selection/dependency refusals continue to use `backend_unavailable`.
+A close failure returns `runtime_failed` with `cleanup_error`, preserving any
+execution result or original error. The CLI consequently exits nonzero. This
+connection cleanup does not replace the backend's input-release checks.
+
+X11 execution errors return nested `status: execution_failed` with the retained
+`execution` record. `completed_ops` lists zero-based operations that returned;
+`failed_op` identifies the interrupted operation, whose effects remain unknown
+and may include partial input. Observations obtained before failure, per-program
+emission count and recovery-release results survive. A failed recovery release
+is recorded separately from the original execution error. None of these fields
+prove application success or authorize replay of the completed prefix.
+
+Wayland-only Linux currently fails closed because no Wayland backend has been promoted. Linux/X11 requires the existing `python-xlib` dependency used by `x11-v1`.
+
+For assistant-visible observations on X11, pass `--capture-directory DIRECTORY`
+to `dispatch`, or `capture_directory=...` to the Python dispatch APIs. This
+optional path additionally requires Pillow. Each native `observe` encodes a PNG
+from its existing GetImage reply and returns its path, PNG SHA-256, dimensions
+and source-raw SHA-256 in `artifact`, alongside the unchanged raw pixel hash.
+The row also records target/window, frame/region and capture start/end clocks.
+The directory is caller-selected; generated filenames are unique and created
+without overwrite. No second capture is substituted for that observation.
+
+The initial encoder supports 24-bit TrueColor with 32-bit pixels and the usual
+RGB masks, in either byte order. Unsupported formats or encoding/write errors
+return `artifact_error` while retaining the captured metadata and execution
+result. Consumers needing an image must check that field. Artifact creation is
+not an application score or a renewal of observation/input authority. It can
+show the state before an asynchronous save has rendered, even if a later scorer
+confirms the save. Other backends reject this option before dispatch. Default
+hash-only behavior remains available without Pillow.
+
+After an input result, request a new observation without replaying input or
+changing focus:
+
+```sh
+python -m runtime.cli_v1 observe --targets targets.json --target fixture \
+  --frame window_client --region 0 0 400 180 --capture-directory observations
+```
+
+The equivalent Python entry point is `runtime.cli_v1.observe.observe`. Currently
+this read-only path is implemented for X11. It captures once, closes its own
+connection and returns `agent-interface/runtime-observation-v1` with a new
+`observation_id`. It never dispatches a program, focuses the window, replays an
+action, releases held input, refreshes a lease or supplies task success. A close
+failure keeps any captured observation but returns `observation_failed`.
+Capture/encoding status must still be checked, including `artifact_error`.
+The existing X11 backend constructor requires XTEST even for this read-only
+entry point. Regions are bounded to 8192 pixels per dimension and 16 Mi pixels.
+
+This gives callers the continuation primitive for delayed rendering. The caller
+still chooses when another observation is useful and whether its pixels prove
+the intended effect; repeated observation is not an implicit completion test.
+
+On X11, `wait_update` currently performs a fixed sleep, and `verify` performs no
+verification. Neither establishes redraw completion or application success.
+Execution receipts include `waits` with operation index, requested milliseconds,
+local monotonic start/end, and whether the sleep completed. `update_observed`
+remains null because this operation does not observe an update. Interrupted
+waits and prior waits survive in partial-failure receipts. These intervals measure
+backend waiting only, not model waiting or time to useful feedback. The operation
+does not add captures, poll application state, or repeat input.
+
+
+Golden-v3 boundary is provided by runtime.cli_v1.golden_v3.dispatch_golden_v3; it preserves the existing dispatch contract and is authority-neutral.
+
+Its `golden-v3-result-v2` result distinguishes native program completion from
+application scoring. Native `completed` sets `program_completed: true`;
+`task_success` remains `null` when no independent task result was supplied.
+Native refusal retains its error and returns `refused`. Unverified release does
+not count as completion. `status: success` requires both completion and an
+explicit positive task result, with no dispatch or cleanup failure.
+
+Cleanup failure sets `status: cleanup_failed` and `task_success: false` without
+erasing already reported program completion; any supplied application result
+is preserved in `raw_dispatch`. Consumers must use `status` for overall
+success rather than either boolean alone. `raw_dispatch` retains the complete
+dispatch response, including native observations, release evidence and effects,
+even when the adapter cannot interpret it. The older `partial_effects` list is
+only a forwarded field: an empty list is not proof that no input occurred.
+These changes replace v1's conflated success booleans; callers inspecting the
+schema must accept v2 explicitly. This adapter still does not perform visual
+target revalidation, compile guarded methods or obtain an application score.
+
+Usage is forwarded separately from dispatch outcome. `usage_status` is `reported`
+only when a nonempty usage mapping is present from the explicit adapter argument
+or the raw dispatch response; otherwise it is `unavailable`. An empty `usage`
+object is a compatibility placeholder, not a zero-token report. Accounting code
+must check `usage_status` before aggregating numeric fields.
+
+
+Read a retained prepared-exchange receipt together with its referenced PNG:
+
+```sh
+python -m runtime.cli_v1 review --report report.json --run-directory /absolute/run
+# The portable runtime supports the same command:
+python agent-interface-runtime.pyz review --report report.json --run-directory /absolute/run
+```
+
+The JSON response contains the receipt view and an image block (`type`,
+`mimeType`, base64 `data`) that a host can forward to its model image input.
+It selects the newest referenced observation, including terminal review, and
+checks path containment, capture identity and PNG signature. It never falls
+back to an older frame when the newest image is missing. `image_status` is
+`image`, `no_observation`, or `needs_review`. Exit 2 signals an invalid receipt
+or unavailable/conflicting image; a valid receipt is retained when its image
+cannot be read. Exit 0 means presentation succeeded, not that the task succeeded.
+This is historical evidence: no new capture, input, completion inference or
+sensor registration occurs. Native research reports use the research adapter;
+this command accepts prepared-exchange receipts and public `runtime-observation-v1`
+responses. Save `observe` output to JSON, then pass that file to `review`.
+For public observations, the PNG hash and source-raw hash must match the
+capture artifact. The original observation ID is retained; no exchange sequence
+is invented. A cleanup failure remains visible even if its captured image is readable.
+
+
+`review` also accepts `runtime-dispatch-result-v1` responses. It presents the
+last entry in `result.execution.observations`, in the backend's execution order,
+and preserves its zero-based `execution_observation_index`. It never invents an
+exchange sequence. Capture identity and PNG hash checks are the same as for
+public observation responses. A refusal with no capture reports no_observation;
+a failed/missing final capture reports needs_review rather than showing an older
+frame. The complete execution status, partial effects, releases and cleanup errors
+remain in the receipt. The last captured frame may precede later input or an
+asynchronous application update: it does not prove the final application state.
+
+```sh
+python -m runtime.cli_v1 review --report dispatch-result.json --run-directory /absolute/run
+```
+
+
+To pass a complete response without creating a report file, use `review --report -`.
+Python callers can pass the original bytes to `runtime.cli_v1.review.review_bytes`.
+The source digest covers the received bytes, not reserialized JSON. Since there
+is no retained source file, the full original parsed report is included under
+`receipt.source.raw_report`; source.path is null. Image validation is unchanged.
+This avoids a temporary report file, not image storage or model token costs.
+
+In bash, use pipefail so an upstream dispatch failure is not hidden by successful
+review. A review exit of 0 only means presentation succeeded:
+
+```sh
+set -o pipefail
+python -m runtime.cli_v1 observe --targets targets.json --target fixture \
+  --frame window_client --region 0 0 400 180 --capture-directory images |
+  python -m runtime.cli_v1 review --report - --run-directory .
+```
+
+Forward the JSON image block through the host's image-input mechanism; printing
+base64 text to the model is not image delivery. The portable zipapp accepts the
+same arguments. Stdin mode does not write a report, recapture, or replay input.
+
+
+X11 key names follow case-sensitive X keysyms: use `Right`, `Left`, `Up`,
+`Down`. The explicit aliases `CTRL`, `SHIFT`, `ALT`, `ENTER`, `TAB`, `ESC`,
+and `SPACE` are supported. Uppercase arrow names are refused before input and
+now report the canonical spelling. A completed program does not acknowledge
+each application's response to individual key events; verify the observed or
+saved effect when exact displacement matters. See the actual-use record in
+[the retained Inkscape use record](https://github.com/Unjuno/agent-interface/blob/873ecdafd/runtime/results/public-inkscape-use-01/README.md) for a three-key request with a smaller
+saved displacement than the nominal six units.
+
+
+For public observation/dispatch images, `image_reference.recorded_capture`
+exposes the selected capture's recorded target, native window ID, coordinate
+frame, region, dimensions and capture clocks when present. Missing fields are
+omitted. These values come from that same capture, not an earlier full-screen
+image or the current desktop. For example, a region `[20,75,180,45]` in
+`window_client` means the 180x45 image was captured starting at window-local
+(20,75). The field is historical metadata, not revalidated target binding or
+permission to send input; do not assume the window has remained unchanged.
+
+
+New X11 dispatch captures include zero-based `operation_index`, also forwarded
+in `image_reference.recorded_capture`. This indexes the submitted program's
+`ops`, whereas `execution_observation_index` indexes only its retained images.
+Compare it with the program and completed/failed operation evidence before
+calling a frame "after the action": later input may have changed the application.
+Standalone observe and older receipts omit operation_index; it is not inferred.
+A capture at the last observe operation still does not prove asynchronous work
+has finished. Existing frozen records remain unchanged.
+
+
+`review.outcome_summary` puts recorded statuses and errors beside the image.
+For dispatch, `reported_status: returned` can coexist with `execution_status:
+refused`; `execution_error` and `execution_detail` retain its recorded reason.
+A close failure can coexist with completed execution and remains visible in
+`cleanup_error`. Missing or malformed fields are null, including unknown
+recovery_required. The summary does not infer task success, zero input effects,
+or permission to resend. The complete original result remains in the receipt.
+
+
+Partial execution failures also expose their recorded `failure_detail`,
+`failed_operation_index` and `failed_operation_effect`. The latter can explicitly
+state that partial input may already have occurred. It is not converted into a
+retry recommendation; absent/malformed evidence remains unknown. The completed
+prefix and release records remain in the full receipt for recovery decisions.
+
+
+For one-call result/image delivery, add `--review` to `observe` or `dispatch`,
+alongside `--capture-directory`. This returns the same review envelope directly,
+without another CLI process or temporary report file:
+
+```sh
+python -m runtime.cli_v1 observe --targets targets.json --target fixture \
+  --frame window_client --region 0 0 400 180 --capture-directory images --review
+```
+
+Dispatch still executes its program once; the flag only presents already
+captured images. Without an observe operation there may be no image. Input
+refusals and runtime failures keep their original nonzero exit codes even when
+review succeeds. If execution succeeded but presentation fails, exit 2 and the
+retained result allow the caller to inspect the problem without replaying input.
+A missing capture-directory is rejected before any execution. The default raw
+response remains unchanged when --review is omitted. Standalone review remains
+available for inspecting retained results later.
+
+### Inspecting interrupted retained attempts
+
+For opt-in diagnosis, add `--retention-timings` to retained `observe` or
+`dispatch`. It requires `--run-directory` and adds `retention.timings_ns`:
+`request_persistence`, `api_call`, and `report_persistence`. These are monotonic
+durations in nanoseconds; an unstarted phase is null. Request persistence includes
+directory reservation and JSON serialization/write/flush/fsync/rename. API time
+includes everything inside the API call, not just native input. Result persistence
+includes its JSON publication. Exceptions still record the attempted phase.
+Preparation, process startup/imports, review/image presentation and stdout delivery
+are excluded. These intervals are not model-useful feedback or semantic completion.
+Raw reports remain unchanged. Timings are response metadata only and can be lost
+with stdout; `attempt-status` does not reconstruct them. The default adds no clock
+reads or timing fields. See the [motivating timing gap](../results/cli-current-calc-01/README.md#retained-timing-decomposition).
+
+Run `python agent-interface-runtime.pyz attempt-status --run-directory RUN` to
+read a retained attempt without dispatch, observation, replay, or file changes.
+The `agent-interface/cli-attempt-status-v1` response includes request/report JSON
+and SHA-256 digests of the bytes read. `report_recorded` (exit 0) means both JSON
+records are readable, not that an action or task succeeded. Read the raw report
+outcome, and use `review --report RUN/report.json --run-directory RUN` for images.
+
+A missing report returns `unknown_or_incomplete` (exit 2). Neither a request nor
+an absent report proves whether input occurred. `process_state` remains `unknown`
+and `replay_allowed` is always false, including for recorded reports. An unreadable
+record or unavailable directory returns `invalid_record` (exit 2). An orphan
+report without a valid request remains incomplete. This is a local record reader,
+not report provenance validation or a process monitor.
+
+Known `.request.json.tmp` and `.report.json.tmp` residue is listed under
+`temporary_files`, preserved, and never promoted to a committed record. Reads of
+individual files are not an atomic snapshot of a concurrently changing directory;
+an incomplete observation may be inspected again without issuing any input.
+This does not promise power-loss durability or automatically repair failed writes.
+
+The CLI detects a stdout writer reporting fewer characters than requested and
+raises `INCOMPLETE_STDOUT_WRITE`. The retained report remains readable; do not
+repeat dispatch to recover its output. This detects a reported short write only:
+a downstream consumer may still truncate bytes after a writer accepts everything.
+Consumers must reject incomplete JSON and use retained read-only recovery.
+After a full write, the CLI explicitly flushes stdout before returning. A flush
+failure propagates without retrying the operation or changing the retained report.
+This follows the delivery proposal in [#3726](https://github.com/Unjuno/agent-interface/pull/3726);
+flush completion is not acknowledgement that the host or model received the result.
+
+### Caller recovery after missing or truncated output
+
+During CLI observe/dispatch invocation, Python-level dependency diagnostics
+written to stdout are redirected to stderr. The structured response is emitted
+on stdout after invocation. This covers printed Xlib warnings; it does not
+redirect native file-descriptor writes. The direct Python API is unchanged.
+The CLI entry point temporarily changes Python's process-wide stdout, so use
+separate CLI processes rather than calling `main()` concurrently in threads.
+
+For a recorded `refused / INVALID_PROGRAM` result, the public dispatch API also
+checks the compiled program against the static contract. If that check fails,
+`result.detail` explains the first failure (at most 256 characters), with
+`detail_source=program_validation`. Review exposes it as
+`outcome_summary.execution_detail`. For example, an operation using
+`width/height` instead of `w/h` reports `observe w must be int`. An `observe`
+**operation** uses `frame, x, y, w, h`; the standalone CLI `observe` command
+instead takes `--region X Y W H`.
+
+The diagnostic follows the existing refusal; it does not change admission,
+execute again, grant authority or repair the program. It describes the compiled
+program after repeat/text-gap expansion. When the failure occurs while validating
+an individual operation, `result.validation_operation_index` and the review's
+`outcome_summary.validation_operation_index` identify its zero-based index in
+that compiled program. Global errors such as a wrong schema have no operation
+index. This is distinct from `failed_operation_index`, which refers to an
+execution failure; a static refusal does not imply an operation was executed.
+When retained repeat/text-gap expansion metadata can be reconstructed,
+`outcome_summary.validation_source_operation` also identifies the original
+source operation. Missing or inconsistent mappings produce no source location.
+If the program passes static validation, the API adds no program diagnostic:
+the refusal may concern the backend manifest. Unsupported operation names are
+not echoed. Input text and full programs are not added to this diagnostic.
+
+Remember the fresh `--run-directory` before issuing an operation. Keep the full
+stdout bytes outside the model context and deliver images through the host's
+image channel. A host output limit can hide a response that was produced in full;
+do not infer another dispatch is needed from missing model-visible text.
+
+If the producer is still running, continue observing that same process handle.
+When inspecting a retained attempt, use the original directory, without another
+`dispatch` or `observe`:
+
+```sh
+python agent-interface-runtime.pyz attempt-status --run-directory "$RUN"
+# Only after inspecting status=report_recorded:
+python agent-interface-runtime.pyz review \
+  --report "$RUN/report.json" --run-directory "$RUN" --compact --report-refs
+```
+
+| Inspection result | Caller action |
+| --- | --- |
+| `report_recorded` | Inspect the outcome and release evidence; use `review` to recover the recorded capture. This does not mean task success. |
+| `unknown_or_incomplete` | Preserve uncertainty. Inspect the same process handle or reread the same attempt; a missing report does not prove input was absent. |
+| `invalid_record` | Inspect the reported file/error; retain the existing directory and do not replace it with a new execution. |
+
+Recovered images are historical captures. If the last capture shows an
+intermediate state such as Saving, a later, explicitly chosen observation can
+check the current screen after recovery. `review` itself does not refresh the
+screen, wait for application completion, or extend input authority. If its
+response also exceeds the host output limit, inspect the retained result/image
+through the host's file and image facilities instead of repeating the action.
+
+The [retained caller experiment](../../research/experiments/issue_3808_cli_caller_recovery_v1/RESULT.md)
+used a synthetic dispatch and a relay that accepted 341 bytes but delivered 37.
+The producer exited 0; read-only status/review recovered the retained report,
+with one dispatch and unchanged attempt files. This supports that recovery path,
+not every transport failure. JSON parsing alone does not establish byte-complete
+delivery; the [terminal-newline successor](https://github.com/Unjuno/agent-interface/issues/3814)
+tracks a strict prefix that can remain valid JSON. No automatic replay or general
+delivery guarantee follows from either producer exit status or parse success.
+
+### Compact received-report references
+
+With `--compact --report-refs` or MCP `compact=true, report_refs=true`, a received receipt whose `report` exactly
+duplicates `source.raw_report` may use `agent-interface/receipt-view-v3-report-ref`.
+Only `report` then contains `{"report_ref":"/source/raw_report"}`; the complete
+raw report remains in this same response. All other reference-shaped values are
+literal. Images, capture references, outcomes and raw source digests are unchanged.
+
+Use the matching version of `receipt_references.expand_receipt` to restore the
+original v1 receipt view. Existing `--compact` / `compact=true` alone preserves
+v1/v2 selection for older consumers. The additional report-reference flag requires
+compact mode and explicitly opts into the new decoder contract. File-based receipts without an
+embedded raw report keep the existing selection behavior. The smaller JSON
+candidate is selected only when it beats the original view; this is not a measured
+model-token, cost or latency reduction.
+
+### Input release in reviewed dispatch results
+
+The shared `outcome_summary.failure_phase` preserves a recorded nonempty string
+such as `backend_initialization` for observation or dispatch failures. Missing or
+malformed values remain null; the phase is not inferred from an error message.
+It remains available if image presentation fails. A phase alone does not assert
+task effects, verified input release, or permission to retry the operation.
+
+CLI `--review` and public MCP expose `outcome_summary.input_release_verified`.
+For a refused dispatch, this includes its explicit `result.release` record in
+addition to any `result.execution.releases`. Backend preflight refusal can retain
+release evidence without starting execution; the summary still reports `refused`.
+It is true only for a nonempty list of release records that all explicitly report
+`verified=true`, `keys_down=[]` and `buttons_down=[]`. Any explicit false record
+makes the summary false, even when another release succeeded. Missing, malformed
+or contradictory evidence is null unless an explicit failure is present.
+The raw records remain available. This summary does not clear `recovery_required`,
+assert task success, or verify backend/process termination; inspect those outcomes
+separately. It adds no observation, polling or input replay.
+
+### Explicit paced text
+
+Public dispatch accepts `{"op":"text","text":"300","gap_ms":20}`. It compiles
+this to text `3`, a 20 ms `wait_update`, text `0`, another 20 ms wait, and text `0`.
+There is no leading/trailing wait. `gap_ms` is an integer from 0 to 1000; zero
+keeps the text as one operation. Omit the field to preserve existing behavior.
+This is opt-in pacing, not automatic correction, redraw detection or retry.
+The caller chooses the interval; no universally effective interval is claimed.
+The motivating Calc record is [#3582](https://github.com/Unjuno/agent-interface/pull/3582).
+
+Expansion occurs before opening the backend. The complete expanded program must
+fit 128 operations, including focus, waits and release; oversized programs are
+rejected, never truncated or split into multiple dispatches. Ordinary backend
+preflight, text support, source/binding and lease checks still apply. Pacing can
+increase elapsed time and consume the caller's lease. `repeat` and `gap_ms` cannot
+be combined on one instruction; separate key repetitions can coexist in a program.
+Direct core callers must expand first; unexpanded gap fields are refused.
+
+A program containing gaps retains `compilation.kind=bounded_text_gap`, the original
+source program and an operation-source map. Reviewed failures identify the
+zero-based `source_operation_index`, `character_index` (Unicode code-point index)
+and `phase` (`text` or `gap_before_character`). Unsplit zero-gap/empty text has a
+null character index. Other operations use one-based `expanded_occurrence`.
+Malformed mappings produce null, and partial-effect uncertainty remains unchanged.
+A character location does not authorize retrying the remainder of an uncertain
+operation. The same program syntax works through CLI, Python API and public MCP.

@@ -1,0 +1,14 @@
+{
+  "controls": [
+    {"errors":["authority:u000-type"],"name":"authority_grant","rejected":true},
+    {"errors":["row_bytes:u000-type","formal_input_hash:public.json"],"name":"target_scope_mismatch","rejected":true},
+    {"errors":["row_bytes:u000-type","payload:u000-type","formal_input_hash:oracle.json"],"name":"invent_payload","rejected":true},
+    {"errors":["oracle_leak:u000-type:disposition","formal_input_hash:public.json"],"name":"oracle_leak_public","rejected":true},
+    {"errors":["row_provenance:u001-type","episode_split","group_split","episode_split","group_split"],"name":"split_leak","rejected":true},
+    {"errors":["v2:png_hash:u000-type"],"name":"frame_evidence_corrupt","rejected":true},
+    {"errors":["forbidden_actions"],"name":"task_input_launder","rejected":true},
+    {"errors":["formal_input_hash:public.json"],"name":"formal_input_hash","rejected":true}
+  ],
+  "rejected": 8,
+  "total": 8
+}

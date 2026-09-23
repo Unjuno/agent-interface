@@ -1,0 +1,12 @@
+{
+  "schema": "route-capability-dependency-expected-v1",
+  "rows": {
+    "exact": {"baseline":{"status":"SELECTED","route":"ctrl_wheel"},"candidate":{"status":"SELECTED","route":"ctrl_wheel"}},
+    "session_changed": {"baseline":{"status":"SELECTED","route":"ctrl_wheel"},"candidate":{"status":"STALE_CAPABILITY","route":null}},
+    "surface_changed": {"baseline":{"status":"SELECTED","route":"ctrl_wheel"},"candidate":{"status":"STALE_CAPABILITY","route":null}},
+    "geometry_changed": {"baseline":{"status":"SELECTED","route":"ctrl_wheel"},"candidate":{"status":"STALE_CAPABILITY","route":null}},
+    "all_changed": {"baseline":{"status":"SELECTED","route":"ctrl_wheel"},"candidate":{"status":"STALE_CAPABILITY","route":null}},
+    "geometry_missing": {"baseline":{"status":"SELECTED","route":"ctrl_wheel"},"candidate":{"status":"CURRENT_CONTEXT_INCOMPLETE","route":null}},
+    "malformed_provenance": {"baseline":{"status":"UNSUPPORTED_PROVENANCE","route":null},"candidate":{"status":"UNSUPPORTED_PROVENANCE","route":null}}
+  }
+}

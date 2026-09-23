@@ -1,0 +1,20 @@
+name: golden-report-independent-scorer-2246
+on:
+  pull_request:
+    paths:
+      - research/integration/golden_report_independent_scorer_2246_v1/**
+      - runtime/results/golden-desktop-app-server-v3-live-01/golden-report.json
+      - .github/workflows/golden-report-independent-scorer-2246.yml
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    container:
+      image: python:3.12-slim
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: compile
+        run: python -m py_compile research/integration/golden_report_independent_scorer_2246_v1/audit.py
+      - name: independent report audit
+        run: python research/integration/golden_report_independent_scorer_2246_v1/audit.py

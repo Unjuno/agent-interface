@@ -1,0 +1,29 @@
+{
+  "decision": {
+    "fail_integrity": "source/WAD/BSP/case identity/order contradiction",
+    "hold": "otherwise",
+    "pass": "candidate safety + min structural hops strictly better >=3/4 + paired median delta <= -1",
+    "reject": "coverage non-worse >=3/4 but min hops better <=1/4 and paired median delta >=0"
+  },
+  "formal_cases": 8,
+  "formal_seeds": [
+    991500,
+    991501,
+    991502,
+    991503
+  ],
+  "issue": 652,
+  "no_same_id_rerun": true,
+  "publication_base": "5d85577dd3556725bfddf6a88e379e783a13ead0",
+  "schema": "agent-interface/map01-exit-topology-progress-prereg-v1",
+  "source_sha256": {
+    "audit.py": "66b8396f85e2b10beede3156b8c74b38aa7377278c00d577538012ee444bb370",
+    "common.py": "0fd76e82c9bbdb0d560b2f04ae87d463ca48596f93597368dc64ba256f58a4f4",
+    "plan.json": "d3c092f30b5adb811885f581aeda29c48f5b323f9fa6ac349ee3ba391e660994",
+    "run_case.py": "9aed98666d01b960acea109aea65ee325d7bca17dc8ec734da25c4ad7771c607",
+    "score_progress.py": "9db0fe2a486768472c30d9cfb3409c05176898cb66ff2e5569e0f3eca8e0a340"
+  },
+  "status": "FROZEN_BEFORE_FORMAL",
+  "task": "MAP01-EXIT-TOPOLOGY-PROGRESS-20260917-001",
+  "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+}

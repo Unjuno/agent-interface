@@ -1,0 +1,640 @@
+{
+  "allocation": "A1",
+  "formal_reruns": 0,
+  "rows": [
+    {
+      "arm": "no_fd",
+      "case_id": "n-stable-01",
+      "committed": true,
+      "db_mode": "0o600",
+      "db_uid": 0,
+      "final": {
+        "events": [
+          [
+            "generation_commit",
+            2
+          ]
+        ],
+        "generation": 2,
+        "kv": {
+          "A": {
+            "revision": 1,
+            "value": "a1"
+          },
+          "B": {
+            "revision": 1,
+            "value": "b1"
+          }
+        }
+      },
+      "mismatches": [],
+      "private_mode": "0o700",
+      "private_uid": 0,
+      "scenario": "stable",
+      "task": {
+        "a": {
+          "revision": 1,
+          "value": "a1"
+        },
+        "b": {
+          "revision": 1,
+          "value": "b1"
+        },
+        "b_source": "socket",
+        "decision": "a1|b1",
+        "gid": 65534,
+        "leak_fd_present": false,
+        "raw_path_error": "OperationalError",
+        "raw_path_ok": false,
+        "token": {
+          "A": 1,
+          "B": 1
+        },
+        "uid": 65534
+      },
+      "task_returncode": 0,
+      "task_stderr": ""
+    },
+    {
+      "arm": "leaked_fd",
+      "case_id": "l-stable-01",
+      "committed": true,
+      "db_mode": "0o600",
+      "db_uid": 0,
+      "final": {
+        "events": [
+          [
+            "generation_commit",
+            2
+          ]
+        ],
+        "generation": 2,
+        "kv": {
+          "A": {
+            "revision": 1,
+            "value": "a1"
+          },
+          "B": {
+            "revision": 1,
+            "value": "b1"
+          }
+        }
+      },
+      "mismatches": [],
+      "private_mode": "0o700",
+      "private_uid": 0,
+      "scenario": "stable",
+      "task": {
+        "a": {
+          "revision": 1,
+          "value": "a1"
+        },
+        "b": {
+          "revision": 1,
+          "value": "b1"
+        },
+        "b_source": "fd_deserialize",
+        "decision": "a1|b1",
+        "gid": 65534,
+        "leak_fd_present": true,
+        "raw_path_error": "OperationalError",
+        "raw_path_ok": false,
+        "token": {
+          "A": 1
+        },
+        "uid": 65534
+      },
+      "task_returncode": 0,
+      "task_stderr": ""
+    },
+    {
+      "arm": "no_fd",
+      "case_id": "n-bchange-01",
+      "committed": false,
+      "db_mode": "0o600",
+      "db_uid": 0,
+      "final": {
+        "events": [],
+        "generation": 1,
+        "kv": {
+          "A": {
+            "revision": 1,
+            "value": "a1"
+          },
+          "B": {
+            "revision": 2,
+            "value": "b2"
+          }
+        }
+      },
+      "mismatches": [
+        {
+          "actual": 2,
+          "expected": 1,
+          "key": "B"
+        }
+      ],
+      "private_mode": "0o700",
+      "private_uid": 0,
+      "scenario": "B_change",
+      "task": {
+        "a": {
+          "revision": 1,
+          "value": "a1"
+        },
+        "b": {
+          "revision": 1,
+          "value": "b1"
+        },
+        "b_source": "socket",
+        "decision": "a1|b1",
+        "gid": 65534,
+        "leak_fd_present": false,
+        "raw_path_error": "OperationalError",
+        "raw_path_ok": false,
+        "token": {
+          "A": 1,
+          "B": 1
+        },
+        "uid": 65534
+      },
+      "task_returncode": 0,
+      "task_stderr": ""
+    },
+    {
+      "arm": "leaked_fd",
+      "case_id": "l-bchange-01",
+      "committed": true,
+      "db_mode": "0o600",
+      "db_uid": 0,
+      "final": {
+        "events": [
+          [
+            "generation_commit",
+            2
+          ]
+        ],
+        "generation": 2,
+        "kv": {
+          "A": {
+            "revision": 1,
+            "value": "a1"
+          },
+          "B": {
+            "revision": 2,
+            "value": "b2"
+          }
+        }
+      },
+      "mismatches": [],
+      "private_mode": "0o700",
+      "private_uid": 0,
+      "scenario": "B_change",
+      "task": {
+        "a": {
+          "revision": 1,
+          "value": "a1"
+        },
+        "b": {
+          "revision": 1,
+          "value": "b1"
+        },
+        "b_source": "fd_deserialize",
+        "decision": "a1|b1",
+        "gid": 65534,
+        "leak_fd_present": true,
+        "raw_path_error": "OperationalError",
+        "raw_path_ok": false,
+        "token": {
+          "A": 1
+        },
+        "uid": 65534
+      },
+      "task_returncode": 0,
+      "task_stderr": ""
+    },
+    {
+      "arm": "leaked_fd",
+      "case_id": "l-stable-02",
+      "committed": true,
+      "db_mode": "0o600",
+      "db_uid": 0,
+      "final": {
+        "events": [
+          [
+            "generation_commit",
+            2
+          ]
+        ],
+        "generation": 2,
+        "kv": {
+          "A": {
+            "revision": 1,
+            "value": "a1"
+          },
+          "B": {
+            "revision": 1,
+            "value": "b1"
+          }
+        }
+      },
+      "mismatches": [],
+      "private_mode": "0o700",
+      "private_uid": 0,
+      "scenario": "stable",
+      "task": {
+        "a": {
+          "revision": 1,
+          "value": "a1"
+        },
+        "b": {
+          "revision": 1,
+          "value": "b1"
+        },
+        "b_source": "fd_deserialize",
+        "decision": "a1|b1",
+        "gid": 65534,
+        "leak_fd_present": true,
+        "raw_path_error": "OperationalError",
+        "raw_path_ok": false,
+        "token": {
+          "A": 1
+        },
+        "uid": 65534
+      },
+      "task_returncode": 0,
+      "task_stderr": ""
+    },
+    {
+      "arm": "no_fd",
+      "case_id": "n-stable-02",
+      "committed": true,
+      "db_mode": "0o600",
+      "db_uid": 0,
+      "final": {
+        "events": [
+          [
+            "generation_commit",
+            2
+          ]
+        ],
+        "generation": 2,
+        "kv": {
+          "A": {
+            "revision": 1,
+            "value": "a1"
+          },
+          "B": {
+            "revision": 1,
+            "value": "b1"
+          }
+        }
+      },
+      "mismatches": [],
+      "private_mode": "0o700",
+      "private_uid": 0,
+      "scenario": "stable",
+      "task": {
+        "a": {
+          "revision": 1,
+          "value": "a1"
+        },
+        "b": {
+          "revision": 1,
+          "value": "b1"
+        },
+        "b_source": "socket",
+        "decision": "a1|b1",
+        "gid": 65534,
+        "leak_fd_present": false,
+        "raw_path_error": "OperationalError",
+        "raw_path_ok": false,
+        "token": {
+          "A": 1,
+          "B": 1
+        },
+        "uid": 65534
+      },
+      "task_returncode": 0,
+      "task_stderr": ""
+    },
+    {
+      "arm": "leaked_fd",
+      "case_id": "l-bchange-02",
+      "committed": true,
+      "db_mode": "0o600",
+      "db_uid": 0,
+      "final": {
+        "events": [
+          [
+            "generation_commit",
+            2
+          ]
+        ],
+        "generation": 2,
+        "kv": {
+          "A": {
+            "revision": 1,
+            "value": "a1"
+          },
+          "B": {
+            "revision": 2,
+            "value": "b2"
+          }
+        }
+      },
+      "mismatches": [],
+      "private_mode": "0o700",
+      "private_uid": 0,
+      "scenario": "B_change",
+      "task": {
+        "a": {
+          "revision": 1,
+          "value": "a1"
+        },
+        "b": {
+          "revision": 1,
+          "value": "b1"
+        },
+        "b_source": "fd_deserialize",
+        "decision": "a1|b1",
+        "gid": 65534,
+        "leak_fd_present": true,
+        "raw_path_ok": false,
+        "raw_path_error": "OperationalError",
+        "token": {
+          "A": 1
+        },
+        "uid": 65534
+      },
+      "task_returncode": 0,
+      "task_stderr": ""
+    },
+    {
+      "arm": "no_fd",
+      "case_id": "n-bchange-02",
+      "committed": false,
+      "db_mode": "0o600",
+      "db_uid": 0,
+      "final": {
+        "events": [],
+        "generation": 1,
+        "kv": {
+          "A": {
+            "revision": 1,
+            "value": "a1"
+          },
+          "B": {
+            "revision": 2,
+            "value": "b2"
+          }
+        }
+      },
+      "mismatches": [
+        {
+          "actual": 2,
+          "expected": 1,
+          "key": "B"
+        }
+      ],
+      "private_mode": "0o700",
+      "private_uid": 0,
+      "scenario": "B_change",
+      "task": {
+        "a": {
+          "revision": 1,
+          "value": "a1"
+        },
+        "b": {
+          "revision": 1,
+          "value": "b1"
+        },
+        "b_source": "socket",
+        "decision": "a1|b1",
+        "gid": 65534,
+        "leak_fd_present": false,
+        "raw_path_error": "OperationalError",
+        "raw_path_ok": false,
+        "token": {
+          "A": 1,
+          "B": 1
+        },
+        "uid": 65534
+      },
+      "task_returncode": 0,
+      "task_stderr": ""
+    },
+    {
+      "arm": "no_fd",
+      "case_id": "n-stable-03",
+      "committed": true,
+      "db_mode": "0o600",
+      "db_uid": 0,
+      "final": {
+        "events": [
+          [
+            "generation_commit",
+            2
+          ]
+        ],
+        "generation": 2,
+        "kv": {
+          "A": {
+            "revision": 1,
+            "value": "a1"
+          },
+          "B": {
+            "revision": 1,
+            "value": "b1"
+          }
+        }
+      },
+      "mismatches": [],
+      "private_mode": "0o700",
+      "private_uid": 0,
+      "scenario": "stable",
+      "task": {
+        "a": {
+          "revision": 1,
+          "value": "a1"
+        },
+        "b": {
+          "revision": 1,
+          "value": "b1"
+        },
+        "b_source": "socket",
+        "decision": "a1|b1",
+        "gid": 65534,
+        "leak_fd_present": false,
+        "raw_path_error": "OperationalError",
+        "raw_path_ok": false,
+        "token": {
+          "A": 1,
+          "B": 1
+        },
+        "uid": 65534
+      },
+      "task_returncode": 0,
+      "task_stderr": ""
+    },
+    {
+      "arm": "leaked_fd",
+      "case_id": "l-stable-03",
+      "committed": true,
+      "db_mode": "0o600",
+      "db_uid": 0,
+      "final": {
+        "events": [
+          [
+            "generation_commit",
+            2
+          ]
+        ],
+        "generation": 2,
+        "kv": {
+          "A": {
+            "revision": 1,
+            "value": "a1"
+          },
+          "B": {
+            "revision": 1,
+            "value": "b1"
+          }
+        }
+      },
+      "mismatches": [],
+      "private_mode": "0o700",
+      "private_uid": 0,
+      "scenario": "stable",
+      "task": {
+        "a": {
+          "revision": 1,
+          "value": "a1"
+        },
+        "b": {
+          "revision": 1,
+          "value": "b1"
+        },
+        "b_source": "fd_deserialize",
+        "decision": "a1|b1",
+        "gid": 65534,
+        "leak_fd_present": true,
+        "raw_path_error": "OperationalError",
+        "raw_path_ok": false,
+        "token": {
+          "A": 1
+        },
+        "uid": 65534
+      },
+      "task_returncode": 0,
+      "task_stderr": ""
+    },
+    {
+      "arm": "no_fd",
+      "case_id": "n-bchange-03",
+      "committed": false,
+      "db_mode": "0o600",
+      "db_uid": 0,
+      "final": {
+        "events": [],
+        "generation": 1,
+        "kv": {
+          "A": {
+            "revision": 1,
+            "value": "a1"
+          },
+          "B": {
+            "revision": 2,
+            "value": "b2"
+          }
+        }
+      },
+      "mismatches": [
+        {
+          "actual": 2,
+          "expected": 1,
+          "key": "B"
+        }
+      ],
+      "private_mode": "0o700",
+      "private_uid": 0,
+      "scenario": "B_change",
+      "task": {
+        "a": {
+          "revision": 1,
+          "value": "a1"
+        },
+        "b": {
+          "revision": 1,
+          "value": "b1"
+        },
+        "b_source": "socket",
+        "decision": "a1|b1",
+        "gid": 65534,
+        "leak_fd_present": false,
+        "raw_path_ok": false,
+        "raw_path_error": "OperationalError",
+        "token": {
+          "A": 1,
+          "B": 1
+        },
+        "uid": 65534
+      },
+      "task_returncode": 0,
+      "task_stderr": ""
+    },
+    {
+      "arm": "leaked_fd",
+      "case_id": "l-bchange-03",
+      "committed": true,
+      "db_mode": "0o600",
+      "db_uid": 0,
+      "final": {
+        "events": [
+          [
+            "generation_commit",
+            2
+          ]
+        ],
+        "generation": 2,
+        "kv": {
+          "A": {
+            "revision": 1,
+            "value": "a1"
+          },
+          "B": {
+            "revision": 2,
+            "value": "b2"
+          }
+        }
+      },
+      "mismatches": [],
+      "private_mode": "0o700",
+      "private_uid": 0,
+      "scenario": "B_change",
+      "task": {
+        "a": {
+          "revision": 1,
+          "value": "a1"
+        },
+        "b": {
+          "revision": 1,
+          "value": "b1"
+        },
+        "b_source": "fd_deserialize",
+        "decision": "a1|b1",
+        "gid": 65534,
+        "leak_fd_present": true,
+        "raw_path_ok": false,
+        "raw_path_error": "OperationalError",
+        "token": {
+          "A": 1
+        },
+        "uid": 65534
+      },
+      "task_returncode": 0,
+      "task_stderr": ""
+    }
+  ],
+  "task": "COORD-INHERITED-FD-BYPASS-20260917-021"
+}

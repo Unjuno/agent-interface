@@ -1,0 +1,28 @@
+{
+  "controls_pass": true,
+  "corruption_controls": {
+    "critical_escape": true,
+    "fresh_overconservative": true,
+    "mismatch": true,
+    "missing_fallback": true,
+    "source": true,
+    "stale_escape": true,
+    "static_discriminator": true
+  },
+  "decision": "PASS_O3_GENERATION_BOUND_RELEVANCE_SCOPED",
+  "integrity_errors": [],
+  "metrics": {
+    "candidate_oracle_mismatch": 0,
+    "critical_false_suppressions": 0,
+    "current_irrelevant_suppressions": 30000,
+    "current_relevant_false_suppressions": 0,
+    "fallback_forged_generation": 15000,
+    "fallback_missing": 20000,
+    "fallback_wrong_scope": 15000,
+    "fresh_post_shift_irrelevant_suppressions": 30000,
+    "stale_hidden_false_suppressions": 0,
+    "static_stale_false_suppressions": 40000,
+    "traces": 200000
+  },
+  "pass": true
+}

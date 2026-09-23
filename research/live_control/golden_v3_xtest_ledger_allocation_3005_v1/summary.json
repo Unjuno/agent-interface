@@ -1,0 +1,198 @@
+{
+  "allocation": "golden-v3-identity-20260920-a2",
+  "decision": "HOLD_IDENTITY_FAIL_CLOSED_NOT_PROVEN",
+  "display": ":0",
+  "rows": {
+    "source_mismatch": {
+      "current_binding_revision": 1,
+      "requested_binding_revision": 999,
+      "result": {
+        "authority_granted": false,
+        "cleanup_error": null,
+        "diagnostic": "STALE_BINDING",
+        "lifecycle": [
+          "dispatch"
+        ],
+        "native_status": "refused",
+        "partial_effects": [],
+        "program_completed": false,
+        "raw_dispatch": {
+          "result": {
+            "backend_emissions": 0,
+            "error": "STALE_BINDING",
+            "required_capabilities": [
+              "capture.frame",
+              "clock.monotonic",
+              "display.geometry",
+              "event.feedback",
+              "input.keyboard",
+              "input.pointer",
+              "input.release_all",
+              "input.text",
+              "window.focus"
+            ],
+            "status": "refused"
+          },
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "status": "returned"
+        },
+        "schema": "golden-v3-result-v2",
+        "status": "refused",
+        "task_success": false,
+        "usage": {}
+      },
+      "window_id": 2097155
+    },
+    "target_replacement": {
+      "distinct_before_destroy": true,
+      "old_window_id": 2097155,
+      "replacement_window_id": 4194307,
+      "result": {
+        "authority_granted": false,
+        "cleanup_error": null,
+        "diagnostic": "BACKEND_EXECUTION_FAILED",
+        "lifecycle": [
+          "dispatch"
+        ],
+        "native_status": "execution_failed",
+        "partial_effects": [],
+        "program_completed": false,
+        "raw_dispatch": {
+          "result": {
+            "admission": "accepted",
+            "error": "BACKEND_EXECUTION_FAILED",
+            "execution": {
+              "completed_ops": [],
+              "emissions": 0,
+              "ended_ns": 24201050402271,
+              "error": "X11BackendError('focus verification failed')",
+              "failed_op": 0,
+              "failed_op_effect": "unknown; may have emitted partial input",
+              "observations": [],
+              "program_emissions": 0,
+              "releases": [
+                {
+                  "buttons_down": [],
+                  "keys_down": [],
+                  "monotonic_ns": 24201050401646,
+                  "verified": true
+                }
+              ],
+              "started_ns": 24201050125640
+            },
+            "recovery_required": false,
+            "required_capabilities": [
+              "capture.frame",
+              "clock.monotonic",
+              "display.geometry",
+              "event.feedback",
+              "input.keyboard",
+              "input.pointer",
+              "input.release_all",
+              "input.text",
+              "window.focus"
+            ],
+            "status": "execution_failed"
+          },
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "status": "returned"
+        },
+        "schema": "golden-v3-result-v2",
+        "status": "partial",
+        "task_success": null,
+        "usage": {}
+      }
+    },
+    "useful_control": {
+      "result": {
+        "authority_granted": false,
+        "cleanup_error": null,
+        "lifecycle": [
+          "dispatch"
+        ],
+        "native_status": "completed",
+        "partial_effects": [],
+        "program_completed": true,
+        "raw_dispatch": {
+          "result": {
+            "admission": "accepted",
+            "execution": {
+              "completed_ops": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "emissions": 35,
+              "ended_ns": 24200877246746,
+              "observations": [
+                {
+                  "artifact": {
+                    "bytes": 3867,
+                    "height": 180,
+                    "mime_type": "image/png",
+                    "path": "/out/allocation-a1/useful-control/capture/4d71ba0a58c84d88bf205503385709ca.png",
+                    "sha256": "49cb14ff1409a135236476474bb7eb6d26d5dc077ce742198ebaaa6da33d0c3b",
+                    "source_raw_sha256": "2d89b0df4c062bc705aaeb76cad59cf88e5474a5a5f7c9f6d29022905e6c3cc3",
+                    "width": 400
+                  },
+                  "bytes": 288000,
+                  "capture_ended_ns": 24200871424421,
+                  "capture_started_ns": 24200870855576,
+                  "frame": "window_client",
+                  "height": 180,
+                  "native_window_id": 2097155,
+                  "region": [
+                    0,
+                    0,
+                    400,
+                    180
+                  ],
+                  "sha256": "2d89b0df4c062bc705aaeb76cad59cf88e5474a5a5f7c9f6d29022905e6c3cc3",
+                  "target": "fixture",
+                  "width": 400
+                }
+              ],
+              "program_emissions": 35,
+              "releases": [
+                {
+                  "buttons_down": [],
+                  "keys_down": [],
+                  "monotonic_ns": 24200877245413,
+                  "verified": true
+                }
+              ],
+              "started_ns": 24200760458855
+            },
+            "recovery_required": false,
+            "required_capabilities": [
+              "capture.frame",
+              "clock.monotonic",
+              "display.geometry",
+              "event.feedback",
+              "input.keyboard",
+              "input.pointer",
+              "input.release_all",
+              "input.text",
+              "window.focus"
+            ],
+            "status": "completed"
+          },
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "status": "returned"
+        },
+        "schema": "golden-v3-result-v2",
+        "status": "partial",
+        "task_success": null,
+        "usage": {}
+      },
+      "window_id": 2097155
+    }
+  },
+  "schema": "golden_v3_identity_fail_closed_result_v1"
+}

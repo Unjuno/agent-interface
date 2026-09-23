@@ -1,0 +1,171 @@
+{
+  "analytic": {
+    "crop_visible_evidence_identical": true,
+    "required_decisions_differ": true,
+    "w0_crop": [
+      "target-signature",
+      "context"
+    ],
+    "w0_outside": "IRRELEVANT_CHANGE",
+    "w0_required": "REUSE_CONTEXT",
+    "w1_crop": [
+      "target-signature",
+      "context"
+    ],
+    "w1_outside": "DUPLICATE_TARGET",
+    "w1_required": "RAW_FALLBACK"
+  },
+  "examples": [
+    {
+      "critical": false,
+      "current": true,
+      "outside": [
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "DUPLICATE_TARGET"
+      ]
+    },
+    {
+      "critical": false,
+      "current": true,
+      "outside": [
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "IRRELEVANT_CHANGE",
+        "DUPLICATE_TARGET"
+      ]
+    },
+    {
+      "critical": false,
+      "current": true,
+      "outside": [
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "DUPLICATE_TARGET",
+        "UNCHANGED"
+      ]
+    },
+    {
+      "critical": false,
+      "current": true,
+      "outside": [
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "DUPLICATE_TARGET",
+        "IRRELEVANT_CHANGE"
+      ]
+    },
+    {
+      "critical": false,
+      "current": true,
+      "outside": [
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "DUPLICATE_TARGET",
+        "DUPLICATE_TARGET"
+      ]
+    },
+    {
+      "critical": false,
+      "current": true,
+      "outside": [
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "IRRELEVANT_CHANGE",
+        "UNCHANGED",
+        "DUPLICATE_TARGET"
+      ]
+    },
+    {
+      "critical": false,
+      "current": true,
+      "outside": [
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "IRRELEVANT_CHANGE",
+        "IRRELEVANT_CHANGE",
+        "DUPLICATE_TARGET"
+      ]
+    },
+    {
+      "critical": false,
+      "current": true,
+      "outside": [
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "UNCHANGED",
+        "IRRELEVANT_CHANGE",
+        "DUPLICATE_TARGET",
+        "UNCHANGED"
+      ]
+    }
+  ],
+  "formal_invocations": 1,
+  "ledger_sha256": "4b67c2b9195d0ff6b86cdbf395e06af84607409fec505193ab647ce768e0f155",
+  "metrics": {
+    "baseline_false_suppressions": 58025,
+    "baseline_safe_reuses": 1024,
+    "candidate_ambiguity_raw_fallbacks": 58025,
+    "candidate_critical_forwards_current": 59049,
+    "candidate_false_suppressions": 0,
+    "candidate_safe_reuses": 1024,
+    "candidate_stale_source_fallbacks": 118098,
+    "rows": 236196
+  },
+  "phase": "formal",
+  "replacements": 0,
+  "reruns": 0,
+  "source_sha256": {
+    "PLAN.md": "8668708e6b8ddef05d5a2600da4a4e17dcac2baeb5f88b11d94a856409d46cf8",
+    "audit.py": "f6eaac1875818a7909f219557cbfa4b3265f2f1dd366c3ede4764805f56d6431",
+    "candidate.py": "f0c01a8708e5f55c040ee7dc8558a6448d52972a8a911959859088f4599e56af",
+    "formal.py": "887311390a413982ce69a8eee49f3e9631843d01048bba634080838f2130b013"
+  },
+  "task": "OBSERVATION-GATING-O3-REVEAL-SUPPORT-CLOSURE-20260919-001",
+  "tuning": 0
+}

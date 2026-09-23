@@ -1,0 +1,34 @@
+name: GTK missing raw event completion #2909
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/gtk-missing-events-2909.yml"
+      - "research/integration/golden_v3_second_domain_2246_v1/formal_matrix_runner.py"
+  push:
+    branches:
+      - "research/gtk-missing-events-2909"
+
+jobs:
+  allocation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build pinned GTK/Xlib image
+        run: docker build --pull=false -f research/integration/gtk_fixture_dependency_2606_v3/Dockerfile -t agent-interface-gtk-fixture-v3:events-2909 .
+      - name: Run fresh eight-case allocation
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/gtk-events-2909"
+          docker run --rm --network none --read-only --tmpfs /tmp             -e PYTHONPATH=/workspace:/usr/lib/python3/dist-packages             -v "$GITHUB_WORKSPACE:/workspace:ro"             -v "$RUNNER_TEMP/gtk-events-2909:/out"             -w /workspace agent-interface-gtk-fixture-v3:events-2909             python3 /workspace/research/integration/golden_v3_second_domain_2246_v1/formal_matrix_runner.py             --out /out/raw > "$RUNNER_TEMP/gtk-events-2909/runner.stdout" 2> "$RUNNER_TEMP/gtk-events-2909/runner.stderr"
+          printf '%s' "$?" > "$RUNNER_TEMP/gtk-events-2909/exit-code.txt"
+      - name: Upload raw event completion evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gtk-missing-events-2909
+          path: ${{ runner.temp }}/gtk-events-2909
+          if-no-files-found: error

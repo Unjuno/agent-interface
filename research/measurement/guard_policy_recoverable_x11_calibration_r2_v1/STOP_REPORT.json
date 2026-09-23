@@ -1,0 +1,30 @@
+{
+  "task": "GUARD-POLICY-RECOVERABLE-X11-CALIBRATION-R2-20260918-001",
+  "issue": 1722,
+  "phase": "formal",
+  "disposition": "STOP_FORMAL_SUCCESS_OBSERVATION_DEADLINE",
+  "formal_invocations": 1,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "formal_result_present": false,
+  "formal_audit_run": false,
+  "independent_formal_audit_run": false,
+  "exception": "RuntimeError: heldout fresh direct failed",
+  "failing_episode": "policy-1/100-0219-POST_ONLY",
+  "frozen_success_observation_deadline_ms": 20,
+  "frozen_stale_no_effect_wait_ms": 3,
+  "app_log_failing_episode": {
+    "reset_ts_ns": 7090637116067,
+    "click_ts_ns": 7090688242891,
+    "click_pos": "LEFT",
+    "click_result": "success",
+    "x": 80,
+    "y": 100,
+    "reset_to_app_event_ms": 51.126824,
+    "latency_claim_limit": "reset-to-app-event only; click-send timestamp for the incomplete row was not committed"
+  },
+  "post_stop_source_match_freeze": true,
+  "lingering_experiment_processes": 0,
+  "scientific_interpretation": "execution stop before selector formal result; not PASS/FAIL of break-even transfer"
+}

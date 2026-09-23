@@ -1,0 +1,39 @@
+{
+  "task": "MAP01-HEADING-PULSE-PRECONDITION-20260918-001",
+  "issue": 1286,
+  "base": "c75f1b18b2e476283cdb91455379de6980e3b3d3",
+  "branch": "research/map01-heading-pulse-precondition-20260918-001",
+  "construction_rows": 6,
+  "formal_rows_executed": 0,
+  "formal_cases": 12,
+  "reruns": 0,
+  "factor": {
+    "baseline_pulse_ms": 190,
+    "candidate_pulse_ms": 45,
+    "tolerance_deg_strict_lt": 4,
+    "max_pulses": 8,
+    "settle_ms": 60
+  },
+  "offsets_deg": [
+    4.6875,
+    -4.6875,
+    7.8672,
+    -7.9531,
+    15.8203,
+    -15.8203
+  ],
+  "runtime_artifact_sha256": "522763418610ea10e57e55615fa71e76445200b9f86d208820ea97c77c234f0b",
+  "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+  "parent_891_freeze_git_blob": "547759a1be1d413dabe68ee216382e38bfad898f",
+  "source_gzip_sha256": "ff7c4c1515e9d4bb8bec2f9da0ef71386bbf5dc7c0715feea79edb3e66d628b9",
+  "canonical_part_git_blobs": [
+    "d78faaca1c772e52fdfc673b77ea8d59c3e566f3",
+    "3fd5f38e7a25b253ebfc814695d5d879650723c8",
+    "0ceda221945a4e191b6145807a0e4c9d8a9c2d36",
+    "5a0b06e0eaf0b5928e4b1339abf4a1b2ba376909"
+  ],
+  "source_manifest_git_blob": "2bca58c07e36a8b3471b7b90271547f8c911fc2b",
+  "reconstructor_git_blob": "fa3bc4b9659381db594947785c279c9549b1e955",
+  "prefreeze_contract_tests": "7/7 PASS",
+  "construction_discriminator": "+10deg:45ms converged in3 pulses;190ms nonconverged 8-pulse two-cycle; +/-6 and -10 mechanics retained"
+}

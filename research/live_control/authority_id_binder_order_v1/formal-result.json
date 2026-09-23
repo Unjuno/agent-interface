@@ -1,0 +1,95 @@
+{
+  "decision": "RETAIN_BINDER_BEFORE_LEDGER_ORDER",
+  "dependency_sha256": {
+    "authority_end_identity_binding_snapshot.py": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+    "authority_ended_bridge_v1.py": "2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e",
+    "bridge_v2_semantic_snapshot.py": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9",
+    "durable_token_state_v2.py": "72a3481653cf9c41ec1a03f4c7a7bf1c482ff69468b5d92986bad8cf814950b4",
+    "validator_byte_pinned_ledger_v3.py": "a0744260a48b3575a451c63139fdb2fde898e0493317d1edd1d731ce3d227be5"
+  },
+  "formal_retries": 0,
+  "hard_gate_pass": true,
+  "limitations": [
+    "offline composition semantics only",
+    "no live GUI/model/network/durable-submit",
+    "PR #168 executed-source provenance remains independent"
+  ],
+  "result_id": "authority-id-binder-order-v1-20260916-01",
+  "rows": [
+    {
+      "case": "direct_ledger_persists_forged_nonempty_id",
+      "detail": {
+        "entry": {
+          "post_sequence": 11,
+          "status": "pending"
+        },
+        "token": "caller-forged-id"
+      },
+      "pass": true
+    },
+    {
+      "case": "prebind_rejects_forged_id",
+      "detail": {
+        "error": "caller authority_end_id mismatch",
+        "status": "REJECTED",
+        "type": "IdentityBindingError"
+      },
+      "pass": true
+    },
+    {
+      "case": "prebind_missing_id_uses_runtime_token",
+      "detail": {
+        "bound_id": "runtime-intent-token",
+        "seq": 11,
+        "token_id": "runtime-intent-token"
+      },
+      "pass": true
+    },
+    {
+      "case": "restart_recovers_prebound_runtime_token",
+      "detail": {
+        "id": "runtime-intent-token",
+        "seq": 11
+      },
+      "pass": true
+    },
+    {
+      "case": "post_issue_binding_is_too_late",
+      "detail": {
+        "binder": {
+          "error": "caller authority_end_id mismatch",
+          "status": "REJECTED",
+          "type": "IdentityBindingError"
+        },
+        "persisted": {
+          "post_sequence": 11,
+          "status": "pending"
+        }
+      },
+      "pass": true
+    },
+    {
+      "case": "prebind_release_interruption_mismatch_rejects_before_state",
+      "detail": {
+        "binder": {
+          "error": "release/interruption intent_token mismatch",
+          "status": "REJECTED",
+          "type": "IdentityBindingError"
+        },
+        "state_exists": false
+      },
+      "pass": true
+    }
+  ],
+  "schema": "authority-id-binder-order-v1-formal-result",
+  "source_sha256": {
+    "authority_end_identity_binding_snapshot.py": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+    "formal_runner.py": "01a8fedb397997646febc96f3fa5beeed977cff31df6bff4807c0fd3121041e0"
+  },
+  "upstream": {
+    "byte_bound_ledger_head": "38048665ee020f6bd4e790807836a1a81649b0a7",
+    "byte_bound_ledger_pr": 191,
+    "identity_binder_head": "2ee3f65b4b80552619bda5e0dfc211fe276a2de5",
+    "identity_binder_pr": 180
+  }
+}

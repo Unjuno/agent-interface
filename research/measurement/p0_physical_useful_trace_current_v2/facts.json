@@ -1,0 +1,28 @@
+{
+  "task":"P0-PHYSICAL-USEFUL-TRACE-CURRENT-CLOSURE-20260918-002",
+  "base":"51d9f5b3b534286f9a4ac50e6a2321e919300a0d",
+  "semantic_nodes":[
+    {"id":"release_bracket","class":"SYNTHETIC_CONTRACT","source_id":"e5166e924b6c1cb5d99f5dde6f5b29ef6014dff0","decision":"PASS_PHYSICAL_RELEASE_BRACKET_CONTRACT_SCOPED"},
+    {"id":"press_bracket","class":"SYNTHETIC_CONTRACT","source_id":"ffc1eec9bbf30843515b1ca0c5fcbd5a9a525e50","decision":"PASS_PHYSICAL_PRESS_BRACKET_CONTRACT_SCOPED"},
+    {"id":"dual_edge_adapter","class":"SYNTHETIC_CONTRACT","source_id":"6cda6cf2f91b3e23e3758bffbdcaae8c444e615d","decision":"PASS_PHYSICAL_BRACKET_DUAL_EDGE_ADAPTER_SCOPED"},
+    {"id":"dual_edge_occupancy","class":"SYNTHETIC_CONTRACT","source_id":"b534ac82996622e7d6ab337f408ebaf9322e5c52ed3e1f258075f6f1a5923165","decision":"PASS_DUAL_EDGE_CENSORING_SCOPED"},
+    {"id":"temporal_effect_gate","class":"SYNTHETIC_CONTRACT","source_id":"7e1806486e83699b3a6d118a44731f8e9f4aad24","decision":"PASS_CENSORED_DOWN_TEMPORAL_GATE_SCOPED"},
+    {"id":"effect_provenance","class":"SYNTHETIC_CONTRACT","source_id":"db1f4a497464897cb9b28e27b08ab09e4ab36c59","decision":"PASS_USEFUL_CONTROL_PROVENANCE_COMPOSITION_SCOPED"}
+  ],
+  "implementation_nodes":[
+    {"id":"sample_sequencing","class":"OFFLINE_RUNTIME_SOURCE","source_id":"17806e9ee6da361eb160f907c8cf993689dedad2","decision":"PASS_OWNER_PHYSICAL_SAMPLE_SEQUENCING_SCOPED"},
+    {"id":"stable_hold_identity","class":"CONSTRUCTION_IDENTITY","source_id":"11017cc3298061ced9cb3eb16016a4c35c94dd15","decision":"PASS_PHYSICAL_HOLD_IDENTITY_AUDITABLE_V4_SCOPED"},
+    {"id":"v12_offline","class":"OFFLINE_RUNTIME_SOURCE","source_id":"fbc43a770865274adf716e6959f4e072be774fc7","source_bundle_sha256":"5960543c9d9193b5615da2b545eb7a385a4d2e17bfe12513731bf9e92f948422","v12_sha256":"b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508","decision":"PASS_INPUT_OWNER_V12_OFFLINE_MECHANICS_SCOPED"},
+    {"id":"clock_provenance_gate","class":"SYNTHETIC_CONTRACT","source_id":"2a4bec93f5df774df2c0456d390c60d9d5363dc3","decision":"PASS_USEFUL_EFFECT_CLOCK_PROVENANCE_FORMAL_SCOPED"}
+  ],
+  "live_gates":[
+    {"id":"LIVE_PHYSICAL_EDGE_TRANSFER","class":"LIVE_PHYSICAL_RECEIPT","status":"UNPROVEN_CURRENT"},
+    {"id":"LIVE_CAUSAL_EFFECT_SAMPLE","class":"LIVE_EFFECT","status":"UNPROVEN_CURRENT"},
+    {"id":"CROSS_PROCESS_CLOCK_AXIS","class":"LIVE_CLOCK_RELATION","status":"UNPROVEN_CURRENT","only_required_for":"CROSS_PROCESS_CLOCK"}
+  ],
+  "plan_intent_not_evidence":[
+    {"issue":1099,"task":"INPUT-OWNER-V12-LIVE-CAUSAL-X11-20260918-001","status":"QUEUED_AWAITING_#60_LIVE_LEASE"},
+    {"issue":60,"comment_id":5721776367,"kind":"LIVE_LEASE_REQUEST_NOT_GRANT"},
+    {"issue":1000,"kind":"OPEN_CLOCK_CONSTRUCTION_CLAIM_NOT_RESULT"}
+  ]
+}

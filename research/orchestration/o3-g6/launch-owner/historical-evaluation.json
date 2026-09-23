@@ -1,0 +1,33 @@
+{
+  "run_34968759795": {
+    "allocation_id": "map01-measurement-integration-live-02",
+    "claim_scope": "launch ownership only; no experiment success, authority, or cancellation claim",
+    "current_run_id": 34968759795,
+    "head_sha": "810479785d1adb7e785962d3e16d6b1e4bd29f79",
+    "matching_run_count": 2,
+    "matching_run_ids": [34968759795, 34968781910],
+    "may_enter_formal_step": true,
+    "owner_run_id": 34968759795,
+    "owner_run_number": 1,
+    "prior_completed_owner": false,
+    "result_class": "PASS_CANONICAL_OWNER",
+    "schema": "formal-allocation-launch-owner-v1",
+    "workflow_path": ".github/workflows/map01-measurement-integration-live-02.yml"
+  },
+  "run_34968781910": {
+    "allocation_id": "map01-measurement-integration-live-02",
+    "claim_scope": "launch ownership only; no experiment success, authority, or cancellation claim",
+    "current_run_id": 34968781910,
+    "head_sha": "810479785d1adb7e785962d3e16d6b1e4bd29f79",
+    "matching_run_count": 2,
+    "matching_run_ids": [34968759795, 34968781910],
+    "may_enter_formal_step": false,
+    "owner_run_id": 34968759795,
+    "owner_run_number": 1,
+    "prior_completed_owner": true,
+    "result_class": "FAIL_NOT_CANONICAL_OWNER",
+    "schema": "formal-allocation-launch-owner-v1",
+    "workflow_path": ".github/workflows/map01-measurement-integration-live-02.yml"
+  },
+  "schema": "formal-allocation-launch-owner-historical-evaluation-v1"
+}

@@ -1,0 +1,47 @@
+{
+  "allocation": "live-focus-delivery-2253-d7b0-20260922-01",
+  "disposition": "PASS_LIVE_FOCUS_BUFFER_BOUNDARY_SCOPED",
+  "parent_issue_2253": "HOLD_MODEL_TASK_UNTESTED",
+  "cases": 18,
+  "formal_reruns": 0,
+  "records": {
+    "states": 618,
+    "events": 60,
+    "total": 678
+  },
+  "policies": {
+    "LATEST_ONLY": {
+      "events_observed": 60,
+      "retained": 0,
+      "explicit_unretained": 0,
+      "silent_historical_loss": 60
+    },
+    "SPLIT_UNBOUNDED": {
+      "events_observed": 60,
+      "retained": 60,
+      "explicit_unretained": 0,
+      "silent_historical_loss": 0
+    },
+    "SPLIT_CAP4": {
+      "events_observed": 60,
+      "retained": 48,
+      "explicit_unretained": 12,
+      "silent_historical_loss": 0
+    }
+  },
+  "exits": {
+    "actors_watchers_consumers_xvfb": 72,
+    "external_case_processes": 18,
+    "nonzero": 0
+  },
+  "validation": {
+    "unit_methods": 24,
+    "mutations_rejected": 16,
+    "audit_errors": 0
+  },
+  "authority": {
+    "model_calls": 0,
+    "keyboard_mouse_emissions": 0,
+    "grants_input_authority": false
+  }
+}

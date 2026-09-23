@@ -1,0 +1,28 @@
+name: resident-gtk-incremental-3518-formal-03
+on:
+  pull_request:
+    paths:
+      - 'research/analysis/resident_gtk_incremental_3518_v2/**'
+      - '.github/workflows/resident-gtk-incremental-3518-formal-03.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/analysis/resident_gtk_incremental_3518_v2/**'
+      - '.github/workflows/resident-gtk-incremental-3518-formal-03.yml'
+jobs:
+  reproducible-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Construction tests
+        working-directory: research/analysis/resident_gtk_incremental_3518_v2
+        run: python -m unittest -v
+      - name: Expand retained lossless frames
+        run: tar -xzf research/analysis/resident_gtk_incremental_3518_v2/formal_03/evidence/images.tar.gz -C research/analysis/resident_gtk_incremental_3518_v2/formal_03/evidence
+      - name: Independent raw evidence audit
+        run: python research/analysis/resident_gtk_incremental_3518_v2/formal_03/audit.py research/analysis/resident_gtk_incremental_3518_v2/formal_03/evidence/rows.json research/analysis/resident_gtk_incremental_3518_v2/formal_03/evidence/frames
+      - name: Independent bytewise image-effect cross-check
+        run: node research/analysis/resident_gtk_incremental_3518_v2/formal_03/audit_frame_pairs.js research/analysis/resident_gtk_incremental_3518_v2/formal_03/evidence

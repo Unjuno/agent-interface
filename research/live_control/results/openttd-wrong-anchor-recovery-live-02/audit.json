@@ -1,0 +1,41 @@
+{
+  "audit_passed": true,
+  "preregistered_sources_match": true,
+  "exact_frames": 50,
+  "all_releases_verified": true,
+  "fault_kind": "deterministic archived wrong-anchor injection",
+  "branch": "expanded",
+  "wrong_anchor": [
+    456,
+    79
+  ],
+  "selected_point": [
+    506,
+    79
+  ],
+  "button_down_admissions": 1,
+  "independent_finance_oracle": true,
+  "reported_input_tokens": {
+    "anchor_evidence": 8107,
+    "expanded_selection": 8280
+  },
+  "comparison": {
+    "initial_receipts_before_decision": 1,
+    "additional_receipts_after_expansion": 4,
+    "total_verified_receipts": 5,
+    "durable_calls": 18
+  },
+  "timing_ms": {
+    "slot_detection": 159.661597,
+    "anchor_hover_submit_to_return": 1340.926091,
+    "decision_start_to_anchor_receipt_ready": 1573.485958,
+    "decision_start_to_semantic_selection": 20355.623274,
+    "decision_start_to_evaluation_return": 24956.241418
+  },
+  "same_single_model": "gpt-5.6-luna low",
+  "subagents": 0,
+  "observed_model_identity": null,
+  "reported_cost": null,
+  "decision": "RETAIN_WRONG_ANCHOR_RECOVERY_EVIDENCE",
+  "limits": "one fixed-seed translated OpenTTD deterministic wrong-anchor fault; same Luna-low model for both semantic decisions, no subagents; proves recovery capability for this injected case only, not natural error frequency, general recovery, speed, resize/reflow, unknown-app or human-tempo performance"
+}

@@ -1,0 +1,304 @@
+[
+  {
+    "stage": 1,
+    "interaction": "click",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 21017694365815,
+        "ended_ns": 21017968833259,
+        "emissions": 7,
+        "program_emissions": 7,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 21017968831401
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "recovery_required": false,
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 2,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            600,
+            378
+          ],
+          "observed_box": [
+            588,
+            371,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 2,
+          "valid_until_ns": 21019105801153,
+          "patch_sha256": "76ac6bd058a2208782137a8edcdd3b74b817b9f6371a5910ef82c670b1c26ff1",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 3,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            600,
+            378
+          ],
+          "observed_box": [
+            588,
+            371,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 3,
+          "valid_until_ns": 21019195346234,
+          "patch_sha256": "76ac6bd058a2208782137a8edcdd3b74b817b9f6371a5910ef82c670b1c26ff1",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 4,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            600,
+            378
+          ],
+          "observed_box": [
+            588,
+            371,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 4,
+          "valid_until_ns": 21019282602284,
+          "patch_sha256": "76ac6bd058a2208782137a8edcdd3b74b817b9f6371a5910ef82c670b1c26ff1",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 5,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            600,
+            378
+          ],
+          "observed_box": [
+            588,
+            371,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 5,
+          "valid_until_ns": 21019349920629,
+          "patch_sha256": "76ac6bd058a2208782137a8edcdd3b74b817b9f6371a5910ef82c670b1c26ff1",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "started_ns": 21017589652786,
+    "feedback": {
+      "status": "matched",
+      "task_success": null,
+      "authority_granted": false,
+      "input_dispatched": false,
+      "expected_title": "shape.svg - Inkscape",
+      "rejected_titles": [],
+      "samples": [
+        {
+          "known_ns": 21017980903186,
+          "title": "shape.svg - Inkscape",
+          "binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          }
+        }
+      ],
+      "started_ns": 21017979343460,
+      "observation": {
+        "sequence": 6,
+        "binding_revision": 0,
+        "capture_ns": 21017981970037,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "34dc3ccafc3d8eb8249557852c4101d0af9483b03b7f415ffece95a12a83e786",
+          "width": 1280,
+          "height": 800,
+          "target": "app",
+          "native_window_id": 6291463,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 21017981970037,
+          "capture_ended_ns": 21017994453834,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-finish-after-task-failure-01/bridge/images/501ec7b8755c4ffe877f410368970fd9.png",
+            "sha256": "ed875d8774ab3357fe9f7ee6b9bfc1971135ba3c89f2975f1b7c12132f26d174",
+            "bytes": 55562,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "34dc3ccafc3d8eb8249557852c4101d0af9483b03b7f415ffece95a12a83e786"
+          }
+        }
+      },
+      "title": "shape.svg - Inkscape",
+      "after_title": "shape.svg - Inkscape",
+      "ended_ns": 21018056308487
+    },
+    "ended_ns": 21018061287494,
+    "window_review": {
+      "status": "reviewed",
+      "authority_granted": false,
+      "input_dispatched": false,
+      "previous_scope": "native-x11:191fe0bcfe104c168db9c4f13f01ef04",
+      "previous_binding_revision": 0,
+      "binding_revision": 1,
+      "scope": "native-x11:12ecb342ea6b446085ee6dd26dd286bf",
+      "previous_window_id": 6291463,
+      "requested_window_id": 6291463,
+      "started_ns": 21018067681980,
+      "observation": {
+        "sequence": 7,
+        "binding_revision": 1,
+        "capture_ns": 21018068924279,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "0673064f7321d1f98eb83c692e1386ef0967448f37ccd8219771a7df4d23b8a8",
+          "width": 1280,
+          "height": 800,
+          "target": "app",
+          "native_window_id": 6291463,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 21018068924279,
+          "capture_ended_ns": 21018075672430,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-finish-after-task-failure-01/bridge/images/0d2e5538c1664e96a7405a126b015ef9.png",
+            "sha256": "115ac54305811c67a43eed09adce40bcf419e1328d918e781b59a4dc13fbfb82",
+            "bytes": 55727,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "0673064f7321d1f98eb83c692e1386ef0967448f37ccd8219771a7df4d23b8a8"
+          }
+        }
+      },
+      "ended_ns": 21018141288842
+    },
+    "through_review_ns": 21018146674702
+  }
+]

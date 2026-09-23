@@ -1,0 +1,173 @@
+[
+  {
+    "attempt_count": 1,
+    "call_ended_monotonic_ns": 52135235099046,
+    "call_started_monotonic_ns": 52135174071447,
+    "dimensions": [
+      500,
+      260
+    ],
+    "elapsed_ns": 61027599,
+    "image_status": "image",
+    "input_dispatched": false,
+    "mime_type": "image/png",
+    "observation": {
+      "artifact_source_raw_sha256": "1b5959a582735e5f14ed65f07389d8c6bc961f3f26da728b77f9bb2e55ff431f",
+      "frame": "window_client",
+      "height": 260,
+      "native_window_id": 4194321,
+      "raw_pixel_sha256": "1b5959a582735e5f14ed65f07389d8c6bc961f3f26da728b77f9bb2e55ff431f",
+      "region": [
+        0,
+        0,
+        500,
+        260
+      ],
+      "target": "fixture",
+      "width": 500
+    },
+    "pixel_sha256": "8403ba12891a93904dd5015f80c8a11d98af41f86cd427906eea381be690b536",
+    "png_sha256": "c7d6ceedb02407b9a572a2334868e2a34aa2c1676845b9954d5f1a31fa9ad6d1",
+    "process": {
+      "fixture": {
+        "exit_code": -15,
+        "stderr": "",
+        "stdout": ""
+      },
+      "kind": "in_process_public_python_api",
+      "native_window_id": 4194321,
+      "pid": 1
+    },
+    "request": {
+      "frame": "window_client",
+      "native_window_id": 4194321,
+      "region": [
+        0,
+        0,
+        500,
+        260
+      ],
+      "target": "fixture"
+    },
+    "route": "api",
+    "side_effect_authority": false,
+    "status": "returned"
+  },
+  {
+    "attempt_count": 1,
+    "call_ended_monotonic_ns": 52135384336742,
+    "call_started_monotonic_ns": 52135297689426,
+    "dimensions": [
+      500,
+      260
+    ],
+    "elapsed_ns": 86647316,
+    "image_status": "image",
+    "input_dispatched": false,
+    "mime_type": "image/png",
+    "observation": {
+      "artifact_source_raw_sha256": "1b5959a582735e5f14ed65f07389d8c6bc961f3f26da728b77f9bb2e55ff431f",
+      "frame": "window_client",
+      "height": 260,
+      "native_window_id": 4194321,
+      "raw_pixel_sha256": "1b5959a582735e5f14ed65f07389d8c6bc961f3f26da728b77f9bb2e55ff431f",
+      "region": [
+        0,
+        0,
+        500,
+        260
+      ],
+      "target": "fixture",
+      "width": 500
+    },
+    "pixel_sha256": "8403ba12891a93904dd5015f80c8a11d98af41f86cd427906eea381be690b536",
+    "png_sha256": "c7d6ceedb02407b9a572a2334868e2a34aa2c1676845b9954d5f1a31fa9ad6d1",
+    "process": {
+      "exit_code": 0,
+      "fixture": {
+        "exit_code": -15,
+        "stderr": "",
+        "stdout": ""
+      },
+      "kind": "cli_subprocess",
+      "native_window_id": 4194321,
+      "pid": 23
+    },
+    "request": {
+      "frame": "window_client",
+      "native_window_id": 4194321,
+      "region": [
+        0,
+        0,
+        500,
+        260
+      ],
+      "target": "fixture"
+    },
+    "route": "cli",
+    "side_effect_authority": false,
+    "status": "returned"
+  },
+  {
+    "attempt_count": 1,
+    "call_ended_monotonic_ns": 52135800595797,
+    "call_started_monotonic_ns": 52135447171899,
+    "dimensions": [
+      500,
+      260
+    ],
+    "elapsed_ns": 353423898,
+    "image_status": "image",
+    "input_dispatched": false,
+    "mime_type": "image/png",
+    "observation": {
+      "artifact_source_raw_sha256": "1b5959a582735e5f14ed65f07389d8c6bc961f3f26da728b77f9bb2e55ff431f",
+      "frame": "window_client",
+      "height": 260,
+      "native_window_id": 4194321,
+      "raw_pixel_sha256": "1b5959a582735e5f14ed65f07389d8c6bc961f3f26da728b77f9bb2e55ff431f",
+      "region": [
+        0,
+        0,
+        500,
+        260
+      ],
+      "target": "fixture",
+      "width": 500
+    },
+    "pixel_sha256": "8403ba12891a93904dd5015f80c8a11d98af41f86cd427906eea381be690b536",
+    "png_sha256": "c7d6ceedb02407b9a572a2334868e2a34aa2c1676845b9954d5f1a31fa9ad6d1",
+    "process": {
+      "child_reaped_after_transport_close": true,
+      "fixture": {
+        "exit_code": -15,
+        "stderr": "",
+        "stdout": ""
+      },
+      "kind": "stdio_mcp_subprocess",
+      "native_window_id": 4194321,
+      "pid": {
+        "command": "/usr/bin/python3 -m runtime.cli_v1.mcp_server --targets /evidence/20260920-issue3561-route-unit-01/mcp/target.json --output-directory /evidence/20260920-issue3561-route-unit-01/mcp/calls --display :99",
+        "pid": 28
+      },
+      "tool_names": [
+        "interface_dispatch",
+        "interface_observe"
+      ]
+    },
+    "request": {
+      "frame": "window_client",
+      "native_window_id": 4194321,
+      "region": [
+        0,
+        0,
+        500,
+        260
+      ],
+      "target": "fixture"
+    },
+    "route": "mcp",
+    "side_effect_authority": false,
+    "status": "returned"
+  }
+]

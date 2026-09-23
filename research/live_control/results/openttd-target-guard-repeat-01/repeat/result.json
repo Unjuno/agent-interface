@@ -1,0 +1,180 @@
+{
+  "name": "repeat",
+  "expected_reason": "target_not_reached",
+  "expected_independent_success": false,
+  "path_derivation": {
+    "format": "target-guard-from-pointer-paths-v1",
+    "box_width": 12,
+    "box_height": 8,
+    "shared_corner_offset": [
+      0,
+      7
+    ],
+    "shared_corner_tolerance": 8,
+    "guard_excludes_continuation_shared_corner": true
+  },
+  "condition": {
+    "event": "local_target_guard_postcondition",
+    "id": "durable-fa1d7046db4447c9bac2ef1e14002484",
+    "step": 3,
+    "sequence": 36,
+    "format": "local-target-guard-postcondition-outcome-v1",
+    "postcondition_id": "seed991004-repeat-first-road-segment",
+    "reason": "target_not_reached",
+    "continue_program": false,
+    "needs_decision": true,
+    "measurements": [
+      {
+        "sequence": 35,
+        "target_changed_pixels": [
+          0,
+          0,
+          0
+        ],
+        "target_changed_total": 0,
+        "guard_changed_pixels": [
+          1,
+          0
+        ],
+        "guard_changed_total": 1
+      },
+      {
+        "sequence": 36,
+        "target_changed_pixels": [
+          0,
+          0,
+          0
+        ],
+        "target_changed_total": 0,
+        "guard_changed_pixels": [
+          1,
+          0
+        ],
+        "guard_changed_total": 1
+      }
+    ],
+    "minimum_target_changed_pixels": 120,
+    "maximum_guard_changed_pixels": 20,
+    "pixel_delta_threshold": 24,
+    "sample_span_ms": 155.114412,
+    "semantic_effect_verified": false,
+    "task_success_verified": false,
+    "grants_input_authority": false,
+    "scope": "fixed-region visual condition for already admitted later steps only",
+    "emitted_ns": 32017570799404
+  },
+  "terminal": {
+    "event": "terminal",
+    "id": "durable-fa1d7046db4447c9bac2ef1e14002484",
+    "status": "needs_decision",
+    "error": null,
+    "steps_completed": 3,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 32017579091276,
+      "valid_until_ns": 32044785247783
+    },
+    "terminal_ns": 32017579128196,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emitted_ns": 32017579130816
+  },
+  "steps_started": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "second_drag_started": false,
+  "independent_evaluation": {
+    "event": "independent_evaluation",
+    "success": false,
+    "checks": {
+      "target_owned_roads": false,
+      "ordered_bidirectional_connections": false,
+      "forbidden_tiles_clear": true,
+      "surrounding_road_owner_unchanged": true
+    },
+    "changed_surrounding_tiles": [],
+    "contract": {
+      "x": 44,
+      "y": 10,
+      "width": 64,
+      "target": [
+        684,
+        685,
+        686,
+        750,
+        814
+      ],
+      "forbidden": [
+        748,
+        749,
+        812,
+        813
+      ],
+      "owner": 0,
+      "guard": [
+        554,
+        555,
+        556,
+        557,
+        558,
+        559,
+        560,
+        618,
+        619,
+        620,
+        621,
+        622,
+        623,
+        624,
+        682,
+        683,
+        684,
+        685,
+        686,
+        687,
+        688,
+        746,
+        747,
+        748,
+        749,
+        750,
+        751,
+        752,
+        810,
+        811,
+        812,
+        813,
+        814,
+        815,
+        816,
+        874,
+        875,
+        876,
+        877,
+        878,
+        879,
+        880,
+        938,
+        939,
+        940,
+        941,
+        942,
+        943,
+        944
+      ]
+    },
+    "emitted_ns": 32018451583916
+  },
+  "bridge_exit_code": 0,
+  "prebuild_submit_to_return_ms": 2876.381515,
+  "repeat_submit_to_return_ms": 2796.828365,
+  "repeat_drag_issued_to_condition_ms": 2547.340455,
+  "condition_to_terminal_ms": 8.328792,
+  "durable_calls": 6
+}

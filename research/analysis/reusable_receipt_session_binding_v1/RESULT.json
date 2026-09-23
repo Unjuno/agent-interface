@@ -1,0 +1,23 @@
+{
+  "decision": "FAIL_REUSABLE_RECEIPT_SESSION_BINDING_UNSOUND",
+  "bridge_blob": "b119c7c4112b9f9873264e6964883ddba5fea906",
+  "source_facts": {
+    "session_id_mentions": 0,
+    "canonical_resource_mentions": 0,
+    "store_checks": ["role","storage","scope","source_blob"],
+    "reusable_current_checks": ["current","role","storage"],
+    "reuse_revalidate_compares_payload_identity": false
+  },
+  "counterexample": {
+    "stored_receipt_lineage": "session-A",
+    "stored_receipt_current": true,
+    "reuse_payload_session": "session-B",
+    "store_accepted": true,
+    "reuse_result": "revalidated",
+    "cross_session_acceptance": true
+  },
+  "stale_control": {
+    "stored_receipt_current": false,
+    "reuse_result": "stale"
+  }
+}

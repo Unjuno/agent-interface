@@ -1,0 +1,26 @@
+{
+  "task": "P0-LIVE-CAUSAL-EFFECT-X11-STACKFILE-A5-20260918-005",
+  "issue": 1325,
+  "branch": "research/p0-live-causal-effect-x11-stackfile-a5-1325",
+  "source_git_blob": {
+    "science_runner.py": "d8c509a55fe5363dc5211aebe510a720e964f7f3",
+    "case_child.py": "27fede8c80942823b9c0df04e5fa39637880efaa",
+    "supervisor.py": "3ef3f84702a239bb797b43d396235fafffa318d7",
+    "audit.py": "7faaba204afeb828203b19e7463a00304b45623d",
+    "schedule.json": "61923526f9bbac107dc710d084bb83f2e303830c",
+    "AUTHORIZATION.json": "c42cf9b0f2fc6670abeb21613ca412c0819237f3"
+  },
+  "source_sha256": {
+    "science_runner.py": "130db1af32380b112a31a28f71aacf376c0d4592389342f7c924acebb404da7b",
+    "case_child.py": "4cb6f52f920ee027a900977f46c3664052dd290ddaa18412e5041fb71ae63b4a",
+    "supervisor.py": "b87d06c322a4e46ca375c1abf9e70433a9bea1373f7693fb8d4b6c4c15525825"
+  },
+  "scientific_changes": [],
+  "diagnostic_changes": [
+    "child stdout/stderr opened as durable files before child start",
+    "timeout kill/wait precedes diagnostic file read"
+  ],
+  "live_sessions": 0,
+  "formal_invocations": 0,
+  "reruns": 0
+}

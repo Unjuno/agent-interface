@@ -1,0 +1,53 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "guarded-f0757eb71bc74a2088dd615c972cfb5f",
+  "source": {
+    "observation_seq": 2,
+    "binding_revision": 0
+  },
+  "authority": {
+    "lease_id": "native-x11-937d05d0e95e4b1a857a7a8b1321496f",
+    "expires_at_ns": 55201941325295
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "app"
+    },
+    {
+      "op": "pointer_move",
+      "frame": "screen_physical_px",
+      "x": 600,
+      "y": 389
+    },
+    {
+      "op": "pointer_button",
+      "button": "left",
+      "down": true
+    },
+    {
+      "op": "pointer_button",
+      "button": "left",
+      "down": false
+    },
+    {
+      "keys": [
+        "Right"
+      ],
+      "op": "key_chord"
+    },
+    {
+      "keys": [
+        "CTRL",
+        "s"
+      ],
+      "op": "key_chord"
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}

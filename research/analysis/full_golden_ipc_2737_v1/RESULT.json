@@ -1,0 +1,29 @@
+{
+  "schema": "full_golden_ipc_2737_result_v1",
+  "status": "PASS",
+  "issue": 2737,
+  "successor_to": [2705, 2730],
+  "allocation": {"id": "v4", "seed": 991035, "retry": false},
+  "container_image": "agent-interface-golden-ipc-2705:20260920-wmctrl@sha256:7e4a3b6f3917baa9f153b4dfd011a4ea528a3d200a7a3d274aa9479900ee7b41",
+  "model": {"name": "gpt-5.6-luna", "effort": "low", "boundary": "container-host-shared-volume-ipc", "authority_granted": false},
+  "preflight": "PASS",
+  "independent_evaluation": {"success": true, "record_count": 6, "duplicates": {}, "missing": []},
+  "tasks": [
+    {"task_id": "task-1", "route": "cold", "exact_submission": true, "releases_verified": true, "pointer_admissions": 2, "model_calls": 1},
+    {"task_id": "task-2", "route": "reuse", "exact_submission": true, "releases_verified": true, "pointer_admissions": 2, "model_calls": 0},
+    {"task_id": "task-3", "route": "reuse", "exact_submission": true, "releases_verified": true, "pointer_admissions": 2, "model_calls": 0},
+    {"task_id": "task-4", "route": "repair", "exact_submission": true, "releases_verified": true, "pointer_admissions": 2, "model_calls": 1, "repair_succeeded": true, "old_reference_status": "missing"},
+    {"task_id": "task-5", "route": "reuse", "exact_submission": true, "releases_verified": true, "pointer_admissions": 2, "model_calls": 0},
+    {"task_id": "task-6", "route": "reuse", "exact_submission": true, "releases_verified": true, "pointer_admissions": 2, "model_calls": 0}
+  ],
+  "promotion_gates": {"all_tasks_exact": true, "all_effects_independent": true, "all_releases_verified": true, "persistent_repair_succeeded": true, "unsafe_or_stale_admissions": 0, "ipc_failures": 0},
+  "source_hashes": {
+    "research/live_control/container_host_model_ipc_runner_v1.py": "ab61a56a7a1395f24b1107a92ac9a208c0a67d0fe1c741d3175427a27aaffe72",
+    "runtime/host_model_ipc_broker_v1.py": "a660dc7e62645e93889ddb42527a976370486c69a905e09c27be1f614c82edff",
+    "research/live_control/integrated_efficiency_client_v1.py": "136266cb7f06fdf4016c2594431f929e09a2d14e003c3f2092795152a9f65204",
+    "research/live_control/source_pixel_transform_v1.py": "a7951c49b8407a4d9e3b8ce16b8c0e496dfa6d24b4212afa49bfd221a9e8f54c",
+    "research/live_control/run_integrated_efficiency_live_v1.py": "f7521fe82e4490da82a45e209d497cce07ca5b60afa2b4ab39e13ebee886ce94"
+  },
+  "local_evidence": "runtime/results-local/full-golden-ipc-2737-v4/report.json",
+  "scope": "one fresh persistent six-task Docker allocation through host-local model IPC; no broad reliability claim"
+}

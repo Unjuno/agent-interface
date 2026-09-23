@@ -1,0 +1,10 @@
+{
+  "pass": true,
+  "corruptions_rejected": 4,
+  "cases": [
+    {"name":"writer_errno_removed","audit_pass":false,"errors":["row1:writer-not-denied"]},
+    {"name":"gui_uid_root","audit_pass":false,"errors":["row1:gui-root","row1:soffice-euid","row1:writer-not-denied"]},
+    {"name":"authority_dir_world_writable","audit_pass":false,"errors":["row1:authority-dir-writable"]},
+    {"name":"final_cells_wrong","audit_pass":false,"errors":["row1:cells"]}
+  ]
+}

@@ -1,0 +1,15 @@
+name: native observe construction failure 2353 p2
+on:
+  pull_request:
+    paths:
+      - "runtime/cli_v1/observe.py"
+      - "research/integration/native_observe_construction_failure_2353_p2/**"
+      - ".github/workflows/native-observe-construction-failure-2353-p2.yml"
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    container: python:3.12-slim
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m py_compile runtime/cli_v1/observe.py research/integration/native_observe_construction_failure_2353_p2/test_observe.py
+      - run: python research/integration/native_observe_construction_failure_2353_p2/test_observe.py

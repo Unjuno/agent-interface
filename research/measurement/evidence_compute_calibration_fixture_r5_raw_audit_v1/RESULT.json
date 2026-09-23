@@ -1,0 +1,66 @@
+{
+  "corruption_controls": {
+    "cache_corruption_rejected": true,
+    "digest_corruption_rejected": true,
+    "predecessor_result_irrelevant": true,
+    "primitive_completion_without_cost_update_rejected": true,
+    "schedule_outcome_corruption_rejected": true,
+    "stale_publish_rejected": true,
+    "stored_double_obsolete_rejected": true
+  },
+  "decision": "PASS_EVIDENCE_COMPUTE_CALIBRATION_FIXTURE_RAW_AUDIT_SCOPED",
+  "derived": {
+    "active_rows": 128,
+    "active_scenarios": 64,
+    "aggregate_delta_run_minus_wait_ns": -164436862,
+    "cache_counts": {
+      "DROP_EXPIRED": 8,
+      "REBUILD_REQUIRED": 8,
+      "REUSE": 48
+    },
+    "correct_rows": 128,
+    "g_count": 48,
+    "g_mean_ns_den": 48,
+    "g_mean_ns_num": 240512261,
+    "g_sum_ns": 240512261,
+    "identity_w_minus_g_ns": -164436862,
+    "invalidated_run_aborted": 16,
+    "invalidated_run_positive_obsolete": 16,
+    "invalidated_scenarios": 16,
+    "p_den": 64,
+    "p_num": 16,
+    "reuse_rate_den": 64,
+    "reuse_rate_num": 48,
+    "run_cost_sum_ns": 1686444137,
+    "stable_scenarios": 48,
+    "stale_publish_count": 0,
+    "threshold_den": 7499815328,
+    "threshold_num": 3848196176,
+    "threshold_predicts_run": true,
+    "version_bench": {
+      "counts": {
+        "DROP_EXPIRED": 80000,
+        "REBUILD_REQUIRED": 80000,
+        "REUSE": 80000
+      },
+      "max_ns": 253594,
+      "p50_ns": 90,
+      "p95_ns": 100,
+      "rows": 240000
+    },
+    "w_count": 16,
+    "w_mean_ns_den": 16,
+    "w_mean_ns_num": 76075399,
+    "w_sum_ns": 76075399,
+    "wait_cost_sum_ns": 1850880999
+  },
+  "digest": "96978cb90b903178473a2a92ae9a6009246972ec56c25b34ac2f5c425e8dcbcd",
+  "errors": [],
+  "formal_audit_invocations": 1,
+  "raw_sha256": "71e9a44f02e86d498c567cd4286f6171e8472dee9e469fce7a7716b345d4f468",
+  "replacements": 0,
+  "reruns": 0,
+  "schedule_sha256": "25fdc3edbcd1df1cf30d2cb43f971604618d1ce7915f0ae601f9914fec220b3c",
+  "status": "PASS",
+  "tuning": 0
+}

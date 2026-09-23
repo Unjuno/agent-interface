@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "checks": {
+    "manifest": true,
+    "frozen_sources": true,
+    "first_failure": true,
+    "audit_failure_retained": true,
+    "missing_evidence_explicit": true,
+    "descriptive_wait_retained": true,
+    "zero_model": true
+  },
+  "allocation_passed": false,
+  "failure_class": "server_request_registration_receipt_not_serialized",
+  "metrics_ms": {
+    "focus_to_runtime_release_ms": 1.249969,
+    "focus_to_early_client_ms": 2.67233,
+    "focus_to_terminal_client_ms": 113.116375,
+    "early_client_wait_advantage_ms": 110.444045,
+    "focus_to_early_final_terminal_ms": 113.894958,
+    "runtime_release_to_terminal_ms": 111.201709
+  },
+  "files_in_manifest": 14,
+  "bytes_before_receipt": 253759,
+  "limits": "posthoc analysis of one no-model pointer/client run; missing registration receipts cannot be reconstructed from client start timestamps or the runner boolean"
+}

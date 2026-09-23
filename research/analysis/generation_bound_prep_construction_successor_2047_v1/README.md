@@ -1,0 +1,1 @@
+# Generation-bound preparation construction gate (#2047)\n\nFinite provenance gate for early PNG preparation. Exact-generation ready cache entries may be reused; obsolete, encoding, missing-timestamp, or request-generation mismatches rebuild or wait. No model-facing utility claim.\n

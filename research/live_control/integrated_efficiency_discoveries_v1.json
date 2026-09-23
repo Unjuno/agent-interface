@@ -1,0 +1,162 @@
+[
+  {
+    "id": "query_url_outside_runtime_text_alphabet",
+    "class": "interface_mismatch",
+    "discovered_phase": "pre_prereg",
+    "symptom": "The checked text runtime rejected a fixture URL containing query-string characters before any task input.",
+    "blocking_requirement": "All three arms must navigate the same task URL through the admitted runtime.",
+    "repair": "Encode task identity as a path segment accepted by the existing bounded text alphabet.",
+    "regression_test": "audit_integrated_efficiency_runtime_probe_v1.py retains probe-01 and verifies corrected probe-02.",
+    "accounting_disposition": "engineering_excluded_zero_model",
+    "status": "fixed",
+    "allocation_invalidated": false,
+    "overhead": {
+      "allocation_id": "integrated-efficiency-runtime-probe-01",
+      "model_calls": 0,
+      "input_tokens": 0,
+      "runtime_ns": 230611297,
+      "target_button_down_admissions": 0,
+      "aggregation_scope": "allocation_total_nonadditive_across_shared_defects"
+    }
+  },
+  {
+    "id": "human_point_vertical_misread",
+    "class": "benchmark_setup_accounting_defect",
+    "discovered_phase": "pre_prereg",
+    "symptom": "The engineering A field point used display-scaled y=177 instead of the exact 1280x800 source-frame y near 401, producing a flat patch refusal.",
+    "blocking_requirement": "Engineering mechanics must use points expressed in the exact source observation frame.",
+    "repair": "Inspect exact source pixels and use A field/submit points [226,401]/[376,401].",
+    "regression_test": "audit_integrated_efficiency_persistent_mechanics_v1.py retains mechanics-01 and verifies later A mints.",
+    "accounting_disposition": "engineering_excluded_zero_model",
+    "status": "fixed",
+    "allocation_invalidated": false,
+    "overhead": {
+      "allocation_id": "integrated-efficiency-persistent-mechanics-01",
+      "model_calls": 0,
+      "input_tokens": 0,
+      "runtime_ns": 1566009671,
+      "target_button_down_admissions": 0,
+      "aggregation_scope": "allocation_total_nonadditive_across_shared_defects"
+    }
+  },
+  {
+    "id": "missing_handle_record_sequence_assumption",
+    "class": "benchmark_setup_accounting_defect",
+    "discovered_phase": "pre_prereg",
+    "symptom": "The task-4 MISSING handle record correctly omitted a resolution sequence, while the probe packaging indexed it as mandatory and raised KeyError.",
+    "blocking_requirement": "Typed refusal packaging must preserve a missing optional field without converting safe refusal into runner failure.",
+    "repair": "Record sequence as optional with get() for non-resolving handle outcomes.",
+    "regression_test": "audit_integrated_efficiency_persistent_mechanics_v1.py verifies the retained mechanics-02 MISSING event and later nullable sequence report.",
+    "accounting_disposition": "engineering_excluded_zero_model",
+    "status": "fixed",
+    "allocation_invalidated": false,
+    "overhead": {
+      "allocation_id": "integrated-efficiency-persistent-mechanics-02",
+      "model_calls": 0,
+      "input_tokens": 0,
+      "runtime_ns": 11270459927,
+      "target_button_down_admissions": 6,
+      "aggregation_scope": "allocation_total_nonadditive_across_shared_defects"
+    }
+  },
+  {
+    "id": "restyled_field_flat_center_patch",
+    "class": "interface_mismatch",
+    "discovered_phase": "pre_prereg",
+    "symptom": "The 30px-tall layout-B field left a 24x22 center patch entirely white, so target minting safely refused it as visually flat.",
+    "blocking_requirement": "One declared field-region rule must remain discriminative across both frozen layouts.",
+    "repair": "Use a fixed 24x38 field region in both layouts so the model point neighborhood includes the visible field boundary.",
+    "regression_test": "audit_integrated_efficiency_persistent_mechanics_v1.py retains mechanics-03 and verifies B mint/reuse in mechanics-05.",
+    "accounting_disposition": "engineering_excluded_zero_model",
+    "status": "fixed",
+    "allocation_invalidated": false,
+    "overhead": {
+      "allocation_id": "integrated-efficiency-persistent-mechanics-03",
+      "model_calls": 0,
+      "input_tokens": 0,
+      "runtime_ns": 11501050125,
+      "target_button_down_admissions": 6,
+      "aggregation_scope": "allocation_total_nonadditive_across_shared_defects"
+    }
+  },
+  {
+    "id": "pointer_event_name_mismatch",
+    "class": "benchmark_setup_accounting_defect",
+    "discovered_phase": "pre_prereg",
+    "symptom": "The successful mechanics-04 report searched for pointer_target_admission while raw runtime events use pointer_admission, falsely reporting zero intended admissions.",
+    "blocking_requirement": "The comparison ledger must reconcile every consequential pointer admission to raw events.",
+    "repair": "Count pointer_admission and require exactly one button_down for each of twelve intended target-action programs.",
+    "regression_test": "audit_integrated_efficiency_persistent_mechanics_v1.py proves mechanics-04's reporting mismatch and mechanics-05's reconciled count.",
+    "accounting_disposition": "engineering_excluded_zero_model",
+    "status": "fixed",
+    "allocation_invalidated": false,
+    "overhead": {
+      "allocation_id": "integrated-efficiency-persistent-mechanics-04",
+      "model_calls": 0,
+      "input_tokens": 0,
+      "runtime_ns": 22480604054,
+      "target_button_down_admissions": 12,
+      "aggregation_scope": "allocation_total_nonadditive_across_shared_defects"
+    }
+  },
+  {
+    "id": "cross_task_duplicate_call_id_gap",
+    "class": "benchmark_setup_accounting_defect",
+    "discovered_phase": "pre_prereg",
+    "symptom": "The first comparison protocol rejected duplicate call IDs only within one task and could accept the same ID in two tasks.",
+    "blocking_requirement": "All attempted model calls must have unique IDs across the complete three-arm allocation.",
+    "repair": "Maintain one global call-ID set while validating every arm and task.",
+    "regression_test": "probe_integrated_efficiency_protocol_v1.py includes a cross-task duplicate-ID rejection.",
+    "accounting_disposition": "engineering_excluded_zero_model",
+    "status": "fixed",
+    "allocation_invalidated": false,
+    "overhead": {
+      "allocation_id": "synthetic-protocol-probe",
+      "model_calls": 0,
+      "input_tokens": 0,
+      "runtime_ns": null,
+      "target_button_down_admissions": 0,
+      "aggregation_scope": "allocation_total_nonadditive_across_shared_defects"
+    }
+  },
+  {
+    "id": "target_alias_prefix_character_mismatch",
+    "class": "interface_mismatch",
+    "discovered_phase": "pre_prereg",
+    "symptom": "The ephemeral arm composed task-1 into a target alias, but the handle registry permits only lowercase letters, digits and underscores.",
+    "blocking_requirement": "Every arm must derive bounded private aliases without weakening the registry grammar.",
+    "repair": "Normalize non-alphanumeric prefix characters to underscores, require a leading letter and cap the prefix before adding the field/submit suffix.",
+    "regression_test": "probe_integrated_efficiency_three_arm_mechanics_v1.py retains mechanics-01 and reruns all three arms with normalized aliases.",
+    "accounting_disposition": "engineering_excluded_zero_model",
+    "status": "fixed",
+    "allocation_invalidated": false,
+    "overhead": {
+      "allocation_id": "integrated-efficiency-three-arm-mechanics-01-ephemeral",
+      "model_calls": 0,
+      "input_tokens": 0,
+      "runtime_ns": 1683413028,
+      "target_button_down_admissions": 0,
+      "aggregation_scope": "allocation_total_nonadditive_across_shared_defects"
+    }
+  },
+  {
+    "id": "submission_history_materialized_at_finish",
+    "class": "benchmark_setup_accounting_defect",
+    "discovered_phase": "pre_prereg",
+    "symptom": "The composed runner read the exported submission-history path after each task, but the runtime materializes that artifact only at finish, so all 18 successful submissions were provisionally counted as zero.",
+    "blocking_requirement": "Each task row must reconcile exact independent submissions without assuming an internal fixture path is live during the episode.",
+    "repair": "After the independent finish event, reconcile the exported append-only history back to the already recorded task rows by task ID and preserve the original task timing/source records.",
+    "regression_test": "probe_integrated_efficiency_live_orchestration_v1.py retains probe-01 and requires probe-02 to report all three independent six-task sequences correct through the formal runner.",
+    "accounting_disposition": "engineering_excluded_zero_model",
+    "status": "fixed",
+    "allocation_invalidated": false,
+    "overhead": {
+      "allocation_id": "integrated-efficiency-live-orchestration-probe-01",
+      "model_calls": 0,
+      "input_tokens": 0,
+      "runtime_ns": 69179659874,
+      "target_button_down_admissions": 36,
+      "aggregation_scope": "allocation_total_nonadditive_across_shared_defects"
+    }
+  }
+]

@@ -1,0 +1,39 @@
+{
+  "schema": "agent-interface/libreoffice-save-guard-summary-v1",
+  "base": "3c6f07f0660aee854d6b2d2d0f525fd9f451de68",
+  "issue": 284,
+  "branch": "research/libreoffice-save-guard-3c6f07f",
+  "flock": {
+    "allocation": "c284-flock-01",
+    "stable": "stable_saved",
+    "stale": "PERMISSIVE_STALE",
+    "stable_lock_fd_inode": 786667,
+    "stable_final_path_inode": 786790,
+    "stale_lock_fd_inode": 786671,
+    "stale_final_path_inode": 786918,
+    "stale_external_sha256": "08c8ddd4ef6e08ba523c3a5d833d19b9fe3381e0918e5c27ebbf57aafc022afb",
+    "stale_final_sha256": "5db614d5b565f962ac9c695fe8243f9b07c334196f5569dc3af552676ffb23fa"
+  },
+  "file_lease": {
+    "allocation": "c284-lease-probe-01",
+    "classification": "UNAVAILABLE_POST_PRECHECK",
+    "errno": 11,
+    "errno_name": "EAGAIN",
+    "get_lease": 2
+  },
+  "construction_control": {
+    "isolated_file_write_lease_acquired": true,
+    "F_GETLEASE": 1
+  },
+  "source_blobs": {
+    "backend_x11.py": "b4f8e043ce4f8929d446e038418ea0fd3655bab0",
+    "office_backend.py": "3aeca10f62fb1366bcdd5fad561509cfcc0d91ab"
+  },
+  "limits": [
+    "LibreOffice 25.2.3.2",
+    "overlay filesystem",
+    "root-run Calc process",
+    "one pair + one lease probe",
+    "no timing/rate/general GUI claim"
+  ]
+}

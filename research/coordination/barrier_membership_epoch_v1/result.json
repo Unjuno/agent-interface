@@ -1,0 +1,46 @@
+{
+  "schema": "barrier_membership_epoch_result_v1",
+  "task": "COORD-BARRIER-MEMBERSHIP-EPOCH-20260916-014",
+  "decision": "PASS_MEMBERSHIP_BOUND_ALL_CONFIRMED_SCOPED",
+  "freeze_commit": "9526be359f77af15414af107460eae496e64ec71",
+  "cases": {
+    "stable_membership": {
+      "membership": {"epoch": 1, "members": ["A", "B"]},
+      "confirmation": {"membership_epoch": 1, "members": ["A", "B"], "receivers": ["A", "B"]},
+      "classification": "ALL_CONFIRMED",
+      "coordination_commit": "8760f94de24beecbc9bc5a174dc08ffbfb3ebc3a",
+      "final_generation": 2
+    },
+    "member_added": {
+      "membership_update_commit": "7db64bad468c4025b94aa7f32d62bc6a9a77b79c",
+      "current_membership": {"epoch": 2, "members": ["A", "B", "C"]},
+      "retained_confirmation": {"membership_epoch": 1, "members": ["A", "B"], "receivers": ["A", "B"]},
+      "classification": "HOLD_MEMBERSHIP_CHANGED",
+      "coordination_writes": 0,
+      "final_generation": 1
+    },
+    "member_replaced": {
+      "membership_update_commit": "fa6cfe48e2d39cf7918050327a0ea8ef97adb6cb",
+      "current_membership": {"epoch": 2, "members": ["A", "C"]},
+      "old_confirmation": {"membership_epoch": 1, "members": ["A", "B"], "receivers": ["A", "B"]},
+      "old_confirmation_classification": "HOLD_MEMBERSHIP_CHANGED",
+      "fresh_confirmation_commit": "4b85d0e7e7b3a0cd133513b446cdea68b3f7f5fd",
+      "fresh_confirmation": {"membership_epoch": 2, "members": ["A", "C"], "receivers": ["A", "C"]},
+      "fresh_classification": "ALL_CONFIRMED",
+      "coordination_commit": "5e9f1b94050907bb06e327b697b60a7c30b199e3",
+      "final_generation": 2
+    }
+  },
+  "totals": {
+    "membership_updates": 2,
+    "old_membership_batches_rejected": 2,
+    "fresh_current_membership_batches_accepted": 2,
+    "coordination_advances": 2,
+    "coordination_advances_from_stale_membership": 0,
+    "retired_receiver_required_after_current_membership_confirmation": false,
+    "quorum_used": false,
+    "timeout_eviction_used": false,
+    "retries": 0
+  },
+  "boundary": "Membership updates are fixture-authorized. No claim is made about membership-change authority, concurrent configuration updates, quorum consensus, or distributed membership discovery."
+}

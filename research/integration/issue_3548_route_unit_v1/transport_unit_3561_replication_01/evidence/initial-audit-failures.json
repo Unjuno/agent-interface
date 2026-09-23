@@ -1,0 +1,24 @@
+{
+  "frozen_auditor_sha256": "628152a20dd59426cbeeff4eb90ed0c9dce59e3f2834d0ae3c272321ed688018",
+  "attempts": [
+    {
+      "exit_code": 1,
+      "stderr": "ValueError: Xvfb did not terminate by recorded harness signal",
+      "classification": "AUDITOR_ASSUMPTION_TOO_STRICT; Xvfb was reaped and its observed exit status was 0"
+    },
+    {
+      "exit_code": 1,
+      "stderr": "ValueError: raw observation not returned/no-input: api",
+      "classification": "AUDITOR_API_RAW_REPORT_SHAPE_PARSING_ERROR"
+    },
+    {
+      "exit_code": 1,
+      "stderr": "ValueError: raw observation not returned/no-input: mcp",
+      "classification": "AUDITOR_MCP_RAW_REPORT_ENVELOPE_PARSING_ERROR"
+    }
+  ],
+  "experiment_rerun": false,
+  "route_calls_during_audit": 0,
+  "corrected_auditor_sha256": "629f46211777d92b4848a2ce8316c808088c59238f4a82560459cb92cf9e1b62",
+  "corrected_audit_result": "PASS_UNIT_ROUTE_EQUIVALENCE"
+}

@@ -1,0 +1,16 @@
+name: observation O4 runtime verify 2595
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - research/observation_gating/o4_runtime_verify_successor_v1/**
+      - .github/workflows/observation-o4-runtime-verify-2595.yml
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    container:
+      image: python:3.12-slim-bookworm@sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m unittest research.observation_gating.o4_runtime_verify_successor_v1.test_gate

@@ -1,0 +1,352 @@
+{
+  "rows": [
+    {
+      "eligibility": {
+        "model_action_discarded": true,
+        "plan_terminal": "not_admitted",
+        "planner_answer_eligible": true,
+        "planner_turn_status": "completed"
+      },
+      "eligible_expected": false,
+      "iteration": 0,
+      "last_effect_receipt": {
+        "kind": "NONE"
+      },
+      "own_effect_receipts": [],
+      "prompt_b64": "U2VsZWN0IHRoZSBuZXh0IGJvdW5kZWQgTUFQMDEgYWN0aW9uIGZyb20gdGhlIG5ldyB0ZW1wb3JhbCBzaGVldC4KQ3VycmVudCBsb2NhbGx5IHZlcmlmaWVkIGhlYWx0aDogOTcuCk5ld2VzdCB0eXBlZCBzb2Z0IGV2ZW50IGZyb20gdGhlIHByZWNlZGluZyBjb250cm9sIGludGVydmFsOiBudWxsClByZXZpb3VzIG5vLXZpc2libGUtZWZmZWN0IGFjdGlvbnM6IFtdCg==",
+      "prompt_git_blob": "b6b45288c741cf1dfbcd40e2cad9c9054caf6a5d",
+      "teacher_label": null
+    },
+    {
+      "eligibility": {
+        "model_action_discarded": false,
+        "plan_terminal": "completed",
+        "planner_answer_eligible": true,
+        "planner_turn_status": "completed"
+      },
+      "eligible_expected": true,
+      "iteration": 1,
+      "last_effect_receipt": {
+        "kind": "NONE"
+      },
+      "own_effect_receipts": [
+        {
+          "action": "retreat_fire",
+          "extent": "short",
+          "result": "visible_change"
+        }
+      ],
+      "prompt_b64": "U2VsZWN0IHRoZSBuZXh0IGJvdW5kZWQgTUFQMDEgYWN0aW9uIGZyb20gdGhlIG5ldyB0ZW1wb3JhbCBzaGVldC4KQ3VycmVudCBsb2NhbGx5IHZlcmlmaWVkIGhlYWx0aDogOTEuCk5ld2VzdCB0eXBlZCBzb2Z0IGV2ZW50IGZyb20gdGhlIHByZWNlZGluZyBjb250cm9sIGludGVydmFsOiBudWxsClByZXZpb3VzIG5vLXZpc2libGUtZWZmZWN0IGFjdGlvbnM6IFtdCg==",
+      "prompt_git_blob": "02edc59200629518b01080e16f7a4e132cda5c60",
+      "teacher_label": {
+        "commands": [
+          {
+            "action": "retreat_fire",
+            "extent": "short"
+          }
+        ],
+        "contingencies": [],
+        "next_cover": [
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          },
+          {
+            "action": "backward",
+            "extent": "short"
+          }
+        ],
+        "next_cover_validity": [
+          {
+            "critical_health_minimum": 45,
+            "max_source_age_ms": 30000,
+            "maximum_health_loss": 8,
+            "signal_id": "health"
+          }
+        ],
+        "state": "active"
+      }
+    },
+    {
+      "eligibility": {
+        "model_action_discarded": false,
+        "plan_terminal": "completed",
+        "planner_answer_eligible": true,
+        "planner_turn_status": "completed"
+      },
+      "eligible_expected": true,
+      "iteration": 2,
+      "last_effect_receipt": {
+        "action": "retreat_fire",
+        "extent": "short",
+        "kind": "RECEIPT",
+        "result": "visible_change",
+        "source_iteration": 1
+      },
+      "own_effect_receipts": [
+        {
+          "action": "fire",
+          "extent": "pulse",
+          "result": "no_visible_effect"
+        }
+      ],
+      "prompt_b64": "U2VsZWN0IHRoZSBuZXh0IGJvdW5kZWQgTUFQMDEgYWN0aW9uIGZyb20gdGhlIG5ldyB0ZW1wb3JhbCBzaGVldC4KQ3VycmVudCBsb2NhbGx5IHZlcmlmaWVkIGhlYWx0aDogOTEuCk5ld2VzdCB0eXBlZCBzb2Z0IGV2ZW50IGZyb20gdGhlIHByZWNlZGluZyBjb250cm9sIGludGVydmFsOiBudWxsClByZXZpb3VzIG5vLXZpc2libGUtZWZmZWN0IGFjdGlvbnM6IFtdCg==",
+      "prompt_git_blob": "02edc59200629518b01080e16f7a4e132cda5c60",
+      "teacher_label": {
+        "commands": [
+          {
+            "action": "fire",
+            "extent": "pulse"
+          }
+        ],
+        "contingencies": [],
+        "next_cover": [
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          }
+        ],
+        "next_cover_validity": [
+          {
+            "critical_health_minimum": 45,
+            "max_source_age_ms": 30000,
+            "maximum_health_loss": 8,
+            "signal_id": "health"
+          }
+        ],
+        "state": "active"
+      }
+    },
+    {
+      "eligibility": {
+        "model_action_discarded": false,
+        "plan_terminal": "completed",
+        "planner_answer_eligible": true,
+        "planner_turn_status": "completed"
+      },
+      "eligible_expected": true,
+      "iteration": 3,
+      "last_effect_receipt": {
+        "action": "fire",
+        "extent": "pulse",
+        "kind": "RECEIPT",
+        "result": "no_visible_effect",
+        "source_iteration": 2
+      },
+      "own_effect_receipts": [
+        {
+          "action": "strafe_left",
+          "extent": "medium",
+          "result": "visible_change"
+        }
+      ],
+      "prompt_b64": "U2VsZWN0IHRoZSBuZXh0IGJvdW5kZWQgTUFQMDEgYWN0aW9uIGZyb20gdGhlIG5ldyB0ZW1wb3JhbCBzaGVldC4KQ3VycmVudCBsb2NhbGx5IHZlcmlmaWVkIGhlYWx0aDogODUuCk5ld2VzdCB0eXBlZCBzb2Z0IGV2ZW50IGZyb20gdGhlIHByZWNlZGluZyBjb250cm9sIGludGVydmFsOiB7InNpZ25hbF9pZCI6ImhlYWx0aCIsInNvdXJjZV92YWx1ZSI6OTEsImN1cnJlbnRfdmFsdWUiOjg1LCJoYXJkX21pbmltdW0iOjgzLCJzb2Z0X2V2ZW50X2NvdW50IjoxLCJzZXF1ZW5jZSI6NzQsIm9ic2VydmVkX2R1cmluZ19pdGVyYXRpb24iOjIsImNvdmVyX3BvbGljeV9zb3VyY2VfaXRlcmF0aW9uIjoxLCJlZmZlY3QiOiJwcmlvcl9jb3Zlcl9wcmVzZXJ2ZWQiLCJncmFudHNfaW5wdXRfYXV0aG9yaXR5IjpmYWxzZX0KUHJldmlvdXMgbm8tdmlzaWJsZS1lZmZlY3QgYWN0aW9uczogWyJmaXJlIl0K",
+      "prompt_git_blob": "24a2772972f4a71e45ac28f6425e94e1767b30dc",
+      "teacher_label": {
+        "commands": [
+          {
+            "action": "strafe_left",
+            "extent": "medium"
+          }
+        ],
+        "contingencies": [],
+        "next_cover": [
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          },
+          {
+            "action": "backward",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          }
+        ],
+        "next_cover_validity": [
+          {
+            "critical_health_minimum": 45,
+            "max_source_age_ms": 30000,
+            "maximum_health_loss": 6,
+            "signal_id": "health"
+          }
+        ],
+        "state": "active"
+      }
+    },
+    {
+      "eligibility": {
+        "model_action_discarded": false,
+        "plan_terminal": "completed",
+        "planner_answer_eligible": true,
+        "planner_turn_status": "completed"
+      },
+      "eligible_expected": true,
+      "iteration": 4,
+      "last_effect_receipt": {
+        "action": "strafe_left",
+        "extent": "medium",
+        "kind": "RECEIPT",
+        "result": "visible_change",
+        "source_iteration": 3
+      },
+      "own_effect_receipts": [
+        {
+          "action": "retreat_fire",
+          "extent": "short",
+          "result": "visible_change"
+        }
+      ],
+      "prompt_b64": "U2VsZWN0IHRoZSBuZXh0IGJvdW5kZWQgTUFQMDEgYWN0aW9uIGZyb20gdGhlIG5ldyB0ZW1wb3JhbCBzaGVldC4KQ3VycmVudCBsb2NhbGx5IHZlcmlmaWVkIGhlYWx0aDogNzkuCk5ld2VzdCB0eXBlZCBzb2Z0IGV2ZW50IGZyb20gdGhlIHByZWNlZGluZyBjb250cm9sIGludGVydmFsOiB7InNpZ25hbF9pZCI6ImhlYWx0aCIsInNvdXJjZV92YWx1ZSI6ODUsImN1cnJlbnRfdmFsdWUiOjc5LCJoYXJkX21pbmltdW0iOjc3LCJzb2Z0X2V2ZW50X2NvdW50IjoxLCJzZXF1ZW5jZSI6MTE1LCJvYnNlcnZlZF9kdXJpbmdfaXRlcmF0aW9uIjozLCJjb3Zlcl9wb2xpY3lfc291cmNlX2l0ZXJhdGlvbiI6MiwiZWZmZWN0IjoicHJpb3JfY292ZXJfcHJlc2VydmVkIiwiZ3JhbnRzX2lucHV0X2F1dGhvcml0eSI6ZmFsc2V9ClByZXZpb3VzIG5vLXZpc2libGUtZWZmZWN0IGFjdGlvbnM6IFtdCg==",
+      "prompt_git_blob": "824298de039013906a50b5e2505d1b57f00d6e00",
+      "teacher_label": {
+        "commands": [
+          {
+            "action": "retreat_fire",
+            "extent": "short"
+          }
+        ],
+        "contingencies": [],
+        "next_cover": [
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          },
+          {
+            "action": "backward",
+            "extent": "pulse"
+          }
+        ],
+        "next_cover_validity": [
+          {
+            "critical_health_minimum": 45,
+            "max_source_age_ms": 30000,
+            "maximum_health_loss": 4,
+            "signal_id": "health"
+          }
+        ],
+        "state": "active"
+      }
+    },
+    {
+      "eligibility": {
+        "model_action_discarded": false,
+        "plan_terminal": "completed",
+        "planner_answer_eligible": true,
+        "planner_turn_status": "completed"
+      },
+      "eligible_expected": true,
+      "iteration": 5,
+      "last_effect_receipt": {
+        "action": "retreat_fire",
+        "extent": "short",
+        "kind": "RECEIPT",
+        "result": "visible_change",
+        "source_iteration": 4
+      },
+      "own_effect_receipts": [
+        {
+          "action": "strafe_right",
+          "extent": "medium",
+          "result": "visible_change"
+        }
+      ],
+      "prompt_b64": "U2VsZWN0IHRoZSBuZXh0IGJvdW5kZWQgTUFQMDEgYWN0aW9uIGZyb20gdGhlIG5ldyB0ZW1wb3JhbCBzaGVldC4KQ3VycmVudCBsb2NhbGx5IHZlcmlmaWVkIGhlYWx0aDogNzUuCk5ld2VzdCB0eXBlZCBzb2Z0IGV2ZW50IGZyb20gdGhlIHByZWNlZGluZyBjb250cm9sIGludGVydmFsOiB7InNpZ25hbF9pZCI6ImhlYWx0aCIsInNvdXJjZV92YWx1ZSI6NzksImN1cnJlbnRfdmFsdWUiOjc1LCJoYXJkX21pbmltdW0iOjczLCJzb2Z0X2V2ZW50X2NvdW50IjoxLCJzZXF1ZW5jZSI6MTczLCJvYnNlcnZlZF9kdXJpbmdfaXRlcmF0aW9uIjo0LCJjb3Zlcl9wb2xpY3lfc291cmNlX2l0ZXJhdGlvbiI6MywiZWZmZWN0IjoicHJpb3JfY292ZXJfcHJlc2VydmVkIiwiZ3JhbnRzX2lucHV0X2F1dGhvcml0eSI6ZmFsc2V9ClByZXZpb3VzIG5vLXZpc2libGUtZWZmZWN0IGFjdGlvbnM6IFtdCg==",
+      "prompt_git_blob": "45d46c58e0ec8af95b666bbe0c5833e6ef232932",
+      "teacher_label": {
+        "commands": [
+          {
+            "action": "strafe_right",
+            "extent": "medium"
+          }
+        ],
+        "contingencies": [],
+        "next_cover": [
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          },
+          {
+            "action": "backward",
+            "extent": "short"
+          }
+        ],
+        "next_cover_validity": [
+          {
+            "critical_health_minimum": 45,
+            "max_source_age_ms": 30000,
+            "maximum_health_loss": 4,
+            "signal_id": "health"
+          }
+        ],
+        "state": "active"
+      }
+    },
+    {
+      "eligibility": {
+        "model_action_discarded": true,
+        "plan_terminal": "not_admitted",
+        "planner_answer_eligible": false,
+        "planner_turn_status": "interrupted"
+      },
+      "eligible_expected": false,
+      "iteration": 6,
+      "last_effect_receipt": {
+        "action": "strafe_right",
+        "extent": "medium",
+        "kind": "RECEIPT",
+        "result": "visible_change",
+        "source_iteration": 5
+      },
+      "own_effect_receipts": [],
+      "prompt_b64": "U2VsZWN0IHRoZSBuZXh0IGJvdW5kZWQgTUFQMDEgYWN0aW9uIGZyb20gdGhlIG5ldyB0ZW1wb3JhbCBzaGVldC4KQ3VycmVudCBsb2NhbGx5IHZlcmlmaWVkIGhlYWx0aDogNzEuCk5ld2VzdCB0eXBlZCBzb2Z0IGV2ZW50IGZyb20gdGhlIHByZWNlZGluZyBjb250cm9sIGludGVydmFsOiB7InNpZ25hbF9pZCI6ImhlYWx0aCIsInNvdXJjZV92YWx1ZSI6NzUsImN1cnJlbnRfdmFsdWUiOjcxLCJoYXJkX21pbmltdW0iOjcxLCJzb2Z0X2V2ZW50X2NvdW50IjoyLCJzZXF1ZW5jZSI6MjExLCJvYnNlcnZlZF9kdXJpbmdfaXRlcmF0aW9uIjo1LCJjb3Zlcl9wb2xpY3lfc291cmNlX2l0ZXJhdGlvbiI6NCwiZWZmZWN0IjoicHJpb3JfY292ZXJfcHJlc2VydmVkIiwiZ3JhbnRzX2lucHV0X2F1dGhvcml0eSI6ZmFsc2V9ClByZXZpb3VzIG5vLXZpc2libGUtZWZmZWN0IGFjdGlvbnM6IFtdCg==",
+      "prompt_git_blob": "7ed91a78c3025bd445112a6be578b4c3d8d553fc",
+      "teacher_label": null
+    },
+    {
+      "eligibility": {
+        "model_action_discarded": true,
+        "plan_terminal": "not_admitted",
+        "planner_answer_eligible": false,
+        "planner_turn_status": "interrupted"
+      },
+      "eligible_expected": false,
+      "iteration": 7,
+      "last_effect_receipt": {
+        "action": "strafe_right",
+        "extent": "medium",
+        "kind": "RECEIPT",
+        "result": "visible_change",
+        "source_iteration": 5
+      },
+      "own_effect_receipts": [],
+      "prompt_b64": "U2VsZWN0IHRoZSBuZXh0IGJvdW5kZWQgTUFQMDEgYWN0aW9uIGZyb20gdGhlIG5ldyB0ZW1wb3JhbCBzaGVldC4KQ3VycmVudCBsb2NhbGx5IHZlcmlmaWVkIGhlYWx0aDogNjQuCk5ld2VzdCB0eXBlZCBzb2Z0IGV2ZW50IGZyb20gdGhlIHByZWNlZGluZyBjb250cm9sIGludGVydmFsOiBudWxsClByZXZpb3VzIG5vLXZpc2libGUtZWZmZWN0IGFjdGlvbnM6IFtdCg==",
+      "prompt_git_blob": "416e5d6de17468c838813c86da934248ec815991",
+      "teacher_label": null
+    }
+  ],
+  "schema": "agent-interface/map01-last-effect-representation-v31-r2-fixture-v1",
+  "source": {
+    "predecessor_result_git_blob": "d08d66c07ed70cd4f02609a1122df664b90f1a2c",
+    "source_rows_git_blob": "4ab9129253b0c2d976c932d07ed744528ea23734",
+    "v31_report_git_blob": "2aed2e7e3f58b4f8b013fc98c79482a4036225ae"
+  },
+  "task": "LOCAL-SYSTEM1-MAP01-LAST-EFFECT-REPRESENTATION-V31-R2-20260918-001"
+}

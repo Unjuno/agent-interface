@@ -1,0 +1,49 @@
+name: golden-v3 second-domain preregistration gate
+
+on:
+  pull_request:
+    paths:
+      - 'research/integration/golden_v3_second_domain_2246_v1/**'
+      - '.github/workflows/golden-v3-second-domain-2492.yml'
+
+jobs:
+  source-gate:
+    runs-on: ubuntu-24.04
+    container:
+      image: python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9
+    steps:
+      - name: Fetch exact PR source
+        env:
+          REF: ${{ github.event.pull_request.head.sha }}
+          REPO: ${{ github.repository }}
+        run: |
+          python - <<'PY'
+          import os, urllib.request
+          ref = os.environ["REF"]
+          repo = os.environ["REPO"]
+          path = "research/integration/golden_v3_second_domain_2246_v1/PREREGISTRATION.md"
+          url = f"https://raw.githubusercontent.com/{repo}/{ref}/{path}"
+          data = urllib.request.urlopen(url, timeout=30).read()
+          open("/tmp/PREREGISTRATION.md", "wb").write(data)
+          print("source_bytes", len(data))
+          PY
+      - name: Validate preregistration only
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path("/tmp/PREREGISTRATION.md").read_text()
+          required = [
+            "Issue: #2492",
+            "PASS_GOLDEN_V3_SECOND_DOMAIN_SCOPED",
+            "FAIL_GOLDEN_V3_SECOND_DOMAIN",
+            "HOLD_GOLDEN_V3_SECOND_DOMAIN_FIXTURE",
+            "No rerun, replacement, tuning, or pooling",
+            "provider/model authority",
+          ]
+          missing = [x for x in required if x not in p]
+          if missing:
+              raise SystemExit("missing preregistration controls: " + repr(missing))
+          print("PASS_GOLDEN_V3_SECOND_DOMAIN_PREREG_SOURCE_GATE")
+          print("formal_fixture_run=0")
+          print("model_gui_input_network=0")
+          PY

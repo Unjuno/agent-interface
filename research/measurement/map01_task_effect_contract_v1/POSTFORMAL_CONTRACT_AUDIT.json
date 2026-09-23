@@ -1,0 +1,23 @@
+{
+  "candidate_modified": false,
+  "controls": {
+    "controller_as_scorer_accepted": true,
+    "duplicate_effect_accepted_twice": true,
+    "ghost_actuation_accepted": true,
+    "record_local_api_has_no_lineage_ledger": true,
+    "unproven_measured_axis_accepted": true
+  },
+  "evidence_laundering_gaps": [
+    "ghost_actuation_accepted",
+    "duplicate_effect_accepted_twice",
+    "unproven_measured_axis_accepted",
+    "controller_as_scorer_accepted",
+    "record_local_api_has_no_lineage_ledger"
+  ],
+  "formal_rerun": false,
+  "formal_result_internal_decision": "PASS_MAP01_TASK_EFFECT_INSTRUMENTATION_CONTRACT_SCOPED",
+  "frozen_candidate_sha256": "3815c58d06df88fa4c91ad32e5cbb24d286de284b565cf0514237a0ee90b0026",
+  "reason": "frozen record-local classifier does not validate cross-record actuation/effect existence, uniqueness, measured-axis evidence, or scorer independence",
+  "schema": "map01-task-effect-contract-postformal-contract-audit-v1",
+  "scientific_disposition": "FAIL_EFFECT_EVIDENCE_LAUNDERING"
+}

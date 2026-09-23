@@ -1,0 +1,1 @@
+# Temporal ring construction gate (#2045)\n\nConstruction-only finite check for temporal evidence provenance. It rejects unavailable, out-of-window, stale-session, cross-surface, and mislabeled observations as UNKNOWN. It makes no live X11 or model-utility claim.\n

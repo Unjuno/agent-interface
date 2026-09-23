@@ -1,0 +1,63 @@
+{
+  "audit_passed": true,
+  "audit_sha256": "55b16998ead6fbdb5c22fd73c725cbbd1f6d8f5fe14bc97fa680d6e4baed6864",
+  "events": 66,
+  "exchanges": 9,
+  "frames": 15,
+  "emissions": [
+    {
+      "stage": "initial",
+      "bytes": 3409,
+      "serialization_ms": 0.06625,
+      "write_flush_ms": 0.077306
+    },
+    {
+      "stage": "select",
+      "bytes": 7788,
+      "serialization_ms": 0.12065,
+      "write_flush_ms": 0.038301
+    },
+    {
+      "stage": "move-save",
+      "bytes": 12170,
+      "serialization_ms": 0.258543,
+      "write_flush_ms": 0.033242
+    },
+    {
+      "stage": "verify",
+      "bytes": 5608,
+      "serialization_ms": 0.092241,
+      "write_flush_ms": 0.050178
+    },
+    {
+      "stage": "finish",
+      "bytes": 568,
+      "serialization_ms": 0.034477,
+      "write_flush_ms": 0.036358
+    }
+  ],
+  "actual": {
+    "x": "74",
+    "y": "50",
+    "width": "40",
+    "height": "30",
+    "transform": null
+  },
+  "submitted_sha256": "b0063e5c04d77f905c91f2a80632ef73cff2a7d6b61606e2046464772cb2be61",
+  "timings": [
+    {
+      "stage": "select",
+      "outer_preparation_ms": 865.198879
+    },
+    {
+      "stage": "move-save",
+      "outer_preparation_ms": 1168.527921
+    },
+    {
+      "stage": "verify",
+      "outer_preparation_ms": 323.433583
+    }
+  ],
+  "initial_capture_to_gui_decision_seconds": 73.627835414,
+  "limits": "Actual GUI and injected optional presentation failure; single move-save then observe only. No matched speed/token claim."
+}

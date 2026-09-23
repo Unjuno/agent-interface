@@ -1,0 +1,20 @@
+{
+  "schema": "docker-host-model-bridge-batch-v1",
+  "count": 6,
+  "passed": 4,
+  "rejected": 2,
+  "elapsed_ms": 63134.3181,
+  "authority_granted": 0,
+  "action_emitted": 0,
+  "task_success": "NOT_RUN",
+  "rejection_policy": "no automatic retry",
+  "calls": [
+    {"index": 1, "image_sha256": "859b236d7685eff2fbe8c2ef9bb719dedc1db827feaa6f52b201cfb626602b89", "status": "REJECTED_VALIDATOR_FIELD_SUBMIT_COLLISION"},
+    {"index": 2, "image": "runtime/results/native-docker-integration-2558-v2/bridge/images/25f45fe50199496fab09cb339d39343f.png", "status": "REJECTED", "error": "field and submit points must differ"},
+    {"index": 3, "image_sha256": "839b1c4a62eca7b4b774b7f1d7bf50635a7b8bc5a31b5567b30e715b16d5afc8", "status": "PASS", "call_id": "01a0ba87-ea6a-72e2-8825-432e745e8935", "field_point": [210,145], "submit_point": [130,190], "usage": {"input_tokens": 14225, "output_tokens": 186, "reasoning_output_tokens": 71}, "runner_ns": 11587126800},
+    {"index": 4, "image_sha256": "839b1c4a62eca7b4b774b7f1d7bf50635a7b8bc5a31b5567b30e715b16d5afc8", "status": "PASS", "call_id": "01a0ba88-1800-71a0-88aa-ff81cff9efa9", "field_point": [210,145], "submit_point": [132,190], "usage": {"input_tokens": 14227, "cached_input_tokens": 13056, "output_tokens": 246, "reasoning_output_tokens": 131}, "runner_ns": 9961135100},
+    {"index": 5, "image_sha256": "839b1c4a62eca7b4b774b7f1d7bf50635a7b8bc5a31b5567b30e715b16d5afc8", "status": "PASS", "call_id": "01a0ba88-3f35-7fc3-9572-52a182d684a0", "field_point": [210,145], "submit_point": [127,190], "usage": {"input_tokens": 14227, "cached_input_tokens": 13056, "output_tokens": 173, "reasoning_output_tokens": 58}, "runner_ns": 11920959100},
+    {"index": 6, "image_sha256": "839b1c4a62eca7b4b774b7f1d7bf50635a7b8bc5a31b5567b30e715b16d5afc8", "status": "PASS", "call_id": "01a0ba88-6e27-7be0-a20d-97151cd3c6ef", "field_point": [210,145], "submit_point": [128,190], "usage": {"input_tokens": 14225, "output_tokens": 219, "reasoning_output_tokens": 104}, "runner_ns": 11742336200}
+  ],
+  "scope": "Six retained Docker observation images sent through the host-local model bridge; no GUI action, effect, or task-success claim."
+}

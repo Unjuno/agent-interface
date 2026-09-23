@@ -1,0 +1,51 @@
+{
+  "schema": "map01-recovery-cover-mechanism-v5-prereg",
+  "allocation_id": "map01-recovery-cover-mechanism-live-v5-01",
+  "status": "FROZEN_CONSTRUCTION_BEFORE_FORMAL_WORKFLOW",
+  "supersedes": {
+    "allocation_id": "map01-recovery-cover-mechanism-live-v4-01",
+    "workflow_run_id": 34980663904,
+    "disposition": "FORMAL_RUN_CONSUMED_HARNESS_FAILURE_NO_SCIENTIFIC_DECISION",
+    "artifact_id": 10401346498,
+    "artifact_sha256": "28ca4677a920e59e393f878e9c1c6d7a031650e2d191663812f630a4298c34f8",
+    "failure": "destructive JsonSession.wait consumed terminal while waiting for optional input_released event"
+  },
+  "scientific_condition": {
+    "identical_to_v4": true,
+    "pairs": 3,
+    "fixture": "map01-threat-contact-v2",
+    "seed": 990619,
+    "prelude_key": "d",
+    "prelude_ms": 180,
+    "planner_wait_ms": 600,
+    "coast_control_input": "none",
+    "recovery_key": "d",
+    "recovery_pulse_ms": 50,
+    "recovery_pulses": 5,
+    "recovery_lease_ms": 400,
+    "source_max_age_ms": 1000,
+    "health_guard": "cancel on any loss, unavailable health, or non-fresh typed sequence",
+    "model_calls": 0
+  },
+  "measurement": {
+    "identical_to_v4": true,
+    "schema": "windowed-any-key-occupancy-v1",
+    "missing_completed_release": "invalid evidence, never zero occupancy",
+    "simultaneous_keys": "union once",
+    "interrupted_input": "interval-censored to independently verified empty-input evidence",
+    "window": "runtime planner-start to planner-return"
+  },
+  "only_code_change": "JsonSession.wait preserves unmatched events for later predicates instead of discarding them",
+  "decision": {
+    "PASS_MECHANISM_ONLY": "All hard gates pass; all three pairs lower no-retained-input upper bound; paired median reduction is at least 10 percent.",
+    "HOLD": "Experiment is valid but continuity is weak in at least one pair or paired median reduction is below 10 percent.",
+    "FAIL": "Any hard launch, input-evidence, release, scorer-isolation, terminal-score, exposure, or negative-outcome gate fails."
+  },
+  "execution_policy": {
+    "one_run_per_allocation": true,
+    "no_retry_same_allocation": true,
+    "retain_first_outcome": true,
+    "construction_and_triggering_workflow_are_separate_commits": true
+  },
+  "claim_scope": "zero-model real-MAP01 bounded-recovery mechanism only; not frontier-model efficacy, human reaction time, general DOOM competence, or general GUI speedup"
+}

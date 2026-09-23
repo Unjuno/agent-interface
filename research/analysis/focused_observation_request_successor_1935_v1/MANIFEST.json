@@ -1,0 +1,19 @@
+{
+  "status": "PASS_LOCAL_DOCKER_REPRODUCTION",
+  "container": {
+    "engine": "Docker Desktop",
+    "engine_version": "29.8.0",
+    "image": "python:3.11-slim",
+    "image_digest": "sha256:da047cb8f9d1d98e5c070f5300ba9f7274e33b8fc0e5be5ed88740aed1b95ba9"
+  },
+  "observed": {
+    "candidate_rows": 256,
+    "candidate_valid": 16,
+    "candidate_rejected": 240,
+    "candidate_sha256": "5c2699e993fd163a1a01c72c3905b46c8f364e329a8ddef47c37bb713952b936",
+    "independent_audit": "PASS",
+    "tamper_controls": "4/4",
+    "truncation_rejection": "1/1"
+  },
+  "formal_boundary": "Fixture-scoped only; no GUI/model/runtime authority or production-transfer claim."
+}

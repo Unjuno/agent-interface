@@ -1,0 +1,26 @@
+{
+  "schema": "host-runner-caller-2558-v1",
+  "status": "PASS_HOST_RUNNER_CALLER",
+  "model": "gpt-5.6-luna",
+  "runner": "research/live_control/host_codex_exec_runner_v1.py",
+  "boundary": "host-local-codex-exe",
+  "image": "runtime/results/native-docker-integration-2558-v2/before.png",
+  "image_sha256": "839B1C4A62ECA7B4B774B7F1D7BF50635A7B8BC5A31B5567B30E715B16D5AFC8",
+  "call_id": "01a0ba81-d2b8-7712-ac52-4fc97ae6d436",
+  "grounding": {
+    "format": "compiled-form-grounding-v1",
+    "field_point": [210, 145],
+    "submit_point": [132, 191],
+    "first_action": "enter_exact_token",
+    "second_action": "activate_submit",
+    "continue_when": "field_pixels_changed_and_submit_revalidated",
+    "complete_when": "submission_pixels_changed_then_independent_score"
+  },
+  "usage": {"input_tokens": 14199, "output_tokens": 218, "reasoning_output_tokens": 103},
+  "runner_elapsed_ms": 8986.3979,
+  "authority_granted": 0,
+  "action_emitted": 0,
+  "task_success": "NOT_RUN",
+  "validation": {"compiled_contract": "PASS", "runner_exit_code": 0, "py_compile": "PASS"},
+  "scope": "Fresh caller-level host-runner compatibility call from integrated_efficiency_model_v1; no GUI action or task-success claim."
+}

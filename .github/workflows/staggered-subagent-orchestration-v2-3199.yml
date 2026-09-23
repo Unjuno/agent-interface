@@ -1,0 +1,36 @@
+name: staggered-subagent-orchestration-v2-3199
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'research/coordination/staggered_subagent_orchestration_v2/**'
+      - '.github/workflows/staggered-subagent-orchestration-v2-3199.yml'
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            research/coordination/staggered_subagent_orchestration_v2
+            .github/workflows
+          sparse-checkout-cone-mode: true
+      - name: Run frozen harness in Docker
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/staggered-v2"
+          mkdir -p "$out"
+          docker run --rm --network none             -v "$GITHUB_WORKSPACE/research/coordination/staggered_subagent_orchestration_v2:/src:ro"             -v "$out:/out"             python:3.12-slim python /src/run.py /out
+      - name: Run independent audit in Docker
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/staggered-v2"
+          docker run --rm --network none             -v "$GITHUB_WORKSPACE/research/coordination/staggered_subagent_orchestration_v2:/src:ro"             -v "$out:/out"             python:3.12-slim python /src/audit.py /out | tee "$out/audit.txt"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: staggered-subagent-orchestration-v2-3199
+          path: ${{ runner.temp }}/staggered-v2/

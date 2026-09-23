@@ -1,0 +1,46 @@
+{
+  "audit": {
+    "decision": "PASS_X11_TEMPORAL_RING_RUNG1_INTEGRATION_SCOPED",
+    "errors": [],
+    "exact_past_jit_promotions": 0,
+    "jit_boundaries": 24,
+    "jit_evidence_median_ns": 100437535.0,
+    "jit_trials": 24,
+    "paired_median_jit_minus_ring_ns": 100436122.25,
+    "ring_boundaries": 0,
+    "ring_query_p95_ns": 17762.44999999999,
+    "ring_trials": 24
+  },
+  "capture": {
+    "capture_exceptions_total": 0,
+    "frame_bytes": 76800,
+    "jit_capture_p95_ms_range": [0.33344315, 0.5546674499999998],
+    "max_ring_frames": 11.0,
+    "payload_types": {"bytes": 183, "str": 45},
+    "ring_capture_p95_ms_range": [0.3865578999999999, 1.0450573999999992],
+    "roi": [80, 60, 160, 120]
+  },
+  "decision": "PASS_X11_TEMPORAL_RING_RUNG1_INTEGRATION_SCOPED",
+  "formal_invocations": 1,
+  "grants_input_authority": false,
+  "pairs": [
+    {"pair":1,"ring_query_ns":[359140,10926,11227,11287],"jit_evidence_ns":[100440663,100448264,100408395,100500833]},
+    {"pair":2,"ring_query_ns":[11557,12770,14161,12319],"jit_evidence_ns":[100396913,100426934,100406358,100421494]},
+    {"pair":3,"ring_query_ns":[18398,12178,11758,11768],"jit_evidence_ns":[100412935,100431091,100450574,100417394]},
+    {"pair":4,"ring_query_ns":[11948,11668,11747,12118],"jit_evidence_ns":[101553884,100497255,100436143,100422501]},
+    {"pair":5,"ring_query_ns":[11127,12188,12119,11768],"jit_evidence_ns":[100476124,100469421,100489984,100438927]},
+    {"pair":6,"ring_query_ns":[11116,13150,12629,12830],"jit_evidence_ns":[100434029,100724294,100646081,100413178]}
+  ],
+  "raw_first_outcome": {
+    "bytes": 37672,
+    "git_blob": "dec49be1dfbbe2c329eeab778a80fe03ce21b0f2",
+    "sha256": "e6a7536458c3cb6a665521775d45c994fc5b53b6b7a4f8d41e9e75ef4121e948"
+  },
+  "reruns": 0,
+  "task": "TEMPORAL-RING-X11-LIVEONLY-RUNG1-20260918-008",
+  "timing": {
+    "jit_evidence_ms_min_median_max": [100.396913, 100.437535, 101.553884],
+    "max_ring_target_error_ms": 0.737761,
+    "ring_query_us_min_median_max": [10.926, 12.033, 359.14]
+  }
+}

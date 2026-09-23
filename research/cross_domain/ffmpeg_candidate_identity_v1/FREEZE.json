@@ -1,0 +1,23 @@
+{
+  "schema": "ffmpeg-candidate-identity-freeze-v1",
+  "task": "FFMPEG-CANDIDATE-IDENTITY-20260916-001",
+  "publication_base": "8d987773ca090640822f96b0710e6c7872eabdfd",
+  "plan_git_blob": "37e848a02b40d8710e2de0f6f5b15e2b8bbe8d98",
+  "plan_sha256": "d2be89083390f78e4b92fdb20912061f60181942af7bc0300c7cade241621f9f",
+  "source_sha256": {
+    "experiment.py": "f6ba4eeb8e36423495299a0270f498b5542a6f43e30e5b3672411481f14e7cce",
+    "audit.py": "dd68e81b725e29e14b120e10b2b773573a7163515c9ba310b4bf93346c57d6a6",
+    "test_contract.py": "038de5511721ea6944f2e21a5289af8ad30ee8fbb84d3941cdbd67f37c382645"
+  },
+  "local_source_git_blobs": {
+    "experiment.py": "32731abd9b5f13036b5b69ed68231307a154e743",
+    "audit.py": "ce111eb90b0dbb6e989f6d02c4e5be4a6b0507fd",
+    "test_contract.py": "2ac4285499fb3a84e548bf2c5b1148188d336417"
+  },
+  "prefreeze_tests": {"passed": 7, "failed": 0},
+  "case_count": 30,
+  "repetitions_per_cell": 5,
+  "measured_cases_before_freeze": 0,
+  "ffmpeg_sha256": "e8a8d46f5225f3062cec7c07fb145d58ae73c603cb740dcd5bad34bfb54e455a",
+  "rule": "Each measured case ID runs once. Any unexpected harness/integrity error stops the allocation. Path-bound wrong publication on stage replacement is retained as the preregistered negative outcome, not a harness failure."
+}

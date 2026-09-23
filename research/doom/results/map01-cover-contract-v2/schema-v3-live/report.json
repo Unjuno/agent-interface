@@ -1,0 +1,302 @@
+{
+  "claim": "pre-formal overlapping inference feasibility",
+  "model": "gpt-6-astra",
+  "effort": "low",
+  "iterations": 2,
+  "decisions": [
+    {
+      "iteration": 0,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-cover-schema-v3-live-01/runtime/001.png",
+      "model_image": "results-local/doom/map01-cover-schema-v3-live-01/decision-0/temporal-sheet.png",
+      "model_image_sha256": "736d5427a8711ec664adce15d9f35fd98bea3e3a8df249d0ff9c8dd86aff9215",
+      "action": {
+        "assessment": "Clear passage ahead toward a metal door; no visible threats.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "long"
+          }
+        ],
+        "contingencies": [
+          {
+            "after_command": 0,
+            "condition": "no_visible_effect",
+            "commands": [
+              {
+                "action": "use",
+                "extent": "pulse"
+              },
+              {
+                "action": "forward",
+                "extent": "short"
+              }
+            ]
+          }
+        ],
+        "next_cover": []
+      },
+      "usage": {
+        "input_tokens": 11519,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 82,
+        "reasoning_output_tokens": 0
+      },
+      "model_ns": 8425652363,
+      "effect_memory": [],
+      "effect_receipts": [
+        {
+          "action": "forward",
+          "extent": "long",
+          "result": "visible_change",
+          "normalized_mae": 0.06088643790849673,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 37,
+          "effect_observed_ns": 13475842867798,
+          "samples": 8,
+          "plan_accept_to_first_capture_ms": 65.28797,
+          "plan_accept_to_last_capture_ms": 998.092272,
+          "capture_ms_total": 27.535549,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 8,
+      "effect_observation_capture_ms": 27.535549,
+      "execution_trace": [
+        {
+          "id": "plan-0-primary-0-0",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "forward",
+            "extent": "long"
+          },
+          "accepted_ns": 13474844775526,
+          "terminal_ns": 13475954297039,
+          "receipt": {
+            "action": "forward",
+            "extent": "long",
+            "result": "visible_change",
+            "normalized_mae": 0.06088643790849673,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 37,
+            "effect_observed_ns": 13475842867798,
+            "samples": 8,
+            "plan_accept_to_first_capture_ms": 65.28797,
+            "plan_accept_to_last_capture_ms": 998.092272,
+            "capture_ms_total": 27.535549,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 8,
+          "observation_capture_ms": 27.535549
+        }
+      ],
+      "contingency_branch": null,
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "long"
+        }
+      ],
+      "model_session_id": "01a0a107-800c-7982-93d7-32028b91d5c3",
+      "controller_model_started_ns": 13466248978478,
+      "controller_model_ended_ns": 13474798759443,
+      "model_image_to_plan_accept_ns": 8983992069,
+      "fresh_observation_to_plan_accept_ns": 126702199,
+      "fresh_sequence_at_plan": 29,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-0"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 1,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-cover-schema-v3-live-01/runtime/037.png",
+      "model_image": "results-local/doom/map01-cover-schema-v3-live-01/decision-1/temporal-sheet.png",
+      "model_image_sha256": "b6f339686652c0e8d9d1c622f99d7389a2807d641d759b4052eff89ce17f6b9f",
+      "action": {
+        "assessment": "Advanced into the corridor; closed metal door ahead, no visible threats.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          },
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ],
+        "contingencies": [],
+        "next_cover": []
+      },
+      "usage": {
+        "input_tokens": 12076,
+        "cached_input_tokens": 11392,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 60,
+        "reasoning_output_tokens": 0
+      },
+      "model_ns": 8169257433,
+      "effect_memory": [],
+      "effect_receipts": [
+        {
+          "action": "forward",
+          "extent": "medium",
+          "result": "visible_change",
+          "normalized_mae": 0.1965223311546841,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 72,
+          "effect_observed_ns": 13485334159374,
+          "samples": 6,
+          "plan_accept_to_first_capture_ms": 59.904458,
+          "plan_accept_to_last_capture_ms": 661.110195,
+          "capture_ms_total": 19.03872,
+          "scope": "viewport pixels only"
+        },
+        {
+          "action": "use",
+          "extent": "pulse",
+          "result": "visible_change",
+          "normalized_mae": 0.07979711328976034,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 74,
+          "effect_observed_ns": 13485525561622,
+          "samples": 2,
+          "plan_accept_to_first_capture_ms": 772.291707,
+          "plan_accept_to_last_capture_ms": 852.512443,
+          "capture_ms_total": 6.1783459999999994,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 8,
+      "effect_observation_capture_ms": 25.217066000000003,
+      "execution_trace": [
+        {
+          "id": "plan-1-primary-0-1",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "forward",
+            "extent": "medium"
+          },
+          "accepted_ns": 13484673049179,
+          "terminal_ns": 13485596602325,
+          "receipt": {
+            "action": "forward",
+            "extent": "medium",
+            "result": "visible_change",
+            "normalized_mae": 0.1965223311546841,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 72,
+            "effect_observed_ns": 13485334159374,
+            "samples": 6,
+            "plan_accept_to_first_capture_ms": 59.904458,
+            "plan_accept_to_last_capture_ms": 661.110195,
+            "capture_ms_total": 19.03872,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 6,
+          "observation_capture_ms": 19.03872
+        },
+        {
+          "id": "plan-1-primary-0-1",
+          "role": "primary",
+          "command_index": 1,
+          "command": {
+            "action": "use",
+            "extent": "pulse"
+          },
+          "accepted_ns": 13484673049179,
+          "terminal_ns": 13485596602325,
+          "receipt": {
+            "action": "use",
+            "extent": "pulse",
+            "result": "visible_change",
+            "normalized_mae": 0.07979711328976034,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 74,
+            "effect_observed_ns": 13485525561622,
+            "samples": 2,
+            "plan_accept_to_first_capture_ms": 772.291707,
+            "plan_accept_to_last_capture_ms": 852.512443,
+            "capture_ms_total": 6.1783459999999994,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 2,
+          "observation_capture_ms": 6.1783459999999994
+        }
+      ],
+      "contingency_branch": null,
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "model_session_id": "01a0a107-800c-7982-93d7-32028b91d5c3",
+      "controller_model_started_ns": 13476284533840,
+      "controller_model_ended_ns": 13484627949152,
+      "model_image_to_plan_accept_ns": 8830181381,
+      "fresh_observation_to_plan_accept_ns": 226035453,
+      "fresh_sequence_at_plan": 66,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-1"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": 0,
+      "plan_terminal": "completed"
+    }
+  ],
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 19716057853,
+    "death_count": 0,
+    "kill_count": 0,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 13485684995640
+  },
+  "model_session_span": 4,
+  "model_session_ids": [
+    "01a0a107-800c-7982-93d7-32028b91d5c3"
+  ],
+  "motor_contract": "semantic commands compiled to <=450ms turns and <=900ms movement",
+  "effect_receipt_contract": "reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
+  "effect_receipt_extra_steps": 0,
+  "contingency_contract": "preplanned no-visible-effect fallback skips the primary tail and runs without another model call",
+  "contingencies_authored": 1,
+  "contingency_branches_taken": 0,
+  "contingency_branch_latency_ms": [],
+  "program_admissions": 2,
+  "extra_program_admissions_vs_one_bundle": 0,
+  "effect_receipt_commands": 3,
+  "effect_observation_samples": 16,
+  "effect_observation_capture_ms": 52.752615000000006,
+  "game_continued_during_model_calls": true,
+  "cover_programs": 2,
+  "cover_renewals": 0,
+  "cover_renewal_gaps_ms": [],
+  "model_authored_cover_policies": 2,
+  "model_wall_seconds": 16.594909796
+}

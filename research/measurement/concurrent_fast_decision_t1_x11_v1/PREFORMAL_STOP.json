@@ -1,0 +1,42 @@
+{
+  "audit_file_written": false,
+  "case_directories_created": 2,
+  "complete_result_rows_retained": 0,
+  "construction_pairs_allocated": 1,
+  "decision": "PREFORMAL_CONSTRUCTION_STOP_XIO_XSERVER_TEARDOWN",
+  "execution_claim_head": "d00daa6e5db2155a9cd785b9629452c81fb27212",
+  "formal_invocations": 0,
+  "issue": 1384,
+  "lease_grant_comment_id": 5727324250,
+  "manual_cleanup_after_stop": {
+    "display_sockets": 0,
+    "xvfb_processes": 0
+  },
+  "observed_scope": "private disposable Xvfb/Tk/XTEST construction only; no model/provider/network/real desktop/MAP01/shared-runtime",
+  "phase": "construction",
+  "posthoc_hypothesis_not_scientific_result": "The multi-session supervisor keeps successive Tk/Xlib sessions in one Python process while tearing down and recreating X servers; process-lifetime isolation is the minimal harness-only successor factor. This hypothesis was not live-tested under #1384.",
+  "predecessor_rows_pooled": 0,
+  "replacements": 0,
+  "reruns": 0,
+  "residual_after_failed_supervisor": {
+    "display_socket": ":0",
+    "xvfb_processes": 1
+  },
+  "result_file_written": false,
+  "scientific_disposition": "NONE",
+  "source_sha256": {
+    "PURE_EXPECTED.json": "85a22160c73304c417b108485fbd9a60c6e650e2355ef4803e85207a3897f1a3",
+    "SOURCE_MAP.json": "873f389838af6f06d2cb65c5395f2e0b8eaa5553b65281df22a5c005cc1531ae",
+    "STATIC_PREFLIGHT.json": "063a0716eadf562a53bead4c8fec8fc97fedcd45b4d70ac2851861ba298084ec",
+    "audit.py": "8d1e7552858123786522d4f8621a5d6e093ae5c88dfab70d3b96f706f93d80a8",
+    "candidate.py": "e1ec191de75e91d22ad4f50e8cab394ff5d6f51c2ea88dc6ad736dcc1c2e2ffd",
+    "fixture.py": "57d457d0d35b62d83b5456f34622c7b46c7b8b6add87bbb6e470333d8cbbe4ab",
+    "runner.py": "41776a062b21fe7b7c1815a626c460c29446341173bb4ea63f27307b2ae4744c",
+    "schedule.json": "6ea4c744d41ae44d295ea22d85f0ee5d9d850918028c8ced7d6c9d62a7fef436"
+  },
+  "source_unchanged_after_freeze": true,
+  "stderr_signature": "XIO: fatal IO error 22 (Invalid argument) on X server ":0" after 233 requests (233 known processed) with 17 events remaining.",
+  "supervisor_exit_code": 1,
+  "task": "CONCURRENT-FAST-DECISION-T1-X11-20260918-001",
+  "tuning": 0
+}

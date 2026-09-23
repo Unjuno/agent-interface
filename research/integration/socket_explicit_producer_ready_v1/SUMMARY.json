@@ -1,0 +1,48 @@
+{
+  "audit_sha256": "3334de511c2c40eedf8f757874ab7bca80e511a8a0250e94f4879a80c2067682",
+  "baseline_timeouts": 6,
+  "candidate_boundaries": 6,
+  "decision": "PASS_EXPLICIT_PRODUCER_READY_SCOPED",
+  "formal_invocations": 1,
+  "formal_reruns": 0,
+  "formal_rows": 12,
+  "freeze_sha256": "897823f7972d8f4b6a85dd2f376c81e24146520476005e524c94270587074f42",
+  "result_sha256": "27148cb9b3d555035f46248949d4fa39537555f4ac9146d36ea1182f4a3cbe0d",
+  "schema": "socket-explicit-producer-ready-summary-v1",
+  "timing": {
+    "endpoint_only": {
+      "endpoint_wait_ms": {
+        "max": 495.077251,
+        "median": 449.086313,
+        "min": 438.972998
+      },
+      "read_ms": {
+        "max": 307.459996,
+        "median": 304.49056900000005,
+        "min": 300.656978
+      }
+    },
+    "producer_ready_gate": {
+      "endpoint_wait_ms": {
+        "max": 980.343417,
+        "median": 917.4650584999999,
+        "min": 873.125985
+      },
+      "publish_before_effect_ms": {
+        "max": 149.924398,
+        "median": 149.858823,
+        "min": 149.783826
+      },
+      "read_ms": {
+        "max": 150.59199,
+        "median": 150.4949585,
+        "min": 150.409184
+      },
+      "ready_append_to_publish_ms": {
+        "max": 0.116001,
+        "median": 0.07585700000000001,
+        "min": 0.06343
+      }
+    }
+  }
+}

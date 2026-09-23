@@ -1,0 +1,111 @@
+{
+  "audit_errors": 0,
+  "by_app": {
+    "calc": {
+      "O1": {
+        "episodes": 8,
+        "wire_bytes": 2801736
+      },
+      "O2": {
+        "episodes": 8,
+        "wire_bytes": 979666
+      }
+    },
+    "chromium": {
+      "O1": {
+        "episodes": 8,
+        "wire_bytes": 3191888
+      },
+      "O2": {
+        "episodes": 8,
+        "wire_bytes": 1330621
+      }
+    },
+    "inkscape": {
+      "O1": {
+        "episodes": 8,
+        "wire_bytes": 7075543
+      },
+      "O2": {
+        "episodes": 8,
+        "wire_bytes": 1349582
+      }
+    },
+    "xterm": {
+      "O1": {
+        "episodes": 8,
+        "wire_bytes": 493704
+      },
+      "O2": {
+        "episodes": 8,
+        "wire_bytes": 194099
+      }
+    }
+  },
+  "correctness_gate": "PASS",
+  "decode_ms": {
+    "O1": {
+      "p50": 3.5008,
+      "p95": 4.942419200000001,
+      "p99": 6.033901479999997
+    },
+    "O2": {
+      "p50": 1.005457,
+      "p95": 3.0105565999999997,
+      "p99": 4.477585279999997
+    }
+  },
+  "encode_ms": {
+    "O1": {
+      "p50": 5.0464155,
+      "p95": 6.283454300000002,
+      "p99": 7.044356009999996
+    },
+    "O2": {
+      "p50": 7.182958,
+      "p95": 10.6906828,
+      "p99": 13.592320479999982
+    }
+  },
+  "episodes": 64,
+  "first_feedback_ms": {
+    "O1": {
+      "p50": 22.601065499999997,
+      "p95": 80.41955475,
+      "p99": 87.660803
+    },
+    "O2": {
+      "p50": 22.4273915,
+      "p95": 81.936977,
+      "p99": 94.60491645
+    }
+  },
+  "live_wire": {
+    "ci95_percent": [
+      66.44314865437369,
+      75.55861319110812
+    ],
+    "o1_bytes": 13562871,
+    "o2_bytes": 3853968,
+    "reduction_percent": 71.58442338646441
+  },
+  "paired_wall_delta_ms": {
+    "ci95": [
+      -4.003939000000003,
+      12.269065500000004
+    ],
+    "median": 2.0025394999999904
+  },
+  "pairs": 32,
+  "same_trace_wire": {
+    "ci95_percent": [
+      64.72418101320865,
+      75.19408147909272
+    ],
+    "o1_bytes": 27196170,
+    "o2_bytes": 7961100,
+    "reduction_percent": 70.72712812134945
+  },
+  "sampled_frames": 553,
+  "scope": "serialized local transport, reconstructed full model image; not image-token savings"
+}

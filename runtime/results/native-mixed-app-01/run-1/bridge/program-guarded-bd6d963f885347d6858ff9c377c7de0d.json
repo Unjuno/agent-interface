@@ -1,0 +1,90 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "guarded-bd6d963f885347d6858ff9c377c7de0d",
+  "source": {
+    "observation_seq": 2,
+    "binding_revision": 0
+  },
+  "authority": {
+    "lease_id": "native-x11-8ca925cca1e244f2a5f28243a61619f2",
+    "expires_at_ns": 10094294662329
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "app"
+    },
+    {
+      "op": "pointer_move",
+      "frame": "screen_physical_px",
+      "x": 600,
+      "y": 378
+    },
+    {
+      "op": "pointer_button",
+      "button": "left",
+      "down": true
+    },
+    {
+      "op": "pointer_button",
+      "button": "left",
+      "down": false
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 50
+    },
+    {
+      "keys": [
+        "Right"
+      ],
+      "op": "key_chord"
+    },
+    {
+      "keys": [
+        "Right"
+      ],
+      "op": "key_chord"
+    },
+    {
+      "keys": [
+        "Right"
+      ],
+      "op": "key_chord"
+    },
+    {
+      "keys": [
+        "Right"
+      ],
+      "op": "key_chord"
+    },
+    {
+      "keys": [
+        "CTRL",
+        "s"
+      ],
+      "op": "key_chord"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 300
+    },
+    {
+      "keys": [
+        "ALT",
+        "TAB"
+      ],
+      "op": "key_chord"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 300
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+name: adapter-trace-successor-2309
+on:
+  pull_request:
+    paths:
+      - "research/integration/adapter_trace_successor_2309_v1/**"
+      - ".github/workflows/adapter-trace-successor-2309.yml"
+  push:
+    paths:
+      - "research/integration/adapter_trace_successor_2309_v1/**"
+      - ".github/workflows/adapter-trace-successor-2309.yml"
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: native audit
+        run: python3 research/integration/adapter_trace_successor_2309_v1/audit.py
+      - name: pinned container audit
+        run: |
+          docker run --rm -v "$PWD:/repo" -w /repo/research/integration/adapter_trace_successor_2309_v1 python:3.12-slim             sh -c "apt-get update -qq && apt-get install -y -qq git >/dev/null && python audit.py"
+      - name: syntax and JSON audit
+        run: |
+          python3 -m py_compile research/integration/adapter_trace_successor_2309_v1/adapter.py
+          python3 -m py_compile research/integration/adapter_trace_successor_2309_v1/audit.py
+          python3 -m json.tool research/integration/adapter_trace_successor_2309_v1/RESULT.json >/dev/null

@@ -1,0 +1,267 @@
+{
+  "aliases": {
+    "field": "assistant_b_field",
+    "submit": "assistant_b_submit"
+  },
+  "refusal": null,
+  "programs": [
+    {
+      "label": "mint-assistant_b_field",
+      "started_ns": 150916735172,
+      "ended_ns": 151201727407,
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-8807e91be9074c32a940f8078fe783bc",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 1,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 151135956297,
+          "valid_until_ns": null
+        },
+        "terminal_ns": 151136129421,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 151136133814
+      },
+      "observations": [
+        {
+          "event": "observation",
+          "id": "durable-8807e91be9074c32a940f8078fe783bc",
+          "step": 0,
+          "sequence": 73,
+          "capture_ns": 151066405792,
+          "context_ns": 151075963129,
+          "context": [
+            [
+              "windows",
+              "0x00600003  0 HPLaptop AI INTEGRATED task-4 READY - Google Chrome for Testing\n"
+            ],
+            [
+              "active_window",
+              6291459
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/guarded-self-use/runtime/072.png",
+          "image_reused": true,
+          "image_prepare_ns": 2573410,
+          "image_ready_ns": 151085805993,
+          "input_focus_before": 6291459,
+          "input_focus_after": 6291459,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291459,
+            "surface": 6291459,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291459,
+            "surface": 6291459,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291459,
+            "surface": 6291459,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 10.188756,
+          "wire_bytes": 339,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 151090601919
+        }
+      ],
+      "pointer_admissions": [],
+      "target_checks": [],
+      "point_mints": [
+        {
+          "event": "target_handle_minted_from_point",
+          "id": "durable-8807e91be9074c32a940f8078fe783bc",
+          "step": 0,
+          "minted_ns": 151100287473,
+          "handle": "assistant_b_field",
+          "name": "assistant_b_field",
+          "status": "VALID",
+          "created_sequence": 73,
+          "expires_ns": 451100287473,
+          "allowed_transformations": [
+            "window_translation"
+          ],
+          "patch_sha256": "4612606da4fbc7ca040ba2f1a5b8696518a5f0b79a89f094c41a75c858222804",
+          "authority": "observational reference only; grants no input authority",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false,
+          "derivation": "centered_region_from_model_point",
+          "source_point": [
+            760,
+            558
+          ],
+          "source_sequence": 72,
+          "fresh_sequence": 73,
+          "derived_box": [
+            748,
+            539,
+            24,
+            38
+          ],
+          "derived_offset": [
+            12,
+            19
+          ],
+          "source_patch_sha256": "4612606da4fbc7ca040ba2f1a5b8696518a5f0b79a89f094c41a75c858222804",
+          "fresh_patch_sha256": "4612606da4fbc7ca040ba2f1a5b8696518a5f0b79a89f094c41a75c858222804",
+          "fresh_patch_exact": true,
+          "emit_started_ns": 151101267710
+        }
+      ]
+    },
+    {
+      "label": "mint-assistant_b_submit",
+      "started_ns": 151339329548,
+      "ended_ns": 151648056714,
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-7f12d400ea54487bbbf0f56ea3c6b3ee",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 1,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 151583758190,
+          "valid_until_ns": null
+        },
+        "terminal_ns": 151583818333,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 151583822265
+      },
+      "observations": [
+        {
+          "event": "observation",
+          "id": "durable-7f12d400ea54487bbbf0f56ea3c6b3ee",
+          "step": 0,
+          "sequence": 74,
+          "capture_ns": 151486588050,
+          "context_ns": 151494357726,
+          "context": [
+            [
+              "windows",
+              "0x00600003  0 HPLaptop AI INTEGRATED task-4 READY - Google Chrome for Testing\n"
+            ],
+            [
+              "active_window",
+              6291459
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/guarded-self-use/runtime/074.png",
+          "image_reused": false,
+          "image_prepare_ns": 26611863,
+          "image_ready_ns": 151536498205,
+          "input_focus_before": 6291459,
+          "input_focus_after": 6291459,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291459,
+            "surface": 6291459,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291459,
+            "surface": 6291459,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291459,
+            "surface": 6291459,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 6.627385,
+          "wire_bytes": 1198,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 151542260801
+        }
+      ],
+      "pointer_admissions": [],
+      "target_checks": [],
+      "point_mints": [
+        {
+          "event": "target_handle_minted_from_point",
+          "id": "durable-7f12d400ea54487bbbf0f56ea3c6b3ee",
+          "step": 0,
+          "minted_ns": 151552430873,
+          "handle": "assistant_b_submit",
+          "name": "assistant_b_submit",
+          "status": "VALID",
+          "created_sequence": 74,
+          "expires_ns": 451552430873,
+          "allowed_transformations": [
+            "window_translation"
+          ],
+          "patch_sha256": "ce343d45a5698eaf9a7fce379f9712d4f6bbba897803194ed9bcb64db6854160",
+          "authority": "observational reference only; grants no input authority",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false,
+          "derivation": "centered_region_from_model_point",
+          "source_point": [
+            689,
+            634
+          ],
+          "source_sequence": 72,
+          "fresh_sequence": 74,
+          "derived_box": [
+            677,
+            627,
+            24,
+            14
+          ],
+          "derived_offset": [
+            12,
+            7
+          ],
+          "source_patch_sha256": "ce343d45a5698eaf9a7fce379f9712d4f6bbba897803194ed9bcb64db6854160",
+          "fresh_patch_sha256": "ce343d45a5698eaf9a7fce379f9712d4f6bbba897803194ed9bcb64db6854160",
+          "fresh_patch_exact": true,
+          "emit_started_ns": 151553316746
+        }
+      ]
+    }
+  ]
+}

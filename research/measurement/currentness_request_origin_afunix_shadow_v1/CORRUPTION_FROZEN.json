@@ -1,0 +1,16 @@
+{
+  "controls": [
+    {"name":"result_trace_digest","rejected":true,"errors":["trace_sha256"]},
+    {"name":"decision","rejected":true,"errors":["decision"]},
+    {"name":"planner_generations","rejected":true,"errors":["planner_generations_seen"]},
+    {"name":"primary_invocations","rejected":true,"errors":["invocation"]},
+    {"name":"cleanup","rejected":true,"errors":["cleanup"]},
+    {"name":"trace_status_semantics","rejected":false,"errors":[],"reason":"no-op: formal row0 was INVALIDATE_BEFORE_REQUEST with install1 already DECISION_INSTALLED"},
+    {"name":"timeline_order","rejected":true,"errors":["safety_or_integrity","timeline_violations"]},
+    {"name":"authority_promotion","rejected":true,"errors":["authority_promotions","safety_or_integrity"]}
+  ],
+  "rejected": 7,
+  "total": 8,
+  "wrapper_exit": "ASSERTION_FAILED_AFTER_EVALUATION",
+  "scientific_primary_rerun": false
+}

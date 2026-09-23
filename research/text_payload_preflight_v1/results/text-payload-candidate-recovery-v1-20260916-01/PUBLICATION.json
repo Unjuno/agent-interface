@@ -1,0 +1,19 @@
+{
+  "schema": "text-payload-preflight-publication-v1",
+  "source_commit": "e1a0c6a7a3f23f36ac9bac011a4338586c082772",
+  "raw_file": "trials.jsonl",
+  "raw_bytes": 143668,
+  "raw_sha256": "c9e2116daeff49200a22f169e6ef2cae0333501150adac427239a6998bb8afaa",
+  "parts": [
+    {"name":"trials.part00.b64","git_blob":"150ed0b35055f92da65b7547d0085d70247f32c9","sha256":"0336d22bc7c1ea0d12f1d1dd18fe1cdd38f5707c91d122e452f33a24e2075d76"},
+    {"name":"trials.part01.b64","git_blob":"e45e5ebf00ece03b4d3010c5a6312aa74040daa7","sha256":"fa54b131684d75539a931d40afa66847d5fe55f6fcc36343f02ca0c3ee3fce34"},
+    {"name":"trials.part02.b64","git_blob":"5da16733e4927db3a772e56cc5e41b0811e63a5b","sha256":"f5a1c87f4db09103b3031e9f667633e3235aae4373ac650c004cb8374ab04e58"}
+  ],
+  "decode": "Concatenate parts in listed order, base64-decode ignoring whitespace, gzip-decompress; assert raw SHA-256 and 132 JSONL rows.",
+  "gzip_sha256": "52eb78c23bd041bbce9a5de9eb57ce9980718b8c7cdacf8924742c9bf1425245",
+  "complete_conversation_archive": {"filename":"text-payload-preflight-evidence.zip","bytes":15202,"sha256":"811b8ccac3610f79923ed4af1e91d5d350b2f3dd9e9fd9f1c94467acd8854006","in_github":false},
+  "retained_in_github": "All 132 original trial rows including receiver events, requested/actual text and all input/map/clipboard receipts; source; plan; unit log; environment receipt; derived audit/report.",
+  "omitted_from_github": "Archive container and incidental Openbox/empty receiver logs; available in conversation archive. Lost pre-reset development logs and Writer files unavailable anywhere in this result.",
+  "not_executed": ["original 260-trial comparison", "original formal Writer transfer"],
+  "experimental_external_model_requests": 0
+}

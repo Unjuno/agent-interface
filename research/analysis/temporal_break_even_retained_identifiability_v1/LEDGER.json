@@ -1,0 +1,83 @@
+{
+  "task":"TEMPORAL-BREAK-EVEN-RETAINED-IDENTIFIABILITY-20260918-001",
+  "families":[
+    {
+      "id":"map01_packed_temporal_model",
+      "source":"map01_temporal_model",
+      "kind":"actual_model_usage",
+      "actual_model_usage":true,
+      "provider_usage_present":true,
+      "model_wall_present":true,
+      "fixed_11_equivalent_presentation":false,
+      "query_conditioned_model_return":false,
+      "continuation_overhead_measured":false,
+      "matched_task_source_model_session_cache":false,
+      "independent_correctness_value_endpoint":false,
+      "reason":"actual Luna usage/model wall exists, but this is a four-source packed sheet in a live trajectory, not a matched 11-sample fixed vs query-return comparison"
+    },
+    {
+      "id":"retained_temporal_sheet_identifiability",
+      "source":"sheet_report",
+      "kind":"retained_model_audit",
+      "actual_model_usage":false,
+      "provider_usage_present":false,
+      "model_wall_present":false,
+      "fixed_11_equivalent_presentation":false,
+      "query_conditioned_model_return":false,
+      "continuation_overhead_measured":false,
+      "matched_task_source_model_session_cache":false,
+      "independent_correctness_value_endpoint":false,
+      "reason":"audit pins seven packed-sheet model families and finds zero matched presentation-only pairs"
+    },
+    {
+      "id":"queryable_ring_latency",
+      "source":"ring_latency",
+      "kind":"model_free_local_latency",
+      "actual_model_usage":false,
+      "provider_usage_present":false,
+      "model_wall_present":false,
+      "fixed_11_equivalent_presentation":false,
+      "query_conditioned_model_return":false,
+      "continuation_overhead_measured":false,
+      "local_query_latency_measured":true,
+      "matched_task_source_model_session_cache":false,
+      "independent_correctness_value_endpoint":false,
+      "reason":"measures local ring/JIT latency only; source plan explicitly says no model/task/token/frontier-boundary claim"
+    },
+    {
+      "id":"matched_source_selection",
+      "source":"matched_selection",
+      "kind":"model_free_selection",
+      "actual_model_usage":false,
+      "provider_usage_present":false,
+      "model_wall_present":false,
+      "fixed_11_equivalent_presentation":false,
+      "query_conditioned_model_return":false,
+      "continuation_overhead_measured":false,
+      "matched_task_source_model_session_cache":false,
+      "independent_correctness_value_endpoint":false,
+      "reason":"same-source selection mechanics only; report explicitly disclaims model/token/wall evidence"
+    },
+    {
+      "id":"break_even_contract",
+      "source":"cost_contract",
+      "kind":"analytical_contract",
+      "actual_model_usage":false,
+      "provider_usage_present":false,
+      "model_wall_present":false,
+      "fixed_11_equivalent_presentation":false,
+      "query_conditioned_model_return":false,
+      "continuation_overhead_measured":false,
+      "matched_task_source_model_session_cache":false,
+      "independent_correctness_value_endpoint":false,
+      "reason":"defines F/Q/H measurement contract but contains no empirical provider endpoints"
+    }
+  ],
+  "forbidden_inferences":[
+    "local ring latency -> model continuation H",
+    "four-source packed temporal sheet -> fixed 11-sample F",
+    "unmatched MAP01 usage delta -> causal break-even",
+    "zero bounded search hits -> proof no private/unpushed evidence exists"
+  ],
+  "causal_cost_estimate":null
+}

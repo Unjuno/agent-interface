@@ -1,0 +1,76 @@
+{
+  "trace_sha256": "5056c54aa11f994229368310adcd9b69cf1687a2a5d5afee645aaa4ce0904417",
+  "calls": [
+    {
+      "id": 1,
+      "tool": "native_start",
+      "sdk_ms": 2984.468182,
+      "nested_descriptive_phases": {}
+    },
+    {
+      "id": 2,
+      "tool": "native_submit",
+      "sdk_ms": 470.340956,
+      "nested_descriptive_phases": {
+        "execution_ms": 86.897406,
+        "feedback_ms": 48.421242
+      }
+    },
+    {
+      "id": 3,
+      "tool": "native_submit",
+      "sdk_ms": 332.232887,
+      "nested_descriptive_phases": {
+        "observation_only_ms": 112.644204
+      }
+    },
+    {
+      "id": 4,
+      "tool": "native_submit",
+      "sdk_ms": 501.095566,
+      "nested_descriptive_phases": {
+        "execution_ms": 193.643659,
+        "feedback_ms": 0.835411
+      }
+    },
+    {
+      "id": 5,
+      "tool": "native_submit",
+      "sdk_ms": 179.850402,
+      "nested_descriptive_phases": {
+        "observation_only_ms": 62.570167
+      }
+    },
+    {
+      "id": 6,
+      "tool": "native_submit",
+      "sdk_ms": 203.807194,
+      "nested_descriptive_phases": {}
+    },
+    {
+      "id": 7,
+      "tool": "native_status",
+      "sdk_ms": 2.285033,
+      "nested_descriptive_phases": {}
+    }
+  ],
+  "span_ms": 109085.167002,
+  "inside_sdk_ms": 4674.08022,
+  "between_calls_ms": 104411.086782,
+  "between_call_gaps_ms": [
+    16249.726716,
+    19348.137089,
+    16135.362902,
+    21053.55101,
+    14526.102443,
+    17098.206622
+  ],
+  "scope": "single sequential same-clock trace, not matched performance comparison",
+  "unmeasured": [
+    "model-visible image arrival",
+    "model reasoning duration",
+    "model tokens/cost",
+    "host transport decomposition",
+    "human baseline"
+  ]
+}

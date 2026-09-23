@@ -1,0 +1,203 @@
+{
+  "groups": {
+    "replace_clock": {
+      "total_ms": {
+        "n": 8,
+        "median_ms": 50.263866,
+        "mean_ms": 50.4065765,
+        "min_ms": 48.477661,
+        "max_ms": 53.090049
+      },
+      "transport_ms": {
+        "n": 8,
+        "median_ms": 19.0330695,
+        "mean_ms": 19.17542575,
+        "min_ms": 17.829803,
+        "max_ms": 20.424391
+      },
+      "caller_outside_transport_ms": {
+        "n": 8,
+        "median_ms": 31.005036,
+        "mean_ms": 31.23115075,
+        "min_ms": 29.839468,
+        "max_ms": 32.665658
+      },
+      "before_transport_ms": {
+        "n": 8,
+        "median_ms": 15.775739999999999,
+        "mean_ms": 15.4744115,
+        "min_ms": 14.561424,
+        "max_ms": 15.94978
+      },
+      "after_transport_ms": {
+        "n": 8,
+        "median_ms": 15.890319,
+        "mean_ms": 15.756739249999999,
+        "min_ms": 14.896298,
+        "max_ms": 16.753502
+      }
+    },
+    "replace_submit": {
+      "total_ms": {
+        "n": 8,
+        "median_ms": 118.345832,
+        "mean_ms": 118.327869625,
+        "min_ms": 109.621914,
+        "max_ms": 128.541566
+      },
+      "transport_ms": {
+        "n": 8,
+        "median_ms": 84.446188,
+        "mean_ms": 84.595737625,
+        "min_ms": 79.17125,
+        "max_ms": 91.532671
+      },
+      "caller_outside_transport_ms": {
+        "n": 8,
+        "median_ms": 31.133862,
+        "mean_ms": 33.732132,
+        "min_ms": 30.312844,
+        "max_ms": 45.084023
+      },
+      "before_transport_ms": {
+        "n": 8,
+        "median_ms": 14.997184,
+        "mean_ms": 15.373749,
+        "min_ms": 14.685891,
+        "max_ms": 18.210407
+      },
+      "after_transport_ms": {
+        "n": 8,
+        "median_ms": 15.786496,
+        "mean_ms": 18.358383,
+        "min_ms": 15.464581,
+        "max_ms": 30.374417
+      },
+      "call_to_runtime_image_ready_ms": {
+        "n": 8,
+        "median_ms": 65.30466,
+        "mean_ms": 64.27392675,
+        "min_ms": 58.809594,
+        "max_ms": 67.77853
+      }
+    },
+    "append_clock": {
+      "total_ms": {
+        "n": 8,
+        "median_ms": 35.380733500000005,
+        "mean_ms": 35.5780685,
+        "min_ms": 33.342424,
+        "max_ms": 38.882967
+      },
+      "transport_ms": {
+        "n": 8,
+        "median_ms": 17.3752895,
+        "mean_ms": 18.0040015,
+        "min_ms": 16.839033,
+        "max_ms": 19.89783
+      },
+      "caller_outside_transport_ms": {
+        "n": 8,
+        "median_ms": 17.443838,
+        "mean_ms": 17.574067,
+        "min_ms": 16.503391,
+        "max_ms": 19.040441
+      },
+      "before_transport_ms": {
+        "n": 8,
+        "median_ms": 8.811341,
+        "mean_ms": 8.897961375,
+        "min_ms": 8.047775,
+        "max_ms": 10.575355
+      },
+      "after_transport_ms": {
+        "n": 8,
+        "median_ms": 8.493258,
+        "mean_ms": 8.676105625,
+        "min_ms": 7.958617,
+        "max_ms": 10.200079
+      }
+    },
+    "append_submit": {
+      "total_ms": {
+        "n": 8,
+        "median_ms": 99.97640150000001,
+        "mean_ms": 100.036317625,
+        "min_ms": 97.117559,
+        "max_ms": 104.11021
+      },
+      "transport_ms": {
+        "n": 8,
+        "median_ms": 81.4912975,
+        "mean_ms": 81.65748425,
+        "min_ms": 78.51227,
+        "max_ms": 86.547564
+      },
+      "caller_outside_transport_ms": {
+        "n": 8,
+        "median_ms": 18.175883,
+        "mean_ms": 18.378833375,
+        "min_ms": 16.310455,
+        "max_ms": 21.419807
+      },
+      "before_transport_ms": {
+        "n": 8,
+        "median_ms": 8.720829,
+        "mean_ms": 8.936566875,
+        "min_ms": 7.963306,
+        "max_ms": 10.231354
+      },
+      "after_transport_ms": {
+        "n": 8,
+        "median_ms": 9.406144999999999,
+        "mean_ms": 9.4422665,
+        "min_ms": 8.347149,
+        "max_ms": 11.37597
+      },
+      "call_to_runtime_image_ready_ms": {
+        "n": 8,
+        "median_ms": 56.424839500000004,
+        "mean_ms": 56.530103,
+        "min_ms": 53.568753,
+        "max_ms": 59.069159
+      }
+    }
+  },
+  "sessions": [
+    {
+      "session": 1,
+      "mode": "replace",
+      "events": 36,
+      "frames": 5,
+      "total_measured_ms": 703.635047,
+      "caller_outside_transport_ms": 275.37117
+    },
+    {
+      "session": 2,
+      "mode": "append",
+      "events": 36,
+      "frames": 5,
+      "total_measured_ms": 540.984768,
+      "caller_outside_transport_ms": 142.153614
+    },
+    {
+      "session": 3,
+      "mode": "append",
+      "events": 36,
+      "frames": 5,
+      "total_measured_ms": 543.9303209999999,
+      "caller_outside_transport_ms": 145.469589
+    },
+    {
+      "session": 4,
+      "mode": "replace",
+      "events": 36,
+      "frames": 5,
+      "total_measured_ms": 646.240522,
+      "caller_outside_transport_ms": 244.335092
+    }
+  ],
+  "measured_calls": 32,
+  "scope": "ABBA native Linux replacement/append checkpoints; two fresh sessions per mode,17 records for append, no model/power-loss proof",
+  "audit_sha256": "1416e4c2f064bb82d369f8e4bcb1ce56ff5898887182157917b594bf9dac0a69"
+}

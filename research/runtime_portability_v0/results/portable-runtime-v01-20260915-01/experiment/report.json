@@ -1,0 +1,38 @@
+{
+  "schema": "agent-interface/runtime-portability-v0-experiment",
+  "seed": 20260915,
+  "codec": {
+    "programs": 1000,
+    "c0_total_bytes": 400110,
+    "c1_total_bytes": 84310,
+    "total_reduction_pct": 78.92829471895229,
+    "median_c0_bytes": 388.0,
+    "median_c1_bytes": 86.0,
+    "median_reduction_pct": 77.83505154639175,
+    "c0_decode_ns_per_program_median": 9605.716,
+    "c1_decode_ns_per_program_median": 10729.039,
+    "roundtrip_failures": 0,
+    "provider_token_accounting": "UNAVAILABLE_NO_EXACT_TOKENIZER_OR_PROVIDER_USAGE"
+  },
+  "dictionary": {
+    "definition_bytes": 71,
+    "digest": "bfea243c17650d29",
+    "lifecycle": [
+      {"uses":1,"baseline_c0_bytes":409,"c2_definition_plus_refs_bytes":136,"delta_bytes":-273,"candidate_smaller":true},
+      {"uses":2,"baseline_c0_bytes":818,"c2_definition_plus_refs_bytes":201,"delta_bytes":-617,"candidate_smaller":true},
+      {"uses":4,"baseline_c0_bytes":1636,"c2_definition_plus_refs_bytes":331,"delta_bytes":-1305,"candidate_smaller":true},
+      {"uses":8,"baseline_c0_bytes":3272,"c2_definition_plus_refs_bytes":591,"delta_bytes":-2681,"candidate_smaller":true},
+      {"uses":16,"baseline_c0_bytes":6556,"c2_definition_plus_refs_bytes":1123,"delta_bytes":-5433,"candidate_smaller":true},
+      {"uses":32,"baseline_c0_bytes":13132,"c2_definition_plus_refs_bytes":2195,"delta_bytes":-10937,"candidate_smaller":true},
+      {"uses":64,"baseline_c0_bytes":26284,"c2_definition_plus_refs_bytes":4339,"delta_bytes":-21945,"candidate_smaller":true}
+    ],
+    "first_tested_break_even_uses": 1
+  },
+  "portable_contract": {
+    "same_program_admitted_on_synthetic_full_profiles": {"linux":true,"windows":true,"macos":true},
+    "unimplemented_profiles_fail_readiness": {"linux":true,"windows":true,"macos":true},
+    "note": "synthetic profiles test contract portability only; they are not OS implementation evidence"
+  },
+  "environment": {"platform":"Linux-6.18.44-x86_64-with-glibc2.41","python":"3.13.5","processor":"","cpu_count":5},
+  "claims": {"native_os_support":false,"provider_token_savings":false,"serialization_proxy_reduction":true,"semantic_roundtrip":true}
+}

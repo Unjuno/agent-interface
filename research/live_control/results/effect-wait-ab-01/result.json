@@ -1,0 +1,37 @@
+{
+  "episodes": [
+    {
+      "label": "poll",
+      "model_calls": 0,
+      "post_unknown_durable_calls": 10,
+      "post_unknown_statuses": [
+        "UNKNOWN",
+        "UNKNOWN",
+        "UNKNOWN",
+        "UNKNOWN",
+        "UNKNOWN",
+        "UNKNOWN",
+        "UNKNOWN",
+        "UNKNOWN",
+        "UNKNOWN",
+        "VERIFIED"
+      ],
+      "post_unknown_to_verified_ms": 5060.458117,
+      "acceptance_to_verified_ms": 5716.463585,
+      "verifier_sample_attempts": 1,
+      "independent_success": true
+    },
+    {
+      "label": "wait",
+      "model_calls": 0,
+      "post_unknown_durable_calls": 1,
+      "post_unknown_statuses": [
+        "VERIFIED"
+      ],
+      "post_unknown_to_verified_ms": 4897.769297,
+      "acceptance_to_verified_ms": 5570.844367,
+      "verifier_sample_attempts": 97,
+      "independent_success": true
+    }
+  ]
+}

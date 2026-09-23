@@ -1,0 +1,49 @@
+{
+  "counts": {
+    "late_bind": {
+      "cases": 4,
+      "fresh": 4,
+      "median_age_ns": 20205865,
+      "release_failures": 0,
+      "target_only_deletes": 4,
+      "unique_retrieval": 4
+    },
+    "snapshot_bound": {
+      "cases": 4,
+      "median_age_ns": 6502596677,
+      "release_failures": 0,
+      "safe_yields": 4
+    }
+  },
+  "errors": [],
+  "paired_age_rows": [
+    {
+      "late_bind_age_ns": 20322827,
+      "seed": 881101,
+      "snapshot_age_ns": 6504313713,
+      "snapshot_minus_late_ns": 6483990886
+    },
+    {
+      "late_bind_age_ns": 18938366,
+      "seed": 881102,
+      "snapshot_age_ns": 6502530041,
+      "snapshot_minus_late_ns": 6483591675
+    },
+    {
+      "late_bind_age_ns": 20088904,
+      "seed": 881103,
+      "snapshot_age_ns": 6502663314,
+      "snapshot_minus_late_ns": 6482574410
+    },
+    {
+      "late_bind_age_ns": 21424707,
+      "seed": 881104,
+      "snapshot_age_ns": 6502227559,
+      "snapshot_minus_late_ns": 6480802852
+    }
+  ],
+  "paired_median_snapshot_minus_late_ns": 6483083042,
+  "schema": "agent-interface/gui-target-late-bind-audit-v2",
+  "scientific_decision": "PASS_CROSS_DOMAIN_LATE_BIND",
+  "status": "PASS_AUDIT"
+}

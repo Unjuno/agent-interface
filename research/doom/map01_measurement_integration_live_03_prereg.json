@@ -1,0 +1,38 @@
+{
+  "schema": "map01-measurement-integration-live-prereg-v3",
+  "allocation_id": "map01-measurement-integration-live-03",
+  "base_research_commit": "5486ea20b417a80903619a384744cf9ac38d5a52",
+  "workflow_path": ".github/workflows/map01-measurement-integration-live-03.yml",
+  "seed": 990613,
+  "model_calls": 0,
+  "formal_probe_runs_allowed": 1,
+  "retry_allowed": false,
+  "purpose": "validate real MAP01 v13 retained-input telemetry, independent scorer cadence, terminal score agreement, and one-shot launch ownership before any recovery-vs-coast efficacy allocation",
+  "launch_protocol": {
+    "concurrency_group": "map01-measurement-integration-live-03",
+    "cancel_in_progress": false,
+    "canonical_owner_rule": "earliest run_number then run_id for exact workflow path and head SHA",
+    "later_matching_runs_may_enter_formal_step": false,
+    "current_run_missing_from_api": "fail_closed"
+  },
+  "frozen_runtime": {
+    "session": "research/doom/session_map01_v13.py",
+    "probe": "research/doom/probe_map01_measurement_integration_v1.py",
+    "release_owner": "research/live_control/input_transition_owner_v3.py",
+    "release_backend": "research/doom/doom_retained_input_backend_v3.py",
+    "integration_audit": "research/doom/audit_map01_measurement_integration_v1.py",
+    "terminal_agreement_audit": "research/doom/audit_map01_terminal_score_agreement_v1.py"
+  },
+  "pass_requires": [
+    "canonical launch ownership before formal probe",
+    "existing measurement integration audit passes",
+    "normal two-key hold completes with verified direct release transitions",
+    "direct retained-input analyzer is measurement-ready with no unmatched or invalid releases",
+    "independent scorer has zero missed periods",
+    "exactly one direct final scorer sample",
+    "final scorer sample strictly equals score.json on map_exit, episode_finished, player_dead, death_count, kill_count",
+    "all terminal input release is verified empty"
+  ],
+  "fail_policy": "retain first outcome; do not retry or select among duplicate/favorable runs",
+  "recovery_vs_coast_authority_after_pass": "measurement gate only; efficacy allocation still requires a separately frozen matched recovery-vs-coast design"
+}

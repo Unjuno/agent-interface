@@ -1,0 +1,23 @@
+{
+  "task_id": "LO-NATURAL-CONTENTION-2975-20260920-01",
+  "issue": 2975,
+  "decision": "FAIL_STALE_EFFECT_ACCEPTED",
+  "failure_offset_ms": 0,
+  "image": "agent-interface-lo2966:20260920@sha256:551f399a59ec7bd238d22c11c5d53ee14a12be6ede6d5184e4320e6cf62a7944",
+  "network": "none",
+  "runner_sha256": "76b2c617e51b2225449eb4742c064e0c543ebf8acfd56b804a8063b3710d03cb",
+  "rows": 30,
+  "repetitions_per_offset": 5,
+  "offsets_ms": [0, 1, 5, 10, 20, 50],
+  "summary": {
+    "0": {"rows": 5, "outcomes": ["APPLIED", "APPLIED"], "final_a_values": [1200, 1700], "final_b": 5000},
+    "1": {"rows": 5, "outcomes": ["APPLIED", "CONFLICT_REJECTED"], "final_a": 1200, "final_b": 5000},
+    "5": {"rows": 5, "outcomes": ["APPLIED", "CONFLICT_REJECTED"], "final_a": 1200, "final_b": 5000},
+    "10": {"rows": 5, "outcomes": ["APPLIED", "CONFLICT_REJECTED"], "final_a": 1200, "final_b": 5000},
+    "20": {"rows": 5, "outcomes": ["APPLIED", "CONFLICT_REJECTED"], "final_a": 1200, "final_b": 5000},
+    "50": {"rows": 5, "outcomes": ["APPLIED", "CONFLICT_REJECTED"], "final_a": 1200, "final_b": 5000}
+  },
+  "forced_438_rows_pooled": false,
+  "prior_2966_modified": false
+}
+

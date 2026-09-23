@@ -1,0 +1,51 @@
+{
+  "model_calls": 2,
+  "episodes": [
+    {
+      "label": "before-return",
+      "expired_steps_completed": 3,
+      "expired_steps_total": 6,
+      "model_decision": "submit_once",
+      "model_runner_s": 7.052837941,
+      "new_input_submissions": 1,
+      "post_decision_effect_statuses": [
+        "VERIFIED"
+      ],
+      "post_decision_effect_calls": 1,
+      "verifier_sample_attempts": 97,
+      "wait_requested_ms": 6000,
+      "poll_requested_ms": 50,
+      "independent_success": true,
+      "usage": {
+        "input_tokens": 9823,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 139,
+        "reasoning_output_tokens": 54
+      }
+    },
+    {
+      "label": "after-return",
+      "expired_steps_completed": 4,
+      "expired_steps_total": 6,
+      "model_decision": "wait_and_check",
+      "model_runner_s": 5.355604446,
+      "new_input_submissions": 0,
+      "post_decision_effect_statuses": [
+        "VERIFIED"
+      ],
+      "post_decision_effect_calls": 1,
+      "verifier_sample_attempts": 1,
+      "wait_requested_ms": 6000,
+      "poll_requested_ms": 50,
+      "independent_success": true,
+      "usage": {
+        "input_tokens": 9822,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 82,
+        "reasoning_output_tokens": 42
+      }
+    }
+  ]
+}

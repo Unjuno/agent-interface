@@ -1,0 +1,27 @@
+{
+  "after": 71,
+  "events": [
+    "terminal"
+  ],
+  "timeout": 15,
+  "action_id": "resave",
+  "request_id": "program-810ed9fff61145b3a4704c35f3ca904e",
+  "command": {
+    "op": "submit",
+    "id": "resave",
+    "steps": [
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "s"
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 80,
+        "timeout_ms": 500
+      }
+    ],
+    "expected_sequence": 15,
+    "valid_until_ns": 99831375839
+  }
+}

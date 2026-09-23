@@ -1,0 +1,33 @@
+import json,subprocess,sys,time,statistics
+from pathlib import Path
+HERE=Path(__file__).parent
+GAP_NS=40_000_000
+
+def run_one(realized,arm):
+    p=subprocess.Popen([sys.executable,str(HERE/'fixture_child.py'),str(realized)],stdin=subprocess.PIPE,stdout=subprocess.PIPE,text=True,bufsize=1)
+    ev=json.loads(p.stdout.readline()); assert ev['event']=='REALIZED'
+    t_real=ev['t_realized_ns']
+    if arm in ('wait','current'):
+        # selected discriminator guarantees current-only miss, so both wait for gap end.
+        deadline=t_real + 30_000_000
+        while time.perf_counter_ns()<deadline: time.sleep(0.0002)
+    cmd={'expected_state':realized,'authority':True,'fresh':True}
+    p.stdin.write(json.dumps(cmd)+'\n');p.stdin.flush(); out=json.loads(p.stdout.readline()); rc=p.wait(timeout=2)
+    assert out.get('effect') is True and not out.get('wrong') and rc==0
+    return {'arm':arm,'latency_ns':out['t_effect_ns']-t_real,'wrong':False,'effect':True}
+
+def construction():
+    rows=[]
+    for realized in (2,-2):
+        for arm in ('wait','current','temporal'): rows.append(run_one(realized,arm))
+    return rows
+
+def formal(cases):
+    rows=[]
+    # 24 predetermined discriminators, half right +2 and half left -2.
+    for i in range(24):
+        realized=2 if i%2==0 else -2
+        order=(('wait','current','temporal') if i%3==0 else ('current','temporal','wait') if i%3==1 else ('temporal','wait','current'))
+        for arm in order:
+            r=run_one(realized,arm);r['trial']=i;rows.append(r)
+    return rows

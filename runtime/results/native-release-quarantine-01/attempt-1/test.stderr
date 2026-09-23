@@ -1,0 +1,55 @@
+test_backend_specific_invalid_text_emits_zero_input (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_backend_specific_invalid_text_emits_zero_input) ... ok
+test_expired_lease_emits_zero_input (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_expired_lease_emits_zero_input) ... ok
+test_failure_after_real_button_press_retains_prefix_and_releases (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_failure_after_real_button_press_retains_prefix_and_releases) ... ok
+test_manifest_is_ready_with_narrow_text_detail (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_manifest_is_ready_with_narrow_text_detail) ... ok
+test_stale_binding_emits_zero_input (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_stale_binding_emits_zero_input) ... ok
+test_stale_observation_emits_zero_input (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_stale_observation_emits_zero_input) ... ok
+test_supported_punctuation_has_exact_independent_effect (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_supported_punctuation_has_exact_independent_effect) ... ok
+test_unverified_native_release_quarantines_persistent_session (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_unverified_native_release_quarantines_persistent_session) ... ok
+test_valid_program_has_independent_effect_and_verified_release (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_valid_program_has_independent_effect_and_verified_release) ... ok
+test_partial_operation_and_observation_survive_failure_and_close (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_partial_operation_and_observation_survive_failure_and_close) ... ok
+test_unexpected_execution_exception_leaves_session_blocked (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_unexpected_execution_exception_leaves_session_blocked) ... ok
+test_unverified_release_blocks_later_dispatch_before_backend_access (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_unverified_release_blocks_later_dispatch_before_backend_access) ... ok
+test_explicit_empty_usage_does_not_fall_back_to_other_usage (runtime.cli_v1.test_native_golden_boundary.EvidenceRetentionTests.test_explicit_empty_usage_does_not_fall_back_to_other_usage) ... ok
+test_rejected_adapter_retains_unknown_raw_evidence (runtime.cli_v1.test_native_golden_boundary.EvidenceRetentionTests.test_rejected_adapter_retains_unknown_raw_evidence) ... ok
+test_close_failure_preserves_completed_operation (runtime.cli_v1.test_native_golden_boundary.NativeBoundaryTests.test_close_failure_preserves_completed_operation) ... FAIL
+test_completed_operation_is_not_an_application_score (runtime.cli_v1.test_native_golden_boundary.NativeBoundaryTests.test_completed_operation_is_not_an_application_score) ... FAIL
+test_stale_source_refuses_without_execution (runtime.cli_v1.test_native_golden_boundary.NativeBoundaryTests.test_stale_source_refuses_without_execution) ... ok
+test_unverified_release_keeps_execution_for_recovery (runtime.cli_v1.test_native_golden_boundary.NativeBoundaryTests.test_unverified_release_keeps_execution_for_recovery) ... ok
+test_existing_store_refuses_changed_pixels_at_native_check (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_existing_store_refuses_changed_pixels_at_native_check) ... ok
+test_expired_guard_does_not_capture_or_resolve (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_expired_guard_does_not_capture_or_resolve) ... ok
+test_failed_window_review_blocks_input_and_mint_until_success (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_failed_window_review_blocks_input_and_mint_until_success) ... ok
+test_feedback_capture_failure_is_retained_without_retry (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_feedback_capture_failure_is_retained_without_retry) ... ok
+test_feedback_changed_title_or_focus_requires_review (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_feedback_changed_title_or_focus_requires_review) ... ok
+test_feedback_match_is_observed_cue_not_task_success (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_feedback_match_is_observed_cue_not_task_success) ... ok
+test_feedback_rejection_and_timeout_are_distinct (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_feedback_rejection_and_timeout_are_distinct) ... ok
+test_feedback_title_prefers_utf8_net_name_and_falls_back_only_if_absent (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_feedback_title_prefers_utf8_net_name_and_falls_back_only_if_absent) ... ok
+test_mint_requires_explicit_retained_source (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_mint_requires_explicit_retained_source) ... ok
+test_point_change_after_move_prevents_native_press (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_point_change_after_move_prevents_native_press) ... ok
+test_refusal_before_admission_never_dispatches (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_refusal_before_admission_never_dispatches) ... ok
+test_release_is_not_blocked_by_guard_refusal (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_release_is_not_blocked_by_guard_refusal) ... ok
+test_window_review_cannot_mutate_scope_during_input (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_window_review_cannot_mutate_scope_during_input) ... ok
+test_window_review_capture_failure_requires_fresh_successful_review (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_window_review_capture_failure_requires_fresh_successful_review) ... ok
+test_window_review_does_not_clear_unverified_input_release (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_window_review_does_not_clear_unverified_input_release) ... ok
+test_window_review_revokes_old_sources_and_prevents_alias_rebinding (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_window_review_revokes_old_sources_and_prevents_alias_rebinding) ... ok
+
+======================================================================
+FAIL: test_close_failure_preserves_completed_operation (runtime.cli_v1.test_native_golden_boundary.NativeBoundaryTests.test_close_failure_preserves_completed_operation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/runtime/cli_v1/test_native_golden_boundary.py", line 62, in test_close_failure_preserves_completed_operation
+    self.assertTrue(row["program_completed"])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_completed_operation_is_not_an_application_score (runtime.cli_v1.test_native_golden_boundary.NativeBoundaryTests.test_completed_operation_is_not_an_application_score)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/runtime/cli_v1/test_native_golden_boundary.py", line 40, in test_completed_operation_is_not_an_application_score
+    self.assertTrue(row["program_completed"])
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 34 tests in 2.425s
+
+FAILED (failures=2)

@@ -1,0 +1,247 @@
+{
+  "scope": "16 fixed-image calls; two calls per evidence mode/case; no actions or live speed comparison",
+  "summaries": [
+    {
+      "case": "form_unknown",
+      "full_evidence_bytes": 958,
+      "compact_evidence_bytes": 621,
+      "evidence_byte_reduction": 337,
+      "full": {
+        "calls": 2,
+        "expected_decisions": 2,
+        "kinds": [
+          "act",
+          "act"
+        ],
+        "input_tokens": [
+          9727,
+          9727
+        ],
+        "cached_input_tokens": [
+          6912,
+          6912
+        ],
+        "output_tokens": [
+          136,
+          122
+        ],
+        "runner_s": [
+          6.8627322,
+          6.2559699
+        ],
+        "save_proposals": 0
+      },
+      "compact": {
+        "calls": 2,
+        "expected_decisions": 2,
+        "kinds": [
+          "act",
+          "act"
+        ],
+        "input_tokens": [
+          9614,
+          9614
+        ],
+        "cached_input_tokens": [
+          1792,
+          1792
+        ],
+        "output_tokens": [
+          116,
+          137
+        ],
+        "runner_s": [
+          6.0699909,
+          6.9196215
+        ],
+        "save_proposals": 0
+      },
+      "input_tokens_saved_per_call": 113,
+      "input_token_reduction_percent": 1.1617148144340494
+    },
+    {
+      "case": "form_verified",
+      "full_evidence_bytes": 1509,
+      "compact_evidence_bytes": 684,
+      "evidence_byte_reduction": 825,
+      "full": {
+        "calls": 2,
+        "expected_decisions": 2,
+        "kinds": [
+          "verify",
+          "verify"
+        ],
+        "input_tokens": [
+          9899,
+          9899
+        ],
+        "cached_input_tokens": [
+          6912,
+          1792
+        ],
+        "output_tokens": [
+          86,
+          70
+        ],
+        "runner_s": [
+          5.7204223,
+          5.2365641
+        ],
+        "save_proposals": 0
+      },
+      "compact": {
+        "calls": 2,
+        "expected_decisions": 2,
+        "kinds": [
+          "verify",
+          "verify"
+        ],
+        "input_tokens": [
+          9653,
+          9653
+        ],
+        "cached_input_tokens": [
+          1792,
+          9216
+        ],
+        "output_tokens": [
+          60,
+          78
+        ],
+        "runner_s": [
+          5.3731859,
+          5.5239766
+        ],
+        "save_proposals": 0
+      },
+      "input_tokens_saved_per_call": 246,
+      "input_token_reduction_percent": 2.485099505000505
+    },
+    {
+      "case": "calc_unknown_dialog",
+      "full_evidence_bytes": 3529,
+      "compact_evidence_bytes": 1328,
+      "evidence_byte_reduction": 2201,
+      "full": {
+        "calls": 2,
+        "expected_decisions": 2,
+        "kinds": [
+          "act",
+          "act"
+        ],
+        "input_tokens": [
+          10661,
+          10661
+        ],
+        "cached_input_tokens": [
+          1792,
+          1792
+        ],
+        "output_tokens": [
+          156,
+          181
+        ],
+        "runner_s": [
+          6.6923815,
+          7.1107456
+        ],
+        "save_proposals": 0
+      },
+      "compact": {
+        "calls": 2,
+        "expected_decisions": 2,
+        "kinds": [
+          "act",
+          "act"
+        ],
+        "input_tokens": [
+          9957,
+          9957
+        ],
+        "cached_input_tokens": [
+          0,
+          6912
+        ],
+        "output_tokens": [
+          159,
+          126
+        ],
+        "runner_s": [
+          7.5895493,
+          6.4148846
+        ],
+        "save_proposals": 0
+      },
+      "input_tokens_saved_per_call": 704,
+      "input_token_reduction_percent": 6.603508113685395
+    },
+    {
+      "case": "calc_verified",
+      "full_evidence_bytes": 1481,
+      "compact_evidence_bytes": 594,
+      "evidence_byte_reduction": 887,
+      "full": {
+        "calls": 2,
+        "expected_decisions": 2,
+        "kinds": [
+          "verify",
+          "verify"
+        ],
+        "input_tokens": [
+          9995,
+          9995
+        ],
+        "cached_input_tokens": [
+          6912,
+          9216
+        ],
+        "output_tokens": [
+          68,
+          103
+        ],
+        "runner_s": [
+          6.4120476,
+          5.3765006
+        ],
+        "save_proposals": 0
+      },
+      "compact": {
+        "calls": 2,
+        "expected_decisions": 2,
+        "kinds": [
+          "verify",
+          "verify"
+        ],
+        "input_tokens": [
+          9716,
+          9716
+        ],
+        "cached_input_tokens": [
+          6912,
+          6912
+        ],
+        "output_tokens": [
+          56,
+          78
+        ],
+        "runner_s": [
+          4.4599257,
+          5.6240628
+        ],
+        "save_proposals": 0
+      },
+      "input_tokens_saved_per_call": 279,
+      "input_token_reduction_percent": 2.7913956978489245
+    }
+  ],
+  "full_input_tokens": 80564,
+  "compact_input_tokens": 77880,
+  "input_tokens_saved": 2684,
+  "input_token_reduction_percent": 3.3315128345166576,
+  "mean_tokens_saved_per_call": 335.5,
+  "all_expected_decisions": true,
+  "raw_records_retained": true,
+  "same_image_and_task_prompt_within_case": true,
+  "served_identity_and_cost": "unavailable",
+  "cached_tokens_and_runner_duration": "reported but not causal metrics"
+}

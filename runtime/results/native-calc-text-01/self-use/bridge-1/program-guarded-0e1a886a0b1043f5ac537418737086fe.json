@@ -1,0 +1,136 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "guarded-0e1a886a0b1043f5ac537418737086fe",
+  "source": {
+    "observation_seq": 2,
+    "binding_revision": 0
+  },
+  "authority": {
+    "lease_id": "native-x11-ea20f97967694117b95b6f631ac2fe5e",
+    "expires_at_ns": 2568221287473
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "app"
+    },
+    {
+      "op": "pointer_move",
+      "frame": "screen_physical_px",
+      "x": 18,
+      "y": 108
+    },
+    {
+      "op": "pointer_button",
+      "button": "left",
+      "down": true
+    },
+    {
+      "op": "pointer_button",
+      "button": "left",
+      "down": false
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "CTRL",
+        "A"
+      ]
+    },
+    {
+      "op": "text",
+      "text": "A"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 2
+    },
+    {
+      "op": "text",
+      "text": "1"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "ENTER"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "text",
+      "text": "1"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 2
+    },
+    {
+      "op": "text",
+      "text": "1"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 2
+    },
+    {
+      "op": "text",
+      "text": "6"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "ENTER"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "text",
+      "text": "4"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 2
+    },
+    {
+      "op": "text",
+      "text": "7"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 2
+    },
+    {
+      "op": "text",
+      "text": "6"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "ENTER"
+      ]
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "CTRL",
+        "s"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 300
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}

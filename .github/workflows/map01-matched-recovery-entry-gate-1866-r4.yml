@@ -1,0 +1,29 @@
+name: MAP01 matched recovery entry gate 1866 r4
+on:
+  workflow_dispatch:
+  push:
+    branches: ["research/map01-matched-recovery-entry-gate-1866-r4"]
+  pull_request:
+    paths:
+      - "research/analysis/map01_matched_recovery_entry_gate_1866_r4/**"
+      - ".github/workflows/map01-matched-recovery-entry-gate-1866-r4.yml"
+jobs:
+  gate:
+    runs-on: ubuntu-24.04
+    container: python:3.12-slim
+    steps:
+      - name: Fetch immutable source
+        env:
+          SHA: ${{ github.sha }}
+        run: |
+          set -eu
+          mkdir -p research/analysis/map01_matched_recovery_entry_gate_1866_r4
+          python - "${SHA}" <<'PY'
+          import pathlib,sys,urllib.request
+          b=f"https://raw.githubusercontent.com/Unjuno/agent-interface/{sys.argv[1]}/research/analysis/map01_matched_recovery_entry_gate_1866_r4"
+          o=pathlib.Path("research/analysis/map01_matched_recovery_entry_gate_1866_r4")
+          with urllib.request.urlopen(b+"/gate.py",timeout=30) as r:(o/"gate.py").write_bytes(r.read())
+          PY
+      - run: python -m py_compile research/analysis/map01_matched_recovery_entry_gate_1866_r4/gate.py
+      - working-directory: research/analysis/map01_matched_recovery_entry_gate_1866_r4
+        run: python gate.py

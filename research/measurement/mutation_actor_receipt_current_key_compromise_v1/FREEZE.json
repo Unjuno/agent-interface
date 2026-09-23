@@ -1,0 +1,31 @@
+{
+  "task": "MUTATION-ACTOR-RECEIPT-CURRENT-KEY-COMPROMISE-20260918-001",
+  "issue": 1277,
+  "base": "020bb2713af7e115b29a71625326707e60118417",
+  "branch": "research/mutation-actor-receipt-current-key-compromise-20260918-001",
+  "formal_pairs": 200000,
+  "batch_count": 4,
+  "batch_size": 50000,
+  "formal_batch_invocations": 0,
+  "batch_reruns": 0,
+  "construction": {
+    "pairs": 128,
+    "legit_accept": 128,
+    "compromised_forge_accept": 128,
+    "visible_byte_identical_pairs": 128,
+    "wrong_key_reject": 128,
+    "retired_epoch_reject": 128
+  },
+  "source_sha256": {
+    "ROADMAP.md": "005e21771a6abef6c8a898b2bbcaf1b96749fb8e161bc977a763f3d8f2573003",
+    "experiment.py": "c66163f8f28bd0f8e3328447f3a0962ea18c7d026e81ce1e525d7d46eefe31f7",
+    "aggregate.py": "55ca6da119903c552e7cac93c0b2f46fd8a1eab52f86b530129c13b99e4d954b",
+    "reconstruct_source.py": "ded5dc09048b68238bc7be92f5bac7fe592f16fcc6d6d9c7b370208845024ade"
+  },
+  "source_chunk_blob_sha": {
+    "00.b64": "6a88113f897a93f133ac89f2d77a805e5abbf031",
+    "01.b64": "3d78f85036d3088a4f10d49b7b7ed9253dc22ac0",
+    "02.b64": "84b484adfa909a8ca00f7388bc71ea8c659cf696",
+    "03.b64": "a014d547bf29cffa98316c82acc2a2c469253e17"
+  }
+}

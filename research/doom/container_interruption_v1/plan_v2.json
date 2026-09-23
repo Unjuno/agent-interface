@@ -1,0 +1,88 @@
+{
+  "allocation_id": "container-map01-interruption-20260915-v2",
+  "base_commit": "9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+  "cases": [
+    {
+      "duration_ms": 300,
+      "keys": [],
+      "lease_ms": 4000,
+      "name": "coast",
+      "status": "completed"
+    },
+    {
+      "duration_ms": 240,
+      "keys": [
+        "a"
+      ],
+      "lease_ms": 4000,
+      "name": "normal-single",
+      "status": "completed"
+    },
+    {
+      "duration_ms": 240,
+      "keys": [
+        "a",
+        "d"
+      ],
+      "lease_ms": 4000,
+      "name": "normal-chord",
+      "status": "completed"
+    },
+    {
+      "cancel_after_held_ms": 120,
+      "duration_ms": 2000,
+      "keys": [
+        "a",
+        "d"
+      ],
+      "lease_ms": 4000,
+      "name": "cancel-chord",
+      "status": "cancelled"
+    },
+    {
+      "duration_ms": 2000,
+      "keys": [
+        "a",
+        "d"
+      ],
+      "lease_ms": 500,
+      "name": "expire-chord",
+      "status": "expired"
+    }
+  ],
+  "change": "Dependency preflight only. Same run_case, five cases, seed, fixture, gates and occupancy analyzer.",
+  "claims_excluded": [
+    "real planner latency",
+    "recovery efficacy",
+    "continuous physical occupancy",
+    "hard real-time guarantee"
+  ],
+  "fixture": "research/doom/fixtures/map01-threat-contact-v2/fixture.json",
+  "hard_gates": [
+    "expected terminal status",
+    "verified empty terminal for every accepted program",
+    "expected independent owner cancellation/expiry reason exposed",
+    "strict five-field final scorer agreement",
+    "no privileged scorer events in controller streams",
+    "old exact sequence refused before new admission",
+    "normal input has matched direct release edges; interruption missing ordinary edges never becomes zero input"
+  ],
+  "issue": 88,
+  "metrics": [
+    "any-key union in measured accepted-to-terminal window",
+    "interrupted occupancy conservative interval with zero certified lower bound",
+    "scorer cadence descriptive only"
+  ],
+  "model_calls": 0,
+  "no_retry": true,
+  "schema": "container-map01-interruption-plan-v2",
+  "seed": 990616,
+  "source_sha256": {
+    "occupancy.py": "154ecdb15b64ccdbd3e719922c454b4fb59fabdaed68d56837e150f5c9ed4db8",
+    "run_matrix.py": "1eb36646808e6bee5806e00d591bf64412f5742e5ae282d7b30378477dca55b3",
+    "run_matrix_v2.py": "c2fed621d99c64a550ee8fc55458dd02df9c9137e4904ebf85682a1fc5295a5f",
+    "test_occupancy.py": "a39393b1b4aa2470ce78af2c6b78b9b71b19e7d1f76da7aa6ec8c7c01ac86eae"
+  },
+  "stop_after_first_error": true,
+  "supersedes": "container-map01-interruption-20260915-v1"
+}

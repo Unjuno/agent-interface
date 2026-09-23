@@ -1,0 +1,40 @@
+{
+  "audit_execution_envelope": {
+    "batch_rows": 100000,
+    "cpu_mhz_snapshot_median": 2596.124,
+    "elapsed_seconds": 16.17,
+    "hardware": "AMD EPYC 9V74, 5 vCPU, KVM",
+    "maxrss_kb": 92972,
+    "note": "audit fully regenerated and replayed the 100,000-row corpus",
+    "python": "3.13.5"
+  },
+  "audit_sha256": "981f98ae2b50248901293a4cc6b6fd01f2d598700cbfb42a560c44c0734b6c7f",
+  "base": "0186dbe6a7a3674c1fd591a7ed7e472e01e0746e",
+  "candidate_oracle_mismatches": 0,
+  "changed_recapture_old_terminal_candidate_accepts": 0,
+  "changed_recapture_old_terminal_untyped_accepts": 25000,
+  "corruption_controls": "8/8 PASS",
+  "decision": "PASS_OBSERVATION_SOURCE_ROLE_COMPOSITION_SCOPED",
+  "formal_execution_envelope": {
+    "batch_rows": 100000,
+    "cpu_mhz_snapshot_median": 2596.124,
+    "elapsed_seconds": 1.98,
+    "hardware": "AMD EPYC 9V74, 5 vCPU, KVM",
+    "maxrss_kb": 92712,
+    "note": "descriptive wrapper measurement only; not a scientific threshold or benchmark claim",
+    "python": "3.13.5"
+  },
+  "formal_invocations": 1,
+  "formal_result_sha256": "442037665bb13af29628ecf8c0a1c3a9a80f1e69fdb3c28cbc3e455b38946233",
+  "formal_rows": 100000,
+  "freeze_commit": "dbd99122325c6703e064128fd82c78877b221cde",
+  "issue": 1471,
+  "replacements": 0,
+  "reruns": 0,
+  "schema": "observation-source-role-composition-publication-v1",
+  "source_bundle_sha256": "59d4b9641a7222fba360a666eead4f3e0292e6c1e294cfb7534dfe474d5a18df",
+  "task": "OBSERVATION-SOURCE-ROLE-COMPOSITION-20260918-001",
+  "terminal_to_current_candidate_accepts": 0,
+  "terminal_to_current_untyped_accepts": 25000,
+  "tuning": 0
+}

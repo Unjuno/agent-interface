@@ -1,0 +1,29 @@
+{
+  "base": "12ad78d903256d08743b49020eb8aced4fd45254",
+  "decision": "RETAIN_PRESENTATION_SCOPING; HOLD_COMPUTE_PRUNING_AND_LIVE_PROMOTION",
+  "chromium_retained_replay": {
+    "positive_equivalent": true,
+    "changed_equivalent": true,
+    "minimal_required_observation_keys": {"empty": 2, "filled": 2, "submitted": 1},
+    "global_predicates": 4,
+    "omission_ablation_changed_behavior": "5/5"
+  },
+  "cross_domain_static": {
+    "finite_cases": 200,
+    "chromium_reduction": "2/2/1 from 4",
+    "xterm_reduction": "none (2/2/2 from 2)",
+    "map01_interface_reduction": "none (2/2/2 from 2)",
+    "continuous_reduction": "none (2 from 2)"
+  },
+  "admission_dependency": {
+    "full_baseline_matches": "6/6",
+    "typed_action_matches": "6/6",
+    "interface_only_fail_closed_healthy_false_stop": true,
+    "interface_only_cached_unsafe_successes": 5,
+    "healthy_semantic_reads_full_vs_typed": [8, 7]
+  },
+  "action_validity_projection": {"finite_cases": 1152, "mismatches": 0},
+  "verifier_dependency": {"effect_only_matches": "4/8", "effect_plus_verifier_matches": "8/8"},
+  "digest": {"retained_reconstructed": "5/5", "full_to_scoped_changes_digest": "5/5", "projection_only_digest_changes_comparable": "4/4"},
+  "performance_disposition": "NO SPEED CLAIM: paired post-capture benchmark is noisy in empty/filled; submitted apparent compute saving is invalid as a first-change claim because frozen canonical digest depends on all four predicates"
+}

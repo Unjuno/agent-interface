@@ -1,0 +1,113 @@
+{
+  "analysis_invocations": 1,
+  "decision": "PASS_RETAINED_FRONTIER_GAP_ELIGIBLE_SCOPED",
+  "frozen_t1_deadline_ms": 12,
+  "frozen_t1_max_useful_effect_latency_ms": 2.692318,
+  "requested_route": {
+    "effort": "medium",
+    "model": "gpt-6-astra",
+    "served_identity_verified": false
+  },
+  "reruns": 0,
+  "rows": [
+    {
+      "cost": null,
+      "git_blob": "03ad0fc3edf350a64b2435cc4a2675d254cc5292",
+      "observed_model_identity": null,
+      "start_to_exit_ms": 12286.9695,
+      "stdin_closed_to_exit_ms": 12275.2935,
+      "tag": "02"
+    },
+    {
+      "cost": null,
+      "git_blob": "fcc30adbe3ab7fe72efef989e9ec18d54dec03b4",
+      "observed_model_identity": null,
+      "start_to_exit_ms": 15349.1979,
+      "stdin_closed_to_exit_ms": 15337.2268,
+      "tag": "03"
+    },
+    {
+      "cost": null,
+      "git_blob": "e9e0866648b231f873c4db73699758c1d10961cb",
+      "observed_model_identity": null,
+      "start_to_exit_ms": 14783.5266,
+      "stdin_closed_to_exit_ms": 14330.1069,
+      "tag": "04"
+    },
+    {
+      "cost": null,
+      "git_blob": "88d6dd26fdde0debefda29a926aff469fb6bb9ee",
+      "observed_model_identity": null,
+      "start_to_exit_ms": 13929.8623,
+      "stdin_closed_to_exit_ms": 13914.1879,
+      "tag": "05"
+    },
+    {
+      "cost": null,
+      "git_blob": "d43b7e57db8e2c32103e7a9cdfd8f2569836b8d5",
+      "observed_model_identity": null,
+      "start_to_exit_ms": 10428.0873,
+      "stdin_closed_to_exit_ms": 9989.1436,
+      "tag": "06"
+    },
+    {
+      "cost": null,
+      "git_blob": "b9e7348546269b25fd9bb8084b5b4d47bcecddac",
+      "observed_model_identity": null,
+      "start_to_exit_ms": 12515.2625,
+      "stdin_closed_to_exit_ms": 11866.0255,
+      "tag": "07"
+    },
+    {
+      "cost": null,
+      "git_blob": "d450c3378365821e243391d4b1cdcd956313b0f5",
+      "observed_model_identity": null,
+      "start_to_exit_ms": 12403.9554,
+      "stdin_closed_to_exit_ms": 11964.6512,
+      "tag": "08"
+    },
+    {
+      "cost": null,
+      "git_blob": "808bc4ae15ea7e9d6cc9c8f57e05b88f68d92f83",
+      "observed_model_identity": null,
+      "start_to_exit_ms": 15591.3529,
+      "stdin_closed_to_exit_ms": 15088.7397,
+      "tag": "09"
+    },
+    {
+      "cost": null,
+      "git_blob": "eab30a12843f309fcf068d924294aee4ee4b707b",
+      "observed_model_identity": null,
+      "start_to_exit_ms": 15974.4855,
+      "stdin_closed_to_exit_ms": 15521.6686,
+      "tag": "10"
+    },
+    {
+      "cost": null,
+      "git_blob": "39e85b930b89b51d670cd4830a2dbe75505dcdec",
+      "observed_model_identity": null,
+      "start_to_exit_ms": 11992.7767,
+      "stdin_closed_to_exit_ms": 10392.4882,
+      "tag": "11"
+    }
+  ],
+  "scope": "retained historical requested-route subprocess intervals only; not a real-frontier T2 execution",
+  "stats": {
+    "min_gap_to_deadline_ratio": 832.4286333333333,
+    "min_gap_to_t1_max_effect_ratio": 3710.239132227322,
+    "n": 10,
+    "start_to_exit_ms": {
+      "max": 15974.4855,
+      "median": 13222.5624,
+      "min": 10428.0873,
+      "p95": 15802.07583
+    },
+    "stdin_closed_to_exit_ms": {
+      "max": 15521.6686,
+      "median": 13094.7407,
+      "min": 9989.1436,
+      "p95": 15438.66979
+    }
+  },
+  "task": "CONCURRENT-FAST-DECISION-T2-RETAINED-FRONTIER-GAP-20260918-009"
+}

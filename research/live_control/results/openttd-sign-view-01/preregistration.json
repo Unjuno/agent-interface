@@ -1,0 +1,29 @@
+{
+  "study": "openttd-sign-view-01",
+  "status": "PREREGISTERED_BEFORE_EXECUTION",
+  "model_calls": 0,
+  "task": "load the byte-pinned L fixture, make trees transparent, then apply Control_L+1 and compare the same live view before/after before independently scoring",
+  "hypothesis": "the official station-sign transparency control may reduce the custom A/B/C/X sign occlusion enough to form a paired annotation/surface observation",
+  "expected": {
+    "engine_success_remains_false": true,
+    "all_target_and_forbidden_road_state_unchanged": true,
+    "surrounding_road_owner_unchanged": true
+  },
+  "method_source": "OpenTTD official manual documents Ctrl+1 as station-sign transparency and lists Signs displayed as a separate display option",
+  "method_url": "https://wiki.openttd.org/en/Manual/Transparency%20options",
+  "classification": "feasibility only; retain only if the custom sign pixels change without task-state mutation",
+  "sources": {
+    "preregister_openttd_sign_view_v1.py": "81f78da79cb899947dd0c2cf09771fcb813f702e2bde2babc6aac1d4b80cae58",
+    "probe_openttd_sign_view_v1.py": "2ae28287605496d356a53d0a69620ec6ed66af896efe092c983c4d52fe48d4ea",
+    "audit_openttd_sign_view_v1.py": "074bccb27d9c2fe893c3a6ac8791c0a2c61b9f497075eac6564ea987d60fdc66",
+    "pointer_socket_entry_v8.py": "01ff225f652d4c4dc400aec60156699b9397ebb0d658883bff6d64a3c05425ab",
+    "durable_submit_v4.py": "a73db793a3238fb5ec6d3e9ecfbe61284ad44d3ebfea769bc531b99d61b1a22b",
+    "received_continuation_v1.py": "7890589fbbc808b914cc6fefa43408cf727bb3b29a7fc8962451bb7a90d5027a",
+    "received_exchange_v2.py": "59353e6d405dee5084870caf4d66aa5546c02771014e7c8f09ad1e7a7901c6c3",
+    "session_v22.py": "a6b59b442f4d96e2e502c0955ebffb2c929399303759d5d53ea456ba92b44a05",
+    "openttd_task/interactive_l_v1.py": "e6c6cbcd9f68d877f4c00aa8fa9cc812bf6acd072f028aed02c1373d7c67d2de",
+    "openttd_task/guarded_l_score_v1.py": "a7f73814928df2d718f9681699cafd2380d184c0ab8abf72454af661e23c4b84",
+    "openttd_task/results/l-geometry-01/baseline.sav": "c91ea76b4dc8c280f98de2e3a4c9b34d6033c833a34fc401bd0c076a15b4bc5b"
+  },
+  "scope": "view-transform feasibility only; no model judgment, task success, generic affordance discovery, latency or token claim"
+}

@@ -1,0 +1,18 @@
+Construction pilot 01 — STOP before any formal allocation
+
+The first OrbStack construction-pilot runner invocation started XCalc and
+obtained one successful public `runtime.cli_v1.observe` screenshot, then exited
+before candidate evaluation or later cases. Exact exception:
+
+`TypeError: decide() got an unexpected keyword argument 'partial'`
+
+The XCalc PNG is retained at `captures/76d7f918468945719c91857ddfb5342b.png`
+(SHA-256 `6bfc1e575a5ae18975eb93ec2c69bc5e9373c70eef640618168c7b11d89fd9d`).
+The harness did not emit API metadata before terminating, so no observation
+receipt, capture timing, candidate decision, or task outcome is claimed for this
+pilot. This is a pre-registration implementation stop, not a formal result;
+it is not pooled with or used to relabel the prior Issue #2918 allocations.
+
+The defect is a call-site/signature mismatch. It must be removed before the
+source freeze. There will be exactly one formal runner invocation after
+pre-registration and source hashing.

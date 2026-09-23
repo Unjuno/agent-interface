@@ -1,0 +1,44 @@
+{
+  "experiment_id": "temporal_prediction_sampling_preflight_2342_v1",
+  "issue": 2342,
+  "status": "STOP_LIVE_MODEL_GUI_NOT_EXECUTED",
+  "scope": "Docker-only preflight; no model, GUI, input, network, synthetic prediction run, or task claim.",
+  "required_gates": [
+    "two_live_application_like_workflows",
+    "same_model_policy_allocation",
+    "independent_future_state_effect_scorer",
+    "raw_history_control",
+    "reversal_occlusion_disappearance_cases",
+    "model_token_latency_accounting",
+    "held_out_second_surface"
+  ],
+  "missing_gates": [
+    "two_live_application_like_workflows",
+    "same_model_policy_allocation",
+    "independent_future_state_effect_scorer",
+    "raw_history_control",
+    "reversal_occlusion_disappearance_cases",
+    "model_token_latency_accounting",
+    "held_out_second_surface"
+  ],
+  "checks": {
+    "container": true,
+    "model_calls": 0,
+    "gui_calls": 0,
+    "input_calls": 0,
+    "network_calls": 0,
+    "synthetic_prediction_run": false
+  },
+  "container": {
+    "image": "python:3.12-slim",
+    "image_digest": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "python": "3.12.14",
+    "result_sha256": "c9e43f62b50027abc89a49487ccc1dadc1e473f421496ea865d14a9c111f409d"
+  },
+  "H": "Age-based sampling should improve model-facing GUI decisions only if it transfers beyond local predictor error and preserves safety under reversal, stale history, disappearance, and occlusion.",
+  "T": "Check whether the mandatory live/model/effect gates for #2342 are available before allocation.",
+  "D": "One Docker preflight enumerated all required gates and retained exact output and digest.",
+  "C": "A synthetic predictor or authored trajectory could pass while the model ignores the prediction or acts on stale/wrong-target state.",
+  "U": "Stop before live allocation; no PASS or predictor-utility claim. A future run must satisfy every missing gate and preserve #808 as control.",
+  "source_ref": "main@b91f0b052de249d37c77aa6f89f92d9c83d1c969"
+}

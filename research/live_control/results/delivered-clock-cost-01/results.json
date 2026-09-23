@@ -1,0 +1,81 @@
+{
+  "rows": [
+    {
+      "name": "initial_observation",
+      "status": "boundary",
+      "records": 2,
+      "before_bytes": 4122,
+      "packed_bytes": 4076,
+      "saved_bytes": 46
+    },
+    {
+      "name": "initial_clock",
+      "status": "boundary",
+      "records": 2,
+      "before_bytes": 891,
+      "packed_bytes": 845,
+      "saved_bytes": 46
+    },
+    {
+      "name": "entry_terminal",
+      "status": "boundary",
+      "records": 12,
+      "before_bytes": 17761,
+      "packed_bytes": 16845,
+      "saved_bytes": 916
+    },
+    {
+      "name": "confirm_effect",
+      "status": "boundary",
+      "records": 6,
+      "before_bytes": 6390,
+      "packed_bytes": 5996,
+      "saved_bytes": 394
+    },
+    {
+      "name": "empty_drain",
+      "status": "timeout",
+      "records": 0,
+      "before_bytes": 135,
+      "packed_bytes": 201,
+      "saved_bytes": -66
+    },
+    {
+      "name": "final_evaluation",
+      "status": "boundary",
+      "records": 1,
+      "before_bytes": 1181,
+      "packed_bytes": 1222,
+      "saved_bytes": -41
+    },
+    {
+      "name": "cleanup_command",
+      "status": "boundary",
+      "records": 1,
+      "before_bytes": 686,
+      "packed_bytes": 727,
+      "saved_bytes": -41
+    }
+  ],
+  "total_before_bytes": 31166,
+  "total_packed_bytes": 29912,
+  "saved_percent": 4.023615478405951,
+  "exact_reply_roundtrips": 7,
+  "median_cpu_ns_per_reply": {
+    "encode": {
+      "False": 20086.838095238094,
+      "True": 70855.55142857143,
+      "paired_delta_ns": 50219.30119047619
+    },
+    "decode": {
+      "False": 20718.429285714286,
+      "True": 66667.72738095238,
+      "paired_delta_ns": 46276.46666666666
+    }
+  },
+  "python": "3.12.3",
+  "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "rounds": 12,
+  "repeats": 300,
+  "scope": "One scripted Calc gated-evaluation trace; offline whole-reply JSONL replay. Includes pack/unpack deep copying. No live transport, model tokens, network or GUI latency. No mixed-domain, gap or cancel trace. No warmup; alternating paired order."
+}

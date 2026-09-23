@@ -1,0 +1,203 @@
+{
+  "groups": {
+    "received_clock": {
+      "total_ms": {
+        "n": 8,
+        "median_ms": 22.259432,
+        "mean_ms": 22.28646675,
+        "min_ms": 19.624138,
+        "max_ms": 24.108377
+      },
+      "transport_ms": {
+        "n": 8,
+        "median_ms": 22.0897705,
+        "mean_ms": 22.120938250000002,
+        "min_ms": 19.43621,
+        "max_ms": 23.95376
+      },
+      "caller_outside_transport_ms": {
+        "n": 8,
+        "median_ms": 0.1650035,
+        "mean_ms": 0.1655285,
+        "min_ms": 0.140557,
+        "max_ms": 0.190018
+      },
+      "before_transport_ms": {
+        "n": 8,
+        "median_ms": 0.0098425,
+        "mean_ms": 0.010392375,
+        "min_ms": 0.008536,
+        "max_ms": 0.01383
+      },
+      "after_transport_ms": {
+        "n": 8,
+        "median_ms": 0.154943,
+        "mean_ms": 0.155136125,
+        "min_ms": 0.131758,
+        "max_ms": 0.181482
+      }
+    },
+    "received_submit": {
+      "total_ms": {
+        "n": 8,
+        "median_ms": 94.16789800000001,
+        "mean_ms": 93.555464875,
+        "min_ms": 83.961099,
+        "max_ms": 109.573242
+      },
+      "transport_ms": {
+        "n": 8,
+        "median_ms": 93.91240049999999,
+        "mean_ms": 93.2782995,
+        "min_ms": 83.760883,
+        "max_ms": 109.159851
+      },
+      "caller_outside_transport_ms": {
+        "n": 8,
+        "median_ms": 0.2554975,
+        "mean_ms": 0.277165375,
+        "min_ms": 0.200216,
+        "max_ms": 0.413391
+      },
+      "before_transport_ms": {
+        "n": 8,
+        "median_ms": 0.010848,
+        "mean_ms": 0.0156485,
+        "min_ms": 0.008351,
+        "max_ms": 0.047589
+      },
+      "after_transport_ms": {
+        "n": 8,
+        "median_ms": 0.2281945,
+        "mean_ms": 0.261516875,
+        "min_ms": 0.19063,
+        "max_ms": 0.40504
+      },
+      "call_to_runtime_image_ready_ms": {
+        "n": 8,
+        "median_ms": 56.1173455,
+        "mean_ms": 55.484432375,
+        "min_ms": 50.691418,
+        "max_ms": 60.187139
+      }
+    },
+    "durable_clock": {
+      "total_ms": {
+        "n": 8,
+        "median_ms": 51.0345985,
+        "mean_ms": 52.730598375,
+        "min_ms": 48.265099,
+        "max_ms": 65.296953
+      },
+      "transport_ms": {
+        "n": 8,
+        "median_ms": 17.344972499999997,
+        "mean_ms": 17.426440125,
+        "min_ms": 16.430216,
+        "max_ms": 18.584238
+      },
+      "caller_outside_transport_ms": {
+        "n": 8,
+        "median_ms": 33.604727,
+        "mean_ms": 35.30415825,
+        "min_ms": 31.834883,
+        "max_ms": 46.712715
+      },
+      "before_transport_ms": {
+        "n": 8,
+        "median_ms": 17.822248000000002,
+        "mean_ms": 19.388401375,
+        "min_ms": 16.587152,
+        "max_ms": 30.590836
+      },
+      "after_transport_ms": {
+        "n": 8,
+        "median_ms": 15.937046500000001,
+        "mean_ms": 15.915756875,
+        "min_ms": 14.899808,
+        "max_ms": 16.827977
+      }
+    },
+    "durable_submit": {
+      "total_ms": {
+        "n": 8,
+        "median_ms": 116.23889299999999,
+        "mean_ms": 118.362797125,
+        "min_ms": 112.690328,
+        "max_ms": 136.635217
+      },
+      "transport_ms": {
+        "n": 8,
+        "median_ms": 80.9626075,
+        "mean_ms": 82.75226487500001,
+        "min_ms": 78.165113,
+        "max_ms": 98.706013
+      },
+      "caller_outside_transport_ms": {
+        "n": 8,
+        "median_ms": 35.8117425,
+        "mean_ms": 35.61053225,
+        "min_ms": 33.111342,
+        "max_ms": 37.929204
+      },
+      "before_transport_ms": {
+        "n": 8,
+        "median_ms": 16.6618645,
+        "mean_ms": 17.144119,
+        "min_ms": 16.067462,
+        "max_ms": 19.976639
+      },
+      "after_transport_ms": {
+        "n": 8,
+        "median_ms": 17.3513705,
+        "mean_ms": 18.466413250000002,
+        "min_ms": 17.026048,
+        "max_ms": 21.1799
+      },
+      "call_to_runtime_image_ready_ms": {
+        "n": 8,
+        "median_ms": 63.635691,
+        "mean_ms": 64.909297125,
+        "min_ms": 61.191274,
+        "max_ms": 72.127904
+      }
+    }
+  },
+  "sessions": [
+    {
+      "session": 1,
+      "mode": "received",
+      "events": 36,
+      "frames": 5,
+      "total_measured_ms": 473.644526,
+      "caller_outside_transport_ms": 1.680702
+    },
+    {
+      "session": 2,
+      "mode": "durable",
+      "events": 36,
+      "frames": 5,
+      "total_measured_ms": 690.721598,
+      "caller_outside_transport_ms": 277.966856
+    },
+    {
+      "session": 3,
+      "mode": "durable",
+      "events": 36,
+      "frames": 5,
+      "total_measured_ms": 678.025566,
+      "caller_outside_transport_ms": 289.350668
+    },
+    {
+      "session": 4,
+      "mode": "received",
+      "events": 36,
+      "frames": 5,
+      "total_measured_ms": 453.09092699999997,
+      "caller_outside_transport_ms": 1.860849
+    }
+  ],
+  "measured_calls": 32,
+  "scope": "ABBA two fresh sessions per mode, four cycles each; observe-only static GUI, in-memory API versus fsync journal; no model; no equal durability claim",
+  "audit_sha256": "05489bee6877d8a410bd826c742537ddff62a50984d491c7e1dec21c5c942856"
+}

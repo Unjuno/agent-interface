@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/run_openttd_evidence_authority_pair_v1.py", line 247, in <module>
+    if __name__ == "__main__": main()
+                               ^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/run_openttd_evidence_authority_pair_v1.py", line 240, in main
+    reports = {condition: run_case(condition, plan) for condition in plan["condition_order"]}
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/run_openttd_evidence_authority_pair_v1.py", line 137, in run_case
+    raise ValueError("fault-injected wrong anchor was accepted instead of expanded")
+ValueError: fault-injected wrong anchor was accepted instead of expanded

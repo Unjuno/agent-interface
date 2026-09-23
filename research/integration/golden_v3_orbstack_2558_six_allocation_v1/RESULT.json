@@ -1,0 +1,13 @@
+{
+  "schema":"agent_interface_golden_v3_six_fresh_orbstack_allocations_v1",
+  "issue":2558,
+  "decision":"PASS_SIX_FRESH_ORBSTACK_MODEL_HANDLE_EFFECT_SCOPED",
+  "count":6,
+  "container":{"context":"orbstack","image_digest":"sha256:1a16aa431254514de58c909e84e5094a8e894caac11bf4c9d937dde6ea6d6398","docker_server":"29.4.0","architecture":"aarch64","orbstack":"2.2.3"},
+  "outcomes":{"effects":6,"visual_target_revalidation":6,"release_verified":6,"continuations_without_replay":6,"focus_change_refused":6,"focus_change_emissions_delta_zero":6},
+  "latency_ms":{"mean":151.69520466666668,"median":153.2202585,"min":144.181123,"max":157.899928},
+  "effects":["docker2558-six-task-1","docker2558-six-task-2","docker2558-six-task-3","docker2558-six-task-4","docker2558-six-task-5","docker2558-six-task-6"],
+  "authority_granted":false,
+  "full_preregistered_golden_comparison":false,
+  "claims":[]
+}

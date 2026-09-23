@@ -1,0 +1,215 @@
+{
+  "catalog": [
+    {
+      "cost": 1,
+      "evidence": [
+        "CURRENT"
+      ],
+      "name": "CURRENT",
+      "rank": 0
+    },
+    {
+      "cost": 3,
+      "evidence": [
+        "CURRENT",
+        "TEMPORAL"
+      ],
+      "name": "TEMPORAL",
+      "rank": 1
+    },
+    {
+      "cost": 3,
+      "evidence": [
+        "CURRENT",
+        "VERIFY"
+      ],
+      "name": "VERIFY",
+      "rank": 2
+    },
+    {
+      "cost": 6,
+      "evidence": [
+        "CURRENT",
+        "TEMPORAL",
+        "VERIFY"
+      ],
+      "name": "FULL",
+      "rank": 3
+    }
+  ],
+  "current_only_temporal_false_defer_witness": {
+    "decisions": {
+      "CURRENT_ONLY": "DEFER",
+      "SCALAR_RAW_HIGHEST": "VERIFY",
+      "SCALAR_RESERVED_HIGHEST": "VERIFY",
+      "SCALAR_RESERVED_POSTCHECK": "DEFER",
+      "TYPED_RESERVED": "TEMPORAL"
+    },
+    "feasible": true,
+    "index": 106,
+    "metrics": {
+      "CURRENT_ONLY": {
+        "deadline_violation": false,
+        "evidence_violation": false,
+        "false_defer": true,
+        "unsafe": false
+      },
+      "SCALAR_RAW_HIGHEST": {
+        "deadline_violation": false,
+        "evidence_violation": true,
+        "false_defer": false,
+        "unsafe": true
+      },
+      "SCALAR_RESERVED_HIGHEST": {
+        "deadline_violation": false,
+        "evidence_violation": true,
+        "false_defer": false,
+        "unsafe": true
+      },
+      "SCALAR_RESERVED_POSTCHECK": {
+        "deadline_violation": false,
+        "evidence_violation": false,
+        "false_defer": true,
+        "unsafe": false
+      },
+      "TYPED_RESERVED": {
+        "deadline_violation": false,
+        "evidence_violation": false,
+        "false_defer": false,
+        "unsafe": false
+      }
+    },
+    "required": [
+      "TEMPORAL"
+    ],
+    "reserve": 0,
+    "slack": 3
+  },
+  "current_only_verify_false_defer_witness": {
+    "decisions": {
+      "CURRENT_ONLY": "DEFER",
+      "SCALAR_RAW_HIGHEST": "VERIFY",
+      "SCALAR_RESERVED_HIGHEST": "VERIFY",
+      "SCALAR_RESERVED_POSTCHECK": "VERIFY",
+      "TYPED_RESERVED": "VERIFY"
+    },
+    "feasible": true,
+    "index": 105,
+    "metrics": {
+      "CURRENT_ONLY": {
+        "deadline_violation": false,
+        "evidence_violation": false,
+        "false_defer": true,
+        "unsafe": false
+      },
+      "SCALAR_RAW_HIGHEST": {
+        "deadline_violation": false,
+        "evidence_violation": false,
+        "false_defer": false,
+        "unsafe": false
+      },
+      "SCALAR_RESERVED_HIGHEST": {
+        "deadline_violation": false,
+        "evidence_violation": false,
+        "false_defer": false,
+        "unsafe": false
+      },
+      "SCALAR_RESERVED_POSTCHECK": {
+        "deadline_violation": false,
+        "evidence_violation": false,
+        "false_defer": false,
+        "unsafe": false
+      },
+      "TYPED_RESERVED": {
+        "deadline_violation": false,
+        "evidence_violation": false,
+        "false_defer": false,
+        "unsafe": false
+      }
+    },
+    "required": [
+      "VERIFY"
+    ],
+    "reserve": 0,
+    "slack": 3
+  },
+  "decision": "PASS_ANYTIME_FIDELITY_TYPED_ADMISSION_SCOPED",
+  "policy_counts": {
+    "CURRENT_ONLY": {
+      "deadline_violation": 0,
+      "evidence_violation": 0,
+      "false_defer": 150,
+      "selected": {
+        "CURRENT": 40,
+        "DEFER": 345,
+        "FULL": 0,
+        "TEMPORAL": 0,
+        "VERIFY": 0
+      },
+      "unsafe": 0
+    },
+    "SCALAR_RAW_HIGHEST": {
+      "deadline_violation": 182,
+      "evidence_violation": 120,
+      "false_defer": 0,
+      "selected": {
+        "CURRENT": 70,
+        "DEFER": 35,
+        "FULL": 175,
+        "TEMPORAL": 0,
+        "VERIFY": 105
+      },
+      "unsafe": 224
+    },
+    "SCALAR_RESERVED_HIGHEST": {
+      "deadline_violation": 0,
+      "evidence_violation": 120,
+      "false_defer": 0,
+      "selected": {
+        "CURRENT": 70,
+        "DEFER": 105,
+        "FULL": 105,
+        "TEMPORAL": 0,
+        "VERIFY": 105
+      },
+      "unsafe": 120
+    },
+    "SCALAR_RESERVED_POSTCHECK": {
+      "deadline_violation": 0,
+      "evidence_violation": 0,
+      "false_defer": 30,
+      "selected": {
+        "CURRENT": 10,
+        "DEFER": 225,
+        "FULL": 105,
+        "TEMPORAL": 0,
+        "VERIFY": 45
+      },
+      "unsafe": 0
+    },
+    "TYPED_RESERVED": {
+      "deadline_violation": 0,
+      "evidence_violation": 0,
+      "false_defer": 0,
+      "selected": {
+        "CURRENT": 10,
+        "DEFER": 195,
+        "FULL": 105,
+        "TEMPORAL": 30,
+        "VERIFY": 45
+      },
+      "unsafe": 0
+    }
+  },
+  "rows_sha256": "4ccae353677ee10825ba187bd4f18e3764e57f20556593f33d5a9222d3fbb919",
+  "state_count": 385,
+  "summary_core_sha256": "bf3b78c53494a82162184ffdc1c4fb114456e02024c8b3d4a4ad66d8e3b88904",
+  "task": "ANYTIME-FIDELITY-TYPED-ADMISSION-R0-20260919-001",
+  "temporal_only_evidence_witness": [
+    "TEMPORAL"
+  ],
+  "temporal_verify_equal_cost_incomparable": true,
+  "verify_only_evidence_witness": [
+    "VERIFY"
+  ]
+}

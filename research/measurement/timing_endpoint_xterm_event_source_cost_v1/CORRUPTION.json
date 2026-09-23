@@ -1,0 +1,49 @@
+{
+  "controls": [
+    {
+      "errors": [
+        "invocation",
+        "decision"
+      ],
+      "name": "invocation",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "delta_summary",
+        "decision"
+      ],
+      "name": "delta",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "rows_integrity",
+        "records",
+        "decision"
+      ],
+      "name": "clock_domain",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "rows_integrity",
+        "effects",
+        "decision"
+      ],
+      "name": "effect",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "rows_integrity",
+        "forbidden",
+        "decision"
+      ],
+      "name": "authority",
+      "rejected": true
+    }
+  ],
+  "rejected": 5,
+  "total": 5
+}

@@ -1,0 +1,129 @@
+"""Read a complete retained report and its referenced image in one response."""
+import argparse
+import base64
+import hashlib
+import json
+from pathlib import Path, PurePosixPath
+import sys
+
+from receipt_image import select_image
+
+# Direct script execution and import from the research client are both supported.
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+
+def native_outcome_summary(report):
+    """Project recorded fields only; null means absent or malformed evidence."""
+    def field(*keys):
+        value = report
+        for key in keys:
+            if not isinstance(value, dict):
+                return None
+            value = value.get(key)
+        return value
+
+    def status(*keys):
+        value = field(*keys)
+        return value if isinstance(value, str) and value else None
+
+    success = field('evaluation', 'success')
+    summary = {'reported_status': status('status'),
+            'evaluation_success': success if type(success) is bool else None,
+            'action_status': status('action', 'result', 'status'),
+            'feedback_status': status('action', 'feedback', 'status'),
+            'cleanup_status': status('cleanup', 'status')}
+    cleanup_keys = ('tracked_processes_terminal', 'owner_exit_verified', 'descendants_verified')
+    cleanup = field('cleanup')
+    if isinstance(cleanup, dict) and any(key in cleanup for key in cleanup_keys):
+        # Completion of the cleanup routine does not prove the process tree exited.
+        summary['cleanup_verification'] = {
+            key: cleanup.get(key) if type(cleanup.get(key)) is bool else None
+            for key in cleanup_keys}
+    if isinstance(field('target_refusal'), dict):
+        # A boundary is not action completion. Project the recorded refusal,
+        # without deriving input safety or success from a missing action row.
+        summary['target_refusal'] = {'reason': status('target_refusal', 'reason')}
+        for key in ('input_dispatched', 'action_attempted', 'finish_after_applied'):
+            value = field('target_refusal', key)
+            summary['target_refusal'][key] = value if type(value) is bool else None
+    return summary
+
+
+def review_native(report_path, run_directory, *, compact=False, recorded_run_directory=None):
+    """Present an explicit native observation/feedback without recapturing it."""
+    path = Path(report_path).resolve(strict=True)
+    data = path.read_bytes()
+    report = json.loads(data)
+    if not isinstance(report, dict):
+        raise ValueError('native report must be an object')
+    result = {'schema': 'agent-interface/review-v1', 'authority': 'none',
+              'outcome_summary': native_outcome_summary(report),
+              'receipt': {'source': {'path': str(path), 'sha256': hashlib.sha256(data).hexdigest()},
+                          'native_result': report}, 'image': None}
+    if compact:
+        from receipt_references import compact_native_receipt
+        result['receipt'] = compact_native_receipt(result['receipt'])
+    try:
+        observation = report if 'native' in report else report.get('observation')
+        if observation is None:
+            result['image_status'] = 'no_observation'
+            return result
+        native = observation['native']
+        artifact = native['artifact']
+        if (artifact['source_raw_sha256'] != native['sha256'] or
+                observation['capture_ns'] != native['capture_started_ns']):
+            raise ValueError('native capture identity mismatch')
+        image_path = artifact['path']
+        if recorded_run_directory is not None:
+            # Explicit Linux archive mapping only. Never rewrite the signed/hashed
+            # receipt or search for an image by basename. Runtime calls omit this.
+            origin = PurePosixPath(recorded_run_directory)
+            recorded = PurePosixPath(image_path)
+            if (not origin.is_absolute() or not recorded.is_absolute()
+                    or '..' in origin.parts or '..' in recorded.parts):
+                raise ValueError('absolute Linux archive roots without traversal required')
+            relative = recorded.relative_to(origin)
+            image_path = str(Path(run_directory).resolve(strict=True).joinpath(*relative.parts))
+            result['archive_mapping'] = {'recorded_run_directory': str(origin),
+                'recorded_image_path': artifact['path'], 'authority': 'none',
+                'scope': 'explicit historical relocation; no fresh observation or input authority'}
+        selected = select_image({'records': [{'event': 'observation',
+            'sequence': observation['sequence'], 'capture_ns': observation['capture_ns'],
+            'image': image_path}]}, run_directory)
+        image_bytes = Path(selected['path']).read_bytes()
+        digest = hashlib.sha256(image_bytes).hexdigest()
+        if digest != artifact['sha256'] or digest != selected['sha256']:
+            raise ValueError('native image sha256 mismatch')
+        if artifact['mime_type'] != 'image/png' or not image_bytes.startswith(b'\x89PNG\r\n\x1a\n'):
+            raise ValueError('native artifact is not a PNG')
+        result.update(image_status='image', image_reference=selected,
+                      image={'type': 'image', 'mimeType': 'image/png',
+                             'data': base64.b64encode(image_bytes).decode('ascii')})
+    except Exception as error:
+        result.update(image_status='needs_review', image_error=str(error))
+    return result
+
+
+def review(report_path, run_directory, *, compact=False):
+    from runtime.cli_v1.review import review as runtime_review
+    return runtime_review(report_path, run_directory, compact=compact)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--report', required=True)
+    parser.add_argument('--run-directory', required=True)
+    parser.add_argument('--compact', action='store_true', help='replace exact duplicate event copies with local references')
+    parser.add_argument('--native', action='store_true', help='present an exact native observation or feedback report')
+    parser.add_argument('--recorded-run-directory', help='explicit original Linux run root for read-only native archive viewing')
+    args = parser.parse_args()
+    if args.recorded_run_directory and not args.native:
+        parser.error('--recorded-run-directory requires --native')
+    result = (review_native(args.report, args.run_directory, compact=args.compact,
+                           recorded_run_directory=args.recorded_run_directory) if args.native else
+              review(args.report, args.run_directory, compact=args.compact))
+    print(json.dumps(result, allow_nan=False))
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,28 @@
+{
+  "schema": "full_golden_ipc_2705_result_v1",
+  "status": "HOLD_TASK1_EFFECT_NOT_REACHED",
+  "allocation": "fresh-no-retry-v5",
+  "base_image": "agent-interface-golden-local:20260920@sha256:8ce5d8639cd5580ae3090caa05a9ed7d839eb05048b2ecf03e91083f20f6517d",
+  "runtime_variant": "agent-interface-golden-ipc-2705:20260920-wmctrl@sha256:7e4a3b6f3917baa9f153b4dfd011a4ea528a3d200a7a3d274aa9479900ee7b41",
+  "preflight": "PASS",
+  "host_model_ipc": "PASS",
+  "model_authority": false,
+  "gui_runtime": "PASS",
+  "task1": {
+    "grounding_response": "received",
+    "browser_state_after_action": "task-1 READY",
+    "independent_effect": "not observed",
+    "cache_target": "not produced"
+  },
+  "stop": {
+    "kind": "composition_route_stop",
+    "error": "reuse route requires cached target",
+    "meaning": "The first task did not reach scored success, so the persistent warm route was fail-closed before task 2 reuse."
+  },
+  "retry_policy": "No retry of this allocation; a route fix requires a new successor allocation.",
+  "evidence": {
+    "preflight_result": "runtime/results-local/full-golden-ipc-2705-v5/preflight/persistent/gate/compiled-form-grounding/preflight-result.json",
+    "model_events": "runtime/results-local/full-golden-ipc-2705-v5/model-calls/persistent/task-1/anchor/model/events.jsonl",
+    "runtime_events": "runtime/results-local/full-golden-ipc-2705-v5/arms/persistent/runtime/events.jsonl"
+  }
+}

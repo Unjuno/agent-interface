@@ -1,0 +1,87 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "guarded-b7222e75709a4382ba7ab08a167dd73c",
+  "source": {
+    "observation_seq": 2,
+    "binding_revision": 0
+  },
+  "authority": {
+    "lease_id": "native-x11-dce5350e0d4b44038ad0448151abe7be",
+    "expires_at_ns": 21965930671368
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "app"
+    },
+    {
+      "op": "text",
+      "text": "5"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 2
+    },
+    {
+      "op": "text",
+      "text": "5"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 2
+    },
+    {
+      "op": "text",
+      "text": "1"
+    },
+    {
+      "keys": [
+        "Return"
+      ],
+      "op": "key_chord"
+    },
+    {
+      "op": "text",
+      "text": "7"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 2
+    },
+    {
+      "op": "text",
+      "text": "6"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 2
+    },
+    {
+      "op": "text",
+      "text": "8"
+    },
+    {
+      "keys": [
+        "Return"
+      ],
+      "op": "key_chord"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "keys": [
+        "CTRL",
+        "s"
+      ],
+      "op": "key_chord"
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}

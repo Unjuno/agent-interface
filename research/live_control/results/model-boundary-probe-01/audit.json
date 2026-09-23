@@ -1,0 +1,35 @@
+{
+  "audit_passed": true,
+  "answer": {
+    "saved": false,
+    "evidence": "The page states: \"Nothing has been saved. Confirm replacement of the existing draft, then save again.\"",
+    "next_action": "Check \"Confirm replacement\", then click \"Save\"."
+  },
+  "reported_usage": {
+    "input_tokens": 17477,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 49,
+    "reasoning_output_tokens": 0
+  },
+  "model_identity": null,
+  "model_received_ns": null,
+  "cost": null,
+  "image_sha256": "16b11d81f6c79ecda9935ff46799d187ada7dd9326911ca9f2b17aba50bd8baf",
+  "sources": {
+    "events.jsonl": "1e0e56fea97af225678dcb9daf43650c3a44e72d10e8a6c77a0f79fcece2aa30",
+    "prompt.txt": "b5583b3cba83dbc3d0c5ddffc4c559ce40790690218b6e2cf7eb564c868acfb4",
+    "stderr.txt": "b0e245e94a0d3b4a083a4b2652cb0187fa591997e84f5efc20021d21414a8950",
+    "cli-version.txt": "65bcdd733044deac9bfaafcba94e8e0a16f1cd89f2429bcdabe607f20c36ba00",
+    "exit-code.txt": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+  },
+  "audit_sha256": "11b235f8ecceb80a2e5f41aae38f0d64cb6ba3ebd569255ec4c0d49eecaa2e11",
+  "limitations": [
+    "Usage belongs to this CLI turn, not this image or the live parent task.",
+    "No tool execution items were emitted; absence is limited to this JSONL evidence.",
+    "ignore-user-config did not prevent MCP startup diagnostics; environment isolation is unproven.",
+    "Requested default model was not identified in emitted JSONL.",
+    "No per-event capture timestamps, price calculation or matched-arm comparison.",
+    "Known screenshot correctness is a smoke test, not a held-out benchmark."
+  ]
+}

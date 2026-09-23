@@ -1,0 +1,172 @@
+[
+  {
+    "app": "xterm",
+    "seed": 980101,
+    "stress": "cancel",
+    "task_success": true,
+    "actual": "t980101",
+    "interruption": {
+      "status": "cancelled",
+      "release_after_anchor_ms": 26.268185,
+      "anchor_ns": 3324207278,
+      "deadline_ns": 5241900626,
+      "held_observed": true,
+      "tail_started": false
+    },
+    "accepted_programs": 2,
+    "observations": 6,
+    "scope": "scripted readiness smoke; expected task artifacts scored after control"
+  },
+  {
+    "app": "xterm",
+    "seed": 980102,
+    "stress": "expiry",
+    "task_success": true,
+    "actual": "t980102",
+    "interruption": {
+      "status": "expired",
+      "release_after_anchor_ms": 4.445298,
+      "anchor_ns": 10735960622,
+      "deadline_ns": 10735960622,
+      "held_observed": true,
+      "tail_started": false
+    },
+    "accepted_programs": 2,
+    "observations": 8,
+    "scope": "scripted readiness smoke; expected task artifacts scored after control"
+  },
+  {
+    "app": "chromium",
+    "seed": 980101,
+    "stress": "cancel",
+    "task_success": true,
+    "actual": {
+      "value": [
+        "t980101"
+      ]
+    },
+    "interruption": {
+      "status": "cancelled",
+      "release_after_anchor_ms": 69.151953,
+      "anchor_ns": 14198819035,
+      "deadline_ns": 16108652941,
+      "held_observed": true,
+      "tail_started": false
+    },
+    "accepted_programs": 3,
+    "observations": 13,
+    "scope": "scripted readiness smoke; expected task artifacts scored after control"
+  },
+  {
+    "app": "chromium",
+    "seed": 980102,
+    "stress": "expiry",
+    "task_success": true,
+    "actual": {
+      "value": [
+        "t980102"
+      ]
+    },
+    "interruption": {
+      "status": "expired",
+      "release_after_anchor_ms": 0.900924,
+      "anchor_ns": 18293782865,
+      "deadline_ns": 18293782865,
+      "held_observed": true,
+      "tail_started": false
+    },
+    "accepted_programs": 3,
+    "observations": 13,
+    "scope": "scripted readiness smoke; expected task artifacts scored after control"
+  },
+  {
+    "app": "calc",
+    "seed": 980101,
+    "stress": "cancel",
+    "task_success": true,
+    "actual": [
+      348,
+      664
+    ],
+    "interruption": {
+      "status": "cancelled",
+      "release_after_anchor_ms": 25.641796,
+      "anchor_ns": 23650051328,
+      "deadline_ns": 25576264462,
+      "held_observed": true,
+      "tail_started": false
+    },
+    "accepted_programs": 3,
+    "observations": 14,
+    "scope": "scripted readiness smoke; expected task artifacts scored after control"
+  },
+  {
+    "app": "calc",
+    "seed": 980102,
+    "stress": "expiry",
+    "task_success": true,
+    "actual": [
+      842,
+      592
+    ],
+    "interruption": {
+      "status": "expired",
+      "release_after_anchor_ms": 56.009525,
+      "anchor_ns": 28502628145,
+      "deadline_ns": 28502628145,
+      "held_observed": true,
+      "tail_started": false
+    },
+    "accepted_programs": 3,
+    "observations": 17,
+    "scope": "scripted readiness smoke; expected task artifacts scored after control"
+  },
+  {
+    "app": "inkscape",
+    "seed": 980101,
+    "stress": "cancel",
+    "task_success": true,
+    "actual": {
+      "x": "52",
+      "y": "50",
+      "width": "40",
+      "height": "30",
+      "transform": null
+    },
+    "interruption": {
+      "status": "cancelled",
+      "release_after_anchor_ms": 24.775281,
+      "anchor_ns": 35354956705,
+      "deadline_ns": 37283883458,
+      "held_observed": true,
+      "tail_started": false
+    },
+    "accepted_programs": 2,
+    "observations": 9,
+    "scope": "scripted readiness smoke; expected task artifacts scored after control"
+  },
+  {
+    "app": "inkscape",
+    "seed": 980102,
+    "stress": "expiry",
+    "task_success": true,
+    "actual": {
+      "x": "52",
+      "y": "50",
+      "width": "40",
+      "height": "30",
+      "transform": null
+    },
+    "interruption": {
+      "status": "expired",
+      "release_after_anchor_ms": 0.757334,
+      "anchor_ns": 39723200172,
+      "deadline_ns": 39723200172,
+      "held_observed": true,
+      "tail_started": false
+    },
+    "accepted_programs": 2,
+    "observations": 10,
+    "scope": "scripted readiness smoke; expected task artifacts scored after control"
+  }
+]

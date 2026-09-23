@@ -1,0 +1,9 @@
+{
+  "completed_first_rows":["case-00 control PASS","case-01 candidate PASS","case-02 candidate PASS","case-03 control PASS","case-04 control PASS"],
+  "disposition":"STOPPED_ORCHESTRATION_PROTOCOL_VIOLATION",
+  "github_issue":603,
+  "not_started":["case-05"],
+  "reason":"cases 03 and 04 were invoked inside one container tool call despite preregistered one-case-per-call rule; both wrote complete results before outer timeout, but allocation was stopped and not pooled into 033",
+  "schema":"predecessor-stop-v1",
+  "task":"INKSCAPE-ATSPI-PANEL-SELECTION-INTERACTION-20260917-032"
+}

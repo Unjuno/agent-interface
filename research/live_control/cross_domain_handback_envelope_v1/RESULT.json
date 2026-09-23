@@ -1,0 +1,33 @@
+{
+  "decision": "PASS_REPRESENTATION_TRANSFER_CANDIDATE",
+  "schema": "cross_domain_handback_envelope_v1",
+  "validation_errors": [],
+  "limits": [
+    "retained-evidence representation only",
+    "no runtime efficacy or latency claim",
+    "MAP01 useful effect remains unresolved"
+  ],
+  "corruption_controls": {
+    "authority_escalation": {"rejected": true, "errors": ["0:semantic_authority_escalation"]},
+    "map01_unknown_to_useful": {"rejected": true, "errors": ["3:map01_useful_coercion"]},
+    "release_to_useful": {"rejected": true, "errors": ["5:release_implies_useful"]},
+    "source_role_collapse": {"rejected": true, "errors": ["0:x11_source_role_relabel"]},
+    "state_change_to_effect": {"rejected": true, "errors": ["3:map01_effect_resolution_coercion"]}
+  },
+  "rows": [
+    {"domain":"x11_tk","variant":"OBSERVED_CURRENT_EFFECT","source_role":"CURRENT_EFFECT","source_ref":"x11_schema","evidence_status":"OBSERVED","causal_to_action":true,"task_useful":"UNSPECIFIED","input_authority":false,"semantic_authority":false,"handoff_effect_status":"RESOLVED"},
+    {"domain":"x11_tk","variant":"UNRESOLVED_EFFECT","source_role":"NO_EFFECT_CONTROL","source_ref":"x11_summary","evidence_status":"UNRESOLVED","causal_to_action":"UNKNOWN","task_useful":"UNKNOWN","input_authority":false,"semantic_authority":false,"handoff_effect_status":"UNRESOLVED"},
+    {"domain":"doom_map01","variant":"UNRESOLVED_EFFECT","source_role":"NO_STATE_FEEDBACK_IN_PROGRAM_ENVELOPE","source_ref":"map01_feedback","evidence_status":"UNRESOLVED","causal_to_action":"UNKNOWN","task_useful":"UNVERIFIED","input_authority":false,"semantic_authority":false,"handoff_effect_status":"UNRESOLVED","plan_id":"plan-0-primary-0-0"},
+    {"domain":"doom_map01","variant":"OBSERVED_STATE_CHANGE","source_role":"HUD_STATE_TRANSITION","source_ref":"map01_feedback","evidence_status":"OBSERVED","causal_to_action":"UNVERIFIED","task_useful":"UNVERIFIED","input_authority":false,"semantic_authority":false,"handoff_effect_status":"UNRESOLVED","plan_id":"plan-0-primary-0-1","changed":["ammo"]},
+    {"domain":"doom_map01","variant":"OBSERVED_STATE_CHANGE","source_role":"HUD_STATE_TRANSITION","source_ref":"map01_feedback","evidence_status":"OBSERVED","causal_to_action":"UNVERIFIED","task_useful":"UNVERIFIED","input_authority":false,"semantic_authority":false,"handoff_effect_status":"UNRESOLVED","plan_id":"plan-3-primary-0-1","changed":["health","ammo"]},
+    {"domain":"doom_map01","variant":"VERIFIED_PHYSICAL_RELEASE","source_role":"OWNER_VERIFIED_EMPTY_INPUT","source_ref":"map01_release","evidence_status":"OBSERVED","causal_to_action":"N/A","task_useful":"UNVERIFIED","input_authority":false,"semantic_authority":false,"handoff_effect_status":"UNRESOLVED","plan_id":"plan-3-primary-0-1","typed_emit_to_verified_physical_release_ms":26.09},
+    {"domain":"doom_map01","variant":"OBSERVED_STATE_CHANGE","source_role":"HUD_STATE_TRANSITION","source_ref":"map01_feedback","evidence_status":"OBSERVED","causal_to_action":"UNVERIFIED","task_useful":"UNVERIFIED","input_authority":false,"semantic_authority":false,"handoff_effect_status":"UNRESOLVED","plan_id":"plan-4-primary-0-1","changed":["ammo"]}
+  ],
+  "source_blobs": {
+    "x11_summary":{"path":"research/live_control/t2_current_effect_absolute_deadline_a2_v1/FORMAL_SUMMARY.json","git_blob":"458ba631c0d5ba58332bc5c432db42a497061169"},
+    "x11_schema":{"path":"research/live_control/t2_current_effect_absolute_deadline_a2_v1/experiment.py","git_blob":"429e790f08ea4f083dec9ab61a5a282e0f2b45ed"},
+    "map01_feedback":{"path":"research/doom/map01_first_useful_feedback_posthoc_v1/result_summary.json","git_blob":"bfdcd8c299a7dbe759977b346737bf592e3f4772"},
+    "map01_tempo":{"path":"research/doom/MAP01_V38_V39_CONTROL_TEMPO_POSTHOC_V1.md","git_blob":"62abb1b07bd70edfa83354e6e864b2481d6f9d3a"},
+    "map01_release":{"path":"research/orchestration/o3-g1/measurement/HELD_INPUT_TELEMETRY_SOURCE_CLOSURE_V1.md","git_blob":"f077c1bd576af8f3e83c6d394669361f597b6e5c"}
+  }
+}

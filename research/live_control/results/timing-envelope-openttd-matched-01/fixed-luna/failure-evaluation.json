@@ -1,0 +1,24 @@
+{
+  "exit_code": 0,
+  "proposals_executed": 9,
+  "journal_calls": 36,
+  "reason": "bounded turn limit; independent failure score required",
+  "evaluation": {
+    "event": "independent_evaluation",
+    "success": false,
+    "checks": {
+      "target_owned_roads": false,
+      "bidirectional_connections": false,
+      "forbidden_row_clear": true,
+      "surrounding_road_owner_unchanged": false
+    },
+    "changed_surrounding_tiles": [
+      613,
+      614,
+      615
+    ],
+    "legacy_success": false,
+    "emitted_ns": 9414744452037
+  },
+  "success": false
+}

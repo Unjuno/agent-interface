@@ -1,0 +1,71 @@
+{
+  "cases": 500,
+  "environment": {
+    "cpu_frequency_controlled": false,
+    "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+    "host_contention_controlled": false,
+    "kernel": "Linux 6.18.44 x86_64",
+    "python": "CPython 3.13.5",
+    "visible_cpus": 5
+  },
+  "formal_invocations": 0,
+  "gzip_bytes": 95618,
+  "gzip_sha256": "e0b2b3f1d4f698a2bbc5a32d04a0b3e74a632776bcb7a7c538da325241b38da6",
+  "independent_audit": {
+    "errors": [],
+    "metrics": {
+      "boundary_probe_rejections": 500,
+      "candidate_cases": 500,
+      "candidate_post_raw_receive_admissions": 0,
+      "pre_return_lane_admissions": 616,
+      "predecessor_gap_violations": 0
+    },
+    "pass": true
+  },
+  "phase": "stress",
+  "primary_audit": {
+    "controls_pass": true,
+    "corruption_controls": {
+      "post_raw_admission": true,
+      "probe_admitted": true,
+      "selector": true,
+      "terminal_generation": true
+    },
+    "decision": "PASS_NONFORMAL_STRESS",
+    "integrity_errors": [],
+    "metrics": {
+      "candidate_boundary_probe_rejections": 500,
+      "candidate_cases": 500,
+      "candidate_lane_admissions": 616,
+      "candidate_post_raw_receive_admissions": 0,
+      "predecessor_gap_violations": 0
+    },
+    "pass": true,
+    "safety_errors": [],
+    "value_errors": []
+  },
+  "raw_bytes": 1359220,
+  "raw_sha256": "e9fb3294a09d1d5d7ad906dc75612b51702c5e070e82010b6a8c32e26e5df5cd",
+  "replacements": 0,
+  "reruns": 0,
+  "seed": 146520260918013,
+  "task": "CONCURRENT-FAST-DECISION-T2-RAW-RECEIVE-LINEARIZATION-A10-20260918-013",
+  "timing_ms": {
+    "child_send_to_raw_recv": {
+      "max": 5.581737,
+      "median": 0.35536999999999996,
+      "p95": 0.533739
+    },
+    "probe_attempt_to_commit": {
+      "max": 2.319323,
+      "median": 0.349116,
+      "p95": 0.437138
+    },
+    "raw_recv_to_close": {
+      "max": 0.824241,
+      "median": 0.33863,
+      "p95": 0.362676
+    }
+  },
+  "tuning": 0
+}

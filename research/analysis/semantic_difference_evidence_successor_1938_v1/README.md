@@ -1,0 +1,1 @@
+# Semantic difference evidence successor (#2004)\n\nFinite, network-free semantic check for evidence-bound typed differences. Facts are bound to source frame, surface identity, and observation epoch; stale and identity-replaced evidence is rejected as authoritative. Synthetic evidence only.\n

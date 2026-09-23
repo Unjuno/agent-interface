@@ -1,0 +1,27 @@
+{
+  "scope": "pre-model scorer and fixture-audit development failures; no GUI task action or model call",
+  "failures": [
+    {
+      "stage": "geometry-derived scorer regression probe",
+      "command": "python research/openttd_task/probe_guarded_score_v2.py",
+      "observed": "KeyError: 'x' in indexed() because contract_from_baseline omitted x/y/width",
+      "effect": "probe stopped before producing a passing result",
+      "resolution": "include x/y/width in the derived contract and rerun all positive/negative controls on Windows and WSL"
+    },
+    {
+      "stage": "new geometry fixture audit",
+      "command": "python research/openttd_task/audit_geometry_v1.py research/openttd_task/results/geometry-01",
+      "observed": "ValueError: exact guard neighborhood required because the setup script emits six tiles and edges but the observer-only restore emits the 42-tile guard",
+      "effect": "audit stopped; save and restore artifacts retained; no model execution had begun",
+      "resolution": "use the first observer-only restore as the scored guard baseline and compare setup x/y/width/tiles/edges separately"
+    },
+    {
+      "stage": "cross-OS fixture audit replay",
+      "command": "Windows and WSL rerun research/openttd_task/audit_geometry_v1.py",
+      "observed": "semantically identical audit.json bytes changed between LF and CRLF, breaking its preregistered SHA",
+      "effect": "the full episode audit refused the changed fixture audit artifact; save, task sources and model artifacts were unchanged",
+      "resolution": "write the deterministic JSON artifact as explicit UTF-8 bytes with LF on both operating systems"
+    }
+  ],
+  "final_status": "both corrected probes pass on Windows and WSL; failures are not counted as product-runtime failure classes"
+}

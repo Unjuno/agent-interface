@@ -1,0 +1,38 @@
+{
+  "analytic": {
+    "assumption_async_intent_before_relevance_publication": true,
+    "relevance_only_inputs_identical": true,
+    "required_decisions_differ": true,
+    "w0_required": "SUPPRESS",
+    "w1_required": "FORWARD",
+    "x_inside_new_B": true,
+    "x_outside_old_A": true
+  },
+  "controls_pass": true,
+  "corruption_controls": {
+    "analytic_decision": true,
+    "analytic_inputs": true,
+    "baseline_discriminator": true,
+    "gap_escape": true,
+    "mismatch": true,
+    "same_roi_overconservative": true,
+    "source": true
+  },
+  "decision": "PASS_O3_INTENT_EPOCH_BINDING_SCOPED",
+  "integrity_errors": [],
+  "metrics": {
+    "candidate_oracle_mismatch": 0,
+    "critical_false_suppressions": 0,
+    "current_irrelevant_suppressions": 30000,
+    "current_relevant_false_suppressions": 0,
+    "forged_intent_suppressions": 0,
+    "fresh_post_switch_irrelevant_suppressions": 30000,
+    "fresh_same_roi_recovery_suppressions": 25000,
+    "intent_gap_hidden_false_suppressions": 0,
+    "missing_wrong_intent_suppressions": 0,
+    "relevance_only_hidden_false_suppressions": 40000,
+    "same_roi_gap_suppressions": 0,
+    "traces": 220000
+  },
+  "pass": true
+}

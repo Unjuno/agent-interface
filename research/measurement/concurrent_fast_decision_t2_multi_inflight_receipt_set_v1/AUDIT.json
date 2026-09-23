@@ -1,0 +1,26 @@
+{
+  "decision": "PASS_T2_MULTI_INFLIGHT_RECEIPT_SET_SCOPED",
+  "errors": [],
+  "pass": true,
+  "recomputed": {
+    "baseline_post_transfer_completions": 60000,
+    "candidate_incomplete_handbacks": 0,
+    "candidate_oracle_mismatch": 0,
+    "candidate_post_transfer_completions": 0,
+    "discriminator_traces": 30000,
+    "family_counts": {
+      "cross_cycle": 15000,
+      "duplicate_a": 15000,
+      "duplicate_b": 15000,
+      "honest_ab": 15000,
+      "honest_ba": 15000,
+      "malformed": 15000,
+      "stale_same_cycle": 15000,
+      "unknown_same_cycle": 15000
+    },
+    "honest_candidate_live": 30000,
+    "honest_traces": 30000,
+    "ignored_invalid_receipts": 90000,
+    "outcome_digest_sha256": "ceef82770032245eb4027fd9fe6cc77e7d8df06898bc8e68f302519b5282ef9a"
+  }
+}

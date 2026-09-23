@@ -1,0 +1,20 @@
+# Evidence manifest — durable authority-ended submit composition v1
+
+Executed local SHA-256 identities:
+
+```text
+76a4fc70ff922f9c1b1c626dcb9af2a47745b13e7c3d0bfc3bc4d7d98236c1fb  worker.py
+f07c9fdd8199ad4a50e1c7fed5fa8968ada66faaa2b4b0598e81137790296e0d  run_matrix.py
+28d709a3d67ff430f1d7a6f4d27d11a29389f047199fa9ba35659ab990c76ed6  prereg.json
+532452d7bed88c7d20f6c270455dbb5ce96f3855bb4f0727095f539347acdf2f  full local result.json
+72a3481653cf9c41ec1a03f4c7a7bf1c482ff69468b5d92986bad8cf814950b4  durable_token_state_v2.py
+ed00f7b3e9805eea650b261aec537a17c7f2517bba21fc7709b32f52a4e40da3  durable_submit_v6.py
+07e5eff9c704af3cf75e0dcb5e7b4c4d57b82e076e4ffafa320d08ee0af51741  append_checkpoint_v1.py
+7890589fbbc808b914cc6fefa43408cf727bb3b29a7fc8962451bb7a90d5027a  received_continuation_v1.py
+decb19099c686ee494fe307c3bf411e61c59e05470319ab80159147d2bd73de3  unix_json_deadline.py
+265a3d2e5ace33b723e7e4be3aeb9674cf3c258b01b64f3c46918bd60ed8b8bd  checkpoint_contract_v1.py
+2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e  authority_ended_bridge_v1.py
+8ce56e2c1ae7c954379a4c4814d36c8985dcee7aa92e71d0d9a60644b953a523  retained real authority-ended receipt fixture
+```
+
+The component sources are existing retained project mechanisms. This namespace intentionally does not fork/copy them again. The report/result records the composition outcome; the full 10 KB local result remains identified by the SHA above, while `result.json` retains every decision-relevant token/pending/block/reconciliation state. No live GUI/socket artifact is claimed because this block used an injected transport/server evidence boundary.

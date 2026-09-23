@@ -1,0 +1,27 @@
+{
+  "status": "HOLD_RUNTIME_FAULT_INJECTION_REQUIRED",
+  "issue": 2256,
+  "source_rows": 3,
+  "source_blobs_verified": true,
+  "execution": "AST_ONLY_NO_RUNTIME_IMPORT_OR_EXECUTION",
+  "native_audit": "PASS",
+  "container_audit": "PASS",
+  "container_image": "python:3.12-slim",
+  "audit_commit": "a61224725bf5472993718ce9bbf859077f22daee",
+  "runtime_fault_injection": "NOT_RUN",
+  "not_observed": [
+    "IPC/display-server/scheduler/kernel failure domains",
+    "wall-clock release latency",
+    "actuator residual state",
+    "fault injection",
+    "task/effect outcome"
+  ],
+  "claims_excluded": [
+    "PASS safety-plane completeness",
+    "timely release",
+    "GUI",
+    "model",
+    "network",
+    "production"
+  ]
+}

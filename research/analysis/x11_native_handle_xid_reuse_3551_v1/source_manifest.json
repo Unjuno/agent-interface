@@ -1,0 +1,19 @@
+{
+  "allocation_id":"issue3551-xid-reuse-formal-01",
+  "repo_source_commit":"49535d91424c3786330ec62e6d621e4e1eaf1c49",
+  "container_image_id":"sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916",
+  "complete_bundle_manifest_sha256":"38dce426a2f78f0028dbcf4b8f7f365329186d3587d7b7422edd9cbee1ca539c",
+  "harness":{
+    "formal_runner.py":"fd31180baa43555c05d019c639da424e210c54d1b2db5e8a8dc7470f7747a16a",
+    "audit_formal.py":"cc0bd1c9d8ac9359e4b6dc471cb6e47cebab8ae26eea0bb39de44bce61b7e859",
+    "test_audit_formal.py":"7718985ada5a17efb24790160f319e0fe9e145feb772e1eb368e187b3f6bb392",
+    "xid_fixture.py":"682c170da8c696c7d46046c545f3022783a2c9b16f88c6cb27c0ffe291e3ad79"
+  },
+  "predecessor_stops":[
+    {"issue":3464,"decision":"STOP_RUNNER_OUTPUT_DIRECTORY_COLLISION","raw_sha256":"cab4f2f8f2bbf0fc9965fc89571c17179d32af6104dc0a10a4703e68515bb06b"},
+    {"issue":3530,"decision":"STOP_RUNNER_FIXTURE_NOT_RENDERED","raw_sha256":"a8abc9be9a5c1568b221a74ab5dfd2d5cb2927a7954496d705e1bdf0f8833e3f"},
+    {"issue":3543,"decision":"STOP_PIXEL_REPLY_ATTRIBUTE_ERROR","raw_sha256":"d32d30d02454484a7e3ff53dbb7c212143c730b6ab3c99f22a250f7756266582","old_alias_attempts":0},
+    {"issue":3545,"decision":"STOP_LAZY_IMPORT_SHADOWED_BY_HARNESS_PATH","raw_sha256":"d9db1f6bbea1c8d8f0bcc64ba974291e9537a769f17a31a88737fc3ce66a9e98","pixels_identical":true,"native_emissions":0},
+    {"issue":3550,"decision":"STOP_PREFLIGHT_EXECUTED_RUNNER_WITHOUT_DISPLAY","formal_not_attempted":true,"alias_attempts":0}
+  ]
+}

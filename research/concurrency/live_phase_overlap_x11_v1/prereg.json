@@ -1,0 +1,34 @@
+{
+  "case_count": 24,
+  "delay_ms": 150,
+  "expected_correct_arms": [
+    "serial_independent",
+    "overlap_independent",
+    "serial_shared"
+  ],
+  "expected_negative": {
+    "arm": "overlap_shared",
+    "effects": {
+      "A": "B",
+      "B": "B"
+    },
+    "pixels": {
+      "A": [
+        0,
+        0,
+        255
+      ],
+      "B": [
+        0,
+        0,
+        255
+      ]
+    }
+  },
+  "formal_budget": 1,
+  "median_reduction_min_ms": 100.0,
+  "ratio_max": 0.65,
+  "repetitions_per_arm": 6,
+  "reruns": 0,
+  "tuning_after_freeze": 0
+}

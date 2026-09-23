@@ -1,0 +1,14 @@
+name: MAP01 task-effect contract successor r2
+on:
+  pull_request:
+    paths:
+      - "research/measurement/map01_task_effect_contract_2241_r2/**"
+      - ".github/workflows/map01-task-effect-contract-2241-r2.yml"
+jobs:
+  offline-contract:
+    runs-on: ubuntu-latest
+    container: python:3.12-slim
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m py_compile research/measurement/map01_task_effect_contract_2241_r2/contract.py research/measurement/map01_task_effect_contract_2241_r2/test_contract.py
+      - run: cd research/measurement/map01_task_effect_contract_2241_r2 && python test_contract.py

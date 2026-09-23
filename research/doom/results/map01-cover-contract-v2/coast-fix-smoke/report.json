@@ -1,0 +1,322 @@
+{
+  "claim": "pre-formal overlapping inference feasibility",
+  "model": "gpt-6-astra",
+  "effort": "low",
+  "iterations": 2,
+  "decisions": [
+    {
+      "iteration": 0,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-cover-coast-fix-01/runtime/001.png",
+      "model_image": "results-local/doom/map01-cover-coast-fix-01/decision-0/temporal-sheet.png",
+      "model_image_sha256": "a3b6ccffccf70670bfa91357f4c9879adcad9cc61510c0786da103424d010c12",
+      "action": {
+        "assessment": "Stationary starting view; passage ahead is clear, with a door beyond.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ],
+        "contingencies": [
+          {
+            "after_command": 0,
+            "condition": "no_visible_effect",
+            "commands": [
+              {
+                "action": "use",
+                "extent": "pulse"
+              },
+              {
+                "action": "forward",
+                "extent": "short"
+              }
+            ]
+          }
+        ],
+        "next_cover": [
+          {
+            "action": "coast",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 11506,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 95,
+        "reasoning_output_tokens": 0
+      },
+      "model_ns": 8479368261,
+      "effect_memory": [],
+      "effect_receipts": [
+        {
+          "action": "forward",
+          "extent": "medium",
+          "result": "visible_change",
+          "normalized_mae": 0.053976034858387804,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 34,
+          "effect_observed_ns": 13296757693202,
+          "samples": 5,
+          "plan_accept_to_first_capture_ms": 76.016225,
+          "plan_accept_to_last_capture_ms": 683.670071,
+          "capture_ms_total": 22.415366,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 5,
+      "effect_observation_capture_ms": 22.415366,
+      "execution_trace": [
+        {
+          "id": "plan-0-primary-0-0",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "forward",
+            "extent": "medium"
+          },
+          "accepted_ns": 13296074023131,
+          "terminal_ns": 13296862563578,
+          "receipt": {
+            "action": "forward",
+            "extent": "medium",
+            "result": "visible_change",
+            "normalized_mae": 0.053976034858387804,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 34,
+            "effect_observed_ns": 13296757693202,
+            "samples": 5,
+            "plan_accept_to_first_capture_ms": 76.016225,
+            "plan_accept_to_last_capture_ms": 683.670071,
+            "capture_ms_total": 22.415366,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 5,
+          "observation_capture_ms": 22.415366
+        }
+      ],
+      "contingency_branch": null,
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a104-c6ab-71f1-922a-be3314cce1b2",
+      "controller_model_started_ns": 13287340770648,
+      "controller_model_ended_ns": 13296015473647,
+      "model_image_to_plan_accept_ns": 9178956896,
+      "fresh_observation_to_plan_accept_ns": 237530519,
+      "fresh_sequence_at_plan": 29,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-0"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [
+        {
+          "action": "coast",
+          "extent": "long"
+        }
+      ],
+      "cover_policy_source_iteration": null,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 1,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-cover-coast-fix-01/runtime/034.png",
+      "model_image": "results-local/doom/map01-cover-coast-fix-01/decision-1/temporal-sheet.png",
+      "model_image_sha256": "6bb45e2b90f9e4cc6198a291d44ab91786e87c956f5415f178bfd8d8f14a66ac",
+      "action": {
+        "assessment": "Moved into the corridor; closed door ahead, no visible threats.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "short"
+          },
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ],
+        "contingencies": [],
+        "next_cover": [
+          {
+            "action": "coast",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 12076,
+        "cached_input_tokens": 11392,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 69,
+        "reasoning_output_tokens": 0
+      },
+      "model_ns": 7131804139,
+      "effect_memory": [],
+      "effect_receipts": [
+        {
+          "action": "forward",
+          "extent": "short",
+          "result": "visible_change",
+          "normalized_mae": 0.19311546840958607,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 66,
+          "effect_observed_ns": 13305138683079,
+          "samples": 4,
+          "plan_accept_to_first_capture_ms": 76.094446,
+          "plan_accept_to_last_capture_ms": 480.158596,
+          "capture_ms_total": 18.923997,
+          "scope": "viewport pixels only"
+        },
+        {
+          "action": "use",
+          "extent": "pulse",
+          "result": "visible_change",
+          "normalized_mae": 0.25351851851851853,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 68,
+          "effect_observed_ns": 13305379102500,
+          "samples": 2,
+          "plan_accept_to_first_capture_ms": 636.886787,
+          "plan_accept_to_last_capture_ms": 720.578017,
+          "capture_ms_total": 7.374832,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 6,
+      "effect_observation_capture_ms": 26.298828999999998,
+      "execution_trace": [
+        {
+          "id": "plan-1-primary-0-1",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "forward",
+            "extent": "short"
+          },
+          "accepted_ns": 13304658524483,
+          "terminal_ns": 13305477148266,
+          "receipt": {
+            "action": "forward",
+            "extent": "short",
+            "result": "visible_change",
+            "normalized_mae": 0.19311546840958607,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 66,
+            "effect_observed_ns": 13305138683079,
+            "samples": 4,
+            "plan_accept_to_first_capture_ms": 76.094446,
+            "plan_accept_to_last_capture_ms": 480.158596,
+            "capture_ms_total": 18.923997,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 4,
+          "observation_capture_ms": 18.923997
+        },
+        {
+          "id": "plan-1-primary-0-1",
+          "role": "primary",
+          "command_index": 1,
+          "command": {
+            "action": "use",
+            "extent": "pulse"
+          },
+          "accepted_ns": 13304658524483,
+          "terminal_ns": 13305477148266,
+          "receipt": {
+            "action": "use",
+            "extent": "pulse",
+            "result": "visible_change",
+            "normalized_mae": 0.25351851851851853,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 68,
+            "effect_observed_ns": 13305379102500,
+            "samples": 2,
+            "plan_accept_to_first_capture_ms": 636.886787,
+            "plan_accept_to_last_capture_ms": 720.578017,
+            "capture_ms_total": 7.374832,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 2,
+          "observation_capture_ms": 7.374832
+        }
+      ],
+      "contingency_branch": null,
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "short"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "model_session_id": "01a0a104-c6ab-71f1-922a-be3314cce1b2",
+      "controller_model_started_ns": 13297228173234,
+      "controller_model_ended_ns": 13304600890805,
+      "model_image_to_plan_accept_ns": 7900831281,
+      "fresh_observation_to_plan_accept_ns": 97984100,
+      "fresh_sequence_at_plan": 62,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-1"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [
+        {
+          "action": "coast",
+          "extent": "short"
+        }
+      ],
+      "cover_policy_source_iteration": 0,
+      "plan_terminal": "completed"
+    }
+  ],
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 18568742735,
+    "death_count": 0,
+    "kill_count": 0,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 13305590398215
+  },
+  "model_session_span": 4,
+  "model_session_ids": [
+    "01a0a104-c6ab-71f1-922a-be3314cce1b2"
+  ],
+  "motor_contract": "semantic commands compiled to <=450ms turns and <=900ms movement",
+  "effect_receipt_contract": "reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
+  "effect_receipt_extra_steps": 0,
+  "contingency_contract": "preplanned no-visible-effect fallback skips the primary tail and runs without another model call",
+  "contingencies_authored": 1,
+  "contingency_branches_taken": 0,
+  "contingency_branch_latency_ms": [],
+  "program_admissions": 2,
+  "extra_program_admissions_vs_one_bundle": 0,
+  "effect_receipt_commands": 3,
+  "effect_observation_samples": 11,
+  "effect_observation_capture_ms": 48.714195,
+  "game_continued_during_model_calls": true,
+  "cover_programs": 2,
+  "cover_renewals": 0,
+  "cover_renewal_gaps_ms": [],
+  "model_authored_cover_policies": 2,
+  "model_wall_seconds": 15.6111724
+}

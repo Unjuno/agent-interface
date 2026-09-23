@@ -1,0 +1,18 @@
+name: dwell-bound-provenance-2279
+on:
+  push:
+    branches: [research/dwell-bound-provenance-2279]
+  pull_request:
+    paths: [research/live_control/dwell_bound_provenance_2279_v1/**, .github/workflows/dwell-bound-provenance-2279.yml]
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    container:
+      image: python:3.12-slim-bookworm@sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a
+    steps:
+      - name: Fetch exact branch sources inside pinned container
+        run: |
+          python -c "import urllib.request; base='https://raw.githubusercontent.com/Unjuno/agent-interface/bd2d77349db10310fa2bb9e21c36e8db650a0cf5/research/live_control/dwell_bound_provenance_2279_v1/'; [(open(n,'wb').write(urllib.request.urlopen(base+n).read())) for n in ['oracle.py','audit.py']]"
+      - run: python -m py_compile oracle.py audit.py
+      - run: python audit.py

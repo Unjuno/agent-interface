@@ -1,0 +1,3 @@
+Before formal start, fixed-image OrbStack checks compiled all frozen sources, imported the public observation API and reproduced the #1904 minimum mask ES.
+
+A private Xvfb construction smoke created a primary window at (20,20) and a second same-role window at (700,20), mapped both, then used the public read-only observation API on the first. The returned pixel at (60,60) remained (0,180,0), XIDs were 2097152 and 2097153, and PNG SHA-256 was 42b4e1146561c6a1f8ab5ac7c67d1a944fed30131ec8f8904ce441dd31c6b867. No input was dispatched. This specifically validates the allocation-04 overlap correction; it is construction-only and not part of the 12-case formal set.

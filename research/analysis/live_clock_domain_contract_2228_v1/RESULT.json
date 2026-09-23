@@ -1,0 +1,58 @@
+{
+  "experiment_id": "live_clock_domain_contract_2228_v1",
+  "issue": 2228,
+  "status": "HOLD_PRE_MODEL_LIVE_TEMPORAL_TRANSFER",
+  "scope": "Docker-only read-only policy contract; no live clock, model, GUI, input, network, or application execution.",
+  "rows": [
+    {
+      "state": "LIVE_SAME_CLOCK_AFTER_DOWN",
+      "decision": "DONE"
+    },
+    {
+      "state": "LIVE_CROSS_CLOCK_PRE_ACTUATION_APPEARANCE",
+      "decision": "RECONCILE_CLOCKS"
+    },
+    {
+      "state": "LIVE_EFFECT_AFTER_RELEASE",
+      "decision": "QUERY_EFFECT"
+    },
+    {
+      "state": "LIVE_WRONG_ACTUATION_OR_TARGET",
+      "decision": "ABORT"
+    },
+    {
+      "state": "LIVE_CLOCK_DOMAIN_UNKNOWN",
+      "decision": "RECONCILE_CLOCKS"
+    },
+    {
+      "state": "LIVE_NO_EFFECT",
+      "decision": "ABORT"
+    },
+    {
+      "state": "LIVE_BOUND_EFFECT_AUTHENTICITY_UNKNOWN",
+      "decision": "QUERY_EFFECT"
+    }
+  ],
+  "checks": {
+    "cases": 7,
+    "agreements": 7,
+    "violations": 0,
+    "model_calls": 0,
+    "gui_calls": 0,
+    "input_calls": 0,
+    "network_calls": 0,
+    "authority_expansion": false
+  },
+  "container": {
+    "image": "python:3.12-slim",
+    "image_digest": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "python": "3.12.14",
+    "result_sha256": "75ad50eb7ab00fc1535d11374028997172e39b5d5f2e4f3c2570c58fc99c538d"
+  },
+  "H": "Clock-domain uncertainty must trigger reconciliation/query rather than silently accepting or rejecting causal timestamps.",
+  "T": "Evaluate seven frozen temporal states in one Docker run with independent decision expectations.",
+  "D": "Exact normalized stdout and result digest are retained.",
+  "C": "A policy fixture cannot prove cross-process clock comparability, delayed live effects, or model/task recovery.",
+  "U": "Stop before live transfer; preserve same-clock synthetic controls and add real cross-process clocks plus an independent effect scorer in the next rung.",
+  "source_ref": "main@331e513c6d10cc995c37a9510440efb396098b3c"
+}

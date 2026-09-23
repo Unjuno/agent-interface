@@ -1,0 +1,43 @@
+{
+  "active_selector_mismatch": 0,
+  "candidate_oracle_mismatch": 0,
+  "construction": false,
+  "corruption_controls": {
+    "expired_reuse_rejected": true,
+    "mismatched_reuse_rejected": true,
+    "rebuild_run_bypass_rejected": true,
+    "stale_utility_override_rejected": true,
+    "tardy_utility_override_rejected": true
+  },
+  "decision": "PASS_EVIDENCE_COMPUTE_DECISION_LATTICE_SCOPED",
+  "decision_counts": {
+    "CANCEL_STALE": 5625,
+    "CANCEL_TARDY": 4050,
+    "DROP_EXPIRED": 2250,
+    "REBUILD_REQUIRED": 5625,
+    "REUSE": 3375,
+    "RUN": 595,
+    "TIE": 385,
+    "WAIT": 595
+  },
+  "digest": "66b3c0605ddc1695b205d4dcafd44cbc3ca28d63bf332dec9f9827ae402ffe6a",
+  "directed_controls": {
+    "active_stale": true,
+    "active_tardy": true,
+    "active_tie_deadline": true,
+    "cached_exact_deadline": true,
+    "cached_expired": true,
+    "cached_mismatch": true,
+    "zero_zero": true
+  },
+  "formal_invocations": 1,
+  "hard_gate_override": 0,
+  "invalid_rebuild_required": 0,
+  "invalid_reuse": 0,
+  "rebuild_direct_run_wait_bypass": 0,
+  "replacements": 0,
+  "reruns": 0,
+  "rows": 22500,
+  "tuning": 0,
+  "unknown_dispositions": 0
+}

@@ -1,0 +1,31 @@
+{
+  "schema":"p0_physical_useful_trace_fixture_v1",
+  "base":"159dd3684ffcd0ee78b9ff5939e0173cd77c7b4f",
+  "semantic_nodes":[
+    {"id":"release_bracket","evidence_class":"SYNTHETIC_CONTRACT","source_kind":"git_blob","source_id":"e5166e924b6c1cb5d99f5dde6f5b29ef6014dff0","decision":"PASS_PHYSICAL_RELEASE_BRACKET_CONTRACT_SCOPED","proven":true},
+    {"id":"press_bracket","evidence_class":"SYNTHETIC_CONTRACT","source_kind":"git_blob","source_id":"ffc1eec9bbf30843515b1ca0c5fcbd5a9a525e50","decision":"PASS_PHYSICAL_PRESS_BRACKET_CONTRACT_SCOPED","proven":true},
+    {"id":"dual_edge_adapter","evidence_class":"SYNTHETIC_CONTRACT","source_kind":"git_blob","source_id":"6cda6cf2f91b3e23e3758bffbdcaae8c444e615d","decision":"PASS_PHYSICAL_BRACKET_DUAL_EDGE_ADAPTER_SCOPED","proven":true},
+    {"id":"dual_edge_occupancy","evidence_class":"SYNTHETIC_CONTRACT","source_kind":"issue_comment_result_sha256","source_id":"b534ac82996622e7d6ab337f408ebaf9322e5c52ed3e1f258075f6f1a5923165","decision":"PASS_DUAL_EDGE_CENSORING_SCOPED","proven":true},
+    {"id":"temporal_effect_gate","evidence_class":"SYNTHETIC_CONTRACT","source_kind":"git_blob","source_id":"7e1806486e83699b3a6d118a44731f8e9f4aad24","decision":"PASS_CENSORED_DOWN_TEMPORAL_GATE_SCOPED","proven":true},
+    {"id":"effect_provenance","evidence_class":"SYNTHETIC_CONTRACT","source_kind":"git_blob","source_id":"db1f4a497464897cb9b28e27b08ab09e4ab36c59","decision":"PASS_USEFUL_CONTROL_PROVENANCE_COMPOSITION_SCOPED","proven":true}
+  ],
+  "runtime_live_gates":[
+    {"id":"OWNER_EDGE_PRODUCER","evidence_class":"RUNTIME_RECEIPT","status":"UNPROVEN_AT_BASE","reason":"input_owner_v12 absent at BASE; #998 active intent is not proof"},
+    {"id":"STABLE_HOLD_IDENTITY","evidence_class":"RUNTIME_RECEIPT","status":"UNPROVEN_AT_BASE","reason":"#999 active construction claims are not retained completed evidence at BASE"},
+    {"id":"LIVE_CAUSAL_SAMPLE","evidence_class":"LIVE_EFFECT","status":"UNPROVEN_AT_BASE","reason":"no separately leased live sample at BASE joins physical edges through independently scored useful effect"}
+  ],
+  "semantic_edges":[
+    ["press_bracket","dual_edge_adapter"],
+    ["release_bracket","dual_edge_adapter"],
+    ["dual_edge_adapter","dual_edge_occupancy"],
+    ["dual_edge_occupancy","temporal_effect_gate"],
+    ["temporal_effect_gate","effect_provenance"]
+  ],
+  "live_edges":[
+    ["OWNER_EDGE_PRODUCER","STABLE_HOLD_IDENTITY"],
+    ["STABLE_HOLD_IDENTITY","press_bracket"],
+    ["STABLE_HOLD_IDENTITY","release_bracket"],
+    ["effect_provenance","LIVE_CAUSAL_SAMPLE"]
+  ],
+  "active_work_not_evidence":[998,999]
+}

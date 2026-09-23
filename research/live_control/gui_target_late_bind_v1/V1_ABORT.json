@@ -1,0 +1,18 @@
+{
+  "completed_cases": 5,
+  "decision": "HARNESS_FAIL_OUTER_BATCH_TIMEOUT",
+  "partial_cases": 0,
+  "reason": "outer 4-case command timeout occurred after case 4 completed; remaining cases were not started. Same scientific block is not resumed under v1.",
+  "rows": [
+    {"case":0,"error":null,"mode":"snapshot_bound","seed":881001,"status":"complete"},
+    {"case":1,"error":null,"mode":"late_bind","seed":881001,"status":"complete"},
+    {"case":2,"error":null,"mode":"late_bind","seed":881002,"status":"complete"},
+    {"case":3,"error":null,"mode":"snapshot_bound","seed":881002,"status":"complete"},
+    {"case":4,"error":null,"mode":"snapshot_bound","seed":881003,"status":"complete"},
+    {"case":5,"status":"not_started"},
+    {"case":6,"status":"not_started"},
+    {"case":7,"status":"not_started"}
+  ],
+  "schema":"agent-interface/gui-target-late-bind-v1-abort",
+  "scientific_disposition":"NONE_DO_NOT_POOL_OR_RERUN"
+}

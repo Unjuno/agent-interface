@@ -1,0 +1,323 @@
+[
+  {
+    "stage": 1,
+    "interaction": "click",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 19130928718290,
+        "ended_ns": 19131256762578,
+        "emissions": 43,
+        "program_emissions": 43,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 19131256759531
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25
+        ]
+      },
+      "recovery_required": false,
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 2,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            600,
+            378
+          ],
+          "observed_box": [
+            588,
+            371,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 2,
+          "valid_until_ns": 19132349945800,
+          "patch_sha256": "76ac6bd058a2208782137a8edcdd3b74b817b9f6371a5910ef82c670b1c26ff1",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 3,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            600,
+            378
+          ],
+          "observed_box": [
+            588,
+            371,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 3,
+          "valid_until_ns": 19132429424400,
+          "patch_sha256": "76ac6bd058a2208782137a8edcdd3b74b817b9f6371a5910ef82c670b1c26ff1",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 4,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            600,
+            378
+          ],
+          "observed_box": [
+            588,
+            371,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 4,
+          "valid_until_ns": 19132499981123,
+          "patch_sha256": "76ac6bd058a2208782137a8edcdd3b74b817b9f6371a5910ef82c670b1c26ff1",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 5,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            600,
+            378
+          ],
+          "observed_box": [
+            588,
+            371,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 5,
+          "valid_until_ns": 19132571547156,
+          "patch_sha256": "76ac6bd058a2208782137a8edcdd3b74b817b9f6371a5910ef82c670b1c26ff1",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "started_ns": 19130845776538,
+    "feedback": {
+      "status": "matched",
+      "task_success": null,
+      "authority_granted": false,
+      "input_dispatched": false,
+      "expected_title": "shape.svg - Inkscape",
+      "rejected_titles": [],
+      "samples": [
+        {
+          "known_ns": 19131269086503,
+          "title": "shape.svg - Inkscape",
+          "binding": {
+            "focus": 8388616,
+            "surface": 8388615,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          }
+        }
+      ],
+      "started_ns": 19131267145445,
+      "observation": {
+        "sequence": 6,
+        "binding_revision": 0,
+        "capture_ns": 19131269757770,
+        "pointer_binding": {
+          "focus": 8388616,
+          "surface": 8388615,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "6a480f0c74ada0950ed8b8901fa4d3c76d9327280e69188b224e5d2b2d9647df",
+          "width": 1280,
+          "height": 800,
+          "target": "app",
+          "native_window_id": 8388615,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 19131269757770,
+          "capture_ended_ns": 19131280556411,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-key-boundary-study-01/run-2/bridge/images/3ed265b730ab4fb7bc97c1621e7c783d.png",
+            "sha256": "ac58d33ead8caaa76c88eb39196e3331483e53433644a8a9849f511524a4f414",
+            "bytes": 55902,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "6a480f0c74ada0950ed8b8901fa4d3c76d9327280e69188b224e5d2b2d9647df"
+          }
+        }
+      },
+      "title": "shape.svg - Inkscape",
+      "after_title": "shape.svg - Inkscape",
+      "ended_ns": 19131346101964
+    },
+    "ended_ns": 19131351164645,
+    "window_review": {
+      "status": "reviewed",
+      "authority_granted": false,
+      "input_dispatched": false,
+      "previous_scope": "native-x11:837f6dc4dbbd4feda494a6fdec93b58b",
+      "previous_binding_revision": 0,
+      "binding_revision": 1,
+      "scope": "native-x11:17207cd870094c289982f130b56e6cea",
+      "previous_window_id": 8388615,
+      "requested_window_id": 8388615,
+      "started_ns": 19131358221367,
+      "observation": {
+        "sequence": 7,
+        "binding_revision": 1,
+        "capture_ns": 19131359043894,
+        "pointer_binding": {
+          "focus": 8388616,
+          "surface": 8388615,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "7b90bae0623e4374bea2f7d8fab70481c1178760a32cc4b450d10413b5f1ebf9",
+          "width": 1280,
+          "height": 800,
+          "target": "app",
+          "native_window_id": 8388615,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 19131359043894,
+          "capture_ended_ns": 19131367321890,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-key-boundary-study-01/run-2/bridge/images/eb8037312817459ca37d9572cb7a3877.png",
+            "sha256": "9218282c6e0a28109a0a3ffc22503db9d774a037f6521b80638779944554bf21",
+            "bytes": 55653,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "7b90bae0623e4374bea2f7d8fab70481c1178760a32cc4b450d10413b5f1ebf9"
+          }
+        }
+      },
+      "ended_ns": 19131432357854
+    },
+    "through_review_ns": 19131438388938
+  }
+]

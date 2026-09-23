@@ -1,0 +1,160 @@
+{
+  "request": {
+    "after": 0,
+    "events": [
+      "observation"
+    ],
+    "timeout": 30
+  },
+  "reply": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "ready",
+        "task": "Build a straight road connecting only the three ground tiles from A to C. Keep the adjacent row marked X free of roads and preserve surrounding roads/ownership. Use visual GUI controls.",
+        "emitted_ns": 12756548909196
+      },
+      {
+        "event": "observation",
+        "id": "initial",
+        "step": 0,
+        "sequence": 1,
+        "capture_ns": 12756563039710,
+        "context_ns": 12756570280354,
+        "context": [
+          [
+            "windows",
+            "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+          ],
+          [
+            "active_window",
+            10485762
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/timing-envelope-openttd-matched-05/fixed-astra/runtime/001.png",
+        "image_reused": false,
+        "image_prepare_ns": 54255155,
+        "image_ready_ns": 12756653811283,
+        "input_focus_before": 10485762,
+        "input_focus_after": 10485762,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 10485762,
+          "surface": 10485762,
+          "geometry": [
+            129,
+            40,
+            1024,
+            720
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 10485762,
+          "surface": 10485762,
+          "geometry": [
+            129,
+            40,
+            1024,
+            720
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 10485762,
+          "surface": 10485762,
+          "geometry": [
+            129,
+            40,
+            1024,
+            720
+          ]
+        },
+        "capture_ms": 9.24078,
+        "wire_bytes": 385472,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "emitted_ns": 12756658596247
+      }
+    ],
+    "cursor": 2,
+    "returned_ns": 12756662886763,
+    "authority": "none",
+    "acknowledgement": "not implied"
+  },
+  "continuation": {
+    "format": "received-continuation-v1",
+    "session": "/tmp/agent-interface-events-68a9nysa/events.sock",
+    "cursor": 2,
+    "record_hashes": [
+      "55ae94b2cf3572c645eb8abe30cbdf70f3dd9b2623c065948c5759e47499e67d",
+      "e479c838ae67ace18ac0ee5eecc94d26c9c3bb7f65f3ccce01662298ce9bbb48"
+    ],
+    "observation": {
+      "event": "observation",
+      "id": "initial",
+      "step": 0,
+      "sequence": 1,
+      "capture_ns": 12756563039710,
+      "context_ns": 12756570280354,
+      "context": [
+        [
+          "windows",
+          "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+        ],
+        [
+          "active_window",
+          10485762
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/timing-envelope-openttd-matched-05/fixed-astra/runtime/001.png",
+      "image_reused": false,
+      "image_prepare_ns": 54255155,
+      "image_ready_ns": 12756653811283,
+      "input_focus_before": 10485762,
+      "input_focus_after": 10485762,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 10485762,
+        "surface": 10485762,
+        "geometry": [
+          129,
+          40,
+          1024,
+          720
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 10485762,
+        "surface": 10485762,
+        "geometry": [
+          129,
+          40,
+          1024,
+          720
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 10485762,
+        "surface": 10485762,
+        "geometry": [
+          129,
+          40,
+          1024,
+          720
+        ]
+      },
+      "capture_ms": 9.24078,
+      "wire_bytes": 385472,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emitted_ns": 12756658596247
+    },
+    "observation_cursor": 2,
+    "pending_clock": null,
+    "clocks": {},
+    "channel_closed": false,
+    "authority": "none"
+  },
+  "requested_clock_id": null,
+  "matched_clock": null,
+  "authority": "none; current observation and admission still required"
+}

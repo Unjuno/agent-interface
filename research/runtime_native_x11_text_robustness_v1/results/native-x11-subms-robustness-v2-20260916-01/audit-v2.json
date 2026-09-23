@@ -1,0 +1,35 @@
+{
+  "schema": "agent-interface/native-x11-subms-robustness-audit-v2",
+  "result_id": "native-x11-subms-robustness-v2-20260916-01",
+  "source_freeze": "db051e9f6709c2000bc892153969b80e983abc88",
+  "v1_excluded": true,
+  "batches_complete": true,
+  "session_count": 20,
+  "controls_passed": true,
+  "raw_xlsx_crc_passed": true,
+  "condition_recomputed": {
+    "0.8": {"sessions":5,"eligible_sessions":0,"exact_sessions":0,"total_exact_strings":45,"median_char_start_interval_ns":875381,"median_edit_elapsed_ns":154179119,"exact_counts":[8,10,9,10,8]},
+    "0.9": {"sessions":5,"eligible_sessions":2,"exact_sessions":2,"total_exact_strings":77,"median_char_start_interval_ns":983232,"median_edit_elapsed_ns":176029602,"exact_counts":[15,15,16,15,16]},
+    "1.0": {"sessions":5,"eligible_sessions":5,"exact_sessions":5,"total_exact_strings":80,"median_char_start_interval_ns":1074621,"median_edit_elapsed_ns":182788453,"exact_counts":[16,16,16,16,16]},
+    "1.1": {"sessions":5,"eligible_sessions":5,"exact_sessions":5,"total_exact_strings":80,"median_char_start_interval_ns":1163625,"median_edit_elapsed_ns":201780450,"exact_counts":[16,16,16,16,16]}
+  },
+  "robust_candidate_ms": 1.0,
+  "aggregate_matches": true,
+  "builder": {
+    "schema": "agent-interface/native-x11-subms-builder-v1",
+    "dependency_blobs": {
+      "go.mod": "db4cfa3665202def1e3c5ae89a3cc1e3292d8c9a",
+      "backend_text.go": "157a240147dfed2f8dfae553e090dbe24db832f2",
+      "backend_text_test.go": "9dcc33b9367a0a4b4b8b475308919156ae0c3bb5",
+      "cmd/controller/main.go": "565494630e48b3fa95eb89daa8e852f9b7094159"
+    },
+    "generated_backend_git_blob": "a766205e0c75288e3583f45ba2b58b58f7aca951",
+    "go_test_exitcode": 0,
+    "go_test_stdout": "?   \tagentinterface/nativetextpacing/cmd/controller\t[no test files]\nok  \tagentinterface/nativetextpacing\t0.004s\n",
+    "go_test_stderr": "",
+    "binary_sha256": "28024b4ad85ee5bf9a09546af01503ea1c583a5a666658f00f5f70b541070b7e",
+    "binary_bytes": 3142648
+  },
+  "formal_reruns": 0,
+  "passed": true
+}

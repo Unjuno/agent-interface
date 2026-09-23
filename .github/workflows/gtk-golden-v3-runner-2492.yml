@@ -1,0 +1,26 @@
+name: GTK golden-v3 runner #2492
+
+on:
+  pull_request:
+    paths:
+      - 'research/integration/golden_v3_second_domain_2246_v1/**'
+      - '.github/workflows/gtk-golden-v3-runner-2492.yml'
+
+jobs:
+  bounded-preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install GTK/X11 dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-gi gir1.2-gtk-3.0 xvfb python3-tk
+      - name: Create environment
+        run: |
+          python3 -m venv --system-site-packages .venv-gtk
+          .venv-gtk/bin/python -m pip install --disable-pip-version-check python-xlib Pillow six jsonschema
+      - name: Run bounded GTK/X11 adapter preflight
+        run: |
+          Xvfb :99 -screen 0 640x360x24 -nolisten tcp -ac >/tmp/xvfb.log 2>&1 &
+          export DISPLAY=:99
+          .venv-gtk/bin/python research/integration/golden_v3_second_domain_2246_v1/gtk_adapter_runner.py --out /tmp/gtk-adapter-2492

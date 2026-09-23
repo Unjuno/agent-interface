@@ -1,0 +1,18 @@
+{
+  "decision": "PASS_OPTIMISTIC_READWRITE_COMMIT_CRITERION_SCOPED",
+  "errors": [],
+  "expected_counts": {
+    "global_false_serializations": 14641,
+    "hazard_rows_a_write_b_read": 716800,
+    "hazard_rows_b_write_a_read": 716800,
+    "hazard_rows_stale_read": 888576,
+    "hazard_rows_ww": 716800,
+    "oracle_parallel": 14641,
+    "oracle_revalidate": 888576,
+    "oracle_serialize": 145359,
+    "rows": 1048576,
+    "write_only_unsafe_parallel": 35984
+  },
+  "pass": true,
+  "result_sha256": "8850e74ede3c74d770353f1aa832373dfa13c48b0fa6e7b2f0f822549a1bd930"
+}

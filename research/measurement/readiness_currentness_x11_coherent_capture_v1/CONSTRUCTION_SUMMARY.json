@@ -1,0 +1,60 @@
+{
+  "decision": "CONSTRUCTION_ELIGIBLE",
+  "errors": [],
+  "formal_invocations": 0,
+  "mode": "construction",
+  "raw_construction_sha256": "6e47d093e986e01ab42bcbb8bd4d950c96b88fc512c43def04715e51572ddaa3",
+  "reruns": 0,
+  "summary": {
+    "coherent_generation_decode_unknown": 0,
+    "coherent_latency_ns": {
+      "max": 1488513,
+      "p50": 90854,
+      "p95": 171273,
+      "p99": 1488513
+    },
+    "coherent_mismatch": 0,
+    "coherent_rows": 80,
+    "directed_controls_pass": 8,
+    "directed_controls_total": 8,
+    "ordinary_authority_actions": 0,
+    "rows": 160,
+    "scenarios": {
+      "hard": {
+        "coherent_effects": 0,
+        "coherent_mismatch": 0,
+        "coherent_n": 20,
+        "split_effects": 0,
+        "split_mismatch": 0,
+        "split_n": 20
+      },
+      "nonready": {
+        "coherent_effects": 0,
+        "coherent_mismatch": 0,
+        "coherent_n": 20,
+        "split_effects": 0,
+        "split_mismatch": 0,
+        "split_n": 20
+      },
+      "race": {
+        "coherent_effects": 0,
+        "coherent_mismatch": 0,
+        "coherent_n": 20,
+        "split_effects": 20,
+        "split_mismatch": 20,
+        "split_n": 20
+      },
+      "stable_valid": {
+        "coherent_effects": 20,
+        "coherent_mismatch": 0,
+        "coherent_n": 20,
+        "split_effects": 20,
+        "split_mismatch": 0,
+        "split_n": 20
+      }
+    },
+    "split_rows": 80,
+    "task_input_actions": 0
+  },
+  "task": "READINESS-CURRENTNESS-X11-COHERENT-CAPTURE-20260918-001"
+}

@@ -1,0 +1,223 @@
+{
+  "request": {
+    "after": 34,
+    "events": [
+      "independent_evaluation"
+    ],
+    "timeout": 3,
+    "command": {
+      "op": "finish"
+    },
+    "request_id": "finish-once"
+  },
+  "reply": {
+    "status": "timeout",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "op": "finish",
+          "transport_request_id": "finish-once"
+        },
+        "received_ns": 156466780967,
+        "emit_started_ns": 156466784293
+      }
+    ],
+    "cursor": 35,
+    "returned_ns": 159467011535,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "finish-once",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "continuation": {
+    "format": "received-continuation-v1",
+    "session": "/tmp/agent-interface-events-1a17i8_o/events.sock",
+    "cursor": 35,
+    "record_hashes": [
+      "b702232c6e416442b09cf2cc88ac04a45ae856d4c31861a00aa6e03bc6f6f0f4",
+      "b7b87806b7e425758e469f636699926d720b5b48d52b4d95aae0f469c279f620",
+      "2e5a39e08b7b5c2879f2889ed61347226612bf62dfba7cf1c0449c9a3a873f8b",
+      "fb2c0e474f26bce1bea8eb74b4cc601a0d4db0f586c8315eb094ed260fcb2edb",
+      "1eeb9603167c50ee50808fe10eaa121c32d2f8c09118f451f033c0e07b1d3554",
+      "bc91e0ab7bb6e4214f3ebb8f501b70aaef906f76a9d181333d7b3aa7978963fb",
+      "d72a9cb3b0e8739e4dc35cd7847dfc338fd444ee70287c7e4abf1a9af4f8526f",
+      "12f46062d574fcaac713f2329b34a4b2a7ec2af11bc597ee16b301427c40a352",
+      "2c768ac5a9bb203a5387704d359f70b5040d9ace60440595021635b1543e67f6",
+      "bcf0aa29cd93b2548a66f7c48c82ff2e8b62bf9b38883cc295faa02feb524d28",
+      "4e848d86b5ff35c2387eb25d9107cd1304285dfcd8d52ae591b9803367843564",
+      "767882710d84b225f66efa1b0d9d628fdf4c75c10759e8e3519fea61e63a5c1a",
+      "4012b4fcce68b8742f706ad84522edd4f0733fd70e90cc3dcb34121d82b17156",
+      "e5bc1ac7b96fd1b9507574a4fd578e3616b9be943dc3b1e7fde7eff7e4fe255f",
+      "479be444066d78d77a655e9871a3704486fe7b49f784b1b86ec845a39cec259d",
+      "c5655a5b038d99f811704fa0a3072528b5acafa788077cca8eb26cc02dced284",
+      "2096cb37fb470d368407b5093cd5d8cd16538c425592b78df80acebdceda47ef",
+      "fa5b3cdac526bebae4f76de6bb2e4a61d468a7499af5c868988610869d82293e",
+      "c1942731dd22ab91756c221b7127ebcc8fbe7b73418e2f8b33a5d1a8b3619dc3",
+      "b00c8c5e1f29df6277a93a738076981718a7005d21eda950d1d37c52a1d6191c",
+      "40df9f2e27cee118fac5904fedc16a185850e7ede47dcaedb9334450a7235da8",
+      "156076061e7fb70d5214d53b51a994d55a8cf3690fecbbd64a62c12fe21f73b9",
+      "ebb1af7012937220e9334098238e2b73b68d2415b4cf0672b15e70e27e37425f",
+      "4d6211856e5a4643f4812fe1f1dfa0682491628e48e3a2d82fadb530c2131e64",
+      "2305fd5af6745c0494d77553e57552905e0c5a5ce20bac3ac60856c7883f418e",
+      "b213d240da2c9377bbc25215cb271f552abf4ffafcdcf10da76a22fbafa11d21",
+      "ce8a1cefdc07220e9cd75c693dd88c3cfa0f41fd268230ad5b45882f7c3c36e9",
+      "f6bf3603599ad76af43e092286657fe4bac656b4548a0146f88241a03c397b93",
+      "b1e8f0af2fa5d9e8c88b88a11b395e5d48b37f087303611924640c67fe49546e",
+      "482466cb9caf2bae0cd12f2fdd365b0b0f9b93e797083885aa0c4daf6ff31476",
+      "c1adc4eaf16806e196da173e24d0ae58f229a6be9c82ce35eecbf52f607f3dae",
+      "a736ebd434a18bb681798dd64bb77173507bd473ae680ce2e00e1c10eba1e59e",
+      "3494c9deee33e2676b483254eb87cda60cb4df17a1657b525917c5ffd56c58de",
+      "c199212e85355a1fb89b68b4c4e4d563e758c27ba18b2753c5dc1817b4769a16",
+      "f35cb80f2012f4ad4eacc2a839a5f5fcb511333d69132f01a21d5676f7eba221"
+    ],
+    "observation": {
+      "event": "observation",
+      "id": "durable-eadae98569c94c34b5d2a965cf775b58",
+      "step": 0,
+      "sequence": 5,
+      "capture_ns": 156394277454,
+      "context_ns": 156398599091,
+      "context": [
+        [
+          "windows",
+          "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+        ],
+        [
+          "active_window",
+          6291463
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/journal-location-01/02-native/runtime/001.png",
+      "image_reused": true,
+      "image_prepare_ns": 1267011,
+      "image_ready_ns": 156404945009,
+      "input_focus_before": 6291464,
+      "input_focus_after": 6291464,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 4.412207,
+      "wire_bytes": 303,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "input_state_before": {
+        "owner_id": "219cf63ec7b141d798af55045b8e8475",
+        "revision": 3,
+        "sample_started_ns": 156388929868,
+        "sample_finished_ns": 156389188899,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 6291464,
+        "active_lease_deadline_ns": null,
+        "active_lease_time_valid": false,
+        "cancel_requested": false
+      },
+      "input_state_after": {
+        "owner_id": "219cf63ec7b141d798af55045b8e8475",
+        "revision": 3,
+        "sample_started_ns": 156412643692,
+        "sample_finished_ns": 156412909980,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 6291464,
+        "active_lease_deadline_ns": null,
+        "active_lease_time_valid": false,
+        "cancel_requested": false
+      },
+      "owner_revision_unchanged": true,
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "emit_started_ns": 156412960114
+    },
+    "observation_cursor": 32,
+    "pending_clock": null,
+    "clocks": {
+      "2593bc15795746c492f6eb7bfc78a197": {
+        "record": {
+          "event": "clock",
+          "runtime_ns": 155822816945,
+          "sequence": 1,
+          "emit_started_ns": 155822821642
+        },
+        "echo_cursor": 3,
+        "record_cursor": 4
+      },
+      "1b872cea5a124dc0b57980da31c3ef19": {
+        "record": {
+          "event": "clock",
+          "runtime_ns": 155983256186,
+          "sequence": 2,
+          "emit_started_ns": 155983260673
+        },
+        "echo_cursor": 11,
+        "record_cursor": 12
+      },
+      "bb34a14b0b3145b5b7cfc1782d3d5921": {
+        "record": {
+          "event": "clock",
+          "runtime_ns": 156152908642,
+          "sequence": 3,
+          "emit_started_ns": 156152911491
+        },
+        "echo_cursor": 19,
+        "record_cursor": 20
+      },
+      "2d7ee4b520ae4c409e165b5dda345cbd": {
+        "record": {
+          "event": "clock",
+          "runtime_ns": 156318566781,
+          "sequence": 4,
+          "emit_started_ns": 156318571458
+        },
+        "echo_cursor": 27,
+        "record_cursor": 28
+      }
+    },
+    "channel_closed": false,
+    "authority": "none"
+  },
+  "requested_clock_id": null,
+  "matched_clock": null,
+  "authority": "none; current observation and admission still required"
+}

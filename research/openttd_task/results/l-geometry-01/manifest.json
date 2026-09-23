@@ -1,0 +1,32 @@
+{
+  "sources": {
+    "openttd_task/run_l_geometry_v1.py": "3da5a0034c14f001c9e43f1752afe2ebda576ae6e272d2c5664ed12eedf392e1",
+    "openttd_task/plan_l_geometry_v1.json": "f13cc285dc7d6bde8bb896a3a2e04eb2f59055ca7e24d53a1d199d3775f67172",
+    "openttd_task/guarded_l_score_v1.py": "a7f73814928df2d718f9681699cafd2380d184c0ab8abf72454af661e23c4b84",
+    "openttd_task/setup_l_v1/common.nut": "007f8bd7d2901a6231c6942f8a1a8e1ff4fd92a490dae13fa3b0cfdc96ebaade",
+    "openttd_task/setup_l_v1/info.nut": "1d15ddace9c263c0184107916543456989aa9aee981cb1cac960fe5a2316fe8c",
+    "openttd_task/setup_l_v1/main.nut": "1f63a0dedb301c076e5e9514fa824268c60cce416388ea494fd3bb2661a34a3f",
+    "openttd_task/observer_l_v1/common.nut": "007f8bd7d2901a6231c6942f8a1a8e1ff4fd92a490dae13fa3b0cfdc96ebaade",
+    "openttd_task/observer_l_v1/info.nut": "a35f2791257b13d1f0ebb44572513858b26a7bbe0e77e0a32cf9f0eed1abc735",
+    "openttd_task/observer_l_v1/main.nut": "06213c30d7505a256dff4ac7719d6504d4ed4202b8a6eb7877bcac7b7e6ffbb3",
+    "observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+    "real_apps_v1/real_app_suite_v1.py": "22b4cc86af68a0ae866fe24735faaeefa40c0e1722238ab8c04723e1a564db24"
+  },
+  "plan": {
+    "study": "openttd-task-l-geometry-01",
+    "seed": 991003,
+    "setup": "select the first flat buildable 3x3 rectangle whose 7x7 guard and +6,+4 viewport offset fit the 64x64 map; signs A/B/C and X; no roads constructed",
+    "objective": "five unique target tiles form an L: three across A-to-B and three down B-to-C; the other four tiles in the 3x3 square are forbidden",
+    "viewport": "before saving, scroll to tile x+6,y+4 so the task is visible away from the prior straight-road allocation",
+    "save": "OpenTTD console save through XTEST keyboard, before model or task-controller use",
+    "restore": "two fresh private X11/game processes load the byte-pinned save with an observer-only script",
+    "gates": [
+      "the target graph has five unique tiles and four ordered bidirectional edges",
+      "restored geometry, guard, tiles and connections match setup",
+      "dynamic L scorer reports incomplete target, clear forbidden tiles and unchanged surroundings",
+      "source save bytes remain unchanged",
+      "all owned processes release"
+    ],
+    "scope": "task preparation/reset and objective-structure calibration; no model call, shared-runtime task control, speed or generalization claim"
+  }
+}

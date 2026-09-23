@@ -1,0 +1,43 @@
+name: golden-cli-lifecycle-contract-successor-2259
+on:
+  pull_request:
+    paths:
+      - research/integration/golden_cli_lifecycle_contract_successor_2259_v1/**
+      - .github/workflows/golden-cli-lifecycle-contract-successor-2259.yml
+  push:
+    paths:
+      - research/integration/golden_cli_lifecycle_contract_successor_2259_v1/**
+      - .github/workflows/golden-cli-lifecycle-contract-successor-2259.yml
+jobs:
+  formal:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Pin every PR check to the same immutable head commit; do not use
+          # the moving pull_request merge ref while main is changing.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify pinned source blobs
+        run: |
+          python3 - <<'PY'
+          import json, subprocess
+          m=json.load(open("research/integration/golden_cli_lifecycle_contract_successor_2259_v1/SOURCE_MANIFEST.json"))
+          for s in m["sources"]:
+              got=subprocess.check_output(["git","hash-object",s["path"]],text=True).strip()
+              assert got == s["blob_sha"], (s["path"], got, s["blob_sha"])
+          print("SOURCE_BLOB_AUDIT_PASS", len(m["sources"]))
+          PY
+      - name: Run path-safe audit in pinned container
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work/research/integration/golden_cli_lifecycle_contract_successor_2259_v1 python:3.12-slim             sh -c "apt-get update -qq && apt-get install -y -qq git >/dev/null && python audit.py"
+      - name: Compile and retain result
+        run: |
+          python3 -m py_compile research/integration/golden_cli_lifecycle_contract_successor_2259_v1/audit.py
+          python3 -m json.tool research/integration/golden_cli_lifecycle_contract_successor_2259_v1/RESULT.json >/dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: golden-cli-lifecycle-contract-successor-2259
+          path: |
+            research/integration/golden_cli_lifecycle_contract_successor_2259_v1/RESULT.json
+            research/integration/golden_cli_lifecycle_contract_successor_2259_v1/SOURCE_MANIFEST.json
+            research/integration/golden_cli_lifecycle_contract_successor_2259_v1/audit.py

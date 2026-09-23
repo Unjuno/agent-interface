@@ -1,0 +1,23 @@
+{
+  "allocation": "map01-task-effect-live-boundary-20260922-01",
+  "audit_command": "python -B audit.py formal-01 --out AUDIT.json",
+  "controls_command": "python -B controls.py formal-01",
+  "decision": "PASS_PLAN_BOUND_TASK_EFFECT_LIVE_BOUNDARY_SCOPED only under PLAN.md gates",
+  "expected_cases": 12,
+  "formal_command": "python -B run.py --out formal-01 --reps 3 --display-base 360",
+  "formal_invocations_at_freeze": 0,
+  "intake_main": "5337efa0394d2c0e4a6d5cb8010f177caf042681",
+  "issue": 4131,
+  "replacements": 0,
+  "retries": 0,
+  "source_sha256": {
+    "CONSTRUCTION.md": "2391db71b52219d3f1da11621e09276d95f919800478473a5f14942d56d1ae89",
+    "ENVIRONMENT.json": "2662aae8407910fa8dac4cedea82f497a9f00f1471d71e54753b5bd347ffa512",
+    "PLAN.md": "4035118a8d36bf46c52b0e64e14523eccdad71c7a5f991e37a4e1e828553a190",
+    "audit.py": "ebce0568b0acd286d3c3e23cb9792aadc51826da52637e3e4e9f95a0f11f8e34",
+    "controls.py": "864ba478ef1cb9a8969150893c704cd39a4e068fcc632594cb375b2c6ee80095",
+    "fixture.py": "3d25b488a6d91b7b4bfb1bb68a38dbe9c7aefcd5c49636bf42b2a603a034ab3e",
+    "run.py": "4ed92d296cacce2535b877efa432a36ed16521a64f7b282c3ffddca95317d276",
+    "scorer.py": "5d7caee70826de1827a7f6535225f2338b9564fb91516fcdfb7e85f7a3ad5338"
+  }
+}

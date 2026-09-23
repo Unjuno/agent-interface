@@ -1,0 +1,2431 @@
+{
+  "passed": true,
+  "scenarios": {
+    "positive-two-dependent-actions": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-confirm-save-v1",
+      "method": "save_with_confirmation",
+      "method_version": "1",
+      "session_scope": "offline-calc-fixture",
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "completed_transitions": 2,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 1,
+          "captured_ns": 2000001,
+          "evidence_ref": "frame:1",
+          "evidence_digest": "digest:1:True:absent",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true,
+            "confirm_target_present": false
+          }
+        },
+        {
+          "sequence": 2,
+          "captured_ns": 2000002,
+          "evidence_ref": "frame:2",
+          "evidence_digest": "digest:2:True:present",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "present",
+            "save_target_present": true,
+            "confirm_target_present": true
+          }
+        },
+        {
+          "sequence": 3,
+          "captured_ns": 2000003,
+          "evidence_ref": "frame:3",
+          "evidence_digest": "digest:3:False:absent",
+          "predicates": {
+            "document_dirty": false,
+            "confirm_dialog": "absent",
+            "save_target_present": true,
+            "confirm_target_present": false
+          }
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "editing",
+          "to_state": "confirming",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "observation_sequence": 1,
+          "evidence_ref": "frame:1",
+          "action_id": "action:1",
+          "effect_ref": "effect:1",
+          "release_verified": true
+        },
+        {
+          "from_state": "confirming",
+          "to_state": "done",
+          "action": "confirm_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "present",
+            "confirm_target_present": true
+          },
+          "observation_sequence": 2,
+          "evidence_ref": "frame:2",
+          "action_id": "action:2",
+          "effect_ref": "effect:2",
+          "release_verified": true
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "editing",
+          "outcome": "action",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "evidence_ref": "frame:1"
+        },
+        {
+          "event": "action_terminal",
+          "action": "request_save",
+          "status": "completed",
+          "action_id": "action:1",
+          "release_verified": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "request_save",
+          "status": "succeeded",
+          "evidence_ref": "frame:2"
+        },
+        {
+          "event": "branch_selected",
+          "state": "confirming",
+          "outcome": "action",
+          "action": "confirm_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "present",
+            "confirm_target_present": true
+          },
+          "evidence_ref": "frame:2"
+        },
+        {
+          "event": "action_terminal",
+          "action": "confirm_save",
+          "status": "completed",
+          "action_id": "action:2",
+          "release_verified": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "confirm_save",
+          "status": "succeeded",
+          "evidence_ref": "frame:3"
+        },
+        {
+          "event": "branch_selected",
+          "state": "done",
+          "outcome": "complete",
+          "action": null,
+          "matched_conditions": {
+            "document_dirty": false,
+            "confirm_dialog": "absent"
+          },
+          "evidence_ref": "frame:3"
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "TASK_SUCCEEDED",
+          "reason": "method_complete",
+          "completed_transitions": 2
+        }
+      ],
+      "latest_evidence_ref": "frame:3",
+      "pending_effect": null,
+      "started_ns": 1000100,
+      "ended_ns": 1000700,
+      "elapsed_ns": 600,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "unknown-intermediate-state": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-confirm-save-v1",
+      "method": "save_with_confirmation",
+      "method_version": "1",
+      "session_scope": "offline-calc-fixture",
+      "outcome": "SAFE_YIELD",
+      "reason": "unknown_state",
+      "completed_transitions": 1,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 1,
+          "captured_ns": 2000001,
+          "evidence_ref": "frame:1",
+          "evidence_digest": "digest:1:True:absent",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true,
+            "confirm_target_present": false
+          }
+        },
+        {
+          "sequence": 2,
+          "captured_ns": 2000002,
+          "evidence_ref": "frame:2",
+          "evidence_digest": "digest:2:True:present",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "present",
+            "save_target_present": true,
+            "confirm_target_present": false
+          }
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "editing",
+          "to_state": "confirming",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "observation_sequence": 1,
+          "evidence_ref": "frame:1",
+          "action_id": "action:1",
+          "effect_ref": "effect:1",
+          "release_verified": true
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "editing",
+          "outcome": "action",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "evidence_ref": "frame:1"
+        },
+        {
+          "event": "action_terminal",
+          "action": "request_save",
+          "status": "completed",
+          "action_id": "action:1",
+          "release_verified": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "request_save",
+          "status": "succeeded",
+          "evidence_ref": "frame:2"
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "unknown_state",
+          "completed_transitions": 1
+        }
+      ],
+      "latest_evidence_ref": "frame:2",
+      "pending_effect": null,
+      "started_ns": 1000100,
+      "ended_ns": 1000500,
+      "elapsed_ns": 400,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "stale-second-symbol": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-confirm-save-v1",
+      "method": "save_with_confirmation",
+      "method_version": "1",
+      "session_scope": "offline-calc-fixture",
+      "outcome": "SAFE_YIELD",
+      "reason": "stale_symbol",
+      "completed_transitions": 1,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 1,
+          "captured_ns": 2000001,
+          "evidence_ref": "frame:1",
+          "evidence_digest": "digest:1:True:absent",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true,
+            "confirm_target_present": false
+          }
+        },
+        {
+          "sequence": 2,
+          "captured_ns": 2000002,
+          "evidence_ref": "frame:2",
+          "evidence_digest": "digest:2:True:present",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "present",
+            "save_target_present": true,
+            "confirm_target_present": true
+          }
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "editing",
+          "to_state": "confirming",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "observation_sequence": 1,
+          "evidence_ref": "frame:1",
+          "action_id": "action:1",
+          "effect_ref": "effect:1",
+          "release_verified": true
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "editing",
+          "outcome": "action",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "evidence_ref": "frame:1"
+        },
+        {
+          "event": "action_terminal",
+          "action": "request_save",
+          "status": "completed",
+          "action_id": "action:1",
+          "release_verified": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "request_save",
+          "status": "succeeded",
+          "evidence_ref": "frame:2"
+        },
+        {
+          "event": "branch_selected",
+          "state": "confirming",
+          "outcome": "action",
+          "action": "confirm_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "present",
+            "confirm_target_present": true
+          },
+          "evidence_ref": "frame:2"
+        },
+        {
+          "event": "admission_refused",
+          "action": "confirm_save",
+          "status": "stale",
+          "reason": "stale_symbol"
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol",
+          "completed_transitions": 1
+        }
+      ],
+      "latest_evidence_ref": "frame:2",
+      "pending_effect": null,
+      "started_ns": 1000100,
+      "ended_ns": 1000500,
+      "elapsed_ns": 400,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "ambiguous-branch": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-confirm-save-v1",
+      "method": "save_with_confirmation",
+      "method_version": "1",
+      "session_scope": "offline-calc-fixture",
+      "outcome": "SAFE_YIELD",
+      "reason": "ambiguous_state",
+      "completed_transitions": 0,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 1,
+          "captured_ns": 2000001,
+          "evidence_ref": "frame:1",
+          "evidence_digest": "digest:1:True:absent",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true,
+            "confirm_target_present": false
+          }
+        }
+      ],
+      "transitions": [],
+      "critical_events": [
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "ambiguous_state",
+          "completed_transitions": 0
+        }
+      ],
+      "latest_evidence_ref": "frame:1",
+      "pending_effect": null,
+      "started_ns": 1000100,
+      "ended_ns": 1000300,
+      "elapsed_ns": 200,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "no-progress": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-confirm-save-v1",
+      "method": "save_with_confirmation",
+      "method_version": "1",
+      "session_scope": "offline-calc-fixture",
+      "outcome": "SAFE_YIELD",
+      "reason": "no_progress",
+      "completed_transitions": 1,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 1,
+          "captured_ns": 2000001,
+          "evidence_ref": "frame:1",
+          "evidence_digest": "digest:1:True:absent",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true,
+            "confirm_target_present": false
+          }
+        },
+        {
+          "sequence": 2,
+          "captured_ns": 2000002,
+          "evidence_ref": "frame:2",
+          "evidence_digest": "digest:1:True:absent",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "present",
+            "save_target_present": true,
+            "confirm_target_present": true
+          }
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "editing",
+          "to_state": "confirming",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "observation_sequence": 1,
+          "evidence_ref": "frame:1",
+          "action_id": "action:1",
+          "effect_ref": "effect:1",
+          "release_verified": true
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "editing",
+          "outcome": "action",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "evidence_ref": "frame:1"
+        },
+        {
+          "event": "action_terminal",
+          "action": "request_save",
+          "status": "completed",
+          "action_id": "action:1",
+          "release_verified": true
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "no_progress",
+          "completed_transitions": 1
+        }
+      ],
+      "latest_evidence_ref": "frame:2",
+      "pending_effect": {
+        "action": "request_save",
+        "expected_effect": {
+          "confirm_dialog": "present"
+        },
+        "effect_ref": "effect:1"
+      },
+      "started_ns": 1000100,
+      "ended_ns": 1000500,
+      "elapsed_ns": 400,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "effect-failed": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-confirm-save-v1",
+      "method": "save_with_confirmation",
+      "method_version": "1",
+      "session_scope": "offline-calc-fixture",
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_failed",
+      "completed_transitions": 1,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 1,
+          "captured_ns": 2000001,
+          "evidence_ref": "frame:1",
+          "evidence_digest": "digest:1:True:absent",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true,
+            "confirm_target_present": false
+          }
+        },
+        {
+          "sequence": 2,
+          "captured_ns": 2000002,
+          "evidence_ref": "frame:2",
+          "evidence_digest": "digest:2:True:present",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "present",
+            "save_target_present": true,
+            "confirm_target_present": true
+          }
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "editing",
+          "to_state": "confirming",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "observation_sequence": 1,
+          "evidence_ref": "frame:1",
+          "action_id": "action:1",
+          "effect_ref": "effect:1",
+          "release_verified": true
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "editing",
+          "outcome": "action",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "evidence_ref": "frame:1"
+        },
+        {
+          "event": "action_terminal",
+          "action": "request_save",
+          "status": "completed",
+          "action_id": "action:1",
+          "release_verified": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "request_save",
+          "status": "failed",
+          "evidence_ref": "frame:2"
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "effect_failed",
+          "completed_transitions": 1
+        }
+      ],
+      "latest_evidence_ref": "frame:2",
+      "pending_effect": {
+        "action": "request_save",
+        "expected_effect": {
+          "confirm_dialog": "present"
+        },
+        "effect_ref": "effect:1"
+      },
+      "started_ns": 1000100,
+      "ended_ns": 1000500,
+      "elapsed_ns": 400,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "effect-unavailable": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-confirm-save-v1",
+      "method": "save_with_confirmation",
+      "method_version": "1",
+      "session_scope": "offline-calc-fixture",
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "completed_transitions": 1,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 1,
+          "captured_ns": 2000001,
+          "evidence_ref": "frame:1",
+          "evidence_digest": "digest:1:True:absent",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true,
+            "confirm_target_present": false
+          }
+        },
+        {
+          "sequence": 2,
+          "captured_ns": 2000002,
+          "evidence_ref": "frame:2",
+          "evidence_digest": "digest:2:True:present",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "present",
+            "save_target_present": true,
+            "confirm_target_present": true
+          }
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "editing",
+          "to_state": "confirming",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "observation_sequence": 1,
+          "evidence_ref": "frame:1",
+          "action_id": "action:1",
+          "effect_ref": "effect:1",
+          "release_verified": true
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "editing",
+          "outcome": "action",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "evidence_ref": "frame:1"
+        },
+        {
+          "event": "action_terminal",
+          "action": "request_save",
+          "status": "completed",
+          "action_id": "action:1",
+          "release_verified": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "request_save",
+          "status": "unavailable",
+          "evidence_ref": "frame:2"
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "effect_unavailable",
+          "completed_transitions": 1
+        }
+      ],
+      "latest_evidence_ref": "frame:2",
+      "pending_effect": {
+        "action": "request_save",
+        "expected_effect": {
+          "confirm_dialog": "present"
+        },
+        "effect_ref": "effect:1"
+      },
+      "started_ns": 1000100,
+      "ended_ns": 1000500,
+      "elapsed_ns": 400,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "cancel-before-second-admission": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-confirm-save-v1",
+      "method": "save_with_confirmation",
+      "method_version": "1",
+      "session_scope": "offline-calc-fixture",
+      "outcome": "SAFE_YIELD",
+      "reason": "cancelled",
+      "completed_transitions": 1,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 1,
+          "captured_ns": 2000001,
+          "evidence_ref": "frame:1",
+          "evidence_digest": "digest:1:True:absent",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true,
+            "confirm_target_present": false
+          }
+        },
+        {
+          "sequence": 2,
+          "captured_ns": 2000002,
+          "evidence_ref": "frame:2",
+          "evidence_digest": "digest:2:True:present",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "present",
+            "save_target_present": true,
+            "confirm_target_present": true
+          }
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "editing",
+          "to_state": "confirming",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "observation_sequence": 1,
+          "evidence_ref": "frame:1",
+          "action_id": "action:1",
+          "effect_ref": "effect:1",
+          "release_verified": true
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "editing",
+          "outcome": "action",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "evidence_ref": "frame:1"
+        },
+        {
+          "event": "action_terminal",
+          "action": "request_save",
+          "status": "completed",
+          "action_id": "action:1",
+          "release_verified": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "request_save",
+          "status": "succeeded",
+          "evidence_ref": "frame:2"
+        },
+        {
+          "event": "branch_selected",
+          "state": "confirming",
+          "outcome": "action",
+          "action": "confirm_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "present",
+            "confirm_target_present": true
+          },
+          "evidence_ref": "frame:2"
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "cancelled",
+          "completed_transitions": 1
+        }
+      ],
+      "latest_evidence_ref": "frame:2",
+      "pending_effect": null,
+      "started_ns": 1000100,
+      "ended_ns": 1000500,
+      "elapsed_ns": 400,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "transition-budget": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-confirm-save-v1",
+      "method": "save_with_confirmation",
+      "method_version": "1",
+      "session_scope": "offline-calc-fixture",
+      "outcome": "SAFE_YIELD",
+      "reason": "budget_exhausted",
+      "completed_transitions": 1,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 1,
+          "captured_ns": 2000001,
+          "evidence_ref": "frame:1",
+          "evidence_digest": "digest:1:True:absent",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true,
+            "confirm_target_present": false
+          }
+        },
+        {
+          "sequence": 2,
+          "captured_ns": 2000002,
+          "evidence_ref": "frame:2",
+          "evidence_digest": "digest:2:True:present",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "present",
+            "save_target_present": true,
+            "confirm_target_present": true
+          }
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "editing",
+          "to_state": "confirming",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "observation_sequence": 1,
+          "evidence_ref": "frame:1",
+          "action_id": "action:1",
+          "effect_ref": "effect:1",
+          "release_verified": true
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "editing",
+          "outcome": "action",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "evidence_ref": "frame:1"
+        },
+        {
+          "event": "action_terminal",
+          "action": "request_save",
+          "status": "completed",
+          "action_id": "action:1",
+          "release_verified": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "request_save",
+          "status": "succeeded",
+          "evidence_ref": "frame:2"
+        },
+        {
+          "event": "branch_selected",
+          "state": "confirming",
+          "outcome": "action",
+          "action": "confirm_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "present",
+            "confirm_target_present": true
+          },
+          "evidence_ref": "frame:2"
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "budget_exhausted",
+          "completed_transitions": 1
+        }
+      ],
+      "latest_evidence_ref": "frame:2",
+      "pending_effect": null,
+      "started_ns": 1000100,
+      "ended_ns": 1000500,
+      "elapsed_ns": 400,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "delivery-uncertain": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-confirm-save-v1",
+      "method": "save_with_confirmation",
+      "method_version": "1",
+      "session_scope": "offline-calc-fixture",
+      "outcome": "SAFE_YIELD",
+      "reason": "delivery_uncertain",
+      "completed_transitions": 0,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 1,
+          "captured_ns": 2000001,
+          "evidence_ref": "frame:1",
+          "evidence_digest": "digest:1:True:absent",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true,
+            "confirm_target_present": false
+          }
+        }
+      ],
+      "transitions": [],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "editing",
+          "outcome": "action",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "evidence_ref": "frame:1"
+        },
+        {
+          "event": "action_terminal",
+          "action": "request_save",
+          "status": "delivery_uncertain",
+          "action_id": "action:1",
+          "release_verified": true
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "delivery_uncertain",
+          "completed_transitions": 0
+        }
+      ],
+      "latest_evidence_ref": "frame:1",
+      "pending_effect": null,
+      "started_ns": 1000100,
+      "ended_ns": 1000400,
+      "elapsed_ns": 300,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "release-failure": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-confirm-save-v1",
+      "method": "save_with_confirmation",
+      "method_version": "1",
+      "session_scope": "offline-calc-fixture",
+      "outcome": "RUNTIME_FAILED",
+      "reason": "execution_failed",
+      "completed_transitions": 0,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 1,
+          "captured_ns": 2000001,
+          "evidence_ref": "frame:1",
+          "evidence_digest": "digest:1:True:absent",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true,
+            "confirm_target_present": false
+          }
+        }
+      ],
+      "transitions": [],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "editing",
+          "outcome": "action",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "evidence_ref": "frame:1"
+        },
+        {
+          "event": "action_terminal",
+          "action": "request_save",
+          "status": "completed",
+          "action_id": "action:1",
+          "release_verified": false
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "RUNTIME_FAILED",
+          "reason": "execution_failed",
+          "completed_transitions": 0
+        }
+      ],
+      "latest_evidence_ref": "frame:1",
+      "pending_effect": null,
+      "started_ns": 1000100,
+      "ended_ns": 1000400,
+      "elapsed_ns": 300,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "stale-observation": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-confirm-save-v1",
+      "method": "save_with_confirmation",
+      "method_version": "1",
+      "session_scope": "offline-calc-fixture",
+      "outcome": "SAFE_YIELD",
+      "reason": "stale_observation",
+      "completed_transitions": 1,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 1,
+          "captured_ns": 2000001,
+          "evidence_ref": "frame:1",
+          "evidence_digest": "digest:1:True:absent",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true,
+            "confirm_target_present": false
+          }
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "editing",
+          "to_state": "confirming",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "observation_sequence": 1,
+          "evidence_ref": "frame:1",
+          "action_id": "action:1",
+          "effect_ref": "effect:1",
+          "release_verified": true
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "editing",
+          "outcome": "action",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "evidence_ref": "frame:1"
+        },
+        {
+          "event": "action_terminal",
+          "action": "request_save",
+          "status": "completed",
+          "action_id": "action:1",
+          "release_verified": true
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_observation",
+          "completed_transitions": 1
+        }
+      ],
+      "latest_evidence_ref": "frame:1",
+      "pending_effect": {
+        "action": "request_save",
+        "expected_effect": {
+          "confirm_dialog": "present"
+        },
+        "effect_ref": "effect:1"
+      },
+      "started_ns": 1000100,
+      "ended_ns": 1000500,
+      "elapsed_ns": 400,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "surface-association-change": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-confirm-save-v1",
+      "method": "save_with_confirmation",
+      "method_version": "1",
+      "session_scope": "offline-calc-fixture",
+      "outcome": "SAFE_YIELD",
+      "reason": "association_changed",
+      "completed_transitions": 1,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 1,
+          "captured_ns": 2000001,
+          "evidence_ref": "frame:1",
+          "evidence_digest": "digest:1:True:absent",
+          "predicates": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true,
+            "confirm_target_present": false
+          }
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "editing",
+          "to_state": "confirming",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "observation_sequence": 1,
+          "evidence_ref": "frame:1",
+          "action_id": "action:1",
+          "effect_ref": "effect:1",
+          "release_verified": true
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "editing",
+          "outcome": "action",
+          "action": "request_save",
+          "matched_conditions": {
+            "document_dirty": true,
+            "confirm_dialog": "absent",
+            "save_target_present": true
+          },
+          "evidence_ref": "frame:1"
+        },
+        {
+          "event": "action_terminal",
+          "action": "request_save",
+          "status": "completed",
+          "action_id": "action:1",
+          "release_verified": true
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "association_changed",
+          "completed_transitions": 1
+        }
+      ],
+      "latest_evidence_ref": "frame:1",
+      "pending_effect": {
+        "action": "request_save",
+        "expected_effect": {
+          "confirm_dialog": "present"
+        },
+        "effect_ref": "effect:1"
+      },
+      "started_ns": 1000100,
+      "ended_ns": 1000500,
+      "elapsed_ns": 400,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "adaptive-cold": {
+      "adaptive": {
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "verified_effect",
+        "task_effect": "succeeded",
+        "delivery": "confirmed",
+        "selected_target": {
+          "interface": {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "calc-confirm-save-v1",
+            "session_scope": "offline-calc-fixture",
+            "surface": "calc-window",
+            "predicates": [
+              "document_dirty",
+              "confirm_dialog",
+              "save_target_present",
+              "confirm_target_present"
+            ],
+            "symbols": {
+              "save_control": {
+                "kind": "target_reference",
+                "target_reference": "handle:save",
+                "identity_predicate": "save_target_present",
+                "dependencies": [
+                  "save_target_present",
+                  "confirm_dialog"
+                ]
+              },
+              "confirm_control": {
+                "kind": "target_reference",
+                "target_reference": "handle:confirm",
+                "identity_predicate": "confirm_target_present",
+                "dependencies": [
+                  "confirm_target_present",
+                  "confirm_dialog"
+                ]
+              }
+            },
+            "actions": {
+              "request_save": {
+                "target_symbol": "save_control",
+                "operation": "activate_save",
+                "expected_effect": {
+                  "confirm_dialog": "present"
+                }
+              },
+              "confirm_save": {
+                "target_symbol": "confirm_control",
+                "operation": "activate_confirm",
+                "expected_effect": {
+                  "document_dirty": false,
+                  "confirm_dialog": "absent"
+                }
+              }
+            },
+            "method": {
+              "name": "save_with_confirmation",
+              "version": "1",
+              "initial_state": "editing",
+              "max_transitions": 2,
+              "max_runtime_ms": 1000,
+              "states": {
+                "editing": {
+                  "branches": [
+                    {
+                      "when": {
+                        "document_dirty": true,
+                        "confirm_dialog": "absent",
+                        "save_target_present": true
+                      },
+                      "outcome": "action",
+                      "action": "request_save",
+                      "next_state": "confirming",
+                      "reason": null
+                    }
+                  ]
+                },
+                "confirming": {
+                  "branches": [
+                    {
+                      "when": {
+                        "document_dirty": true,
+                        "confirm_dialog": "present",
+                        "confirm_target_present": true
+                      },
+                      "outcome": "action",
+                      "action": "confirm_save",
+                      "next_state": "done",
+                      "reason": null
+                    }
+                  ]
+                },
+                "done": {
+                  "branches": [
+                    {
+                      "when": {
+                        "document_dirty": false,
+                        "confirm_dialog": "absent"
+                      },
+                      "outcome": "complete",
+                      "action": null,
+                      "next_state": null,
+                      "reason": null
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "authority": "reference_only"
+        },
+        "cache_update": {
+          "interface": {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "calc-confirm-save-v1",
+            "session_scope": "offline-calc-fixture",
+            "surface": "calc-window",
+            "predicates": [
+              "document_dirty",
+              "confirm_dialog",
+              "save_target_present",
+              "confirm_target_present"
+            ],
+            "symbols": {
+              "save_control": {
+                "kind": "target_reference",
+                "target_reference": "handle:save",
+                "identity_predicate": "save_target_present",
+                "dependencies": [
+                  "save_target_present",
+                  "confirm_dialog"
+                ]
+              },
+              "confirm_control": {
+                "kind": "target_reference",
+                "target_reference": "handle:confirm",
+                "identity_predicate": "confirm_target_present",
+                "dependencies": [
+                  "confirm_target_present",
+                  "confirm_dialog"
+                ]
+              }
+            },
+            "actions": {
+              "request_save": {
+                "target_symbol": "save_control",
+                "operation": "activate_save",
+                "expected_effect": {
+                  "confirm_dialog": "present"
+                }
+              },
+              "confirm_save": {
+                "target_symbol": "confirm_control",
+                "operation": "activate_confirm",
+                "expected_effect": {
+                  "document_dirty": false,
+                  "confirm_dialog": "absent"
+                }
+              }
+            },
+            "method": {
+              "name": "save_with_confirmation",
+              "version": "1",
+              "initial_state": "editing",
+              "max_transitions": 2,
+              "max_runtime_ms": 1000,
+              "states": {
+                "editing": {
+                  "branches": [
+                    {
+                      "when": {
+                        "document_dirty": true,
+                        "confirm_dialog": "absent",
+                        "save_target_present": true
+                      },
+                      "outcome": "action",
+                      "action": "request_save",
+                      "next_state": "confirming",
+                      "reason": null
+                    }
+                  ]
+                },
+                "confirming": {
+                  "branches": [
+                    {
+                      "when": {
+                        "document_dirty": true,
+                        "confirm_dialog": "present",
+                        "confirm_target_present": true
+                      },
+                      "outcome": "action",
+                      "action": "confirm_save",
+                      "next_state": "done",
+                      "reason": null
+                    }
+                  ]
+                },
+                "done": {
+                  "branches": [
+                    {
+                      "when": {
+                        "document_dirty": false,
+                        "confirm_dialog": "absent"
+                      },
+                      "outcome": "complete",
+                      "action": null,
+                      "next_state": null,
+                      "reason": null
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "authority": "reference_only"
+        },
+        "route": "cold",
+        "coarse_origin": "model_produced",
+        "comparison": {
+          "class": "full_cold",
+          "omitted_stages": [],
+          "comparable_to_full_cold": true
+        },
+        "stages": {
+          "observe_source": {
+            "status": "completed",
+            "reason": null
+          },
+          "coarse_model": {
+            "status": "completed",
+            "reason": null
+          },
+          "acquire_anchor": {
+            "status": "completed",
+            "reason": null
+          },
+          "anchor_model": {
+            "status": "completed",
+            "reason": null
+          },
+          "reuse_revalidate": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "acquire_expansion": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "expanded_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "final_revalidate": {
+            "status": "completed",
+            "reason": null
+          },
+          "execute": {
+            "status": "completed",
+            "reason": null
+          },
+          "verify_effect": {
+            "status": "completed",
+            "reason": null
+          }
+        },
+        "attempt_ledger": [
+          {
+            "attempt_id": "attempt:coarse",
+            "stage": "coarse_model",
+            "status": "completed",
+            "started_ns": 1000300,
+            "completed_ns": 1000400,
+            "call_id": "synthetic:coarse",
+            "usage": null,
+            "error": null
+          },
+          {
+            "attempt_id": "attempt:compile",
+            "stage": "anchor_model",
+            "status": "completed",
+            "started_ns": 1000700,
+            "completed_ns": 1000800,
+            "call_id": "synthetic:compile",
+            "usage": null,
+            "error": null
+          }
+        ],
+        "model_call_ledger": [
+          {
+            "attempt_id": "attempt:coarse",
+            "stage": "coarse_model",
+            "call_id": "synthetic:coarse",
+            "usage": null,
+            "cost": null,
+            "requested_model": "test-double",
+            "requested_effort": "none",
+            "output": {
+              "status": "candidate",
+              "point": [
+                1,
+                1
+              ]
+            }
+          },
+          {
+            "attempt_id": "attempt:compile",
+            "stage": "anchor_model",
+            "call_id": "synthetic:compile",
+            "usage": null,
+            "cost": null,
+            "requested_model": "test-double",
+            "requested_effort": "none",
+            "output": {
+              "status": "target_reference",
+              "target": {
+                "interface": {
+                  "format": "compiled-gui-interface-v1",
+                  "interface_id": "calc-confirm-save-v1",
+                  "session_scope": "offline-calc-fixture",
+                  "surface": "calc-window",
+                  "predicates": [
+                    "document_dirty",
+                    "confirm_dialog",
+                    "save_target_present",
+                    "confirm_target_present"
+                  ],
+                  "symbols": {
+                    "save_control": {
+                      "kind": "target_reference",
+                      "target_reference": "handle:save",
+                      "identity_predicate": "save_target_present",
+                      "dependencies": [
+                        "save_target_present",
+                        "confirm_dialog"
+                      ]
+                    },
+                    "confirm_control": {
+                      "kind": "target_reference",
+                      "target_reference": "handle:confirm",
+                      "identity_predicate": "confirm_target_present",
+                      "dependencies": [
+                        "confirm_target_present",
+                        "confirm_dialog"
+                      ]
+                    }
+                  },
+                  "actions": {
+                    "request_save": {
+                      "target_symbol": "save_control",
+                      "operation": "activate_save",
+                      "expected_effect": {
+                        "confirm_dialog": "present"
+                      }
+                    },
+                    "confirm_save": {
+                      "target_symbol": "confirm_control",
+                      "operation": "activate_confirm",
+                      "expected_effect": {
+                        "document_dirty": false,
+                        "confirm_dialog": "absent"
+                      }
+                    }
+                  },
+                  "method": {
+                    "name": "save_with_confirmation",
+                    "version": "1",
+                    "initial_state": "editing",
+                    "max_transitions": 2,
+                    "max_runtime_ms": 1000,
+                    "states": {
+                      "editing": {
+                        "branches": [
+                          {
+                            "when": {
+                              "document_dirty": true,
+                              "confirm_dialog": "absent",
+                              "save_target_present": true
+                            },
+                            "outcome": "action",
+                            "action": "request_save",
+                            "next_state": "confirming",
+                            "reason": null
+                          }
+                        ]
+                      },
+                      "confirming": {
+                        "branches": [
+                          {
+                            "when": {
+                              "document_dirty": true,
+                              "confirm_dialog": "present",
+                              "confirm_target_present": true
+                            },
+                            "outcome": "action",
+                            "action": "confirm_save",
+                            "next_state": "done",
+                            "reason": null
+                          }
+                        ]
+                      },
+                      "done": {
+                        "branches": [
+                          {
+                            "when": {
+                              "document_dirty": false,
+                              "confirm_dialog": "absent"
+                            },
+                            "outcome": "complete",
+                            "action": null,
+                            "next_state": null,
+                            "reason": null
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "authority": "reference_only"
+              }
+            }
+          }
+        ],
+        "accounting": {
+          "attempted_calls": 2,
+          "completed_calls": 2,
+          "duplicate_call_ids": [],
+          "usage_totals": {
+            "input_tokens": null,
+            "cached_input_tokens": null,
+            "cache_write_input_tokens": null,
+            "output_tokens": null,
+            "reasoning_output_tokens": null
+          },
+          "usage_coverage": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "cost": null,
+          "cached_input_semantics": "subset of input_tokens; never added to input total"
+        },
+        "phase_timings": [
+          {
+            "stage": "observe_source",
+            "started_ns": 1000100,
+            "ended_ns": 1000200,
+            "elapsed_ns": 100
+          },
+          {
+            "stage": "coarse_model",
+            "started_ns": 1000300,
+            "ended_ns": 1000400,
+            "elapsed_ns": 100
+          },
+          {
+            "stage": "acquire_anchor",
+            "started_ns": 1000500,
+            "ended_ns": 1000600,
+            "elapsed_ns": 100
+          },
+          {
+            "stage": "anchor_model",
+            "started_ns": 1000700,
+            "ended_ns": 1000800,
+            "elapsed_ns": 100
+          },
+          {
+            "stage": "final_revalidate",
+            "started_ns": 1000900,
+            "ended_ns": 1001000,
+            "elapsed_ns": 100
+          },
+          {
+            "stage": "execute",
+            "started_ns": 1001100,
+            "ended_ns": 1001200,
+            "elapsed_ns": 100
+          },
+          {
+            "stage": "verify_effect",
+            "started_ns": 1001300,
+            "ended_ns": 1001400,
+            "elapsed_ns": 100
+          }
+        ],
+        "input_authority": "consumed_by_recorded_execute_stage"
+      },
+      "runtime": {
+        "format": "compiled-gui-runtime-receipt-v1",
+        "interface_id": "calc-confirm-save-v1",
+        "method": "save_with_confirmation",
+        "method_version": "1",
+        "session_scope": "offline-calc-fixture",
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "method_complete",
+        "completed_transitions": 2,
+        "frontier_model_resumptions": 0,
+        "observations": [
+          {
+            "sequence": 1,
+            "captured_ns": 2000001,
+            "evidence_ref": "frame:1",
+            "evidence_digest": "digest:1:True:absent",
+            "predicates": {
+              "document_dirty": true,
+              "confirm_dialog": "absent",
+              "save_target_present": true,
+              "confirm_target_present": false
+            }
+          },
+          {
+            "sequence": 2,
+            "captured_ns": 2000002,
+            "evidence_ref": "frame:2",
+            "evidence_digest": "digest:2:True:present",
+            "predicates": {
+              "document_dirty": true,
+              "confirm_dialog": "present",
+              "save_target_present": true,
+              "confirm_target_present": true
+            }
+          },
+          {
+            "sequence": 3,
+            "captured_ns": 2000003,
+            "evidence_ref": "frame:3",
+            "evidence_digest": "digest:3:False:absent",
+            "predicates": {
+              "document_dirty": false,
+              "confirm_dialog": "absent",
+              "save_target_present": true,
+              "confirm_target_present": false
+            }
+          }
+        ],
+        "transitions": [
+          {
+            "from_state": "editing",
+            "to_state": "confirming",
+            "action": "request_save",
+            "matched_conditions": {
+              "document_dirty": true,
+              "confirm_dialog": "absent",
+              "save_target_present": true
+            },
+            "observation_sequence": 1,
+            "evidence_ref": "frame:1",
+            "action_id": "action:1",
+            "effect_ref": "effect:1",
+            "release_verified": true
+          },
+          {
+            "from_state": "confirming",
+            "to_state": "done",
+            "action": "confirm_save",
+            "matched_conditions": {
+              "document_dirty": true,
+              "confirm_dialog": "present",
+              "confirm_target_present": true
+            },
+            "observation_sequence": 2,
+            "evidence_ref": "frame:2",
+            "action_id": "action:2",
+            "effect_ref": "effect:2",
+            "release_verified": true
+          }
+        ],
+        "critical_events": [
+          {
+            "event": "branch_selected",
+            "state": "editing",
+            "outcome": "action",
+            "action": "request_save",
+            "matched_conditions": {
+              "document_dirty": true,
+              "confirm_dialog": "absent",
+              "save_target_present": true
+            },
+            "evidence_ref": "frame:1"
+          },
+          {
+            "event": "action_terminal",
+            "action": "request_save",
+            "status": "completed",
+            "action_id": "action:1",
+            "release_verified": true
+          },
+          {
+            "event": "effect_checked",
+            "action": "request_save",
+            "status": "succeeded",
+            "evidence_ref": "frame:2"
+          },
+          {
+            "event": "branch_selected",
+            "state": "confirming",
+            "outcome": "action",
+            "action": "confirm_save",
+            "matched_conditions": {
+              "document_dirty": true,
+              "confirm_dialog": "present",
+              "confirm_target_present": true
+            },
+            "evidence_ref": "frame:2"
+          },
+          {
+            "event": "action_terminal",
+            "action": "confirm_save",
+            "status": "completed",
+            "action_id": "action:2",
+            "release_verified": true
+          },
+          {
+            "event": "effect_checked",
+            "action": "confirm_save",
+            "status": "succeeded",
+            "evidence_ref": "frame:3"
+          },
+          {
+            "event": "branch_selected",
+            "state": "done",
+            "outcome": "complete",
+            "action": null,
+            "matched_conditions": {
+              "document_dirty": false,
+              "confirm_dialog": "absent"
+            },
+            "evidence_ref": "frame:3"
+          },
+          {
+            "event": "runtime_finished",
+            "outcome": "TASK_SUCCEEDED",
+            "reason": "method_complete",
+            "completed_transitions": 2
+          }
+        ],
+        "latest_evidence_ref": "frame:3",
+        "pending_effect": null,
+        "started_ns": 1000100,
+        "ended_ns": 1000700,
+        "elapsed_ns": 600,
+        "input_authority": "admission_per_action_only",
+        "raw_evidence_retention": "adapter_responsibility_unverified"
+      }
+    },
+    "adaptive-warm": {
+      "adaptive": {
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "verified_effect",
+        "task_effect": "succeeded",
+        "delivery": "confirmed",
+        "selected_target": {
+          "interface": {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "calc-confirm-save-v1",
+            "session_scope": "offline-calc-fixture",
+            "surface": "calc-window",
+            "predicates": [
+              "document_dirty",
+              "confirm_dialog",
+              "save_target_present",
+              "confirm_target_present"
+            ],
+            "symbols": {
+              "save_control": {
+                "kind": "target_reference",
+                "target_reference": "handle:save",
+                "identity_predicate": "save_target_present",
+                "dependencies": [
+                  "save_target_present",
+                  "confirm_dialog"
+                ]
+              },
+              "confirm_control": {
+                "kind": "target_reference",
+                "target_reference": "handle:confirm",
+                "identity_predicate": "confirm_target_present",
+                "dependencies": [
+                  "confirm_target_present",
+                  "confirm_dialog"
+                ]
+              }
+            },
+            "actions": {
+              "request_save": {
+                "target_symbol": "save_control",
+                "operation": "activate_save",
+                "expected_effect": {
+                  "confirm_dialog": "present"
+                }
+              },
+              "confirm_save": {
+                "target_symbol": "confirm_control",
+                "operation": "activate_confirm",
+                "expected_effect": {
+                  "document_dirty": false,
+                  "confirm_dialog": "absent"
+                }
+              }
+            },
+            "method": {
+              "name": "save_with_confirmation",
+              "version": "1",
+              "initial_state": "editing",
+              "max_transitions": 2,
+              "max_runtime_ms": 1000,
+              "states": {
+                "editing": {
+                  "branches": [
+                    {
+                      "when": {
+                        "document_dirty": true,
+                        "confirm_dialog": "absent",
+                        "save_target_present": true
+                      },
+                      "outcome": "action",
+                      "action": "request_save",
+                      "next_state": "confirming",
+                      "reason": null
+                    }
+                  ]
+                },
+                "confirming": {
+                  "branches": [
+                    {
+                      "when": {
+                        "document_dirty": true,
+                        "confirm_dialog": "present",
+                        "confirm_target_present": true
+                      },
+                      "outcome": "action",
+                      "action": "confirm_save",
+                      "next_state": "done",
+                      "reason": null
+                    }
+                  ]
+                },
+                "done": {
+                  "branches": [
+                    {
+                      "when": {
+                        "document_dirty": false,
+                        "confirm_dialog": "absent"
+                      },
+                      "outcome": "complete",
+                      "action": null,
+                      "next_state": null,
+                      "reason": null
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "authority": "reference_only"
+        },
+        "cache_update": {
+          "interface": {
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "calc-confirm-save-v1",
+            "session_scope": "offline-calc-fixture",
+            "surface": "calc-window",
+            "predicates": [
+              "document_dirty",
+              "confirm_dialog",
+              "save_target_present",
+              "confirm_target_present"
+            ],
+            "symbols": {
+              "save_control": {
+                "kind": "target_reference",
+                "target_reference": "handle:save",
+                "identity_predicate": "save_target_present",
+                "dependencies": [
+                  "save_target_present",
+                  "confirm_dialog"
+                ]
+              },
+              "confirm_control": {
+                "kind": "target_reference",
+                "target_reference": "handle:confirm",
+                "identity_predicate": "confirm_target_present",
+                "dependencies": [
+                  "confirm_target_present",
+                  "confirm_dialog"
+                ]
+              }
+            },
+            "actions": {
+              "request_save": {
+                "target_symbol": "save_control",
+                "operation": "activate_save",
+                "expected_effect": {
+                  "confirm_dialog": "present"
+                }
+              },
+              "confirm_save": {
+                "target_symbol": "confirm_control",
+                "operation": "activate_confirm",
+                "expected_effect": {
+                  "document_dirty": false,
+                  "confirm_dialog": "absent"
+                }
+              }
+            },
+            "method": {
+              "name": "save_with_confirmation",
+              "version": "1",
+              "initial_state": "editing",
+              "max_transitions": 2,
+              "max_runtime_ms": 1000,
+              "states": {
+                "editing": {
+                  "branches": [
+                    {
+                      "when": {
+                        "document_dirty": true,
+                        "confirm_dialog": "absent",
+                        "save_target_present": true
+                      },
+                      "outcome": "action",
+                      "action": "request_save",
+                      "next_state": "confirming",
+                      "reason": null
+                    }
+                  ]
+                },
+                "confirming": {
+                  "branches": [
+                    {
+                      "when": {
+                        "document_dirty": true,
+                        "confirm_dialog": "present",
+                        "confirm_target_present": true
+                      },
+                      "outcome": "action",
+                      "action": "confirm_save",
+                      "next_state": "done",
+                      "reason": null
+                    }
+                  ]
+                },
+                "done": {
+                  "branches": [
+                    {
+                      "when": {
+                        "document_dirty": false,
+                        "confirm_dialog": "absent"
+                      },
+                      "outcome": "complete",
+                      "action": null,
+                      "next_state": null,
+                      "reason": null
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "authority": "reference_only"
+        },
+        "route": "reuse",
+        "coarse_origin": "caller_provided",
+        "comparison": {
+          "class": "warm_reuse",
+          "omitted_stages": [
+            "observe_source",
+            "coarse_model",
+            "acquire_anchor",
+            "anchor_model"
+          ],
+          "comparable_to_full_cold": false
+        },
+        "stages": {
+          "observe_source": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "coarse_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "acquire_anchor": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "anchor_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "reuse_revalidate": {
+            "status": "completed",
+            "reason": null
+          },
+          "acquire_expansion": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "expanded_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "final_revalidate": {
+            "status": "completed",
+            "reason": null
+          },
+          "execute": {
+            "status": "completed",
+            "reason": null
+          },
+          "verify_effect": {
+            "status": "completed",
+            "reason": null
+          }
+        },
+        "attempt_ledger": [],
+        "model_call_ledger": [],
+        "accounting": {
+          "attempted_calls": 0,
+          "completed_calls": 0,
+          "duplicate_call_ids": [],
+          "usage_totals": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "usage_coverage": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "cost": 0,
+          "cached_input_semantics": "subset of input_tokens; never added to input total"
+        },
+        "phase_timings": [
+          {
+            "stage": "reuse_revalidate",
+            "started_ns": 1000100,
+            "ended_ns": 1000200,
+            "elapsed_ns": 100
+          },
+          {
+            "stage": "final_revalidate",
+            "started_ns": 1000300,
+            "ended_ns": 1000400,
+            "elapsed_ns": 100
+          },
+          {
+            "stage": "execute",
+            "started_ns": 1000500,
+            "ended_ns": 1000600,
+            "elapsed_ns": 100
+          },
+          {
+            "stage": "verify_effect",
+            "started_ns": 1000700,
+            "ended_ns": 1000800,
+            "elapsed_ns": 100
+          }
+        ],
+        "input_authority": "consumed_by_recorded_execute_stage"
+      },
+      "runtime": {
+        "format": "compiled-gui-runtime-receipt-v1",
+        "interface_id": "calc-confirm-save-v1",
+        "method": "save_with_confirmation",
+        "method_version": "1",
+        "session_scope": "offline-calc-fixture",
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "method_complete",
+        "completed_transitions": 2,
+        "frontier_model_resumptions": 0,
+        "observations": [
+          {
+            "sequence": 1,
+            "captured_ns": 2000001,
+            "evidence_ref": "frame:1",
+            "evidence_digest": "digest:1:True:absent",
+            "predicates": {
+              "document_dirty": true,
+              "confirm_dialog": "absent",
+              "save_target_present": true,
+              "confirm_target_present": false
+            }
+          },
+          {
+            "sequence": 2,
+            "captured_ns": 2000002,
+            "evidence_ref": "frame:2",
+            "evidence_digest": "digest:2:True:present",
+            "predicates": {
+              "document_dirty": true,
+              "confirm_dialog": "present",
+              "save_target_present": true,
+              "confirm_target_present": true
+            }
+          },
+          {
+            "sequence": 3,
+            "captured_ns": 2000003,
+            "evidence_ref": "frame:3",
+            "evidence_digest": "digest:3:False:absent",
+            "predicates": {
+              "document_dirty": false,
+              "confirm_dialog": "absent",
+              "save_target_present": true,
+              "confirm_target_present": false
+            }
+          }
+        ],
+        "transitions": [
+          {
+            "from_state": "editing",
+            "to_state": "confirming",
+            "action": "request_save",
+            "matched_conditions": {
+              "document_dirty": true,
+              "confirm_dialog": "absent",
+              "save_target_present": true
+            },
+            "observation_sequence": 1,
+            "evidence_ref": "frame:1",
+            "action_id": "action:1",
+            "effect_ref": "effect:1",
+            "release_verified": true
+          },
+          {
+            "from_state": "confirming",
+            "to_state": "done",
+            "action": "confirm_save",
+            "matched_conditions": {
+              "document_dirty": true,
+              "confirm_dialog": "present",
+              "confirm_target_present": true
+            },
+            "observation_sequence": 2,
+            "evidence_ref": "frame:2",
+            "action_id": "action:2",
+            "effect_ref": "effect:2",
+            "release_verified": true
+          }
+        ],
+        "critical_events": [
+          {
+            "event": "branch_selected",
+            "state": "editing",
+            "outcome": "action",
+            "action": "request_save",
+            "matched_conditions": {
+              "document_dirty": true,
+              "confirm_dialog": "absent",
+              "save_target_present": true
+            },
+            "evidence_ref": "frame:1"
+          },
+          {
+            "event": "action_terminal",
+            "action": "request_save",
+            "status": "completed",
+            "action_id": "action:1",
+            "release_verified": true
+          },
+          {
+            "event": "effect_checked",
+            "action": "request_save",
+            "status": "succeeded",
+            "evidence_ref": "frame:2"
+          },
+          {
+            "event": "branch_selected",
+            "state": "confirming",
+            "outcome": "action",
+            "action": "confirm_save",
+            "matched_conditions": {
+              "document_dirty": true,
+              "confirm_dialog": "present",
+              "confirm_target_present": true
+            },
+            "evidence_ref": "frame:2"
+          },
+          {
+            "event": "action_terminal",
+            "action": "confirm_save",
+            "status": "completed",
+            "action_id": "action:2",
+            "release_verified": true
+          },
+          {
+            "event": "effect_checked",
+            "action": "confirm_save",
+            "status": "succeeded",
+            "evidence_ref": "frame:3"
+          },
+          {
+            "event": "branch_selected",
+            "state": "done",
+            "outcome": "complete",
+            "action": null,
+            "matched_conditions": {
+              "document_dirty": false,
+              "confirm_dialog": "absent"
+            },
+            "evidence_ref": "frame:3"
+          },
+          {
+            "event": "runtime_finished",
+            "outcome": "TASK_SUCCEEDED",
+            "reason": "method_complete",
+            "completed_transitions": 2
+          }
+        ],
+        "latest_evidence_ref": "frame:3",
+        "pending_effect": null,
+        "started_ns": 1000100,
+        "ended_ns": 1000700,
+        "elapsed_ns": 600,
+        "input_authority": "admission_per_action_only",
+        "raw_evidence_retention": "adapter_responsibility_unverified"
+      }
+    }
+  },
+  "adapter_call_counts": {
+    "positive": {
+      "observe": 3,
+      "admit": 2,
+      "execute": 2,
+      "verify_effect": 2,
+      "cancelled": 7
+    },
+    "unknown": {
+      "observe": 2,
+      "admit": 1,
+      "execute": 1,
+      "verify_effect": 1,
+      "cancelled": 4
+    },
+    "stale_symbol": {
+      "observe": 2,
+      "admit": 2,
+      "execute": 1,
+      "verify_effect": 1,
+      "cancelled": 5
+    },
+    "ambiguous": {
+      "observe": 1,
+      "admit": 0,
+      "execute": 0,
+      "verify_effect": 0,
+      "cancelled": 1
+    },
+    "no_progress": {
+      "observe": 2,
+      "admit": 1,
+      "execute": 1,
+      "verify_effect": 0,
+      "cancelled": 4
+    },
+    "effect-failed": {
+      "observe": 2,
+      "admit": 1,
+      "execute": 1,
+      "verify_effect": 1,
+      "cancelled": 4
+    },
+    "effect-unavailable": {
+      "observe": 2,
+      "admit": 1,
+      "execute": 1,
+      "verify_effect": 1,
+      "cancelled": 4
+    },
+    "cancel": {
+      "observe": 2,
+      "admit": 1,
+      "execute": 1,
+      "verify_effect": 1,
+      "cancelled": 5
+    },
+    "budget": {
+      "observe": 2,
+      "admit": 1,
+      "execute": 1,
+      "verify_effect": 1,
+      "cancelled": 4
+    },
+    "delivery": {
+      "observe": 1,
+      "admit": 1,
+      "execute": 1,
+      "verify_effect": 0,
+      "cancelled": 3
+    },
+    "release": {
+      "observe": 1,
+      "admit": 1,
+      "execute": 1,
+      "verify_effect": 0,
+      "cancelled": 3
+    },
+    "stale_observation": {
+      "observe": 2,
+      "admit": 1,
+      "execute": 1,
+      "verify_effect": 0,
+      "cancelled": 4
+    },
+    "association": {
+      "observe": 2,
+      "admit": 1,
+      "execute": 1,
+      "verify_effect": 0,
+      "cancelled": 4
+    }
+  },
+  "invalid_controls": {
+    "symbol_carries_authority": true,
+    "duplicate_predicate": true,
+    "unknown_action_symbol": true,
+    "untyped_yield": true
+  },
+  "sources": {
+    "compiled_gui_interface_v1.py": "93e47e1ab5ae3450bb4acf9ec9d21c9abc44ca93ffaee25683b22039d9a722ca",
+    "probe_compiled_gui_interface_v1.py": "963e932dfeb3a94521d600c867319d96ad40883d7ed7c1ad14e9050f4304f18d",
+    "adaptive_acquisition_caller_v1.py": "cba8667e316bbd09403ef01f5c0b4b26a891ef3d8612ff63efa90276dfc6d37d"
+  },
+  "decision": "ADVANCE_TO_PREREGISTERED_LIVE_DESKTOP_BLOCK",
+  "scope": "deterministic local state-machine and shared-caller test doubles; no GUI input, frontier model call, token/latency saving, live efficacy, portability or break-even claim"
+}

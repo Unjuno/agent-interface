@@ -1,0 +1,66 @@
+{
+  "construction_excluded": {
+    "candidate_mechanism_sessions": 3,
+    "discriminator": "recovery authority stays none; recovery-only rejects/no input/modal stays; explicit rebind+current read admits one Escape and returns main; neutral/SVG unchanged",
+    "final_runner_cases": 2
+  },
+  "decision": "PASS_EXPLICIT_REBIND_AFTER_RECOVERY_SCOPED iff Issue #866 frozen gates and frozen audit pass",
+  "formal_cases": 8,
+  "formal_executed": 0,
+  "formal_reruns": 0,
+  "issue": 866,
+  "publication_base": "57fbc9fca01add6ef6be4ca2cf808bf234200fb4",
+  "source_archive": {
+    "bytes": 5080,
+    "git_blob": "a8cdaf635ba8478bb30471cf3b9c26f5ac7e8319",
+    "members": [
+      "run_case.py",
+      "run_block.py",
+      "audit.py",
+      "schedule.json",
+      "environment.json",
+      "prereg.json",
+      "source_hashes.json",
+      "test.svg"
+    ],
+    "sha256": "332e3335f7618b3a7d0ebd103b9bb49eb1256ec86e77ae280c64c6fc5bb4ace5"
+  },
+  "source_files": {
+    "audit.py": {
+      "bytes": 2757,
+      "git_blob": "b7fe06a8fc44879d6f1bc3a1b0f97b1810c56ca7",
+      "sha256": "06acf89571506e649561cc28d372efa02f8144099672a757a037e77b06d33af0"
+    },
+    "environment.json": {
+      "bytes": 214,
+      "git_blob": "0ebe8f79b69207a28b63d5f75e74a5efcf34d58b",
+      "sha256": "94bb007fb3b42d4b697538c80252dfa0ef3c50419b275f3499e566f5f788e355"
+    },
+    "prereg.json": {
+      "bytes": 298,
+      "git_blob": "d6345fef829503872bf8913e85746c2ffa41120c",
+      "sha256": "349abd60428968be6e7a03dbc15da086f9202ac48534700627c243e223e9166a"
+    },
+    "run_block.py": {
+      "bytes": 807,
+      "git_blob": "7d314d98689a50efa7e23a3cf36b8519a22e85ed",
+      "sha256": "cc934029de8e9e518687aa47bd0d25c8b7ea3d3ad0cc165760eaed573ed1bf7d"
+    },
+    "run_case.py": {
+      "bytes": 8903,
+      "git_blob": "2e0257c480bafd46a028f33386eba1df6dae366e",
+      "sha256": "8457bffdddca7852f61a17b46fa514d7f31a492da8c7c59f3a53d0afa168235e"
+    },
+    "schedule.json": {
+      "bytes": 443,
+      "git_blob": "93cbbd92d59e172e2ea5f8e65913ff256112f893",
+      "sha256": "efe3622b633851f19afe83ad299fd9a14747806534f97c42afe8e77c2520f3c5"
+    },
+    "test.svg": {
+      "bytes": 176,
+      "git_blob": "1b0d1d2278a73961b6c0f1bff0db8ae82be8e3b7",
+      "sha256": "8d74f1840f55abaef48e9d12da19ae8197a394329dd85131e00066840d36e55b"
+    }
+  },
+  "task": "MODAL-RECOVERY-EXPLICIT-REBIND-20260917-001"
+}

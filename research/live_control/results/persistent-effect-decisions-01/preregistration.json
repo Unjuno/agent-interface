@@ -1,0 +1,62 @@
+{
+  "status": "preregistered_before_model_execution",
+  "design": "one frozen v11 turn7 context; same image; A/B/B/A fresh calls; B adds only one compact nonsemantic visual receipt",
+  "order": [
+    "baseline-1",
+    "receipt-1",
+    "receipt-2",
+    "baseline-2"
+  ],
+  "model_route": {
+    "model": "gpt-6-astra",
+    "effort": "medium"
+  },
+  "required_checkpoint_prior_turn": 5,
+  "image": "C:\\Users\\junny\\Documents\\New project\\agent-interface\\research\\live_control\\results\\timing-envelope-openttd-l-11\\fixed-astra\\planner-7.png",
+  "image_sha256": "3b85afca939691d0b510421eaac6409d09cbc5388f9a630c8b16e01827ab0df8",
+  "original_prompt": "C:\\Users\\junny\\Documents\\New project\\agent-interface\\research\\live_control\\results\\timing-envelope-openttd-l-11\\fixed-astra\\prompt-7.txt",
+  "original_prompt_sha256": "a9f74119ebbe57bd49ae19b461a11261c794dd90ee71dee793e2959fddd01cab",
+  "baseline_prompt_sha256": "a9f74119ebbe57bd49ae19b461a11261c794dd90ee71dee793e2959fddd01cab",
+  "receipt_prompt_sha256": "fd64b14d38def5461318f5b22a2f74bb21694192eee9f176ca61fcdbd5d75070",
+  "receipt": {
+    "format": "persistent-effect-receipt-v1",
+    "source_turn": 5,
+    "before_sequence": 29,
+    "after_sequence": 32,
+    "latest_inspection": 1,
+    "rgb_difference_threshold": 20,
+    "after_changed_pixels": 2298,
+    "latest_changed_pixels": 1938,
+    "persistent_changed_pixels": 1676,
+    "crop_pixels": 7488,
+    "persistent_fraction": 0.22382478632478633,
+    "persistent_bbox_in_crop": [
+      0,
+      3,
+      104,
+      66
+    ],
+    "classification": "substantial_persistent_visual_change",
+    "semantic_authority": "none",
+    "permits_new_mutation": false,
+    "limit": "pixel persistence does not prove the intended application effect, target, connectivity or task completion"
+  },
+  "primary_endpoint": "checkpoint status distribution by condition",
+  "secondary_endpoints": [
+    "proposal kind and intent",
+    "drag count",
+    "reported input/cached/output tokens",
+    "runner wall time"
+  ],
+  "decision_rule": "advance to a fresh live candidate only if receipt is observed 2/2, baseline is not observed 2/2, schemas pass and no receipt call treats it as semantic authority; otherwise hold or reject",
+  "failure_policy": "retain first result of every ordered call; no retry or replacement",
+  "interpretation": "matched fixed-context model signal; no GUI action, correctness, speed, population or causal claim",
+  "sources": {
+    "preregister_persistent_effect_decisions_v1.py": "ea98ba8e159b8025aa6fe35d46b92143140928060d3a88f21c290727a92adb09",
+    "run_persistent_effect_decisions_v1.py": "4ab2af14a21168d377e8ca097c12f8c309326e8a7634cae6fadb22f04fa456cc",
+    "persistent_effect_receipt_v1.py": "b2c91414f2292859d957d047f2ee6c0a77e763e9e1e9550e2b3ededa5cb455ef",
+    "probe_persistent_effect_receipt_v1.py": "b51e9c3eb5a022b5cfb77f26d36d90cb50c0705a884eb166f46eee8f05cdc724",
+    "model_pair_runner_v2.py": "31c59f88eeac7eebe8470d875934db87a6bb8395f444a812ccb6fb9444191f77",
+    "semantic_checkpoint_v4.py": "9e6d2b71c9e997057113e3c86728ca40738f386baa4c790ab1d329f2c707838a"
+  }
+}

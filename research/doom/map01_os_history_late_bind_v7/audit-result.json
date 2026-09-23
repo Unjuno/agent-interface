@@ -1,0 +1,37 @@
+{
+  "counts": {
+    "late_bind": {
+      "cases": 8,
+      "median_age_ns": 176023958,
+      "release_failures": 0,
+      "safe_yields": 0,
+      "stale": 0,
+      "task_input_events": 24,
+      "transit_success": 8
+    },
+    "snapshot_bound": {
+      "cases": 8,
+      "median_age_ns": 6759132958,
+      "release_failures": 0,
+      "safe_yields": 8,
+      "stale": 8,
+      "task_input_events": 0,
+      "transit_success": 0
+    }
+  },
+  "errors": [],
+  "paired_age_rows": [
+    {"late_bind_age_ns":196193940,"seed":996700,"snapshot_age_ns":6730144533,"snapshot_minus_late_ns":6533950593,"state":"opening"},
+    {"late_bind_age_ns":149622930,"seed":996700,"snapshot_age_ns":6772713823,"snapshot_minus_late_ns":6623090893,"state":"closing"},
+    {"late_bind_age_ns":204301010,"seed":996701,"snapshot_age_ns":6760352193,"snapshot_minus_late_ns":6556051183,"state":"opening"},
+    {"late_bind_age_ns":159265353,"seed":996701,"snapshot_age_ns":6757913723,"snapshot_minus_late_ns":6598648370,"state":"closing"},
+    {"late_bind_age_ns":158604638,"seed":996702,"snapshot_age_ns":6728233829,"snapshot_minus_late_ns":6569629191,"state":"opening"},
+    {"late_bind_age_ns":185845850,"seed":996702,"snapshot_age_ns":6724346717,"snapshot_minus_late_ns":6538500867,"state":"closing"},
+    {"late_bind_age_ns":183030954,"seed":996703,"snapshot_age_ns":6763742655,"snapshot_minus_late_ns":6580711701,"state":"opening"},
+    {"late_bind_age_ns":169016963,"seed":996703,"snapshot_age_ns":6767749238,"snapshot_minus_late_ns":6598732275,"state":"closing"}
+  ],
+  "paired_median_snapshot_minus_late_ns":6575170446,
+  "schema":"agent-interface/map01-os-history-late-bind-audit-v7",
+  "scientific_decision":"PASS_LONG_WAIT_LATE_BIND",
+  "status":"PASS_AUDIT"
+}

@@ -1,0 +1,40 @@
+{
+  "decision": "RETAIN_STAGED_BRANCH_THEN_SELECTED_ACTION_ACQUISITION",
+  "elapsed_ms": 2023.021783,
+  "environment": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5"
+  },
+  "modes": {
+    "planner_only": {
+      "correct_continue": 66658,
+      "correct_reject": 19195,
+      "false_reject": 0,
+      "mean_dependencies": 3.50005,
+      "median_dependencies": 4.0,
+      "p95_dependencies": 5,
+      "stale_accept": 14147
+    },
+    "staged": {
+      "correct_continue": 66658,
+      "correct_reject": 33342,
+      "false_reject": 0,
+      "mean_dependencies": 6.16921,
+      "median_dependencies": 6.0,
+      "p95_dependencies": 9,
+      "stale_accept": 0
+    },
+    "state_union": {
+      "correct_continue": 33420,
+      "correct_reject": 33342,
+      "false_reject": 33238,
+      "mean_dependencies": 9.66689,
+      "median_dependencies": 10.0,
+      "p95_dependencies": 13,
+      "stale_accept": 0
+    }
+  },
+  "schema": "staged-dependency-acquisition-v1",
+  "seed": 202609160224,
+  "trials": 100000
+}

@@ -1,0 +1,23 @@
+name: Workflow dispatch boundary 3222
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  boundary:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Emit boundary evidence
+        run: |
+          set -euo pipefail
+          mkdir -p boundary-evidence
+          printf 'run_id=%s\nsha=%s\nref=%s\n' "$GITHUB_RUN_ID" "$GITHUB_SHA" "$GITHUB_REF" > boundary-evidence/metadata.txt
+      - name: Upload boundary evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: workflow-dispatch-boundary-3222-${{ github.run_id }}
+          if-no-files-found: error
+          path: boundary-evidence/metadata.txt

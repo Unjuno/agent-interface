@@ -1,0 +1,13 @@
+{
+  "allocation": "OPTIMISTIC-READWRITE-X11-TRANSFER-R1-20260919-001",
+  "formal_invocations": 1,
+  "raw_result_decision": "PASS_OPTIMISTIC_READWRITE_X11_TRANSFER_SCOPED",
+  "raw_result_pass": true,
+  "frozen_audit_decision": "FAIL_INTEGRITY",
+  "frozen_audit_errors": ["gates"],
+  "scientific_disposition": "FAIL_INTEGRITY_AUDIT_GATE_COUNT",
+  "reruns": 0,
+  "replacement_rows": 0,
+  "raw_rows_pooled_into_parent_decision": 0,
+  "reason": "Frozen audit expected exactly 6 result gates while the frozen formal emitted 7 preregistered gates. The raw 12-case result is retained but is not promoted or relabeled in this allocation."
+}

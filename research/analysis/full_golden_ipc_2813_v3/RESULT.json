@@ -1,0 +1,12 @@
+{
+  "schema": "full_golden_ipc_task1_successor_result_v1",
+  "issue": 2813,
+  "successor": "full_golden_ipc_2813_v3",
+  "status": "HOLD_DEPENDENCY_IMPORT_INCOMPATIBLE",
+  "entry_gate": "PASS_TASK1_ROUTE_PREFLIGHT",
+  "allocation": {"count": 1, "retry": false, "scope": "task-1 only", "container_started": true},
+  "stop_reason": "The frozen route wrapper imported current run_integrated_efficiency_live_v1, which imports call from integrated_efficiency_model_v1; current main no longer exposes that API.",
+  "execution": {"ipc_request_created": false, "model_invoked": false, "gui_operations": 0, "authority_granted": false, "task_effect_claim": false},
+  "decision": "STOP_BEFORE_TASK_EXECUTION",
+  "next": "Build a separately pinned full historical dependency bundle or a reviewed adapter successor; do not retry this preregistered allocation."
+}

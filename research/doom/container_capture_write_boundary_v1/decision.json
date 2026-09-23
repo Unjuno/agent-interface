@@ -1,0 +1,62 @@
+{
+  "schema": "capture-write-boundary-development-decision-v1",
+  "task_id": "container-capture-write-boundary-20260915-v1",
+  "environment": {
+    "python": "3.13.5",
+    "kernel": "6.18.44",
+    "machine": "x86_64"
+  },
+  "result": {
+    "schema": "capture-write-boundary-development-v1",
+    "pairs": 12,
+    "summary": {
+      "release_first": {
+        "n": 12,
+        "app_hold_median_ms": 249.906112,
+        "app_hold_p95_ms": 250.08858965000002,
+        "send_hold_median_ms": 250.12290050000001,
+        "deadline_to_up_median_ms": 0.1229005,
+        "pipeline_total_median_ms": 15.630343,
+        "capture_median_ms": 3.131707,
+        "png_write_fsync_median_ms": 11.99316,
+        "reopen_load_median_ms": 0.0,
+        "send_up_to_app_release_median_ms": 0.600998
+      },
+      "pipeline_first": {
+        "n": 12,
+        "app_hold_median_ms": 265.1869835,
+        "app_hold_p95_ms": 269.39489195,
+        "send_hold_median_ms": 265.6144215,
+        "deadline_to_up_median_ms": 15.614421499999999,
+        "pipeline_total_median_ms": 15.0253205,
+        "capture_median_ms": 3.396434,
+        "png_write_fsync_median_ms": 11.201270999999998,
+        "reopen_load_median_ms": 0.0,
+        "send_up_to_app_release_median_ms": 0.5150315
+      }
+    },
+    "paired_pipeline_first_minus_release_first_app_hold_ms": {
+      "median": 15.846044500000005,
+      "p95": 19.791358850000027,
+      "min": 13.546381000000025,
+      "max": 20.542204000000027
+    },
+    "pipeline_first_total_ms": {
+      "median": 15.0253205,
+      "p95": 18.9893446
+    }
+  },
+  "decision": "WRITE_BOUNDARY_COST_CANDIDATE",
+  "thresholds": {
+    "median_ms": 10.0,
+    "p95_ms": 20.0
+  },
+  "first_outcome_retained": true,
+  "retry_count": 0,
+  "source_sha256": "efe20061ec1de8f7dffdbe2116569684dca3117bda27c8b264da598e58ac6797",
+  "preregistration_sha256": "0c84520853f5105cb16a3e0218debf225ada3d46032ec059a94c68e105139e1f",
+  "result_sha256": "cd2732b93925a70020ccae6f68ef8776abb7a906626b2e74f4a399e0a49ebea7",
+  "raw_case_count": 24,
+  "next": "Directly pair write-only-before-release against full-pipeline-before-release, changing only PNG reopen/load.",
+  "claim_boundary": "Rendered Xvfb/Tk/XTEST development fixture only."
+}

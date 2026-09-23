@@ -1,0 +1,45 @@
+{
+  "allocation": "05",
+  "api_calls_on_ambiguous": 0,
+  "cases": 12,
+  "independently_pixel_and_terminal_scored": [
+    "complete_initial",
+    "complete_unmasked_change",
+    "complete_masked_change",
+    "abort_initial",
+    "abort_unmasked_change"
+  ],
+  "png_artifacts": 11,
+  "public_api_returns": 11,
+  "scope": "private Xvfb color-cell fixture; public X11 observe API; no GUI action or real-app/effect claim",
+  "status": "PASS_LIVE_MANIPULATE_CERTIFICATE_SCOPED",
+  "strict_narrowing": [
+    {
+      "changed": [
+        "D",
+        "T"
+      ],
+      "global_support": "FORWARD",
+      "mask": [
+        "E",
+        "S"
+      ],
+      "phase_union": "FORWARD",
+      "transition": "complete_initial->complete_unmasked_change"
+    },
+    {
+      "changed": [
+        "D",
+        "E",
+        "T"
+      ],
+      "global_support": "FORWARD",
+      "mask": [
+        "S"
+      ],
+      "phase_union": "FORWARD",
+      "transition": "abort_initial->abort_unmasked_change"
+    }
+  ],
+  "unsafe_suppressions": 0
+}

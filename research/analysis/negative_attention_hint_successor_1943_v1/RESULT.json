@@ -1,0 +1,18 @@
+{
+  "decision": "PASS_ADVISORY_HINT_CONTRACT_SCOPED",
+  "formal_invocations": 1,
+  "reruns": 0,
+  "tuning": 0,
+  "container_image": "python:3.12-slim",
+  "container_image_digest": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "source_commit": "e0e138bb63e190166e9416ba42f3b6988e9dca78",
+  "results": [
+    {"case":"unchanged","control":"FULL","recovered":true,"packet_bytes":153,"authoritative_sha256":"713044ee01abe95328c3da275bf6d726ec5bfac3b666122e97a09bd05e147920"},
+    {"case":"unchanged","control":"ADVISORY_LOW_PRIORITY","recovered":true,"packet_bytes":100,"authoritative_sha256":"713044ee01abe95328c3da275bf6d726ec5bfac3b666122e97a09bd05e147920"},
+    {"case":"unchanged","control":"FORCED_EXCLUSION","recovered":false,"packet_bytes":100,"authoritative_sha256":"713044ee01abe95328c3da275bf6d726ec5bfac3b666122e97a09bd05e147920"},
+    {"case":"changed_low","control":"FULL","recovered":true,"packet_bytes":153,"authoritative_sha256":"5e17a8010c1c1b3617665c0836bd8dc17cf2b1d1eb7cf829d0b125db1733d3e9"},
+    {"case":"changed_low","control":"ADVISORY_LOW_PRIORITY","recovered":true,"packet_bytes":100,"authoritative_sha256":"5e17a8010c1c1b3617665c0836bd8dc17cf2b1d1eb7cf829d0b125db1733d3e9"},
+    {"case":"changed_low","control":"FORCED_EXCLUSION","recovered":false,"packet_bytes":100,"authoritative_sha256":"5e17a8010c1c1b3617665c0836bd8dc17cf2b1d1eb7cf829d0b125db1733d3e9"}
+  ],
+  "scope_limits": ["synthetic fixture only","raw observation remains authoritative","no model","no GUI","no network","no token or latency claim","no integrated runtime claim"]
+}

@@ -1,0 +1,28 @@
+{
+  "decision": "PASS_O3_MULTI_APP_TRANSPORT_SCOPED",
+  "display": ":147",
+  "model_calls": 0,
+  "network_calls": 0,
+  "apps": [
+    {
+      "app": "app_a",
+      "mode": "useful",
+      "window": "2097155",
+      "capture_ns": 27816489287825,
+      "arrival_ns": 27816489417117,
+      "effect": {"saved": true, "text": ""},
+      "events": ["{\"key\": \"Control_L\", \"type\": \"key_press\"}", "{\"key\": \"s\", \"type\": \"key_press\"}", "{\"key\": null, \"type\": \"save\"}"],
+      "gate": {"admitted": true, "reason": "admitted"}
+    },
+    {
+      "app": "app_b",
+      "mode": "partial",
+      "window": "4194307",
+      "capture_ns": 27816642329326,
+      "arrival_ns": 27816642471453,
+      "effect": {"collateral": "fixture-label", "saved": true, "text": ""},
+      "events": ["{\"key\": \"Control_L\", \"type\": \"key_press\"}", "{\"key\": \"s\", \"type\": \"key_press\"}", "{\"key\": null, \"type\": \"partial_save\"}"],
+      "gate": {"admitted": true, "reason": "admitted"}
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "decision": "PASS_GTK_INDEPENDENT_GATE_REPAIR_ALLOCATION",
+  "issue": 2884,
+  "pr": 2885,
+  "local_date": "2026-09-20",
+  "worktree": "agent-interface-gate-2872",
+  "image_tag": "agent-interface-gtk-fixture-v3:local-2884",
+  "image_id": "sha256:28b527d0ab9dd8dd0c030676216f22c588cc08196279124d072ded3417db5432",
+  "container": "gtk-independent-gate-local-2884",
+  "network": "none",
+  "source_mount": "read-only",
+  "exit_code": 0,
+  "actual": [
+    "SUCCESS",
+    "YIELD",
+    "YIELD",
+    "NONE",
+    "PARTIAL",
+    "YIELD",
+    "YIELD",
+    "YIELD"
+  ],
+  "expected": [
+    "SUCCESS",
+    "YIELD",
+    "YIELD",
+    "NONE",
+    "PARTIAL",
+    "YIELD",
+    "YIELD",
+    "YIELD"
+  ],
+  "scorer_matches": true,
+  "formal_receipt_order_ok": true,
+  "independent_gate": [
+    [
+      "USEFUL_EFFECT",
+      true,
+      "classified"
+    ],
+    [
+      "UNAVAILABLE_BEFORE_INPUT",
+      true,
+      "classified"
+    ],
+    [
+      "GUARDED_REFUSAL",
+      true,
+      "classified"
+    ],
+    [
+      "ACCEPTED_NO_EFFECT",
+      true,
+      "classified"
+    ],
+    [
+      "PARTIAL_COLLATERAL",
+      true,
+      "classified"
+    ],
+    [
+      "STALE_REPAIR",
+      true,
+      "classified"
+    ],
+    [
+      "AMBIGUOUS_DELIVERY",
+      true,
+      "ambiguous_no_replay"
+    ],
+    [
+      "TERMINAL_CLEANUP_FAILURE",
+      true,
+      "cleanup_failure_recorded"
+    ]
+  ],
+  "scope": "live GTK/X11 adapter matrix receipt-emission preflight; not formal #2606 acceptance",
+  "note": "Raw local evidence remains under the isolated worktree output; this committed report is a compact integrity record, not a replacement for the raw artifact."
+}

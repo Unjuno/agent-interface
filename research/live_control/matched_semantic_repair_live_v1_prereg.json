@@ -1,0 +1,112 @@
+{
+  "schema": "matched-semantic-repair-prereg-v1",
+  "allocation_id": "matched-semantic-repair-live-01",
+  "output": "research/live_control/results/matched-semantic-repair-live-01",
+  "allocations": 1,
+  "retry_limit": 0,
+  "order": [
+    "local",
+    "model",
+    "model",
+    "local"
+  ],
+  "seed": 213,
+  "model": {
+    "name": "gpt-5.6-luna",
+    "effort": "low"
+  },
+  "expected_arm_model_calls": {
+    "local": 1,
+    "model": 2
+  },
+  "chromium": "/home/taka/.cache/ms-playwright/chromium-1208/chrome-linux64/chrome",
+  "expected_source_geometry": [
+    10,
+    10,
+    1050,
+    780
+  ],
+  "resize_width_delta": -120,
+  "field_box": [
+    135,
+    233,
+    240,
+    254
+  ],
+  "submit_box": [
+    248,
+    232,
+    296,
+    255
+  ],
+  "semantic_screen_box": [
+    15,
+    170,
+    330,
+    215
+  ],
+  "expected_crop_sha256": "879ad35b666f63b1c9a401c359bd563c52170146b3e4ca5c7314448fdfb5784c",
+  "max_positive_exchanges": 8,
+  "thresholds": {
+    "minimum_input_token_advantage": 5000,
+    "minimum_recovery_ms_advantage": 5000,
+    "feedback_lte_ms": 650,
+    "probe_compute_lte_ms": 5
+  },
+  "execution": [
+    "run four fresh private Chromium sessions in frozen local/model/model/local order with the same task seed",
+    "charge every arm one Luna-low grounding call on its filled source screenshot and validate both points against independent target boxes",
+    "mint an exact no-authority Save-button handle and derive a completion contract from the verified handle plus the same calibrated local relation",
+    "resize the same surface width by -120, take one passive coherent observation, and require the old contract to refuse surface_size_changed",
+    "for local arms revalidate the cached handle and repair the contract with no second model call; for model arms call Luna-low on the resized screenshot and derive a new contract from its validated point",
+    "submit through ordinary Executor admission, consume pre-artifact semantics, independently verify the saved token and release, and account for all calls, visible images, input tokens, waits and client exchanges"
+  ],
+  "decision": {
+    "pass": "Retain the bounded same-model evidence if all four arms are correct and the preregistered token and recovery-time advantages both pass.",
+    "fail": "Retain the first outcome without retry and diagnose the failed boundary or unmet comparison gate.",
+    "forbidden_claims": [
+      "general token savings",
+      "general resize recovery",
+      "unknown-layout understanding",
+      "causal superiority outside this task",
+      "cross-platform support",
+      "human-tempo control",
+      "research freeze"
+    ]
+  },
+  "scope": "One finite no-retry Linux/X11 Chromium comparison with four fresh same-seed sessions. Both arms pay for initial Luna-low visual grounding; only the model arm pays for Luna-low reacquisition after a known width resize. It measures task correctness, release, model calls, visible images, recorded input tokens, caller wait, local recovery time and semantic feedback for this calibrated form. Cost is unavailable and no generality, portability, human-tempo or causal claim follows.",
+  "source_sha256": {
+    "research/live_control/matched_semantic_repair_live_v1.py": "47c7bfd6dd2a43915a3608c6166b1b0ae48b86bac09f03484b67a1730e357c8f",
+    "research/live_control/audit_matched_semantic_repair_live_v1.py": "7d8269f225410a32f16ea3aa2dc845b75ae9426c4e3818d82fa51dcc2d798e43",
+    "research/live_control/semantic_repair_model_v1.py": "e3a0fa550847f724c47bf025e5cc26a950487b33e9e8e2d109598b9cae627016",
+    "research/live_control/test_semantic_repair_model_v1.py": "6c094b8043ebf6ad0b8658b837a826cfb5c8172f5238cd4f2d4b5a7efcffabb1",
+    "research/live_control/target_handle_semantic_binding_v1.py": "e3699401beb092d4bc6cf0ebab9f4ddf7a41e6339473d062863a7844dd79a8b7",
+    "research/live_control/test_target_handle_semantic_binding_v1.py": "fb37bc64df4b7e1d09d4ee34d203e754e52ef357bb7884d502a9b06b6200cf70",
+    "research/live_control/target_relative_crop_semantic_probe_v1.py": "4445ec20fd4c0a3cf75dbb81d6eb87a3dc5bb011114baad43681ddfbf9cd893b",
+    "research/live_control/semantic_probe_runtime_v3.py": "f7c967cd548e1285eecc8fe67959a08f3eed8f5325759ff8b8d1036a7d8586b5",
+    "research/live_control/semantic_probe_backend_v3.py": "c8df75570919521573fd78c94645baa449c13d99b443685c106ed9e06751475c",
+    "research/live_control/scoped_target_handle_v1.py": "550d377f145abbb16f8466dc91b5bb84ca25fccadf71e4d24b2f426550f5a19f",
+    "research/live_control/coordinate_frame_transform_v1.py": "cb6aefeaa4e9a41b4f4b9ca532e24106025247e39e7c7ee026ddc242a7cbb05b",
+    "research/live_control/inkscape_selection_frame_probe_v1.py": "b7d21eb76741b84120730334f21ef0692c13f10b2a49064ca7386ae4d877ab42",
+    "research/live_control/release_event_socket_v3.py": "f3aba577f924a6bf7ea605b9c954d2ee61d4732ae047d6999c7824b89c184746",
+    "research/live_control/release_event_socket_v2.py": "dd57b486f177661a5ea76e97a17932818b034275eb19562e6e266877b89e9731",
+    "research/live_control/release_event_cursor_v2.py": "4e58de4e42ac352771e3df750e21d0c90acf5d4df754cb9524be61967890bdd5",
+    "research/live_control/release_event_scope_v2.py": "5ecfa36d4df389ec534a4af342174611360f5d97786309c223d796b1f84008db",
+    "research/live_control/executor_v13.py": "2e45aeae89038d42b4f8082ef930e50ce2f1d2cd64a0ea5c184ea3daba44c327",
+    "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+    "research/live_control/release_recovery_backend_v1.py": "f6fb71dd07df4aa6daf2a3280364de1ddce6f9a8cd7a8fe8a751acbc17ffc7d2",
+    "research/live_control/cause_session_v1.py": "7a4377c568c9755f3d980575a6a936b3ccae074bf916db3867b7cf634ef9399b",
+    "research/live_control/session_v8.py": "508bc5441a08d7e403b1ec84cc08fd10d7d5f92f3f41549ef8af79f5b5de0943",
+    "research/live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+    "research/observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+    "research/observation_tiles/tile_transport.py": "f74caf4f2bea59fe3a73b3f04975384d8520bb06c296765566c4dd2542ef12b0",
+    "research/observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e",
+    "research/live_control/compiled_form_grounding_v1.py": "40a3f6eb27d117680485d35839a242f501304745cf7e532e2da62340160d444a",
+    "research/live_control/compiled_form_grounding_schema_v1.json": "a1a5901b84656375657538d2dccb975e3b40a5b22272abbab487c54904db1d0f",
+    "research/live_control/compiled_form_grounding_responder_v1.txt": "d641719d3cdac5e9a036c4bf7306ec1f91414aa4910da670a24d3edb20f9401d",
+    "research/live_control/target_handle_model_runner_v2.py": "db7f28c611fe12d648edab3e9fbd54afa89f6764c80b2be9f2642063b31baaf2",
+    "research/live_control/schema_preflight_gate_v1.py": "4fb369d3f0b7b4d551b3326b9dfc3df8152e1bc7a8fd27d8b5445b191abebae7",
+    "research/live_control/schema_preflight_v1.py": "798a0967a65208afb90b7c71aac144a91822bcace69deede3f71c92e9a9fcb9b",
+    "research/live_control/schema_preflight_responder_v1.txt": "fd2785852cd55d2a742fba02f3f214839c912a016e9782339e1eb888d2cfb4ef"
+  }
+}

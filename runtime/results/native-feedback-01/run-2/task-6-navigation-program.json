@@ -1,0 +1,49 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "navigate-task-6",
+  "source": {
+    "observation_seq": 54,
+    "binding_revision": 0
+  },
+  "authority": {
+    "lease_id": "native-navigation",
+    "expires_at_ns": 1212797025431
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "browser"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "CTRL",
+        "l"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "text",
+      "text": "http://127.0.0.1:45145/task/6"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "ENTER"
+      ]
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "app": "inkscape",
+  "audit_pass": true,
+  "candidate_observations": 13,
+  "captured_pixels": 13312000,
+  "compare_ns_total": 1188818,
+  "controller_wall_ms": 436.632166,
+  "exact_repeat_opportunities": 1,
+  "false_suppressions": 0,
+  "goal": {
+    "a": 662,
+    "b": 572,
+    "dx": 24,
+    "setup_readiness_captures": 3,
+    "token": "t780104"
+  },
+  "hash_compute_ns_in_gate": 0,
+  "input_events": 19,
+  "launch_ms": 2509.303955,
+  "logical_ops": 4,
+  "missed_changes": 0,
+  "model_calls": 0,
+  "model_visible_observations": 12,
+  "model_visible_pixels": 12288000,
+  "motor_events": [
+    {
+      "ack_ns": 140093664671,
+      "arguments": {
+        "x": 620,
+        "y": 391
+      },
+      "issued_ns": 140093284505,
+      "kind": 6
+    },
+    {
+      "ack_ns": 140094233715,
+      "arguments": {
+        "detail": 1
+      },
+      "issued_ns": 140093670966,
+      "kind": 4
+    },
+    {
+      "ack_ns": 140173631702,
+      "arguments": {
+        "x": 624,
+        "y": 391
+      },
+      "issued_ns": 140173156549,
+      "kind": 6
+    },
+    {
+      "ack_ns": 140194644173,
+      "arguments": {
+        "x": 628,
+        "y": 391
+      },
+      "issued_ns": 140194207001,
+      "kind": 6
+    },
+    {
+      "ack_ns": 140217015917,
+      "arguments": {
+        "x": 632,
+        "y": 391
+      },
+      "issued_ns": 140216640007,
+      "kind": 6
+    },
+    {
+      "ack_ns": 140239923418,
+      "arguments": {
+        "x": 636,
+        "y": 391
+      },
+      "issued_ns": 140239403040,
+      "kind": 6
+    },
+    {
+      "ack_ns": 140261793061,
+      "arguments": {
+        "x": 640,
+        "y": 391
+      },
+      "issued_ns": 140261343014,
+      "kind": 6
+    },
+    {
+      "ack_ns": 140283688994,
+      "arguments": {
+        "x": 644,
+        "y": 391
+      },
+      "issued_ns": 140283224006,
+      "kind": 6
+    },
+    {
+      "ack_ns": 140305597249,
+      "arguments": {
+        "detail": 1
+      },
+      "issued_ns": 140305238045,
+      "kind": 5
+    }
+  ],
+  "oracle": {
+    "actual": {
+      "height": "30",
+      "transform": null,
+      "width": "40",
+      "x": "66.94915",
+      "y": "50"
+    },
+    "known_ns": 140357564995,
+    "success": true
+  },
+  "oracle_after_controller_ms": 0.192426,
+  "parameters": {
+    "calc_setup_readiness": "painted worksheet: >20% near-white pixels and >128 colors; setup only",
+    "char_gap_ms": 2.0,
+    "display": "Xvfb 1280x800x24 + Openbox + XTEST",
+    "first_feedback": "fresh image or timestamped unchanged-image reference with public X11 context",
+    "first_feedback_is_semantic_completion": false,
+    "gate": "exact dimensions + mode + immutable pixel bytes; no hash/threshold",
+    "inkscape_selection_barrier": "visible dark selector handles on all four sides of acquired red object",
+    "inkscape_setup_readiness": "visible red document target before task timing",
+    "model_calls": 0,
+    "motion_gap_ms": 4.0,
+    "oracle_timeout_s": 3.0,
+    "pair_order": "alternate O0/O1 and O1/O0 by seed in development and fresh phases",
+    "poll_ms": 16.0,
+    "press_dwell_ms": 30.0,
+    "public_timeout_s": 4.0,
+    "reset": "fresh X server, WM, application process, HOME, XDG and profile per episode"
+  },
+  "pointer_path_px": 24.0,
+  "reconstruction_errors": 0,
+  "same_trace_o1_visible": 12,
+  "seed": 780104,
+  "strategy": "O2",
+  "success": true,
+  "suppressed_observations": 1,
+  "task_wall_ms": 436.824592,
+  "transport": "O2",
+  "wire_bytes": 167154,
+  "wire_decode_ms": 17.468289,
+  "wire_encode_ms": 89.588434,
+  "wire_reconstruction_errors": 0
+}

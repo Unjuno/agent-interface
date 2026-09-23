@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["op", "point_space", "points", "motion_model", "confidence_basis"],
+  "properties": {
+    "op": {"type": "string", "enum": ["target_reference", "request_hover_probe", "needs_decision"]},
+    "point_space": {"type": "string", "enum": ["source_observation_pixels", "not_applicable"]},
+    "points": {
+      "type": "array", "minItems": 0, "maxItems": 3,
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["x", "y"],
+        "properties": {"x": {"type": "integer"}, "y": {"type": "integer"}}
+      }
+    },
+    "motion_model": {"type": "string", "enum": ["surface_origin_translation", "not_applicable"]},
+    "confidence_basis": {"type": "string", "enum": ["visually_unambiguous", "visual_probe_required", "no_candidate", "ambiguous", "unreadable"]}
+  }
+}

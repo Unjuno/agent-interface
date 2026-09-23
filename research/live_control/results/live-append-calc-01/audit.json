@@ -1,0 +1,68 @@
+{
+  "events": 63,
+  "exact_frames": 12,
+  "journal_records": 17,
+  "model_turns": [
+    {
+      "turn": 1,
+      "usage": {
+        "input_tokens": 12701,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 172,
+        "reasoning_output_tokens": 76
+      },
+      "runner_wall_ms": 8622.0825,
+      "actual_served_identity": null,
+      "cost": null
+    },
+    {
+      "turn": 2,
+      "usage": {
+        "input_tokens": 12659,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 90,
+        "reasoning_output_tokens": 32
+      },
+      "runner_wall_ms": 5795.538,
+      "actual_served_identity": null,
+      "cost": null
+    },
+    {
+      "turn": 3,
+      "usage": {
+        "input_tokens": 12611,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 109,
+        "reasoning_output_tokens": 42
+      },
+      "runner_wall_ms": 8144.9105,
+      "actual_served_identity": null,
+      "cost": null
+    }
+  ],
+  "runtime_timings": [
+    {
+      "proposal": 1,
+      "source_to_revalidation_capture_ms": 55584.943969,
+      "four_api_calls_ms": 1046.315429,
+      "proposal_received_to_result_ms": 1101.249806
+    },
+    {
+      "proposal": 2,
+      "source_to_revalidation_capture_ms": 70766.177443,
+      "four_api_calls_ms": 755.37994,
+      "proposal_received_to_result_ms": 817.228531
+    }
+  ],
+  "saved_cells": [
+    480,
+    192
+  ],
+  "xlsx_sha256": "17a168dd0ab96af4259dd11baf4e620e2f31f7ab7cc6e4bb0c2e586d4e69ff2a",
+  "initial_capture_to_evaluation_ms": 205515.765782,
+  "scope": "actual requested Luna screenshot proposals, assistant review/file handoff; independent success, no autonomous-loop or human-speed claim; Windows/Linux clocks never subtracted",
+  "audit_sha256": "228095b446afcd73d33509bab8c6a359403b6ba16945f33aee738fe87dd1e73d"
+}

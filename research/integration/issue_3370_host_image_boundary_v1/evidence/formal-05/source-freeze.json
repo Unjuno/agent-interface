@@ -1,0 +1,40 @@
+{
+  "source_main_sha": "71c712eb6dd11dc3cc167fd7a0588a85c89822ce",
+  "pre_registration_commit": "32accc4935144c3337a82fb7ea55ac5ecdfc9723",
+  "runtime_correction_commit": "1aa2ab2a6fc495cb7853569cb803ca2f4ff4d6fd",
+  "bounded_handoff_commit": "c5d9d0b8c35375a39c2685e0ee355c697a3ca428",
+  "formal04_result": "FAIL_COMPLETED_INPUT_NO_SCORED_EFFECT_X_REMAINED_50",
+  "container_image": "sha256:cf02676f620c6679614a311c4baee4deceb135a37cae9d6e14c39a5e8e49001e",
+  "platform": "linux/arm64",
+  "seed": 991122,
+  "tail": [
+    {
+      "op": "wait_update",
+      "timeout_ms": 50
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "Right"
+      ],
+      "repeat": 18
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 50
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "CTRL",
+        "s"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 300
+    }
+  ],
+  "runner_sha256": "cd25eb316462a9b59d51a2cd0d5c1508b2e1ddb3c50bf54a2df750d7f69d5cc4",
+  "audit_sha256": "cefe0776fab9e537e1195f738ad061455571778da5947fdd9a5765712ec32f17"
+}

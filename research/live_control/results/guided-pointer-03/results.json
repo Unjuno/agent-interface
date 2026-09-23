@@ -1,0 +1,64 @@
+[
+  {
+    "case": "visual_reply",
+    "bbox": [
+      597,
+      374,
+      643,
+      408
+    ],
+    "command": {
+      "op": "move",
+      "x": 654,
+      "y": 390
+    }
+  },
+  {
+    "case": "visual_reply",
+    "bbox": [
+      620,
+      374,
+      666,
+      408
+    ],
+    "command": {
+      "op": "finish"
+    }
+  },
+  {
+    "case": "visual_result",
+    "requested_dx": 24,
+    "observed_dx": 23,
+    "within_one_pixel": true,
+    "evaluation": {
+      "success": true,
+      "actual": {
+        "x": "69.491524",
+        "y": "50",
+        "width": "40",
+        "height": "30",
+        "transform": null
+      },
+      "known_ns": 75550941833
+    }
+  },
+  {
+    "case": "reply_timeout",
+    "released_while_delivery_blocked": true,
+    "terminal": "needs_decision",
+    "no_late_motion": true
+  },
+  {
+    "case": "original_expiry",
+    "released_while_delivery_blocked": true,
+    "terminal": "expired",
+    "no_late_motion": true
+  },
+  {
+    "case": "consumed_reply_stall",
+    "released_before_resume": true,
+    "no_late_motion": true,
+    "terminal": "failed",
+    "error": "ValueError('obsolete continuation owner/revision')"
+  }
+]

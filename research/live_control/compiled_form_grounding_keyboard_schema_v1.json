@@ -1,0 +1,20 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["format","field","method"],
+  "properties":{
+    "format":{"type":"string","const":"compiled-form-grounding-keyboard-v1"},
+    "field":{"type":"object","additionalProperties":false,"required":["point_space","point","motion_model"],"properties":{
+      "point_space":{"type":"string","const":"source_observation_pixels"},
+      "point":{"type":"object","additionalProperties":false,"required":["x","y"],"properties":{"x":{"type":"integer"},"y":{"type":"integer"}}},
+      "motion_model":{"type":"string","const":"surface_origin_translation"}
+    }},
+    "method":{"type":"object","additionalProperties":false,"required":["first_action","continue_when","second_action","complete_when"],"properties":{
+      "first_action":{"type":"string","const":"enter_exact_token"},
+      "continue_when":{"type":"string","const":"field_pixels_changed"},
+      "second_action":{"type":"string","const":"key_chord_ctrl_s"},
+      "complete_when":{"type":"string","const":"label_pixels_changed_then_independent_score"}
+    }}
+  }
+}

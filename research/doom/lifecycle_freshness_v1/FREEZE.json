@@ -1,0 +1,23 @@
+{
+  "schema": "lifecycle-freshness-freeze-v1",
+  "task": "O3-LIFECYCLE-FRESHNESS-20260916-001",
+  "publication_base": "1308b57d3209bc32b3bea5b84efb4911c915d8e9",
+  "runtime_base": "9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+  "plan_canonical_sha256": "8d75670ca810cebff09a6a1d763236df7acc09713b8d1bc5f6699ae9dd2d2db5",
+  "unit_tests": "13/13 PASS",
+  "preflight": "excluded: running condition, freshness 300 ms, 500 ms owner cutoff, real MAP01/X11 PASS",
+  "sources": {
+    "acquisition.py": "7dd7e11a38025e072db79a91559c9264aafce8b59aac1947ba9ad26eab9ac3da",
+    "audit.py": "681ade87769ec796cb2d954615a85776e8b0272fda3829666a956faada63aef0",
+    "gate.py": "c75af990ecd4cd458110b17f297e87264558670de5bb2fb15dfb8dce3b83144b",
+    "monitor.py": "fdd22e1190ed9b4dfa65b9e4cf32ad6cd1abab3f117c7f69a3a0d109959293a8",
+    "outcome.py": "b58374b956fba546e1c13ab65aa6f50feececf7e52b4ddc065e1605de60abc0b",
+    "run.py": "0a27ee5a6b66cc31d3b1a706d1ff7947ab2914a467af629ef9c67a1e648af9cd",
+    "session.py": "0874120ba6b7fd60070f5371c9b0f8138132e48774bb85808fd46fc860a74373",
+    "test_gate.py": "ae5ed1ddb410739a6396790e0197af6756fa1bb01a92df2cac1d6396a369ed96"
+  },
+  "fixture_save_sha256": "cc5302aa9cda3960248733caa96da1b53adcc4b6a1a2dcfb80675650c9350401",
+  "freshness_ms": 300,
+  "measured_cases": 12,
+  "retry": false
+}

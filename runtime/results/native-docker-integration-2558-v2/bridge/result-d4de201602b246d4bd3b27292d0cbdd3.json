@@ -1,0 +1,18 @@
+{
+  "status": "refused",
+  "error": "X11BackendError('native target guard refused: SCOPE_MISMATCH')",
+  "input_dispatched": false,
+  "guard_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 6,
+      "eligible": false,
+      "status": "SCOPE_MISMATCH",
+      "handle": "field",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "focus_or_surface_changed",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "state": "needs_reconciliation",
+  "exchanges": [
+    {
+      "request": {
+        "after": 12,
+        "events": [
+          "clock"
+        ],
+        "timeout": 5,
+        "request_id": "clock-558de70125634767a8ce1dff330ceab9",
+        "command": {
+          "op": "clock"
+        }
+      },
+      "started_ns": 78832712826,
+      "returned_ns": 78859546978,
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "clock-558de70125634767a8ce1dff330ceab9"
+            },
+            "received_ns": 78839805821,
+            "emit_started_ns": 78839808726
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 78849649708,
+            "sequence": 2,
+            "emit_started_ns": 78849653061
+          }
+        ],
+        "cursor": 14,
+        "returned_ns": 78859386230,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "clock-558de70125634767a8ce1dff330ceab9",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      }
+    },
+    {
+      "request": {
+        "after": 14,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 15,
+        "action_id": "move-save",
+        "request_id": "program-80f3194f184c4472a127c53e2070f235",
+        "command": {
+          "op": "submit",
+          "id": "move-save",
+          "steps": [
+            {
+              "op": "pointer_click",
+              "x": 618,
+              "y": 391
+            },
+            {
+              "op": "hold",
+              "keys": [
+                "Right"
+              ],
+              "duration_ms": 80
+            },
+            {
+              "op": "key",
+              "keys": [
+                "ctrl",
+                "s"
+              ]
+            },
+            {
+              "op": "settle",
+              "quiet_ms": 80,
+              "timeout_ms": 500
+            }
+          ],
+          "expected_sequence": 2,
+          "valid_until_ns": 108849649708
+        }
+      },
+      "started_ns": 78867200889,
+      "returned_ns": 78894014527,
+      "reply": {
+        "status": "unattributed_rejection",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 2,
+              "id": "move-save",
+              "op": "submit",
+              "steps": [
+                {
+                  "op": "pointer_click",
+                  "x": 618,
+                  "y": 391
+                },
+                {
+                  "duration_ms": 80,
+                  "keys": [
+                    "Right"
+                  ],
+                  "op": "hold"
+                },
+                {
+                  "keys": [
+                    "ctrl",
+                    "s"
+                  ],
+                  "op": "key"
+                },
+                {
+                  "op": "settle",
+                  "quiet_ms": 80,
+                  "timeout_ms": 500
+                }
+              ],
+              "transport_request_id": "program-80f3194f184c4472a127c53e2070f235",
+              "valid_until_ns": 108849649708
+            },
+            "received_ns": 78873938559,
+            "emit_started_ns": 78873941301
+          },
+          {
+            "event": "rejected",
+            "reason": "unsupported key",
+            "emit_started_ns": 78883936159
+          }
+        ],
+        "cursor": 16,
+        "returned_ns": 78893820446,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "program-80f3194f184c4472a127c53e2070f235",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      }
+    }
+  ],
+  "program_sent": true,
+  "source_image": {
+    "status": "image",
+    "sequence": 2,
+    "capture_ns": 33442383540,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/pointer-view-stale-01/runtime/001.png",
+    "relative_path": "001.png",
+    "sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "last_reply": {
+    "status": "unattributed_rejection",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "expected_sequence": 2,
+          "id": "move-save",
+          "op": "submit",
+          "steps": [
+            {
+              "op": "pointer_click",
+              "x": 618,
+              "y": 391
+            },
+            {
+              "duration_ms": 80,
+              "keys": [
+                "Right"
+              ],
+              "op": "hold"
+            },
+            {
+              "keys": [
+                "ctrl",
+                "s"
+              ],
+              "op": "key"
+            },
+            {
+              "op": "settle",
+              "quiet_ms": 80,
+              "timeout_ms": 500
+            }
+          ],
+          "transport_request_id": "program-80f3194f184c4472a127c53e2070f235",
+          "valid_until_ns": 108849649708
+        },
+        "received_ns": 78873938559,
+        "emit_started_ns": 78873941301
+      },
+      {
+        "event": "rejected",
+        "reason": "unsupported key",
+        "emit_started_ns": 78883936159
+      }
+    ],
+    "cursor": 16,
+    "returned_ns": 78893820446,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "program-80f3194f184c4472a127c53e2070f235",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "reason": "boundary unresolved: unattributed_rejection",
+  "authority": "none; clock refresh does not refresh image; ordinary v9 admission applies"
+}

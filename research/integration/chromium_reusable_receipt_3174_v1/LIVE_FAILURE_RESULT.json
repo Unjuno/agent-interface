@@ -1,0 +1,20 @@
+{
+  "decision": "FAIL_CHROMIUM_LIVE_RECEIPT",
+  "image": "mixed-formal-2992-debian:20260920",
+  "network": "none",
+  "display": ":155",
+  "xid1": "4194304",
+  "xid2": "4194304",
+  "observed_title": "Chromium clipboard",
+  "rows": [
+    {"case":"valid","admitted":true,"effect":false,"title":"Chromium clipboard","native_window":"auxiliary_or_wrong_window"},
+    {"case":"session_restart","admitted":false,"reason":"session_mismatch"},
+    {"case":"window_replacement","admitted":false,"reason":"resource_mismatch"},
+    {"case":"duplicate","admitted":false,"reason":"duplicate"}
+  ],
+  "runtime_error": "Xlib BadMatch during focus/input path",
+  "model_calls": 0,
+  "network_calls": 0,
+  "retries_after_formal_failure": 0,
+  "interpretation": "Chromium launched, but main app window identity and live effect were not acquired; no PASS claim."
+}

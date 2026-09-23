@@ -1,0 +1,32 @@
+{
+  "schema": "barrier_membership_epoch_freeze_v1",
+  "task": "COORD-BARRIER-MEMBERSHIP-EPOCH-20260916-014",
+  "publication_base": "33c8c538fc763fee2d05f8e5bc915888352b82b1",
+  "pre_measurement_head": "a000c6cd0c1658a57672eaf6d6e6ddba217649f6",
+  "measured_order": ["stable_membership", "member_added", "member_replaced"],
+  "artifacts": {
+    "policy.py": "dc422094af9acb656a80eb2929d00a92404307db",
+    "plan.json": "79fb5470a974006783c9736231d551cb09b898ba",
+    "membership_stable.json": "d25ce7d4cf7734e44365c96bec99d84540737a32",
+    "membership_added.json": "66e0cd925cb2ceb814a76a0f1e7141537a13cb77",
+    "membership_replaced.json": "7ad109c7b31ac1c49f20e9a040c40af2233bc1e4",
+    "coord_stable.json": "279ed8dd6f6bf4df3a9261f8aec6d57ba14c23f3",
+    "coord_added.json": "4f1da1500abc52e50c256f08f9b3fcd238c00ffe",
+    "coord_replaced.json": "a898d325c2b8a450f1f502ccbd7a019f7e588411",
+    "confirm_stable.json": "663fad2a1fee8254c1ab7123b0b7438eee702464",
+    "confirm_added.json": "810a65c09ce508cc41f61e6d547bd1d574c0cb53",
+    "confirm_replaced.json": "e58fec3aeca6a7d39913cbb1cb9ad0e147814c6f",
+    "payload_membership_added_epoch2.json": "d225792e832fbaaee257c2567b034e691ea42a08",
+    "payload_membership_replaced_epoch2.json": "afc6cd2489b55c6a2c4f39a14ee9ed560d1e9653",
+    "payload_confirm_replaced_epoch2.json": "6952b7f7df099fde5ad5cb8b7768130c347022d8",
+    "payload_coord_stable_g2.json": "236b0954b55507ce6232c0bbe2527ce351dc525d",
+    "payload_coord_replaced_g2.json": "1ae8fdd9b2d387229133de616682d73b3c8b27bd"
+  },
+  "rules": {
+    "advance_only_if_batch_matches_current_membership_epoch_and_exact_set": true,
+    "no_quorum": true,
+    "no_timeout_eviction": true,
+    "no_retries": true,
+    "individual_barrier_confirmation_semantics_held_fixed": true
+  }
+}

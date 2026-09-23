@@ -1,0 +1,26 @@
+{
+  "task": "OBSERVATION-EPOCH-BOUNDED-SKEW-R1-20260918-001",
+  "issue": 1580,
+  "base_main": "13e9cd3f6bf2682e38cd3d1b85bebeb0d096feda",
+  "branch": "research/observation-epoch-bounded-skew-r1-1580",
+  "formal_status": "NOT_RUN",
+  "formal_invocations": 0,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "source_blobs": {
+    "PLAN.md": "5a082f99cf824c01cc20531be32d1621b3ab686c",
+    "candidate.py": "3eb514bdcd0d6f98733dad91975e3b121afa51fa",
+    "oracle.py": "af5cf9e8e33635cd56ee17bf2bbb1f60ed8e0e75",
+    "runner.py": "44fd31e8fef2f7ac8bb1f2791b934a1f94c6fb62",
+    "audit.py": "2e6a8cdb74a9b48c5e40ea7dc3c4a44953a6376a",
+    "independent_audit.py": "55225f329f6e5ad766ea1f4411f6c10b3989fb38"
+  },
+  "construction_blobs": {
+    "CONSTRUCTION.json": "b11ba0f08ba07200a495a966aa3a0480440039a8",
+    "CONSTRUCTION_AUDIT.json": "6a2889395618311d8a064be79f1d1cd566b64482",
+    "CONSTRUCTION_INDEPENDENT_AUDIT.json": "fcff7523c1449f893fbaeb94640c0aeec30a681a"
+  },
+  "local_source_git_blob_match": true,
+  "note": "construction JSON publication differs from the earlier scratch file only in serialization/newline bytes; formal uses the source blobs above, all of which match local git hash-object after readback normalization."
+}

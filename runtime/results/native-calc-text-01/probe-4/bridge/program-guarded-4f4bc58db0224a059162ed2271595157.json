@@ -1,0 +1,105 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "guarded-4f4bc58db0224a059162ed2271595157",
+  "source": {
+    "observation_seq": 78,
+    "binding_revision": 0
+  },
+  "authority": {
+    "lease_id": "native-x11-fc0b8129ae3a4f69ba9bc672434fc2b9",
+    "expires_at_ns": 2411631967801
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "app"
+    },
+    {
+      "op": "pointer_move",
+      "frame": "screen_physical_px",
+      "x": 119,
+      "y": 108
+    },
+    {
+      "op": "pointer_button",
+      "button": "left",
+      "down": true
+    },
+    {
+      "op": "pointer_button",
+      "button": "left",
+      "down": false
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "CTRL",
+        "A"
+      ]
+    },
+    {
+      "op": "text",
+      "text": "B8"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "ENTER"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "F2"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "text",
+      "text": "1"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 2
+    },
+    {
+      "op": "text",
+      "text": "1"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 2
+    },
+    {
+      "op": "text",
+      "text": "6"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "ENTER"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}

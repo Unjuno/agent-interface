@@ -1,0 +1,157 @@
+{
+  "scope": "observed automatic recovery from Calc dialog focus changes only; no cancellation, stale-target, lost-reply or general recovery claim",
+  "rows": [
+    {
+      "label": "responder-abba-1-builtin",
+      "instruction_mode": "builtin",
+      "focus_interruptions": [
+        {
+          "after_turn": 1,
+          "steps_completed": 4,
+          "next_proposal": {
+            "kind": "act",
+            "steps": [
+              {
+                "op": "pointer_click",
+                "x": 785,
+                "y": 463,
+                "duration_ms": 80
+              }
+            ],
+            "rationale": "The Excel format confirmation dialog is visible; select \u201cUse Excel 2007-365 Format\u201d to complete saving in the requested format."
+          },
+          "release_verified": true
+        },
+        {
+          "after_turn": 2,
+          "steps_completed": 0,
+          "next_proposal": {
+            "kind": "act",
+            "steps": [
+              {
+                "op": "chord",
+                "modifier": "Control_L",
+                "key": "s"
+              }
+            ],
+            "rationale": "The worksheet visibly contains A1=480 and A2=192, and no dialog is visible. Save the existing workbook, then stop in case Excel-format confirmation appears."
+          },
+          "release_verified": true
+        }
+      ]
+    },
+    {
+      "label": "responder-abba-2-responder",
+      "instruction_mode": "responder",
+      "focus_interruptions": [
+        {
+          "after_turn": 1,
+          "steps_completed": 4,
+          "next_proposal": {
+            "kind": "act",
+            "steps": [
+              {
+                "op": "pointer_click",
+                "x": 785,
+                "y": 463,
+                "duration_ms": 80
+              }
+            ],
+            "rationale": "The Excel-format confirmation dialog is visible; choose Use Excel 2007-365 Format to complete the requested save."
+          },
+          "release_verified": true
+        },
+        {
+          "after_turn": 2,
+          "steps_completed": 0,
+          "next_proposal": {
+            "kind": "act",
+            "steps": [
+              {
+                "op": "chord",
+                "modifier": "Control_L",
+                "key": "s"
+              }
+            ],
+            "rationale": "The visible values match the requested entries, and the workbook needs to be saved in Excel format."
+          },
+          "release_verified": true
+        }
+      ]
+    },
+    {
+      "label": "responder-abba-3-responder",
+      "instruction_mode": "responder",
+      "focus_interruptions": [
+        {
+          "after_turn": 1,
+          "steps_completed": 3,
+          "next_proposal": {
+            "kind": "act",
+            "steps": [
+              {
+                "op": "pointer_click",
+                "x": 782,
+                "y": 463,
+                "duration_ms": 80
+              }
+            ],
+            "rationale": "The worksheet visibly contains A1=480 and A2=192, and the Excel-format confirmation dialog is open; choose Use Excel 2007\u2013365 Format to complete the requested save."
+          },
+          "release_verified": true
+        },
+        {
+          "after_turn": 2,
+          "steps_completed": 0,
+          "next_proposal": {
+            "kind": "verify",
+            "visible_A1": 480,
+            "visible_A2": 192,
+            "confirmation_dialog_visible": false,
+            "rationale": "A1 and A2 visibly match the requested values, and no confirmation dialog is present."
+          },
+          "release_verified": true
+        }
+      ]
+    },
+    {
+      "label": "responder-abba-4-builtin",
+      "instruction_mode": "builtin",
+      "focus_interruptions": [
+        {
+          "after_turn": 1,
+          "steps_completed": 4,
+          "next_proposal": {
+            "kind": "act",
+            "steps": [
+              {
+                "op": "pointer_click",
+                "x": 784,
+                "y": 463,
+                "duration_ms": 80
+              }
+            ],
+            "rationale": "The required values are visible and the Excel-format confirmation dialog is open; click Use Excel 2007-365 Format to complete saving."
+          },
+          "release_verified": true
+        },
+        {
+          "after_turn": 2,
+          "steps_completed": 0,
+          "next_proposal": {
+            "kind": "act",
+            "steps": [
+              {
+                "op": "chord",
+                "modifier": "Control_L",
+                "key": "s"
+              }
+            ],
+            "rationale": "The required values are visible in A1 and A2, and no dialog is open. Save the existing workbook in Excel format; stop afterward if a format confirmation appears."
+          },
+          "release_verified": true
+        }
+      ]
+    }
+  ]
+}

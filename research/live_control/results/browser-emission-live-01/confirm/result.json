@@ -1,0 +1,660 @@
+{
+  "bounded_followup": null,
+  "outer_operation": {
+    "started_ns": 97109753264,
+    "prepared_ns": 97970868647,
+    "scope": "through exchange and optional followup; report rendering and model receipt not included"
+  },
+  "lifecycle": {
+    "state": "terminal_received",
+    "action_id": "confirm",
+    "cursor": 104,
+    "uncertainty": null,
+    "stopped": null,
+    "terminal": {
+      "event": "terminal",
+      "id": "confirm",
+      "status": "completed",
+      "error": null,
+      "steps_completed": 3,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 97890972063,
+        "valid_until_ns": 127163250297
+      },
+      "interruption": null,
+      "decision_reason": null,
+      "post_release_observation": null,
+      "terminal_ns": 97891061227,
+      "semantic_completion": "program status only; task scoring is separate",
+      "emit_started_ns": 97891064058
+    },
+    "observation": {
+      "event": "observation",
+      "id": "confirm",
+      "step": 2,
+      "sequence": 17,
+      "capture_ns": 97804001089,
+      "context_ns": 97809636765,
+      "context": [
+        [
+          "windows",
+          "0x00600003  0 HPLaptop AI FORM SAVED - Google Chrome for Testing\n"
+        ],
+        [
+          "active_window",
+          6291459
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/016.png",
+      "image_reused": true,
+      "image_prepare_ns": 6505751,
+      "image_ready_ns": 97826973514,
+      "input_focus_before": 6291459,
+      "input_focus_after": 6291459,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "capture_ms": 3.290057,
+      "wire_bytes": 292,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "input_state_before": {
+        "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+        "revision": 87,
+        "sample_started_ns": 97799025439,
+        "sample_finished_ns": 97799289463,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          45,
+          350
+        ],
+        "focus": 6291459,
+        "active_lease_deadline_ns": 127163250297,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "input_state_after": {
+        "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+        "revision": 87,
+        "sample_started_ns": 97848718794,
+        "sample_finished_ns": 97848942692,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          45,
+          350
+        ],
+        "focus": 6291459,
+        "active_lease_deadline_ns": 127163250297,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "owner_revision_unchanged": true,
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "emit_started_ns": 97848998037
+    },
+    "input_authority": "none",
+    "meaning": "Historical action state; terminal is not task success or permission to reuse a lease."
+  },
+  "receipt": {
+    "format": "decision-receipt-v5",
+    "source": {
+      "sha256": "f3c608e34f5749f3d5ff29b97a774ef87dd2514a0047c5613f5f59ae6c742a4c",
+      "bytes": 58484
+    },
+    "reported_state": "terminal_received",
+    "reported_reason": null,
+    "program_write_may_have_been_attempted": true,
+    "terminals": [
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          17
+        ],
+        "record": {
+          "event": "terminal",
+          "id": "confirm",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 3,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 97890972063,
+            "valid_until_ns": 127163250297
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "post_release_observation": null,
+          "terminal_ns": 97891061227,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 97891064058
+        }
+      }
+    ],
+    "image": {
+      "status": "image",
+      "sequence": 17,
+      "capture_ns": 97804001089,
+      "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/016.png",
+      "relative_path": "016.png",
+      "sha256": "af0085c259ee97a3610743e78eba7009cc272e3844dc7ff8e0defd9271342b75",
+      "authority": "none",
+      "freshness": "historical referenced capture; no new observation"
+    },
+    "event_index": {
+      "command": {
+        "count": 2,
+        "paths": [
+          [
+            "exchanges",
+            0,
+            "reply",
+            "records",
+            0
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            0
+          ]
+        ]
+      },
+      "clock": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            0,
+            "reply",
+            "records",
+            1
+          ]
+        ]
+      },
+      "accepted": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            1
+          ]
+        ]
+      },
+      "step_started": {
+        "count": 3,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            2
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            7
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            12
+          ]
+        ]
+      },
+      "pointer_admission": {
+        "count": 4,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            3
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            8
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            9
+          ]
+        ]
+      },
+      "observation": {
+        "count": 4,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            10
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            13
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            14
+          ]
+        ]
+      },
+      "step_completed": {
+        "count": 3,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            6
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            11
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            16
+          ]
+        ]
+      },
+      "settle_result": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            15
+          ]
+        ]
+      },
+      "terminal": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            17
+          ]
+        ]
+      }
+    },
+    "attention": [
+      {
+        "path": [
+          "lifecycle"
+        ],
+        "reason": "unknown report field"
+      },
+      {
+        "path": [
+          "outer_operation"
+        ],
+        "reason": "unknown report field"
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          5
+        ],
+        "reason": "unknown event fields",
+        "fields": [
+          "input_state_after",
+          "input_state_before",
+          "input_state_scope",
+          "owner_revision_unchanged"
+        ]
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          10
+        ],
+        "reason": "unknown event fields",
+        "fields": [
+          "input_state_after",
+          "input_state_before",
+          "input_state_scope",
+          "owner_revision_unchanged"
+        ]
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          13
+        ],
+        "reason": "unknown event fields",
+        "fields": [
+          "input_state_after",
+          "input_state_before",
+          "input_state_scope",
+          "owner_revision_unchanged"
+        ]
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          14
+        ],
+        "reason": "unknown event fields",
+        "fields": [
+          "input_state_after",
+          "input_state_before",
+          "input_state_scope",
+          "owner_revision_unchanged"
+        ]
+      }
+    ],
+    "detail_review_required": true,
+    "task_success": "unknown; program completion is not independent task scoring",
+    "coverage": "Index of exchange events only; routine payloads and other report fields remain in source. Not full review or schema validation.",
+    "authority": "none; no new input approval, refreshed image, or model receipt",
+    "limits": "Binding checks only recorded consistency, not authenticity or full nested schema semantics. No attention is not approval. Unknown nested fields may need manual review.",
+    "program_binding": {
+      "program_id": "confirm",
+      "request_id": "program-8883ad2e2f594eccbf1f1eaab6b5dbe7",
+      "terminal": {
+        "event": "terminal",
+        "id": "confirm",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 3,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 97890972063,
+          "valid_until_ns": 127163250297
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "post_release_observation": null,
+        "terminal_ns": 97891061227,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 97891064058
+      },
+      "meaning": "internally consistent recorded program binding; not task success, provenance, current lease or input approval",
+      "recorded_exchanges": 2,
+      "projection": "validated contiguous received slices; not a new socket reply",
+      "lifecycle_state": "terminal_received"
+    },
+    "tracking_metrics": [],
+    "servo_feedback": []
+  },
+  "state_table": {
+    "format": "input-state-table-v1",
+    "source_sha256": "f3c608e34f5749f3d5ff29b97a774ef87dd2514a0047c5613f5f59ae6c742a4c",
+    "table": {
+      "common_state": {
+        "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "focus": 6291459,
+        "active_lease_deadline_ns": 127163250297,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "common_observation": {
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "owner_revision_unchanged": true
+      },
+      "observations": [
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          "sequence": 14,
+          "fields": {
+            "input_state_before": {
+              "delta": {
+                "revision": 84,
+                "sample_started_ns": 97356261744,
+                "sample_finished_ns": 97356507631,
+                "pointer": [
+                  32,
+                  314
+                ]
+              }
+            },
+            "input_state_after": {
+              "delta": {
+                "revision": 84,
+                "sample_started_ns": 97427921999,
+                "sample_finished_ns": 97428328068,
+                "pointer": [
+                  32,
+                  314
+                ]
+              }
+            }
+          }
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            10
+          ],
+          "sequence": 15,
+          "fields": {
+            "input_state_before": {
+              "delta": {
+                "revision": 87,
+                "sample_started_ns": 97573583058,
+                "sample_finished_ns": 97573871429,
+                "pointer": [
+                  45,
+                  350
+                ]
+              }
+            },
+            "input_state_after": {
+              "delta": {
+                "revision": 87,
+                "sample_started_ns": 97661804848,
+                "sample_finished_ns": 97662082048,
+                "pointer": [
+                  45,
+                  350
+                ]
+              }
+            }
+          }
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            13
+          ],
+          "sequence": 16,
+          "fields": {
+            "input_state_before": {
+              "delta": {
+                "revision": 87,
+                "sample_started_ns": 97699945107,
+                "sample_finished_ns": 97700104321,
+                "pointer": [
+                  45,
+                  350
+                ]
+              }
+            },
+            "input_state_after": {
+              "delta": {
+                "revision": 87,
+                "sample_started_ns": 97768184877,
+                "sample_finished_ns": 97768347342,
+                "pointer": [
+                  45,
+                  350
+                ]
+              }
+            }
+          }
+        },
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            14
+          ],
+          "sequence": 17,
+          "fields": {
+            "input_state_before": {
+              "delta": {
+                "revision": 87,
+                "sample_started_ns": 97799025439,
+                "sample_finished_ns": 97799289463,
+                "pointer": [
+                  45,
+                  350
+                ]
+              }
+            },
+            "input_state_after": {
+              "delta": {
+                "revision": 87,
+                "sample_started_ns": 97848718794,
+                "sample_finished_ns": 97848942692,
+                "pointer": [
+                  45,
+                  350
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "coverage": "Four named input-state fields of every exchange observation; all other fields/events/images remain in the original report and receipt.",
+    "authority": "none; historical values only; no attention cleared, lease renewed, or task success inferred"
+  },
+  "image": {
+    "status": "image",
+    "sequence": 17,
+    "capture_ns": 97804001089,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/016.png",
+    "relative_path": "016.png",
+    "sha256": "af0085c259ee97a3610743e78eba7009cc272e3844dc7ff8e0defd9271342b75",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  }
+}

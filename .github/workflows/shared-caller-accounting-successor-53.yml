@@ -1,0 +1,43 @@
+name: shared caller accounting successor 53 r1
+on:
+  pull_request:
+    paths:
+      - "research/analysis/shared_caller_accounting_successor_53_v1/**"
+      - ".github/workflows/shared-caller-accounting-successor-53.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  accounting:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Run shared caller
+        run: |
+          python -m py_compile research/analysis/shared_caller_accounting_successor_53_v1/experiment.py
+          python research/analysis/shared_caller_accounting_successor_53_v1/experiment.py
+      - name: Independent reconciliation
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path("research/analysis/shared_caller_accounting_successor_53_v1/RESULT.json").read_text())
+          assert d["decision"]=="PASS_SHARED_CALLER_ACCOUNTING_SCOPED"
+          calls=[c for r in d["records"] for c in r["calls"]]
+          assert len({c["call_id"] for c in calls})==len(calls)
+          assert {r["outcome"] for r in d["records"]}=={"success","no_match","stale"}
+          assert sum(c["input_tokens"] for c in calls)==d["total_input_tokens"]
+          print("INDEPENDENT_RECONCILIATION_PASS")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shared-caller-accounting-successor-53-${{ github.run_id }}
+          path: research/analysis/shared_caller_accounting_successor_53_v1
+          if-no-files-found: error
+          retention-days: 30

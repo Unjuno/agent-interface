@@ -1,0 +1,89 @@
+{
+  "audit_exitcode": 0,
+  "audit_result_sha256": "ffb269d10599d3085bbb8e2f59a856d506d6b2b68063cebc58c6cc3f8b88f314",
+  "audit_stderr_bytes": 0,
+  "cases": [
+    {
+      "arm": "coast",
+      "errors": [],
+      "id": "g01-coast",
+      "mae": 0.014397032558918,
+      "pair": 1,
+      "verdict": "ADMIT"
+    },
+    {
+      "arm": "recovery",
+      "errors": [],
+      "id": "g01-recovery",
+      "mae": 0.02738925628364086,
+      "pair": 1,
+      "verdict": "REJECT_CONTEXT_CHANGED"
+    },
+    {
+      "arm": "recovery",
+      "errors": [],
+      "id": "g02-recovery",
+      "mae": 0.03360089659690857,
+      "pair": 2,
+      "verdict": "REJECT_CONTEXT_CHANGED"
+    },
+    {
+      "arm": "coast",
+      "errors": [],
+      "id": "g02-coast",
+      "mae": 0.014398002997040749,
+      "pair": 2,
+      "verdict": "ADMIT"
+    },
+    {
+      "arm": "coast",
+      "errors": [],
+      "id": "g03-coast",
+      "mae": 0.013354034163057804,
+      "pair": 3,
+      "verdict": "ADMIT"
+    },
+    {
+      "arm": "recovery",
+      "errors": [],
+      "id": "g03-recovery",
+      "mae": 0.03838657960295677,
+      "pair": 3,
+      "verdict": "REJECT_CONTEXT_CHANGED"
+    },
+    {
+      "arm": "recovery",
+      "errors": [],
+      "id": "g04-recovery",
+      "mae": 0.038638874888420105,
+      "pair": 4,
+      "verdict": "REJECT_CONTEXT_CHANGED"
+    },
+    {
+      "arm": "coast",
+      "errors": [],
+      "id": "g04-coast",
+      "mae": 0.014398002997040749,
+      "pair": 4,
+      "verdict": "ADMIT"
+    }
+  ],
+  "decision": "PASS_VISUAL_CONTEXT_GUARD_SCOPED",
+  "errors": [],
+  "expected_order": [
+    "g01-coast",
+    "g01-recovery",
+    "g02-recovery",
+    "g02-coast",
+    "g03-coast",
+    "g03-recovery",
+    "g04-recovery",
+    "g04-coast"
+  ],
+  "formal_exitcode": 0,
+  "formal_stderr_bytes": 0,
+  "formal_summary_sha256": "e3b62aaf9fd714f0b042e00c1fa2408b92acfc25f72c7dc441813cc3040110d3",
+  "pass": true,
+  "schema": "map01-recovery-visual-context-guard-postformal-verification-v1",
+  "task": "MAP01-RECOVERY-VISUAL-CONTEXT-GUARD-20260917-002"
+}

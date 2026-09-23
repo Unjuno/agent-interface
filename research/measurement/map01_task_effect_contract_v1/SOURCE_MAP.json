@@ -1,0 +1,23 @@
+{
+  "task": "MAP01-TASK-EFFECT-INSTRUMENTATION-CONTRACT-20260919-001",
+  "issue": 1839,
+  "base": "18938ef108a929caa236f5d1a4aa3a7707302012",
+  "parents": {
+    "1838": "PASS_USEFUL_OCCUPIED_CONTROL_NONIDENTIFIABLE_SCOPED",
+    "503": "SCHEMA_INSUFFICIENT_FIRST_USEFUL_FEEDBACK",
+    "1276": "PASS_INPUT_OWNER_V12_LIVE_CAUSAL_X11_SCOPED",
+    "1340": "PASS_LIVE_CAUSAL_EFFECT_SAMPLE_SAME_PROCESS_X11_SCOPED",
+    "1530": "PASS_REPRESENTATION_TRANSFER_CANDIDATE"
+  },
+  "main_source_blobs": {
+    "research/doom/doom_typed_observation_v1.py": "86d5f5b3cd6ea099f775e6213cc608f92b37d1fd",
+    "research/doom/session_map01_v12.py": "0ac2d3c1d84e27f87c68dd6cbcbbd82f90209747",
+    "research/live_control/executor_v13.py": "7f308a0dd863af534f764f657d603b4921ba1c6a"
+  },
+  "observed_roles": {
+    "typed_state": "health/ammo, grants_input_authority=false",
+    "program_terminal": "program status only; task scoring is separate",
+    "run_score": "post_control_score map_exit/episode_finished/player_dead/death_count/kill_count at run level",
+    "viewport_observation": "semantic_completion unknown"
+  }
+}

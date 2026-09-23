@@ -1,0 +1,117 @@
+{
+  "cases": [
+    {
+      "case": "full",
+      "format": "presentation-emission-v1",
+      "attempt_id": "642fbf3f252b4dc192cade6ba9b190f3",
+      "pid": 10,
+      "clock": {
+        "name": "perf_counter_ns",
+        "domain": "this process only; cross-process alignment unverified"
+      },
+      "status": "locally_flushed",
+      "accepted_bytes": 60,
+      "model_received_ns": null,
+      "model_input_tokens": null,
+      "model_id": null,
+      "model_cost": null,
+      "downstream_measurement": "not recorded",
+      "scope": "local binary stream write and flush, not model receipt",
+      "serialization_started_ns": 1616349561,
+      "serialization_finished_ns": 1616393666,
+      "payload_bytes": 60,
+      "payload_sha256": "cd68ceb2de3a898bc18bef38a7eacc75578c1341b3080d671103a87bb30eff53",
+      "write_started_ns": 1621764490,
+      "write_finished_ns": 1621778184,
+      "flush_finished_ns": 1621779688,
+      "attempt_finished_ns": 1621781047
+    },
+    {
+      "case": "short-writes",
+      "format": "presentation-emission-v1",
+      "attempt_id": "4055dd4572f24835aaf12465dec22bfd",
+      "pid": 10,
+      "clock": {
+        "name": "perf_counter_ns",
+        "domain": "this process only; cross-process alignment unverified"
+      },
+      "status": "locally_flushed",
+      "accepted_bytes": 60,
+      "model_received_ns": null,
+      "model_input_tokens": null,
+      "model_id": null,
+      "model_cost": null,
+      "downstream_measurement": "not recorded",
+      "scope": "local binary stream write and flush, not model receipt",
+      "serialization_started_ns": 1645118100,
+      "serialization_finished_ns": 1645158110,
+      "payload_bytes": 60,
+      "payload_sha256": "cd68ceb2de3a898bc18bef38a7eacc75578c1341b3080d671103a87bb30eff53",
+      "write_started_ns": 1651472975,
+      "write_finished_ns": 1651500860,
+      "flush_finished_ns": 1651502138,
+      "attempt_finished_ns": 1651502835
+    },
+    {
+      "case": "broken-pipe",
+      "format": "presentation-emission-v1",
+      "attempt_id": "6d1364b32546441aa72a3cac26e5a1fb",
+      "pid": 10,
+      "clock": {
+        "name": "perf_counter_ns",
+        "domain": "this process only; cross-process alignment unverified"
+      },
+      "status": "failed",
+      "accepted_bytes": 3,
+      "model_received_ns": null,
+      "model_input_tokens": null,
+      "model_id": null,
+      "model_cost": null,
+      "downstream_measurement": "not recorded",
+      "scope": "local binary stream write and flush, not model receipt",
+      "serialization_started_ns": 1675319637,
+      "serialization_finished_ns": 1675346249,
+      "payload_bytes": 60,
+      "payload_sha256": "cd68ceb2de3a898bc18bef38a7eacc75578c1341b3080d671103a87bb30eff53",
+      "write_started_ns": 1680485205,
+      "error_type": "BrokenPipeError",
+      "error": "injected after three accepted bytes",
+      "attempt_finished_ns": 1680507469
+    },
+    {
+      "case": "flush-failure",
+      "format": "presentation-emission-v1",
+      "attempt_id": "6389c3ee15b14539bbc335b9bfb91a85",
+      "pid": 10,
+      "clock": {
+        "name": "perf_counter_ns",
+        "domain": "this process only; cross-process alignment unverified"
+      },
+      "status": "failed",
+      "accepted_bytes": 60,
+      "model_received_ns": null,
+      "model_input_tokens": null,
+      "model_id": null,
+      "model_cost": null,
+      "downstream_measurement": "not recorded",
+      "scope": "local binary stream write and flush, not model receipt",
+      "serialization_started_ns": 1705776820,
+      "serialization_finished_ns": 1705799507,
+      "payload_bytes": 60,
+      "payload_sha256": "cd68ceb2de3a898bc18bef38a7eacc75578c1341b3080d671103a87bb30eff53",
+      "write_started_ns": 1711076391,
+      "write_finished_ns": 1711084577,
+      "error_type": "OSError",
+      "error": "injected flush failure",
+      "attempt_finished_ns": 1711099585
+    }
+  ],
+  "real_pipe_exact": true,
+  "overwrite_rejected": true,
+  "received_sha256": "cd68ceb2de3a898bc18bef38a7eacc75578c1341b3080d671103a87bb30eff53",
+  "source_hashes": {
+    "presentation_emission_v1.py": "fc476352bade9cfda7b36cfe7029734bb6074d87a2d06f9ea2349ce7c71a759d",
+    "probe_presentation_emission_v1.py": "c9b58fd7df1bcde1f7c5a89836bf14d02cb81581b4d87d279e8ab964c5746c0b"
+  },
+  "scope": "transport controls; no GUI or model token measurement"
+}

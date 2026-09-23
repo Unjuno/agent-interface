@@ -1,0 +1,42 @@
+name: Mixed-app formal allocation #2821
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "research/integration/mixed_app_long_session_2499/formal_session.py"
+      - ".github/workflows/mixed-app-formal-allocation-2821.yml"
+
+jobs:
+  allocation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run one Docker allocation
+        shell: bash
+        run: |
+          set +e
+          mkdir -p "$RUNNER_TEMP/mixed-2499"
+          docker run --rm --network none \
+            -v "$GITHUB_WORKSPACE:/workspace:ro" \
+            -v "$RUNNER_TEMP/mixed-2499:/out" \
+            -w /workspace ubuntu:24.04 bash -lc '
+              set -o pipefail
+              apt-get update -qq
+              DEBIAN_FRONTEND=noninteractive apt-get install -y -qq python3 xvfb xdotool x11-utils inkscape libreoffice chromium > /tmp/install.log 2>&1
+              python3 research/integration/mixed_app_long_session_2499/formal_session.py > /out/result.json 2> /out/stderr.log
+            '
+          rc=$?
+          if [ ! -f "$RUNNER_TEMP/mixed-2499/result.json" ]; then
+            printf '%s\n' '{"decision":"STOP_MIXED_APP_LONG_SESSION","reason":"container produced no result.json","container_exit":'$rc'}' > "$RUNNER_TEMP/mixed-2499/result.json"
+          fi
+          printf '%s\n' "$rc" > "$RUNNER_TEMP/mixed-2499/container_exit.txt"
+          exit 0
+      - name: Upload formal allocation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mixed-app-formal-allocation-2821
+          path: ${{ runner.temp }}/mixed-2499
+          if-no-files-found: error

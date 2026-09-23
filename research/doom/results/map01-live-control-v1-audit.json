@@ -1,0 +1,134 @@
+{
+  "audit_passed": true,
+  "scope": "pre-formal normal MAP01; no clear claim",
+  "ephemeral_12": {
+    "turns": 12,
+    "input_tokens": 104054,
+    "cached_input_tokens": 6912,
+    "uncached_input_tokens": 97142,
+    "model_seconds": 99.203273006,
+    "model_seconds_median": 7.944010233,
+    "score": {
+      "event": "post_control_score",
+      "map": "MAP01",
+      "skill": 1,
+      "map_exit": false,
+      "episode_finished": false,
+      "player_dead": false,
+      "wall_control_ns": 158493542274,
+      "episode_timeout_seconds": 600,
+      "reward": 0.0,
+      "scorer_refresh_calls_after_control": 1,
+      "emit_ns": 4030318511883
+    }
+  },
+  "persistent_12": {
+    "turns": 12,
+    "input_tokens": 149089,
+    "cached_input_tokens": 126208,
+    "uncached_input_tokens": 22881,
+    "model_seconds": 116.143807215,
+    "model_seconds_median": 9.5122660645,
+    "score": {
+      "event": "post_control_score",
+      "map": "MAP01",
+      "skill": 1,
+      "map_exit": false,
+      "episode_finished": false,
+      "player_dead": false,
+      "wall_control_ns": 163747381524,
+      "episode_timeout_seconds": 600,
+      "reward": 0.0,
+      "scorer_refresh_calls_after_control": 1,
+      "emit_ns": 4479125820376
+    }
+  },
+  "hybrid_20": {
+    "turns": 20,
+    "input_tokens": 199476,
+    "cached_input_tokens": 121344,
+    "uncached_input_tokens": 78132,
+    "model_seconds": 168.680710905,
+    "model_seconds_median": 8.350205317,
+    "score": {
+      "event": "post_control_score",
+      "map": "MAP01",
+      "skill": 1,
+      "map_exit": false,
+      "episode_finished": false,
+      "player_dead": false,
+      "wall_control_ns": 257178852838,
+      "death_count": 0,
+      "kill_count": 0,
+      "one_life_map_exit": false,
+      "episode_timeout_seconds": 600,
+      "reward": 0.0,
+      "scorer_refresh_calls_after_control": 1,
+      "emit_ns": 5279067297182
+    }
+  },
+  "semantic_motor_20": {
+    "turns": 20,
+    "input_tokens": 196727,
+    "cached_input_tokens": 121472,
+    "uncached_input_tokens": 75255,
+    "model_seconds": 156.602211337,
+    "model_seconds_median": 7.6039254145,
+    "score": {
+      "event": "post_control_score",
+      "map": "MAP01",
+      "skill": 1,
+      "map_exit": false,
+      "episode_finished": false,
+      "player_dead": false,
+      "wall_control_ns": 181262872999,
+      "death_count": 0,
+      "kill_count": 1,
+      "one_life_map_exit": false,
+      "episode_timeout_seconds": 600,
+      "reward": 0.0,
+      "scorer_refresh_calls_after_control": 1,
+      "emit_ns": 5920257318521
+    }
+  },
+  "semantic_motor_reflex_30": {
+    "turns": 30,
+    "input_tokens": 294613,
+    "cached_input_tokens": 164608,
+    "uncached_input_tokens": 130005,
+    "model_seconds": 246.409800429,
+    "model_seconds_median": 7.9698591,
+    "score": {
+      "event": "post_control_score",
+      "map": "MAP01",
+      "skill": 1,
+      "map_exit": false,
+      "episode_finished": false,
+      "player_dead": false,
+      "wall_control_ns": 289860886928,
+      "death_count": 0,
+      "kill_count": 0,
+      "one_life_map_exit": false,
+      "episode_timeout_seconds": 600,
+      "reward": 0.0,
+      "scorer_refresh_calls_after_control": 1,
+      "emit_ns": 6358916925875
+    }
+  },
+  "persistent_uncached_reduction_vs_ephemeral_percent": 76.446,
+  "persistent_model_time_change_vs_ephemeral_percent": 17.077,
+  "semantic_motor_wall_reduction_vs_hybrid_percent": 29.519,
+  "semantic_motor_nonmodel_reduction_vs_hybrid_percent": 72.134,
+  "coast_composed_over_existing_pointer_drag_backend": true,
+  "deathcount_calibrated_on_terminal_death": true,
+  "model_time_covered_by_bounded_program_percent": {
+    "map01-overlap-persistent-luna-01": 97.294,
+    "map01-overlap-hybrid-luna-01": 98.966
+  },
+  "invalid_metric_retained": "map01-overlap-temporal-luna-01 observation_to_plan_accept_ns is negative and unusable",
+  "limitations": [
+    "allocations use different seeds and are descriptive, not a matched causal comparison",
+    "no MAP01 exit",
+    "post-control deathcount persistence after an in-session restart is untested"
+  ]
+}

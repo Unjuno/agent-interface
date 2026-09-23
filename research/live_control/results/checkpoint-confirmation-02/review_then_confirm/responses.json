@@ -1,0 +1,461 @@
+[
+  {
+    "request": {
+      "after": 0,
+      "events": [
+        "clock"
+      ],
+      "timeout": 10,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "initial"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "ready",
+          "app": "chromium",
+          "task": "Submit token in the form.",
+          "goal": {
+            "token": "t991029",
+            "a": 865,
+            "b": 726,
+            "dx": 24,
+            "url": "http://127.0.0.1:37797/",
+            "setup_readiness_captures": 0
+          },
+          "presentation": "compact",
+          "finish_after_contract": "submit finish_after=true reserves final program; after terminal close input admission and score; cancel/clock remain available; finish cleans up without rescoring",
+          "basic_step_examples": [
+            {
+              "op": "text",
+              "text": "123"
+            },
+            {
+              "op": "key",
+              "key": "Return"
+            },
+            {
+              "op": "chord",
+              "modifier": "Control_L",
+              "key": "s"
+            }
+          ],
+          "decision_evidence_schema": {
+            "required_for": "submit",
+            "fields": {
+              "delivery_id": "successfully flushed observation or review delivery ID",
+              "observation_sequence": "must equal expected_sequence",
+              "producer": [
+                "assistant",
+                "scripted",
+                "human"
+              ]
+            },
+            "authority": "none; ordinary admission required"
+          },
+          "servo_schema": {
+            "op": "pointer_servo",
+            "program_constraint": "must be the only step",
+            "required": {
+              "source_sequence": "integer; latest observation sequence",
+              "box": "[x,y,width,height] integers; size 4..96; spatial detail required",
+              "target_delta": "[dx,dy] integers; each -32..32",
+              "points": "2..32 objects {x: integer, y: integer}; within source frame",
+              "duration_ms": "integer 1..5000; initial path only",
+              "max_corrections": "integer 1..3"
+            },
+            "fixed": {
+              "search_radius_px": 32,
+              "max_correction_px": 24,
+              "tolerance_px": 1,
+              "reply_timeout_ms": 1000,
+              "feedback_delay_ms": 80
+            },
+            "outcomes": [
+              "local_goal_reached",
+              "lost",
+              "ambiguous",
+              "invalid_frame",
+              "same_observation",
+              "update_limit"
+            ],
+            "completion": "non-goal outcome gives needs_decision; local goal is not independent task success"
+          },
+          "operations": [
+            "submit",
+            "pointer_reply",
+            "cancel",
+            "clock",
+            "finish",
+            "finalization_status",
+            "effect_checkpoint"
+          ],
+          "guided_fields": [
+            "points",
+            "duration_ms",
+            "reply_timeout_ms",
+            "max_updates",
+            "feedback_delay_ms"
+          ],
+          "reply_fields": [
+            "ticket",
+            "sequence",
+            "command"
+          ],
+          "clock_domain_id": "80e0ad92255aaa85942a534f08f0858777eb35fd9337cabc3c4296c43bb1cf53",
+          "emit_started_ns": 153301862524,
+          "delivery_id": "delivery:1"
+        },
+        {
+          "event": "observation",
+          "id": "initial",
+          "step": 0,
+          "sequence": 1,
+          "capture_ns": 153327852832,
+          "context_ns": 153336516055,
+          "context": [
+            [
+              "windows",
+              "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+            ],
+            [
+              "active_window",
+              6291459
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/checkpoint-confirmation-02/review_then_confirm/runtime/001.png",
+          "image_reused": false,
+          "image_prepare_ns": 38575738,
+          "image_ready_ns": 153391545568,
+          "input_focus_before": 6291459,
+          "input_focus_after": 6291459,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291459,
+            "surface": 6291459,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291459,
+            "surface": 6291459,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291459,
+            "surface": 6291459,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          },
+          "capture_ms": 13.795529,
+          "wire_bytes": 35201,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "a095e5a8f8fc414fa69e86564c149d87",
+            "revision": 0,
+            "sample_started_ns": 153312249769,
+            "sample_finished_ns": 153312917738,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 6291459,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "a095e5a8f8fc414fa69e86564c149d87",
+            "revision": 0,
+            "sample_started_ns": 153398881104,
+            "sample_finished_ns": 153399189260,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 6291459,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "clock_domain_id": "80e0ad92255aaa85942a534f08f0858777eb35fd9337cabc3c4296c43bb1cf53",
+          "emit_started_ns": 153399275786,
+          "delivery_id": "delivery:2"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "initial"
+          },
+          "received_ns": 153406134345,
+          "transport_request_id": "initial",
+          "runtime_request_sequence": 1,
+          "declared_action_id": null,
+          "command_op": "clock",
+          "correlation_scope": "current runtime input line; action ID is caller-declared",
+          "clock_domain_id": "80e0ad92255aaa85942a534f08f0858777eb35fd9337cabc3c4296c43bb1cf53",
+          "emit_started_ns": 153406144916,
+          "delivery_id": "delivery:3"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 153419265457,
+          "sequence": 1,
+          "clock_domain_id": "80e0ad92255aaa85942a534f08f0858777eb35fd9337cabc3c4296c43bb1cf53",
+          "emit_started_ns": 153419273548,
+          "delivery_id": "delivery:4"
+        }
+      ],
+      "cursor": 4,
+      "returned_ns": 153432996437,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "initial",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 24,
+      "events": [
+        "effect_checkpoint"
+      ],
+      "timeout": 5,
+      "command": {
+        "op": "effect_checkpoint",
+        "contract": {
+          "kind": "saved_form_value",
+          "expected": "t991029"
+        }
+      },
+      "request_id": "before-confirm",
+      "read_request_id": "before-confirm"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "contract": {
+              "expected": "t991029",
+              "kind": "saved_form_value"
+            },
+            "op": "effect_checkpoint",
+            "transport_request_id": "before-confirm"
+          },
+          "received_ns": 155652475276,
+          "transport_request_id": "before-confirm",
+          "runtime_request_sequence": 4,
+          "declared_action_id": null,
+          "command_op": "effect_checkpoint",
+          "correlation_scope": "current runtime input line; action ID is caller-declared",
+          "clock_domain_id": "80e0ad92255aaa85942a534f08f0858777eb35fd9337cabc3c4296c43bb1cf53",
+          "emit_started_ns": 155652492539,
+          "delivery_id": "delivery:25"
+        },
+        {
+          "event": "effect_checkpoint",
+          "evidence": {
+            "status": "UNKNOWN",
+            "authority": "none",
+            "attribution": "not_established",
+            "task_success": null,
+            "observation_closed": false,
+            "contract": {
+              "expected": "t991029",
+              "kind": "saved_form_value"
+            },
+            "started_ns": 155659687463,
+            "reason": "evidence_unavailable",
+            "error": {
+              "type": "FileNotFoundError",
+              "message": "[Errno 2] No such file or directory: '/tmp/realapp-x-h0fqgovv/submitted.txt'"
+            },
+            "finished_ns": 155659904716
+          },
+          "task_success": null,
+          "authority": "none",
+          "scope": "non-final artifact query; input admission unchanged",
+          "transport_request_id": "before-confirm",
+          "runtime_request_sequence": 4,
+          "declared_action_id": null,
+          "command_op": "effect_checkpoint",
+          "correlation_scope": "current runtime input line; action ID is caller-declared",
+          "clock_domain_id": "80e0ad92255aaa85942a534f08f0858777eb35fd9337cabc3c4296c43bb1cf53",
+          "emit_started_ns": 155659919980,
+          "delivery_id": "delivery:26"
+        }
+      ],
+      "cursor": 26,
+      "returned_ns": 155673787647,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "before-confirm",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 34,
+      "events": [
+        "effect_checkpoint"
+      ],
+      "timeout": 5,
+      "command": {
+        "op": "effect_checkpoint",
+        "contract": {
+          "kind": "saved_form_value",
+          "expected": "t991029"
+        }
+      },
+      "request_id": "after-confirm",
+      "read_request_id": "after-confirm"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "contract": {
+              "expected": "t991029",
+              "kind": "saved_form_value"
+            },
+            "op": "effect_checkpoint",
+            "transport_request_id": "after-confirm"
+          },
+          "received_ns": 156264578736,
+          "transport_request_id": "after-confirm",
+          "runtime_request_sequence": 6,
+          "declared_action_id": null,
+          "command_op": "effect_checkpoint",
+          "correlation_scope": "current runtime input line; action ID is caller-declared",
+          "clock_domain_id": "80e0ad92255aaa85942a534f08f0858777eb35fd9337cabc3c4296c43bb1cf53",
+          "emit_started_ns": 156264590288,
+          "delivery_id": "delivery:35"
+        },
+        {
+          "event": "effect_checkpoint",
+          "evidence": {
+            "status": "VERIFIED",
+            "authority": "none",
+            "attribution": "not_established",
+            "task_success": null,
+            "observation_closed": false,
+            "contract": {
+              "expected": "t991029",
+              "kind": "saved_form_value"
+            },
+            "started_ns": 156268675483,
+            "sampled_ns": 156268816421,
+            "artifact_sha256": "c87c2a7b6734e28a61c50731b2205f125892d3cc3e6938b40554caf911675990",
+            "actual": {
+              "value": [
+                "t991029"
+              ]
+            },
+            "scope": "one saved form artifact, exact field mapping",
+            "reason": "sample_matches_declared_value",
+            "finished_ns": 156268845492
+          },
+          "task_success": null,
+          "authority": "none",
+          "scope": "non-final artifact query; input admission unchanged",
+          "transport_request_id": "after-confirm",
+          "runtime_request_sequence": 6,
+          "declared_action_id": null,
+          "command_op": "effect_checkpoint",
+          "correlation_scope": "current runtime input line; action ID is caller-declared",
+          "clock_domain_id": "80e0ad92255aaa85942a534f08f0858777eb35fd9337cabc3c4296c43bb1cf53",
+          "emit_started_ns": 156268853341,
+          "delivery_id": "delivery:36"
+        }
+      ],
+      "cursor": 36,
+      "returned_ns": 156280166967,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "after-confirm",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 36,
+      "events": [
+        "command"
+      ],
+      "timeout": 5,
+      "command": {
+        "op": "finish"
+      },
+      "request_id": "finish"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "finish",
+            "transport_request_id": "finish"
+          },
+          "received_ns": 156290991630,
+          "transport_request_id": "finish",
+          "runtime_request_sequence": 7,
+          "declared_action_id": null,
+          "command_op": "finish",
+          "correlation_scope": "current runtime input line; action ID is caller-declared",
+          "clock_domain_id": "80e0ad92255aaa85942a534f08f0858777eb35fd9337cabc3c4296c43bb1cf53",
+          "emit_started_ns": 156291011780,
+          "delivery_id": "delivery:37"
+        }
+      ],
+      "cursor": 37,
+      "returned_ns": 156296641899,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "finish",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    }
+  }
+]

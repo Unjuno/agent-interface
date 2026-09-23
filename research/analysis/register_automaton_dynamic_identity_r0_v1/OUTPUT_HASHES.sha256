@@ -1,0 +1,13 @@
+# Frozen source identities
+1ef214af4f6aaebb0391ba5a1c9c1a0c235966a224caf2ecd81a680bc7e03768  PLAN.md
+f992bc79417b33a1d6503eb3879bfbf7ea325220ef3d874ac42afc92165cd977  PROOF.md
+e3d6dd8f583d04a8741cdb9c4f777b19b5463b42adc1831a7737ea3500ff4cf8  formal.py
+3085209bd963d13e58550285ee585c650a71f0261d03aa756232491d33f6bf8e  audit.py
+
+# Exact full outputs produced after source freeze
+b602eab43821ce48748690ca33bf07ab4e41ecf097ce5bcf04164849feadac50  RESULT.json
+d52c5f32455278c049630b23a79c390e82f7a9868cd66f7d705c03d1866cba82  AUDIT.json
+fac97abb9f665d041fdb00cc9328ae44865e7517844412e8598a0ae4cdacbb85  FORMAL_TIME.txt
+68bde069acb865688afad09cc4aedc24823076349e6c176a47ef8f14983049cf  AUDIT_TIME.txt
+
+The repository retains compact semantic summaries plus these commitments. Re-running the frozen source with REPRODUCE.txt must recreate the full RESULT.json/AUDIT.json hashes exactly on a compatible Python JSON implementation.

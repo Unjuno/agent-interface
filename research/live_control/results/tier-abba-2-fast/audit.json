@@ -1,0 +1,80 @@
+{
+  "events": 81,
+  "exact_frames": 15,
+  "append_records": 25,
+  "socket_calls": 14,
+  "history_mode": "last",
+  "requested_tier": "fast",
+  "model_turns": [
+    {
+      "turn": 1,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 12857,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 195,
+        "reasoning_output_tokens": 103
+      },
+      "runner_wall_ms": 7683.839,
+      "supervisor_model_return_to_publish_ms": 14.2603,
+      "supervisor_publish_to_applied_ms": 1073.7157,
+      "linux_proposal_to_result_ms": 1004.698298,
+      "source_to_fresh_capture_ms": 8087.837206
+    },
+    {
+      "turn": 2,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 13316,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 102,
+        "reasoning_output_tokens": 38
+      },
+      "runner_wall_ms": 5399.4855,
+      "supervisor_model_return_to_publish_ms": 11.3463,
+      "supervisor_publish_to_applied_ms": 819.1572,
+      "linux_proposal_to_result_ms": 783.870595,
+      "source_to_fresh_capture_ms": 5792.109819
+    },
+    {
+      "turn": 3,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 13278,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 145,
+        "reasoning_output_tokens": 79
+      },
+      "runner_wall_ms": 6641.1249,
+      "supervisor_model_return_to_publish_ms": 12.7838,
+      "supervisor_publish_to_applied_ms": 612.352,
+      "linux_proposal_to_result_ms": 569.954343,
+      "source_to_fresh_capture_ms": 7053.842393
+    },
+    {
+      "turn": 4,
+      "kind": "verify",
+      "usage": {
+        "input_tokens": 13121,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 99,
+        "reasoning_output_tokens": 47
+      },
+      "runner_wall_ms": 5674.7992
+    }
+  ],
+  "save_chords": 2,
+  "saved_cells": [
+    480,
+    192
+  ],
+  "xlsx_sha256": "3dcb9073e19fab4c22ebe4450e6ccbd037053c9dae7e2896444a466c33c64adb",
+  "supervisor_start_to_verified_exit_ms": 32245.2116,
+  "linux_initial_capture_to_evaluation_ms": 28728.436254,
+  "scope": "one predeclared requested-tier comparison episode; current outcome only, no population/human parity claim",
+  "audit_sha256": "bf83ab113717d339af82b438f425777169283eca031f305eb7fe88436d023921"
+}

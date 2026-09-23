@@ -1,0 +1,44 @@
+{
+  "schema": "agent-interface/writer-uno-serialization-negative-audit-v1",
+  "result_id": "writer-uno-serialization-negative-v1-20260916-01",
+  "source_freeze": "749d4253aa9b8e8560919a8d245ef1c8431feeaf",
+  "sessions": 9,
+  "unit_exitcode": 0,
+  "matrix_exitcode": 0,
+  "all_negative_pass": true,
+  "all_mutator_before_candidate_write": true,
+  "all_final_stale_overwrite": true,
+  "lock_external_observed_true": true,
+  "arms": {
+    "compare_set": {
+      "n": 3,
+      "negative_pass": 3,
+      "mutator_elapsed_ms": [
+        8.112959,
+        9.302231,
+        10.027925
+      ],
+      "median_mutator_elapsed_ms": 9.302231
+    },
+    "controllers_lock_set": {
+      "n": 3,
+      "negative_pass": 3,
+      "mutator_elapsed_ms": [
+        5.150821,
+        5.910536,
+        6.455549
+      ],
+      "median_mutator_elapsed_ms": 5.910536
+    },
+    "recheck_set": {
+      "n": 3,
+      "negative_pass": 3,
+      "mutator_elapsed_ms": [
+        9.048356,
+        8.051048,
+        10.636905
+      ],
+      "median_mutator_elapsed_ms": 9.048356
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "decision": "RETAIN_SEMANTIC_BRANCH_PREDICATE_REVALIDATION",
+  "environment": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5"
+  },
+  "methods": {
+    "exact_value_revalidate": {
+      "correct_execute": 7,
+      "correct_reject": 115,
+      "false_reject": 32,
+      "stale_execute": 0
+    },
+    "no_branch_revalidate": {
+      "correct_execute": 39,
+      "correct_reject": 77,
+      "false_reject": 0,
+      "stale_execute": 38
+    },
+    "predicate_truth_revalidate": {
+      "correct_execute": 39,
+      "correct_reject": 115,
+      "false_reject": 0,
+      "stale_execute": 0
+    }
+  },
+  "schema": "branch-predicate-truth-revalidation-v1",
+  "states": 154
+}

@@ -1,0 +1,44 @@
+{
+  "actual_model_incremental_cost_estimated": false,
+  "conservative_future_gate": "compare measured same-generation incremental model wall against p95 break-even budget",
+  "decision": "PASS_MODEL_BRANCH_AUTHORING_BREAK_EVEN_LOCALIZED_SCOPED",
+  "extra_generation_k2": {
+    "observed_full_boundary_reference_ms": 4905.3379,
+    "reference_only": true,
+    "same_generation_cost_estimate": false
+  },
+  "formal_invocations": 1,
+  "full_boundary_reference_to_p95_budget_ratio": 635.2647634815136,
+  "gui_actions": 0,
+  "k1_temporal_mean_ms": 13.62925,
+  "k2_temporal_mean_ms": 5.8027,
+  "local_marginal_ms": {
+    "mean": 0.059019203220000004,
+    "p50": 0.052169,
+    "p95": 0.104828,
+    "p99": 0.21933
+  },
+  "model_calls": 0,
+  "model_side_break_even_ms": {
+    "mean": 7.767530796780001,
+    "p50": 7.774381000000001,
+    "p95": 7.721722000000001,
+    "p99": 7.607220000000001
+  },
+  "provider_actions": 0,
+  "raw_k2_advantage_ms": 7.826550000000001,
+  "reruns": 0,
+  "same_generation_k2": {
+    "incremental_model_wall_ms": null,
+    "status": "UNMEASURED"
+  },
+  "source_blobs": {
+    "k1_summary": "96098fa35bbc13de189581d97eb332efac22b4be",
+    "k2_summary": "cec7c4a48cddf8ed4e9845c6a454b36c769326c0",
+    "local_cost_result": "83fda0abdd2a0c5a7e410bd6f23870394d302e62",
+    "model_probe2_audit": "d5f136d5a2ed92690fdce054e362aaf37a7c476e"
+  },
+  "source_identity_ok": true,
+  "task": "SPECULATIVE-BRANCH-MODEL-COST-BREAK-EVEN-20260918-001",
+  "task_input_actions": 0
+}

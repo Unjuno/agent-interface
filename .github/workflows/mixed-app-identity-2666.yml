@@ -1,0 +1,14 @@
+name: Mixed-app identity gate #2666
+
+on:
+  pull_request:
+    paths:
+      - 'research/integration/mixed_app_identity_2666/**'
+      - '.github/workflows/mixed-app-identity-2666.yml'
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -m unittest research.integration.mixed_app_identity_2666.test_identity_gate

@@ -1,0 +1,114 @@
+{
+  "schema": "obstac-experiment-freeze-v1",
+  "allocation_id": "issue3551-xid-reuse-formal-01",
+  "issue": 3551,
+  "parent_issue": 3550,
+  "grandparent_issue": 3541,
+  "hypothesis": "The experimental NativeHandleBridge may keep a visual alias eligible across process replacement when the same XID is recycled and the replacement window has identical rendered pixels.",
+  "target": "One p1 observe+mint without input; observe p1 exit; start distinct p2 with recycled XID and equal geometry; independently query XGetGeometry dimensions and hash exact XGetImage .data bytes for p1 and p2 before old alias. Proceed only if dimensions are 240x160 and raw bytes match. Old alias once then fresh p2 positive control once.",
+  "repo_source_commit": "49535d91424c3786330ec62e6d621e4e1eaf1c49",
+  "container_image_id": "sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916",
+  "source_manifest_sha256": "718e2ca7622535bd4a2a4f1ce9b860c4637b6ecf48bfc6dbc5fa7d9724ace024",
+  "bundle": "complete selective main snapshot in /app; PYTHONPATH=/app/research/live_control:/app:/harness",
+  "H": "A stale visual alias may be admitted against a replacement process if XID is reused and the pixels are identical, absent process-incarnation binding.",
+  "T": "Use pinned experimental NativeHandleBridge and same shared fixture. Establish p1 capture+mint; p1 exit; distinct p2 PID/start identity; same XID/geometry; independent Xlib GetImage of p1 and p2 exact client window dimensions (240x160) and raw pixel SHA/byte equality before any old-alias click. Old alias once, then fresh p2 handle once.",
+  "D": "Retain full raw identities/observations/handles/results, exact independent window pixel hashes, emissions, independent p2 effect property, PNG artifacts+manifest, releases/cleanup, all source/image/freeze hashes, candidate logs and separate auditor/corruption results.",
+  "C": "XID and visual equality do not encode process incarnation. X11 window map/draw order, full package import closure, and construction/formal fixture identity are validity gates. Full-screen capture is not used as a substitute for window pixel identity.",
+  "U": "Only the experimental bridge at frozen main snapshot, pinned linux/arm64 image, private Xvfb fixture, and one allocation; no default-runtime, production compositor, general GUI or product safety claim.",
+  "environment": {
+    "network": "none",
+    "read_only": true,
+    "allowed_writes": [
+      "/tmp tmpfs",
+      "empty per-allocation /results bind"
+    ],
+    "display": "private Xvfb :89",
+    "formal_invocations": 1,
+    "old_alias_attempts": 1,
+    "fresh_control_attempts": 1,
+    "retries": 0,
+    "tuning": false
+  },
+  "decision_rules": {
+    "FAIL": "All process/XID/geometry/pixel gates true; old alias admitted; native emission increases; independent p2 effect exactly [1,109,118]; fresh positive control succeeds and effect exactly [2,212,118]; independent audit verifies image/release/cleanup evidence.",
+    "PASS": "All gates true; old alias refused; zero emission and independent p2 effect [0,0,0]; fresh positive control succeeds and effect [1,212,118]; independent audit clean.",
+    "HOLD": "Any identity/pixel precondition fails before old-alias API call; old-alias attempts must remain 0.",
+    "STOP": "Any infrastructure/import/setup exception or incomplete evidence; preserve outputs, never rerun allocation."
+  },
+  "construction_gate": {
+    "construction_sha256": "a4e246ca0de38bbf130d51d32b1b67f0e3fcb44ed74772fee558448214bac62c",
+    "tests": "8/8 pass in pinned image",
+    "shared_fixture_identity": true,
+    "pixel_extraction_unit_test": true
+  },
+  "audit": "Separate network-none container; audit raw/hashes/cleanup and decision, verify independent pixel precondition, no candidate bridge import.",
+  "created_utc": "2026-09-20T12:33:02Z",
+  "predecessors": [
+    {
+      "issue": 3464,
+      "allocation": "issue3464-xid-reuse-formal-01",
+      "decision": "STOP_RUNNER_OUTPUT_DIRECTORY_COLLISION",
+      "raw_sha256": "cab4f2f8f2bbf0fc9965fc89571c17179d32af6104dc0a10a4703e68515bb06b"
+    },
+    {
+      "issue": 3530,
+      "allocation": "issue3530-xid-reuse-formal-02",
+      "decision": "STOP_RUNNER_FIXTURE_NOT_RENDERED",
+      "raw_sha256": "a8abc9be9a5c1568b221a74ab5dfd2d5cb2927a7954496d705e1bdf0f8833e3f"
+    },
+    {
+      "issue": 3534,
+      "allocation": "issue3534-xid-reuse-formal-03",
+      "decision": "STOP_SETUP_BEFORE_P1_OR_IMPORT_FAILURE_AFTER_P1_MINT",
+      "do_not_rerun": true
+    },
+    {
+      "issue": 3539,
+      "allocation": "issue3539-xid-reuse-formal-01",
+      "decision": "STOP_SOURCE_MANIFEST_MOUNT_MISSING",
+      "do_not_rerun": true
+    },
+    {
+      "issue": 3540,
+      "allocation": "issue3534-xid-reuse-formal-03",
+      "decision": "STOP_RUNTIME_PACKAGE_IMPORT_FAILURE_BEFORE_CLICK",
+      "raw_sha256": "888e27895d9cac2346c088d765e737a6d987e0f78257760923c69cff064cb340",
+      "do_not_rerun": true
+    },
+    {
+      "issue": 3541,
+      "decision": "STOP_PREFLIGHT_SOURCE_BUNDLE_INCOMPLETE",
+      "formal_not_run": true
+    },
+    {
+      "issue": 3543,
+      "allocation": "issue3543-xid-reuse-formal-01",
+      "decision": "STOP_PIXEL_REPLY_ATTRIBUTE_ERROR",
+      "raw_sha256": "d32d30d02454484a7e3ff53dbb7c212143c730b6ab3c99f22a250f7756266582",
+      "old_alias_attempts": 0,
+      "do_not_rerun": true
+    },
+    {
+      "issue": 3545,
+      "allocation": "issue3543-xid-reuse-formal-01",
+      "decision": "STOP_LAZY_IMPORT_SHADOWED_BY_HARNESS_PATH",
+      "raw_sha256": "d9db1f6bbea1c8d8f0bcc64ba974291e9537a769f17a31a88737fc3ce66a9e98",
+      "pixels_identical": true,
+      "no_native_emissions": true,
+      "do_not_rerun": true
+    },
+    {
+      "issue": 3550,
+      "decision": "STOP_PREFLIGHT_EXECUTED_RUNNER_WITHOUT_DISPLAY",
+      "formal_not_attempted": true,
+      "alias_attempts": 0,
+      "do_not_rerun": true
+    }
+  ],
+  "harness_hashes": {
+    "formal_runner": "fd31180baa43555c05d019c639da424e210c54d1b2db5e8a8dc7470f7747a16a",
+    "audit_formal": "cc0bd1c9d8ac9359e4b6dc471cb6e47cebab8ae26eea0bb39de44bce61b7e859",
+    "unit_tests": "7718985ada5a17efb24790160f319e0fe9e145feb772e1eb368e187b3f6bb392"
+  },
+  "bootstrap": "Import-only preflight verified sys.path order /app, /app/research/live_control, /harness. Formal launch uses -c bootstrap then exec(compile(runner)) with globals __name__='__main__'. Do not use this in preflight."
+}
