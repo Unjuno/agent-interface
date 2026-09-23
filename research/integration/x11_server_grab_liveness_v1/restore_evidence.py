@@ -2,7 +2,7 @@ import base64,hashlib,io,json,lzma,tarfile,sys
 from pathlib import Path
 root=Path(__file__).resolve().parent; out=Path(sys.argv[1])
 if out.exists(): raise SystemExit('destination_exists')
-parts=json.loads((root/'PARTS.json').read_text()); info=json.loads((root/'COMPACT_EVIDENCE.json').read_text()); original=json.loads((root/'EVIDENCE.json').read_text())
+parts=json.loads((root/'PARTS.json').read_text()); info=json.loads((root/'COMPACT_EVIDENCE.json').read_text())
 chunks=[]
 for item in parts['parts']:
     p=root/item['path']; raw=p.read_bytes()
@@ -16,8 +16,9 @@ tar=lzma.decompress(xz)
 if len(tar)!=info['tar_bytes'] or hashlib.sha256(tar).hexdigest()!=info['tar_sha256']: raise SystemExit('tar_integrity')
 with tarfile.open(fileobj=io.BytesIO(tar),mode='r:') as tf:
     blobs={m.name:tf.extractfile(m).read() for m in tf if m.isfile()}
-cm=json.loads(blobs['COMPACT_MANIFEST.json'])
-obs_by={x['original_path']:x for x in cm['observers']}
+original_bytes=blobs.get('ORIGINAL_EVIDENCE.json')
+if original_bytes is None or hashlib.sha256(original_bytes).hexdigest()!=info['original_manifest_sha256']: raise SystemExit('original_manifest_integrity')
+original=json.loads(original_bytes); cm=json.loads(blobs['COMPACT_MANIFEST.json']); obs_by={x['original_path']:x for x in cm['observers']}
 def read_u(data,pos):
     n=0; shift=0
     while True:
@@ -50,4 +51,4 @@ try:
         dst.write_bytes(data)
 except Exception:
     import shutil; shutil.rmtree(out,ignore_errors=True); raise
-print(json.dumps({'restored':len(original['members']),'bytes':sum(x['bytes'] for x in original['members']),'xz_sha256':info['xz_sha256']},sort_keys=True))
+print(json.dumps({'restored':len(original['members']),'bytes':sum(x['bytes'] for x in original['members']),'manifest_sha256':info['original_manifest_sha256'],'xz_sha256':info['xz_sha256']},sort_keys=True))
