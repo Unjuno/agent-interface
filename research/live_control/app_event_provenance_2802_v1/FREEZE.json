@@ -1,0 +1,19 @@
+{
+  "allocation": "app-event-provenance-2802-20260923-01",
+  "issue": 2802,
+  "base_main": "118b385697a03be6452249bf2a0111718d7535c2",
+  "preformal_source_head": "5d4c11ff83be2d9f3d90e477ffe4bdb2c68363e4",
+  "branch": "research/issue-2802-app-stream-provenance-20260923",
+  "formal_cases": 18,
+  "formal_invocations": 1,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "bound_ns": 20000000,
+  "late_sleep_s": 0.04,
+  "formal_command": "cd <study> && python -B run.py formal <fresh-output>",
+  "audit_command": "cd <study> && python -B audit.py <fresh-output>/RAW.json",
+  "source_hash_manifest_sha256": "bb285cdbe63018f3286c8872645798678ef3367e18ae0bf00bc5b1edc9ef4ac0",
+  "construction_formal_cases": 0,
+  "decision": "PASS_APP_EVENT_PROVENANCE_BOUNDARY_SCOPED only under PLAN.md frozen gates"
+}
