@@ -1,0 +1,25 @@
+{
+  "controls_pass": 9,
+  "controls_total": 9,
+  "corruption_controls": {
+    "censor": true,
+    "guard_classification": true,
+    "missing_eval": true,
+    "partition": true,
+    "policy_arm": true,
+    "recovery": true,
+    "rerun": true,
+    "schedule": true,
+    "truth": true
+  },
+  "errors": [],
+  "original_frozen_audit_pass": true,
+  "pass": true,
+  "postformal_audit_only": true,
+  "tiers": [
+    {"bootstrap95_ns":[-399670.3640625,274092.28515625],"cg_ns_from_policy_guards":92191.0859375,"f":0.0,"observed_mean_pre_minus_post_ns":4061.875,"observed_selector":"UNKNOWN","pairs":32,"predicted_delta_ns":-37120.353515625,"predicted_selector":"GUARD","q":"1/100","realized_p":0.03125,"s":1.0,"stale_count":1},
+    {"bootstrap95_ns":[60539.707812500004,266962.34140624997],"cg_ns_from_policy_guards":92191.0859375,"f":0.0,"observed_mean_pre_minus_post_ns":177465.78125,"observed_selector":"POST","pairs":32,"predicted_delta_ns":92191.0859375,"predicted_selector":"POST","q":"1/20","realized_p":0.0,"s":1.0,"stale_count":0},
+    {"bootstrap95_ns":[-1343572.3890625,-202082.36953125047],"cg_ns_from_policy_guards":92191.0859375,"f":0.0,"observed_mean_pre_minus_post_ns":-754382.15625,"observed_selector":"GUARD","pairs":32,"predicted_delta_ns":-1071611.869140625,"predicted_selector":"GUARD","q":"1/5","realized_p":0.28125,"s":1.0,"stale_count":9},
+    {"bootstrap95_ns":[-2427785.2828125,-1246698.38125],"cg_ns_from_policy_guards":92191.0859375,"f":0.0,"observed_mean_pre_minus_post_ns":-1841526.96875,"observed_selector":"GUARD","pairs":32,"predicted_delta_ns":-2364726.263671875,"predicted_selector":"GUARD","q":"1/2","realized_p":0.59375,"s":1.0,"stale_count":19}
+  ]
+}
