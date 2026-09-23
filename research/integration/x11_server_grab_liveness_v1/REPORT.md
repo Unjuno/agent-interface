@@ -3,6 +3,7 @@
 **Disposition: `PASS_X11_SERVER_GRAB_LIVENESS_BOUNDARY_SCOPED`**
 
 Allocation `x11-server-grab-liveness-20260924-01` ran exactly once after public source/gate freeze. Formal rows 15/15; reruns/replacements/post-result tuning 0/0/0. Independent audit: 174 checks, errors=[]; copied-evidence corruption controls: 12/12 rejected.
+Postformal raw reconstruction audit-v2 independently re-derived case summaries from observer round trips, owner events and XSERVER_EXIT without using ROWS.json for the scientific decision: 690,719 checks, errors=[]; 12/12 raw-file corruption controls rejected. This strengthens evidence integrity only and did not rerun any formal case.
 
 ## Formal result
 
