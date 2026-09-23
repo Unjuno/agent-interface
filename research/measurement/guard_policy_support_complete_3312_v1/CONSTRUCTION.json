@@ -1,0 +1,10 @@
+{
+  "construction_live_result_sha256": "6d07048f068b5a15dd2c5855c755252d27788c3f3676ad8d8555c474a897f286",
+  "formal_rows": 0,
+  "records": [
+    {"detail":"python -m unittest with absolute file path could not import local audit module; no live/formal case","result":"STOP_CONSTRUCTION_IMPORT_PATH","step":"initial unittest invocation"},
+    {"detail":"lost_recovery mutation was not rejected; formal0","result":"FAIL_CONSTRUCTION_CORRUPTION_CONTROL","step":"corrected unittest before control fix"},
+    {"corruption_controls":9,"result":"PASS","step":"auditor strengthened and synthetic fixture aligned","tests":2},
+    {"all_terminal_neutral":true,"excluded":true,"fixture_exit":0,"result":"PASS","rows":5,"step":"live X11 five-stratum seam"}
+  ]
+}
