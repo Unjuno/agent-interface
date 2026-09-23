@@ -1,0 +1,18 @@
+{
+  "allocation": "app-obligation-keying-2802-20260923-01",
+  "issue": 2802,
+  "base_main": "b38806cd09243f7ad18deb61db44048bc3feffae",
+  "preformal_source_head": "2b2fb735980bf3742772451aa78c056484408cc5",
+  "branch": "research/issue-2802-obligation-keying-20260923",
+  "formal_cases": 18,
+  "formal_invocations": 1,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "formal_command": "cd <study> && python -B run.py formal <fresh-output>",
+  "audit_command": "cd <study> && python -B audit.py <fresh-output>/RAW.json",
+  "source_hash_manifest_sha256": "1f3a43485d322c072ebb4ed780aa450d609aaaefa8c99c112519437e917ddb94",
+  "construction_formal_cases": 0,
+  "preformal_publication_incident": "audit.py first remote copy omitted one explanatory comment line; exact local frozen bytes restored and read back before formal0",
+  "decision": "PASS_OBLIGATION_KEYING_BOUNDARY_SCOPED only under PLAN.md frozen gates"
+}
