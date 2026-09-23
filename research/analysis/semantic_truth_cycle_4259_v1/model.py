@@ -24,6 +24,8 @@ def or3(vals):
     return "UNKNOWN"
 
 def oracle(base):
+    # Least grounded fixed point: derived facts start UNKNOWN and can become TRUE/FALSE
+    # only from finite support chains rooted in current base facts.
     cur={d:"UNKNOWN" for d in DERIVED}
     for _ in range(16):
         nxt=dict(cur)
@@ -32,6 +34,8 @@ def oracle(base):
             for supp in SUPPORTS[d]:
                 vals=[base[x] if x in base else cur[x] for x in supp]
                 groups.append(and3(vals))
+            # Positive derivation: any grounded TRUE support proves TRUE.
+            # FALSE only when every support set is conclusively FALSE.
             nxt[d]=or3(groups)
         if nxt==cur: break
         cur=nxt
@@ -60,6 +64,8 @@ def affected(changed):
     return seen
 
 def scc_grounded_retract(prev, base, changed):
+    # Candidate uses exact affected region, but grounds its result against the least
+    # fixed-point oracle rather than cached mutual truth.
     target=oracle(base)
     region=affected(changed)
     cur=dict(prev)
