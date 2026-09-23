@@ -1,17 +1,103 @@
 {
   "controls": [
-    {"decision":"FAIL_ROUTER_SCOPE_OR_FRESHNESS","errors":["WRONG_ROUTE:NOMINAL_BROWSER_0"],"name":"wrong_candidate","rejected":true},
-    {"decision":"HOLD_AUDIT_OR_EVIDENCE","errors":["ROW_COUNT:47","MISSING:INTERFERENCE_5"],"name":"drop_row","rejected":true},
-    {"decision":"HOLD_AUDIT_OR_EVIDENCE","errors":["DUP:NOMINAL_BROWSER_0","MISSING:NOMINAL_BROWSER_1"],"name":"duplicate_id","rejected":true},
-    {"decision":"HOLD_AUDIT_OR_EVIDENCE","errors":["AUTHORITY:NOMINAL_BROWSER_0"],"name":"authority","rejected":true},
-    {"decision":"HOLD_AUDIT_OR_EVIDENCE","errors":["RAW_SOURCE_MISMATCH:STALE_CONTEXT_0"],"name":"stale_epoch_launder","rejected":true},
-    {"decision":"HOLD_AUDIT_OR_EVIDENCE","errors":["RAW_SOURCE_MISMATCH:ADAPTER_UNAVAILABLE_0"],"name":"availability_launder","rejected":true},
-    {"decision":"HOLD_AUDIT_OR_EVIDENCE","errors":["RAW_SOURCE_MISMATCH:INTERFERENCE_0"],"name":"interference_launder","rejected":true},
-    {"decision":"HOLD_AUDIT_OR_EVIDENCE","errors":["RAW_SOURCE_MISMATCH:SCOPE_MISMATCH_0"],"name":"scope_launder","rejected":true},
-    {"decision":"HOLD_AUDIT_OR_EVIDENCE","errors":["RAW_SOURCE_MISMATCH:SCOPE_MISMATCH_0"],"name":"confidence_launder","rejected":true},
-    {"decision":"HOLD_AUDIT_OR_EVIDENCE","errors":["RAW_SOURCE_MISMATCH:NOMINAL_BROWSER_0"],"name":"request_scope_change","rejected":true},
-    {"decision":"HOLD_AUDIT_OR_EVIDENCE","errors":["CORPUS_SHA"],"name":"corpus_sha","rejected":true},
-    {"decision":"FAIL_ROUTER_SCOPE_OR_FRESHNESS","errors":["WRONG_ROUTE:NOMINAL_BROWSER_0"],"name":"unexpected_yield","rejected":true}
+    {
+      "decision": "FAIL_ROUTER_SCOPE_OR_FRESHNESS",
+      "errors": [
+        "WRONG_ROUTE:NOMINAL_BROWSER_0"
+      ],
+      "name": "wrong_candidate",
+      "rejected": true
+    },
+    {
+      "decision": "HOLD_AUDIT_OR_EVIDENCE",
+      "errors": [
+        "ROW_COUNT:47",
+        "MISSING:INTERFERENCE_5"
+      ],
+      "name": "drop_row",
+      "rejected": true
+    },
+    {
+      "decision": "HOLD_AUDIT_OR_EVIDENCE",
+      "errors": [
+        "DUP:NOMINAL_BROWSER_0",
+        "MISSING:NOMINAL_BROWSER_1"
+      ],
+      "name": "duplicate_id",
+      "rejected": true
+    },
+    {
+      "decision": "HOLD_AUDIT_OR_EVIDENCE",
+      "errors": [
+        "AUTHORITY:NOMINAL_BROWSER_0"
+      ],
+      "name": "authority",
+      "rejected": true
+    },
+    {
+      "decision": "HOLD_AUDIT_OR_EVIDENCE",
+      "errors": [
+        "RAW_SOURCE_MISMATCH:STALE_CONTEXT_0"
+      ],
+      "name": "stale_epoch_launder",
+      "rejected": true
+    },
+    {
+      "decision": "HOLD_AUDIT_OR_EVIDENCE",
+      "errors": [
+        "RAW_SOURCE_MISMATCH:ADAPTER_UNAVAILABLE_0"
+      ],
+      "name": "availability_launder",
+      "rejected": true
+    },
+    {
+      "decision": "HOLD_AUDIT_OR_EVIDENCE",
+      "errors": [
+        "RAW_SOURCE_MISMATCH:INTERFERENCE_0"
+      ],
+      "name": "interference_launder",
+      "rejected": true
+    },
+    {
+      "decision": "HOLD_AUDIT_OR_EVIDENCE",
+      "errors": [
+        "RAW_SOURCE_MISMATCH:SCOPE_MISMATCH_0"
+      ],
+      "name": "scope_launder",
+      "rejected": true
+    },
+    {
+      "decision": "HOLD_AUDIT_OR_EVIDENCE",
+      "errors": [
+        "RAW_SOURCE_MISMATCH:SCOPE_MISMATCH_0"
+      ],
+      "name": "confidence_launder",
+      "rejected": true
+    },
+    {
+      "decision": "HOLD_AUDIT_OR_EVIDENCE",
+      "errors": [
+        "RAW_SOURCE_MISMATCH:NOMINAL_BROWSER_0"
+      ],
+      "name": "request_scope_change",
+      "rejected": true
+    },
+    {
+      "decision": "HOLD_AUDIT_OR_EVIDENCE",
+      "errors": [
+        "CORPUS_SHA"
+      ],
+      "name": "corpus_sha",
+      "rejected": true
+    },
+    {
+      "decision": "FAIL_ROUTER_SCOPE_OR_FRESHNESS",
+      "errors": [
+        "WRONG_ROUTE:NOMINAL_BROWSER_0"
+      ],
+      "name": "unexpected_yield",
+      "rejected": true
+    }
   ],
   "rejected": 12,
   "total": 12
