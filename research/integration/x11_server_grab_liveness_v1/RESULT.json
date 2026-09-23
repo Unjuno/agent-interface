@@ -1,0 +1,24 @@
+{
+  "allocation": "x11-server-grab-liveness-20260924-01",
+  "audit_checks": 174,
+  "audit_errors": 0,
+  "audit_sha256": "7f2d933dc9814e1b5881c6cc3277937df571f8606e9e1218070af5ac947cecaf",
+  "controls_sha256": "43766ea585ea1e38402d50714d4d1c0375878056eb5da4a09c4d148a0f588feb",
+  "corruption_controls_rejected": 12,
+  "corruption_controls_total": 12,
+  "formal_cases": 15,
+  "formal_invocations": 1,
+  "post_result_tuning": 0,
+  "replacements": 0,
+  "reruns": 0,
+  "rows_sha256": "674bf70c09801ee5c8246f52cf97dda56776ae554770d5aebf49f4b76e00fa58",
+  "scope": "private Xvfb/Python-Xlib server-grab liveness boundary only; no production latency/model/task/product claim",
+  "status": "PASS_X11_SERVER_GRAB_LIVENESS_BOUNDARY_SCOPED",
+  "summary": {
+    "HEALTHY_1MS": {"grab_to_release_or_death_ms":[1.447519,1.485224,1.392457],"observer_max_ms":[10.13977,2.611488,2.944881],"observer_rows":[12161,14557,9600],"owner_returncodes":[0,0,0],"post_release_completion_ms":[0.044896,0.045848,0.038867],"spanning_stall_ms":[1.661134,1.837785,1.625431]},
+    "HEALTHY_20MS": {"grab_to_release_or_death_ms":[21.516347,20.578761,20.497901],"observer_max_ms":[21.770978,20.802747,20.730129],"observer_rows":[9891,10892,12759],"owner_returncodes":[0,0,0],"post_release_completion_ms":[0.275101,0.112886,0.092407],"spanning_stall_ms":[21.770978,20.802747,20.730129]},
+    "HUNG_OWNER_100MS_WATCHDOG": {"grab_to_release_or_death_ms":[107.563744,107.419523,107.602187],"observer_max_ms":[105.908348,106.136657,104.713814],"observer_rows":[7690,16239,7212],"owner_returncodes":[-9,-9,-9],"post_release_completion_ms":[0.071936,0.022413,0.061921],"spanning_stall_ms":[105.908348,106.136657,104.713814]},
+    "KILL_OWNER_20MS": {"grab_to_release_or_death_ms":[23.541002,27.453357,35.619967],"observer_max_ms":[23.750036,23.918996,28.622925],"observer_rows":[11415,11709,10759],"owner_returncodes":[-9,-9,-9],"post_release_completion_ms":[0.096633,0.023855,0.040025],"spanning_stall_ms":[23.750036,23.918996,28.622925]},
+    "NO_GRAB": {"observer_max_ms":[8.712511,0.307725,0.942492],"observer_rows":[13493,12386,11806],"owner_returncodes":[null,null,null],"post_release_completion_ms":[null,null,null],"spanning_stall_ms":[0.0,0.0,0.0]}
+  }
+}
