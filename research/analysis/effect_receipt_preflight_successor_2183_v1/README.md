@@ -1,1 +1,0 @@
-# Effect receipt preflight (#2183)\n\nContainer preflight for actuation-bound effect receipt policy. Seven receipt classes are separated into DONE, QUERY_EFFECT, and ABORT without granting input authority. The live model/application-scorer transfer is explicitly stopped and not claimed.\n

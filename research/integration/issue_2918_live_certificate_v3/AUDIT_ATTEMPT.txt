@@ -1,5 +1,0 @@
-Frozen allocation-03 auditor command (one attempt):
-
-docker --context orbstack run --rm --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m -e PYTHONDONTWRITEBYTECODE=1 -v "$PWD:/repo:ro" -v /tmp/issue2918-formal-v3.MjKq13:/in:ro -v /tmp/issue2918-audit-v3.kRTk9S:/report:rw -w /repo issue-3548-route-unit:20260920 python3 -B research/integration/issue_2918_live_certificate_v3/audit_live_allocation.py /in /report
-
-Exit code 1; traceback stopped at the line that opened `file`, an undefined variable after the auditor had changed its hash index from a single Path to a list of candidate paths. The report directory contains no `independent_audit.json`. The formal runner was not repeated. All 12 candidate rows, the sealed oracle, 11 PNGs, source hashes and checksums are retained under `allocation_03_raw/`.

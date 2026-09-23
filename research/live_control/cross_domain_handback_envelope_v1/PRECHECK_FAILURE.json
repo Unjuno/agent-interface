@@ -1,8 +1,0 @@
-{
-  "stage": "corruption-control precheck",
-  "decision": "FAIL_TEST_DESIGN_FIXED_INDEX_SELECTED_UNRESOLVED_ROW",
-  "scientific_result": "NONE",
-  "formal_invocations": 0,
-  "cause": "The first corruption control mutated rows[2], which was DOOM UNRESOLVED_EFFECT rather than OBSERVED_STATE_CHANGE, so the intended MAP01 unknown-to-useful corruption was not exercised.",
-  "repair": "Select corruption targets by domain+variant, not row index. No retained source fact, threshold, or scientific acceptance rule changed."
-}
