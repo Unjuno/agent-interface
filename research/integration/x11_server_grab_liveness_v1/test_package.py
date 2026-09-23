@@ -9,11 +9,13 @@ def main():
   with tempfile.TemporaryDirectory() as td:
    r=Path(td)/'pkg'; r.mkdir(); (r/'evidence_parts').mkdir()
    for name in ['restore_evidence.py','PARTS.json','COMPACT_EVIDENCE.json']: shutil.copy2(ROOT/name,r/name)
-   for p0 in (ROOT/'evidence_parts').glob('COMPACT.part*.b64'): shutil.copy2(p0,r/'evidence_parts'/p0.name)
+   manifest=json.loads((ROOT/'PARTS.json').read_text())
+   for item in manifest['parts']:
+    p0=ROOT/item['path']; shutil.copy2(p0,r/'evidence_parts'/p0.name)
    out=Path(td)/'out'
-   if m=='missing_part': (r/'evidence_parts/COMPACT.part003.b64').unlink()
+   if m=='missing_part': (r/manifest['parts'][3]['path']).unlink()
    elif m=='alter_part':
-    p=r/'evidence_parts/COMPACT.part003.b64'; s=p.read_text(); p.write_text(('A' if s[0]!='A' else 'B')+s[1:])
+    p=r/manifest['parts'][3]['path']; s=p.read_text(); p.write_text(('A' if s[0]!='A' else 'B')+s[1:])
    elif m=='reorder_parts':
     p=r/'PARTS.json'; x=json.loads(p.read_text()); x['parts'][2],x['parts'][3]=x['parts'][3],x['parts'][2]; p.write_text(json.dumps(x,indent=2,sort_keys=True)+'\n')
    elif m=='wrong_xz':
