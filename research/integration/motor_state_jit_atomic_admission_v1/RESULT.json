@@ -1,0 +1,42 @@
+{
+  "allocation": "motor-state-jit-atomic-admission-4266-20260923-01",
+  "audit_errors": [],
+  "authority": "none",
+  "batch_exits": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "candidate_race_correct_effects": 2,
+  "candidate_wrong_surface_effects": 0,
+  "complete_process_receipts": 16,
+  "corruption_controls_rejected": 12,
+  "decision": "PASS_MOTOR_STATE_JIT_ADMISSION_RACE_SCOPED",
+  "final_neutral": 16,
+  "formal_cases": 16,
+  "formal_reruns": 0,
+  "grab_ns": {
+    "count": 6,
+    "max": 375163,
+    "median": 310707.0,
+    "min": 224307
+  },
+  "held_observed": 16,
+  "limits": [
+    "directed X11 race",
+    "XGrabServer liveness cost unqualified",
+    "not OS-global atomicity",
+    "not physical HID",
+    "no model/planner benefit",
+    "no cross-platform/product claim"
+  ],
+  "post_result_tuning": 0,
+  "precheck_refusals": 4,
+  "release_observed": 16,
+  "replacements": 0,
+  "schema": "agent-interface/motor-state-jit-admission-result-v1",
+  "stable_correct_effects": 4,
+  "unknown_refusals": 4,
+  "weak_race_wrong_surface_effects": 2
+}
