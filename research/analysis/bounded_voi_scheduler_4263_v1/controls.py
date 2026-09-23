@@ -1,5 +1,5 @@
 from __future__ import annotations
-import copy,json,sys
+import copy,json,subprocess,sys,tempfile,os
 from audit import audit
 raw=json.load(open(sys.argv[1]))
 mut=[]
