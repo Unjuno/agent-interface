@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-import argparse, hashlib, json, pathlib
+import argparse, hashlib, json, pathlib, re
 POLICIES=['POP_ONLY','EVIDENCE_BOUND_RESUME']; SCENARIOS=['NORMAL','TARGET_REPLACED','QUEUE_CHANGED','SOURCE_STALE','PENDING_UNKNOWN','TASK_CANCELED']
 EXPECTED_CAND={'NORMAL':'RESUME','TARGET_REPLACED':'REVALIDATE_TARGET','QUEUE_CHANGED':'REPLAN_QUEUE','SOURCE_STALE':'YIELD_STALE','PENDING_UNKNOWN':'RECONCILE_RESULT','TASK_CANCELED':'CANCELED'}
 SOURCE_NAMES=['app.py','run.py','audit.py','controls.py']
 def sha(p): return hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
 def audit(root,reps,freeze_path=None):
  root=pathlib.Path(root); rows=[]; errors=[]
+ freeze=None
  if freeze_path:
    freeze=json.loads(pathlib.Path(freeze_path).read_text())
    for name,expected in freeze['source_sha256'].items():
@@ -18,7 +19,8 @@ def audit(root,reps,freeze_path=None):
    rows+=batch
  exp=len(reps)*12
  if len(rows)!=exp: errors.append(f'row_count:{len(rows)}!={exp}')
- ids=set(); expected_ids={f'r{rep}-{p}-{s}' for rep in reps for s in SCENARIOS for p in POLICIES}
+ ids=set()
+ expected_ids={f'r{rep}-{p}-{s}' for rep in reps for s in SCENARIOS for p in POLICIES}
  for r in rows:
    cid=r.get('case_id')
    if cid in ids: errors.append('duplicate:'+str(cid))
