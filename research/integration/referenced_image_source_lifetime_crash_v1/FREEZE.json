@@ -1,0 +1,47 @@
+{
+  "allocation": "referenced-image-source-lifetime-crash-20260923-01",
+  "commands": [
+    "python -B runner.py formal 1 <fresh-formal-r1>",
+    "python -B runner.py formal 2 <fresh-formal-r2>",
+    "python -B audit.py <evidence-root> 1 2",
+    "python -B test_audit.py <evidence-root> 1 2"
+  ],
+  "cuts": [
+    "BEFORE_READ",
+    "AFTER_READ_BEFORE_TXN",
+    "AFTER_DB_WRITES_BEFORE_COMMIT",
+    "AFTER_COMMIT_BEFORE_RELEASE",
+    "NORMAL"
+  ],
+  "decision": {
+    "candidate_expected_complete": 10,
+    "corruption_controls_min": 8,
+    "pass": "PASS_SOURCE_LIFETIME_HANDOFF_SCOPED",
+    "unsafe": "FAIL_SOURCE_LIFETIME_TOO_SHORT",
+    "unsafe_expected_failures": 4
+  },
+  "formal_batches": [1,2],
+  "formal_cases": 20,
+  "formal_started": false,
+  "intake_main": "665339328f808c63e3ca3bc83169264038d399c6",
+  "issue": 4190,
+  "policies": ["RELEASE_AFTER_READ","RELEASE_AFTER_DURABLE"],
+  "reruns_allowed": 0,
+  "schema": "referenced-image-source-lifetime-crash-freeze-v1",
+  "source_sha256": {
+    "CONSTRUCTION.md": "4b0bf59d940210f584a2921b829ed7a73f0a4e7c0d4a72f81dd13fffb0e62342",
+    "CONSTRUCTION_AUDIT.json": "bd309f0c15964ab614b17f510a42d428ffea0dcdf1ae778a1844b81c7fef151c",
+    "CONSTRUCTION_CONTROLS.json": "a745bd3a5685ebf4835aa34fb156e78fb0d3c6bccb60dc757d130a437d38e5f3",
+    "ENVIRONMENT.json": "ca9119b8f69df670cd950f3bcda7e3fcf38af312d2dd4e31a55c3772ec29a448",
+    "PLAN.md": "1e1db5bba636e06191c8a2a38aae50e352697ffe5f20a8f8ca9766cdd40e2331",
+    "UPSTREAM.json": "e36798b5842bf40dd263c9b64b8ee863e97bfd07c7b9c3b07cef3725218a2be1",
+    "audit.py": "7c3771c358b7e2bb221367884bf3bc5ff9223c0fc04ee12e8aeafcaeb9eae029",
+    "host.py": "c2e455234445b7c56e60990f2ac6a1ef6555523e1acc2a187f04ef443cd8a937",
+    "producer.py": "041bdb00000c3700a541d81fc07f26ddc8302cf9ee12aa06e9903e649411c5bc",
+    "runner.py": "29f1b1eb1e5c41e83f00abbd1ccdabac4bd53795f0a21754e2c37e78acd6f2be",
+    "test_audit.py": "2dd6ee8e57acbe481b8c74f99d172a84bb9b45899208e89a97e3e0216f3c75d4",
+    "upstream/research/integration/event_inbox_reader_v1/__main__.py": "61486b4a063374f1794f5f4db22715901d64ff151693f22e23fc628faccf7b9b",
+    "upstream/research/integration/event_inbox_reader_v1/reader.py": "5917fdbda5b2d3dbef5856ba9cc5c8463a07022ad8a31113ec3fdf9b21034240",
+    "upstream/research/live_control/delivery_ledger_v2.py": "9aba4584cc23457ccee0554b8dd6a0bd26ebbf9e35098975d7ea99f35e7c28b9"
+  }
+}
