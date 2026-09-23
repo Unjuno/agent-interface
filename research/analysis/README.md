@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 140 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 141 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
@@ -141,6 +141,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`belief_recommit_epoch_aba_r2_v1/`](belief_recommit_epoch_aba_r2_v1/)
 - [`belief_repair_decision_lattice_r4_v1/`](belief_repair_decision_lattice_r4_v1/)
 - [`bounded_skew_context_join_successor_1218_v1/`](bounded_skew_context_join_successor_1218_v1/)
+- [`bounded_voi_scheduler_4263_v1/`](bounded_voi_scheduler_4263_v1/)
 - [`caller_two_tier_stage_dominance_v1/`](caller_two_tier_stage_dominance_v1/)
 - [`capability_snapshot_currentness_fallback_r0_v1/`](capability_snapshot_currentness_fallback_r0_v1/)
 - [`causal_temporal_attention_successor_1941_v1/`](causal_temporal_attention_successor_1941_v1/)
