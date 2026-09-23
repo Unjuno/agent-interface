@@ -1,0 +1,11 @@
+{
+  "formal_command": "python -B runner.py --out FORMAL.json",
+  "formal_exit": 0,
+  "audit_command": "python -B audit.py FORMAL.json --out AUDIT.json",
+  "audit_exit": 0,
+  "controls_command": "python -B controls.py FORMAL.json --out CONTROLS.json",
+  "controls_exit": 0,
+  "formal_time_real_seconds": 9.36,
+  "formal_child_time_report": "TIME_REAL=9.36 TIME_USER=9.47 TIME_SYS=0.28 EXIT=0",
+  "outer_surface_note": "execution shell emitted a TERM-environment display warning after retained child receipts; no formal rerun was performed"
+}
