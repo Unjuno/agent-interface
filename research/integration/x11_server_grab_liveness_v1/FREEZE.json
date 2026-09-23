@@ -1,0 +1,33 @@
+{
+  "allocation": "x11-server-grab-liveness-20260924-01",
+  "audit_command": "python3 -B audit.py formal-01 --reps 3 --out FORMAL_AUDIT.json",
+  "branch": "research/x11-server-grab-liveness-20260923",
+  "controls_command": "python3 -B controls.py formal-01 --reps 3 --audit audit.py --out FORMAL_CONTROLS.json",
+  "formal_command": "python3 -B run.py --out formal-01 --reps 3",
+  "formal_invocations": 0,
+  "formal_rows": 0,
+  "issue": 4297,
+  "path": "research/integration/x11_server_grab_liveness_v1",
+  "post_result_tuning": 0,
+  "replacements": 0,
+  "reruns": 0,
+  "schedule_rows": 15,
+  "sha256": {
+    "CONSTRUCTION.md": "7c91990962c3c91806df79b940581a140cfad71bdc164d77dd2ebddd383e706a",
+    "ENVIRONMENT.json": "59be61fe1af1bf19796facf6d80f24e5e42e1879018c9789410e0f0403e89a71",
+    "PLAN.md": "43c7521c92fbdbb7923d455570bf1a3467b34343c433eecfad6c38fcd29c3490",
+    "SCHEDULE.json": "9679edcb87325ac9aa34a10fccc7474b3e7626c71bccb503431103b4f98c57ff",
+    "SOURCE_CAPSULE.b64": "6092c962039ddf64e999b00816da845eca09a4c5473615768f513efdc73445ff",
+    "SOURCE_CAPSULE.json": "a5c4dcd5b0384d525c14ca12e63e76038e249b87a5eeeddbca21825b99b31f37",
+    "restore_source.py": "4aca6ed0e75c975cac20cf2e6ef2c48d66fed9fd641e853bb1e3eebe3a8c6e80"
+  },
+  "source_members": [
+    {"bytes":1507,"path":"owner.py","sha256":"8be0f813149141c07874f36c8b4164c3fcf8c5e79b8de0a95a480f88918fbf12"},
+    {"bytes":1115,"path":"observer.py","sha256":"d146ee3f5246db9586e02eeddc3a9e48e3d8604ad6d7797499b5ddc9528da09f"},
+    {"bytes":7417,"path":"run.py","sha256":"e4f820b9a7bd459339cff858325c1a54e13f3b04384fd1eb32ccb6c0d7a297e8"},
+    {"bytes":3761,"path":"audit.py","sha256":"1d6f064a517163809cbca64c6b5efd395346de034998e4cf46befda4deaa8438"},
+    {"bytes":2587,"path":"controls.py","sha256":"75fe04b9b4a97b7faab16ddfb60504d334fa67a262e254e25cfdb214002cfbd7"},
+    {"bytes":540,"path":"test_contract.py","sha256":"974e1a8503f213076ec547105e1c3a9e5cb661b5b7dbadf0f4e0d730cba64b62"}
+  ],
+  "source_xz_sha256": "34af3129f446dfbf61c0c5d6fb3610d2a6b0614367b35f34c108d819a936ba29"
+}
