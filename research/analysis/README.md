@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 145 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 147 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
@@ -202,6 +202,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`phase_overlap_resource_footprint_r0_v2/`](phase_overlap_resource_footprint_r0_v2/)
 - [`predicate_cache_persist_4217_v1/`](predicate_cache_persist_4217_v1/)
 - [`predicate_dependency_cache_4217_v1/`](predicate_dependency_cache_4217_v1/)
+- [`predicate_specialist_switch_4284_v1/`](predicate_specialist_switch_4284_v1/)
 - [`probabilistic_automaton_censor_bounds_r1_v1/`](probabilistic_automaton_censor_bounds_r1_v1/)
 - [`probabilistic_automaton_censoring_identifiability_r0_v1/`](probabilistic_automaton_censoring_identifiability_r0_v1/)
 - [`probabilistic_automaton_dwell_censor_r2_v1/`](probabilistic_automaton_dwell_censor_r2_v1/)
