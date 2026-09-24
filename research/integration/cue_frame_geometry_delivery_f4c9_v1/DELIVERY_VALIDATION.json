@@ -1,0 +1,37 @@
+{
+  "external_review": "NOT_ASSERTED",
+  "frozen_readonly": {
+    "frozen_verification": {
+      "audit_byte_identical": true,
+      "controls_replayed": 12,
+      "errors": [],
+      "files": 472,
+      "gui_runs": 0,
+      "scientific_reruns": 0,
+      "status": "PASS_READONLY_RECONSTRUCTION"
+    },
+    "gui_runs": 0,
+    "restore": {
+      "files": 472,
+      "gui_runs": 0,
+      "member_bytes": 22571258,
+      "scientific_reruns": 0,
+      "status": "PASS_LOSSLESS_RESTORE"
+    },
+    "scientific_reruns": 0,
+    "status": "PASS_COMPLETE_GEOMETRY_DELIVERY"
+  },
+  "gui_runs": 0,
+  "policy_evaluation_workers": 0,
+  "publication_tests": {
+    "command": "python -B -m unittest -v test_restore",
+    "exit": 0,
+    "methods": 10,
+    "negative_methods": 9,
+    "positive_methods": 1,
+    "stderr_sha256": "8abce8e930dae6296bae97fd053e2edfa361d968e14ee9fbad4823da506488b1"
+  },
+  "remote_ci": "NOT_ASSERTED",
+  "scientific_reruns": 0,
+  "status": "PASS_LOCAL_DELIVERY_VALIDATION"
+}
