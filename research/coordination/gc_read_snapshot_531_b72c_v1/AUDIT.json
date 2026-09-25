@@ -1,0 +1,104 @@
+{
+  "cases": 40,
+  "classifications": 120,
+  "corruption_controls": {
+    "authority": {
+      "errors": [
+        "00-AUTOCOMMIT-META_FIRST-STABLE-r0:AUTHORITY",
+        "00-AUTOCOMMIT-META_FIRST-STABLE-r0:RESULT_JOIN"
+      ],
+      "rejected": true
+    },
+    "boolean_exit": {
+      "errors": [
+        "00-AUTOCOMMIT-META_FIRST-STABLE-r0:EXIT:reader"
+      ],
+      "rejected": true
+    },
+    "boolean_rep": {
+      "errors": [
+        "00-AUTOCOMMIT-META_FIRST-STABLE-r0:CONFIG"
+      ],
+      "rejected": true
+    },
+    "changed_final_state": {
+      "errors": [
+        "00-AUTOCOMMIT-META_FIRST-STABLE-r0:final"
+      ],
+      "rejected": true
+    },
+    "drop_case": {
+      "errors": [
+        "CASE_COUNT"
+      ],
+      "rejected": true
+    },
+    "drop_history": {
+      "errors": [
+        "00-AUTOCOMMIT-META_FIRST-STABLE-r0:VIEW",
+        "00-AUTOCOMMIT-META_FIRST-STABLE-r0:RESULT_JOIN"
+      ],
+      "rejected": true
+    },
+    "duplicate_case": {
+      "errors": [
+        "39-SNAPSHOT-HISTORY_FIRST-AFTER_READS-r1:CONFIG",
+        "39-SNAPSHOT-HISTORY_FIRST-AFTER_READS-r1:final",
+        "39-SNAPSHOT-HISTORY_FIRST-AFTER_READS-r1:ATOMIC_WRITE"
+      ],
+      "rejected": true
+    },
+    "false_fresh_refusal": {
+      "errors": [
+        "00-AUTOCOMMIT-META_FIRST-STABLE-r0:DECISIONS",
+        "00-AUTOCOMMIT-META_FIRST-STABLE-r0:RESULT_JOIN"
+      ],
+      "rejected": true
+    },
+    "lost_process": {
+      "errors": [
+        "00-AUTOCOMMIT-META_FIRST-STABLE-r0:PROCESS_COUNT",
+        "00-AUTOCOMMIT-META_FIRST-STABLE-r0:READY_BINDING",
+        "00-AUTOCOMMIT-META_FIRST-STABLE-r0:WIRE_IDENTITY"
+      ],
+      "rejected": true
+    },
+    "missing_sql_evidence": {
+      "errors": [
+        "00-AUTOCOMMIT-META_FIRST-STABLE-r0:READER_SQL"
+      ],
+      "rejected": true
+    },
+    "mixed_watermark": {
+      "errors": [
+        "00-AUTOCOMMIT-META_FIRST-STABLE-r0:VIEW",
+        "00-AUTOCOMMIT-META_FIRST-STABLE-r0:RESULT_JOIN"
+      ],
+      "rejected": true
+    },
+    "wrong_request": {
+      "errors": [
+        "00-AUTOCOMMIT-META_FIRST-STABLE-r0:REQUESTS"
+      ],
+      "rejected": true
+    }
+  },
+  "decision": "PASS_GC_READ_SNAPSHOT_BOUNDARY_SCOPED",
+  "errors": [],
+  "summary": {
+    "AUTOCOMMIT": {
+      "cases": 20,
+      "fresh_refusals": 2,
+      "historical_at_return": 4,
+      "mixed_views": 4,
+      "rebound_proposals": 2
+    },
+    "SNAPSHOT": {
+      "cases": 20,
+      "fresh_refusals": 0,
+      "historical_at_return": 8,
+      "mixed_views": 0,
+      "rebound_proposals": 0
+    }
+  }
+}
