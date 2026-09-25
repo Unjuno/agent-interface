@@ -1,0 +1,23 @@
+{
+  "clock": {
+    "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+    "resolution_s": 1e-09
+  },
+  "cpu_visible": 5,
+  "docker": null,
+  "engine": "provided execution container",
+  "executable": "/opt/pyvenv/bin/python",
+  "no_image_attestation": true,
+  "no_performance_claim": true,
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "sqlite": "3.46.1",
+  "sqlite_settings": {
+    "autocommit": true,
+    "busy_timeout_ms": 0,
+    "journal_mode": "wal",
+    "reader_query_only": true,
+    "synchronous": "FULL",
+    "wal_autocheckpoint": 0
+  }
+}
