@@ -1,4 +1,5 @@
 """Restore exact retained JSON in a temporary directory and audit, never rerun trials."""
+import argparse
 import base64
 import hashlib
 import json
@@ -17,10 +18,20 @@ def sha(data):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--historical-only', action='store_true',
+                        help='report current runtime/workflow drift without changing historical evidence')
+    args = parser.parse_args()
+    runtime_drift = []
     freeze = json.loads((HERE / 'FREEZE.json').read_text())
     for path, expected in freeze['sources'].items():
-        if sha((ROOT / path).read_bytes()) != expected:
-            raise ValueError('frozen source mismatch: ' + path)
+        current = ROOT / path
+        matches = current.is_file() and sha(current.read_bytes()) == expected
+        if not matches:
+            if args.historical_only and path.startswith(('runtime/', '.github/')):
+                runtime_drift.append(path)
+            else:
+                raise ValueError('frozen evidence source mismatch: ' + path)
     manifest = json.loads((HERE / 'RECORD_ARCHIVES.json').read_text())
     outputs = {}
     with tempfile.TemporaryDirectory(prefix='static-validation-review-') as td:
@@ -46,7 +57,8 @@ def main():
                     raise ValueError(label + ' failed exact ' + name + ' reproduction')
             outputs[label] = {'raw_sha256': sha(raw), 'exact_audit_and_controls': True}
     print(json.dumps({'status': 'PASS_READONLY_RECONSTRUCTION', 'frozen_sources': len(freeze['sources']),
-                      'new_engineering_trials': 0, 'records': outputs}, indent=2, sort_keys=True))
+                      'new_engineering_trials': 0, 'records': outputs,
+                      'current_runtime_drift': runtime_drift}, indent=2, sort_keys=True))
     return 0
 
 
