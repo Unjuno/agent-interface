@@ -6,6 +6,7 @@ on:
       - 'runtime/distribution_v2/test_validator_zipapp.py'
       - 'runtime/core_v1/**'
       - 'runtime/cli_v1/validate_program.py'
+      - 'research/integration/standalone_validator_z5m8_v1/**'
       - '.github/workflows/runtime-standalone-validator-v1.yml'
   push:
     branches: [main]
@@ -14,6 +15,7 @@ on:
       - 'runtime/distribution_v2/test_validator_zipapp.py'
       - 'runtime/core_v1/**'
       - 'runtime/cli_v1/validate_program.py'
+      - 'research/integration/standalone_validator_z5m8_v1/**'
       - '.github/workflows/runtime-standalone-validator-v1.yml'
   workflow_dispatch:
 permissions:
@@ -28,3 +30,4 @@ jobs:
         with:
           python-version: '3.13'
       - run: python -B -S -m unittest -v runtime.distribution_v2.test_validator_zipapp
+      - run: python -B -S research/integration/standalone_validator_z5m8_v1/verify_retained.py
