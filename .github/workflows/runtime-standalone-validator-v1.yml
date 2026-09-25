@@ -1,0 +1,30 @@
+name: Standalone static validator
+on:
+  pull_request:
+    paths:
+      - 'runtime/distribution_v2/build_validator.py'
+      - 'runtime/distribution_v2/test_validator_zipapp.py'
+      - 'runtime/core_v1/**'
+      - 'runtime/cli_v1/validate_program.py'
+      - '.github/workflows/runtime-standalone-validator-v1.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'runtime/distribution_v2/build_validator.py'
+      - 'runtime/distribution_v2/test_validator_zipapp.py'
+      - 'runtime/core_v1/**'
+      - 'runtime/cli_v1/validate_program.py'
+      - '.github/workflows/runtime-standalone-validator-v1.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-artifact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -B -S -m unittest -v runtime.distribution_v2.test_validator_zipapp
