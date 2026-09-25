@@ -10,6 +10,30 @@ NESTED_REFUSAL_STATUSES={"refused","invalid_request","backend_unavailable"}
 AMBIGUOUS_DELIVERY_VALUES={"ambiguous","uncertain","unknown","write_uncertain","delivery_uncertain"}
 KNOWN_DELIVERY_VALUES={"confirmed","confirmed_partial"}
 
+
+def _delivery_evidence(result: dict[str, Any], nested: dict[str, Any]) -> str | None:
+    """Resolve both same-contract delivery fields without erasing uncertainty.
+
+    Null/absence makes no delivery assertion. Unsupported evidence dominates
+    ambiguity, which dominates confirmed partial, then confirmed. This resolver
+    changes presentation only; original fields survive in raw_dispatch.
+    """
+    values = [("delivery", result.get("delivery")),
+              ("result.delivery", nested.get("delivery"))]
+    known = AMBIGUOUS_DELIVERY_VALUES | KNOWN_DELIVERY_VALUES
+    for path, value in values:
+        if value is not None and not isinstance(value, str):
+            return "INVALID_TYPE:" + path
+    for _, value in values:
+        if value is not None and value not in known:
+            return value
+    for _, value in values:
+        if value in AMBIGUOUS_DELIVERY_VALUES:
+            return value
+    if any(value == "confirmed_partial" for _, value in values):
+        return "confirmed_partial"
+    return "confirmed" if any(value == "confirmed" for _, value in values) else None
+
 def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None=None, lifecycle: list[str]|None=None) -> dict[str,Any]:
     status=result.get("status")
     states=list(lifecycle) if lifecycle is not None else ["dispatch"]
@@ -20,7 +44,7 @@ def adapt_dispatch_result(result: dict[str,Any], *, usage: Mapping[str,Any]|None
     cleanup=result.get("cleanup_error")
     nested=result.get("result") if isinstance(result.get("result"),dict) else {}
     native_status=nested.get("status")
-    delivery=result.get("delivery", nested.get("delivery"))
+    delivery=_delivery_evidence(result, nested)
     # Native sessions return status, not the legacy golden success flags.
     # Completion does not supply an independent application score.
     completed=(native_status=="completed" if native_status is not None
