@@ -126,12 +126,13 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 147 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 149 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
 - [`action_conditioned_routing_successor_1934_r2/`](action_conditioned_routing_successor_1934_r2/)
 - [`action_conditioned_routing_successor_1934_v1/`](action_conditioned_routing_successor_1934_v1/)
+- [`affine_clock_delivery_c6t9_t7k3_v1/`](affine_clock_delivery_c6t9_t7k3_v1/)
 - [`altgr_preflight_contract_successor_2171_v1/`](altgr_preflight_contract_successor_2171_v1/)
 - [`anytime_fidelity_typed_admission_r0_v1/`](anytime_fidelity_typed_admission_r0_v1/)
 - [`attention_budgeting_successor_1940_v1/`](attention_budgeting_successor_1940_v1/)
