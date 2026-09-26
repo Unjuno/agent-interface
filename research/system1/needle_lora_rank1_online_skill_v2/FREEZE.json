@@ -1,0 +1,61 @@
+{
+  "schema": "needle-lora-rank1-freeze-v2.v1",
+  "issue": 4507,
+  "allocation": "needle-lora-rank1-online-skill-v2",
+  "branch": "research/needle-lora-rank1-online-skill-20260927-v2",
+  "base_main_sha": "175ff6fff032d43de826d4ea63774cd001df5636",
+  "parent_evidence_commit": "54e5b395fc4fcbab2b10ecfca6f9770bca07885d",
+  "docker_image": "needle-pilot05:local",
+  "docker_image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+  "platform": "linux/amd64",
+  "seeds": [74111, 74222, 74333],
+  "seed_offsets": [1, 2, 3, 4, 10, 20, 21, 30],
+  "isolation": {
+    "network": "none",
+    "root_read_only": true,
+    "v1_dependency_read_only": true,
+    "v2_source_read_only": true,
+    "cpus": 1,
+    "memory_bytes": 2147483648,
+    "pids_limit": 64
+  },
+  "output_layout": {
+    "host_metadata": "/out",
+    "training_directory": "/out/training",
+    "training_directory_precreated_empty": true,
+    "training_results": "training/",
+    "audit_result": "AUDIT.json"
+  },
+  "formal_invocations": 1,
+  "training_container_invocations": 1,
+  "audit_container_invocations": 1,
+  "retry_count": 0,
+  "source_sha256": {
+    "PREREGISTRATION.json": "6388b65c52b9c58272613c25f24c20695f5b6260b81d4434914a6c5aa16b09c9",
+    "PREREGISTRATION.md": "dba3d1a638a5b355cdf4a591c17edfe7406e18a60a659efd51bdcab0bc8d4394",
+    "README.md": "c4d51704da70ec73d8fe0e225be22991a7c0c43c25624ba34d09bac88eec020d",
+    "SOURCE_LIST.txt": "bf02d737542882725856bff2796d14a5d6b2c86ade8f15e0e6c8fc1bf0f972d9",
+    "audit_v2.py": "fc706d6250c57d1cd8a3870b09c9ed96803af848a609fd9eb390a8636f326dc1",
+    "formal_v2.py": "f236bf8242ba62b2a7ac52c9604ab09f444c422e78115bc3ef39fd5cfe7ce1a9",
+    "runner_v2.py": "15ee9a4ae18c27a3ad9594c07dffc7653fee45e8c95c95f5cd82d8bc1bdc7e38",
+    "test_construction_v2.py": "6212170488c5bfb82e7891dc6b000d97ff03e301675634b6f6c52a03ac793408"
+  },
+  "dependency_sha256": {
+    "runner.py": "bef24c1dc1a14f42b531716b969027a415b497fd7594669f1153eed392f88f86",
+    "audit.py": "4193b8cc5c0f6ef5ce8e4ca1e07e05f309e2339496faa78c924e000e52aa0183",
+    "formal.py": "8a93503144059fdd99c99a78c083855d5cc7ef16da6f28557c5dfa7e0d3705ae",
+    "FREEZE.json": "9dc258712bf9e2dd312ca715b393bdb9dc7710c295fd71b99dbe7dfea6952a61",
+    "FREEZE.sha256": "5e87dd7e8769bcfcdccd3ed966874ecd26c8f828e93a42d0bf40665eeb4d751d",
+    "PREREGISTRATION.json": "76d49784c35b5909122682f53d3a548a0ccf52956814da5655082146d8b22d57",
+    "PREREGISTRATION.md": "8b76bfcfdd8f8b910d2a8c65ae2bf79f52a43600e126301ce3a5465f01a45300",
+    "README.md": "de4c8da6ca60d9109f2816bc59a00d538b0b8520ea1c8cbdd9a04bb86bbff3dd",
+    "SOURCE_LIST.txt": "385798c9017f8276a49cd0261e779d56b55823ac24b2a845df502e76c6d89a96",
+    "test_construction.py": "2bc76d226beec0f205c0cad5cdefc36437e5f390c7ff95038d073ec811d98584",
+    "formal/stop-01/FORMAL_INVOCATION.json": "ca0a0b0e9546b9365792a8b32e6b78fa50a8c1d3810c59fe0ae5a66e800e196f",
+    "formal/stop-01/SHA256SUMS.txt": "cc58fcbd91d645c72545541b3ae39b104217b841815869130485b132309f46ea",
+    "formal/stop-01/STOP.json": "fd91d8ae775cd306031a0d55a9f70013cbec017ad46a4ca8ce479899b0d4f0ba",
+    "formal/stop-01/STOP.md": "52b69c2a93dac7074a5522721eca31d8c111a60bdff624acf9d254f85ebec92f",
+    "formal/stop-01/training.stderr.txt": "20850f330e515e6b5e9d70af6ffc1d646529f7655a2bbd6832a045dd32834951",
+    "formal/stop-01/training.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

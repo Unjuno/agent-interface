@@ -1,0 +1,65 @@
+{
+  "admissions": {
+    "COMPOUND": 5,
+    "FRESH_EPOCH": 13,
+    "REUSED_ID": 17
+  },
+  "cases": 49,
+  "controls": [
+    {
+      "name": "drop_row",
+      "rejected": true
+    },
+    {
+      "name": "duplicate_case_id",
+      "rejected": true
+    },
+    {
+      "name": "effect_count",
+      "rejected": true
+    },
+    {
+      "name": "decision_flip",
+      "rejected": true
+    },
+    {
+      "name": "target_change",
+      "rejected": true
+    },
+    {
+      "name": "boolean_epoch",
+      "rejected": true
+    },
+    {
+      "name": "bad_app_exit",
+      "rejected": true
+    },
+    {
+      "name": "receipt_corrupt",
+      "rejected": true
+    },
+    {
+      "name": "button_not_neutral",
+      "rejected": true
+    },
+    {
+      "name": "final_count",
+      "rejected": true
+    }
+  ],
+  "decision": "FAIL_OR_HOLD_RECOMMIT_RECEIPT_RUNTIME_BOUNDARY",
+  "effects": {
+    "COMPOUND": 5,
+    "FRESH_EPOCH": 13,
+    "REUSED_ID": 17
+  },
+  "errors": [
+    "ROW_COUNT:49"
+  ],
+  "schema": "agent-interface/action-receipt-recommit-audit-v1",
+  "unsafe_case_count": {
+    "COMPOUND": 0,
+    "FRESH_EPOCH": 8,
+    "REUSED_ID": 12
+  }
+}

@@ -1,0 +1,24 @@
+Construction-clock-41 invocation and provenance
+
+Upstream: Farama-Foundation/ViZDoom tag `1.3.0`, commit `c8e0a31182d98c6f40a65674283e736b851e8e59`; pybind11 submodule `f5fbe867d2d26e4a0a9177a51f6e568868ad3dc8`.
+Patch SHA-256: `bed15556d201cf6b1a1b3d780835100b50fe649bdb854ec845b5c4f348a7df71`.
+Base image: `agent-interface-map01-clock-review-fixed:20260920`, digest `sha256:4320dd483b24ea91c1481f12fd5799c903d9daa99a517b994f607037098ea41d`.
+First instrumented runtime image used by this run: `sha256:edc98e0a13be2bfa6f0e9c52387c25a7a29f6b62378ded884e597882adb7882b`, linux/arm64. Build output reported wheel `vizdoom-1.3.0-cp311-cp311-linux_aarch64.whl`, SHA-256 `e8b13a0e715a64a86be7f60655c35dbfc8f02cdc9c536ab06d83712679367246`. The later fully logged rebuild for run42 is retained alongside this run and uses the same upstream commit and patch.
+WAD SHA-256: `a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b`.
+
+Runtime command was issued from `research/doom/issue_3300_map01_live_scorer_phase_v1/`:
+
+```sh
+docker run --rm --platform linux/arm64 --network none --read-only \
+  --workdir /tmp --tmpfs /tmp:rw,noexec,nosuid,size=128m \
+  -v "$PWD/results/construction-clock-41/probe.py:/probe.py:ro" \
+  -v "$PWD/runner.py:/opt/phase-probe/runner.py:ro" \
+  -v "$PWD/results/construction-clock-41:/results" \
+  -v /tmp/agent-interface-3300-freedoom.rVM7UB/unpacked/freedoom-0.13.0/freedoom2.wad:/assets/freedoom2.wad:ro \
+  --entrypoint python agent-interface-map01-clock-entry:20260920 /probe.py \
+  > "$PWD/results/construction-clock-41/container.log" 2>&1
+```
+
+Probe SHA-256 `f03ad5f0048fe96b006a84643ab5c77d06c257ec322a9e65aec59dd9352089c4`; raw SHA-256 `b3801c579b038900be3b65d45131b32aa74c57a15980cb2ee41b76a6c849c4c1`; container log SHA-256 `53e800351f86d63f5b5369957908cf5b386b884d02f184b26602fed49cf0b3a9`.
+
+Initial auditor SHA-256 `38dd571a4b99ff6163f5245c2d459d813e16c23bb855d54425b51446589c2397`; initial audit result hash `9df38632161ab0911d7655943a793d6f9be8fab907de82e9469fd6b4a5195de1` (FAIL_AUDIT caused by wrong preceding-record selection). Corrected auditor and test sources and all audit/test stdout/stderr are preserved in this directory. Run42 invocation binds the full reproducible build and corrected v2 audit.

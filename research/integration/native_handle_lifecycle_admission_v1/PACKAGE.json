@@ -1,0 +1,27 @@
+{
+  "format": "compact-evidence-v1",
+  "published_files": {
+    "sources.tar.gz.b64": {
+      "decoded_bytes": 6362,
+      "sha256": "99df9cc6382d17d9fbf4a88ade453037c719fa413375f65fcade216189dc819e"
+    },
+    "formal.raw.json.gz.b64": {
+      "decoded_bytes": 914,
+      "sha256": "bf9807e4f2dd25d1de629ef872298e231ed57b3845569975f39920daf808e111",
+      "uncompressed_bytes": 12593,
+      "uncompressed_sha256": "b67790414851ebbe0ed82cb835eefc03b884ac89190d6d39040f004b416dd193"
+    },
+    "construction.tar.gz.b64": {
+      "decoded_bytes": 1477,
+      "sha256": "90a3669e484892fe4b28cae0aaf80fd4b9e6801b43955295bf9faeb2d9d52a7d"
+    }
+  },
+  "preformal_freeze_sha256": "f8ec1d8be7b97b04cdf197fd517699f6aabf6b77cda3d9fc9ba62d584b70b55a",
+  "first_postformal_control_launch": "STOP_MODULE_IMPORT_UNDER_PYTHON_I",
+  "supplemental_read_only_controls": {
+    "decision": "PASS_CORRUPTION_CONTROLS",
+    "rejected": 10,
+    "total": 10
+  },
+  "note": "The earlier local full evidence.tar.xz packaging object was not published on this branch. These three compact archives are the canonical published evidence payloads."
+}

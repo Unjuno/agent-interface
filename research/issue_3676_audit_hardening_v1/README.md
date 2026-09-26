@@ -13,3 +13,17 @@
 Against exact predecessor raw bytes (SHA-256 `ccb9a75eefb7df73cb13dbc9191d33334fb672c2fd58fcc5fa32be998e182807`), the predecessor audit accepted six tested variants: the baseline, unexpected event, duplicate stale row, contradictory `would_call_bridge`, reordered required transition and unsupported event field. Its documented invocation exited with the usage error because the argument-count check rejects the six-element argv vector.
 
 The hardened offline audit requires exact top-level/event/nested schemas, ordered transition cardinality, consistent stale/fresh fields, and checks the study's source hashes before emitting a pass. Its `argparse` CLI requires both predecessor `--freeze` and this study's `--study-freeze`. The retained predecessor files in `evidence/` are byte-bound to their original hashes. See `REPORT.md` for actual construction results and limits.
+
+## Later exact-source container evidence
+
+PR [#3773](https://github.com/Unjuno/agent-interface/pull/3773) validated the
+exact final source commit `de9acd02b50fac4e9b8c46ed961d923181cbbece` in two
+fresh, network-disabled Linux/amd64 containers: 5/5 tests passed, all 21/21
+mutation controls were rejected, and the separate raw-only CLI matched the
+retained output byte-for-byte. The immutable transcript and source manifest
+are retained at
+`research/integration/issue_3690_docker_validation_v1/` on `main`. This was
+OrbStack on an ARM64 host with an amd64 container, not Docker Desktop host
+integration or native x86_64 hardware. The separate Docker Desktop-specific
+gate remains open; this evidence does not close Issue #3690 or establish
+general XRes correctness.

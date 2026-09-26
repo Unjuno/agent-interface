@@ -1,0 +1,77 @@
+{
+  "checks": [
+    {
+      "byte_equal": true,
+      "exit": 0,
+      "expected_exit": 0,
+      "matched": true,
+      "name": "prefix"
+    },
+    {
+      "exit": 0,
+      "expected_exit": 0,
+      "matched": true,
+      "name": "mutations"
+    },
+    {
+      "exit": 0,
+      "expected_exit": 0,
+      "matched": true,
+      "name": "units"
+    },
+    {
+      "exit": 1,
+      "expected_exit": 1,
+      "matched": true,
+      "name": "full-audit-expected-failure"
+    },
+    {
+      "matched": true,
+      "name": "82-extracted-members"
+    }
+  ],
+  "formal_PASS": false,
+  "limitations": [
+    "same-author checks, not external human review",
+    "full formal audit still fails; this validates preservation only"
+  ],
+  "new_live_invocations": 0,
+  "packaging_controls": [
+    {
+      "control": "existing-output",
+      "exit": 2,
+      "new_output_created": false,
+      "refused": true
+    },
+    {
+      "control": "corrupt-part",
+      "exit": 2,
+      "new_output_created": false,
+      "refused": true
+    },
+    {
+      "control": "missing-part",
+      "exit": 2,
+      "new_output_created": false,
+      "refused": true
+    },
+    {
+      "control": "wrong-expanded-hash",
+      "exit": 2,
+      "new_output_created": false,
+      "refused": true
+    },
+    {
+      "control": "path-escape",
+      "exit": 2,
+      "new_output_created": false,
+      "refused": true
+    },
+    {
+      "control": "duplicate-manifest-key",
+      "exit": 2,
+      "new_output_created": false,
+      "refused": true
+    }
+  ]
+}

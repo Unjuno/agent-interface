@@ -1,0 +1,5 @@
+# Post-formal auditor source correction
+
+The formal builder and loader source files remained unchanged at their preregistered hashes, and no formal model/container run was repeated. The first independent audit invocation stopped before scoring because (1) it expected `seeds` while the freeze manifest initially exposed `formal_seeds`, (2) it expected files at the evidence root rather than the frozen per-seed `builder/`, `load1/`, and `load2/` paths, and (3) `loader_sha256` in the manifest had one omitted hexadecimal character. The same retained raw evidence was re-audited after these audit/manifest-only corrections; the final audit is `PASS_AUDIT_SCOPED` with zero errors.
+
+The initial audit STOP is preserved in the turn/tool history; the initial auditor stdout did not create an `audit.json`. Final exact audit output is retained at `formal/audit.json`. The corrected auditor's final SHA-256 is `4e53e241aa115202ce9ca2ce3a5b3df76599b80ad03290a61594bd6b0e35c3a0` as included in the updated source freeze. The first failed audit output is not overwritten or represented as a PASS.

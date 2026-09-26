@@ -1,0 +1,38 @@
+{
+  "checks": [
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-S",
+        "-B",
+        "verify_evidence.py"
+      ],
+      "end_ns": 1275184046860,
+      "kind": "verify",
+      "pid": 709,
+      "returncode": 0,
+      "start_ns": 1274775430895,
+      "stderr": "",
+      "stdout_sha256": "97a895c2e8a9382160d8bf498180d0d408a3adf8216464c8603751f4a0bb852c"
+    },
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-S",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_restore"
+      ],
+      "end_ns": 1275321410975,
+      "kind": "units",
+      "pid": 716,
+      "returncode": 0,
+      "start_ns": 1275184105908,
+      "stderr": "test_changed (test_restore.RestoreTests.test_changed) ... ok\ntest_extra_stream (test_restore.RestoreTests.test_extra_stream) ... ok\ntest_freeze (test_restore.RestoreTests.test_freeze) ... ok\ntest_fresh_restore (test_restore.RestoreTests.test_fresh_restore) ... ok\ntest_member_bytes (test_restore.RestoreTests.test_member_bytes) ... ok\ntest_member_count (test_restore.RestoreTests.test_member_count) ... ok\ntest_new_destination_only (test_restore.RestoreTests.test_new_destination_only) ... ok\ntest_original (test_restore.RestoreTests.test_original) ... ok\ntest_path (test_restore.RestoreTests.test_path) ... ok\ntest_truncated (test_restore.RestoreTests.test_truncated) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.090s\n\nOK\n",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "scope": "publication mechanics; no scientific or GUI reruns"
+}

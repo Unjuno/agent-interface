@@ -1,0 +1,83 @@
+{
+  "allocation_id": "issue2499-readiness-successor-3634-formal-01",
+  "apps": {},
+  "cleanup_complete": true,
+  "cleanup_processes": [
+    {
+      "pid": 8,
+      "remaining_pids": [],
+      "returncode": 0
+    },
+    {
+      "pid": 7,
+      "remaining_pids": [],
+      "returncode": 0
+    }
+  ],
+  "decision": "STOP_MIXED_APP_READINESS_SUCCESSOR",
+  "error": "RuntimeError('STOP_IDENTITY_MISSING:inkscape')",
+  "event_count": 3,
+  "failed_launches": [
+    {
+      "cleanup": {
+        "pid": 26,
+        "remaining_pids": [],
+        "returncode": 1
+      },
+      "pid": 26,
+      "role": "inkscape"
+    }
+  ],
+  "formal_invocations": 1,
+  "freeze_sha256": "7827247548e27843725bd17c2f66881ffd8695f450843c39ee0fc75cd350aae7",
+  "image_id": "sha256:f8ae93cfedd412cfe39ca575a97abc32c4d6e99ee7b5cc7848e79e0ce08bdc9f",
+  "independent_task_effect_scored": false,
+  "input_operations": 0,
+  "issue": 3645,
+  "ledger": [
+    {
+      "display": ":159",
+      "hash": "cf451a97704c132f97183c6f7b6c0b3d8a089ccf3d91a8280e9e140248227ec0",
+      "kind": "session_setup",
+      "seq": 0,
+      "xauthority_cookie_added": true,
+      "xauthority_mode": "cookie_auth_file"
+    },
+    {
+      "hash": "e34104772f8989590d9ab8c0ae5aaf835e97622299bfb5293bd80559eccffed1",
+      "kind": "stop",
+      "reason": "RuntimeError('STOP_IDENTITY_MISSING:inkscape')",
+      "seq": 1
+    },
+    {
+      "complete": true,
+      "hash": "79459b4b7ac5dc932db73640f836f4e489bb71e0edb1023798627efd39c9f969",
+      "kind": "process_cleanup",
+      "processes": [
+        {
+          "pid": 8,
+          "remaining_pids": [],
+          "returncode": 0
+        },
+        {
+          "pid": 7,
+          "remaining_pids": [],
+          "returncode": 0
+        }
+      ],
+      "seq": 2
+    }
+  ],
+  "model_calls": 0,
+  "network_calls": 0,
+  "platform": "linux/arm64",
+  "preregistration_sha256": "09a2083cdfcf5089619472cb8e74e6a7b88f5f1b7923e8d976e048101c899c49",
+  "retries": 0,
+  "session_complete": false,
+  "source_commit": "c8a25969563876c9f5d0348eb4fb71c132eea0f8",
+  "source_manifest_sha256": "96b50aa65dd4a787d015192608bf293b4cf1ffe7d11b85c6b65cb28015d91473",
+  "terminal_input_state": "not_independently_measured",
+  "traceback": "Traceback (most recent call last):\n  File \"/src/formal_session.py\", line 145, in main\n    inkscape, iw, ident = launch([\"inkscape\",\"--no-splash\",\"--new\"], env,\"inkscape\")\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/src/formal_session.py\", line 88, in launch\n    wid,identity=wait_role_window(env,role,before)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/src/formal_session.py\", line 81, in wait_role_window\n    raise RuntimeError(last[\"status\"]+\":\"+role)\nRuntimeError: STOP_IDENTITY_MISSING:inkscape\n",
+  "transition_gate": "NOT_RUN_OR_INCOMPLETE",
+  "xvfb_socket_disappeared": true
+}

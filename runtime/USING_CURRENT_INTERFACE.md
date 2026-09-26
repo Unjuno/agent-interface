@@ -63,8 +63,10 @@ research reports use `agent_review.py --native` as described in the MCP guide.
 
 ## Retrieve an outcome or request a fresh image
 
-Public MCP offers three tools: `interface_dispatch`, `interface_observe`, and
-`interface_results`. Choose the next call according to what is missing:
+Public MCP offers `interface_dispatch`, `interface_observe`, `interface_results`,
+and optional draft checking with `interface_validate`. Validation performs no
+input and does not establish runtime admission. For action feedback, choose the
+next call according to what is missing:
 
 | Situation | Next call | Meaning |
 |---|---|---|

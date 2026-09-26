@@ -23,6 +23,7 @@ SOURCE_FILES = (
     "runtime/selector_v1/selector.py",
     "runtime/cli_v1/__init__.py",
     "runtime/cli_v1/__main__.py",
+    "runtime/cli_v1/validate_program.py",
     "runtime/cli_v1/api.py",
     "runtime/cli_v1/attempt.py",
     "runtime/cli_v1/mcp_server.py",
