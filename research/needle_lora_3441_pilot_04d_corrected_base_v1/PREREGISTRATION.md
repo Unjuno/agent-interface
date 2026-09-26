@@ -16,9 +16,14 @@ Base Git commit: `c83ddb057c680a126144d000bf7ef7ba2274652a`. Files are canonical
 
 | File | SHA-256 | Git blob |
 |---|---|---|
-| `runner.py` | `c80a7ee2f4cb9a0cd45b941962bdedc40936d5c0275a6e13aa9ba1baa24710fa` | `afa50451444aa858feab2ef6576d771c6ddff969` |
+| `runner.py` | `b9dcf1e9720adef96e095d02e26bd61171c5453ba382880300cca11efaadd357` | `e76e1582f12db745c5c3b1140b1393079265fff7` |
 | `audit.py` | `1f663574f605612aafb80a422c805f068b6c4fcfb1ea32bd5f4baeefe69d7c9c` | `7ed931198030a809a105490ab2c4aa0568cc0f3c` |
-| `test_construction.py` | `173985caaa16db11e6f8a54ac2175797437c6f10cdf596c396141a8401167184` | `7a06b15c70266496ce39e49015b6cc7a069fe500` |
+| `test_construction.py` | `fa01c208e0566b64ab5867345df6c6ec2a58b8a29551d8b090973cf78dd38b0d` | `2231296afd4cfe04bf7b99c3e99b51b6de71e352` |
 | `test_audit.py` | `681810d71182fe8e3c9e4ab0fe68a6eeed531fb1605b5c588d203564fc5091ee` | `6bb1aaba4826bfe06ea2a9f40897182875d4d63b` |
 
 The exact hashes for this preregistration are retained in `FREEZE.json`; the freeze file pins all five source files and Git blob IDs above plus this preregistration.
+
+
+## Pre-formal WDDM instrumentation amendment
+
+Before any training, a read-only GPU-memory instrumentation probe reproduced `torch.cuda.reset_peak_memory_stats(cuda:0)` failing with `RuntimeError: Invalid device argument` on the local Windows WDDM host. No optimizer step, training or evaluation occurred. The unsupported peak-memory calls are removed from the frozen runner; `cuda_peak_allocated_bytes` is recorded as null and `cuda_peak_memory_status` as `UNAVAILABLE_WDDM`. This is instrumentation-only and leaves all treatment variables and outcome gates fixed. The test suite verifies these unsupported calls are absent and the typed measurement state is reported.
