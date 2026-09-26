@@ -1,0 +1,107 @@
+{
+  "allocation": "affine-clock-c6t9-20260925-01",
+  "auditor_checks": 110731,
+  "ci_run": false,
+  "clock_calibration": false,
+  "controls_passed": 12,
+  "decision": "PASS_LOCAL_AFFINE_CLOCK_CONTRACT",
+  "end_main": "b669264a65d1474481e511676eacfc06bf82d775",
+  "frozen_files": 10,
+  "full_corpus_invocations": 1,
+  "github_writes": 0,
+  "global_roadmap_complete": false,
+  "gui_input_model_runs": 0,
+  "intake_main": "b669264a65d1474481e511676eacfc06bf82d775",
+  "main_integrated": false,
+  "postfreeze_tuning": 0,
+  "pr_created": false,
+  "previous_4250_head_ahead_of_main": 0,
+  "previous_4250_head_behind_main": 190,
+  "public_preregistration": false,
+  "remote_branch_created": false,
+  "remote_issue_created": false,
+  "replacements": 0,
+  "reruns": 0,
+  "source_hashes_unchanged": true,
+  "statistics": {
+    "candidate_status_counts": {
+      "LATE": 1951,
+      "ON_TIME": 3842,
+      "UNRESOLVED": 626
+    },
+    "directed": {
+      "direct-correlated_ontime": {
+        "interval": [
+          "11",
+          "14"
+        ],
+        "marginal_status": "UNRESOLVED",
+        "nominal_status": "ON_TIME",
+        "status": "ON_TIME"
+      },
+      "direct-lower_equality": {
+        "interval": [
+          "11",
+          "14"
+        ],
+        "marginal_status": "UNRESOLVED",
+        "nominal_status": "LATE",
+        "status": "LATE"
+      },
+      "direct-nominal_false_late": {
+        "interval": [
+          "11",
+          "14"
+        ],
+        "marginal_status": "UNRESOLVED",
+        "nominal_status": "LATE",
+        "status": "UNRESOLVED"
+      },
+      "direct-nominal_false_ontime": {
+        "interval": [
+          "11",
+          "14"
+        ],
+        "marginal_status": "UNRESOLVED",
+        "nominal_status": "ON_TIME",
+        "status": "UNRESOLVED"
+      },
+      "direct-singleton_late": {
+        "interval": [
+          "1",
+          "2"
+        ],
+        "marginal_status": "LATE",
+        "nominal_status": "LATE",
+        "status": "LATE"
+      },
+      "direct-singleton_ontime": {
+        "interval": [
+          "1",
+          "2"
+        ],
+        "marginal_status": "ON_TIME",
+        "nominal_status": "ON_TIME",
+        "status": "ON_TIME"
+      },
+      "direct-upper_equality": {
+        "interval": [
+          "11",
+          "14"
+        ],
+        "marginal_status": "UNRESOLVED",
+        "nominal_status": "ON_TIME",
+        "status": "ON_TIME"
+      }
+    },
+    "feasible_rows": 6419,
+    "inconsistent_rows": 2661,
+    "invalid_rows": 8,
+    "marginal_unresolved_but_exact_decisive": 164,
+    "nominal_false_late": 66,
+    "nominal_false_ontime": 141,
+    "rows": 9088
+  },
+  "unit_methods": 16,
+  "unpublished_parallel_activity_unknown": true
+}

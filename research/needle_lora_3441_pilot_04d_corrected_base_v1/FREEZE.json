@@ -1,0 +1,52 @@
+{
+  "schema": "needle-corrected-base-freeze-v1",
+  "issue": 4471,
+  "allocation": "needle-lora-3441-pilot-04d-corrected-base-20260926-01",
+  "repository": "Unjuno/agent-interface",
+  "mainBase": "c83ddb057c680a126144d000bf7ef7ba2274652a",
+  "branch": "research/needle-lora-3441-pilot-04d-20260926",
+  "path": "research/needle_lora_3441_pilot_04d_corrected_base_v1/",
+  "predecessor": {
+    "issue": 3895,
+    "seed": 3444,
+    "disposition": "HOLD_PROTOCOL_DEVIATION",
+    "preserveBytes": true
+  },
+  "seed": 3927,
+  "protocol": {
+    "features": 8,
+    "hidden": 16,
+    "classes": 4,
+    "rank": 2,
+    "baseRows": 512,
+    "basePretrainSteps": 400,
+    "adapterFitSteps": 120,
+    "supportEach": 16,
+    "heldoutEach": 4096,
+    "batch": 32,
+    "adamwLearningRate": 0.04,
+    "adapterOrder": [
+      "global_B",
+      "global_C",
+      "adapter_B",
+      "adapter_C"
+    ],
+    "deterministicCuda": true,
+    "tf32": false,
+    "cublasWorkspaceConfig": ":4096:8"
+  },
+  "sources": {
+    "runner.py": "b9dcf1e9720adef96e095d02e26bd61171c5453ba382880300cca11efaadd357",
+    "audit.py": "1f663574f605612aafb80a422c805f068b6c4fcfb1ea32bd5f4baeefe69d7c9c",
+    "test_construction.py": "fa01c208e0566b64ab5867345df6c6ec2a58b8a29551d8b090973cf78dd38b0d",
+    "test_audit.py": "681810d71182fe8e3c9e4ab0fe68a6eeed531fb1605b5c588d203564fc5091ee",
+    "PREREGISTRATION.md": "47b85d0848e26c27d0b4bbf1105a9f06a16025d73dbffe4d859e19240156c527"
+  },
+  "gitBlobs": {
+    "runner.py": "e76e1582f12db745c5c3b1140b1393079265fff7",
+    "audit.py": "7ed931198030a809a105490ab2c4aa0568cc0f3c",
+    "test_construction.py": "2231296afd4cfe04bf7b99c3e99b51b6de71e352",
+    "test_audit.py": "a17a03d7d9993c5b7d026d053f28bc5afdabfd58",
+    "PREREGISTRATION.md": "906d959ed2eab283319254b28f339cf39b74c515"
+  }
+}

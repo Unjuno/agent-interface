@@ -1,0 +1,84 @@
+{
+  "schema": "b72c-delivery-validation-v1",
+  "original_files": 918,
+  "restored_primary_files": 917,
+  "included_original_manifest_entries": 916,
+  "excluded_only": "PREDECESSOR_A61E.tar.xz",
+  "original_unchanged": true,
+  "restored_original_bytes_equal": true,
+  "audit_byte_identical": true,
+  "audit_sha256": "48930301b596129cb76c842c48f824509974ffe4aa3618c9d3ca9c3db7eaf2b9",
+  "decoder_unit_methods": 10,
+  "original_unit_methods": 10,
+  "new_formal_invocations": 0,
+  "new_gui_invocations": 0,
+  "steps": [
+    {
+      "name": "decoder_units",
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "test_restore.py"
+      ],
+      "pid": 796,
+      "returncode": 0,
+      "start_ns": 1870682622957,
+      "end_ns": 1871544235323,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "60ad40ab6dad287c68167a3dab912548628a1a661762167d0623d0b3398d9ee4",
+      "stdout_bytes": 0,
+      "stderr_bytes": 809
+    },
+    {
+      "name": "fresh_restore",
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "restore.py",
+        "--out",
+        "/mnt/data/b72c_delivery_20260925/publication-review-final"
+      ],
+      "pid": 806,
+      "returncode": 0,
+      "start_ns": 1871544282572,
+      "end_ns": 1872294866932,
+      "stdout_sha256": "df256311d03ee4c6057c7adf2f73be29b4a0311b4a67cd3a176f092ed71f983c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 150,
+      "stderr_bytes": 0
+    },
+    {
+      "name": "fresh_audit",
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "audit.py",
+        "--controls"
+      ],
+      "pid": 816,
+      "returncode": 0,
+      "start_ns": 1872294902916,
+      "end_ns": 1873124093856,
+      "stdout_sha256": "48930301b596129cb76c842c48f824509974ffe4aa3618c9d3ca9c3db7eaf2b9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 2543,
+      "stderr_bytes": 0
+    },
+    {
+      "name": "restored_units",
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "test_contract.py"
+      ],
+      "pid": 826,
+      "returncode": 0,
+      "start_ns": 1873124168156,
+      "end_ns": 1873773953259,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "ec1f39c83afa872a0e200674cb89090452b1a9bed95015daa31f2ac1706b935b",
+      "stdout_bytes": 0,
+      "stderr_bytes": 737
+    }
+  ]
+}

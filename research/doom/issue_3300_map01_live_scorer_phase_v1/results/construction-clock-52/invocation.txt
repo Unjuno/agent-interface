@@ -1,0 +1,12 @@
+Experiment: construction-clock-52, uninstrumented passive wait time course
+Runtime: OrbStack Docker Engine, context orbstack, linux/arm64
+Image: agent-interface-map01-clock-control-v1:20260921; image ID sha256:05e01176ffcc2258ca88d7f8aafb6bd9e3915cd7ad19af196924008ff16f84b6
+Pinned ViZDoom 1.3.0 source commit c8e0a31182d98c6f40a65674283e736b851e8e59; run48 source patch reversed; linked CNTVCT opcode count 0.
+Exact current-main scorer `_coherent_progress_sample` SHA-256 1a6da676db9c6b2aa61ccf0f600a1565395e906736bb07a50b2006e100d7ca98. WAD SHA-256 a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b.
+Frozen index/delay/seed: 0/0.5s/349600, 1/2s/349601, 2/6s/349602, 3/10s/349603, 4/14s/349604, 5/20s/349605. One fresh network-none container per row; 35 Hz ASYNC_SPECTATOR, episode timeout 350, 100ms sleep between passive episode_time+finished reads, one exact scorer invocation at the delay endpoint, then cleanup. No button/action/advance calls.
+
+Run template from repository root:
+docker run --rm --platform linux/arm64 --network none --read-only --workdir /tmp --tmpfs /tmp:rw,noexec,nosuid,size=128m -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-52:/results" -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-52/probe52.py:/probe52.py:ro" -v "$PWD/research/doom/session_map01_v13.py:/scorer/session_map01_v13.py:ro" -v "$PWD/research/doom/map01_scorer_stdio_adapter_v1.py:/scorer/map01_scorer_stdio_adapter_v1.py:ro" -v "$PWD/research/doom/independent_progress_clock_v2.py:/scorer/independent_progress_clock_v2.py:ro" -v "$PWD/research/doom/main_thread_scorer_polling_v1.py:/scorer/main_thread_scorer_polling_v1.py:ro" -v /tmp/agent-interface-3300-freedoom.rVM7UB/unpacked/freedoom-0.13.0/freedoom2.wad:/assets/freedoom2.wad:ro --entrypoint python agent-interface-map01-clock-control-v1:20260921 /probe52.py INDEX
+
+Each stdout is retained as run-NN.log; raw rows append to raw.jsonl. Audit:
+python3 research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-52/audit52.py research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-52/raw.jsonl > research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-52/audit.json

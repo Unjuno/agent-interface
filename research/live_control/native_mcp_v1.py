@@ -27,7 +27,9 @@ class NativeDecision(BaseModel):
     model_config = ConfigDict(extra='allow', allow_inf_nan=False)
     source_sequence: StrictInt = Field(ge=1, description='Exact sequence of the source image you viewed.')
     point: list[StrictInt | StrictFloat] | None = Field(default=None, min_length=2, max_length=2,
-        description='Observed [x,y] in screen physical pixels; required for click and keyboard context binding.')
+        description=('Observed [x,y] in screen physical pixels; required for click and keyboard context binding. '
+                     'For keyboard, choose a visible feature in the intended focused window, not a blank region. '
+                     'This point guards context; it does not click or select the text destination.'))
     expected_title: StrictStr | None = Field(default=None,
         description='Expected application title for feedback; required for an action, not a task success assertion.')
     interaction: Literal['click','keyboard','observe'] = Field(default='click',

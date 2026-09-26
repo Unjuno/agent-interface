@@ -11,6 +11,24 @@ SCHEMA_DOCTOR = "agent-interface/runtime-doctor-v1"
 SCHEMA_DISPATCH = "agent-interface/runtime-dispatch-result-v1"
 
 
+def _program_validation_diagnostic(program):
+    """Explain a recorded refusal without changing admission or invoking input."""
+    from runtime.core_v1.contract import ContractError, validate_program
+    try:
+        validate_program(program)
+    except ContractError as error:
+        detail = str(error)
+        # Unsupported operation names can contain arbitrary caller text.
+        if detail.startswith('unsupported op '):
+            detail = 'unsupported operation'
+        diagnostic = {'detail': detail[:256], 'detail_source': 'program_validation'}
+        index = getattr(error, 'operation_index', None)
+        if type(index) is int and 0 <= index < 128:
+            diagnostic['validation_operation_index'] = index
+        return diagnostic
+    return None
+
+
 def doctor(*, platform: str | None = None, environ: Mapping[str, str] | None = None,
            check_dependencies: bool = False) -> dict[str, Any]:
     plan = select_backend(platform=platform, environ=environ)
@@ -113,6 +131,10 @@ def dispatch(
             current_observation_seq=current_observation_seq,
             current_binding_revision=current_binding_revision,
         )
+        if result.get('status') == 'refused' and result.get('error') == 'INVALID_PROGRAM':
+            diagnostic = _program_validation_diagnostic(program)
+            if diagnostic is not None:
+                result = {**result, **diagnostic}
         row = {"schema": SCHEMA_DISPATCH, "status": "returned", "result": result}
     except Exception as error:
         row = {"schema": SCHEMA_DISPATCH, "status": "runtime_failed", "error": repr(error)}

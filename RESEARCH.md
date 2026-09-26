@@ -64,6 +64,29 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+### Issue #3849 — independent audit of retained #3442 intent-alignment result
+
+The [audit report](research/system1/intent_alignment_3442_audit_v1/REPORT.md)
+reconstructs 1,024 held-out paired rows, labels, categorical predictions and
+predictive metrics from the retained synthetic CPU result. It reproduces the
+original `HOLD_OR_FAIL_GATE_MISS`; three predictive gates remain false. The
+stale/unknown YIELD and matched PROPOSE controls are checked against stored
+aggregate gate counts rather than replayed, and p95 is recomputed from stored
+latency samples rather than measured anew. This is posthoc evidence auditing,
+not runtime/model-benefit or control-path validation.
+
+### Issue #3850 — bounded static validation detail, Obstac facade allocation
+
+The [retained experiment](research/experiments/issue_3850_static_validation_obstac_v1/RESULT.md)
+ran one four-row Linux/arm64 OrbStack allocation against the exact open PR
+#3853 head. The two observed malformed observe shapes returned bounded field
+diagnostics after `INVALID_PROGRAM`; valid-program refusal was not mislabeled,
+and unsupported caller text was not echoed. The independent raw-only audit
+passed all four retained rows. Scope is limited to the public dispatch facade
+with a mocked refusing session: `backend_emissions=0` is the mock's recorded
+value, not live native-backend evidence. User/model recovery benefit, actual
+native emission behavior and operation-index diagnostics remain untested.
+
 ### MAP01 admission-to-physical-input audit supplement
 
 The [v2 offline audit supplement](research/doom/map01_v12_physical_occupancy_audit_v2/README.md)
@@ -1469,5 +1492,56 @@ One pinned linux/arm64/private-Xvfb allocation observed XRes 1.2 distinguishing 
 ### X-server lifetime identity replication — Issue #3574
 
 A provenance-complete linux/arm64 OrbStack allocation restarted private Xvfb four times per pair and reproduced the same XID, root XID, KNOWN_NULL transient relation, geometry and 153,600-byte pixel buffer in all four pairs while XRes 1.2 LocalClientPID and `/proc` start ticks changed. The exact #881 typed validator returned `EXACT_MATCH` for all stale cross-generation identities; an opaque observation-side server-instance comparison rejected all four while preserving four same-generation exact matches. Independent raw-only audit passed 16 classification rows and 24 fail-closed negative controls; seven separate-copy corruption probes passed. This remains one deterministic fixture result, not a production token implementation, remote-X11 security proof, or action authority. The earlier #902 eight-row comment and #3555 provenance-incomplete record remain unchanged. See [the retained report](research/integration/typed_recovery_xserver_lifetime_v1/issue_3574_lifetime_01/evidence/REPORT.md).
+
+### Live observation-boundary certificate transfer — Issue #2918
+
+Allocation 05 passed its scoped, preregistered 12-case transfer in pinned
+OrbStack Docker linux/arm64: 11 public X11 `observe` receipts plus one
+zero-call ambiguous-target case; two unmasked transitions safely suppressed
+using the prior minimum certificate while phase-union/global-support controls
+would forward; the masked transition forwarded; and missing, contradictory,
+partial, stale, replaced, ambiguous, and intent-epoch-mismatched evidence all
+yielded. The independent pixel/terminal audit passed with zero unsafe
+suppressions. No input, real-app effect, model call, or observation-cost
+benefit was tested. Scope and raw evidence: [allocation 05 result](research/integration/issue_2918_live_certificate_v5/FORMAL_RESULT.json),
+[independent audit](research/integration/issue_2918_live_certificate_v5/independent_audit/independent_audit.json),
+and [PR #3760](https://github.com/Unjuno/agent-interface/pull/3760), merged at
+`6611ee71f3b6b65aaa7e11e3954b7c0b03cac843`.
+
+The predecessor import STOP, incomplete-lineage/audit-output HOLD, auditor
+code STOP, and overlapping-window capture HOLD remain separately retained in
+allocations 01–04; allocation 05 corrected the evidenced setup/fixture defects
+without modifying those records. Issue #2918 remains open: next test a held-out
+real application surface with independently established complete/current
+facts, and measure acquisition cost separately from narrowing and terminal
+outcome. No cross-application or production claim follows from this fixture.
+
+### German XKB formula delivery to a focused X11 receiver — Issue #3794
+
+One pinned OrbStack linux/arm64 allocation passed three fresh standard-German
+XKB rows and one US control. All four focused InputOnly receivers decoded the
+candidate's exact `=B2*A2` KeyPress text, observed traces matched the frozen
+plan, unsupported trailing Euro was refused with zero events/emissions, and
+release state was empty. A separate no-network-container audit reported zero
+integrity errors and rejected five corruption probes; its early-STOP phase gate
+also passed. This is only an X11/XTEST-to-receiver component result: no Calc or
+other application/task effect, physical keyboard, IME/dead-key, layout breadth,
+latency, or product claim. The earlier #3792 harness STOP remains preserved
+without reinterpretation. See [formal result](research/issue_3784_focused_receiver_v1/RESULT.md),
+[raw evidence](research/issue_3784_focused_receiver_v1/results/formal-01/raw.json),
+[independent audit](research/issue_3784_focused_receiver_v1/results/audit-01/audit.json),
+and PR (to be added after evidence publication).
+
+### Cross-process role skill reload — Issue #3890
+
+The successor to #3780 passed a preregistered three-seed synthetic lifecycle in local network-isolated CPU Docker: each JSON tensor skill was independently loaded by two fresh containers, all 12,288 role predictions matched per seed, all roles met the 0.90 threshold, and both fresh graph generations completed receipt-gated A→B→C with fail-closed controls. Independent audit passed with zero errors. Seed 3789 / role C is a narrow pass (0.900635). Construction-only seeds and the post-formal auditor/path/hash correction are explicitly retained; no model rerun or production-authority claim. See [formal report](research/needle_role_skill_reload_3780_v1/REPORT.md), [raw evidence and checksums](research/needle_role_skill_reload_3780_v1/formal/SHA256SUMS.txt), and [Issue #3890](https://github.com/Unjuno/agent-interface/issues/3890).
+
+### Online LoRA skill snapshot/resume — Issue #3911
+
+Three network-isolated local Docker seeds resumed all 16 rank-2 LoRA/AdamW feedback arrivals in distinct fresh processes. Adapter tensors, optimizer moments/steps, cursor, base identity and hash chain matched the uninterrupted reference; all invalid/stale/duplicate/skipped controls yielded. The preregistered experiment is **FAIL**, not a promotion: strict bit-exact heldout logits differed by only 1.91e-6–3.82e-6 despite identical predictions, and update-only p95 was 68.32–209.22 ms against the 60 ms gate. B accuracy was 0.8613/0.9429/0.9314. The first independent-auditor invocation had a lookup bug; its correction and successful FAIL disposition are retained, with no training rerun or threshold relaxation. This supports synthetic state-resume equivalence only, not exact inference portability or the latency target. See [report and raw formal evidence](research/needle_online_lora_skill_stream_v1/REPORT.md), [audit correction](research/needle_online_lora_skill_stream_v1/AUDIT_SOURCE_CORRECTION.md), and [Issue #3911](https://github.com/Unjuno/agent-interface/issues/3911).
+
+### Representation-bound proxy effect unit — Issue #3631
+
+One frozen OrbStack linux/arm64 allocation completed 28/28 rows across screenshot, proxy-image, structured-proxy, and hybrid arms. Each arm produced one exact synthetic 0→1 effect and refused/yielded on its six negative controls; XRes PID plus stable `/proc` start ticks bound the selected XID to its fixture process. Representation-derived coordinates and hashes reconciled, two-target ambiguity was established before dispatch with zero input/effect, and all release/cleanup checks passed. A separate read-only primary auditor returned `PASS_INDEPENDENT_AUDIT` with seven of seven corruption probes detected; a post-formal cross-binding audit recomputed state/representation/action correspondence for all 28 rows and passed. This closes only the deterministic GTK/Xvfb allocation: no arm superiority, model/human benefit, production authority, general GUI safety, or integrated desktop claim. See [the preregistration, raw rows, freeze, and audits](research/experiments/issue_3631_proxy_effect_unit_v4/README.md).
 
 </details>

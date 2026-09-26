@@ -3,6 +3,7 @@
 research/observation_gating/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 research/observation_tiles/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 research/live_control/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/issue_3676_audit_hardening_v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 research/visual_tracking/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 research/doom/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 research/evolution/readiness_probe.py -text
@@ -52,3 +53,12 @@ research/live_control/prepare_delayed_effect_v*.py whitespace=-blank-at-eof
 research/live_control/probe_delayed_effect_decisions_v1.py whitespace=-blank-at-eof
 research/live_control/results/recovery-pair4-01/A/runtime/openttd.cfg -whitespace
 research/live_control/results/recovery-pair4-01/B/runtime/openttd.cfg -whitespace
+
+# Preserve exact source and formal evidence bytes for Issue #3814 across hosts.
+research/experiments/issue_3814_newline_frame_v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Preserve exact source and formal evidence bytes for Issue #3840 across hosts.
+research/experiments/issue_3840_newline_frame_v2/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Preserve exact source and formal evidence bytes for Issue #3903 across hosts.
+research/doom/map01_r4_import_boundary_desktop_v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Preserve exact Docker Desktop validation bytes for Issue #3690 across hosts.
+research/integration/issue_3690_dockerdesktop_native_v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

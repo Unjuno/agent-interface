@@ -1,0 +1,74 @@
+{
+  "authority_granted": false,
+  "cleanup_error": null,
+  "lifecycle": [
+    "dispatch"
+  ],
+  "native_status": "completed",
+  "partial_effects": [],
+  "program_completed": true,
+  "raw_dispatch": {
+    "result": {
+      "admission": "accepted",
+      "execution": {
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "emissions": 4,
+        "ended_ns": 10358069169673,
+        "observations": [
+          {
+            "bytes": 288000,
+            "height": 180,
+            "operation_index": 3,
+            "sha256": "2e98396e3b96bcfb1d985b0611ea2a0a95373d942dd981e8e6b88a55349b1cfd",
+            "width": 400
+          }
+        ],
+        "program_emissions": 4,
+        "releases": [
+          {
+            "buttons_down": [],
+            "keys_down": [],
+            "monotonic_ns": 10358069166706,
+            "verified": true
+          }
+        ],
+        "started_ns": 10357966367971,
+        "waits": [
+          {
+            "completed": true,
+            "ended_ns": 10358067652388,
+            "kind": "fixed_delay",
+            "operation_index": 2,
+            "requested_ms": 100,
+            "started_ns": 10357967372343,
+            "update_observed": null
+          }
+        ]
+      },
+      "recovery_required": false,
+      "required_capabilities": [
+        "capture.frame",
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.release_all",
+        "window.focus"
+      ],
+      "status": "completed"
+    },
+    "schema": "agent-interface/runtime-dispatch-result-v1",
+    "status": "returned"
+  },
+  "schema": "golden-v3-result-v2",
+  "status": "partial",
+  "task_success": null,
+  "usage": {},
+  "usage_status": "unavailable"
+}

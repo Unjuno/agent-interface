@@ -1,0 +1,30 @@
+name: Issue 4197 retained-data qualification s4a1
+on:
+  pull_request:
+    paths:
+      - 'research/integration/issue4197_readonly_qualification_s4a1/**'
+      - 'research/integration/native_handle_lifecycle_admission_v1/**'
+      - '.github/workflows/issue4197-readonly-qualification-s4a1.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  retained-data:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    container: python:3.13-slim
+    steps:
+      - name: Checkout selected data and verifier
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            research/integration/issue4197_readonly_qualification_s4a1
+            research/integration/native_handle_lifecycle_admission_v1
+      - name: Restore and independently reconcile saved receipts only
+        working-directory: research/integration/issue4197_readonly_qualification_s4a1
+        run: |
+          python -S -B restore.py --out /tmp/issue4197-s4a1-ci
+          python -S -B reconcile.py /tmp/issue4197-s4a1-ci/study/retained > /tmp/issue4197-s4a1-ci/recheck.json
+          cmp AUDIT.json /tmp/issue4197-s4a1-ci/recheck.json
+          S4A1_RETAINED=/tmp/issue4197-s4a1-ci/study/retained python -S -B -m unittest -v test_verify test_reconcile test_restore

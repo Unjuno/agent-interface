@@ -16,6 +16,7 @@ from pydantic import Field, StrictBool, StrictInt, StrictStr
 from .api import dispatch
 from .observe import observe
 from .review import present_result
+from .validate_program import SCHEMA as VALIDATION_SCHEMA, inspect_program
 
 
 # Documentation metadata only: the public compiler and core remain the validators.
@@ -133,6 +134,25 @@ def create_server(targets, output_directory, *, display_name=None):
         worker.add_done_callback(finished)
         # A cancelled transport must not cancel a queued worker and strand its lock.
         return await asyncio.shield(worker)
+
+    @server.tool()
+    async def interface_validate(program: dict) -> CallToolResult:
+        """Check a draft program's static syntax/expansion without input or a backend.
+
+        Optional; not a prerequisite for dispatch. Does not check live capability,
+        freshness, lease expiry or task success, and grants no runtime admission.
+        No action call ID or retained result is created. Invalid programs return
+        static_valid=false; correct the draft explicitly rather than retrying input.
+        A nesting-limit input error returns static_valid=null, not a validity verdict.
+        """
+        try:
+            row = inspect_program(program)
+        except RecursionError:
+            row = {'schema': VALIDATION_SCHEMA, 'status': 'input_error',
+                   'static_valid': None, 'error': 'INPUT_NESTING_LIMIT',
+                   'side_effect_authority': False, 'runtime_admission': 'not_evaluated',
+                   'backend_checked': False, 'task_success': None}
+        return content(row, error=row['static_valid'] is not True)
 
     @server.tool()
     async def interface_observe(target: StrictStr, frame: Literal['window_client', 'screen_physical_px'],

@@ -1,0 +1,146 @@
+[
+  {
+    "expect": {
+      "expanded_operation_count": 1,
+      "status": "valid"
+    },
+    "id": "release_expired_static",
+    "missing": false,
+    "raw": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"expired-static\"}, \"ops\": [{\"op\": \"release_all\"}], \"program_id\": \"retained-check\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+  },
+  {
+    "expect": {
+      "expanded_operation_count": 2,
+      "status": "valid"
+    },
+    "id": "observe",
+    "missing": false,
+    "raw": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"expired-static\"}, \"ops\": [{\"frame\": \"window_client\", \"h\": 8, \"op\": \"observe\", \"w\": 12, \"x\": 0, \"y\": 0}, {\"op\": \"release_all\"}], \"program_id\": \"retained-check\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+  },
+  {
+    "expect": {
+      "error": "INVALID_PROGRAM",
+      "status": "invalid"
+    },
+    "id": "missing_w",
+    "missing": false,
+    "raw": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"expired-static\"}, \"ops\": [{\"frame\": \"window_client\", \"height\": 8, \"op\": \"observe\", \"width\": 12, \"x\": 0, \"y\": 0}, {\"op\": \"release_all\"}], \"program_id\": \"retained-check\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+  },
+  {
+    "expect": {
+      "error": "INVALID_PROGRAM",
+      "status": "invalid"
+    },
+    "id": "wrong_schema",
+    "missing": false,
+    "raw": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"expired-static\"}, \"ops\": [{\"op\": \"release_all\"}], \"program_id\": \"retained-check\", \"schema\": \"other\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+  },
+  {
+    "expect": {
+      "expanded_operation_count": 4,
+      "status": "valid"
+    },
+    "id": "repeat",
+    "missing": false,
+    "raw": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"expired-static\"}, \"ops\": [{\"keys\": [\"a\"], \"op\": \"key_chord\", \"repeat\": 3}, {\"op\": \"release_all\"}], \"program_id\": \"retained-check\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+  },
+  {
+    "expect": {
+      "expanded_operation_count": 4,
+      "status": "valid"
+    },
+    "id": "unicode_gap",
+    "missing": false,
+    "raw": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"expired-static\"}, \"ops\": [{\"gap_ms\": 2, \"op\": \"text\", \"text\": \"\\u65e5a\"}, {\"op\": \"release_all\"}], \"program_id\": \"retained-check\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+  },
+  {
+    "expect": {
+      "error": "INVALID_PROGRAM",
+      "status": "invalid"
+    },
+    "id": "unknown_op",
+    "missing": false,
+    "raw": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"expired-static\"}, \"ops\": [{\"op\": \"PRIVATE_PAYLOAD_87\"}, {\"op\": \"release_all\"}], \"program_id\": \"retained-check\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+  },
+  {
+    "expect": {
+      "expanded_operation_count": 1,
+      "status": "valid"
+    },
+    "id": "unknown_field_compatibility",
+    "missing": false,
+    "raw": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"expired-static\"}, \"extra\": \"PRIVATE_PAYLOAD_87\", \"ops\": [{\"op\": \"release_all\"}], \"program_id\": \"retained-check\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+  },
+  {
+    "expect": {
+      "expanded_operation_count": 2,
+      "status": "valid"
+    },
+    "id": "logical_coordinates",
+    "missing": false,
+    "raw": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"expired-static\"}, \"ops\": [{\"frame\": \"screen_logical\", \"op\": \"pointer_move\", \"x\": 2, \"y\": 3}, {\"op\": \"release_all\"}], \"program_id\": \"retained-check\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+  },
+  {
+    "expect": {
+      "error": "INVALID_PROGRAM",
+      "status": "invalid"
+    },
+    "id": "empty_ops",
+    "missing": false,
+    "raw": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"expired-static\"}, \"ops\": [], \"program_id\": \"retained-check\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+  },
+  {
+    "expect": {
+      "error": "INVALID_KEY_REPEAT",
+      "status": "invalid"
+    },
+    "id": "boolean_repeat",
+    "missing": false,
+    "raw": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"expired-static\"}, \"ops\": [{\"keys\": [\"a\"], \"op\": \"key_chord\", \"repeat\": true}, {\"op\": \"release_all\"}], \"program_id\": \"retained-check\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+  },
+  {
+    "expect": {
+      "expanded_operation_count": 128,
+      "status": "valid"
+    },
+    "id": "capacity_128",
+    "missing": false,
+    "raw": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"expired-static\"}, \"ops\": [{\"keys\": [\"a\"], \"op\": \"key_chord\", \"repeat\": 126}, {\"op\": \"wait_update\", \"timeout_ms\": 0}, {\"op\": \"release_all\"}], \"program_id\": \"retained-check\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+  },
+  {
+    "expect": {
+      "error": "INVALID_KEY_REPEAT",
+      "status": "invalid"
+    },
+    "id": "capacity_129",
+    "missing": false,
+    "raw": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"expired-static\"}, \"ops\": [{\"keys\": [\"a\"], \"op\": \"key_chord\", \"repeat\": 126}, {\"keys\": [\"b\"], \"op\": \"key_chord\", \"repeat\": 2}, {\"op\": \"release_all\"}], \"program_id\": \"retained-check\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+  },
+  {
+    "expect": {
+      "error": "PROGRAM_NOT_OBJECT",
+      "status": "invalid"
+    },
+    "id": "not_object",
+    "missing": false,
+    "raw": "[]\n"
+  },
+  {
+    "expect": {
+      "error": "INVALID_JSON",
+      "status": "input_error"
+    },
+    "id": "invalid_json",
+    "missing": false,
+    "raw": "{\n"
+  },
+  {
+    "expect": {
+      "error": "INPUT_UNREADABLE",
+      "status": "input_error"
+    },
+    "id": "missing_file",
+    "missing": true,
+    "raw": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"expired-static\"}, \"ops\": [{\"op\": \"release_all\"}], \"program_id\": \"retained-check\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+  }
+]

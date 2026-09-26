@@ -1,0 +1,367 @@
+{
+  "aggregate": {
+    "EVENT_EARLY": {
+      "appended": 4,
+      "cases": 12,
+      "refused": 4,
+      "wrong": 4
+    },
+    "HOST_ONLY": {
+      "appended": 4,
+      "cases": 12,
+      "refused": 0,
+      "wrong": 8
+    },
+    "PRE_CLASS": {
+      "appended": 4,
+      "cases": 12,
+      "refused": 8,
+      "wrong": 0
+    }
+  },
+  "cases": 36,
+  "checks": 29913,
+  "corruption_controls": {
+    "bool_count": {
+      "reason": "snapshot-int:releases",
+      "rejected": true
+    },
+    "caret": {
+      "reason": "snapshot-state:caret",
+      "rejected": true
+    },
+    "emission": {
+      "reason": "emission-char",
+      "rejected": true
+    },
+    "exit": {
+      "reason": "'app_exit'",
+      "rejected": true
+    },
+    "guard": {
+      "reason": "guard-recompute",
+      "rejected": true
+    },
+    "identity": {
+      "reason": "snapshot-identity:generation",
+      "rejected": true
+    },
+    "lost_event": {
+      "reason": "journal-sequence",
+      "rejected": true
+    },
+    "release": {
+      "reason": "release-verified",
+      "rejected": true
+    },
+    "tag_order": {
+      "reason": "tag-order",
+      "rejected": true
+    },
+    "ticket": {
+      "reason": "armed-ticket",
+      "rejected": true
+    },
+    "time": {
+      "reason": "rpc-clock-enclosure",
+      "rejected": true
+    },
+    "value": {
+      "reason": "snapshot-state:values",
+      "rejected": true
+    }
+  },
+  "errors": [],
+  "mode": "formal",
+  "rows": [
+    {
+      "appended": true,
+      "policy": "HOST_ONLY",
+      "refused": false,
+      "scenario": "STABLE",
+      "value": "abc",
+      "wrong": false
+    },
+    {
+      "appended": true,
+      "policy": "EVENT_EARLY",
+      "refused": false,
+      "scenario": "STABLE",
+      "value": "abc",
+      "wrong": false
+    },
+    {
+      "appended": true,
+      "policy": "PRE_CLASS",
+      "refused": false,
+      "scenario": "STABLE",
+      "value": "abc",
+      "wrong": false
+    },
+    {
+      "appended": false,
+      "policy": "HOST_ONLY",
+      "refused": false,
+      "scenario": "IPC_CARET",
+      "value": "cab",
+      "wrong": true
+    },
+    {
+      "appended": false,
+      "policy": "EVENT_EARLY",
+      "refused": true,
+      "scenario": "IPC_CARET",
+      "value": "ab",
+      "wrong": false
+    },
+    {
+      "appended": false,
+      "policy": "PRE_CLASS",
+      "refused": true,
+      "scenario": "IPC_CARET",
+      "value": "ab",
+      "wrong": false
+    },
+    {
+      "appended": false,
+      "policy": "HOST_ONLY",
+      "refused": false,
+      "scenario": "IPC_SELECTION",
+      "value": "c",
+      "wrong": true
+    },
+    {
+      "appended": false,
+      "policy": "EVENT_EARLY",
+      "refused": true,
+      "scenario": "IPC_SELECTION",
+      "value": "ab",
+      "wrong": false
+    },
+    {
+      "appended": false,
+      "policy": "PRE_CLASS",
+      "refused": true,
+      "scenario": "IPC_SELECTION",
+      "value": "ab",
+      "wrong": false
+    },
+    {
+      "appended": false,
+      "policy": "HOST_ONLY",
+      "refused": false,
+      "scenario": "EVENT_CARET",
+      "value": "cab",
+      "wrong": true
+    },
+    {
+      "appended": false,
+      "policy": "EVENT_EARLY",
+      "refused": false,
+      "scenario": "EVENT_CARET",
+      "value": "cab",
+      "wrong": true
+    },
+    {
+      "appended": false,
+      "policy": "PRE_CLASS",
+      "refused": true,
+      "scenario": "EVENT_CARET",
+      "value": "ab",
+      "wrong": false
+    },
+    {
+      "appended": false,
+      "policy": "HOST_ONLY",
+      "refused": false,
+      "scenario": "EVENT_SELECTION",
+      "value": "c",
+      "wrong": true
+    },
+    {
+      "appended": false,
+      "policy": "EVENT_EARLY",
+      "refused": false,
+      "scenario": "EVENT_SELECTION",
+      "value": "c",
+      "wrong": true
+    },
+    {
+      "appended": false,
+      "policy": "PRE_CLASS",
+      "refused": true,
+      "scenario": "EVENT_SELECTION",
+      "value": "ab",
+      "wrong": false
+    },
+    {
+      "appended": true,
+      "policy": "HOST_ONLY",
+      "refused": false,
+      "scenario": "EVENT_UNRELATED",
+      "value": "abc",
+      "wrong": false
+    },
+    {
+      "appended": true,
+      "policy": "EVENT_EARLY",
+      "refused": false,
+      "scenario": "EVENT_UNRELATED",
+      "value": "abc",
+      "wrong": false
+    },
+    {
+      "appended": true,
+      "policy": "PRE_CLASS",
+      "refused": false,
+      "scenario": "EVENT_UNRELATED",
+      "value": "abc",
+      "wrong": false
+    },
+    {
+      "appended": true,
+      "policy": "EVENT_EARLY",
+      "refused": false,
+      "scenario": "STABLE",
+      "value": "abc",
+      "wrong": false
+    },
+    {
+      "appended": true,
+      "policy": "PRE_CLASS",
+      "refused": false,
+      "scenario": "STABLE",
+      "value": "abc",
+      "wrong": false
+    },
+    {
+      "appended": true,
+      "policy": "HOST_ONLY",
+      "refused": false,
+      "scenario": "STABLE",
+      "value": "abc",
+      "wrong": false
+    },
+    {
+      "appended": false,
+      "policy": "EVENT_EARLY",
+      "refused": true,
+      "scenario": "IPC_CARET",
+      "value": "ab",
+      "wrong": false
+    },
+    {
+      "appended": false,
+      "policy": "PRE_CLASS",
+      "refused": true,
+      "scenario": "IPC_CARET",
+      "value": "ab",
+      "wrong": false
+    },
+    {
+      "appended": false,
+      "policy": "HOST_ONLY",
+      "refused": false,
+      "scenario": "IPC_CARET",
+      "value": "cab",
+      "wrong": true
+    },
+    {
+      "appended": false,
+      "policy": "EVENT_EARLY",
+      "refused": true,
+      "scenario": "IPC_SELECTION",
+      "value": "ab",
+      "wrong": false
+    },
+    {
+      "appended": false,
+      "policy": "PRE_CLASS",
+      "refused": true,
+      "scenario": "IPC_SELECTION",
+      "value": "ab",
+      "wrong": false
+    },
+    {
+      "appended": false,
+      "policy": "HOST_ONLY",
+      "refused": false,
+      "scenario": "IPC_SELECTION",
+      "value": "c",
+      "wrong": true
+    },
+    {
+      "appended": false,
+      "policy": "EVENT_EARLY",
+      "refused": false,
+      "scenario": "EVENT_CARET",
+      "value": "cab",
+      "wrong": true
+    },
+    {
+      "appended": false,
+      "policy": "PRE_CLASS",
+      "refused": true,
+      "scenario": "EVENT_CARET",
+      "value": "ab",
+      "wrong": false
+    },
+    {
+      "appended": false,
+      "policy": "HOST_ONLY",
+      "refused": false,
+      "scenario": "EVENT_CARET",
+      "value": "cab",
+      "wrong": true
+    },
+    {
+      "appended": false,
+      "policy": "EVENT_EARLY",
+      "refused": false,
+      "scenario": "EVENT_SELECTION",
+      "value": "c",
+      "wrong": true
+    },
+    {
+      "appended": false,
+      "policy": "PRE_CLASS",
+      "refused": true,
+      "scenario": "EVENT_SELECTION",
+      "value": "ab",
+      "wrong": false
+    },
+    {
+      "appended": false,
+      "policy": "HOST_ONLY",
+      "refused": false,
+      "scenario": "EVENT_SELECTION",
+      "value": "c",
+      "wrong": true
+    },
+    {
+      "appended": true,
+      "policy": "EVENT_EARLY",
+      "refused": false,
+      "scenario": "EVENT_UNRELATED",
+      "value": "abc",
+      "wrong": false
+    },
+    {
+      "appended": true,
+      "policy": "PRE_CLASS",
+      "refused": false,
+      "scenario": "EVENT_UNRELATED",
+      "value": "abc",
+      "wrong": false
+    },
+    {
+      "appended": true,
+      "policy": "HOST_ONLY",
+      "refused": false,
+      "scenario": "EVENT_UNRELATED",
+      "value": "abc",
+      "wrong": false
+    }
+  ],
+  "status": "PASS_DISPATCH_PLACEMENT_BOUNDARY_SCOPED"
+}
