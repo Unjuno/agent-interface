@@ -81,6 +81,20 @@ in the same response. `report_refs=true` without compact mode is rejected before
 operation scheduling. Images and outcomes are unchanged. A retained-result read
 can change the receipt format without capturing or replaying the operation.
 
+To read a v3 response directly, check `receipt.schema` is
+`agent-interface/receipt-view-v3-report-ref`: its `receipt.report` is a marker,
+and the complete report is `receipt.source.raw_report` in the same response.
+`/source/raw_report` is relative to the receipt, not a filesystem path or a
+request to another tool. Inspect `outcome_summary` for execution/release/cleanup
+and the returned image for visible application state; the reference itself is
+not evidence of task completion or freshness. Interpret only the declared v3
+reference; similarly shaped objects elsewhere remain ordinary data. A caller
+that does not understand this format should leave `report_refs=false`.
+
+[Primary v3 use](../results/mcp-report-refs-use-01/README.md) records one
+SDK-mediated input/save and read-only result comparison, including identical
+images and exact reconstruction. It does not establish token or speed savings.
+
 `interface_validate(program)` optionally checks a draft using the same static
 inspector as CLI `validate`, without opening a backend or issuing input. It
 returns static validity, required capabilities or bounded diagnostics with
@@ -201,3 +215,13 @@ from the index during the process lifetime; deployments should account for its
 memory use. This is result retrieval, not automatic restart recovery or polling
 of application state. Current `operation_invoked=false` describes the retrieval
 call, not whether the retained original call emitted input.
+
+By-ID results also retain the original call's `backend_attempted` and
+`persistence_failure` (`null`, `request`, or `report`) in `call` for pending or
+unavailable results, or `retained_call` for a readable report. These are in-memory
+process facts. `backend_attempted=true` marks entry to the backend attempt, not
+input emission, execution success or task effect. A finished call with
+`backend_attempted=false` and `persistence_failure=request` stopped before that
+attempt; a report-save failure may follow input. A running call with false can
+still proceed later. An unavailable receipt explicitly has `replay_allowed=false`.
+These fields do not grant replay permission or survive a server restart.
