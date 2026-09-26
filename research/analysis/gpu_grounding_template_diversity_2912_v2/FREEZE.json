@@ -5,7 +5,7 @@
   "branch": "research/gpu-grounding-template-diversity-2912-20260927-v2",
   "source_commit": "d823943868ff73e81fed278e9a00ca6422fdf50d",
   "predecessor_stop": "issue 4546; no results transfer",
-  "status": "PREFORMAL_CPU_PATH_PASS_GPU_SERIALIZATION_PENDING",
+  "status": "PREFORMAL_CONSTRUCTION_PASS_FORMAL_GPU_RECONFIRMATION_PENDING",
   "formal_invocations_allowed": 1,
   "formal_invocations_completed": 0,
   "retries_allowed": 0,
@@ -71,11 +71,13 @@
     "compiled_form_grounding_schema_v1.json": "a1a5901b84656375657538d2dccb975e3b40a5b22272abbab487c54904db1d0f"
   },
   "construction_evidence_hashes": {
-    "CONSTRUCTION.md": "f6f844edda1c3cdca37e767d00bc34d5e1cddd96fc9be4a0f7aa14ca47bd1761",
-    "construction/01/PREFORMAL.json": "1eeeb49453b022d154a2c830b0080208ac436dd7f8bca2b1f0ee9cd49d26ee55",
+    "CONSTRUCTION.md": "429b66887a102d446fd702af736c4d85a7c5cd6035473b2fafaed3b1f79d6bf2",
+    "construction/01/PREFORMAL.json": "9da99ab04ad7fedad9d5ae0fae999c478685fcbe67595463f1f409f3d1d740ac",
     "construction/01/py_compile.log": "e307b3d2ef25eefa0a510951eb9ab93a4bb1e46efaa0126eb694131fff3b42a0",
     "construction/01/py_compile_status.txt": "ac6dfcdbada59dcd8acd0cf81e86a9cc6daffa4c0467a248008c6685f5b9fc7a",
-    "construction/01/cpu_unittest.log": "fffe5c0e9a852d0c8b12243df3d6a02cdd5155278b9976aad3fe97ba7083b737"
+    "construction/01/cpu_unittest.log": "fffe5c0e9a852d0c8b12243df3d6a02cdd5155278b9976aad3fe97ba7083b737",
+    "construction/01/cuda_unittest.log": "157a71d94c5c30aa919f3594019d9ebd462c3fa88a136607a1c1d30b8c0a325d",
+    "construction/01/gpu_idle_before_cuda_construction.log": "ac2ada64b0ae76b9c3322b11c272de22da67a4d95d13787ed9973f70b88e3502"
   },
   "construction": {
     "py_compile": "PASS",
@@ -83,7 +85,7 @@
     "cpu_tests_failed": 0,
     "all_240_manifest_image_paths_and_hashes": "PASS",
     "path_traversal_rejected": true,
-    "cuda_construction_test": "NOT_RUN_PENDING_GPU_SERIALIZATION",
+    "cuda_construction_test": "PASS; repeated deterministic CUDA forward/backward; no optimizer update",
     "optimizer_updates": 0
   },
   "formal_authorization_gate": "Before the one invocation, verify all source/data/evidence hashes locally, push and read every frozen text source back through GitHub MCP, check issue #4567 for conflicting allocations, confirm #4205 is no longer using the local GPU and capture fresh nvidia-smi evidence. Only then set both one-shot and GPU-serialization acknowledgements. Any failure is STOP; do not run the formal process."

@@ -14,6 +14,6 @@ The prior STOP arose because the v1 loader joined `images/...` against the exper
 ## Construction evidence
 
 - Python bytecode compilation: recorded in `construction/01/py_compile.log`.
-- CPU-only construction tests: recorded in `construction/01/cpu_unittest.log`; the full CUDA determinism test is deliberately omitted while #4205 is active.
+- CPU-only construction tests: recorded in `construction/01/cpu_unittest.log` (7 passed). CUDA determinism control: `construction/01/cuda_unittest.log` (1 passed, deterministic repeated forward/backward; zero optimizer updates). Fresh read-only device snapshot: `construction/01/gpu_idle_before_cuda_construction.log` (RTX 3080, 0% utilization, 11 MiB used; no compute allocation reported).
 - No optimizer updates or model training occurred during construction.
-- Formal execution is not authorized until a fresh local GPU-idle/serialization check, complete GitHub MCP readback, and issue-allocation check pass.
+- Formal execution remains unstarted. Before its one-shot call, reconfirm #4205 has no remaining GPU use, capture a fresh device/process snapshot, read back all frozen sources from GitHub MCP, and recheck allocation conflicts.
