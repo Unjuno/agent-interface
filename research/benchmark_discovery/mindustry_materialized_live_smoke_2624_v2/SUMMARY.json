@@ -1,0 +1,108 @@
+{
+  "formal_reruns": {
+    "v1": 0,
+    "v2": 0
+  },
+  "historical_oracle_git_blob": "fb7cd0e88e730401b32c2954b58c8c02ec83fcc6",
+  "publication": {
+    "partial_source_files_committed": true,
+    "reason": "connected GitHub safety check blocked the first run.py repository write; not bypassed",
+    "run_py_committed": false
+  },
+  "schema": "mindustry-2624-publication-summary-v1",
+  "v1": {
+    "allocation": "mindustry-materialized-live-smoke-2624-20260922-01",
+    "decision": "FAIL_ORACLE_MISMATCH",
+    "frozen_audit": {
+      "checks": {
+        "cases": 1,
+        "cleanup_processes": 3,
+        "fixture_files": 4
+      },
+      "decision": "HOLD_AUDIT_MISMATCH",
+      "errors": [
+        "oracle_scalar",
+        "oracle_shape",
+        "runner_decision"
+      ]
+    },
+    "oracle_git_blob": null,
+    "oracle_sha256": "f8816ee6f7df8c5b70b66c14cf660498a37a5860a0e13b3b989316feb511ff79",
+    "oracle_summary": {
+      "copper": 200,
+      "core_present": true,
+      "height": 300,
+      "paused": true,
+      "row_widths": [
+        250
+      ],
+      "tile_rows": 300,
+      "width": 250
+    },
+    "setup_s": 6.037828135000041
+  },
+  "v2": {
+    "allocation": "mindustry-materialized-live-smoke-2624-20260926-02",
+    "audit": {
+      "checks": {
+        "cases": 1,
+        "cleanup_processes": 3,
+        "fixture_files": 4
+      },
+      "decision": "PASS_MINDUSTRY_MATERIALIZED_LIVE_SMOKE_SCOPED",
+      "errors": []
+    },
+    "controls": {
+      "rejected": 8,
+      "tests": [
+        [
+          "ready",
+          true
+        ],
+        [
+          "alive",
+          true
+        ],
+        [
+          "window",
+          true
+        ],
+        [
+          "input",
+          true
+        ],
+        [
+          "model",
+          true
+        ],
+        [
+          "kill",
+          true
+        ],
+        [
+          "missing_exit",
+          true
+        ],
+        [
+          "runner_decision",
+          true
+        ]
+      ]
+    },
+    "decision": "PASS_MINDUSTRY_MATERIALIZED_LIVE_SMOKE_SCOPED",
+    "oracle_git_blob": "fb7cd0e88e730401b32c2954b58c8c02ec83fcc6",
+    "oracle_sha256": "f8816ee6f7df8c5b70b66c14cf660498a37a5860a0e13b3b989316feb511ff79",
+    "oracle_summary": {
+      "copper": 200,
+      "core_present": true,
+      "height": 300,
+      "paused": true,
+      "row_widths": [
+        250
+      ],
+      "tile_rows": 300,
+      "width": 250
+    },
+    "setup_s": 5.852067001000023
+  }
+}
