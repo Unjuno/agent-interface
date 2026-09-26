@@ -30,6 +30,7 @@ class PrivateSession(suite.Session):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--route", choices=["persistent", "direct"], default="persistent")
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--seed", type=int, default=991083)
     parser.add_argument("--negative-task", choices=[f'task-{i}' for i in range(1, 7)],
@@ -45,6 +46,7 @@ def main():
         (out/name).write_text(json.dumps(value, indent=2)+'\n')
 
     def request_grounding(name, source):
+        grounding_started = time.monotonic_ns()
         request = out/(name+'-grounding.json')
         save(name+'-source.json', source)
         print(json.dumps({'needs_grounding': name, 'source_sequence': source['sequence'],
@@ -57,6 +59,11 @@ def main():
         grounding = json.loads(request.read_text())
         if grounding['source_sequence'] != source['sequence']:
             raise ValueError('grounding source does not match presented source')
+        save(name+'-grounding-timing.json', {'requested_ns': grounding_started, 'received_ns': time.monotonic_ns()})
+        if args.route == 'direct':
+            from native_direct_task_v1 import validate_grounding
+            validate_grounding(source, grounding)
+            return grounding
         for kind in ('field', 'submit'):
             offset = bridge.mint(name+'_'+kind, source['sequence'], grounding[kind+'_point'],
                                  region_size=(24, 38) if kind=='field' else (24, 14))
@@ -68,7 +75,7 @@ def main():
         goal, history, server = integrated.prepare(session, 'chromium', args.seed, args.chromium)
         fixture = integrated._ACTIVE[str(history)]
         save('goal.json', goal)
-        save('allocation.json', {'negative_task': args.negative_task})
+        save('allocation.json', {'negative_task': args.negative_task, 'route': args.route})
         window = next(line.split()[0] for line in session.windows().splitlines()
                       if 'about:blank' in line)
         targets = {'browser': int(window, 16)}
@@ -110,6 +117,31 @@ def main():
         for index, task in enumerate(goal['tasks']):
             if index:
                 navigation = navigate(task)
+            if args.route == 'direct':
+                from native_direct_task_v1 import build_program
+                if index:
+                    source = bridge.observe()
+                    handles = request_grounding(task['task_id'], source)
+                token = task['token'] + ('-wrong' if task['task_id'] == args.negative_task else '')
+                program = build_program(source, handles, token, task['task_id'], time.monotonic_ns())
+                save(task['task_id']+'-direct-program.json', program)
+                started = time.monotonic_ns()
+                result = dispatch(program, targets, current_observation_seq=source['sequence'],
+                                  current_binding_revision=source['binding_revision'], display_name=session.name)
+                row = {'task_id': task['task_id'], 'navigation': navigation, 'direct': result,
+                       'dispatch_ms': (time.monotonic_ns()-started)/1e6}
+                rows.append(row)
+                save('tasks.json', rows)
+                if result.get('status') != 'returned' or result.get('result', {}).get('status') != 'completed':
+                    raise RuntimeError('direct task did not complete; no replay')
+                feedback = bridge.feedback('AI INTEGRATED SAVED - Google Chrome for Testing',
+                                          rejected_titles=['AI INTEGRATED REJECTED - Google Chrome for Testing'])
+                row['feedback'] = feedback
+                row['through_feedback_ms'] = (time.monotonic_ns()-started)/1e6
+                save('tasks.json', rows)
+                if feedback['status'] != 'matched':
+                    raise RuntimeError('direct task feedback '+feedback['status']+'; no replay')
+                continue
             before = bridge.backend.emissions
             started = time.monotonic_ns()
             token = task['token'] + ('-wrong' if task['task_id'] == args.negative_task else '')
