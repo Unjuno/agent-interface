@@ -32,18 +32,22 @@ class HostBrokerContractTest(unittest.TestCase):
         return process_returncode, receipt, response
 
     def test_once_preserves_zero_child_exit(self):
-        child = subprocess.CompletedProcess(["fake-codex"], 0, "{}\n", "")
+        response_text = '{"type":"result"}\n'
+        child = subprocess.CompletedProcess(["fake-codex"], 0, response_text, "")
         process_returncode, receipt, response = self.run_once_with_child(child_result=child)
         self.assertEqual(process_returncode, 0)
         self.assertEqual(receipt["returncode"], 0)
-        self.assertEqual(response, "{}\n")
+        self.assertEqual(process_returncode, receipt["returncode"])
+        self.assertEqual(response, response_text)
 
     def test_once_propagates_nonzero_child_exit(self):
-        child = subprocess.CompletedProcess(["fake-codex"], 23, "", "fixture failure")
+        response_text = '{"type":"error"}\n'
+        child = subprocess.CompletedProcess(["fake-codex"], 23, response_text, "fixture failure")
         process_returncode, receipt, response = self.run_once_with_child(child_result=child)
         self.assertEqual(process_returncode, 23)
         self.assertEqual(receipt["returncode"], 23)
-        self.assertEqual(response, "")
+        self.assertEqual(process_returncode, receipt["returncode"])
+        self.assertEqual(response, response_text)
 
     def test_once_timeout_remains_nonzero_and_typed(self):
         timeout = subprocess.TimeoutExpired(["fake-codex"], 0.01)
