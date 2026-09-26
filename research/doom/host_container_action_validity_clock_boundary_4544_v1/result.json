@@ -1,0 +1,92 @@
+{
+  "experiment": "live_host_container_action_validity_clock_boundary_v1",
+  "source_commit": "4c3d6f1240896d4441ecb37e447760a3847012ae",
+  "source_blobs": {
+    "action_validity_admission_v1_py": "31bd30bd9baf6b7d56494cc3a18b2c6c70ffbc5e",
+    "running_action_guard_v1_py": "d54047e78bc76f53ef47c6f70fd4a3be6318f09c"
+  },
+  "source_sha256": {
+    "action_validity_admission_v1_py": "f102cbde4f0e46c9f8e974e9f0a7d1c47f3fc662d7c8ba32699d16799d3db98a",
+    "running_action_guard_v1_py": "2d5feb69efd59fdca22e0db9e561923411490eb758eab9e2b8379714e20e5c62"
+  },
+  "container": {
+    "image": "issue2679-map01-runtime@sha256:029e1867aeb843f2d63080343bfbb61540b64852ce00d4d99ec0be51796a093e",
+    "platform": "linux/arm64",
+    "network": "none",
+    "root_filesystem": "read-only",
+    "persistent_session_probes": 3
+  },
+  "samples": [
+    {
+      "probe": 1,
+      "host_before_ns": 14759265336541,
+      "container_capture_ns": 14020429793516,
+      "host_after_ns": 14759540262708,
+      "host_decided_ns": 14759540263333,
+      "host_minus_container_interval_ns": [
+        738835543025,
+        739110469192
+      ],
+      "decision_minus_capture_ns": 739110469817
+    },
+    {
+      "probe": 2,
+      "host_before_ns": 14759540276958,
+      "container_capture_ns": 14020430975278,
+      "host_after_ns": 14759541097666,
+      "host_decided_ns": 14759541097916,
+      "host_minus_container_interval_ns": [
+        739109301680,
+        739110122388
+      ],
+      "decision_minus_capture_ns": 739110122638
+    },
+    {
+      "probe": 3,
+      "host_before_ns": 14759541099875,
+      "container_capture_ns": 14020432555656,
+      "host_after_ns": 14759542737083,
+      "host_decided_ns": 14759542737958,
+      "host_minus_container_interval_ns": [
+        739108544219,
+        739110181427
+      ],
+      "decision_minus_capture_ns": 739110182302
+    }
+  ],
+  "controls": {
+    "host_host": {
+      "outcome": "receipt",
+      "state": "INPUT_ACTIVE",
+      "current_input_authority": true
+    },
+    "cross_domain": {
+      "outcome": "receipt",
+      "exception": null,
+      "state": "CANCEL_REQUIRED",
+      "current_input_authority": false,
+      "physical_release_verified": false,
+      "requires_new_decision": true,
+      "invalidation_kind": "action_validity",
+      "validity_status": "REJECTED_STALE",
+      "validity_reason": "current_snapshot_too_old",
+      "controller_decided_ns": 14759542737958,
+      "capture_ns": 14020432555656,
+      "configured_max_current_age_ms": 30000
+    }
+  },
+  "independent_recomputation": {
+    "final_container_capture_minus_first_ns": 2762140,
+    "final_controller_minus_container_capture_ns": 739110182302,
+    "stale_threshold_ns": 30000000000
+  },
+  "disposition": {
+    "pre_registered_exception_gate": "HOLD_EXPECTED_INVERSION_NOT_REPRODUCED",
+    "observed_clock_effect": "SCOPED_HOST_CONTAINER_CLOCK_MISMATCH_PRODUCED_FALSE_STALE_REJECTION",
+    "historical_seed_990641_causality": "UNKNOWN"
+  },
+  "prior_harness_attempt": {
+    "classification": "HOLD_HARNESS_OUTPUT_NOT_RETAINED",
+    "detail": "three probes ran; the guard returned normally; report code raised NameError before retaining rows/receipt"
+  }
+}
