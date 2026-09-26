@@ -1,8 +1,71 @@
 from pathlib import Path
+import json
+import subprocess
+import tempfile
 import unittest
+from unittest.mock import patch
 
 
 class HostBrokerContractTest(unittest.TestCase):
+    def run_once_with_child(self, child_result=None, child_error=None):
+        from runtime.host_model_ipc_broker_v1 import serve
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            ipc = root / "ipc"
+            ipc.mkdir()
+            request = {
+                "request_id": "one-shot-01",
+                "prompt": "Return the fixed test response.",
+                "schema": "/repo/schema.json",
+                "working": "/repo",
+            }
+            (ipc / "one-shot-01.request.json").write_text(json.dumps(request))
+            with patch("runtime.host_model_ipc_broker_v1.subprocess.run") as run:
+                if child_error is not None:
+                    run.side_effect = child_error
+                else:
+                    run.return_value = child_result
+                process_returncode = serve(ipc, root, once=True)
+            receipt = json.loads((ipc / "one-shot-01.broker.json").read_text())
+            response = (ipc / "one-shot-01.response.jsonl").read_text()
+        return process_returncode, receipt, response
+
+    def test_once_preserves_zero_child_exit(self):
+        response_text = '{"type":"result"}\n'
+        child = subprocess.CompletedProcess(["fake-codex"], 0, response_text, "")
+        process_returncode, receipt, response = self.run_once_with_child(child_result=child)
+        self.assertEqual(process_returncode, 0)
+        self.assertEqual(receipt["returncode"], 0)
+        self.assertEqual(process_returncode, receipt["returncode"])
+        self.assertEqual(response, response_text)
+
+    def test_once_propagates_nonzero_child_exit(self):
+        response_text = '{"type":"error"}\n'
+        child = subprocess.CompletedProcess(["fake-codex"], 23, response_text, "fixture failure")
+        process_returncode, receipt, response = self.run_once_with_child(child_result=child)
+        self.assertEqual(process_returncode, 23)
+        self.assertEqual(receipt["returncode"], 23)
+        self.assertEqual(process_returncode, receipt["returncode"])
+        self.assertEqual(response, response_text)
+
+    def test_once_timeout_remains_nonzero_and_typed(self):
+        timeout = subprocess.TimeoutExpired(["fake-codex"], 0.01)
+        process_returncode, receipt, response = self.run_once_with_child(child_error=timeout)
+        self.assertNotEqual(process_returncode, 0)
+        self.assertIsNone(receipt["returncode"])
+        self.assertEqual(receipt["stop_reason"], "HOST_BROKER_SUBPROCESS_TIMEOUT")
+        self.assertEqual(response, "")
+
+    def test_once_unavailable_executable_remains_nonzero_and_typed(self):
+        process_returncode, receipt, response = self.run_once_with_child(
+            child_error=FileNotFoundError("fake Codex executable unavailable")
+        )
+        self.assertNotEqual(process_returncode, 0)
+        self.assertIsNone(receipt["returncode"])
+        self.assertEqual(receipt["stop_reason"], "HOST_BROKER_EXECUTABLE_UNAVAILABLE")
+        self.assertEqual(response, "")
+
     def test_maps_container_repo_paths(self):
         from runtime.host_model_ipc_broker_v1 import host_path
         self.assertEqual(Path(host_path("/repo/runtime/a.png", Path("C:/repo"))),
