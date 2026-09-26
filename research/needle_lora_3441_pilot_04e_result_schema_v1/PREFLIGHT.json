@@ -1,31 +1,24 @@
 {
-  "schema": "needle-04e-preflight-v1",
+  "schema": "needle-04e-preflight-v2",
   "issue": 4492,
   "allocation": "needle-lora-3441-pilot-04e-result-schema-20260926-01",
   "formalInvocations": 0,
-  "constructionTests": "17/17 PASS",
+  "constructionTests": "17/17 PASS after runner metadata correction",
   "pyCompile": "PASS",
-  "sourceReadback": "five pinned source blobs match; local content exact",
+  "sourceFreeze": "runner.py metadata corrected and GitHub-readback pinned; FREEZE.json updated; all five source blobs reread required before launch",
+  "preregInterpretation": {
+    "hostCuda": "REQUIRED; Issue says 'Host CUDA only, not container evidence'",
+    "containerProbe": "not applicable to the prescribed formal environment",
+    "initialStopClassification": "superseded erroneous interpretation; no formal run had started"
+  },
   "windowsHost": {
     "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
     "gpuFreeBytes": 15991832576,
-    "diskCFreeBytes": 318094680064,
+    "diskCFreeBytes": 318051844096,
     "python": "3.11.9",
     "torch": "2.5.1+cu121",
     "cuda": "12.1"
   },
-  "container": {
-    "dockerDesktopLinux": "GPU passthrough PASS: /dev/dxg and libcuda visible; nvidia-smi reports RTX 3080",
-    "compatibleImage": "none present locally with Linux CPython 3.11 + CUDA 12.1 + PyTorch 2.5.1",
-    "probe": "stock python:3.11-bookworm is Linux and sees the GPU but has no PyTorch; no pulls/install attempted"
-  },
-  "wsl": {
-    "distro": "Arch Linux",
-    "python": "3.14.5",
-    "torch": "not installed",
-    "gpu": "/dev/dxg and libcuda present"
-  },
-  "decision": "STOP_NO_PREEXISTING_COMPATIBLE_CONTAINER_RUNTIME",
-  "reason": "Issue #4492 forbids image pulls, package installation, Docker repairs, and host-run substitution. GPU passthrough works; required pre-existing Linux/PyTorch runtime does not exist. Formal run not started.",
+  "decision": "HOST_PREFLIGHT_PASS_PENDING_FINAL_GITHUB_READBACK",
   "timestampUTC": "2026-09-26"
 }
