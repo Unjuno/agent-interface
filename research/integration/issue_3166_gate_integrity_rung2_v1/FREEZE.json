@@ -1,0 +1,49 @@
+{
+  "allocation": "issue3166-gate-integrity-rung2-20260927-01",
+  "audit_sha256": "e7927147ec4a52dd53c452623ebbb97a84fdea3c78fe1ce765e29e67bb9cb042",
+  "construction_smoke_sha256": "7b63a50bc5c11cfd0b36066b0af687743263c1cfa47029a603b79d30732950e4",
+  "construction_test_result": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/repo /usr/bin/python3 -B -m unittest research.integration.issue_3166_gate_integrity_rung2_v1.test_policy runtime.cli_v1.test_golden_v3 runtime.cli_v1.test_native_golden_boundary",
+    "outcome": "PASS 21/21",
+    "container": "agent-interface-2994:20260920"
+  },
+  "construction_gtk_smoke_result": "CONSTRUCTION_GTK_X11_EFFECT_AND_RELEASE_PASS; exact saved effect; native_status=completed; emissions=4",
+  "formal_command": [
+    "docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges --cpus 2 --memory 2g --pids-limit 256 --tmpfs /tmp:rw,nosuid,nodev,size=1g",
+    "--mount type=bind,source=<checkout>,target=/repo,readonly",
+    "--mount type=bind,source=<fresh-empty-evidence-dir>,target=/evidence,rw",
+    "--env FROZEN_SOURCE_COMMIT=2c5be06f9563deb3e5e739df6e7f154d145a8687",
+    "--env FROZEN_IMAGE_ID=sha256:167fd6184cac8729ccfea407938943384d64fe2999e7319bed3587638fa94b7c",
+    "--workdir /repo --entrypoint /bin/sh agent-interface-2994:20260920 -c 'PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/repo /usr/bin/python3 -B research/integration/issue_3166_gate_integrity_rung2_v1/run_formal.py'"
+  ],
+  "formal_run_count": 1,
+  "image_id": "sha256:167fd6184cac8729ccfea407938943384d64fe2999e7319bed3587638fa94b7c",
+  "image_platform": "linux/arm64",
+  "image_tag": "agent-interface-2994:20260920",
+  "preregistration_sha256": "96078a8b7be67a61c3fedea39058edd728527c4bd7e484995f26b3ee37dc6301",
+  "runner_sha256": "070e69fda9253cbb91f788e5da15c597b138fab3e71be872874f9cc5910d6f5d",
+  "source_commit": "2c5be06f9563deb3e5e739df6e7f154d145a8687",
+  "source_sha256": {
+    "research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py": "a89740107f5b544cde8a0ab1ae9f1af1764498889f85c982d106301577685f4a",
+    "runtime/backends/x11_v1/__init__.py": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b",
+    "runtime/backends/x11_v1/backend.py": "3429a422e61ecb8b1f1f278540d0696842d8197d7967803e01bc8d9453bcb4a8",
+    "runtime/backends/x11_v1/session.py": "70ffb0167a70efcf629221c8236dd19ba9fbc2ff3ffc18454f13a0f656b86a93",
+    "runtime/cli_v1/api.py": "a04d1fa2819d9f7199210cc4ac602de020fdf849fa9e3edf0d44568c9a51ddcd",
+    "runtime/cli_v1/golden_v3.py": "4325c6e5b662adaa36138dc2f895d31938541a8e030e59b096c60521bb424d5d",
+    "runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+    "runtime/core_v1/contract.py": "f053f73ccdeb67175068bf4d663bd484d886beb83305ed679510292809afd536",
+    "runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+    "runtime/selector_v1/__init__.py": "66bc2fcb2797b108cd739b1c000352932dbdd7a16c186c1104cd8d26d0645881",
+    "runtime/selector_v1/selector.py": "7f3db522b2250fcd3d8960c87b1d87ad078bf1b2b565900b4210836f6b7ca764"
+  },
+  "study_sha256": {
+    "research/integration/issue_3166_gate_integrity_rung2_v1/PREREG.md": "96078a8b7be67a61c3fedea39058edd728527c4bd7e484995f26b3ee37dc6301",
+    "research/integration/issue_3166_gate_integrity_rung2_v1/audit_raw.py": "e7927147ec4a52dd53c452623ebbb97a84fdea3c78fe1ce765e29e67bb9cb042",
+    "research/integration/issue_3166_gate_integrity_rung2_v1/construction_smoke.py": "7b63a50bc5c11cfd0b36066b0af687743263c1cfa47029a603b79d30732950e4",
+    "research/integration/issue_3166_gate_integrity_rung2_v1/policy.py": "e284e4015d87aff99058f8e9f7948e425e35ca94b61496eba65f9bfb573c63d1",
+    "research/integration/issue_3166_gate_integrity_rung2_v1/run_formal.py": "070e69fda9253cbb91f788e5da15c597b138fab3e71be872874f9cc5910d6f5d",
+    "research/integration/issue_3166_gate_integrity_rung2_v1/test_policy.py": "49a379baca0d150973ed215c9ef5b26b03820d3b2a9b9c2625b1c47c1c09c1be"
+  },
+  "zero_reruns": true,
+  "zero_postfreeze_tuning": true
+}
