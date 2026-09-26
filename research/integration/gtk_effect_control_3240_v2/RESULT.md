@@ -17,11 +17,16 @@ is not a new GUI allocation and does not alter `gtk_effect_control_3240_v1`.
 - The corrected audit returns
   `HOLD_EVIDENCE_OR_EFFECT_BOUNDARY` with the sole finding
   `untouched_target_pixels_changed`. The original HOLD is preserved.
-- Three local regression tests cover the historical disposition, a corrupted
-  native receipt status, and a corrupted target image hash.
+- Five local regression tests cover the historical disposition, corrupted
+  action and preparation native receipts, a corrupted target image hash, and a
+  measured-preimage hash tamper that attempts to hide the stability failure.
 - The first local unittest invocation failed before running tests because its
   module import was not package-qualified. That harness error was retained and
-  corrected; the rerun executed all three tests successfully.
+  corrected; the rerun executed all three original tests successfully. Two
+  review-driven corruption controls were added and passed as well.
+- The first run after the review fix exposed an assertion still expecting the
+  old unsuffixed error label; the auditor correctly emitted a stage-qualified
+  label. The test expectation was updated and all five controls passed.
 
 ## Reproduction
 

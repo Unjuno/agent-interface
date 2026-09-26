@@ -18,7 +18,8 @@ class AuditRawTests(unittest.TestCase):
         self.assertEqual(result["decision"], "HOLD_EVIDENCE_OR_EFFECT_BOUNDARY")
         self.assertEqual(result["errors"], ["untouched_target_pixels_changed"])
         positive = result["rows"][0]
-        self.assertEqual(positive["native_status"], "completed")
+        self.assertEqual(positive["native_status_by_stage"],
+                         {"prep": "completed", "action": "completed"})
         self.assertEqual(positive["adapter_status"], "partial")
 
     def test_native_status_corruption_is_not_accepted(self):
@@ -29,7 +30,18 @@ class AuditRawTests(unittest.TestCase):
             receipt = json.loads(path.read_text())
             receipt["raw_dispatch"]["result"]["status"] = "failed"
             path.write_text(json.dumps(receipt))
-            self.assertIn("adapter_native_execution_incomplete", audit(copied)["errors"])
+            self.assertIn("adapter_native_execution_incomplete:action",
+                          audit(copied)["errors"])
+
+    def test_preparation_receipt_is_audited(self):
+        with tempfile.TemporaryDirectory() as temp:
+            copied = Path(temp) / "formal01"
+            shutil.copytree(EVIDENCE, copied)
+            path = copied / "01_application_save" / "adapter-prep.json"
+            receipt = json.loads(path.read_text())
+            receipt["raw_dispatch"]["result"]["status"] = "failed"
+            path.write_text(json.dumps(receipt))
+            self.assertIn("adapter_native_execution_incomplete:prep", audit(copied)["errors"])
 
     def test_target_image_hash_corruption_is_not_accepted(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -40,6 +52,17 @@ class AuditRawTests(unittest.TestCase):
             row["target_initial_sha256"] = "0" * 64
             path.write_text(json.dumps(row))
             self.assertIn("raw_image_hash_mismatch:02_render_only_decoy:target_initial_sha256",
+                          audit(copied)["errors"])
+
+    def test_measured_untouched_preimage_is_bound_to_raw_bytes(self):
+        with tempfile.TemporaryDirectory() as temp:
+            copied = Path(temp) / "formal01"
+            shutil.copytree(EVIDENCE, copied)
+            path = copied / "02_render_only_decoy" / "row.json"
+            row = json.loads(path.read_text())
+            row["target_pre_sha256"] = row["target_post_sha256"]
+            path.write_text(json.dumps(row))
+            self.assertIn("raw_image_hash_mismatch:02_render_only_decoy:target_pre_sha256",
                           audit(copied)["errors"])
 
 

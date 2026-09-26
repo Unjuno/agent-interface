@@ -53,17 +53,23 @@ def audit(root):
     if not any(event.get("type") == "save" for event in events):
         errors.append("application_save_event_missing")
     action = read_json(positive / "adapter-action.json")
-    raw = action.get("raw_dispatch", {})
-    native = raw.get("result", {})
-    execution = native.get("execution", {})
-    if raw.get("status") != "returned" or native.get("status") != "completed":
-        errors.append("adapter_native_execution_incomplete")
-    if action.get("status") != "partial" or action.get("task_success") is not None:
-        errors.append("adapter_boundary_changed_or_claimed_unscored_success")
-    releases = execution.get("releases", [])
-    if not releases or any(r.get("verified") is not True or r.get("keys_down") or
-                           r.get("buttons_down") for r in releases):
-        errors.append("release_not_verified_empty")
+    native_results = {}
+    for stage in ("prep", "action"):
+        result = read_json(positive / f"adapter-{stage}.json")
+        raw = result.get("raw_dispatch", {})
+        native = raw.get("result", {})
+        execution = native.get("execution", {})
+        native_results[stage] = native.get("status")
+        if raw.get("status") != "returned" or native.get("status") != "completed":
+            errors.append("adapter_native_execution_incomplete:" + stage)
+        if result.get("program_completed") is not True:
+            errors.append("adapter_program_incomplete:" + stage)
+        if result.get("status") != "partial" or result.get("task_success") is not None:
+            errors.append("adapter_boundary_changed_or_claimed_unscored_success:" + stage)
+        releases = execution.get("releases", [])
+        if not releases or any(r.get("verified") is not True or r.get("keys_down") or
+                               r.get("buttons_down") for r in releases):
+            errors.append("release_not_verified_empty:" + stage)
     devents = (decoy / "app-events.jsonl")
     if devents.exists() and devents.read_text().strip():
         errors.append("decoy_target_received_event")
@@ -81,7 +87,9 @@ def audit(root):
     if drow.get("visual_only_would_accept") is not True:
         errors.append("visual_decoy_not_effective")
     for folder, row in ((positive, prow), (decoy, drow)):
+        measured_pre = "target_ready_pre_action.xwd" if folder == positive else "target_pre.xwd"
         for key, file in (("target_initial_sha256", "target_pre.xwd"),
+                          ("target_pre_sha256", measured_pre),
                           ("target_post_sha256", "target_post.xwd")):
             if row.get(key) != sha(folder / file):
                 errors.append("raw_image_hash_mismatch:" + folder.name + ":" + key)
@@ -90,7 +98,7 @@ def audit(root):
             errors.append("process_not_reaped:" + process_file.parent.name)
     rows.extend([
         {"case": "APPLICATION_SAVE", "adapter_status": action.get("status"),
-         "native_status": native.get("status"), "target_xid": ppre["xid"],
+         "native_status_by_stage": native_results, "target_xid": ppre["xid"],
          "target_pid": pid(ppre), "effect": effect},
         {"case": "RENDER_ONLY_DECOY", "target_xid": dpre["xid"],
          "decoy_xid": didentity["xid"], "visual_only_would_accept": drow.get("visual_only_would_accept"),

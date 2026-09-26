@@ -13,8 +13,9 @@ immutable `gtk_effect_control_3240_v1/evidence/formal01` bundle and run the
 standard-library-only `audit_raw.py` in a separate read-only OrbStack container
 from image `sha256:296d358f5c71e6c3e766c49ebfe13b9b1ec5c2837157da2cfe406ee73bfb2992`
 (`linux/arm64`). Do not rerun or modify the original allocation. Exercise the
-auditor against the retained original and corruption controls for native status,
-target image hash, and untouched-target stability.
+auditor against the retained original and corruption controls for both dispatch
+receipts, target initial and measured pre/post image hashes, and
+untouched-target stability.
 
 **D** — PASS for this narrow audit-reconciliation hypothesis only if the
 corrected auditor recognizes `raw_dispatch.result.status=completed`, keeps
