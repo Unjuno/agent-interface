@@ -1,1 +1,31 @@
-{"schema":"needle-04e-preflight-v1","issue":4492,"allocation":"needle-lora-3441-pilot-04e-result-schema-20260926-01","formalInvocations":0,"constructionTests":"17/17 PASS","pyCompile":"PASS","sourceReadback":"five pinned source blobs match; local content exact","gpu":"NVIDIA GeForce RTX 3080 Laptop GPU; 15991832576 bytes free host preflight","diskCFreeBytes":318168449024,"software":{"python":"3.11.9","torch":"2.5.1+cu121","cuda":"12.1"},"container":{"dockerDaemon":"available Linux","gpuRuntime":"unavailable; no NVIDIA runtime advertised","probe":"docker run --rm --gpus all python:3.11-bookworm; container did not expose torch (ModuleNotFoundError), runtime query only runc"},"decision":"STOP_CONTAINER_GPU_UNAVAILABLE","reason":"Frozen preregistration forbids dependency installs, image pulls, Docker repairs, and host-run substitution. Preserve allocation before any formal invocation.","timestampUTC":"2026-09-26"}
+{
+  "schema": "needle-04e-preflight-v1",
+  "issue": 4492,
+  "allocation": "needle-lora-3441-pilot-04e-result-schema-20260926-01",
+  "formalInvocations": 0,
+  "constructionTests": "17/17 PASS",
+  "pyCompile": "PASS",
+  "sourceReadback": "five pinned source blobs match; local content exact",
+  "windowsHost": {
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "gpuFreeBytes": 15991832576,
+    "diskCFreeBytes": 318094680064,
+    "python": "3.11.9",
+    "torch": "2.5.1+cu121",
+    "cuda": "12.1"
+  },
+  "container": {
+    "dockerDesktopLinux": "GPU passthrough PASS: /dev/dxg and libcuda visible; nvidia-smi reports RTX 3080",
+    "compatibleImage": "none present locally with Linux CPython 3.11 + CUDA 12.1 + PyTorch 2.5.1",
+    "probe": "stock python:3.11-bookworm is Linux and sees the GPU but has no PyTorch; no pulls/install attempted"
+  },
+  "wsl": {
+    "distro": "Arch Linux",
+    "python": "3.14.5",
+    "torch": "not installed",
+    "gpu": "/dev/dxg and libcuda present"
+  },
+  "decision": "STOP_NO_PREEXISTING_COMPATIBLE_CONTAINER_RUNTIME",
+  "reason": "Issue #4492 forbids image pulls, package installation, Docker repairs, and host-run substitution. GPU passthrough works; required pre-existing Linux/PyTorch runtime does not exist. Formal run not started.",
+  "timestampUTC": "2026-09-26"
+}
