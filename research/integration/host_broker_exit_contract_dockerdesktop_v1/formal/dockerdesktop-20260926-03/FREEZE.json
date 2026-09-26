@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "issue": 3926,
+  "parent_issue": 3924,
+  "branch": "research/issue-3924-dockerdesktop-broker-contract-v1",
+  "base_main_commit": "260c3f088f756eb33d0296298b81fa8d4eafafda",
+  "formal_allocation_id": "dockerdesktop-20260926-03",
+  "formal_result_path": "formal/dockerdesktop-20260926-03",
+  "formal_status_at_freeze": "NOT_STARTED",
+  "freeze_commit": "0fd61fadd88a3e48e39d7a1e67723ab57263e8f3",
+  "formal_suite_invocation_limit": 1,
+  "independent_audit_invocation_limit": 1,
+  "retry_limit": 0,
+  "prior_allocations": [
+    {
+      "allocation_id": "dockerdesktop-20260926-01",
+      "disposition": "STOP_DOCKER_MOUNT_FLAG_SYNTAX",
+      "formal_cases_run": 0,
+      "preserve_unchanged": true
+    },
+    {
+      "allocation_id": "dockerdesktop-20260926-02",
+      "disposition": "NOT_STARTED_ENGINE_VERSION_MISMATCH",
+      "engine_expected": "28.5.1",
+      "formal_cases_run": 0,
+      "preserve_unchanged": true
+    }
+  ],
+  "construction_attempts": [
+    {
+      "attempt": 5,
+      "disposition": "STOP_CONSTRUCTION_IMPORT_PATH",
+      "formal_cases_run": 0
+    },
+    {
+      "attempt": 6,
+      "disposition": "PASS_FAKE_ONLY_CONTAINER_CONSTRUCTION",
+      "formal_cases_run": 0,
+      "docker_engine": "29.8.0"
+    }
+  ],
+  "source_git_blobs": {
+    "runtime/host_model_ipc_broker_v1.py": "f307daafdfd36d1ab4faf39bb36c36350e6e67e4",
+    "runtime/test_host_model_ipc_broker_v1.py": "e645ae575cd6fdae02556df9facc9919739584f3"
+  },
+  "engine": {
+    "context": "desktop-linux",
+    "version": "29.8.0",
+    "os": "linux",
+    "architecture": "x86_64"
+  },
+  "image": {
+    "reference": "python:3.12-slim",
+    "id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "os": "linux",
+    "architecture": "amd64",
+    "python_version_observed_in_construction": "3.12.14"
+  },
+  "cases": [
+    {
+      "order": 1,
+      "name": "exit-zero",
+      "fake_exit": 0,
+      "broker_timeout_seconds": 2.0
+    },
+    {
+      "order": 2,
+      "name": "exit-23",
+      "fake_exit": 23,
+      "broker_timeout_seconds": 2.0
+    },
+    {
+      "order": 3,
+      "name": "timeout",
+      "fake_sleep_seconds": 1.0,
+      "broker_timeout_seconds": 0.1
+    },
+    {
+      "order": 4,
+      "name": "unavailable",
+      "executable": "/tmp/no-such-fake-codex"
+    },
+    {
+      "order": 5,
+      "name": "malformed",
+      "request_bytes_hex": "7b6e6f742d6a736f6e0a"
+    },
+    {
+      "order": 6,
+      "name": "no-request",
+      "idle_observation_seconds": 0.2
+    },
+    {
+      "order": 7,
+      "name": "one-shot-two-requests",
+      "request_ids": [
+        "req-A",
+        "req-B"
+      ]
+    }
+  ],
+  "decision": {
+    "predicted_hypothesis_disposition": "FAIL_ZERO_EXIT_PROPAGATION",
+    "require_independent_audit": true,
+    "expected_audit_status": "AUDIT_PASS_REPRODUCED_CONTRACT_FAIL"
+  },
+  "container_policy": {
+    "pull": "never",
+    "platform": "linux/amd64",
+    "network": "none",
+    "rootfs_read_only": true,
+    "source_read_only": true,
+    "evidence_mount": "formal-only writable path",
+    "tmpfs": "/tmp:rw,exec,nosuid,nodev,size=32m",
+    "cpus": 1,
+    "memory_bytes": 268435456,
+    "pids_limit": 64,
+    "capabilities_dropped": [
+      "ALL"
+    ],
+    "security_option": "no-new-privileges",
+    "credential_mounts": 0,
+    "real_codex_executable": false,
+    "model_or_provider_calls": false,
+    "gui_or_input": false
+  },
+  "sha256": {
+    "study/.gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+    "runtime/host_model_ipc_broker_v1.py": "034b2e72a28fc3defb1b48195a2a8d3450e850895a4b3b7b7919dca44e198775",
+    "runtime/test_host_model_ipc_broker_v1.py": "a28b59232e55956a11bd87a35812b7d77df16febe5510c68fb80eda03a3ede1c",
+    "study/PREREGISTRATION.md": "28481e433b68dd7358f4f072aee4100400ac4fa0e1403734701baf87fdcab2e4",
+    "study/test_contract.py": "48c1db494bab325bd3a7cc806b14d274dc94a0c23909f475b705f8c73087cfc1",
+    "study/audit_contract.py": "98c994f63020ec46a3722a76e06ee02c256fafd818678636d1b3a97eb10d52a2",
+    "study/construction_probe.py": "1be63989ac56eb3f0b76efaa275a1fd928abec5603d685adcd1faa79b379a4b4",
+    "study/fake_codex.py": "f730498c1158b55c0af45036e350090eecad7042d79c4e35be625d87e20e78eb",
+    "study/run_allocation03.ps1": "a5bf3643017ec49e1de8da378f6fca8ed429d7fc148bec360a5d000398e16c91",
+    "study/construction/06/probe.py": "72b1f92dad5a953f82b04dc040e61f93d34f5b75d2af0f93f3315bf753be6e62"
+  },
+  "scope": "One fake-process host-broker exit/receipt characterization on Docker Desktop Engine 29.8.0 Linux/amd64. No equivalence with OrbStack or engine 28.5.1; no model utility, task success, production authority, or arbitrary subprocess safety claim."
+}
