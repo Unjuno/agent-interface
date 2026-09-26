@@ -1,0 +1,76 @@
+{
+  "schema": "needle-pilot09-disjoint-strata-freeze-v1",
+  "issue": 4469,
+  "allocation": "needle-intent-distill-3458-pilot-09-disjoint-strata",
+  "branch": "research/needle-pilot09-disjoint-strata-20260926",
+  "additive_path": "research/system1/needle_distill_3458_pilot_09_disjoint_strata/",
+  "base_main_sha": "c83ddb057c680a126144d000bf7ef7ba2274652a",
+  "public_issue_contract_excerpt": {
+    "source": "https://github.com/Unjuno/agent-interface/issues/4469",
+    "path": "ISSUE_CONTRACT.md",
+    "sha256": "a0b0a504ebe2342e379f2f20bbd7636a0a538740bc5e753210a67a47dae551e7"
+  },
+  "predecessor": {
+    "issue": 3869,
+    "pilot06_result_sha256": "0878c39a68fe2abea218132b307ceff77df1e9a52291ba14186f2c8c423e37a7",
+    "pilot06_disposition": "FAIL_NEAR_BOUNDARY_SHIFT",
+    "correct_recall_by_seed": [0.1866825208, 0.0257985258, 0.3006060606]
+  },
+  "seeds": [3490, 3491, 3492],
+  "paired_arms": ["balanced_control", "targeted_augmented"],
+  "training_contract": {
+    "architecture": "6->16->16->3 tanh MLP",
+    "optimizer": "AdamW",
+    "learning_rate": 0.008,
+    "steps_per_arm_seed": 700,
+    "batch_size": 64,
+    "total_optimizer_steps": 4200,
+    "same_initial_weights_per_seed": true,
+    "same_minibatch_index_stream_per_seed": true,
+    "only_treatment_change": "replace 1024 of 2048 CORRECT training rows with 512 band-A |dx| [.071,.110] and 512 band-B |dx| [.111,.149] rows; audit exact assigned bands"
+  },
+  "data_seed_map": {
+    "balanced_training_class_c": "seed+10+c",
+    "targeted_training_shifted_correct_band_a": "seed+40",
+    "targeted_training_shifted_correct_band_b": "seed+41",
+    "held_out_shift_suite_class_c": "seed+100+c",
+    "held_out_iid_suite_class_c": "seed+200+c",
+    "latency_probe": "balanced_class(1,2000,seed+300)"
+  },
+  "source_sha256": {
+    "runner.py": "162fae6957c6e9e78dbd306d31c605cffba5e7fe9203def76a70938818955846",
+    "audit.py": "aaa0fd5250ef530d04b28bc0da5ae1ca1eb015eac81ddbadd604e6baf9ccc1c6",
+    "formal.py": "061e491a1fa73d38d9d9703242e9d3c63b045b706440e3d2f37e36ba36e952c3",
+    "test_construction.py": "82d0deec7ffbf56927e2eee2dd0cb625f0a6571ae20a668813e53d3fd51da8c4",
+    "test_audit.py": "a4859f9288ef3f18dd842ba34b9bfaa2e01dc5a5fbdb9306e06f66b0b333f14a",
+    "PREREGISTRATION.md": "ff89fa2638b66b255366d4993a8e2f9cc1e7570eb69c8b36844abb60ef6f6568",
+    "ISSUE_CONTRACT.md": "a0b0a504ebe2342e379f2f20bbd7636a0a538740bc5e753210a67a47dae551e7",
+    "README.md": "1aee96b46b8949a758bba990aa869d91dbe56342454fadb2bfedf11e716613bd",
+    "ENVIRONMENT.json": "12b54df7de7c379e1a89ac766fadbaeb7dfff4140a555cfe9b49c4a044e0fcc1",
+    "CONSTRUCTION.md": "60dda132ab1c6db2fb5313239c89bac9ecf807bb0918d8c6a78c4f11488c1854"
+  },
+  "formal_invocations_allowed": 1,
+  "formal_invocations_before_freeze": 0,
+  "retries_allowed": 0,
+  "construction": "12/12 Docker unit tests pass on 2026-09-26; no model training in construction",
+  "container": {
+    "docker_engine": "Docker Desktop 29.8.0",
+    "context": "desktop-linux",
+    "platform": "linux/amd64",
+    "image": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "python": "3.12.14",
+    "torch": "2.5.1+cpu",
+    "device": "CPU only",
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "output_mount": "dedicated writable formal-01",
+    "tmpfs": "64m",
+    "memory": "4g",
+    "cpus": 2,
+    "pids_limit": 64,
+    "wall_time_limit_seconds": 900
+  },
+  "formal_command": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=64m --pids-limit 64 --memory 4g --cpus 2 --mount type=bind,source=C:/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-3/work/issue-4469-pilot09/research/system1/needle_distill_3458_pilot_09_disjoint_strata,target=/src,readonly --mount type=bind,source=C:/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-3/work/issue-4469-pilot09-output/formal-01,target=/out --workdir /src needle-pilot05:local -B formal.py --out /out"
+}
