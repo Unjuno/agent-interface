@@ -77,4 +77,3 @@ formal #2476 result and authorizes no integration or promotion.
   sequence and digest exactly match the current observation and whose validity
   interval contains the capture timestamp. No physical input is emitted.
 
-
