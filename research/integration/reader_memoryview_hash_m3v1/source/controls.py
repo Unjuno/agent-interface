@@ -10,7 +10,7 @@ def mutate(raw,name):
  elif name=='source':
   x=json.loads(r['resource'][0]['stdout']); x['source_sha256']='0'*64; r['resource'][0]['stdout']=json.dumps(x,separators=(',',':'))+'\n'
  elif name=='result':
-  x=json.loads(r['resource'][0]['stdout']); x['result']['authority']='task'; r['resource'][0]['stdout]'=json.dumps(x,separators=(',',':'))+'\n'
+  x=json.loads(r['resource'][0]['stdout']); x['result']['authority']='task'; r['resource'][0]['stdout']=json.dumps(x,separators=(',',':'))+'\n'
  elif name=='inputsha':
   x=json.loads(r['resource'][0]['stdout']); x['input_sha256_after']='0'*64; r['resource'][0]['stdout']=json.dumps(x,separators=(',',':'))+'\n'
  elif name=='exit': r['resource'][0]['exit']=7
