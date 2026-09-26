@@ -155,11 +155,17 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIs(reread['operation_invoked'], False)
                 self.assertEqual(reread['call_id'], call_id)
                 self.assertEqual(reread['retained_call']['arguments']['program'], {})
+                self.assertTrue(reread['retained_call']['backend_attempted'])
+                self.assertIsNone(reread['retained_call']['persistence_failure'])
                 unknown = await server.call_tool('interface_results', {'call_id': '../outside'})
                 self.assertTrue(unknown.isError)
                 Path(td, call_id, 'report.json').unlink()
                 missing = await server.call_tool('interface_results', {'call_id': call_id})
-                self.assertEqual(json.loads(missing.content[0].text)['status'], 'receipt_unavailable')
+                missing_row = json.loads(missing.content[0].text)
+                self.assertEqual(missing_row['status'], 'receipt_unavailable')
+                self.assertTrue(missing_row['call']['backend_attempted'])
+                self.assertIsNone(missing_row['call']['persistence_failure'])
+                self.assertIs(missing_row['replay_allowed'], False)
                 dispatch.assert_called_once()
 
 
@@ -399,7 +405,12 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertTrue(reply.isError)
             self.assertIs(row['replay_allowed'], False)
             retained = await server.call_tool('interface_results', {'call_id': row['call_id']})
-            self.assertEqual(json.loads(retained.content[0].text)['status'], 'receipt_unavailable')
+            missing = json.loads(retained.content[0].text)
+            self.assertEqual(missing['status'], 'receipt_unavailable')
+            self.assertTrue(missing['call']['backend_attempted'])
+            self.assertEqual(missing['call']['persistence_failure'], 'report')
+            self.assertIs(missing['operation_invoked'], False)
+            self.assertIs(missing['replay_allowed'], False)
 
     async def test_request_persistence_failure_is_explicit_and_releases_busy_lock(self):
         with tempfile.TemporaryDirectory() as td:
@@ -414,7 +425,11 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIs(row['operation_invoked'], False)
                 dispatch.assert_not_called()
             retained = await server.call_tool('interface_results', {'call_id': row['call_id']})
-            self.assertEqual(json.loads(retained.content[0].text)['status'], 'receipt_unavailable')
+            missing = json.loads(retained.content[0].text)
+            self.assertEqual(missing['status'], 'receipt_unavailable')
+            self.assertIs(missing['call']['backend_attempted'], False)
+            self.assertEqual(missing['call']['persistence_failure'], 'request')
+            self.assertIs(missing['replay_allowed'], False)
             with patch('runtime.cli_v1.mcp_server.dispatch', return_value={'status': 'returned'}) as dispatch:
                 later = await server.call_tool('interface_dispatch', args)
                 self.assertFalse(later.isError)

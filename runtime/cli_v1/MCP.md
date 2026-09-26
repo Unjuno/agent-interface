@@ -215,3 +215,13 @@ from the index during the process lifetime; deployments should account for its
 memory use. This is result retrieval, not automatic restart recovery or polling
 of application state. Current `operation_invoked=false` describes the retrieval
 call, not whether the retained original call emitted input.
+
+By-ID results also retain the original call's `backend_attempted` and
+`persistence_failure` (`null`, `request`, or `report`) in `call` for pending or
+unavailable results, or `retained_call` for a readable report. These are in-memory
+process facts. `backend_attempted=true` marks entry to the backend attempt, not
+input emission, execution success or task effect. A finished call with
+`backend_attempted=false` and `persistence_failure=request` stopped before that
+attempt; a report-save failure may follow input. A running call with false can
+still proceed later. An unavailable receipt explicitly has `replay_allowed=false`.
+These fields do not grant replay permission or survive a server restart.

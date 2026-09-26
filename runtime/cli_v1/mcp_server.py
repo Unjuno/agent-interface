@@ -81,13 +81,16 @@ def create_server(targets, output_directory, *, display_name=None):
             call_id = call_root.name
             with calls_lock:
                 calls[call_id] = {"call_id": call_id, "operation": operation,
-                                  "state": "running", "arguments": deepcopy(kwargs)}
+                                  "state": "running", "arguments": deepcopy(kwargs),
+                                  "backend_attempted": False, "persistence_failure": None}
             # Serialize before calling the backend. A persistence failure here sends no input.
             request = {'operation': operation, 'arguments': kwargs, 'targets': targets,
                        'display_name': display_name}
             try:
                 _write_json(call_root / 'request.json', request)
             except (OSError, ValueError, TypeError) as error:
+                with calls_lock:
+                    calls[call_id]['persistence_failure'] = 'request'
                 return content({'status': 'invalid_request',
                     'error': 'REQUEST_PERSISTENCE_FAILED', 'detail': repr(error),
                     'failure_phase': 'request_persistence', 'operation_invoked': False,
@@ -95,6 +98,9 @@ def create_server(targets, output_directory, *, display_name=None):
                     'replay_allowed': False}, error=True)
             options = dict(kwargs, capture_directory=str(call_root / 'images'),
                            display_name=display_name)
+            # Attempt boundary only, not proof that the backend emitted input.
+            with calls_lock:
+                calls[call_id]['backend_attempted'] = True
             try:
                 if operation == 'observe':
                     report = observe(deepcopy(targets), **options)
@@ -111,6 +117,8 @@ def create_server(targets, output_directory, *, display_name=None):
                 persistence_error = None
             except OSError as error:
                 persistence_error = repr(error)
+                with calls_lock:
+                    calls[call_id]['persistence_failure'] = 'report'
             result = present_result(report, call_root, compact=compact, report_refs=report_refs)
             result['call_directory'] = str(call_root)
             result['call_id'] = call_id
@@ -245,7 +253,8 @@ def create_server(targets, output_directory, *, display_name=None):
                                                        encoding='utf-8'))
         except (OSError, ValueError) as error:
             return content({'status': 'receipt_unavailable', 'call': record,
-                'error': repr(error), 'operation_invoked': False}, error=True)
+                'error': repr(error), 'operation_invoked': False,
+                'replay_allowed': False}, error=True)
         result = await asyncio.to_thread(present_result, report, call_root, compact=compact, report_refs=report_refs)
         result.update(call_id=call_id, call_directory=str(call_root), retained_call=record,
                       operation_invoked=False)
