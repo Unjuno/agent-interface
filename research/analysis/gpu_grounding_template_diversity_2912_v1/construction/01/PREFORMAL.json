@@ -1,0 +1,50 @@
+{
+  "allocation": "gpu-grounding-template-diversity-2912-successor-01",
+  "issue": 4546,
+  "source_main": "13cd6645b1bdd266bbe010f82ebcec2a573c23ed",
+  "disposition": "PREFORMAL_CONSTRUCTION_PASS",
+  "formal_invocations": 0,
+  "optimizer_updates": 0,
+  "corpus": {
+    "records": 240,
+    "unique_image_sha256": 240,
+    "train_template_families": 8,
+    "heldout_template_families": 4,
+    "variants_per_family": 20,
+    "manifest_sha256": "bff0c9edc8f4b1a0d1fcb7d3577faba6d752e38bb8182879a4af0ff3f7ea2d8a"
+  },
+  "construction": {
+    "py_compile": "PASS",
+    "tests_passed": 7,
+    "tests_failed": 0,
+    "cuda_forward_backward_deterministic": true,
+    "formal_model_training": false
+  },
+  "host_runtime": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "pillow": "10.4.0",
+    "torch": "2.5.1+cu121",
+    "cuda_runtime": "12.1",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "total_vram_bytes": 17179344896,
+    "driver": "581.57",
+    "nvidia_smi_memory_used_mib": 11,
+    "nvidia_smi_utilization_percent": 0
+  },
+  "container_probe": {
+    "image": "needle-pilot05:local",
+    "network": "none",
+    "torch": "2.5.1+cpu",
+    "cuda_available": false,
+    "interpretation": "existing image is CPU-only; Docker GPU passthrough not established"
+  },
+  "formal_device_boundary": "PC-local Windows host CUDA; no hosted/remote compute; no container claim",
+  "retained_raw": [
+    "construction/01/py_compile.log",
+    "construction/01/unittest.log",
+    "construction/01/host_runtime_probe.log",
+    "construction/01/nvidia_smi_probe.log",
+    "construction/01/docker_torch_probe.log"
+  ]
+}
