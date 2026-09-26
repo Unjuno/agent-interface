@@ -1,0 +1,44 @@
+{
+  "formal_container": {
+    "id": "1ada99021679ffe6b5a75eb301733c4a720de9d58851fffc889a026592856270",
+    "name": "issue4485-broker-formal-v1",
+    "image_ref_at_create": "python:3.12-slim",
+    "image_id_inspected_immediately_before_run": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "image_platform": "linux/arm64",
+    "started_at_utc_epoch_ns": 1790431983332682392,
+    "exited_at_utc_epoch_ns": 1790431984864413939,
+    "exit_code": 0
+  },
+  "audit_container": {
+    "id": "86b498b4abae3ab2ee9df9490cecbe29040dad0a2b9585d263b803d9fc6c3e10",
+    "name": "issue4485-broker-audit-v1",
+    "image_ref_at_create": "python:3.12-slim",
+    "image_id_inspected_before_formal_run": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "started_at_utc_epoch_ns": 1790431992961678483,
+    "exited_at_utc_epoch_ns": 1790431993081643419,
+    "exit_code": 0
+  },
+  "engine": {
+    "name": "OrbStack",
+    "server_version": "29.4.0",
+    "os_arch": "linux/arm64",
+    "client_version": "29.5.2",
+    "context": "orbstack"
+  },
+  "formal_limits": {
+    "network": "none",
+    "root_filesystem": "read-only",
+    "cpu": 1,
+    "memory_bytes": 536870912,
+    "memory_swap_bytes": 536870912,
+    "pids_limit": 64,
+    "capabilities": "all dropped",
+    "no_new_privileges": true,
+    "tmpfs": "/tmp:rw,noexec,nosuid,size=32m",
+    "repo_mount": "read-only",
+    "study_mount": "read-only",
+    "evidence_mount": "read-write dedicated directory"
+  },
+  "docker_events_source": "docker events --since 90m --until 0s --filter type=container",
+  "image_resolution_note": "The local image ID/platform was inspected before run; Docker create/start events bind container IDs to the python:3.12-slim ref. The run used the local cached tag with no pull command."
+}
