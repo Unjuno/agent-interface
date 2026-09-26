@@ -36,6 +36,20 @@ python /absolute/agent-interface-runtime.pyz mcp \
 The archive includes the adapter, not its third-party dependencies. Ordinary CLI
 commands do not import MCP. Missing MCP dependencies affect only `mcp` mode.
 
+Requests and reports use the CLI's temporary-file, flush/fsync, then replace
+writer. The final report name is published only after the write completes.
+A failed request write returns `REQUEST_PERSISTENCE_FAILED` with
+`operation_invoked=false` and sends no input. A failed report write preserves
+the action outcome in the immediate response, adds `persistence_error` and
+`replay_allowed=false`, and sets the MCP error flag. Inspect the outcome even
+when that flag is set: the action may have completed. The call registry still
+reports the worker as finished, but a missing final report yields
+`receipt_unavailable`; result lookup does not promote a temporary file or repeat
+input. Temporary files remain for inspection. This shares the CLI's persistence
+mechanism, not a guarantee of directory durability after a machine crash or
+server-restart recovery. Storage flush cost has not been measured as a model
+latency benefit.
+
 For module launch, set the host's working directory to the repository root.
 For portable launch, use the absolute archive path. `targets.json` is a
 nonempty mapping such as `{"editor":12345}`, with the actual native window ID

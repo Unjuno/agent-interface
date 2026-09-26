@@ -14,6 +14,7 @@ from mcp.types import CallToolResult, ImageContent, TextContent
 from pydantic import Field, StrictBool, StrictInt, StrictStr
 
 from .api import dispatch
+from .attempt import _write_json
 from .observe import observe
 from .review import present_result
 from .validate_program import SCHEMA as VALIDATION_SCHEMA, inspect_program
@@ -84,8 +85,14 @@ def create_server(targets, output_directory, *, display_name=None):
             # Serialize before calling the backend. A persistence failure here sends no input.
             request = {'operation': operation, 'arguments': kwargs, 'targets': targets,
                        'display_name': display_name}
-            (call_root / 'request.json').write_text(
-                json.dumps(request, allow_nan=False), encoding='utf-8')
+            try:
+                _write_json(call_root / 'request.json', request)
+            except (OSError, ValueError, TypeError) as error:
+                return content({'status': 'invalid_request',
+                    'error': 'REQUEST_PERSISTENCE_FAILED', 'detail': repr(error),
+                    'failure_phase': 'request_persistence', 'operation_invoked': False,
+                    'call_id': call_id, 'call_directory': str(call_root),
+                    'replay_allowed': False}, error=True)
             options = dict(kwargs, capture_directory=str(call_root / 'images'),
                            display_name=display_name)
             try:
@@ -99,9 +106,8 @@ def create_server(targets, output_directory, *, display_name=None):
                 report = {'status': 'runtime_failed', 'error': repr(error),
                           'operation': operation, 'operation_invoked': True,
                           'effect_status': 'unknown'}
-            data = json.dumps(report, allow_nan=False).encode('utf-8')
             try:
-                (call_root / 'report.json').write_bytes(data)
+                _write_json(call_root / 'report.json', report)
                 persistence_error = None
             except OSError as error:
                 persistence_error = repr(error)
@@ -110,7 +116,8 @@ def create_server(targets, output_directory, *, display_name=None):
             result['call_id'] = call_id
             if persistence_error is not None:
                 result['persistence_error'] = persistence_error
-            return content(result)
+                result['replay_allowed'] = False
+            return content(result, error=persistence_error is not None)
         finally:
             if call_id is not None:
                 with calls_lock:
