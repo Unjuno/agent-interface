@@ -1,0 +1,31 @@
+{
+  "allocation": "dynamic-focus-save-overlap-2781-20260926-02",
+  "base_main": "3666992ab2b5e1b41b159b361d1c690d8e720fdf",
+  "branch": "research/dynamic-focus-save-overlap-2781-20260926",
+  "case_order": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+  "decision": "FROZEN_BEFORE_ALLOCATION02_CASE0",
+  "dependency_archive": {
+    "git_blob": "9012a95002e330f6793ba114bd9854ffa873e786",
+    "sha256": "f92bc3af2c8d21af61502b32121abf4b06781c4ea043447328ed8b4a5909be24"
+  },
+  "execution": "one case per separate outer invocation; absolute owned out root",
+  "files": {
+    "ALLOCATION02_DELTA.patch": {"bytes": 1003, "git_blob": "c74c3a378acd0449a2ba3a4da391e5816fbc204a", "sha256": "37a8b7b3c02bf2ff1f61de4f10ae308fe6f8ffdb7f2a4dce4346dcf9222ae6ba"},
+    "ENVIRONMENT.json": {"bytes": 6691, "git_blob": "6f2711bd3f38254493711d7723788ce1429fb91a", "sha256": "fbe53f259f5e0acefc296a4915cabe81aa9a78b4d2f4f9f9ba31f70828170950"},
+    "PLAN.md": {"bytes": 3860, "git_blob": "05121332cb6a4058e1100843f41da1f440a410af", "sha256": "eea574e0df17ca2d4533615b908f49edefdfdc9e86531b23ddef274b4fb600c0"},
+    "PLAN02.md": {"bytes": 1763, "git_blob": "f10ff524831f163261b1ebb0d207f6925466d53c", "sha256": "bbe241d702d015176d2ca507f076e454a1bce162b07f5a81cef2d8fc6c32c117"},
+    "SCHEDULE.json": {"bytes": 2063, "git_blob": "a86de932c761433c2b36ff1c777e94aae61084c2", "sha256": "a2d9d7e2782b69b557e1ab8c922f4fe74fa6f7d3610d507951cf1536093f5a35"},
+    "source/audit.py": {"bytes": 3244, "git_blob": "5593c1fc8c81ba2e84796a6970bf3418b85bf1a4", "sha256": "dd9d801c758b2aaa6903160130c1e3a059634cc3538268ddf2212868ecc28cb1"},
+    "source/controls.py": {"bytes": 1559, "git_blob": "0f40fc4d58fe9a96a545bf8408bf78a7f88a4c8f", "sha256": "e5015d31bce70a4176e68125eea3f2c3ca926d06beded069e00e70bbfda6175c"},
+    "source/score_file.py": {"bytes": 1003, "git_blob": "0743c92343fa4cb2b93ac34ec78910017da2a2a4", "sha256": "3cfae6b13337e077a65266f895fcc150e6719787b63a9aaa2818afc853d819f5"},
+    "source/study.py": {"bytes": 13155, "git_blob": "9edfbb7b130f536522c732a31eae59d6044ebf4c", "sha256": "5e34e7ea2ce7bc9ae2f970dde734f8eee36118ad44229ddb2e49095e2cf11ac0"},
+    "source/test_contract.py": {"bytes": 581, "git_blob": "6b7194408b1bed7a641188f53f637e80604a2711", "sha256": "b952d93ec40b3ce3da34ad844e7de9a2ad502d4b634da81b97516be394741787"}
+  },
+  "formal_cases": 16,
+  "formal_completed_before_freeze": 0,
+  "formal_reruns": 0,
+  "issue": 2781,
+  "predecessor_allocation": "dynamic-focus-save-overlap-2781-20260926-01",
+  "predecessor_disposition": "STOP_EXTERNAL_EXECUTION_ENVELOPE / HOLD_FORMAL_INCOMPLETE",
+  "schema": "agent-interface/dynamic-focus-save-overlap-freeze-v2"
+}
