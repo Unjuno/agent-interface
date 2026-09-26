@@ -31,10 +31,7 @@ Saved internal execution receipt:
 - stderr bytes: 2274
 - stderr SHA-256: `513c73426c0e1ba776660b335daa3648def2736d90226b65ff54e6492743de49`
 - stdout bytes: 0
-- stdout SHA-256: `e3b0c44298fc1c149afbf4e95e6492743de49`
-
-Correction: the stdout SHA above is intentionally superseded below because this prose line is not an evidence source. The actual retained stdout SHA-256 is:
-`e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`.
+- stdout SHA-256: `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
 
 All five source/dependency Git blob identities were checked immediately before the test and again afterward and remained exact.
 
