@@ -1,0 +1,90 @@
+{
+  "schema": "gpu-grounding-template-diversity-freeze-v2",
+  "issue": 4567,
+  "allocation": "gpu-grounding-template-diversity-2912-successor-02",
+  "branch": "research/gpu-grounding-template-diversity-2912-20260927-v2",
+  "source_commit": "d823943868ff73e81fed278e9a00ca6422fdf50d",
+  "predecessor_stop": "issue 4546; no results transfer",
+  "status": "PREFORMAL_CPU_PATH_PASS_GPU_SERIALIZATION_PENDING",
+  "formal_invocations_allowed": 1,
+  "formal_invocations_completed": 0,
+  "retries_allowed": 0,
+  "generator_sha256": "3b2f9f65e1ada35be269bcc1876cba24ea87d2ed3fb0ca26f49e639bb167fe75",
+  "template_spec_sha256": "5e1acf1f4874a6d1ed72c26e77f3b8c0bbda531de819456d37ca78306e449bbe",
+  "manifest_sha256": "bff0c9edc8f4b1a0d1fcb7d3577faba6d752e38bb8182879a4af0ff3f7ea2d8a",
+  "corpus": {
+    "records": 240,
+    "unique_image_sha256": 240,
+    "train_families": ["T01", "T02", "T03", "T04", "T05", "T06", "T07", "T08"],
+    "heldout_families": ["T09", "T10", "T11", "T12"],
+    "variants_per_family": 20,
+    "png_bytes": 3457880,
+    "split_unit": "whole template family",
+    "lineage": "reused unchanged from issue 4546; not a new data collection"
+  },
+  "treatment": {
+    "seeds": [29121, 29122, 29123],
+    "narrow_families": ["T01", "T02"],
+    "broad_families": ["T01", "T02", "T03", "T04", "T05", "T06", "T07", "T08"],
+    "heldout_images_per_family": 20,
+    "batch_size": 16,
+    "optimizer_steps_per_model": 500,
+    "sampled_examples_per_model": 8000,
+    "optimizer": "Adam lr=0.001",
+    "loss": "SmoothL1Loss beta=0.02",
+    "model": "Conv 1-8-16; fixed separable 25x40 to 8x10 pool; MLP 1280-32-4 sigmoid",
+    "coordinate_grid_source_pixels": 8
+  },
+  "local_runtime": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "pillow": "10.4.0",
+    "torch": "2.5.1+cu121",
+    "cuda_runtime": "12.1",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "total_vram_bytes": 17179344896,
+    "driver": "581.57",
+    "deterministic_algorithms": true,
+    "cublas_workspace_config": ":4096:8",
+    "tf32": false,
+    "execution_boundary": "PC-local Windows host CUDA; no hosted/remote compute; no container claim"
+  },
+  "decision": {
+    "pass": "broad exact-coordinate rate >=0.90 in each held-out family and >=0.10 aggregate improvement over narrow; 100% schema/bounds validity; independent audit has zero integrity errors",
+    "hold": "all broad held-out family rates >=0.90 but aggregate improvement <0.10",
+    "fail_quality": "any broad held-out family rate <0.90",
+    "fail_schema": "any candidate rejected by the strict schema/bounds validator",
+    "stop": "any pretraining source, readback, path, device, determinism, serialization, or protocol gate fails"
+  },
+  "source_hash_rule": "SHA-256 over UTF-8/LF-canonical text bytes; corpus PNG hashes are over exact binary bytes.",
+  "runner_sha256": "a7d6368042f9f48d9aa480afe6f01a7da1b267eaf9e286f918d0da797f84aa87",
+  "source_hashes": {
+    ".gitattributes": "edb2f619a6da444d853c6f48a4c2966f2c150139c4761ae54cfbad96ad6c2aec",
+    "README.md": "ede5493999253782ce45924d621d6da9eb0f15885268b5c3fa653421e8373c92",
+    "templates.json": "9cb0c8322f5db01e5feeeebb6a638473caf8be50e9c66dd4c774989f90eaef83",
+    "generate_corpus.py": "3b2f9f65e1ada35be269bcc1876cba24ea87d2ed3fb0ca26f49e639bb167fe75",
+    "train_eval.py": "a7d6368042f9f48d9aa480afe6f01a7da1b267eaf9e286f918d0da797f84aa87",
+    "audit.py": "fb5a14a301394e7476af59838269cf2b1fe4df6b202cc8eddcd05cf50565c606",
+    "test_construction.py": "cb51046e193365e9f24aff99c1f75e1a606d5317554bb23eedf903c391fca5d9",
+    "PREREGISTRATION.md": "01a49e0ba8322860caeebca2a641ae611cd532180c125291f0432de735a6b25f",
+    "compiled_form_grounding_v1.py": "40a3f6eb27d117680485d35839a242f501304745cf7e532e2da62340160d444a",
+    "compiled_form_grounding_schema_v1.json": "a1a5901b84656375657538d2dccb975e3b40a5b22272abbab487c54904db1d0f"
+  },
+  "construction_evidence_hashes": {
+    "CONSTRUCTION.md": "f6f844edda1c3cdca37e767d00bc34d5e1cddd96fc9be4a0f7aa14ca47bd1761",
+    "construction/01/PREFORMAL.json": "1eeeb49453b022d154a2c830b0080208ac436dd7f8bca2b1f0ee9cd49d26ee55",
+    "construction/01/py_compile.log": "22ce5d374af6cc88de02daa34fdc10504882c5d544849c370bdfc23245f91f34",
+    "construction/01/py_compile_status.txt": "ac6dfcdbada59dcd8acd0cf81e86a9cc6daffa4c0467a248008c6685f5b9fc7a",
+    "construction/01/cpu_unittest.log": "46307cb7c991e52d025f3ddda67e55af8bf96a344fead39a97d45e9c6ba65aec"
+  },
+  "construction": {
+    "py_compile": "PASS",
+    "cpu_tests_passed": 7,
+    "cpu_tests_failed": 0,
+    "all_240_manifest_image_paths_and_hashes": "PASS",
+    "path_traversal_rejected": true,
+    "cuda_construction_test": "NOT_RUN_PENDING_GPU_SERIALIZATION",
+    "optimizer_updates": 0
+  },
+  "formal_authorization_gate": "Before the one invocation, verify all source/data/evidence hashes locally, push and read every frozen text source back through GitHub MCP, check issue #4567 for conflicting allocations, confirm #4205 is no longer using the local GPU and capture fresh nvidia-smi evidence. Only then set both one-shot and GPU-serialization acknowledgements. Any failure is STOP; do not run the formal process."
+}
