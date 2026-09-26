@@ -254,6 +254,8 @@ def output_directory_ready(out):
         return False
     try:
         marker = json.loads(entries[0].read_text(encoding="utf-8"))
+        freeze_bytes = (Path(__file__).resolve().parent / "FREEZE.json").read_bytes()
+        freeze = json.loads(freeze_bytes.decode("utf-8"))
     except (OSError, json.JSONDecodeError):
         return False
     return (marker.get("schema") == "needle-rank1-formal-invocation.v1"
@@ -261,7 +263,10 @@ def output_directory_ready(out):
             and marker.get("issue") == ISSUE
             and marker.get("formal_invocations") == 1
             and marker.get("retry_count") == 0
-            and marker.get("docker_image_id") == DOCKER_IMAGE_ID)
+            and marker.get("docker_image_id") == DOCKER_IMAGE_ID == freeze.get("docker_image_id")
+            and marker.get("base_main_sha") == freeze.get("base_main_sha")
+            and marker.get("freeze_sha256") == sha_bytes(freeze_bytes)
+            and marker.get("source_sha256") == freeze.get("source_sha256"))
 
 
 def main():
