@@ -42,9 +42,19 @@ if ($Mode -eq 'formal') {
     $freezeDate = (& git -C $repo show -s --format=%cI $head).Trim()
     $remoteBranchLine = (& git -C $repo ls-remote --heads origin "refs/heads/$($freeze.branch)").Trim()
     $workingChanges = (& git -C $repo status --porcelain=v1 --untracked-files=all) -join "`n"
-    if ($branch -ne $freeze.branch -or $mainHead -ne $freeze.base_main_commit -or
+    & git -C $repo merge-base --is-ancestor $freeze.base_main_commit $mainHead
+    $baseAncestorExit = $LASTEXITCODE
+    $mainSourceMismatches = @()
+    foreach ($entry in $freeze.source_git_blobs.PSObject.Properties) {
+        $mainBlob = (& git -C $repo rev-parse "origin/main:$($entry.Name)").Trim()
+        if ($mainBlob -ne $entry.Value) { $mainSourceMismatches += $entry.Name }
+    }
+    & git -C $repo diff --quiet "$($freeze.base_main_commit)..origin/main" -- 'research/integration/host_broker_exit_contract_dockerdesktop_v1'
+    $studyPathDiffExit = $LASTEXITCODE
+    if ($branch -ne $freeze.branch -or $baseAncestorExit -ne 0 -or
+        $mainSourceMismatches.Count -gt 0 -or $studyPathDiffExit -ne 0 -or
         $remoteBranchLine -notmatch "^$head\s+refs/heads/$([regex]::Escape($freeze.branch))$" -or $workingChanges) {
-        throw "Git preflight mismatch: branch=$branch head=$head origin_main=$mainHead changes=$workingChanges remote=$remoteBranchLine"
+        throw "Git preflight mismatch: branch=$branch head=$head frozen_base=$($freeze.base_main_commit) origin_main=$mainHead ancestry_exit=$baseAncestorExit source_mismatches=$($mainSourceMismatches -join ',') study_path_diff_exit=$studyPathDiffExit changes=$workingChanges remote=$remoteBranchLine"
     }
     if (Test-Path $formal) { throw "Formal output already exists; refusing a second invocation: $formal" }
     $containerName = 'agent-interface-3926-formal02-20260926'
@@ -100,7 +110,8 @@ if ($Mode -eq 'formal') {
     $commandRecord.branch = $branch
     $commandRecord.freeze_commit = $head
     $commandRecord.freeze_commit_date = $freezeDate
-    $commandRecord.base_main_commit = $mainHead
+    $commandRecord.base_main_commit = $freeze.base_main_commit
+    $commandRecord.observed_origin_main = $mainHead
 }
 $transcriptPath = Join-Path $output ("$Mode-docker-stdout.txt")
 $inspectPath = Join-Path $output ("$Mode-container-inspect.json")
