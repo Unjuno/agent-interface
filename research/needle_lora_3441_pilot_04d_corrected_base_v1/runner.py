@@ -107,7 +107,6 @@ def main():
     torch.backends.cudnn.benchmark = False
     if torch.cuda.get_device_name(DEVICE) != "NVIDIA GeForce RTX 3080 Laptop GPU":
         raise RuntimeError("Unexpected GPU; frozen local allocation must stop.")
-    torch.cuda.reset_peak_memory_stats(DEVICE)
 
     xa, ya, ha = dataset(512, SEED + 1)
     xb, yb, hb = dataset(16, SEED + 2, flip0=True)
@@ -209,7 +208,8 @@ def main():
                          "snapshots": snapshots, "rollback_tensor_exact": rollback,
                          "dispatcher_only_ms_per_call_median": statistics.median(timings),
                          "dispatch_block_means_ms": timings,
-                         "cuda_peak_allocated_bytes": torch.cuda.max_memory_allocated(DEVICE)},
+                         "cuda_peak_allocated_bytes": None,
+                         "cuda_peak_memory_status": "UNAVAILABLE_WDDM"},
         "checks": {"invalid_routes": route_tests, "base_immutable": base_immutable,
                    "all_snapshot_roundtrip_exact": all(x["roundtrip_exact"] for x in snapshots.values()),
                    "all_rollbacks_exact": all(rollback.values())},
