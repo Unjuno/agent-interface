@@ -1,0 +1,89 @@
+{
+  "blind_invalidation_false_removed_claims": 200,
+  "candidate_full_mismatch_rows": 0,
+  "conditions_sha256": "80469fe9fd4434682ff00eb101417b053cd5b683edde7573043d3de1b24461a9",
+  "controls_rejected": 7,
+  "corruption_controls": [
+    {
+      "control": 1,
+      "effective": true,
+      "field": "mask",
+      "rejected": true,
+      "row": 0
+    },
+    {
+      "control": 2,
+      "effective": true,
+      "field": "deleted_rule",
+      "rejected": true,
+      "row": 0
+    },
+    {
+      "control": 3,
+      "effective": true,
+      "field": "before",
+      "rejected": true,
+      "row": 1
+    },
+    {
+      "control": 4,
+      "effective": true,
+      "field": "active_rules_before",
+      "rejected": true,
+      "row": 1
+    },
+    {
+      "control": 5,
+      "effective": true,
+      "field": "active_rules_after",
+      "rejected": true,
+      "row": 1
+    },
+    {
+      "control": 6,
+      "effective": false,
+      "field": "affected_cone",
+      "rejected": false,
+      "row": 1
+    },
+    {
+      "control": 7,
+      "effective": false,
+      "field": "clear_and_rederive",
+      "rejected": false,
+      "row": 1
+    },
+    {
+      "control": 8,
+      "effective": false,
+      "field": "full_rebuild",
+      "rejected": false,
+      "row": 1
+    },
+    {
+      "control": 9,
+      "effective": true,
+      "field": "local_support",
+      "rejected": true,
+      "row": 7
+    },
+    {
+      "control": 10,
+      "effective": true,
+      "field": "blind_invalidate",
+      "rejected": true,
+      "row": 29
+    }
+  ],
+  "decision": "STOP_POSTHOC_AUDIT",
+  "escaped_separator_sha256": "0af2eedbb7586a0d45b8a0b651833813f406c0dea57523b08e16cd450e17aa57",
+  "local_support_false_retained_claims": 36,
+  "newline_conditions_sha256": "80469fe9fd4434682ff00eb101417b053cd5b683edde7573043d3de1b24461a9",
+  "original_frozen_conditions_sha256": "0af2eedbb7586a0d45b8a0b651833813f406c0dea57523b08e16cd450e17aa57",
+  "original_issue_4449_disposition_unchanged": "STOP_AUDIT",
+  "provenance_errors": [],
+  "rows": 256,
+  "rows_sha256": "c7b2f3dacf65a5d5c1799883ce037d8ffab039de10472e9efb2c4f238b0c5a0e",
+  "schema": "cyclic-rule-retraction-posthoc-audit-v2",
+  "semantic_errors": []
+}
