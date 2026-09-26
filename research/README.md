@@ -71,6 +71,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 ### Fast local decision / System-1 research
 
 - [`system1/`](system1/) — bounded fast-path representation and decision experiments.
+- [`needle_role_graph_3775_v1/`](needle_role_graph_3775_v1/) — Issue #3778 original role-graph allocation retained as `STOP_RESULT_CAPTURE_TRUNCATED`; see [recovery review](needle_role_graph_3775_v1/RECOVERY_REVIEW.md). Distinct compact successor #3780 is documented separately.
 - [`local_system1/`](local_system1/) — local decision-kernel, latency, typed-evidence, and frontier-gap mechanics.
 - [`needle_lora_3441_pilot_04d_corrected_base_v1/`](needle_lora_3441_pilot_04d_corrected_base_v1/) — Issue #4471 one-shot GPU formal run stopped after training during result serialization; no metrics or predictions were persisted.
 - [`needle_lora_3441_pilot_04e_result_schema_v1/`](needle_lora_3441_pilot_04e_result_schema_v1/) — Issue #4471 fresh-seed result-schema successor; scoped one-seed synthetic routing PASS with host-only CUDA limits, not recovery of the earlier STOP.
@@ -165,6 +166,7 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 - [`needle_lora_3441_online_stream_v1/`](needle_lora_3441_online_stream_v1/) — Issue #3769 streamed online LoRA successor; scoped host-CPU metrics and limits are in its report.
 - [`needle_online_lora_skill_stream_v1/`](needle_online_lora_skill_stream_v1/) — Issue #3911 fresh-process online LoRA/AdamW snapshot-resume experiment; state equivalence passed but strict logit and update-latency gates failed. Formal traces and auditor correction are retained.
 - [`needle_role_graph_3780_compact_v1/`](needle_role_graph_3780_compact_v1/) — Issue #3780 compact receipt-gated role-adapter graph evidence; scoped synthetic PASS plus provenance warning.
+- [`needle_role_graph_3775_v1/`](needle_role_graph_3775_v1/RECOVERY_REVIEW.md) — Issue #3778 original role-graph allocation retained as `STOP_RESULT_CAPTURE_TRUNCATED`; distinct compact successor #3780 is documented separately.
 - [`needle_lora_3441_rank4_online_multiseed_v1/`](needle_lora_3441_rank4_online_multiseed_v1/) — Issue #3790 frozen CPU rank-capacity study; its single formal attempt stopped before held-out metrics, documented in `STOP_RUN.json`.
 - [`needle_lora_3441_rank4_online_multiseed_gpu_v1/`](needle_lora_3441_rank4_online_multiseed_gpu_v1/) — Issues #3807/#3819 rank-capacity GPU raw result; final rank-4 online accuracy FAIL is preserved, with the missing learning-curve HOLD noted in #3822.
 - [`needle_lora_3441_pilot_04d_multiskill_400base/`](needle_lora_3441_pilot_04d_multiskill_400base/) — retained direct-root Needle multi-skill pilot evidence; use its own report for exact scientific disposition and scope.
