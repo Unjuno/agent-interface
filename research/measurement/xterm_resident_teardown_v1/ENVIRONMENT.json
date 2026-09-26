@@ -1,0 +1,19 @@
+{
+  "execution": "local Docker only; no GitHub Actions workflow evidence",
+  "docker_engine": "29.8.0",
+  "image_tag": "agent-interface-golden-ipc-2705:20260920-wmctrl",
+  "image_id": "sha256:7e4a3b6f3917baa9f153b4dfd011a4ea528a3d200a7a3d274aa9479900ee7b41",
+  "platform": "linux/amd64",
+  "kernel": "Linux 6.6.114.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Mon Dec 1 20:46:23 UTC 2025 x86_64 GNU/Linux",
+  "python": "3.11.16",
+  "python_xlib": "0.33",
+  "xterm": "379-1",
+  "openbox": "3.6.1-10",
+  "xvfb": "2:21.1.7-3+deb12u13",
+  "network": "none",
+  "root_filesystem": "read-only",
+  "pull_policy": "never",
+  "runtime_tmp": ["/tmp tmpfs", "/dev/shm tmpfs"],
+  "per_display_HOME_XDG_Xauthority": "container-local /tmp tmpfs; not the Windows evidence bind mount",
+  "issue_environment_deviation": "Issue intake named CPython 3.13.5; locally cached pinned Docker image provides CPython 3.11.16/Python-Xlib 0.33. Same amended environment is used for both arms; no equivalence claim. Exact unchanged Issue gates bound inference to this image/fixture."
+}
