@@ -1,5 +1,6 @@
 """Construction-only checks. No optimizer step or formal output is produced."""
 import json
+import hashlib
 import tempfile
 from pathlib import Path
 import unittest
@@ -68,6 +69,11 @@ class ConstructionTests(unittest.TestCase):
             marker = {"schema": "needle-rank1-formal-invocation.v1", "allocation": ALLOCATION,
                       "issue": ISSUE, "formal_invocations": 1, "retry_count": 0,
                       "docker_image_id": DOCKER_IMAGE_ID}
+            freeze_bytes = (ROOT / "FREEZE.json").read_bytes()
+            freeze = json.loads(freeze_bytes.decode("utf-8"))
+            marker.update({"base_main_sha": freeze["base_main_sha"],
+                           "freeze_sha256": hashlib.sha256(freeze_bytes).hexdigest(),
+                           "source_sha256": freeze["source_sha256"]})
             (out / "FORMAL_INVOCATION.json").write_text(json.dumps(marker), encoding="utf-8")
             self.assertTrue(output_directory_ready(out))
             marker["retry_count"] = 1
@@ -75,6 +81,10 @@ class ConstructionTests(unittest.TestCase):
             self.assertFalse(output_directory_ready(out))
             marker["retry_count"] = 0
             marker["issue"] = 4507
+            (out / "FORMAL_INVOCATION.json").write_text(json.dumps(marker), encoding="utf-8")
+            self.assertFalse(output_directory_ready(out))
+            marker["issue"] = ISSUE
+            marker["freeze_sha256"] = "0" * 64
             (out / "FORMAL_INVOCATION.json").write_text(json.dumps(marker), encoding="utf-8")
             self.assertFalse(output_directory_ready(out))
             (out / "unrelated.txt").write_text("x", encoding="utf-8")
