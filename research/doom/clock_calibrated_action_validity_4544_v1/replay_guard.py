@@ -9,7 +9,7 @@ import json
 from pathlib import Path
 
 
-SOURCE_COMMIT = "342d11c09e8cb8fe5cf8677d285b5ef616050539"
+SOURCE_COMMIT = "91b5143989403754b360738c445f72b68b673718"
 SOURCE_BLOBS = {
     "action_validity_admission_v1.py": "31bd30bd9baf6b7d56494cc3a18b2c6c70ffbc5e",
     "running_action_guard_v1.py": "d54047e78bc76f53ef47c6f70fd4a3be6318f09c",
