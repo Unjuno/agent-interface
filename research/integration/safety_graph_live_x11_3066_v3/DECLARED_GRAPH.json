@@ -1,0 +1,17 @@
+{
+  "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+  "process_roles": ["runner", "xvfb", "openbox", "observer", "worker"],
+  "allowed_role_conditionals": {
+    "openbox": "absent for bare; exactly one for openbox",
+    "worker": "absent only for typed unknown_dependency stop"
+  },
+  "declared_unix_socket_path": "/tmp/.X11-unix/X<display-number>",
+  "expected_edges": [
+    "runner starts Xvfb and optional Openbox",
+    "runner starts independent observer and runtime worker",
+    "observer and worker connect to this cell's Xvfb display",
+    "runner owns worker stdout/stderr result pipes"
+  ],
+  "unresolved_socket_policy": "Any socket FD whose peer/path cannot be reconciled is HOLD evidence incompleteness. A named path outside this cell's declared X11 socket is FAIL hidden dependency.",
+  "outside_scope": ["host desktop", "external network", "physical input devices", "other displays"]
+}
