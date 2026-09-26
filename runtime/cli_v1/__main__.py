@@ -50,6 +50,8 @@ def _present_result(row, *, with_review, capture_directory, exit_code, compact=F
 def main() -> int:
     parser = argparse.ArgumentParser(prog="agent-interface")
     sub = parser.add_subparsers(dest="command", required=True)
+    validation = sub.add_parser('validate', help='check program syntax and expansion without opening a backend')
+    validation.add_argument('--program', type=Path, required=True, help='local UTF-8 JSON program; static validity is not runtime admission')
     attempt_status = sub.add_parser('attempt-status', help='inspect retained attempt files without input or replay')
     attempt_status.add_argument('--run-directory', required=True)
     diagnostic = sub.add_parser("doctor")
@@ -88,6 +90,11 @@ def main() -> int:
     run.add_argument("--compact", action="store_true", help="use smaller reversible receipt references with --review")
     run.add_argument("--report-refs", action="store_true", help="allow v3 report references; requires --compact and a compatible decoder")
     args = parser.parse_args()
+    if args.command == 'validate':
+        from .validate_program import inspect_file
+        row = inspect_file(args.program)
+        _emit(row)
+        return {'valid': 0, 'invalid': 1, 'input_error': 2}[row['status']]
     if getattr(args, 'retention_timings', False) and not args.run_directory:
         parser.error('--retention-timings requires --run-directory')
     if args.command in ('observe', 'dispatch') and args.run_directory:
