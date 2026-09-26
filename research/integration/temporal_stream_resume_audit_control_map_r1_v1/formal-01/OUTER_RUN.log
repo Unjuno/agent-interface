@@ -1,0 +1,5 @@
+Successful formal local Docker invocation — once only; no GitHub Actions.
+Command: python -I -S -B /study/run_control_map.py --source /source --evidence /evidence --verifier /verifier/verify_receipts.py --output /results
+Docker Desktop Engine 29.8.0; python:3.13.5-slim-bookworm, linux/amd64, --pull=never --network none --read-only, bounded /tmp tmpfs.
+Read-only mounts: frozen study, canonical 14-file source capsule, #4447 formal-01 evidence, and frozen #4511 verifier. Only /results was writable.
+Outer Docker exit: 1. Baseline audit returned 0; all 11 mutated copies rejected; unchanged acceptance control returned 0 and was byte-identical. The runner recorded its positive copy-removal field before TemporaryDirectory context exit, leaving copy_removed=false and the frozen gate unpassed.
