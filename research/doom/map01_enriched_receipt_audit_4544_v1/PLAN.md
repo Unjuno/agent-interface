@@ -1,0 +1,13 @@
+# Independent #4544 enriched-receipt audit
+
+## H/T/D/C/U
+
+- **H:** An event emitted by the repository's actual `ObservableSignalPolicyMonitor.observe()` can retain its production metadata while the hard-invalidation host timestamp is translated with the retained decision-8 offset envelope; the actual final-admission helper will reject the stale action without granting input.
+- **T:** Generate a hard invalidation through the main-branch monitor with a deterministic extractor and patched monotonic clock. Use the three retained iteration-8 probes and decision-8 host/runtime timestamps. Since the predecessor did not persist its invalidation event, label this generated event synthetic. Exercise metadata retention, clock conversion, actual admission, and fail-closed controls.
+- **D:** PASS iff all original monitor fields survive except the explicitly domain-converted `outcome_evaluated_ns`; original host timestamp and runtime-domain tags remain; exactly three probes yield the retained 903,814 ns uncertainty interval; absolute probe-to-event distance is at most 5 s; wrong-session, missing/extra probes, malformed order, future/stale timestamps, over-wide calibration, and authority-granting outcomes refuse; final result is `REJECTED_POLICY_INVALIDATED` with no executor admission or input authority.
+- **C:** Python stdlib only. OrbStack context, pinned `linux/arm64` image `issue2679-map01-runtime:20260921-pinned` (`sha256:029e1867aeb843f2d63080343bfbb61540b64852ce00d4d99ec0be51796a093e`), `--network none`, read-only container root and source mount, bounded tmpfs. No model, game, GUI, GPU, or input. No formal allocation.
+- **U:** The generated timestamp is not the missing historical #4536 receipt. This only proves the deterministic conversion/admission path with a monitor-source-shaped event; it does not explain #4544 seed 990641's earlier `controller decision precedes current snapshot` HOLD or establish MAP01 progress.
+
+The fixture values come from decision 8 in `research/doom/map01_model_loop_finite_v10/results/map01-model-loop-finite-v10-20260927-02/runtime/action-freshness-clock-translations.jsonl` (blob `c78c12917fdbc2ad09280878090dca9d26b60976`). The clock calibration row carries three probes in one iteration record. Its retained envelope is lower `-739170084874`, upper `-739169181060`, width `903814` ns; controller host/runtime decision are `8577271870833` / `7838101785959`; planner terminal runtime is `7838099328334`.
+
+Only this additive audit directory is introduced. The source helpers are imported from main and are not copied or modified here. The formal allocation and all predecessor outputs remain untouched.

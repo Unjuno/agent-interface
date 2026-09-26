@@ -1,0 +1,1583 @@
+{
+  "allocation": "issue3166-gate-integrity-rung2-20260927-01",
+  "audit_disposition": "HOLD_RAW_AUDIT_ERRORS",
+  "audited_at_utc_ns": 1790438140485256822,
+  "check_count": 279,
+  "checks": [
+    {
+      "detail": null,
+      "name": "source_hashes_equal_freeze",
+      "passed": true
+    },
+    {
+      "detail": 43,
+      "name": "expected_raw_record_count_43",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "jsonl_no_blank_or_duplicate_bytes",
+      "passed": true
+    },
+    {
+      "detail": {
+        "duplicates": [],
+        "rows": 40
+      },
+      "name": "all_40_matrix_cells_exactly_once",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "two_duplicate_attempt_records",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "one_contradictory_control",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::TWO_TIER_FRESH_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "valid::TWO_TIER_FRESH_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::TWO_TIER_FRESH_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::TWO_TIER_FRESH_GATE:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::TWO_TIER_FRESH_GATE:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::TWO_TIER_FRESH_GATE:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::TWO_TIER_FRESH_GATE:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::TWO_TIER_FRESH_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "valid::DEPENDENCY_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "valid::DEPENDENCY_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::DEPENDENCY_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::DEPENDENCY_ONLY:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::DEPENDENCY_ONLY:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::DEPENDENCY_ONLY:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::DEPENDENCY_ONLY:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::DEPENDENCY_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "valid::GATE_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "valid::GATE_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::GATE_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::GATE_ONLY:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::GATE_ONLY:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::GATE_ONLY:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::GATE_ONLY:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::GATE_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "valid::CACHED_PREPARE_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "valid::CACHED_PREPARE_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::CACHED_PREPARE_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::CACHED_PREPARE_GATE:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::CACHED_PREPARE_GATE:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::CACHED_PREPARE_GATE:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::CACHED_PREPARE_GATE:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "valid::CACHED_PREPARE_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::TWO_TIER_FRESH_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "stale_dependency_version::TWO_TIER_FRESH_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::TWO_TIER_FRESH_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::TWO_TIER_FRESH_GATE:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::TWO_TIER_FRESH_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::DEPENDENCY_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "stale_dependency_version::DEPENDENCY_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::DEPENDENCY_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::DEPENDENCY_ONLY:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::DEPENDENCY_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::GATE_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "stale_dependency_version::GATE_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::GATE_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::GATE_ONLY:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::GATE_ONLY:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::GATE_ONLY:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::GATE_ONLY:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::GATE_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::CACHED_PREPARE_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "stale_dependency_version::CACHED_PREPARE_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::CACHED_PREPARE_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::CACHED_PREPARE_GATE:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_dependency_version::CACHED_PREPARE_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::TWO_TIER_FRESH_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "fresh_false::TWO_TIER_FRESH_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::TWO_TIER_FRESH_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::TWO_TIER_FRESH_GATE:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::TWO_TIER_FRESH_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::DEPENDENCY_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "fresh_false::DEPENDENCY_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::DEPENDENCY_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::DEPENDENCY_ONLY:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::DEPENDENCY_ONLY:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::DEPENDENCY_ONLY:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::DEPENDENCY_ONLY:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::DEPENDENCY_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::GATE_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "fresh_false::GATE_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::GATE_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::GATE_ONLY:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::GATE_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::CACHED_PREPARE_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "fresh_false::CACHED_PREPARE_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::CACHED_PREPARE_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::CACHED_PREPARE_GATE:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::CACHED_PREPARE_GATE:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::CACHED_PREPARE_GATE:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::CACHED_PREPARE_GATE:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_false::CACHED_PREPARE_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::TWO_TIER_FRESH_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "fresh_unknown::TWO_TIER_FRESH_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::TWO_TIER_FRESH_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::TWO_TIER_FRESH_GATE:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::TWO_TIER_FRESH_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::DEPENDENCY_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "fresh_unknown::DEPENDENCY_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::DEPENDENCY_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::DEPENDENCY_ONLY:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::DEPENDENCY_ONLY:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::DEPENDENCY_ONLY:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::DEPENDENCY_ONLY:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::DEPENDENCY_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::GATE_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "fresh_unknown::GATE_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::GATE_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::GATE_ONLY:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::GATE_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::CACHED_PREPARE_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "fresh_unknown::CACHED_PREPARE_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::CACHED_PREPARE_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::CACHED_PREPARE_GATE:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::CACHED_PREPARE_GATE:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::CACHED_PREPARE_GATE:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::CACHED_PREPARE_GATE:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "fresh_unknown::CACHED_PREPARE_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "stale_true::TWO_TIER_FRESH_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "stale_true::TWO_TIER_FRESH_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::TWO_TIER_FRESH_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::TWO_TIER_FRESH_GATE:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::TWO_TIER_FRESH_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "stale_true::DEPENDENCY_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "stale_true::DEPENDENCY_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::DEPENDENCY_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::DEPENDENCY_ONLY:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::DEPENDENCY_ONLY:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::DEPENDENCY_ONLY:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::DEPENDENCY_ONLY:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::DEPENDENCY_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "stale_true::GATE_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "stale_true::GATE_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::GATE_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::GATE_ONLY:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::GATE_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "stale_true::CACHED_PREPARE_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "stale_true::CACHED_PREPARE_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::CACHED_PREPARE_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::CACHED_PREPARE_GATE:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::CACHED_PREPARE_GATE:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::CACHED_PREPARE_GATE:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::CACHED_PREPARE_GATE:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stale_true::CACHED_PREPARE_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::TWO_TIER_FRESH_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "lineage_mismatch::TWO_TIER_FRESH_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::TWO_TIER_FRESH_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::TWO_TIER_FRESH_GATE:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::TWO_TIER_FRESH_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::DEPENDENCY_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "lineage_mismatch::DEPENDENCY_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::DEPENDENCY_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::DEPENDENCY_ONLY:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::DEPENDENCY_ONLY:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::DEPENDENCY_ONLY:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::DEPENDENCY_ONLY:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::DEPENDENCY_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::GATE_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "lineage_mismatch::GATE_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::GATE_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::GATE_ONLY:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::GATE_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::CACHED_PREPARE_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "lineage_mismatch::CACHED_PREPARE_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::CACHED_PREPARE_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::CACHED_PREPARE_GATE:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::CACHED_PREPARE_GATE:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::CACHED_PREPARE_GATE:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::CACHED_PREPARE_GATE:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lineage_mismatch::CACHED_PREPARE_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::TWO_TIER_FRESH_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "missing_lineage::TWO_TIER_FRESH_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::TWO_TIER_FRESH_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::TWO_TIER_FRESH_GATE:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::TWO_TIER_FRESH_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::DEPENDENCY_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "missing_lineage::DEPENDENCY_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::DEPENDENCY_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::DEPENDENCY_ONLY:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::DEPENDENCY_ONLY:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::DEPENDENCY_ONLY:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::DEPENDENCY_ONLY:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::DEPENDENCY_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::GATE_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "missing_lineage::GATE_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::GATE_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::GATE_ONLY:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::GATE_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::CACHED_PREPARE_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "missing_lineage::CACHED_PREPARE_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::CACHED_PREPARE_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::CACHED_PREPARE_GATE:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::CACHED_PREPARE_GATE:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::CACHED_PREPARE_GATE:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::CACHED_PREPARE_GATE:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "missing_lineage::CACHED_PREPARE_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::TWO_TIER_FRESH_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "malformed_timestamp::TWO_TIER_FRESH_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::TWO_TIER_FRESH_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::TWO_TIER_FRESH_GATE:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::TWO_TIER_FRESH_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::DEPENDENCY_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "malformed_timestamp::DEPENDENCY_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::DEPENDENCY_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::DEPENDENCY_ONLY:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::DEPENDENCY_ONLY:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::DEPENDENCY_ONLY:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::DEPENDENCY_ONLY:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::DEPENDENCY_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::GATE_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "malformed_timestamp::GATE_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::GATE_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::GATE_ONLY:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::GATE_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::CACHED_PREPARE_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "malformed_timestamp::CACHED_PREPARE_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::CACHED_PREPARE_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::CACHED_PREPARE_GATE:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::CACHED_PREPARE_GATE:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::CACHED_PREPARE_GATE:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::CACHED_PREPARE_GATE:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "malformed_timestamp::CACHED_PREPARE_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::TWO_TIER_FRESH_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "cross_intent::TWO_TIER_FRESH_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::TWO_TIER_FRESH_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::TWO_TIER_FRESH_GATE:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::TWO_TIER_FRESH_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::DEPENDENCY_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "cross_intent::DEPENDENCY_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::DEPENDENCY_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::DEPENDENCY_ONLY:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::DEPENDENCY_ONLY:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::DEPENDENCY_ONLY:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::DEPENDENCY_ONLY:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::DEPENDENCY_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::GATE_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "cross_intent::GATE_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::GATE_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::GATE_ONLY:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::GATE_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::CACHED_PREPARE_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "cross_intent::CACHED_PREPARE_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::CACHED_PREPARE_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::CACHED_PREPARE_GATE:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::CACHED_PREPARE_GATE:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::CACHED_PREPARE_GATE:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::CACHED_PREPARE_GATE:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_intent::CACHED_PREPARE_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::TWO_TIER_FRESH_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "cross_epoch::TWO_TIER_FRESH_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::TWO_TIER_FRESH_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::TWO_TIER_FRESH_GATE:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::TWO_TIER_FRESH_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::DEPENDENCY_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "cross_epoch::DEPENDENCY_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::DEPENDENCY_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::DEPENDENCY_ONLY:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::DEPENDENCY_ONLY:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::DEPENDENCY_ONLY:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::DEPENDENCY_ONLY:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::DEPENDENCY_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::GATE_ONLY:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": false,
+        "observed": false
+      },
+      "name": "cross_epoch::GATE_ONLY:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::GATE_ONLY:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::GATE_ONLY:refusal_zero_side_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::GATE_ONLY:cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::CACHED_PREPARE_GATE:well_formed_time",
+      "passed": true
+    },
+    {
+      "detail": {
+        "expected": true,
+        "observed": true
+      },
+      "name": "cross_epoch::CACHED_PREPARE_GATE:admission_recomputed",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::CACHED_PREPARE_GATE:target_remained_live",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::CACHED_PREPARE_GATE:runtime_called",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::CACHED_PREPARE_GATE:native_complete_release",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::CACHED_PREPARE_GATE:exact_effect",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::CACHED_PREPARE_GATE:one_save_event",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "cross_epoch::CACHED_PREPARE_GATE:cleanup",
+      "passed": false
+    },
+    {
+      "detail": [],
+      "name": "two_tier_no_invalid_admission",
+      "passed": true
+    },
+    {
+      "detail": 8,
+      "name": "DEPENDENCY_ONLY:unsafe_effect_witness",
+      "passed": true
+    },
+    {
+      "detail": 1,
+      "name": "GATE_ONLY:unsafe_effect_witness",
+      "passed": true
+    },
+    {
+      "detail": 8,
+      "name": "CACHED_PREPARE_GATE:unsafe_effect_witness",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_same_probe_program_and_receipt",
+      "passed": true
+    },
+    {
+      "detail": [
+        1,
+        2
+      ],
+      "name": "duplicate_effect_count_retained",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_disposition_matches_raw",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_cleanup",
+      "passed": false
+    },
+    {
+      "detail": null,
+      "name": "contradictory_control_not_exact_success",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "contradictory_control_cleanup",
+      "passed": false
+    }
+  ],
+  "contradictory_controls": 1,
+  "duplicate_attempts": 2,
+  "duplicate_replay_accepted": true,
+  "errors": [
+    "valid::TWO_TIER_FRESH_GATE:cleanup",
+    "valid::DEPENDENCY_ONLY:cleanup",
+    "valid::GATE_ONLY:cleanup",
+    "valid::CACHED_PREPARE_GATE:cleanup",
+    "stale_dependency_version::TWO_TIER_FRESH_GATE:cleanup",
+    "stale_dependency_version::DEPENDENCY_ONLY:cleanup",
+    "stale_dependency_version::GATE_ONLY:cleanup",
+    "stale_dependency_version::CACHED_PREPARE_GATE:cleanup",
+    "fresh_false::TWO_TIER_FRESH_GATE:cleanup",
+    "fresh_false::DEPENDENCY_ONLY:cleanup",
+    "fresh_false::GATE_ONLY:cleanup",
+    "fresh_false::CACHED_PREPARE_GATE:cleanup",
+    "fresh_unknown::TWO_TIER_FRESH_GATE:cleanup",
+    "fresh_unknown::DEPENDENCY_ONLY:cleanup",
+    "fresh_unknown::GATE_ONLY:cleanup",
+    "fresh_unknown::CACHED_PREPARE_GATE:cleanup",
+    "stale_true::TWO_TIER_FRESH_GATE:cleanup",
+    "stale_true::DEPENDENCY_ONLY:cleanup",
+    "stale_true::GATE_ONLY:cleanup",
+    "stale_true::CACHED_PREPARE_GATE:cleanup",
+    "lineage_mismatch::TWO_TIER_FRESH_GATE:cleanup",
+    "lineage_mismatch::DEPENDENCY_ONLY:cleanup",
+    "lineage_mismatch::GATE_ONLY:cleanup",
+    "lineage_mismatch::CACHED_PREPARE_GATE:cleanup",
+    "missing_lineage::TWO_TIER_FRESH_GATE:cleanup",
+    "missing_lineage::DEPENDENCY_ONLY:cleanup",
+    "missing_lineage::GATE_ONLY:cleanup",
+    "missing_lineage::CACHED_PREPARE_GATE:cleanup",
+    "malformed_timestamp::TWO_TIER_FRESH_GATE:cleanup",
+    "malformed_timestamp::DEPENDENCY_ONLY:cleanup",
+    "malformed_timestamp::GATE_ONLY:cleanup",
+    "malformed_timestamp::CACHED_PREPARE_GATE:cleanup",
+    "cross_intent::TWO_TIER_FRESH_GATE:cleanup",
+    "cross_intent::DEPENDENCY_ONLY:cleanup",
+    "cross_intent::GATE_ONLY:cleanup",
+    "cross_intent::CACHED_PREPARE_GATE:cleanup",
+    "cross_epoch::TWO_TIER_FRESH_GATE:cleanup",
+    "cross_epoch::DEPENDENCY_ONLY:cleanup",
+    "cross_epoch::GATE_ONLY:cleanup",
+    "cross_epoch::CACHED_PREPARE_GATE:cleanup",
+    "duplicate_cleanup",
+    "contradictory_control_cleanup"
+  ],
+  "formal_finding": "FAIL_GATE_INTEGRITY_RUNG2",
+  "matrix_rows": 40,
+  "raw_sha256": "e6e0593f0b02b6d24a4a1a5da86c0c76d9380d60c1226fa8f8bafdbefdbdec95",
+  "records": 43,
+  "schema": "issue3166-rung2-independent-audit-v1",
+  "scope": "GTK/Xvfb fixture and frozen evidence comparators only; not a production gate API",
+  "source_commit": "2c5be06f9563deb3e5e739df6e7f154d145a8687"
+}

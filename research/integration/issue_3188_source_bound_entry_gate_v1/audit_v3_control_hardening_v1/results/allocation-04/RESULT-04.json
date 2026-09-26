@@ -1,0 +1,23 @@
+{
+  "allocation": "issue3188-audit-v3-control-schema-20260921-04",
+  "status": "STOP_TEST_FIXTURE_PATH_MAPPING",
+  "runner_reported_status": "FAIL_AUDIT_V3",
+  "invocation_count": 1,
+  "unittest_cases_started": 0,
+  "failures": 0,
+  "errors": 1,
+  "setup_error": "AuditV3ControlTests.setUpClass: raw.json FileNotFoundError; the host harness supplied a virtual root with doubled path separators, so the frozen fixture-path mapping did not match.",
+  "formal02_raw_sha256_before": "8460a9ca79611929cbd6d2f6930067a06c6f177e7da3287ad07d1b7f483cb324",
+  "formal02_raw_sha256_after": "8460a9ca79611929cbd6d2f6930067a06c6f177e7da3287ad07d1b7f483cb324",
+  "source_sha256": {
+    "runner": "913d8133671f7b9e3e5c968b8a45fbf78a3f0d2b05ad23fa9a0841d40d696041",
+    "protocol": "25fdf92be4ca1d9d70b6feb348131d01155ee49b6c3a96bb3851723fba0443a9",
+    "auditor": "3839e9c47e3f8cd59901b7cc99a9fdacda3ece6ed3b873c4bf1692c000c96f76",
+    "tests": "1ce5e9fe5b8198156221a58b8b2f4b965d42a1f02b56dec3723716f448421070",
+    "raw": "8460a9ca79611929cbd6d2f6930067a06c6f177e7da3287ad07d1b7f483cb324",
+    "run": "e104bf12925ef7878e7972c768cb19ecfdfe699303667bebf0ee6a0276f05822",
+    "candidate_audit": "72a5f6dcffff0e9d3a5e2daa58937bb4ab440ca789d824f183f168abc57e458d"
+  },
+  "docker_validation": "NOT_RUN_DAEMON_UNAVAILABLE",
+  "note": "No test assertion executed. Frozen allocation 04 is not rerun. This is a harness/setup STOP, not evidence about audit-v3 correctness. Formal-02 remains HOLD_FROZEN_AUDITOR_DEFECT."
+}

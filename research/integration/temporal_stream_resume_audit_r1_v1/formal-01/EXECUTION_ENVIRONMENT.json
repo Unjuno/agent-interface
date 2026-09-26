@@ -1,0 +1,19 @@
+{
+  "allocation": "temporal-resume-audit-returncode-20260927-01",
+  "docker_exit_code": 1,
+  "input_commit": "de1064b335a6567c57817209485cf18d25d9e3f2",
+  "input_manifest_sha256": "1584edb3a45202b3e816d2a9735708265dae279fd4e18d8680fded7756cc3855",
+  "freeze_commit": "3a5557245fd1f57e9d65e9ddfd732d67abd41b69",
+  "source_hash_manifest_entries": 14,
+  "invoked_at_utc": "2026-09-26T15:33:47.4149392Z",
+  "image": "python:3.13.5-slim-bookworm",
+  "platform": "linux/amd64",
+  "docker_engine": "29.8.0",
+  "network": "none",
+  "container_root_filesystem": "read-only",
+  "invocations": 1,
+  "disposition": "HOLD_GATE_CONTROL_DENOMINATOR",
+  "summary": "Baseline audit passed with 54 rows, candidate 48/48, 40 comparator disagreements, and 6 corruption refusals. Nine byte-changing mutations were rejected. A tenth byte-changing comparator return-code mutation was also rejected, but the named control_accept was byte-identical and correctly accepted. The fixed gate counts only bytes_changed && rejected, yielding effective=10 while requiring 11. This is a frozen denominator/control-design failure; no rerun or gate/source tuning was performed.",
+  "preflight_history": ["PREFLIGHT01.log", "PREFLIGHT02.log", "PREFLIGHT03.log"],
+  "outer_receipt": "OUTER_VERIFY.json"
+}

@@ -10,6 +10,10 @@ This additive record closes the missing exact-source/local-container execution r
 - **C:** Finite readiness classifier only. No MAP01 game session, recovery, model/provider, GUI/X11, OS input, or authority grant. The single `AUTHORIZE` truth-table row is not a live authority grant.
 - **U:** Does not establish live recovery efficacy, runtime/input safety, CI equivalence, model quality, or production readiness. The corrected audit checks this finite raw/schema and source binding, not arbitrary auditor soundness.
 
+## Auditor-v3 control-construction lineage
+
+The separate `audit_v3_control_hardening_v1/` path retains allocations 01–03 as pre-discovery STOPs and allocation 04 as `STOP_TEST_FIXTURE_PATH_MAPPING` (zero test cases, one setup error). It does not alter formal-02's `HOLD_FROZEN_AUDITOR_DEFECT` or turn the entry-gate output into a PASS. See its `RECOVERY_REVIEW.md` for the independent hash checks and exact scope; allocation 04 is not rerun.
+
 ## Frozen and executed identities
 
 - Source base: `f79ef46d478911170d73b71bddcbe58fd698dc84`.

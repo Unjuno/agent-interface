@@ -1,0 +1,72 @@
+name: Issue 3816 delivery-byte binding audit
+
+on:
+  pull_request:
+    types: [opened]
+    branches: [main]
+    paths:
+      - research/audits/issue_3793_delivery_byte_binding_v3/**
+
+permissions:
+  contents: read
+
+jobs:
+  retained-evidence-audit:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 10
+    steps:
+      - name: Stage source and immutable inputs
+        shell: bash
+        env:
+          AUDIT_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          work="$RUNNER_TEMP/issue-3816"
+          src="$work/src"
+          inputs="$work/inputs"
+          mkdir -p "$src" "$inputs"
+          audit_path="research/audits/issue_3793_delivery_byte_binding_v3"
+          raw_base="https://raw.githubusercontent.com/Unjuno/agent-interface"
+          curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 \
+            "$raw_base/$AUDIT_HEAD/$audit_path/audit.py" -o "$src/audit.py"
+          curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 \
+            "$raw_base/$AUDIT_HEAD/$audit_path/test_audit.py" -o "$src/test_audit.py"
+          curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 \
+            "$raw_base/$AUDIT_HEAD/$audit_path/MANIFEST.json" -o "$src/MANIFEST.json"
+          frozen_head="8bac49525c93835a69b6d441740a1c424faaecb2"
+          input_paths=(
+            "research/integration/issue_3711_downstream_truncation_v1/audit-v2-successor-02/FREEZE.json"
+            "research/integration/issue_3711_downstream_truncation_v1/audit-v2-successor-02/PLAN.md"
+            "research/integration/issue_3711_downstream_truncation_v1/audit-v2-successor-02/audit.py"
+            "research/integration/issue_3711_downstream_truncation_v1/audit-v2-successor-02/result/RESULT.json"
+            "research/integration/issue_3711_downstream_truncation_v1/successor-02/FREEZE.json"
+            "research/integration/issue_3711_downstream_truncation_v1/formal-02/raw.json"
+            "research/integration/issue_3711_downstream_truncation_v1/formal-02/accepted.json"
+            "research/integration/issue_3711_downstream_truncation_v1/formal-02/delivered-prefix.bin"
+            "research/integration/issue_3711_downstream_truncation_v1/formal-02/audit.json"
+            "research/integration/issue_3711_downstream_truncation_v1/audit-v2/formal-02-recheck/RESULT.json"
+          )
+          for rel in "${input_paths[@]}"; do
+            mkdir -p "$inputs/$(dirname "$rel")"
+            curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 \
+              "$raw_base/$frozen_head/$rel" -o "$inputs/$rel"
+          done
+          out="$(mktemp -d "$RUNNER_TEMP/issue-3816-result.XXXXXX")"
+          test -z "$(find "$out" -mindepth 1 -print -quit)"
+          image="python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9"
+          docker version
+          set +e
+          docker run --rm --pull=missing --platform linux/arm64 --network none --read-only \
+            --tmpfs /tmp:rw,nosuid,nodev,size=16m \
+            --mount "type=bind,src=$src,dst=/src,readonly" \
+            --mount "type=bind,src=$inputs,dst=/input,readonly" \
+            --mount "type=bind,src=$out,dst=/out" \
+            --workdir /src --entrypoint /bin/bash --env "AUDIT_HEAD=$AUDIT_HEAD" "$image" \
+            -c 'python -B -m unittest -v test_audit.py && python -B audit.py /input /src/MANIFEST.json /out "$AUDIT_HEAD"' \
+            2>&1 | tee "$work/container.log"
+          status=${PIPESTATUS[0]}
+          set -e
+          if test -f "$out/RESULT.json"; then
+            cat "$out/RESULT.json" | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+          exit "$status"

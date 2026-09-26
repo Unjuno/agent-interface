@@ -18,6 +18,27 @@ inspect and independently revalidate it. The PR/merge is the evidence-delivery
 mechanism, not the research objective. A component or readiness PASS must not
 be promoted to integrated runtime, model, task-effect, or product success.
 
+### Required work cadence for autonomous agents
+
+The unit of progress is an executed experiment against one concrete Issue
+hypothesis—not a branch, PR, issue comment, plan, or document update. In each
+work segment, proceed from intake and H/T/D/C/U to a frozen, smallest useful
+Docker/OrbStack experiment and actually run it. A proposed command or a green
+test remembered from an earlier run is not a current result. If a formal/live
+allocation is separately gated or already consumed, do not spend it again;
+run a distinct construction or boundary experiment that advances the same
+Issue question, or select another unresolved Issue hypothesis.
+
+Before calling a segment complete, retain the executed command, source/image
+identities, raw outcome, an independent audit, and explicit scope limits in an
+additive research path; record the result on the corresponding GitHub Issue;
+run the applicable local CI; then deliver the evidence through a reviewable PR
+and merge when its checks and review gates permit. Do not stop at a staged
+worktree, an Issue comment, a list of next steps, or a PR/merge with no new
+experiment. When blocked, state the exact missing authority/resource or failed
+gate and keep the research goal open. This cadence is experiment-first; it does
+not authorize retries of consumed allocations or broad runtime/product claims.
+
 This user direction takes precedence over the narrower integration-only
 wording immediately below for the current autonomous research task; the
 existing desktop integration and human-tempo objectives remain valid backlog.

@@ -1,0 +1,5 @@
+Preflight launcher failure — no Docker invocation or evidence read.
+
+PowerShell raised `The term 'true' is not recognized` while constructing the execution-environment metadata because the hashtable used bare `true` instead of `$true`. The scratch directory had been created, but metadata generation failed before the docker run command. No container was started, no #4447 evidence was mounted/read, and no verifier invocation occurred.
+
+This scratch path is preserved unchanged. The actual once-only verifier invocation will use a fresh scratch path after correcting the launcher.
