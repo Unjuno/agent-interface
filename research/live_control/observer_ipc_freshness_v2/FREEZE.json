@@ -61,54 +61,270 @@
   "parent_issue": 2117,
   "path": "research/live_control/observer_ipc_freshness_v2",
   "plan": {
-    "arms": ["INLINE_IDLE","INLINE_THREAD","PROCESS_IDLE","PROCESS_THREAD"],
+    "arms": [
+      "INLINE_IDLE",
+      "INLINE_THREAD",
+      "PROCESS_IDLE",
+      "PROCESS_THREAD"
+    ],
     "cadence_ns": 2000000,
     "cases": [
-      {"arm":"INLINE_IDLE","block":0,"case":"b00-0-INLINE_IDLE","offset_ms":50},
-      {"arm":"INLINE_THREAD","block":0,"case":"b00-1-INLINE_THREAD","offset_ms":50},
-      {"arm":"PROCESS_IDLE","block":0,"case":"b00-2-PROCESS_IDLE","offset_ms":50},
-      {"arm":"PROCESS_THREAD","block":0,"case":"b00-3-PROCESS_THREAD","offset_ms":50},
-      {"arm":"INLINE_THREAD","block":1,"case":"b01-0-INLINE_THREAD","offset_ms":52},
-      {"arm":"PROCESS_IDLE","block":1,"case":"b01-1-PROCESS_IDLE","offset_ms":52},
-      {"arm":"PROCESS_THREAD","block":1,"case":"b01-2-PROCESS_THREAD","offset_ms":52},
-      {"arm":"INLINE_IDLE","block":1,"case":"b01-3-INLINE_IDLE","offset_ms":52},
-      {"arm":"PROCESS_IDLE","block":2,"case":"b02-0-PROCESS_IDLE","offset_ms":54},
-      {"arm":"PROCESS_THREAD","block":2,"case":"b02-1-PROCESS_THREAD","offset_ms":54},
-      {"arm":"INLINE_IDLE","block":2,"case":"b02-2-INLINE_IDLE","offset_ms":54},
-      {"arm":"INLINE_THREAD","block":2,"case":"b02-3-INLINE_THREAD","offset_ms":54},
-      {"arm":"PROCESS_THREAD","block":3,"case":"b03-0-PROCESS_THREAD","offset_ms":56},
-      {"arm":"INLINE_IDLE","block":3,"case":"b03-1-INLINE_IDLE","offset_ms":56},
-      {"arm":"INLINE_THREAD","block":3,"case":"b03-2-INLINE_THREAD","offset_ms":56},
-      {"arm":"PROCESS_IDLE","block":3,"case":"b03-3-PROCESS_IDLE","offset_ms":56},
-      {"arm":"INLINE_IDLE","block":4,"case":"b04-0-INLINE_IDLE","offset_ms":58},
-      {"arm":"INLINE_THREAD","block":4,"case":"b04-1-INLINE_THREAD","offset_ms":58},
-      {"arm":"PROCESS_IDLE","block":4,"case":"b04-2-PROCESS_IDLE","offset_ms":58},
-      {"arm":"PROCESS_THREAD","block":4,"case":"b04-3-PROCESS_THREAD","offset_ms":58},
-      {"arm":"INLINE_IDLE","block":5,"case":"b05-0-INLINE_IDLE","offset_ms":50},
-      {"arm":"PROCESS_THREAD","block":5,"case":"b05-1-PROCESS_THREAD","offset_ms":50},
-      {"arm":"PROCESS_IDLE","block":5,"case":"b05-2-PROCESS_IDLE","offset_ms":50},
-      {"arm":"INLINE_THREAD","block":5,"case":"b05-3-INLINE_THREAD","offset_ms":50},
-      {"arm":"INLINE_THREAD","block":6,"case":"b06-0-INLINE_THREAD","offset_ms":52},
-      {"arm":"INLINE_IDLE","block":6,"case":"b06-1-INLINE_IDLE","offset_ms":52},
-      {"arm":"PROCESS_THREAD","block":6,"case":"b06-2-PROCESS_THREAD","offset_ms":52},
-      {"arm":"PROCESS_IDLE","block":6,"case":"b06-3-PROCESS_IDLE","offset_ms":52},
-      {"arm":"PROCESS_IDLE","block":7,"case":"b07-0-PROCESS_IDLE","offset_ms":54},
-      {"arm":"INLINE_THREAD","block":7,"case":"b07-1-INLINE_THREAD","offset_ms":54},
-      {"arm":"INLINE_IDLE","block":7,"case":"b07-2-INLINE_IDLE","offset_ms":54},
-      {"arm":"PROCESS_THREAD","block":7,"case":"b07-3-PROCESS_THREAD","offset_ms":54},
-      {"arm":"PROCESS_THREAD","block":8,"case":"b08-0-PROCESS_THREAD","offset_ms":56},
-      {"arm":"PROCESS_IDLE","block":8,"case":"b08-1-PROCESS_IDLE","offset_ms":56},
-      {"arm":"INLINE_THREAD","block":8,"case":"b08-2-INLINE_THREAD","offset_ms":56},
-      {"arm":"INLINE_IDLE","block":8,"case":"b08-3-INLINE_IDLE","offset_ms":56},
-      {"arm":"INLINE_IDLE","block":9,"case":"b09-0-INLINE_IDLE","offset_ms":58},
-      {"arm":"PROCESS_THREAD","block":9,"case":"b09-1-PROCESS_THREAD","offset_ms":58},
-      {"arm":"PROCESS_IDLE","block":9,"case":"b09-2-PROCESS_IDLE","offset_ms":58},
-      {"arm":"INLINE_THREAD","block":9,"case":"b09-3-INLINE_THREAD","offset_ms":58}
+      {
+        "arm": "INLINE_IDLE",
+        "block": 0,
+        "case": "b00-0-INLINE_IDLE",
+        "offset_ms": 50
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 0,
+        "case": "b00-1-INLINE_THREAD",
+        "offset_ms": 50
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 0,
+        "case": "b00-2-PROCESS_IDLE",
+        "offset_ms": 50
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 0,
+        "case": "b00-3-PROCESS_THREAD",
+        "offset_ms": 50
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 1,
+        "case": "b01-0-INLINE_THREAD",
+        "offset_ms": 52
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 1,
+        "case": "b01-1-PROCESS_IDLE",
+        "offset_ms": 52
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 1,
+        "case": "b01-2-PROCESS_THREAD",
+        "offset_ms": 52
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 1,
+        "case": "b01-3-INLINE_IDLE",
+        "offset_ms": 52
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 2,
+        "case": "b02-0-PROCESS_IDLE",
+        "offset_ms": 54
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 2,
+        "case": "b02-1-PROCESS_THREAD",
+        "offset_ms": 54
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 2,
+        "case": "b02-2-INLINE_IDLE",
+        "offset_ms": 54
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 2,
+        "case": "b02-3-INLINE_THREAD",
+        "offset_ms": 54
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 3,
+        "case": "b03-0-PROCESS_THREAD",
+        "offset_ms": 56
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 3,
+        "case": "b03-1-INLINE_IDLE",
+        "offset_ms": 56
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 3,
+        "case": "b03-2-INLINE_THREAD",
+        "offset_ms": 56
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 3,
+        "case": "b03-3-PROCESS_IDLE",
+        "offset_ms": 56
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 4,
+        "case": "b04-0-INLINE_IDLE",
+        "offset_ms": 58
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 4,
+        "case": "b04-1-INLINE_THREAD",
+        "offset_ms": 58
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 4,
+        "case": "b04-2-PROCESS_IDLE",
+        "offset_ms": 58
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 4,
+        "case": "b04-3-PROCESS_THREAD",
+        "offset_ms": 58
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 5,
+        "case": "b05-0-INLINE_IDLE",
+        "offset_ms": 50
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 5,
+        "case": "b05-1-PROCESS_THREAD",
+        "offset_ms": 50
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 5,
+        "case": "b05-2-PROCESS_IDLE",
+        "offset_ms": 50
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 5,
+        "case": "b05-3-INLINE_THREAD",
+        "offset_ms": 50
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 6,
+        "case": "b06-0-INLINE_THREAD",
+        "offset_ms": 52
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 6,
+        "case": "b06-1-INLINE_IDLE",
+        "offset_ms": 52
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 6,
+        "case": "b06-2-PROCESS_THREAD",
+        "offset_ms": 52
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 6,
+        "case": "b06-3-PROCESS_IDLE",
+        "offset_ms": 52
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 7,
+        "case": "b07-0-PROCESS_IDLE",
+        "offset_ms": 54
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 7,
+        "case": "b07-1-INLINE_THREAD",
+        "offset_ms": 54
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 7,
+        "case": "b07-2-INLINE_IDLE",
+        "offset_ms": 54
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 7,
+        "case": "b07-3-PROCESS_THREAD",
+        "offset_ms": 54
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 8,
+        "case": "b08-0-PROCESS_THREAD",
+        "offset_ms": 56
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 8,
+        "case": "b08-1-PROCESS_IDLE",
+        "offset_ms": 56
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 8,
+        "case": "b08-2-INLINE_THREAD",
+        "offset_ms": 56
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 8,
+        "case": "b08-3-INLINE_IDLE",
+        "offset_ms": 56
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 9,
+        "case": "b09-0-INLINE_IDLE",
+        "offset_ms": 58
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 9,
+        "case": "b09-1-PROCESS_THREAD",
+        "offset_ms": 58
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 9,
+        "case": "b09-2-PROCESS_IDLE",
+        "offset_ms": 58
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 9,
+        "case": "b09-3-INLINE_THREAD",
+        "offset_ms": 58
+      }
     ],
-    "offsets_ms":[50,52,54,56,58,50,52,54,56,58],
-    "pulse_ns":5000000,
-    "switch_s":0.005,
-    "window_ns":120000000
+    "offsets_ms": [
+      50,
+      52,
+      54,
+      56,
+      58,
+      50,
+      52,
+      54,
+      56,
+      58
+    ],
+    "pulse_ns": 5000000,
+    "switch_s": 0.005,
+    "window_ns": 120000000
   },
-  "schema":"observer-ipc-freshness-freeze-v2"
+  "schema": "observer-ipc-freshness-freeze-v2"
 }
