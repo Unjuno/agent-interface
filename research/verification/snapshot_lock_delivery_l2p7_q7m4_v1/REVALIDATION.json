@@ -1,0 +1,76 @@
+{
+  "direct_study_local_reconstruction": {
+    "audit_reproduction": {
+      "AUDIT.json": {
+        "byte_exact": true,
+        "exit": 0,
+        "sha256": "db640c6da38dbd30314f0783b47dc826afa42c8208763472e861b9cb213c0c87"
+      },
+      "CONSTRUCTION_AUDIT.json": {
+        "byte_exact": true,
+        "exit": 0,
+        "sha256": "2261bec72b16a98ae6e7faed1cbb70c792feb6674eb779e603c2d5095d2c4c0a"
+      },
+      "CONSTRUCTION_CONTROLS.json": {
+        "byte_exact": true,
+        "exit": 0,
+        "sha256": "975672ed045975d19701c45d07007b74df7f4d821f826bb56d05f5f663e91373"
+      },
+      "CONTROLS.json": {
+        "byte_exact": true,
+        "exit": 0,
+        "sha256": "a3a110779857963dbcf3194201c2029f9425446e7f1f926eb71b44f9d0e12fc6"
+      }
+    },
+    "excluded_historical_archives": [
+      {
+        "bytes": 2584854,
+        "path": "provenance/prior_f8c1.zip",
+        "sha256": "b31799bdf2a45a58d52e82f8120b56b96c9c0d39c7fd1fee8612b33160618f8c"
+      }
+    ],
+    "github_ci": false,
+    "independent_human_review": false,
+    "original_manifest_preserved": true,
+    "restored_bytes": 12208092,
+    "restored_files": 603,
+    "scientific_actors_started": 0,
+    "scientific_reruns": 0,
+    "status": "PASS_EXACT_DIRECT_STUDY_PUBLICATION"
+  },
+  "new_packaging_tests": {
+    "methods": 10,
+    "passed": 10,
+    "scientific_runs": 0
+  },
+  "new_scientific_runs": 0,
+  "original_archive": {
+    "bytes": 3040384,
+    "sha256": "e012a707549cec85279dcd389a057b63f4f7163dc35375eac741d7d380017e00"
+  },
+  "original_files": 604,
+  "original_member_bytes": 14792946,
+  "original_verification": {
+    "audit_reproduction": {
+      "AUDIT.json": {
+        "byte_exact": true,
+        "sha256": "db640c6da38dbd30314f0783b47dc826afa42c8208763472e861b9cb213c0c87"
+      },
+      "CONTROLS.json": {
+        "byte_exact": true,
+        "sha256": "a3a110779857963dbcf3194201c2029f9425446e7f1f926eb71b44f9d0e12fc6"
+      }
+    },
+    "experimental_reruns": 0,
+    "external_review": false,
+    "frozen_files": 10,
+    "github_ci": false,
+    "manifest_files": 603,
+    "new_actor_processes": 0,
+    "status": "PASS_RETAINED_BYTES_AND_READONLY_AUDITS"
+  },
+  "remote_evidence_complete": false,
+  "remote_payload": "Only this metadata, README.md and PUBLICATION_STOP.json; no source or raw capsule.",
+  "same_author_review_only": true,
+  "status": "LOCAL_REVALIDATION_PASSED_REMOTE_EVIDENCE_PENDING"
+}
