@@ -1,0 +1,36 @@
+{
+  "allocation": "effect-owner-deadline-4195-20260923-02",
+  "audit_commands": [
+    "python -B audit_batches.py formal2 --out AUDIT2.json",
+    "python -B controls_batches.py"
+  ],
+  "batch_commands": [
+    "python -B batch.py --out formal2/batch-0 --rep 0",
+    "python -B batch.py --out formal2/batch-1 --rep 1",
+    "python -B batch.py --out formal2/batch-2 --rep 2"
+  ],
+  "batches_before_freeze": 0,
+  "formal_rows_before_freeze": 0,
+  "id001_rows_not_pooled": true,
+  "no_same_batch_retry": true,
+  "orchestration_source_sha256": {
+    "PLAN2.md": "dee24362bac107790f0e1805a20cbfafc477e5257a4f0f98d732c51c55baf5bf",
+    "audit_batches.py": "5fa852b07709a9d38fcb3f9596fbce27fc299c371e4c26ce78f3adfd3e07f586",
+    "batch.py": "ff3190c69126699c8fcaaaaa946268202802e87612f25182423d58d0f8f89158",
+    "controls_batches.py": "ce338757b826a3f8a36a620046471de63f86b0805b727139b53d064f86ea9d82"
+  },
+  "post_freeze_tuning": false,
+  "predecessor_allocation": "effect-owner-deadline-4195-20260923-01",
+  "predecessor_disposition": "STOP_EXTERNAL_EXECUTION_TIMEOUT / HOLD_FORMAL_INCOMPLETE",
+  "replacements": 0,
+  "scientific_source_sha256": {
+    "ENVIRONMENT.json": "77330d05a278ac8d1eadfb74df2d86c3a925c57fdd4ad2b7206009aaae24a7e9",
+    "PLAN.md": "d3c30d17008af0e028495d07737622edbdb4064622e994897692a4b275181547",
+    "SCHEDULE.json": "15c386d7cf60c45f7c952d088d78438754cd1f780af572bfb9e39650d38d5742",
+    "app_worker.py": "8f7d34ce0e14cd31c44e9d86221e8c6a68e619d9a416450ac136b6d7d52575e7",
+    "audit.py": "62432355377282e1ce84296bd0d62918dc0126e5df3b2e7bd69f2471dbce27e0",
+    "controls.py": "c8fad3d6bec7eb7e3f149a7a3e1bdd0c2fd1f2a2fb8042aec2f80afebc1521b1",
+    "run.py": "6c6d07e82ef71f610fc90d6a655742def4fc4000e3b379f257e18a0d8dab15c1",
+    "sink_worker.py": "a61feb8a18b429e96be9154348ee3006caab325443b77b033bdf2f9b0ad0f48b"
+  }
+}
