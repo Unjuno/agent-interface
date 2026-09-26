@@ -1,0 +1,51 @@
+{
+  "schema": "issue3240_gtk_effect_control_freeze_v1",
+  "allocation": "issue3240-gtk-app-effect-control-v1",
+  "source_main_commit": "fab3b392fb854696312a85a6b859a78369c3e737",
+  "branch": "research/issue-3240-live-app-effect-reconcile-20260921",
+  "image": {
+    "tag": "agent-interface-gtk-effect-control-3240:construction01",
+    "id": "sha256:eb3ce9f5bd0cf358664b9d1ff9bce4cf2ce9f82f72ec700222046fb8fe8b96ba",
+    "platform": "linux/amd64",
+    "base": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "build_command": "docker build --pull=false --file research/integration/gtk_effect_control_3240_v1/Dockerfile --tag agent-interface-gtk-effect-control-3240:construction01 .",
+    "build_network": "enabled for apt package construction only; formal runtime is --network none"
+  },
+  "runtime": {
+    "default_python": "Python 3.12 from base image; imports runtime adapter and pure-Python Xlib via PYTHONPATH",
+    "gtk_python": "/usr/bin/python3 3.13.5-1; imports Debian PyGObject/GTK3",
+    "packages": {
+      "python3": "3.13.5-1",
+      "python3-gi": "3.50.0-4+b1",
+      "gir1.2-gtk-3.0": "3.24.49-3",
+      "python3-xlib": "0.33-3",
+      "xvfb": "2:21.1.16-1.3+deb13u4",
+      "xauth": "1:1.1.2-1.1",
+      "x11-utils": "7.7+7",
+      "x11-apps": "7.7+11+b1"
+    }
+  },
+  "schedule": ["01_application_save", "02_render_only_decoy"],
+  "formal_sessions": 2,
+  "reruns": 0,
+  "source_sha256": {
+    "research/integration/gtk_effect_control_3240_v1/README.md": "149AB30BBEAB6B9C9312F055216D2D001A6EC69AC98EA2416844661E8818939C",
+    "research/integration/gtk_effect_control_3240_v1/PREREG.md": "792B08791FE40604BCA57E2AC31DA082C71FC4451ADAE95FECE739693CF63DF4",
+    "research/integration/gtk_effect_control_3240_v1/Dockerfile": "39054BB094FB7074BDC2A85459D330C0219C0D4C74819ADBF09EBDF6351AB53B",
+    "research/integration/gtk_effect_control_3240_v1/run_probe.py": "1A1764B2046167D6F9964046708AE933ADCD9F36087E2D1D4438CA42F672CF0A",
+    "research/integration/gtk_effect_control_3240_v1/audit_probe.py": "265BE427ABFC17A97396FC6F80D7F9465835080446801FCF5091976960EA94EF",
+    "research/integration/gtk_effect_control_3240_v1/fixture_render_decoy.py": "E312E9A144B3984EF409BA9EF655E7032D694D437130058D537FDFDC2D0273A6",
+    "research/integration/gtk_effect_control_3240_v1/construction_check.py": "0FC5ACBE04CBFEF4469C292637AA419B89680EE829AEB6E66DC09E65803DB2A7",
+    "research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py": "2F8ED8C604AFBCF5DD43363D2EDE4950E70AA9F7EAE70A4B795DECF4FEB4BB3B",
+    "runtime/cli_v1/golden_v3.py": "FB184B89638309A97D626277948ED52B27D124EFE655A1344906E006827FA7B2",
+    "runtime/cli_v1/api.py": "19C19A08C918B88B9B888B995CAAD8C4FD999123C8349E718D16BAB5C1FBD15D",
+    "runtime/core_v1/contract.py": "DD842A5A8102ACB5FA8D679EBA5FE325646B02B4B2477CE719E14B37A802E04E",
+    "runtime/core_v1/__init__.py": "B642FDD3FDFFC31CE90C65E84E0C71DA8D6FAEA7A48C1458503D67FA9C084208",
+    "runtime/core_v1/platform_probe.py": "8AF707ECAB647F29F129E6BD1D2907A424FDCF6F90A19840A75A773A50C969CA",
+    "runtime/selector_v1/__init__.py": "3E4F381F3B8ED95C05382E1F8E03C1C3B55225DEA1E012FBF12B8A72B01D789D",
+    "runtime/selector_v1/selector.py": "6E9D8D0E33FFE4A8DF7BB4200013C498BB0DC80D30ACA47B36D78CB494B4DA2D",
+    "runtime/backends/x11_v1/backend.py": "CC3D2CD7DA617543AB2C0F8F98496661200654B568F35587105284A217975511",
+    "runtime/backends/x11_v1/session.py": "4B0B5823161CEF64203A8745E3CBE8C238DE108993DE5FC0DA2A5F710450EB4F"
+  },
+  "decision_rule": "See PREREG.md; pass requires real app effect with same target XID/PID and empty release, plus fail-closed rejection of a same-title/same-geometry render-only decoy in a different XID/PID."
+}
