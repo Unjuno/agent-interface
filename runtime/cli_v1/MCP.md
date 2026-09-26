@@ -72,6 +72,9 @@ inspector as CLI `validate`, without opening a backend or issuing input. It
 returns static validity, required capabilities or bounded diagnostics with
 operation positions where available. Invalid drafts set `isError=true` and
 `static_valid=false`. Even an expired lease may be statically valid: this is not
+a runtime admission. A nesting-limit failure returns `status=input_error`,
+`error=INPUT_NESTING_LIMIT`, `static_valid=null` and `isError=true`, matching the
+file inspector's unassessed-input distinction. Validation does not constitute
 a capability, freshness, authority or task-success check. Dispatch still performs
 its existing checks; calling validation first is optional. It creates no action
 call ID, image, persisted request or `interface_results` entry. The usual fixed

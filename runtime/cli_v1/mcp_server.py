@@ -16,7 +16,7 @@ from pydantic import Field, StrictBool, StrictInt, StrictStr
 from .api import dispatch
 from .observe import observe
 from .review import present_result
-from .validate_program import inspect_program
+from .validate_program import SCHEMA as VALIDATION_SCHEMA, inspect_program
 
 
 # Documentation metadata only: the public compiler and core remain the validators.
@@ -143,8 +143,15 @@ def create_server(targets, output_directory, *, display_name=None):
         freshness, lease expiry or task success, and grants no runtime admission.
         No action call ID or retained result is created. Invalid programs return
         static_valid=false; correct the draft explicitly rather than retrying input.
+        A nesting-limit input error returns static_valid=null, not a validity verdict.
         """
-        row = inspect_program(program)
+        try:
+            row = inspect_program(program)
+        except RecursionError:
+            row = {'schema': VALIDATION_SCHEMA, 'status': 'input_error',
+                   'static_valid': None, 'error': 'INPUT_NESTING_LIMIT',
+                   'side_effect_authority': False, 'runtime_admission': 'not_evaluated',
+                   'backend_checked': False, 'task_success': None}
         return content(row, error=row['static_valid'] is not True)
 
     @server.tool()

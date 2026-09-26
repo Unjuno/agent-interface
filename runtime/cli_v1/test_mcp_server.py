@@ -14,6 +14,26 @@ from runtime.cli_v1.mcp_server import create_server
 
 class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
 
+    async def test_validation_nesting_failure_retains_structured_metadata(self):
+        with tempfile.TemporaryDirectory() as td:
+            server = create_server({'fixture': 123}, td)
+            with patch('runtime.cli_v1.mcp_server.inspect_program', side_effect=RecursionError), \
+                 patch('runtime.cli_v1.mcp_server.dispatch') as dispatch, \
+                 patch('runtime.cli_v1.mcp_server.observe') as observe:
+                reply = await server.call_tool('interface_validate', {'program': {}})
+                row = json.loads(reply.content[0].text)
+                self.assertTrue(reply.isError)
+                self.assertEqual(row['status'], 'input_error')
+                self.assertEqual(row['error'], 'INPUT_NESTING_LIMIT')
+                self.assertIsNone(row['static_valid'])
+                self.assertIsNone(row['task_success'])
+                self.assertIs(row['side_effect_authority'], False)
+                self.assertIs(row['backend_checked'], False)
+                self.assertEqual(row['runtime_admission'], 'not_evaluated')
+                dispatch.assert_not_called()
+                observe.assert_not_called()
+            self.assertEqual(list(Path(td).iterdir()), [])
+
     async def test_static_validation_matches_inspector_without_action_or_retention(self):
         from copy import deepcopy
         from runtime.cli_v1.validate_program import inspect_program
