@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 import os
 import sys
 from pathlib import Path
@@ -28,8 +29,13 @@ CLOCK_REPLACEMENT = """    _clock_host_ns = time.perf_counter_ns()
 
 MONITOR_ANCHOR = """        decided_ns = runtime_clock_ns() if decided_ns is None else decided_ns
         self.last_receipt = self.guard.check_current(snapshot, decided_ns)"""
-MONITOR_REPLACEMENT = """        decided_ns = runtime_clock_ns() if decided_ns is None else decided_ns
-        _clock_meta = globals().get("_RUNNING_ACTION_CLOCK_LAST")
+MONITOR_REPLACEMENT = """        _runtime_decision = decided_ns is None
+        decided_ns = runtime_clock_ns() if _runtime_decision else decided_ns
+        _clock_meta = globals().get("_RUNNING_ACTION_CLOCK_LAST") if _runtime_decision else None
+        _clock_calibration = globals().get("_RUNNING_ACTION_CLOCK_CALIBRATION") if _runtime_decision else None
+        _calibration_sha256 = (hashlib.sha256(json.dumps(
+            _clock_calibration,sort_keys=True,separators=(",", ":")).encode()).hexdigest()
+            if _clock_calibration is not None else None)
         _row = {
             "schema": "running-action-clock-check-v1",
             "sequence": snapshot["sequence"],
@@ -39,6 +45,8 @@ MONITOR_REPLACEMENT = """        decided_ns = runtime_clock_ns() if decided_ns i
             "controller_host_ns": (_clock_meta or {}).get("host_ns"),
             "controller_runtime_ns": (_clock_meta or {}).get("runtime_ns"),
             "offset_lower_ns": (_clock_meta or {}).get("offset_lower_ns"),
+            "calibration": _clock_calibration,
+            "calibration_sha256": _calibration_sha256,
             "host_clock": (_clock_meta or {}).get("host_clock"),
             "runtime_clock": (_clock_meta or {}).get("runtime_clock"),
             "observation_event": {key: observation.get(key) for key in (
@@ -62,7 +70,34 @@ MONITOR_PATH_REPLACEMENT = '''        action_monitor=DoomRunningActionMonitor(
 
 def main() -> None:
     base.REPLACEMENTS = tuple(base.REPLACEMENTS) + ((
-        "import json\n", "import json\nimport os\n"),)
+        "import json\n", "import json\nimport hashlib\nimport os\n"),)
+    base.REPLACEMENTS = tuple(base.REPLACEMENTS) + (
+        ('globals()["_RUNTIME_CLOCK_OFFSET_LOWER"]=_lower',
+         'globals()["_RUNTIME_CLOCK_OFFSET_LOWER"]=_lower\n'
+         '                globals()["_RUNNING_ACTION_CLOCK_CALIBRATION"]={"stage":"lease_command",'
+         '"same_session":True,"host_domain":"host_monotonic_ns",'
+         '"runtime_domain":"runtime_monotonic_ns","samples":_samples}'),
+        ('globals()["_RUNTIME_CLOCK_OFFSET_LOWER"]=_stage2_lower',
+         'globals()["_RUNTIME_CLOCK_OFFSET_LOWER"]=_stage2_lower\n'
+         '        globals()["_RUNNING_ACTION_CLOCK_CALIBRATION"]={"stage":"zero_decision",'
+         '"same_session":True,"host_domain":"host_monotonic_ns",'
+         '"runtime_domain":"runtime_monotonic_ns","samples":_stage2_samples}'),
+        ('globals()["_RUNTIME_CLOCK_OFFSET_LOWER"]=_decision_offset_lower',
+         'globals()["_RUNTIME_CLOCK_OFFSET_LOWER"]=_decision_offset_lower\n'
+         '        globals()["_RUNNING_ACTION_CLOCK_CALIBRATION"]={"stage":"planner_decision",'
+         '"same_session":True,"host_domain":"host_monotonic_ns",'
+         '"runtime_domain":"runtime_monotonic_ns","samples":_decision_clock_samples}'),
+        ('globals()["_RUNTIME_CLOCK_OFFSET_LOWER"]=_validity_offset_lower',
+         'globals()["_RUNTIME_CLOCK_OFFSET_LOWER"]=_validity_offset_lower\n'
+         '        globals()["_RUNNING_ACTION_CLOCK_CALIBRATION"]={"stage":"current_validity",'
+         '"same_session":True,"host_domain":"host_monotonic_ns",'
+         '"runtime_domain":"runtime_monotonic_ns","samples":_validity_clock_samples}'),
+        ('globals()["_RUNTIME_CLOCK_OFFSET_LOWER"]=_send_offset_lower',
+         'globals()["_RUNTIME_CLOCK_OFFSET_LOWER"]=_send_offset_lower\n'
+         '            globals()["_RUNNING_ACTION_CLOCK_CALIBRATION"]={"stage":"submit_send",'
+         '"same_session":True,"host_domain":"host_monotonic_ns",'
+         '"runtime_domain":"runtime_monotonic_ns","samples":_send_clock_samples}'),
+    )
     base.REPLACEMENTS = tuple(base.REPLACEMENTS) + (
         (CLOCK_ANCHOR, CLOCK_REPLACEMENT),
         (MONITOR_ANCHOR, MONITOR_REPLACEMENT),
