@@ -31,7 +31,7 @@ def fixture():
  return {"allocation":"needle-lora-3441-pilot-04d-corrected-base-20260926-01","parameters":{"seed":3927,"base_pretrain_steps":400,"adapter_steps":120},
   "data_sha256":data_hash,"checks":{"invalid_routes":{"unknown":"YIELD","stale":"YIELD"},"base_immutable":True,"all_snapshot_roundtrip_exact":True,"all_rollbacks_exact":True},
   "measurements":{"row_evidence":rows,"routed_accuracy":routed,"shared_sequential_accuracy":shared,
-   "adapter_setup_ms":1.0,"update_ms":{"global_B":1.,"global_C":1.,"adapter_B":1.,"adapter_C":1.},"snapshots":snapshots}}}
+   "adapter_setup_ms":1.0,"update_ms":{"global_B":1.,"global_C":1.,"adapter_B":1.,"adapter_C":1.},"snapshots":snapshots}}
 def run(obj):
  with tempfile.NamedTemporaryFile("w",encoding="utf-8",suffix=".json",delete=False) as f:
   path=f.name;json.dump(obj,f)
@@ -47,13 +47,13 @@ class AuditorTests(unittest.TestCase):
   x["measurements"]["shared_sequential_accuracy"]["C"]=1.
   r=run(x);self.assertEqual(r["disposition"],"HOLD_NO_ROUTING_ADVANTAGE")
  def test_corrupt_metric_is_rejected(self):
-  x=fixture();x["measurements"]["row_evidence"]["routed"]["B"]["predicted"][0]=3
+  x=fixture();row=x["measurements"]["row_evidence"]["routed"]["B"];row["predicted"][0]=(row["predicted"][0]+1)%4
   r=run(x);self.assertFalse(r["integrity"]);self.assertIn("B:routed:metric",r["errors"])
  def test_corrupt_state_hash_is_rejected(self):
   x=fixture();x["measurements"]["snapshots"]["B"]["sha256"]="0"*64
   r=run(x);self.assertFalse(r["integrity"]);self.assertIn("B:learned_sha",r["errors"])
  def test_accuracy_miss_fails(self):
-  x=fixture();x["measurements"]["row_evidence"]["routed"]["B"]["predicted"]=[0]*32
+  x=fixture();x["measurements"]["row_evidence"]["routed"]["B"]["predicted"]=[0]*len(x["measurements"]["row_evidence"]["routed"]["B"]["expected"])
   row=x["measurements"]["row_evidence"]["routed"]["B"];row["correct"]=sum(a==b for a,b in zip(row["expected"],row["predicted"]));row["accuracy"]=row["correct"]/len(row["expected"])
   x["measurements"]["routed_accuracy"]["B"]=row["accuracy"]
   r=run(x);self.assertEqual(r["disposition"],"FAIL_MULTI_SKILL_INTERFERENCE")
