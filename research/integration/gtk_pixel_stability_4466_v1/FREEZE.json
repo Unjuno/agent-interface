@@ -1,62 +1,41 @@
 {
-  "schema": "issue4466_gtk_visibility_freeze_v1",
-  "allocation": "issue4466-visibility-formal01",
-  "source_main_commit": "c83ddb057c680a126144d000bf7ef7ba2274652a",
-  "branch": "research/issue-4466-gtk-pixel-stability-20260926",
-  "image": {
-    "id": "sha256:eb3ce9f5bd0cf358664b9d1ff9bce4cf2ce9f82f72ec700222046fb8fe8b96ba",
-    "platform": "linux/amd64",
-    "base": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
-    "packages": {
-      "python3": "3.13.5-1",
-      "python3-gi": "3.50.0-4+b1",
-      "gir1.2-gtk-3.0": "3.24.49-3",
-      "python3-xlib": "0.33-3",
-      "xvfb": "2:21.1.16-1.3+deb13u4",
-      "xauth": "1:1.1.2-1.1",
-      "x11-utils": "7.7+7",
-      "x11-apps": "7.7+11+b1"
-    }
+  "allocation": "issue4466-gtk-pixel-stability-formal-01-20260926",
+  "formal_invocations": 1,
+  "main_snapshot_sha": "6fff330748fa5cf98c76b3f7cc4f537fb8884d2e",
+  "branch": "research/issue-4466-gtk-pixel-stability-v2-20260926",
+  "fixture_origin": "research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py at main snapshot c83ddb057c680a126144d000bf7ef7ba2274652a (blob e4cb3876769e69efd52d684fcd146bdc4233e385); setup-only focus metadata was added in the successor copy",
+  "formal_image": "sha256:7c202113e519666007d7f6a74fa4a9854ed7cec62c07c1e80631474e69af7a27",
+  "platform": "linux/arm64",
+  "image_packages": {
+    "gir1.2-gtk-3.0": "3.24.41-4ubuntu1.3",
+    "python3-gi": "3.48.2-1",
+    "python3-xlib": "0.33-2",
+    "x11-utils": "7.7+6build2",
+    "xauth": "1:1.1.2-1build1",
+    "xvfb": "2:21.1.12-1ubuntu1.6"
   },
-  "runtime": {
-    "network": "none",
-    "source_mount": "read-only",
-    "output_mount": "fresh writable directory",
-    "sessions": 1,
-    "formal_invocations": 1,
-    "retries": 0,
-    "model_calls": 0,
-    "provider_calls": 0,
-    "input_events": 0,
-    "application_effects": 0
+  "base_image": "sha256:296d358f5c71e6c3e766c49ebfe13b9b1ec5c2837157da2cfe406ee73bfb2992",
+  "pinned_gtk_image": "agent-interface-2972@sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+  "xwd_donor_image": "agent-interface-map01-clock-control-v1@sha256:05e01176ffcc2258ca88d7f8aafb6bd9e3915cd7ad19af196924008ff16f84b6",
+  "xwd_binary_sha256": "4a3b9d121fc525717c9912029e2fbeac87d49b633659b677c1c8825d3e7e596f",
+  "container_id": "f24d29bb3cf4f09c6c06bd4c715be4a26385983a6606d9c9a077801ef1a32d26",
+  "docker_run": "docker run --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=32m -v /tmp/issue4466-calibration-bG3kps/formal-out-01:/out:rw -e OUT=/out -e ALLOCATION=issue4466-gtk-pixel-stability-formal-01-20260926 -e IMAGE_ID=sha256:7c202113e519666007d7f6a74fa4a9854ed7cec62c07c1e80631474e69af7a27 -e IMAGE_PLATFORM=linux/arm64 --name issue4466-gtk-pixel-stability-formal01-20260926 --entrypoint /usr/bin/python3 sha256:7c202113e519666007d7f6a74fa4a9854ed7cec62c07c1e80631474e69af7a27 /experiment/runner.py",
+  "runtime_source_sha256": {
+    "runner.py": "b07f535f5b42d946ff828741fdc86fca9ef0480386905302140603d0919460bc",
+    "fixture.py": "d73688716f5113bfd1b504c7123f89d9a7042a361048248deac9737285c3aac4",
+    "decoy.py": "68b773d0df022130cf9516d5ab65a0ac46c8e5496e1798760bcf07b11b0f0a59",
+    "stability_gate.py": "60f2d90430f32be53ae43afce4fd261ef06831de3c96627691c4623538c91397",
+    "xwd_pixels.py": "1295718d125c403c10db59beb22127351ee345d0f1a58fdf7ba8543f69761ff0",
+    "audit.py": "abd4476dae463ecdef71bc38074bfd0fee67894198e3faeaf1daa12f1a760d5a",
+    "case_schedule.json": "e5657f5d993f4130ac7f6e0aabf237244df42e6a91ec427ebe06e54070509561",
+    "PREREGISTRATION.md": "f69a0f72c8da9682285abaf8147cd2f1ba072f8afada6a390064381bee20b145"
   },
-  "schedule": [
-    {"stage": "target_only", "role": "target", "indices": [1, 2, 3]},
-    {"stage": "decoy_overlapping", "role_order": ["target", "decoy"], "indices": [1, 2, 3], "geometry": "both 400x180 at (0,0)"},
-    {"stage": "decoy_moved", "role_order": ["target", "decoy"], "indices": [1, 2, 3], "geometry": "target (0,0), decoy (400,0) on 800x400 root"}
-  ],
-  "capture": {
-    "method": "xwd -silent -id <xid>",
-    "interval_ms": 250,
-    "rgb_masks": ["0xff0000", "0xff00", "0xff"],
-    "ignored_bits": "unused high bits in the 32bpp storage word are excluded from RGB stability decisions"
-  },
-  "construction_excluded_from_formal": [
-    "construction01: STOP before captures; Xlib display name omitted",
-    "construction02: exploratory; decoy at x=420 clipped by the 800px root",
-    "construction03: exploratory; no cross-stage RGB audit",
-    "construction04: exploratory; RGB-mask and cross-stage analysis added",
-    "construction05: final construction gate; 15 captures, RGB baseline stable, overlap all-black, target restored after move"
-  ],
-  "source_sha256": {
-    "research/integration/gtk_pixel_stability_4466_v1/CONSTRUCTION_PLAN.md": "C14EC6B7971298980E794270790A4E19DA6BB499FCE6B84305971B362202C055",
-    "research/integration/gtk_pixel_stability_4466_v1/PREREG.md": "BD139CA81F33810DA322C95FA4B9BF66548CC25AE026545A136001BF8CDA8827",
-    "research/integration/gtk_pixel_stability_4466_v1/README.md": "3E64DA56A530565B7125714E4ADEBE531C01E50C132FFA0A7223E82C2B517F36",
-    "research/integration/gtk_pixel_stability_4466_v1/construct_visibility.py": "CD5EEAEE84D7001C0082046D3761EE38A2733A19F633D743BA44E6828941C5E7",
-    "research/integration/gtk_pixel_stability_4466_v1/audit_visibility.py": "490989C3E25D7EA4FAB61731805EB251A0C4EB1BA828628A04327D121EC5D6E5",
-    "research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py": "2F8ED8C604AFBCF5DD43363D2EDE4950E70AA9F7EAE70A4B795DECF4FEB4BB3B",
-    "research/integration/gtk_effect_control_3240_v1/fixture_render_decoy.py": "D6E8BF1AC0D4551EFCA372B30360EE0964FAF6F7629DCB6AD8FB1AA70E9B19EC",
-    "research/integration/gtk_effect_control_3240_v1/Dockerfile": "C25A47317BD606666675D20AD3899D94F77055BA5A3C206198AC085A7C881412"
-  },
-  "decision_rule": "See PREREG.md; no XWD RGB pixels may be treated as application effect in the overlapping/invalid capture state. Formal pass calibrates only this fixture's capture-validity gate."
+  "formal_audit": "PASS_NO_INPUT_STABILITY_GATE_CALIBRATED; zero errors in live and post-cleanup audits",
+  "container_exit_code": 0,
+  "network_mode": "none",
+  "read_only_rootfs": true,
+  "writable_mounts": ["/out"],
+  "construction_06": "PASS_NO_INPUT_STABILITY_GATE_CALIBRATED with latest source, before formal freeze",
+  "formal_archive": "evidence/formal-01.tar.gz",
+  "formal_archive_sha256": "bfcc99f985286ebf001141a90b0278cff47e019461a1b8d9760f7601eb3dc25d"
 }
