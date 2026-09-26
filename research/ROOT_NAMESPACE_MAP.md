@@ -174,6 +174,7 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`audits/`](audits/) — retained audit-only evidence bundles; currently includes the scoped #3688 exact raw-byte-binding audit and its independent revalidation.
 - [`chromium/`](chromium/) — retained Chromium live-control, identity, and recovery experiments; consult each child report for scope and disposition.
 - [`cli_fault_residue_3711_revalidation_v1/`](cli_fault_residue_3711_revalidation_v1/) — retained Issue #3711 CLI fault-residue revalidation; consult its report for exact scope and disposition.
+- [`cli_retention_3711_short_write_v1/`](cli_retention_3711_short_write_v1/) — retained Issue #3711 short-write protocol; Ubuntu's required CLI workflow failed on selector mock imports, so no three-OS construction PASS is claimed.
 - [`issue_3733_german_xkb_text_orbstack_v3/`](issue_3733_german_xkb_text_orbstack_v3/) — retained Issue #3733 German XKB formula-delivery experiment and immutable formal/audit evidence; consult its preregistration and result disposition before making claims.
 - [`x11_text_german_layout_3668_v1/`](x11_text_german_layout_3668_v1/) — original Issue #3733 setup STOP and frozen protocol; de-01 stopped before the hypothesis test, with a freeze/result-state discrepancy documented in the artifacts.
 - [`needle_lora_3441_pilot_04c_multiskill_audit_complete/`](needle_lora_3441_pilot_04c_multiskill_audit_complete/) — Issue #3895 one-seed multi-skill audit; HOLD_PROTOCOL_DEVIATION because the run used 120 rather than the specified 400 base updates.
