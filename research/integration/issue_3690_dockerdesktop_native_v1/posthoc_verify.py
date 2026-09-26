@@ -7,7 +7,6 @@ import hashlib
 import json
 import pathlib
 import re
-import sys
 
 
 def sha(path):
@@ -24,6 +23,18 @@ def main():
     result = json.loads(result_bytes)
     tests_log = (output / "tests.log").read_text(encoding="utf-8")
     manifest = json.loads((root / "SOURCE_MANIFEST.json").read_text(encoding="utf-8"))
+    sum_path = root / "SHA256SUMS"
+    expected_sums = {}
+    for line in sum_path.read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        digest, relative = line.split(None, 1)
+        expected_sums[relative.strip()] = digest.lower()
+    checksum_checks = {
+        relative: sha(root / relative) == digest
+        for relative, digest in expected_sums.items()
+        if relative != "results/formal01/verification-posthoc.json"
+    }
     source_checks = {}
     for entry in manifest["files"]:
         source_checks[entry["path"]] = sha(bundle / entry["path"]) == entry["sha256"]
@@ -40,6 +51,7 @@ def main():
         "cli_sha_matches_frozen": sha(output / "hardening_audit.json") == manifest["protocol"]["expected_cli_sha256"],
         "cli_bytes_match_retained": result_bytes == baseline_bytes,
         "all_source_hashes_match": all(source_checks.values()),
+        "checksum_inventory_matches": all(checksum_checks.values()),
         "formal_wrapper_assertion_bug_identified": True,
     }
     report = {
@@ -56,6 +68,7 @@ def main():
         "cli_sha256": sha(output / "hardening_audit.json"),
         "cli_byte_identical_to_retained": result_bytes == baseline_bytes,
         "source_checks": source_checks,
+        "checksum_checks": checksum_checks,
         "container_stdout_sha256": {
             "tests.log": sha(output / "tests.log"),
             "cli.log": sha(output / "cli.log"),

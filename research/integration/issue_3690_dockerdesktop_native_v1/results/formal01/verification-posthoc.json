@@ -3,6 +3,7 @@
   "checks": {
     "all_21_mutations_rejected": true,
     "all_source_hashes_match": true,
+    "checksum_inventory_matches": true,
     "cli_bytes_match_retained": true,
     "cli_errors_empty": true,
     "cli_sha_matches_frozen": true,
@@ -11,6 +12,20 @@
     "docker_test_exit_zero": true,
     "five_unittests_passed": true,
     "formal_wrapper_assertion_bug_identified": true
+  },
+  "checksum_checks": {
+    "CONSTRUCTION.md": true,
+    "PREREG.md": true,
+    "README.md": true,
+    "RESULT.md": true,
+    "SOURCE_MANIFEST.json": true,
+    "posthoc_verify.py": true,
+    "results/formal01/cli.exit": true,
+    "results/formal01/cli.log": true,
+    "results/formal01/hardening_audit.json": true,
+    "results/formal01/tests.exit": true,
+    "results/formal01/tests.log": true,
+    "run_formal.ps1": true
   },
   "cli_byte_identical_to_retained": true,
   "cli_error_count": 0,
