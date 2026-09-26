@@ -208,8 +208,7 @@ def formal(outdir):
     ok=(counts["roi_preserved_fail"]==0 and counts["mapping_fail"]==0 and counts["fixed_zero_contrast"]>0 and counts["fixed_lt3"]>0
         and counts["adaptive_bound_fail"]==0 and counts["dual_bound_fail"]==0 and counts["padded_completeness_fail"]==0 and counts["clipped_rows"]>0)
     result["disposition"]="PASS_SOURCE_PRESERVING_CONTRAST_CUE_SCOPED" if ok else "FAIL_FORMAL_GATE"
-    (outdir/"RESULT.json").write_text(json.dumps(result,indent=2,sort_keys=True)+"
-",encoding="utf-8")
+    (outdir/"RESULT.json").write_text(json.dumps(result,indent=2,sort_keys=True)+"\n",encoding="utf-8")
     return result
 
 def construction(outdir):
@@ -224,8 +223,7 @@ def construction(outdir):
             if mode=="PADDED_DUAL_BW_OUTLINE": assert actual==expected
             rows+=1
     o={"construction_only":True,"colors":colors_construction(),"cases":len(colors_construction())*len(SIZES)*len(POSITIONS),"rows":rows,"status":"PASS_CONSTRUCTION"}
-    (outdir/"CONSTRUCTION.json").write_text(json.dumps(o,indent=2,sort_keys=True)+"
-",encoding="utf-8")
+    (outdir/"CONSTRUCTION.json").write_text(json.dumps(o,indent=2,sort_keys=True)+"\n",encoding="utf-8")
     return o
 
 def main():
