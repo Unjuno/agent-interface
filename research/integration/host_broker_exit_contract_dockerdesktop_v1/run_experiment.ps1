@@ -11,6 +11,19 @@ $runtime = (Resolve-Path (Join-Path $repo 'runtime')).Path
 $freeze = Get-Content (Join-Path $study 'FREEZE.json') -Raw | ConvertFrom-Json
 $formal = Join-Path $study $freeze.formal_result_path
 
+foreach ($entry in $freeze.sha256.PSObject.Properties) {
+    $relative = $entry.Name -replace '^study/', ''
+    $path = if ($entry.Name.StartsWith('study/')) { Join-Path $study $relative } else { Join-Path $repo $entry.Name }
+    if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { throw "Frozen file missing: $($entry.Name)" }
+    $actual = (Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.ToLowerInvariant()
+    if ($actual -ne $entry.Value) { throw "Frozen SHA-256 mismatch: $($entry.Name) expected=$($entry.Value) actual=$actual" }
+}
+foreach ($entry in $freeze.source_git_blobs.PSObject.Properties) {
+    $path = Join-Path $repo $entry.Name
+    $actual = (& git -C $repo hash-object --no-filters -- $path).Trim()
+    if ($actual -ne $entry.Value) { throw "Frozen Git blob mismatch: $($entry.Name) expected=$($entry.Value) actual=$actual" }
+}
+
 $context = (& docker context show).Trim()
 $engineParts = ((& docker info --format '{{.ServerVersion}}|{{.OSType}}|{{.Architecture}}').Trim() -split '\|')
 $imageParts = ((& docker image inspect python:3.12-slim --format '{{.Id}}|{{.Os}}|{{.Architecture}}').Trim() -split '\|')
