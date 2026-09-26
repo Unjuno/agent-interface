@@ -26,6 +26,7 @@ def main():
    out.mkdir(parents=True); tf.extractall(out,filter='data')
  finally:
   if tmp.exists(): tmp.unlink()
+ # checksum list is archive-bound; verify every listed primary member after extraction.
  lines=(out/m['checksum_member']).read_text().splitlines(); seen=set()
  for line in lines:
   digest,path=line.split('  ',1); p=out/path
