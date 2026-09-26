@@ -1,0 +1,66 @@
+{
+  "arms": [
+    {
+      "accepted": 5,
+      "accepted_false": 0,
+      "arm": "no_augmentation",
+      "exact": 6,
+      "exact_by_transform": {
+        "bright_1.15": 2,
+        "dark_0.85": 2,
+        "original": 2
+      },
+      "peak_cuda_bytes": 97987072,
+      "reject": 0,
+      "train_seconds": 1.2444642000000385,
+      "validator_accept": 6,
+      "wrong_predictions": [],
+      "yield": 1
+    },
+    {
+      "accepted": 6,
+      "accepted_false": 0,
+      "arm": "brightness_augmentation",
+      "exact": 6,
+      "exact_by_transform": {
+        "bright_1.15": 2,
+        "dark_0.85": 2,
+        "original": 2
+      },
+      "peak_cuda_bytes": 97987072,
+      "reject": 0,
+      "train_seconds": 0.9811596999998073,
+      "validator_accept": 6,
+      "wrong_predictions": [],
+      "yield": 0
+    }
+  ],
+  "format": "gpu-photometric-grounding-independent-audit-v1",
+  "heldout_rows_per_arm": 6,
+  "perturbed_exact": {
+    "brightness_augmentation": 4,
+    "max": 4,
+    "no_augmentation": 4,
+    "no_case_regression": true,
+    "per_case": {
+      "brightness_augmentation": {
+        "task-3|bright_1.15": 1,
+        "task-3|dark_0.85": 1,
+        "task-6|bright_1.15": 1,
+        "task-6|dark_0.85": 1
+      },
+      "no_augmentation": {
+        "task-3|bright_1.15": 1,
+        "task-3|dark_0.85": 1,
+        "task-6|bright_1.15": 1,
+        "task-6|dark_0.85": 1
+      }
+    },
+    "strict_case_gain": false
+  },
+  "scope": "two held-out source images only; no GUI/action/authority/runtime claim",
+  "source_images_verified": 6,
+  "source_manifest_sha256": "dc86185fdec9a1605548861519fa6777c1153948c032c49a7fa1557160c77bc8",
+  "status": "HOLD_NO_SAFE_BENEFIT",
+  "validator_scope": "schema/bounds only; coordinate correctness independently recomputed from source manifest"
+}
