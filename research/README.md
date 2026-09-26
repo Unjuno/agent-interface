@@ -94,6 +94,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 - `text_*` directories — text delivery, keymap, XKB, observation binding, and related robustness studies.
 - [`issue_3784_explicit_x11_receiver_v1/`](issue_3784_explicit_x11_receiver_v1/) — explicit X11 receiver formal allocation and retained STOP/audit evidence; consult RESULT.md for scope.
 - [`issue_3784_focused_receiver_v1/`](issue_3784_focused_receiver_v1/) — Issue #3794 frozen focused-receiver German XKB formula-delivery allocation; formal-01 and independent audit PASS within the documented scope.
+- [`issue_3794_receiver_control_construction_v1/`](issue_3794_receiver_control_construction_v1/) — retained Issue #3794 construction-only pilots and audit/corruption evidence; these do not constitute a formal allocation or upgrade predecessor STOPs.
 - [`issue_3784_explicit_x11_receiver_v2/`](issue_3784_explicit_x11_receiver_v2/) — corrected receiver-oracle successor; consult RESULT.md for the formal-02 baseline-parser STOP and audit scope.
 - [`issue_3784_explicit_x11_receiver_v3/`](issue_3784_explicit_x11_receiver_v3/) — construction-gated German XKB receiver experiment; consult RESULT.md for the formal-03 scoped delivery result.
 
