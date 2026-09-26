@@ -14,6 +14,49 @@ from runtime.cli_v1.mcp_server import create_server
 
 class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
 
+    async def test_validation_nesting_failure_retains_structured_metadata(self):
+        with tempfile.TemporaryDirectory() as td:
+            server = create_server({'fixture': 123}, td)
+            with patch('runtime.cli_v1.mcp_server.inspect_program', side_effect=RecursionError), \
+                 patch('runtime.cli_v1.mcp_server.dispatch') as dispatch, \
+                 patch('runtime.cli_v1.mcp_server.observe') as observe:
+                reply = await server.call_tool('interface_validate', {'program': {}})
+                row = json.loads(reply.content[0].text)
+                self.assertTrue(reply.isError)
+                self.assertEqual(row['status'], 'input_error')
+                self.assertEqual(row['error'], 'INPUT_NESTING_LIMIT')
+                self.assertIsNone(row['static_valid'])
+                self.assertIsNone(row['task_success'])
+                self.assertIs(row['side_effect_authority'], False)
+                self.assertIs(row['backend_checked'], False)
+                self.assertEqual(row['runtime_admission'], 'not_evaluated')
+                dispatch.assert_not_called()
+                observe.assert_not_called()
+            self.assertEqual(list(Path(td).iterdir()), [])
+
+    async def test_static_validation_matches_inspector_without_action_or_retention(self):
+        from copy import deepcopy
+        from runtime.cli_v1.validate_program import inspect_program
+        valid = {'schema': 'agent-interface/program-v1', 'program_id': 'draft',
+                 'source': {'observation_seq': 0, 'binding_revision': 0},
+                 'authority': {'lease_id': 'expired', 'expires_at_ns': 1},
+                 'terminal': {'release_all_required': True},
+                 'ops': [{'op': 'text', 'text': 'ab', 'gap_ms': 2}, {'op': 'release_all'}]}
+        with tempfile.TemporaryDirectory() as td:
+            server = create_server({'fixture': 123}, td, display_name='no-display')
+            with patch('runtime.cli_v1.mcp_server.dispatch') as dispatch, \
+                 patch('runtime.cli_v1.mcp_server.observe') as observe:
+                for program in (valid, {}):
+                    before = deepcopy(program)
+                    response = await server.call_tool('interface_validate', {'program': program})
+                    row = json.loads(response.content[0].text)
+                    self.assertEqual(row, inspect_program(program))
+                    self.assertEqual(response.isError, not row['static_valid'])
+                    self.assertEqual(program, before)
+                dispatch.assert_not_called()
+                observe.assert_not_called()
+            self.assertEqual(list(Path(td).iterdir()), [])
+
     async def test_report_references_require_explicit_opt_in_without_replay(self):
         from runtime.cli_v1.receipt_references import REPORT_REF, expand_receipt
         with tempfile.TemporaryDirectory() as td:
@@ -144,8 +187,13 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     await client.initialize()
                     listed = await client.list_tools()
                     self.assertEqual({tool.name for tool in listed.tools},
-                                     {'interface_observe', 'interface_dispatch', 'interface_results'})
+                                     {'interface_observe', 'interface_dispatch', 'interface_results', 'interface_validate'})
                     dispatch_tool = next(t for t in listed.tools if t.name == 'interface_dispatch')
+                    validation = await client.call_tool('interface_validate', {'program': {}})
+                    self.assertTrue(validation.isError)
+                    validation_row = json.loads(validation.content[0].text)
+                    self.assertIs(validation_row['static_valid'], False)
+                    self.assertEqual(validation_row['runtime_admission'], 'not_evaluated')
                     program_schema = dispatch_tool.inputSchema['properties']['program']
                     self.assertEqual(program_schema['type'], 'object')
                     for term in ('agent-interface/program-v1', 'expires_at_ns',
@@ -167,6 +215,9 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     # Real packaged transport: choose v3 only on explicit reread.
                     from runtime.cli_v1.receipt_references import REPORT_REF, expand_receipt
                     for tool in listed.tools:
+                        if tool.name == 'interface_validate':
+                            self.assertNotIn('report_refs', tool.inputSchema['properties'])
+                            continue
                         option = tool.inputSchema['properties']['report_refs']
                         self.assertEqual(option['type'], 'boolean')
                         self.assertIs(option['default'], False)
@@ -312,7 +363,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     await client.initialize()
                     listed = await client.list_tools()
                     self.assertEqual({tool.name for tool in listed.tools},
-                                     {'interface_observe', 'interface_dispatch', 'interface_results'})
+                                     {'interface_observe', 'interface_dispatch', 'interface_results', 'interface_validate'})
                     dispatch_tool = next(t for t in listed.tools if t.name == 'interface_dispatch')
                     program_schema = dispatch_tool.inputSchema['properties']['program']
                     self.assertEqual(program_schema['type'], 'object')

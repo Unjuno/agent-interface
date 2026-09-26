@@ -13,6 +13,32 @@ from runtime.distribution_v2.build import FIXED_TIME, GENERATED, SOURCE_FILES, S
 
 
 class PortableDistributionTests(unittest.TestCase):
+    def test_public_validation_outside_checkout_without_dependencies(self):
+        root = Path(__file__).resolve().parents[2]
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            out = td / 'runtime.pyz'
+            build(root, out, td / 'manifest.json', td / 'sum')
+            path = td / 'program.json'
+            valid = {'schema': 'agent-interface/program-v1', 'program_id': 'portable',
+                     'source': {'observation_seq': 0, 'binding_revision': 0},
+                     'authority': {'lease_id': 'expired', 'expires_at_ns': 1},
+                     'terminal': {'release_all_required': True},
+                     'ops': [{'op': 'release_all'}]}
+            for raw, code, status in [(json.dumps(valid), 0, 'valid'),
+                                      ('{}', 1, 'invalid'), ('{', 2, 'input_error')]:
+                path.write_text(raw, encoding='utf-8')
+                result = subprocess.run([sys.executable, '-S', str(out), 'validate',
+                                         '--program', str(path)], cwd=td,
+                                        capture_output=True, text=True, timeout=10)
+                self.assertEqual(result.returncode, code, result.stderr)
+                self.assertEqual(result.stderr, '')
+                row = json.loads(result.stdout)
+                self.assertEqual(row['status'], status)
+                self.assertIs(row['side_effect_authority'], False)
+                self.assertEqual(row['runtime_admission'], 'not_evaluated')
+                self.assertEqual(path.read_text(encoding='utf-8'), raw)
+
     def test_cli_remains_usable_without_optional_mcp_dependency(self):
         root = Path(__file__).resolve().parents[2]
         with tempfile.TemporaryDirectory() as td:
