@@ -1,0 +1,9 @@
+Key artifact SHA-256 (raw frame bytes are individually hashed in `raw_events.jsonl`):
+
+```text
+AUDIT_RESULT.json fc04a0e19e9b7bcc7872f4cd36658cefd05801b69d6909c1e3580efcb093e596
+manifest.json 955d2f823789571d163237fdd88763566776434c7617a2c7116f75bb2eae423f
+raw_events.jsonl eccf77c581bba198c73e5fd9487f78b0e47a253030c4ff0b88626e175cb1e38b
+deliveries.jsonl b9d40dd202bd4884934eb9fc1874d5f236480b470851d3ec33b625d17cde69d9
+decisions.jsonl 439a2f28dff38c6206388eba6c3d2e35c52e5b36d467540c6d64533058042e40
+```
