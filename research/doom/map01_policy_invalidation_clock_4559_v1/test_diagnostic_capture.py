@@ -76,14 +76,20 @@ def typed_event(capture_ns: int) -> dict:
 
 def load_effective_module(directory: Path):
     effective = directory / "effective.py"
-    subprocess.run(
-        [PYTHON, "-B", str(HERE / "adapter_v13.py"), "--prepare-only", str(effective)],
-        cwd=REPO,
-        check=True,
-        env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
-        capture_output=True,
-        text=True,
-    )
+    try:
+        subprocess.run(
+            [PYTHON, "-B", str(HERE / "adapter_v13.py"), "--prepare-only", str(effective)],
+            cwd=REPO,
+            check=True,
+            env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+            capture_output=True,
+            text=True,
+        )
+    except subprocess.CalledProcessError as exc:
+        raise AssertionError(
+            f"adapter_v13 --prepare-only failed ({exc.returncode})\\n"
+            f"stdout:\\n{exc.stdout}\\nstderr:\\n{exc.stderr}"
+        ) from exc
     sys.path[:0] = [str(REPO / "research/doom"), str(REPO / "research/live_control")]
     spec = importlib.util.spec_from_file_location("v13_diagnostic_test_controller", effective)
     module = importlib.util.module_from_spec(spec)
