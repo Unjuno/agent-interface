@@ -1,0 +1,29 @@
+{
+  "checks": {
+    "corruption_control": true,
+    "exact_expected_answer": false,
+    "formal_mode": true,
+    "freeze_bound": true,
+    "http_200": false,
+    "image_hash": true,
+    "image_identity_bound": true,
+    "manifest_hashes": true,
+    "no_actions": true,
+    "one_raw_request_file": true,
+    "one_request_only": true,
+    "preregistration_bound": true,
+    "prompt_hash": true,
+    "request_contract": true,
+    "request_matches_manifest": true,
+    "request_result_hash": true,
+    "response_body_hash": true,
+    "response_model_identity": true,
+    "response_name": false,
+    "response_result_hash": true,
+    "source_commit_bound": true
+  },
+  "decision": "STOP_OBSTAC_OR_MODEL_TRANSPORT",
+  "http_status": 400,
+  "parsed_answer": {},
+  "response_body_sha256": "55cddbed42e08243ba32e2805d0234886b969f44368c7bccf77dd1458a2dafad"
+}
