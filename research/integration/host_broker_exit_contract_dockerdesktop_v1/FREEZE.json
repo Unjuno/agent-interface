@@ -5,11 +5,23 @@
   "branch": "research/issue-3924-dockerdesktop-broker-contract-v1",
   "base_main_commit": "5dd2b9b18fc5f3e73e8ff9adf808806a49a121ce",
   "initial_base_commit": "a0f0ca37c88ad46f3f98485483453cedbe432723",
-  "formal_result_path": "formal/dockerdesktop-20260926-01",
+  "formal_allocation_id": "dockerdesktop-20260926-02",
+  "formal_result_path": "formal/dockerdesktop-20260926-02",
   "formal_status_at_freeze": "NOT_STARTED",
-  "formal_suite_invocation_limit": 1,
+  "formal_suite_invocation_limit_per_allocation": 1,
   "independent_audit_invocation_limit": 1,
   "retry_limit": 0,
+  "prior_allocations": [
+    {
+      "allocation_id": "dockerdesktop-20260926-01",
+      "result_path": "formal/dockerdesktop-20260926-01",
+      "disposition": "STOP_DOCKER_MOUNT_FLAG_SYNTAX",
+      "docker_container_created": false,
+      "formal_cases_run": 0,
+      "preserve_unchanged": true,
+      "allocation_02_delta": "Correct --mount syntax (omit writable mode; use readonly for audit input), use a distinct formal output path and container names, and freeze this delta before allocation 02. Hypothesis, source blobs, image, cases, expected results, and isolation limits are unchanged."
+    }
+  ],
   "source_git_blobs": {
     "runtime/host_model_ipc_broker_v1.py": "f307daafdfd36d1ab4faf39bb36c36350e6e67e4",
     "runtime/test_host_model_ipc_broker_v1.py": "e645ae575cd6fdae02556df9facc9919739584f3"
@@ -28,10 +40,11 @@
     "python_version_observed_in_construction": "3.12.14"
   },
   "construction": {
-    "attempts": 3,
+    "attempts": 4,
     "construction_01": "STOP_CONTAINER_TEST_IMPORT_PATH",
     "construction_02": "STOP_FAKE_EXECUTABLE_TMPFS_NOEXEC",
     "construction_03": "PASS_FAKE_ONLY_CONTAINER_CONSTRUCTION",
+    "construction_04": "PASS_DOCKER_MOUNT_SYNTAX_AND_WRITABILITY",
     "formal_test_cases_run": 0
   },
   "container_policy": {
@@ -65,18 +78,21 @@
     "study/.gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
     "runtime/host_model_ipc_broker_v1.py": "034b2e72a28fc3defb1b48195a2a8d3450e850895a4b3b7b7919dca44e198775",
     "runtime/test_host_model_ipc_broker_v1.py": "a28b59232e55956a11bd87a35812b7d77df16febe5510c68fb80eda03a3ede1c",
-    "study/PREREGISTRATION.md": "e55b6c6db118416a5ef16eb5405b32b91205c30d7b2dab43f6ffebb252a84589",
+    "study/PREREGISTRATION.md": "2ba8c7f7c5aa4b214d8ab2f6ee68b63930e3868657023c3cc32edd91bba0638b",
     "study/test_contract.py": "48c1db494bab325bd3a7cc806b14d274dc94a0c23909f475b705f8c73087cfc1",
     "study/audit_contract.py": "98c994f63020ec46a3722a76e06ee02c256fafd818678636d1b3a97eb10d52a2",
     "study/construction_probe.py": "1be63989ac56eb3f0b76efaa275a1fd928abec5603d685adcd1faa79b379a4b4",
     "study/fake_codex.py": "f730498c1158b55c0af45036e350090eecad7042d79c4e35be625d87e20e78eb",
-    "study/run_experiment.ps1": "d562a1f01c36aca6e171e8cbdc6d97269ea7f1ab2603cc970fc03c64f86ee7d7",
+    "study/run_experiment.ps1": "cd20e40e9d5b12533debd511f0eb7d75dc225f273cb5290506d7bf6ad88f9e42",
     "study/construction/01/STOP.md": "a91c295110f3880aef1a1ffdbb9b3a18336c0e4bca206fe14e3b1102bd4f0d40",
     "study/construction/01/container.stdout.txt": "b6893db3d06a01d370a73219c021ecb20fc2c1309cac2744411087bdd0c7f994",
     "study/construction/02/STOP.md": "5f895dc3997e2692f42371a8abf07a880a7ed3c19bbea99bcebfc4a90c92399d",
     "study/construction/02/container.stdout.txt": "10bc099c1ab6345e7c96039439b11bcb6475aaf254c80cd8912a4a52a4cdc664",
     "study/construction/03/construction.json": "9a1ad26cb5d2c815dc34bc985aea5a8900e693a1d58fd0a2554d741156ac0b5a",
     "study/construction/03/fake-capture.json": "9d0ef676464eac0f0a72e8b6fe7e1a52e44ca2a17f5c6b56f6c5bd4c178a8538",
-    "study/construction/03/container.stdout.txt": "7854e1d75e10cffc30312fc34cb0cee5010d953eef8065e601b0bc3c7de01d09"
+    "study/construction/03/container.stdout.txt": "7854e1d75e10cffc30312fc34cb0cee5010d953eef8065e601b0bc3c7de01d09",
+    "study/construction/04/CONSTRUCTION.md": "cceb4f66f52baf67cdeace3d4c40cd8560a775087459ae9616b1c489aa16db88",
+    "study/construction/04/probe.txt": "a1213ce0d2f12052e3548e3f43b040031235a1533d6b9c26423b4454c29f9a95",
+    "study/formal/dockerdesktop-20260926-01/STOP.md": "0da89e949364a26af75a57aa0ee57d11a2ca5a8f85665d3daba1129aec638e63"
   }
 }

@@ -34,38 +34,40 @@ if ($Mode -eq 'formal') {
         throw "Git preflight mismatch: branch=$branch head=$head origin_main=$mainHead changes=$workingChanges remote=$remoteBranchLine"
     }
     if (Test-Path $formal) { throw "Formal output already exists; refusing a second invocation: $formal" }
-    $containerName = 'agent-interface-3926-formal01-20260926'
+    $containerName = 'agent-interface-3926-formal02-20260926'
     $evidence = Join-Path $formal 'raw'
     $output = $formal
     $entry = @('/study/test_contract.py')
-    $evidenceMode = 'rw'
+    $evidenceMode = $null
     $containerCommand = 'test_contract.py'
 } else {
     if (-not (Test-Path (Join-Path $formal 'formal_run.json'))) { throw 'Formal run metadata missing; cannot audit' }
-    $containerName = 'agent-interface-3926-audit01-20260926'
+    $containerName = 'agent-interface-3926-audit02-20260926'
     $evidence = Join-Path $formal 'raw'
     $output = Join-Path $formal 'audit'
     $entry = @('/study/audit_contract.py', '--evidence', '/evidence', '--output', '/audit-out/audit.json',
                '--study', '/study', '--workspace', '/source')
-    $evidenceMode = 'ro'
+    $evidenceMode = 'readonly'
     $containerCommand = 'audit_contract.py'
 }
 if ($Mode -eq 'audit' -and (Test-Path $output)) { throw "Audit output already exists; refusing a second audit invocation: $output" }
 
 $existing = & docker container ls -a --filter "name=^/$containerName$" --format '{{.Names}}'
 if ($existing) { throw "Container name already exists; refusing reuse: $containerName" }
+$evidenceMount = "type=bind,source=$evidence,target=/evidence"
+if ($evidenceMode) { $evidenceMount += ",$evidenceMode" }
 $imageArgs = @('run', '--name', $containerName, '--pull=never', '--platform', 'linux/amd64',
     '--network', 'none', '--read-only', '--cap-drop', 'ALL', '--security-opt', 'no-new-privileges',
     '--pids-limit', '64', '--memory', '268435456', '--cpus', '1',
     '--tmpfs', '/tmp:rw,exec,nosuid,nodev,size=32m',
     '--mount', "type=bind,source=$study,target=/study,readonly",
     '--mount', "type=bind,source=$runtime,target=/source/runtime,readonly",
-    '--mount', "type=bind,source=$evidence,target=/evidence,$evidenceMode")
+    '--mount', $evidenceMount)
 if ($Mode -eq 'formal') {
     $null = New-Item -ItemType Directory -Path $evidence -Force
 } else {
     $null = New-Item -ItemType Directory -Path $output -Force
-    $imageArgs += @('--mount', "type=bind,source=$output,target=/audit-out,rw")
+    $imageArgs += @('--mount', "type=bind,source=$output,target=/audit-out")
 }
 $imageArgs += @('--env', 'BROKER_REPO_ROOT=/source', '--env',
     'BROKER_SOURCE_PATH=/source/runtime/host_model_ipc_broker_v1.py', '--env', 'EVIDENCE_DIR=/evidence',
