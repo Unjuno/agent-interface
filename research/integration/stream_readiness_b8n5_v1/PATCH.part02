@@ -1,0 +1,1000 @@
++      "path": "pilot/batch-0/01-SINGLE-EXPLICIT_BUFFER/writer.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "d6e522303de74986c13dfdc44ca752113783c60a2b33ce198ec13427f1ce33a0",
++      "effective": true,
++      "errors": [
++        "raw_syscall_bytes",
++        "frame_raw_before_extraction"
++      ],
++      "name": "raw_read_omission",
++      "original_sha256": "23da9889f9e2d83d6a4fd599a144a5fd21d6ba153d3cf8ded9a1f73b6f5acec3",
++      "parser_failure": false,
++      "path": "pilot/batch-0/01-SINGLE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "45f4b8163ef6ee01596f81d5bf4d411499efc5f3fc400cf49cf142540a2c0b26",
++      "effective": true,
++      "errors": [
++        "fragment_retention"
++      ],
++      "name": "truncated_promoted_empty",
++      "original_sha256": "2da3a8da31d460da356d54d5982a63d8efd4b2e8f0db19201dcb97f47aee8ab5",
++      "parser_failure": false,
++      "path": "pilot/batch-0/13-TRUNCATED_EOF-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "9e981a13e4cb5316257ac1d7b532a572654951c19b1fc7ec9fcfe44c93e37737",
++      "effective": true,
++      "errors": [
++        "os_descriptor_not_ready"
++      ],
++      "name": "false_buffer_readiness",
++      "original_sha256": "122413e3c55f3d3fe95f4c7c951aab77ea020ca543ae19bacfec48edddb44ef1",
++      "parser_failure": false,
++      "path": "pilot/batch-0/03-COALESCED_TWO-FD_THEN_BUFFERED/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "4bfa43d2965c0397aa3fe33091c5c516740a71dd1462ae6390d745ba5171ba4e",
++      "effective": true,
++      "errors": [
++        "source:source/policy.py"
++      ],
++      "name": "source_identity",
++      "original_sha256": "1a55a70f4c710f11d4f3a4dd9821073478ef2444cefeb3a96f9e43e878aa45f4",
++      "parser_failure": false,
++      "path": "source/policy.py",
++      "rejected": true
++    }
++  ],
++  "count": 16,
++  "intact_cases": 48
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/CONTROLS.stderr b/research/integration/stream_readiness_b8n5_v1/CONTROLS.stderr
+new file mode 100644
+index 0000000..e69de29
+diff --git a/research/integration/stream_readiness_b8n5_v1/CONTROLS.stdout b/research/integration/stream_readiness_b8n5_v1/CONTROLS.stdout
+new file mode 100644
+index 0000000..e36f04c
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/CONTROLS.stdout
+@@ -0,0 +1 @@
++{"count": 16, "all_rejected": true}
+diff --git a/research/integration/stream_readiness_b8n5_v1/CONTROLS_EXECUTION.json b/research/integration/stream_readiness_b8n5_v1/CONTROLS_EXECUTION.json
+new file mode 100644
+index 0000000..4e80df5
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/CONTROLS_EXECUTION.json
+@@ -0,0 +1,19 @@
++{
++  "argv": [
++    "/opt/pyvenv/bin/python",
++    "-S",
++    "-B",
++    "source/controls.py",
++    ".",
++    "pilot",
++    "0,1,2",
++    "CONTROLS.json"
++  ],
++  "end_ns": 644162132773,
++  "label": "CONTROLS",
++  "pid": 920,
++  "returncode": 0,
++  "start_ns": 643959802940,
++  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
++  "stdout_sha256": "5f14671b1c9e05a020f2bbcd488a7c7a61f408d333a4a0b9c7fcd270b2d8ff28"
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_AUDIT_01.json b/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_AUDIT_01.json
+new file mode 100644
+index 0000000..8a2444a
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_AUDIT_01.json
+@@ -0,0 +1,418 @@
++{
++  "actor_pids": 32,
++  "batches": [
++    0
++  ],
++  "cases": 16,
++  "checks": 807,
++  "decision": "PASS_LOCAL_BUFFERED_READINESS_BOUNDARY",
++  "errors": [],
++  "production_authority": false,
++  "public_preregistration": false,
++  "rows": [
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "00-SINGLE-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 0.218793,
++      "scenario": "SINGLE",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "01-SINGLE-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.188272,
++      "scenario": "SINGLE",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 2,
++      "batch": 0,
++      "case": "02-COALESCED_TWO-EXPLICIT_BUFFER",
++      "expected_frames": 2,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.178918,
++      "scenario": "COALESCED_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 2,
++      "batch": 0,
++      "case": "03-COALESCED_TWO-FD_THEN_BUFFERED",
++      "expected_frames": 2,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.278035,
++      "return_ms": 200.278035,
++      "scenario": "COALESCED_TWO",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 3,
++      "batch": 0,
++      "case": "04-COALESCED_THREE-FD_THEN_BUFFERED",
++      "expected_frames": 3,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.276316,
++      "return_ms": 200.276316,
++      "scenario": "COALESCED_THREE",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 3,
++      "batch": 0,
++      "case": "05-COALESCED_THREE-EXPLICIT_BUFFER",
++      "expected_frames": 3,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.177,
++      "scenario": "COALESCED_THREE",
++      "status": "COMPLETE",
++      "timely_frames": 3
++    },
++    {
++      "all_frames": 2,
++      "batch": 0,
++      "case": "06-SEPARATE_TWO-EXPLICIT_BUFFER",
++      "expected_frames": 2,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 60.217771,
++      "scenario": "SEPARATE_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 2,
++      "batch": 0,
++      "case": "07-SEPARATE_TWO-FD_THEN_BUFFERED",
++      "expected_frames": 2,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 60.350038,
++      "scenario": "SEPARATE_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "08-SPLIT_EARLY-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 60.220294,
++      "scenario": "SPLIT_EARLY",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "09-SPLIT_EARLY-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 60.271927,
++      "scenario": "SPLIT_EARLY",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "10-SPLIT_LATE-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0.268273,
++      "return_ms": 200.268273,
++      "scenario": "SPLIT_LATE",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "11-SPLIT_LATE-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 140.296624,
++      "return_ms": 340.296624,
++      "scenario": "SPLIT_LATE",
++      "status": "COMPLETE_LATE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 0,
++      "case": "12-TRUNCATED_EOF-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 80.210439,
++      "scenario": "TRUNCATED_EOF",
++      "status": "EOF_INCOMPLETE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 0,
++      "case": "13-TRUNCATED_EOF-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 80.241935,
++      "scenario": "TRUNCATED_EOF",
++      "status": "EOF_INCOMPLETE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 0,
++      "case": "14-SILENT_OPEN-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0.36256,
++      "return_ms": 200.36256,
++      "scenario": "SILENT_OPEN",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 0,
++      "case": "15-SILENT_OPEN-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.312885,
++      "return_ms": 200.312885,
++      "scenario": "SILENT_OPEN",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    }
++  ],
++  "scientific_actor_reruns": 0,
++  "stage": "development",
++  "summary": {
++    "COALESCED_THREE/EXPLICIT_BUFFER": {
++      "expected_frames": 3,
++      "n": 1,
++      "return_ms_median": 0.177,
++      "return_ms_range": [
++        0.177,
++        0.177
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 3
++    },
++    "COALESCED_THREE/FD_THEN_BUFFERED": {
++      "expected_frames": 3,
++      "n": 1,
++      "return_ms_median": 200.276316,
++      "return_ms_range": [
++        200.276316,
++        200.276316
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 1
++      },
++      "timely_frames": 1
++    },
++    "COALESCED_TWO/EXPLICIT_BUFFER": {
++      "expected_frames": 2,
++      "n": 1,
++      "return_ms_median": 0.178918,
++      "return_ms_range": [
++        0.178918,
++        0.178918
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 2
++    },
++    "COALESCED_TWO/FD_THEN_BUFFERED": {
++      "expected_frames": 2,
++      "n": 1,
++      "return_ms_median": 200.278035,
++      "return_ms_range": [
++        200.278035,
++        200.278035
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 1
++      },
++      "timely_frames": 1
++    },
++    "SEPARATE_TWO/EXPLICIT_BUFFER": {
++      "expected_frames": 2,
++      "n": 1,
++      "return_ms_median": 60.217771,
++      "return_ms_range": [
++        60.217771,
++        60.217771
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 2
++    },
++    "SEPARATE_TWO/FD_THEN_BUFFERED": {
++      "expected_frames": 2,
++      "n": 1,
++      "return_ms_median": 60.350038,
++      "return_ms_range": [
++        60.350038,
++        60.350038
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 2
++    },
++    "SILENT_OPEN/EXPLICIT_BUFFER": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 200.36256,
++      "return_ms_range": [
++        200.36256,
++        200.36256
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 1
++      },
++      "timely_frames": 0
++    },
++    "SILENT_OPEN/FD_THEN_BUFFERED": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 200.312885,
++      "return_ms_range": [
++        200.312885,
++        200.312885
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 1
++      },
++      "timely_frames": 0
++    },
++    "SINGLE/EXPLICIT_BUFFER": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 0.188272,
++      "return_ms_range": [
++        0.188272,
++        0.188272
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 1
++    },
++    "SINGLE/FD_THEN_BUFFERED": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 0.218793,
++      "return_ms_range": [
++        0.218793,
++        0.218793
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 1
++    },
++    "SPLIT_EARLY/EXPLICIT_BUFFER": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 60.271927,
++      "return_ms_range": [
++        60.271927,
++        60.271927
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 1
++    },
++    "SPLIT_EARLY/FD_THEN_BUFFERED": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 60.220294,
++      "return_ms_range": [
++        60.220294,
++        60.220294
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 1
++    },
++    "SPLIT_LATE/EXPLICIT_BUFFER": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 200.268273,
++      "return_ms_range": [
++        200.268273,
++        200.268273
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 1
++      },
++      "timely_frames": 0
++    },
++    "SPLIT_LATE/FD_THEN_BUFFERED": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 340.296624,
++      "return_ms_range": [
++        340.296624,
++        340.296624
++      ],
++      "status_counts": {
++        "COMPLETE_LATE": 1
++      },
++      "timely_frames": 0
++    },
++    "TRUNCATED_EOF/EXPLICIT_BUFFER": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 80.241935,
++      "return_ms_range": [
++        80.241935,
++        80.241935
++      ],
++      "status_counts": {
++        "EOF_INCOMPLETE": 1
++      },
++      "timely_frames": 0
++    },
++    "TRUNCATED_EOF/FD_THEN_BUFFERED": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 80.210439,
++      "return_ms_range": [
++        80.210439,
++        80.210439
++      ],
++      "status_counts": {
++        "EOF_INCOMPLETE": 1
++      },
++      "timely_frames": 0
++    }
++  }
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_AUDIT_02.json b/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_AUDIT_02.json
+new file mode 100644
+index 0000000..8a2444a
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_AUDIT_02.json
+@@ -0,0 +1,418 @@
++{
++  "actor_pids": 32,
++  "batches": [
++    0
++  ],
++  "cases": 16,
++  "checks": 807,
++  "decision": "PASS_LOCAL_BUFFERED_READINESS_BOUNDARY",
++  "errors": [],
++  "production_authority": false,
++  "public_preregistration": false,
++  "rows": [
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "00-SINGLE-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 0.218793,
++      "scenario": "SINGLE",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "01-SINGLE-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.188272,
++      "scenario": "SINGLE",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 2,
++      "batch": 0,
++      "case": "02-COALESCED_TWO-EXPLICIT_BUFFER",
++      "expected_frames": 2,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.178918,
++      "scenario": "COALESCED_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 2,
++      "batch": 0,
++      "case": "03-COALESCED_TWO-FD_THEN_BUFFERED",
++      "expected_frames": 2,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.278035,
++      "return_ms": 200.278035,
++      "scenario": "COALESCED_TWO",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 3,
++      "batch": 0,
++      "case": "04-COALESCED_THREE-FD_THEN_BUFFERED",
++      "expected_frames": 3,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.276316,
++      "return_ms": 200.276316,
++      "scenario": "COALESCED_THREE",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 3,
++      "batch": 0,
++      "case": "05-COALESCED_THREE-EXPLICIT_BUFFER",
++      "expected_frames": 3,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.177,
++      "scenario": "COALESCED_THREE",
++      "status": "COMPLETE",
++      "timely_frames": 3
++    },
++    {
++      "all_frames": 2,
++      "batch": 0,
++      "case": "06-SEPARATE_TWO-EXPLICIT_BUFFER",
++      "expected_frames": 2,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 60.217771,
++      "scenario": "SEPARATE_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 2,
++      "batch": 0,
++      "case": "07-SEPARATE_TWO-FD_THEN_BUFFERED",
++      "expected_frames": 2,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 60.350038,
++      "scenario": "SEPARATE_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "08-SPLIT_EARLY-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 60.220294,
++      "scenario": "SPLIT_EARLY",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "09-SPLIT_EARLY-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 60.271927,
++      "scenario": "SPLIT_EARLY",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "10-SPLIT_LATE-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0.268273,
++      "return_ms": 200.268273,
++      "scenario": "SPLIT_LATE",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "11-SPLIT_LATE-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 140.296624,
++      "return_ms": 340.296624,
++      "scenario": "SPLIT_LATE",
++      "status": "COMPLETE_LATE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 0,
++      "case": "12-TRUNCATED_EOF-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 80.210439,
++      "scenario": "TRUNCATED_EOF",
++      "status": "EOF_INCOMPLETE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 0,
++      "case": "13-TRUNCATED_EOF-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 80.241935,
++      "scenario": "TRUNCATED_EOF",
++      "status": "EOF_INCOMPLETE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 0,
++      "case": "14-SILENT_OPEN-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0.36256,
++      "return_ms": 200.36256,
++      "scenario": "SILENT_OPEN",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 0,
++      "case": "15-SILENT_OPEN-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.312885,
++      "return_ms": 200.312885,
++      "scenario": "SILENT_OPEN",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    }
++  ],
++  "scientific_actor_reruns": 0,
++  "stage": "development",
++  "summary": {
++    "COALESCED_THREE/EXPLICIT_BUFFER": {
++      "expected_frames": 3,
++      "n": 1,
++      "return_ms_median": 0.177,
++      "return_ms_range": [
++        0.177,
++        0.177
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 3
++    },
++    "COALESCED_THREE/FD_THEN_BUFFERED": {
++      "expected_frames": 3,
++      "n": 1,
++      "return_ms_median": 200.276316,
++      "return_ms_range": [
++        200.276316,
++        200.276316
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 1
++      },
++      "timely_frames": 1
++    },
++    "COALESCED_TWO/EXPLICIT_BUFFER": {
++      "expected_frames": 2,
++      "n": 1,
++      "return_ms_median": 0.178918,
++      "return_ms_range": [
++        0.178918,
++        0.178918
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 2
++    },
++    "COALESCED_TWO/FD_THEN_BUFFERED": {
++      "expected_frames": 2,
++      "n": 1,
++      "return_ms_median": 200.278035,
++      "return_ms_range": [
++        200.278035,
++        200.278035
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 1
++      },
++      "timely_frames": 1
++    },
++    "SEPARATE_TWO/EXPLICIT_BUFFER": {
++      "expected_frames": 2,
++      "n": 1,
++      "return_ms_median": 60.217771,
++      "return_ms_range": [
++        60.217771,
++        60.217771
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 2
++    },
++    "SEPARATE_TWO/FD_THEN_BUFFERED": {
++      "expected_frames": 2,
++      "n": 1,
++      "return_ms_median": 60.350038,
++      "return_ms_range": [
++        60.350038,
++        60.350038
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 2
++    },
++    "SILENT_OPEN/EXPLICIT_BUFFER": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 200.36256,
++      "return_ms_range": [
++        200.36256,
++        200.36256
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 1
++      },
++      "timely_frames": 0
++    },
++    "SILENT_OPEN/FD_THEN_BUFFERED": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 200.312885,
++      "return_ms_range": [
++        200.312885,
++        200.312885
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 1
++      },
++      "timely_frames": 0
++    },
++    "SINGLE/EXPLICIT_BUFFER": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 0.188272,
++      "return_ms_range": [
++        0.188272,
++        0.188272
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 1
++    },
++    "SINGLE/FD_THEN_BUFFERED": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 0.218793,
++      "return_ms_range": [
++        0.218793,
++        0.218793
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 1
++    },
++    "SPLIT_EARLY/EXPLICIT_BUFFER": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 60.271927,
++      "return_ms_range": [
++        60.271927,
++        60.271927
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 1
++    },
++    "SPLIT_EARLY/FD_THEN_BUFFERED": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 60.220294,
++      "return_ms_range": [
++        60.220294,
++        60.220294
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 1
++    },
++    "SPLIT_LATE/EXPLICIT_BUFFER": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 200.268273,
++      "return_ms_range": [
++        200.268273,
++        200.268273
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 1
++      },
++      "timely_frames": 0
++    },
++    "SPLIT_LATE/FD_THEN_BUFFERED": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 340.296624,
++      "return_ms_range": [
++        340.296624,
++        340.296624
++      ],
++      "status_counts": {
++        "COMPLETE_LATE": 1
++      },
++      "timely_frames": 0
++    },
++    "TRUNCATED_EOF/EXPLICIT_BUFFER": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 80.241935,
++      "return_ms_range": [
++        80.241935,
++        80.241935
++      ],
++      "status_counts": {
++        "EOF_INCOMPLETE": 1
++      },
++      "timely_frames": 0
++    },
++    "TRUNCATED_EOF/FD_THEN_BUFFERED": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 80.210439,
++      "return_ms_range": [
++        80.210439,
++        80.210439
++      ],
++      "status_counts": {
++        "EOF_INCOMPLETE": 1
++      },
++      "timely_frames": 0
++    }
++  }
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_AUDIT_WITH_FREEZE.json b/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_AUDIT_WITH_FREEZE.json
+new file mode 100644
+index 0000000..4b62659
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_AUDIT_WITH_FREEZE.json
+@@ -0,0 +1,418 @@
++{
++  "actor_pids": 32,
++  "batches": [
++    0
++  ],
++  "cases": 16,
++  "checks": 818,
++  "decision": "PASS_LOCAL_BUFFERED_READINESS_BOUNDARY",
++  "errors": [],
++  "production_authority": false,
++  "public_preregistration": false,
++  "rows": [
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "00-SINGLE-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 0.218793,
++      "scenario": "SINGLE",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "01-SINGLE-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.188272,
++      "scenario": "SINGLE",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 2,
++      "batch": 0,
++      "case": "02-COALESCED_TWO-EXPLICIT_BUFFER",
++      "expected_frames": 2,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.178918,
++      "scenario": "COALESCED_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 2,
++      "batch": 0,
++      "case": "03-COALESCED_TWO-FD_THEN_BUFFERED",
++      "expected_frames": 2,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.278035,
