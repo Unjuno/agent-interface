@@ -1,0 +1,54 @@
+{
+  "source_member_count": 64,
+  "source_member_bytes": 4189310,
+  "restored_all_members_byte_identical": true,
+  "audit_byte_identical": true,
+  "controls_byte_identical": true,
+  "unit_test_methods": 18,
+  "formal_corruptions_rejected": 14,
+  "package_controls": [
+    {
+      "control": "altered-part",
+      "rejected": true,
+      "error": "ValueError: part integrity"
+    },
+    {
+      "control": "reordered-parts",
+      "rejected": true,
+      "error": "ValueError: archive integrity"
+    },
+    {
+      "control": "wrong-member-count",
+      "rejected": true,
+      "error": "ValueError: member count mismatch"
+    },
+    {
+      "control": "wrong-member-hash",
+      "rejected": true,
+      "error": "ValueError: member integrity"
+    },
+    {
+      "control": "existing-destination",
+      "rejected": true,
+      "error": "ValueError: destination exists"
+    },
+    {
+      "control": "rehashed-path",
+      "rejected": true,
+      "error": "ValueError: unsafe member name"
+    },
+    {
+      "control": "rehashed-link",
+      "rejected": true,
+      "error": "ValueError: non-regular archive member"
+    },
+    {
+      "control": "rehashed-duplicate",
+      "rejected": true,
+      "error": "ValueError: duplicate member"
+    }
+  ],
+  "formal_reruns_during_validation": 0,
+  "external_human_review": false,
+  "original_performance_hold_unchanged": true
+}
