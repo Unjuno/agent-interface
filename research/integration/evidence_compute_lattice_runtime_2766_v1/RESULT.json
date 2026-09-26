@@ -1,0 +1,16 @@
+{
+  "allocation": "evidence-compute-lattice-runtime-2766-20260922-01",
+  "audit_control_subtype": "HOLD_EVIDENCE_AUDIT_INCOMPLETE",
+  "decision": "HOLD_RUNTIME_INPUTS_INCOMPLETE",
+  "formal_batches": 2,
+  "formal_cases": 18,
+  "formal_reruns": 0,
+  "pass_gate_satisfied": false,
+  "policy_enforcement_failures_observed": 0,
+  "postfreeze_tuning": 0,
+  "raw_audit": {"cases":18,"decision":"PASS_RAW_AUDIT","decisions":23,"errors":[],"partial_missing":0,"published_after_cancel":0},
+  "corruption_controls": {"controls":12,"rejected":10,"nonrejected":["wrong_g","publish_after_cancel"]},
+  "reason": "Frozen PASS gate required all 12 copied-evidence corruptions rejected; only 10/12 rejected. Runtime rows themselves have zero oracle mismatch and zero publish-after-cancel.",
+  "replacements": 0,
+  "decision_counts": {"REUSE":2,"DROP_EXPIRED":1,"REBUILD_REQUIRED":5,"RUN":6,"WAIT":1,"TIE":2,"CANCEL_STALE":4,"CANCEL_TARDY":2}
+}
