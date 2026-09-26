@@ -14,8 +14,8 @@ if (Test-Path -LiteralPath $OutRoot) {
     New-Item -ItemType Directory -Path $OutRoot | Out-Null
 }
 $OutRoot = (Resolve-Path -LiteralPath $OutRoot).Path
-$sourceMount = $sourceRoot.Replace("","/")
-$outMount = $OutRoot.Replace("","/")
+$sourceMount = $sourceRoot.Replace("\","/")
+$outMount = $OutRoot.Replace("\","/")
 function Assert-Image {
     $id = (& docker image inspect $image --format "{{.Id}}" 2>&1 | Out-String).Trim()
     if ($LASTEXITCODE -ne 0 -or $id -ne $expectedImage) { throw "pinned Docker image unavailable or mismatched: $id" }
@@ -44,7 +44,7 @@ try {
         $common = @("--rm","--pull=never","--platform","linux/amd64","--network","none","--read-only",
             "--tmpfs","/tmp:rw,nosuid,nodev,size=64m","--pids-limit","64","--memory","2g","--cpus","1",
             "--mount","type=bind,source=$sourceMount,target=/src,readonly","--workdir","/src",$image)
-        $b = $builder.Replace("","/")
+        $b = $builder.Replace("\","/")
         $phase = "builder-$seed"
         $dockerArgs = @($common[0..($common.Count-2)]) + @("--env","NEEDLE_SEED=$seed","--env","NEEDLE_OUTPUT=/out",
             "--mount","type=bind,source=$b,target=/out","$image","-B","runner.py")
@@ -54,7 +54,7 @@ try {
         }
         foreach ($loaderName in @("load1","load2")) {
             $loadOut = Join-Path $seedRoot $loaderName
-            $loadOutMount = $loadOut.Replace("","/")
+            $loadOutMount = $loadOut.Replace("\","/")
             $phase = "$loaderName-$seed"
             $dockerArgs = @("--rm","--pull=never","--platform","linux/amd64","--network","none","--read-only",
                 "--tmpfs","/tmp:rw,nosuid,nodev,size=64m","--pids-limit","64","--memory","2g","--cpus","1",
