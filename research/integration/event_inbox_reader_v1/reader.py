@@ -47,8 +47,11 @@ def read_pending(path, *, stream_id, cursor=None, max_records=32, max_bytes=1048
     if len(data) > max_bytes:
         raise ValueError('STREAM_READ_BOUND_EXCEEDED')
     offset = cursor['offset']
-    if (len(data) < offset or (offset and data[offset-1:offset] != b'\n')
-            or hashlib.sha256(data[:offset]).hexdigest() != cursor['prefix_sha256']):
+    if len(data) < offset or (offset and data[offset-1:offset] != b'\n'):
+        raise ValueError('CURSOR_PREFIX_CHANGED')
+    # Reuse only this invocation's freshly verified hash state.
+    prefix_hash = hashlib.sha256(data[:offset])
+    if prefix_hash.hexdigest() != cursor['prefix_sha256']:
         raise ValueError('CURSOR_PREFIX_CHANGED')
     sequence = cursor['next_sequence']
     if sequence != data[:offset].count(b'\n')+1:
@@ -76,9 +79,10 @@ def read_pending(path, *, stream_id, cursor=None, max_records=32, max_bytes=1048
         sequence += 1
     if len(records) == max_records and offset < len(data):
         tail = 'limit'
+    prefix_hash.update(data[cursor['offset']:offset])
     return {'schema': 'agent-interface/experimental-inbox-read-v1',
             'records': records, 'tail_state': tail, 'problem': problem,
             'next_cursor': {'schema': SCHEMA, 'stream_id': stream_id, 'offset': offset,
-                            'prefix_sha256': hashlib.sha256(data[:offset]).hexdigest(),
+                            'prefix_sha256': prefix_hash.hexdigest(),
                             'next_sequence': sequence},
             'authority': 'none', 'acknowledged': False, 'input_dispatched': False}
