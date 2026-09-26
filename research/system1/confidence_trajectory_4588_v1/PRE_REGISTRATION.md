@@ -6,7 +6,7 @@ Allocation `confidence-trajectory-system1-v1`; branch `research/confidence-traje
 
 Compare current confidence only against causal velocity, acceleration, and causal-smoothed trajectory features for a four-way `ACTION_A` / `ACTION_B` / `NO_OP` / `YIELD` decision. All arms use the same linear classifier shape, initialization, optimizer, train/test rows, feature normalization and step schedule; only registered feature masks differ. No confidence or history grants execution authority.
 
-Ten seeds: `2026100100` through `2026101000` in 100-point increments. Each seed creates stratified train and held-out temporal examples from ten frozen families. No replacement seeds, retries, post-result tuning, or pooling with other Issues. Per-seed arm model states, logits, predictions, raw inputs, labels, family/alias identifiers, training schedule, timings and hashes are retained.
+Ten seeds: `2026100100` through `2026101000` in 100-point increments. Each seed creates independent stratified train, validation, and held-out test temporal examples from ten frozen families. Validation is diagnostic only; optimizer schedule and all gates are fixed before any fit, and validation cannot tune or select arms. No replacement seeds, retries, post-result tuning, or pooling with other Issues. Per-seed arm model states, logits, predictions, raw inputs, labels, family/alias identifiers, training schedule, timings and hashes are retained.
 
 ## Decision contract
 
