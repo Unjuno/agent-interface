@@ -73,7 +73,8 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                 json.dumps(broker) + "\n", encoding="utf-8", newline="\n")
             handled.add(request_id)
             if once:
-                return broker.get("returncode") or 1
+                child_returncode = broker.get("returncode")
+                return 1 if child_returncode is None else child_returncode
         time.sleep(.05)
 
 
