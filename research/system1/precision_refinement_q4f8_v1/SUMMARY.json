@@ -1,0 +1,155 @@
+{
+  "checks": 2864,
+  "controls": [
+    {
+      "effective": true,
+      "name": "missing_row",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "name": "wrong_final",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "name": "wrong_exit",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "name": "wrong_byte_count",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "name": "extra_authority",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "name": "wrong_source_id",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "name": "wrong_wire_status",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "name": "swapped_rows",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "name": "lost_query",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "name": "bad_time",
+      "rejected": true
+    }
+  ],
+  "errors": [],
+  "outcome": "PASS_SELECTIVE_PRECISION_CONTRACT_SCOPED",
+  "summary": {
+    "0/ALWAYS64": {
+      "I": 8,
+      "U": 0,
+      "V": 8,
+      "bytes": 800,
+      "refinements": 0,
+      "rows": 16
+    },
+    "0/COARSE_ONLY": {
+      "I": 8,
+      "U": 0,
+      "V": 8,
+      "bytes": 544,
+      "refinements": 0,
+      "rows": 16
+    },
+    "0/SELECTIVE64": {
+      "I": 8,
+      "U": 0,
+      "V": 8,
+      "bytes": 544,
+      "refinements": 0,
+      "rows": 16
+    },
+    "16/ALWAYS64": {
+      "I": 8,
+      "U": 0,
+      "V": 8,
+      "bytes": 800,
+      "refinements": 0,
+      "rows": 16
+    },
+    "16/COARSE_ONLY": {
+      "I": 0,
+      "U": 16,
+      "V": 0,
+      "bytes": 544,
+      "refinements": 0,
+      "rows": 16
+    },
+    "16/SELECTIVE64": {
+      "I": 8,
+      "U": 0,
+      "V": 8,
+      "bytes": 1344,
+      "refinements": 16,
+      "rows": 16
+    },
+    "2/ALWAYS64": {
+      "I": 8,
+      "U": 0,
+      "V": 8,
+      "bytes": 800,
+      "refinements": 0,
+      "rows": 16
+    },
+    "2/COARSE_ONLY": {
+      "I": 7,
+      "U": 2,
+      "V": 7,
+      "bytes": 544,
+      "refinements": 0,
+      "rows": 16
+    },
+    "2/SELECTIVE64": {
+      "I": 8,
+      "U": 0,
+      "V": 8,
+      "bytes": 644,
+      "refinements": 2,
+      "rows": 16
+    },
+    "8/ALWAYS64": {
+      "I": 8,
+      "U": 0,
+      "V": 8,
+      "bytes": 800,
+      "refinements": 0,
+      "rows": 16
+    },
+    "8/COARSE_ONLY": {
+      "I": 4,
+      "U": 8,
+      "V": 4,
+      "bytes": 544,
+      "refinements": 0,
+      "rows": 16
+    },
+    "8/SELECTIVE64": {
+      "I": 8,
+      "U": 0,
+      "V": 8,
+      "bytes": 944,
+      "refinements": 8,
+      "rows": 16
+    }
+  }
+}

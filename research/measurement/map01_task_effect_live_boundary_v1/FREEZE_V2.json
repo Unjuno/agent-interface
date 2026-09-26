@@ -1,0 +1,31 @@
+{
+  "aggregate_command": "python -B aggregate.py --root formal-02 --out formal-02-combined",
+  "allocation": "map01-task-effect-live-boundary-20260922-02",
+  "audit_command": "python -B audit.py formal-02-combined --out AUDIT_V2.json",
+  "commands": [
+    "python -B batch.py --out formal-02/batch-0 --rep 0 --display-base 420",
+    "python -B batch.py --out formal-02/batch-1 --rep 1 --display-base 430",
+    "python -B batch.py --out formal-02/batch-2 --rep 2 --display-base 440"
+  ],
+  "controls_command": "python -B controls.py formal-02-combined",
+  "decision": "unchanged PLAN.md PASS_PLAN_BOUND_TASK_EFFECT_LIVE_BOUNDARY_SCOPED",
+  "expected_cases": 12,
+  "formal_batches_at_freeze": 0,
+  "issue": 4131,
+  "predecessor_stop_sha256": "a2aee20fb29b1fadf21adb6fea87c0565babb4aecfac63b3d65bc506be70443f",
+  "replacements": 0,
+  "retries": 0,
+  "scientific_delta": "none; execution envelope only: three immutable four-session batches",
+  "source_sha256": {
+    "CONSTRUCTION.md": "a7b320b8efca8f11622cba7447b4393320de380f63e659eb3b5ec9611a0b7d55",
+    "ENVIRONMENT.json": "2662aae8407910fa8dac4cedea82f497a9f00f1471d71e54753b5bd347ffa512",
+    "PLAN.md": "4035118a8d36bf46c52b0e64e14523eccdad71c7a5f991e37a4e1e828553a190",
+    "aggregate.py": "ee023d2415a7e6b46b79a7f8cdf79fb9a06d5cfdd5ead3ca2be88d905a5d0c6d",
+    "audit.py": "ebce0568b0acd286d3c3e23cb9792aadc51826da52637e3e4e9f95a0f11f8e34",
+    "batch.py": "29cf959240a833a8b89cfa30d55f6b3e39034fc99b8694f8661be140a716cc32",
+    "controls.py": "864ba478ef1cb9a8969150893c704cd39a4e068fcc632594cb375b2c6ee80095",
+    "fixture.py": "3d25b488a6d91b7b4bfb1bb68a38dbe9c7aefcd5c49636bf42b2a603a034ab3e",
+    "run.py": "4ed92d296cacce2535b877efa432a36ed16521a64f7b282c3ffddca95317d276",
+    "scorer.py": "5d7caee70826de1827a7f6535225f2338b9564fb91516fcdfb7e85f7a3ad5338"
+  }
+}

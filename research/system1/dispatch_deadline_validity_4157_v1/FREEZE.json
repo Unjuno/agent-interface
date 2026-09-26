@@ -1,0 +1,45 @@
+{
+  "allocation": "dispatch-deadline-4171-20260923-01",
+  "audit_command": "python -B audit.py formal --reps 3 --out AUDIT.json && python -B controls.py",
+  "construction": {
+    "construction-01": "retained harness STOP/HOLD: no-dispatch app EOF exit2",
+    "construction-02": "excluded PASS 8/8"
+  },
+  "deadline_ms": 120,
+  "formal_command": "python -B run.py --out formal --mode formal --reps 3",
+  "formal_rows_before_freeze": 0,
+  "freshness_ms": 400,
+  "no_retry": true,
+  "policies": [
+    "PROPOSAL_READY_DEADLINE",
+    "PRE_DISPATCH_DEADLINE"
+  ],
+  "post_freeze_tuning": false,
+  "repetitions": 3,
+  "schedules": {
+    "EARLY_LONG": [
+      20,
+      140
+    ],
+    "EARLY_SHORT": [
+      20,
+      20
+    ],
+    "NEAR_LONG": [
+      90,
+      60
+    ],
+    "NEAR_SHORT": [
+      90,
+      10
+    ]
+  },
+  "source_sha256": {
+    "ENVIRONMENT.json": "a89dee2df0c517b78a2edd3bb88e5cbb7e7850a0fd2daccb6590c936140aa20f",
+    "PLAN.md": "ab5cfd0550e4f73125491ec8217dc801798508a948671d8202faf5da6b7d9b60",
+    "app_worker.py": "b61e01cf9311a762716e0d7ba163af27f98a731b045acdc123024cea14cec171",
+    "audit.py": "782376610b870311548c2fb6b7645ebd3c7580e3e5cfbe91aaf9f4adc529d18b",
+    "controls.py": "4ff9c3a7972a796b424a5a4be7086bb52535835cd509e35fe1641c05a4e47100",
+    "run.py": "0ed195b460e60f64036d5ada98989543692c94fe7ee04a58896b87cc941265bb"
+  }
+}

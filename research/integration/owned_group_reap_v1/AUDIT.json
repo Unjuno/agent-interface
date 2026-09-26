@@ -1,0 +1,64 @@
+{
+  "corruption_controls": {
+    "boolean_exit": true,
+    "boolean_repetition": true,
+    "early_rescue": true,
+    "false_incarnation": true,
+    "final_residual": true,
+    "foreign_signal_group": true,
+    "hidden_stderr_rehashed": true,
+    "missing_helper_wait": true,
+    "missing_terminal": true,
+    "sentinel_missing": true,
+    "wrong_launcher_exit": true,
+    "wrong_raw_wait": true
+  },
+  "counts": {
+    "GROUP_REAP": {
+      "ABSENT": 8,
+      "LIVE": 0,
+      "ZOMBIE": 0
+    },
+    "GROUP_SIGNAL": {
+      "ABSENT": 2,
+      "LIVE": 0,
+      "ZOMBIE": 6
+    },
+    "LEADER_ONLY": {
+      "ABSENT": 2,
+      "LIVE": 6,
+      "ZOMBIE": 0
+    }
+  },
+  "decision": "PASS_OWNED_GROUP_REAP_BOUNDARY_SCOPED",
+  "errors": [],
+  "independence": "separate implementation/process, same author; not external review",
+  "raw_sha256": {
+    "formal/batch-00/NORMAL_TREE__0__GROUP_REAP/RAW.json": "9c29d154874063828dc525fc05e1f487366116ae905b1622988e2f96d0aa7eac",
+    "formal/batch-00/NORMAL_TREE__0__GROUP_SIGNAL/RAW.json": "adcdff103bce1862e75e8ef7fbd853756b49d60ca5347839af1b03f687d76fdd",
+    "formal/batch-00/NORMAL_TREE__0__LEADER_ONLY/RAW.json": "7df4862f905bc901117874cc581a5d2c1cba93e5460785b0c20e78478fee122c",
+    "formal/batch-00/NORMAL_TREE__1__GROUP_REAP/RAW.json": "67c6e2de261161eb314c771930d9544bee471499f10b4b11e508a4a074dad20a",
+    "formal/batch-00/NORMAL_TREE__1__GROUP_SIGNAL/RAW.json": "d32ad7622152d786d52cf12cc0fdfc6ff79c805f000355dd0b314ed9edf4f586",
+    "formal/batch-00/NORMAL_TREE__1__LEADER_ONLY/RAW.json": "66aba985bd67ef2dc8368e5ac3164d669d3153e132e89547526d4956af0a28e9",
+    "formal/batch-01/LAUNCHER_EXIT__0__GROUP_REAP/RAW.json": "35a78f29a1d39a7cb17eb5fc55e4c8a1c86105498e6ef0b23b53303967b8ae1f",
+    "formal/batch-01/LAUNCHER_EXIT__0__GROUP_SIGNAL/RAW.json": "d5a4d10264b9a95dfaea82cf826c41cd5ede294013dbd4a0f64d32155259d5ce",
+    "formal/batch-01/LAUNCHER_EXIT__0__LEADER_ONLY/RAW.json": "a31d5ade01d3f0a70ef8ef1fd6a6bf7e88bb4f0f81a538a6b298e989d367749d",
+    "formal/batch-01/LAUNCHER_EXIT__1__GROUP_REAP/RAW.json": "99d34c3dce4b892e7a368abbca15391c165c07401a9204f1298c73512af7bd44",
+    "formal/batch-01/LAUNCHER_EXIT__1__GROUP_SIGNAL/RAW.json": "d5d43a055e7bc68f95ea1155d87b7a1510fbfa10ad669becf683427432018d59",
+    "formal/batch-01/LAUNCHER_EXIT__1__LEADER_ONLY/RAW.json": "2432da5e8b1ec5fc97c79f9fb2ac66aba7ac433631bc91751cc6cd6b08d45179",
+    "formal/batch-02/LAUNCHER_KILLED__0__GROUP_REAP/RAW.json": "4adefe4f915f958366b28f38a93cdb0dd7af595627b515866c2ca64860b99c2f",
+    "formal/batch-02/LAUNCHER_KILLED__0__GROUP_SIGNAL/RAW.json": "a8b3452a71d809715c767bfb02093ee0e5cc8e8908b88d4360996df5de8af987",
+    "formal/batch-02/LAUNCHER_KILLED__0__LEADER_ONLY/RAW.json": "7e12962892bb4f96b42095edc394be76c9374e8bdd8b3263d96f2f0bb0a89d4c",
+    "formal/batch-02/LAUNCHER_KILLED__1__GROUP_REAP/RAW.json": "119b6c358ac398c184ef3d326a43ab338b06d363fea8b16619df189063292696",
+    "formal/batch-02/LAUNCHER_KILLED__1__GROUP_SIGNAL/RAW.json": "910d3215931af10822968f90b1f72a785acbf88adde5a9be46e3845a10b360c2",
+    "formal/batch-02/LAUNCHER_KILLED__1__LEADER_ONLY/RAW.json": "9324963221f2828b8773b1a8834c2602784ceafc90e39db589024aee656af031",
+    "formal/batch-03/IGNORE_TERM__0__GROUP_REAP/RAW.json": "a17a3418bd28fb0c323727879ee5005f7245f30a7373c437bf44968f3b993bbc",
+    "formal/batch-03/IGNORE_TERM__0__GROUP_SIGNAL/RAW.json": "c4abcd1a5548be9baeafb7c2914973ba5d2897b6caa999ec2790973071e22e56",
+    "formal/batch-03/IGNORE_TERM__0__LEADER_ONLY/RAW.json": "4c2538d90580f02d6506d98bbc6a9c18d7ee3a218d281c9427c2df2a17329f1f",
+    "formal/batch-03/IGNORE_TERM__1__GROUP_REAP/RAW.json": "8a9954667a5609bdac860fdf2184ed1eb7b1ed3bcf3b7a28eb17e453ad841770",
+    "formal/batch-03/IGNORE_TERM__1__GROUP_SIGNAL/RAW.json": "8fcdca4618f03686a1ef63889d2a87ba6dd0d64596eb94b547e444dacf25941d",
+    "formal/batch-03/IGNORE_TERM__1__LEADER_ONLY/RAW.json": "9561d2ad7763dfa34cc6f14fedcb376ca63042e625b6c32d0546fa7194eb1b4b"
+  },
+  "rows": 24,
+  "source_freeze_sha256": "279b4684c909f852e0175275d75ae918a0334f004f4179768ba57bf8b941cf65"
+}

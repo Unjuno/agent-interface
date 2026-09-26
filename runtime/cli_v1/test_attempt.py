@@ -14,6 +14,36 @@ from runtime.cli_v1.__main__ import _present_result
 
 
 class RetainedAttemptTests(unittest.TestCase):
+    def test_opt_in_phase_timings_preserve_raw_report_and_default(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            report = {'status': 'runtime_failed', 'effect_status': 'unknown'}
+            call = Mock(return_value=report)
+            with patch('runtime.cli_v1.attempt.time.monotonic_ns',
+                       side_effect=[10, 30, 40, 90, 100, 170]):
+                actual, retention = invoke(call, {}, root / 'timed', operation='dispatch', timings=True)
+            call.assert_called_once()
+            self.assertEqual(retention['timings_ns'], {
+                'request_persistence': 20, 'api_call': 50, 'report_persistence': 70})
+            self.assertEqual(actual, report)
+            with patch('runtime.cli_v1.attempt.time.monotonic_ns', side_effect=AssertionError('unexpected clock')):
+                _, default = invoke(Mock(return_value=report), {}, root / 'default', operation='dispatch')
+            self.assertNotIn('timings_ns', default)
+            self.assertEqual((root / 'timed/report.json').read_bytes(),
+                             (root / 'default/report.json').read_bytes())
+
+    def test_timing_failure_phases_do_not_invent_unstarted_work(self):
+        with tempfile.TemporaryDirectory() as td:
+            call = Mock()
+            with patch('runtime.cli_v1.attempt.time.monotonic_ns', side_effect=[10, 35]):
+                _, retention = invoke(call, {}, Path(td), operation='dispatch', timings=True)
+            call.assert_not_called()
+            self.assertEqual(retention['timings_ns'], {
+                'request_persistence': 25, 'api_call': None, 'report_persistence': None})
+            with self.assertRaises(ValueError):
+                invoke(call, {}, None, operation='dispatch', timings=True)
+            call.assert_not_called()
+
     def test_flush_failure_surfaces_after_report_retention_without_retry(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td) / 'attempt'
@@ -239,3 +269,104 @@ class RetainedAttemptTests(unittest.TestCase):
         self.assertEqual(code, 2)
         self.assertEqual(emit.call_args.args[0]['result']['status'], 'completed')
         self.assertNotIn('retention', report)
+
+    def test_partial_report_temp_write_failure_is_visible_and_read_only(self):
+        class PartialWriteFailure:
+            def __init__(self, stream):
+                self.stream = stream
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc, traceback):
+                return self.stream.__exit__(exc_type, exc, traceback)
+
+            def write(self, data):
+                self.stream.write(data[:max(1, len(data) // 2)])
+                self.stream.flush()
+                raise OSError('injected partial report write')
+
+            def __getattr__(self, name):
+                return getattr(self.stream, name)
+
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / 'run'
+            original_open = Path.open
+
+            def open_with_partial_failure(path, mode='r', *args, **kwargs):
+                stream = original_open(path, mode, *args, **kwargs)
+                if path.name == '.report.json.tmp' and 'x' in mode:
+                    return PartialWriteFailure(stream)
+                return stream
+
+            call = Mock(return_value={'status': 'returned', 'result': {'status': 'completed'}})
+            with patch.object(Path, 'open', autospec=True, side_effect=open_with_partial_failure):
+                report, retention = invoke(call, {}, root, operation='dispatch')
+
+            call.assert_called_once()
+            self.assertTrue(retention['request_persisted'])
+            self.assertFalse(retention['report_persisted'])
+            self.assertIn('injected partial report write', retention['persistence_error'])
+            self.assertFalse((root / 'report.json').exists())
+            temp = root / '.report.json.tmp'
+            residue = temp.read_bytes()
+            self.assertGreater(len(residue), 0)
+            self.assertLess(len(residue), len(json.dumps(report, allow_nan=False).encode('utf-8')))
+            first = inspect_attempt(root)
+            self.assertEqual(first['status'], 'unknown_or_incomplete')
+            self.assertFalse(first['replay_allowed'])
+            self.assertEqual(first['temporary_files'], ['.report.json.tmp'])
+            self.assertEqual(temp.read_bytes(), residue)
+            self.assertEqual(inspect_attempt(root), first)
+            self.assertEqual(temp.read_bytes(), residue)
+            call.assert_called_once()
+
+    def test_report_fsync_failure_is_visible_and_read_only(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / 'run'
+            original_fsync = os.fsync
+            count = 0
+
+            def fail_report_fsync(fd):
+                nonlocal count
+                count += 1
+                if count == 2:
+                    raise OSError('injected report fsync failure')
+                return original_fsync(fd)
+
+            call = Mock(return_value={'status': 'returned', 'result': {'status': 'completed'}})
+            with patch('runtime.cli_v1.attempt.os.fsync', side_effect=fail_report_fsync):
+                report, retention = invoke(call, {}, root, operation='dispatch')
+
+            call.assert_called_once()
+            self.assertEqual(count, 2)
+            self.assertTrue(retention['request_persisted'])
+            self.assertFalse(retention['report_persisted'])
+            self.assertIn('injected report fsync failure', retention['persistence_error'])
+            self.assertFalse((root / 'report.json').exists())
+            temp = root / '.report.json.tmp'
+            residue = temp.read_bytes()
+            self.assertEqual(json.loads(residue), report)
+            first = inspect_attempt(root)
+            self.assertEqual(first['status'], 'unknown_or_incomplete')
+            self.assertFalse(first['replay_allowed'])
+            self.assertEqual(first['temporary_files'], ['.report.json.tmp'])
+            self.assertEqual(temp.read_bytes(), residue)
+            self.assertEqual(inspect_attempt(root), first)
+            self.assertEqual(temp.read_bytes(), residue)
+            call.assert_called_once()
+
+    def test_successful_report_publication_leaves_no_temp_residue(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td) / 'run'
+            report = {'status': 'returned', 'result': {'status': 'completed'}}
+            call = Mock(return_value=report)
+            _, retention = invoke(call, {}, root, operation='dispatch')
+            call.assert_called_once()
+            self.assertTrue(retention['request_persisted'])
+            self.assertTrue(retention['report_persisted'])
+            inspected = inspect_attempt(root)
+            self.assertEqual(inspected['status'], 'report_recorded')
+            self.assertFalse(inspected['replay_allowed'])
+            self.assertEqual(inspected['temporary_files'], [])
+

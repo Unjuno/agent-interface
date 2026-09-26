@@ -1,0 +1,37 @@
+{
+  "original_files": 918,
+  "original_manifest_entries": 917,
+  "new_formal_invocations": 0,
+  "steps": [
+    {
+      "name": "audit",
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "audit.py",
+        "--controls"
+      ],
+      "pid": 532,
+      "exit": 0,
+      "started_ns": 261383265964,
+      "ended_ns": 262299511345,
+      "stdout_sha256": "48930301b596129cb76c842c48f824509974ffe4aa3618c9d3ca9c3db7eaf2b9",
+      "stderr_bytes": 0
+    },
+    {
+      "name": "units",
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "test_contract.py"
+      ],
+      "pid": 542,
+      "exit": 0,
+      "started_ns": 262299941851,
+      "ended_ns": 262956437731,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 737
+    }
+  ],
+  "unchanged": true
+}

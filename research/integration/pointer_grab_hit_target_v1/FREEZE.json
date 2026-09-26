@@ -1,0 +1,34 @@
+{
+  "allocation": "pointer-grab-hit-target-20260922-01",
+  "base_main": "3f79994b4dda589951e2ddfe062215bb4a944d70",
+  "formal_rows": 0,
+  "source_sha256": {
+    "study.py": "c9a30205a0165cf8e233afa98e7152fe2c432ce6edfa316b61112bc8d2986263",
+    "audit.py": "bf3a3f55577b1c5a79bdffe5a8fcbdd35b3b74cd3737bfca0910cd4cd09eaae5",
+    "controls.py": "1421332167df68d6776c97b86d17c7fa692220f5dfe12c015a49901d48c3a359",
+    "supervisor.py": "e4d7117be0882c709636548227fb28f1546b6ae76ec51a832539b39c50558fb5"
+  },
+  "source_git_blobs": {
+    "study.py": "f0eacdbe9d33cc43917ef698b1a0c7ea1aa0fb38",
+    "audit.py": "8684dea18765a254c0cfbca1ca6ac2e6ca54591e",
+    "controls.py": "8f90672f4de4ad6bc12d55bf876ef85254a7e3c2",
+    "supervisor.py": "bc0ad2524d04db6bcb01d36db2cb338a9d4e3765"
+  },
+  "environment": {
+    "python": "3.13.5",
+    "platform": "Linux x86_64 / glibc 2.41",
+    "tk": "8.6",
+    "python_xlib": "0.15",
+    "display": "private Xvfb, TCP disabled, explicit temporary Xauthority"
+  },
+  "issue": 4136,
+  "formal_reruns": 0,
+  "correction": "The initial FREEZE recorded pre-public local hashes. Remote source readback occurred before formal execution; these hashes bind the actual published bytes. Scientific schedule/gates are unchanged.",
+  "execution_contract": {
+    "formal_command": "python -B supervisor.py FORMAL_OUTPUT",
+    "display": ":93",
+    "outer_timeout_s": 45,
+    "xvfb_cleanup": "intentional SIGTERM, reaped, socket removed; return code 0 or -SIGTERM accepted",
+    "corruption_controls": 9
+  }
+}

@@ -40,6 +40,7 @@ Inspect the packaged commands before supplying target mappings or programs:
 
 ```sh
 python agent-interface-runtime.pyz observe --help
+python agent-interface-runtime.pyz validate --help
 python agent-interface-runtime.pyz dispatch --help
 python agent-interface-runtime.pyz review --help
 ```

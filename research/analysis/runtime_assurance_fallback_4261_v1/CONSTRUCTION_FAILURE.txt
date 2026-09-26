@@ -1,0 +1,2 @@
+construction-01 corruption-control harness failure:
+The valid development RAW audited PASS, then controls.py mutation remove_row caused audit.py to raise KeyError on the missing fallback_unavailable candidate row instead of returning an integrity failure. Formal had not been frozen or executed. Repair added an explicit required-row completeness check before downstream indexing. Plant/controller/monitor/fallback/scenario data and decision thresholds were unchanged.

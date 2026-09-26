@@ -1,0 +1,1000 @@
++        "-S",
++        "-B",
++        "/mnt/data/stream_readiness_b8n5_v1/source/actor.py",
++        "reader",
++        "3",
++        "/mnt/data/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/CONFIG.json",
++        "/mnt/data/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/reader.json"
++      ],
++      "command_sent_ns": 571981816469,
++      "launch_ns": 571950927583,
++      "pid": 787,
++      "ready_received_ns": 571981736690,
++      "returncode": 0,
++      "wait_return_ns": 572408703235
++    },
++    "writer": {
++      "argv": [
++        "/opt/pyvenv/bin/python",
++        "-S",
++        "-B",
++        "/mnt/data/stream_readiness_b8n5_v1/source/actor.py",
++        "writer",
++        "4",
++        "/mnt/data/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/CONFIG.json",
++        "/mnt/data/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/writer.json"
++      ],
++      "command_sent_ns": 571981803900,
++      "launch_ns": 571950274036,
++      "pid": 786,
++      "ready_received_ns": 571973258062,
++      "returncode": 0,
++      "wait_return_ns": 572406625819
++    }
++  },
++  "complete": true,
++  "pipe": {
++    "pipe_buf": 4096,
++    "reader_inode": 5707,
++    "writer_inode": 5707
++  },
++  "start_ns": 571981737952
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/reader.json b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/reader.json
+new file mode 100644
+index 0000000..d6ba317
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/reader.json
+@@ -0,0 +1,88 @@
++{
++  "authority": false,
++  "diagnostic": {
++    "begin_ns": 572042039402,
++    "end_ns": 572401969973,
++    "eof": true,
++    "fragment_hex": "",
++    "pending_hex": "",
++    "scored": false,
++    "total_frames": 1
++  },
++  "events": [
++    {
++      "after_ns": 571981906920,
++      "before_ns": 571981854471,
++      "kind": "select",
++      "phase": "budget",
++      "ready": true
++    },
++    {
++      "after_ns": 571981915042,
++      "before_ns": 571981912689,
++      "data_hex": "7b227061796c6f6164223a22e9",
++      "kind": "raw_read",
++      "requested": 4096
++    },
++    {
++      "after_ns": 572041938021,
++      "before_ns": 571981921792,
++      "data_hex": "809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a46445f5448454e5f42554646455245443a53504c49545f4541524c59222c2273657175656e6365223a317d0a",
++      "kind": "raw_read",
++      "requested": 4096
++    },
++    {
++      "after_ns": 572041960795,
++      "before_ns": 571981908252,
++      "data_hex": "7b227061796c6f6164223a22e9809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a46445f5448454e5f42554646455245443a53504c49545f4541524c59222c2273657175656e6365223a317d0a",
++      "kind": "readline",
++      "phase": "budget"
++    },
++    {
++      "after_ns": 572401941400,
++      "before_ns": 572042044680,
++      "data_hex": "",
++      "kind": "raw_read",
++      "requested": 4096
++    },
++    {
++      "after_ns": 572401965426,
++      "before_ns": 572042039823,
++      "data_hex": "",
++      "kind": "readline",
++      "phase": "diagnostic"
++    }
++  ],
++  "frames": [
++    {
++      "checked_ns": 572042021455,
++      "data_hex": "7b227061796c6f6164223a22e9809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a46445f5448454e5f42554646455245443a53504c49545f4541524c59222c2273657175656e6365223a317d0a",
++      "extracted_ns": 572041967365,
++      "phase": "budget",
++      "value": {
++        "payload": "\u901a\u77e5\u4e00",
++        "scope": "pilot:0:FD_THEN_BUFFERED:SPLIT_EARLY",
++        "sequence": 1
++      },
++      "within_budget": true
++    }
++  ],
++  "pid": 787,
++  "primary": {
++    "authority": false,
++    "begin_ns": 571981853490,
++    "deadline_ns": 572181737952,
++    "end_ns": 572042024260,
++    "eof": false,
++    "event_count": 4,
++    "fragments_hex": "",
++    "pending_hex": "",
++    "retry_authority": false,
++    "returned_frames": 1,
++    "status": "COMPLETE",
++    "timely_frames": 1
++  },
++  "retry_authority": false,
++  "role": "reader",
++  "start_ns": 571981737952
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/reader.ready b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/reader.ready
+new file mode 100644
+index 0000000..ffcd1a3
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/reader.ready
+@@ -0,0 +1 @@
++{"kind": "READY", "pid": 787}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/reader.stderr b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/reader.stderr
+new file mode 100644
+index 0000000..e69de29
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/reader.stdout b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/reader.stdout
+new file mode 100644
+index 0000000..cf19a6b
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/reader.stdout
+@@ -0,0 +1 @@
++{"kind": "DONE", "pid": 787}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/received.bin b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/received.bin
+new file mode 100644
+index 0000000..bc5f247
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/received.bin
+@@ -0,0 +1 @@
++{"payload":"通知一","scope":"pilot:0:FD_THEN_BUFFERED:SPLIT_EARLY","sequence":1}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/sent.bin b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/sent.bin
+new file mode 100644
+index 0000000..bc5f247
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/sent.bin
+@@ -0,0 +1 @@
++{"payload":"通知一","scope":"pilot:0:FD_THEN_BUFFERED:SPLIT_EARLY","sequence":1}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/start_command.bin b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/start_command.bin
+new file mode 100644
+index 0000000..33b8742
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/start_command.bin
+@@ -0,0 +1 @@
++{"start_ns": 571981737952}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/writer.json b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/writer.json
+new file mode 100644
+index 0000000..fe05865
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/writer.json
+@@ -0,0 +1,27 @@
++{
++  "authority": false,
++  "events": [
++    {
++      "after_ns": 571973069040,
++      "before_ns": 571973065184,
++      "data_hex": "7b227061796c6f6164223a22e9",
++      "kind": "write",
++      "written": 13
++    },
++    {
++      "after_ns": 572041862522,
++      "before_ns": 572041840950,
++      "data_hex": "809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a46445f5448454e5f42554646455245443a53504c49545f4541524c59222c2273657175656e6365223a317d0a",
++      "kind": "write",
++      "written": 71
++    },
++    {
++      "after_ns": 572401850148,
++      "before_ns": 572401828926,
++      "kind": "close"
++    }
++  ],
++  "pid": 786,
++  "role": "writer",
++  "start_ns": 571981737952
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/writer.ready b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/writer.ready
+new file mode 100644
+index 0000000..1658c10
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/writer.ready
+@@ -0,0 +1 @@
++{"first_written": 13, "kind": "READY", "pid": 786}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/writer.stderr b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/writer.stderr
+new file mode 100644
+index 0000000..e69de29
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/writer.stdout b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/writer.stdout
+new file mode 100644
+index 0000000..ae4c012
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/08-SPLIT_EARLY-FD_THEN_BUFFERED/writer.stdout
+@@ -0,0 +1 @@
++{"kind": "DONE", "pid": 786}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/CONFIG.json b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/CONFIG.json
+new file mode 100644
+index 0000000..6390a4f
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/CONFIG.json
+@@ -0,0 +1,13 @@
++{
++  "budget_ms": 200,
++  "close_ms": 420,
++  "expected": 1,
++  "first_hex": "7b227061796c6f6164223a22e9",
++  "mode": "EXPLICIT_BUFFER",
++  "repetition": 0,
++  "scenario": "SPLIT_EARLY",
++  "scope": "pilot:0:EXPLICIT_BUFFER:SPLIT_EARLY",
++  "stage": "pilot",
++  "tail_hex": "809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a4558504c494349545f4255464645523a53504c49545f4541524c59222c2273657175656e6365223a317d0a",
++  "tail_ms": 60
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/EXECUTION.json b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/EXECUTION.json
+new file mode 100644
+index 0000000..cc2adb7
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/EXECUTION.json
+@@ -0,0 +1,47 @@
++{
++  "actors": {
++    "reader": {
++      "argv": [
++        "/opt/pyvenv/bin/python",
++        "-S",
++        "-B",
++        "/mnt/data/stream_readiness_b8n5_v1/source/actor.py",
++        "reader",
++        "3",
++        "/mnt/data/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/CONFIG.json",
++        "/mnt/data/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/reader.json"
++      ],
++      "command_sent_ns": 572431605309,
++      "launch_ns": 572409573727,
++      "pid": 789,
++      "ready_received_ns": 572431531619,
++      "returncode": 0,
++      "wait_return_ns": 572857249827
++    },
++    "writer": {
++      "argv": [
++        "/opt/pyvenv/bin/python",
++        "-S",
++        "-B",
++        "/mnt/data/stream_readiness_b8n5_v1/source/actor.py",
++        "writer",
++        "4",
++        "/mnt/data/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/CONFIG.json",
++        "/mnt/data/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/writer.json"
++      ],
++      "command_sent_ns": 572431593552,
++      "launch_ns": 572409140088,
++      "pid": 788,
++      "ready_received_ns": 572430756460,
++      "returncode": 0,
++      "wait_return_ns": 572857056278
++    }
++  },
++  "complete": true,
++  "pipe": {
++    "pipe_buf": 4096,
++    "reader_inode": 5716,
++    "writer_inode": 5716
++  },
++  "start_ns": 572431532050
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/reader.json b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/reader.json
+new file mode 100644
+index 0000000..3ee05e5
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/reader.json
+@@ -0,0 +1,91 @@
++{
++  "authority": false,
++  "diagnostic": {
++    "begin_ns": 572491858913,
++    "end_ns": 572851736744,
++    "eof": true,
++    "fragment_hex": "",
++    "pending_hex": "",
++    "scored": false,
++    "total_frames": 1
++  },
++  "events": [
++    {
++      "after_ns": 572431660582,
++      "before_ns": 572431642254,
++      "kind": "select",
++      "phase": "budget",
++      "ready": true
++    },
++    {
++      "after_ns": 572431663266,
++      "before_ns": 572431661613,
++      "data_hex": "7b227061796c6f6164223a22e9",
++      "kind": "raw_read",
++      "phase": "budget",
++      "requested": 4096
++    },
++    {
++      "after_ns": 572491738392,
++      "before_ns": 572431668614,
++      "kind": "select",
++      "phase": "budget",
++      "ready": true
++    },
++    {
++      "after_ns": 572491761527,
++      "before_ns": 572491747947,
++      "data_hex": "809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a4558504c494349545f4255464645523a53504c49545f4541524c59222c2273657175656e6365223a317d0a",
++      "kind": "raw_read",
++      "phase": "budget",
++      "requested": 4096
++    },
++    {
++      "after_ns": 572851711056,
++      "before_ns": 572491861036,
++      "kind": "select",
++      "phase": "diagnostic",
++      "ready": true
++    },
++    {
++      "after_ns": 572851726959,
++      "before_ns": 572851716764,
++      "data_hex": "",
++      "kind": "raw_read",
++      "phase": "diagnostic",
++      "requested": 4096
++    }
++  ],
++  "frames": [
++    {
++      "checked_ns": 572491842608,
++      "data_hex": "7b227061796c6f6164223a22e9809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a4558504c494349545f4255464645523a53504c49545f4541524c59222c2273657175656e6365223a317d0a",
++      "extracted_ns": 572491799113,
++      "phase": "budget",
++      "value": {
++        "payload": "\u901a\u77e5\u4e00",
++        "scope": "pilot:0:EXPLICIT_BUFFER:SPLIT_EARLY",
++        "sequence": 1
++      },
++      "within_budget": true
++    }
++  ],
++  "pid": 789,
++  "primary": {
++    "authority": false,
++    "begin_ns": 572431639831,
++    "deadline_ns": 572631532050,
++    "end_ns": 572491845302,
++    "eof": false,
++    "event_count": 4,
++    "fragments_hex": "",
++    "pending_hex": "",
++    "retry_authority": false,
++    "returned_frames": 1,
++    "status": "COMPLETE",
++    "timely_frames": 1
++  },
++  "retry_authority": false,
++  "role": "reader",
++  "start_ns": 572431532050
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/reader.ready b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/reader.ready
+new file mode 100644
+index 0000000..25ed217
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/reader.ready
+@@ -0,0 +1 @@
++{"kind": "READY", "pid": 789}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/reader.stderr b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/reader.stderr
+new file mode 100644
+index 0000000..e69de29
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/reader.stdout b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/reader.stdout
+new file mode 100644
+index 0000000..33f42e7
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/reader.stdout
+@@ -0,0 +1 @@
++{"kind": "DONE", "pid": 789}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/received.bin b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/received.bin
+new file mode 100644
+index 0000000..63dc30d
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/received.bin
+@@ -0,0 +1 @@
++{"payload":"通知一","scope":"pilot:0:EXPLICIT_BUFFER:SPLIT_EARLY","sequence":1}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/sent.bin b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/sent.bin
+new file mode 100644
+index 0000000..63dc30d
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/sent.bin
+@@ -0,0 +1 @@
++{"payload":"通知一","scope":"pilot:0:EXPLICIT_BUFFER:SPLIT_EARLY","sequence":1}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/start_command.bin b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/start_command.bin
+new file mode 100644
+index 0000000..7a3d4d8
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/start_command.bin
+@@ -0,0 +1 @@
++{"start_ns": 572431532050}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/writer.json b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/writer.json
+new file mode 100644
+index 0000000..3d35550
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/writer.json
+@@ -0,0 +1,27 @@
++{
++  "authority": false,
++  "events": [
++    {
++      "after_ns": 572430597422,
++      "before_ns": 572430594037,
++      "data_hex": "7b227061796c6f6164223a22e9",
++      "kind": "write",
++      "written": 13
++    },
++    {
++      "after_ns": 572491661297,
++      "before_ns": 572491640536,
++      "data_hex": "809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a4558504c494349545f4255464645523a53504c49545f4541524c59222c2273657175656e6365223a317d0a",
++      "kind": "write",
++      "written": 70
++    },
++    {
++      "after_ns": 572851638788,
++      "before_ns": 572851616835,
++      "kind": "close"
++    }
++  ],
++  "pid": 788,
++  "role": "writer",
++  "start_ns": 572431532050
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/writer.ready b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/writer.ready
+new file mode 100644
+index 0000000..25092a3
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/writer.ready
+@@ -0,0 +1 @@
++{"first_written": 13, "kind": "READY", "pid": 788}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/writer.stderr b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/writer.stderr
+new file mode 100644
+index 0000000..e69de29
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/writer.stdout b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/writer.stdout
+new file mode 100644
+index 0000000..760d259
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/09-SPLIT_EARLY-EXPLICIT_BUFFER/writer.stdout
+@@ -0,0 +1 @@
++{"kind": "DONE", "pid": 788}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/CONFIG.json b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/CONFIG.json
+new file mode 100644
+index 0000000..0dfee4c
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/CONFIG.json
+@@ -0,0 +1,13 @@
++{
++  "budget_ms": 200,
++  "close_ms": 420,
++  "expected": 1,
++  "first_hex": "7b227061796c6f6164223a22e9",
++  "mode": "EXPLICIT_BUFFER",
++  "repetition": 0,
++  "scenario": "SPLIT_LATE",
++  "scope": "pilot:0:EXPLICIT_BUFFER:SPLIT_LATE",
++  "stage": "pilot",
++  "tail_hex": "809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a4558504c494349545f4255464645523a53504c49545f4c415445222c2273657175656e6365223a317d0a",
++  "tail_ms": 340
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/EXECUTION.json b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/EXECUTION.json
+new file mode 100644
+index 0000000..cc05785
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/EXECUTION.json
+@@ -0,0 +1,47 @@
++{
++  "actors": {
++    "reader": {
++      "argv": [
++        "/opt/pyvenv/bin/python",
++        "-S",
++        "-B",
++        "/mnt/data/stream_readiness_b8n5_v1/source/actor.py",
++        "reader",
++        "3",
++        "/mnt/data/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/CONFIG.json",
++        "/mnt/data/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.json"
++      ],
++      "command_sent_ns": 572882071091,
++      "launch_ns": 572858183093,
++      "pid": 791,
++      "ready_received_ns": 572881996640,
++      "returncode": 0,
++      "wait_return_ns": 573307344096
++    },
++    "writer": {
++      "argv": [
++        "/opt/pyvenv/bin/python",
++        "-S",
++        "-B",
++        "/mnt/data/stream_readiness_b8n5_v1/source/actor.py",
++        "writer",
++        "4",
++        "/mnt/data/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/CONFIG.json",
++        "/mnt/data/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/writer.json"
++      ],
++      "command_sent_ns": 572882060716,
++      "launch_ns": 572857678258,
++      "pid": 790,
++      "ready_received_ns": 572881291926,
++      "returncode": 0,
++      "wait_return_ns": 573307163496
++    }
++  },
++  "complete": true,
++  "pipe": {
++    "pipe_buf": 4096,
++    "reader_inode": 5725,
++    "writer_inode": 5725
++  },
++  "start_ns": 572881997371
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.json b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.json
+new file mode 100644
+index 0000000..207518f
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.json
+@@ -0,0 +1,98 @@
++{
++  "authority": false,
++  "diagnostic": {
++    "begin_ns": 573082301928,
++    "end_ns": 573302236894,
++    "eof": true,
++    "fragment_hex": "",
++    "pending_hex": "",
++    "scored": false,
++    "total_frames": 1
++  },
++  "events": [
++    {
++      "after_ns": 572882123785,
++      "before_ns": 572882104706,
++      "kind": "select",
++      "phase": "budget",
++      "ready": true
++    },
++    {
++      "after_ns": 572882126649,
++      "before_ns": 572882124827,
++      "data_hex": "7b227061796c6f6164223a22e9",
++      "kind": "raw_read",
++      "phase": "budget",
++      "requested": 4096
++    },
++    {
++      "after_ns": 573082250601,
++      "before_ns": 572882132147,
++      "kind": "select",
++      "phase": "budget",
++      "ready": false
++    },
++    {
++      "after_ns": 573222176444,
++      "before_ns": 573082305764,
++      "kind": "select",
++      "phase": "diagnostic",
++      "ready": true
++    },
++    {
++      "after_ns": 573222198327,
++      "before_ns": 573222184997,
++      "data_hex": "809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a4558504c494349545f4255464645523a53504c49545f4c415445222c2273657175656e6365223a317d0a",
++      "kind": "raw_read",
++      "phase": "diagnostic",
++      "requested": 4096
++    },
++    {
++      "after_ns": 573302208061,
++      "before_ns": 573222280179,
++      "kind": "select",
++      "phase": "diagnostic",
++      "ready": true
++    },
++    {
++      "after_ns": 573302225987,
++      "before_ns": 573302214460,
++      "data_hex": "",
++      "kind": "raw_read",
++      "phase": "diagnostic",
++      "requested": 4096
++    }
++  ],
++  "frames": [
++    {
++      "checked_ns": 573222276073,
++      "data_hex": "7b227061796c6f6164223a22e9809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a4558504c494349545f4255464645523a53504c49545f4c415445222c2273657175656e6365223a317d0a",
++      "extracted_ns": 573222221401,
++      "phase": "diagnostic",
++      "value": {
++        "payload": "\u901a\u77e5\u4e00",
++        "scope": "pilot:0:EXPLICIT_BUFFER:SPLIT_LATE",
++        "sequence": 1
++      },
++      "within_budget": true
++    }
++  ],
++  "pid": 791,
++  "primary": {
++    "authority": false,
++    "begin_ns": 572882102223,
++    "deadline_ns": 573081997371,
++    "end_ns": 573082260025,
++    "eof": false,
++    "event_count": 3,
++    "fragments_hex": "",
++    "pending_hex": "7b227061796c6f6164223a22e9",
++    "retry_authority": false,
++    "returned_frames": 0,
++    "status": "BUDGET_EXHAUSTED",
++    "timely_frames": 0
++  },
++  "retry_authority": false,
++  "role": "reader",
++  "start_ns": 572881997371
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.ready b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.ready
+new file mode 100644
+index 0000000..0f061be
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.ready
+@@ -0,0 +1 @@
++{"kind": "READY", "pid": 791}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.stderr b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.stderr
+new file mode 100644
+index 0000000..e69de29
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.stdout b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.stdout
+new file mode 100644
+index 0000000..f20667b
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.stdout
+@@ -0,0 +1 @@
++{"kind": "DONE", "pid": 791}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/received.bin b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/received.bin
+new file mode 100644
+index 0000000..1186403
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/received.bin
+@@ -0,0 +1 @@
++{"payload":"通知一","scope":"pilot:0:EXPLICIT_BUFFER:SPLIT_LATE","sequence":1}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/sent.bin b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/sent.bin
+new file mode 100644
+index 0000000..1186403
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/sent.bin
+@@ -0,0 +1 @@
++{"payload":"通知一","scope":"pilot:0:EXPLICIT_BUFFER:SPLIT_LATE","sequence":1}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/start_command.bin b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/start_command.bin
+new file mode 100644
+index 0000000..90e492b
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/start_command.bin
+@@ -0,0 +1 @@
++{"start_ns": 572881997371}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/writer.json b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/writer.json
+new file mode 100644
+index 0000000..20b9660
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/writer.json
+@@ -0,0 +1,27 @@
++{
++  "authority": false,
++  "events": [
++    {
++      "after_ns": 572881053665,
++      "before_ns": 572881048958,
++      "data_hex": "7b227061796c6f6164223a22e9",
++      "kind": "write",
++      "written": 13
++    },
++    {
++      "after_ns": 573222111748,
++      "before_ns": 573222092399,
++      "data_hex": "809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a4558504c494349545f4255464645523a53504c49545f4c415445222c2273657175656e6365223a317d0a",
++      "kind": "write",
++      "written": 69
++    },
++    {
++      "after_ns": 573302141431,
++      "before_ns": 573302121091,
++      "kind": "close"
++    }
++  ],
++  "pid": 790,
++  "role": "writer",
++  "start_ns": 572881997371
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/writer.ready b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/writer.ready
+new file mode 100644
+index 0000000..ee196ee
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/writer.ready
+@@ -0,0 +1 @@
++{"first_written": 13, "kind": "READY", "pid": 790}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/writer.stderr b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/writer.stderr
+new file mode 100644
+index 0000000..e69de29
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/writer.stdout b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/writer.stdout
+new file mode 100644
+index 0000000..3d21669
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/writer.stdout
+@@ -0,0 +1 @@
++{"kind": "DONE", "pid": 790}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/CONFIG.json b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/CONFIG.json
+new file mode 100644
+index 0000000..7e0869f
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/CONFIG.json
+@@ -0,0 +1,13 @@
++{
++  "budget_ms": 200,
++  "close_ms": 420,
++  "expected": 1,
++  "first_hex": "7b227061796c6f6164223a22e9",
++  "mode": "FD_THEN_BUFFERED",
++  "repetition": 0,
++  "scenario": "SPLIT_LATE",
++  "scope": "pilot:0:FD_THEN_BUFFERED:SPLIT_LATE",
++  "stage": "pilot",
++  "tail_hex": "809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a46445f5448454e5f42554646455245443a53504c49545f4c415445222c2273657175656e6365223a317d0a",
++  "tail_ms": 340
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/EXECUTION.json b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/EXECUTION.json
+new file mode 100644
+index 0000000..115ef62
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/EXECUTION.json
+@@ -0,0 +1,47 @@
++{
++  "actors": {
++    "reader": {
++      "argv": [
++        "/opt/pyvenv/bin/python",
++        "-S",
++        "-B",
++        "/mnt/data/stream_readiness_b8n5_v1/source/actor.py",
++        "reader",
++        "3",
++        "/mnt/data/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/CONFIG.json",
++        "/mnt/data/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/reader.json"
++      ],
++      "command_sent_ns": 573330976491,
++      "launch_ns": 573308203721,
++      "pid": 793,
++      "ready_received_ns": 573330898715,
++      "returncode": 0,
++      "wait_return_ns": 573756538677
++    },
++    "writer": {
++      "argv": [
++        "/opt/pyvenv/bin/python",
++        "-S",
++        "-B",
++        "/mnt/data/stream_readiness_b8n5_v1/source/actor.py",
++        "writer",
++        "4",
++        "/mnt/data/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/CONFIG.json",
++        "/mnt/data/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/writer.json"
++      ],
++      "command_sent_ns": 573330963913,
++      "launch_ns": 573307764885,
++      "pid": 792,
++      "ready_received_ns": 573329508086,
++      "returncode": 0,
++      "wait_return_ns": 573755387306
++    }
++  },
++  "complete": true,
++  "pipe": {
++    "pipe_buf": 4096,
++    "reader_inode": 5734,
++    "writer_inode": 5734
++  },
++  "start_ns": 573330899256
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/reader.json b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/reader.json
+new file mode 100644
+index 0000000..9724e32
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/reader.json
+@@ -0,0 +1,88 @@
++{
++  "authority": false,
++  "diagnostic": {
++    "begin_ns": 573671172881,
++    "end_ns": 573751126600,
++    "eof": true,
++    "fragment_hex": "",
++    "pending_hex": "",
++    "scored": false,
++    "total_frames": 1
++  },
++  "events": [
++    {
++      "after_ns": 573331031389,
++      "before_ns": 573331010678,
++      "kind": "select",
++      "phase": "budget",
++      "ready": true
++    },
++    {
++      "after_ns": 573331038590,
++      "before_ns": 573331036386,
++      "data_hex": "7b227061796c6f6164223a22e9",
++      "kind": "raw_read",
++      "requested": 4096
++    },
++    {
++      "after_ns": 573671088996,
++      "before_ns": 573331045049,
++      "data_hex": "809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a46445f5448454e5f42554646455245443a53504c49545f4c415445222c2273657175656e6365223a317d0a",
++      "kind": "raw_read",
++      "requested": 4096
++    },
++    {
++      "after_ns": 573671107133,
++      "before_ns": 573331032631,
++      "data_hex": "7b227061796c6f6164223a22e9809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a46445f5448454e5f42554646455245443a53504c49545f4c415445222c2273657175656e6365223a317d0a",
++      "kind": "readline",
++      "phase": "budget"
++    },
++    {
++      "after_ns": 573751099049,
++      "before_ns": 573671177969,
++      "data_hex": "",
++      "kind": "raw_read",
++      "requested": 4096
++    },
++    {
++      "after_ns": 573751121592,
++      "before_ns": 573671173442,
++      "data_hex": "",
++      "kind": "readline",
++      "phase": "diagnostic"
++    }
++  ],
++  "frames": [
++    {
++      "checked_ns": 573671158129,
++      "data_hex": "7b227061796c6f6164223a22e9809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a46445f5448454e5f42554646455245443a53504c49545f4c415445222c2273657175656e6365223a317d0a",
++      "extracted_ns": 573671112972,
++      "phase": "budget",
++      "value": {
++        "payload": "\u901a\u77e5\u4e00",
++        "scope": "pilot:0:FD_THEN_BUFFERED:SPLIT_LATE",
++        "sequence": 1
++      },
++      "within_budget": false
++    }
++  ],
++  "pid": 793,
++  "primary": {
++    "authority": false,
++    "begin_ns": 573331009356,
++    "deadline_ns": 573530899256,
++    "end_ns": 573671160302,
++    "eof": false,
++    "event_count": 4,
++    "fragments_hex": "",
++    "pending_hex": "",
++    "retry_authority": false,
++    "returned_frames": 1,
++    "status": "COMPLETE_LATE",
++    "timely_frames": 0
++  },
++  "retry_authority": false,
++  "role": "reader",
++  "start_ns": 573330899256
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/reader.ready b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/reader.ready
+new file mode 100644
+index 0000000..6dc0782
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/reader.ready
+@@ -0,0 +1 @@
++{"kind": "READY", "pid": 793}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/reader.stderr b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/reader.stderr
+new file mode 100644
+index 0000000..e69de29
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/reader.stdout b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/reader.stdout
+new file mode 100644
+index 0000000..9f51016
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/reader.stdout
+@@ -0,0 +1 @@
++{"kind": "DONE", "pid": 793}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/received.bin b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/received.bin
+new file mode 100644
+index 0000000..a5dabfc
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/received.bin
+@@ -0,0 +1 @@
++{"payload":"通知一","scope":"pilot:0:FD_THEN_BUFFERED:SPLIT_LATE","sequence":1}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/sent.bin b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/sent.bin
+new file mode 100644
+index 0000000..a5dabfc
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/sent.bin
+@@ -0,0 +1 @@
++{"payload":"通知一","scope":"pilot:0:FD_THEN_BUFFERED:SPLIT_LATE","sequence":1}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/start_command.bin b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/start_command.bin
+new file mode 100644
+index 0000000..52babc4
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/start_command.bin
+@@ -0,0 +1 @@
++{"start_ns": 573330899256}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/writer.json b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/writer.json
+new file mode 100644
+index 0000000..fe961e4
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/writer.json
+@@ -0,0 +1,27 @@
++{
++  "authority": false,
++  "events": [
++    {
++      "after_ns": 573329304541,
++      "before_ns": 573329300666,
++      "data_hex": "7b227061796c6f6164223a22e9",
++      "kind": "write",
++      "written": 13
++    },
++    {
++      "after_ns": 573671016762,
++      "before_ns": 573670996933,
++      "data_hex": "809ae79fa5e4b880222c2273636f7065223a2270696c6f743a303a46445f5448454e5f42554646455245443a53504c49545f4c415445222c2273657175656e6365223a317d0a",
++      "kind": "write",
++      "written": 70
++    },
++    {
++      "after_ns": 573751020586,
++      "before_ns": 573750999234,
++      "kind": "close"
++    }
++  ],
++  "pid": 792,
++  "role": "writer",
++  "start_ns": 573330899256
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/writer.ready b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/writer.ready
+new file mode 100644
+index 0000000..95868e2
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/writer.ready
+@@ -0,0 +1 @@
++{"first_written": 13, "kind": "READY", "pid": 792}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/writer.stderr b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/writer.stderr
+new file mode 100644
+index 0000000..e69de29
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/writer.stdout b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/writer.stdout
+new file mode 100644
+index 0000000..5292f24
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/11-SPLIT_LATE-FD_THEN_BUFFERED/writer.stdout
+@@ -0,0 +1 @@
++{"kind": "DONE", "pid": 792}
+diff --git a/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/12-TRUNCATED_EOF-FD_THEN_BUFFERED/CONFIG.json b/research/integration/stream_readiness_b8n5_v1/pilot/batch-0/12-TRUNCATED_EOF-FD_THEN_BUFFERED/CONFIG.json
