@@ -2,6 +2,10 @@
 
 This is an additive successor experiment for the closed visual-context guard result. It tests whether exactly one fresh observation in the same live session can re-establish an admissible pair after the guard rejects an older pair.
 
+## Issue routing status
+
+Issue #2548 was closed as `not_planned` on 2026-09-22 after #615/#629 established the preferred handoff: reuse the already captured post-recovery observation as no-authority planner context, bind planner outcomes to that receipt, and never revive the discarded action authority. This v4 allocation is retrospective evidence about the historical extra-observation gate. It does not reopen #2548, supersede #615/#629, or show that an extra `observe` adds utility over #615's no-extra-capture receipt. Its `ADMIT` verdict means only that a fresh visual pair passed the tested receipt/MAE gate; no action authority was granted or action dispatched.
+
 ## H/T/D/C/U
 
 - H: a bounded fresh pair can recover admissibility only when it is same-session, non-duplicate, unambiguous, and within the one-observation budget; the guard remains fail-closed before that pair exists.
