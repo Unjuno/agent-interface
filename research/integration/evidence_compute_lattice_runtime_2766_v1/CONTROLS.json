@@ -1,0 +1,18 @@
+{
+  "controls": 12,
+  "rejected": 10,
+  "results": [
+    {"errors":["decision:cached_reuse_current:initial:REUSE!=REBUILD_REQUIRED"],"mutation":"stale_reuse","rejected":true},
+    {"errors":["decision:cached_reuse_current:initial:REUSE!=DROP_EXPIRED"],"mutation":"expired_reuse","rejected":true},
+    {"errors":["decision:active_run_low_p:precompute:RUN!=CANCEL_STALE"],"mutation":"stale_active_run","rejected":true},
+    {"errors":["decision:active_run_low_p:precompute:RUN!=CANCEL_TARDY"],"mutation":"tardy_active_run","rejected":true},
+    {"errors":["decision:rebuild_measure_then_active:initial:RUN!=REBUILD_REQUIRED","rebuild_initial:rebuild_measure_then_active"],"mutation":"rebuild_run","rejected":true},
+    {"errors":["decision:active_run_low_p:precompute:RUN!=WAIT"],"mutation":"wrong_p","rejected":true},
+    {"errors":[],"mutation":"wrong_g","rejected":false},
+    {"errors":["decision:active_run_low_p:precompute:RUN!=CANCEL_STALE"],"mutation":"wrong_version","rejected":true},
+    {"errors":["case_order_or_denominator"],"mutation":"missing_case","rejected":true},
+    {"errors":[],"mutation":"publish_after_cancel","rejected":false},
+    {"errors":["partial_missing"],"mutation":"missing_partial","rejected":true},
+    {"errors":["decision:active_run_low_p:precompute:RUN!=CANCEL_TARDY"],"mutation":"wrong_deadline","rejected":true}
+  ]
+}

@@ -1,0 +1,694 @@
+{
+  "allocation_id": "issue3644-calc-owner-lifecycle-formal-01",
+  "audit_unit_tests": {
+    "returncode": 0,
+    "stderr": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.000s\n\nOK\n",
+    "stdout": ""
+  },
+  "cleanup": {
+    "launcher_reaped": true,
+    "launcher_returncode": 255,
+    "x_socket_absent": true,
+    "xvfb_reaped": true,
+    "xvfb_returncode": 0
+  },
+  "decision": "HOLD_PROCESS_OWNERSHIP_UNRESOLVED",
+  "display": ":143",
+  "group_members_before": [
+    {
+      "cmdline": "/usr/lib/libreoffice/program/oosplash --norestore --nofirststartwizard -env:UserInstallation=file:///tmp/issue3644-calc-life-mdj92tl4/lo --calc",
+      "comm": "oosplash",
+      "pgid": 12,
+      "pid": 12,
+      "ppid": 6,
+      "sid": 12,
+      "start_ticks": "130636",
+      "state": "S"
+    },
+    {
+      "cmdline": "/usr/lib/libreoffice/program/soffice.bin -env:UserInstallation=file:///tmp/issue3644-calc-life-mdj92tl4/lo --norestore --nofirststartwizard --calc --splash-pipe=5",
+      "comm": "soffice.bin",
+      "pgid": 12,
+      "pid": 37,
+      "ppid": 12,
+      "sid": 12,
+      "start_ticks": "130647",
+      "state": "S"
+    }
+  ],
+  "image_id_asserted": "sha256:e6ced3789130dae21c7b42b7b9d25cd590a271a77910e16c01d2edf87e44cee6",
+  "image_platform_expected": "linux/arm64",
+  "launch": {
+    "argv": [
+      "libreoffice",
+      "--norestore",
+      "--nofirststartwizard",
+      "-env:UserInstallation=file:///tmp/issue3644-calc-life-mdj92tl4/lo",
+      "--calc"
+    ],
+    "pgid_expected": 12,
+    "pid": 12,
+    "poll_after_group_signal": 255,
+    "poll_before_termination": null,
+    "reaped": true,
+    "sid_expected": 12,
+    "start": {
+      "cmdline": "/bin/sh /usr/bin/libreoffice --norestore --nofirststartwizard -env:UserInstallation=file:///tmp/issue3644-calc-life-mdj92tl4/lo --calc",
+      "comm": "libreoffice",
+      "pgid": 12,
+      "pid": 12,
+      "ppid": 6,
+      "sid": 12,
+      "start_ticks": "130636",
+      "state": "R"
+    }
+  },
+  "operations": {
+    "focus": 0,
+    "geometry": 0,
+    "input": 0,
+    "model": 0,
+    "network": 0
+  },
+  "raw_sha256": "6d110e3f3b7cbc0d1b970b50fb35a8d242c9cddb416190237419f78be8760824",
+  "samples_after": [
+    {
+      "elapsed_s": 0.1607,
+      "group_members": [
+        {
+          "cmdline": "/usr/lib/libreoffice/program/oosplash --norestore --nofirststartwizard -env:UserInstallation=file:///tmp/issue3644-calc-life-mdj92tl4/lo --calc",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "S"
+        },
+        {
+          "cmdline": "",
+          "comm": "soffice.bin",
+          "pgid": 12,
+          "pid": 37,
+          "ppid": 12,
+          "sid": 12,
+          "start_ticks": "130647",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": true,
+      "xid_visible": true
+    },
+    {
+      "elapsed_s": 0.3248,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 0.487,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 0.6557,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 0.8078,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 0.9669,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 1.1311,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 1.2907,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 1.4561,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 1.6149,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 1.7741,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 1.9399,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 2.1009,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 2.2669,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 2.4299,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 2.5912,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 2.759,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 2.9212,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 3.0808,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 3.2362,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 3.4186,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 3.5759,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 3.731,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 3.8969,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 4.0639,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 4.2259,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 4.3891,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 4.5501,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 4.7032,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 4.8617,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    },
+    {
+      "elapsed_s": 5.0247,
+      "group_members": [
+        {
+          "cmdline": "",
+          "comm": "oosplash",
+          "pgid": 12,
+          "pid": 12,
+          "ppid": 6,
+          "sid": 12,
+          "start_ticks": "130636",
+          "state": "Z"
+        }
+      ],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    }
+  ],
+  "sentinel": {
+    "alive_after_group_signal": true,
+    "alive_before": true,
+    "identity_before": {
+      "cmdline": "/usr/bin/python3 -c import time; time.sleep(90)",
+      "comm": "python3",
+      "pgid": 11,
+      "pid": 11,
+      "ppid": 6,
+      "sid": 11,
+      "start_ticks": "130636",
+      "state": "S"
+    },
+    "launch": {
+      "cmdline": "/usr/bin/python3 -c import time; time.sleep(90)",
+      "comm": "python3",
+      "pgid": 11,
+      "pid": 11,
+      "ppid": 6,
+      "sid": 11,
+      "start_ticks": "130636",
+      "state": "R"
+    },
+    "pre_cleanup_alive": true,
+    "reaped": true,
+    "returncode": -15
+  },
+  "source_base_commit": "3bbb1523aaae7959adf131be6447334647acfcb3",
+  "termination": {
+    "attempts": 1,
+    "os_killpg_returned": true,
+    "sent_at_monotonic": 1307.03316703,
+    "signal": "SIGTERM",
+    "target_pgid": 12
+  },
+  "window_candidates_before": [
+    {
+      "owner_pid": 37,
+      "probe_returncodes": [
+        0
+      ],
+      "title": "Untitled 1 - LibreOffice Calc",
+      "xid": 4195109,
+      "xprop": "_NET_WM_PID(CARDINAL) = 37\nWM_CLASS(STRING) = \"libreoffice\", \"libreoffice-calc\""
+    }
+  ],
+  "window_owner": {
+    "owner_pid": 37,
+    "probe_returncodes": [
+      0
+    ],
+    "proc": {
+      "cmdline": "/usr/lib/libreoffice/program/soffice.bin -env:UserInstallation=file:///tmp/issue3644-calc-life-mdj92tl4/lo --norestore --nofirststartwizard --calc --splash-pipe=5",
+      "comm": "soffice.bin",
+      "pgid": 12,
+      "pid": 37,
+      "ppid": 12,
+      "sid": 12,
+      "start_ticks": "130647",
+      "state": "S"
+    },
+    "title": "Untitled 1 - LibreOffice Calc",
+    "xid": 4195109,
+    "xprop": "_NET_WM_PID(CARDINAL) = 37\nWM_CLASS(STRING) = \"libreoffice\", \"libreoffice-calc\""
+  },
+  "xauth_add": {
+    "display_number": "143",
+    "host_display_mounted": false,
+    "method": "Xvfb -ac on private container display",
+    "returncode": 0
+  },
+  "xvfb_start": {
+    "cmdline": "Xvfb :143 -screen 0 1600x1000x24 -ac",
+    "comm": "Xvfb",
+    "pgid": 8,
+    "pid": 8,
+    "ppid": 6,
+    "sid": 8,
+    "start_ticks": "130631",
+    "state": "R"
+  }
+}

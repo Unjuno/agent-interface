@@ -1,0 +1,7 @@
+FORMAL_CASE_RETAINED case=exit0 broker_rc=1 timeout_kill=False
+FORMAL_CASE_RETAINED case=exit23 broker_rc=1 timeout_kill=False
+FORMAL_CASE_RETAINED case=timeout broker_rc=1 timeout_kill=False
+FORMAL_CASE_RETAINED case=unavailable broker_rc=1 timeout_kill=False
+FORMAL_CASE_RETAINED case=malformed broker_rc=1 timeout_kill=False
+FORMAL_CASE_RETAINED case=two-queued broker_rc=1 timeout_kill=False
+FORMAL_MATRIX_COMPLETE allocation=02 cases=7 fake_only=1

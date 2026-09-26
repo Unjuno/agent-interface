@@ -14,6 +14,49 @@ from runtime.cli_v1.mcp_server import create_server
 
 class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
 
+    async def test_validation_nesting_failure_retains_structured_metadata(self):
+        with tempfile.TemporaryDirectory() as td:
+            server = create_server({'fixture': 123}, td)
+            with patch('runtime.cli_v1.mcp_server.inspect_program', side_effect=RecursionError), \
+                 patch('runtime.cli_v1.mcp_server.dispatch') as dispatch, \
+                 patch('runtime.cli_v1.mcp_server.observe') as observe:
+                reply = await server.call_tool('interface_validate', {'program': {}})
+                row = json.loads(reply.content[0].text)
+                self.assertTrue(reply.isError)
+                self.assertEqual(row['status'], 'input_error')
+                self.assertEqual(row['error'], 'INPUT_NESTING_LIMIT')
+                self.assertIsNone(row['static_valid'])
+                self.assertIsNone(row['task_success'])
+                self.assertIs(row['side_effect_authority'], False)
+                self.assertIs(row['backend_checked'], False)
+                self.assertEqual(row['runtime_admission'], 'not_evaluated')
+                dispatch.assert_not_called()
+                observe.assert_not_called()
+            self.assertEqual(list(Path(td).iterdir()), [])
+
+    async def test_static_validation_matches_inspector_without_action_or_retention(self):
+        from copy import deepcopy
+        from runtime.cli_v1.validate_program import inspect_program
+        valid = {'schema': 'agent-interface/program-v1', 'program_id': 'draft',
+                 'source': {'observation_seq': 0, 'binding_revision': 0},
+                 'authority': {'lease_id': 'expired', 'expires_at_ns': 1},
+                 'terminal': {'release_all_required': True},
+                 'ops': [{'op': 'text', 'text': 'ab', 'gap_ms': 2}, {'op': 'release_all'}]}
+        with tempfile.TemporaryDirectory() as td:
+            server = create_server({'fixture': 123}, td, display_name='no-display')
+            with patch('runtime.cli_v1.mcp_server.dispatch') as dispatch, \
+                 patch('runtime.cli_v1.mcp_server.observe') as observe:
+                for program in (valid, {}):
+                    before = deepcopy(program)
+                    response = await server.call_tool('interface_validate', {'program': program})
+                    row = json.loads(response.content[0].text)
+                    self.assertEqual(row, inspect_program(program))
+                    self.assertEqual(response.isError, not row['static_valid'])
+                    self.assertEqual(program, before)
+                dispatch.assert_not_called()
+                observe.assert_not_called()
+            self.assertEqual(list(Path(td).iterdir()), [])
+
     async def test_report_references_require_explicit_opt_in_without_replay(self):
         from runtime.cli_v1.receipt_references import REPORT_REF, expand_receipt
         with tempfile.TemporaryDirectory() as td:
@@ -112,11 +155,17 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIs(reread['operation_invoked'], False)
                 self.assertEqual(reread['call_id'], call_id)
                 self.assertEqual(reread['retained_call']['arguments']['program'], {})
+                self.assertTrue(reread['retained_call']['backend_attempted'])
+                self.assertIsNone(reread['retained_call']['persistence_failure'])
                 unknown = await server.call_tool('interface_results', {'call_id': '../outside'})
                 self.assertTrue(unknown.isError)
                 Path(td, call_id, 'report.json').unlink()
                 missing = await server.call_tool('interface_results', {'call_id': call_id})
-                self.assertEqual(json.loads(missing.content[0].text)['status'], 'receipt_unavailable')
+                missing_row = json.loads(missing.content[0].text)
+                self.assertEqual(missing_row['status'], 'receipt_unavailable')
+                self.assertTrue(missing_row['call']['backend_attempted'])
+                self.assertIsNone(missing_row['call']['persistence_failure'])
+                self.assertIs(missing_row['replay_allowed'], False)
                 dispatch.assert_called_once()
 
 
@@ -144,8 +193,13 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     await client.initialize()
                     listed = await client.list_tools()
                     self.assertEqual({tool.name for tool in listed.tools},
-                                     {'interface_observe', 'interface_dispatch', 'interface_results'})
+                                     {'interface_observe', 'interface_dispatch', 'interface_results', 'interface_validate'})
                     dispatch_tool = next(t for t in listed.tools if t.name == 'interface_dispatch')
+                    validation = await client.call_tool('interface_validate', {'program': {}})
+                    self.assertTrue(validation.isError)
+                    validation_row = json.loads(validation.content[0].text)
+                    self.assertIs(validation_row['static_valid'], False)
+                    self.assertEqual(validation_row['runtime_admission'], 'not_evaluated')
                     program_schema = dispatch_tool.inputSchema['properties']['program']
                     self.assertEqual(program_schema['type'], 'object')
                     for term in ('agent-interface/program-v1', 'expires_at_ns',
@@ -167,6 +221,9 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     # Real packaged transport: choose v3 only on explicit reread.
                     from runtime.cli_v1.receipt_references import REPORT_REF, expand_receipt
                     for tool in listed.tools:
+                        if tool.name == 'interface_validate':
+                            self.assertNotIn('report_refs', tool.inputSchema['properties'])
+                            continue
                         option = tool.inputSchema['properties']['report_refs']
                         self.assertEqual(option['type'], 'boolean')
                         self.assertIs(option['default'], False)
@@ -312,7 +369,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     await client.initialize()
                     listed = await client.list_tools()
                     self.assertEqual({tool.name for tool in listed.tools},
-                                     {'interface_observe', 'interface_dispatch', 'interface_results'})
+                                     {'interface_observe', 'interface_dispatch', 'interface_results', 'interface_validate'})
                     dispatch_tool = next(t for t in listed.tools if t.name == 'interface_dispatch')
                     program_schema = dispatch_tool.inputSchema['properties']['program']
                     self.assertEqual(program_schema['type'], 'object')
@@ -327,12 +384,17 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(row['image_status'], 'no_observation')
 
     async def test_report_persistence_failure_retains_result_without_replay(self):
+        from runtime.cli_v1.attempt import _write_json
         with tempfile.TemporaryDirectory() as td:
             server = create_server({'fixture': 123}, td)
             report = {'schema': 'agent-interface/runtime-dispatch-result-v1',
                       'status': 'returned', 'result': {'status': 'completed'}}
+            def write(path, value):
+                if path.name == 'report.json':
+                    raise OSError('disk full')
+                return _write_json(path, value)
             with patch('runtime.cli_v1.mcp_server.dispatch', return_value=report) as dispatch, patch(
-                    'pathlib.Path.write_bytes', side_effect=OSError('disk full')):
+                    'runtime.cli_v1.mcp_server._write_json', side_effect=write):
                 reply = await server.call_tool('interface_dispatch', {
                     'program': {}, 'current_observation_seq': 0, 'current_binding_revision': 0})
             dispatch.assert_called_once()
@@ -340,6 +402,67 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertIn('disk full', row['persistence_error'])
             self.assertEqual(row['outcome_summary']['execution_status'], 'completed')
             self.assertEqual(row['receipt']['source']['raw_report'], report)
+            self.assertTrue(reply.isError)
+            self.assertIs(row['replay_allowed'], False)
+            retained = await server.call_tool('interface_results', {'call_id': row['call_id']})
+            missing = json.loads(retained.content[0].text)
+            self.assertEqual(missing['status'], 'receipt_unavailable')
+            self.assertTrue(missing['call']['backend_attempted'])
+            self.assertEqual(missing['call']['persistence_failure'], 'report')
+            self.assertIs(missing['operation_invoked'], False)
+            self.assertIs(missing['replay_allowed'], False)
+
+    async def test_request_persistence_failure_is_explicit_and_releases_busy_lock(self):
+        with tempfile.TemporaryDirectory() as td:
+            server = create_server({'fixture': 123}, td)
+            args = {'program': {}, 'current_observation_seq': 0, 'current_binding_revision': 0}
+            with patch('runtime.cli_v1.mcp_server._write_json', side_effect=OSError('disk full')), \
+                 patch('runtime.cli_v1.mcp_server.dispatch') as dispatch:
+                reply = await server.call_tool('interface_dispatch', args)
+                row = json.loads(reply.content[0].text)
+                self.assertTrue(reply.isError)
+                self.assertEqual(row['error'], 'REQUEST_PERSISTENCE_FAILED')
+                self.assertIs(row['operation_invoked'], False)
+                dispatch.assert_not_called()
+            retained = await server.call_tool('interface_results', {'call_id': row['call_id']})
+            missing = json.loads(retained.content[0].text)
+            self.assertEqual(missing['status'], 'receipt_unavailable')
+            self.assertIs(missing['call']['backend_attempted'], False)
+            self.assertEqual(missing['call']['persistence_failure'], 'request')
+            self.assertIs(missing['replay_allowed'], False)
+            with patch('runtime.cli_v1.mcp_server.dispatch', return_value={'status': 'returned'}) as dispatch:
+                later = await server.call_tool('interface_dispatch', args)
+                self.assertFalse(later.isError)
+                dispatch.assert_called_once()
+
+    async def test_report_replace_failure_keeps_temporary_bytes_without_claiming_receipt(self):
+        import os
+        original_replace = os.replace
+        report = {'schema': 'agent-interface/runtime-dispatch-result-v1',
+                  'status': 'returned', 'result': {'status': 'completed'}}
+        def replace(source, destination):
+            if Path(destination).name == 'report.json':
+                raise OSError('report replacement unavailable')
+            return original_replace(source, destination)
+        with tempfile.TemporaryDirectory() as td:
+            server = create_server({'fixture': 123}, td)
+            with patch('runtime.cli_v1.attempt.os.replace', side_effect=replace), \
+                 patch('runtime.cli_v1.mcp_server.dispatch', return_value=report) as dispatch:
+                response = await server.call_tool('interface_dispatch', {
+                    'program': {}, 'current_observation_seq': 0, 'current_binding_revision': 0})
+                row = json.loads(response.content[0].text)
+                directory = Path(row['call_directory'])
+                temporary = directory / '.report.json.tmp'
+                before = temporary.read_bytes()
+                self.assertEqual(json.loads(before), report)
+                self.assertFalse((directory / 'report.json').exists())
+                self.assertTrue((directory / 'request.json').exists())
+                self.assertTrue(response.isError)
+                self.assertEqual(row['outcome_summary']['execution_status'], 'completed')
+                retained = await server.call_tool('interface_results', {'call_id': row['call_id']})
+                self.assertEqual(json.loads(retained.content[0].text)['status'], 'receipt_unavailable')
+                self.assertEqual(temporary.read_bytes(), before)
+                dispatch.assert_called_once()
 
     async def test_dispatch_once_preserves_failure_and_fixed_targets(self):
         with tempfile.TemporaryDirectory() as td:

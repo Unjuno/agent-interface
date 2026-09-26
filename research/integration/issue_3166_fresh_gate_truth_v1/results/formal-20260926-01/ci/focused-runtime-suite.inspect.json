@@ -1,0 +1,221 @@
+[
+    {
+        "Id": "1ffc6796a5afc252b78df81a266142171d6e05dbb9badf947d05ab36f8230fe5",
+        "Created": "2026-09-26T14:52:46.831753217Z",
+        "Path": "/bin/sh",
+        "Args": [
+            "-c",
+            "Xvfb :153 -screen 0 1024x768x24 -nolisten tcp -ac >/tmp/ci-xvfb.log 2>&1 & xvfb_pid=$!; sleep 0.3; DISPLAY=:153 PYTHONPATH=/repo /usr/bin/python3 -B -m unittest runtime.core_v1.test_contract runtime.core_v1.test_platform_probe runtime.selector_v1.test_selector runtime.backends.x11_v1.test_integration runtime.cli_v1.test_golden_v3 runtime.cli_v1.test_native_golden_boundary; rc=$?; kill \"$xvfb_pid\" 2>/dev/null || true; wait \"$xvfb_pid\" 2>/dev/null || true; exit \"$rc\""
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 1,
+            "Error": "",
+            "StartedAt": "2026-09-26T14:52:46.941272509Z",
+            "FinishedAt": "2026-09-26T14:52:47.435604563Z"
+        },
+        "Image": "sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+        "ResolvConfPath": "/var/lib/docker/containers/1ffc6796a5afc252b78df81a266142171d6e05dbb9badf947d05ab36f8230fe5/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/1ffc6796a5afc252b78df81a266142171d6e05dbb9badf947d05ab36f8230fe5/hostname",
+        "HostsPath": "/var/lib/docker/containers/1ffc6796a5afc252b78df81a266142171d6e05dbb9badf947d05ab36f8230fe5/hosts",
+        "LogPath": "/var/lib/docker/containers/1ffc6796a5afc252b78df81a266142171d6e05dbb9badf947d05ab36f8230fe5/1ffc6796a5afc252b78df81a266142171d6e05dbb9badf947d05ab36f8230fe5-json.log",
+        "Name": "/issue3166-current-main-focused-runtime-tests-20260926",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "/tmp/agent-interface-3924c:/repo:ro"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "5",
+                    "max-size": "20m"
+                }
+            },
+            "NetworkMode": "none",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": [
+                "ALL"
+            ],
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": true,
+            "SecurityOpt": [
+                "no-new-privileges"
+            ],
+            "Tmpfs": {
+                "/tmp": "rw,noexec,nosuid,size=512m"
+            },
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 8409579520,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 2147483648,
+            "NanoCpus": 2000000000,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 4294967296,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": 256,
+            "Ulimits": [],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/tmp/agent-interface-3924c",
+                "Destination": "/repo",
+                "Mode": "ro",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "1ffc6796a5af",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "PYTHONUNBUFFERED=1"
+            ],
+            "Cmd": [
+                "-c",
+                "Xvfb :153 -screen 0 1024x768x24 -nolisten tcp -ac >/tmp/ci-xvfb.log 2>&1 & xvfb_pid=$!; sleep 0.3; DISPLAY=:153 PYTHONPATH=/repo /usr/bin/python3 -B -m unittest runtime.core_v1.test_contract runtime.core_v1.test_platform_probe runtime.selector_v1.test_selector runtime.backends.x11_v1.test_integration runtime.cli_v1.test_golden_v3 runtime.cli_v1.test_native_golden_boundary; rc=$?; kill \"$xvfb_pid\" 2>/dev/null || true; wait \"$xvfb_pid\" 2>/dev/null || true; exit \"$rc\""
+            ],
+            "Image": "sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+            "Volumes": null,
+            "WorkingDir": "/repo",
+            "Entrypoint": [
+                "/bin/sh"
+            ],
+            "Labels": {
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "NetworkSettings": {
+            "SandboxID": "",
+            "SandboxKey": "",
+            "Ports": {},
+            "Networks": {
+                "none": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "be4d057ee3ffc26baf9220196f1b89ed6bef1d8bcc10973725f59293e4e88c31",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": null
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:9190971341d117ae2376af24ef2684c7ee9f781b2267f46a4eed64530d18264d",
+            "size": 863,
+            "platform": {
+                "architecture": "arm64",
+                "os": "linux"
+            }
+        }
+    }
+]

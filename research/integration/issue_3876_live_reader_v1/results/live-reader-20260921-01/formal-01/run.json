@@ -1,0 +1,340 @@
+{
+  "argv": [
+    "/usr/local/bin/python3",
+    "research/live_control/interactive_v17.py",
+    "--app",
+    "calc",
+    "--seed",
+    "387601",
+    "--out",
+    "/evidence/formal-01/producer",
+    "--presentation",
+    "full"
+  ],
+  "event_names_stdout": [
+    "ready",
+    "observation",
+    "command",
+    "clock",
+    "command",
+    "independent_evaluation"
+  ],
+  "image_id": "sha256:cda81a9061bf72cad538ca0eca3094bad66d8afba21c6f69e0cd80e904c49d72",
+  "input_commands_sent": [
+    {
+      "op": "clock"
+    },
+    {
+      "op": "finish"
+    }
+  ],
+  "live_reader_producer_alive": true,
+  "producer_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "reader1": {
+    "acknowledged": false,
+    "authority": "none",
+    "input_dispatched": false,
+    "next_cursor": {
+      "next_sequence": 5,
+      "offset": 3643,
+      "prefix_sha256": "5729722d6240a768b05929cd516abee455be43923359159d11ecf0bce2373587",
+      "schema": "agent-interface/experimental-read-cursor-v1",
+      "stream_id": "interactive-v17-calc-387601-epoch-01"
+    },
+    "problem": null,
+    "records": [
+      {
+        "app": "calc",
+        "decision_evidence_schema": {
+          "authority": "none; ordinary admission required",
+          "fields": {
+            "delivery_id": "successfully flushed observation or review delivery ID",
+            "observation_sequence": "must equal expected_sequence",
+            "producer": [
+              "assistant",
+              "scripted",
+              "human"
+            ]
+          },
+          "required_for": "submit"
+        },
+        "delivery_id": "delivery:1",
+        "emit_started_ns": 1672187356476,
+        "event": "ready",
+        "goal": {
+          "a": 554,
+          "b": 273,
+          "dx": 30,
+          "setup_readiness_captures": 12,
+          "token": "t387601"
+        },
+        "guided_fields": [
+          "points",
+          "duration_ms",
+          "reply_timeout_ms",
+          "max_updates",
+          "feedback_delay_ms"
+        ],
+        "operations": [
+          "submit",
+          "pointer_reply",
+          "cancel",
+          "clock",
+          "finish"
+        ],
+        "presentation": "full",
+        "reply_fields": [
+          "ticket",
+          "sequence",
+          "command"
+        ],
+        "servo_schema": {
+          "completion": "non-goal outcome gives needs_decision; local goal is not independent task success",
+          "fixed": {
+            "feedback_delay_ms": 80,
+            "max_correction_px": 24,
+            "reply_timeout_ms": 1000,
+            "search_radius_px": 32,
+            "tolerance_px": 1
+          },
+          "op": "pointer_servo",
+          "outcomes": [
+            "local_goal_reached",
+            "lost",
+            "ambiguous",
+            "invalid_frame",
+            "same_observation",
+            "update_limit"
+          ],
+          "program_constraint": "must be the only step",
+          "required": {
+            "box": "[x,y,width,height] integers; size 4..96; spatial detail required",
+            "duration_ms": "integer 1..5000; initial path only",
+            "max_corrections": "integer 1..3",
+            "points": "2..32 objects {x: integer, y: integer}; within source frame",
+            "source_sequence": "integer; latest observation sequence",
+            "target_delta": "[dx,dy] integers; each -32..32"
+          }
+        },
+        "task": "Enter a in A1 and b in A2, then save sheet.xlsx in Excel format."
+      },
+      {
+        "capture_ms": 3.929759,
+        "capture_ns": 1672196795970,
+        "context": [
+          [
+            "windows",
+            "0x00800325  0 56c926416dfb sheet.xlsx - LibreOffice Calc\n"
+          ],
+          [
+            "active_window",
+            8389413
+          ]
+        ],
+        "context_ns": 1672201462467,
+        "delivery_id": "delivery:2",
+        "emit_started_ns": 1672247148406,
+        "event": "observation",
+        "exact": true,
+        "focus_samples_match": true,
+        "id": "initial",
+        "image": "/evidence/formal-01/producer/001.png",
+        "image_prepare_ns": 30618630,
+        "image_ready_ns": 1672245057956,
+        "image_reused": false,
+        "input_focus_after": 8389413,
+        "input_focus_before": 8389413,
+        "input_state_after": {
+          "active_lease_deadline_ns": null,
+          "active_lease_time_valid": false,
+          "cancel_requested": false,
+          "focus": 8389413,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "owner_id": "01383874c7d74884b50baee666dafcdd",
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "revision": 0,
+          "sample_finished_ns": 1672247113847,
+          "sample_started_ns": 1672246864650
+        },
+        "input_state_before": {
+          "active_lease_deadline_ns": null,
+          "active_lease_time_valid": false,
+          "cancel_requested": false,
+          "focus": 8389413,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "owner_id": "01383874c7d74884b50baee666dafcdd",
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "revision": 0,
+          "sample_finished_ns": 1672192152615,
+          "sample_started_ns": 1672191905573
+        },
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "owner_revision_unchanged": true,
+        "pointer_binding": {
+          "focus": 8389413,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ],
+          "surface": 8389413
+        },
+        "pointer_context_after": {
+          "focus": 8389413,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ],
+          "surface": 8389413
+        },
+        "pointer_context_before": {
+          "focus": 8389413,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ],
+          "surface": 8389413
+        },
+        "semantic_completion": "unknown",
+        "sequence": 1,
+        "step": 0,
+        "wire_bytes": 78860
+      },
+      {
+        "command": {
+          "op": "clock"
+        },
+        "delivery_id": "delivery:3",
+        "emit_started_ns": 1672250010387,
+        "event": "command",
+        "received_ns": 1672250008821
+      },
+      {
+        "delivery_id": "delivery:4",
+        "emit_started_ns": 1672252453092,
+        "event": "clock",
+        "runtime_ns": 1672252450268,
+        "sequence": 1
+      }
+    ],
+    "schema": "agent-interface/experimental-inbox-read-v1",
+    "tail_state": "end"
+  },
+  "reader2": {
+    "acknowledged": false,
+    "authority": "none",
+    "input_dispatched": false,
+    "next_cursor": {
+      "next_sequence": 7,
+      "offset": 3954,
+      "prefix_sha256": "46a495d982fa4fe1dc410a68dc1ae09e6a35ab6795421979c516c09f3f1ae384",
+      "schema": "agent-interface/experimental-read-cursor-v1",
+      "stream_id": "interactive-v17-calc-387601-epoch-01"
+    },
+    "problem": null,
+    "records": [
+      {
+        "command": {
+          "op": "finish"
+        },
+        "delivery_id": "delivery:5",
+        "emit_started_ns": 1672369192077,
+        "event": "command",
+        "received_ns": 1672369188850
+      },
+      {
+        "actual": [
+          null,
+          null
+        ],
+        "delivery_id": "delivery:6",
+        "emit_started_ns": 1675383095133,
+        "event": "independent_evaluation",
+        "known_ns": 1675383090601,
+        "success": false
+      }
+    ],
+    "schema": "agent-interface/experimental-inbox-read-v1",
+    "tail_state": "end"
+  },
+  "reader3": {
+    "acknowledged": false,
+    "authority": "none",
+    "input_dispatched": false,
+    "next_cursor": {
+      "next_sequence": 7,
+      "offset": 3954,
+      "prefix_sha256": "46a495d982fa4fe1dc410a68dc1ae09e6a35ab6795421979c516c09f3f1ae384",
+      "schema": "agent-interface/experimental-read-cursor-v1",
+      "stream_id": "interactive-v17-calc-387601-epoch-01"
+    },
+    "problem": null,
+    "records": [],
+    "schema": "agent-interface/experimental-inbox-read-v1",
+    "tail_state": "end"
+  },
+  "reader_cursor_files": [
+    "reader1_cursor.json",
+    "reader2_cursor.json",
+    "reader3_cursor.json"
+  ],
+  "returncode": 0,
+  "runtime": {
+    "executable": "/usr/local/bin/python3",
+    "finished_ns": 1789942894704511514,
+    "platform": "linux",
+    "python": "3.12.14 (main, Sep 19 2026, 01:05:48) [GCC 12.2.0]",
+    "started_ns": 1789942888091555121
+  },
+  "source_manifest": {
+    "live_control/delivery_ledger_v2.py": "9aba4584cc23457ccee0554b8dd6a0bd26ebbf9e35098975d7ea99f35e7c28b9",
+    "live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "live_control/input_owner.py": "a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3",
+    "live_control/input_owner_v2.py": "f706aaf812b566e6420536a32d00297d1ed92e84246be769d0a673235f232f8e",
+    "live_control/input_owner_v5.py": "ee72de489aa8da2f5276ab44927c5c13df777336dd3a8b88b1a77be53e6e2ea7",
+    "live_control/input_owner_v9.py": "ca4d82d22765d6e4b8eb23f5795a78745ef1839a84a514ba61b7bbdbdb4869a2",
+    "live_control/interactive_v17.py": "5b325ab9351d3b8ac5282ccaa2cd574385b55153d6e5f1ccb7ee366a4bdb3420",
+    "live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "live_control/patch_servo.py": "994707fa490f8c836d02db7c399dfacbe7baf0f021764f25d7ea1fc2c05bbc29",
+    "live_control/pointer_reply_v2.py": "bac225ad8c8668e33918b1bb43cd4cae72821bf6cf86f6dadd226d2b23ab3dd0",
+    "live_control/presentation.py": "2dc74536a713cc9dd94f14cbc1eb383395bfa09275d30bc06aa5f7c6af6caed2",
+    "live_control/presentation_v2.py": "20601d379e651cc6340efe73ba6df7d9a23abe18409cee02e9919295b161d416",
+    "live_control/quiet_window.py": "4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0",
+    "live_control/receipt_journal.py": "5b2d4dcd68ff21b1ce87f92d1111eb6f359b94f0149cb86e59912e443dc222f4",
+    "live_control/session_v11.py": "59cf664e8fb8a9b735a0cdbbc2cb5969916eff57326d2154b365a16550f896a3",
+    "live_control/session_v12.py": "52c81ce7afb2fc4d945ef76919a235245b2741f845cf0883ad5109d6f6c31563",
+    "live_control/session_v13.py": "71b406bc6acbcd05b51196c9eaa5623a5cdfc78cce9c7edf6378529bdd3e997d",
+    "live_control/session_v15.py": "cc66baf54f6236d822ee13d50f093a8e4cac2787ba74673617f91ec946cb9b8f",
+    "live_control/session_v16.py": "7d53912c86793df95a11f5a1d22aa05c4c539153fdea31c04a870f7bcc2b6afa",
+    "live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+    "live_control/session_v5.py": "041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12",
+    "live_control/session_v6.py": "aafab2dda2f110b6dcd0b2aef13821fc21253681daf20b03eb7d66674eb21c60",
+    "live_control/session_v7.py": "68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11",
+    "live_control/session_v8.py": "508bc5441a08d7e403b1ec84cc08fd10d7d5f92f3f41549ef8af79f5b5de0943",
+    "live_control/session_v9.py": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0",
+    "live_control/visual_anchor.py": "98275ec4781976ee566872915b3e5403f9c548fac5b37f091b9a66f2329ada7b",
+    "observation_gating/exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944",
+    "observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+    "observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e",
+    "observation_tiles/tile_transport.py": "f74caf4f2bea59fe3a73b3f04975384d8520bb06c296765566c4dd2542ef12b0",
+    "real_apps_v1/real_app_suite_v1.py": "22b4cc86af68a0ae866fe24735faaeefa40c0e1722238ab8c04723e1a564db24"
+  },
+  "stdout_line_count": 6,
+  "stdout_sha256": "46a495d982fa4fe1dc410a68dc1ae09e6a35ab6795421979c516c09f3f1ae384",
+  "stream_id": "interactive-v17-calc-387601-epoch-01"
+}

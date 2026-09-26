@@ -1,0 +1,46 @@
+{
+  "allocation": "issue3555-xres-guard-orbstack-v2-formal-01",
+  "frozen_at_utc": "2026-09-20T16:13:33Z",
+  "repository": "Unjuno/agent-interface",
+  "branch": "research/issue-3662-xres-orbstack-v2",
+  "source_commit": "fe69162290557a56b52678c782f5b763001df196",
+  "source_tree": "031f85f5bbc94bbc209297a71a7e2a414bb5099e",
+  "platform": "linux/arm64",
+  "engine": {
+    "runtime": "OrbStack",
+    "docker_server_version": "29.4.0",
+    "architecture": "aarch64",
+    "context": "orbstack"
+  },
+  "image": {
+    "base": "agent-interface-3311-runtime-v2:20260920@sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916",
+    "derived_tag": "issue3662-xres-v2:formal",
+    "derived_id": "sha256:6efffbdf1526d51a1e4c7076b41ce021454986ac5fc5ef6ed971aca1e445ee0d",
+    "packages": {
+      "xvfb": "2:21.1.7-3+deb12u13",
+      "libxres1": "2:1.2.1-1",
+      "python3-tk": "3.11.2-3",
+      "xdotool": "1:3.20160805.1-5"
+    },
+    "xres_protocol": "1.2",
+    "xdotool_version": "3.20160805.1"
+  },
+  "network": "none",
+  "display": ":91",
+  "xvfb": ["Xvfb", ":91", "-screen", "0", "800x600x24", "-nolisten", "tcp", "-ac"],
+  "source_mount": "read-only:/work/repo (experiment directory)",
+  "output_mount": "read-write:/work/out (artifacts/formal_01; unique and initially absent)",
+  "formal_runner": "python3 /work/repo/src/formal_runner.py (exactly once)",
+  "auditor": "python3 /work/repo/src/audit.py /work/out/raw.json --freeze /work/repo/FREEZE.json --output /work/out/audit.json (separate container invocation)",
+  "input_policy": "No input until source/image freeze and same-XID/geometry/pixels plus distinct PID/start_ticks are verified. If stale identity is admitted, stop without emitting input or running positive control.",
+  "source_sha256": {
+    "Dockerfile": "22253d965159b2682b74d2ae35abfecb7a8c0f3b0c05732bfa0e3d3248677d2a",
+    "README.md": "e4213a87b18fb467c375c6392bd0dcb4cc43186984fe983626c6fa71537bf7bc",
+    "src/audit.py": "464e2a8dc14f41760639e37bbe6c0cfca2e8adb66d2fe0c007cb4c74b33136e6",
+    "src/fixture_window.py": "90aae4f87eb0c03401852cdee5aa05513ec3963d26a08ece9dd6e5a4e71abae2",
+    "src/formal_runner.py": "4b57191603f2dc86051baffa480f5410bbee822e36d3aea4208791d3e7983cb9",
+    "src/incarnation_guard.py": "9086809b5e38d22a244a1b7b4604aeecc655f00eab1006b49475d8d266d6dce4",
+    "src/test_guard.py": "b2123f06508b6c610e40ed9fb9736b980159aab9cde7f3dc882debf71ed0f0e6",
+    "src/xres_owner.c": "93c65a81e7cffc9f3fc23c8f19e95968a7faf569c7b20c5398140b65656f5835"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "cactus-needle3-formal-result-manifest-v1",
+  "allocation": "cactus-needle3-base-structured-action-20260926-01",
+  "source_commit": "84f6c74ab8b48e1807eb7c7b0c72e05c7f516e6f",
+  "freeze_sha256": "ae7816be51d4094dace23f44abbb8031bc28db2b8921a193a1400fe6f98dd265",
+  "formal_started_at_utc": "2026-09-26T15:19:37.246113+00:00",
+  "formal_finished_at_utc": "2026-09-26T15:20:48.143853+00:00",
+  "formal_invocations": 1,
+  "formal_host_exit_code": 0,
+  "formal_container_id": "5caad8e1b17d3301900215e09653015ab892e69cb5deb458b868cb9bcf9aef71",
+  "formal_result": {
+    "decision": "FAIL_CACTUS_NEEDLE3_YIELD_BOUNDARY",
+    "model_decisions": 7,
+    "cold_model_init_ms": 4250.147553,
+    "warm_p95_ms": 10897.878032,
+    "cgroup_memory_peak_bytes": 182272000,
+    "network_disabled": true,
+    "telemetry_disabled": true,
+    "cuda_visible_devices": "-1"
+  },
+  "independent_audit": {
+    "report_file": "audit.json",
+    "report_sha256": "26dadf5a4853c5436f7b9f0b759eb68ccd91c7fe7e3610694e6723dd48cae481",
+    "decision": "FAIL_CACTUS_NEEDLE3_YIELD_BOUNDARY",
+    "report_errors": [],
+    "auditor_stderr_bytes": 0,
+    "outer_shell_exit_code": 2,
+    "outer_shell_diagnostic": "exit: Illegal number: \\",
+    "auditor_reruns": 0
+  },
+  "files_sha256": {
+    "audit.json": "26dadf5a4853c5436f7b9f0b759eb68ccd91c7fe7e3610694e6723dd48cae481",
+    "audit.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "container.cid": "8a07036f1d545fa07bcee96d02f6facf20a2e81458e9dfba8b042b82c8984623",
+    "docker.stderr.log": "16e16d01c0970ec1fd15cd48fd10a53cdf1431f9904f14e780c249c38dea54be",
+    "docker.stdout.log": "b73df6c360df0cb0d6c1137cc6bafe0de813533f5392a86a5c8dbd3d41303848",
+    "formal-result.json": "b640c1ba41bd12eb483c9fb61ac3d9aa49d600e72f33f930355a4376f26cd7fc",
+    "pip-client.log": "9be501fa7a8f0e12aca33b83ee7ae28fb77ed64efb69d0b418dcdb4f93cc34cd",
+    "pip-engine.log": "400c2cfd4bdfe09275d7967300eaa0e1fbf9a360019c3c70d5f5ea47bb501a87"
+  }
+}

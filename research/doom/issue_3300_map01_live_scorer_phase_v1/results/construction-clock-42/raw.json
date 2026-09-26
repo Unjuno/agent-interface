@@ -1,0 +1,1925 @@
+[
+  {
+    "advancing_api_calls": 0,
+    "anchors": [],
+    "closed": true,
+    "final_api_tic": 1,
+    "initial_api_tic": 1,
+    "mode": "Mode.ASYNC_SPECTATOR",
+    "passive_end_ns": 55515810061351,
+    "passive_start_ns": 55514280787640,
+    "post_end_ns": 55515967671058,
+    "repetition": 0,
+    "samples": [
+      {
+        "api_tic": 1,
+        "end_ns": 55514280810974,
+        "start_ns": 55514280794682
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55514332598857,
+        "start_ns": 55514332575606
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55514392852455,
+        "start_ns": 55514392808912
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55514451695990,
+        "start_ns": 55514451671197
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55514509740822,
+        "start_ns": 55514509676778
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55514565672017,
+        "start_ns": 55514565633349
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55514624221747,
+        "start_ns": 55514624168078
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55514681382373,
+        "start_ns": 55514681305202
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55514741081821,
+        "start_ns": 55514741046111
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55514799301911,
+        "start_ns": 55514799275410
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55514857260656,
+        "start_ns": 55514857235905
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55514909399930,
+        "start_ns": 55514909372845
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55514965662431,
+        "start_ns": 55514965628013
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55515024479298,
+        "start_ns": 55515024424921
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55515076999589,
+        "start_ns": 55515076925794
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55515129252284,
+        "start_ns": 55515129192698
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55515184740751,
+        "start_ns": 55515184680457
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55515243740585,
+        "start_ns": 55515243682582
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55515302626538,
+        "start_ns": 55515302558868
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55515354960279,
+        "start_ns": 55515354882608
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55515406547402,
+        "start_ns": 55515406498442
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55515458995315,
+        "start_ns": 55515458909853
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55515518891606,
+        "start_ns": 55515518815769
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55515577269994,
+        "start_ns": 55515577206783
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55515633896929,
+        "start_ns": 55515633847802
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55515693759635,
+        "start_ns": 55515693688715
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55515752127857,
+        "start_ns": 55515752070688
+      }
+    ],
+    "scorer_api_trace": [
+      {
+        "args": [],
+        "end_ns": 55515810798051,
+        "name": "get_episode_time",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55515810715714,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": 1
+      },
+      {
+        "args": [],
+        "end_ns": 55515810909014,
+        "name": "is_episode_finished",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55515810896138,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": false
+      },
+      {
+        "args": [],
+        "end_ns": 55515810948141,
+        "name": "is_player_dead",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55515810942015,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": false
+      },
+      {
+        "args": [
+          "KILLCOUNT"
+        ],
+        "end_ns": 55515810994809,
+        "name": "get_game_variable",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55515810976267,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": 0.0
+      },
+      {
+        "args": [
+          "DEATHCOUNT"
+        ],
+        "end_ns": 55515811088189,
+        "name": "get_game_variable",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55515811079855,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": 0.0
+      },
+      {
+        "args": [],
+        "end_ns": 55515811250238,
+        "name": "get_ticrate",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55515811233529,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": 35
+      },
+      {
+        "args": [],
+        "end_ns": 55515811290406,
+        "name": "is_episode_timeout_reached",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55515811284031,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": false
+      },
+      {
+        "args": [],
+        "end_ns": 55515811379285,
+        "name": "get_episode_time",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55515811360034,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": 1
+      }
+    ],
+    "scorer_end_ns": 55515811483623,
+    "scorer_return": {
+      "death_count": 0,
+      "episode_finished": false,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false,
+      "sample_ns": 55515811397994,
+      "schema": "independent-progress-sample-v2"
+    },
+    "scorer_start_ns": 55515810600000,
+    "scorer_status": "returned",
+    "setup": "initialized",
+    "tic_entries": [
+      {
+        "gametic": 1,
+        "monotonic_ns": 55514141990491,
+        "pid": 7,
+        "viz_time": 1
+      },
+      {
+        "gametic": 2,
+        "monotonic_ns": 55514180051544,
+        "pid": 7,
+        "viz_time": 2
+      },
+      {
+        "gametic": 3,
+        "monotonic_ns": 55514206434154,
+        "pid": 7,
+        "viz_time": 3
+      },
+      {
+        "gametic": 4,
+        "monotonic_ns": 55514254676209,
+        "pid": 7,
+        "viz_time": 4
+      },
+      {
+        "gametic": 5,
+        "monotonic_ns": 55514255831011,
+        "pid": 7,
+        "viz_time": 5
+      },
+      {
+        "gametic": 6,
+        "monotonic_ns": 55514293888357,
+        "pid": 7,
+        "viz_time": 6
+      },
+      {
+        "gametic": 7,
+        "monotonic_ns": 55514315794055,
+        "pid": 7,
+        "viz_time": 7
+      },
+      {
+        "gametic": 8,
+        "monotonic_ns": 55514349307320,
+        "pid": 7,
+        "viz_time": 8
+      },
+      {
+        "gametic": 9,
+        "monotonic_ns": 55514374194070,
+        "pid": 7,
+        "viz_time": 9
+      },
+      {
+        "gametic": 10,
+        "monotonic_ns": 55514408353989,
+        "pid": 7,
+        "viz_time": 10
+      },
+      {
+        "gametic": 11,
+        "monotonic_ns": 55514432333948,
+        "pid": 7,
+        "viz_time": 11
+      },
+      {
+        "gametic": 12,
+        "monotonic_ns": 55514457417374,
+        "pid": 7,
+        "viz_time": 12
+      },
+      {
+        "gametic": 13,
+        "monotonic_ns": 55514493742224,
+        "pid": 7,
+        "viz_time": 13
+      },
+      {
+        "gametic": 14,
+        "monotonic_ns": 55514518809024,
+        "pid": 7,
+        "viz_time": 14
+      },
+      {
+        "gametic": 15,
+        "monotonic_ns": 55514548269022,
+        "pid": 7,
+        "viz_time": 15
+      },
+      {
+        "gametic": 16,
+        "monotonic_ns": 55514570375646,
+        "pid": 7,
+        "viz_time": 16
+      },
+      {
+        "gametic": 17,
+        "monotonic_ns": 55514599542048,
+        "pid": 7,
+        "viz_time": 17
+      },
+      {
+        "gametic": 18,
+        "monotonic_ns": 55514629199847,
+        "pid": 7,
+        "viz_time": 18
+      },
+      {
+        "gametic": 19,
+        "monotonic_ns": 55514656412744,
+        "pid": 7,
+        "viz_time": 19
+      },
+      {
+        "gametic": 20,
+        "monotonic_ns": 55514691094145,
+        "pid": 7,
+        "viz_time": 20
+      },
+      {
+        "gametic": 21,
+        "monotonic_ns": 55514714243525,
+        "pid": 7,
+        "viz_time": 21
+      },
+      {
+        "gametic": 22,
+        "monotonic_ns": 55514741210369,
+        "pid": 7,
+        "viz_time": 22
+      },
+      {
+        "gametic": 23,
+        "monotonic_ns": 55514777537677,
+        "pid": 7,
+        "viz_time": 23
+      },
+      {
+        "gametic": 24,
+        "monotonic_ns": 55514807361359,
+        "pid": 7,
+        "viz_time": 24
+      },
+      {
+        "gametic": 25,
+        "monotonic_ns": 55514833300698,
+        "pid": 7,
+        "viz_time": 25
+      },
+      {
+        "gametic": 26,
+        "monotonic_ns": 55514858558882,
+        "pid": 7,
+        "viz_time": 26
+      },
+      {
+        "gametic": 27,
+        "monotonic_ns": 55514889026342,
+        "pid": 7,
+        "viz_time": 27
+      },
+      {
+        "gametic": 28,
+        "monotonic_ns": 55514920575893,
+        "pid": 7,
+        "viz_time": 28
+      },
+      {
+        "gametic": 29,
+        "monotonic_ns": 55514947457733,
+        "pid": 7,
+        "viz_time": 29
+      },
+      {
+        "gametic": 30,
+        "monotonic_ns": 55514970602530,
+        "pid": 7,
+        "viz_time": 30
+      },
+      {
+        "gametic": 31,
+        "monotonic_ns": 55514999576756,
+        "pid": 7,
+        "viz_time": 31
+      },
+      {
+        "gametic": 32,
+        "monotonic_ns": 55515033262070,
+        "pid": 7,
+        "viz_time": 32
+      },
+      {
+        "gametic": 33,
+        "monotonic_ns": 55515063972417,
+        "pid": 7,
+        "viz_time": 33
+      },
+      {
+        "gametic": 34,
+        "monotonic_ns": 55515093597589,
+        "pid": 7,
+        "viz_time": 34
+      },
+      {
+        "gametic": 35,
+        "monotonic_ns": 55515118905900,
+        "pid": 7,
+        "viz_time": 35
+      },
+      {
+        "gametic": 36,
+        "monotonic_ns": 55515149811964,
+        "pid": 7,
+        "viz_time": 36
+      },
+      {
+        "gametic": 37,
+        "monotonic_ns": 55515173868926,
+        "pid": 7,
+        "viz_time": 37
+      },
+      {
+        "gametic": 38,
+        "monotonic_ns": 55515207720623,
+        "pid": 7,
+        "viz_time": 38
+      },
+      {
+        "gametic": 39,
+        "monotonic_ns": 55515235591925,
+        "pid": 7,
+        "viz_time": 39
+      },
+      {
+        "gametic": 40,
+        "monotonic_ns": 55515257437745,
+        "pid": 7,
+        "viz_time": 40
+      },
+      {
+        "gametic": 41,
+        "monotonic_ns": 55515296792399,
+        "pid": 7,
+        "viz_time": 41
+      },
+      {
+        "gametic": 42,
+        "monotonic_ns": 55515318140906,
+        "pid": 7,
+        "viz_time": 42
+      },
+      {
+        "gametic": 43,
+        "monotonic_ns": 55515350482576,
+        "pid": 7,
+        "viz_time": 43
+      },
+      {
+        "gametic": 44,
+        "monotonic_ns": 55515374248776,
+        "pid": 7,
+        "viz_time": 44
+      },
+      {
+        "gametic": 45,
+        "monotonic_ns": 55515406852541,
+        "pid": 7,
+        "viz_time": 45
+      },
+      {
+        "gametic": 46,
+        "monotonic_ns": 55515435151529,
+        "pid": 7,
+        "viz_time": 46
+      },
+      {
+        "gametic": 47,
+        "monotonic_ns": 55515456728712,
+        "pid": 7,
+        "viz_time": 47
+      },
+      {
+        "gametic": 48,
+        "monotonic_ns": 55515491085474,
+        "pid": 7,
+        "viz_time": 48
+      },
+      {
+        "gametic": 49,
+        "monotonic_ns": 55515520766274,
+        "pid": 7,
+        "viz_time": 49
+      },
+      {
+        "gametic": 50,
+        "monotonic_ns": 55515542507965,
+        "pid": 7,
+        "viz_time": 50
+      },
+      {
+        "gametic": 51,
+        "monotonic_ns": 55515577555466,
+        "pid": 7,
+        "viz_time": 51
+      },
+      {
+        "gametic": 52,
+        "monotonic_ns": 55515605473103,
+        "pid": 7,
+        "viz_time": 52
+      },
+      {
+        "gametic": 53,
+        "monotonic_ns": 55515634413411,
+        "pid": 7,
+        "viz_time": 53
+      },
+      {
+        "gametic": 54,
+        "monotonic_ns": 55515665430688,
+        "pid": 7,
+        "viz_time": 54
+      },
+      {
+        "gametic": 55,
+        "monotonic_ns": 55515691560702,
+        "pid": 7,
+        "viz_time": 55
+      },
+      {
+        "gametic": 56,
+        "monotonic_ns": 55515715711669,
+        "pid": 7,
+        "viz_time": 56
+      },
+      {
+        "gametic": 57,
+        "monotonic_ns": 55515749798918,
+        "pid": 7,
+        "viz_time": 57
+      },
+      {
+        "gametic": 58,
+        "monotonic_ns": 55515773114889,
+        "pid": 7,
+        "viz_time": 58
+      },
+      {
+        "gametic": 59,
+        "monotonic_ns": 55515802087115,
+        "pid": 7,
+        "viz_time": 59
+      },
+      {
+        "gametic": 60,
+        "monotonic_ns": 55515837119115,
+        "pid": 7,
+        "viz_time": 60
+      },
+      {
+        "gametic": 61,
+        "monotonic_ns": 55515861309250,
+        "pid": 7,
+        "viz_time": 61
+      },
+      {
+        "gametic": 62,
+        "monotonic_ns": 55515891589078,
+        "pid": 7,
+        "viz_time": 62
+      },
+      {
+        "gametic": 63,
+        "monotonic_ns": 55515920762605,
+        "pid": 7,
+        "viz_time": 63
+      },
+      {
+        "gametic": 64,
+        "monotonic_ns": 55515948518859,
+        "pid": 7,
+        "viz_time": 64
+      }
+    ],
+    "ticrate": 35,
+    "vizdoom_version": "1.3.0",
+    "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+  },
+  {
+    "advancing_api_calls": 0,
+    "anchors": [],
+    "closed": true,
+    "final_api_tic": 1,
+    "initial_api_tic": 1,
+    "mode": "Mode.ASYNC_SPECTATOR",
+    "passive_end_ns": 55517881146595,
+    "passive_start_ns": 55516324435268,
+    "post_end_ns": 55518037768716,
+    "repetition": 1,
+    "samples": [
+      {
+        "api_tic": 1,
+        "end_ns": 55516324498230,
+        "start_ns": 55516324471520
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55516381846072,
+        "start_ns": 55516381809820
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55516442095462,
+        "start_ns": 55516442059794
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55516502201012,
+        "start_ns": 55516502140718
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55516556310000,
+        "start_ns": 55516556224663
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55516607655238,
+        "start_ns": 55516607480271
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55516668204058,
+        "start_ns": 55516668148222
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55516724894954,
+        "start_ns": 55516724833701
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55516782455597,
+        "start_ns": 55516782394678
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55516843863790,
+        "start_ns": 55516843792078
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55516902916834,
+        "start_ns": 55516902836497
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55516959187628,
+        "start_ns": 55516957861401
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55517018837907,
+        "start_ns": 55517018779572
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55517074309040,
+        "start_ns": 55517074236370
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55517134265083,
+        "start_ns": 55517134191455
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55517193530929,
+        "start_ns": 55517193190330
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55517251822356,
+        "start_ns": 55517251787396
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55517310470798,
+        "start_ns": 55517310434922
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55517365844843,
+        "start_ns": 55517365796841
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55517424354113,
+        "start_ns": 55517424298777
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55517483237275,
+        "start_ns": 55517483179439
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55517539952463,
+        "start_ns": 55517539885294
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55517595724151,
+        "start_ns": 55517595651856
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55517647902385,
+        "start_ns": 55517647829756
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55517706316692,
+        "start_ns": 55517706260856
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55517763412189,
+        "start_ns": 55517763183304
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55517823093679,
+        "start_ns": 55517822960548
+      }
+    ],
+    "scorer_api_trace": [
+      {
+        "args": [],
+        "end_ns": 55517881773456,
+        "name": "get_episode_time",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55517881725788,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": 1
+      },
+      {
+        "args": [],
+        "end_ns": 55517881853543,
+        "name": "is_episode_finished",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55517881844376,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": false
+      },
+      {
+        "args": [],
+        "end_ns": 55517881876169,
+        "name": "is_player_dead",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55517881870669,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": false
+      },
+      {
+        "args": [
+          "KILLCOUNT"
+        ],
+        "end_ns": 55517881912504,
+        "name": "get_game_variable",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55517881890920,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": 0.0
+      },
+      {
+        "args": [
+          "DEATHCOUNT"
+        ],
+        "end_ns": 55517881994050,
+        "name": "get_game_variable",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55517881983758,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": 0.0
+      },
+      {
+        "args": [],
+        "end_ns": 55517882121305,
+        "name": "get_ticrate",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55517882114888,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": 35
+      },
+      {
+        "args": [],
+        "end_ns": 55517882137389,
+        "name": "is_episode_timeout_reached",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55517882133473,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": false
+      },
+      {
+        "args": [],
+        "end_ns": 55517882151848,
+        "name": "get_episode_time",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55517882148723,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": 1
+      }
+    ],
+    "scorer_end_ns": 55517882238519,
+    "scorer_return": {
+      "death_count": 0,
+      "episode_finished": false,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false,
+      "sample_ns": 55517882159849,
+      "schema": "independent-progress-sample-v2"
+    },
+    "scorer_start_ns": 55517881602990,
+    "scorer_status": "returned",
+    "setup": "initialized",
+    "tic_entries": [
+      {
+        "gametic": 1,
+        "monotonic_ns": 55516174172226,
+        "pid": 19,
+        "viz_time": 1
+      },
+      {
+        "gametic": 2,
+        "monotonic_ns": 55516200455998,
+        "pid": 19,
+        "viz_time": 2
+      },
+      {
+        "gametic": 3,
+        "monotonic_ns": 55516226359002,
+        "pid": 19,
+        "viz_time": 3
+      },
+      {
+        "gametic": 4,
+        "monotonic_ns": 55516272830186,
+        "pid": 19,
+        "viz_time": 4
+      },
+      {
+        "gametic": 5,
+        "monotonic_ns": 55516287603895,
+        "pid": 19,
+        "viz_time": 5
+      },
+      {
+        "gametic": 6,
+        "monotonic_ns": 55516313837248,
+        "pid": 19,
+        "viz_time": 6
+      },
+      {
+        "gametic": 7,
+        "monotonic_ns": 55516340567039,
+        "pid": 19,
+        "viz_time": 7
+      },
+      {
+        "gametic": 8,
+        "monotonic_ns": 55516369223710,
+        "pid": 19,
+        "viz_time": 8
+      },
+      {
+        "gametic": 9,
+        "monotonic_ns": 55516397127846,
+        "pid": 19,
+        "viz_time": 9
+      },
+      {
+        "gametic": 10,
+        "monotonic_ns": 55516432640868,
+        "pid": 19,
+        "viz_time": 10
+      },
+      {
+        "gametic": 11,
+        "monotonic_ns": 55516457693042,
+        "pid": 19,
+        "viz_time": 11
+      },
+      {
+        "gametic": 12,
+        "monotonic_ns": 55516490252431,
+        "pid": 19,
+        "viz_time": 12
+      },
+      {
+        "gametic": 13,
+        "monotonic_ns": 55516515816128,
+        "pid": 19,
+        "viz_time": 13
+      },
+      {
+        "gametic": 14,
+        "monotonic_ns": 55516543904647,
+        "pid": 19,
+        "viz_time": 14
+      },
+      {
+        "gametic": 15,
+        "monotonic_ns": 55516569518847,
+        "pid": 19,
+        "viz_time": 15
+      },
+      {
+        "gametic": 16,
+        "monotonic_ns": 55516599844301,
+        "pid": 19,
+        "viz_time": 16
+      },
+      {
+        "gametic": 17,
+        "monotonic_ns": 55516631815496,
+        "pid": 19,
+        "viz_time": 17
+      },
+      {
+        "gametic": 18,
+        "monotonic_ns": 55516661839812,
+        "pid": 19,
+        "viz_time": 18
+      },
+      {
+        "gametic": 19,
+        "monotonic_ns": 55516692385568,
+        "pid": 19,
+        "viz_time": 19
+      },
+      {
+        "gametic": 20,
+        "monotonic_ns": 55516720229118,
+        "pid": 19,
+        "viz_time": 20
+      },
+      {
+        "gametic": 21,
+        "monotonic_ns": 55516741097519,
+        "pid": 19,
+        "viz_time": 21
+      },
+      {
+        "gametic": 22,
+        "monotonic_ns": 55516778594923,
+        "pid": 19,
+        "viz_time": 22
+      },
+      {
+        "gametic": 23,
+        "monotonic_ns": 55516804480801,
+        "pid": 19,
+        "viz_time": 23
+      },
+      {
+        "gametic": 24,
+        "monotonic_ns": 55516834955345,
+        "pid": 19,
+        "viz_time": 24
+      },
+      {
+        "gametic": 25,
+        "monotonic_ns": 55516860835724,
+        "pid": 19,
+        "viz_time": 25
+      },
+      {
+        "gametic": 26,
+        "monotonic_ns": 55516889852285,
+        "pid": 19,
+        "viz_time": 26
+      },
+      {
+        "gametic": 27,
+        "monotonic_ns": 55516915385814,
+        "pid": 19,
+        "viz_time": 27
+      },
+      {
+        "gametic": 28,
+        "monotonic_ns": 55516949474730,
+        "pid": 19,
+        "viz_time": 28
+      },
+      {
+        "gametic": 29,
+        "monotonic_ns": 55516977198109,
+        "pid": 19,
+        "viz_time": 29
+      },
+      {
+        "gametic": 30,
+        "monotonic_ns": 55517005561307,
+        "pid": 19,
+        "viz_time": 30
+      },
+      {
+        "gametic": 31,
+        "monotonic_ns": 55517035683252,
+        "pid": 19,
+        "viz_time": 31
+      },
+      {
+        "gametic": 32,
+        "monotonic_ns": 55517059548706,
+        "pid": 19,
+        "viz_time": 32
+      },
+      {
+        "gametic": 33,
+        "monotonic_ns": 55517090182507,
+        "pid": 19,
+        "viz_time": 33
+      },
+      {
+        "gametic": 34,
+        "monotonic_ns": 55517119992397,
+        "pid": 19,
+        "viz_time": 34
+      },
+      {
+        "gametic": 35,
+        "monotonic_ns": 55517147701274,
+        "pid": 19,
+        "viz_time": 35
+      },
+      {
+        "gametic": 36,
+        "monotonic_ns": 55517178186736,
+        "pid": 19,
+        "viz_time": 36
+      },
+      {
+        "gametic": 37,
+        "monotonic_ns": 55517201503498,
+        "pid": 19,
+        "viz_time": 37
+      },
+      {
+        "gametic": 38,
+        "monotonic_ns": 55517231744781,
+        "pid": 19,
+        "viz_time": 38
+      },
+      {
+        "gametic": 39,
+        "monotonic_ns": 55517258523450,
+        "pid": 19,
+        "viz_time": 39
+      },
+      {
+        "gametic": 40,
+        "monotonic_ns": 55517282606122,
+        "pid": 19,
+        "viz_time": 40
+      },
+      {
+        "gametic": 41,
+        "monotonic_ns": 55517315833874,
+        "pid": 19,
+        "viz_time": 41
+      },
+      {
+        "gametic": 42,
+        "monotonic_ns": 55517347229835,
+        "pid": 19,
+        "viz_time": 42
+      },
+      {
+        "gametic": 43,
+        "monotonic_ns": 55517374408522,
+        "pid": 19,
+        "viz_time": 43
+      },
+      {
+        "gametic": 44,
+        "monotonic_ns": 55517405190830,
+        "pid": 19,
+        "viz_time": 44
+      },
+      {
+        "gametic": 45,
+        "monotonic_ns": 55517426598756,
+        "pid": 19,
+        "viz_time": 45
+      },
+      {
+        "gametic": 46,
+        "monotonic_ns": 55517461620214,
+        "pid": 19,
+        "viz_time": 46
+      },
+      {
+        "gametic": 47,
+        "monotonic_ns": 55517489773487,
+        "pid": 19,
+        "viz_time": 47
+      },
+      {
+        "gametic": 48,
+        "monotonic_ns": 55517519308447,
+        "pid": 19,
+        "viz_time": 48
+      },
+      {
+        "gametic": 49,
+        "monotonic_ns": 55517546942321,
+        "pid": 19,
+        "viz_time": 49
+      },
+      {
+        "gametic": 50,
+        "monotonic_ns": 55517577625500,
+        "pid": 19,
+        "viz_time": 50
+      },
+      {
+        "gametic": 51,
+        "monotonic_ns": 55517597918250,
+        "pid": 19,
+        "viz_time": 51
+      },
+      {
+        "gametic": 52,
+        "monotonic_ns": 55517635498657,
+        "pid": 19,
+        "viz_time": 52
+      },
+      {
+        "gametic": 53,
+        "monotonic_ns": 55517658210434,
+        "pid": 19,
+        "viz_time": 53
+      },
+      {
+        "gametic": 54,
+        "monotonic_ns": 55517689893450,
+        "pid": 19,
+        "viz_time": 54
+      },
+      {
+        "gametic": 55,
+        "monotonic_ns": 55517720503458,
+        "pid": 19,
+        "viz_time": 55
+      },
+      {
+        "gametic": 56,
+        "monotonic_ns": 55517741550160,
+        "pid": 19,
+        "viz_time": 56
+      },
+      {
+        "gametic": 57,
+        "monotonic_ns": 55517777175728,
+        "pid": 19,
+        "viz_time": 57
+      },
+      {
+        "gametic": 58,
+        "monotonic_ns": 55517802961185,
+        "pid": 19,
+        "viz_time": 58
+      },
+      {
+        "gametic": 59,
+        "monotonic_ns": 55517830822987,
+        "pid": 19,
+        "viz_time": 59
+      },
+      {
+        "gametic": 60,
+        "monotonic_ns": 55517862650467,
+        "pid": 19,
+        "viz_time": 60
+      },
+      {
+        "gametic": 61,
+        "monotonic_ns": 55517891804743,
+        "pid": 19,
+        "viz_time": 61
+      },
+      {
+        "gametic": 62,
+        "monotonic_ns": 55517918592829,
+        "pid": 19,
+        "viz_time": 62
+      },
+      {
+        "gametic": 63,
+        "monotonic_ns": 55517948210585,
+        "pid": 19,
+        "viz_time": 63
+      },
+      {
+        "gametic": 64,
+        "monotonic_ns": 55517977241897,
+        "pid": 19,
+        "viz_time": 64
+      },
+      {
+        "gametic": 65,
+        "monotonic_ns": 55518003792930,
+        "pid": 19,
+        "viz_time": 65
+      },
+      {
+        "gametic": 66,
+        "monotonic_ns": 55518035514781,
+        "pid": 19,
+        "viz_time": 66
+      }
+    ],
+    "ticrate": 35,
+    "vizdoom_version": "1.3.0",
+    "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+  },
+  {
+    "advancing_api_calls": 0,
+    "anchors": [],
+    "closed": true,
+    "final_api_tic": 1,
+    "initial_api_tic": 1,
+    "mode": "Mode.ASYNC_SPECTATOR",
+    "passive_end_ns": 55519924760389,
+    "passive_start_ns": 55518393136946,
+    "post_end_ns": 55520078599801,
+    "repetition": 2,
+    "samples": [
+      {
+        "api_tic": 1,
+        "end_ns": 55518393155531,
+        "start_ns": 55518393145947
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55518452878314,
+        "start_ns": 55518452863480
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55518507478032,
+        "start_ns": 55518507461114
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55518565859546,
+        "start_ns": 55518565828586
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55518624790751,
+        "start_ns": 55518624764292
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55518685086477,
+        "start_ns": 55518684983639
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55518743831341,
+        "start_ns": 55518743805131
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55518800534820,
+        "start_ns": 55518800509069
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55518860448862,
+        "start_ns": 55518860424694
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55518918547905,
+        "start_ns": 55518918516404
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55518974725444,
+        "start_ns": 55518974646941
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55519030889941,
+        "start_ns": 55519030862607
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55519081716156,
+        "start_ns": 55519081689404
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55519139860617,
+        "start_ns": 55519139834074
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55519195283539,
+        "start_ns": 55519195256788
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55519249617329,
+        "start_ns": 55519249578785
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55519307623201,
+        "start_ns": 55519307596283
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55519366635243,
+        "start_ns": 55519366609117
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55519418356081,
+        "start_ns": 55519418329747
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55519474554871,
+        "start_ns": 55519474527495
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55519533106018,
+        "start_ns": 55519533074142
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55519589865042,
+        "start_ns": 55519589838208
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55519640880056,
+        "start_ns": 55519640855097
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55519699199151,
+        "start_ns": 55519699163233
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55519754052381,
+        "start_ns": 55519754026338
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55519812813870,
+        "start_ns": 55519812789202
+      },
+      {
+        "api_tic": 1,
+        "end_ns": 55519865538253,
+        "start_ns": 55519865512836
+      }
+    ],
+    "scorer_api_trace": [
+      {
+        "args": [],
+        "end_ns": 55519925064444,
+        "name": "get_episode_time",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55519925042943,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": 1
+      },
+      {
+        "args": [],
+        "end_ns": 55519925099446,
+        "name": "is_episode_finished",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55519925095862,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": false
+      },
+      {
+        "args": [],
+        "end_ns": 55519925109154,
+        "name": "is_player_dead",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55519925107196,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": false
+      },
+      {
+        "args": [
+          "KILLCOUNT"
+        ],
+        "end_ns": 55519925122405,
+        "name": "get_game_variable",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55519925115780,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": 0.0
+      },
+      {
+        "args": [
+          "DEATHCOUNT"
+        ],
+        "end_ns": 55519925151323,
+        "name": "get_game_variable",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55519925149281,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": 0.0
+      },
+      {
+        "args": [],
+        "end_ns": 55519925185991,
+        "name": "get_ticrate",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55519925183991,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": 35
+      },
+      {
+        "args": [],
+        "end_ns": 55519925192700,
+        "name": "is_episode_timeout_reached",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55519925191117,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": false
+      },
+      {
+        "args": [],
+        "end_ns": 55519925198867,
+        "name": "get_episode_time",
+        "role": "exact_scorer_predicate",
+        "start_ns": 55519925197575,
+        "status": "ok",
+        "thread_id": 281473586135072,
+        "value": 1
+      }
+    ],
+    "scorer_end_ns": 55519925232993,
+    "scorer_return": {
+      "death_count": 0,
+      "episode_finished": false,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false,
+      "sample_ns": 55519925205951,
+      "schema": "independent-progress-sample-v2"
+    },
+    "scorer_start_ns": 55519924965231,
+    "scorer_status": "returned",
+    "setup": "initialized",
+    "tic_entries": [
+      {
+        "gametic": 1,
+        "monotonic_ns": 55518256612067,
+        "pid": 23,
+        "viz_time": 1
+      },
+      {
+        "gametic": 2,
+        "monotonic_ns": 55518288747436,
+        "pid": 23,
+        "viz_time": 2
+      },
+      {
+        "gametic": 3,
+        "monotonic_ns": 55518316164300,
+        "pid": 23,
+        "viz_time": 3
+      },
+      {
+        "gametic": 4,
+        "monotonic_ns": 55518356602920,
+        "pid": 23,
+        "viz_time": 4
+      },
+      {
+        "gametic": 5,
+        "monotonic_ns": 55518366243439,
+        "pid": 23,
+        "viz_time": 5
+      },
+      {
+        "gametic": 6,
+        "monotonic_ns": 55518399128967,
+        "pid": 23,
+        "viz_time": 6
+      },
+      {
+        "gametic": 7,
+        "monotonic_ns": 55518424173308,
+        "pid": 23,
+        "viz_time": 7
+      },
+      {
+        "gametic": 8,
+        "monotonic_ns": 55518456348346,
+        "pid": 23,
+        "viz_time": 8
+      },
+      {
+        "gametic": 9,
+        "monotonic_ns": 55518480243801,
+        "pid": 23,
+        "viz_time": 9
+      },
+      {
+        "gametic": 10,
+        "monotonic_ns": 55518515224174,
+        "pid": 23,
+        "viz_time": 10
+      },
+      {
+        "gametic": 11,
+        "monotonic_ns": 55518540789079,
+        "pid": 23,
+        "viz_time": 11
+      },
+      {
+        "gametic": 12,
+        "monotonic_ns": 55518569102776,
+        "pid": 23,
+        "viz_time": 12
+      },
+      {
+        "gametic": 13,
+        "monotonic_ns": 55518602369071,
+        "pid": 23,
+        "viz_time": 13
+      },
+      {
+        "gametic": 14,
+        "monotonic_ns": 55518624714539,
+        "pid": 23,
+        "viz_time": 14
+      },
+      {
+        "gametic": 15,
+        "monotonic_ns": 55518658441522,
+        "pid": 23,
+        "viz_time": 15
+      },
+      {
+        "gametic": 16,
+        "monotonic_ns": 55518685336613,
+        "pid": 23,
+        "viz_time": 16
+      },
+      {
+        "gametic": 17,
+        "monotonic_ns": 55518714854906,
+        "pid": 23,
+        "viz_time": 17
+      },
+      {
+        "gametic": 18,
+        "monotonic_ns": 55518744111978,
+        "pid": 23,
+        "viz_time": 18
+      },
+      {
+        "gametic": 19,
+        "monotonic_ns": 55518766426695,
+        "pid": 23,
+        "viz_time": 19
+      },
+      {
+        "gametic": 20,
+        "monotonic_ns": 55518794329498,
+        "pid": 23,
+        "viz_time": 20
+      },
+      {
+        "gametic": 21,
+        "monotonic_ns": 55518824320437,
+        "pid": 23,
+        "viz_time": 21
+      },
+      {
+        "gametic": 22,
+        "monotonic_ns": 55518858356642,
+        "pid": 23,
+        "viz_time": 22
+      },
+      {
+        "gametic": 23,
+        "monotonic_ns": 55518885279151,
+        "pid": 23,
+        "viz_time": 23
+      },
+      {
+        "gametic": 24,
+        "monotonic_ns": 55518916628318,
+        "pid": 23,
+        "viz_time": 24
+      },
+      {
+        "gametic": 25,
+        "monotonic_ns": 55518943986263,
+        "pid": 23,
+        "viz_time": 25
+      },
+      {
+        "gametic": 26,
+        "monotonic_ns": 55518972689311,
+        "pid": 23,
+        "viz_time": 26
+      },
+      {
+        "gametic": 27,
+        "monotonic_ns": 55518997591645,
+        "pid": 23,
+        "viz_time": 27
+      },
+      {
+        "gametic": 28,
+        "monotonic_ns": 55519031037323,
+        "pid": 23,
+        "viz_time": 28
+      },
+      {
+        "gametic": 29,
+        "monotonic_ns": 55519056267005,
+        "pid": 23,
+        "viz_time": 29
+      },
+      {
+        "gametic": 30,
+        "monotonic_ns": 55519086082520,
+        "pid": 23,
+        "viz_time": 30
+      },
+      {
+        "gametic": 31,
+        "monotonic_ns": 55519114520680,
+        "pid": 23,
+        "viz_time": 31
+      },
+      {
+        "gametic": 32,
+        "monotonic_ns": 55519137446966,
+        "pid": 23,
+        "viz_time": 32
+      },
+      {
+        "gametic": 33,
+        "monotonic_ns": 55519172863692,
+        "pid": 23,
+        "viz_time": 33
+      },
+      {
+        "gametic": 34,
+        "monotonic_ns": 55519195734893,
+        "pid": 23,
+        "viz_time": 34
+      },
+      {
+        "gametic": 35,
+        "monotonic_ns": 55519229181196,
+        "pid": 23,
+        "viz_time": 35
+      },
+      {
+        "gametic": 36,
+        "monotonic_ns": 55519254298957,
+        "pid": 23,
+        "viz_time": 36
+      },
+      {
+        "gametic": 37,
+        "monotonic_ns": 55519284340898,
+        "pid": 23,
+        "viz_time": 37
+      },
+      {
+        "gametic": 38,
+        "monotonic_ns": 55519316195255,
+        "pid": 23,
+        "viz_time": 38
+      },
+      {
+        "gametic": 39,
+        "monotonic_ns": 55519337613223,
+        "pid": 23,
+        "viz_time": 39
+      },
+      {
+        "gametic": 40,
+        "monotonic_ns": 55519364596651,
+        "pid": 23,
+        "viz_time": 40
+      },
+      {
+        "gametic": 41,
+        "monotonic_ns": 55519402427569,
+        "pid": 23,
+        "viz_time": 41
+      },
+      {
+        "gametic": 42,
+        "monotonic_ns": 55519429108067,
+        "pid": 23,
+        "viz_time": 42
+      },
+      {
+        "gametic": 43,
+        "monotonic_ns": 55519459594279,
+        "pid": 23,
+        "viz_time": 43
+      },
+      {
+        "gametic": 44,
+        "monotonic_ns": 55519485756544,
+        "pid": 23,
+        "viz_time": 44
+      },
+      {
+        "gametic": 45,
+        "monotonic_ns": 55519509348819,
+        "pid": 23,
+        "viz_time": 45
+      },
+      {
+        "gametic": 46,
+        "monotonic_ns": 55519539591603,
+        "pid": 23,
+        "viz_time": 46
+      },
+      {
+        "gametic": 47,
+        "monotonic_ns": 55519571077485,
+        "pid": 23,
+        "viz_time": 47
+      },
+      {
+        "gametic": 48,
+        "monotonic_ns": 55519600706449,
+        "pid": 23,
+        "viz_time": 48
+      },
+      {
+        "gametic": 49,
+        "monotonic_ns": 55519624392311,
+        "pid": 23,
+        "viz_time": 49
+      },
+      {
+        "gametic": 50,
+        "monotonic_ns": 55519651543997,
+        "pid": 23,
+        "viz_time": 50
+      },
+      {
+        "gametic": 51,
+        "monotonic_ns": 55519688197445,
+        "pid": 23,
+        "viz_time": 51
+      },
+      {
+        "gametic": 52,
+        "monotonic_ns": 55519710442576,
+        "pid": 23,
+        "viz_time": 52
+      },
+      {
+        "gametic": 53,
+        "monotonic_ns": 55519745613207,
+        "pid": 23,
+        "viz_time": 53
+      },
+      {
+        "gametic": 54,
+        "monotonic_ns": 55519764891871,
+        "pid": 23,
+        "viz_time": 54
+      },
+      {
+        "gametic": 55,
+        "monotonic_ns": 55519799901120,
+        "pid": 23,
+        "viz_time": 55
+      },
+      {
+        "gametic": 56,
+        "monotonic_ns": 55519831138865,
+        "pid": 23,
+        "viz_time": 56
+      },
+      {
+        "gametic": 57,
+        "monotonic_ns": 55519856954824,
+        "pid": 23,
+        "viz_time": 57
+      },
+      {
+        "gametic": 58,
+        "monotonic_ns": 55519878663180,
+        "pid": 23,
+        "viz_time": 58
+      },
+      {
+        "gametic": 59,
+        "monotonic_ns": 55519908643619,
+        "pid": 23,
+        "viz_time": 59
+      },
+      {
+        "gametic": 60,
+        "monotonic_ns": 55519939431802,
+        "pid": 23,
+        "viz_time": 60
+      },
+      {
+        "gametic": 61,
+        "monotonic_ns": 55519973775229,
+        "pid": 23,
+        "viz_time": 61
+      },
+      {
+        "gametic": 62,
+        "monotonic_ns": 55520001991255,
+        "pid": 23,
+        "viz_time": 62
+      },
+      {
+        "gametic": 63,
+        "monotonic_ns": 55520028996684,
+        "pid": 23,
+        "viz_time": 63
+      },
+      {
+        "gametic": 64,
+        "monotonic_ns": 55520058847366,
+        "pid": 23,
+        "viz_time": 64
+      }
+    ],
+    "ticrate": 35,
+    "vizdoom_version": "1.3.0",
+    "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+  }
+]

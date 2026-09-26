@@ -1,0 +1,77 @@
+{
+  "checksum_entries_verified": 288,
+  "formal_reruns": 0,
+  "incidents": [
+    "container.exec returned ServerError before command execution; Python-backed verification used.",
+    "First unpack command omitted -S: site startup printed artifact_tool spreadsheet-warmup warning; unpack returned 0 and all original bytes matched. Unrelated stderr retained in separate publication logs; documented audit/restore commands now use -S. No original file or scientific gate changed."
+  ],
+  "issue": 4056,
+  "limits": [
+    "Same-author separate audit is not external review",
+    "Current-head repository CI/review not asserted",
+    "Historical local freeze is not GitHub preregistration"
+  ],
+  "original_files": 289,
+  "original_member_bytes": 1156979,
+  "original_zip": {
+    "bytes": 246153,
+    "sha256": "b914d351e38ee94cb2e8c34042f6cf47374e134a01eabb45bdf21dabc906fb5b"
+  },
+  "package_refusal_controls": [
+    {
+      "case": "missing_part",
+      "error_class": "ValueError",
+      "rejected": true
+    },
+    {
+      "case": "corrupt_part",
+      "error_class": "ValueError",
+      "rejected": true
+    },
+    {
+      "case": "reordered_parts",
+      "error_class": "ValueError",
+      "rejected": true
+    },
+    {
+      "case": "boolean_length",
+      "error_class": "ValueError",
+      "rejected": true
+    },
+    {
+      "case": "oversized_expansion",
+      "error_class": "ValueError",
+      "rejected": true
+    },
+    {
+      "case": "trailing_xz",
+      "error_class": "ValueError",
+      "rejected": true
+    },
+    {
+      "case": "wrong_file_count",
+      "error_class": "ValueError",
+      "rejected": true
+    },
+    {
+      "case": "existing_destination",
+      "error_class": "ValueError",
+      "rejected": true
+    }
+  ],
+  "readonly_audit": {
+    "byte_identical": true,
+    "checks": 4086,
+    "returncode": 0,
+    "sha256": "c527362686d2fc2dc11dfffb90934dabda775faac3ecdf9007937f834c8ae5b1"
+  },
+  "restoration": {
+    "audit_byte_identical": true,
+    "files_byte_identical": true,
+    "tests_returncode": 0
+  },
+  "tests": {
+    "methods": 6,
+    "returncode": 0
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "issue-experiment-freeze-v1",
+  "issue": 3851,
+  "repository": "Unjuno/agent-interface",
+  "allocation": "needle-lora-3441-rank4-minibatch-seed-paired-v1",
+  "branch": "research/needle-lora-rank4-minibatch-seed-3851-20260921",
+  "path": "research/needle_lora_3441_rank4_minibatch_seed_v1/",
+  "main_base_commit": "e56f0e705ce7d5d48ef945e0b71b2ee21328db83",
+  "predecessors": {
+    "runner_path": "research/needle_lora_3441_rank4_online_multiseed_gpu_v1/runner.py",
+    "runner_git_blob": "18b6be0a175df957d838e188de4c7ca826b26af8",
+    "auditor_path": "research/needle_lora_3441_rank4_online_multiseed_gpu_v1/audit.py",
+    "auditor_git_blob": "40f0afde6df1de2336f47bc78671100aec3156d7",
+    "formal_result_path": "research/needle_lora_3441_rank4_online_multiseed_gpu_v1/FORMAL_RESULT.json",
+    "formal_result_sha256": "abf9a01dd4dc34bc137bf4c25d191372ddceb8c872b3df73a61cdc9c30defc06"
+  },
+  "source_sha256": {
+    "SOURCE_3807_RUNNER.py": "3fef592881aca183ddb8c95b0d8b2bc589ee0b4915d8b0d7fc206eb550c125bf",
+    "audit.py": "85770fb2db12bfe51fce0cd750ff2a490c60a50bada36c214a9e59f857c6b7f4"
+  },
+  "H": "On the original #3807 seeds/data, changing only the rank-4 online minibatch index stream from seed+35 to shared seed+31 rescues held-out B accuracy; the RNG stream is a candidate explanation, not an asserted cause.",
+  "T": {
+    "seeds": [3451, 3452, 3453, 3454, 3455],
+    "sameDataAndTask": "Original #3807 CUDA formal runner data and labels: CPU-seeded input tensors copied to CUDA; CUDA base training; 8 features, hidden 16 tanh, 4 classes.",
+    "base": "512 rows, 400 AdamW steps, LR .025, generator seed+10.",
+    "online": "Rank 4, AdamW LR .04, 16 one-at-a-time feedback rows in seed+20 order, 8 updates/arrival, batch size 32, total 128 steps.",
+    "arms": ["legacy minibatch stream seed+35", "shared-schedule minibatch stream seed+31"],
+    "pairing": "Tensor-identical full adapter initialization per seed; reset each arm's CPU generator for its one fixed stream; balanced arm order 3451 L>S, 3452 S>L, 3453 L>S, 3454 S>L, 3455 L>S.",
+    "cudaParity": "Follow frozen #3807 CUDA runner device and RNG behavior exactly for data generation, base training, and rank-4 adapter initialization. The sole intervention is the rank-4 online minibatch index generator seed: seed+35 versus seed+31.",
+    "curves": "Retain all 4096 heldout B predictions after every arrival 1..16 for both arms, final row predictions, per-arrival timings, setup timings, route controls, snapshot and rollback state."
+  },
+  "D": {
+    "pass": "PASS_SAMPLER_SEED_EXPLAINS_COLLAPSE_SCOPED only if legacy final mean <= .10, shared arm >= .90 on every seed, paired mean gain >= .50, p95 <= 60 ms, and all row-level, route, snapshot, base-integrity, provenance and independent audit checks pass.",
+    "hold": "HOLD_LEGACY_COLLAPSE_NOT_REPRODUCED if legacy final mean > .10; make no causal attribution even if shared arm is strong.",
+    "fail": "FAIL_SAMPLER_SEED_NOT_SUFFICIENT if legacy collapse reproduces but rescue criteria fail; FAIL_ROUTE_OR_STATE_INTEGRITY on integrity violation; typed STOP/HOLD on ambiguity.",
+    "invocationLimit": 1,
+    "retries": 0,
+    "tuning": 0
+  },
+  "C": {
+    "python": "3.11.9",
+    "torch": "2.5.1+cu121",
+    "cuda": "12.1",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "cublasWorkspaceConfig": ":4096:8",
+    "deterministic": true,
+    "tf32": false,
+    "minimumSystemFreeBytes": 1073741824,
+    "execution": "Local host CUDA per issue; no container claim. Docker check is read-only."
+  },
+  "U": "Five synthetic seeds in one task family only. Does not establish general online adaptation, explain all between-study differences, prove real task quality, authorize runtime updates, or establish production safety/latency."
+}
+

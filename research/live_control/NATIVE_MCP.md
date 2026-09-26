@@ -37,6 +37,28 @@ install a plugin or add tools to the current Codex conversation.
   read-only digest-bound path. It does not create a missing request.
 
 The run is bound at server startup; tools cannot select another filesystem path.
+
+### Choosing a keyboard context point
+
+`interaction="keyboard"` requires an observed `point` even though it emits no
+pointer movement or click. The point identifies visual context in the intended
+focused window; it does not select a cell, move the caret, or set the text
+destination. Choose a visible feature in the returned image, such as a column
+heading in Calc, rather than the blank interior of a cell. Use explicit keyboard
+operations in `tail` to navigate to the intended destination before typing.
+Coordinates must come from the current image, not from this example or an older
+layout.
+
+A visually flat region can return `visually_flat_source_region` before input.
+When the receipt explicitly reports that refusal with no input attempted, review
+the returned image and make a new decision using its source sequence and stage.
+This is not permission to replay an input after a timeout or uncertain result;
+those still require digest-bound `native_resume` reconciliation.
+
+This clarification follows [registered-tool Calc self-use](https://github.com/Unjuno/agent-interface/issues/2789#issuecomment-5753151369),
+where the blank cell was refused and an observed column heading supplied valid
+context. It changes guidance only; no guard, default, or execution behavior changes.
+
 Calls are serialized. Existing source, request, reply and image checks remain.
 SDK/process errors or transport cancellation do not prove an action was absent;
 reconcile the selected request/reply. This adapter grants no extra authority.
@@ -124,6 +146,15 @@ complete JSON output; truncation or split chunks must never trigger action repla
 
 
 ## Returned continuation reference
+
+Read `outcome_summary.feedback_status`, `image_status` and `continuation`
+separately. A post-action feedback check can report `needs_review` while a later
+window review provides a valid next-stage image. Keep that feedback uncertainty;
+it does not mean the delivered image is missing. When `image_status=image` and
+`continuation.status=source_available`, inspect that image and take the next
+`stage` and `source_sequence` from `continuation` in the same response. Reading
+`source-N.json` separately is unnecessary. This reference describes retained
+evidence, not current freshness, task success, or permission to replay input.
 
 At a completed stage boundary, `native_submit` and read-only `native_resume`
 include `continuation`. `source_available` carries the next stage, source
