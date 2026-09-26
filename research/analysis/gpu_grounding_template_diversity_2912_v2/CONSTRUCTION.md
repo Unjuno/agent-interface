@@ -15,5 +15,4 @@ The prior STOP arose because the v1 loader joined `images/...` against the exper
 
 - Python bytecode compilation: recorded in `construction/01/py_compile.log`.
 - CPU-only construction tests: recorded in `construction/01/cpu_unittest.log` (7 passed). CUDA determinism control: `construction/01/cuda_unittest.log` (1 passed, deterministic repeated forward/backward; zero optimizer updates). Fresh read-only device snapshot: `construction/01/gpu_idle_before_cuda_construction.log` (RTX 3080, 0% utilization, 11 MiB used; no compute allocation reported).
-- No optimizer updates or model training occurred during construction.
-- Formal execution remains unstarted. Before its one-shot call, reconfirm #4205 has no remaining GPU use, capture a fresh device/process snapshot, read back all frozen sources from GitHub MCP, and recheck allocation conflicts.
+- Construction completed with zero optimizer updates. The preregistered one-shot formal invocation subsequently completed six models on the local RTX 3080; see `results/formal01/RESULTS.md`, `results.json`, and `AUDIT.json`. The audit passed integrity but the experiment failed the frozen held-out exact-coordinate quality gate. `construction/02/` preserves pre/post device snapshots, exact process summaries, and exit statuses.
