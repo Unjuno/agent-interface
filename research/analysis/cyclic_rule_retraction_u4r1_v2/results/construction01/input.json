@@ -1,0 +1,57 @@
+{
+  "claims": [
+    "A",
+    "B"
+  ],
+  "expected_conditions": 10,
+  "roots": [
+    "E0",
+    "E1"
+  ],
+  "rules": [
+    {
+      "body": [
+        "E0"
+      ],
+      "head": "A",
+      "id": "r0"
+    },
+    {
+      "body": [
+        "B"
+      ],
+      "head": "A",
+      "id": "r1"
+    },
+    {
+      "body": [
+        "E1",
+        "B"
+      ],
+      "head": "A",
+      "id": "r2"
+    },
+    {
+      "body": [
+        "E1"
+      ],
+      "head": "B",
+      "id": "r3"
+    },
+    {
+      "body": [
+        "A"
+      ],
+      "head": "B",
+      "id": "r4"
+    },
+    {
+      "body": [
+        "E0",
+        "A"
+      ],
+      "head": "B",
+      "id": "r5"
+    }
+  ]
+}
