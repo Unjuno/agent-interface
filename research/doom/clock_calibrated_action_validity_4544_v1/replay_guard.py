@@ -1,8 +1,7 @@
-"""Rebuild complete guard receipts from the retained clock sample record.
+"""Replay full exact-main RunningActionGuard receipts from retained clocks.
 
-This is a deterministic evidence replay, not a new clock measurement. The
-synthetic accepted-program event is supplied to the guard fixture only; no
-Executor process or physical input is used.
+No new clock probe is made. The accepted-program object is a deterministic
+fixture input to the guard, not an actual Executor event or physical action.
 """
 import argparse
 import hashlib
@@ -32,7 +31,7 @@ def snapshot(sequence, capture_ns):
             "binding": BINDING, "signals": SIGNALS}
 
 
-def build_replay(clock_result, validity_module, guard_class):
+def build_replay(clock_result, validity_module, guard_class, clock_result_sha256):
     samples = clock_result["samples"]
     lower, upper = clock_result["common_offset_host_minus_container_ns"]
     raw_capture = samples[-1]["container_capture_ns"]
@@ -103,7 +102,7 @@ def build_replay(clock_result, validity_module, guard_class):
         "source_commit": SOURCE_COMMIT,
         "source_blobs": SOURCE_BLOBS,
         "source_sha256": SOURCE_SHA256,
-        "clock_result_sha256": clock_result["artifact_sha256"],
+        "clock_result_sha256": clock_result_sha256,
         "clock_result_experiment": clock_result["experiment"],
         "container_image": clock_result["image"],
         "platform": clock_result["platform"],
@@ -114,17 +113,16 @@ def build_replay(clock_result, validity_module, guard_class):
         "offset_uncertainty_ns": upper - lower,
         "controller_decided_ns": decision_ns,
         "observations": observations,
-        "scope": ("Re-executes the exact-main guard from retained clock values and "
-                  "explicit deterministic fixture inputs. It does not recover the "
-                  "original invocation's unretained inputs/receipts, does not read "
-                  "a WAD, and does not create a physical Executor action."),
+        "scope": ("Re-executes the exact-main guard using retained clock values and "
+                  "explicit deterministic fixture inputs. This does not recover the "
+                  "original invocation's unretained inputs/receipts, read a WAD, "
+                  "or create a physical Executor action."),
     }
 
 
 def load_production(repo_root):
     import sys
     source_dir = Path(repo_root) / "research" / "live_control"
-    sys.path.insert(0, str(source_dir))
     for filename in SOURCE_BLOBS:
         content = (source_dir / filename).read_bytes()
         git_blob_sha = hashlib.sha1(
@@ -133,6 +131,7 @@ def load_production(repo_root):
             raise RuntimeError(f"main source blob mismatch: {filename}")
         if hashlib.sha256(content).hexdigest() != SOURCE_SHA256[filename]:
             raise RuntimeError(f"main source SHA-256 mismatch: {filename}")
+    sys.path.insert(0, str(source_dir))
     from action_validity_admission_v1 import evaluate_action_validity, action_fingerprint
     from running_action_guard_v1 import RunningActionGuard
     class ValidityModule:
@@ -150,8 +149,11 @@ def main():
     parser.add_argument("--out", required=True)
     args = parser.parse_args()
     validity_module, guard_class = load_production(args.repo_root)
-    clock_result = json.loads(Path(args.clock_result).read_text())
-    payload = build_replay(clock_result, validity_module, guard_class)
+    clock_bytes = Path(args.clock_result).read_bytes()
+    clock_result = json.loads(clock_bytes)
+    payload = build_replay(
+        clock_result, validity_module, guard_class,
+        hashlib.sha256(clock_bytes).hexdigest())
     Path(args.out).write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
     print(json.dumps({"classification": payload["classification"],
                       "cases": len(payload["observations"]),
