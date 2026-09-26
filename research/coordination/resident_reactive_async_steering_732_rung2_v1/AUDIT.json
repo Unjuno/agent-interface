@@ -1,0 +1,38 @@
+{
+  "audit": "FAIL",
+  "auditor": "postformal independent JavaScript oracle; does not import runner",
+  "runner_sha256": "UNPINNED",
+  "rows_recomputed": 576,
+  "unique_cases": 576,
+  "outcome_counts": {
+    "STALE_GENERATION": 288,
+    "PARAM_OUT_OF_BOUNDS": 6,
+    "UPDATE_QUEUED_SAFE_POINT": 3,
+    "UPDATE_APPLIED": 3,
+    "PARALLEL_ACCEPTED": 4,
+    "SAME_RESOURCE_ACCEPTED": 4,
+    "NOT_PAUSED": 12,
+    "REVOKED_IMMEDIATE": 24,
+    "UNKNOWN_COMMAND": 24,
+    "RESOURCE_BUSY": 16,
+    "HANDOFF_QUEUED_SAFE_POINT": 2,
+    "HANDOFF_READY": 2,
+    "NOT_RUNNING": 36,
+    "RESUME_QUEUED_SAFE_POINT": 6,
+    "RESUMED": 2,
+    "TERMINAL_PROGRAM": 144
+  },
+  "stateful_trace_events": 10,
+  "negative_controls": {
+    "revoke_waits_for_safe_point": true,
+    "same_resource_off_safe_point_overlaps": true,
+    "stale_generation_admitted": true
+  },
+  "errors": [
+    "runner_source_sha256"
+  ],
+  "decision": "HOLD",
+  "auditor_source_path": "postformal_audit.js",
+  "auditor_source_sha256": "9b330997db8373708ef62f0a355e3f2ffe0f6118bca076ff1d1864ba51310e3b",
+  "auditor_timing": "Authored after the formal output because runner metadata was unpinned; not part of the preregistered frozen auditor."
+}
