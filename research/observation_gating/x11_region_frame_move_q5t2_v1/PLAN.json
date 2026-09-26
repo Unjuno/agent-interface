@@ -1,0 +1,23 @@
+{
+  "schema": "x11-region-frame-move-plan-v1",
+  "issue": 4439,
+  "allocation": "x11-region-frame-move-q5t2-20260926-01",
+  "base_main": "3666992ab2b5e1b41b159b361d1c690d8e720fdf",
+  "branch": "research/x11-region-frame-move-20260926-q5t2",
+  "path": "research/observation_gating/x11_region_frame_move_q5t2_v1/",
+  "policies": ["PINNED_SCREEN", "REFRESH_SCREEN", "WINDOW_CLIENT"],
+  "schedules": ["STABLE", "MOVE_BEFORE", "MOVE_BETWEEN"],
+  "repetitions": 3,
+  "formal_cases": 27,
+  "formal_batches": 3,
+  "window": {"width": 120, "height": 80, "start": [20,20], "moved": [220,160]},
+  "display": {"width": 400, "height": 300, "depth": 24, "tcp": false, "authenticated": true},
+  "expected_match": {
+    "STABLE": {"PINNED_SCREEN": true, "REFRESH_SCREEN": true, "WINDOW_CLIENT": true},
+    "MOVE_BEFORE": {"PINNED_SCREEN": false, "REFRESH_SCREEN": true, "WINDOW_CLIENT": true},
+    "MOVE_BETWEEN": {"PINNED_SCREEN": false, "REFRESH_SCREEN": false, "WINDOW_CLIENT": true}
+  },
+  "decision": "PASS_X11_REGION_FRAME_MOVE_BOUNDARY_SCOPED",
+  "minimum_corruption_controls": 10,
+  "formal_reruns": 0
+}
