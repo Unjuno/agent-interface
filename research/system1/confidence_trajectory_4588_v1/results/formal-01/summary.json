@@ -1,0 +1,58 @@
+{
+  "allocation": "confidence-trajectory-4588-first-rung-20260927-01",
+  "case_count": 84,
+  "elapsed_monotonic_ns": 2068424,
+  "metrics": {
+    "CURRENT_ONLY": {
+      "action_precision": 0.714286,
+      "action_recall": 0.833333,
+      "action_true_positive": 30,
+      "correct_no_op": 6,
+      "correct_yield": 30,
+      "false_executable": 12,
+      "false_executable_rate": 0.142857,
+      "rows": 84,
+      "typed_accuracy": 66
+    },
+    "LEVEL_PLUS_VELOCITY": {
+      "action_precision": 0.857143,
+      "action_recall": 1.0,
+      "action_true_positive": 36,
+      "correct_no_op": 6,
+      "correct_yield": 36,
+      "false_executable": 6,
+      "false_executable_rate": 0.071429,
+      "rows": 84,
+      "typed_accuracy": 78
+    },
+    "LEVEL_PLUS_VELOCITY_PLUS_ACCEL": {
+      "action_precision": 0.857143,
+      "action_recall": 1.0,
+      "action_true_positive": 36,
+      "correct_no_op": 6,
+      "correct_yield": 36,
+      "false_executable": 6,
+      "false_executable_rate": 0.071429,
+      "rows": 84,
+      "typed_accuracy": 78
+    },
+    "SMOOTHED_TRAJECTORY": {
+      "action_precision": 0.714286,
+      "action_recall": 0.833333,
+      "action_true_positive": 30,
+      "correct_no_op": 6,
+      "correct_yield": 30,
+      "false_executable": 12,
+      "false_executable_rate": 0.142857,
+      "rows": 84,
+      "typed_accuracy": 66
+    }
+  },
+  "policy_order": [
+    "CURRENT_ONLY",
+    "LEVEL_PLUS_VELOCITY",
+    "LEVEL_PLUS_VELOCITY_PLUS_ACCEL",
+    "SMOOTHED_TRAJECTORY"
+  ],
+  "runner_exit": 0
+}
