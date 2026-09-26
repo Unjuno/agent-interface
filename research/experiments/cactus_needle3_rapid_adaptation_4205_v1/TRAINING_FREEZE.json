@@ -1,0 +1,87 @@
+{
+  "schema": "cactus-needle3-rapid-adaptation-freeze-v1",
+  "allocation": "cactus-needle3-rapid-adaptation-4205-v1-20260927-01",
+  "status": "FROZEN_BEFORE_32_EXAMPLE_FIT",
+  "preregistration_commit": "e07604f5e54b562aba8f317d97963e6349fc5945",
+  "parent_main_commit": "91b5143989403754b360738c445f72b68b673718",
+  "parent_allocation": "cactus-needle3-base-structured-action-20260926-01",
+  "parent_case_sha256": "927d6d3474f124550e2a88404ffd34dc8e406b168a9c9f0c2b553b1ed21311de",
+  "parent_freeze_sha256": "32f476f36ed58a49684df79389ef339199519187f29a8499afc44206a055ab18",
+  "parent_result_sha256": "8ca6531d3eaf8bcca99f596c5d811d27a639ce961b1fec6f306db1f5c66a7936",
+  "parent_audit_sha256": "2c9f12ae36daf5204486595339adef511d01aa06f30647c4594f07e0542b2d63",
+  "parent_baseline": {
+    "exact_cases": "0/7",
+    "model_decisions": 7,
+    "warm_p95_ms": 10897.878032,
+    "formal_invocations": 1,
+    "reruns": 0,
+    "tuning": 0
+  },
+  "base_model": {
+    "repo": "Cactus-Compute/needle3",
+    "revision": "b274efcb211a9eef48c9a88da4b43bd569696a39",
+    "file": "checkpoints/needle3.safetensors",
+    "bytes": 242047978,
+    "sha256": "c234c70dccc7a9115e7c41ac2e41d3655fea3b85c245dd898b46179fb90c6c0c"
+  },
+  "tokenizer": {
+    "repo": "Cactus-Compute/needle3",
+    "revision": "b274efcb211a9eef48c9a88da4b43bd569696a39",
+    "model_sha256": "97dfd5666620b19875deba9e55953d312364e7763bd08bee428b94f1b9491b25",
+    "vocab_sha256": "7c87aa0da9f19b5d5a97824ec94555d6e73766f2a60e51e7ebe0b7c61ded3b33"
+  },
+  "support_set": {
+    "path": "support-32.jsonl",
+    "sha256": "4c1eb2c2b5d2399126cd995510c465e5491a0ed70922ed03c5357e0e605f2d16",
+    "rows": 32,
+    "labels": "synthetic authored demonstrations; no actual Astra supervision; no hidden chain-of-thought",
+    "composition": {"set_field_and_save_steps": 20, "reminder_toggles": 4, "yield": 5, "no_action": 3},
+    "token_audit": {"sequence_length": 1024, "min_supervised_tokens": 22, "max_supervised_tokens": 52, "empty_rows": 0}
+  },
+  "training": {
+    "command": "needle finetune support-32.jsonl --checkpoint /model/needle3.safetensors --epochs 3 --batch-size 2 --lr 0.0001 --lora-rank 8 --lora-alpha 16 --max-len 1024 --val-split 0.1 --seed 420532 --generate 0",
+    "train_rows": 29,
+    "validation_rows": 3,
+    "steps": 45,
+    "frozen_seed": 420532,
+    "runs": 1,
+    "retries": 0,
+    "replacements": 0
+  },
+  "runtime": {
+    "image": "cactus-needle3-train:4205-v1",
+    "image_id": "sha256:69f3c6830fda67fc5e8d3f6d8c09bbf730dffca043e3dfb70e433c84bc9db2a5",
+    "base_image": "cactus-needle3-action:v1-frozen@sha256:268ca519beed0aa750ef44c8cbc47e66dcf824b885591f905009127233bb5151",
+    "requirements_lock_sha256": "1a052e501c9c7783f6d6d58831faf4462ee22d7b1fb2c235c55bd01c6a98a77a",
+    "requirements_lock_dry_run_pass": true,
+    "python": "3.12",
+    "cactus_needle": "3.0.1",
+    "jax": "0.11.2",
+    "jaxlib": "0.11.2",
+    "flax": "0.12.10",
+    "optax": "0.2.8",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU, 16384 MiB",
+    "container_limits": {"cpus": 8, "memory_bytes": 12884901888, "pids": 512},
+    "network_disabled": true,
+    "root_read_only": true,
+    "input_mounts_read_only": true,
+    "xla_python_client_preallocate": false,
+    "xla_flags": "--xla_cpu_multi_thread_eigen=false intra_op_parallelism_threads=1",
+    "omp_num_threads": 1,
+    "tf_intraop_threads": 4,
+    "tf_interop_threads": 4
+  },
+  "source_sha256": {
+    "PRE_REGISTRATION.md": "40ffb086adefd24e82b913efe8f8e42c76ed0731544b69c49bc8950a67cf4099",
+    "prepare_support.py": "002dd67ca2a441909a995640570dd3e9582b4c7278d303c0b31e4ad688cc98aa",
+    "support-32.jsonl": "4c1eb2c2b5d2399126cd995510c465e5491a0ed70922ed03c5357e0e605f2d16",
+    "Dockerfile.train": "cd7b0c87945b62db73e62833e1a0b01650d8ca2fe9bf482b2e0cee75235910ff",
+    "Dockerfile.train.dockerignore": "55d741a6ac9fa56dc2712036bb8445ffa174605de62d00398c755635dfb4c92d",
+    "requirements.gpu.lock": "1a052e501c9c7783f6d6d58831faf4462ee22d7b1fb2c235c55bd01c6a98a77a",
+    "base/CASES.json": "927d6d3474f124550e2a88404ffd34dc8e406b168a9c9f0c2b553b1ed21311de",
+    "base/FREEZE.json": "32f476f36ed58a49684df79389ef339199519187f29a8499afc44206a055ab18",
+    "base/results/formal01/formal-result.json": "8ca6531d3eaf8bcca99f596c5d811d27a639ce961b1fec6f306db1f5c66a7936",
+    "base/results/formal01/audit.json": "2c9f12ae36daf5204486595339adef511d01aa06f30647c4594f07e0542b2d63"
+  }
+}
+
