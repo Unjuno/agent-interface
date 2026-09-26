@@ -1,0 +1,1000 @@
+@@ -0,0 +1 @@
++{"argv": ["/opt/pyvenv/bin/python", "-S", "-B", "/mnt/data/stream_readiness_b8n5_v1/source/run_batch.py", "pilot", "2"], "end_ns": 624764275975, "pid": 872, "returncode": 0, "start_ns": 618150693442, "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "stdout_sha256": "be7b886caef003b9fac5334b2a073109f8f29e8e1aa31a57b0fc61600ff6e7ed", "timed_out": false}
+diff --git a/research/integration/stream_readiness_b8n5_v1/provenance/R9K4_REAUDIT.json b/research/integration/stream_readiness_b8n5_v1/provenance/R9K4_REAUDIT.json
+new file mode 100644
+index 0000000..1caf409
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/provenance/R9K4_REAUDIT.json
+@@ -0,0 +1,106 @@
++{
++  "decision": "PASS_READONLY_BYTE_RECONSTRUCTION",
++  "files_verified": 971,
++  "frozen_files_verified": 18,
++  "member_bytes": 668006,
++  "pilot_cases": 42,
++  "public_preregistration": false,
++  "receipts": [
++    {
++      "argv": [
++        "/opt/pyvenv/bin/python",
++        "-S",
++        "-B",
++        "/mnt/data/r9k4_readonly_restore/receipt_observation_r9k4_v1/source/audit.py",
++        "/mnt/data/r9k4_readonly_restore/receipt_observation_r9k4_v1",
++        "--mode",
++        "pilot",
++        "--batches",
++        "0,1,2",
++        "--out",
++        "/tmp/r9k4-readonly-rfq9ui_j/audit.json"
++      ],
++      "byte_identical_to": "AUDIT.json",
++      "pid": 532,
++      "result_sha256": "511442989d098ec21853db7782f9f50023a734b09dbeeb2d8ae535d01bec018b",
++      "returncode": 0,
++      "returned_ns": 191841562308,
++      "role": "pilot_raw_audit",
++      "started_ns": 191775765846,
++      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
++      "stdout_sha256": "511442989d098ec21853db7782f9f50023a734b09dbeeb2d8ae535d01bec018b"
++    },
++    {
++      "argv": [
++        "/opt/pyvenv/bin/python",
++        "-S",
++        "-B",
++        "/mnt/data/r9k4_readonly_restore/receipt_observation_r9k4_v1/source/controls.py",
++        "/mnt/data/r9k4_readonly_restore/receipt_observation_r9k4_v1",
++        "--mode",
++        "pilot",
++        "--batches",
++        "0,1,2",
++        "--out",
++        "/tmp/r9k4-readonly-rfq9ui_j/controls.json"
++      ],
++      "byte_identical_to": "CONTROLS.json",
++      "pid": 533,
++      "result_sha256": "9bcdf094110c53571c870451fda3d774532b86f657671be8f0add05daea62b90",
++      "returncode": 0,
++      "returned_ns": 193553654796,
++      "role": "pilot_evidence_controls",
++      "started_ns": 191841693715,
++      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
++      "stdout_sha256": "e61da490d0b4bc38668054a97b0b09fc13893cf1df98ec5c265381bc8881703d"
++    },
++    {
++      "argv": [
++        "/opt/pyvenv/bin/python",
++        "-S",
++        "-B",
++        "/mnt/data/r9k4_readonly_restore/receipt_observation_r9k4_v1/source/audit.py",
++        "/mnt/data/r9k4_readonly_restore/receipt_observation_r9k4_v1",
++        "--mode",
++        "development",
++        "--batches",
++        "0",
++        "--out",
++        "/tmp/r9k4-readonly-rfq9ui_j/development.json"
++      ],
++      "byte_identical_to": "DEVELOPMENT_REVIEW_AUDIT.json",
++      "pid": 534,
++      "result_sha256": "efd92bb00c6720a15225b9d18280b63f628b1e47036aa5a56d29300977ff1cdc",
++      "returncode": 0,
++      "returned_ns": 193602994882,
++      "role": "development_raw_audit",
++      "started_ns": 193553784781,
++      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
++      "stdout_sha256": "efd92bb00c6720a15225b9d18280b63f628b1e47036aa5a56d29300977ff1cdc"
++    },
++    {
++      "argv": [
++        "/opt/pyvenv/bin/python",
++        "-S",
++        "-B",
++        "-m",
++        "unittest",
++        "discover",
++        "-s",
++        "/mnt/data/r9k4_readonly_restore/receipt_observation_r9k4_v1/source",
++        "-p",
++        "test_policy.py",
++        "-v"
++      ],
++      "pid": 535,
++      "returncode": 0,
++      "returned_ns": 193654514216,
++      "role": "pure_units",
++      "started_ns": 193603107090,
++      "stderr_sha256": "ef9b6635f9a3c5c3c7ed712f7a22033b75bc8e3df5eca8ba1e81bb8f46f43530",
++      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++    }
++  ],
++  "remote_evidence_complete": false,
++  "scientific_actor_reruns": 0
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/provenance/r9k4-verify.exit b/research/integration/stream_readiness_b8n5_v1/provenance/r9k4-verify.exit
+new file mode 100644
+index 0000000..573541a
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/provenance/r9k4-verify.exit
+@@ -0,0 +1 @@
++0
+diff --git a/research/integration/stream_readiness_b8n5_v1/provenance/r9k4-verify.stderr b/research/integration/stream_readiness_b8n5_v1/provenance/r9k4-verify.stderr
+new file mode 100644
+index 0000000..e69de29
+diff --git a/research/integration/stream_readiness_b8n5_v1/provenance/r9k4-verify.stdout b/research/integration/stream_readiness_b8n5_v1/provenance/r9k4-verify.stdout
+new file mode 100644
+index 0000000..a846e4d
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/provenance/r9k4-verify.stdout
+@@ -0,0 +1 @@
++{"decision": "PASS_READONLY_BYTE_RECONSTRUCTION", "files_verified": 971, "frozen_files_verified": 18, "member_bytes": 668006, "pilot_cases": 42, "public_preregistration": false, "remote_evidence_complete": false, "scientific_actor_reruns": 0}
+diff --git a/research/integration/stream_readiness_b8n5_v1/source/actor.py b/research/integration/stream_readiness_b8n5_v1/source/actor.py
+new file mode 100644
+index 0000000..67c3c8d
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/source/actor.py
+@@ -0,0 +1,72 @@
++"""Two private pipe actors; separate stdin control and stdout result channels."""
++from __future__ import annotations
++import argparse
++import json
++import os
++from pathlib import Path
++import sys
++import time
++from policy import Collector
++
++
++def output(value):
++    print(json.dumps(value, sort_keys=True), flush=True)
++
++
++def sleep_until(target):
++    while True:
++        remaining = target - time.monotonic_ns()
++        if remaining <= 0:
++            return
++        time.sleep(min(remaining / 1_000_000_000, .01))
++
++
++def main():
++    parser = argparse.ArgumentParser()
++    parser.add_argument('role', choices=['writer', 'reader'])
++    parser.add_argument('fd', type=int)
++    parser.add_argument('config')
++    parser.add_argument('out')
++    args = parser.parse_args()
++    cfg = json.loads(Path(args.config).read_text())
++    out = Path(args.out)
++    events = []
++    if args.role == 'writer':
++        first = bytes.fromhex(cfg['first_hex'])
++        if first:
++            a = time.monotonic_ns(); n = os.write(args.fd, first); b = time.monotonic_ns()
++            if n != len(first):
++                raise RuntimeError('unexpected_partial_fixture_write')
++            events.append({'kind': 'write', 'before_ns': a, 'after_ns': b,
++                           'data_hex': first.hex(), 'written': n})
++        output({'kind': 'READY', 'pid': os.getpid(), 'first_written': len(first)})
++        start = json.loads(sys.stdin.readline())['start_ns']
++        tail = bytes.fromhex(cfg['tail_hex'])
++        if tail:
++            sleep_until(start + cfg['tail_ms'] * 1_000_000)
++            a = time.monotonic_ns(); n = os.write(args.fd, tail); b = time.monotonic_ns()
++            if n != len(tail):
++                raise RuntimeError('unexpected_partial_fixture_write')
++            events.append({'kind': 'write', 'before_ns': a, 'after_ns': b,
++                           'data_hex': tail.hex(), 'written': n})
++        sleep_until(start + cfg['close_ms'] * 1_000_000)
++        a = time.monotonic_ns(); os.close(args.fd); b = time.monotonic_ns()
++        events.append({'kind': 'close', 'before_ns': a, 'after_ns': b})
++        result = {'role': 'writer', 'pid': os.getpid(), 'start_ns': start,
++                  'events': events, 'authority': False}
++    else:
++        collector = Collector(args.fd, cfg['mode'], cfg['scope'], cfg['expected'])
++        output({'kind': 'READY', 'pid': os.getpid()})
++        start = json.loads(sys.stdin.readline())['start_ns']
++        primary = collector.collect(start + cfg['budget_ms'] * 1_000_000)
++        diagnostic = collector.diagnostic_drain(start + 1_500_000_000)
++        os.close(args.fd)
++        result = {'role': 'reader', 'pid': os.getpid(), 'start_ns': start,
++                  'primary': primary, 'diagnostic': diagnostic,
++                  'events': collector.events, 'frames': collector.frames,
++                  'authority': False, 'retry_authority': False}
++    out.write_text(json.dumps(result, indent=2, sort_keys=True) + '\n')
++    output({'kind': 'DONE', 'pid': os.getpid()})
++
++if __name__ == '__main__':
++    main()
+diff --git a/research/integration/stream_readiness_b8n5_v1/source/audit.py b/research/integration/stream_readiness_b8n5_v1/source/audit.py
+new file mode 100644
+index 0000000..4873ce9
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/source/audit.py
+@@ -0,0 +1,186 @@
++"""Independent reconstruction from saved request, raw read/write and exit bytes.
++
++Imports no actor, collector, corpus module or runner. No experimental actor is
++started. Every statistic is recomputed; summary JSON is not an input.
++"""
++from __future__ import annotations
++import argparse
++from collections import defaultdict
++import hashlib
++import json
++from pathlib import Path
++import statistics
++
++SCENARIOS = ('SINGLE', 'COALESCED_TWO', 'COALESCED_THREE', 'SEPARATE_TWO',
++             'SPLIT_EARLY', 'SPLIT_LATE', 'TRUNCATED_EOF', 'SILENT_OPEN')
++MODES = ('FD_THEN_BUFFERED', 'EXPLICIT_BUFFER')
++
++
++def audit(root: Path, stage: str, batches: list[int], overrides: dict | None = None) -> dict:
++    errors, checks, seen_pids, samples = [], 0, set(), []
++    replacements = overrides or {}
++    def raw(rel):
++        return replacements.get(str(rel), (root/rel).read_bytes())
++    def obj(rel):
++        return json.loads(raw(rel))
++    def require(ok, message):
++        nonlocal checks
++        checks += 1
++        if not ok:
++            errors.append(message)
++    try:
++        if (root/'FREEZE.json').exists():
++            for rel, expected in obj('FREEZE.json')['sha256'].items():
++                require(hashlib.sha256(raw(rel)).hexdigest() == expected, 'source:'+rel)
++        for batch in batches:
++            prefix = f'{stage}/batch-{batch}'
++            end, begin = obj(prefix+'/END.json'), obj(prefix+'/BEGIN.json')
++            outer = obj(f'execution/{stage}/batch-{batch}/receipt.json')
++            require(type(outer['returncode']) is int and outer['returncode'] == 0 and outer['timed_out'] is False, 'outer_exit')
++            require(begin['pid'] == end['pid'] == outer['pid'], 'outer_pid')
++            require(outer['start_ns'] <= begin['start_ns'] <= end['end_ns'] <= outer['end_ns'], 'outer_clock_order')
++            require(hashlib.sha256(raw(f'execution/{stage}/batch-{batch}/stdout')).hexdigest() == outer['stdout_sha256'], 'outer_stdout')
++            require(raw(f'execution/{stage}/batch-{batch}/stderr') == b'', 'outer_stderr')
++            order = []
++            for i, scenario in enumerate(SCENARIOS):
++                for mode in (MODES if (i+batch)%2 == 0 else MODES[::-1]):
++                    order.append(f'{len(order):02d}-{scenario}-{mode}')
++            require(end['cases'] == order and end['complete'] is True, 'case_order_count')
++            for name in order:
++                rel = prefix+'/'+name
++                cfg, writer, reader, proc = [obj(rel+'/'+x) for x in ('CONFIG.json','writer.json','reader.json','EXECUTION.json')]
++                scope = cfg['scope']; mode = cfg['mode']; scenario = cfg['scenario']
++                require(mode in MODES and scenario in SCENARIOS and mode in name and scenario in name, 'case_identity')
++                require(type(cfg['repetition']) is int and cfg['repetition'] == batch and cfg['stage'] == stage, 'repetition')
++                require(scope == f'{stage}:{batch}:{mode}:{scenario}', 'scope')
++                require(cfg['budget_ms'] == 200 and type(cfg['budget_ms']) is int, 'budget_contract')
++                frames = []
++                for seq, text in enumerate(('通知一','通知二','通知三'),1):
++                    frames.append((json.dumps({'scope':scope,'sequence':seq,'payload':text},ensure_ascii=False,sort_keys=True,separators=(',',':'))+'\n').encode())
++                expected = {'COALESCED_TWO':2,'COALESCED_THREE':3,'SEPARATE_TWO':2}.get(scenario,1)
++                if scenario == 'COALESCED_TWO': first,tail=b''.join(frames[:2]),b''
++                elif scenario == 'COALESCED_THREE': first,tail=b''.join(frames),b''
++                elif scenario == 'SEPARATE_TWO': first,tail=frames[:2]
++                elif scenario.startswith('SPLIT_'):
++                    split=frames[0].index('通'.encode())+1
++                    first,tail=frames[0][:split],frames[0][split:]
++                elif scenario == 'TRUNCATED_EOF': first,tail=frames[0][:-1],b''
++                elif scenario == 'SILENT_OPEN': first,tail=b'',b''
++                else:first,tail=frames[0],b''
++                tail_ms = 340 if scenario == 'SPLIT_LATE' else 60
++                close_ms = 80 if scenario == 'TRUNCATED_EOF' else 420
++                require(cfg['expected'] == expected and cfg['tail_ms']==tail_ms and cfg['close_ms']==close_ms, 'schedule')
++                require(cfg['first_hex']==first.hex() and cfg['tail_hex']==tail.hex(), 'recipe_bytes')
++                require(raw(rel+'/sent.bin')==first+tail==raw(rel+'/received.bin'), 'full_stream_conservation')
++                require(proc['pipe']['reader_inode']==proc['pipe']['writer_inode'], 'same_pipe')
++                require(len(first+tail) <= proc['pipe']['pipe_buf'], 'fixture_pipe_buf')
++                t0 = proc['start_ns']; deadline = t0 + 200_000_000
++                require(t0==writer['start_ns']==reader['start_ns'], 'common_clock')
++                require(obj(rel+'/start_command.bin')=={'start_ns':t0}, 'command_time')
++                for role, record in [('writer',writer),('reader',reader)]:
++                    p=proc['actors'][role]; ready=obj(rel+'/'+role+'.ready')
++                    require(type(p['returncode']) is int and p['returncode']==0, 'actor_exit')
++                    require(type(p['pid']) is int and p['pid'] not in seen_pids, 'unique_actor_pid')
++                    seen_pids.add(p['pid'])
++                    require(p['pid']==record['pid']==ready['pid'] and ready['kind']=='READY', 'actor_identity')
++                    require(p['launch_ns'] <= p['ready_received_ns'] <= t0 <= p['command_sent_ns'] <= p['wait_return_ns'], 'actor_order')
++                    require(raw(rel+'/'+role+'.stderr')==b'', 'actor_stderr')
++                    done=json.loads(raw(rel+'/'+role+'.stdout'))
++                    require(done=={'kind':'DONE','pid':p['pid']}, 'actor_done')
++                require(writer['authority'] is False and reader['authority'] is False and reader['retry_authority'] is False, 'actor_authority')
++                writes = [e for e in writer['events'] if e['kind']=='write']
++                emitted = b''.join(bytes.fromhex(e['data_hex']) for e in writes)
++                require(emitted==first+tail, 'writer_bytes')
++                for e in writes:
++                    require(e['before_ns']<=e['after_ns'] and e['written']==len(bytes.fromhex(e['data_hex'])), 'write_receipt')
++                if first:
++                    require(writes[0]['after_ns']<=t0, 'preloaded_first_chunk')
++                if tail:
++                    require(writes[-1]['before_ns']>=t0+tail_ms*1_000_000 and writes[-1]['after_ns']<=t0+(tail_ms+50)*1_000_000, 'tail_exposure')
++                close=writer['events'][-1]
++                require(close['kind']=='close' and close['before_ns']>=t0+close_ms*1_000_000, 'writer_close')
++                a,b,events=reader['primary'],reader['diagnostic'],reader['events']
++                require(a['deadline_ns']==deadline and t0<=a['begin_ns']<=a['end_ns']<=b['begin_ns']<=b['end_ns'], 'reader_order')
++                require(a['authority'] is False and a['retry_authority'] is False and b['scored'] is False, 'collection_authority')
++                require(b['eof'] is True and b['pending_hex']=='', 'final_drain_eof')
++                reads=[e for e in events if e['kind']=='raw_read']
++                received=b''.join(bytes.fromhex(e['data_hex']) for e in reads)
++                require(received==emitted, 'raw_syscall_bytes')
++                for e in events:
++                    require(e['before_ns']<=e['after_ns'], 'event_bracket')
++                for f in reader['frames']:
++                    data=bytes.fromhex(f['data_hex'])
++                    require(data.endswith(b'\n') and len(data)<=1024, 'frame_boundary')
++                    require(json.loads(data.decode('utf-8'))==f['value'], 'frame_decode')
++                    require(f['extracted_ns']<=f['checked_ns'], 'frame_clock')
++                    received_before=b''.join(bytes.fromhex(e['data_hex']) for e in reads if e['after_ns']<=f['extracted_ns'])
++                    upto=b''.join(bytes.fromhex(x['data_hex']) for x in reader['frames'][:f['value']['sequence']])
++                    require(received_before.startswith(upto), 'frame_raw_before_extraction')
++                actual_frames=[bytes.fromhex(f['data_hex']) for f in reader['frames']]
++                framed_expected=[] if scenario in ('TRUNCATED_EOF','SILENT_OPEN') else frames[:expected]
++                require(actual_frames==framed_expected, 'ordered_complete_frames')
++                fragment=frames[0][:-1] if scenario=='TRUNCATED_EOF' else b''
++                require(bytes.fromhex(b['fragment_hex'])==fragment, 'fragment_retention')
++                primary=[f for f in reader['frames'] if f['phase']=='budget']
++                timely=sum(f['checked_ns']<=deadline for f in primary)
++                require(a['returned_frames']==len(primary) and a['timely_frames']==timely, 'primary_reconstruction')
++                for f in primary:
++                    require(f['within_budget'] is (f['checked_ns']<=deadline) and f['checked_ns']<=a['end_ns'], 'postparse_deadline')
++                if scenario in ('SINGLE','SEPARATE_TWO','SPLIT_EARLY') or (scenario.startswith('COALESCED') and mode=='EXPLICIT_BUFFER'):
++                    status,goal='COMPLETE',expected
++                elif scenario.startswith('COALESCED'):
++                    status,goal='BUDGET_EXHAUSTED',1
++                elif scenario=='SPLIT_LATE':
++                    status,goal=('COMPLETE_LATE' if mode=='FD_THEN_BUFFERED' else 'BUDGET_EXHAUSTED'),0
++                elif scenario=='TRUNCATED_EOF':status,goal='EOF_INCOMPLETE',0
++                else:status,goal='BUDGET_EXHAUSTED',0
++                require(a['status']==status and timely==goal, 'expected_first_outcome')
++                require(a['eof'] is (scenario=='TRUNCATED_EOF'), 'primary_eof_truth')
++                if mode=='EXPLICIT_BUFFER':
++                    require(a['end_ns']<=deadline+50_000_000, 'candidate_return_tolerance')
++                if scenario.startswith('COALESCED') and mode=='FD_THEN_BUFFERED':
++                    primary_events=events[:a['event_count']]
++                    primary_reads=[e for e in primary_events if e['kind']=='raw_read']
++                    require(b''.join(bytes.fromhex(e['data_hex']) for e in primary_reads)==emitted, 'all_frames_prefetched')
++                    polls=[e for e in primary_events if e['kind']=='select']
++                    require(polls[-1]['ready'] is False, 'os_descriptor_not_ready')
++                    diagnostic_frames=[f for f in reader['frames'] if f['phase']=='diagnostic']
++                    require(len(diagnostic_frames)==expected-1 and diagnostic_frames[-1]['checked_ns']<close['before_ns'], 'buffered_recovery_before_eof')
++                    read_during_recovery=[e for e in reads if b['begin_ns']<=e['before_ns']<=diagnostic_frames[-1]['checked_ns']]
++                    require(not read_during_recovery, 'recovery_without_new_raw_read')
++                if scenario=='SPLIT_LATE':
++                    if mode=='FD_THEN_BUFFERED':
++                        require(a['end_ns']>=t0+340_000_000 and len(primary)==1, 'blocking_read_overrun')
++                    else:
++                        require(a['end_ns']<writes[-1]['before_ns'] and a['pending_hex']==first.hex() and len(primary)==0, 'pending_before_late_tail')
++                samples.append({'case':name,'batch':batch,'mode':mode,'scenario':scenario,'status':a['status'],
++                                'timely_frames':timely,'expected_frames':expected,'all_frames':len(actual_frames),
++                                'return_ms':(a['end_ns']-t0)/1_000_000,
++                                'overrun_ms':max(0,(a['end_ns']-deadline)/1_000_000)})
++    except Exception as exc:
++        errors.append('audit_input_error:'+type(exc).__name__+':'+str(exc))
++    grouped=defaultdict(list)
++    for sample in samples:
++        grouped[sample['scenario']+'/'+sample['mode']].append(sample)
++    summary={}
++    for key,values in sorted(grouped.items()):
++        durations=[v['return_ms'] for v in values]
++        summary[key]={'n':len(values),'return_ms_median':statistics.median(durations),
++                      'return_ms_range':[min(durations),max(durations)],
++                      'timely_frames':sum(v['timely_frames'] for v in values),
++                      'expected_frames':sum(v['expected_frames'] for v in values),
++                      'status_counts':{s:sum(v['status']==s for v in values) for s in sorted({v['status'] for v in values})}}
++    return {'decision':'PASS_LOCAL_BUFFERED_READINESS_BOUNDARY' if not errors else 'HOLD_OR_FAIL',
++            'checks':checks,'errors':errors,'cases':len(samples),'actor_pids':len(seen_pids),
++            'stage':stage,'batches':batches,'summary':summary,'rows':samples,
++            'scientific_actor_reruns':0,'public_preregistration':False,'production_authority':False}
++
++
++def main():
++    p=argparse.ArgumentParser();p.add_argument('root',type=Path);p.add_argument('stage');p.add_argument('batches');p.add_argument('out',type=Path);a=p.parse_args()
++    result=audit(a.root,a.stage,[int(b) for b in a.batches.split(',')])
++    a.out.write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
++    print(json.dumps({k:v for k,v in result.items() if k not in ('summary','rows')},sort_keys=True))
++    raise SystemExit(bool(result['errors']))
++
++if __name__=='__main__':main()
+diff --git a/research/integration/stream_readiness_b8n5_v1/source/controls.py b/research/integration/stream_readiness_b8n5_v1/source/controls.py
+new file mode 100644
+index 0000000..ae042f6
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/source/controls.py
+@@ -0,0 +1,65 @@
++"""Well-formed copied-evidence controls; never changes original evidence."""
++import argparse
++import copy
++import hashlib
++import json
++from pathlib import Path
++from audit import audit
++
++
++def controls(root, stage, batches):
++    original=audit(root,stage,batches)
++    if original['errors']:
++        raise RuntimeError('intact_evidence_not_valid')
++    batch=batches[0]
++    parent=f'{stage}/batch-{batch}'
++    paths={}
++    for name in json.loads((root/parent/'END.json').read_bytes())['cases']:
++        c=json.loads((root/parent/name/'CONFIG.json').read_bytes())
++        paths[c['scenario'],c['mode']]=parent+'/'+name
++    baseline=paths['COALESCED_TWO','FD_THEN_BUFFERED']
++    candidate=paths['SPLIT_LATE','EXPLICIT_BUFFER']
++    silent=paths['SILENT_OPEN','EXPLICIT_BUFFER']
++    simple=paths['SINGLE','EXPLICIT_BUFFER']
++    truncated=paths['TRUNCATED_EOF','EXPLICIT_BUFFER']
++    checks=[]
++    def mutate(label, path, fn):
++        before=(root/path).read_bytes(); value=json.loads(before)
++        fn(value)
++        after=(json.dumps(value,sort_keys=True,indent=2)+'\n').encode()
++        if json.loads(before)==value:
++            raise RuntimeError('mutation_noop:'+label)
++        result=audit(root,stage,batches,{path:after})
++        bad_parser=any(e.startswith('audit_input_error:') for e in result['errors'])
++        checks.append({'name':label,'path':path,'original_sha256':hashlib.sha256(before).hexdigest(),
++                       'changed_sha256':hashlib.sha256(after).hexdigest(),'effective':before!=after,
++                       'rejected':bool(result['errors']) and not bad_parser,'parser_failure':bad_parser,
++                       'errors':result['errors']})
++    mutate('denominator',parent+'/END.json',lambda x:x['cases'].pop())
++    mutate('boolean_repetition',simple+'/CONFIG.json',lambda x:x.update(repetition=True))
++    mutate('false_complete',baseline+'/reader.json',lambda x:x['primary'].update(status='COMPLETE',returned_frames=2,timely_frames=2))
++    mutate('false_empty_eof',silent+'/reader.json',lambda x:x['primary'].update(eof=True,status='EOF_INCOMPLETE'))
++    mutate('wrong_deadline',candidate+'/reader.json',lambda x:x['primary'].update(deadline_ns=x['primary']['deadline_ns']+200_000_000))
++    mutate('lost_partial_prefix',candidate+'/reader.json',lambda x:x['primary'].update(pending_hex=''))
++    mutate('diagnostic_promoted',candidate+'/reader.json',lambda x:x['frames'][0].update(phase='budget',within_budget=True))
++    mutate('authority_grant',simple+'/reader.json',lambda x:x.update(authority=True))
++    mutate('retry_grant',simple+'/reader.json',lambda x:x['primary'].update(retry_authority=True))
++    mutate('wrong_wait_status',simple+'/EXECUTION.json',lambda x:x['actors']['reader'].update(returncode=5))
++    mutate('false_pipe_identity',simple+'/EXECUTION.json',lambda x:x['pipe'].update(writer_inode=x['pipe']['reader_inode']+1))
++    mutate('writer_wrong_byte',simple+'/writer.json',lambda x:x['events'][0].update(data_hex='00'+x['events'][0]['data_hex'][2:]))
++    mutate('raw_read_omission',simple+'/reader.json',lambda x:next(e for e in x['events'] if e['kind']=='raw_read' and e['data_hex']).update(data_hex=''))
++    mutate('truncated_promoted_empty',truncated+'/reader.json',lambda x:x['diagnostic'].update(fragment_hex=''))
++    mutate('false_buffer_readiness',baseline+'/reader.json',lambda x:[e for e in x['events'][:x['primary']['event_count']] if e['kind']=='select'][-1].update(ready=True))
++    if (root/'FREEZE.json').exists():
++        path='source/policy.py';before=(root/path).read_bytes();after=before+b'\n# copied-source corruption\n'
++        result=audit(root,stage,batches,{path:after})
++        checks.append({'name':'source_identity','path':path,'original_sha256':hashlib.sha256(before).hexdigest(),
++                       'changed_sha256':hashlib.sha256(after).hexdigest(),'effective':True,
++                       'rejected':('source:'+path) in result['errors'],'parser_failure':False,'errors':result['errors']})
++    return {'intact_cases':original['cases'],'controls':checks,'count':len(checks),
++            'all_rejected':all(c['effective'] and c['rejected'] and not c['parser_failure'] for c in checks)}
++
++if __name__=='__main__':
++    p=argparse.ArgumentParser();p.add_argument('root',type=Path);p.add_argument('stage');p.add_argument('batches');p.add_argument('out',type=Path);a=p.parse_args()
++    r=controls(a.root,a.stage,[int(x) for x in a.batches.split(',')]);a.out.write_text(json.dumps(r,indent=2,sort_keys=True)+'\n')
++    print(json.dumps({'count':r['count'],'all_rejected':r['all_rejected']}));raise SystemExit(not r['all_rejected'])
+diff --git a/research/integration/stream_readiness_b8n5_v1/source/execute.py b/research/integration/stream_readiness_b8n5_v1/source/execute.py
+new file mode 100644
+index 0000000..f89bda7
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/source/execute.py
+@@ -0,0 +1,35 @@
++"""Outer supervision with actual exit receipt; no experiment retry."""
++import argparse
++import hashlib
++import json
++from pathlib import Path
++import subprocess
++import sys
++import time
++
++root = Path(__file__).resolve().parents[1]
++parser = argparse.ArgumentParser()
++parser.add_argument('stage', choices=['development', 'pilot'])
++parser.add_argument('batch', type=int, choices=range(3))
++a = parser.parse_args()
++folder = root/'execution'/a.stage/f'batch-{a.batch}'
++folder.mkdir(parents=True, exist_ok=False)
++argv = [sys.executable, '-S', '-B', str(root/'source/run_batch.py'), a.stage, str(a.batch)]
++start = time.monotonic_ns()
++p = subprocess.Popen(argv, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
++timed_out = False
++try:
++    stdout, stderr = p.communicate(timeout=25)
++except subprocess.TimeoutExpired:
++    timed_out = True
++    p.kill()
++    stdout, stderr = p.communicate()
++(folder/'stdout').write_bytes(stdout)
++(folder/'stderr').write_bytes(stderr)
++record = {'argv': argv, 'pid': p.pid, 'start_ns': start, 'end_ns': time.monotonic_ns(),
++          'returncode': p.returncode, 'timed_out': timed_out,
++          'stdout_sha256': hashlib.sha256(stdout).hexdigest(),
++          'stderr_sha256': hashlib.sha256(stderr).hexdigest()}
++(folder/'receipt.json').write_text(json.dumps(record, sort_keys=True, indent=2)+'\n')
++print(json.dumps(record, sort_keys=True))
++raise SystemExit(p.returncode if not timed_out else 124)
+diff --git a/research/integration/stream_readiness_b8n5_v1/source/policy.py b/research/integration/stream_readiness_b8n5_v1/source/policy.py
+new file mode 100644
+index 0000000..c402b8d
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/source/policy.py
+@@ -0,0 +1,181 @@
++"""Read-only finite-stream collectors. No task execution or retry authority.
++
++FD_THEN_BUFFERED is a deliberately incomplete comparison pattern, not alleged
++production code. EXPLICIT_BUFFER owns all unread bytes and does not mix an OS
++readiness test with opaque read-ahead. Python/Linux build is recorded by runner.
++"""
++from __future__ import annotations
++import io
++import json
++import os
++import select
++import time
++
++LIMIT = 1024
++CHUNK = 4096
++
++
++def decode_frame(data: bytes, scope: str, sequence: int) -> dict:
++    if not data.endswith(b'\n') or len(data) > LIMIT:
++        raise ValueError('incomplete_or_oversized')
++    value = json.loads(data.decode('utf-8'))
++    if (type(value) is not dict or value.get('scope') != scope or
++        type(value.get('sequence')) is not int or value['sequence'] != sequence or
++        type(value.get('payload')) is not str):
++        raise ValueError('frame_identity_or_shape')
++    return value
++
++
++class TappedRaw(io.RawIOBase):
++    """Transparent logging of actual os.read calls beneath BufferedReader."""
++    def __init__(self, fd: int, events: list):
++        super().__init__()
++        self.fd, self.events = fd, events
++    def readable(self):
++        return True
++    def fileno(self):
++        return self.fd
++    def readinto(self, target):
++        before = time.monotonic_ns()
++        data = os.read(self.fd, len(target))
++        after = time.monotonic_ns()
++        target[:len(data)] = data
++        self.events.append({'kind': 'raw_read', 'before_ns': before,
++                            'after_ns': after, 'data_hex': data.hex(),
++                            'requested': len(target)})
++        return len(data)
++
++
++class Collector:
++    def __init__(self, fd: int, mode: str, scope: str, expected: int):
++        if mode not in ('FD_THEN_BUFFERED', 'EXPLICIT_BUFFER'):
++            raise ValueError('unknown_mode')
++        if not 1 <= expected <= 3:
++            raise ValueError('expected_range')
++        self.fd, self.mode, self.scope, self.expected = fd, mode, scope, expected
++        self.events, self.frames, self.fragments = [], [], []
++        self.pending = bytearray()
++        self.eof = False
++        self.raw = TappedRaw(fd, self.events)
++        self.stream = io.BufferedReader(self.raw, buffer_size=CHUNK) if mode == 'FD_THEN_BUFFERED' else None
++        if self.stream is None:
++            os.set_blocking(fd, False)
++
++    def ready(self, deadline: int, phase: str) -> bool:
++        before = time.monotonic_ns()
++        timeout = max(0, (deadline - before) / 1_000_000_000)
++        result = bool(select.select([self.fd], [], [], timeout)[0])
++        after = time.monotonic_ns()
++        self.events.append({'kind': 'select', 'phase': phase, 'before_ns': before,
++                            'after_ns': after, 'ready': result})
++        return result
++
++    def record(self, data: bytes, deadline: int, phase: str) -> None:
++        extracted = time.monotonic_ns()
++        value = decode_frame(data, self.scope, len(self.frames) + 1)
++        checked = time.monotonic_ns()
++        self.frames.append({'data_hex': data.hex(), 'value': value,
++                            'extracted_ns': extracted, 'checked_ns': checked,
++                            'phase': phase, 'within_budget': checked <= deadline})
++
++    def next_explicit(self, deadline: int, phase: str) -> bytes | None:
++        while time.monotonic_ns() < deadline:
++            pos = self.pending.find(b'\n')
++            if pos >= 0:
++                frame = bytes(self.pending[:pos + 1])
++                del self.pending[:pos + 1]
++                return frame
++            if len(self.pending) > LIMIT:
++                raise ValueError('oversized_pending')
++            if self.eof:
++                return None
++            if not self.ready(deadline, phase):
++                return None
++            if time.monotonic_ns() >= deadline:
++                return None
++            before = time.monotonic_ns()
++            try:
++                data = os.read(self.fd, CHUNK)
++            except BlockingIOError:
++                self.events.append({'kind': 'eagain', 'phase': phase,
++                                    'before_ns': before, 'after_ns': time.monotonic_ns()})
++                continue
++            after = time.monotonic_ns()
++            self.events.append({'kind': 'raw_read', 'phase': phase,
++                                'before_ns': before, 'after_ns': after,
++                                'data_hex': data.hex(), 'requested': CHUNK})
++            if not data:
++                self.eof = True
++            else:
++                self.pending.extend(data)
++        return None
++
++    def collect(self, deadline: int) -> dict:
++        began = time.monotonic_ns()
++        while len(self.frames) < self.expected and time.monotonic_ns() < deadline:
++            if self.stream is not None:
++                if not self.ready(deadline, 'budget'):
++                    break
++                if time.monotonic_ns() >= deadline:
++                    break
++                before = time.monotonic_ns()
++                data = self.stream.readline(LIMIT + 1)
++                self.events.append({'kind': 'readline', 'phase': 'budget',
++                                    'before_ns': before, 'after_ns': time.monotonic_ns(),
++                                    'data_hex': data.hex()})
++                if not data:
++                    self.eof = True
++                    break
++                if not data.endswith(b'\n'):
++                    self.fragments.append(data)
++                    self.eof = True  # only the bounded fixture's EOF path, not general oversized input
++                    break
++            else:
++                data = self.next_explicit(deadline, 'budget')
++                if data is None:
++                    break
++            self.record(data, deadline, 'budget')
++        ended = time.monotonic_ns()
++        timely = sum(f['within_budget'] for f in self.frames)
++        if len(self.frames) == self.expected:
++            status = 'COMPLETE' if timely == self.expected else 'COMPLETE_LATE'
++        else:
++            status = 'EOF_INCOMPLETE' if self.eof else 'BUDGET_EXHAUSTED'
++        return {'begin_ns': began, 'end_ns': ended, 'deadline_ns': deadline,
++                'status': status, 'returned_frames': len(self.frames),
++                'timely_frames': timely, 'pending_hex': bytes(self.pending).hex(),
++                'fragments_hex': b''.join(self.fragments).hex(), 'eof': self.eof,
++                'event_count': len(self.events), 'authority': False, 'retry_authority': False}
++
++    def diagnostic_drain(self, deadline: int) -> dict:
++        """Outside the scored budget; never credited as timely collection.
++
++        Baseline intentionally omits its selector gate here to test for a frame
++        already inside the opaque buffer. This is diagnostic, not policy rescue.
++        """
++        began = time.monotonic_ns()
++        while time.monotonic_ns() < deadline:
++            if self.stream is not None:
++                before = time.monotonic_ns()
++                data = self.stream.readline(LIMIT + 1)
++                self.events.append({'kind': 'readline', 'phase': 'diagnostic',
++                                    'before_ns': before, 'after_ns': time.monotonic_ns(),
++                                    'data_hex': data.hex()})
++                if not data:
++                    self.eof = True
++                    break
++                if not data.endswith(b'\n'):
++                    self.fragments.append(data)
++                    self.eof = True
++                    break
++            else:
++                data = self.next_explicit(deadline, 'diagnostic')
++                if data is None:
++                    break
++            self.record(data, deadline, 'diagnostic')
++        if self.stream is None and self.eof and self.pending:
++            self.fragments.append(bytes(self.pending))
++            self.pending.clear()
++        return {'begin_ns': began, 'end_ns': time.monotonic_ns(), 'eof': self.eof,
++                'total_frames': len(self.frames), 'pending_hex': bytes(self.pending).hex(),
++                'fragment_hex': b''.join(self.fragments).hex(), 'scored': False}
+diff --git a/research/integration/stream_readiness_b8n5_v1/source/run_batch.py b/research/integration/stream_readiness_b8n5_v1/source/run_batch.py
+new file mode 100644
+index 0000000..90bb5a7
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/source/run_batch.py
+@@ -0,0 +1,113 @@
++"""Execute a consumed-once 16-case local pilot batch; retain all first outcomes."""
++from __future__ import annotations
++import argparse
++import hashlib
++import json
++import os
++from pathlib import Path
++import select
++import subprocess
++import sys
++import time
++from spec import MODES, SCENARIOS, case_config
++
++ROOT = Path(__file__).resolve().parents[1]
++
++def dump(path, data):
++    path.write_text(json.dumps(data, indent=2, sort_keys=True) + '\n')
++
++
++def run_case(folder, cfg):
++    folder.mkdir(exist_ok=False)
++    dump(folder/'CONFIG.json', cfg)
++    (folder/'sent.bin').write_bytes(bytes.fromhex(cfg['first_hex'] + cfg['tail_hex']))
++    rfd, wfd = os.pipe()
++    pipe_identity = {'reader_inode': os.fstat(rfd).st_ino, 'writer_inode': os.fstat(wfd).st_ino,
++                     'pipe_buf': os.fpathconf(wfd, 'PC_PIPE_BUF')}
++    procs = {}
++    ledger = {}
++    try:
++        for role, fd in [('writer', wfd), ('reader', rfd)]:
++            argv = [sys.executable, '-S', '-B', str(ROOT/'source/actor.py'), role, str(fd),
++                    str(folder/'CONFIG.json'), str(folder/(role+'.json'))]
++            before = time.monotonic_ns()
++            p = subprocess.Popen(argv, pass_fds=(fd,), stdin=subprocess.PIPE,
++                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
++                                 env={k:v for k,v in os.environ.items() if k not in ('DISPLAY', 'WAYLAND_DISPLAY')})
++            procs[role] = p
++            ledger[role] = {'argv': argv, 'pid': p.pid, 'launch_ns': before}
++        os.close(rfd); rfd = None
++        os.close(wfd); wfd = None
++        for role, p in procs.items():
++            if not select.select([p.stdout.fileno()], [], [], 3)[0]:
++                raise TimeoutError(role + '_ready_timeout')
++            raw = p.stdout.readline()
++            ready = json.loads(raw)
++            (folder/(role+'.ready')).write_bytes(raw)
++            if ready.get('kind') != 'READY' or ready.get('pid') != p.pid:
++                raise RuntimeError('bad_ready')
++            ledger[role]['ready_received_ns'] = time.monotonic_ns()
++        start = time.monotonic_ns()
++        command = (json.dumps({'start_ns': start}, sort_keys=True)+'\n').encode()
++        (folder/'start_command.bin').write_bytes(command)
++        for role, p in procs.items():
++            p.stdin.write(command); p.stdin.flush(); p.stdin.close(); p.stdin = None
++            ledger[role]['command_sent_ns'] = time.monotonic_ns()
++        for role, p in procs.items():
++            stdout, stderr = p.communicate(timeout=4)
++            ledger[role]['wait_return_ns'] = time.monotonic_ns()
++            ledger[role]['returncode'] = p.returncode
++            (folder/(role+'.stdout')).write_bytes(stdout)
++            (folder/(role+'.stderr')).write_bytes(stderr)
++            if p.returncode != 0 or stderr:
++                raise RuntimeError(role + '_failed')
++        reader = json.loads((folder/'reader.json').read_bytes())
++        recovered = b''.join(bytes.fromhex(f['data_hex']) for f in reader['frames'])
++        recovered += bytes.fromhex(reader['diagnostic']['fragment_hex'])
++        (folder/'received.bin').write_bytes(recovered)
++        dump(folder/'EXECUTION.json', {'start_ns': start, 'pipe': pipe_identity,
++                                      'actors': ledger, 'complete': True})
++    except BaseException as error:
++        for role, p in procs.items():
++            if p.poll() is None:
++                p.kill()
++            out, err = p.communicate(timeout=2)
++            ledger[role]['returncode'] = p.returncode
++            (folder/(role+'.stop.stdout')).write_bytes(out)
++            (folder/(role+'.stop.stderr')).write_bytes(err)
++        dump(folder/'STOP.json', {'type': type(error).__name__, 'message': str(error), 'actors': ledger})
++        raise
++    finally:
++        for fd in (rfd, wfd):
++            if fd is not None:
++                os.close(fd)
++
++
++def main():
++    parser = argparse.ArgumentParser()
++    parser.add_argument('stage', choices=['development', 'pilot'])
++    parser.add_argument('batch', type=int, choices=range(3))
++    args = parser.parse_args()
++    root = ROOT/args.stage/f'batch-{args.batch}'
++    root.mkdir(parents=True, exist_ok=False)
++    if args.stage == 'pilot':
++        freeze = json.loads((ROOT/'FREEZE.json').read_bytes())
++        for rel, expected in freeze['sha256'].items():
++            if hashlib.sha256((ROOT/rel).read_bytes()).hexdigest() != expected:
++                raise RuntimeError('source_mismatch:'+rel)
++    dump(root/'BEGIN.json', {'pid': os.getpid(), 'start_ns': time.monotonic_ns(),
++                            'stage': args.stage, 'batch': args.batch})
++    cases = []
++    for ix, scenario in enumerate(SCENARIOS):
++        modes = MODES if (ix+args.batch)%2 == 0 else MODES[::-1]
++        for mode in modes:
++            cfg = case_config(mode, scenario, args.batch, args.stage)
++            name = f'{len(cases):02d}-{scenario}-{mode}'
++            run_case(root/name, cfg)
++            cases.append(name)
++    dump(root/'END.json', {'pid': os.getpid(), 'end_ns': time.monotonic_ns(), 'cases': cases,
++                          'complete': True, 'stage': args.stage, 'batch': args.batch})
++    print(json.dumps({'cases': len(cases), 'batch': args.batch, 'stage': args.stage}, sort_keys=True))
++
++if __name__ == '__main__':
++    main()
+diff --git a/research/integration/stream_readiness_b8n5_v1/source/spec.py b/research/integration/stream_readiness_b8n5_v1/source/spec.py
+new file mode 100644
+index 0000000..1fefc9f
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/source/spec.py
+@@ -0,0 +1,36 @@
++"""Authored stream corpus; no labels are provided to the collector itself."""
++from __future__ import annotations
++import json
++
++MODES = ('FD_THEN_BUFFERED', 'EXPLICIT_BUFFER')
++SCENARIOS = ('SINGLE', 'COALESCED_TWO', 'COALESCED_THREE', 'SEPARATE_TWO',
++             'SPLIT_EARLY', 'SPLIT_LATE', 'TRUNCATED_EOF', 'SILENT_OPEN')
++
++
++def case_config(mode: str, scenario: str, repetition: int, stage: str) -> dict:
++    scope = f'{stage}:{repetition}:{mode}:{scenario}'
++    def frame(seq, text):
++        return (json.dumps({'scope': scope, 'sequence': seq, 'payload': text},
++                           ensure_ascii=False, sort_keys=True, separators=(',', ':')) + '\n').encode()
++    frames = [frame(1, '通知一'), frame(2, '通知二'), frame(3, '通知三')]
++    first, tail, expected, tail_ms, close_ms = frames[0], b'', 1, 60, 420
++    if scenario == 'COALESCED_TWO':
++        first, expected = b''.join(frames[:2]), 2
++    elif scenario == 'COALESCED_THREE':
++        first, expected = b''.join(frames), 3
++    elif scenario == 'SEPARATE_TWO':
++        tail, expected = frames[1], 2
++    elif scenario in ('SPLIT_EARLY', 'SPLIT_LATE'):
++        cut = frames[0].index('通'.encode()) + 1  # cut inside a real UTF-8 code point
++        first, tail = frames[0][:cut], frames[0][cut:]
++        tail_ms = 60 if scenario == 'SPLIT_EARLY' else 340
++    elif scenario == 'TRUNCATED_EOF':
++        first, close_ms = frames[0][:-1], 80
++    elif scenario == 'SILENT_OPEN':
++        first = b''
++    elif scenario != 'SINGLE':
++        raise ValueError('unknown_scenario')
++    return {'scope': scope, 'mode': mode, 'scenario': scenario, 'stage': stage,
++            'repetition': repetition, 'expected': expected, 'budget_ms': 200,
++            'first_hex': first.hex(), 'tail_hex': tail.hex(), 'tail_ms': tail_ms,
++            'close_ms': close_ms}
+diff --git a/research/integration/stream_readiness_b8n5_v1/source/test_policy.py b/research/integration/stream_readiness_b8n5_v1/source/test_policy.py
+new file mode 100644
+index 0000000..bc84981
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/source/test_policy.py
+@@ -0,0 +1,63 @@
++import io
++import json
++import os
++import time
++import unittest
++from policy import Collector, TappedRaw, decode_frame
++
++
++def wire(sequence=1,scope='s',text='通知'):
++    return (json.dumps({'scope':scope,'sequence':sequence,'payload':text},ensure_ascii=False)+'\n').encode()
++
++
++class TestCollector(unittest.TestCase):
++    def test_valid_unicode(self):
++        self.assertEqual(decode_frame(wire(),'s',1)['payload'],'通知')
++    def test_newline_required(self):
++        with self.assertRaises(ValueError):decode_frame(wire()[:-1],'s',1)
++    def test_wrong_scope(self):
++        with self.assertRaises(ValueError):decode_frame(wire(scope='other'),'s',1)
++    def test_boolean_sequence(self):
++        with self.assertRaises(ValueError):decode_frame(wire(sequence=True),'s',1)
++    def test_wrong_sequence(self):
++        with self.assertRaises(ValueError):decode_frame(wire(sequence=2),'s',1)
++    def test_invalid_utf8(self):
++        with self.assertRaises(ValueError):decode_frame(b'\xff\n','s',1)
++    def test_oversized(self):
++        with self.assertRaises(ValueError):decode_frame(wire(text='x'*2000),'s',1)
++    def test_shape(self):
++        with self.assertRaises(ValueError):decode_frame(b'[]\n','s',1)
++    def test_owned_pending_before_select(self):
++        r,w=os.pipe()
++        try:
++            c=Collector(r,'EXPLICIT_BUFFER','s',2);c.pending.extend(wire()+wire(2))
++            result=c.collect(time.monotonic_ns()+50_000_000)
++            self.assertEqual(result['timely_frames'],2);self.assertFalse(c.events)
++        finally:os.close(r);os.close(w)
++    def test_expired_pending_retained(self):
++        r,w=os.pipe()
++        try:
++            c=Collector(r,'EXPLICIT_BUFFER','s',1);c.pending.extend(wire())
++            result=c.collect(time.monotonic_ns()-1)
++            self.assertEqual(result['returned_frames'],0);self.assertEqual(bytes(c.pending),wire())
++        finally:os.close(r);os.close(w)
++    def test_partial_eof(self):
++        r,w=os.pipe();os.write(w,wire()[:-1]);os.close(w)
++        try:
++            c=Collector(r,'EXPLICIT_BUFFER','s',1);result=c.collect(time.monotonic_ns()+50_000_000)
++            self.assertEqual(result['status'],'EOF_INCOMPLETE');self.assertEqual(result['timely_frames'],0)
++            self.assertEqual(bytes(c.pending),wire()[:-1])
++        finally:os.close(r)
++    def test_logging_raw_parity(self):
++        payload=wire()+wire(2)
++        outputs=[]
++        for tapped in (False,True):
++            r,w=os.pipe();os.write(w,payload);os.close(w)
++            try:
++                raw=TappedRaw(r,[]) if tapped else io.FileIO(r,'rb',closefd=False)
++                with io.BufferedReader(raw,buffer_size=4096) as stream:
++                    outputs.append([stream.readline(),stream.readline(),stream.readline()])
++            finally:os.close(r)
++        self.assertEqual(outputs[0],outputs[1]);self.assertEqual(outputs[0],[wire(),wire(2),b''])
++
++if __name__=='__main__':unittest.main()
+diff --git a/research/integration/stream_readiness_b8n5_v1/verify_readonly.py b/research/integration/stream_readiness_b8n5_v1/verify_readonly.py
+new file mode 100644
+index 0000000..8a887f6
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/verify_readonly.py
+@@ -0,0 +1,75 @@
++"""Verify retained bytes, frozen source, and saved-data audits only.
++
++Does not run actor.py, run_batch.py or execute.py. Destination must be new and
++outside the evidence tree. Trusted local filesystem; not an adversarial sandbox.
++"""
++from __future__ import annotations
++import argparse
++import hashlib
++import json
++from pathlib import Path
++import subprocess
++import sys
++import tempfile
++import time
++
++ROOT=Path(__file__).resolve().parent
++
++def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
++
++def verify():
++    manifest=json.loads((ROOT/'SHA256SUMS.json').read_text())
++    found={str(p.relative_to(ROOT)) for p in ROOT.rglob('*') if p.is_file() and p.name!='SHA256SUMS.json'}
++    if found!=set(manifest['files']):raise ValueError('inventory')
++    for name,spec in manifest['files'].items():
++        p=ROOT/name
++        if p.is_symlink() or p.stat().st_size!=spec['bytes'] or digest(p)!=spec['sha256']:
++            raise ValueError('member:'+name)
++    freeze=json.loads((ROOT/'FREEZE.json').read_text())
++    for name,expected in freeze['sha256'].items():
++        if digest(ROOT/name)!=expected:raise ValueError('source:'+name)
++    for batch in range(3):
++        if (ROOT/f'pilot_receipts/batch-{batch}.exit').read_bytes()!=b'0\n':raise ValueError('outer_shell_exit')
++        if (ROOT/f'pilot_receipts/batch-{batch}.stderr').read_bytes()!=b'':raise ValueError('outer_shell_stderr')
++        batchdir=ROOT/f'pilot/batch-{batch}'
++        for name in json.loads((batchdir/'END.json').read_text())['cases']:
++            record=json.loads((batchdir/name/'EXECUTION.json').read_text())
++            for role in ('writer','reader'):
++                argv=record['actors'][role]['argv']
++                if len(argv)!=8 or argv[1:3]!=['-S','-B'] or Path(argv[3]).name!='actor.py' or argv[4]!=role:
++                    raise ValueError('actor_argv')
++                if Path(argv[6]).name!='CONFIG.json' or Path(argv[7]).name!=role+'.json':
++                    raise ValueError('actor_file_argv')
++    receipts=[]
++    with tempfile.TemporaryDirectory(prefix='b8n5-readonly-') as tmp:
++        work=Path(tmp)
++        commands=[('pilot_audit','audit.py','pilot','0,1,2','AUDIT.json'),
++                  ('pilot_controls','controls.py','pilot','0,1,2','CONTROLS.json'),
++                  ('development_audit','audit.py','development','0','DEVELOPMENT_AUDIT_WITH_FREEZE.json')]
++        for label,script,stage,batches,reference in commands:
++            output=work/(label+'.json')
++            argv=[sys.executable,'-S','-B',str(ROOT/'source'/script),str(ROOT),stage,batches,str(output)]
++            start=time.monotonic_ns();p=subprocess.Popen(argv,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
++            out,err=p.communicate(timeout=20)
++            if p.returncode or err:raise RuntimeError(label+':'+err.decode(errors='replace'))
++            if output.read_bytes()!=(ROOT/reference).read_bytes():raise ValueError('audit_output:'+label)
++            receipts.append({'label':label,'pid':p.pid,'returncode':p.returncode,'start_ns':start,
++                             'end_ns':time.monotonic_ns(),'byte_identical_to':reference,
++                             'sha256':digest(output)})
++        argv=[sys.executable,'-S','-B','-m','unittest','discover','-s',str(ROOT/'source'),'-p','test_policy.py','-v']
++        p=subprocess.Popen(argv,stdout=subprocess.PIPE,stderr=subprocess.PIPE);out,err=p.communicate(timeout=10)
++        if p.returncode or b'Ran 12 tests' not in err:raise ValueError('unit_result')
++        receipts.append({'label':'units','pid':p.pid,'returncode':p.returncode,'methods':12})
++    for name,spec in manifest['files'].items():
++        if digest(ROOT/name)!=spec['sha256']:raise ValueError('verification_mutated:'+name)
