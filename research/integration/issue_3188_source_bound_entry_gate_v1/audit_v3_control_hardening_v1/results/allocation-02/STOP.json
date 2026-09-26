@@ -1,0 +1,16 @@
+{
+  "schema": "issue-3188-audit-v3-allocation-stop-v1",
+  "allocation": "issue3188-audit-v3-control-schema-20260921-02",
+  "status": "STOP_FREEZE_RUNNER_SCHEMA_MISMATCH",
+  "date": "2026-09-21",
+  "frozen_suite_attempts": 1,
+  "test_cases_started": 0,
+  "test_cases_completed": 0,
+  "error": "KeyError: 'runner' in run_once; FREEZE-02 records the runner identity under 'loader'",
+  "interpretation": "The frozen runner rejected the frozen manifest before test discovery. This is a setup/schema STOP, not a candidate FAIL or PASS.",
+  "source_freeze_preserved": true,
+  "formal_02_raw_mutated": false,
+  "raw_sha256": "8460a9ca79611929cbd6d2f6930067a06c6f177e7da3287ad07d1b7f483cb324",
+  "same_allocation_retry": "prohibited",
+  "next_action": "Create a distinct allocation whose frozen manifest uses the runner key required by byte-identical runner_v2.py; preflight the manifest field contract before the one suite call."
+}
