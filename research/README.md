@@ -72,6 +72,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 - [`system1/`](system1/) — bounded fast-path representation and decision experiments.
 - [`local_system1/`](local_system1/) — local decision-kernel, latency, typed-evidence, and frontier-gap mechanics.
+- [`needle_lora_3441_pilot_04d_corrected_base_v1/`](needle_lora_3441_pilot_04d_corrected_base_v1/) — Issue #4471 one-shot GPU formal run stopped after training during result serialization; no metrics or predictions were persisted.
 
 ### Observation, grounding, and visual state
 
@@ -86,6 +87,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 - `runtime_*` directories — backend/native/runtime experiments.
 - [`container_control/`](container_control/) — containerized control work.
 - [`control_codec/`](control_codec/) — control-codec experiments.
+- [`x11_text_german_layout_3668_v2/`](x11_text_german_layout_3668_v2/) — Issue #3741 German XKB text-delivery evidence; retained audit FAIL and missing de-01 raw row are detailed in RECOVERY_REVIEW.md.
 - `text_*` directories — text delivery, keymap, XKB, observation binding, and related robustness studies.
 - [`issue_3784_explicit_x11_receiver_v1/`](issue_3784_explicit_x11_receiver_v1/) — explicit X11 receiver formal allocation and retained STOP/audit evidence; consult RESULT.md for scope.
 - [`issue_3784_focused_receiver_v1/`](issue_3784_focused_receiver_v1/) — Issue #3794 frozen focused-receiver German XKB formula-delivery allocation; formal-01 and independent audit PASS within the documented scope.
