@@ -1,0 +1,59 @@
+{
+  "classification": "FAIL_GUARD_LOCAL_FAIL_CLOSED_BOUNDARY",
+  "experiment": "map01-action-validity-time-boundary-v1",
+  "provenance": {
+    "container_image": "issue2679-map01-runtime@sha256:029e1867aeb843f2d63080343bfbb61540b64852ce00d4d99ec0be51796a093e",
+    "main_commit": "a778bdd577b149a5ec964bbe19da533311335e2f",
+    "network": "none",
+    "platform": "linux/arm64",
+    "root_filesystem": "read-only",
+    "source_blobs": {
+      "action_validity_admission_v1.py": "31bd30bd9baf6b7d56494cc3a18b2c6c70ffbc5e",
+      "running_action_guard_v1.py": "d54047e78bc76f53ef47c6f70fd4a3be6318f09c",
+      "test_action_validity_admission_v1.py": "9d5dbf119fcb56c75ac1732da60b18832876e1a5",
+      "test_running_action_guard_v1.py": "a4a423da1118f2da8cca08e9965419fac322461a"
+    },
+    "source_mount": "read-only"
+  },
+  "rows": [
+    {
+      "case": "active_decision_after_capture",
+      "current_input_authority": true,
+      "invalidation": null,
+      "outcome": "receipt",
+      "phase": "active",
+      "requires_new_decision": false,
+      "state": "INPUT_ACTIVE"
+    },
+    {
+      "case": "active_decision_equal_capture",
+      "current_input_authority": true,
+      "invalidation": null,
+      "outcome": "receipt",
+      "phase": "active",
+      "requires_new_decision": false,
+      "state": "INPUT_ACTIVE"
+    },
+    {
+      "case": "active_decision_one_ns_before_capture",
+      "current_input_authority_after": true,
+      "exception_type": "ValueError",
+      "invalidation_after": null,
+      "message": "controller decision precedes current snapshot",
+      "outcome": "exception",
+      "phase": "active",
+      "state_after": "INPUT_ACTIVE"
+    },
+    {
+      "case": "between_decision_one_ns_before_capture",
+      "current_input_authority_after": false,
+      "exception_type": "ValueError",
+      "invalidation_after": null,
+      "message": "controller decision precedes current snapshot",
+      "outcome": "exception",
+      "phase": "between",
+      "state_after": "BETWEEN_PROGRAMS_REQUIRES_FRESH_CHECK"
+    }
+  ],
+  "scope": "deterministic synthetic timestamps against exact current-main guard; no formal allocation/game/model/input"
+}
