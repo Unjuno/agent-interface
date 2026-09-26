@@ -1,0 +1,57 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.16kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/agent-interface-map01-clock-review-fixed:20260920
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 6.94kB done
+#4 DONE 0.0s
+
+#5 [1/9] FROM docker.io/library/agent-interface-map01-clock-review-fixed:20260920@sha256:4320dd483b24ea91c1481f12fd5799c903d9daa99a517b994f607037098ea41d
+#5 resolve docker.io/library/agent-interface-map01-clock-review-fixed:20260920@sha256:4320dd483b24ea91c1481f12fd5799c903d9daa99a517b994f607037098ea41d
+#5 resolve docker.io/library/agent-interface-map01-clock-review-fixed:20260920@sha256:4320dd483b24ea91c1481f12fd5799c903d9daa99a517b994f607037098ea41d 0.0s done
+#5 DONE 0.0s
+
+#6 [5/9] RUN git -C /tmp/vizdoom-src apply /tmp/vizdoom-tic-counter-v1.patch     && python -m pip install --no-cache-dir /tmp/vizdoom-src     && python -c 'import vizdoom; print(vizdoom.__version__, vizdoom.__file__)'
+#6 CACHED
+
+#7 [7/9] COPY counter_call.c /counter_call.c
+#7 CACHED
+
+#8 [4/9] COPY vizdoom-tic-counter-v1.patch /tmp/vizdoom-tic-counter-v1.patch
+#8 CACHED
+
+#9 [6/9] WORKDIR /probe
+#9 CACHED
+
+#10 [3/9] RUN git clone --depth 1 --branch 1.3.0 --recurse-submodules       https://github.com/Farama-Foundation/ViZDoom.git /tmp/vizdoom-src     && test "$(git -C /tmp/vizdoom-src rev-parse HEAD)" =       c8e0a31182d98c6f40a65674283e736b851e8e59     && git -C /tmp/vizdoom-src submodule update --init --recursive
+#10 CACHED
+
+#11 [2/9] RUN apt-get update && apt-get install -y --no-install-recommends     build-essential cmake git libboost-all-dev libsdl2-dev libopenal-dev     python3-dev pkg-config ca-certificates binutils     && rm -rf /var/lib/apt/lists/*
+#11 CACHED
+
+#12 [8/9] RUN gcc -shared -fPIC -O2 $(python3-config --includes)     -o /counter_call$(python3-config --extension-suffix) /counter_call.c
+#12 CACHED
+
+#13 [9/9] COPY probe.py /probe48.py
+#13 DONE 0.1s
+
+#14 exporting to image
+#14 exporting layers
+#14 exporting layers 0.2s done
+#14 exporting manifest sha256:fdd402afaeb0a7876bcd925ba13710444e3d66ac6eeed4d392c7765e69b50d69
+#14 exporting manifest sha256:fdd402afaeb0a7876bcd925ba13710444e3d66ac6eeed4d392c7765e69b50d69 0.0s done
+#14 exporting config sha256:948aa469d922dba7f084f6fc55be4cb7ab8f648c1982bb04c5295f73f991fc49 0.0s done
+#14 exporting attestation manifest sha256:1599d4ab82e2fb4d935c3462609904d76487f17baeb0f0d6710109314a530867 0.0s done
+#14 exporting manifest list sha256:d533fbad67bb229b8001f4d098cef692164d2f5dafb85e37f2934cea346a9f35 0.0s done
+#14 naming to docker.io/library/agent-interface-map01-clock-counter-v1:20260920 done
+#14 unpacking to docker.io/library/agent-interface-map01-clock-counter-v1:20260920 0.0s done
+#14 DONE 0.3s

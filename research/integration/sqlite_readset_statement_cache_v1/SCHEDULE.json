@@ -1,0 +1,602 @@
+[
+  {
+    "id": "c000",
+    "rep": 0,
+    "condition": "cold_stable",
+    "mode": "EVENT_ONLY",
+    "prime_sql": null,
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "none"
+  },
+  {
+    "id": "c001",
+    "rep": 0,
+    "condition": "cold_stable",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": null,
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "none"
+  },
+  {
+    "id": "c002",
+    "rep": 0,
+    "condition": "cold_stable",
+    "mode": "METADATA_REUSE",
+    "prime_sql": null,
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "none"
+  },
+  {
+    "id": "c003",
+    "rep": 0,
+    "condition": "cold_relevant_change",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": null,
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_a"
+  },
+  {
+    "id": "c004",
+    "rep": 0,
+    "condition": "cold_relevant_change",
+    "mode": "METADATA_REUSE",
+    "prime_sql": null,
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_a"
+  },
+  {
+    "id": "c005",
+    "rep": 0,
+    "condition": "cold_relevant_change",
+    "mode": "EVENT_ONLY",
+    "prime_sql": null,
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_a"
+  },
+  {
+    "id": "c006",
+    "rep": 0,
+    "condition": "warm_stable",
+    "mode": "METADATA_REUSE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "none"
+  },
+  {
+    "id": "c007",
+    "rep": 0,
+    "condition": "warm_stable",
+    "mode": "EVENT_ONLY",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "none"
+  },
+  {
+    "id": "c008",
+    "rep": 0,
+    "condition": "warm_stable",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "none"
+  },
+  {
+    "id": "c009",
+    "rep": 0,
+    "condition": "warm_relevant_change",
+    "mode": "EVENT_ONLY",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_a"
+  },
+  {
+    "id": "c010",
+    "rep": 0,
+    "condition": "warm_relevant_change",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_a"
+  },
+  {
+    "id": "c011",
+    "rep": 0,
+    "condition": "warm_relevant_change",
+    "mode": "METADATA_REUSE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_a"
+  },
+  {
+    "id": "c012",
+    "rep": 0,
+    "condition": "warm_unrelated_change",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_u"
+  },
+  {
+    "id": "c013",
+    "rep": 0,
+    "condition": "warm_unrelated_change",
+    "mode": "METADATA_REUSE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_u"
+  },
+  {
+    "id": "c014",
+    "rep": 0,
+    "condition": "warm_unrelated_change",
+    "mode": "EVENT_ONLY",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_u"
+  },
+  {
+    "id": "c015",
+    "rep": 0,
+    "condition": "warm_relevant_rollback",
+    "mode": "METADATA_REUSE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "rollback_a"
+  },
+  {
+    "id": "c016",
+    "rep": 0,
+    "condition": "warm_relevant_rollback",
+    "mode": "EVENT_ONLY",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "rollback_a"
+  },
+  {
+    "id": "c017",
+    "rep": 0,
+    "condition": "warm_relevant_rollback",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "rollback_a"
+  },
+  {
+    "id": "c018",
+    "rep": 0,
+    "condition": "warm_change_before_prepare",
+    "mode": "EVENT_ONLY",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "change_a",
+    "after": "none"
+  },
+  {
+    "id": "c019",
+    "rep": 0,
+    "condition": "warm_change_before_prepare",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "change_a",
+    "after": "none"
+  },
+  {
+    "id": "c020",
+    "rep": 0,
+    "condition": "warm_change_before_prepare",
+    "mode": "METADATA_REUSE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "change_a",
+    "after": "none"
+  },
+  {
+    "id": "c021",
+    "rep": 0,
+    "condition": "different_sql_after_warm",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM b",
+    "before": "none",
+    "after": "change_b"
+  },
+  {
+    "id": "c022",
+    "rep": 0,
+    "condition": "different_sql_after_warm",
+    "mode": "METADATA_REUSE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM b",
+    "before": "none",
+    "after": "change_b"
+  },
+  {
+    "id": "c023",
+    "rep": 0,
+    "condition": "different_sql_after_warm",
+    "mode": "EVENT_ONLY",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM b",
+    "before": "none",
+    "after": "change_b"
+  },
+  {
+    "id": "c024",
+    "rep": 0,
+    "condition": "view_retarget_relevant",
+    "mode": "METADATA_REUSE",
+    "prime_sql": "SELECT value FROM current_view",
+    "sql": "SELECT value FROM current_view",
+    "before": "retarget_b",
+    "after": "change_b"
+  },
+  {
+    "id": "c025",
+    "rep": 0,
+    "condition": "view_retarget_relevant",
+    "mode": "EVENT_ONLY",
+    "prime_sql": "SELECT value FROM current_view",
+    "sql": "SELECT value FROM current_view",
+    "before": "retarget_b",
+    "after": "change_b"
+  },
+  {
+    "id": "c026",
+    "rep": 0,
+    "condition": "view_retarget_relevant",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": "SELECT value FROM current_view",
+    "sql": "SELECT value FROM current_view",
+    "before": "retarget_b",
+    "after": "change_b"
+  },
+  {
+    "id": "c027",
+    "rep": 0,
+    "condition": "view_retarget_old_resource",
+    "mode": "EVENT_ONLY",
+    "prime_sql": "SELECT value FROM current_view",
+    "sql": "SELECT value FROM current_view",
+    "before": "retarget_b",
+    "after": "change_a"
+  },
+  {
+    "id": "c028",
+    "rep": 0,
+    "condition": "view_retarget_old_resource",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": "SELECT value FROM current_view",
+    "sql": "SELECT value FROM current_view",
+    "before": "retarget_b",
+    "after": "change_a"
+  },
+  {
+    "id": "c029",
+    "rep": 0,
+    "condition": "view_retarget_old_resource",
+    "mode": "METADATA_REUSE",
+    "prime_sql": "SELECT value FROM current_view",
+    "sql": "SELECT value FROM current_view",
+    "before": "retarget_b",
+    "after": "change_a"
+  },
+  {
+    "id": "c030",
+    "rep": 1,
+    "condition": "cold_stable",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": null,
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "none"
+  },
+  {
+    "id": "c031",
+    "rep": 1,
+    "condition": "cold_stable",
+    "mode": "METADATA_REUSE",
+    "prime_sql": null,
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "none"
+  },
+  {
+    "id": "c032",
+    "rep": 1,
+    "condition": "cold_stable",
+    "mode": "EVENT_ONLY",
+    "prime_sql": null,
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "none"
+  },
+  {
+    "id": "c033",
+    "rep": 1,
+    "condition": "cold_relevant_change",
+    "mode": "METADATA_REUSE",
+    "prime_sql": null,
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_a"
+  },
+  {
+    "id": "c034",
+    "rep": 1,
+    "condition": "cold_relevant_change",
+    "mode": "EVENT_ONLY",
+    "prime_sql": null,
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_a"
+  },
+  {
+    "id": "c035",
+    "rep": 1,
+    "condition": "cold_relevant_change",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": null,
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_a"
+  },
+  {
+    "id": "c036",
+    "rep": 1,
+    "condition": "warm_stable",
+    "mode": "EVENT_ONLY",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "none"
+  },
+  {
+    "id": "c037",
+    "rep": 1,
+    "condition": "warm_stable",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "none"
+  },
+  {
+    "id": "c038",
+    "rep": 1,
+    "condition": "warm_stable",
+    "mode": "METADATA_REUSE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "none"
+  },
+  {
+    "id": "c039",
+    "rep": 1,
+    "condition": "warm_relevant_change",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_a"
+  },
+  {
+    "id": "c040",
+    "rep": 1,
+    "condition": "warm_relevant_change",
+    "mode": "METADATA_REUSE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_a"
+  },
+  {
+    "id": "c041",
+    "rep": 1,
+    "condition": "warm_relevant_change",
+    "mode": "EVENT_ONLY",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_a"
+  },
+  {
+    "id": "c042",
+    "rep": 1,
+    "condition": "warm_unrelated_change",
+    "mode": "METADATA_REUSE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_u"
+  },
+  {
+    "id": "c043",
+    "rep": 1,
+    "condition": "warm_unrelated_change",
+    "mode": "EVENT_ONLY",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_u"
+  },
+  {
+    "id": "c044",
+    "rep": 1,
+    "condition": "warm_unrelated_change",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "change_u"
+  },
+  {
+    "id": "c045",
+    "rep": 1,
+    "condition": "warm_relevant_rollback",
+    "mode": "EVENT_ONLY",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "rollback_a"
+  },
+  {
+    "id": "c046",
+    "rep": 1,
+    "condition": "warm_relevant_rollback",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "rollback_a"
+  },
+  {
+    "id": "c047",
+    "rep": 1,
+    "condition": "warm_relevant_rollback",
+    "mode": "METADATA_REUSE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "none",
+    "after": "rollback_a"
+  },
+  {
+    "id": "c048",
+    "rep": 1,
+    "condition": "warm_change_before_prepare",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "change_a",
+    "after": "none"
+  },
+  {
+    "id": "c049",
+    "rep": 1,
+    "condition": "warm_change_before_prepare",
+    "mode": "METADATA_REUSE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "change_a",
+    "after": "none"
+  },
+  {
+    "id": "c050",
+    "rep": 1,
+    "condition": "warm_change_before_prepare",
+    "mode": "EVENT_ONLY",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM a",
+    "before": "change_a",
+    "after": "none"
+  },
+  {
+    "id": "c051",
+    "rep": 1,
+    "condition": "different_sql_after_warm",
+    "mode": "METADATA_REUSE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM b",
+    "before": "none",
+    "after": "change_b"
+  },
+  {
+    "id": "c052",
+    "rep": 1,
+    "condition": "different_sql_after_warm",
+    "mode": "EVENT_ONLY",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM b",
+    "before": "none",
+    "after": "change_b"
+  },
+  {
+    "id": "c053",
+    "rep": 1,
+    "condition": "different_sql_after_warm",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": "SELECT value FROM a",
+    "sql": "SELECT value FROM b",
+    "before": "none",
+    "after": "change_b"
+  },
+  {
+    "id": "c054",
+    "rep": 1,
+    "condition": "view_retarget_relevant",
+    "mode": "EVENT_ONLY",
+    "prime_sql": "SELECT value FROM current_view",
+    "sql": "SELECT value FROM current_view",
+    "before": "retarget_b",
+    "after": "change_b"
+  },
+  {
+    "id": "c055",
+    "rep": 1,
+    "condition": "view_retarget_relevant",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": "SELECT value FROM current_view",
+    "sql": "SELECT value FROM current_view",
+    "before": "retarget_b",
+    "after": "change_b"
+  },
+  {
+    "id": "c056",
+    "rep": 1,
+    "condition": "view_retarget_relevant",
+    "mode": "METADATA_REUSE",
+    "prime_sql": "SELECT value FROM current_view",
+    "sql": "SELECT value FROM current_view",
+    "before": "retarget_b",
+    "after": "change_b"
+  },
+  {
+    "id": "c057",
+    "rep": 1,
+    "condition": "view_retarget_old_resource",
+    "mode": "NO_STATEMENT_CACHE",
+    "prime_sql": "SELECT value FROM current_view",
+    "sql": "SELECT value FROM current_view",
+    "before": "retarget_b",
+    "after": "change_a"
+  },
+  {
+    "id": "c058",
+    "rep": 1,
+    "condition": "view_retarget_old_resource",
+    "mode": "METADATA_REUSE",
+    "prime_sql": "SELECT value FROM current_view",
+    "sql": "SELECT value FROM current_view",
+    "before": "retarget_b",
+    "after": "change_a"
+  },
+  {
+    "id": "c059",
+    "rep": 1,
+    "condition": "view_retarget_old_resource",
+    "mode": "EVENT_ONLY",
+    "prime_sql": "SELECT value FROM current_view",
+    "sql": "SELECT value FROM current_view",
+    "before": "retarget_b",
+    "after": "change_a"
+  }
+]

@@ -1,0 +1,1000 @@
++      "return_ms": 200.278035,
++      "scenario": "COALESCED_TWO",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 3,
++      "batch": 0,
++      "case": "04-COALESCED_THREE-FD_THEN_BUFFERED",
++      "expected_frames": 3,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.276316,
++      "return_ms": 200.276316,
++      "scenario": "COALESCED_THREE",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 3,
++      "batch": 0,
++      "case": "05-COALESCED_THREE-EXPLICIT_BUFFER",
++      "expected_frames": 3,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.177,
++      "scenario": "COALESCED_THREE",
++      "status": "COMPLETE",
++      "timely_frames": 3
++    },
++    {
++      "all_frames": 2,
++      "batch": 0,
++      "case": "06-SEPARATE_TWO-EXPLICIT_BUFFER",
++      "expected_frames": 2,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 60.217771,
++      "scenario": "SEPARATE_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 2,
++      "batch": 0,
++      "case": "07-SEPARATE_TWO-FD_THEN_BUFFERED",
++      "expected_frames": 2,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 60.350038,
++      "scenario": "SEPARATE_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "08-SPLIT_EARLY-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 60.220294,
++      "scenario": "SPLIT_EARLY",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "09-SPLIT_EARLY-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 60.271927,
++      "scenario": "SPLIT_EARLY",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "10-SPLIT_LATE-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0.268273,
++      "return_ms": 200.268273,
++      "scenario": "SPLIT_LATE",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "11-SPLIT_LATE-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 140.296624,
++      "return_ms": 340.296624,
++      "scenario": "SPLIT_LATE",
++      "status": "COMPLETE_LATE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 0,
++      "case": "12-TRUNCATED_EOF-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 80.210439,
++      "scenario": "TRUNCATED_EOF",
++      "status": "EOF_INCOMPLETE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 0,
++      "case": "13-TRUNCATED_EOF-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 80.241935,
++      "scenario": "TRUNCATED_EOF",
++      "status": "EOF_INCOMPLETE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 0,
++      "case": "14-SILENT_OPEN-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0.36256,
++      "return_ms": 200.36256,
++      "scenario": "SILENT_OPEN",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 0,
++      "case": "15-SILENT_OPEN-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.312885,
++      "return_ms": 200.312885,
++      "scenario": "SILENT_OPEN",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    }
++  ],
++  "scientific_actor_reruns": 0,
++  "stage": "development",
++  "summary": {
++    "COALESCED_THREE/EXPLICIT_BUFFER": {
++      "expected_frames": 3,
++      "n": 1,
++      "return_ms_median": 0.177,
++      "return_ms_range": [
++        0.177,
++        0.177
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 3
++    },
++    "COALESCED_THREE/FD_THEN_BUFFERED": {
++      "expected_frames": 3,
++      "n": 1,
++      "return_ms_median": 200.276316,
++      "return_ms_range": [
++        200.276316,
++        200.276316
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 1
++      },
++      "timely_frames": 1
++    },
++    "COALESCED_TWO/EXPLICIT_BUFFER": {
++      "expected_frames": 2,
++      "n": 1,
++      "return_ms_median": 0.178918,
++      "return_ms_range": [
++        0.178918,
++        0.178918
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 2
++    },
++    "COALESCED_TWO/FD_THEN_BUFFERED": {
++      "expected_frames": 2,
++      "n": 1,
++      "return_ms_median": 200.278035,
++      "return_ms_range": [
++        200.278035,
++        200.278035
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 1
++      },
++      "timely_frames": 1
++    },
++    "SEPARATE_TWO/EXPLICIT_BUFFER": {
++      "expected_frames": 2,
++      "n": 1,
++      "return_ms_median": 60.217771,
++      "return_ms_range": [
++        60.217771,
++        60.217771
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 2
++    },
++    "SEPARATE_TWO/FD_THEN_BUFFERED": {
++      "expected_frames": 2,
++      "n": 1,
++      "return_ms_median": 60.350038,
++      "return_ms_range": [
++        60.350038,
++        60.350038
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 2
++    },
++    "SILENT_OPEN/EXPLICIT_BUFFER": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 200.36256,
++      "return_ms_range": [
++        200.36256,
++        200.36256
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 1
++      },
++      "timely_frames": 0
++    },
++    "SILENT_OPEN/FD_THEN_BUFFERED": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 200.312885,
++      "return_ms_range": [
++        200.312885,
++        200.312885
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 1
++      },
++      "timely_frames": 0
++    },
++    "SINGLE/EXPLICIT_BUFFER": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 0.188272,
++      "return_ms_range": [
++        0.188272,
++        0.188272
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 1
++    },
++    "SINGLE/FD_THEN_BUFFERED": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 0.218793,
++      "return_ms_range": [
++        0.218793,
++        0.218793
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 1
++    },
++    "SPLIT_EARLY/EXPLICIT_BUFFER": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 60.271927,
++      "return_ms_range": [
++        60.271927,
++        60.271927
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 1
++    },
++    "SPLIT_EARLY/FD_THEN_BUFFERED": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 60.220294,
++      "return_ms_range": [
++        60.220294,
++        60.220294
++      ],
++      "status_counts": {
++        "COMPLETE": 1
++      },
++      "timely_frames": 1
++    },
++    "SPLIT_LATE/EXPLICIT_BUFFER": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 200.268273,
++      "return_ms_range": [
++        200.268273,
++        200.268273
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 1
++      },
++      "timely_frames": 0
++    },
++    "SPLIT_LATE/FD_THEN_BUFFERED": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 340.296624,
++      "return_ms_range": [
++        340.296624,
++        340.296624
++      ],
++      "status_counts": {
++        "COMPLETE_LATE": 1
++      },
++      "timely_frames": 0
++    },
++    "TRUNCATED_EOF/EXPLICIT_BUFFER": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 80.241935,
++      "return_ms_range": [
++        80.241935,
++        80.241935
++      ],
++      "status_counts": {
++        "EOF_INCOMPLETE": 1
++      },
++      "timely_frames": 0
++    },
++    "TRUNCATED_EOF/FD_THEN_BUFFERED": {
++      "expected_frames": 1,
++      "n": 1,
++      "return_ms_median": 80.210439,
++      "return_ms_range": [
++        80.210439,
++        80.210439
++      ],
++      "status_counts": {
++        "EOF_INCOMPLETE": 1
++      },
++      "timely_frames": 0
++    }
++  }
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_CONTROLS_01.json b/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_CONTROLS_01.json
+new file mode 100644
+index 0000000..b234a37
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_CONTROLS_01.json
+@@ -0,0 +1,193 @@
++{
++  "all_rejected": true,
++  "controls": [
++    {
++      "changed_sha256": "d1c7fb880bad8583209bfd87006bae60d4f74006e1229c0f9eb5ddac1db862b1",
++      "effective": true,
++      "errors": [
++        "case_order_count"
++      ],
++      "name": "denominator",
++      "original_sha256": "cb5ee2fd4ab28385ccaec2d0962e803378ca99128c6e9064c292d93e22e8603a",
++      "parser_failure": false,
++      "path": "development/batch-0/END.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "3fd8714f28cc385dd0f8bae36f64fc3c5fd64bf1c87230295de78a2b76eaeefa",
++      "effective": true,
++      "errors": [
++        "repetition"
++      ],
++      "name": "boolean_repetition",
++      "original_sha256": "f9de35d86b0b84e8b154206ce4e5438ad2e3bdc65994e7a1f726ab60788b6e04",
++      "parser_failure": false,
++      "path": "development/batch-0/01-SINGLE-EXPLICIT_BUFFER/CONFIG.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "e1b45da0dfdf88e7b0cbbd420641e2448e292a30b66a37ef918868ac26335f3c",
++      "effective": true,
++      "errors": [
++        "primary_reconstruction",
++        "expected_first_outcome"
++      ],
++      "name": "false_complete",
++      "original_sha256": "c1ee94bd9bb78984d3b33c21871e6e413aa292bc253d2e94751245f4d0e3f4ad",
++      "parser_failure": false,
++      "path": "development/batch-0/03-COALESCED_TWO-FD_THEN_BUFFERED/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "f8bb66929171929d1cacd190c056043febe3ba19578a5ac482c80c8d2e137e93",
++      "effective": true,
++      "errors": [
++        "expected_first_outcome",
++        "primary_eof_truth"
++      ],
++      "name": "false_empty_eof",
++      "original_sha256": "332177af5780fb714d3f3d9261974d49d73122003e60c1ce02fbe185c2326c3b",
++      "parser_failure": false,
++      "path": "development/batch-0/14-SILENT_OPEN-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "5b67c45ef93f559c541a4540991300285a903d3737c4e6bae84bce678d9e92eb",
++      "effective": true,
++      "errors": [
++        "reader_order"
++      ],
++      "name": "wrong_deadline",
++      "original_sha256": "4817b0e868386140100763ffd3cdaf1298b81512047a002d2d6a6a280a015106",
++      "parser_failure": false,
++      "path": "development/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "2f00f2651c8ea05c6d554c1fe7bd7134613f3b231bf5e603d1293ed39f61a6b7",
++      "effective": true,
++      "errors": [
++        "pending_before_late_tail"
++      ],
++      "name": "lost_partial_prefix",
++      "original_sha256": "4817b0e868386140100763ffd3cdaf1298b81512047a002d2d6a6a280a015106",
++      "parser_failure": false,
++      "path": "development/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "9c520566f8c87eb90e65ab31627c7738f443d7fee64aed536802d9a22660d800",
++      "effective": true,
++      "errors": [
++        "primary_reconstruction",
++        "postparse_deadline",
++        "pending_before_late_tail"
++      ],
++      "name": "diagnostic_promoted",
++      "original_sha256": "4817b0e868386140100763ffd3cdaf1298b81512047a002d2d6a6a280a015106",
++      "parser_failure": false,
++      "path": "development/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "5b99db57e1d71fa8bb0d9f8beeb2dd6f689e24ac753e1211cc727a0584ffab75",
++      "effective": true,
++      "errors": [
++        "actor_authority"
++      ],
++      "name": "authority_grant",
++      "original_sha256": "4f2803d37836b33bc743b928e26ee4d0fa709814dcbc416384780fb0f78c1f98",
++      "parser_failure": false,
++      "path": "development/batch-0/01-SINGLE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "ed5f0c881069fef4997751210f43f6abf67d7c07762c83ca2753d49a6b0d2d76",
++      "effective": true,
++      "errors": [
++        "collection_authority"
++      ],
++      "name": "retry_grant",
++      "original_sha256": "4f2803d37836b33bc743b928e26ee4d0fa709814dcbc416384780fb0f78c1f98",
++      "parser_failure": false,
++      "path": "development/batch-0/01-SINGLE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "51e1c4a9a90c7db3d67b77202e3ee3a489e0f42b03267e4901678e837cb24d2e",
++      "effective": true,
++      "errors": [
++        "actor_exit"
++      ],
++      "name": "wrong_wait_status",
++      "original_sha256": "fdc554e17529ed15f50a78d6fa73a3e640cfaa0cd857c8fe12261675560ee873",
++      "parser_failure": false,
++      "path": "development/batch-0/01-SINGLE-EXPLICIT_BUFFER/EXECUTION.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "87a7501dc8434b236e48d7e26d9d21b07c64ade44053c87fd3a7dc2d95398c27",
++      "effective": true,
++      "errors": [
++        "same_pipe"
++      ],
++      "name": "false_pipe_identity",
++      "original_sha256": "fdc554e17529ed15f50a78d6fa73a3e640cfaa0cd857c8fe12261675560ee873",
++      "parser_failure": false,
++      "path": "development/batch-0/01-SINGLE-EXPLICIT_BUFFER/EXECUTION.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "682acbd702906387f59e0412ad07065d3c6b854d0be8d69beefe64a993e8a832",
++      "effective": true,
++      "errors": [
++        "writer_bytes",
++        "raw_syscall_bytes"
++      ],
++      "name": "writer_wrong_byte",
++      "original_sha256": "cdc3dad7acb4f39d7f905d2dcac421e9c3b36c404d1a6d8ce75419fee18973e6",
++      "parser_failure": false,
++      "path": "development/batch-0/01-SINGLE-EXPLICIT_BUFFER/writer.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "8b8667815f95cbe94a2bf673ab94977cd5cb4adafb250e3eedcf23f8450a788b",
++      "effective": true,
++      "errors": [
++        "raw_syscall_bytes",
++        "frame_raw_before_extraction"
++      ],
++      "name": "raw_read_omission",
++      "original_sha256": "4f2803d37836b33bc743b928e26ee4d0fa709814dcbc416384780fb0f78c1f98",
++      "parser_failure": false,
++      "path": "development/batch-0/01-SINGLE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "47146f44938f2c1a7200f69f336a1dccc585711b31ec25611c0891edda5dcd8e",
++      "effective": true,
++      "errors": [
++        "fragment_retention"
++      ],
++      "name": "truncated_promoted_empty",
++      "original_sha256": "1ed2601594dd9b4f3f0495117aab0c9b82892ecde18c465e7426aa3ee79a6ae1",
++      "parser_failure": false,
++      "path": "development/batch-0/13-TRUNCATED_EOF-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "076702f64b07b3220c7ec29ec77fa35d1a2cc7c8cd890d398bb3d998bfec37b9",
++      "effective": true,
++      "errors": [
++        "os_descriptor_not_ready"
++      ],
++      "name": "false_buffer_readiness",
++      "original_sha256": "c1ee94bd9bb78984d3b33c21871e6e413aa292bc253d2e94751245f4d0e3f4ad",
++      "parser_failure": false,
++      "path": "development/batch-0/03-COALESCED_TWO-FD_THEN_BUFFERED/reader.json",
++      "rejected": true
++    }
++  ],
++  "count": 15,
++  "intact_cases": 16
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_CONTROLS_02.json b/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_CONTROLS_02.json
+new file mode 100644
+index 0000000..1e5b034
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_CONTROLS_02.json
+@@ -0,0 +1,205 @@
++{
++  "all_rejected": true,
++  "controls": [
++    {
++      "changed_sha256": "d1c7fb880bad8583209bfd87006bae60d4f74006e1229c0f9eb5ddac1db862b1",
++      "effective": true,
++      "errors": [
++        "case_order_count"
++      ],
++      "name": "denominator",
++      "original_sha256": "cb5ee2fd4ab28385ccaec2d0962e803378ca99128c6e9064c292d93e22e8603a",
++      "parser_failure": false,
++      "path": "development/batch-0/END.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "3fd8714f28cc385dd0f8bae36f64fc3c5fd64bf1c87230295de78a2b76eaeefa",
++      "effective": true,
++      "errors": [
++        "repetition"
++      ],
++      "name": "boolean_repetition",
++      "original_sha256": "f9de35d86b0b84e8b154206ce4e5438ad2e3bdc65994e7a1f726ab60788b6e04",
++      "parser_failure": false,
++      "path": "development/batch-0/01-SINGLE-EXPLICIT_BUFFER/CONFIG.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "e1b45da0dfdf88e7b0cbbd420641e2448e292a30b66a37ef918868ac26335f3c",
++      "effective": true,
++      "errors": [
++        "primary_reconstruction",
++        "expected_first_outcome"
++      ],
++      "name": "false_complete",
++      "original_sha256": "c1ee94bd9bb78984d3b33c21871e6e413aa292bc253d2e94751245f4d0e3f4ad",
++      "parser_failure": false,
++      "path": "development/batch-0/03-COALESCED_TWO-FD_THEN_BUFFERED/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "f8bb66929171929d1cacd190c056043febe3ba19578a5ac482c80c8d2e137e93",
++      "effective": true,
++      "errors": [
++        "expected_first_outcome",
++        "primary_eof_truth"
++      ],
++      "name": "false_empty_eof",
++      "original_sha256": "332177af5780fb714d3f3d9261974d49d73122003e60c1ce02fbe185c2326c3b",
++      "parser_failure": false,
++      "path": "development/batch-0/14-SILENT_OPEN-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "5b67c45ef93f559c541a4540991300285a903d3737c4e6bae84bce678d9e92eb",
++      "effective": true,
++      "errors": [
++        "reader_order"
++      ],
++      "name": "wrong_deadline",
++      "original_sha256": "4817b0e868386140100763ffd3cdaf1298b81512047a002d2d6a6a280a015106",
++      "parser_failure": false,
++      "path": "development/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "2f00f2651c8ea05c6d554c1fe7bd7134613f3b231bf5e603d1293ed39f61a6b7",
++      "effective": true,
++      "errors": [
++        "pending_before_late_tail"
++      ],
++      "name": "lost_partial_prefix",
++      "original_sha256": "4817b0e868386140100763ffd3cdaf1298b81512047a002d2d6a6a280a015106",
++      "parser_failure": false,
++      "path": "development/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "9c520566f8c87eb90e65ab31627c7738f443d7fee64aed536802d9a22660d800",
++      "effective": true,
++      "errors": [
++        "primary_reconstruction",
++        "postparse_deadline",
++        "pending_before_late_tail"
++      ],
++      "name": "diagnostic_promoted",
++      "original_sha256": "4817b0e868386140100763ffd3cdaf1298b81512047a002d2d6a6a280a015106",
++      "parser_failure": false,
++      "path": "development/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "5b99db57e1d71fa8bb0d9f8beeb2dd6f689e24ac753e1211cc727a0584ffab75",
++      "effective": true,
++      "errors": [
++        "actor_authority"
++      ],
++      "name": "authority_grant",
++      "original_sha256": "4f2803d37836b33bc743b928e26ee4d0fa709814dcbc416384780fb0f78c1f98",
++      "parser_failure": false,
++      "path": "development/batch-0/01-SINGLE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "ed5f0c881069fef4997751210f43f6abf67d7c07762c83ca2753d49a6b0d2d76",
++      "effective": true,
++      "errors": [
++        "collection_authority"
++      ],
++      "name": "retry_grant",
++      "original_sha256": "4f2803d37836b33bc743b928e26ee4d0fa709814dcbc416384780fb0f78c1f98",
++      "parser_failure": false,
++      "path": "development/batch-0/01-SINGLE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "51e1c4a9a90c7db3d67b77202e3ee3a489e0f42b03267e4901678e837cb24d2e",
++      "effective": true,
++      "errors": [
++        "actor_exit"
++      ],
++      "name": "wrong_wait_status",
++      "original_sha256": "fdc554e17529ed15f50a78d6fa73a3e640cfaa0cd857c8fe12261675560ee873",
++      "parser_failure": false,
++      "path": "development/batch-0/01-SINGLE-EXPLICIT_BUFFER/EXECUTION.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "87a7501dc8434b236e48d7e26d9d21b07c64ade44053c87fd3a7dc2d95398c27",
++      "effective": true,
++      "errors": [
++        "same_pipe"
++      ],
++      "name": "false_pipe_identity",
++      "original_sha256": "fdc554e17529ed15f50a78d6fa73a3e640cfaa0cd857c8fe12261675560ee873",
++      "parser_failure": false,
++      "path": "development/batch-0/01-SINGLE-EXPLICIT_BUFFER/EXECUTION.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "682acbd702906387f59e0412ad07065d3c6b854d0be8d69beefe64a993e8a832",
++      "effective": true,
++      "errors": [
++        "writer_bytes",
++        "raw_syscall_bytes"
++      ],
++      "name": "writer_wrong_byte",
++      "original_sha256": "cdc3dad7acb4f39d7f905d2dcac421e9c3b36c404d1a6d8ce75419fee18973e6",
++      "parser_failure": false,
++      "path": "development/batch-0/01-SINGLE-EXPLICIT_BUFFER/writer.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "8b8667815f95cbe94a2bf673ab94977cd5cb4adafb250e3eedcf23f8450a788b",
++      "effective": true,
++      "errors": [
++        "raw_syscall_bytes",
++        "frame_raw_before_extraction"
++      ],
++      "name": "raw_read_omission",
++      "original_sha256": "4f2803d37836b33bc743b928e26ee4d0fa709814dcbc416384780fb0f78c1f98",
++      "parser_failure": false,
++      "path": "development/batch-0/01-SINGLE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "47146f44938f2c1a7200f69f336a1dccc585711b31ec25611c0891edda5dcd8e",
++      "effective": true,
++      "errors": [
++        "fragment_retention"
++      ],
++      "name": "truncated_promoted_empty",
++      "original_sha256": "1ed2601594dd9b4f3f0495117aab0c9b82892ecde18c465e7426aa3ee79a6ae1",
++      "parser_failure": false,
++      "path": "development/batch-0/13-TRUNCATED_EOF-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "076702f64b07b3220c7ec29ec77fa35d1a2cc7c8cd890d398bb3d998bfec37b9",
++      "effective": true,
++      "errors": [
++        "os_descriptor_not_ready"
++      ],
++      "name": "false_buffer_readiness",
++      "original_sha256": "c1ee94bd9bb78984d3b33c21871e6e413aa292bc253d2e94751245f4d0e3f4ad",
++      "parser_failure": false,
++      "path": "development/batch-0/03-COALESCED_TWO-FD_THEN_BUFFERED/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "4bfa43d2965c0397aa3fe33091c5c516740a71dd1462ae6390d745ba5171ba4e",
++      "effective": true,
++      "errors": [
++        "source:source/policy.py"
++      ],
++      "name": "source_identity",
++      "original_sha256": "1a55a70f4c710f11d4f3a4dd9821073478ef2444cefeb3a96f9e43e878aa45f4",
++      "parser_failure": false,
++      "path": "source/policy.py",
++      "rejected": true
++    }
++  ],
++  "count": 16,
++  "intact_cases": 16
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_UNITS.stderr b/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_UNITS.stderr
+new file mode 100644
+index 0000000..307fac2
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_UNITS.stderr
+@@ -0,0 +1,17 @@
++test_boolean_sequence (test_policy.TestCollector.test_boolean_sequence) ... ok
++test_expired_pending_retained (test_policy.TestCollector.test_expired_pending_retained) ... ok
++test_invalid_utf8 (test_policy.TestCollector.test_invalid_utf8) ... ok
++test_logging_raw_parity (test_policy.TestCollector.test_logging_raw_parity) ... ok
++test_newline_required (test_policy.TestCollector.test_newline_required) ... ok
++test_oversized (test_policy.TestCollector.test_oversized) ... ok
++test_owned_pending_before_select (test_policy.TestCollector.test_owned_pending_before_select) ... ok
++test_partial_eof (test_policy.TestCollector.test_partial_eof) ... ok
++test_shape (test_policy.TestCollector.test_shape) ... ok
++test_valid_unicode (test_policy.TestCollector.test_valid_unicode) ... ok
++test_wrong_scope (test_policy.TestCollector.test_wrong_scope) ... ok
++test_wrong_sequence (test_policy.TestCollector.test_wrong_sequence) ... ok
++
++----------------------------------------------------------------------
++Ran 12 tests in 0.001s
++
++OK
+diff --git a/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_UNITS.stdout b/research/integration/stream_readiness_b8n5_v1/DEVELOPMENT_UNITS.stdout
+new file mode 100644
+index 0000000..e69de29
+diff --git a/research/integration/stream_readiness_b8n5_v1/ENVIRONMENT.json b/research/integration/stream_readiness_b8n5_v1/ENVIRONMENT.json
+new file mode 100644
+index 0000000..3477525
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/ENVIRONMENT.json
+@@ -0,0 +1,31 @@
++{
++  "batch_size": 16,
++  "clock_pinned": false,
++  "combined_uncertainty_seconds": null,
++  "coverage_factor": null,
++  "cpu_affinity": [
++    0,
++    1,
++    2,
++    3,
++    4
++  ],
++  "cpu_exclusive": false,
++  "cpu_model": "AMD EPYC 9V74 80-Core Processor",
++  "docker": null,
++  "docker_image_attestation": false,
++  "executable": "/opt/pyvenv/bin/python",
++  "gh": null,
++  "git": "/usr/bin/git",
++  "machine": "x86_64",
++  "monotonic": {
++    "adjustable": false,
++    "implementation": "clock_gettime(CLOCK_MONOTONIC)",
++    "monotonic": true,
++    "resolution": 1e-09
++  },
++  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
++  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
++  "repetitions_per_cell": 3,
++  "utc_recorded": "2026-09-25T23:41:28Z"
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/FREEZE.json b/research/integration/stream_readiness_b8n5_v1/FREEZE.json
+new file mode 100644
+index 0000000..fe19c41
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/FREEZE.json
+@@ -0,0 +1,29 @@
++{
++  "allocation": "stream-readiness-b8n5-20260926-01",
++  "batches": [
++    0,
++    1,
++    2
++  ],
++  "expected_controls": 16,
++  "intake_main": "4c701cc51b06296268ad8d9ae3eff1dd6f2d379d",
++  "pilot_cases": 48,
++  "pilot_cases_before_freeze": 0,
++  "public_preregistration": false,
++  "repetitions": 3,
++  "sha256": {
++    "ENVIRONMENT.json": "e4057115bc1c1cd97c591f49c970ec4cea9624c81e7f0c44816c4489987fa9d3",
++    "PLAN.md": "aafd1c9829cbcd6b0cc8922fb0c3d3534dbf66f653c2c51e806d4c58f7aee8e7",
++    "SOURCES.md": "a04d59807a44f97ed5f314a6525f9a00248c43b6670b87a436f27a3e641e8a2a",
++    "source/actor.py": "a337419420a5a0c38e0d28a000b99e472ce9ba1b3731b0d97211efeb865b384b",
++    "source/audit.py": "323857decd305674438636155699748eaf93c5b72fdac3df0e9474e29940bc4e",
++    "source/controls.py": "2b52774279d8dab7080d87206069dda458919ee79a9e0f609adccaefb68925cf",
++    "source/execute.py": "70797546ada37ba4c2c5bb1f30951fd9dcc50ac600d17665e930f2b08806bdce",
++    "source/policy.py": "1a55a70f4c710f11d4f3a4dd9821073478ef2444cefeb3a96f9e43e878aa45f4",
++    "source/run_batch.py": "de32d504b2cd48cd05617f0f3e661ec3c2efd62cf4dc7cd887bd9c974f26b16b",
++    "source/spec.py": "34044a540f1f5913bcacb54dda86a6e6c5a1b6bcf6dc9ba4fe4175a7b08f6a46",
++    "source/test_policy.py": "4c01ad3c032de872d95d758b7525b9449c9c9c9277e05b3bb40144e9254aa9bd"
++  },
++  "source_changes_after_first_pilot": false,
++  "utc": "2026-09-25T23:41:29Z"
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/GITHUB_ISSUE_DRAFT.md b/research/integration/stream_readiness_b8n5_v1/GITHUB_ISSUE_DRAFT.md
+new file mode 100644
+index 0000000..5182c26
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/GITHUB_ISSUE_DRAFT.md
+@@ -0,0 +1,169 @@
++# Proposed successor #4390/#3876: distinguish descriptor readiness from buffered complete frames
++
++UNPOSTED draft; retrospective delivery of local b8n5, not public preregistration.
++Do not modify #4390 or any predecessor allocation. This is a new multiple-frame
++I/O-composition question after r9k4's one-terminal-frame result.
++
++# Stream readiness versus buffered frame availability — b8n5
++
++Allocation: `stream-readiness-b8n5-20260926-01`. **Local preregistration only**.
++New scientific question after closed #4231 and the original r9k4 study, now
++separately owned for delivery by #4390. Related notification integration #3876
++and result/recovery #2789. Preserve every old source/result and foreign branch.
++Intake main: `4c701cc51b06296268ad8d9ae3eff1dd6f2d379d`.
++Proposed additive path: `research/integration/stream_readiness_b8n5_v1/**`.
++Proposed branch: `research/stream-readiness-20260926-b8n5`; not remotely created.
++
++## H
++A selector guarding a blocking buffered readline does not implement a bounded
++complete-message receive contract. (1) Read-ahead can place additional complete
++frames in a user buffer while the kernel descriptor is not readable. (2) A
++readable descriptor can contain only a prefix; readline can wait beyond the
++selector's original timeout. A single explicit byte accumulator plus nonblocking
++raw reads should preserve frame order and observed-deadline classification,
++return partial state within the authored budget plus measured scheduling slack,
++and support subsequent **diagnostic read-only collection** without any data replay.
++This is a known I/O composition boundary, not a Python defect, a deployed-runtime
++vulnerability or a novel framing algorithm.
++
++## T
++Two collectors over identical authored cooperative byte streams:
++- FD_THEN_BUFFERED: actual select.select(fd) then io.BufferedReader.readline.
++- EXPLICIT_BUFFER: inspect own bytearray first, otherwise select and nonblocking
++  os.read; retain prefixes; decode UTF-8/JSON only after LF.
++
++Eight conditions: SINGLE, COALESCED_TWO, COALESCED_THREE, SEPARATE_TWO,
++SPLIT_EARLY, SPLIT_LATE, TRUNCATED_EOF, SILENT_OPEN.
++First bytes are written before the clock origin and acknowledged out-of-band.
++The reader is fully initialized before this origin. Second chunks arrive at
++60 ms (separate/early) or340 ms (late); late and early splits bisect a UTF-8
++code point. Writer closes at420 ms except truncated EOF at80 ms. No unframed
++prefix is accepted. A single writer and reader with no competing consumers.
++
++Local pilot:8 conditions x2 collectors x3 fresh repetitions=48 cases/96 separately
++executed actors. Three immutable16-case batches, one per container invocation,
++alternating collector order. Budget200 ms; candidate return tolerance50 ms.
++Each actor await<=4 s, outer batch supervisor25 s, outer tool35 s. Stop after an
++incomplete batch, without retry/replacement/exclusion/pooling/source tuning.
++
++No GUI, task input, model/provider, experimental network, package installation or
++user data. Linux anonymous pipe, same-host monotonic clock. Standard-library-only
++CPython. No Docker/OrbStack image attestation. OS clock and CPU frequency are not
++calibrated; no hard-real-time or whole-product latency claim.
++
++Construction:one separately identified16-case development batch;12 pure unit
++methods;15 effective prefreeze copied-evidence controls, excluding source check
++until FREEZE exists. Development outputs stay excluded. All succeeded; no
++scientific actor was rerun. One redundant same-file audit read was removed before
++freeze; it does not change collector semantics or the table. Record the original
++development audit and the re-audit separately.
++
++## D — fixed full table
++Per repetition, require:
++
++| Scenario | FD_THEN_BUFFERED | EXPLICIT_BUFFER |
++|---|---|---|
++| SINGLE | COMPLETE,1 timely | COMPLETE,1 timely |
++| COALESCED_TWO | BUDGET_EXHAUSTED,1 timely | COMPLETE,2 timely |
++| COALESCED_THREE | BUDGET_EXHAUSTED,1 timely | COMPLETE,3 timely |
++| SEPARATE_TWO | COMPLETE,2 timely | COMPLETE,2 timely |
++| SPLIT_EARLY | COMPLETE,1 timely | COMPLETE,1 timely |
++| SPLIT_LATE | COMPLETE_LATE,0 timely | BUDGET_EXHAUSTED,0 timely |
++| TRUNCATED_EOF | EOF_INCOMPLETE,0 timely | EOF_INCOMPLETE,0 timely |
++| SILENT_OPEN | BUDGET_EXHAUSTED,0 timely | BUDGET_EXHAUSTED,0 timely |
++
++PASS_LOCAL_BUFFERED_READINESS_BOUNDARY additionally requires all48 complete,
++source/process/read/write bytes and frame identities reconcile; all candidate
++returns occur by250 ms; split-late baseline returns no earlier than340 ms;
++coalesced baseline has read all written bytes before its failed readiness wait,
++and its later diagnostic extraction obtains the remaining complete frames before
++writer close without any new raw read. Tail writes must begin no earlier than
++the declared offset and finish within50 ms of it. Every final received byte equals
++the exact emitted stream; final EOF is observed. Truncated prefixes remain partial
++and silent-open timeout is not EOF. No authority or retry permission. All96 actor
++and3 outer exits0; separate raw audit no errors;16 effective well-formed controls
++all reject with no no-op or parser exception.
++
++Complete contradictory data => FAIL at the named boundary. Timing discrimination
++not exposed, missing source/process/raw bytes, timeout or audit failure => HOLD/STOP.
++No gate is loosened after first pilot output. A deliberately incomplete comparator
++failure is not retrospectively alleged to be a current production failure.
++
++## C
++Real io.BufferedReader supplies buffering; a transparent RawIOBase.readinto wrapper
++logs actual os.read below it. A pure unit compares its output to FileIO. Instrumentation
++can change overhead; no uninstrumented speed claim is made. Fixed writes smaller than
++PIPE_BUF and a readiness barrier guarantee this directed coalescence; natural
++coalescence frequency is unmeasured. BufferedReader and select are valid separately.
++Postparse deadline validation is shared by both arms: even the blocking comparator
++never labels its late line as timely. The diagnostic drain intentionally bypasses
++that comparator's readiness gate and is NOT part of its budgeted success.
++
++## U
++No arbitrary concurrent-writer framing, authentication, shared-reader streams,
++current native transport adoption, model consumption, task effects, latency/token
++savings, natural failure probabilities, cross-platform support or hard deadline.
++A successful parse proves neither observation freshness nor action authority.
++Combined calibrated measurement uncertainty u_c and coverage factor k are not
++estimated; the50 ms bound is a preregistered engineering gate, not an uncertainty
++interval. Three technical repetitions are reported as medians/ranges only.
++
++## Variable and unit table
++
++| Symbol/name | Meaning | SI unit | Definition | Domain/assumption | Type |
++|---|---|---|---|---|---|
++| fd | 私有パイプの読取記述子 | 1 | 単一readerが所有するOS記述子 | 非負整数、同一パイプ寿命 | integer scalar |
++| t0 | 共通計測開始時刻 | s (stored ns) | 両actor READY後の親monotonic標本 | 同一host時計 | integer scalar |
++| d | 収集期限 | s (stored ns) | t0から200 ms後 | t0と同一時計 | integer scalar |
++| t_return | 収集処理の戻り時刻 | s (stored ns) | collect終了の実monotonic標本 | 診断読取より前 | integer scalar |
++| t_checked | 完全フレームの検証終了時刻 | s (stored ns) | decode/identity検査直後の標本 | raw読取後 | integer scalar |
++| B | まだ消費していないbytes | 1 (bytes count is a data unit) | reader所有bytearray | 順序を保存、同時変更なし | byte vector |
++| R | raw読取の累積bytes | 1 | os.readで得たbytesを順番に連結 | 単一reader | byte vector |
++| F | 取り出したフレームbytesの累積 | 1 | 完全LFフレームの順序付き連結 | 再送・重複消費なし | byte vector |
++| n | 要求されたフレーム数 | 1 | SINGLE等1、TWO2、THREE3 | 1..3 | integer scalar |

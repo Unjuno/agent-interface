@@ -1,0 +1,13 @@
+FROM agent-interface-map01-clock-counter-v1:20260920
+RUN git -C /tmp/vizdoom-src apply -R /tmp/vizdoom-tic-counter-v1.patch \
+    && test -z "$(git -C /tmp/vizdoom-src status --porcelain)" \
+    && test "$(git -C /tmp/vizdoom-src rev-parse HEAD)" = \
+       c8e0a31182d98c6f40a65674283e736b851e8e59 \
+    && python -m pip uninstall -y vizdoom \
+    && python -m pip install --no-cache-dir --force-reinstall /tmp/vizdoom-src \
+    && python -c 'import vizdoom; print(vizdoom.__version__, vizdoom.__file__)'
+RUN objdump -d /usr/local/lib/python3.11/site-packages/vizdoom/vizdoom \
+    > /tmp/control-disassembly.txt \
+    && ! grep -qE '\bmrs[[:space:]]+x0,[[:space:]]*cntvct_el0\b' /tmp/control-disassembly.txt
+COPY probe49.py /probe49.py
+ENTRYPOINT ["python", "/probe49.py"]

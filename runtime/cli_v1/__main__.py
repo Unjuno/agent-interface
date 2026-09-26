@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from contextlib import redirect_stdout
 import json
 import sys
 from pathlib import Path
@@ -9,7 +10,14 @@ from .api import dispatch, doctor
 from .receipt import receipt_view
 from .review import review, review_bytes, present_result
 from .observe import observe
-from .attempt import invoke
+from .attempt import invoke, inspect_attempt
+
+
+def _invoke_cli(*args, **kwargs):
+    # Some Python dependencies print diagnostics instead of using logging.
+    # Scope redirection to invocation; structured presentation stays on stdout.
+    with redirect_stdout(sys.stderr):
+        return invoke(*args, **kwargs)
 
 
 def _read_json(path: str):
@@ -21,7 +29,11 @@ def _read_json(path: str):
 
 
 def _emit(payload) -> None:
-    sys.stdout.write(json.dumps(payload, sort_keys=True, separators=(",", ":")) + "\n")
+    text = json.dumps(payload, sort_keys=True, separators=(",", ":")) + "\n"
+    written = sys.stdout.write(text)
+    if written != len(text):
+        raise OSError('INCOMPLETE_STDOUT_WRITE')
+    sys.stdout.flush()
 
 
 def _present_result(row, *, with_review, capture_directory, exit_code, compact=False, report_refs=False, retention=None):
@@ -38,6 +50,10 @@ def _present_result(row, *, with_review, capture_directory, exit_code, compact=F
 def main() -> int:
     parser = argparse.ArgumentParser(prog="agent-interface")
     sub = parser.add_subparsers(dest="command", required=True)
+    validation = sub.add_parser('validate', help='check program syntax and expansion without opening a backend')
+    validation.add_argument('--program', type=Path, required=True, help='local UTF-8 JSON program; static validity is not runtime admission')
+    attempt_status = sub.add_parser('attempt-status', help='inspect retained attempt files without input or replay')
+    attempt_status.add_argument('--run-directory', required=True)
     diagnostic = sub.add_parser("doctor")
     diagnostic.add_argument('--check-dependencies', action='store_true',
                             help='inspect optional module discovery and installed versions without importing backends')
@@ -48,6 +64,7 @@ def main() -> int:
     read.add_argument("--region", nargs=4, type=int, required=True, metavar=("X", "Y", "W", "H"))
     read.add_argument("--capture-directory")
     read.add_argument("--run-directory", help="reserve a fresh directory for request, raw result and images")
+    read.add_argument('--retention-timings', action='store_true', help='measure retention phases; requires --run-directory')
     read.add_argument("--display")
     read.add_argument("--review", action="store_true", help="return result and captured image together")
     read.add_argument("--compact", action="store_true", help="use smaller reversible receipt references with --review")
@@ -68,10 +85,18 @@ def main() -> int:
     run.add_argument("--display")
     run.add_argument("--capture-directory")
     run.add_argument("--run-directory", help="reserve a fresh directory for request, raw result and images")
+    run.add_argument('--retention-timings', action='store_true', help='measure retention phases; requires --run-directory')
     run.add_argument("--review", action="store_true", help="return result and last captured image together")
     run.add_argument("--compact", action="store_true", help="use smaller reversible receipt references with --review")
     run.add_argument("--report-refs", action="store_true", help="allow v3 report references; requires --compact and a compatible decoder")
     args = parser.parse_args()
+    if args.command == 'validate':
+        from .validate_program import inspect_file
+        row = inspect_file(args.program)
+        _emit(row)
+        return {'valid': 0, 'invalid': 1, 'input_error': 2}[row['status']]
+    if getattr(args, 'retention_timings', False) and not args.run_directory:
+        parser.error('--retention-timings requires --run-directory')
     if args.command in ('observe', 'dispatch') and args.run_directory:
         if args.capture_directory:
             parser.error('--run-directory owns images; do not combine with --capture-directory')
@@ -86,6 +111,10 @@ def main() -> int:
     if args.command == "doctor":
         _emit(doctor(check_dependencies=args.check_dependencies))
         return 0
+    if args.command == 'attempt-status':
+        row = inspect_attempt(args.run_directory)
+        _emit(row)
+        return 0 if row['status'] == 'report_recorded' else 2
     if args.command == "review":
         try:
             row = (review_bytes(sys.stdin.buffer.read(), args.run_directory, compact=args.compact, report_refs=args.report_refs) if args.report == "-"
@@ -104,9 +133,9 @@ def main() -> int:
         return 0
     if args.command == "observe":
         try:
-            row, retention = invoke(observe, dict(targets=_read_json(args.targets), target=args.target,
+            row, retention = _invoke_cli(observe, dict(targets=_read_json(args.targets), target=args.target,
                           frame=args.frame, region=args.region, capture_directory=args.capture_directory,
-                          display_name=args.display), args.run_directory, operation='observe')
+                          display_name=args.display), args.run_directory, operation='observe', timings=args.retention_timings)
         except (OSError, ValueError, TypeError) as error:
             _emit({"status": "invalid_request", "error": str(error)})
             return 2
@@ -118,12 +147,12 @@ def main() -> int:
     except Exception as error:
         _emit({"schema": "agent-interface/runtime-dispatch-result-v1", "status": "invalid_request", "error": f"INVALID_JSON:{error}"})
         return 2
-    row, retention = invoke(dispatch, dict(
+    row, retention = _invoke_cli(dispatch, dict(
         program=program, targets=targets,
         current_observation_seq=args.current_observation_seq,
         current_binding_revision=args.current_binding_revision,
         display_name=args.display, capture_directory=args.capture_directory),
-        args.run_directory, operation='dispatch')
+        args.run_directory, operation='dispatch', timings=args.retention_timings)
     code = 2 if row["status"] != "returned" else (0 if row["result"].get("status") == "completed" else 3)
     return _present_result(row, with_review=args.review, capture_directory=args.capture_directory, exit_code=code, compact=args.compact, report_refs=args.report_refs, retention=retention)
 

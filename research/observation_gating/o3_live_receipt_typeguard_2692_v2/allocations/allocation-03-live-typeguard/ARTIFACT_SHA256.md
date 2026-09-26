@@ -1,0 +1,17 @@
+# Allocation 03 retained-artifact SHA-256
+
+```text
+AUDIT_RESULT.json ff1e98e09aef3ab38fc419cdd7098de84914798580b7349974303b362245a40b
+manifest.json 041d3c41e298be4e9e8930116b04692a0ca9778f2bf95f24538f174fd630cc9f
+raw_events.jsonl d05c87bc25f4470c2a01d22ffbdb097ed97e23919b04f0b2ef556ac396518671
+deliveries.jsonl 9e15a35fd945dbc722cf4f05b1b74c622b52dadc66b0ef94559c652c0eee158b
+decisions.jsonl 2e2b1cbac0b8ed91209ab0f78893f3721b80f3bd782d623fdcba21720da644c4
+oracle.stdout.txt 415d0aac52523ded2e58bfca8133eb6a1b11af64391a3cbfa22298f679fd3142
+oracle.stderr.txt e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+cleanup.json e909ea7930fb907f10ce0627b1e56330e88d0112c4dac5c53dd6491292ef28c4
+```
+
+All 64 full/region frame files are retained under `frames/`; their hashes are
+also independently embedded and validated by each raw transport event and the
+independent audit. Evidence is an additive successor; v1 allocations are not
+modified.

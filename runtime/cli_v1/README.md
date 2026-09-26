@@ -2,6 +2,22 @@
 
 This is the model/vendor-neutral local entry point over promoted Agent Interface backends.
 
+Check a local program before attempting input:
+
+```sh
+python -m runtime.cli_v1 validate --program program.json
+```
+
+This uses the existing display-free validator and dispatch's sequence expanders.
+It returns bounded diagnostics and original/expanded operation positions when
+available, without opening a backend or modifying the file. Exit codes are
+0 for static validity, 1 for an invalid program, and 2 for input-loading errors.
+The file must be UTF-8 JSON, at most 1 MiB. This command does not accept stdin.
+Static validity does not check live capabilities, target identity, observation
+freshness, lease expiry, release or task success. Dispatch still performs its
+normal checks. Validation is optional; it is not an automatic extra round trip.
+The standalone `python -m runtime.cli_v1.validate_program` entry remains available.
+
 For a retained `prepared_exchange` action report, inspect the result and latest
 observation without printing the full routine event history:
 
@@ -331,6 +347,122 @@ retained result allow the caller to inspect the problem without replaying input.
 A missing capture-directory is rejected before any execution. The default raw
 response remains unchanged when --review is omitted. Standalone review remains
 available for inspecting retained results later.
+
+### Inspecting interrupted retained attempts
+
+For opt-in diagnosis, add `--retention-timings` to retained `observe` or
+`dispatch`. It requires `--run-directory` and adds `retention.timings_ns`:
+`request_persistence`, `api_call`, and `report_persistence`. These are monotonic
+durations in nanoseconds; an unstarted phase is null. Request persistence includes
+directory reservation and JSON serialization/write/flush/fsync/rename. API time
+includes everything inside the API call, not just native input. Result persistence
+includes its JSON publication. Exceptions still record the attempted phase.
+Preparation, process startup/imports, review/image presentation and stdout delivery
+are excluded. These intervals are not model-useful feedback or semantic completion.
+Raw reports remain unchanged. Timings are response metadata only and can be lost
+with stdout; `attempt-status` does not reconstruct them. The default adds no clock
+reads or timing fields. See the [motivating timing gap](../results/cli-current-calc-01/README.md#retained-timing-decomposition).
+
+Run `python agent-interface-runtime.pyz attempt-status --run-directory RUN` to
+read a retained attempt without dispatch, observation, replay, or file changes.
+The `agent-interface/cli-attempt-status-v1` response includes request/report JSON
+and SHA-256 digests of the bytes read. `report_recorded` (exit 0) means both JSON
+records are readable, not that an action or task succeeded. Read the raw report
+outcome, and use `review --report RUN/report.json --run-directory RUN` for images.
+
+A missing report returns `unknown_or_incomplete` (exit 2). Neither a request nor
+an absent report proves whether input occurred. `process_state` remains `unknown`
+and `replay_allowed` is always false, including for recorded reports. An unreadable
+record or unavailable directory returns `invalid_record` (exit 2). An orphan
+report without a valid request remains incomplete. This is a local record reader,
+not report provenance validation or a process monitor.
+
+Known `.request.json.tmp` and `.report.json.tmp` residue is listed under
+`temporary_files`, preserved, and never promoted to a committed record. Reads of
+individual files are not an atomic snapshot of a concurrently changing directory;
+an incomplete observation may be inspected again without issuing any input.
+This does not promise power-loss durability or automatically repair failed writes.
+
+The CLI detects a stdout writer reporting fewer characters than requested and
+raises `INCOMPLETE_STDOUT_WRITE`. The retained report remains readable; do not
+repeat dispatch to recover its output. This detects a reported short write only:
+a downstream consumer may still truncate bytes after a writer accepts everything.
+Consumers must reject incomplete JSON and use retained read-only recovery.
+After a full write, the CLI explicitly flushes stdout before returning. A flush
+failure propagates without retrying the operation or changing the retained report.
+This follows the delivery proposal in [#3726](https://github.com/Unjuno/agent-interface/pull/3726);
+flush completion is not acknowledgement that the host or model received the result.
+
+### Caller recovery after missing or truncated output
+
+During CLI observe/dispatch invocation, Python-level dependency diagnostics
+written to stdout are redirected to stderr. The structured response is emitted
+on stdout after invocation. This covers printed Xlib warnings; it does not
+redirect native file-descriptor writes. The direct Python API is unchanged.
+The CLI entry point temporarily changes Python's process-wide stdout, so use
+separate CLI processes rather than calling `main()` concurrently in threads.
+
+For a recorded `refused / INVALID_PROGRAM` result, the public dispatch API also
+checks the compiled program against the static contract. If that check fails,
+`result.detail` explains the first failure (at most 256 characters), with
+`detail_source=program_validation`. Review exposes it as
+`outcome_summary.execution_detail`. For example, an operation using
+`width/height` instead of `w/h` reports `observe w must be int`. An `observe`
+**operation** uses `frame, x, y, w, h`; the standalone CLI `observe` command
+instead takes `--region X Y W H`.
+
+The diagnostic follows the existing refusal; it does not change admission,
+execute again, grant authority or repair the program. It describes the compiled
+program after repeat/text-gap expansion. When the failure occurs while validating
+an individual operation, `result.validation_operation_index` and the review's
+`outcome_summary.validation_operation_index` identify its zero-based index in
+that compiled program. Global errors such as a wrong schema have no operation
+index. This is distinct from `failed_operation_index`, which refers to an
+execution failure; a static refusal does not imply an operation was executed.
+When retained repeat/text-gap expansion metadata can be reconstructed,
+`outcome_summary.validation_source_operation` also identifies the original
+source operation. Missing or inconsistent mappings produce no source location.
+If the program passes static validation, the API adds no program diagnostic:
+the refusal may concern the backend manifest. Unsupported operation names are
+not echoed. Input text and full programs are not added to this diagnostic.
+
+Remember the fresh `--run-directory` before issuing an operation. Keep the full
+stdout bytes outside the model context and deliver images through the host's
+image channel. A host output limit can hide a response that was produced in full;
+do not infer another dispatch is needed from missing model-visible text.
+
+If the producer is still running, continue observing that same process handle.
+When inspecting a retained attempt, use the original directory, without another
+`dispatch` or `observe`:
+
+```sh
+python agent-interface-runtime.pyz attempt-status --run-directory "$RUN"
+# Only after inspecting status=report_recorded:
+python agent-interface-runtime.pyz review \
+  --report "$RUN/report.json" --run-directory "$RUN" --compact --report-refs
+```
+
+| Inspection result | Caller action |
+| --- | --- |
+| `report_recorded` | Inspect the outcome and release evidence; use `review` to recover the recorded capture. This does not mean task success. |
+| `unknown_or_incomplete` | Preserve uncertainty. Inspect the same process handle or reread the same attempt; a missing report does not prove input was absent. |
+| `invalid_record` | Inspect the reported file/error; retain the existing directory and do not replace it with a new execution. |
+
+Recovered images are historical captures. If the last capture shows an
+intermediate state such as Saving, a later, explicitly chosen observation can
+check the current screen after recovery. `review` itself does not refresh the
+screen, wait for application completion, or extend input authority. If its
+response also exceeds the host output limit, inspect the retained result/image
+through the host's file and image facilities instead of repeating the action.
+
+The [retained caller experiment](../../research/experiments/issue_3808_cli_caller_recovery_v1/RESULT.md)
+used a synthetic dispatch and a relay that accepted 341 bytes but delivered 37.
+The producer exited 0; read-only status/review recovered the retained report,
+with one dispatch and unchanged attempt files. This supports that recovery path,
+not every transport failure. JSON parsing alone does not establish byte-complete
+delivery; the [terminal-newline successor](https://github.com/Unjuno/agent-interface/issues/3814)
+tracks a strict prefix that can remain valid JSON. No automatic replay or general
+delivery guarantee follows from either producer exit status or parse success.
 
 ### Compact received-report references
 

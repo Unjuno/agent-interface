@@ -60,12 +60,25 @@ environment. With no explicit display, normal environment selection applies.
   include_image=true, report_refs=false)` lists calls or reads a retained result without input or
   capture. See the result-retrieval section below.
 
-All three tools keep v1/v2 receipt selection with `compact=true` alone.
+These three tools keep v1/v2 receipt selection with `compact=true` alone.
 A consumer with the v3 decoder can explicitly set both `compact=true` and
 `report_refs=true` to allow a duplicate report to reference `source.raw_report`
 in the same response. `report_refs=true` without compact mode is rejected before
 operation scheduling. Images and outcomes are unchanged. A retained-result read
 can change the receipt format without capturing or replaying the operation.
+
+`interface_validate(program)` optionally checks a draft using the same static
+inspector as CLI `validate`, without opening a backend or issuing input. It
+returns static validity, required capabilities or bounded diagnostics with
+operation positions where available. Invalid drafts set `isError=true` and
+`static_valid=false`. Even an expired lease may be statically valid: this is not
+a runtime admission. A nesting-limit failure returns `status=input_error`,
+`error=INPUT_NESTING_LIMIT`, `static_valid=null` and `isError=true`, matching the
+file inspector's unassessed-input distinction. Validation does not constitute
+a capability, freshness, authority or task-success check. Dispatch still performs
+its existing checks; calling validation first is optional. It creates no action
+call ID, image, persisted request or `interface_results` entry. The usual fixed
+server startup configuration is still required.
 See [receipt formats](README.md#compact-received-report-references).
 
 The dispatch tool advertises the program envelope, bounded operation examples and

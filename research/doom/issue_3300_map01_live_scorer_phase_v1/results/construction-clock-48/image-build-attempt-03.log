@@ -1,0 +1,88 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.16kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/agent-interface-map01-clock-review-fixed:20260920
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context:
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [internal] load build context
+#4 transferring context: 2.49kB done
+#4 DONE 0.0s
+
+#5 [1/9] FROM docker.io/library/agent-interface-map01-clock-review-fixed:20260920@sha256:4320dd483b24ea91c1481f12fd5799c903d9daa99a517b994f607037098ea41d
+#5 resolve docker.io/library/agent-interface-map01-clock-review-fixed:20260920@sha256:4320dd483b24ea91c1481f12fd5799c903d9daa99a517b994f607037098ea41d 0.0s done
+#5 DONE 0.0s
+
+#6 [2/9] RUN apt-get update && apt-get install -y --no-install-recommends     build-essential cmake git libboost-all-dev libsdl2-dev libopenal-dev     python3-dev pkg-config ca-certificates binutils     && rm -rf /var/lib/apt/lists/*
+#6 CACHED
+
+#7 [3/9] RUN git clone --depth 1 --branch 1.3.0 --recurse-submodules       https://github.com/Farama-Foundation/ViZDoom.git /tmp/vizdoom-src     && test "$(git -C /tmp/vizdoom-src rev-parse HEAD)" =       c8e0a31182d98c6f40a65674283e736b851e8e59     && git -C /tmp/vizdoom-src submodule update --init --recursive
+#7 CACHED
+
+#8 [4/9] COPY vizdoom-tic-counter-v1.patch /tmp/vizdoom-tic-counter-v1.patch
+#8 DONE 0.3s
+
+#9 [5/9] RUN git -C /tmp/vizdoom-src apply /tmp/vizdoom-tic-counter-v1.patch     && python -m pip install --no-cache-dir /tmp/vizdoom-src     && python -c 'import vizdoom; print(vizdoom.__version__, vizdoom.__file__)'
+#9 0.360 Processing /tmp/vizdoom-src
+#9 0.362   Installing build dependencies: started
+#9 4.467   Installing build dependencies: finished with status 'done'
+#9 4.469   Getting requirements to build wheel: started
+#9 4.618   Getting requirements to build wheel: finished with status 'done'
+#9 4.618   Preparing metadata (pyproject.toml): started
+#9 4.743   Preparing metadata (pyproject.toml): finished with status 'done'
+#9 4.748 Requirement already satisfied: numpy in /usr/local/lib/python3.11/site-packages (from vizdoom==1.3.0) (2.4.6)
+#9 4.749 Requirement already satisfied: gymnasium>=0.28.0 in /usr/local/lib/python3.11/site-packages (from vizdoom==1.3.0) (1.3.0)
+#9 4.750 Requirement already satisfied: pygame-ce>=2.1.3 in /usr/local/lib/python3.11/site-packages (from vizdoom==1.3.0) (2.5.8)
+#9 4.765 Requirement already satisfied: cloudpickle>=1.2.0 in /usr/local/lib/python3.11/site-packages (from gymnasium>=0.28.0->vizdoom==1.3.0) (3.1.2)
+#9 4.766 Requirement already satisfied: typing-extensions>=4.3.0 in /usr/local/lib/python3.11/site-packages (from gymnasium>=0.28.0->vizdoom==1.3.0) (4.16.0)
+#9 4.766 Requirement already satisfied: farama-notifications>=0.0.1 in /usr/local/lib/python3.11/site-packages (from gymnasium>=0.28.0->vizdoom==1.3.0) (0.0.6)
+#9 4.769 Building wheels for collected packages: vizdoom
+#9 4.769   Building wheel for vizdoom (pyproject.toml): started
+#9 45.78   Building wheel for vizdoom (pyproject.toml): finished with status 'done'
+#9 45.81   Created wheel for vizdoom: filename=vizdoom-1.3.0-cp311-cp311-linux_aarch64.whl size=25000559 sha256=9b8c0dd77537ea941cc059d4a82a4b0d205e6bc6b42e5a609344c68d47727ee6
+#9 45.81   Stored in directory: /tmp/pip-ephem-wheel-cache-e5_ix53a/wheels/a9/01/1c/1390c3bd1864c797bf720a436f05c8b5a70734c89bbbce74b4
+#9 45.81 Successfully built vizdoom
+#9 45.85 Installing collected packages: vizdoom
+#9 45.85   Attempting uninstall: vizdoom
+#9 45.85     Found existing installation: vizdoom 1.3.0
+#9 45.85     Uninstalling vizdoom-1.3.0:
+#9 45.92       Successfully uninstalled vizdoom-1.3.0
+#9 46.21 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#9 46.21 Successfully installed vizdoom-1.3.0
+#9 46.35 
+#9 46.35 [notice] A new release of pip is available: 24.0 -> 26.2.1
+#9 46.35 [notice] To update, run: pip install --upgrade pip
+#9 46.45 1.3.0 /usr/local/lib/python3.11/site-packages/vizdoom/__init__.py
+#9 DONE 46.6s
+
+#10 [6/9] WORKDIR /probe
+#10 DONE 0.1s
+
+#11 [7/9] COPY counter_call.c /counter_call.c
+#11 DONE 0.1s
+
+#12 [8/9] RUN gcc -shared -fPIC -O2 $(python3-config --includes)     -o /counter_call$(python3-config --extension-suffix) /counter_call.c
+#12 DONE 0.3s
+
+#13 [9/9] COPY probe.py /probe48.py
+#13 DONE 0.1s
+
+#14 exporting to image
+#14 exporting layers
+#14 exporting layers 20.3s done
+#14 exporting manifest sha256:50efacfe50590ddbb611a3fc80c48d9dec0ca0740e9b817160b218036b81e332
+#14 exporting manifest sha256:50efacfe50590ddbb611a3fc80c48d9dec0ca0740e9b817160b218036b81e332 0.0s done
+#14 exporting config sha256:a35dfec4db8dd8d2a4df37e476e411e26a9171c9b05ccef054b6066bb5df9f13 0.0s done
+#14 exporting attestation manifest sha256:cc17a3844d1bc3f5b85016bbd6068d85fc98ff8d9d3e05a7f54507b5f11d7b74 0.0s done
+#14 exporting manifest list sha256:d788a2d9a8389cac71686ba191c873bb6335beaf6f0032cf939cdc2334538b9b 0.0s done
+#14 naming to docker.io/library/agent-interface-map01-clock-counter-v1:20260920 done
+#14 unpacking to docker.io/library/agent-interface-map01-clock-counter-v1:20260920
+#14 unpacking to docker.io/library/agent-interface-map01-clock-counter-v1:20260920 5.5s done
+#14 DONE 25.9s

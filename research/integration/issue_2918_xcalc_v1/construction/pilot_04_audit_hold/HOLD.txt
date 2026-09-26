@@ -1,0 +1,19 @@
+Construction pilot 04 — HOLD, runner complete, independent audit incomplete
+
+The runner completed all 13 scheduled rows and 12 public observation calls in
+OrbStack Docker. The independent auditor stopped at
+`assert row['state'] == list(state_from_value(image_value))` with `KeyError:
+'state'` on a boundary-control row. The candidate correctly returned before
+pixel classification for stale/binding/intent invalidation cases; the auditor
+incorrectly required a decoded candidate state even where no candidate
+certificate should exist. It therefore did not complete the overall audit.
+
+All runner JSON, 12 PNG captures, and any emitted audit directory are preserved
+unchanged here and are covered by `RAW_SHA256SUMS.txt`. No PASS is claimed.
+An additive follow-up audit after that correction advanced further and stopped
+at a second assertion in the contradictory-XID control: it compared the
+original API-reported XID (which correctly equals the binding) instead of the
+deliberately mismatched XID passed into the candidate. The candidate-input XID
+is retained separately in the raw row. This assertion is being corrected to
+check `candidate_observed_xid`; no audit PASS is claimed yet. Then run a fresh
+construction rehearsal and corruption controls before formal freeze.
