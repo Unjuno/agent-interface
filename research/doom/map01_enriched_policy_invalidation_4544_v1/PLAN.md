@@ -39,9 +39,10 @@ recompute the declared bounds, with uncertainty <=1 second and age <=5 seconds; 
 outcome boundary is translated; the mixed-domain witness fails before
 translation; final admission after translation is
 `REJECTED_POLICY_INVALIDATED`, has no executor admission, and grants no input
-authority. Every retained host-stage timestamp remains labeled host-domain;
-only the outcome boundary is translated and labeled runtime-domain. Any
-missing semantic field or invalid calibration must fail closed.
+authority. Monitor receive/extraction timestamps stay host-domain;
+`signal.capture_ns` stays unchanged and is labeled runtime-domain; only the
+outcome boundary is translated and labeled runtime-domain. Any missing
+semantic field or invalid calibration must fail closed.
 
 **C** — The invalidation timestamp and clock values used in the admission
 ordering test are synthetic controls based on retained #4536 iteration-8

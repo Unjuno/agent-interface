@@ -82,10 +82,24 @@ def main():
         assert path.is_file(), f"missing runtime source: {relative}"
         assert sha256(path) == expected, f"runtime source hash mismatch: {relative}"
 
+    effective = (ARTIFACTS / "effective_controller.py").read_bytes()
+    canonical = effective.replace(b"\r\n", b"\n")
+    assert hashlib.sha256(canonical).hexdigest() == (
+        "8ee8de8ffae4074fa11cd360aac8ca42325473e2cf8fa424b84ebfc7d1d6c117")
+    manifest = HERE / "SHA256SUMS.txt"
+    entries = [line.split("  ", 1) for line in manifest.read_text(
+        encoding="utf-8").splitlines()]
+    assert len(entries) == 35
+    for expected, relative in entries:
+        path = REPO / relative
+        assert path.is_file(), f"missing manifest file: {relative}"
+        assert sha256(path) == expected, f"manifest hash mismatch: {relative}"
+
     print("PASS_LOCAL_ZERO_MODEL_STARTUP_RELEASE_AUDIT")
     print("planner_turns=0 typed_observations=3 verified_empty_owner_releases=3")
     print(f"clock_uncertainty_ns={probe['uncertainty_width_ns']}")
     print(f"runtime_source_hashes={len(sources)}/{len(sources)}")
+    print(f"artifact_hashes={len(entries)}/{len(entries)}")
 
 
 if __name__ == "__main__":

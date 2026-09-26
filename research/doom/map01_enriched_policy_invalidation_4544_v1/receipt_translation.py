@@ -119,7 +119,7 @@ def translate_monitor_receipt(receipt, calibration, session_id, *,
     result["outcome_clock_domain"] = "runtime_monotonic"
     result["monitor_received_clock_domain"] = "host_monotonic"
     result["signal_extracted_clock_domain"] = "host_monotonic"
-    result["signal_capture_clock_domain"] = "host_monotonic"
+    result["signal_capture_clock_domain"] = "runtime_monotonic"
     result["clock_translation"] = {
         "session_id": session_id,
         "source_clock_domain": "host_monotonic",
@@ -127,7 +127,8 @@ def translate_monitor_receipt(receipt, calibration, session_id, *,
         "translated_field": "outcome_evaluated_ns",
         "preserved_host_timestamp_field": "outcome_evaluated_host_ns",
         "untouched_host_timestamp_fields": [
-            "monitor_received_ns", "signal_extracted_ns", "signal.capture_ns"],
+            "monitor_received_ns", "signal_extracted_ns"],
+        "untouched_runtime_timestamp_fields": ["signal.capture_ns"],
         "probe_count": 3,
         "sampled_host_ns": calibration["sampled_host_ns"],
         "calibration_age_ns": age_ns,

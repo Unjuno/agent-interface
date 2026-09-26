@@ -75,7 +75,11 @@ Key SHA-256 values:
 - Adapter: `9f457ac4f6663f09a775e3852b4c157c9dc8c69b04b7e7ea583b966f4dbb04a8`
 - Receipt translator: `21f8d91f369d8ef55b5db5e8ce7b7bcc13a9418f6dd7c1ea02e6b340f07370d4`
 - Test file: `023b118a1a86b249762cd832766fe8c5214cf4d40a7876dc3f781fd8fcaa5460`
-- Generated effective controller: `8ee8de8ffae4074fa11cd360aac8ca42325473e2cf8fa424b84ebfc7d1d6c117`
+- Generated effective-controller canonical LF-source hash (printed by the
+  adapter): `8ee8de8ffae4074fa11cd360aac8ca42325473e2cf8fa424b84ebfc7d1d6c117`
+- Committed Windows text-mode artifact byte hash:
+  `8d5dd1afc1840d654b28afc624849e8d886502faae0de133b69ffaf68a9d40ba`;
+  CRLF-to-LF normalization reproduces the canonical source hash above.
 - `report.json`: `3220aabfcd70e937ad166c4bbf982ab412d3bf1a7869c7a7f2bef44f4e4ebedd`
 - `runtime/submit-clock-zero-decision.json`: `bc6e57339b212f78498dbe49112ad6bbd37390b9b36393f832296902d49bbc89`
 - `runtime/events.jsonl` and `runtime/delivered.jsonl` (identical):
@@ -93,6 +97,7 @@ PASS_LOCAL_ZERO_MODEL_STARTUP_RELEASE_AUDIT
 planner_turns=0 typed_observations=3 verified_empty_owner_releases=3
 clock_uncertainty_ns=14626168
 runtime_source_hashes=20/20
+artifact_hashes=35/35
 ```
 
 `runtime/sources.json` binds all 20 runtime files to their exact repository

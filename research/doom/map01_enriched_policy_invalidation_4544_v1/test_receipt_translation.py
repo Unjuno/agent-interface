@@ -106,9 +106,11 @@ class EnrichedReceiptTranslationTests(unittest.TestCase):
             "signal_capture_clock_domain"}})
         self.assertEqual(translated["outcome_clock_domain"], "runtime_monotonic")
         self.assertEqual(translated["monitor_received_clock_domain"], "host_monotonic")
-        self.assertEqual(translated["signal_capture_clock_domain"], "host_monotonic")
+        self.assertEqual(translated["signal_capture_clock_domain"], "runtime_monotonic")
         self.assertIn("signal.capture_ns",
-                      translated["clock_translation"]["untouched_host_timestamp_fields"])
+                      translated["clock_translation"]["untouched_runtime_timestamp_fields"])
+        self.assertNotIn("signal.capture_ns",
+                         translated["clock_translation"]["untouched_host_timestamp_fields"])
         self.assertEqual(translated["clock_translation"]["probe_count"], 3)
 
     def test_mixed_domain_control_fails_then_translation_rejects_without_input(self):
