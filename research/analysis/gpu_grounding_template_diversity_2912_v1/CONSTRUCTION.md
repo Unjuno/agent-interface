@@ -14,7 +14,7 @@ Date: 2026-09-27 JST. Source main: `13cd6645b1bdd266bbe010f82ebcec2a573c23ed`.
 - `py_compile`: PASS.
 - `test_construction.py`: 7/7 PASS, including CPU full-model shape and pooling-oracle checks, exact candidate schema/bounds controls, independent metric-auditor positive/corruption controls, deterministic rendering checks, and repeated CUDA forward/backward equality.
 - The CUDA determinism test used the RTX 3080 Laptop GPU with `CUBLAS_WORKSPACE_CONFIG=:4096:8`, deterministic algorithms enabled and TF32 disabled. It performed zero optimizer updates.
-- Formal invocations: 0. No model training, evaluation allocation, GUI input, or authority grant has occurred.
+- The single formal invocation stopped before the first image load because the runner omitted the manifest's `corpus/` prefix. See `results/formal01/STOP.md`; this allocation is consumed and must not be retried. No optimizer step, model training, evaluation, GUI input, or authority grant occurred.
 
 ## Local runtime boundary
 
@@ -22,4 +22,4 @@ Host probe: Python 3.11.9, NumPy 2.4.6, Pillow 10.4.0, PyTorch 2.5.1+cu121, CUDA
 
 A no-network run of the pre-existing `needle-pilot05:local` Docker image found PyTorch 2.5.1+cpu and CUDA unavailable in that image. This is not a claim that Docker GPU passthrough is impossible. To keep all computation on the PC and avoid installing another large CUDA stack, the frozen allocation uses the already-installed host-local CUDA runtime. No hosted or remote training workflow was used.
 
-Raw compile/test/runtime/Docker probe outputs are retained in `construction/01/`. Exact source and environment pins are recorded in `FREEZE.json`. These are preformal construction gates only; they do not authorize or count as a training result.
+Raw compile/test/runtime/Docker probe outputs are retained in `construction/01/`. Exact source and environment pins are recorded in `FREEZE.json`. These are preformal construction gates only; they do not authorize or count as a training result. The sole formal invocation subsequently stopped before loading the first image because the runner omitted the manifest's `corpus/` prefix. See `results/formal01/STOP.md`; the allocation is consumed and must not be retried. No training or GPU model computation occurred. The independent GPU-serialization condition was also not met while the separate #4205 task remained active.

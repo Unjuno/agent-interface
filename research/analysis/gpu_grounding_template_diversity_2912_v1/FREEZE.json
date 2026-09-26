@@ -4,9 +4,9 @@
   "allocation": "gpu-grounding-template-diversity-2912-successor-01",
   "branch": "research/gpu-grounding-template-diversity-2912-20260927",
   "source_commit": "13cd6645b1bdd266bbe010f82ebcec2a573c23ed",
-  "status": "PREFORMAL_CONSTRUCTION_PASS",
+  "status": "STOP_FORMAL_INVOCATION_01_INPUT_PATH_ERROR",
   "formal_invocations_allowed": 1,
-  "formal_invocations_completed": 0,
+  "formal_invocations_completed": 1,
   "retries_allowed": 0,
   "generator_sha256": "3b2f9f65e1ada35be269bcc1876cba24ea87d2ed3fb0ca26f49e639bb167fe75",
   "template_spec_sha256": "5e1acf1f4874a6d1ed72c26e77f3b8c0bbda531de819456d37ca78306e449bbe",
@@ -99,13 +99,15 @@
     "compiled_form_grounding_schema_v1.json": "a1a5901b84656375657538d2dccb975e3b40a5b22272abbab487c54904db1d0f"
   },
   "construction_evidence_hashes": {
-    "CONSTRUCTION.md": "02b8978cade4fabed98601e1eb8d9e63512c6099dc65960965b408f62d64222d",
+    "CONSTRUCTION.md": "373746eaaccbf9f872ff8d1f14579f1f8184ad72fea77e784b2306f8742a99fe",
     "construction/01/PREFORMAL.json": "d1918cb0a95f8bbc8767708db8e99569cbb5a57bdcf4904ad798e3c9b2039d45",
     "construction/01/py_compile.log": "9a89898ddb81b30bb0e13ea1302a64cf69aad96d71745830fd83b6e0be7016f5",
     "construction/01/unittest.log": "675807324b5a1d68ae15b79562e32ba98ec6f64ebd7bd66f2cf515dd1def3300",
     "construction/01/host_runtime_probe.log": "1ad21cee6b973f48868be082b0414d7282570dbaa529f427933c272a43e44122",
     "construction/01/nvidia_smi_probe.log": "bc853918473266d075420792acfe4ea03e500b59953c48cac51141c7c5fd23d8",
-    "construction/01/docker_torch_probe.log": "06909998c2eea756ef33f556a8dc7545b4b84617a6003a83c3ce05e5a974d8f7"
+    "construction/01/docker_torch_probe.log": "06909998c2eea756ef33f556a8dc7545b4b84617a6003a83c3ce05e5a974d8f7",
+    "results/formal01/STOP.md": "8202f77c282a38cd7635d35559810b44f97ef14ead01d77e37407f1c180a94ea",
+    "results/formal01/process_excerpt.log": "f066e9e3fa13e8cf2fdd9808d5125c7425c49e5949ee3cbf31cf2b534e68bc12"
   },
   "construction": {
     "py_compile": "PASS",
@@ -114,5 +116,5 @@
     "optimizer_updates": 0,
     "cuda_forward_backward_deterministic": true
   },
-  "formal_authorization_gate": "Before the one formal invocation, push this freeze, read every frozen file back through GitHub MCP, verify the source/data hashes, and confirm the issue still has no conflicting allocation."
+  "formal_authorization_gate": "Consumed. One formal process invocation occurred and stopped before image loading/training. Do not retry this allocation; preserve STOP evidence and use a successor allocation after fixing the path and confirming GPU serialization."
 }
