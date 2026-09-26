@@ -1,0 +1,250 @@
+[
+  {
+    "arm": "coast",
+    "budget": 0,
+    "event_count": 28,
+    "fresh_frame_sha256": null,
+    "fresh_mode": "none",
+    "fresh_sequence": null,
+    "guard_only": {
+      "admission": "ADMIT",
+      "fresh_mae": 0.014387705363333225
+    },
+    "id": "c01-coast-guard-only",
+    "reanchor": {
+      "admission": "REJECT_NO_FRESH_OBSERVATION",
+      "fresh_mae": null
+    },
+    "rejected_frame_sha256": "4411f0442fd2dee2f92cefb38fc08b753a410d2af40de3996450b5b583157ae9",
+    "rejected_sequence": 7,
+    "release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "release",
+      "valid_until_ns": null,
+      "verified": true,
+      "verified_ns": 446863865601
+    },
+    "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+    "same_session": true,
+    "schema": "bounded-fresh-reanchor-case-v1",
+    "score": {
+      "death_count": 0,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false
+    },
+    "seed": 254801,
+    "session_id": null,
+    "source_sequence": 1,
+    "terminal_status": "completed"
+  },
+  {
+    "arm": "recovery",
+    "budget": 0,
+    "event_count": 84,
+    "fresh_frame_sha256": null,
+    "fresh_mode": "none",
+    "fresh_sequence": null,
+    "guard_only": {
+      "admission": "REJECT_CONTEXT_CHANGED",
+      "fresh_mae": 0.04327588900923729
+    },
+    "id": "c02-drift-guard-only",
+    "reanchor": {
+      "admission": "REJECT_NO_FRESH_OBSERVATION",
+      "fresh_mae": null
+    },
+    "rejected_frame_sha256": "05f52d1f4dfe70f9b8170887512b59a800791e94e32f4f6ae9ff8a37b2ac7d74",
+    "rejected_sequence": 20,
+    "release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "release",
+      "valid_until_ns": 457511199586,
+      "verified": true,
+      "verified_ns": 454628581130
+    },
+    "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+    "same_session": true,
+    "schema": "bounded-fresh-reanchor-case-v1",
+    "score": {
+      "death_count": 0,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false
+    },
+    "seed": 254802,
+    "session_id": null,
+    "source_sequence": 1,
+    "terminal_status": "completed"
+  },
+  {
+    "arm": "recovery",
+    "budget": 1,
+    "event_count": 90,
+    "fresh_frame_sha256": "6c8103e1643f2fcda953c8d4f5eb4e593e50177fa0846cb2a5eaa8484a734a9c",
+    "fresh_mode": "observe",
+    "fresh_sequence": 22,
+    "guard_only": {
+      "admission": "REJECT_CONTEXT_CHANGED",
+      "fresh_mae": 0.04301640763878822
+    },
+    "id": "c03-drift-fresh-reanchor",
+    "reanchor": {
+      "admission": "ADMIT",
+      "fresh_mae": 3.710810051416047e-05
+    },
+    "rejected_frame_sha256": "cbf2bb409f3db625b71b6ace2ba37eae4b2ca9fe462d789841aad34421825c8f",
+    "rejected_sequence": 21,
+    "release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "release",
+      "valid_until_ns": 465863546005,
+      "verified": true,
+      "verified_ns": 463069378780
+    },
+    "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+    "same_session": true,
+    "schema": "bounded-fresh-reanchor-case-v1",
+    "score": {
+      "death_count": 0,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false
+    },
+    "seed": 254803,
+    "session_id": null,
+    "source_sequence": 1,
+    "terminal_status": "completed"
+  },
+  {
+    "arm": "coast",
+    "budget": 1,
+    "event_count": 32,
+    "fresh_frame_sha256": "97ec204a68cfd01a0cfb3132f32dba54011e275801a5d4ad15a3823c79f53151",
+    "fresh_mode": "observe",
+    "fresh_sequence": 8,
+    "guard_only": {
+      "admission": "ADMIT",
+      "fresh_mae": 0.012563234195113182
+    },
+    "id": "c04-coast-fresh-reanchor",
+    "reanchor": {
+      "admission": "ADMIT",
+      "fresh_mae": 0.00010209992615273222
+    },
+    "rejected_frame_sha256": "818c0553652c408d21e54ccd1b1f7108f2814ea52047a84a97387af55f9b08c2",
+    "rejected_sequence": 7,
+    "release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "release",
+      "valid_until_ns": null,
+      "verified": true,
+      "verified_ns": 469154392809
+    },
+    "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+    "same_session": true,
+    "schema": "bounded-fresh-reanchor-case-v1",
+    "score": {
+      "death_count": 0,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false
+    },
+    "seed": 254804,
+    "session_id": null,
+    "source_sequence": 1,
+    "terminal_status": "completed"
+  },
+  {
+    "arm": "recovery",
+    "budget": 1,
+    "duplicate": true,
+    "event_count": 86,
+    "fresh_frame_sha256": null,
+    "fresh_mode": "none",
+    "fresh_sequence": null,
+    "guard_only": {
+      "admission": "REJECT_CONTEXT_CHANGED",
+      "fresh_mae": 0.04413634538650513
+    },
+    "id": "c05-stale-reanchor",
+    "reanchor": {
+      "admission": "REJECT_NO_FRESH_OBSERVATION",
+      "fresh_mae": null
+    },
+    "rejected_frame_sha256": "05865cf88609c31ab7c8dfdbe40083cbd0a4a1fe84f46d46e192102cf907d566",
+    "rejected_sequence": 21,
+    "release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "release",
+      "valid_until_ns": 480918770493,
+      "verified": true,
+      "verified_ns": 478166934747
+    },
+    "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+    "same_session": true,
+    "schema": "bounded-fresh-reanchor-case-v1",
+    "score": {
+      "death_count": 0,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false
+    },
+    "seed": 254805,
+    "session_id": null,
+    "source_sequence": 1,
+    "terminal_status": "completed"
+  },
+  {
+    "ambiguous": true,
+    "arm": "recovery",
+    "budget": 1,
+    "event_count": 90,
+    "fresh_frame_sha256": "fcd2b1a6fb7a30f44eb46799d7f7255f23670ecdf907a12570368b987ff2e42c",
+    "fresh_mode": "observe",
+    "fresh_sequence": 22,
+    "guard_only": {
+      "admission": "REJECT_CONTEXT_CHANGED",
+      "fresh_mae": 0.04448915272951126
+    },
+    "id": "c06-ambiguous-reanchor",
+    "reanchor": {
+      "admission": "REJECT_PROVENANCE",
+      "fresh_mae": 7.96594176790677e-05
+    },
+    "rejected_frame_sha256": "a5d06761491485779c5df26608a76fad7749cd9622317ad76a6b7bc4088c213a",
+    "rejected_sequence": 21,
+    "release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "release",
+      "valid_until_ns": 489456283424,
+      "verified": true,
+      "verified_ns": 486585293611
+    },
+    "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+    "same_session": true,
+    "schema": "bounded-fresh-reanchor-case-v1",
+    "score": {
+      "death_count": 0,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false
+    },
+    "seed": 254806,
+    "session_id": null,
+    "source_sequence": 1,
+    "terminal_status": "completed"
+  }
+]

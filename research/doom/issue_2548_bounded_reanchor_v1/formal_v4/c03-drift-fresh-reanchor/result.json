@@ -1,0 +1,67 @@
+{
+  "arm": "recovery",
+  "candidate": "fresh",
+  "candidate_receipt": {
+    "capture_ns": 2717996250370,
+    "frame_rgb_sha256": "2583877ece9c1060be6f424bdf59d8ece69dc3e62f5043ff0d430f34c7679b13",
+    "image": "/work/out/c03-drift-fresh-reanchor/runtime/022.png",
+    "sequence": 22,
+    "session_id": "90b88fe25a424a88b1c280318b2d9497"
+  },
+  "capture_fresh": true,
+  "captured_fresh_receipt": {
+    "capture_ns": 2717996250370,
+    "frame_rgb_sha256": "2583877ece9c1060be6f424bdf59d8ece69dc3e62f5043ff0d430f34c7679b13",
+    "image": "/work/out/c03-drift-fresh-reanchor/runtime/022.png",
+    "sequence": 22,
+    "session_id": "90b88fe25a424a88b1c280318b2d9497"
+  },
+  "event_count": 90,
+  "fresh_observation_count": 1,
+  "guard_only": {
+    "admission": "REJECT_CONTEXT_CHANGED",
+    "mae": 0.044289253652095795
+  },
+  "id": "c03-drift-fresh-reanchor",
+  "old_receipt": {
+    "capture_ns": 2717917654831,
+    "frame_rgb_sha256": "ffa70d3d99968ac0e7b3009261e52ed3c761f572433d1a9b8cd344ffc3de84e3",
+    "image": "/work/out/c03-drift-fresh-reanchor/runtime/021.png",
+    "sequence": 21,
+    "session_id": "90b88fe25a424a88b1c280318b2d9497"
+  },
+  "reanchor": {
+    "admission": "ADMIT",
+    "fresh_receipt_id": "90b88fe25a424a88b1c280318b2d9497:22",
+    "mae": 0.0036222999915480614,
+    "old_receipt_id": "90b88fe25a424a88b1c280318b2d9497:21",
+    "reason": "FRESH_PAIR_EVALUATED"
+  },
+  "release": {
+    "buttons_down": [],
+    "event": "owner_release",
+    "keys_down": [],
+    "reason": "release",
+    "valid_until_ns": 2721075328070,
+    "verified": true,
+    "verified_ns": 2718067787527
+  },
+  "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+  "schema": "bounded-fresh-reanchor-case-v2",
+  "score": {
+    "death_count": 0,
+    "kill_count": 0,
+    "map_exit": false,
+    "player_dead": false
+  },
+  "seed": 254813,
+  "session_id": "90b88fe25a424a88b1c280318b2d9497",
+  "source_receipt": {
+    "capture_ns": 2715991705251,
+    "frame_rgb_sha256": "660239613e924063fd7fbba6c0c2b90305550c0158e2e08fe5096ddc7a8f53af",
+    "image": "/work/out/c03-drift-fresh-reanchor/runtime/001.png",
+    "sequence": 1,
+    "session_id": "90b88fe25a424a88b1c280318b2d9497"
+  },
+  "terminal_status": "completed"
+}
