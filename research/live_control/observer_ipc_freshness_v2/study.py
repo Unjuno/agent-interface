@@ -244,6 +244,7 @@ def cmd_construction(args):
             rec,_=capture(lib,d,'construction',time.monotonic_ns(),n); rows.append({"expected":n,"actual":rec['target_pixels'],"sample":rec})
         t=(ctypes.c_uint64*2)(); py0=time.monotonic_ns(); rc=lib.q_pause(t); py1=time.monotonic_ns(); lib.q_paint(d,0); lib.q_close(d)
         if rc or not(py0<=t[0]<=t[1]<=py1): raise RuntimeError('clock enclosure')
+        # Static pipe path: six clear samples, no pulse.
         obs=subprocess.Popen([sys.executable,'-B',str(ROOT/'study.py'),'observer','--display',display],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
         ready,_=child_ready(obs,'observer'); epoch=time.monotonic_ns()+15_000_000; send_start(obs,{"case":"construction-static","epoch_ns":epoch})
         static=[]
@@ -252,6 +253,7 @@ def cmd_construction(args):
             if row.get('kind')=='done': done=row; break
             row['received_ns']=rcv; static.append(row)
         obs_err=obs.stderr.read().decode(); obs.wait(3)
+        # GIL load exposure, no pulse comparison.
         set_aff(0); lt,ls,lo=start_load(True); time.sleep(.035); lr=stop_load(lt,ls,lo)
         result={"status":"PASS_STATIC_CONSTRUCTION","short_pulse_cases":0,"static_counts":rows,"clock":{"py_before_ns":py0,"c_ns":[int(x) for x in t],"py_after_ns":py1},
                 "static_pipe":{"ready":ready,"records":static,"done":done,"exit":obs.returncode,"stderr":obs_err},"load":lr,"environment":environment()}
