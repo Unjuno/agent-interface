@@ -50,6 +50,10 @@ class Construction(unittest.TestCase):
  def test_cuda_timing_and_evidence_are_present(self):
   for token in ("torch.cuda.synchronize(); setup_start","adapter_setup_ms","row_evidence","expected","predicted"):
    self.assertIn(token,self.text)
+ def test_wddm_memory_stat_is_typed_unavailable(self):
+  self.assertNotIn("reset_peak_memory_stats",self.text)
+  self.assertNotIn("max_memory_allocated",self.text)
+  self.assertIn('"cuda_peak_memory_status": "UNAVAILABLE_WDDM"',self.text)
  def test_runner_never_claims_independent_audit_pass(self):
   self.assertIn("QUALITY_GATE_MET_PENDING_INDEPENDENT_AUDIT",self.text)
   self.assertNotIn('result["outcome"] = "PASS_MULTI_SKILL_ROUTING_SCOPED"',self.text)
