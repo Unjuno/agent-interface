@@ -4,6 +4,8 @@ on:
   pull_request:
     types: [opened]
     branches: [main]
+    paths:
+      - research/audits/issue_3793_delivery_byte_binding_v3/**
 
 permissions:
   contents: read
