@@ -9,7 +9,7 @@ This verifies copied retained evidence from #4447; it does not rerun or replace 
 Own only branch `research/temporal-resume-audit-returncode-20260927-r1` and additive path `research/integration/temporal_stream_resume_audit_r1_v1/**`. The verifier reads the source capsule and formal-01 data from #4447 commit `de1064b335a6567c57817209485cf18d25d9e3f2` read-only.
 
 Pinned inputs:
-- #4447 formal artifact manifest SHA-256: `1584edb3a45202b3e816d2a9735708265da279fd4e18d8680fded7756cc3855`
+- #4447 formal artifact manifest SHA-256: `1584edb3a45202b3e816d2a9735708265dae279fd4e18d8680fded7756cc3855`
 - source fixture SHA-256: `5531e1296e31064da7661138f6ae9036e473b5c953ebd82b3f1ce28a9409fd61`
 - source schedule SHA-256: `90c2d136dfe7e429bfdc504c12fff51e4ad141030080b897d11249a5f28151cd`
 - frozen #4447 auditor SHA-256: `41f2500217bd7ea056494d0d9fe747f2131365d7ee64de2ae5b4da710de511af`
@@ -35,3 +35,7 @@ Construction incident before freeze: the first synthetic-unit launcher failed at
 The next synthetic-only run had 3/4 tests pass; its exact-80ms test expected the strict-time policy to remain pending. Inspection of the frozen contract shows strict-time accepts `tick > anchor_tick`, so equality at the deadline is satisfied. The test expectation (not the verifier policy) was corrected and the failure is retained in `CONSTRUCTION02.log`.
 
 After those corrections, the Docker-only synthetic suite passed 5/5 tests (`CONSTRUCTION03.log`). It covered same-tick policy distinction, exact-80ms behavior, nonzero child-exit rejection, stdout/parsed reconciliation and the eleven-control schedule. No #4447 evidence was mounted in any construction run.
+
+The first public freeze at commit `8b82cd7a5dcff13ecbc2096533cd43a1898f9a72` contained a one-character transcription error in the pinned #4447 formal-manifest SHA-256. The local preflight compared the actual evidence manifest, detected the mismatch, and stopped before creating the results directory, starting Docker, or reading any evidence. Preserve that freeze unchanged as history in `FREEZE.json`; the exact command error is retained in `PREFLIGHT01.log`. The corrected input commitment and source hashes are published as `FREEZE_REV02.json`; no formal verifier invocation has occurred yet.
+
+After correcting the pin, the unchanged five-test synthetic construction suite passed again in Docker (`CONSTRUCTION05.log`). It did not mount/read the #4447 source or evidence. Revision 02—not revision 01—governs any subsequent formal invocation.

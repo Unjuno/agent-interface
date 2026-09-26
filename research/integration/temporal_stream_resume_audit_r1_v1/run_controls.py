@@ -12,7 +12,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from verify_receipts import canonical, sha256
 
-FORMAL_MANIFEST_SHA = "1584edb3a45202b3e816d2a9735708265da279fd4e18d8680fded7756cc3855"
+FORMAL_MANIFEST_SHA = "1584edb3a45202b3e816d2a9735708265dae279fd4e18d8680fded7756cc3855"
 
 
 def write_json(path: Path, value: object) -> None:
