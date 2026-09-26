@@ -18,6 +18,18 @@ Container: `sha256:eb3ce9f5bd0cf358664b9d1ff9bce4cf2ce9f82f72ec700222046fb8fe8b9
 - Terminal decisions matched the control contract: all 16 NO-receipt, 16 valid-receipt, and 16 ambiguous-receipt effect-present rows ended `CONTINUE`; all 8 no-effect/contradictory rows ended `ABORT`. No release receipt was treated as application-effect authority.
 - The runner recorded zero model calls, provider calls, and tokens. The environment was synthetic and offline.
 
+### Post-run independent metric recheck
+
+After review, two aggregation/gate issues were found in the frozen original auditor: its reported `0.818%` compared the two arm medians rather than taking the median of the 16 paired relative changes, and its PASS logic did not enforce the preregistered ≥20% action-reduction threshold. The frozen source and original `AUDIT.json` remain unchanged. A separate post-hoc script recomputed paired metrics directly from the retained 56 raw rows; it is not a formal rerun.
+
+- Correct median paired relative latency reduction: **−0.828%** (a slight worsening, not an improvement). The paired-bootstrap 95% interval is **−10.78% to +5.05%**.
+- Median absolute latency reduction remains **−1,738,179 ns**; the 95% interval remains **−5,979,677 to +5,333,551 ns**.
+- Median action reduction is **0%**, with interval **[0%, 0%]**. The explicit ≥20% median action and positive-lower-bound gates both fail.
+- Corrected disposition remains **`HOLD_NO_DECISION_VALUE`**. The evidence supports neither preregistered benefit threshold.
+- Recheck implementation and machine-readable report: `paired_metric_recheck.py`, `test_paired_metric_recheck.py`, and `evidence/audit-formal01/PAIRED_METRIC_RECHECK.json`.
+
+This correction supersedes only the latency aggregation and action-gate interpretation above; it does not alter frozen inputs, raw evidence, or the HOLD disposition. Do not cite the original 0.818% as a paired effect.
+
 ## Decision-value metrics
 
 - Paired median caller-return-to-correct-decision latency reduction for VALID vs NO receipt: **0.818%** (about 0.82%), below the preregistered 20% threshold. The 95% paired-bootstrap interval for absolute latency reduction was **−5,979,677 to +5,333,551 ns**, spanning zero.
