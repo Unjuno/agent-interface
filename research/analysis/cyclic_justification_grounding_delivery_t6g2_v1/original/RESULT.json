@@ -1,0 +1,59 @@
+{
+  "checks": 700837,
+  "controls_rejected": 10,
+  "decision": "PASS_LOCAL_CYCLIC_GROUNDING_CONTRACT",
+  "deletion_cases": 15135,
+  "errors": [],
+  "families": {
+    "acyclic_diamond": 1,
+    "and_external_seed": 1,
+    "and_not_independent_seed": 1,
+    "conjunction_lost": 1,
+    "cycle_external_alternative": 1,
+    "exhaustive": 27225,
+    "head_without_rule": 1,
+    "no_change": 1,
+    "seeded_cycle_retracted": 1,
+    "self_support_lost": 1,
+    "three_cycle_and_tail": 1,
+    "unaffected_branch": 1,
+    "unseeded_cycle": 1
+  },
+  "local_freeze_commit": "cfaac9b1dfdc8322f19fcc124b4cc1e12b080fa9",
+  "no_change_cases": 12102,
+  "public_preregistered": false,
+  "raw_bytes": 16003195,
+  "raw_sha256": "20defa9e0ece5da65fce49fad39659fe469293299d4693a2ef76bbb9ae1b2cf3",
+  "rows": 27237,
+  "runtime_adopted": false,
+  "scientific_invocations": 1,
+  "scientific_reruns": 0,
+  "scope": "finite declared positive graphs, local prospective analytical check only",
+  "source_freeze_files": 12,
+  "stats": {
+    "blind_drop": {
+      "false_removed_cases": 1306,
+      "false_removed_claims": 1755,
+      "false_retained_cases": 0,
+      "false_retained_claims": 0
+    },
+    "candidate": {
+      "false_removed_cases": 0,
+      "false_removed_claims": 0,
+      "false_retained_cases": 0,
+      "false_retained_claims": 0
+    },
+    "full_rebuild": {
+      "false_removed_cases": 0,
+      "false_removed_claims": 0,
+      "false_retained_cases": 0,
+      "false_retained_claims": 0
+    },
+    "local_prune": {
+      "false_removed_cases": 0,
+      "false_removed_claims": 0,
+      "false_retained_cases": 2645,
+      "false_retained_claims": 3921
+    }
+  }
+}
