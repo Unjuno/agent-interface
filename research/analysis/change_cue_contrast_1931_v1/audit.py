@@ -87,8 +87,7 @@ def validate(outdir):
       if result['counts'][k]!=v: errors.append('aggregate_'+k)
     audit={"status":"PASS_AUDIT" if not errors else "FAIL_AUDIT","errors":errors,"checks":checks,"corruption_controls":controls,
            "sqrt21":BOUND,"formal_disposition":result.get('disposition')}
-    (out/'AUDIT.json').write_text(json.dumps(audit,indent=2,sort_keys=True)+'
-')
+    (out/'AUDIT.json').write_text(json.dumps(audit,indent=2,sort_keys=True)+'\n')
     return audit
 
 def main():
