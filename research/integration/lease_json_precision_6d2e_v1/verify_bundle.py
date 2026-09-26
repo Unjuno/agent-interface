@@ -20,7 +20,7 @@ def main() -> int:
     with archive.open("wb") as dst:
         for name in PARTS:
             p = here / name
-            data = base64.b64decode(p.read_text(encoding="ascii"), validate=True)
+            data = base64.b64decode(p.read_text(encoding="ascii").strip(), validate=True)
             dst.write(data); h.update(data); total += len(data)
     digest = h.hexdigest()
     if total != ARCHIVE_SIZE:
