@@ -1,0 +1,191 @@
+{
+  "cases": [
+    {
+      "expected": {
+        "expanded_operation_count": 1,
+        "static_valid": true,
+        "status": "valid"
+      },
+      "id": "release_only_expired",
+      "raw_text": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"test-only\"}, \"ops\": [{\"op\": \"release_all\"}], \"program_id\": \"local-test\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+    },
+    {
+      "expected": {
+        "expanded_operation_count": 2,
+        "static_valid": true,
+        "status": "valid"
+      },
+      "id": "observe_valid",
+      "raw_text": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"test-only\"}, \"ops\": [{\"frame\": \"screen_physical_px\", \"h\": 10, \"op\": \"observe\", \"w\": 10, \"x\": 0, \"y\": 0}, {\"op\": \"release_all\"}], \"program_id\": \"local-test\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+    },
+    {
+      "expected": {
+        "detail": "observe x must be int",
+        "error": "INVALID_PROGRAM",
+        "expanded_operation_index": 0,
+        "source_operation_index": 0,
+        "static_valid": false,
+        "status": "invalid"
+      },
+      "id": "region_shape",
+      "raw_text": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"test-only\"}, \"ops\": [{\"frame\": \"screen_physical_px\", \"op\": \"observe\", \"region\": [0, 0, 10, 10]}, {\"op\": \"release_all\"}], \"program_id\": \"local-test\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+    },
+    {
+      "expected": {
+        "detail": "observe w must be int",
+        "error": "INVALID_PROGRAM",
+        "expanded_operation_index": 0,
+        "source_operation_index": 0,
+        "static_valid": false,
+        "status": "invalid"
+      },
+      "id": "width_height_shape",
+      "raw_text": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"test-only\"}, \"ops\": [{\"frame\": \"screen_physical_px\", \"height\": 10, \"op\": \"observe\", \"width\": 10, \"x\": 0, \"y\": 0}, {\"op\": \"release_all\"}], \"program_id\": \"local-test\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+    },
+    {
+      "expected": {
+        "detail": "observe w must be int",
+        "error": "INVALID_PROGRAM",
+        "expanded_operation_index": 0,
+        "source_operation_index": 0,
+        "static_valid": false,
+        "status": "invalid"
+      },
+      "id": "boolean_width",
+      "raw_text": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"test-only\"}, \"ops\": [{\"frame\": \"screen_physical_px\", \"h\": 10, \"op\": \"observe\", \"w\": true, \"x\": 0, \"y\": 0}, {\"op\": \"release_all\"}], \"program_id\": \"local-test\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+    },
+    {
+      "expected": {
+        "expanded_operation_count": 4,
+        "static_valid": true,
+        "status": "valid"
+      },
+      "id": "repeated_key",
+      "raw_text": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"test-only\"}, \"ops\": [{\"keys\": [\"Right\"], \"op\": \"key_chord\", \"repeat\": 3}, {\"op\": \"release_all\"}], \"program_id\": \"local-test\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+    },
+    {
+      "expected": {
+        "expanded_operation_count": 4,
+        "static_valid": true,
+        "status": "valid"
+      },
+      "id": "text_gap",
+      "raw_text": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"test-only\"}, \"ops\": [{\"gap_ms\": 5, \"op\": \"text\", \"text\": \"ab\"}, {\"op\": \"release_all\"}], \"program_id\": \"local-test\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+    },
+    {
+      "expected": {
+        "expanded_operation_count": 6,
+        "static_valid": true,
+        "status": "valid"
+      },
+      "id": "mixed_expansion",
+      "raw_text": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"test-only\"}, \"ops\": [{\"gap_ms\": 5, \"op\": \"text\", \"text\": \"ab\"}, {\"keys\": [\"Right\"], \"op\": \"key_chord\", \"repeat\": 2}, {\"op\": \"release_all\"}], \"program_id\": \"local-test\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+    },
+    {
+      "expected": {
+        "detail": "observe w must be int",
+        "error": "INVALID_PROGRAM",
+        "expanded_operation_index": 3,
+        "source_operation_index": 1,
+        "static_valid": false,
+        "status": "invalid"
+      },
+      "id": "repeat_error_mapping",
+      "raw_text": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"test-only\"}, \"ops\": [{\"keys\": [\"Right\"], \"op\": \"key_chord\", \"repeat\": 3}, {\"frame\": \"screen_physical_px\", \"h\": 10, \"op\": \"observe\", \"w\": true, \"x\": 0, \"y\": 0}, {\"op\": \"release_all\"}], \"program_id\": \"local-test\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+    },
+    {
+      "expected": {
+        "detail": "observe w must be int",
+        "error": "INVALID_PROGRAM",
+        "expanded_operation_index": 3,
+        "source_operation_index": 1,
+        "static_valid": false,
+        "status": "invalid"
+      },
+      "id": "gap_error_mapping",
+      "raw_text": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"test-only\"}, \"ops\": [{\"gap_ms\": 5, \"op\": \"text\", \"text\": \"ab\"}, {\"frame\": \"screen_physical_px\", \"h\": 10, \"op\": \"observe\", \"w\": true, \"x\": 0, \"y\": 0}, {\"op\": \"release_all\"}], \"program_id\": \"local-test\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+    },
+    {
+      "expected": {
+        "expanded_operation_count": 128,
+        "static_valid": true,
+        "status": "valid"
+      },
+      "id": "capacity_128",
+      "raw_text": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"test-only\"}, \"ops\": [{\"op\": \"focus\", \"target\": \"root\"}, {\"keys\": [\"Right\"], \"op\": \"key_chord\", \"repeat\": 126}, {\"op\": \"release_all\"}], \"program_id\": \"local-test\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+    },
+    {
+      "expected": {
+        "error": "INVALID_KEY_REPEAT",
+        "static_valid": false,
+        "status": "invalid"
+      },
+      "id": "capacity_129",
+      "raw_text": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"test-only\"}, \"ops\": [{\"op\": \"focus\", \"target\": \"root\"}, {\"op\": \"focus\", \"target\": \"root\"}, {\"keys\": [\"Right\"], \"op\": \"key_chord\", \"repeat\": 126}, {\"op\": \"release_all\"}], \"program_id\": \"local-test\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+    },
+    {
+      "expected": {
+        "detail": "release_all must appear exactly once",
+        "error": "INVALID_PROGRAM",
+        "static_valid": false,
+        "status": "invalid"
+      },
+      "id": "missing_release",
+      "raw_text": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"test-only\"}, \"ops\": [{\"op\": \"text\", \"text\": \"PRIVATE_SENTINEL\"}], \"program_id\": \"local-test\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+    },
+    {
+      "expected": {
+        "detail": "unsupported operation",
+        "error": "INVALID_PROGRAM",
+        "expanded_operation_index": 0,
+        "source_operation_index": 0,
+        "static_valid": false,
+        "status": "invalid"
+      },
+      "id": "unsupported_operation",
+      "raw_text": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"test-only\"}, \"ops\": [{\"op\": \"PRIVATE_SENTINEL\"}, {\"op\": \"release_all\"}], \"program_id\": \"local-test\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+    },
+    {
+      "expected": {
+        "detail": "program contains an invalid field type",
+        "error": "INVALID_PROGRAM",
+        "static_valid": false,
+        "status": "invalid"
+      },
+      "id": "invalid_frame_type",
+      "raw_text": "{\"authority\": {\"expires_at_ns\": 1, \"lease_id\": \"test-only\"}, \"ops\": [{\"frame\": [], \"h\": 10, \"op\": \"observe\", \"w\": 10, \"x\": 0, \"y\": 0}, {\"op\": \"release_all\"}], \"program_id\": \"local-test\", \"schema\": \"agent-interface/program-v1\", \"source\": {\"binding_revision\": 0, \"observation_seq\": 0}, \"terminal\": {\"release_all_required\": true}}\n"
+    },
+    {
+      "expected": {
+        "error": "INVALID_JSON",
+        "static_valid": null,
+        "status": "input_error"
+      },
+      "id": "invalid_json",
+      "raw_text": "{\"ops\":"
+    },
+    {
+      "expected": {
+        "error": "INPUT_UNREADABLE",
+        "static_valid": null,
+        "status": "input_error"
+      },
+      "id": "missing_file",
+      "raw_text": null
+    },
+    {
+      "expected": {
+        "error": "PROGRAM_NOT_OBJECT",
+        "static_valid": false,
+        "status": "invalid"
+      },
+      "id": "non_object",
+      "raw_text": "[]\n"
+    }
+  ],
+  "environments": [
+    "no_display",
+    "unusable_display"
+  ],
+  "planned_processes": 36
+}

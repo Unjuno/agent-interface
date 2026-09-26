@@ -1,0 +1,58 @@
+{
+  "artifact": "validator.pyz",
+  "backend_included": false,
+  "bytes": 28437,
+  "entries": [
+    "BUILD.json",
+    "__main__.py",
+    "runtime/__init__.py",
+    "runtime/core_v1/__init__.py",
+    "runtime/core_v1/contract.py",
+    "runtime/core_v1/platform_probe.py",
+    "runtime/core_v1/sequence.py"
+  ],
+  "generated_entries": [
+    "runtime/__init__.py"
+  ],
+  "purpose": "static validation only",
+  "python_minimum": "3.12",
+  "runtime_admission": "not_evaluated",
+  "schema": "agent-interface/standalone-validator-build-v1",
+  "sha256": "238171672ecc368356a3ced49c5b60d81072400cea28136ae67849bb4958e017",
+  "source_files": [
+    {
+      "bytes": 6208,
+      "entry": "__main__.py",
+      "sha256": "97cd5d013f8deb1979617bb23e1d6a57ffe67b30b6b13fb9df17772efced88f0",
+      "source": "runtime/cli_v1/validate_program.py"
+    },
+    {
+      "bytes": 823,
+      "entry": "runtime/core_v1/__init__.py",
+      "sha256": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+      "source": "runtime/core_v1/__init__.py"
+    },
+    {
+      "bytes": 14397,
+      "entry": "runtime/core_v1/contract.py",
+      "sha256": "f053f73ccdeb67175068bf4d663bd484d886beb83305ed679510292809afd536",
+      "source": "runtime/core_v1/contract.py"
+    },
+    {
+      "bytes": 3057,
+      "entry": "runtime/core_v1/sequence.py",
+      "sha256": "20fd121ec7d54c0c0318fa1415bff49ff18808808b35cd902cd4435fb671b391",
+      "source": "runtime/core_v1/sequence.py"
+    },
+    {
+      "bytes": 1898,
+      "entry": "runtime/core_v1/platform_probe.py",
+      "sha256": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+      "source": "runtime/core_v1/platform_probe.py"
+    }
+  ],
+  "source_kind": "directory_snapshot",
+  "source_revision": null,
+  "task_success": null,
+  "third_party_dependencies": []
+}

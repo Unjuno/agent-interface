@@ -1,0 +1,99 @@
+{
+  "allocation": "app-event-provenance-2802-20260923-01",
+  "audit_sha256": "611ca58cb8ee8e1960bd244222f794e6b08ba9f2a5f0be2831afc353ffc4c151",
+  "decision": "PASS_APP_EVENT_PROVENANCE_BOUNDARY_SCOPED",
+  "formal_cases": 18,
+  "formal_invocations": 1,
+  "raw_sha256": "1758bf82f0a9894de23cd307ca15e75c53269b30db5cdb1c3340e7635374461f",
+  "replacements": 0,
+  "reruns": 0,
+  "scenarios": {
+    "CROSS_DOMAIN": {
+      "all_done": true,
+      "all_exit0": true,
+      "candidate": [
+        "UNKNOWN_CLOCK_DOMAIN"
+      ],
+      "cases": 3,
+      "delta_ns_max": 2378335,
+      "delta_ns_median": 2345791,
+      "delta_ns_min": 2318959,
+      "unsafe": [
+        "SATISFIED"
+      ]
+    },
+    "CROSS_SOURCE": {
+      "all_done": true,
+      "all_exit0": true,
+      "candidate": [
+        "UNKNOWN_SOURCE"
+      ],
+      "cases": 3,
+      "delta_ns_max": 2350265,
+      "delta_ns_median": 2330510,
+      "delta_ns_min": 2326219,
+      "unsafe": [
+        "SATISFIED"
+      ]
+    },
+    "GAPPED_SEQUENCE": {
+      "all_done": true,
+      "all_exit0": true,
+      "candidate": [
+        "UNKNOWN_GAP"
+      ],
+      "cases": 3,
+      "delta_ns_max": 2439673,
+      "delta_ns_median": 2384194,
+      "delta_ns_min": 2322905,
+      "unsafe": [
+        "SATISFIED"
+      ]
+    },
+    "LATE_B": {
+      "all_done": true,
+      "all_exit0": true,
+      "candidate": [
+        "EXPIRED"
+      ],
+      "cases": 3,
+      "delta_ns_max": 40700955,
+      "delta_ns_median": 40544541,
+      "delta_ns_min": 40528277,
+      "unsafe": [
+        "EXPIRED"
+      ]
+    },
+    "REGRESSED_SEQUENCE": {
+      "all_done": true,
+      "all_exit0": true,
+      "candidate": [
+        "UNKNOWN_ORDER"
+      ],
+      "cases": 3,
+      "delta_ns_max": 2388841,
+      "delta_ns_median": 2385837,
+      "delta_ns_min": 2382088,
+      "unsafe": [
+        "SATISFIED"
+      ]
+    },
+    "SAME_DOMAIN_CONTIGUOUS": {
+      "all_done": true,
+      "all_exit0": true,
+      "candidate": [
+        "SATISFIED"
+      ],
+      "cases": 3,
+      "delta_ns_max": 2711319,
+      "delta_ns_median": 2433876,
+      "delta_ns_min": 2370863,
+      "unsafe": [
+        "SATISFIED"
+      ]
+    }
+  },
+  "source_hashes_unchanged": true,
+  "tuning": 0,
+  "unit_sha256": "fe836cbecd3b6b4f70bec51b58d30c3e45ad72ae7fb3cb63421a0f7337e651ae"
+}

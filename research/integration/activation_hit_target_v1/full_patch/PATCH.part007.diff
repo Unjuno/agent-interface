@@ -1,0 +1,1000 @@
++                       capture_ended_ns=capture_ended_ns)
++            try:
++                info = self.d.display.info
++                fmt = next(f for f in info.pixmap_formats if f.depth == image.depth)
++                visual = next(v for screen in info.roots for d in screen.allowed_depths
++                              for v in d.visuals if v.visual_id == image.visual)
++                row["artifact"] = self.capture_artifacts.write(
++                    raw, w, h, depth=image.depth, bits_per_pixel=fmt.bits_per_pixel,
++                    scanline_pad=fmt.scanline_pad, byte_order=info.image_byte_order,
++                    masks=(visual.red_mask, visual.green_mask, visual.blue_mask),
++                    true_color=visual.visual_class == X.TrueColor)
++            except Exception as error:
++                # Keep the actual observation and completed input evidence even
++                # if image presentation fails. Never take a replacement capture.
++                row["artifact_error"] = repr(error)
++        return row
++
++    def _physical_keys_down(self, tracked: dict[str, int] | None = None) -> list[str]:
++        keymap = self.d.query_keymap()
++        rows = []
++        for name, code in (tracked or self.held_keycodes).items():
++            if keymap[code // 8] & (1 << (code % 8)):
++                rows.append(name)
++        return sorted(rows)
++
++    def _physical_buttons_down(self) -> list[str]:
++        mask = self.root.query_pointer().mask
++        reverse = {1: "left", 2: "middle", 3: "right"}
++        return sorted(reverse[n] for n, bit in BUTTON_MASKS.items() if mask & bit)
++
++    def release_all(self) -> dict[str, Any]:
++        tracked = dict(self.held_keycodes)
++        for code in list(self.held_keycodes.values()):
++            xtest.fake_input(self.d, X.KeyRelease, code)
++            self.emissions += 1
++        for button in list(self.held_buttons):
++            xtest.fake_input(self.d, X.ButtonRelease, BUTTON_MAP[button])
++            self.emissions += 1
++        self.d.sync()
++        self.held_keycodes.clear()
++        self.held_buttons.clear()
++        keys = self._physical_keys_down(tracked)
++        buttons = self._physical_buttons_down()
++        return {
++            "keys_down": keys,
++            "buttons_down": buttons,
++            "verified": not keys and not buttons,
++            "monotonic_ns": time.monotonic_ns(),
++        }
++
++    def execute(self, program: dict[str, Any]) -> dict[str, Any]:
++        self.preflight(program)
++        current_target: str | None = None
++        observations: list[dict[str, Any]] = []
++        releases: list[dict[str, Any]] = []
++        waits: list[dict[str, Any]] = []
++        started = time.monotonic_ns()
++        emissions_before = self.emissions
++        completed_ops = []
++        index = None
++
++        def evidence():
++            return {
++                "started_ns": started, "ended_ns": time.monotonic_ns(),
++                "emissions": self.emissions,
++                "program_emissions": self.emissions - emissions_before,
++                "observations": observations, "releases": releases,
++                "waits": waits,
++                "completed_ops": completed_ops,
++            }
++
++        try:
++            for index, op in enumerate(program["ops"]):
++                kind = op["op"]
++                if kind == "focus":
++                    current_target = op["target"]
++                    self.focus(current_target)
++                elif kind == "key_chord": self.key_chord(op["keys"])
++                elif kind == "key_state": self.key_state(op["key"], op["down"])
++                elif kind == "text": self.text(op["text"])
++                elif kind == "pointer_move":
++                    if current_target is None: raise X11BackendError("pointer_move requires focused target")
++                    self.pointer_move(current_target, op["frame"], op["x"], op["y"])
++                elif kind == "pointer_button": self.pointer_button(op["button"], op["down"])
++                elif kind == "scroll": self.scroll(op["dx"], op["dy"])
++                elif kind == "observe":
++                    if current_target is None: raise X11BackendError("observe requires focused target")
++                    captured = self.capture(current_target, op["frame"], op["x"], op["y"], op["w"], op["h"])
++                    observations.append(dict(captured, operation_index=index))
++                elif kind == "wait_update":
++                    wait = {"operation_index": index, "requested_ms": op["timeout_ms"],
++                            "started_ns": time.monotonic_ns(), "completed": False,
++                            "kind": "fixed_delay", "update_observed": None}
++                    waits.append(wait)
++                    try:
++                        time.sleep(op["timeout_ms"] / 1000.0)
++                        wait["completed"] = True
++                    finally:
++                        wait["ended_ns"] = time.monotonic_ns()
++                elif kind == "verify": pass
++                elif kind == "release_all": releases.append(self.release_all())
++                else: raise X11BackendError(f"unsupported op {kind}")
++                completed_ops.append(index)
++        except Exception as error:
++            try:
++                releases.append(self.release_all())
++            except Exception as release_error:
++                releases.append({"verified": False, "error": repr(release_error),
++                                 "monotonic_ns": time.monotonic_ns()})
++            partial = evidence()
++            partial.update(error=repr(error), failed_op=index,
++                           failed_op_effect="unknown; may have emitted partial input")
++            raise X11ExecutionError(partial) from error
++        return evidence()
+diff --git a/research/integration/activation_hit_target_v1/controls.py b/research/integration/activation_hit_target_v1/controls.py
+new file mode 100644
+index 0000000..6072540
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/controls.py
+@@ -0,0 +1,45 @@
++"""Finite copied-evidence changes. Does not execute a GUI or import the candidate."""
++import argparse,copy,json,shutil,tempfile,zlib
++from pathlib import Path
++from audit import case_audit,expected_rows,sha
++
++def replace_record(path,change):
++    p=path/'record.json';r=json.loads(p.read_text());change(r);p.write_text(json.dumps(r,sort_keys=True)+'\n')
++def strip_event(path,event_type=None,kind=None):
++    p=path/'app-events.jsonl'; rows=[json.loads(x) for x in p.read_text().splitlines()]
++    for i,r in enumerate(rows):
++        if (event_type is not None and r.get('event')==event_type and r['kind']=='native') or (kind is not None and r['kind']==kind): rows.pop(i);break
++    for i,r in enumerate(rows):r['seq']=i+1
++    p.write_text(''.join(json.dumps(r,sort_keys=True)+'\n' for r in rows))
++def mutate_pixels(path):
++    rp=path/'record.json';r=json.loads(rp.read_text()); cap=r['after_capture']; p=path/cap['file']; raw=bytearray(zlib.decompress(p.read_bytes())); x,y=cap['marker_xy']
++    for dy in range(10):
++        for dx in range(10):
++            k=((y+dy)*640+x+dx)*4;raw[k:k+4]=(0x112233).to_bytes(4,'little')
++    p.write_bytes(zlib.compress(raw)); cap['sha256']=sha(raw);rp.write_text(json.dumps(r,sort_keys=True)+'\n')
++def controls(source_root,output=None):
++    source_root=Path(source_root)
++    changes=[
++      ('final_value',0,lambda d:replace_record(d,lambda r:r['final'].__setitem__('a','wrong'))),
++      ('omitted_callback_reindexed',3,lambda d:strip_event(d,kind='callback')),
++      ('wrong_hit_leaf',0,lambda d:replace_record(d,lambda r:r['pre_observer'].__setitem__('leaf',r['initial']['ids']['cover']))),
++      ('receipt_hit_binding',0,lambda d:replace_record(d,lambda r:r['decisions'][0]['receipt'].__setitem__('hit',r['initial']['ids']['cover']))),
++      ('flipped_decision',5,lambda d:replace_record(d,lambda r:r['decisions'][0]['result'].__setitem__('allow',True))),
++      ('omitted_key_reindexed',0,lambda d:strip_event(d,event_type='2')),
++      ('missing_app_exit',0,lambda d:replace_record(d,lambda r:r.pop('app_exit'))),
++      ('bool_app_exit',0,lambda d:replace_record(d,lambda r:r.__setitem__('app_exit',False))),
++      ('non_neutral',0,lambda d:replace_record(d,lambda r:r['final_observer']['keymap'].__setitem__(0,1))),
++      ('changed_geometry',0,lambda d:replace_record(d,lambda r:r['geometry_after'].__setitem__('x',99))),
++      ('marker_with_recomputed_hash',3,mutate_pixels),
++      ('reversed_decision_time',0,lambda d:replace_record(d,lambda r:r['decisions'][0].__setitem__('decided_ns',0))),
++    ]
++    results=[]
++    for name,i,change in changes:
++        src=source_root/f'case-{i:02d}'; baseline=case_audit(src,expected_rows()[i])
++        if baseline['errors']:raise RuntimeError('baseline refused: '+str(baseline['errors']))
++        with tempfile.TemporaryDirectory(prefix='hit-audit-') as tmp:
++            d=Path(tmp)/'case';shutil.copytree(src,d);change(d);out=case_audit(d,expected_rows()[i])
++            results.append({'name':name,'case':i,'rejected':bool(out['errors']),'errors':out['errors']})
++    return {'controls':results,'rejected':sum(r['rejected'] for r in results),'total':len(results),'pass':all(r['rejected'] for r in results)}
++if __name__=='__main__':
++    a=argparse.ArgumentParser();a.add_argument('input');args=a.parse_args();r=controls(args.input);print(json.dumps(r,indent=2,sort_keys=True));raise SystemExit(not r['pass'])
+diff --git a/research/integration/activation_hit_target_v1/examples/cover-before-comparison.png b/research/integration/activation_hit_target_v1/examples/cover-before-comparison.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..6db7a8a126730005478e293a1c68acaf97cbf1c1
+GIT binary patch
+literal 10001
+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
+IGuQ9^1CVFG3;+NC
+
+literal 0
+HcmV?d00001
+
+diff --git a/research/integration/activation_hit_target_v1/launch.py b/research/integration/activation_hit_target_v1/launch.py
+new file mode 100644
+index 0000000..3858bd4
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/launch.py
+@@ -0,0 +1,17 @@
++"""Bounded foreground supervisor; records an actual wait status, never an inferred one."""
++import json,os,signal,subprocess,sys,time
++from pathlib import Path
++here=Path(__file__).resolve().parent
++out=Path(sys.argv[2]).resolve(); receipt=out.with_suffix('.execution.json')
++if out.exists() or receipt.exists(): raise SystemExit('REFUSE_CONSUMED_PATH')
++cmd=[sys.executable,'-B',str(here/'runner.py'),*sys.argv[1:]]
++start=time.monotonic_ns(); timed_out=False
++with out.with_suffix('.stdout').open('x') as stdout, out.with_suffix('.stderr').open('x') as stderr:
++    p=subprocess.Popen(cmd,stdout=stdout,stderr=stderr,start_new_session=True)
++    try: code=p.wait(timeout=35)
++    except subprocess.TimeoutExpired:
++        timed_out=True; os.killpg(p.pid,signal.SIGTERM)
++        try: code=p.wait(timeout=3)
++        except subprocess.TimeoutExpired: os.killpg(p.pid,signal.SIGKILL); code=p.wait(timeout=2)
++rec={'cmd':cmd,'child_pid':p.pid,'returncode':code,'timed_out':timed_out,'started_ns':start,'ended_ns':time.monotonic_ns()}
++receipt.write_text(json.dumps(rec,sort_keys=True)+'\n'); print(json.dumps(rec)); sys.exit(int(code!=0 or timed_out))
+diff --git a/research/integration/activation_hit_target_v1/load_backend.py b/research/integration/activation_hit_target_v1/load_backend.py
+new file mode 100644
+index 0000000..71b0fb5
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/load_backend.py
+@@ -0,0 +1,16 @@
++"""Load exact upstream bytes; omit only unused core-manifest import."""
++import ast
++import hashlib
++from pathlib import Path
++EXPECTED='9cae101a219348077668c8fc086acf8e13154afe'
++def load():
++    path=Path(__file__).with_name('backend.py'); data=path.read_bytes()
++    actual=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
++    if actual!=EXPECTED: raise RuntimeError('STOP_UPSTREAM_SOURCE_MISMATCH')
++    tree=ast.parse(data,filename=str(path))
++    removed=[n for n in tree.body if isinstance(n,ast.ImportFrom) and n.module=='runtime.core_v1.contract']
++    if len(removed)!=1: raise RuntimeError('unexpected import structure')
++    tree.body=[n for n in tree.body if n not in removed]
++    ns={'__name__':'isolated_backend','__file__':str(path)}
++    exec(compile(tree,str(path),'exec'),ns)
++    return ns['X11Backend']
+diff --git a/research/integration/activation_hit_target_v1/policy.py b/research/integration/activation_hit_target_v1/policy.py
+new file mode 100644
+index 0000000..81ff291
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/policy.py
+@@ -0,0 +1,16 @@
++"""Receipt-only recipe decisions; no scenario, outcome or fixture access."""
++POLICIES=('CLICK_THEN_TYPE','POST_FOCUS','HIT_AND_FOCUS','NO_TASK_INPUT')
++def decide(policy,phase,expected,receipt):
++    if policy not in POLICIES or phase not in ('click','type'): raise ValueError('unsupported decision')
++    keys={'session','target','surface','sequence','captured_ns','geometry','hit','focus'}
++    if type(receipt) is not dict or set(receipt)!=keys: return {'allow':False,'reason':'MALFORMED'}
++    if any(type(receipt[k]) is not int for k in ('target','surface','sequence','captured_ns')):
++        return {'allow':False,'reason':'MALFORMED'}
++    if any(receipt[k]!=expected[k] for k in ('session','target','surface','geometry')):
++        return {'allow':False,'reason':'BINDING_CHANGED'}
++    if policy=='NO_TASK_INPUT': return {'allow':False,'reason':'CONTROL'}
++    if phase=='click' and policy=='HIT_AND_FOCUS' and (type(receipt['hit']) is not int or receipt['hit']!=expected['target']):
++        return {'allow':False,'reason':'HIT_NOT_TARGET'}
++    if phase=='type' and policy in ('POST_FOCUS','HIT_AND_FOCUS') and (type(receipt['focus']) is not int or receipt['focus']!=expected['target']):
++        return {'allow':False,'reason':'FOCUS_NOT_TARGET'}
++    return {'allow':True,'reason':'RECIPE_ELIGIBLE'}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00.execution.json b/research/integration/activation_hit_target_v1/results/formal-batch-00.execution.json
+new file mode 100644
+index 0000000..7c2e410
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00.execution.json
+@@ -0,0 +1 @@
++{"child_pid": 1039, "cmd": ["/opt/pyvenv/bin/python", "-B", "/mnt/data/activation_occlusion_work/research/integration/activation_hit_target_v1/runner.py", "formal", "/mnt/data/activation_occlusion_work/research/integration/activation_hit_target_v1/results/formal-batch-00", "--batch", "0"], "ended_ns": 736439946626, "returncode": 0, "started_ns": 728308650164, "timed_out": false}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00.stderr b/research/integration/activation_hit_target_v1/results/formal-batch-00.stderr
+new file mode 100644
+index 0000000..e69de29
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00.stdout b/research/integration/activation_hit_target_v1/results/formal-batch-00.stdout
+new file mode 100644
+index 0000000..88e79b8
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00.stdout
+@@ -0,0 +1,9 @@
++{"index": 0, "execution": "COMPLETE", "values": {"a": "7", "b": "", "counter": 0}}
++{"index": 1, "execution": "COMPLETE", "values": {"a": "7", "b": "", "counter": 0}}
++{"index": 2, "execution": "COMPLETE", "values": {"a": "7", "b": "", "counter": 0}}
++{"index": 3, "execution": "COMPLETE", "values": {"a": "", "b": "7", "counter": 1}}
++{"index": 4, "execution": "COMPLETE", "values": {"a": "", "b": "", "counter": 1}}
++{"index": 5, "execution": "COMPLETE", "values": {"a": "", "b": "", "counter": 0}}
++{"index": 6, "execution": "COMPLETE", "values": {"a": "", "b": "7", "counter": 1}}
++{"index": 7, "execution": "COMPLETE", "values": {"a": "", "b": "", "counter": 1}}
++{"index": 8, "execution": "COMPLETE", "values": {"a": "", "b": "", "counter": 1}}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/END.json b/research/integration/activation_hit_target_v1/results/formal-batch-00/END.json
+new file mode 100644
+index 0000000..fcfb044
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/END.json
+@@ -0,0 +1 @@
++{"auth_removed": true, "batch": 0, "completed_cases": 9, "display": ":0", "error": null, "mode": "formal", "monotonic_ns": 736248041810, "results": [{"execution": "COMPLETE", "final": {"a": "7", "b": "", "captured_ns": 729466239599, "counter": 0, "cover_mapped": false, "events": 21, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}, "index": 0}, {"execution": "COMPLETE", "final": {"a": "7", "b": "", "captured_ns": 730329824093, "counter": 0, "cover_mapped": false, "events": 21, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}, "index": 1}, {"execution": "COMPLETE", "final": {"a": "7", "b": "", "captured_ns": 731147987021, "counter": 0, "cover_mapped": false, "events": 21, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}, "index": 2}, {"execution": "COMPLETE", "final": {"a": "", "b": "7", "captured_ns": 731974779626, "counter": 1, "cover_mapped": true, "events": 24, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097197, "hit_path": ".cover", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1086, "session": "fac89c6ffa41a8d63219b9a36fdbc51e"}, "index": 3}, {"execution": "COMPLETE", "final": {"a": "", "b": "", "captured_ns": 732792867518, "counter": 1, "cover_mapped": true, "events": 20, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097197, "hit_path": ".cover", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 1}, "pid": 1097, "session": "a164aee0f60400e132c6c53ac73ad29e"}, "index": 4}, {"execution": "COMPLETE", "final": {"a": "", "b": "", "captured_ns": 733615478788, "counter": 0, "cover_mapped": true, "events": 16, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097197, "hit_path": ".cover", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1108, "session": "a0a44d470728efa10fb6129df1ab2578"}, "index": 5}, {"execution": "COMPLETE", "final": {"a": "", "b": "7", "captured_ns": 734461313910, "counter": 1, "cover_mapped": true, "events": 24, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097197, "hit_path": ".cover", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1119, "session": "134f6c245494134f0acdc08959b83597"}, "index": 6}, {"execution": "COMPLETE", "final": {"a": "", "b": "", "captured_ns": 735256725053, "counter": 1, "cover_mapped": true, "events": 20, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097197, "hit_path": ".cover", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 1}, "pid": 1130, "session": "d58f2fac73f0a0d39ff7ba12702a4f7e"}, "index": 7}, {"execution": "COMPLETE", "final": {"a": "", "b": "", "captured_ns": 736061243998, "counter": 1, "cover_mapped": true, "events": 20, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097197, "hit_path": ".cover", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 1}, "pid": 1141, "session": "eb3367e905baf6230605a67d57a50604"}, "index": 8}], "server_command": ["Xvfb", "-displayfd", "4", "-screen", "0", "640x360x24", "-nolisten", "tcp", "-auth", "/tmp/ai-hit-rwr5f99m/Xauthority", "-noreset"], "server_exit": 0, "server_pid": 1049, "socket_removed": true}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/START.json b/research/integration/activation_hit_target_v1/results/formal-batch-00/START.json
+new file mode 100644
+index 0000000..15a5903
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/START.json
+@@ -0,0 +1 @@
++{"batch": 0, "mode": "formal", "monotonic_ns": 728782649296, "pid": 1039, "schedule": [{"index": 0, "policy": "CLICK_THEN_TYPE", "rep": 0, "scenario": "CLEAR"}, {"index": 1, "policy": "POST_FOCUS", "rep": 0, "scenario": "CLEAR"}, {"index": 2, "policy": "HIT_AND_FOCUS", "rep": 0, "scenario": "CLEAR"}, {"index": 3, "policy": "CLICK_THEN_TYPE", "rep": 0, "scenario": "COVER_BEFORE"}, {"index": 4, "policy": "POST_FOCUS", "rep": 0, "scenario": "COVER_BEFORE"}, {"index": 5, "policy": "HIT_AND_FOCUS", "rep": 0, "scenario": "COVER_BEFORE"}, {"index": 6, "policy": "CLICK_THEN_TYPE", "rep": 0, "scenario": "COVER_AFTER"}, {"index": 7, "policy": "POST_FOCUS", "rep": 0, "scenario": "COVER_AFTER"}, {"index": 8, "policy": "HIT_AND_FOCUS", "rep": 0, "scenario": "COVER_AFTER"}]}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/after.ximage.zlib b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/after.ximage.zlib
+new file mode 100644
+index 0000000000000000000000000000000000000000..c38a6733743258f406a7f1937a061f371a3cd857
+GIT binary patch
+literal 4898
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/app-events.jsonl b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/app-events.jsonl
+new file mode 100644
+index 0000000..fa7b7fd
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/app-events.jsonl
+@@ -0,0 +1,22 @@
++{"a": "", "b": "", "counter": 0, "event": "9", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 729353849426, "num": "??", "seq": 1, "server_time": "??", "session": "1ab323da8270ba1b4ad780831000072c", "widget": ".", "xid": 2097181}
++{"a": "", "b": "", "counter": 0, "event": "7", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 729354155757, "num": "??", "seq": 2, "server_time": "729353", "session": "1ab323da8270ba1b4ad780831000072c", "widget": ".", "xid": 2097181}
++{"a": "", "b": "", "counter": 0, "event": "10", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 729355984794, "num": "??", "seq": 3, "server_time": "??", "session": "1ab323da8270ba1b4ad780831000072c", "widget": ".", "xid": 2097181}
++{"a": "", "b": "", "counter": 0, "event": "9", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 729356167563, "num": "??", "seq": 4, "server_time": "??", "session": "1ab323da8270ba1b4ad780831000072c", "widget": ".b", "xid": 2097185}
++{"kind": "ready", "monotonic_ns": 729356698165, "seq": 5, "session": "1ab323da8270ba1b4ad780831000072c", "snapshot": {"a": "", "b": "", "captured_ns": 729356663454, "counter": 0, "cover_mapped": false, "events": 4, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}, "tk": "8.6.16"}
++{"kind": "rpc", "monotonic_ns": 729374926104, "request": {"id": 1, "op": "snapshot"}, "seq": 6, "session": "1ab323da8270ba1b4ad780831000072c"}
++{"a": "", "b": "", "counter": 0, "event": "8", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 729386601073, "num": "??", "seq": 7, "server_time": "729386", "session": "1ab323da8270ba1b4ad780831000072c", "widget": ".", "xid": 2097181}
++{"a": "", "b": "", "counter": 0, "event": "7", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 729386666159, "num": "??", "seq": 8, "server_time": "729386", "session": "1ab323da8270ba1b4ad780831000072c", "widget": ".a", "xid": 2097186}
++{"kind": "rpc", "monotonic_ns": 729386737234, "request": {"id": 2, "op": "snapshot"}, "seq": 9, "session": "1ab323da8270ba1b4ad780831000072c"}
++{"kind": "rpc", "monotonic_ns": 729398088487, "request": {"id": 3, "op": "snapshot"}, "seq": 10, "session": "1ab323da8270ba1b4ad780831000072c"}
++{"a": "", "b": "", "counter": 0, "event": "4", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 729421560185, "num": "1", "seq": 11, "server_time": "729421", "session": "1ab323da8270ba1b4ad780831000072c", "widget": ".a", "xid": 2097186}
++{"a": "", "b": "", "counter": 0, "event": "10", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 729421629307, "num": "??", "seq": 12, "server_time": "??", "session": "1ab323da8270ba1b4ad780831000072c", "widget": ".b", "xid": 2097185}
++{"a": "", "b": "", "counter": 0, "event": "9", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 729421673772, "num": "??", "seq": 13, "server_time": "??", "session": "1ab323da8270ba1b4ad780831000072c", "widget": ".a", "xid": 2097186}
++{"kind": "rpc", "monotonic_ns": 729421767861, "request": {"counts": {"4": 1}, "id": 4, "op": "wait"}, "seq": 14, "session": "1ab323da8270ba1b4ad780831000072c"}
++{"a": "", "b": "", "counter": 0, "event": "5", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 729432635010, "num": "1", "seq": 15, "server_time": "729432", "session": "1ab323da8270ba1b4ad780831000072c", "widget": ".a", "xid": 2097186}
++{"kind": "rpc", "monotonic_ns": 729432776458, "request": {"counts": {"5": 1}, "id": 5, "op": "wait"}, "seq": 16, "session": "1ab323da8270ba1b4ad780831000072c"}
++{"field": "a", "kind": "value", "monotonic_ns": 729444412600, "seq": 17, "session": "1ab323da8270ba1b4ad780831000072c", "value": "7"}
++{"a": "7", "b": "", "counter": 0, "event": "2", "keycode": "16", "keysym": "7", "kind": "native", "monotonic_ns": 729444597453, "num": "??", "seq": 18, "server_time": "729443", "session": "1ab323da8270ba1b4ad780831000072c", "widget": ".a", "xid": 2097186}
++{"kind": "rpc", "monotonic_ns": 729444753152, "request": {"counts": {"2": 1, "3": 1}, "id": 6, "op": "wait"}, "seq": 19, "session": "1ab323da8270ba1b4ad780831000072c"}
++{"a": "7", "b": "", "counter": 0, "event": "3", "keycode": "16", "keysym": "7", "kind": "native", "monotonic_ns": 729444829575, "num": "??", "seq": 20, "server_time": "729444", "session": "1ab323da8270ba1b4ad780831000072c", "widget": ".a", "xid": 2097186}
++{"kind": "rpc", "monotonic_ns": 729455844046, "request": {"id": 7, "op": "snapshot"}, "seq": 21, "session": "1ab323da8270ba1b4ad780831000072c"}
++{"kind": "rpc", "monotonic_ns": 729479679661, "request": {"id": 8, "op": "close"}, "seq": 22, "session": "1ab323da8270ba1b4ad780831000072c"}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/app-final.json b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/app-final.json
+new file mode 100644
+index 0000000..2141429
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/app-final.json
+@@ -0,0 +1 @@
++{"a": "7", "b": "", "captured_ns": 729490046242, "counter": 0, "cover_mapped": false, "events": 22, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/app.stderr b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/app.stderr
+new file mode 100644
+index 0000000..e69de29
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/app.stdin b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/app.stdin
+new file mode 100644
+index 0000000..004fea0
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/app.stdin
+@@ -0,0 +1,8 @@
++{"id": 1, "op": "snapshot"}
++{"id": 2, "op": "snapshot"}
++{"id": 3, "op": "snapshot"}
++{"id": 4, "op": "wait", "counts": {"4": 1}}
++{"id": 5, "op": "wait", "counts": {"5": 1}}
++{"id": 6, "op": "wait", "counts": {"2": 1, "3": 1}}
++{"id": 7, "op": "snapshot"}
++{"id": 8, "op": "close"}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/app.stdout b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/app.stdout
+new file mode 100644
+index 0000000..af5a14b
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/app.stdout
+@@ -0,0 +1,9 @@
++{"ready": {"a": "", "b": "", "captured_ns": 729356808668, "counter": 0, "cover_mapped": false, "events": 5, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}, "tk": "8.6.16"}
++{"id": 1, "snapshot": {"a": "", "b": "", "captured_ns": 729385352513, "counter": 0, "cover_mapped": false, "events": 6, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}}
++{"id": 2, "snapshot": {"a": "", "b": "", "captured_ns": 729397034353, "counter": 0, "cover_mapped": false, "events": 9, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}}
++{"id": 3, "snapshot": {"a": "", "b": "", "captured_ns": 729408405364, "counter": 0, "cover_mapped": false, "events": 10, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}}
++{"id": 4, "snapshot": {"a": "", "b": "", "captured_ns": 729432189013, "counter": 0, "cover_mapped": false, "events": 14, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 0}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}}
++{"id": 5, "snapshot": {"a": "", "b": "", "captured_ns": 729443173154, "counter": 0, "cover_mapped": false, "events": 16, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 1}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}}
++{"id": 6, "snapshot": {"a": "7", "b": "", "captured_ns": 729455231583, "counter": 0, "cover_mapped": false, "events": 20, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}}
++{"id": 7, "snapshot": {"a": "7", "b": "", "captured_ns": 729466239599, "counter": 0, "cover_mapped": false, "events": 21, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}}
++{"id": 8, "snapshot": {"a": "7", "b": "", "captured_ns": 729490046242, "counter": 0, "cover_mapped": false, "events": 22, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/before.ximage.zlib b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/before.ximage.zlib
+new file mode 100644
+index 0000000000000000000000000000000000000000..989e03601e09b487479570a777316758e51e26a0
+GIT binary patch
+literal 4485
+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
+Y!!x>fcvklp-`bfjA0&e+wBqCc0{z)?0{{R3
+
+literal 0
+HcmV?d00001
+
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/record.json b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/record.json
+new file mode 100644
+index 0000000..e2da6f4
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/record.json
+@@ -0,0 +1 @@
++{"after_capture": {"bits_per_pixel": 32, "byte_order": 0, "capture_ns": 729479277949, "depth": 24, "file": "after.ximage.zlib", "height": 360, "marker_xy": [505, 65], "masks": [16711680, 65280, 255], "sha256": "8b854598c345be0dfe2c1edbe5c5df34ae468b0e91f2d69fe0eb8997a7e84bb0", "size": 921600, "width": 640}, "after_click": {"a": "", "b": "", "captured_ns": 729443173154, "counter": 0, "cover_mapped": false, "events": 16, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 1}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}, "after_click_observer": {"button_mask": 0, "captured_ns": 729443736369, "chain": [{"child": 2097182, "mask": 0, "window": 543, "x": 160, "y": 80}, {"child": 2097181, "mask": 0, "window": 2097182, "x": 160, "y": 80}, {"child": 2097186, "mask": 0, "window": 2097181, "x": 160, "y": 80}, {"child": 0, "mask": 0, "window": 2097186, "x": 160, "y": 80}], "keymap": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "leaf": 2097186, "server_focus": 2097182}, "app_exit": 0, "app_stderr": "", "before_capture": {"bits_per_pixel": 32, "byte_order": 0, "capture_ns": 729421146751, "depth": 24, "file": "before.ximage.zlib", "height": 360, "marker_xy": [505, 65], "masks": [16711680, 65280, 255], "sha256": "2ef7c35331b669badbceca144c5aaaadbda19f55457e6fdf9e06efcd270d31b0", "size": 921600, "width": 640}, "before_click": {"a": "", "b": "", "captured_ns": 729408405364, "counter": 0, "cover_mapped": false, "events": 10, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}, "before_click_observer": {"button_mask": 0, "captured_ns": 729408779972, "chain": [{"child": 2097182, "mask": 0, "window": 543, "x": 160, "y": 80}, {"child": 2097181, "mask": 0, "window": 2097182, "x": 160, "y": 80}, {"child": 2097186, "mask": 0, "window": 2097181, "x": 160, "y": 80}, {"child": 0, "mask": 0, "window": 2097186, "x": 160, "y": 80}], "keymap": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "leaf": 2097186, "server_focus": 2097182}, "calls": [{"args": ["surface"], "emissions": 0, "ended_ns": 729374820995, "method": "focus", "returned": null, "started_ns": 729374285125}, {"args": ["a"], "emissions": 0, "ended_ns": 729386146849, "method": "geometry", "returned": {"height": 40, "width": 200, "x": 60, "y": 60}, "started_ns": 729385514407}, {"args": ["surface", "screen_physical_px", 160, 80], "emissions": 1, "ended_ns": 729386503064, "method": "pointer_move", "returned": null, "started_ns": 729386149824}, {"args": ["left", true], "emissions": 2, "ended_ns": 729421334778, "method": "pointer_button", "returned": null, "started_ns": 729421150116}, {"args": ["left", false], "emissions": 3, "ended_ns": 729432709796, "method": "pointer_button", "returned": null, "started_ns": 729432344637}, {"args": [["7"]], "emissions": 5, "ended_ns": 729444362752, "method": "key_chord", "returned": null, "started_ns": 729443851849}, {"args": [], "emissions": 5, "ended_ns": 729455749767, "method": "release_all", "returned": {"buttons_down": [], "keys_down": [], "monotonic_ns": 729455748315, "verified": true}, "started_ns": 729455508091}, {"args": ["a"], "emissions": 5, "ended_ns": 729479543911, "method": "geometry", "returned": {"height": 40, "width": 200, "x": 60, "y": 60}, "started_ns": 729479282266}], "cleanup_release": {"buttons_down": [], "keys_down": [], "monotonic_ns": 729667672120, "verified": true}, "close": {"a": "7", "b": "", "captured_ns": 729490046242, "counter": 0, "cover_mapped": false, "events": 22, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}, "config": {"index": 0, "policy": "CLICK_THEN_TYPE", "rep": 0, "scenario": "CLEAR"}, "decisions": [{"decided_ns": 729398027242, "expected": {"geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "session": "1ab323da8270ba1b4ad780831000072c", "surface": 2097182, "target": 2097186}, "phase": "click", "receipt": {"captured_ns": 729397034353, "focus": 2097185, "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "sequence": 1, "session": "1ab323da8270ba1b4ad780831000072c", "surface": 2097182, "target": 2097186}, "result": {"allow": true, "reason": "RECIPE_ELIGIBLE"}}, {"decided_ns": 729443849766, "expected": {"geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "session": "1ab323da8270ba1b4ad780831000072c", "surface": 2097182, "target": 2097186}, "phase": "type", "receipt": {"captured_ns": 729443173154, "focus": 2097186, "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "sequence": 2, "session": "1ab323da8270ba1b4ad780831000072c", "surface": 2097182, "target": 2097186}, "result": {"allow": true, "reason": "RECIPE_ELIGIBLE"}}], "elapsed_ns": 844854875, "execution": "COMPLETE", "final": {"a": "7", "b": "", "captured_ns": 729466239599, "counter": 0, "cover_mapped": false, "events": 21, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}, "final_observer": {"button_mask": 0, "captured_ns": 729466652068, "chain": [{"child": 2097182, "mask": 0, "window": 543, "x": 160, "y": 80}, {"child": 2097181, "mask": 0, "window": 2097182, "x": 160, "y": 80}, {"child": 2097186, "mask": 0, "window": 2097181, "x": 160, "y": 80}, {"child": 0, "mask": 0, "window": 2097186, "x": 160, "y": 80}], "keymap": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "leaf": 2097186, "server_focus": 2097182}, "geometry_after": {"height": 40, "width": 200, "x": 60, "y": 60}, "geometry_before": {"height": 40, "width": 200, "x": 60, "y": 60}, "initial": {"a": "", "b": "", "captured_ns": 729385352513, "counter": 0, "cover_mapped": false, "events": 6, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}, "observed_app_exit": 0, "pre": {"a": "", "b": "", "captured_ns": 729397034353, "counter": 0, "cover_mapped": false, "events": 9, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}, "pre_observer": {"button_mask": 0, "captured_ns": 729397753258, "chain": [{"child": 2097182, "mask": 0, "window": 543, "x": 160, "y": 80}, {"child": 2097181, "mask": 0, "window": 2097182, "x": 160, "y": 80}, {"child": 2097186, "mask": 0, "window": 2097181, "x": 160, "y": 80}, {"child": 0, "mask": 0, "window": 2097186, "x": 160, "y": 80}], "keymap": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "leaf": 2097186, "server_focus": 2097182}, "ready": {"ready": {"a": "", "b": "", "captured_ns": 729356808668, "counter": 0, "cover_mapped": false, "events": 5, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}, "tk": "8.6.16"}, "release": {"buttons_down": [], "keys_down": [], "monotonic_ns": 729455748315, "verified": true}, "rpcs": [{"received_ns": 729385510221, "request": {"id": 1, "op": "snapshot"}, "response": {"id": 1, "snapshot": {"a": "", "b": "", "captured_ns": 729385352513, "counter": 0, "cover_mapped": false, "events": 6, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}}, "sent_ns": 729374823919}, {"received_ns": 729397186743, "request": {"id": 2, "op": "snapshot"}, "response": {"id": 2, "snapshot": {"a": "", "b": "", "captured_ns": 729397034353, "counter": 0, "cover_mapped": false, "events": 9, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}}, "sent_ns": 729386505568}, {"received_ns": 729408530504, "request": {"id": 3, "op": "snapshot"}, "response": {"id": 3, "snapshot": {"a": "", "b": "", "captured_ns": 729408405364, "counter": 0, "cover_mapped": false, "events": 10, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}}, "sent_ns": 729398030066}, {"received_ns": 729432341433, "request": {"counts": {"4": 1}, "id": 4, "op": "wait"}, "response": {"id": 4, "snapshot": {"a": "", "b": "", "captured_ns": 729432189013, "counter": 0, "cover_mapped": false, "events": 14, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 0}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}}, "sent_ns": 729421338814}, {"received_ns": 729443362598, "request": {"counts": {"5": 1}, "id": 5, "op": "wait"}, "response": {"id": 5, "snapshot": {"a": "", "b": "", "captured_ns": 729443173154, "counter": 0, "cover_mapped": false, "events": 16, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 1}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}}, "sent_ns": 729432713281}, {"received_ns": 729455503534, "request": {"counts": {"2": 1, "3": 1}, "id": 6, "op": "wait"}, "response": {"id": 6, "snapshot": {"a": "7", "b": "", "captured_ns": 729455231583, "counter": 0, "cover_mapped": false, "events": 20, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}}, "sent_ns": 729444366408}, {"received_ns": 729466417922, "request": {"id": 7, "op": "snapshot"}, "response": {"id": 7, "snapshot": {"a": "7", "b": "", "captured_ns": 729466239599, "counter": 0, "cover_mapped": false, "events": 21, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}}, "sent_ns": 729455752992}, {"received_ns": 729490271434, "request": {"id": 8, "op": "close"}, "response": {"id": 8, "snapshot": {"a": "7", "b": "", "captured_ns": 729490046242, "counter": 0, "cover_mapped": false, "events": 22, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1052, "session": "1ab323da8270ba1b4ad780831000072c"}}, "sent_ns": 729479550551}], "session": "1ab323da8270ba1b4ad780831000072c", "stdout_tail": ""}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/tk-bindings.json b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/tk-bindings.json
+new file mode 100644
+index 0000000..b183225
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-00/tk-bindings.json
+@@ -0,0 +1 @@
++{"Button": {"<Button-1>": "\n    tk::ButtonDown %W\n", "<ButtonRelease-1>": "\n    tk::ButtonUp %W\n", "<KeyPress>": ""}, "Entry": {"<Button-1>": "\n    tk::EntryButton1 %W %x\n    %W selection clear\n", "<ButtonRelease-1>": "\n    tk::CancelRepeat\n", "<KeyPress>": "\n    tk::CancelRepeat\n    tk::EntryInsert %W %A\n"}}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/after.ximage.zlib b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/after.ximage.zlib
+new file mode 100644
+index 0000000000000000000000000000000000000000..c38a6733743258f406a7f1937a061f371a3cd857
+GIT binary patch
+literal 4898
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/app-events.jsonl b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/app-events.jsonl
+new file mode 100644
+index 0000000..3e68c5e
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/app-events.jsonl
+@@ -0,0 +1,22 @@
++{"a": "", "b": "", "counter": 0, "event": "9", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 730222137540, "num": "??", "seq": 1, "server_time": "??", "session": "c7dad66d230081e92d1f2a1bb425e6cf", "widget": ".", "xid": 2097181}
++{"a": "", "b": "", "counter": 0, "event": "7", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 730222344485, "num": "??", "seq": 2, "server_time": "730221", "session": "c7dad66d230081e92d1f2a1bb425e6cf", "widget": ".", "xid": 2097181}
++{"a": "", "b": "", "counter": 0, "event": "8", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 730222817091, "num": "??", "seq": 3, "server_time": "730222", "session": "c7dad66d230081e92d1f2a1bb425e6cf", "widget": ".", "xid": 2097181}
++{"a": "", "b": "", "counter": 0, "event": "7", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 730222869088, "num": "??", "seq": 4, "server_time": "730222", "session": "c7dad66d230081e92d1f2a1bb425e6cf", "widget": ".a", "xid": 2097186}
++{"a": "", "b": "", "counter": 0, "event": "10", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 730223323077, "num": "??", "seq": 5, "server_time": "??", "session": "c7dad66d230081e92d1f2a1bb425e6cf", "widget": ".", "xid": 2097181}
++{"a": "", "b": "", "counter": 0, "event": "9", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 730223380352, "num": "??", "seq": 6, "server_time": "??", "session": "c7dad66d230081e92d1f2a1bb425e6cf", "widget": ".b", "xid": 2097185}
++{"kind": "ready", "monotonic_ns": 730223802274, "seq": 7, "session": "c7dad66d230081e92d1f2a1bb425e6cf", "snapshot": {"a": "", "b": "", "captured_ns": 730223767152, "counter": 0, "cover_mapped": false, "events": 6, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}, "tk": "8.6.16"}
++{"kind": "rpc", "monotonic_ns": 730240427132, "request": {"id": 1, "op": "snapshot"}, "seq": 8, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}
++{"kind": "rpc", "monotonic_ns": 730251460196, "request": {"id": 2, "op": "snapshot"}, "seq": 9, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}
++{"kind": "rpc", "monotonic_ns": 730262346053, "request": {"id": 3, "op": "snapshot"}, "seq": 10, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}
++{"a": "", "b": "", "counter": 0, "event": "4", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 730286230904, "num": "1", "seq": 11, "server_time": "730285", "session": "c7dad66d230081e92d1f2a1bb425e6cf", "widget": ".a", "xid": 2097186}
++{"a": "", "b": "", "counter": 0, "event": "10", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 730286312835, "num": "??", "seq": 12, "server_time": "??", "session": "c7dad66d230081e92d1f2a1bb425e6cf", "widget": ".b", "xid": 2097185}
++{"a": "", "b": "", "counter": 0, "event": "9", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 730286358312, "num": "??", "seq": 13, "server_time": "??", "session": "c7dad66d230081e92d1f2a1bb425e6cf", "widget": ".a", "xid": 2097186}
++{"kind": "rpc", "monotonic_ns": 730286417799, "request": {"counts": {"4": 1}, "id": 4, "op": "wait"}, "seq": 14, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}
++{"a": "", "b": "", "counter": 0, "event": "5", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 730297196925, "num": "1", "seq": 15, "server_time": "730297", "session": "c7dad66d230081e92d1f2a1bb425e6cf", "widget": ".a", "xid": 2097186}
++{"kind": "rpc", "monotonic_ns": 730297258676, "request": {"counts": {"5": 1}, "id": 5, "op": "wait"}, "seq": 16, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}
++{"field": "a", "kind": "value", "monotonic_ns": 730308416715, "seq": 17, "session": "c7dad66d230081e92d1f2a1bb425e6cf", "value": "7"}
++{"a": "7", "b": "", "counter": 0, "event": "2", "keycode": "16", "keysym": "7", "kind": "native", "monotonic_ns": 730308548719, "num": "??", "seq": 18, "server_time": "730308", "session": "c7dad66d230081e92d1f2a1bb425e6cf", "widget": ".a", "xid": 2097186}
++{"kind": "rpc", "monotonic_ns": 730308629218, "request": {"counts": {"2": 1, "3": 1}, "id": 6, "op": "wait"}, "seq": 19, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}
++{"a": "7", "b": "", "counter": 0, "event": "3", "keycode": "16", "keysym": "7", "kind": "native", "monotonic_ns": 730308692932, "num": "??", "seq": 20, "server_time": "730308", "session": "c7dad66d230081e92d1f2a1bb425e6cf", "widget": ".a", "xid": 2097186}
++{"kind": "rpc", "monotonic_ns": 730319544870, "request": {"id": 7, "op": "snapshot"}, "seq": 21, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}
++{"kind": "rpc", "monotonic_ns": 730343277055, "request": {"id": 8, "op": "close"}, "seq": 22, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/app-final.json b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/app-final.json
+new file mode 100644
+index 0000000..e755c10
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/app-final.json
+@@ -0,0 +1 @@
++{"a": "7", "b": "", "captured_ns": 730353638831, "counter": 0, "cover_mapped": false, "events": 22, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/app.stderr b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/app.stderr
+new file mode 100644
+index 0000000..e69de29
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/app.stdin b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/app.stdin
+new file mode 100644
+index 0000000..004fea0
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/app.stdin
+@@ -0,0 +1,8 @@
++{"id": 1, "op": "snapshot"}
++{"id": 2, "op": "snapshot"}
++{"id": 3, "op": "snapshot"}
++{"id": 4, "op": "wait", "counts": {"4": 1}}
++{"id": 5, "op": "wait", "counts": {"5": 1}}
++{"id": 6, "op": "wait", "counts": {"2": 1, "3": 1}}
++{"id": 7, "op": "snapshot"}
++{"id": 8, "op": "close"}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/app.stdout b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/app.stdout
+new file mode 100644
+index 0000000..c6108ad
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/app.stdout
+@@ -0,0 +1,9 @@
++{"ready": {"a": "", "b": "", "captured_ns": 730223882001, "counter": 0, "cover_mapped": false, "events": 7, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}, "tk": "8.6.16"}
++{"id": 1, "snapshot": {"a": "", "b": "", "captured_ns": 730250871708, "counter": 0, "cover_mapped": false, "events": 8, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}}
++{"id": 2, "snapshot": {"a": "", "b": "", "captured_ns": 730261755302, "counter": 0, "cover_mapped": false, "events": 9, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}}
++{"id": 3, "snapshot": {"a": "", "b": "", "captured_ns": 730272615302, "counter": 0, "cover_mapped": false, "events": 10, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}}
++{"id": 4, "snapshot": {"a": "", "b": "", "captured_ns": 730296788242, "counter": 0, "cover_mapped": false, "events": 14, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 0}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}}
++{"id": 5, "snapshot": {"a": "", "b": "", "captured_ns": 730307528946, "counter": 0, "cover_mapped": false, "events": 16, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 1}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}}
++{"id": 6, "snapshot": {"a": "7", "b": "", "captured_ns": 730318920630, "counter": 0, "cover_mapped": false, "events": 20, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}}
++{"id": 7, "snapshot": {"a": "7", "b": "", "captured_ns": 730329824093, "counter": 0, "cover_mapped": false, "events": 21, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}}
++{"id": 8, "snapshot": {"a": "7", "b": "", "captured_ns": 730353638831, "counter": 0, "cover_mapped": false, "events": 22, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/before.ximage.zlib b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/before.ximage.zlib
+new file mode 100644
+index 0000000000000000000000000000000000000000..989e03601e09b487479570a777316758e51e26a0
+GIT binary patch
+literal 4485
+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
+Y!!x>fcvklp-`bfjA0&e+wBqCc0{z)?0{{R3
+
+literal 0
+HcmV?d00001
+
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/record.json b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/record.json
+new file mode 100644
+index 0000000..1d62943
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/record.json
+@@ -0,0 +1 @@
++{"after_capture": {"bits_per_pixel": 32, "byte_order": 0, "capture_ns": 730342685939, "depth": 24, "file": "after.ximage.zlib", "height": 360, "marker_xy": [505, 65], "masks": [16711680, 65280, 255], "sha256": "8b854598c345be0dfe2c1edbe5c5df34ae468b0e91f2d69fe0eb8997a7e84bb0", "size": 921600, "width": 640}, "after_click": {"a": "", "b": "", "captured_ns": 730307528946, "counter": 0, "cover_mapped": false, "events": 16, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 1}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}, "after_click_observer": {"button_mask": 0, "captured_ns": 730307947038, "chain": [{"child": 2097182, "mask": 0, "window": 543, "x": 160, "y": 80}, {"child": 2097181, "mask": 0, "window": 2097182, "x": 160, "y": 80}, {"child": 2097186, "mask": 0, "window": 2097181, "x": 160, "y": 80}, {"child": 0, "mask": 0, "window": 2097186, "x": 160, "y": 80}], "keymap": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "leaf": 2097186, "server_focus": 2097182}, "app_exit": 0, "app_stderr": "", "before_capture": {"bits_per_pixel": 32, "byte_order": 0, "capture_ns": 730285667414, "depth": 24, "file": "before.ximage.zlib", "height": 360, "marker_xy": [505, 65], "masks": [16711680, 65280, 255], "sha256": "2ef7c35331b669badbceca144c5aaaadbda19f55457e6fdf9e06efcd270d31b0", "size": 921600, "width": 640}, "before_click": {"a": "", "b": "", "captured_ns": 730272615302, "counter": 0, "cover_mapped": false, "events": 10, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}, "before_click_observer": {"button_mask": 0, "captured_ns": 730272943426, "chain": [{"child": 2097182, "mask": 0, "window": 543, "x": 160, "y": 80}, {"child": 2097181, "mask": 0, "window": 2097182, "x": 160, "y": 80}, {"child": 2097186, "mask": 0, "window": 2097181, "x": 160, "y": 80}, {"child": 0, "mask": 0, "window": 2097186, "x": 160, "y": 80}], "keymap": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "leaf": 2097186, "server_focus": 2097182}, "calls": [{"args": ["surface"], "emissions": 0, "ended_ns": 730240325633, "method": "focus", "returned": null, "started_ns": 730240130755}, {"args": ["a"], "emissions": 0, "ended_ns": 730251297576, "method": "geometry", "returned": {"height": 40, "width": 200, "x": 60, "y": 60}, "started_ns": 730251146574}, {"args": ["surface", "screen_physical_px", 160, 80], "emissions": 1, "ended_ns": 730251401870, "method": "pointer_move", "returned": null, "started_ns": 730251301151}, {"args": ["left", true], "emissions": 2, "ended_ns": 730285960215, "method": "pointer_button", "returned": null, "started_ns": 730285773370}, {"args": ["left", false], "emissions": 3, "ended_ns": 730297076292, "method": "pointer_button", "returned": null, "started_ns": 730296948875}, {"args": [["7"]], "emissions": 5, "ended_ns": 730308314369, "method": "key_chord", "returned": null, "started_ns": 730308082888}, {"args": [], "emissions": 5, "ended_ns": 730319468312, "method": "release_all", "returned": {"buttons_down": [], "keys_down": [], "monotonic_ns": 730319466199, "verified": true}, "started_ns": 730319084527}, {"args": ["a"], "emissions": 5, "ended_ns": 730343027313, "method": "geometry", "returned": {"height": 40, "width": 200, "x": 60, "y": 60}, "started_ns": 730342755442}], "cleanup_release": {"buttons_down": [], "keys_down": [], "monotonic_ns": 730493030082, "verified": true}, "close": {"a": "7", "b": "", "captured_ns": 730353638831, "counter": 0, "cover_mapped": false, "events": 22, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}, "config": {"index": 1, "policy": "POST_FOCUS", "rep": 0, "scenario": "CLEAR"}, "decisions": [{"decided_ns": 730262286696, "expected": {"geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "session": "c7dad66d230081e92d1f2a1bb425e6cf", "surface": 2097182, "target": 2097186}, "phase": "click", "receipt": {"captured_ns": 730261755302, "focus": 2097185, "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "sequence": 1, "session": "c7dad66d230081e92d1f2a1bb425e6cf", "surface": 2097182, "target": 2097186}, "result": {"allow": true, "reason": "RECIPE_ELIGIBLE"}}, {"decided_ns": 730308081246, "expected": {"geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "session": "c7dad66d230081e92d1f2a1bb425e6cf", "surface": 2097182, "target": 2097186}, "phase": "type", "receipt": {"captured_ns": 730307528946, "focus": 2097186, "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "sequence": 2, "session": "c7dad66d230081e92d1f2a1bb425e6cf", "surface": 2097182, "target": 2097186}, "result": {"allow": true, "reason": "RECIPE_ELIGIBLE"}}], "elapsed_ns": 824075922, "execution": "COMPLETE", "final": {"a": "7", "b": "", "captured_ns": 730329824093, "counter": 0, "cover_mapped": false, "events": 21, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}, "final_observer": {"button_mask": 0, "captured_ns": 730330239811, "chain": [{"child": 2097182, "mask": 0, "window": 543, "x": 160, "y": 80}, {"child": 2097181, "mask": 0, "window": 2097182, "x": 160, "y": 80}, {"child": 2097186, "mask": 0, "window": 2097181, "x": 160, "y": 80}, {"child": 0, "mask": 0, "window": 2097186, "x": 160, "y": 80}], "keymap": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "leaf": 2097186, "server_focus": 2097182}, "geometry_after": {"height": 40, "width": 200, "x": 60, "y": 60}, "geometry_before": {"height": 40, "width": 200, "x": 60, "y": 60}, "initial": {"a": "", "b": "", "captured_ns": 730250871708, "counter": 0, "cover_mapped": false, "events": 8, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}, "observed_app_exit": 0, "pre": {"a": "", "b": "", "captured_ns": 730261755302, "counter": 0, "cover_mapped": false, "events": 9, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}, "pre_observer": {"button_mask": 0, "captured_ns": 730262123365, "chain": [{"child": 2097182, "mask": 0, "window": 543, "x": 160, "y": 80}, {"child": 2097181, "mask": 0, "window": 2097182, "x": 160, "y": 80}, {"child": 2097186, "mask": 0, "window": 2097181, "x": 160, "y": 80}, {"child": 0, "mask": 0, "window": 2097186, "x": 160, "y": 80}], "keymap": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "leaf": 2097186, "server_focus": 2097182}, "ready": {"ready": {"a": "", "b": "", "captured_ns": 730223882001, "counter": 0, "cover_mapped": false, "events": 7, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}, "tk": "8.6.16"}, "release": {"buttons_down": [], "keys_down": [], "monotonic_ns": 730319466199, "verified": true}, "rpcs": [{"received_ns": 730251142197, "request": {"id": 1, "op": "snapshot"}, "response": {"id": 1, "snapshot": {"a": "", "b": "", "captured_ns": 730250871708, "counter": 0, "cover_mapped": false, "events": 8, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}}, "sent_ns": 730240329138}, {"received_ns": 730261889390, "request": {"id": 2, "op": "snapshot"}, "response": {"id": 2, "snapshot": {"a": "", "b": "", "captured_ns": 730261755302, "counter": 0, "cover_mapped": false, "events": 9, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}}, "sent_ns": 730251404223}, {"received_ns": 730272742931, "request": {"id": 3, "op": "snapshot"}, "response": {"id": 3, "snapshot": {"a": "", "b": "", "captured_ns": 730272615302, "counter": 0, "cover_mapped": false, "events": 10, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}}, "sent_ns": 730262289160}, {"received_ns": 730296945439, "request": {"counts": {"4": 1}, "id": 4, "op": "wait"}, "response": {"id": 4, "snapshot": {"a": "", "b": "", "captured_ns": 730296788242, "counter": 0, "cover_mapped": false, "events": 14, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 0}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}}, "sent_ns": 730285965633}, {"received_ns": 730307672052, "request": {"counts": {"5": 1}, "id": 5, "op": "wait"}, "response": {"id": 5, "snapshot": {"a": "", "b": "", "captured_ns": 730307528946, "counter": 0, "cover_mapped": false, "events": 16, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 1}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}}, "sent_ns": 730297079507}, {"received_ns": 730319081172, "request": {"counts": {"2": 1, "3": 1}, "id": 6, "op": "wait"}, "response": {"id": 6, "snapshot": {"a": "7", "b": "", "captured_ns": 730318920630, "counter": 0, "cover_mapped": false, "events": 20, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}}, "sent_ns": 730308317834}, {"received_ns": 730329953840, "request": {"id": 7, "op": "snapshot"}, "response": {"id": 7, "snapshot": {"a": "7", "b": "", "captured_ns": 730329824093, "counter": 0, "cover_mapped": false, "events": 21, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}}, "sent_ns": 730319471126}, {"received_ns": 730353809978, "request": {"id": 8, "op": "close"}, "response": {"id": 8, "snapshot": {"a": "7", "b": "", "captured_ns": 730353638831, "counter": 0, "cover_mapped": false, "events": 22, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1064, "session": "c7dad66d230081e92d1f2a1bb425e6cf"}}, "sent_ns": 730343038619}], "session": "c7dad66d230081e92d1f2a1bb425e6cf", "stdout_tail": ""}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/tk-bindings.json b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/tk-bindings.json
+new file mode 100644
+index 0000000..b183225
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-01/tk-bindings.json
+@@ -0,0 +1 @@
++{"Button": {"<Button-1>": "\n    tk::ButtonDown %W\n", "<ButtonRelease-1>": "\n    tk::ButtonUp %W\n", "<KeyPress>": ""}, "Entry": {"<Button-1>": "\n    tk::EntryButton1 %W %x\n    %W selection clear\n", "<ButtonRelease-1>": "\n    tk::CancelRepeat\n", "<KeyPress>": "\n    tk::CancelRepeat\n    tk::EntryInsert %W %A\n"}}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/after.ximage.zlib b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/after.ximage.zlib
+new file mode 100644
+index 0000000000000000000000000000000000000000..c38a6733743258f406a7f1937a061f371a3cd857
+GIT binary patch
+literal 4898
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/app-events.jsonl b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/app-events.jsonl
+new file mode 100644
+index 0000000..f9a05f5
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/app-events.jsonl
+@@ -0,0 +1,22 @@
++{"a": "", "b": "", "counter": 0, "event": "9", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 731045171058, "num": "??", "seq": 1, "server_time": "??", "session": "9f30f3e8537dd4bc9f6c5756af59185c", "widget": ".", "xid": 2097181}
++{"a": "", "b": "", "counter": 0, "event": "7", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 731045430861, "num": "??", "seq": 2, "server_time": "731044", "session": "9f30f3e8537dd4bc9f6c5756af59185c", "widget": ".", "xid": 2097181}
++{"a": "", "b": "", "counter": 0, "event": "8", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 731045879302, "num": "??", "seq": 3, "server_time": "731045", "session": "9f30f3e8537dd4bc9f6c5756af59185c", "widget": ".", "xid": 2097181}
++{"a": "", "b": "", "counter": 0, "event": "7", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 731045929035, "num": "??", "seq": 4, "server_time": "731045", "session": "9f30f3e8537dd4bc9f6c5756af59185c", "widget": ".a", "xid": 2097186}
++{"a": "", "b": "", "counter": 0, "event": "10", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 731046314664, "num": "??", "seq": 5, "server_time": "??", "session": "9f30f3e8537dd4bc9f6c5756af59185c", "widget": ".", "xid": 2097181}
++{"a": "", "b": "", "counter": 0, "event": "9", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 731046369074, "num": "??", "seq": 6, "server_time": "??", "session": "9f30f3e8537dd4bc9f6c5756af59185c", "widget": ".b", "xid": 2097185}
++{"kind": "ready", "monotonic_ns": 731046787200, "seq": 7, "session": "9f30f3e8537dd4bc9f6c5756af59185c", "snapshot": {"a": "", "b": "", "captured_ns": 731046751518, "counter": 0, "cover_mapped": false, "events": 6, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}, "tk": "8.6.16"}
++{"kind": "rpc", "monotonic_ns": 731058078706, "request": {"id": 1, "op": "snapshot"}, "seq": 8, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}
++{"kind": "rpc", "monotonic_ns": 731069078011, "request": {"id": 2, "op": "snapshot"}, "seq": 9, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}
++{"kind": "rpc", "monotonic_ns": 731079985841, "request": {"id": 3, "op": "snapshot"}, "seq": 10, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}
++{"a": "", "b": "", "counter": 0, "event": "4", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 731103530890, "num": "1", "seq": 11, "server_time": "731103", "session": "9f30f3e8537dd4bc9f6c5756af59185c", "widget": ".a", "xid": 2097186}
++{"a": "", "b": "", "counter": 0, "event": "10", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 731103599081, "num": "??", "seq": 12, "server_time": "??", "session": "9f30f3e8537dd4bc9f6c5756af59185c", "widget": ".b", "xid": 2097185}
++{"a": "", "b": "", "counter": 0, "event": "9", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 731103642745, "num": "??", "seq": 13, "server_time": "??", "session": "9f30f3e8537dd4bc9f6c5756af59185c", "widget": ".a", "xid": 2097186}
++{"kind": "rpc", "monotonic_ns": 731103750434, "request": {"counts": {"4": 1}, "id": 4, "op": "wait"}, "seq": 14, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}
++{"a": "", "b": "", "counter": 0, "event": "5", "keycode": "??", "keysym": "??", "kind": "native", "monotonic_ns": 731114693441, "num": "1", "seq": 15, "server_time": "731114", "session": "9f30f3e8537dd4bc9f6c5756af59185c", "widget": ".a", "xid": 2097186}
++{"kind": "rpc", "monotonic_ns": 731114786688, "request": {"counts": {"5": 1}, "id": 5, "op": "wait"}, "seq": 16, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}
++{"field": "a", "kind": "value", "monotonic_ns": 731125902725, "seq": 17, "session": "9f30f3e8537dd4bc9f6c5756af59185c", "value": "7"}
++{"a": "7", "b": "", "counter": 0, "event": "2", "keycode": "16", "keysym": "7", "kind": "native", "monotonic_ns": 731126034248, "num": "??", "seq": 18, "server_time": "731125", "session": "9f30f3e8537dd4bc9f6c5756af59185c", "widget": ".a", "xid": 2097186}
++{"a": "7", "b": "", "counter": 0, "event": "3", "keycode": "16", "keysym": "7", "kind": "native", "monotonic_ns": 731126125363, "num": "??", "seq": 19, "server_time": "731125", "session": "9f30f3e8537dd4bc9f6c5756af59185c", "widget": ".a", "xid": 2097186}
++{"kind": "rpc", "monotonic_ns": 731126237378, "request": {"counts": {"2": 1, "3": 1}, "id": 6, "op": "wait"}, "seq": 20, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}
++{"kind": "rpc", "monotonic_ns": 731137527842, "request": {"id": 7, "op": "snapshot"}, "seq": 21, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}
++{"kind": "rpc", "monotonic_ns": 731160312691, "request": {"id": 8, "op": "close"}, "seq": 22, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/app-final.json b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/app-final.json
+new file mode 100644
+index 0000000..f6c1248
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/app-final.json
+@@ -0,0 +1 @@
++{"a": "7", "b": "", "captured_ns": 731170676579, "counter": 0, "cover_mapped": false, "events": 22, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/app.stderr b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/app.stderr
+new file mode 100644
+index 0000000..e69de29
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/app.stdin b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/app.stdin
+new file mode 100644
+index 0000000..004fea0
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/app.stdin
+@@ -0,0 +1,8 @@
++{"id": 1, "op": "snapshot"}
++{"id": 2, "op": "snapshot"}
++{"id": 3, "op": "snapshot"}
++{"id": 4, "op": "wait", "counts": {"4": 1}}
++{"id": 5, "op": "wait", "counts": {"5": 1}}
++{"id": 6, "op": "wait", "counts": {"2": 1, "3": 1}}
++{"id": 7, "op": "snapshot"}
++{"id": 8, "op": "close"}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/app.stdout b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/app.stdout
+new file mode 100644
+index 0000000..c1dc400
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/app.stdout
+@@ -0,0 +1,9 @@
++{"ready": {"a": "", "b": "", "captured_ns": 731046875691, "counter": 0, "cover_mapped": false, "events": 7, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}, "tk": "8.6.16"}
++{"id": 1, "snapshot": {"a": "", "b": "", "captured_ns": 731068535210, "counter": 0, "cover_mapped": false, "events": 8, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}}
++{"id": 2, "snapshot": {"a": "", "b": "", "captured_ns": 731079410232, "counter": 0, "cover_mapped": false, "events": 9, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}}
++{"id": 3, "snapshot": {"a": "", "b": "", "captured_ns": 731090327817, "counter": 0, "cover_mapped": false, "events": 10, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}}
++{"id": 4, "snapshot": {"a": "", "b": "", "captured_ns": 731114036948, "counter": 0, "cover_mapped": false, "events": 14, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 0}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}}
++{"id": 5, "snapshot": {"a": "", "b": "", "captured_ns": 731125050438, "counter": 0, "cover_mapped": false, "events": 16, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 1}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}}
++{"id": 6, "snapshot": {"a": "7", "b": "", "captured_ns": 731136812888, "counter": 0, "cover_mapped": false, "events": 20, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}}
++{"id": 7, "snapshot": {"a": "7", "b": "", "captured_ns": 731147987021, "counter": 0, "cover_mapped": false, "events": 21, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}}
++{"id": 8, "snapshot": {"a": "7", "b": "", "captured_ns": 731170676579, "counter": 0, "cover_mapped": false, "events": 22, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/before.ximage.zlib b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/before.ximage.zlib
+new file mode 100644
+index 0000000000000000000000000000000000000000..989e03601e09b487479570a777316758e51e26a0
+GIT binary patch
+literal 4485
+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
+Y!!x>fcvklp-`bfjA0&e+wBqCc0{z)?0{{R3
+
+literal 0
+HcmV?d00001
+
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/record.json b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/record.json
+new file mode 100644
+index 0000000..a5f8bc3
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/record.json
+@@ -0,0 +1 @@
++{"after_capture": {"bits_per_pixel": 32, "byte_order": 0, "capture_ns": 731159823200, "depth": 24, "file": "after.ximage.zlib", "height": 360, "marker_xy": [505, 65], "masks": [16711680, 65280, 255], "sha256": "8b854598c345be0dfe2c1edbe5c5df34ae468b0e91f2d69fe0eb8997a7e84bb0", "size": 921600, "width": 640}, "after_click": {"a": "", "b": "", "captured_ns": 731125050438, "counter": 0, "cover_mapped": false, "events": 16, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 1}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}, "after_click_observer": {"button_mask": 0, "captured_ns": 731125456657, "chain": [{"child": 2097182, "mask": 0, "window": 543, "x": 160, "y": 80}, {"child": 2097181, "mask": 0, "window": 2097182, "x": 160, "y": 80}, {"child": 2097186, "mask": 0, "window": 2097181, "x": 160, "y": 80}, {"child": 0, "mask": 0, "window": 2097186, "x": 160, "y": 80}], "keymap": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "leaf": 2097186, "server_focus": 2097182}, "app_exit": 0, "app_stderr": "", "before_capture": {"bits_per_pixel": 32, "byte_order": 0, "capture_ns": 731103071658, "depth": 24, "file": "before.ximage.zlib", "height": 360, "marker_xy": [505, 65], "masks": [16711680, 65280, 255], "sha256": "2ef7c35331b669badbceca144c5aaaadbda19f55457e6fdf9e06efcd270d31b0", "size": 921600, "width": 640}, "before_click": {"a": "", "b": "", "captured_ns": 731090327817, "counter": 0, "cover_mapped": false, "events": 10, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}, "before_click_observer": {"button_mask": 0, "captured_ns": 731090694362, "chain": [{"child": 2097182, "mask": 0, "window": 543, "x": 160, "y": 80}, {"child": 2097181, "mask": 0, "window": 2097182, "x": 160, "y": 80}, {"child": 2097186, "mask": 0, "window": 2097181, "x": 160, "y": 80}, {"child": 0, "mask": 0, "window": 2097186, "x": 160, "y": 80}], "keymap": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "leaf": 2097186, "server_focus": 2097182}, "calls": [{"args": ["surface"], "emissions": 0, "ended_ns": 731057890444, "method": "focus", "returned": null, "started_ns": 731057729737}, {"args": ["a"], "emissions": 0, "ended_ns": 731068866854, "method": "geometry", "returned": {"height": 40, "width": 200, "x": 60, "y": 60}, "started_ns": 731068726507}, {"args": ["surface", "screen_physical_px", 160, 80], "emissions": 1, "ended_ns": 731068968224, "method": "pointer_move", "returned": null, "started_ns": 731068869298}, {"args": ["left", true], "emissions": 2, "ended_ns": 731103257733, "method": "pointer_button", "returned": null, "started_ns": 731103075274}, {"args": ["left", false], "emissions": 3, "ended_ns": 731114571501, "method": "pointer_button", "returned": null, "started_ns": 731114256317}, {"args": [["7"]], "emissions": 5, "ended_ns": 731125746985, "method": "key_chord", "returned": null, "started_ns": 731125581011}, {"args": [], "emissions": 5, "ended_ns": 731137387365, "method": "release_all", "returned": {"buttons_down": [], "keys_down": [], "monotonic_ns": 731137385433, "verified": true}, "started_ns": 731137082506}, {"args": ["a"], "emissions": 5, "ended_ns": 731160135881, "method": "geometry", "returned": {"height": 40, "width": 200, "x": 60, "y": 60}, "started_ns": 731159934354}], "cleanup_release": {"buttons_down": [], "keys_down": [], "monotonic_ns": 731339595786, "verified": true}, "close": {"a": "7", "b": "", "captured_ns": 731170676579, "counter": 0, "cover_mapped": false, "events": 22, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}, "config": {"index": 2, "policy": "HIT_AND_FOCUS", "rep": 0, "scenario": "CLEAR"}, "decisions": [{"decided_ns": 731079882939, "expected": {"geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "session": "9f30f3e8537dd4bc9f6c5756af59185c", "surface": 2097182, "target": 2097186}, "phase": "click", "receipt": {"captured_ns": 731079410232, "focus": 2097185, "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "sequence": 1, "session": "9f30f3e8537dd4bc9f6c5756af59185c", "surface": 2097182, "target": 2097186}, "result": {"allow": true, "reason": "RECIPE_ELIGIBLE"}}, {"decided_ns": 731125579438, "expected": {"geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "session": "9f30f3e8537dd4bc9f6c5756af59185c", "surface": 2097182, "target": 2097186}, "phase": "type", "receipt": {"captured_ns": 731125050438, "focus": 2097186, "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "sequence": 2, "session": "9f30f3e8537dd4bc9f6c5756af59185c", "surface": 2097182, "target": 2097186}, "result": {"allow": true, "reason": "RECIPE_ELIGIBLE"}}], "elapsed_ns": 845330943, "execution": "COMPLETE", "final": {"a": "7", "b": "", "captured_ns": 731147987021, "counter": 0, "cover_mapped": false, "events": 21, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}, "final_observer": {"button_mask": 0, "captured_ns": 731148614096, "chain": [{"child": 2097182, "mask": 0, "window": 543, "x": 160, "y": 80}, {"child": 2097181, "mask": 0, "window": 2097182, "x": 160, "y": 80}, {"child": 2097186, "mask": 0, "window": 2097181, "x": 160, "y": 80}, {"child": 0, "mask": 0, "window": 2097186, "x": 160, "y": 80}], "keymap": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "leaf": 2097186, "server_focus": 2097182}, "geometry_after": {"height": 40, "width": 200, "x": 60, "y": 60}, "geometry_before": {"height": 40, "width": 200, "x": 60, "y": 60}, "initial": {"a": "", "b": "", "captured_ns": 731068535210, "counter": 0, "cover_mapped": false, "events": 8, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}, "observed_app_exit": 0, "pre": {"a": "", "b": "", "captured_ns": 731079410232, "counter": 0, "cover_mapped": false, "events": 9, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}, "pre_observer": {"button_mask": 0, "captured_ns": 731079792515, "chain": [{"child": 2097182, "mask": 0, "window": 543, "x": 160, "y": 80}, {"child": 2097181, "mask": 0, "window": 2097182, "x": 160, "y": 80}, {"child": 2097186, "mask": 0, "window": 2097181, "x": 160, "y": 80}, {"child": 0, "mask": 0, "window": 2097186, "x": 160, "y": 80}], "keymap": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "leaf": 2097186, "server_focus": 2097182}, "ready": {"ready": {"a": "", "b": "", "captured_ns": 731046875691, "counter": 0, "cover_mapped": false, "events": 7, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}, "tk": "8.6.16"}, "release": {"buttons_down": [], "keys_down": [], "monotonic_ns": 731137385433, "verified": true}, "rpcs": [{"received_ns": 731068721770, "request": {"id": 1, "op": "snapshot"}, "response": {"id": 1, "snapshot": {"a": "", "b": "", "captured_ns": 731068535210, "counter": 0, "cover_mapped": false, "events": 8, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}}, "sent_ns": 731057894289}, {"received_ns": 731079561154, "request": {"id": 2, "op": "snapshot"}, "response": {"id": 2, "snapshot": {"a": "", "b": "", "captured_ns": 731079410232, "counter": 0, "cover_mapped": false, "events": 9, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}}, "sent_ns": 731068970467}, {"received_ns": 731090473406, "request": {"id": 3, "op": "snapshot"}, "response": {"id": 3, "snapshot": {"a": "", "b": "", "captured_ns": 731090327817, "counter": 0, "cover_mapped": false, "events": 10, "focus": 2097185, "focus_path": ".b", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 0, "5": 0}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}}, "sent_ns": 731079885472}, {"received_ns": 731114253512, "request": {"counts": {"4": 1}, "id": 4, "op": "wait"}, "response": {"id": 4, "snapshot": {"a": "", "b": "", "captured_ns": 731114036948, "counter": 0, "cover_mapped": false, "events": 14, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 0}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}}, "sent_ns": 731103262099}, {"received_ns": 731125214470, "request": {"counts": {"5": 1}, "id": 5, "op": "wait"}, "response": {"id": 5, "snapshot": {"a": "", "b": "", "captured_ns": 731125050438, "counter": 0, "cover_mapped": false, "events": 16, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 0, "3": 0, "4": 1, "5": 1}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}}, "sent_ns": 731114576138}, {"received_ns": 731137077719, "request": {"counts": {"2": 1, "3": 1}, "id": 6, "op": "wait"}, "response": {"id": 6, "snapshot": {"a": "7", "b": "", "captured_ns": 731136812888, "counter": 0, "cover_mapped": false, "events": 20, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}}, "sent_ns": 731125751302}, {"received_ns": 731148327123, "request": {"id": 7, "op": "snapshot"}, "response": {"id": 7, "snapshot": {"a": "7", "b": "", "captured_ns": 731147987021, "counter": 0, "cover_mapped": false, "events": 21, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}}, "sent_ns": 731137391291}, {"received_ns": 731170838799, "request": {"id": 8, "op": "close"}, "response": {"id": 8, "snapshot": {"a": "7", "b": "", "captured_ns": 731170676579, "counter": 0, "cover_mapped": false, "events": 22, "focus": 2097186, "focus_path": ".a", "geometry": {"height": 40, "width": 200, "x": 60, "y": 60}, "hit": 2097186, "hit_path": ".a", "ids": {"a": 2097186, "b": 2097185, "cover": 2097197, "root": 2097181}, "marker_xy": [505, 65], "native_counts": {"2": 1, "3": 1, "4": 1, "5": 1}, "pid": 1075, "session": "9f30f3e8537dd4bc9f6c5756af59185c"}}, "sent_ns": 731160142300}], "session": "9f30f3e8537dd4bc9f6c5756af59185c", "stdout_tail": ""}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/tk-bindings.json b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/tk-bindings.json
+new file mode 100644
+index 0000000..b183225
+--- /dev/null
++++ b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-02/tk-bindings.json
+@@ -0,0 +1 @@
++{"Button": {"<Button-1>": "\n    tk::ButtonDown %W\n", "<ButtonRelease-1>": "\n    tk::ButtonUp %W\n", "<KeyPress>": ""}, "Entry": {"<Button-1>": "\n    tk::EntryButton1 %W %x\n    %W selection clear\n", "<ButtonRelease-1>": "\n    tk::CancelRepeat\n", "<KeyPress>": "\n    tk::CancelRepeat\n    tk::EntryInsert %W %A\n"}}
+diff --git a/research/integration/activation_hit_target_v1/results/formal-batch-00/case-03/after.ximage.zlib b/research/integration/activation_hit_target_v1/results/formal-batch-00/case-03/after.ximage.zlib
+new file mode 100644
+index 0000000000000000000000000000000000000000..6c7932d46709073cb71c332ead4d05f2276508fe
+GIT binary patch
+literal 5925
+zcmeHLdsI_*p2xaVPHUCj?d)QUn%S`{DnhgfC<xbCN3GKe9o>qG5ET(Dh6o5D<Z-pO
+zIzCxfLqx#%rWPRzLI`>JjuId|)Bt%27z5@d3FMO8+<W&Iq1Dcrojs?gXa4ByIr-=Q
+z&b|44f8X!-^Z5P>%B;FcSM_;pMfU7VpPvo=^`Who>c0BJKfd+u%-_%dP0reH*NfK8
+z{!QTCf1Z|eBIE4`UBCU0hK0Mo$u9jY%ozXH@umN;cTUf5t7cDlYtcuWW(At=USFJ+
+zZW0b{Gd;lxNEXXtdnEdYA<j*Ot%Gq(;tXY-eRC^6`R|Wb{XD-%SS)I(_47+!e!T{n
+z==bfV_1)+Mzej7XS};GqFXyatas2%1ejUPu{Pt`-#Fdi#mWJMI(g*mRE#8`D_xJn!
+z(_iXm>StFf&b(FpZ|KlFl3b0pfq0jTp$wrfBdeQoH&H00`Cp>}jio4g1xP_=hlogF
+zS|grP12^s33)aiV*Zc5&y;`^p)4~ft`Y7)sr1wntKAQ<Y{6~=D(+$MtMF?p(giwxv
+ze5&ta{&z&gSyV)91v!_`vO!Z@F@K#33%mg85|K^Z+GT?VI5zoIPz1q2G+=)&@jE1!
+zxHsDumKL602Daw^q^-B5$%#na?#^IDLzCO9ukwr9dw&#YBkGi{6>4*o)ta5PEk(8R
+zV^HFcf)R)zLrh-t0>!3hcv9pWr@E-N$pa~@?3NsK=e1jJ%Tsb&A`Ds%Y9%$IHnEU2
+znwe72`^}JII$irKJ43}xnQO0gKQDz`Hzx+{{6e3vPNrM0Ia^~4wYbMDkKS_oYgj`S
+z>TE2_b%kDjRTcHf5tm;opf;VHL*zU=zB1+GVWgn#cmCL&n><w<YB}+|xg?k2{!pnd
+z?Amf5+2c@>1u6PCx=rguiFS+m)Dngxvs^_O$*{W*N8mK+$P*^pE=6QU6GXTl?Ij_%
+zCy|%DxLVs9o!4=36;b%|mOrILYR|}iBm0F`9PQxAhUv!oXlHYHg4pX&2J~z>Fx^Ii
+zI9@q<<Bfr3<w!T(z!pr8%F>eJ7aLF32F_c*>l2as4AUlh$4EtVbb}%xcH|LFU(kP)
+zxru453pb#8M7AjN$<?6Z5%>O$dPSDAu1-okS)Y28=z<B17&@I<?Pi(uF@)Dy6iTB=

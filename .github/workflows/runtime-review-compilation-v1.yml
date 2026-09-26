@@ -1,0 +1,32 @@
+name: Runtime review compilation fidelity
+on:
+  push:
+    paths:
+      - 'runtime/cli_v1/**'
+      - 'runtime/core_v1/**'
+      - 'runtime/motor_state_v1/**'
+      - 'research/integration/review_compilation_r4k6_v1/**'
+      - '.github/workflows/runtime-review-compilation-v1.yml'
+  pull_request:
+    paths:
+      - 'runtime/cli_v1/**'
+      - 'runtime/core_v1/**'
+      - 'runtime/motor_state_v1/**'
+      - 'research/integration/review_compilation_r4k6_v1/**'
+      - '.github/workflows/runtime-review-compilation-v1.yml'
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Read-only regressions
+        run: python -S -B -m unittest -v runtime.cli_v1.test_review_compilation_r4k6
+      - name: Saved record audit, never replay the matrix
+        if: hashFiles('research/integration/review_compilation_r4k6_v1/records.b64') != ''
+        run: python -S -B research/integration/review_compilation_r4k6_v1/verify_saved.py

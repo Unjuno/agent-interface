@@ -62,6 +62,8 @@ Questions that are exactly determined by contracts, invariants, finite state spa
 
 The clean comparison keeps model, task, environment, and correctness requirement fixed while changing only the interface. See [Research method](docs/RESEARCH_METHOD.md).
 
+Before opening a follow-up Issue, apply [failure classification and Issue routing](docs/ISSUE_FAILURE_CLASSIFICATION.md). A local tool/setup/upload failure is an execution record, not automatically a new research question or a fleet-wide blocker. Preserve its evidence without multiplying wrapper-only successor tasks.
+
 ## Evidence and scope
 
 This repository contains analytical results, controlled experiments, live GUI studies, retained failures, audits, and integration work. A component PASS is not automatically an integrated PASS or product claim.

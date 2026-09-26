@@ -1,0 +1,22 @@
+{
+  "schema": "agent-interface/map01-matched-recovery-entry-gate-r5-result-v1",
+  "issue": 1866,
+  "allocation": "map01-matched-recovery-entry-gate-1866-r5-20260923-01",
+  "decision": "PASS_MATCHED_RECOVERY_ENTRY_GATE_READY_SCOPED",
+  "current": "AUTHORIZE",
+  "vectors": 32,
+  "authorize_vectors": 1,
+  "controls_hold": 5,
+  "formal_invocations": 1,
+  "formal_reruns": 0,
+  "raw_sha256": "7da951e4f745963049c313524341bf12aaa477265d86b9bc346af91c3e788e1d",
+  "formal_stdout_sha256": "712e8f5f684f5f89640e8a05b28d409526678fa9117a044ce239f9b8db563cad",
+  "audit_stdout_sha256": "8aca602b0fa9b71afdd5b5d37b1bc89cc4514582e234d906153e385456f857c8",
+  "authority": false,
+  "limits": [
+    "readiness/identifiability only",
+    "no live MAP01 efficacy result",
+    "no recovery benefit or safety claim",
+    "no model/provider/GUI/input"
+  ]
+}
