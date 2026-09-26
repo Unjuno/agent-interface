@@ -81,6 +81,20 @@ in the same response. `report_refs=true` without compact mode is rejected before
 operation scheduling. Images and outcomes are unchanged. A retained-result read
 can change the receipt format without capturing or replaying the operation.
 
+To read a v3 response directly, check `receipt.schema` is
+`agent-interface/receipt-view-v3-report-ref`: its `receipt.report` is a marker,
+and the complete report is `receipt.source.raw_report` in the same response.
+`/source/raw_report` is relative to the receipt, not a filesystem path or a
+request to another tool. Inspect `outcome_summary` for execution/release/cleanup
+and the returned image for visible application state; the reference itself is
+not evidence of task completion or freshness. Interpret only the declared v3
+reference; similarly shaped objects elsewhere remain ordinary data. A caller
+that does not understand this format should leave `report_refs=false`.
+
+[Primary v3 use](../results/mcp-report-refs-use-01/README.md) records one
+SDK-mediated input/save and read-only result comparison, including identical
+images and exact reconstruction. It does not establish token or speed savings.
+
 `interface_validate(program)` optionally checks a draft using the same static
 inspector as CLI `validate`, without opening a backend or issuing input. It
 returns static validity, required capabilities or bounded diagnostics with

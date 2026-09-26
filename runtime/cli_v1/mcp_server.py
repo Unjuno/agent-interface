@@ -173,6 +173,8 @@ def create_server(targets, output_directory, *, display_name=None):
         when an overlapping dialog is needed to interpret the target's state.
         A capture is not a redraw or task-completion acknowledgement.
         report_refs requires compact=true and a v3 receipt decoder.
+        In v3, read the full report at receipt.source.raw_report in this response;
+        the report reference requires no additional tool call.
         """
         return await submit('observe', {'target': target, 'frame': frame, 'region': region}, compact, report_refs)
 
@@ -185,6 +187,8 @@ def create_server(targets, output_directory, *, display_name=None):
         Sequence/binding values are caller assertions, not server-issued freshness.
         A returned image may precede redraw. Release and cleanup failures remain visible.
         report_refs requires compact=true and a v3 receipt decoder.
+        In v3, read the full report at receipt.source.raw_report in this response;
+        the report reference requires no additional tool call.
         """
         return await submit('dispatch', {'program': program,
             'current_observation_seq': current_observation_seq,
@@ -202,6 +206,8 @@ def create_server(targets, output_directory, *, display_name=None):
         This registry lasts only for this server process; no restart recovery is implied.
         Set include_image=false to inspect metadata without resending a retained image.
         report_refs requires compact=true and a v3 receipt decoder.
+        In v3, read the full report at receipt.source.raw_report in this response;
+        the report reference requires no additional tool call.
         """
         if report_refs and not compact:
             return content({'status': 'invalid_request',
