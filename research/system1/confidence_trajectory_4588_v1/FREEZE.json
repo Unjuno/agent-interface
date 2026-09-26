@@ -1,0 +1,48 @@
+{
+  "schema": "confidence-trajectory-system1-freeze-v1",
+  "issue": 4588,
+  "allocation": "confidence-trajectory-system1-v1",
+  "status": "FROZEN_BEFORE_FORMAL_ORCHESTRATION",
+  "base_main_commit_at_branch_creation": "ca9b3669d222aa5f99979ec48e6e28983b62ecb0",
+  "branch": "research/confidence-trajectory-4588-v1-20260927",
+  "path": "research/system1/confidence_trajectory_4588_v1/",
+  "seeds": [2026100100, 2026100200, 2026100300, 2026100400, 2026100500, 2026100600, 2026100700, 2026100800, 2026100900, 2026101000],
+  "source_sha256": {
+    "PRE_REGISTRATION.md": "eeb9ef431039dc85b57c397378fdf475021a30c03c623b80e78024b2e6612841",
+    "runner.py": "73af140fede616a778438c552c3c37e068b942d68b43025d5da5595162ab2be0",
+    "audit.py": "bf9f87a770d28a2ac592fbaac3bf671ac5b0ee9b234f7d19c84429ebc31bde1c",
+    "formal.py": "86f66072a098ce1612ecba011fc38f36e4805b5b6d8b5648f036aaa27f09cc0e",
+    "test_runner.py": "ff3a9ec2c736c573b344c068884b884f5afcbf2bc8ff3358d1cf74f777ac09a8"
+  },
+  "construction": {
+    "tests_passed": 6,
+    "tests_failed": 0,
+    "optimizer_or_formal_invocations": 0,
+    "docker_preflight": "PASS",
+    "docker_version": "29.8.0",
+    "image": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "runtime": "linux/amd64, Python 3.12.14, torch 2.5.1+cpu, CPU-only, one thread"
+  },
+  "runtime": {
+    "image": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "network": "none",
+    "root_read_only": true,
+    "source_read_only": true,
+    "cpus": 1,
+    "memory_bytes": 2147483648,
+    "pids": 64,
+    "tmpfs_bytes": 536870912,
+    "torch_threads": 1
+  },
+  "formal_contract": {
+    "orchestrations": 1,
+    "retries": 0,
+    "tuning": 0,
+    "seed_replacements": 0,
+    "runner_container_invocations": 1,
+    "independent_audit_container_invocations": 1
+  }
+}
+
