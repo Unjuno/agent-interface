@@ -37,3 +37,7 @@ No scientific cases were rerun. The #4447 HOLD remains unchanged. The #4511 resu
 ## Retained files
 
 `BASE_AUDIT.json`, `CONTROL_RESULTS.json`, `EXECUTION_ENVIRONMENT.json`, `OUTER_VERIFY.json`, and `OUTER_VERIFY.log` retain the actual output/receipt. PREFLIGHT02/03 preserve two pre-invocation failures; PREFLIGHT01 and CONSTRUCTION01–05 are retained with the frozen source. `ARTIFACT_MANIFEST.json` binds the committed formal bundle.
+
+## Evidence transcription correction
+
+Automated PR review found that the first committed copy of `CONTROL_RESULTS.json` had been manually reserialized and two embedded verifier stdout strings were malformed. The raw scratch output from the once-only Docker invocation remained intact. The file has now been restored byte-for-byte from that scratch output (10,030 bytes; SHA-256 `6a2d2ca159df0377442a34890be6d7eba81b8e44f78463c393d3409d9493dcf0`) and its artifact-manifest entry updated. No verifier, evidence, mutation, or formal experiment was rerun or changed. The superseded transcription remains recoverable in Git history; this correction changes only evidence fidelity.
