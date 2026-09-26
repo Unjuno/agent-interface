@@ -124,6 +124,7 @@ The directories below predate or sit outside the newer category structure. Their
 These are research predecessors. Current promoted executable organization lives under [`../runtime/`](../runtime/).
 
 ### Text delivery / XKB experiments
+- [`x11_text_german_layout_3668_v2/`](x11_text_german_layout_3668_v2/) — Issue #3741 frozen German XKB delivery run; audit FAIL is retained, with de-01 raw evidence missing and the independent re-audit limitation documented in RECOVERY_REVIEW.md.
 
 - [`text_delivery_capability_v1/`](text_delivery_capability_v1/)
 - [`text_observation_binding_v1/`](text_observation_binding_v1/)
@@ -170,10 +171,14 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`gtk/`](gtk/) — retained GTK/X11 fixture and adapter research paths; consult each child report for scope and disposition.
 
 ### Recent additive namespaces
+- [`needle_lora_3441_pilot_04d_corrected_base_v1/`](needle_lora_3441_pilot_04d_corrected_base_v1/) — Issue #4471 GPU formal STOP during result serialization; no scientific metrics were retained.
+- [`needle_lora_3441_pilot_04e_result_schema_v1/`](needle_lora_3441_pilot_04e_result_schema_v1/) — Issue #4471 fresh-seed result-schema successor; scoped one-seed synthetic routing PASS with host-only CUDA limits, not recovery of the earlier STOP.
+- [`needle_lora_3441_pilot_04f_seed_replication_v1/`](needle_lora_3441_pilot_04f_seed_replication_v1/) — Issue #4492 one-seed fresh replication PASS within the same synthetic task family; no population-reliability or runtime claim.
 
 - [`audits/`](audits/) — retained audit-only evidence bundles; currently includes the scoped #3688 exact raw-byte-binding audit and its independent revalidation.
 - [`chromium/`](chromium/) — retained Chromium live-control, identity, and recovery experiments; consult each child report for scope and disposition.
 - [`cli_fault_residue_3711_revalidation_v1/`](cli_fault_residue_3711_revalidation_v1/) — retained Issue #3711 CLI fault-residue revalidation; consult its report for exact scope and disposition.
+- [`cli_retention_3711_short_write_v1/`](cli_retention_3711_short_write_v1/) — retained Issue #3711 short-write protocol; Ubuntu's required CLI workflow failed on selector mock imports, so no three-OS construction PASS is claimed.
 - [`issue_3733_german_xkb_text_orbstack_v3/`](issue_3733_german_xkb_text_orbstack_v3/) — retained Issue #3733 German XKB formula-delivery experiment and immutable formal/audit evidence; consult its preregistration and result disposition before making claims.
 - [`x11_text_german_layout_3668_v1/`](x11_text_german_layout_3668_v1/) — original Issue #3733 setup STOP and frozen protocol; de-01 stopped before the hypothesis test, with a freeze/result-state discrepancy documented in the artifacts.
 - [`needle_lora_3441_pilot_04c_multiskill_audit_complete/`](needle_lora_3441_pilot_04c_multiskill_audit_complete/) — Issue #3895 one-seed multi-skill audit; HOLD_PROTOCOL_DEVIATION because the run used 120 rather than the specified 400 base updates.
