@@ -1,0 +1,46 @@
+{
+  "actor_exits_zero": 36,
+  "audit_checks": 1127,
+  "audit_errors": [],
+  "batch_exits_zero": 6,
+  "cases": 18,
+  "classification": "PASS_CONSTRUCTION_ONLY",
+  "counts": {
+    "AFTER_ONLY": {
+      "cache_hits": 11,
+      "cases": 6,
+      "observations": 18,
+      "obsolete_cache_hits": 4,
+      "snapshot_reads": 7,
+      "sql_statements": 53,
+      "status_selects": 14
+    },
+    "ALWAYS_READ": {
+      "cache_hits": 0,
+      "cases": 6,
+      "observations": 18,
+      "obsolete_cache_hits": 0,
+      "snapshot_reads": 18,
+      "sql_statements": 72,
+      "status_selects": 36
+    },
+    "BRACKETED": {
+      "cache_hits": 8,
+      "cases": 6,
+      "observations": 18,
+      "obsolete_cache_hits": 0,
+      "snapshot_reads": 10,
+      "sql_statements": 68,
+      "status_selects": 20
+    }
+  },
+  "effective_controls_rejected": 10,
+  "first_three_cases_have_cross_process_timeline": false,
+  "formal_cases": 0,
+  "frozen_sources_unchanged": 7,
+  "full_raw_evidence_remote": false,
+  "model_gui_input_calls": 0,
+  "polls": 54,
+  "scope": "new cooperative SQLite status fixture; not production CLI; no task or speed claim",
+  "source_change_before_freeze": "later construction gained cross-process timeline and owned-process cleanup instrumentation; first source version retained"
+}
