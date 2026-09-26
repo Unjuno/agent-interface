@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import pathlib
 import unittest
+import sys
 
 from model import Calibration, Decision, Invalidation, final_action_admission
 
@@ -12,6 +13,10 @@ CALIBRATION_PATH = pathlib.Path(__import__("os").environ.get(
     "POLICY_CLOCK_CALIBRATION",
     ROOT / "map01_model_loop_finite_v10/results/map01-model-loop-finite-v10-20260927-02/runtime/lease-clock-calibration.json",
 ))
+LIVE_CONTROL = pathlib.Path(__import__("os").environ.get(
+    "POLICY_CLOCK_LIVE_CONTROL", "/evidence/live_control"))
+sys.path.insert(0, str(LIVE_CONTROL))
+from final_action_admission_v1 import decide_final_admission  # noqa: E402
 
 
 class PolicyInvalidationClockTests(unittest.TestCase):
@@ -72,6 +77,40 @@ class PolicyInvalidationClockTests(unittest.TestCase):
                             "host.perf_counter_ns", 8_500_000_000_000)
         with self.assertRaisesRegex(ValueError, "follows controller decision"):
             final_action_admission(late, self.decision, self.calibration)
+
+    def test_actual_final_admission_v1_reproduces_predecessor_exception(self):
+        terminal = {"turn_id": "turn-8", "status": "interrupted",
+                    "answer_eligible": False, "terminal_observed_ns": 7_755_779_900_000}
+        # Host timestamp is roughly 739 ms ahead of runtime time; the unchanged
+        # production path compares it directly with the runtime decision value.
+        host_invalidation = {
+            "outcome_evaluated_ns": self.invalidation.outcome_evaluated_host_ns,
+            "outcome": {"status": "INVALIDATED", "requires_new_decision": True,
+                        "grants_input_authority": False, "reason": "hard_health"},
+        }
+        with self.assertRaisesRegex(ValueError, "controller decision precedes observed boundary"):
+            decide_final_admission(terminal, host_invalidation,
+                                   self.decision.decided_runtime_ns)
+
+    def test_actual_final_admission_v1_rejects_translated_invalidation_no_authority(self):
+        terminal = {"turn_id": "turn-8", "status": "interrupted",
+                    "answer_eligible": False, "terminal_observed_ns": 7_755_779_900_000}
+        translated = self.calibration.host_to_runtime(
+            self.invalidation.outcome_evaluated_host_ns, self.decision.session_id)
+        receipt = {"outcome_evaluated_ns": translated,
+                   "outcome_evaluated_host_ns": self.invalidation.outcome_evaluated_host_ns,
+                   "outcome_evaluated_runtime_ns": translated,
+                   "outcome": {"status": "INVALIDATED", "requires_new_decision": True,
+                               "grants_input_authority": False, "reason": "hard_health"}}
+        result = decide_final_admission(terminal, receipt,
+                                       self.decision.decided_runtime_ns)
+        self.assertEqual(result["status"], "REJECTED_POLICY_INVALIDATED")
+        self.assertIs(result["input_authority_admitted"], False)
+        self.assertIsNone(result["executor_admission"])
+        self.assertEqual(result["policy_invalidation"]["outcome_evaluated_host_ns"],
+                         self.invalidation.outcome_evaluated_host_ns)
+        self.assertEqual(result["policy_invalidation"]["outcome_evaluated_runtime_ns"],
+                         translated)
 
 
 if __name__ == "__main__":
