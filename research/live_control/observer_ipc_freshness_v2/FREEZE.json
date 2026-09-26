@@ -1,0 +1,114 @@
+{
+  "allocation": "observer-ipc-freshness-20260926-r2",
+  "binary": {
+    "build_command": "gcc -O2 -Wall -Wextra -Werror -shared -fPIC native.c -lX11 -o native.so",
+    "native.so": {
+      "bytes": 16024,
+      "sha256": "e4b6d268a670005c6f5646db9c73786e6092688e25b3ea56c2f1fcf951df67cd"
+    }
+  },
+  "branch": "research/observer-ipc-freshness-3944-20260926-r2",
+  "construction": {
+    "path": "construction-02/construction.json",
+    "sha256": "de7caa5f93d16261620e9d9e10f5516d1d7e7fb520d7630c334bc4a3ffc826f5",
+    "short_pulse_cases": 0,
+    "status": "PASS_STATIC_CONSTRUCTION"
+  },
+  "decision": {
+    "age_limit_ns": 5000000,
+    "capture_margin_over_inline_thread_min": 3,
+    "exposure_max_ns": 8000000,
+    "exposure_min_ns": 4000000,
+    "process_thread_age_qualified_case_min": 9,
+    "process_thread_capture_min": 9
+  },
+  "files": {
+    "ENVIRONMENT.json": {
+      "bytes": 911,
+      "git_blob": "e75dd588b8f87d48e0755825ecee2c7fad16f920",
+      "sha256": "9a3309aa08b6597d66844cbe66b149cf8eafb423a5102ba5ad1564f13dea0b5b"
+    },
+    "PLAN.md": {
+      "bytes": 2156,
+      "git_blob": "d483b90391f98fe822abd8ca338e31ea694018fe",
+      "sha256": "43b7653ef4b489f20b9b546c2ac394a2ad902429aca7478c463a1d4b3c228304"
+    },
+    "audit.py": {
+      "bytes": 4567,
+      "git_blob": "4ccb49d5b3e33c574d580fba3c673c1017a8b141",
+      "sha256": "208ce9bda299e9cc7f281ad9af31e75adff13e37831b3c8c3d51033b9979b721"
+    },
+    "controls.py": {
+      "bytes": 2087,
+      "git_blob": "503dfc45ae5376dbf93800c125b511bd48a968c6",
+      "sha256": "acc5d5886bab29101985bf1cbd78408612a11c9901cce3dd5bb73cc253c9133b"
+    },
+    "native.c": {
+      "bytes": 2289,
+      "git_blob": "92b2ca11117f6bcb80f45dbac62e16d62bb4f6fd",
+      "sha256": "5297e1252113ab4d91c58bd5e7b9462af155979cc44259d42eb98c0d9ce35975"
+    },
+    "study.py": {
+      "bytes": 15610,
+      "git_blob": "fc4b2079aeeb68df37cb69956eb7a8ae735db93d",
+      "sha256": "b0832eed278e94b377e43d53a812e7cd0bc2f36354661c0ea6ab5234907d904f"
+    }
+  },
+  "formal_cases_before_freeze": 0,
+  "formal_invocations_before_freeze": 0,
+  "intake_main": "3666992ab2b5e1b41b159b361d1c690d8e720fdf",
+  "issue": 3944,
+  "parent_issue": 2117,
+  "path": "research/live_control/observer_ipc_freshness_v2",
+  "plan": {
+    "arms": ["INLINE_IDLE","INLINE_THREAD","PROCESS_IDLE","PROCESS_THREAD"],
+    "cadence_ns": 2000000,
+    "cases": [
+      {"arm":"INLINE_IDLE","block":0,"case":"b00-0-INLINE_IDLE","offset_ms":50},
+      {"arm":"INLINE_THREAD","block":0,"case":"b00-1-INLINE_THREAD","offset_ms":50},
+      {"arm":"PROCESS_IDLE","block":0,"case":"b00-2-PROCESS_IDLE","offset_ms":50},
+      {"arm":"PROCESS_THREAD","block":0,"case":"b00-3-PROCESS_THREAD","offset_ms":50},
+      {"arm":"INLINE_THREAD","block":1,"case":"b01-0-INLINE_THREAD","offset_ms":52},
+      {"arm":"PROCESS_IDLE","block":1,"case":"b01-1-PROCESS_IDLE","offset_ms":52},
+      {"arm":"PROCESS_THREAD","block":1,"case":"b01-2-PROCESS_THREAD","offset_ms":52},
+      {"arm":"INLINE_IDLE","block":1,"case":"b01-3-INLINE_IDLE","offset_ms":52},
+      {"arm":"PROCESS_IDLE","block":2,"case":"b02-0-PROCESS_IDLE","offset_ms":54},
+      {"arm":"PROCESS_THREAD","block":2,"case":"b02-1-PROCESS_THREAD","offset_ms":54},
+      {"arm":"INLINE_IDLE","block":2,"case":"b02-2-INLINE_IDLE","offset_ms":54},
+      {"arm":"INLINE_THREAD","block":2,"case":"b02-3-INLINE_THREAD","offset_ms":54},
+      {"arm":"PROCESS_THREAD","block":3,"case":"b03-0-PROCESS_THREAD","offset_ms":56},
+      {"arm":"INLINE_IDLE","block":3,"case":"b03-1-INLINE_IDLE","offset_ms":56},
+      {"arm":"INLINE_THREAD","block":3,"case":"b03-2-INLINE_THREAD","offset_ms":56},
+      {"arm":"PROCESS_IDLE","block":3,"case":"b03-3-PROCESS_IDLE","offset_ms":56},
+      {"arm":"INLINE_IDLE","block":4,"case":"b04-0-INLINE_IDLE","offset_ms":58},
+      {"arm":"INLINE_THREAD","block":4,"case":"b04-1-INLINE_THREAD","offset_ms":58},
+      {"arm":"PROCESS_IDLE","block":4,"case":"b04-2-PROCESS_IDLE","offset_ms":58},
+      {"arm":"PROCESS_THREAD","block":4,"case":"b04-3-PROCESS_THREAD","offset_ms":58},
+      {"arm":"INLINE_IDLE","block":5,"case":"b05-0-INLINE_IDLE","offset_ms":50},
+      {"arm":"PROCESS_THREAD","block":5,"case":"b05-1-PROCESS_THREAD","offset_ms":50},
+      {"arm":"PROCESS_IDLE","block":5,"case":"b05-2-PROCESS_IDLE","offset_ms":50},
+      {"arm":"INLINE_THREAD","block":5,"case":"b05-3-INLINE_THREAD","offset_ms":50},
+      {"arm":"INLINE_THREAD","block":6,"case":"b06-0-INLINE_THREAD","offset_ms":52},
+      {"arm":"INLINE_IDLE","block":6,"case":"b06-1-INLINE_IDLE","offset_ms":52},
+      {"arm":"PROCESS_THREAD","block":6,"case":"b06-2-PROCESS_THREAD","offset_ms":52},
+      {"arm":"PROCESS_IDLE","block":6,"case":"b06-3-PROCESS_IDLE","offset_ms":52},
+      {"arm":"PROCESS_IDLE","block":7,"case":"b07-0-PROCESS_IDLE","offset_ms":54},
+      {"arm":"INLINE_THREAD","block":7,"case":"b07-1-INLINE_THREAD","offset_ms":54},
+      {"arm":"INLINE_IDLE","block":7,"case":"b07-2-INLINE_IDLE","offset_ms":54},
+      {"arm":"PROCESS_THREAD","block":7,"case":"b07-3-PROCESS_THREAD","offset_ms":54},
+      {"arm":"PROCESS_THREAD","block":8,"case":"b08-0-PROCESS_THREAD","offset_ms":56},
+      {"arm":"PROCESS_IDLE","block":8,"case":"b08-1-PROCESS_IDLE","offset_ms":56},
+      {"arm":"INLINE_THREAD","block":8,"case":"b08-2-INLINE_THREAD","offset_ms":56},
+      {"arm":"INLINE_IDLE","block":8,"case":"b08-3-INLINE_IDLE","offset_ms":56},
+      {"arm":"INLINE_IDLE","block":9,"case":"b09-0-INLINE_IDLE","offset_ms":58},
+      {"arm":"PROCESS_THREAD","block":9,"case":"b09-1-PROCESS_THREAD","offset_ms":58},
+      {"arm":"PROCESS_IDLE","block":9,"case":"b09-2-PROCESS_IDLE","offset_ms":58},
+      {"arm":"INLINE_THREAD","block":9,"case":"b09-3-INLINE_THREAD","offset_ms":58}
+    ],
+    "offsets_ms":[50,52,54,56,58,50,52,54,56,58],
+    "pulse_ns":5000000,
+    "switch_s":0.005,
+    "window_ns":120000000
+  },
+  "schema":"observer-ipc-freshness-freeze-v2"
+}
