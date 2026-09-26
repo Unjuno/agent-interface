@@ -1,0 +1,99 @@
+{
+  "aggregate": {
+    "GLOBAL_SUCCESS_CACHE": {
+      "cases": 1,
+      "root_contract_complete": 0,
+      "scope_reuses": 1,
+      "suffixes": 2,
+      "unsafe_suffixes": 1,
+      "wrong_target_effects": 1
+    },
+    "PER_FRAME_RECHECK": {
+      "cases": 2,
+      "root_contract_complete": 1,
+      "scope_reuses": 0,
+      "suffixes": 3,
+      "unsafe_suffixes": 0,
+      "wrong_target_effects": 0
+    }
+  },
+  "case_reports": [
+    {
+      "case": "/results/cases/nrs4307-c7e4-docker-c01-root-replaced-candidate",
+      "checks": 155,
+      "depth": 2,
+      "errors": [
+        "app-stderr-empty"
+      ],
+      "metrics": {
+        "root_contract_complete": false,
+        "scope_reuses": 0,
+        "suffixes": 1,
+        "unsafe_suffixes": 0,
+        "wrong_target_effects": 0
+      },
+      "policy": "PER_FRAME_RECHECK",
+      "scenario": "ROOT_TARGET_REPLACED",
+      "session": "nrs4307-c7e4-docker-c01-root-replaced-candidate"
+    },
+    {
+      "case": "/results/cases/nrs4307-c7e4-docker-c01-root-replaced-weak",
+      "checks": 169,
+      "depth": 2,
+      "errors": [
+        "app-stderr-empty"
+      ],
+      "metrics": {
+        "root_contract_complete": false,
+        "scope_reuses": 1,
+        "suffixes": 2,
+        "unsafe_suffixes": 1,
+        "wrong_target_effects": 1
+      },
+      "policy": "GLOBAL_SUCCESS_CACHE",
+      "scenario": "ROOT_TARGET_REPLACED",
+      "session": "nrs4307-c7e4-docker-c01-root-replaced-weak"
+    },
+    {
+      "case": "/results/cases/nrs4307-c7e4-docker-c01-stable-candidate",
+      "checks": 166,
+      "depth": 2,
+      "errors": [
+        "app-stderr-empty"
+      ],
+      "metrics": {
+        "root_contract_complete": true,
+        "scope_reuses": 0,
+        "suffixes": 2,
+        "unsafe_suffixes": 0,
+        "wrong_target_effects": 0
+      },
+      "policy": "PER_FRAME_RECHECK",
+      "scenario": "STABLE",
+      "session": "nrs4307-c7e4-docker-c01-stable-candidate"
+    }
+  ],
+  "cases": 3,
+  "checks": 490,
+  "errors": [
+    {
+      "case": "/results/cases/nrs4307-c7e4-docker-c01-root-replaced-candidate",
+      "errors": [
+        "app-stderr-empty"
+      ]
+    },
+    {
+      "case": "/results/cases/nrs4307-c7e4-docker-c01-root-replaced-weak",
+      "errors": [
+        "app-stderr-empty"
+      ]
+    },
+    {
+      "case": "/results/cases/nrs4307-c7e4-docker-c01-stable-candidate",
+      "errors": [
+        "app-stderr-empty"
+      ]
+    }
+  ],
+  "kind": "FRAME_SCOPE_RAW_AUDIT"
+}
