@@ -1,0 +1,35 @@
+{
+  "allocation": "confidence-trajectory-4588-first-rung-20260927-01",
+  "issue": 4588,
+  "intake_main": "d649ca87a04514ec1d1dae6169f693f7789d56a0",
+  "branch": "research/confidence-trajectory-4588-20260927",
+  "path": "research/system1/confidence_trajectory_4588_v1/",
+  "case_count": 84,
+  "families": 14,
+  "repetitions_per_family": 6,
+  "formal_invocations": 1,
+  "reruns": 0,
+  "replacements": 0,
+  "post_freeze_tuning": 0,
+  "container_image_id": "sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0",
+  "source_sha256": {
+    "PLAN.md": "0a6f3c832ec053c61e4ff5c70623b82accbc4c7aaf3511bc7c2cb718294be465",
+    "ENVIRONMENT.json": "3f22fb952b6612ea07766f6f2d68c50fa43e7c7a7a10ce87a28b0a7b3abf4c3a",
+    "README.md": "dd89b6650e6080ec52447ef351747995178aa3d2b5dc5209c4275e3a2260d34c",
+    "run.py": "90b2f4609d1bbd40f40b2c98126b525babea21bf0f1446963a5dc1e3b558ceff",
+    "audit.py": "faa8cc70ca733478c5fa83d8c8b1d41770315160c57ec5e65077b6db737fcd95",
+    "gate.py": "129ed1a816f58aa1d571efdf4dff4b753dd3a349e490e44e6ba3dfb22244fb2d",
+    "controls.py": "0a42b4061b8294bdf2c27ab3d7148ba22696ee8dd425fee2ede591f9481e3596",
+    "test_audit.py": "ffce43fa2c2e26f4fa2c28d37fb16247d84b8e8ce6f64ad6f65b81530c1da16c"
+  },
+  "formal_decision_gates": [
+    "84/84 fixed inputs and all four policy outputs reconcile in raw-only audit",
+    "8/8 effective copied-formal-row mutations are rejected",
+    "all six acceleration-alias pairs are identically classified by current-only and velocity; acceleration classifies both labels correctly",
+    "all six self-correcting cases produce NO_OP in every arm",
+    "all 18 invalid-history cases explicitly invalidate history features and fall back to current-only",
+    "the authored oscillatory/noise stress shows acceleration-specific false ACTION in 6/6 rows and the smoother avoids those 6 false ACTIONs",
+    "acceleration-arm accuracy is not below current-only and its false-executable count is not higher on this authored corpus"
+  ],
+  "formal_result": "NOT_RUN_AT_FREEZE"
+}
