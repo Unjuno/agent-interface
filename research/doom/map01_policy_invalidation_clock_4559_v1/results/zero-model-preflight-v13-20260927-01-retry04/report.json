@@ -1,0 +1,132 @@
+{
+  "claim": "persistent typed planner plus immediate and running action invalidation from a fixed real-MAP01 threat state",
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "iterations": 0,
+  "decisions": [],
+  "score": {
+    "event": "post_control_score",
+    "evaluator_score_withheld": true
+  },
+  "model_session_span": 4,
+  "model_session_ids": [],
+  "motor_contract": "semantic commands compiled to <=450ms turns and <=900ms movement",
+  "effect_receipt_contract": "reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
+  "soft_event_context_contract": "expose only the newest validated typed soft event from the preceding control interval in the already-required next planner turn; add no image, model call, input authority or mid-turn boundary",
+  "final_action_admission_contract": "historical transition receipt only after running guard creation: planner eligibility, controller policy/validation decision and first fresh Executor acceptance remain retained; it is not current authority",
+  "running_action_contract": "the root running-action-v3 receipt is authoritative after guard creation; every primary/fallback semantic slice is deterministically recompiled and bound to the exact submitted steps, Executor program SHA-256 and lease token; invalidation requires a matched cancel, then exposes independently verified empty physical release while terminal closure remains pending; inter-segment input still requires a fresh passive observation",
+  "typed_observation_contract": "health/ammo and RGB SHA-256 are extracted from the captured in-memory frame and emitted before transport/artifact publication; every retained full observation must later match epoch, binding, RGB hash and both signal values",
+  "typed_observations": 3,
+  "typed_artifact_reconciliations": [
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "44a99c2823dd576dc88f0230b9f1135d0e13d84515c94159d9f1905f276c751c",
+      "artifact_rgb_sha256": "44a99c2823dd576dc88f0230b9f1135d0e13d84515c94159d9f1905f276c751c",
+      "artifact": "/private/tmp/unjuno-4559.pHhs6T/repo/research/doom/map01_policy_invalidation_clock_4559_v1/results/zero-model-preflight-v13-20260927-01-retry04/runtime/001.png",
+      "sequence": 1
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "ba05a037ee048a6830765f019dec6a3b0e285f388770dcfe1c57db9e61137e31",
+      "artifact_rgb_sha256": "ba05a037ee048a6830765f019dec6a3b0e285f388770dcfe1c57db9e61137e31",
+      "artifact": "/private/tmp/unjuno-4559.pHhs6T/repo/research/doom/map01_policy_invalidation_clock_4559_v1/results/zero-model-preflight-v13-20260927-01-retry04/runtime/002.png",
+      "sequence": 2
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "53e1d86a506b6570e8655f80f705575ae5f9885e91e9717b54be3e709bface74",
+      "artifact_rgb_sha256": "53e1d86a506b6570e8655f80f705575ae5f9885e91e9717b54be3e709bface74",
+      "artifact": "/private/tmp/unjuno-4559.pHhs6T/repo/research/doom/map01_policy_invalidation_clock_4559_v1/results/zero-model-preflight-v13-20260927-01-retry04/runtime/003.png",
+      "sequence": 3
+    }
+  ],
+  "typed_artifact_reconciled": 3,
+  "typed_artifact_reconciliation_failures": 0,
+  "typed_capture_to_ready_ms": [
+    4.773248,
+    5.377463,
+    5.096752
+  ],
+  "typed_ready_to_emit_ms": [
+    2.274437,
+    3.227861,
+    2.464021
+  ],
+  "typed_capture_to_artifact_ready_ms": [
+    31.778562,
+    32.091107,
+    31.077348
+  ],
+  "typed_emit_to_artifact_ready_ms": [
+    24.730877,
+    23.485783,
+    23.516575
+  ],
+  "effect_receipt_extra_steps": 0,
+  "contingency_contract": "preplanned no-visible-effect fallback skips the primary tail and runs without another model call",
+  "contingencies_authored": 0,
+  "contingency_branches_taken": 0,
+  "contingency_branch_latency_ms": [],
+  "program_admissions": 0,
+  "action_refresh_programs": 0,
+  "running_action_invalidations": 0,
+  "running_action_revocations": 0,
+  "running_action_intersegment_rejections": 0,
+  "running_action_program_bindings": 0,
+  "historical_first_executor_admissions": 0,
+  "current_input_authority_true_at_decision_close": 0,
+  "extra_program_admissions_vs_one_bundle": 0,
+  "effect_receipt_commands": 0,
+  "effect_observation_samples": 0,
+  "effect_observation_capture_ms": 0,
+  "game_continued_during_model_calls": true,
+  "runtime_fixture": null,
+  "fixture_contract": "hash/IWAD/engine/map/skill checked before load; measured control begins after load; fixture grants no action authority",
+  "planner_contract": "one capability-minimized app-server process; stable typed thread/turn ownership; invalidation interrupts the matching turn and no cancelled or stale answer is admitted",
+  "planner_turns": 0,
+  "planner_interruption_requests": 0,
+  "planner_interrupted_completions": 0,
+  "planner_ineligible_answers": 0,
+  "policy_invalidation_contract": "authored cover health floor is max(critical_health_minimum, fresh source health - schema-bounded maximum_health_loss); soft change may only preserve admitted cover; hard, unknown, expired or binding-mismatched evidence cancels cover and discards the dependent model action; unauthored empty coast has no policy to invalidate and does not interrupt a pending answer on damage; exact observations and fresh immediate action validity remain mandatory; this never grants input authority or proves success",
+  "policy_invalidations": 0,
+  "cover_validity_soft_events": 0,
+  "cover_validity_admission_rejections": 0,
+  "model_actions_discarded": 0,
+  "historical_final_action_admission_statuses": {},
+  "cover_programs": 0,
+  "cover_renewals": 0,
+  "cover_renewal_gaps_ms": [],
+  "model_authored_cover_policies": 0,
+  "model_authored_cover_validity_envelopes": 0,
+  "model_wall_seconds": 0.0
+}
