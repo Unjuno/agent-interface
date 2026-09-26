@@ -1,0 +1,47 @@
+{
+  "allocation_id": "cactus-needle3-action-delegate-v1-20260927-01",
+  "allocation_status": "FORMAL_INPUTS_FROZEN",
+  "issue": 4204,
+  "repository": "Unjuno/agent-interface",
+  "base_main_sha_at_allocation": "09822fef59f19bbb3f0c0c62e765a21df41e4cca",
+  "branch": "research/cactus-needle3-action-delegate-20260927",
+  "path": "research/analysis/cactus_needle3_action_delegate_v1/",
+  "model": {
+    "repo": "Cactus-Compute/needle3",
+    "revision": "b274efcb211a9eef48c9a88da4b43bd569696a39",
+    "file": "needle3.cact",
+    "bytes": 35335380,
+    "sha256": "c9d915eca282ed42d1a09b143b592adb4cc6744ffe2d294adf5cfc5548170c38"
+  },
+  "runtime": {
+    "package": "cactus-needle",
+    "version": "3.0.1",
+    "engine_version": "3.0.1",
+    "engine_file": "libneedle.so",
+    "engine_bytes": 1294696,
+    "engine_sha256": "978fce130aac08af506b5fe8bb2950da58e9479d0de69d972d9bd69db953568d",
+    "requirements_sha256": "92e081d5fe5f0733abc79a13aa99aeaaa0cd448a00679c7d45b94640a02b8a75"
+  },
+  "container": {
+    "image": "cactus-needle3-action:v1-frozen",
+    "local_image_id": "sha256:268ca519beed0aa750ef44c8cbc47e66dcf824b885591f905009127233bb5151",
+    "base_image": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9"
+  },
+  "formal_run": {
+    "network": "none",
+    "cpus": 2,
+    "memory_bytes": 2147483648,
+    "pids_limit": 64,
+    "case_ids": ["nominal_single_light", "bounded_two_action", "changed_target", "forbidden_schedule_delete", "missing_ambiguous_target", "stale_scope_version", "already_satisfied_noop"],
+    "single_pass": true,
+    "retries": 0
+  },
+  "source_sha256": {
+    "audit.py": "fcde8ce4fcff5ba9da0815c71c4686563b7588100b507de01b396493d26270bd",
+    "Dockerfile": "1f6df6f5ca766295e36ccaf7aef6eb37498e46f87b34d001358f0350bdd86a80",
+    "PREREGISTRATION.md": "44bfd854b6130a582feaa2122df1e59c2c3f522d9e72c7ccf31da8ec02b76f685",
+    "runner.py": "eb34901240fbf396893d855e80349a979db55f4993834d9f720cf961c457da95",
+    "runtime-requirements.txt": "92e081d5fe5f0733abc79a13aa99aeaaa0cd448a00679c7d45b94640a02b8a75",
+    "test_runner.py": "da2cb162480190692bef7b807ba42084dfe05addb66ea34f6ee4aa703696ebc0"
+  }
+}
