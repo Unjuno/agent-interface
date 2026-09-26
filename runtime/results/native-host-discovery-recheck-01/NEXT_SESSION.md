@@ -1,5 +1,23 @@
 # Fresh allocation connection prepared, not applied to the active host
 
+## Configuration follow-up (2026-09-27)
+
+The preparation account below is historical. The user subsequently authorized
+configuration, and the global `agent-interface-integration` registration was
+saved. A fresh `codex mcp get agent-interface-integration --json` confirms it is
+enabled, starts the WSL command for Inkscape allocation
+`results-local/native-host-integration-02`, seed 991284, and uses startup/tool
+timeouts of 30/45 seconds. Re-editing the registration is not the next step.
+
+The active host's `native_status` still returns the consumed Calc allocation
+`native-host-integration-01/run`, seed 991221, `needs_review`, with restart
+disallowed. Saving configuration has therefore not refreshed this connection.
+An attempted app UI refresh did not establish a successful server reload.
+No fresh direct-host run or performance result is claimed. After host reload,
+verify the allocation, app, seed and `not_started` state before starting.
+
+## Historical preparation account
+
 The next-session directory retains a Windows-SDK-to-WSL handshake for a fresh
 native-host-integration-02 Inkscape allocation (seed991284, max8 stages,
 text gap2ms, system Python harness). It initialized, listed tools and called
