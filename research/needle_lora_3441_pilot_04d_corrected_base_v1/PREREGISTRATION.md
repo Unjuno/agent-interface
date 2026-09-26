@@ -16,9 +16,9 @@ Base Git commit: `c83ddb057c680a126144d000bf7ef7ba2274652a`. Files are canonical
 
 | File | SHA-256 | Git blob |
 |---|---|---|
-| `runner.py` | `488bb46b0d38983f340f5815b2b0a9fc00e6dddc102f34639ba08d49de24df97` | `87fcad49af14cf8ac4b57ba9702715f87da45cca` |
-| `audit.py` | `972ec02bc549ce7ee5d5bb4f4c0c4a8661ca98567237340e361b356fa9628b2e` | `d1a06776d3e98b21708306d3794f851f0958be5f` |
-| `test_construction.py` | `6519277652f51213a73b479531636c2fdd57b24da661bc93539a0810427d7b75` | `43705f499953e2e5a8ca0c686cf62d9eee4ab7ca` |
-| `test_audit.py` | `681810d71182fe8e3c9e4ab0fe68a6eeed531fb1605b5c588d203564fc5091ee` | `a17a03d7d9993c5b7d026d053f28bc5afdabfd58` |
+| `runner.py` | `c80a7ee2f4cb9a0cd45b941962bdedc40936d5c0275a6e13aa9ba1baa24710fa` | `afa50451444aa858feab2ef6576d771c6ddff969` |
+| `audit.py` | `1f663574f605612aafb80a422c805f068b6c4fcfb1ea32bd5f4baeefe69d7c9c` | `7ed931198030a809a105490ab2c4aa0568cc0f3c` |
+| `test_construction.py` | `173985caaa16db11e6f8a54ac2175797437c6f10cdf596c396141a8401167184` | `7a06b15c70266496ce39e49015b6cc7a069fe500` |
+| `test_audit.py` | `681810d71182fe8e3c9e4ab0fe68a6eeed531fb1605b5c588d203564fc5091ee` | `6bb1aaba4826bfe06ea2a9f40897182875d4d63b` |
 
 The exact hashes for this preregistration are retained in `FREEZE.json`; the freeze file pins all five source files and Git blob IDs above plus this preregistration.
