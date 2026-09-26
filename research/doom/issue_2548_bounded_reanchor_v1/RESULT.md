@@ -1,4 +1,6 @@
-# Formal result: #2548
+# Historical formal result: #2548 v3 (not qualified)
+
+PR review found the v3 audit could pass incomplete/unsafe records and its provenance logic trusted plan booleans. The execution rows below are retained exactly as historical output, but the v3 PASS is withdrawn as a qualified result. The authoritative successor is [RESULT_V4.md](RESULT_V4.md).
 
 Decision: `PASS_BOUNDED_REANCHOR_PRESERVES_SAFETY_SCOPED`.
 

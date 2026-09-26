@@ -12,17 +12,19 @@ This is an additive successor experiment for the closed visual-context guard res
 
 The formal plan and source freeze are in `plan.json` and `FREEZE.json`. The v3 allocation is in `formal_v3/`; `formal_v1/` and `formal_v2/` are retained as failed driver allocations with their stop reasons.
 
-## Result
+## Result and qualification history
 
-`PASS_BOUNDED_REANCHOR_PRESERVES_SAFETY_SCOPED`.
+Formal v3 initially reported `PASS_BOUNDED_REANCHOR_PRESERVES_SAFETY_SCOPED`, but PR review found that its auditor did not enforce completeness/safety invariants and its provenance decision trusted plan booleans. That v3 PASS is **not qualified**; see `REVIEW_RESPONSE.md` and the retained raw `formal_v3/` files.
 
-All six sessions completed with verified empty release and zero kills/deaths/map exit. The guard-only drift cases were rejected (MAE 0.0430–0.0445). The fresh same-session drift case admitted only the new pair (MAE 0.0000371), while the ambiguous fresh control rejected provenance. The unchanged fresh control admitted (MAE 0.0001021). No stale or missing-fresh input was admitted.
+Formal v4 is the authoritative result: `PASS_BOUNDED_REANCHOR_PRESERVES_SAFETY_SCOPED`.
 
-The independent Docker audit is `formal_v3/audit.json` and reports `PASS` with zero failures. This does not claim that a recovery action is safe beyond the tested admission contract.
+All seven fresh sessions completed with verified empty release and zero kills/deaths/map exit. Guard-only drift was rejected (MAE 0.04418). The same-session fresh drift pair admitted at MAE 0.00362, below the fixed 0.015 threshold. The unchanged fresh pair admitted at MAE 0.0000991. Stale/duplicate, cross-session, and incomplete receipts rejected from their captured receipt identity. No stale or malformed receipt was admitted.
+
+The independent v4 Docker audit is `formal_v4/audit.json` and reports `PASS` with zero errors. The mutation audit is `formal_v4/mutation-check.json`; it rejected empty/truncated data, terminal failure, unverified release, nonzero death, and a foreign-session mutation. This does not claim that a recovery action is safe beyond the tested admission contract.
 
 ## Failed allocations retained
 
 - v1 stopped because the driver attempted `observe` after `terminal`; the runtime did not emit a fresh observation.
 - v2 stopped because the driver selected the final typed observation as both post and fresh, making the fresh index undefined.
 
-Neither failure is used as a scientific result. They remain in the working evidence directories and are described in `FAILURES.md`.
+Neither failure is used as a scientific result. The v3 execution completed, but its PASS was invalidated during review because its gate and audit were insufficient; see `FAILURES.md`. Raw allocations remain retained.

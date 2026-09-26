@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "matching_error": "case_count:0 expected:7",
+      "mutation": "empty",
+      "rejected": true
+    },
+    {
+      "matching_error": "case_count:6 expected:7",
+      "mutation": "truncated",
+      "rejected": true
+    },
+    {
+      "matching_error": "c01-coast-guard-only:terminal_not_completed",
+      "mutation": "terminal_failure",
+      "rejected": true
+    },
+    {
+      "matching_error": "c01-coast-guard-only:release_not_verified_empty",
+      "mutation": "unverified_release",
+      "rejected": true
+    },
+    {
+      "matching_error": "c01-coast-guard-only:unsafe_or_missing_score",
+      "mutation": "nonzero_death",
+      "rejected": true
+    },
+    {
+      "matching_error": "c03-drift-fresh-reanchor:receipt_recomputation_mismatch",
+      "mutation": "foreign_session_mutation",
+      "rejected": true
+    }
+  ],
+  "schema": "issue-2548-auditor-mutation-check-v1",
+  "status": "PASS"
+}
