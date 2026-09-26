@@ -7,3 +7,7 @@ It recomputed all 44 runner-artifact hashes against the actual evidence tree; ve
 Audit JSON SHA-256: `5a5583a6e0f86b4ddc6f678bd56224b82fd56f03ee8475ba76b9ee9efeee7847`. The audit container stdout/exit record is `container-logs/audit-01.stdout.log`, SHA-256 `409046b0e11d551dbd571959f51ab28885dfa3fb4e02f0d8bc2e11ebbb955a78`.
 
 Combined interpretation remains a private-Xvfb diagnostic only. It does not resolve why the prior formal-02 capture recorded an unchanged core map, and it is not a text-delivery/backend result.
+
+## Post-merge bundle re-audit
+
+A later re-run of the frozen auditor against the exact committed tree returns `FAIL_AUDIT`: four `xvfb.log` files referenced by the raw inventory were excluded by the repository `*.log` ignore rule. The original audit JSON and its PASS remain unchanged, but the published bundle is now `HOLD_COMMITTED_ARTIFACT_TREE_INCOMPLETE`. See [POST_MERGE_AUDIT_REVIEW.md](POST_MERGE_AUDIT_REVIEW.md) for the hashes, scope, and recovery boundary.
