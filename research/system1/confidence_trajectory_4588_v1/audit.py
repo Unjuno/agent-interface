@@ -71,7 +71,9 @@ def regen_example(rng, seed, split, family, index):
 
 
 def regen(seed, split):
-    rng=random.Random(seed*1009+(13 if split=="train" else 29))
+    offsets={"train":13,"validation":23,"test":29}
+    if split not in offsets: raise ValueError("invalid split")
+    rng=random.Random(seed*1009+offsets[split])
     regular=160 if split=="train" else 80
     rows=[]
     for family in FAMILIES:
@@ -119,10 +121,12 @@ def audit(evidence, freeze, source_root):
         if sha(raw)!=record.get("evidence_sha256") or len(raw)!=record.get("evidence_bytes"):
             errors.append(f"{seed}:evidence_hash")
         doc=json.loads(raw)
-        train=regen(seed,"train"); test=regen(seed,"test")
+        train=regen(seed,"train"); validation=regen(seed,"validation"); test=regen(seed,"test")
         if doc.get("train_rows")!=train: errors.append(f"{seed}:train_regeneration")
+        if doc.get("validation_rows")!=validation: errors.append(f"{seed}:validation_regeneration")
         if doc.get("test_rows")!=test: errors.append(f"{seed}:test_regeneration")
-        if len(test)!=record.get("rows_test") or len(train)!=record.get("rows_train"):
+        if (len(test)!=record.get("rows_test") or len(train)!=record.get("rows_train")
+                or len(validation)!=record.get("rows_validation")):
             errors.append(f"{seed}:row_denominator")
         byarm={}
         for arm in ARMS:
@@ -146,10 +150,39 @@ def audit(evidence, freeze, source_root):
             for i,row in enumerate(test):
                 if row["history_status"]!="current": recomputed[i]=3
             if pred!=recomputed: errors.append(f"{seed}:{arm}:prediction_or_fail_closed_gate")
+            val_logits=[linear_logits(row,arm,result["state"]) for row in validation]
+            saved_val_logits=result.get("validation_logits",[])
+            val_pred=result.get("validation_predictions",[])
+            if len(val_pred)!=len(validation) or len(saved_val_logits)!=len(validation):
+                errors.append(f"{seed}:{arm}:validation_denominator")
+            else:
+                if any(len(got)!=4 or any(not close(got[j],want[j]) for j in range(4))
+                       for got,want in zip(saved_val_logits,val_logits)):
+                    errors.append(f"{seed}:{arm}:validation_logit_recompute")
+                expected_val=[max(range(4),key=lambda c:logit[c]) for logit in val_logits]
+                for i,row in enumerate(validation):
+                    if row["history_status"]!="current": expected_val[i]=3
+                if val_pred!=expected_val: errors.append(f"{seed}:{arm}:validation_prediction")
+                if result.get("validation_metrics")!= {
+                    "overall":metric(validation,val_pred),
+                    "subgroups":{
+                        name:metric([r for r in validation if keep(r)],
+                                    [val_pred[i] for i,r in enumerate(validation) if keep(r)])
+                        for name,keep in {
+                            "alias":lambda r:r["group"]=="alias",
+                            "stress":lambda r:r["stress"],
+                            "noop":lambda r:r["label"]==2,
+                            "required":lambda r:r["label"] in (0,1),
+                            "invalid":lambda r:r["history_status"]!="current",
+                        }.items() if any(keep(r) for r in validation)
+                    }}:
+                    errors.append(f"{seed}:{arm}:validation_metric_recompute")
             m=metric(test,pred); saved=result.get("metrics",{}).get("overall")
             if saved!=m: errors.append(f"{seed}:{arm}:metric_recompute")
             if record.get("metrics",{}).get(arm)!=result.get("metrics"):
                 errors.append(f"{seed}:{arm}:run_summary_metrics")
+            if record.get("validation_metrics",{}).get(arm)!=result.get("validation_metrics"):
+                errors.append(f"{seed}:{arm}:run_summary_validation_metrics")
             if record.get("decision_latency_p50_ms",{}).get(arm)!=result.get("decision_latency_p50_ms") or record.get("decision_latency_p95_ms",{}).get(arm)!=result.get("decision_latency_p95_ms") or record.get("state_bytes",{}).get(arm)!=result.get("state_bytes"):
                 errors.append(f"{seed}:{arm}:run_summary_measurements")
             byarm[arm]={"overall":m,"alias":metric([r for r in test if r["group"]=="alias"],
