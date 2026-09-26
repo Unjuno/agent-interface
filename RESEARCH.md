@@ -993,6 +993,8 @@ A candidate is promoted only when:
 
 Negative results are retained because they constrain the design space.
 
+- [Issue #3066 v4 preformal HOLD](research/integration/safety_graph_live_x11_3066_v4/PREFORMAL_HOLD.md) — bare Xvfb construction reached single-shot recovery; Openbox stopped before an independently observed press. No formal invocation or runtime claim; v3 failure remains unchanged.
+
 - fixed sleeps as a correctness mechanism — rejected;
 - method-wide invalidation for every route failure — rejected as default;
 - blind re-anchor-and-continue — unstable in fresh runs;
