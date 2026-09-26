@@ -1,0 +1,52 @@
+{
+  "allocation": "checkpoint-publication-batches-20260922-02",
+  "audit_commands": [
+    "python -B finalize.py",
+    "python -B audit_batches.py evidence --output verification/FORMAL_AUDIT.json",
+    "python -B inherited/test_controls.py evidence/formal --output verification/RAW_MUTATIONS.json",
+    "python -B test_envelope_controls.py evidence --output verification/BATCH_MUTATIONS.json"
+  ],
+  "batch_limit_seconds": 150,
+  "commands": [
+    "python -B supervise.py --batch 0",
+    "python -B supervise.py --batch 1",
+    "python -B supervise.py --batch 2"
+  ],
+  "created_utc": "2026-09-21T19:54:49.845375+00:00",
+  "external_tool_envelope_seconds": 180,
+  "formal_batches_started": 0,
+  "issue": 3992,
+  "schema": "checkpoint-batch-freeze-v2",
+  "sha256": {
+    "BATCH_PLAN.json": "180c6b4b929db1217027686e0ad88d3bd7fcc4821b4c3de1fe5f06375aefaa20",
+    "ENVIRONMENT.json": "5cdbb28be9da7f7d022a5b36f55bb1dbe43930898e8b4ca1d0d08587b1372f6b",
+    "PLAN_V2.md": "15827cc4cc78bad00bd8d1931315afc85567d843dea628700b8f71fbd6cd8daf",
+    "audit_batches.py": "3d63e04c1a2ac73cc47324f276cf1fe454f08f75767c599e878551b50abb1492",
+    "batch.py": "9b3cb5212ced7050e832ca05d21feef719ab3749ed6609492baea199d2a11a0a",
+    "finalize.py": "0da82da385fc8e60004225306fe2b27e77c7517d576e6b4c29f6516e2c98df97",
+    "inherited/FREEZE.json": "878f68f1e8e1d94cefaabdc53f9207e2d04326eab4a782f25221e9c31aef1f14",
+    "inherited/PLAN.json": "c7bbf1aed35847369bf74a09c2fb8b1ff7bc09807b0a07ae7dee17698f653a39",
+    "inherited/audit.py": "848775056727c6a807b7c172796f885aed8b19bb3037504b1c6f4e90322a1301",
+    "inherited/common.py": "42d555ae8bf7696052e7792a92bc4e7d41478ef2b97df6b46053ae71a33446ff",
+    "inherited/inherited_io.py": "3578e55bdc4bc77280a73f0c53d4be28e8f004abce7c1da3d6d30c7be0691761",
+    "inherited/reader.py": "eb0602b7efdb3b148543298e084e64fc2503a3c1f4fe50b0eb7deb539dea0a59",
+    "inherited/run.py": "7b47c9e78c116e2fe77c7ab7e5f7fc2042c8fe7aef3f7ae5c7b8e89debbd8641",
+    "inherited/test_controls.py": "d528a95d77c82a3c96221f51d74b83fb58a8b5862fa9559416426062e7996f4d",
+    "inherited/writer.py": "c0777e2f58c30b8f66e390d15d3613b74b2b0b0748f3d1427e2a0f024299ca95",
+    "previous-delivery.zip": "867427c3117ea28c7abe22c51db764f57574dd7f04cfece7432478c7388d2ebf",
+    "supervise.py": "3ae5119ddc2411ac01cc711d42e729c66b318a532579ffcc29edda085522031d",
+    "test_batches.py": "e12f9538057f9237e18be8a42b34ec16cd697f5f6b959648b7559a26607b79bd",
+    "test_envelope_controls.py": "73f43e4bf49f367ac2d31980833db4c901db1c8ed1f217d44f1f61a6ab33a810",
+    "verification/inherited-unit-exit.json": "0dc152695c1d207d0e04104499a40be2ab63773c84138951ec77eb1b5dd9f7a7",
+    "verification/inherited-unit.stderr": "fefa2662197ff97b0c5e6f4f1167c96f5625b3ac0c12df64bf2199df688119c8",
+    "verification/inherited-unit.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "verification/predecessor-prefix-audit.json": "d21a27a1a09c1167b4db65fc72662699e324d82ea657ef1358c9416a48e0dc58",
+    "verification/predecessor-prefix.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "verification/predecessor-prefix.stdout": "c9b443d0dc43cbdc0c743e74695cf75a9a070ba1c8c703d34db4a3658dbcaaa4",
+    "verification/predecessor-reaudit-receipt.json": "f17bd34027a506a510318e1202d23607dcd93356f7b5b5e2ff4781b8ee4fb025",
+    "verification/wrapper-tests-exit.json": "4a3fe59aeb3541099631957b9e5e64280956b064a5304a49919a08171dc12bc9",
+    "verification/wrapper-tests.stderr": "eb2e946e31e811ce84cc08cef5a3664e7d1ed239ad03d1450e40c40e280b7169",
+    "verification/wrapper-tests.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "source_main": "6d79043dadcecb88fd36fe4b4b577faa3573cde3"
+}
