@@ -145,6 +145,15 @@ not automatic host registration or demonstrated latency/token savings. Preserve
 complete JSON output; truncation or split chunks must never trigger action replay.
 
 
+## Exact title feedback
+
+`expected_title` is the complete, case-sensitive window title;
+the existing feedback check uses equality, not substring matching. For example,
+use `shape.svg - Inkscape` for that displayed title, rather than `shape.svg`.
+An unmatched title can consume the feedback timeout and remain `pending` even
+when the input completed. Select the expected title from the actual application
+state; a title match alone never establishes the task result or saved effect.
+
 ## Returned continuation reference
 
 Read `outcome_summary.feedback_status`, `image_status` and `continuation`
