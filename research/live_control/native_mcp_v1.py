@@ -178,6 +178,10 @@ def create_server(run_directory, *, allocation=None):
         Uses existing guarded click/keyboard tail and immutable stage publication.
         Never retry submit after timeout/error. Pending returns decision_sha256:
         use native_resume. Task success is separate from input completion.
+        Inspect image_status and continuation separately from feedback_status.
+        When continuation.status=source_available, view the returned image and
+        use its stage/source_sequence for a new decision; no source-file read is
+        needed. This is retained evidence, not freshness or permission to replay.
         Managed responses include a process snapshot; it may still be live.
         interaction=observe requests one fresh capture without input; include only
         source_sequence and interaction. It consumes a stage and does not finish.
