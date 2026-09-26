@@ -32,11 +32,11 @@ class HostBrokerContractTest(unittest.TestCase):
         return process_returncode, receipt, response
 
     def test_once_preserves_zero_child_exit(self):
-        child = subprocess.CompletedProcess(["fake-codex"], 0, "{}\\n", "")
+        child = subprocess.CompletedProcess(["fake-codex"], 0, "{}\n", "")
         process_returncode, receipt, response = self.run_once_with_child(child_result=child)
         self.assertEqual(process_returncode, 0)
         self.assertEqual(receipt["returncode"], 0)
-        self.assertEqual(response, "{}\\n")
+        self.assertEqual(response, "{}\n")
 
     def test_once_propagates_nonzero_child_exit(self):
         child = subprocess.CompletedProcess(["fake-codex"], 23, "", "fixture failure")
