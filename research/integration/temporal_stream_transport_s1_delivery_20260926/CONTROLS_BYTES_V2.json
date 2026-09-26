@@ -1,0 +1,21 @@
+{
+  "adapter_reruns": 0,
+  "controls": [
+    {"after_sha256":"f188449c9199bb22363e3439fc64e6a78764f93d35e223e83f6bbd978fb5d7de","auditor_exception":false,"before_sha256":"a386acee0b9c52792c128e0e2fc96d868ac5ca6681370a7af9f599d97417bb9c","byte_changed":true,"errors":["prefix semantics"],"name":"false_prefix","rejected":true},
+    {"after_sha256":"9579300bb92200e44bb0388e7fa9950adccc43586c60cae2e3d93003e0d7e076","auditor_exception":false,"before_sha256":"a386acee0b9c52792c128e0e2fc96d868ac5ca6681370a7af9f599d97417bb9c","byte_changed":true,"errors":["ordinal response"],"name":"ordinal","rejected":true},
+    {"after_sha256":"8da36ac14e61640d42b0faf8454c31e3837959a1e143f9114ae2773a74ea2ece","auditor_exception":false,"before_sha256":"a386acee0b9c52792c128e0e2fc96d868ac5ca6681370a7af9f599d97417bb9c","byte_changed":true,"errors":["authority separation"],"name":"authority","rejected":true},
+    {"after_sha256":"36761f6481ee69ac46df3f8789470858205d1a360ded65a384f583ea5acf8ee4","auditor_exception":false,"before_sha256":"a386acee0b9c52792c128e0e2fc96d868ac5ca6681370a7af9f599d97417bb9c","byte_changed":true,"errors":["frozen request bytes","written bytes","complete wire read"],"name":"input_bytes","rejected":true},
+    {"after_sha256":"dd9940dbb4e7aa5274863d6ebf23fcf59a0b12def2139ab692e811ccdbed7587","auditor_exception":false,"before_sha256":"a386acee0b9c52792c128e0e2fc96d868ac5ca6681370a7af9f599d97417bb9c","byte_changed":true,"errors":["actual read prefix","complete wire read"],"name":"read_bytes","rejected":true},
+    {"after_sha256":"ba9d5edbaf99a673bed00581d9d4932e546dbdf513bfe454e086cc5d983c9bd7","auditor_exception":false,"before_sha256":"a386acee0b9c52792c128e0e2fc96d868ac5ca6681370a7af9f599d97417bb9c","byte_changed":true,"errors":["child exit"],"name":"boolean_exit","rejected":true},
+    {"after_sha256":"7bcc9034e2c66c55309cc0656eb10c90eb39ceaafa1d326cee3c58fab6a0e09c","auditor_exception":false,"before_sha256":"a386acee0b9c52792c128e0e2fc96d868ac5ca6681370a7af9f599d97417bb9c","byte_changed":true,"errors":["read cap"],"name":"read_cap","rejected":true},
+    {"after_sha256":"8033b8b1d23d3f6832318b7ecaf498b473fecfc6b5352d85d7ef1504f32ea520","auditor_exception":false,"before_sha256":"a386acee0b9c52792c128e0e2fc96d868ac5ca6681370a7af9f599d97417bb9c","byte_changed":true,"errors":["start receipt","terminal process identity"],"name":"pid","rejected":true},
+    {"after_sha256":"a8c7287bdb3a2b650282d29aa733eaa62c6377b0d18cf307520444f6c6692f78","auditor_exception":false,"before_sha256":"a386acee0b9c52792c128e0e2fc96d868ac5ca6681370a7af9f599d97417bb9c","byte_changed":true,"errors":["terminal count"],"name":"terminal_count","rejected":true},
+    {"after_sha256":"e72d5768b6bf113ad2e1718e50a1798d14104e9c87b6b413ebe5c6e067eabee3","auditor_exception":false,"before_sha256":"a386acee0b9c52792c128e0e2fc96d868ac5ca6681370a7af9f599d97417bb9c","byte_changed":true,"errors":["process clock"],"name":"clock","rejected":true},
+    {"after_sha256":"6dd2897a39f3726914fe93f9b0fa323878d9c03f45dd39bbbc852b548a283a83","auditor_exception":false,"before_sha256":"a386acee0b9c52792c128e0e2fc96d868ac5ca6681370a7af9f599d97417bb9c","byte_changed":true,"errors":["forced cleanup"],"name":"forced","rejected":true},
+    {"after_sha256":"4259f64496ae3cbce5ebe5d6592aec1bab79456a036c1c1c201286d1faed2a35","auditor_exception":false,"before_sha256":"a386acee0b9c52792c128e0e2fc96d868ac5ca6681370a7af9f599d97417bb9c","byte_changed":true,"errors":["actual EOF"],"name":"missing_EOF","rejected":true}
+  ],
+  "no_op_copy_correctly_unchanged": true,
+  "original_controls_verdict_preserved": "FAIL_CONTROLS",
+  "original_files_modified": false,
+  "verdict": "PASS_VERSIONED_BYTE_CONTROLS"
+}
