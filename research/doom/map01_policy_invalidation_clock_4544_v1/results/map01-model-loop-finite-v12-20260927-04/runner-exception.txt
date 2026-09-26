@@ -1,0 +1,20 @@
+Formal allocation invoked once with seed 990641; it is consumed.
+
+Traceback (most recent call last):
+  File "research/doom/map01_policy_invalidation_clock_4544_v1/adapter_v2.py", line 47, in <module>
+    main()
+  File "research/doom/map01_policy_invalidation_clock_4544_v1/adapter_v2.py", line 43, in main
+    v10.main()
+  File "research/doom/map01_model_loop_finite_v10/adapter.py", line 36, in main
+    module.main()
+  File "research/doom/map01_overlap_controller_v39.py", line 1137, in main
+  File "research/doom/map01_overlap_controller_v39.py", line 1039, in execute_segment
+  File "research/doom/map01_overlap_controller_v39.py", line 513, in wait
+  File "research/doom/map01_overlap_controller_v39.py", line 275, in observe
+  File "research/live_control/running_action_guard_v2.py", line 224, in observe
+  File "research/live_control/running_action_guard_v1.py", line 121, in check_current
+  File "research/live_control/action_validity_admission_v1.py", line 150, in evaluate_action_validity
+ValueError: controller decision precedes current snapshot
+
+The exception occurred before the final policy-invalidation translation path.
+No policy-invalidation translation log or final report was produced.
