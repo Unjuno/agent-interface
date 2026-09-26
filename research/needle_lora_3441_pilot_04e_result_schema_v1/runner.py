@@ -206,7 +206,7 @@ def main():
         "allocation": "needle-lora-3441-pilot-04e-result-schema-20260926-01",
         "outcome": "PENDING_CLASSIFICATION",
         "device": {"name": torch.cuda.get_device_name(DEVICE), "torch": torch.__version__,
-                   "cuda": torch.version.cuda, "execution": "Windows host; Docker daemon unavailable"},
+                   "cuda": torch.version.cuda, "execution": "Windows host CUDA; Docker Desktop available but not used"},
         "parameters": parameter_record(),
         "data_sha256": {"A_train": ha, "B_support": hb, "C_support": hc,
                         "A_eval": hea, "B_eval": heb, "C_eval": hec},
@@ -232,4 +232,3 @@ def main():
     print(json.dumps(result, indent=2, sort_keys=True))
 
 if __name__ == "__main__": main()
-
