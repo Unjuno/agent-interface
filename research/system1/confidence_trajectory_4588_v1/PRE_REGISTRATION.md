@@ -19,4 +19,3 @@ Cached `needle-pilot05:local` only; CPU, one torch thread, no network, read-only
 ## Limits
 
 Synthetic temporal confidence only. No real perception calibration, cross-app transfer, task success, live action safety, human tempo, or general Local System-1 claim.
-
