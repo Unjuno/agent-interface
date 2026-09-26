@@ -5,10 +5,13 @@
   "preregistration_commit": "e07604f5e54b562aba8f317d97963e6349fc5945",
   "parent_main_commit": "91b5143989403754b360738c445f72b68b673718",
   "parent_allocation": "cactus-needle3-base-structured-action-20260926-01",
-  "parent_case_sha256": "927d6d3474f124550e2a88404ffd34dc8e406b168a9c9f0c2b553b1ed21311de",
-  "parent_freeze_sha256": "32f476f36ed58a49684df79389ef339199519187f29a8499afc44206a055ab18",
-  "parent_result_sha256": "8ca6531d3eaf8bcca99f596c5d811d27a639ce961b1fec6f306db1f5c66a7936",
-  "parent_audit_sha256": "2c9f12ae36daf5204486595339adef511d01aa06f30647c4594f07e0542b2d63",
+  "parent_git_blob_sha1": {
+    "CASES.json": "4250f1bf5429907234aca2e0a5c6c714db3daaa1",
+    "FREEZE.json": "6f56fee85c94a449b25cacfadb1675d4116f0162",
+    "runner.py": "596b05b729999094d6b5b2c39019d7ea4bb4180f",
+    "results/formal01/formal-result.json": "e09de974195dc849b5245a1cdf581b9eddb61105",
+    "results/formal01/audit.json": "00323aab637092448ebe2ac4e64e5d57893a949d"
+  },
   "parent_baseline": {
     "exact_cases": "0/7",
     "model_decisions": 7,
@@ -37,6 +40,15 @@
     "labels": "synthetic authored demonstrations; no actual Astra supervision; no hidden chain-of-thought",
     "composition": {"set_field_and_save_steps": 20, "reminder_toggles": 4, "yield": 5, "no_action": 3},
     "token_audit": {"sequence_length": 1024, "min_supervised_tokens": 22, "max_supervised_tokens": 52, "empty_rows": 0}
+  },
+  "preflight_audit": {
+    "script": "audit_freeze.py",
+    "script_sha256": "a5993797029717916e842dbdc424cb283a7c88f15ba6c0821625ae5b3c286ef2",
+    "result_sha256": "6d346405769fa13033a6383a4258c928b862d3ad1ccfcea38c0aca33a0ae11b3",
+    "pass": true,
+    "errors": [],
+    "heldout_task_or_state_overlap": false,
+    "hidden_reasoning_fields": false
   },
   "training": {
     "command": "needle finetune support-32.jsonl --checkpoint /model/needle3.safetensors --epochs 3 --batch-size 2 --lr 0.0001 --lora-rank 8 --lora-alpha 16 --max-len 1024 --val-split 0.1 --seed 420532 --generate 0",
@@ -74,14 +86,12 @@
   "source_sha256": {
     "PRE_REGISTRATION.md": "40ffb086adefd24e82b913efe8f8e42c76ed0731544b69c49bc8950a67cf4099",
     "prepare_support.py": "002dd67ca2a441909a995640570dd3e9582b4c7278d303c0b31e4ad688cc98aa",
+    "audit_freeze.py": "a5993797029717916e842dbdc424cb283a7c88f15ba6c0821625ae5b3c286ef2",
     "support-32.jsonl": "4c1eb2c2b5d2399126cd995510c465e5491a0ed70922ed03c5357e0e605f2d16",
     "Dockerfile.train": "cd7b0c87945b62db73e62833e1a0b01650d8ca2fe9bf482b2e0cee75235910ff",
     "Dockerfile.train.dockerignore": "55d741a6ac9fa56dc2712036bb8445ffa174605de62d00398c755635dfb4c92d",
     "requirements.gpu.lock": "1a052e501c9c7783f6d6d58831faf4462ee22d7b1fb2c235c55bd01c6a98a77a",
-    "base/CASES.json": "927d6d3474f124550e2a88404ffd34dc8e406b168a9c9f0c2b553b1ed21311de",
-    "base/FREEZE.json": "32f476f36ed58a49684df79389ef339199519187f29a8499afc44206a055ab18",
-    "base/results/formal01/formal-result.json": "8ca6531d3eaf8bcca99f596c5d811d27a639ce961b1fec6f306db1f5c66a7936",
-    "base/results/formal01/audit.json": "2c9f12ae36daf5204486595339adef511d01aa06f30647c4594f07e0542b2d63"
+    "PREFLIGHT_AUDIT.json": "6d346405769fa13033a6383a4258c928b862d3ad1ccfcea38c0aca33a0ae11b3"
   }
 }
 
