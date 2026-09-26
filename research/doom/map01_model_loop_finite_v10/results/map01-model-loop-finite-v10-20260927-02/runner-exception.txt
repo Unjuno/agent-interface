@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "research/doom/map01_model_loop_finite_v10/adapter.py", line 39, in <module>
+    main()
+  File "research/doom/map01_model_loop_finite_v10/adapter.py", line 36, in main
+    module.main()
+  File "research/doom/map01_overlap_controller_v39.py", line 802, in main
+    final_action_admission=final_admission_from_planner_result(
+  File "research/doom/map01_overlap_controller_v39.py", line 213, in final_admission_from_planner_result
+    return decide_final_admission({
+  File "research/live_control/final_action_admission_v2.py", line 22, in decide_final_admission
+    receipt = decide_v1(planner_terminal, policy_invalidation, controller_decided_ns)
+  File "research/live_control/final_action_admission_v1.py", line 44, in decide_final_admission
+    raise ValueError("controller decision precedes observed boundary")
+ValueError: controller decision precedes observed boundary
+
+No same-seed or same-output retry was made.
