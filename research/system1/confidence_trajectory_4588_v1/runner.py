@@ -101,7 +101,10 @@ def example(rng, seed, split, family, index):
 
 
 def dataset(seed, split):
-    rng = random.Random(seed * 1009 + (13 if split == "train" else 29))
+    offsets = {"train": 13, "validation": 23, "test": 29}
+    if split not in offsets:
+        raise ValueError("invalid split")
+    rng = random.Random(seed * 1009 + offsets[split])
     rows = []
     regular = 160 if split == "train" else 80
     aliases = regular * 2
@@ -143,7 +146,7 @@ def row_metrics(rows, pred):
     return {"overall": all_m, "subgroups": subsets}
 
 
-def train_arm(seed, arm, train_rows, test_rows):
+def train_arm(seed, arm, train_rows, validation_rows, test_rows):
     ids = ARMS[arm]
     x = torch.tensor([[(r["smoothed_features"] if arm == "CAUSAL_SMOOTHED" else r["features"])[j]
                        if j in ids else 0.0 for j in range(9)] for r in train_rows], dtype=torch.float32)
@@ -165,9 +168,16 @@ def train_arm(seed, arm, train_rows, test_rows):
         loss.backward()
         opt.step()
     elapsed_ms = (time.perf_counter_ns() - start) / 1e6
+    vx = torch.tensor([[(r["smoothed_features"] if arm == "CAUSAL_SMOOTHED" else r["features"])[j]
+                        if j in ids else 0.0 for j in range(9)] for r in validation_rows], dtype=torch.float32)
     tx = torch.tensor([[(r["smoothed_features"] if arm == "CAUSAL_SMOOTHED" else r["features"])[j]
                         if j in ids else 0.0 for j in range(9)] for r in test_rows], dtype=torch.float32)
     with torch.no_grad():
+        validation_logits = model(vx)
+        validation_pred = validation_logits.argmax(dim=1).tolist()
+        for i, row in enumerate(validation_rows):
+            if row["history_status"] != "current":
+                validation_pred[i] = 3
         logits = model(tx)
         pred = logits.argmax(dim=1).tolist()
         decision_latencies_ms = []
@@ -185,7 +195,11 @@ def train_arm(seed, arm, train_rows, test_rows):
     ordered_latency = sorted(decision_latencies_ms)
     p95_index = max(0, math.ceil(0.95 * len(ordered_latency)) - 1)
     p50_index = max(0, math.ceil(0.50 * len(ordered_latency)) - 1)
-    return {"metrics": row_metrics(test_rows, pred), "elapsed_train_ms": elapsed_ms,
+    return {"metrics": row_metrics(test_rows, pred),
+            "validation_metrics": row_metrics(validation_rows, validation_pred),
+            "validation_predictions": validation_pred,
+            "validation_logits": validation_logits.tolist(),
+            "elapsed_train_ms": elapsed_ms,
             "decision_latency_ms": decision_latencies_ms,
             "decision_latency_p50_ms": ordered_latency[p50_index],
             "decision_latency_p95_ms": ordered_latency[p95_index],
@@ -206,20 +220,25 @@ def main():
     results = {"schema": "confidence-trajectory-run-v1", "seeds": [],
                "torch": torch.__version__, "threads": torch.get_num_threads()}
     for seed in SEEDS:
-        train_rows, test_rows = dataset(seed, "train"), dataset(seed, "test")
+        train_rows = dataset(seed, "train")
+        validation_rows = dataset(seed, "validation")
+        test_rows = dataset(seed, "test")
         arm_results = {}
         for arm in ARMS:
-            arm_results[arm] = train_arm(seed, arm, train_rows, test_rows)
-        seed_doc = {"seed": seed, "train_rows": train_rows, "test_rows": test_rows,
+            arm_results[arm] = train_arm(seed, arm, train_rows, validation_rows, test_rows)
+        seed_doc = {"seed": seed, "train_rows": train_rows,
+                    "validation_rows": validation_rows, "test_rows": test_rows,
                     "arms": arm_results}
         seed_dir = out / f"seed-{seed}"
         seed_dir.mkdir()
         raw = canonical(seed_doc) + b"\n"
         (seed_dir / "evidence.json").write_bytes(raw)
         results["seeds"].append({"seed": seed, "rows_train": len(train_rows),
+                                  "rows_validation": len(validation_rows),
                                   "rows_test": len(test_rows), "evidence_sha256": sha(raw),
                                   "evidence_bytes": len(raw),
                                   "metrics": {a: arm_results[a]["metrics"] for a in ARMS},
+                                  "validation_metrics": {a: arm_results[a]["validation_metrics"] for a in ARMS},
                                   "elapsed_train_ms": {a: arm_results[a]["elapsed_train_ms"] for a in ARMS},
                                   "decision_latency_p50_ms": {a: arm_results[a]["decision_latency_p50_ms"] for a in ARMS},
                                   "decision_latency_p95_ms": {a: arm_results[a]["decision_latency_p95_ms"] for a in ARMS},
