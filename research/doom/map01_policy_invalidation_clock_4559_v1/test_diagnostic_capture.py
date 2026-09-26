@@ -94,6 +94,14 @@ class DiagnosticCaptureTests(unittest.TestCase):
             monitor = module.DoomRunningActionMonitor(guard, None, None)
             monitor.clock_boundary_log = root / "boundary.jsonl"
             module._RUNTIME_CLOCK_OFFSET_LOWER = 0
+            module._RUNNING_ACTION_CLOCK_CALIBRATION = {
+                "stage": "test", "same_session": True,
+                "host_domain": "host_monotonic_ns",
+                "runtime_domain": "runtime_monotonic_ns",
+                "samples": [{"host_send_ns": 90, "runtime_ns": 100,
+                             "host_receive_ns": 95, "offset_lower_ns": 5,
+                             "offset_upper_ns": 10}],
+            }
             module.time.perf_counter_ns = lambda: 100
             with self.assertRaisesRegex(ValueError, "controller decision precedes current snapshot"):
                 monitor.observe(typed_event(101))
@@ -102,6 +110,9 @@ class DiagnosticCaptureTests(unittest.TestCase):
             self.assertEqual(row["capture_ns"], 101)
             self.assertEqual(row["controller_decided_ns"], 100)
             self.assertEqual(row["comparison_delta_ns"], -1)
+            self.assertEqual(row["calibration"]["stage"], "test")
+            self.assertEqual(len(row["calibration"]["samples"]), 1)
+            self.assertEqual(len(row["calibration_sha256"]), 64)
             self.assertTrue(guard.called)
 
     def test_log_failure_stops_before_guard(self):
