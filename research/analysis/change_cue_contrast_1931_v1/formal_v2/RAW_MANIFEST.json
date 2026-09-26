@@ -1,0 +1,32 @@
+{
+  "ordered_hash_column_roots": {
+    "before_sha256_ordered_binary_sha256": "9789ca0f804dc5ed7033e1de4865754a691c438a151d954ae907c8accc6f849b",
+    "presentation_sha256_ordered_binary_sha256": "398510ebbee6f57aefeb9a1f38141b649813984bf17350b3bf222cbaedd91b02",
+    "source_sha256_ordered_binary_sha256": "db9871f10ef18a5f1c85b7b6793527b166c887d3d17275ff1bb2c7c08dd57ee5"
+  },
+  "original_rows_csv_gz": {
+    "bytes": 4756475,
+    "decompressed_csv_bytes": 22981634,
+    "decompressed_csv_sha256": "e0a249a57122076933a0cebf3378211c10466c451c870e17519c738a25aa5100",
+    "local_sha256": "193d4ceb87c507fafea9e7525658b515f2dcc3f1fcd5dd1a889151b0baecbdd0",
+    "published_directly": false,
+    "reason": "GitHub MCP contents path accepts UTF-8 text; large binary artifact is represented by compact measurement corpus plus ordered hash-column roots and exact original digests.",
+    "rows": 78080
+  },
+  "published_measurement_corpus": {
+    "binary_xz_bytes": 195512,
+    "binary_xz_sha256": "43eb9b8e0e322b6ca5d7e0e0e13d26feccb4663f4a4103a780ac8d68b0c49abe",
+    "columns_omitted_as_deterministically_recomputable": ["before_sha256","source_sha256","presentation_sha256"],
+    "decoded_csv_sha256": "68c6a94e4c159e7b64a178dee1c2fa40ca9a1a472901c38e5284f211edb0a383",
+    "encoding": "base64(xz(csv))",
+    "file": "ROWS_MEASUREMENTS.csv.xz.b64",
+    "rows": 78080
+  },
+  "schema": "change-cue-raw-publication-v1",
+  "scope": "Publication representation only; does not alter the formal result or claim complete byte-for-byte GitHub retention of the original 4.75MB gzip.",
+  "witness_file": {
+    "file": "WITNESS_ROWS.csv",
+    "rows": 32,
+    "sha256": "6baa00dede7b8e1740de24bc4e603ffe2261ff2a9be8aa95f646768e9638f5b1"
+  }
+}
