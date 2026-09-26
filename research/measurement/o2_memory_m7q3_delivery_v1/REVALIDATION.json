@@ -1,0 +1,92 @@
+{
+  "audit": {
+    "audit_byte_identical": true,
+    "audit_sha256": "6639a97fa324aabacd39fcd5790bb19e33ea9411baa11a2500b929640c643070",
+    "controls": [
+      {
+        "changed": true,
+        "name": "peak_bool",
+        "reason": "MEMORY_TYPE",
+        "rejected": true
+      },
+      {
+        "changed": true,
+        "name": "peak_arithmetic",
+        "reason": "PEAK_ARITHMETIC",
+        "rejected": true
+      },
+      {
+        "changed": true,
+        "name": "pid",
+        "reason": "PID",
+        "rejected": true
+      },
+      {
+        "changed": true,
+        "name": "source",
+        "reason": "EFFECTIVE_SOURCE",
+        "rejected": true
+      },
+      {
+        "changed": true,
+        "name": "wire_digest",
+        "reason": "WIRE_HASH",
+        "rejected": true
+      },
+      {
+        "changed": true,
+        "name": "pixels",
+        "reason": "PIXELS_SEQUENCE",
+        "rejected": true
+      },
+      {
+        "changed": true,
+        "name": "authority",
+        "reason": "AUTHORITY",
+        "rejected": true
+      },
+      {
+        "changed": true,
+        "name": "sequence",
+        "reason": "PIXELS_SEQUENCE",
+        "rejected": true
+      },
+      {
+        "changed": true,
+        "name": "rss",
+        "reason": "PROC_COUNTER_MISMATCH",
+        "rejected": true
+      },
+      {
+        "changed": true,
+        "name": "route",
+        "reason": "ROUTE_STATS",
+        "rejected": true
+      },
+      {
+        "changed": true,
+        "name": "child_exit",
+        "reason": "EXIT",
+        "rejected": true
+      },
+      {
+        "changed": true,
+        "name": "actual_wire",
+        "reason": "WIRE_HASH",
+        "rejected": true
+      }
+    ],
+    "controls_rejected": 12,
+    "helper_chronology": "post-measurement; not a new public preregistration",
+    "measured_rows": 54,
+    "new_gui_or_model_calls": 0,
+    "new_measurement_workers": 0,
+    "status": "PASS_READONLY_VERIFICATION"
+  },
+  "bytes": 63114042,
+  "files": 457,
+  "measurement_workers_started": 0,
+  "original_manifest_sha256": "4984ecf167c909fbbcc6ad225341a6e7a3e00147bf8067648189d73abe4c303a",
+  "readonly_exit": 0,
+  "status": "RESTORED_EXACT_ORIGINAL"
+}
