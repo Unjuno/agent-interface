@@ -52,12 +52,46 @@ def run_case(controller, source: dict, current: dict, decided_ns: int, log: Path
     receipt = guard.receipt()
     return {"controller_decided_ns": decided_ns,
             "capture_ns": current["capture_ns"],
+            "observation_sequence": current["sequence"],
             "delta_ns": decided_ns - current["capture_ns"],
             "logged_before_result": len(rows) == 1,
             "guard_state": receipt["state"],
             "logical_authority_still_active": receipt["current_input_authority"],
             "error": error,
             "row": rows[0] if rows else None}
+
+
+def boundary_case_is_valid(result: dict, expected_delta: int, expected_error: str | None) -> bool:
+    """Require an exact durable operand row and an accepted live guard receipt."""
+    row = result.get("row")
+    if not isinstance(row, dict) or result.get("logged_before_result") is not True:
+        return False
+    event = row.get("observation_event")
+    if not isinstance(event, dict):
+        return False
+    if result.get("delta_ns") != expected_delta:
+        return False
+    if result.get("error") != expected_error:
+        return False
+    if result.get("guard_state") != "INPUT_ACTIVE":
+        return False
+    if result.get("logical_authority_still_active") is not True:
+        return False
+    if row.get("schema") != "running-action-clock-check-v1":
+        return False
+    if row.get("capture_ns") != result.get("capture_ns"):
+        return False
+    if row.get("controller_decided_ns") != result.get("controller_decided_ns"):
+        return False
+    if row.get("comparison_delta_ns") != expected_delta:
+        return False
+    if row.get("sequence") != result.get("observation_sequence"):
+        return False
+    if event.get("sequence") != result.get("observation_sequence"):
+        return False
+    if event.get("capture_ns") != result.get("capture_ns"):
+        return False
+    return True
 
 
 def main() -> None:
@@ -86,12 +120,12 @@ def main() -> None:
                "source_sequence": source["sequence"],
                "cases": {"inverted": inverted_result, "equal": equal_result,
                          "ordered": ordered_result}}
-    expected = (inverted_result["logged_before_result"] and
-                inverted_result["delta_ns"] == -1 and
-                inverted_result["error"] == "controller decision precedes current snapshot" and
-                inverted_result["guard_state"] == "INPUT_ACTIVE" and
-                equal_result["error"] is None and equal_result["delta_ns"] == 0 and
-                ordered_result["error"] is None and ordered_result["delta_ns"] == 1)
+    expected = (
+        boundary_case_is_valid(inverted_result, -1,
+                               "controller decision precedes current snapshot")
+        and boundary_case_is_valid(equal_result, 0, None)
+        and boundary_case_is_valid(ordered_result, 1, None)
+    )
     results["pass"] = expected
     (args.out / "summary.json").write_text(json.dumps(results, indent=2) + "\n",
                                            encoding="utf-8")

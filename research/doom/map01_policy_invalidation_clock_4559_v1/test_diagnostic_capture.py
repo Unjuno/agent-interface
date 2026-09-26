@@ -14,6 +14,13 @@ import unittest
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 PYTHON = sys.executable
+_BOUNDARY_SPEC = importlib.util.spec_from_file_location(
+    "map01_boundary_replay_test",
+    HERE / "replay_real_observation_boundary_v13.py",
+)
+BOUNDARY_REPLAY = importlib.util.module_from_spec(_BOUNDARY_SPEC)
+assert _BOUNDARY_SPEC and _BOUNDARY_SPEC.loader
+_BOUNDARY_SPEC.loader.exec_module(BOUNDARY_REPLAY)
 
 
 class FakeGuard:
@@ -69,20 +76,78 @@ def typed_event(capture_ns: int) -> dict:
 
 def load_effective_module(directory: Path):
     effective = directory / "effective.py"
-    subprocess.run(
-        [PYTHON, "-B", str(HERE / "adapter_v13.py"), "--prepare-only", str(effective)],
-        cwd=REPO,
-        check=True,
-        env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
-        capture_output=True,
-        text=True,
-    )
+    try:
+        subprocess.run(
+            [PYTHON, "-B", str(HERE / "adapter_v13.py"), "--prepare-only", str(effective)],
+            cwd=REPO,
+            check=True,
+            env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+            capture_output=True,
+            text=True,
+        )
+    except subprocess.CalledProcessError as exc:
+        raise AssertionError(
+            f"adapter_v13 --prepare-only failed ({exc.returncode})\\n"
+            f"stdout:\\n{exc.stdout}\\nstderr:\\n{exc.stderr}"
+        ) from exc
     sys.path[:0] = [str(REPO / "research/doom"), str(REPO / "research/live_control")]
     spec = importlib.util.spec_from_file_location("v13_diagnostic_test_controller", effective)
     module = importlib.util.module_from_spec(spec)
     assert spec and spec.loader
     spec.loader.exec_module(module)
     return module
+
+
+class BoundaryPassGateTests(unittest.TestCase):
+    @staticmethod
+    def valid_case(delta: int, error=None) -> dict:
+        capture = 1000
+        decided = capture + delta
+        sequence = 7
+        row = {
+            "schema": "running-action-clock-check-v1",
+            "capture_ns": capture,
+            "controller_decided_ns": decided,
+            "comparison_delta_ns": delta,
+            "sequence": sequence,
+            "observation_event": {"sequence": sequence, "capture_ns": capture},
+        }
+        return {
+            "controller_decided_ns": decided,
+            "capture_ns": capture,
+            "observation_sequence": sequence,
+            "delta_ns": delta,
+            "logged_before_result": True,
+            "guard_state": "INPUT_ACTIVE",
+            "logical_authority_still_active": True,
+            "error": error,
+            "row": row,
+        }
+
+    def test_accepts_exact_inverted_equal_and_ordered_cases(self):
+        self.assertTrue(BOUNDARY_REPLAY.boundary_case_is_valid(
+            self.valid_case(-1, "controller decision precedes current snapshot"),
+            -1, "controller decision precedes current snapshot"))
+        self.assertTrue(BOUNDARY_REPLAY.boundary_case_is_valid(
+            self.valid_case(0), 0, None))
+        self.assertTrue(BOUNDARY_REPLAY.boundary_case_is_valid(
+            self.valid_case(1), 1, None))
+
+    def test_rejects_normal_cancellation_receipt_for_control(self):
+        case = self.valid_case(0)
+        case["guard_state"] = "CANCEL_REQUIRED"
+        self.assertFalse(BOUNDARY_REPLAY.boundary_case_is_valid(case, 0, None))
+
+    def test_rejects_missing_or_nonmatching_log_for_control(self):
+        case = self.valid_case(0)
+        case["logged_before_result"] = False
+        self.assertFalse(BOUNDARY_REPLAY.boundary_case_is_valid(case, 0, None))
+        case = self.valid_case(0)
+        case["row"]["controller_decided_ns"] += 1
+        self.assertFalse(BOUNDARY_REPLAY.boundary_case_is_valid(case, 0, None))
+        case = self.valid_case(0)
+        case["row"]["sequence"] += 1
+        self.assertFalse(BOUNDARY_REPLAY.boundary_case_is_valid(case, 0, None))
 
 
 class DiagnosticCaptureTests(unittest.TestCase):
