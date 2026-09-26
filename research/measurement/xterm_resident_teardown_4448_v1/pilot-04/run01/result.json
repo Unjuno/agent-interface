@@ -1,0 +1,209 @@
+{
+  "allocation": "issue4448-construction-pilot-04",
+  "arm_order": [
+    "ephemeral",
+    "resident"
+  ],
+  "arms": [
+    {
+      "actions": [
+        {
+          "action_start_ns": 14142342281806,
+          "effect_observed_ns": 14142418927715,
+          "effect_to_next_ready_ns": 8102079,
+          "keymap_neutral": true,
+          "keymap_neutral_ns": 14142419071300,
+          "next_ready_ns": 14142427029794,
+          "sequence": 0,
+          "xterm_exit": 0,
+          "xterm_pid": 23
+        },
+        {
+          "action_start_ns": 14142427061336,
+          "effect_observed_ns": 14142508815628,
+          "effect_to_next_ready_ns": 10532560,
+          "keymap_neutral": true,
+          "keymap_neutral_ns": 14142508919296,
+          "next_ready_ns": 14142519348188,
+          "sequence": 1,
+          "xterm_exit": 0,
+          "xterm_pid": 25
+        },
+        {
+          "action_start_ns": 14142519412731,
+          "effect_observed_ns": 14142599059586,
+          "effect_to_next_ready_ns": 10047722,
+          "keymap_neutral": true,
+          "keymap_neutral_ns": 14142599172629,
+          "next_ready_ns": 14142609107308,
+          "sequence": 2,
+          "xterm_exit": 0,
+          "xterm_pid": 27
+        },
+        {
+          "action_start_ns": 14142609196601,
+          "effect_observed_ns": 14142688442702,
+          "effect_to_next_ready_ns": 5694014,
+          "keymap_neutral": true,
+          "keymap_neutral_ns": 14142688522411,
+          "next_ready_ns": 14142694136716,
+          "sequence": 3,
+          "xterm_exit": 0,
+          "xterm_pid": 29
+        }
+      ],
+      "arm": "ephemeral",
+      "child_pids": [
+        24,
+        26,
+        28,
+        30
+      ],
+      "effect_records": [
+        {
+          "arm": "ephemeral",
+          "pid": 24,
+          "sequence": 0
+        },
+        {
+          "arm": "ephemeral",
+          "pid": 26,
+          "sequence": 0
+        },
+        {
+          "arm": "ephemeral",
+          "pid": 28,
+          "sequence": 0
+        },
+        {
+          "arm": "ephemeral",
+          "pid": 30,
+          "sequence": 0
+        }
+      ],
+      "pair_id": "pair01",
+      "release_verified": true,
+      "session_end_ns": 14142694186799,
+      "session_start_ns": 14142342278597,
+      "session_wall_ns": 351908202,
+      "xterm_exits": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "xterm_pids": [
+        23,
+        25,
+        27,
+        29
+      ]
+    },
+    {
+      "actions": [
+        {
+          "action_start_ns": 14142770049285,
+          "child_pid": 32,
+          "effect_observed_ns": 14142774984374,
+          "effect_to_next_ready_ns": 127501,
+          "keymap_neutral": true,
+          "keymap_neutral_ns": 14142775111667,
+          "next_ready_ns": 14142775111875,
+          "resident_final_shutdown_ns": 11070940,
+          "sequence": 0,
+          "xterm_and_child_still_live": true,
+          "xterm_exit": 0,
+          "xterm_pid": 31
+        },
+        {
+          "action_start_ns": 14142775121834,
+          "child_pid": 32,
+          "effect_observed_ns": 14142775524379,
+          "effect_to_next_ready_ns": 128252,
+          "keymap_neutral": true,
+          "keymap_neutral_ns": 14142775652214,
+          "next_ready_ns": 14142775652631,
+          "resident_final_shutdown_ns": 11070940,
+          "sequence": 1,
+          "xterm_and_child_still_live": true,
+          "xterm_exit": 0,
+          "xterm_pid": 31
+        },
+        {
+          "action_start_ns": 14142775711048,
+          "child_pid": 32,
+          "effect_observed_ns": 14142777347105,
+          "effect_to_next_ready_ns": 60751,
+          "keymap_neutral": true,
+          "keymap_neutral_ns": 14142777407648,
+          "next_ready_ns": 14142777407856,
+          "resident_final_shutdown_ns": 11070940,
+          "sequence": 2,
+          "xterm_and_child_still_live": true,
+          "xterm_exit": 0,
+          "xterm_pid": 31
+        },
+        {
+          "action_start_ns": 14142777412439,
+          "child_pid": 32,
+          "effect_observed_ns": 14142777644025,
+          "effect_to_next_ready_ns": 35667,
+          "keymap_neutral": true,
+          "keymap_neutral_ns": 14142777679484,
+          "next_ready_ns": 14142777679692,
+          "resident_final_shutdown_ns": 11070940,
+          "sequence": 3,
+          "xterm_and_child_still_live": true,
+          "xterm_exit": 0,
+          "xterm_pid": 31
+        }
+      ],
+      "arm": "resident",
+      "child_pids": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "effect_records": [
+        {
+          "arm": "resident",
+          "pid": 32,
+          "sequence": 0
+        },
+        {
+          "arm": "resident",
+          "pid": 32,
+          "sequence": 1
+        },
+        {
+          "arm": "resident",
+          "pid": 32,
+          "sequence": 2
+        },
+        {
+          "arm": "resident",
+          "pid": 32,
+          "sequence": 3
+        }
+      ],
+      "pair_id": "pair01",
+      "release_verified": true,
+      "session_end_ns": 14142788795925,
+      "session_start_ns": 14142694683763,
+      "session_wall_ns": 94112162,
+      "xterm_exits": [
+        0
+      ],
+      "xterm_pids": [
+        31
+      ]
+    }
+  ],
+  "classification": "CONSTRUCTION_ONLY_NOT_FORMAL",
+  "display": ":99",
+  "processes": {
+    "openbox": 17,
+    "xvfb": 6
+  }
+}
