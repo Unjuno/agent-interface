@@ -12,15 +12,22 @@ permissions:
 
 jobs:
   boundary-pass-gate:
-    timeout-minutes: 5
+    timeout-minutes: 10
     runs-on: ubuntu-24.04
-    container: python:3.12-slim
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Run construction and false-positive regression tests
+      - name: Run construction and false-positive regression tests in Python 3.12 container
         run: |
-          python -B -m unittest -v research/doom/map01_policy_invalidation_clock_4559_v1/test_diagnostic_capture.py
-      - name: Compile changed Python files
+          docker run --rm \
+            -v "$GITHUB_WORKSPACE:/src" \
+            -w /src \
+            python:3.12-slim \
+            python -B -m unittest -v research/doom/map01_policy_invalidation_clock_4559_v1/test_diagnostic_capture.py
+      - name: Compile changed Python files in Python 3.12 container
         run: |
-          python -B -m py_compile research/doom/map01_policy_invalidation_clock_4559_v1/replay_real_observation_boundary_v13.py research/doom/map01_policy_invalidation_clock_4559_v1/test_diagnostic_capture.py
+          docker run --rm \
+            -v "$GITHUB_WORKSPACE:/src" \
+            -w /src \
+            python:3.12-slim \
+            python -B -m py_compile research/doom/map01_policy_invalidation_clock_4559_v1/replay_real_observation_boundary_v13.py research/doom/map01_policy_invalidation_clock_4559_v1/test_diagnostic_capture.py
