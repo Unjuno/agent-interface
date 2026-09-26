@@ -1,0 +1,53 @@
+{
+  "arm": "recovery",
+  "candidate": "none",
+  "candidate_receipt": null,
+  "capture_fresh": false,
+  "captured_fresh_receipt": null,
+  "event_count": 86,
+  "fresh_observation_count": 0,
+  "guard_only": {
+    "admission": "REJECT_CONTEXT_CHANGED",
+    "mae": 0.044182609766721725
+  },
+  "id": "c02-drift-guard-only",
+  "old_receipt": {
+    "capture_ns": 2711165306540,
+    "frame_rgb_sha256": "bbf062253c1b316cc2abe3a4af181cb8b3610cfa23b0153d9b9f99a0efddf81b",
+    "image": "/work/out/c02-drift-guard-only/runtime/021.png",
+    "sequence": 21,
+    "session_id": "ecddb19d3ea24dceb8bb83625ac27f2c"
+  },
+  "reanchor": {
+    "admission": "REJECT_NO_FRESH_OBSERVATION",
+    "mae": null,
+    "reason": "NO_CANDIDATE_RECEIPT"
+  },
+  "release": {
+    "buttons_down": [],
+    "event": "owner_release",
+    "keys_down": [],
+    "reason": "release",
+    "valid_until_ns": 2714099651885,
+    "verified": true,
+    "verified_ns": 2711251096954
+  },
+  "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+  "schema": "bounded-fresh-reanchor-case-v2",
+  "score": {
+    "death_count": 0,
+    "kill_count": 0,
+    "map_exit": false,
+    "player_dead": false
+  },
+  "seed": 254812,
+  "session_id": "ecddb19d3ea24dceb8bb83625ac27f2c",
+  "source_receipt": {
+    "capture_ns": 2708995652414,
+    "frame_rgb_sha256": "19e13ee1965a87584e5b96a0d588039569f2a38dfb73f3e211b1b613b9e44b70",
+    "image": "/work/out/c02-drift-guard-only/runtime/001.png",
+    "sequence": 1,
+    "session_id": "ecddb19d3ea24dceb8bb83625ac27f2c"
+  },
+  "terminal_status": "completed"
+}
