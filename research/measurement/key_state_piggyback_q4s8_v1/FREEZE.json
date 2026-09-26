@@ -1,0 +1,71 @@
+{
+  "allocation": "focus-reply-piggyback-q4s8-20260926-01",
+  "commands": [
+    [
+      "/opt/pyvenv/bin/python",
+      "-B",
+      "/mnt/data/piggyback_q4s8/execute.py",
+      "/mnt/data/piggyback_q4s8/formal-01",
+      "UP",
+      "formal"
+    ],
+    [
+      "/opt/pyvenv/bin/python",
+      "-B",
+      "/mnt/data/piggyback_q4s8/execute.py",
+      "/mnt/data/piggyback_q4s8/formal-01",
+      "DOWN",
+      "formal"
+    ],
+    [
+      "/opt/pyvenv/bin/python",
+      "-B",
+      "/mnt/data/piggyback_q4s8/execute.py",
+      "/mnt/data/piggyback_q4s8/formal-01",
+      "EDGE_BURST",
+      "formal"
+    ],
+    [
+      "/opt/pyvenv/bin/python",
+      "-B",
+      "/mnt/data/piggyback_q4s8/execute.py",
+      "/mnt/data/piggyback_q4s8/formal-01",
+      "FOCUS_RETURN",
+      "formal"
+    ]
+  ],
+  "contract_gate": "PASS_FOCUS_REPLY_PIGGYBACK_CONTRACT",
+  "counts": {
+    "acquisitions": 612,
+    "blocks": 12,
+    "first": 36,
+    "primary": 504,
+    "warmup": 72
+  },
+  "created_utc": "2026-09-25T23:44:59.540851+00:00",
+  "files": {
+    "BUILD.json": "9303340dc7cd360bdb6e02ebde52119e57ccc84b722b56210988a189f454a907",
+    "CONSTRUCTION_NOTE.md": "2b8798a57c917f9a040bd8b35f013ad5713ad14ebda696908efff3e3bdff929b",
+    "ENVIRONMENT.json": "751afdffcf9fdf903392de33deecd66c19b9dd70746f0088c197edfe1afb5961",
+    "LINEAGE.json": "9c6cdf9404c2b68ca563153820f9d6b6d8789a7ab01f99d7c899fef09328f5fc",
+    "PLAN.md": "e07e12215162248acdcd8f13c3b8e54d9183d4f0b4a53fffc9798712970ef10b",
+    "acquire.c": "ddb2a8b622cdaa2e69813ed7f847e042f813938612f51f4bb3eca88c53ce364c",
+    "actor.py": "f3045bf89f051a1f68cf11d2c10ba5792a5ddfa66e45a2b272ffa879f6c5c31a",
+    "audit.py": "116df8ebe485ae88c4cc83fe16bade12d2ca01b588821879d149f8df7b8b0439",
+    "bundle.py": "4269576d78e596fe5fe8742ba58f013086c90c141a14d36d95cafdf99273e347",
+    "controls.py": "b754230234ca370ac4ceb2fee8b97d222cbb9e3eff6121045e3b3b59a00cbdcb",
+    "execute.py": "a1b9e980e448532f3f1460a41cfa0e1b88a3291efdb3db70b067674dff959a29",
+    "key_state_native.so": "82dc4cdbb91d81af633fbf0f267c738432d1948b287fc89e7137980d29c2cc4b",
+    "native.py": "86ef9017c5d220722ba81bb5c393f11be6ef563ee10bffa46f49ec3acd886252",
+    "predecessor_policy.py": "bf1b4c9f636dabd473f5584cc767f49088ba63ca9fb8d733d13a0ea38c512ece",
+    "run.py": "2bca7f991b12160986672760e1ef9bb26fec98c8b235bb1d9367bda365176d4c",
+    "server.py": "c6d2388502bae45bb9980f405a072ab1b8ef47937f0911812ad0372f621c8b82",
+    "test_contract.py": "35b721cddc1aceeab005c51550304c73830c17292a77bd371927f2abb79ce5ab",
+    "upstream_infra.py": "4d5c53ce114a67577089c420e0297de529d1fe3c24c966b2ebe72614bf7ff119"
+  },
+  "formal_started": false,
+  "intake_main": "4c701cc51b06296268ad8d9ae3eff1dd6f2d379d",
+  "issue": 4389,
+  "public_source_readback_required": true,
+  "speed_ratio_max": 0.8
+}

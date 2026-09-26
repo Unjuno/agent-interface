@@ -1,0 +1,15 @@
+{
+  "binary_sha256": "82dc4cdbb91d81af633fbf0f267c738432d1948b287fc89e7137980d29c2cc4b",
+  "command": [
+    "gcc",
+    "-O2",
+    "-fPIC",
+    "-shared",
+    "acquire.c",
+    "-o",
+    "key_state_native.so",
+    "-lX11"
+  ],
+  "note": "Compiler exit0 was observed in container output before construction.",
+  "returncode": 0
+}
