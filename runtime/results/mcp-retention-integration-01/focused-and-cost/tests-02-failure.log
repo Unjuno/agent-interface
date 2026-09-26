@@ -1,0 +1,35 @@
+......Executing <Task pending name='Task-39' coro=<PublicMCPTests.test_portable_stdio_runs_outside_checkout() running at /src/runtime/cli_v1/test_mcp_server.py:185> cb=[_run_until_complete_cb() at /usr/local/lib/python3.12/asyncio/base_events.py:181] created at /usr/local/lib/python3.12/asyncio/runners.py:100> took 0.153 seconds
+execute program '/usr/local/bin/python': <_UnixSubprocessTransport pid=19 running stdin=<_UnixWritePipeTransport fd=7 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=8 polling>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+<_UnixReadPipeTransport fd=8 polling> was closed by peer
+<_UnixSubprocessTransport pid=19 running stdin=<_UnixWritePipeTransport closed fd=7 closed> stdout=<_UnixReadPipeTransport closed fd=8 closed>> exited with return code 0
+...E.....execute program '/usr/local/bin/python': <_UnixSubprocessTransport pid=39 running stdin=<_UnixWritePipeTransport fd=7 idle bufsize=0> stdout=<_UnixReadPipeTransport fd=8 polling>>
+Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+<_UnixReadPipeTransport fd=8 polling> was closed by peer
+<_UnixSubprocessTransport pid=39 running stdin=<_UnixWritePipeTransport closed fd=7 closed> stdout=<_UnixReadPipeTransport closed fd=8 closed>> exited with return code 0
+...................
+======================================================================
+ERROR: test_report_replace_failure_keeps_temporary_bytes_without_claiming_receipt (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_report_replace_failure_keeps_temporary_bytes_without_claiming_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/src/runtime/cli_v1/test_mcp_server.py", line 445, in test_report_replace_failure_keeps_temporary_bytes_without_claiming_receipt
+    self.assertEqual(row['outcome_summary']['execution_status'], 'completed')
+                     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+KeyError: 'execution_status'
+
+----------------------------------------------------------------------
+Ran 34 tests in 5.247s
+
+FAILED (errors=1)
