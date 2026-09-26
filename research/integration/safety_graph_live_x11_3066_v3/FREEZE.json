@@ -1,0 +1,36 @@
+{
+  "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+  "issue": 3066,
+  "formal_invocations_before_freeze": 0,
+  "construction_only_cells_completed": 14,
+  "synthetic_audit_corruption_controls_passed": 8,
+  "base_main_commit": "da411bf55844fe19d1f0ab95f1ff123af7f98d63",
+  "image_id": "sha256:03bb8f908cc4d0bcfcda4e521c5318c651543bb8dffc2f6b09bb874a1d4f9adc",
+  "files_sha256_manifest": "checksums.json",
+  "files_sha256_manifest_sha256": "e5d0ebe8c94ce624d1efeabcc4147277afafeaf11e88a69e705075bcac7a371d",
+  "preformal_constraints": {
+    "network": "none",
+    "rootfs": "read-only",
+    "exp_mount": "read-only",
+    "src_mount": "read-only",
+    "work_mount": "read-write",
+    "container_memory": "1g",
+    "container_cpus": 2,
+    "container_pids": 96,
+    "reruns": 0,
+    "replacements": 0,
+    "postfreeze_tuning": 0
+  },
+  "formal_argv_inside_container": ["python3", "-B", "/exp/run.py", "--formal", "/work"],
+  "formal_image_ref": "sha256:03bb8f908cc4d0bcfcda4e521c5318c651543bb8dffc2f6b09bb874a1d4f9adc",
+  "formal_container_invocation_template": "docker run --name ai3066-v3-formal-20260926-01 --memory=1g --cpus=2 --pids-limit=96 --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m --tmpfs /run:rw,noexec,nosuid,size=16m -e PYTHONPATH=/src --mount source=<frozen experiment directory>,target=/exp,readonly --mount source=<frozen runtime source>,target=/src,readonly --mount source=<fresh empty raw output directory>,target=/work <image_id> python3 -B /exp/run.py --formal /work",
+  "result_policy": [
+    "14 unique cells required",
+    "unknown dependency must typed-STOP with no worker and no dispatched input",
+    "unclassified socket peer/path is HOLD",
+    "unexpected named socket dependency is FAIL",
+    "physical release later than authority deadline plus 50ms is FAIL",
+    "missing evidence is HOLD",
+    "any formal failure or STOP preserves RAW/STOP and is not rerun"
+  ]
+}
