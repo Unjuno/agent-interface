@@ -9,6 +9,7 @@ class CorpusContractTests(unittest.TestCase):
     def test_exact_ten_seed_schedule(self):
         self.assertEqual(runner.SEEDS, list(range(2026100100, 2026101001, 100)))
         self.assertEqual(len(runner.SEEDS), 10)
+        self.assertNotEqual(runner.dataset(2026100100,"train"), runner.dataset(2026100100,"validation"))
 
     def test_alias_pair_current_and_velocity_identical_acceleration_differs(self):
         rows = [runner.example(random.Random(1), 2026100100, "test", "alias_accel", i)
@@ -38,7 +39,7 @@ class CorpusContractTests(unittest.TestCase):
         self.assertEqual(runner.CLASS_NAMES, ["ACTION_A", "ACTION_B", "NO_OP", "YIELD"])
 
     def test_independent_auditor_regenerates_identical_rows_without_runner_import(self):
-        for split in ("train", "test"):
+        for split in ("train", "validation", "test"):
             self.assertEqual(runner.dataset(2026100100, split), audit.regen(2026100100, split))
 
 
