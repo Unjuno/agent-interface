@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent
-FILES = ("PREREGISTRATION.md", "FREEZE.json", "environment.json", "CONSTRUCTION.md",
+FILES = ("PREREGISTRATION.md", "FREEZE.json", "environment.json", "CONSTRUCTION.md", "FORMAL_FAILURE.md",
          "evidence/stdout.txt", "evidence/stderr.txt", "evidence/traceback.txt", "evidence/CONSTRUCTION.json")
 
 
