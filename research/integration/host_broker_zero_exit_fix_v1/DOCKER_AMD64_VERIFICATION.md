@@ -2,7 +2,7 @@
 
 Disposition: `PASS_LOCAL_DOCKER_AMD64_CONTRACT_TESTS_SCOPED` for PR head `71adf863725b1ad4d8a33e0298b07bb85e2a10f4`.
 
-This is exact-head contract-test verification for the zero-exit fix; it is not a model, provider, GUI, or scientific performance experiment.
+This is exact-head contract-test verification for the zero-exit fix; it is not a model, provider, GUI, or scientific performance experiment. The implementation commit `71adf863725b1ad4d8a33e0298b07bb85e2a10f4` was tested once, and the full suite was repeated against PR head `67c5da6cbda576fea44d57b7ee040830a17296b3` after the report-only evidence commit was added.
 
 ## Environment
 
@@ -28,7 +28,7 @@ docker run --rm --pull=never --network none --read-only `
 
 ## Result
 
-Exit `0`; **28/28 passed** in `0.194s`:
+Both runs exited `0`; **28/28 passed** each (`0.194s` on implementation commit `71adf86`, `0.123s` on PR head `67c5da6`). The second run included the already-committed verification report in the read-only checkout:
 
 - host model bridge: 2/2
 - one-shot IPC broker: 8/8, including child exit 0, exit 23, timeout, and unavailable executable
