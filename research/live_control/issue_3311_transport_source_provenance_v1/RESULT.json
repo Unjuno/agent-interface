@@ -1,0 +1,26 @@
+{
+  "disposition": "PASS_SOURCE_PROVENANCE_REAUDIT",
+  "formal_invocations": 1,
+  "formal_container_exit_code": 0,
+  "container_image_id": "sha256:e635facd4cd70a0e0b5d72cb0ce38f24434b6e98e11c2383d428a880c0f7232c",
+  "container_flags": [
+    "--network none",
+    "--read-only",
+    "PYTHONDONTWRITEBYTECODE=1"
+  ],
+  "reports": {
+    "01.json": "56f760bb1e818a7288cc54377b8bf08d00e01ef3c4ab22a18134b183e68f9c21",
+    "02.json": "0a5bee883481c1ef44e3c974254abf02f87b8cf7db455e664489b5dbc865ad55",
+    "03.json": "d828bc365e80f2fd6d95680e20a3f57a7f504114b0436be9cf101bab5d431b89"
+  },
+  "checks": {
+    "runs_passed": 3,
+    "checks_per_run": 18,
+    "all_checks_true": true,
+    "historical_source_files_hash_verified": 9,
+    "raw_and_source_manifests_identical_to_original": 3,
+    "preformal_controls_passed": 4,
+    "automatic_retries": 0
+  },
+  "scope": "Provenance and re-audit of retained synthetic CLI transport only; not a real provider/model call or Issue #3311 integrated efficiency result."
+}
