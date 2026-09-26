@@ -34,7 +34,19 @@ jobs:
           curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 \
             "$raw_base/$AUDIT_HEAD/$audit_path/MANIFEST.json" -o "$src/MANIFEST.json"
           frozen_head="8bac49525c93835a69b6d441740a1c424faaecb2"
-          jq -r '.inputs[].path' "$src/MANIFEST.json" | while IFS= read -r rel; do
+          input_paths=(
+            "research/integration/issue_3711_downstream_truncation_v1/audit-v2-successor-02/FREEZE.json"
+            "research/integration/issue_3711_downstream_truncation_v1/audit-v2-successor-02/PLAN.md"
+            "research/integration/issue_3711_downstream_truncation_v1/audit-v2-successor-02/audit.py"
+            "research/integration/issue_3711_downstream_truncation_v1/audit-v2-successor-02/result/RESULT.json"
+            "research/integration/issue_3711_downstream_truncation_v1/successor-02/FREEZE.json"
+            "research/integration/issue_3711_downstream_truncation_v1/formal-02/raw.json"
+            "research/integration/issue_3711_downstream_truncation_v1/formal-02/accepted.json"
+            "research/integration/issue_3711_downstream_truncation_v1/formal-02/delivered-prefix.bin"
+            "research/integration/issue_3711_downstream_truncation_v1/formal-02/audit.json"
+            "research/integration/issue_3711_downstream_truncation_v1/audit-v2/formal-02-recheck/RESULT.json"
+          )
+          for rel in "${input_paths[@]}"; do
             mkdir -p "$inputs/$(dirname "$rel")"
             curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 \
               "$raw_base/$frozen_head/$rel" -o "$inputs/$rel"
