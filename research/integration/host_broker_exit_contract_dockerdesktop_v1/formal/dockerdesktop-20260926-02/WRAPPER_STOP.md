@@ -1,0 +1,9 @@
+# Host runner collection STOP
+
+Classification: `STOP_POWERSHELL_NATIVE_STDERR_INTERCEPTION`.
+
+The formal Docker container completed all seven tests. The retained Docker inspect reports `State.Status=exited`, `State.ExitCode=0`, and `OOMKilled=false`; the retained Docker log has seven `ok` rows followed by `Ran 7 tests` and `OK`. The mounted raw bundle contains all seven `raw.json` records, `formal_summary.json` (`tests_run=7`, `failures=0`, `errors=0`) and `raw_inventory.json`. The preregistered case disposition is `FAIL_ZERO_EXIT_PROPAGATION` for the exit-zero case.
+
+The PowerShell wrapper itself exited 1 when PowerShell treated unittest progress emitted on the Docker CLI's native stderr as a terminating error under `$ErrorActionPreference='Stop'`. It stopped before reading `$LASTEXITCODE`, saving `docker inspect`, or writing its host run metadata. The actual Docker CLI exit code was therefore not observed and is recorded as `null`, not inferred from the container exit code. The wrapper's exit 1 and the later read-only collection of Docker inspect/logs and container cleanup are recorded separately in `formal_run.json`. During host-side recovery, the command array was reconstructed from the frozen runner; its `/evidence` source path was corrected to the absolute source reported by Docker inspect. This collector correction changed no raw case or container data.
+
+The frozen independent audit 01 independently reclassified all seven raw cases as expected but returned `AUDIT_FAIL` with the single error `formal container did not exit cleanly`, because it requires an observed Docker CLI exit code of zero. It did not report raw-evidence, source-identity, behavioral, or isolation errors. A separately versioned read-only audit 02 is specified in `POSTHOC_AUDIT_V2.md`; it may validate the raw cases while retaining a HOLD for the missing CLI exit receipt, but it cannot upgrade this formal allocation to an overall PASS. No formal case is rerun.
