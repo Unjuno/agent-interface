@@ -1,0 +1,162 @@
+{
+  "app_events": [
+    {
+      "at_ns": 4546900762457,
+      "hardware_keycode": 74,
+      "key": "F8",
+      "kind": "key_press"
+    },
+    {
+      "at_ns": 4547031564103,
+      "kind": "effect_state_changed",
+      "scenario": "before"
+    },
+    {
+      "at_ns": 4547067631666,
+      "hardware_keycode": 74,
+      "key": "F8",
+      "kind": "key_release"
+    }
+  ],
+  "app_pid": 13,
+  "app_title": "AgentInterfaceReleaseDecision",
+  "canvas_size": [
+    400,
+    180
+  ],
+  "canvas_window_id": 2097155,
+  "case_id": "case-001",
+  "condition": "NO_RELEASE_RECEIPT",
+  "decision_latency_ns": 30859133,
+  "decision_returned_ns": 4547098601743,
+  "decision_trace": [
+    {
+      "action": "QUERY",
+      "action_returned": true,
+      "at_ns": 4547067763410,
+      "consumed_observation_number": 1,
+      "elapsed_ns": 16798,
+      "key_down": null,
+      "receipt_status": "NO_RELEASE_RECEIPT",
+      "retries": 0,
+      "visible_state": null
+    },
+    {
+      "action": "CONTINUE",
+      "action_returned": true,
+      "at_ns": 4547098599671,
+      "elapsed_ns": 30854381,
+      "key_down": false,
+      "receipt_status": "NO_RELEASE_RECEIPT",
+      "retries": 0,
+      "visible_state": "DONE"
+    }
+  ],
+  "delay_ms": 120,
+  "display": ":0",
+  "effect_after_press_ms": 120,
+  "effect_oracle": {
+    "at_ns": 4547026193474,
+    "effect": "DONE",
+    "effect_representation": "GdkPixbuf replacement",
+    "scenario": "before",
+    "source": "gtk_fixture_key_action"
+  },
+  "false_continue_candidate": false,
+  "focus_setup": {
+    "actual_focus": 2097155,
+    "expected_focus": 2097155,
+    "matches": true
+  },
+  "model_calls": 0,
+  "observations": [
+    {
+      "available_to_policy_ns": 4547098594105,
+      "capture_finished_ns": 4547080187775,
+      "capture_started_ns": 4547067817554,
+      "image": "query-01.xwd",
+      "image_sha256": "ccb000d3342ca6de5dfd6857edc65397cb93d377c9944893b0c65c4c23ab88f3",
+      "keymap": {
+        "down": false,
+        "key": "F8",
+        "keycode": 74,
+        "sampled_ns": 4547098530992,
+        "source": "XQueryKeymap"
+      },
+      "query_number": 1,
+      "visible_state": "DONE"
+    }
+  ],
+  "owner_actions": [
+    {
+      "attempt": 1,
+      "available_to_policy_ns": 4547067754261,
+      "caller_after_receipt_ns": null,
+      "caller_returned_ns": 4547067742610,
+      "down_call_returned_ns": 4546899960171,
+      "down_call_started_ns": 4546899331460,
+      "pre_release_gate_observations": [
+        {
+          "capture_finished_ns": 4547044835850,
+          "capture_started_ns": 4547031952419,
+          "gate_number": 1,
+          "image": "pre-release-gate-01.xwd",
+          "image_sha256": "03ea1d359b2cb23dde38e325d87b177ffd0e0285eec893dc117c80cccd2cc835",
+          "keymap": {
+            "down": true,
+            "key": "F8",
+            "keycode": 74,
+            "sampled_ns": 4547067102457,
+            "source": "XQueryKeymap"
+          },
+          "source": "intervention_gate",
+          "visible_state": "DONE"
+        }
+      ],
+      "receipt_interval_width_ns": null,
+      "receipt_presented_to_policy": null,
+      "receipt_raw": null,
+      "receipt_status": "NO_RELEASE_RECEIPT",
+      "release_call_started_ns": 4547067188554
+    }
+  ],
+  "owner_id": "ad8034b3af3640b69fb03b1bb40671c9",
+  "owner_state": {
+    "active_lease_deadline_ns": 4554895956644,
+    "active_lease_time_valid": true,
+    "cancel_requested": false,
+    "focus": 2097155,
+    "owned_buttons": [],
+    "owned_keycodes": [],
+    "owner_id": "ad8034b3af3640b69fb03b1bb40671c9",
+    "physical_pointer_mask": 0,
+    "pointer": [
+      320,
+      180
+    ],
+    "revision": 2,
+    "sample_finished_ns": 4547098883282,
+    "sample_started_ns": 4547098654835
+  },
+  "policy_query_count": 1,
+  "provider_calls": 0,
+  "rep": 0,
+  "retry_count": 0,
+  "scenario": "before",
+  "status": "completed",
+  "terminal_action": "CONTINUE",
+  "terminal_keymap": {
+    "down": false,
+    "key": "F8",
+    "keycode": 74,
+    "sampled_ns": 4547101894407,
+    "source": "XQueryKeymap"
+  },
+  "tokens": 0,
+  "toolkit": "GTK3",
+  "window_id": 2097155,
+  "xvfb_autorepeat": {
+    "global_auto_repeat_after_fixture": 0,
+    "xvfb_r_flag": true
+  }
+}

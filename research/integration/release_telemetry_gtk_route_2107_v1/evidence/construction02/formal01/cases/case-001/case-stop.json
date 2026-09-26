@@ -1,0 +1,27 @@
+{
+  "case_id": "case-001",
+  "error": "RuntimeError('pre_release_visible_effect_not_observed')",
+  "partial_result": {
+    "app_pid": 10,
+    "app_title": "AgentInterfaceReleaseDecision",
+    "case_id": "case-001",
+    "condition": "NO_RELEASE_RECEIPT",
+    "decision_trace": [],
+    "delay_ms": 0,
+    "display": ":0",
+    "focus_setup": {
+      "actual_focus": 2097155,
+      "expected_focus": 2097155,
+      "matches": true
+    },
+    "observations": [],
+    "owner_actions": [],
+    "rep": 0,
+    "scenario": "before",
+    "status": "running",
+    "toolkit": "GTK3",
+    "window_id": 2097155
+  },
+  "status": "STOP",
+  "traceback": "Traceback (most recent call last):\n  File \"/repo/research/integration/release_telemetry_gtk_route_2107_v1/runner.py\", line 306, in run_case\n    first_action = run_action(owner, lease, out, 1, scenario, env, xid, display_name)\n  File \"/repo/research/integration/release_telemetry_gtk_route_2107_v1/runner.py\", line 263, in run_action\n    raise RuntimeError(\"pre_release_visible_effect_not_observed\")\nRuntimeError: pre_release_visible_effect_not_observed\n"
+}

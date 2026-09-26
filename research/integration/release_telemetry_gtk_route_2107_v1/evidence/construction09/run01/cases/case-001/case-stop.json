@@ -1,0 +1,18 @@
+{
+  "case_id": "case-001",
+  "error": "RuntimeError('gtk_fixture_readiness_failed')",
+  "partial_result": {
+    "case_id": "case-001",
+    "condition": "NO_RELEASE_RECEIPT",
+    "decision_trace": [],
+    "delay_ms": 120,
+    "effect_after_press_ms": 120,
+    "observations": [],
+    "owner_actions": [],
+    "rep": 0,
+    "scenario": "before",
+    "status": "running"
+  },
+  "status": "STOP",
+  "traceback": "Traceback (most recent call last):\n  File \"/repo/research/integration/release_telemetry_gtk_route_2107_v1/runner.py\", line 318, in run_case\n    app, meta = launch_fixture(out, env, scenario, delay_ms, effect_after_press_ms)\n                ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/repo/research/integration/release_telemetry_gtk_route_2107_v1/runner.py\", line 148, in launch_fixture\n    raise RuntimeError(\"gtk_fixture_readiness_failed\")\nRuntimeError: gtk_fixture_readiness_failed\n"
+}

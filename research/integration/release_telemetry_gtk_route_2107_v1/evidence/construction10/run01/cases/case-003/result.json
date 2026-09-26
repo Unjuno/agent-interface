@@ -1,0 +1,261 @@
+{
+  "app_events": [
+    {
+      "at_ns": 4548097358777,
+      "hardware_keycode": 74,
+      "key": "F8",
+      "kind": "key_press"
+    },
+    {
+      "at_ns": 4548111618058,
+      "hardware_keycode": 74,
+      "key": "F8",
+      "kind": "key_release"
+    },
+    {
+      "at_ns": 4548239589117,
+      "kind": "effect_state_changed",
+      "scenario": "after"
+    }
+  ],
+  "app_pid": 38,
+  "app_title": "AgentInterfaceReleaseDecision",
+  "canvas_size": [
+    400,
+    180
+  ],
+  "canvas_window_id": 2097155,
+  "case_id": "case-003",
+  "condition": "AMBIGUOUS_RECEIPT",
+  "decision_latency_ns": 194170196,
+  "decision_returned_ns": 4548305831416,
+  "decision_trace": [
+    {
+      "action": "QUERY",
+      "action_returned": true,
+      "at_ns": 4548111678796,
+      "consumed_observation_number": 1,
+      "elapsed_ns": 14638,
+      "key_down": null,
+      "receipt_status": "UNKNOWN",
+      "retries": 0,
+      "visible_state": null
+    },
+    {
+      "action": "WAIT",
+      "action_returned": true,
+      "at_ns": 4548145042117,
+      "elapsed_ns": 33378324,
+      "key_down": false,
+      "receipt_status": "UNKNOWN",
+      "retries": 0,
+      "visible_state": "PENDING",
+      "wait_completed_ns": 4548195362410,
+      "wait_requested_duration_ns": 50000000,
+      "wait_requested_ns": 4548145043797
+    },
+    {
+      "action": "QUERY",
+      "action_returned": true,
+      "at_ns": 4548195372001,
+      "consumed_observation_number": 2,
+      "elapsed_ns": 83708569,
+      "key_down": null,
+      "receipt_status": "UNKNOWN",
+      "retries": 0,
+      "visible_state": null
+    },
+    {
+      "action": "WAIT",
+      "action_returned": true,
+      "at_ns": 4548223997282,
+      "elapsed_ns": 112332383,
+      "key_down": false,
+      "receipt_status": "UNKNOWN",
+      "retries": 0,
+      "visible_state": "PENDING",
+      "wait_completed_ns": 4548274114614,
+      "wait_requested_duration_ns": 50000000,
+      "wait_requested_ns": 4548223999371
+    },
+    {
+      "action": "QUERY",
+      "action_returned": true,
+      "at_ns": 4548274122369,
+      "consumed_observation_number": 3,
+      "elapsed_ns": 162458995,
+      "key_down": null,
+      "receipt_status": "UNKNOWN",
+      "retries": 0,
+      "visible_state": null
+    },
+    {
+      "action": "CONTINUE",
+      "action_returned": true,
+      "at_ns": 4548305829918,
+      "elapsed_ns": 194167245,
+      "key_down": false,
+      "receipt_status": "UNKNOWN",
+      "retries": 0,
+      "visible_state": "DONE"
+    }
+  ],
+  "delay_ms": 120,
+  "display": ":0",
+  "effect_after_press_ms": 0,
+  "effect_oracle": {
+    "at_ns": 4548235763181,
+    "effect": "DONE",
+    "effect_representation": "GdkPixbuf replacement",
+    "scenario": "after",
+    "source": "gtk_fixture_key_action"
+  },
+  "false_continue_candidate": false,
+  "focus_setup": {
+    "actual_focus": 2097155,
+    "expected_focus": 2097155,
+    "matches": true
+  },
+  "model_calls": 0,
+  "observations": [
+    {
+      "available_to_policy_ns": 4548145037595,
+      "capture_finished_ns": 4548125057295,
+      "capture_started_ns": 4548111704456,
+      "image": "query-01.xwd",
+      "image_sha256": "e5bfda3d4ac0e170f51e3dc7ed452034083d1dbe67efe4c21da460b3faf7acec",
+      "keymap": {
+        "down": false,
+        "key": "F8",
+        "keycode": 74,
+        "sampled_ns": 4548144964681,
+        "source": "XQueryKeymap"
+      },
+      "query_number": 1,
+      "visible_state": "PENDING"
+    },
+    {
+      "available_to_policy_ns": 4548223958485,
+      "capture_finished_ns": 4548205149857,
+      "capture_started_ns": 4548195398011,
+      "image": "query-02.xwd",
+      "image_sha256": "cbdf3bd4d97e96fc179387df2d7c53041527dc07533ec50a70dfd915d16adb6c",
+      "keymap": {
+        "down": false,
+        "key": "F8",
+        "keycode": 74,
+        "sampled_ns": 4548223807999,
+        "source": "XQueryKeymap"
+      },
+      "query_number": 2,
+      "visible_state": "PENDING"
+    },
+    {
+      "available_to_policy_ns": 4548305826680,
+      "capture_finished_ns": 4548295490119,
+      "capture_started_ns": 4548274144771,
+      "image": "query-03.xwd",
+      "image_sha256": "03ea1d359b2cb23dde38e325d87b177ffd0e0285eec893dc117c80cccd2cc835",
+      "keymap": {
+        "down": false,
+        "key": "F8",
+        "keycode": 74,
+        "sampled_ns": 4548305763112,
+        "source": "XQueryKeymap"
+      },
+      "query_number": 3,
+      "visible_state": "DONE"
+    }
+  ],
+  "owner_actions": [
+    {
+      "attempt": 1,
+      "available_to_policy_ns": 4548111670078,
+      "caller_after_receipt_ns": 6002,
+      "caller_returned_ns": 4548111661220,
+      "down_call_returned_ns": 4548096899148,
+      "down_call_started_ns": 4548096243113,
+      "pre_release_gate_observations": [],
+      "receipt_interval_width_ns": 440034,
+      "receipt_presented_to_policy": {
+        "application_consumption_observed": false,
+        "call_returned_ns": 4548111655218,
+        "call_started_ns": 4548111215184,
+        "continuous_physical_state_sampled": false,
+        "event": "input_release_rpc",
+        "grants_input_authority": false,
+        "intent_token": "case-003-intent-stale",
+        "interval_width_ns": 440034,
+        "operation": "up",
+        "owner_id": "bc5e6b6c80c544f89703cd876def6844",
+        "payload": "F8",
+        "release_transition_interval_ns": [
+          4548111215184,
+          4548111655218
+        ],
+        "valid_until_ns": 4556093054918,
+        "x11_release_and_sync_completed_before_return": true
+      },
+      "receipt_raw": {
+        "application_consumption_observed": false,
+        "call_returned_ns": 4548111655218,
+        "call_started_ns": 4548111215184,
+        "continuous_physical_state_sampled": false,
+        "event": "input_release_rpc",
+        "grants_input_authority": false,
+        "intent_token": "case-003-intent",
+        "interval_width_ns": 440034,
+        "operation": "up",
+        "owner_id": "bc5e6b6c80c544f89703cd876def6844",
+        "payload": "F8",
+        "release_transition_interval_ns": [
+          4548111215184,
+          4548111655218
+        ],
+        "valid_until_ns": 4556093054918,
+        "x11_release_and_sync_completed_before_return": true
+      },
+      "receipt_status": "UNKNOWN",
+      "release_call_started_ns": 4548111211585
+    }
+  ],
+  "owner_id": "bc5e6b6c80c544f89703cd876def6844",
+  "owner_state": {
+    "active_lease_deadline_ns": 4556093054918,
+    "active_lease_time_valid": true,
+    "cancel_requested": false,
+    "focus": 2097155,
+    "owned_buttons": [],
+    "owned_keycodes": [],
+    "owner_id": "bc5e6b6c80c544f89703cd876def6844",
+    "physical_pointer_mask": 0,
+    "pointer": [
+      320,
+      180
+    ],
+    "revision": 2,
+    "sample_finished_ns": 4548306111049,
+    "sample_started_ns": 4548305908170
+  },
+  "policy_query_count": 3,
+  "provider_calls": 0,
+  "rep": 0,
+  "retry_count": 0,
+  "scenario": "after",
+  "status": "completed",
+  "terminal_action": "CONTINUE",
+  "terminal_keymap": {
+    "down": false,
+    "key": "F8",
+    "keycode": 74,
+    "sampled_ns": 4548309164308,
+    "source": "XQueryKeymap"
+  },
+  "tokens": 0,
+  "toolkit": "GTK3",
+  "window_id": 2097155,
+  "xvfb_autorepeat": {
+    "global_auto_repeat_after_fixture": 0,
+    "xvfb_r_flag": true
+  }
+}

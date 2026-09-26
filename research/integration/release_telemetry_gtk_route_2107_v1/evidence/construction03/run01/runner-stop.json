@@ -1,0 +1,8 @@
+{
+  "case_count": 4,
+  "completed_cases": 0,
+  "error": "RuntimeError('gtk_canvas_geometry_mismatch')",
+  "mode": "construction",
+  "status": "STOP",
+  "traceback": "Traceback (most recent call last):\n  File \"/repo/research/integration/release_telemetry_gtk_route_2107_v1/runner.py\", line 459, in main\n    cases.append(run_case(out, index, condition, scenario, delay, press_delay, rep,\n                 ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                          construction=args.mode == \"construction\"))\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/repo/research/integration/release_telemetry_gtk_route_2107_v1/runner.py\", line 322, in run_case\n    raise RuntimeError(\"gtk_canvas_geometry_mismatch\")\nRuntimeError: gtk_canvas_geometry_mismatch\n"
+}

@@ -1,0 +1,34 @@
+{
+  "case_id": "case-001",
+  "error": "RuntimeError('gtk_canvas_geometry_mismatch')",
+  "partial_result": {
+    "app_pid": 13,
+    "app_title": "AgentInterfaceReleaseDecision",
+    "canvas_size": [
+      400,
+      200
+    ],
+    "canvas_window_id": 2097165,
+    "case_id": "case-001",
+    "condition": "NO_RELEASE_RECEIPT",
+    "decision_trace": [],
+    "delay_ms": 120,
+    "display": ":0",
+    "effect_after_press_ms": 120,
+    "focus_setup": {
+      "actual_focus": 2097155,
+      "expected_focus": 2097155,
+      "matches": true
+    },
+    "observations": [],
+    "owner_actions": [],
+    "rep": 0,
+    "scenario": "before",
+    "status": "running",
+    "toolkit": "GTK3",
+    "window_id": 2097155,
+    "xvfb_autorepeat": "disabled for isolated display"
+  },
+  "status": "STOP",
+  "traceback": "Traceback (most recent call last):\n  File \"/repo/research/integration/release_telemetry_gtk_route_2107_v1/runner.py\", line 322, in run_case\n    raise RuntimeError(\"gtk_canvas_geometry_mismatch\")\nRuntimeError: gtk_canvas_geometry_mismatch\n"
+}

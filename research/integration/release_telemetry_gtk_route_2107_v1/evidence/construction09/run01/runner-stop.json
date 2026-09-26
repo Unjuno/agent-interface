@@ -1,0 +1,8 @@
+{
+  "case_count": 4,
+  "completed_cases": 0,
+  "error": "RuntimeError('gtk_fixture_readiness_failed')",
+  "mode": "construction",
+  "status": "STOP",
+  "traceback": "Traceback (most recent call last):\n  File \"/repo/research/integration/release_telemetry_gtk_route_2107_v1/runner.py\", line 472, in main\n    cases.append(run_case(out, index, condition, scenario, delay, press_delay, rep,\n                 ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                          construction=args.mode == \"construction\"))\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/repo/research/integration/release_telemetry_gtk_route_2107_v1/runner.py\", line 318, in run_case\n    app, meta = launch_fixture(out, env, scenario, delay_ms, effect_after_press_ms)\n                ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/repo/research/integration/release_telemetry_gtk_route_2107_v1/runner.py\", line 148, in launch_fixture\n    raise RuntimeError(\"gtk_fixture_readiness_failed\")\nRuntimeError: gtk_fixture_readiness_failed\n"
+}
