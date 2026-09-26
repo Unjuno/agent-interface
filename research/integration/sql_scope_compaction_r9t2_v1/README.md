@@ -1,6 +1,6 @@
 # SQL scope-receipt compaction / r9t2
 
-Retrospective publication for Issue #4429. This is research evidence only.
+Retrospective publication for Issue #4429. Research evidence only.
 
 ## Scoped result
 
@@ -16,11 +16,14 @@ SCOPE_ONLY adoption**.
 
 The directed counterexample uses SQLite REPLACE. When writer-side
 `recursive_triggers` is OFF, the old-range delete trigger does not maintain the
-scope epoch; row revisions still expose the change. The finding is a dependency-
-coverage boundary, not a SQLite defect.
+scope epoch; row revisions still expose the change. This is a dependency-coverage
+boundary, not a SQLite defect.
 
-Full original plan/source/raw SQLite databases/IPC/process receipts/auditor and
-construction history are in `EVIDENCE.tar.xz`. Review without rerunning science:
+The complete original source/raw SQLite databases/IPC/process receipts/auditor
+and construction history are losslessly encoded in the Base64 parts listed by
+`CAPSULE.json`.
+
+Read-only reconstruction, without rerunning scientific actors:
 
 ```sh
 python -S -B verify_capsule.py /tmp/r9t2-review
@@ -29,5 +32,4 @@ python -S -B verify.py
 python -S -B test_contract.py
 ```
 
-Do not execute the consumed formal batches. See `PUBLICATION_NOTE.md` for
-chronology and publication scope.
+Do not execute the consumed formal batches. See `PUBLICATION_NOTE.md`.
