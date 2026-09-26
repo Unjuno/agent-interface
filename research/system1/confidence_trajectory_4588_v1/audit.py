@@ -195,4 +195,3 @@ if __name__=="__main__":
     out=Path(a.output); out.mkdir(parents=True,exist_ok=True); (out/"AUDIT.json").write_bytes(canonical(result)+b"\n")
     print(json.dumps({"status":result["status"],"error_count":result["error_count"],"gates":result["gates"]},sort_keys=True))
     raise SystemExit(0 if result["error_count"]==0 else 1)
-
