@@ -47,7 +47,7 @@ def decide_final_admission(planner_terminal, policy_invalidation, controller_dec
         reason = invalidation["outcome"].get("reason", "policy_invalidated")
     elif turn["status"] != "completed" or turn["answer_eligible"] is not True:
         status = "REJECTED_PLANNER_INELIGIBLE"
-        reason = f"planner_{turn['status']}"
+        reason = f"planner_{turn['status']}" if turn["status"] != "completed" else "planner_answer_ineligible"
     else:
         status = "READY_FOR_FRESH_EXECUTOR_ADMISSION"
         reason = "planner_complete_and_policy_current"

@@ -68,6 +68,14 @@ class FinalActionAdmissionTests(unittest.TestCase):
     def test_ineligible_or_malformed_boundaries_fail_closed(self):
         receipt = decide_final_admission(turn(status="interrupted", eligible=False), None, 21)
         self.assertEqual(receipt["status"], "REJECTED_PLANNER_INELIGIBLE")
+        self.assertEqual(receipt["reason"], "planner_interrupted")
+        completed_ineligible = decide_final_admission(
+            turn(status="completed", eligible=False), None, 21)
+        self.assertEqual(completed_ineligible["status"], "REJECTED_PLANNER_INELIGIBLE")
+        self.assertEqual(completed_ineligible["reason"], "planner_answer_ineligible")
+        self.assertFalse(completed_ineligible["input_authority_admitted"])
+        self.assertIsNone(completed_ineligible["executor_admission"])
+        self.assertFalse(completed_ineligible["grants_input_authority"])
         with self.assertRaises(ValueError):
             decide_final_admission(turn(), hard(observed=30), 21)
         forged = hard()
