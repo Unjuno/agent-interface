@@ -147,6 +147,15 @@ complete JSON output; truncation or split chunks must never trigger action repla
 
 ## Returned continuation reference
 
+Read `outcome_summary.feedback_status`, `image_status` and `continuation`
+separately. A post-action feedback check can report `needs_review` while a later
+window review provides a valid next-stage image. Keep that feedback uncertainty;
+it does not mean the delivered image is missing. When `image_status=image` and
+`continuation.status=source_available`, inspect that image and take the next
+`stage` and `source_sequence` from `continuation` in the same response. Reading
+`source-N.json` separately is unnecessary. This reference describes retained
+evidence, not current freshness, task success, or permission to replay input.
+
 At a completed stage boundary, `native_submit` and read-only `native_resume`
 include `continuation`. `source_available` carries the next stage, source
 sequence and exact source-file SHA-256 only after the retained next observation
