@@ -14,4 +14,8 @@ This additive adapter wraps the frozen v12 candidate without editing the shared 
 - Mock-only logging overhead sample: 500 instrumented checks median 48,166 ns, p95 96,542 ns, max 283,958 ns; 1,000 no-log checks median 4,541 ns, p95 4,709 ns, max 64,500 ns. This is not gameplay/runtime performance evidence.
 - One exploratory container command encoded a literal backslash-n and failed JSONL parsing; corrected command passed. Two mock preparations had invalid test fixture/import assumptions; neither invoked the formal seed. Do not count these as semantic failures.
 
-No Obstac-specific MCP, executable, or local configuration was available in this environment at inspection time; the container checks used Docker/OrbStack. Formal seed `990642`, preflight seed `990643`, and both allocated output paths remain unused. Formal execution is still gated on final worker collision/ownership confirmation and exact provenance update in Issue #4563.
+No Obstac-specific MCP, executable, or local configuration was available in this environment at inspection time; the container checks used Docker/OrbStack. Preflight seed `990643` has been consumed; its first allocated output path retains an initialization failure, and the successful retry is recorded below. Formal seed `990642` remains unused pending final worker collision/ownership confirmation and exact provenance update in Issue #4563.
+
+## 2026-09-27 experiment update
+
+Preflight seed `990643` has now been consumed by a zero-model Docker MAP01 observe/release run, and a controlled real-observation timestamp-boundary replay has passed. These scoped results do not reproduce the natural #4544 inversion or clear the formal-seed gate. Full hypotheses, controls, uncertainty, commands, evidence hashes, and retained output paths are in [EXPERIMENT_20260927.md](EXPERIMENT_20260927.md).
