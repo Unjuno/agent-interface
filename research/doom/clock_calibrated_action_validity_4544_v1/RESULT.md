@@ -1,6 +1,6 @@
 # Result — calibrated clock conversion at RunningActionGuard (#4544)
 
-**Disposition: PASS_SCOPED.** Conservative same-session conversion changed the exact current-main guard from a stale cancellation to a valid-current receipt; the 31-second-old control remained stale.
+**Amended disposition:** clock-calibration arithmetic PASS; the original guard execution is not independently evidenced because its exact inputs and receipts were not retained. The corresponding guard outcome is now supported by a separately identified deterministic replay below—not by recovered original receipts.
 
 ## Execution
 
@@ -22,11 +22,21 @@ Intersection: [738980930394, 739196113716] ns; width 215183322 ns. The conservat
 | Conservatively translated capture | 315300500 ns | VALID_CURRENT | INPUT_ACTIVE | true |
 | Translated capture shifted 31 s older | 31315300500 ns | REJECTED_STALE | CANCEL_REQUIRED | false |
 
-The complete raw operands and receipts are in `result.json`. Translation was arithmetic over the intersection of the three measured bracket intervals; the fixture supplied typed, unchanged signals and binding. No physical Executor program was submitted, so the guard's authority bit must not be interpreted as a physical input observation.
+`result.json` retains the clock brackets and derived summary rows, but not the original guard inputs or full receipts. The original report's claim that it contains them was incorrect. Translation was arithmetic over the intersection of the three measured bracket intervals. The guard summary in that file was not independently supported by retained invocation operands at the time. No physical Executor program was submitted.
 
 ## Independent audit
 
 `audit.py` recomputes each bracket, the common interval, width, translation, ages, threshold comparisons, and required dispositions. It also rejects four corrupted-result controls. It was run in the pinned container after reading back the committed artifact files.
+
+## Deterministic replay and correction
+
+The additive `replayed_guard_inputs_receipts.json` contains explicit deterministic fixture inputs and complete receipts produced by re-executing both production modules. It is classified `DETERMINISTIC_REPLAY_ONLY`: it does not recover what the original invocation consumed, and the synthetic accepted-program fixture is not an Executor event. The guard receipt consequently reports `physical_input_may_be_down=true`; this is a state-machine implication of that fixture, not evidence that any physical input was sent or held.
+
+Replay used the same three clock brackets already retained above, the pinned `issue2679-map01-runtime@sha256:029e1867aeb843f2d63080343bfbb61540b64852ce00d4d99ec0be51796a093e` image (linux/arm64), network disabled, read-only root, and a 16 MiB no-exec tmpfs. The Python harness and exact source bytes were staged only inside the container's ephemeral tmpfs. The replay builder, independent receipt auditor, and five corruption mutations all ran there. Result: `PASS_FULL_RECEIPT_REPLAY`; all five mutated-input/receipt controls were rejected. No new clock probe, model call, WAD/game, GUI, Executor process/input, formal allocation, cancellation, or physical release event was involved.
+
+The replay verifies the complete receipts against the exact recorded source commit `91b5143989403754b360738c445f72b68b673718`. Both source files fetched at that commit matched their recorded Git blob IDs and SHA-256 digests. The main-branch commit later used while drafting the first replay scripts was different; those scripts were corrected to pin the recorded commit before the final replay.
+
+The original v1 `result.json` is unchanged. This replay supports the reported guard-state transition for the explicit reconstructed fixture, but does not establish that the original invocation used those operands or that seed 990641 behaved the same way.
 
 ## Provenance and scope limits
 
