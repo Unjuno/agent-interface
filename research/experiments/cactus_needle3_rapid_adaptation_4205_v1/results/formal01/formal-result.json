@@ -1,12 +1,13 @@
 {
   "schema": "cactus-needle3-rapid-adaptation-result-v1",
   "allocation": "cactus-needle3-rapid-adaptation-4205-v1-20260927-01",
-  "status": "FAIL_NO_USEFUL_ADAPTATION_GAIN_AND_HOLD_UPDATE_TOO_SLOW_FOR_SESSION_LOCAL_USE",
+  "status": "HOLD_PROTOCOL_DEVIATION",
   "preregistration_commit": "e07604f5e54b562aba8f317d97963e6349fc5945",
-  "formal_invocations": 1,
-  "training_runs": 1,
-  "partial_failed_fit_invocations": 1,
-  "retries": 0,
+  "formal_invocations": 2,
+  "training_fit_attempts": 2,
+  "completed_optimizer_steps_total": 90,
+  "saved_candidate_fit_attempt": 2,
+  "retries": 1,
   "tuning": 0,
   "replacements": 0,
   "training": {
@@ -86,6 +87,8 @@
     },
     "already_satisfied_no_action_exact": false
   },
+  "protocol_deviation": "The pre-registration required exactly one formal 32-example fit and no retries. Attempt 1 completed all 45 optimizer steps but failed only at adapter serialization because the frozen command omitted writable output arguments. Attempt 2 repeated the complete 45-step fit under the same seed/settings. Therefore the candidate/evaluation metrics are retained exploratory evidence but are not a protocol-compliant formal result; do not interpret them as a clean one-fit allocation.",
+  "observed_candidate_disposition_not_formally_adjudicated": "FAIL_NO_USEFUL_ADAPTATION_GAIN; update-time gate also exceeded 300 seconds",
   "snapshot_protocol": {
     "status": "NOT_RUN",
     "reason": "candidate failed semantic/safety and latency gates; no candidate promotion permitted"
