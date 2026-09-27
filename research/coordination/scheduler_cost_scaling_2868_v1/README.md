@@ -10,10 +10,12 @@ drain of all-ready candidates under one fixed stable key. The three policies
 must produce the exact same order. All process stdout/stderr and full traces
 are retained in the raw result.
 
-The experiment is not yet run. A previous PASS/FAIL remembered from another
-allocation is not a result for this allocation. `results/formal01/runner/` and
-`results/formal01/audit/` must be empty before the sole runner invocation.
-Any STOP or negative threshold result is preserved as observed.
+Allocation 01 has run once. Its independent audit decision is
+`FAIL_HEAP_COST_THRESHOLD_NOT_MET`; the complete raw rows, separate-container
+audit, exact invocation receipts, scope caveat, and hashes are retained in
+`results/formal01/`. No retry was made. The outcome is specific to this frozen
+Python implementation; the report identifies a timed `heapq` import that is a
+confounder for interpreting representation cost.
 
 Run the preformal construction checks with:
 
