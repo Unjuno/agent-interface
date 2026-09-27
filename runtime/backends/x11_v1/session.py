@@ -81,23 +81,6 @@ class X11RuntimeSession:
                 "execution": error.execution,
                 "recovery_required": self.recovery_required,
             }
-        except X11BackendError as error:
-            # execute repeats preflight before its effect boundary. A managed
-            # client may disappear after the first check; this is still a
-            # pre-input constraint failure, not an unknown execution exception.
-            try:
-                release = self.backend.release_all()
-            except Exception:
-                self.recovery_required = True
-                raise
-            self._record_release([release])
-            return {
-                "status": "refused", "error": "BACKEND_CONSTRAINT",
-                "detail": str(error),
-                "required_capabilities": list(admission.required_capabilities),
-                "backend_emissions": self.backend.emissions,
-                "release": release, "recovery_required": self.recovery_required,
-            }
         except Exception:
             self.recovery_required = True
             raise

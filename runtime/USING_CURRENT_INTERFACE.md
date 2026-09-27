@@ -121,13 +121,6 @@ key repetitions and all other operations together must fit the 128-operation
 limit. Waits consume the caller's lease. See the
 [public text pacing contract](cli_v1/README.md) for validation and source mapping.
 
-[Calc pacing follow-ups](results/calc-text-pacing-01/README.md) reproduced repeated-digit
-loss through public dispatch despite completed receipts. In one held-out eight-string
-sample, explicit 1, 2 and 10-ms gaps each saved all values correctly; zero gaps saved
-four. A caller can try a small explicit gap under comparable conditions and verify
-the resulting text. This is not a universal default or an application-readiness
-barrier, and uncertain input should not be blindly repeated.
-
 Split a sequence when the next action depends on a new image: submit the first
 program, inspect its result, then choose the next. An `observe` inside a program
 records an image; it does not suspend the remaining operations for model judgment.
@@ -277,8 +270,3 @@ For a dialog whose pixels and target information are both needed, call `interfac
 
 Before replacing a field, inspect that the intended text is selected; before Save/Submit, inspect the resulting value when an incorrect value would matter. A batch of click, Ctrl+A, text and Save can finish at the input layer while saving the wrong value. In a primary Inkscape Save-As trial, this saved `shape.svgsaved-copy.svg`; a subsequent trial that reviewed the full-name selection and the resulting `saved-copy.svg` before Save succeeded. This is one observed failure and one follow-up success, not a generic text-replacement guard or a proven speed improvement. All outcomes are retained in [the Inkscape trials](results/target-review-image-01/README.md).
 On X11, `focus` preserves the current native focus when it is already the registered client or one of its X11 descendants (including GTK InputOnly children). This avoids resetting an existing input widget to the top-level client. A separate transient dialog is not a descendant: select it explicitly through the existing target review workflow. If focus is outside the target, the backend still requests focus and verifies the resulting ancestry. Verification is momentary; the application can move focus afterward. It is not a modal lock or an acknowledgement that a field processed input. [Native focus comparison and primary save](results/x11-child-focus-01/README.md).
-### Capture after explicit target review
-
-Persistent MCP interface_review_target accepts optional screen_region=[x,y,width,height]. It captures after committing the selected target and reports capture_consistency from a subsequent metadata read. Review the delivered image and require appropriate current evidence before input. Matching metadata does not acknowledge redraw or application completion. Without this option, capture separately as before.
-
-Selection and image delivery have separate outcomes: target_reviewed and the new binding_revision remain valid reports of the selection even if capture fails or metadata changes. Do not replay the consumed review token or assume rollback. Inspect again when evidence is unavailable or changed. Retained interface_results does not select or capture again.

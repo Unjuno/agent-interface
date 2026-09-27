@@ -35,17 +35,8 @@ def main():
     with tempfile.TemporaryDirectory() as tmp:
         base = Path(tmp)
         source = base / 'source'
-        for name, digest in json.loads((HERE / 'FREEZE.json').read_text())['files'].items():
-            data = (HERE / 'frozen_sources' / name).read_bytes()
-            if hashlib.sha256(data).hexdigest() != digest:
-                raise ValueError('frozen input identity differs: ' + name)
-            target = source / name
-            target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_bytes(data)
         for row in baseline['sources']:
-            # Reconstruct the historical artifact from its original bytes.
-            # Current runtime compatibility is tested separately in CI.
-            src = HERE / 'frozen_sources' / row['path']
+            src = ROOT / row['path']
             data = src.read_bytes()
             if hashlib.sha256(data).hexdigest() != row['sha256']:
                 raise ValueError('upstream source identity differs')
@@ -54,7 +45,7 @@ def main():
             target.write_bytes(data)
         # Build from a no-Git snapshot to reproduce the ORIGINAL local artifact.
         # This is archive reconstruction, not execution of the validator.
-        builder = runpy.run_path(str(source / 'runtime/distribution_v2/build_validator.py'))
+        builder = runpy.run_path(str(ROOT / 'runtime/distribution_v2/build_validator.py'))
         out = base / 'records'
         out.mkdir()
         builder['build'](source, out / 'validator.pyz', out / 'artifact.json', out / 'artifact.sha256')
@@ -63,9 +54,7 @@ def main():
         shutil.copyfile(out / 'validator.pyz', out / 'replica.pyz')
         (out / 'RAW.jsonl').write_bytes(raw)
         shutil.copyfile(HERE / 'LAUNCHER.json', out / 'LAUNCHER.json')
-        audit_path = source / HERE.relative_to(ROOT) / 'audit.py'
-        shutil.copyfile(HERE / 'FREEZE.json', audit_path.parent / 'FREEZE.json')
-        audit = load_module('retained_audit', audit_path).audit(out)
+        audit = load_module('retained_audit', HERE / 'audit.py').audit(out)
         actual = (json.dumps(audit, indent=2, sort_keys=True) + '\n').encode()
         if actual != (HERE / 'AUDIT.json').read_bytes() or audit['errors']:
             raise ValueError('original frozen audit differs')

@@ -149,7 +149,6 @@ These are research predecessors. Current promoted executable organization lives 
 
 ## Cross-engine JSONL framing replication
 
-- [`issue_3814_jsonl_framing_v1/`](issue_3814_jsonl_framing_v1/) — Issue #3814 Docker Desktop/Linux amd64 newline-framing audit; retain the overall `HOLD_EVIDENCE_INCOMPLETE` (75/76) and the single-dispatch receipt without replay.
 - [`experiments/issue_3840_newline_frame_v2/`](experiments/issue_3840_newline_frame_v2/) — Issue #3840 Docker Desktop/Linux amd64 replication of the terminal-LF strict-prefix result; `RESULT.md` separates the corroborated row-level observation from the unresolved audit-provenance HOLD.
 
 ## Navigation check
@@ -206,7 +205,7 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 
 
 - [`procedural_control_arena_v0/`](procedural_control_arena_v0/) — dependency-light mechanics/regression prototype; see its README and validation record for limits. It is not evidence of candidate or cross-domain performance.
-- [`procedural_control_arena_v1/`](procedural_control_arena_v1/) — construction GUI benchmark with compound input primitives; paired baseline/candidate, held-out promotion, evaluator isolation, formal performance, and cross-domain transfer remain unvalidated.
+- [`procedural_control_arena_v1/`](procedural_control_arena_v1/) - Construction GUI benchmark with compound input primitives; formal paired performance and cross-domain transfer remain unvalidated.
 
 ### Needle / System-1 adapter research
 
@@ -230,4 +229,3 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`needle_lora_3441_rank4_online_multiseed_gpu_v1/`](needle_lora_3441_rank4_online_multiseed_gpu_v1/) — Issues #3807/#3819 GPU rank-capacity failure evidence; #3822 separately records the learning-curve HOLD.
 
 - [`procedural_control_arena_v0/`](procedural_control_arena_v0/) - Procedural control arena; consult its README and VALIDATION for scope and current evidence.
-- [`procedural_control_arena_v1/`](procedural_control_arena_v1/) - Procedural control arena v1 construction environment; see README and VALIDATION for scope and open promotion gates.

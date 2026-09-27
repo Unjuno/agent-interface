@@ -978,14 +978,6 @@ Primary artifacts:
 - [`summary.csv`](research/observation_gating/results/a1r3-summary/summary.csv)
 - [`frozen source and environment`](research/observation_gating/results/frozen-a1r3/)
 
-### Exact host-frame CUDA comparison — Issue #4957
-
-Path: [`research/measurement/observation_gpu_exact_frame_1564_v1/`](research/measurement/observation_gpu_exact_frame_1564_v1/).
-
-The one-shot RTX 3080 comparison preserved exact equality in all 6/6 cases. With host-resident frames and both uploads included, CUDA was slower at 1080p (median 2.17 ms vs CPU 1.30 ms) and 4K (7.13 ms vs 5.21 ms). Decision: **REJECT_GPU_FOR_HOST_RESIDENT_EXACT_O1_SCOPED**. The independent raw audit passed with zero errors.
-
-See the [full report](research/measurement/observation_gpu_exact_frame_1564_v1/results/formal_01/REPORT.md), [freeze](research/measurement/observation_gpu_exact_frame_1564_v1/FREEZE.json), and [raw result](research/measurement/observation_gpu_exact_frame_1564_v1/results/formal_01/result.json). This is one synthetic host-memory path; it does not test GPU-resident frames or establish a general CPU/GPU performance result.
-
 ## Observation tiles — A2 scoped result and actual assistant use
 
 Path: [`research/observation_tiles/`](research/observation_tiles/).

@@ -15,7 +15,6 @@ from runtime.core_v1.contract import (
     OFFICE_FLOOR,
     CAPTURE_FRAME,
     WINDOW_FOCUS,
-    WINDOW_ACTIVATE,
     SCHEMA_PROGRAM,
     admit_program,
     capability_manifest,
@@ -71,29 +70,6 @@ FULL = OFFICE_FLOOR
 
 
 class ProgramTests(unittest.TestCase):
-    def test_activation_requires_explicit_optional_capability(self):
-        row = program()
-        row['ops'] = [{'op': 'activate', 'target': 'app', 'timeout_ms': 250},
-                      {'op': 'release_all'}]
-        self.assertEqual(set(required_capabilities(row)),
-                         {WINDOW_ACTIVATE, CLOCK_MONOTONIC, INPUT_RELEASE_ALL})
-        kwargs = dict(now_ns=1, current_observation_seq=7, current_binding_revision=3)
-        unsupported = capability_manifest('test', 'linux', 'x11', OFFICE_FLOOR)
-        self.assertEqual(admit_program(row, unsupported, **kwargs).error,
-                         'UNSUPPORTED_CAPABILITY')
-        supported = capability_manifest('test', 'linux', 'x11', OFFICE_FLOOR | {WINDOW_ACTIVATE})
-        self.assertTrue(admit_program(row, supported, **kwargs).accepted)
-        kwargs['current_observation_seq'] = 8
-        self.assertEqual(admit_program(row, supported, **kwargs).error, 'STALE_OBSERVATION')
-
-    def test_activation_rejects_invalid_or_missing_timeout(self):
-        for timeout in (None, -1, 2001, True, 0.5, '250'):
-            with self.subTest(timeout=timeout):
-                row = program()
-                row['ops'][0] = {'op': 'activate', 'target': 'app', 'timeout_ms': timeout}
-                with self.assertRaises(ContractError):
-                    validate_program(row)
-
     def test_unexpanded_text_gap_cannot_be_silently_ignored(self):
         request = program()
         request['ops'].insert(-1, {'op': 'text', 'text': '300', 'gap_ms': 20})

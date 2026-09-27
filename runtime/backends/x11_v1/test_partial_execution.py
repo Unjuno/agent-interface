@@ -10,60 +10,6 @@ from runtime.core_v1.test_contract import program
 
 
 class PartialExecutionTests(unittest.TestCase):
-    def test_target_disappearing_after_session_preflight_returns_failure(self):
-        from runtime.backends.x11_v1.backend import X11BackendError
-        from runtime.core_v1.contract import WINDOW_ACTIVATE
-        backend = object.__new__(X11Backend)
-        backend.emissions = 0
-        backend.monotonic_ns = lambda: 9000
-        backend.manifest = lambda: capability_manifest(
-            'inert', 'linux', 'x11', OFFICE_FLOOR | {WINDOW_ACTIVATE})
-        backend.preflight = mock.Mock(side_effect=[None, X11BackendError('client withdrawn')])
-        backend.activate = mock.Mock()
-        backend.release_all = mock.Mock(return_value={
-            'verified': True, 'keys_down': [], 'buttons_down': []})
-        row = program()
-        row['ops'] = [{'op': 'activate', 'target': 'app', 'timeout_ms': 25},
-                      {'op': 'release_all'}]
-        session = X11RuntimeSession(backend)
-        result = session.dispatch(row, current_observation_seq=7, current_binding_revision=3)
-        self.assertEqual(result['status'], 'refused')
-        self.assertEqual(result['error'], 'BACKEND_CONSTRAINT')
-        self.assertFalse(session.recovery_required)
-        self.assertEqual(result['backend_emissions'], 0)
-        self.assertTrue(result['release']['verified'])
-        backend.activate.assert_not_called()
-        backend.release_all.assert_called_once()
-
-    def test_activation_timeout_retains_request_and_stops_following_edit(self):
-        from runtime.backends.x11_v1.backend import X11BackendError, X11ExecutionError
-        backend = object.__new__(X11Backend)
-        backend.emissions = 0
-        backend.preflight = mock.Mock()
-        backend.text = mock.Mock()
-        backend.release_all = mock.Mock(return_value={
-            'verified': True, 'keys_down': [], 'buttons_down': []})
-
-        def activate(target, timeout, receipt):
-            receipt.update(target=target, requested_ms=timeout,
-                           request_attempted=True, status='timeout')
-            raise X11BackendError('activation not confirmed; request may take effect later')
-
-        backend.activate = mock.Mock(side_effect=activate)
-        with self.assertRaises(X11ExecutionError) as caught:
-            backend.execute({'ops': [
-                {'op': 'activate', 'target': 'app', 'timeout_ms': 25},
-                {'op': 'text', 'text': 'must-not-run'}, {'op': 'release_all'}]})
-        evidence = caught.exception.execution
-        self.assertEqual(evidence['completed_ops'], [])
-        self.assertEqual(evidence['failed_op'], 0)
-        self.assertEqual(evidence['activations'][0]['status'], 'timeout')
-        self.assertTrue(evidence['activations'][0]['request_attempted'])
-        self.assertTrue(evidence['releases'][0]['verified'])
-        backend.activate.assert_called_once()
-        backend.text.assert_not_called()
-        backend.release_all.assert_called_once()
-
     def test_wait_receipt_survives_later_failure_without_claiming_an_update(self):
         from runtime.backends.x11_v1.backend import X11ExecutionError
         backend = object.__new__(X11Backend)
