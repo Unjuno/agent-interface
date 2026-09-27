@@ -80,8 +80,11 @@ def verify(root):
         if freeze.get("source_sha256", {}).get(name) != digest:
             errors.append(f"freeze:{name}")
     for name, expected in freeze.get("source_sha256", {}).items():
-        if name not in source_files and (root / name).is_file() and sha(read(name)) != expected:
-            errors.append(f"freeze_external:{name}")
+        if name not in source_files:
+            if not (root / name).is_file():
+                errors.append(f"freeze_external_missing:{name}")
+            elif sha(read(name)) != expected:
+                errors.append(f"freeze_external:{name}")
     if result.get("decision") != "HOLD_ATTACK_TASK_EFFECT_NOT_REPRODUCED":
         errors.append("decision")
     if result.get("formal_invocations") != 1 or result.get("reruns") != 0 or result.get("replacements") != 0 or result.get("tuning_after_freeze") != 0:

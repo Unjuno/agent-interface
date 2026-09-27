@@ -42,6 +42,22 @@ class PublicationIntegrityTests(unittest.TestCase):
             path.write_text("\n".join(lines) + "\n")
             self.assertIn("integrity_manifest:verify_publication.py", verify(target)["errors"])
 
+    def test_rejects_missing_external_frozen_source(self):
+        with tempfile.TemporaryDirectory() as temp:
+            target = Path(temp) / "study"
+            shutil.copytree(ROOT, target, ignore=shutil.ignore_patterns("__pycache__"))
+            (target / "PLAN.md").unlink()
+            errors = verify(target)["errors"]
+            self.assertIn("freeze_external_missing:PLAN.md", errors)
+
+    def test_rejects_tampered_success_receipt(self):
+        with tempfile.TemporaryDirectory() as temp:
+            target = Path(temp) / "study"
+            shutil.copytree(ROOT, target, ignore=shutil.ignore_patterns("__pycache__"))
+            path = target / "INTEGRITY_RECHECK.txt"
+            path.write_text(path.read_text() + "tampered\n")
+            self.assertIn("integrity_manifest:INTEGRITY_RECHECK.txt", verify(target)["errors"])
+
 
 if __name__ == "__main__":
     unittest.main()
