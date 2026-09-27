@@ -22,6 +22,7 @@ Formal fitting: prohibited in this allocation.
 
 ## Frozen sources and execution
 
+The `models.py` and `prepare.py` contents come from the audited #4814 branch; only terminal line endings are normalized. The exact local bytes used by Docker are pinned in `source_sha256.json`. Pinned image: `codex-gtk-model:local`, image ID `sha256:ba509e8a38d311c07539c49a7a2970b6f19869de42b8008be07a85568e2c9824`, linux/amd64, Python 3.11.2, NumPy 1.24.2. Use `--pull=never --network none --read-only --cpus=1 --memory=2g --pids-limit=64`, no GPU, no package installation. Source mount is read-only and only the unique output directory writable. One producer and one independent raw-only auditor invocation. No CI/workflow scientific runs.
 
 Frozen source SHA-256 values are in `source_sha256.json`; both producer and independent auditor will verify them. Commands (PowerShell from workspace root; output directory must be created fresh and empty):
 
