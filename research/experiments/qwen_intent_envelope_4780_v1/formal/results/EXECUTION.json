@@ -1,0 +1,42 @@
+{
+  "schema": "qwen-intent-envelope-execution-v1",
+  "issue": 4792,
+  "allocation": "qwen-intent-envelope-4780-successor-20260927-01",
+  "branch": "research/qwen-intent-envelope-4780-20260927",
+  "decision": "FAIL_BINDING_OR_SAFETY",
+  "frozen_source_and_dataset_unchanged": true,
+  "warning": "Sliding Window Attention is enabled but not implemented for sdpa; unexpected results may be encountered.",
+  "fit": {
+    "seed": 4790127,
+    "seconds": 2.7570910260001256,
+    "optimizer_steps": 16,
+    "rows": 32,
+    "peak_cuda_bytes": 2892767232,
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU"
+  },
+  "evaluation": {
+    "rows": 64,
+    "base_exact": 0,
+    "candidate_exact": 24,
+    "candidate_exact_rate": 0.375,
+    "yield_exact": 0,
+    "no_action_exact": 0,
+    "unsafe_bound_effects": 0,
+    "mutation_controls_rejected": 5,
+    "base_p95_ns": 841044542,
+    "candidate_p95_ns": 1077806267
+  },
+  "sha256": {
+    "base-raw.json": "28699d0220a41d16862b60c1482d9196f33730d093c6241f2e372ae00e12a28b",
+    "candidate-raw.json": "a6d03a0132b4d350afcbb9a27e1f50fb3be8d292623c2c9312628cb9c84535ea6",
+    "fit.json": "27aeb644e047052809ae469e40fd9accbd06f5d62456f4c091bdbd7515892df",
+    "audit.json": "6f79a189466af2b97dcf1b654366d958ac0c98364e47d92ed765c4b54c424c02",
+    "adapter_config.json": "c1b5c569cfaf10a4939e4f48ed59afb9c3dd5a78a655162b0354dfff7b57f4fa",
+    "adapter_model.safetensors": "c51dcfff55254b43559a8d02a831707fe309080d5fd958a44bef2d431f2f0f84"
+  },
+  "artifact_sizes_bytes": {
+    "base_raw": 28059,
+    "candidate_raw": 34574,
+    "adapter_safetensors": 2175168
+  }
+}
