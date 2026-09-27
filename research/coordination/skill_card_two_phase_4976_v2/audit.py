@@ -10,7 +10,7 @@ EXPECTED_SOURCE_HASHES = {
     "base_model.py": "eb6f025b2557728683d54ebf86fcb0b32c48f3e12a9debbf736eddeb51c5774f",
     "cases.json": "75d26a48ca7ed3d24587170f2a66dd6c9da6027bc0602917b82ef9add796d84e",
     "candidate.py": "efbd1765a4d7fe331fcf37331b592497cd0ae5228b4a4756ad8992eb59e60194",
-    "runner.py": "9d290b3d0c46919a8590c42ff878e91fe6826a990f5ca711f58c4abce6e1f13c",
+    "runner.py": "1656754685c4d60732d88dbbc47d39ce6fb949f6800bb130812aeb446c1028fd",
 }
 EXPECTED = [
     ("capability_touch_missing", "pointer_track_v2", "EXECUTABLE", False),
