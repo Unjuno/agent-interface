@@ -45,8 +45,7 @@ def audit_rows(raw):
         if row["expected"] != ("accept" if accept else "reject"): raise ValueError("expectation")
         if row["broker_receipt_count"]!=1 or not row["response_exists"]: raise ValueError("receipt_count")
         receipt=row["receipt"]
-        if receipt.get("request_id") != row["subprocess_calls"][0][0] if row["subprocess_calls"] else False:
-            pass
+        if receipt.get("request_id") != row.get("request_id"): raise ValueError("request_id")
         if receipt.get("authority_granted") is not False: raise ValueError("authority")
         if accept:
             if row["exit_code"]!=0 or receipt.get("returncode")!=0 or receipt.get("error_class") is not None: raise ValueError("accepted_receipt")
@@ -71,8 +70,8 @@ def controls(raw):
     for name,mutate in (
        ("missing_row",lambda x:x["rows"].pop()),
        ("authority_flip",lambda x:x["rows"][0]["receipt"].update(authority_granted=True)),
-       ("rejected_subprocess",lambda x:x["rows"][5]["subprocess_calls"].append(["codex.exe"])),
-       ("invalid_receipt_flip",lambda x:x["rows"][5]["receipt"].update(returncode=0)),
+       ("rejected_subprocess",lambda x:next(r for r in x["rows"] if r["field"]=="schema" and r["class"]=="absolute")["subprocess_calls"].append(["codex.exe"])),
+       ("invalid_receipt_flip",lambda x:next(r for r in x["rows"] if r["field"]=="schema" and r["class"]=="absolute")["receipt"].update(returncode=0)),
        ("duplicate_row",lambda x:x["rows"].append(copy.deepcopy(x["rows"][0])))):
         altered=copy.deepcopy(raw); mutate(altered)
         rejected=False
