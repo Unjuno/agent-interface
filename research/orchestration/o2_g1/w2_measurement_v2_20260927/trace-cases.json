@@ -82,7 +82,15 @@
         "possible_any_input_ns": 0,
         "task_effect": "UNRESOLVED",
         "input_decision_may_be_correct": true
-      }
+      },
+      "clock_domains": [
+        {
+          "domain_id": "mono",
+          "epoch_id": "s1",
+          "kind": "monotonic",
+          "unit": "ns"
+        }
+      ]
     },
     {
       "case_id": "unauthorized-input-after-expiry",
@@ -181,7 +189,15 @@
         "possible_any_input_ns": 20,
         "authorized_guaranteed_ns": 0,
         "task_effect": "UNRESOLVED"
-      }
+      },
+      "clock_domains": [
+        {
+          "domain_id": "mono",
+          "epoch_id": "s2",
+          "kind": "monotonic",
+          "unit": "ns"
+        }
+      ]
     },
     {
       "case_id": "coast-damage",
@@ -266,7 +282,15 @@
         "possible_any_input_ns": 0,
         "task_effect": "UNRESOLVED",
         "causality": "UNBOUND"
-      }
+      },
+      "clock_domains": [
+        {
+          "domain_id": "mono",
+          "epoch_id": "s3",
+          "kind": "monotonic",
+          "unit": "ns"
+        }
+      ]
     },
     {
       "case_id": "release-before-terminal",
@@ -413,7 +437,15 @@
         "possible_any_input_ns": 302,
         "program_envelope_ns": 500,
         "terminal_does_not_extend_input": true
-      }
+      },
+      "clock_domains": [
+        {
+          "domain_id": "mono",
+          "epoch_id": "s4",
+          "kind": "monotonic",
+          "unit": "ns"
+        }
+      ]
     },
     {
       "case_id": "overlapping-key-holds",
@@ -575,7 +607,15 @@
         "guaranteed_any_input_ns": 58,
         "possible_any_input_ns": 62,
         "key_intervals_counted_as_union": true
-      }
+      },
+      "clock_domains": [
+        {
+          "domain_id": "mono",
+          "epoch_id": "s5",
+          "kind": "monotonic",
+          "unit": "ns"
+        }
+      ]
     },
     {
       "case_id": "missing-and-out-of-order-edge",
@@ -714,7 +754,15 @@
         "possible_any_input_ns": null,
         "upper_bound": "UNKNOWN",
         "terminal_not_release": true
-      }
+      },
+      "clock_domains": [
+        {
+          "domain_id": "mono",
+          "epoch_id": "s6",
+          "kind": "monotonic",
+          "unit": "ns"
+        }
+      ]
     },
     {
       "case_id": "no-input-unbound-task-effect",
@@ -774,7 +822,15 @@
         "possible_any_input_ns": 0,
         "task_effect": "OBSERVED_UNBOUND",
         "input_decision_may_be_correct": true
-      }
+      },
+      "clock_domains": [
+        {
+          "domain_id": "mono",
+          "epoch_id": "s7",
+          "kind": "monotonic",
+          "unit": "ns"
+        }
+      ]
     },
     {
       "case_id": "held-input-no-effect",
@@ -902,7 +958,15 @@
         "possible_any_input_ns": 102,
         "task_effect": "NEGATIVE_FOR_DECLARED_WINDOW",
         "input_authority_remains_separate": true
-      }
+      },
+      "clock_domains": [
+        {
+          "domain_id": "mono",
+          "epoch_id": "s8",
+          "kind": "monotonic",
+          "unit": "ns"
+        }
+      ]
     }
   ]
 }
