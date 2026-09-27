@@ -33,7 +33,7 @@ install a plugin or add tools to the current Codex conversation.
   publication. Unspecified defaults are not inserted into the saved request;
   extension fields remain available. Tail/runtime admission is still checked
   by the existing harness and backend, not certified by this input schema.
-- `native_resume(stage, decision_sha256, timeout=5)` follows the existing
+- `native_resume(stage, decision_sha256, timeout=5, include_image=true)` follows the existing
   read-only digest-bound path. It does not create a missing request.
 
 The run is bound at server startup; tools cannot select another filesystem path.
@@ -347,3 +347,6 @@ The sequential relay forwards the opt-in native_stop tool. Native private-sessio
 
 
 The [persistent Node host client](NATIVE_RELAY_CLIENT.md) provides a reusable adapter to the existing relay, with one outstanding request, retained replies and same-request waiting after host interruption.
+
+
+For outcome-only rereading, native_resume accepts include_image=false. It still validates the retained image and exact request, preserves image_status/image_reference, and adds image_delivery=omitted_by_request only when a valid image block was suppressed. It does not recapture or grant input authority. The default delivers the image. See [paired retained retrieval](../../runtime/results/native-resume-image-delivery-01/README.md).

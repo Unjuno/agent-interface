@@ -7,10 +7,11 @@ import threading
 from typing import Annotated, Literal
 
 from mcp.server.fastmcp import FastMCP
-from mcp.types import CallToolResult, ImageContent, TextContent
+from mcp.types import CallToolResult, TextContent
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, model_validator
 
 from agent_review import review_native
+from runtime.cli_v1.mcp_server import content
 from native_exchange_v1 import run
 from native_tail_v1 import expand_tail, paced_text_tail
 
@@ -158,16 +159,6 @@ def window_inventory(root, stage):
         return dict(result, status='needs_review', error=str(error))
 
 
-def content(result):
-    """Keep metadata complete; return image once as an MCP image block."""
-    metadata = dict(result)
-    image = metadata.pop('image', None)
-    blocks = [TextContent(type='text', text=json.dumps(metadata, allow_nan=False))]
-    if image is not None:
-        blocks.append(ImageContent(**image))
-    return CallToolResult(content=blocks)
-
-
 def create_server(run_directory, *, allocation=None):
     root = (allocation.run_directory if allocation is not None
             else Path(run_directory).resolve(strict=True))
@@ -192,11 +183,11 @@ def create_server(run_directory, *, allocation=None):
             result['allocation'] = state
         return result
 
-    def invoke(operation):
+    def invoke(operation, *, include_image=True):
         # One bound run, no concurrent submit/resume processing or automatic retry.
         with lock:
             try:
-                return content(operation())
+                return content(operation(), include_image=include_image)
             except Exception as error:
                 return CallToolResult(isError=True, content=[TextContent(type='text', text=json.dumps({
                     'status':'client_error', 'error':str(error), 'authority':'none',
@@ -289,14 +280,18 @@ def create_server(run_directory, *, allocation=None):
         return invoke(submit)
 
     @server.tool(structured_output=False)
-    def native_resume(stage: StrictInt, decision_sha256: str, timeout: WaitSeconds = 5) -> CallToolResult:
+    def native_resume(stage: StrictInt, decision_sha256: str, timeout: WaitSeconds = 5,
+                      include_image: StrictBool = True) -> CallToolResult:
         """Read/wait for an exact committed request without publishing input.
 
         Supply the original pending response's stage and SHA256. Missing/changed
         requests refuse. Owner loss requires reconciliation, never restart/replay.
+        Set include_image=false only to reread the outcome without redelivering its
+        retained image. Image integrity is still checked; metadata and historical
+        image reference remain. This does not capture a new frame or justify input.
         """
         return invoke(lambda: with_process_snapshot(run(root, stage, resume=True, decision_sha256=decision_sha256,
-                                  timeout=timeout, compact=True)))
+                                  timeout=timeout, compact=True)), include_image=include_image)
     return server
 
 
