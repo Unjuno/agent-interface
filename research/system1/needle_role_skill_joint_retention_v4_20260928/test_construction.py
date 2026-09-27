@@ -1,5 +1,6 @@
 """Zero-optimizer-update checks for role routing and separate online skills."""
 import os
+import sys
 import unittest
 from unittest.mock import patch
 
@@ -8,6 +9,7 @@ import torch.nn.functional as F
 
 import audit
 import runner
+import construction
 
 
 class RoleRouterConstruction(unittest.TestCase):
@@ -15,8 +17,20 @@ class RoleRouterConstruction(unittest.TestCase):
         self.assertEqual(runner.ALLOCATION, "needle-role-skill-joint-retention-20260928-v4")
         self.assertEqual(runner.SEEDS, (9944211, 9944311, 9944411))
         self.assertNotIn(9944014, runner.SEEDS)
-        self.assertNotIn(9944014, runner.SEEDS)
-        self.assertEqual(9944014, 9944014)
+        self.assertNotIn(736514, runner.SEEDS)
+
+    def test_construction_rejects_wrong_seed_and_missing_output_before_fit(self):
+        cases = [
+            (["construction.py", "--seed", "9944211"], {}, "STOP_CONSTRUCTION_SEED_MISMATCH"),
+            (["construction.py", "--seed", "9944014"], {}, "STOP_CONSTRUCTION_OUTPUT_MISSING"),
+        ]
+        for argv, env, expected in cases:
+            with patch.object(sys, "argv", argv), patch.dict(os.environ, env, clear=True), \
+                 patch.object(runner, "run_seed", side_effect=AssertionError("fit attempted")) as fit:
+                with self.assertRaises(SystemExit) as raised:
+                    construction.main()
+                self.assertEqual(str(raised.exception), expected)
+                fit.assert_not_called()
 
     def test_fresh_seeds_and_role_conditioned_splits(self):
         self.assertEqual(runner.SEEDS, (9944211, 9944311, 9944411))
