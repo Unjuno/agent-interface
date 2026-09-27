@@ -74,6 +74,15 @@ class FrozenTargetAuditTests(unittest.TestCase):
         self.assertIn("duplicate seed/arm/image case", errors)
         self.assertIn("missing or extra seed/arm/image cases", errors)
 
+    def test_added_case_is_rejected(self):
+        raw, manifest = fixture()
+        extra = copy.deepcopy(raw["cases"][0])
+        extra["seed"] = 999
+        raw["cases"].append(extra)
+        errors = audit_data(raw, manifest)["errors"]
+        self.assertIn("case outside exact frozen seed/arm/image population", errors)
+        self.assertIn("case cardinality is not exactly 96", errors)
+
     def test_confidence_and_acceptance_mutation_is_rejected(self):
         raw, manifest = fixture()
         raw["cases"][0]["confidence"] = [ACCEPT_MIN, 0.99]
