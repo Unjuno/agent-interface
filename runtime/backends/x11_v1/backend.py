@@ -76,12 +76,31 @@ class X11Backend:
             raise X11BackendError(f"unknown target {name}")
         return self.targets[name]
 
+    def _focus_within(self, window_id: int) -> bool:
+        # GTK may use an InputOnly child for keyboard input. A transient sibling
+        # is a separate client and is not accepted by this ancestry check.
+        try:
+            focus = self.d.get_input_focus().focus
+            seen = set()
+            for _ in range(64):
+                identifier = getattr(focus, "id", None)
+                if type(identifier) is not int or identifier <= 0 or identifier in seen:
+                    return False
+                if identifier == window_id:
+                    return True
+                seen.add(identifier)
+                focus = focus.query_tree().parent
+        except Exception:
+            return False
+        return False
+
     def focus(self, target: str) -> None:
         win = self._target(target)
+        if self._focus_within(win.id):
+            return
         win.set_input_focus(X.RevertToParent, X.CurrentTime)
         self.d.sync()
-        focus = self.d.get_input_focus().focus
-        if getattr(focus, "id", None) != win.id:
+        if not self._focus_within(win.id):
             raise X11BackendError("focus verification failed")
 
     def geometry(self, target: str) -> dict[str, int]:
