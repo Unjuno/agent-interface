@@ -1,0 +1,35 @@
+{
+  "schema": "scheduler-selection-stop-v1",
+  "issue": 2868,
+  "allocation": "issue2868-scheduler-selection-20260928-01",
+  "freeze_parent_commit": "58386990aa73f3291556e613a43f50b72a5a6b32",
+  "runner": {
+    "invocations": 1,
+    "exit": 0,
+    "rows": 48,
+    "raw_sha256": "8d8495dd0bfeced7d2278a59ce66d6137cbba1223a665bb6dcbcc69d67e36216",
+    "raw_sha_file_sha256": "e45c8a5c544d3f6ac265c6d5e2944a624e9a4a6fcfcaec346a0a64b7524f69a5"
+  },
+  "independent_audit": {
+    "invocations": 1,
+    "exit": 1,
+    "decision": "HOLD_OR_FAIL_SCHEDULER_SELECTION",
+    "errors": 24,
+    "corruption_controls_rejected": 10,
+    "report_sha256": "f2b451461b496c4d7e02d9025d15554b6f6737882fc68f5c4aab450bcb4bbac7",
+    "report_sha_file_sha256": "4008c1888968e68d88458008e695d3c97e4696f4e2b5abfaf30b15c8ada310db"
+  },
+  "stop_reason": "Independent reference audit omitted trace.reason while comparing the complete raw trace; all 24 scenario-policy reference_trace comparisons therefore failed. This is an audit implementation defect, not evidence that the scheduler policies are equivalent or incorrect.",
+  "diagnostic_evidence": "The preserved FIFO_HEAD raw row for independent_blocked_head has trace[0].reason=not_before; audit.reference_trace emits only tick, selected, eligible_while_idle. No source was edited after freeze. No formal runner or auditor rerun was performed.",
+  "container": {
+    "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "docker_engine": "29.8.0",
+    "network": "none",
+    "cpus": 1,
+    "memory": "512m",
+    "pids_limit": 64,
+    "gpu": false
+  },
+  "formal_interpretation": "STOP_AUDIT_DEFECT; no PASS, scheduler adoption, or performance claim. Raw evidence is retained unchanged. A corrected auditor requires a successor allocation and a newly frozen protocol before any future execution."
+}
