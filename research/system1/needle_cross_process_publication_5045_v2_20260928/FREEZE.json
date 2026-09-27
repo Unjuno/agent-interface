@@ -68,20 +68,20 @@
     "protocol.py": "07abf2da45b50bb025ab6055fa92f9e630461cec46197f2a413f8bc89609ac5b",
     "runner.py": "721b16f2f284ef91ac6aaab1ffbe23be4008fdcc291a234af65c090a64cc4edf",
     "audit.py": "1cdaefa4769e4f3f4c2864f437bbd20915100dc7e6b97c78f8c3350fb93d3b37",
-    "formal.py": "973d6a880fcbc8268e9d79b892823920ada0325786bdcdfa4f3b4ed66dbd0648",
+    "formal.py": "fd1324fe9c2e9550cdc12cea9d9e3b9b58e43aad1d5233cd4abfbc0e0bf2ddaa",
     "test_protocol.py": "ac51b23f0362bc2345cad87713b40d95179095f31c81a4c9ef4ec4939f98f858",
     "test_audit.py": "2548958d21cacec59a2e28fbda8856c50a76e763c4de63409ad9d903b07d34ce",
-    "test_formal.py": "566055fbd0a1bc500e9efd91207d3518aab6c465fe13d6494a3d9384b1681683"
+    "test_formal.py": "968474ae105294b0595150570e31d2c1b8a860436a69380551acfdac35277ed5"
   },
   "source_git_blobs": {
     "PLAN.md": "ab06d0408bd23f941416fddb56d6d712bf7bf273",
     "protocol.py": "21fbe888ee2b7aaadcb6b1ed72574b7b66122146",
     "runner.py": "af21dbffa9102cec6d245be8b6a004af498ec97d",
     "audit.py": "eb66dbbd38c4ceea26f920d4aa3a21aacfd6f0ac",
-    "formal.py": "4d663906371e72e75823a69b2d284db93efc0b5f",
+    "formal.py": "802b08d77df5ae00fd1e848d2f86b41b9559fe1c",
     "test_protocol.py": "07de9ef7cc04a67a9bd265251bd55fbee06e3ec9",
     "test_audit.py": "24b237f506c74d08768ffdf714eac6e41444883f",
-    "test_formal.py": "54142a77057844f97df82eb9bbd2355ee628163f"
+    "test_formal.py": "666958313694124edca054ef50d05dc4eb88d9de"
   },
   "test_record": {
     "command": "python -B -m unittest -v test_protocol.py test_audit.py test_formal.py",
@@ -89,7 +89,8 @@
     "regression_cases": "actual registered freeze; nested-key mutation; wrong image; wrong seed digest; source hash mismatch; preexisting output directory; --preflight-only must not invoke Docker or create output"
   },
   "pre_freeze_corrections": [
-    "The initial draft FREEZE.json commit omitted the final 9 from image_id. The actual-freeze CLI integration test detected the mismatch before output creation or any Docker invocation. The corrected complete image ID is recorded here; the prior GitHub commit remains in branch history. No formal allocation was invoked or consumed."
+    "The initial draft FREEZE.json commit omitted the final 9 from image_id. The actual-freeze CLI integration test detected the mismatch before output creation or any Docker invocation. The corrected complete image ID is recorded here; the prior GitHub commit remains in branch history. No formal allocation was invoked or consumed.",
+    "A new CLI assertion detected that successful --preflight-only (SystemExit(0)) was misleadingly logged as an orchestration error because BaseException was caught. Catch narrowed to Exception and the updated regression requires empty stderr; fixed before formal execution."
   ],
   "pre_run_gate": "Wait for the coordinated #5036 consumed-allocation disposition and the separately authorized, bounded Mindustry asset materialization/smoke container to finish. Immediately before formal, require current desktop-linux inventory plus explicit slot release; idle utilization alone is not release.",
   "retry_policy": "One formal orchestration only; after any formal invocation or output creation preserve exact result and never retry this allocation. V1 #5045 remains immutable and is not a retry target.",
