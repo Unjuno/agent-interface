@@ -45,7 +45,9 @@ def finite_difference_probe():
    checks.append(rel)
  return {'count':len(checks),'max_symmetric_relative_error':max(checks),'pass':len(checks)==49 and max(checks)<1e-4}
 def main(out):
- out=Path(out); out.mkdir(parents=True,exist_ok=False)
+ out=Path(out)
+ if out.exists() and any(out.iterdir()): raise RuntimeError('STOP_OUTPUT_NOT_EMPTY')
+ out.mkdir(parents=True,exist_ok=True)
  assert os.environ.get('CUBLAS_WORKSPACE_CONFIG')==':4096:8'
  torch.use_deterministic_algorithms(True); torch.backends.cudnn.deterministic=True; torch.backends.cudnn.benchmark=False; torch.backends.cuda.matmul.allow_tf32=False; torch.backends.cudnn.allow_tf32=False
  assert torch.are_deterministic_algorithms_enabled() and torch.backends.cudnn.deterministic and not torch.backends.cudnn.benchmark
