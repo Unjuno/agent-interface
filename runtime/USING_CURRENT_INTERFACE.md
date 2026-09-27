@@ -254,3 +254,5 @@ target may preserve context better. This is guidance for the primary model,
 not automatic point selection. The [six-task construction pair](results/stable-anchor-six-pair-01/README.md)
 retains both correctness and the tradeoff: fewer grounding requests, but more
 internal captures and slower local application-feedback handling.
+
+Capture-stage timing is available in X11 image artifacts; see [interval definitions](backends/x11_v1/CAPTURE_TIMING.md). Treat these as local processing measurements, not model-visible completion. The [primary-operated Calc PNG comparison](results/calc-png-integration-01/README.md) retained a faster first response but a slower second response and different final visual readiness with level1 compression. Standard compression remains unchanged; lower encoder time alone is not an adoption criterion.
