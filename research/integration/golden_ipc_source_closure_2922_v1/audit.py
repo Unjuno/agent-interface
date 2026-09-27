@@ -12,7 +12,8 @@ def git_blob_sha(data: bytes) -> str:
 
 def audit(root: Path, *, rows_override=None, manifest_override=None,
           runner_sources_override=None, package_override=None,
-          no_gui_result_override=None, ready_result_override=None) -> list[str]:
+          no_gui_result_override=None, ready_result_override=None,
+          fixture_result_override=None) -> list[str]:
     errors: list[str] = []
     package = package_override or root / "research/integration/golden_ipc_source_closure_2922_v1"
     evidence = root / "evidence/ready-gate-01"
@@ -91,6 +92,23 @@ def audit(root: Path, *, rows_override=None, manifest_override=None,
         if not artifact.is_file() or hashlib.sha256(artifact.read_bytes()).hexdigest() != expected_sha:
             errors.append(f"direct-Xvfb artifact digest mismatch: {filename}")
 
+    fixture_result = fixture_result_override if fixture_result_override is not None else json.loads(
+        (package / "FIXTURE_GET_HOST_RESULT.json").read_text())
+    if (fixture_result.get("schema") != "issue2922_fixture_get_host_component_v1"
+            or fixture_result.get("disposition") != "PASS_GET_HANDLER_NO_OUTPUT_MUTATION"
+            or fixture_result.get("containerized") is not False
+            or fixture_result.get("request_method") != "GET"
+            or fixture_result.get("http_status") != 200
+            or fixture_result.get("output_path_exists_before") is not False
+            or fixture_result.get("output_path_exists_after") is not False
+            or fixture_result.get("post_requests") != 0
+            or fixture_result.get("integrated_session_invoked") is not False
+            or fixture_result.get("task_effect") != "not tested"):
+        errors.append("host GET component result scope mismatch")
+    fixture_source = package / "source_snapshot/research/observation_gating/gui_suite.py"
+    if hashlib.sha256(fixture_source.read_bytes()).hexdigest() != fixture_result.get("source_sha256"):
+        errors.append("host GET component source digest mismatch")
+
     manifest = manifest_override if manifest_override is not None else json.loads(
         (package / "SOURCE_MANIFEST.json").read_text())
     runner_sources = runner_sources_override if runner_sources_override is not None else json.loads(
@@ -126,7 +144,8 @@ if __name__ == "__main__":
     print(json.dumps({"startup_hold_event_rows": 4, "direct_xvfb_event_rows": 4,
                       "source_files": source_count, "errors": problems,
                       "rung_dispositions": ["HOLD_XVFB_READY_SIGNAL_INTERVENTION",
-                                            "PASS_IMPORT_ONLY", "PASS_PRETASK_READY_ONLY"],
+                                            "PASS_IMPORT_ONLY", "PASS_PRETASK_READY_ONLY",
+                                            "PASS_GET_HANDLER_NO_OUTPUT_MUTATION_HOST_COMPONENT_ONLY"],
                       "audit_disposition": "PASS" if not problems else "FAIL_AUDIT"},
                      sort_keys=True))
     raise SystemExit(bool(problems))
