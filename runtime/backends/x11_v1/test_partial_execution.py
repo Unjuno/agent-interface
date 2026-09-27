@@ -27,11 +27,11 @@ class PartialExecutionTests(unittest.TestCase):
                       {'op': 'release_all'}]
         session = X11RuntimeSession(backend)
         result = session.dispatch(row, current_observation_seq=7, current_binding_revision=3)
-        self.assertEqual(result['status'], 'execution_failed')
+        self.assertEqual(result['status'], 'refused')
+        self.assertEqual(result['error'], 'BACKEND_CONSTRAINT')
         self.assertFalse(session.recovery_required)
-        self.assertEqual(result['execution']['program_emissions'], 0)
-        self.assertEqual(result['execution']['completed_ops'], [])
-        self.assertEqual(result['execution']['activations'], [])
+        self.assertEqual(result['backend_emissions'], 0)
+        self.assertTrue(result['release']['verified'])
         backend.activate.assert_not_called()
         backend.release_all.assert_called_once()
 
