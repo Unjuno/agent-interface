@@ -14,4 +14,3 @@ WORKDIR /opt/study/study
 RUN python -B -m unittest discover -s /opt/study/study -v
 
 CMD ["python", "-B", "runner.py", "--formal", "--out", "/results/formal"]
-
