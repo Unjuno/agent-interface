@@ -26,7 +26,7 @@ def independently_check(root:Path):
             assert receipt["final_weights_sha256"]==weight_sha
             assert receipt["training_inputs_sha256"]==hashlib.sha256(x.tobytes(order="C")).hexdigest()
             assert receipt["training_rows"]==160 and receipt["positive_rows"]==80 and receipt["negative_rows"]==80
-            assert receipt["parameters"]==(19217 if arm=="control" else 45)
+            assert receipt["parameters"]==(19233 if arm=="control" else 45)
             saved=base64.b64decode((root/"weights"/f"{seed}-{arm}.npz.b64").read_text().strip())
             assert hashlib.sha256(saved).hexdigest()==weight_sha
             for sidx,(name,center,dseed) in enumerate([("base",(20,15),seed+2)]+[(f"heldout_{i}",c,seed+10+i) for i,c in enumerate(EVAL_CENTERS)]):
