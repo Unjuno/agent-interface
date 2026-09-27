@@ -1,18 +1,24 @@
-# Successor #4908 v4 — launcher/output-boundary construction rung
+# Successor #4929 v4 — role-separated online LoRA construction
 
 ## H / T / D / C / U
 
 ### H
-Separating host launcher logs/receipt from the runner's initially empty `/out` directory prevents the v2 pre-fit output-not-empty STOP while retaining the runner's fail-closed empty-output precondition.
+A role-isolated online rank-2 LoRA skill B can learn synthetic B corrections while immutable A skill state remains unchanged. A correctly separated launcher can execute the excluded construction seed without contaminating the fresh raw-output mount with host logs.
 
 ### T
-Fresh allocation: `needle-role-skill-joint-retention-20260928-v3`, issue #4941, branch `research/needle-role-skill-joint-retention-v3-20260928`, path `research/system1/needle_role_skill_joint_retention_v3_20260928/`. Intake main: `519f2c1bdb219697c2f5e92ae6c27714265d60e`. Candidate lineage is #4911 / `research/needle-role-skill-joint-retention-v2-20260928`; predecessor allocation and STOP remain unchanged. This rung only checks launcher/output boundary and runs the zero-update suite. No optimizer step or formal seed is authorized.
+- Allocation: `needle-role-skill-joint-retention-20260928-v4`, Issue #4941.
+- Base: main `6906d6d9b5679604a5d997c89edd1b1789f849ed`; branch `research/needle-role-skill-joint-retention-v4-20260928`; path `research/system1/needle_role_skill_joint_retention_v4_20260928/`.
+- Excluded construction seed 9944014. Formal seeds 9944211, 9944311, 9944411 are reserved and unspent.
+- Stage 0 is one zero-update contract suite with corrected fixture setup, seed-argument binding, and fail-before-fit controls.
+- Stage 1 is exactly one excluded-seed training/construction run only after Stage 0 PASS and resource ownership recheck. It uses the pinned cached image sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e (linux/amd64, network none, read-only root/source, 1 CPU, 2 GiB, 64 PIDs). Output and logs are separate mounts. An independent auditor runs separately on read-only raw output.
+- No retries or replacements. Formal seeds remain separate from construction; no formal fit is authorized by Stage 1.
 
 ### D
-Construction boundary PASS only if tests show logs and receipt remain outside output, output starts empty, stale output/log paths and aliasing stop before subprocess, and the copied v2 source contract tests pass. No scientific PASS is inferred. Any unexpected failure is retained without rerun.
+Stage 0 PASS requires all tests to pass, including correct fixture creation, empty output at subprocess entry, logs/receipt outside raw output, stale paths/aliases rejected before subprocess, explicit construction seed passed, and invalid seed/missing output rejected before run_seed.
+Stage 1 PASS requires independent deterministic reconstruction, all 11 dataset hashes including base_row_indices, exact immutable A, invalid route YIELD, route/optimizer receipts, and per-update timing gates. Source/provenance mismatch is HOLD; a valid construction failure is retained without retry. This does not certify three-seed quality.
 
 ### C
-One pinned local Docker invocation: cached image `needle-pilot05:local`, immutable image ID `sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e`, linux/amd64, network none, read-only root/source, 1 CPU, 2 GiB, 64 PIDs. Logs use a separate writable mount; runner output uses a separate empty writable mount.
+Synthetic task with explicit role bit, local Windows Docker Desktop/Linux amd64 CPU execution. No real role detection, GUI, external provider, user data or production Needle runtime.
 
 ### U
-Synthetic protocol-construction evidence only. No construction seed fit, online LoRA update, model/task quality, real role detection, GPU claim, or integrated Needle performance. Formal seeds 9944211/9944311/9944411 are reserved but unspent.
+No claim of online-LoRA retention quality across formal seeds, natural-language routing, GPU benefit, integrated task performance or product readiness.
