@@ -1,8 +1,8 @@
 import hashlib, json, sys
 from pathlib import Path
 
-BASE = Path('/in/baseline_skill.json')
-RAW = Path('/in/raw.json')
+BASE = Path('/src/baseline_skill.json')
+RAW = Path('/raw/raw.json')
 def sha(b): return hashlib.sha256(b).hexdigest()
 def canon(x): return json.dumps(x,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
 def unique(pairs):
