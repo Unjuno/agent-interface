@@ -139,6 +139,13 @@ still requires a matched measurement.
 
 ## Native decision loop
 
+Native MCP image responses include `window_inventory` when a stage's recorded
+listing is available. Read its complete application/dialog titles alongside the
+image for exact-title feedback; no separate shell discovery is needed. The
+listing is historical and grants no input authority. Missing or malformed
+context stays explicit, and ordinary guards still decide admission. See the
+[two-app saved-file validation and retained first failure](results/native-window-context-01/README.md).
+
 For the six-task primary-use runner, add `--primary-review` to either
 `--route persistent` or `--route direct` to pause after each successful local
 feedback result. View the printed image and retained task receipt, then

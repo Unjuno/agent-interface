@@ -15,6 +15,30 @@ from native_exchange_v1 import encoded
 
 
 class MCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_window_inventory_uses_only_exact_stage_and_retains_raw_identity(self):
+        from native_mcp_v1 import window_inventory
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            raw = json.dumps('0x10  0 host book.xlsx - LibreOffice Calc\n').encode()
+            (root/'windows-2.json').write_bytes(raw)
+            result = window_inventory(root, 2)
+            self.assertEqual(result['text'], json.loads(raw))
+            self.assertEqual(result['source']['sha256'], hashlib.sha256(raw).hexdigest())
+            self.assertEqual(result['authority'], 'none')
+            self.assertEqual(window_inventory(root, 1)['status'], 'unavailable')
+            for stage in (True, 0, 65, '../2'):
+                self.assertEqual(window_inventory(root, stage)['status'], 'needs_review')
+
+    def test_window_inventory_malformed_or_large_is_explicit_without_fallback(self):
+        from native_mcp_v1 import window_inventory
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for raw in (b'not json', b'{}', b'"'+b'x'*16384+b'"', b'"\xff"'):
+                (root/'windows-1.json').write_bytes(raw)
+                result = window_inventory(root, 1)
+                self.assertEqual(result['status'], 'needs_review')
+                self.assertNotIn('text', result)
+
     @unittest.skipUnless(os.name == 'posix', 'executable harness fixture requires POSIX')
     async def test_failed_harness_stderr_reaches_stdio_client_without_relaunch(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -169,12 +193,20 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(context['exchange_contract']['value']['max_stages'],6)
                     self.assertEqual(context['authority'],'none')
                     self.assertNotIn('DO_NOT_EXPOSE',observed.content[0].text)
+                    self.assertEqual(json.loads(observed.content[0].text)['window_inventory']['status'], 'unavailable')
+                    (root/'windows-1.json').write_text('{}')
                     (root/'goal.json').write_text('[]')
                     incomplete = await client.call_tool('native_observe', {'stage':1})
                     self.assertFalse(incomplete.isError)
                     incomplete_metadata=json.loads(incomplete.content[0].text)
                     self.assertEqual(incomplete_metadata['session_context']['goal']['status'],'needs_review')
+                    self.assertEqual(incomplete_metadata['window_inventory']['status'], 'needs_review')
                     self.assertEqual(base64.b64decode(incomplete.content[1].data),pixels)
+                    (root/'windows-1.json').write_bytes(encoded('0x01 host exact application title'))
+                    listed = await client.call_tool('native_observe', {'stage':1})
+                    self.assertEqual(json.loads(listed.content[0].text)['window_inventory']['text'],
+                                     '0x01 host exact application title')
+                    self.assertEqual(base64.b64decode(listed.content[1].data), pixels)
                     (root/'goal.json').write_bytes(encoded(goal))
                     invalid = await client.call_tool('native_submit', {'stage':True,'decision':{},'timeout':0})
                     self.assertTrue(invalid.isError)

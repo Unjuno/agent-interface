@@ -38,6 +38,18 @@ install a plugin or add tools to the current Codex conversation.
 
 The run is bound at server startup; tools cannot select another filesystem path.
 
+Start/observe responses and source-available submit/resume responses include
+`window_inventory` for that exact source stage. This reads the harness's already
+recorded `windows-N.json`, with its path and SHA-256, so complete application and
+dialog titles can be read alongside the image. It performs no discovery, focus
+change or input. The listing is historical, is not atomic with the screenshot,
+and gives no freshness or input authority. Inspect the image and normal guard
+results; do not use a listed window ID as automatic permission to target it.
+Missing listings return `unavailable`; malformed or over-16384-byte listings
+return `needs_review` without dropping the image or action receipt. No older
+listing is substituted. The managed harness publishes the listing before its
+stage source and reply, without reader-side sleeps or retries.
+
 ### Choosing a keyboard context point
 
 `interaction="keyboard"` requires an observed `point` even though it emits no
