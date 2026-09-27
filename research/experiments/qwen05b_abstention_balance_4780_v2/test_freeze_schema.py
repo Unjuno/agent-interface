@@ -10,6 +10,8 @@ class FrozenSchemaTests(unittest.TestCase):
         self.assertEqual(freeze["issue"], 5014)
         self.assertEqual(freeze["allocation"], "qwen05b-abstention-balance-4780-20260928-02")
         self.assertEqual(freeze["seeds"]["formal_seed"], 73194109)
+        self.assertIn('--seed 73194109', freeze['commands']['formal'])
+        self.assertNotIn('--seed 73194019', freeze['commands']['formal'])
         self.assertEqual(freeze["data"]["formal_input_sha256"], "cfcf89f19bc4bec7c8bbca80ee9ce4bc77d38dc239c3d6147b77fb7504c42d1d")
         self.assertEqual(freeze["model"]["model_safetensors_sha256"], "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe")
         self.assertEqual(sum(freeze["data"]["support_counts"]["balanced"].values()), 32)
