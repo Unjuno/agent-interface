@@ -305,3 +305,21 @@ For a sparse source checkout, the live native GUI harness also imports
 and `research/live_control`. Include these directories before managed startup;
 the inert contract suites alone do not establish that all live imports exist.
 The linked record retains the missing-dependency startup failure separately.
+
+## Experimental managed owner lifetime
+
+`--owner-lifetime` is an opt-in managed-mode candidate on POSIX. The server
+retains a pipe writer and the harness receives only its reader, which is marked
+non-inheritable before application launch. Server exit closes the writer. The
+harness checks for EOF during decision waiting and at stage/evaluation boundaries,
+then takes its existing failure/cleanup path without replay or success evaluation.
+The default remains unchanged. A timeout in one tool call does not close the
+ownership channel. Closing stdio may end the server and therefore its ownership.
+
+This is cooperative boundary handling, not immediate input cancellation: setup,
+input programs and feedback already in progress can continue until a check.
+There remains a check/use race. It does not contain escaped descendants, survive
+a killed harness, prove physical release, or provide restart authority. Initial
+actual-MCP construction used an inert substitute worker; GUI cleanup and held
+input remain unverified for this option. Do not enable it as a production default
+from that construction result.

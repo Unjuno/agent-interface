@@ -7,11 +7,37 @@ import hashlib
 import json
 import math
 import os
+import select
+import stat
 from pathlib import Path
 import tempfile
 import time
 
 from agent_review import review_native
+
+
+class OwnerLifetime:
+    """Optional Linux pipe lifetime checked only at cooperative boundaries."""
+    def __init__(self, fd=None):
+        self.fd = fd
+        if fd is not None:
+            if type(fd) is not int or fd < 0 or not stat.S_ISFIFO(os.fstat(fd).st_mode):
+                raise ValueError('owner lifetime requires an inherited pipe descriptor')
+            os.set_inheritable(fd, False)
+
+    def check(self):
+        if self.fd is None:
+            return
+        if select.select([self.fd], [], [], 0)[0]:
+            data = os.read(self.fd, 1)
+            if data:
+                raise RuntimeError('invalid owner lifetime channel payload')
+            raise RuntimeError('owning server ended; stop at cooperative boundary, no input replay')
+
+    def close(self):
+        if self.fd is not None:
+            os.close(self.fd)
+            self.fd = None
 
 
 def _process_identity(pid):

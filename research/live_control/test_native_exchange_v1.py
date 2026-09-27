@@ -11,6 +11,39 @@ from native_exchange_v1 import encoded, publish, run, current_owner_identity, co
 
 
 class NativeExchangeTests(unittest.TestCase):
+    def test_owner_pipe_lifetime_is_nonblocking_and_does_not_leak_on_exec(self):
+        from native_exchange_v1 import OwnerLifetime
+        reader, writer = os.pipe()
+        lifetime = OwnerLifetime(reader)
+        try:
+            self.assertFalse(os.get_inheritable(reader))
+            lifetime.check()
+            os.close(writer)
+            writer = None
+            with self.assertRaisesRegex(RuntimeError, 'owning server ended'):
+                lifetime.check()
+        finally:
+            if writer is not None:
+                os.close(writer)
+            lifetime.close()
+            lifetime.close()
+
+    def test_owner_channel_payload_or_wrong_descriptor_refuses(self):
+        from native_exchange_v1 import OwnerLifetime
+        with tempfile.TemporaryFile() as regular:
+            with self.assertRaises(ValueError):
+                OwnerLifetime(regular.fileno())
+        reader, writer = os.pipe()
+        lifetime = OwnerLifetime(reader)
+        try:
+            os.write(writer, b'x')
+            with self.assertRaisesRegex(RuntimeError, 'payload'):
+                lifetime.check()
+        finally:
+            os.close(writer)
+            lifetime.close()
+        OwnerLifetime().check()
+
     def test_continuation_requires_matching_source_and_unoccupied_slot(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp); source={'sequence':9,'capture_ns':123,'native':{'artifact':{'sha256':'pixels'}}}

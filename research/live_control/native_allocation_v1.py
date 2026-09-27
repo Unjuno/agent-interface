@@ -11,13 +11,17 @@ from native_exchange_v1 import owner_state
 
 
 class NativeAllocation:
-    def __init__(self, directory, app, *, seed=991116, max_stages=4, python=None, text_gap_ms=0):
+    def __init__(self, directory, app, *, seed=991116, max_stages=4, python=None, text_gap_ms=0, owner_lifetime=False):
         if app not in ('calc','inkscape','calc-inkscape'):
             raise ValueError('explicit supported research app required')
         if type(seed) is not int or type(max_stages) is not int or not 2 <= max_stages <= 64:
             raise ValueError('integer seed and max_stages 2..64 required')
         if type(text_gap_ms) is not int or text_gap_ms not in (0, 2, 10):
             raise ValueError('supported text gaps are 0, 2, 10 ms')
+        if type(owner_lifetime) is not bool or (owner_lifetime and os.name != 'posix'):
+            raise ValueError('owner lifetime requires an explicit boolean and POSIX')
+        self.owner_lifetime = owner_lifetime
+        self._owner_writer = None
         self.directory = Path(directory).resolve()
         self.run_directory = self.directory/'run'
         self.app, self.seed, self.max_stages = app, seed, max_stages
@@ -27,7 +31,13 @@ class NativeAllocation:
         self.attempted = False
         self.error = None
 
+    def _close_owner_writer(self):
+        if self._owner_writer is not None:
+            os.close(self._owner_writer)
+            self._owner_writer = None
+
     def _terminal_status(self, base, code):
+        self._close_owner_writer()
         result = dict(base, status='terminal', pid=self.process.pid, returncode=code,
                       task_success=None, cleanup_verified=False, restart_allowed=False)
         if code != 0:
@@ -85,6 +95,7 @@ class NativeAllocation:
             raise ValueError('startup wait 0..30 required')
         if not self.attempted:
             self.attempted = True
+            owner_reader = None
             try:
                 # Atomic claim before Popen. Existing/partial allocations never launch again.
                 self.directory.mkdir(exist_ok=False)
@@ -93,14 +104,28 @@ class NativeAllocation:
                         '--out', str(self.run_directory), '--app', self.app,
                         '--seed', str(self.seed), '--max-stages', str(self.max_stages),
                         '--text-gap-ms', str(self.text_gap_ms)]
+                owner_reader = None
+                if self.owner_lifetime:
+                    owner_reader, self._owner_writer = os.pipe()
+                    args.extend(['--owner-lifetime-fd', str(owner_reader)])
                 (self.directory/'launch.json').write_text(json.dumps({'argv':args},indent=2)+'\n')
                 env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1',
                            PYTHONPATH=os.pathsep.join([str(repo),str(Path(__file__).parent)]))
                 with (self.directory/'stdout.log').open('xb') as stdout, (self.directory/'stderr.log').open('xb') as stderr:
-                    self.process = subprocess.Popen(args, cwd=repo, env=env, stdin=subprocess.DEVNULL,
-                                                    stdout=stdout, stderr=stderr)
+                    try:
+                        options = {'pass_fds': (owner_reader,)} if owner_reader is not None else {}
+                        self.process = subprocess.Popen(args, cwd=repo, env=env, stdin=subprocess.DEVNULL,
+                                                        stdout=stdout, stderr=stderr, **options)
+                    finally:
+                        if owner_reader is not None:
+                            os.close(owner_reader)
+                            owner_reader = None
             except Exception as error:
+                self._close_owner_writer()
                 self.error = str(error)
+            finally:
+                if owner_reader is not None:
+                    os.close(owner_reader)
         deadline = time.monotonic()+timeout
         while True:
             state = self.status()
