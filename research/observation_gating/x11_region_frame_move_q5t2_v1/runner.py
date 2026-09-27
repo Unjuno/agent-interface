@@ -131,8 +131,8 @@ def run_case(case_id, policy, schedule, repetition):
                     d.screen().root_depth, X.InputOutput, X.CopyFromParent,
                     background_pixel=0x000000, override_redirect=1,
                     event_mask=X.StructureNotifyMask)
-                target_pattern(win, d)
                 win.map(); d.sync()
+                target_pattern(win, d)
                 initial = win.get_geometry()
                 initial_xy = [int(initial.x), int(initial.y)]
                 initial_pixels = capture(win, 0, 0)

@@ -87,6 +87,8 @@ def validate(rows, mode):
                 errors.append(f"pixel_hash:{i}")
             if row["initial_target_sha256"] != digest(oracle):
                 errors.append(f"target_changed:{i}")
+            if row["initial_target_sha256"] == digest(background):
+                errors.append(f"target_pattern_not_discriminating:{i}")
             if row["candidate_bytes"]["bytes"] != row["oracle_bytes"]["bytes"]:
                 errors.append(f"pixel_length:{i}")
             if len(cand) != 120 * 80 * 4 or len(oracle) != len(cand):
@@ -134,6 +136,7 @@ def corruption_controls(rows):
     mutate("wrong_exit", lambda x: x[0].update(xvfb_returncode=7))
     mutate("unsafe_authority", lambda x: x[0].update(authority_file_mode="0o644"))
     mutate("pixel_tamper", lambda x: x[0]["candidate_bytes"].update(data=base64.b64encode(gzip.compress(b"tampered", mtime=0)).decode("ascii")))
+    mutate("target_pattern_collapse", lambda x: x[0].update(initial_target_sha256=x[0]["background_sha256"]))
     return cases
 
 
