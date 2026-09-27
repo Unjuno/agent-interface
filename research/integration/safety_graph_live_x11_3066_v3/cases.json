@@ -1,0 +1,21 @@
+{
+  "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+  "authority_lease_ms": 150,
+  "release_grace_ms": 50,
+  "dimensions": {
+    "window_manager": ["bare", "openbox"],
+    "schedule": ["normal", "ipc_delay", "display_stall", "owner_death", "target_replacement", "cleanup_failure", "unknown_dependency"]
+  },
+  "expected_unique_cells": 14,
+  "schedule_parameters": {
+    "normal": {"worker_wait_ms": 30},
+    "ipc_delay": {"worker_wait_ms": 30, "result_pipe_read_delay_ms": 200},
+    "display_stall": {"worker_wait_ms": 30, "x_server_sigstop_ms": 180},
+    "owner_death": {"worker_wait_ms": 4000, "worker_action": "SIGKILL immediately after independent F8 press witness"},
+    "target_replacement": {"worker_wait_ms": 30, "target_action": "SIGKILL target after independent F8 press witness"},
+    "cleanup_failure": {"worker_wait_ms": 120, "fault": "raise from backend release_all; supervisor samples after deadline plus 60ms"},
+    "unknown_dependency": {"worker_created": false, "expected_disposition": "STOP_UNKNOWN_DEPENDENCY"}
+  },
+  "formal_reruns": 0,
+  "construction_rows_are_formal": false
+}

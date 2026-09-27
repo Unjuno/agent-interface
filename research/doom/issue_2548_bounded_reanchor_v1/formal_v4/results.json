@@ -1,0 +1,441 @@
+[
+  {
+    "arm": "coast",
+    "candidate": "none",
+    "candidate_receipt": null,
+    "capture_fresh": false,
+    "captured_fresh_receipt": null,
+    "event_count": 30,
+    "fresh_observation_count": 0,
+    "guard_only": {
+      "admission": "ADMIT",
+      "mae": 0.014387705363333225
+    },
+    "id": "c01-coast-guard-only",
+    "old_receipt": {
+      "capture_ns": 2704305551732,
+      "frame_rgb_sha256": "4411f0442fd2dee2f92cefb38fc08b753a410d2af40de3996450b5b583157ae9",
+      "image": "/work/out/c01-coast-guard-only/runtime/008.png",
+      "sequence": 8,
+      "session_id": "278456049b1143febc16a009fce8b220"
+    },
+    "reanchor": {
+      "admission": "REJECT_NO_FRESH_OBSERVATION",
+      "mae": null,
+      "reason": "NO_CANDIDATE_RECEIPT"
+    },
+    "release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "release",
+      "valid_until_ns": null,
+      "verified": true,
+      "verified_ns": 2704383491759
+    },
+    "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+    "schema": "bounded-fresh-reanchor-case-v2",
+    "score": {
+      "death_count": 0,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false
+    },
+    "seed": 254811,
+    "session_id": "278456049b1143febc16a009fce8b220",
+    "source_receipt": {
+      "capture_ns": 2703510307046,
+      "frame_rgb_sha256": "660239613e924063fd7fbba6c0c2b90305550c0158e2e08fe5096ddc7a8f53af",
+      "image": "/work/out/c01-coast-guard-only/runtime/001.png",
+      "sequence": 1,
+      "session_id": "278456049b1143febc16a009fce8b220"
+    },
+    "terminal_status": "completed"
+  },
+  {
+    "arm": "recovery",
+    "candidate": "none",
+    "candidate_receipt": null,
+    "capture_fresh": false,
+    "captured_fresh_receipt": null,
+    "event_count": 86,
+    "fresh_observation_count": 0,
+    "guard_only": {
+      "admission": "REJECT_CONTEXT_CHANGED",
+      "mae": 0.044182609766721725
+    },
+    "id": "c02-drift-guard-only",
+    "old_receipt": {
+      "capture_ns": 2711165306540,
+      "frame_rgb_sha256": "bbf062253c1b316cc2abe3a4af181cb8b3610cfa23b0153d9b9f99a0efddf81b",
+      "image": "/work/out/c02-drift-guard-only/runtime/021.png",
+      "sequence": 21,
+      "session_id": "ecddb19d3ea24dceb8bb83625ac27f2c"
+    },
+    "reanchor": {
+      "admission": "REJECT_NO_FRESH_OBSERVATION",
+      "mae": null,
+      "reason": "NO_CANDIDATE_RECEIPT"
+    },
+    "release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "release",
+      "valid_until_ns": 2714099651885,
+      "verified": true,
+      "verified_ns": 2711251096954
+    },
+    "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+    "schema": "bounded-fresh-reanchor-case-v2",
+    "score": {
+      "death_count": 0,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false
+    },
+    "seed": 254812,
+    "session_id": "ecddb19d3ea24dceb8bb83625ac27f2c",
+    "source_receipt": {
+      "capture_ns": 2708995652414,
+      "frame_rgb_sha256": "19e13ee1965a87584e5b96a0d588039569f2a38dfb73f3e211b1b613b9e44b70",
+      "image": "/work/out/c02-drift-guard-only/runtime/001.png",
+      "sequence": 1,
+      "session_id": "ecddb19d3ea24dceb8bb83625ac27f2c"
+    },
+    "terminal_status": "completed"
+  },
+  {
+    "arm": "recovery",
+    "candidate": "fresh",
+    "candidate_receipt": {
+      "capture_ns": 2717996250370,
+      "frame_rgb_sha256": "2583877ece9c1060be6f424bdf59d8ece69dc3e62f5043ff0d430f34c7679b13",
+      "image": "/work/out/c03-drift-fresh-reanchor/runtime/022.png",
+      "sequence": 22,
+      "session_id": "90b88fe25a424a88b1c280318b2d9497"
+    },
+    "capture_fresh": true,
+    "captured_fresh_receipt": {
+      "capture_ns": 2717996250370,
+      "frame_rgb_sha256": "2583877ece9c1060be6f424bdf59d8ece69dc3e62f5043ff0d430f34c7679b13",
+      "image": "/work/out/c03-drift-fresh-reanchor/runtime/022.png",
+      "sequence": 22,
+      "session_id": "90b88fe25a424a88b1c280318b2d9497"
+    },
+    "event_count": 90,
+    "fresh_observation_count": 1,
+    "guard_only": {
+      "admission": "REJECT_CONTEXT_CHANGED",
+      "mae": 0.044289253652095795
+    },
+    "id": "c03-drift-fresh-reanchor",
+    "old_receipt": {
+      "capture_ns": 2717917654831,
+      "frame_rgb_sha256": "ffa70d3d99968ac0e7b3009261e52ed3c761f572433d1a9b8cd344ffc3de84e3",
+      "image": "/work/out/c03-drift-fresh-reanchor/runtime/021.png",
+      "sequence": 21,
+      "session_id": "90b88fe25a424a88b1c280318b2d9497"
+    },
+    "reanchor": {
+      "admission": "ADMIT",
+      "fresh_receipt_id": "90b88fe25a424a88b1c280318b2d9497:22",
+      "mae": 0.0036222999915480614,
+      "old_receipt_id": "90b88fe25a424a88b1c280318b2d9497:21",
+      "reason": "FRESH_PAIR_EVALUATED"
+    },
+    "release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "release",
+      "valid_until_ns": 2721075328070,
+      "verified": true,
+      "verified_ns": 2718067787527
+    },
+    "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+    "schema": "bounded-fresh-reanchor-case-v2",
+    "score": {
+      "death_count": 0,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false
+    },
+    "seed": 254813,
+    "session_id": "90b88fe25a424a88b1c280318b2d9497",
+    "source_receipt": {
+      "capture_ns": 2715991705251,
+      "frame_rgb_sha256": "660239613e924063fd7fbba6c0c2b90305550c0158e2e08fe5096ddc7a8f53af",
+      "image": "/work/out/c03-drift-fresh-reanchor/runtime/001.png",
+      "sequence": 1,
+      "session_id": "90b88fe25a424a88b1c280318b2d9497"
+    },
+    "terminal_status": "completed"
+  },
+  {
+    "arm": "coast",
+    "candidate": "fresh",
+    "candidate_receipt": {
+      "capture_ns": 2723642896105,
+      "frame_rgb_sha256": "341f653bc757fdc6f6c205754c7556e6821caa09618499af4c2420cd65a377fc",
+      "image": "/work/out/c04-coast-fresh-reanchor/runtime/008.png",
+      "sequence": 8,
+      "session_id": "a6864f3ce57f454fa4c3595136f2ad69"
+    },
+    "capture_fresh": true,
+    "captured_fresh_receipt": {
+      "capture_ns": 2723642896105,
+      "frame_rgb_sha256": "341f653bc757fdc6f6c205754c7556e6821caa09618499af4c2420cd65a377fc",
+      "image": "/work/out/c04-coast-fresh-reanchor/runtime/008.png",
+      "sequence": 8,
+      "session_id": "a6864f3ce57f454fa4c3595136f2ad69"
+    },
+    "event_count": 32,
+    "fresh_observation_count": 1,
+    "guard_only": {
+      "admission": "ADMIT",
+      "mae": 0.014394978992640972
+    },
+    "id": "c04-coast-fresh-reanchor",
+    "old_receipt": {
+      "capture_ns": 2723541699460,
+      "frame_rgb_sha256": "2a948e199579d18bbb7af759240132acbec2184eb7fe10b6dc7b72ff41f286e8",
+      "image": "/work/out/c04-coast-fresh-reanchor/runtime/007.png",
+      "sequence": 7,
+      "session_id": "a6864f3ce57f454fa4c3595136f2ad69"
+    },
+    "reanchor": {
+      "admission": "ADMIT",
+      "fresh_receipt_id": "a6864f3ce57f454fa4c3595136f2ad69:8",
+      "mae": 9.911151573760435e-05,
+      "old_receipt_id": "a6864f3ce57f454fa4c3595136f2ad69:7",
+      "reason": "FRESH_PAIR_EVALUATED"
+    },
+    "release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "release",
+      "valid_until_ns": null,
+      "verified": true,
+      "verified_ns": 2723724129888
+    },
+    "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+    "schema": "bounded-fresh-reanchor-case-v2",
+    "score": {
+      "death_count": 0,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false
+    },
+    "seed": 254814,
+    "session_id": "a6864f3ce57f454fa4c3595136f2ad69",
+    "source_receipt": {
+      "capture_ns": 2722799952422,
+      "frame_rgb_sha256": "660239613e924063fd7fbba6c0c2b90305550c0158e2e08fe5096ddc7a8f53af",
+      "image": "/work/out/c04-coast-fresh-reanchor/runtime/001.png",
+      "sequence": 1,
+      "session_id": "a6864f3ce57f454fa4c3595136f2ad69"
+    },
+    "terminal_status": "completed"
+  },
+  {
+    "arm": "recovery",
+    "candidate": "stale",
+    "candidate_receipt": {
+      "capture_ns": 2730808965650,
+      "frame_rgb_sha256": "1a456c937a1566b912b55ceb1d3f32dceac735c9dee81c64dd71f46e5f5e6e7d",
+      "image": "/work/out/c05-stale-receipt-control/runtime/021.png",
+      "sequence": 21,
+      "session_id": "4df7865da52d4e919d182f9031bcc45c"
+    },
+    "capture_fresh": true,
+    "captured_fresh_receipt": {
+      "capture_ns": 2730910138423,
+      "frame_rgb_sha256": "a40706177ca0f4d56ceaa0cce75ab4e1334a3de7caf1d7da56c260c4fd716944",
+      "image": "/work/out/c05-stale-receipt-control/runtime/022.png",
+      "sequence": 22,
+      "session_id": "4df7865da52d4e919d182f9031bcc45c"
+    },
+    "event_count": 90,
+    "fresh_observation_count": 1,
+    "guard_only": {
+      "admission": "REJECT_CONTEXT_CHANGED",
+      "mae": 0.044417209923267365
+    },
+    "id": "c05-stale-receipt-control",
+    "old_receipt": {
+      "capture_ns": 2730808965650,
+      "frame_rgb_sha256": "1a456c937a1566b912b55ceb1d3f32dceac735c9dee81c64dd71f46e5f5e6e7d",
+      "image": "/work/out/c05-stale-receipt-control/runtime/021.png",
+      "sequence": 21,
+      "session_id": "4df7865da52d4e919d182f9031bcc45c"
+    },
+    "reanchor": {
+      "admission": "REJECT_PROVENANCE",
+      "fresh_receipt_id": "4df7865da52d4e919d182f9031bcc45c:21",
+      "mae": null,
+      "old_receipt_id": "4df7865da52d4e919d182f9031bcc45c:21",
+      "reason": "STALE_OR_DUPLICATE_RECEIPT"
+    },
+    "release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "release",
+      "valid_until_ns": 2733769676681,
+      "verified": true,
+      "verified_ns": 2730993891132
+    },
+    "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+    "schema": "bounded-fresh-reanchor-case-v2",
+    "score": {
+      "death_count": 0,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false
+    },
+    "seed": 254815,
+    "session_id": "4df7865da52d4e919d182f9031bcc45c",
+    "source_receipt": {
+      "capture_ns": 2728681073588,
+      "frame_rgb_sha256": "660239613e924063fd7fbba6c0c2b90305550c0158e2e08fe5096ddc7a8f53af",
+      "image": "/work/out/c05-stale-receipt-control/runtime/001.png",
+      "sequence": 1,
+      "session_id": "4df7865da52d4e919d182f9031bcc45c"
+    },
+    "terminal_status": "completed"
+  },
+  {
+    "arm": "recovery",
+    "candidate": "cross_session",
+    "candidate_receipt": {
+      "capture_ns": 2723642896105,
+      "frame_rgb_sha256": "341f653bc757fdc6f6c205754c7556e6821caa09618499af4c2420cd65a377fc",
+      "image": "/work/out/c04-coast-fresh-reanchor/runtime/008.png",
+      "sequence": 8,
+      "session_id": "a6864f3ce57f454fa4c3595136f2ad69"
+    },
+    "capture_fresh": true,
+    "captured_fresh_receipt": {
+      "capture_ns": 2737837032921,
+      "frame_rgb_sha256": "5bcc9833c8601dd86f695776b2df1b20993ca4625af0e57556c67752d8dbceed",
+      "image": "/work/out/c06-cross-session-control/runtime/022.png",
+      "sequence": 22,
+      "session_id": "86a75c9749b14c26b26bb21fff400463"
+    },
+    "event_count": 90,
+    "foreign_from": "c04-coast-fresh-reanchor",
+    "fresh_observation_count": 1,
+    "guard_only": {
+      "admission": "REJECT_CONTEXT_CHANGED",
+      "mae": 0.04444694519042969
+    },
+    "id": "c06-cross-session-control",
+    "old_receipt": {
+      "capture_ns": 2737756106562,
+      "frame_rgb_sha256": "050f1a49f9a6ad6f9c2c0fb441fcdc457ab940645213e0d482cf8d095d694096",
+      "image": "/work/out/c06-cross-session-control/runtime/021.png",
+      "sequence": 21,
+      "session_id": "86a75c9749b14c26b26bb21fff400463"
+    },
+    "reanchor": {
+      "admission": "REJECT_PROVENANCE",
+      "fresh_receipt_id": "a6864f3ce57f454fa4c3595136f2ad69:8",
+      "mae": null,
+      "old_receipt_id": "86a75c9749b14c26b26bb21fff400463:21",
+      "reason": "CROSS_SESSION"
+    },
+    "release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "release",
+      "valid_until_ns": 2740882095545,
+      "verified": true,
+      "verified_ns": 2737908318486
+    },
+    "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+    "schema": "bounded-fresh-reanchor-case-v2",
+    "score": {
+      "death_count": 0,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false
+    },
+    "seed": 254816,
+    "session_id": "86a75c9749b14c26b26bb21fff400463",
+    "source_receipt": {
+      "capture_ns": 2735813747775,
+      "frame_rgb_sha256": "660239613e924063fd7fbba6c0c2b90305550c0158e2e08fe5096ddc7a8f53af",
+      "image": "/work/out/c06-cross-session-control/runtime/001.png",
+      "sequence": 1,
+      "session_id": "86a75c9749b14c26b26bb21fff400463"
+    },
+    "terminal_status": "completed"
+  },
+  {
+    "arm": "recovery",
+    "candidate": "ambiguous",
+    "candidate_receipt": {
+      "capture_ns": 2744821726105,
+      "image": "/work/out/c07-incomplete-receipt-control/runtime/022.png",
+      "sequence": 22,
+      "session_id": "ca851fe035ec4d5d8df7fe4edad63681"
+    },
+    "capture_fresh": true,
+    "captured_fresh_receipt": {
+      "capture_ns": 2744821726105,
+      "frame_rgb_sha256": "33a084b5b8bbca66f4078c8dd3e419c86ff30b6a59c3f0f04492df5d1557012a",
+      "image": "/work/out/c07-incomplete-receipt-control/runtime/022.png",
+      "sequence": 22,
+      "session_id": "ca851fe035ec4d5d8df7fe4edad63681"
+    },
+    "event_count": 90,
+    "fresh_observation_count": 1,
+    "guard_only": {
+      "admission": "REJECT_CONTEXT_CHANGED",
+      "mae": 0.04452137276530266
+    },
+    "id": "c07-incomplete-receipt-control",
+    "old_receipt": {
+      "capture_ns": 2744747187978,
+      "frame_rgb_sha256": "eebd8f66b68d9f80a354a3cc6a84c5e2490da69d26c6d8c3025a95f198823652",
+      "image": "/work/out/c07-incomplete-receipt-control/runtime/021.png",
+      "sequence": 21,
+      "session_id": "ca851fe035ec4d5d8df7fe4edad63681"
+    },
+    "reanchor": {
+      "admission": "REJECT_PROVENANCE",
+      "mae": null,
+      "reason": "MISSING_RECEIPT_FIELD"
+    },
+    "release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "release",
+      "valid_until_ns": 2747954882752,
+      "verified": true,
+      "verified_ns": 2744890077318
+    },
+    "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+    "schema": "bounded-fresh-reanchor-case-v2",
+    "score": {
+      "death_count": 0,
+      "kill_count": 0,
+      "map_exit": false,
+      "player_dead": false
+    },
+    "seed": 254817,
+    "session_id": "ca851fe035ec4d5d8df7fe4edad63681",
+    "source_receipt": {
+      "capture_ns": 2742882129927,
+      "frame_rgb_sha256": "660239613e924063fd7fbba6c0c2b90305550c0158e2e08fe5096ddc7a8f53af",
+      "image": "/work/out/c07-incomplete-receipt-control/runtime/001.png",
+      "sequence": 1,
+      "session_id": "ca851fe035ec4d5d8df7fe4edad63681"
+    },
+    "terminal_status": "completed"
+  }
+]

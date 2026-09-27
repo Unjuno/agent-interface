@@ -1,0 +1,56 @@
+{
+  "all_original_bytes_equal": true,
+  "manifest_entries": 38,
+  "measured_workers_restarted": 0,
+  "original_audit_checks": 2661,
+  "original_effective_controls": 14,
+  "original_files": 39,
+  "original_unit_tests": 8,
+  "package_tests": 8,
+  "receipts": [
+    {
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-S",
+        "-B",
+        "/mnt/data/ingress_delivery_q2h7/publication_exact/restore.py",
+        "/mnt/data/ingress_delivery_q2h7/fresh_publication_restore_01"
+      ],
+      "exit": 0,
+      "pid": 926,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "8cbc4a1c4cdd06b86cb846e1ff745f477f21d5c09ffffda90cd77c42bfa8c0b1"
+    },
+    {
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-S",
+        "-B",
+        "/mnt/data/ingress_delivery_q2h7/fresh_publication_restore_01/verify.py"
+      ],
+      "exit": 0,
+      "pid": 927,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "39c8734a40a40642c78417413f67bed12d190a9c5aeeabf68bb3ea5438d5fc15"
+    },
+    {
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-S",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_restore"
+      ],
+      "exit": 0,
+      "pid": 931,
+      "stderr_sha256": "73a953888729349ac9aae02ba5e3ffb4deae6d5ff15371066301b28b6a7be351",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "remote_tree_verified": false,
+  "scope": "publication-only read-only verification",
+  "source_freeze_members": 14,
+  "status": "PASS_LOCAL_PUBLICATION_VERIFICATION"
+}

@@ -1,0 +1,26 @@
+{
+  "allocation": "guarded-inline-skill-cache-4260-20260923-01",
+  "audit_command": "python3 audit.py formal-01/RAW.json --out formal-01/AUDIT.json",
+  "branch": "research/guarded-inline-skill-cache-4260-20260923",
+  "construction": [
+    "STOP_SETUP_XAUTHORITY",
+    "STOP_SETUP_XAUTHORITY_PARENT_ENV",
+    "PASS_CONSTRUCTION_ELIGIBLE_EXCLUDED"
+  ],
+  "controls_command": "python3 controls.py formal-01/RAW.json",
+  "formal_command": "python3 runner.py --out formal-01 --reps 3 --display-base 710",
+  "formal_rows": 48,
+  "formal_runs": 0,
+  "issue": 4260,
+  "source_archive_sha256": "5a5f026eaec9ea109b9fca3518baae4f45dd2ba3aa1319cce4804229290b5e76",
+  "source_sha256": {
+    "CONSTRUCTION.md": "0fd254f56ba6e24b63574de2cdef348021ee1577583469e75fd28cadb7f6ad38",
+    "ENVIRONMENT.json": "80d1c59b19bc755c1e609da16d57890d42bd2c1fd4448b71f4a216e1a9a92d84",
+    "PLAN.md": "cb9202ac058f7a916d29ef1dc89267b2128884434510b2d2f76b8cf6c5785607",
+    "audit.py": "1e28d5ba0f1b2f87ea77a70722d7b92ec4006d458291cc0c073bfe5d11f2050a",
+    "controls.py": "12e78476618d10abc654e488813b774f0430ecf535f7717af785595134140cdb",
+    "fixture.py": "8a682449d859eafcab2b73d10caa608c5292536938af6cf359df365d2712bbc5",
+    "runner.py": "7a3c083fc1f77f329a2ed46f1ef67a3efe842d2716ab8a7bb3826ee0e4f30d4f",
+    "test_contract.py": "2777eddea1f9840464d7c4d37c7e4aae34d0490bc5941627c4bf98fba20534c7"
+  }
+}

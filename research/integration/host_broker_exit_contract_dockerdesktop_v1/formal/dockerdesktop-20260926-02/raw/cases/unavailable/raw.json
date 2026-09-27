@@ -1,0 +1,60 @@
+{
+  "broker_receipt": {
+    "authority_granted": false,
+    "boundary": "host-local-codex-exe",
+    "error_class": "FileNotFoundError",
+    "exited_ns": 4165123047695,
+    "request_id": "req-missing",
+    "returncode": null,
+    "started_ns": 4165122475281,
+    "stderr": "[Errno 2] No such file or directory: '/tmp/no-such-fake-codex'",
+    "stop_reason": "HOST_BROKER_EXECUTABLE_UNAVAILABLE"
+  },
+  "broker_receipt_bytes_hex": "7b22726571756573745f6964223a20227265712d6d697373696e67222c202272657475726e636f6465223a206e756c6c2c20226572726f725f636c617373223a202246696c654e6f74466f756e644572726f72222c202273746f705f726561736f6e223a2022484f53545f42524f4b45525f45584543555441424c455f554e415641494c41424c45222c2022737464657272223a20225b4572726e6f20325d204e6f20737563682066696c65206f72206469726563746f72793a20272f746d702f6e6f2d737563682d66616b652d636f64657827222c2022626f756e64617279223a2022686f73742d6c6f63616c2d636f6465782d657865222c2022617574686f726974795f6772616e746564223a2066616c73652c2022737461727465645f6e73223a20343136353132323437353238312c20226578697465645f6e73223a20343136353132333034373639357d0a",
+  "broker_stderr_text": "[Errno 2] No such file or directory: '/tmp/no-such-fake-codex'",
+  "case": "unavailable",
+  "child": null,
+  "child_stdout_bytes_hex": "",
+  "command": [
+    "/usr/local/bin/python",
+    "/source/runtime/host_model_ipc_broker_v1.py",
+    "--ipc",
+    "/tmp/ipc-unavailable-ypzcb5xh",
+    "--repo",
+    "/source",
+    "--once"
+  ],
+  "execution_config": {
+    "broker_timeout_s": 2.0,
+    "executable": "/tmp/no-such-fake-codex",
+    "executable_sha256": null,
+    "fake_exit": 0,
+    "fake_sleep_s": 0.0,
+    "idle_observation_s": null
+  },
+  "fake_source_sha256": "f730498c1158b55c0af45036e350090eecad7042d79c4e35be625d87e20e78eb",
+  "ipc_files": [
+    "01.request.json",
+    "req-missing.broker.json",
+    "req-missing.response.jsonl"
+  ],
+  "observed": {
+    "receipt_count": 1,
+    "response_count": 1
+  },
+  "process": {
+    "duration_ns": 196008582,
+    "returncode": 1,
+    "stderr": "",
+    "stdout": ""
+  },
+  "requests": [
+    {
+      "bytes_hex": "7b2270726f6d7074223a202264657465726d696e69737469632066616b652d6f6e6c792070726f6265222c2022726571756573745f6964223a20227265712d6d697373696e67222c2022736368656d61223a20222f7265706f2f72756e74696d652f66616b652d736368656d612e6a736f6e222c2022776f726b696e67223a20222f7265706f227d0a",
+      "filename": "01.request.json",
+      "sha256": "0ba74954edbeb2330ea81ab347def0450d6ded585b7ed7a2417a9886a981be22"
+    }
+  ],
+  "response_bytes_hex": "",
+  "response_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

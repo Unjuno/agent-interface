@@ -1,0 +1,44 @@
+{
+  "schema": "issue3924_orbstac_broker_exit_contract_v2",
+  "issue": 4485,
+  "predecessor": {"issue": 3924, "result": "STOP_FAKE_EXECUTABLE_MOUNT_MISSING", "merged_pr": 4476, "formal_fake_invocations": 0},
+  "allocation": "issue3924-orbstac-broker-contract-v2-20260926-01",
+  "intake_main_commit": "a718da028d33c9608433789676ddd7204d8c5d14",
+  "main_commit": "67f1aedace0039d2ab8e4550becfaea78c50653c",
+  "branch": "research/issue-3924-broker-orbstac-v2-20260926",
+  "study_path": "research/integration/issue_3924_broker_exit_contract_v2",
+  "source": {
+    "broker_git_blob": "f307daafdfd36d1ab4faf39bb36c36350e6e67e4",
+    "broker_sha256": "034b2e72a28fc3defb1b48195a2a8d3450e850895a4b3b7b7919dca44e198775",
+    "existing_test_git_blob": "e645ae575cd6fdae02556df9facc9919739584f3",
+    "existing_test_sha256": "a28b59232e55956a11bd87a35812b7d77df16febe5510c68fb80eda03a3ede1c"
+  },
+  "fake_sha256": "e6824182c55dd5dbe15024402ccd63dcaddaf4407e0634bce13e65bb98739aa0",
+  "environment": {
+    "engine": "OrbStack 29.4.0",
+    "platform": "linux/arm64",
+    "image": "python:3.12-slim",
+    "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "network": "none",
+    "rootfs": "read-only",
+    "repo_mount": "/repo read-only",
+    "study_mount": "/study read-only; fake executable must pass existence, executable-bit and SHA-256 checks in formal container before any case",
+    "evidence_mount": "/evidence writable, fresh allocation directory",
+    "limits": {"cpus": 1, "memory": "256m", "memory_swap": "256m", "pids": 32, "tmpfs": "/tmp 16m noexec,nosuid", "capabilities": "ALL dropped", "no_new_privileges": true},
+    "host_environment_forwarded": false,
+    "credentials_forwarded": false,
+    "real_codex_binary_required": false
+  },
+  "formal_matrix": ["exit0", "exit23", "timeout", "unavailable", "malformed", "one-shot-idle", "two-queued"],
+  "timeout_case": {"fake_sleep_s": 2.0, "broker_timeout_s": 1.0, "outer_bound_s": 5.0},
+  "idle_case": {"external_bound_s": 0.3},
+  "decision": {
+    "zero_exit_failure": "receipt child returncode 0 with broker process exit != 0",
+    "pass": "all frozen controls/IDs/provenance reconcile and independent audit has zero errors",
+    "stop": "source/image/study-mount/runtime/provenance/audit infrastructure failure; preserve output; never rerun this allocation"
+  },
+  "preregistration_manifest_sha256": "ace2a52223a3e613647c5db4dde1f7e5c6b5a2cc3061f99be89cb0d9bbb2c49e",
+  "formal_cases_before_freeze": 0,
+  "real_model_calls": 0,
+  "created_before_formal_allocation": true
+}

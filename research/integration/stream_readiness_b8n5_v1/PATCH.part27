@@ -1,0 +1,11 @@
++    return {'decision':'PASS_READONLY_RECONSTRUCTION','manifest_members':len(manifest['files']),
++            'total_files':len(manifest['files'])+1,'frozen_files':len(freeze['sha256']),
++            'cases':48,'scientific_actor_reruns':0,'remote_evidence_complete':False,'receipts':receipts}
++
++if __name__=='__main__':
++    p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);a=p.parse_args()
++    dst=a.out.resolve()
++    if dst.exists() or dst.is_relative_to(ROOT):raise SystemExit('new external output required')
++    result=verify()
++    with dst.open('x') as f:json.dump(result,f,indent=2,sort_keys=True);f.write('\n')
++    print(json.dumps({k:v for k,v in result.items() if k!='receipts'},sort_keys=True))

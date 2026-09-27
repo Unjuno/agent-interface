@@ -1,0 +1,19 @@
+# #4387: unequal three-sample reversal geometry
+
+Scope: exact, input-free estimator applicability, not runtime promotion. Parents #2442/#4255; #2542 history depth and #2923 after-newest blind tail remain untouched. Base 4c701cc51b06296268ad8d9ae3eff1dd6f2d379d. Owned path research/observation/reversal_geometry_g8m2_v1/. Branch research/reversal-geometry-20260926-g8m2.
+
+H: correct dynamic timestamps and a calibrated point-error bound do not necessarily make the existing full-interval heuristic sound under unequal intervals. Exact continuous one-reversal feasibility over the same three observations should expose ambiguity and emit only unanimous directions.
+
+T: one 360-case finite matrix. Newest/preceding gaps in ms: (100,100),(100,10),(10,100),(100,25),(25,100),(40,160). Post-direction -1/+1. Constant or reversal age 1,20,60,110,200 ms. Error-quarter triples (0,0,0),(3,-3,0),(-3,3,0),(0,3,-3),(0,-3,3). These are directed synthetic worlds, not random samples or fresh GUI observations. Exact fixture values are converted once to binary64 and retained; the actual conversion error is checked against the 1 px envelope. Speed 73 px/s. Query is right-hand direction at newest source t=0. Common position offset unknown. Reversal time is continuous, not constrained to the fixture's five reversal ages. The candidate receives only the three epoch/time/position records.
+
+Outputs per input: unchanged legacy.decide; rational transcription of its heuristic (arithmetic diagnostic); candidate feasible set/decision with exact witnesses. No admission or action path. Separate auditor implements rational polygon-vertex enumeration rather than the candidate's offset elimination. It imports no candidate, legacy or generator. Source and raw records are required for acceptance.
+
+D: 360 rows/1080 outputs; frozen bytes and actual process receipts; all true worlds satisfy bounds; oracle/candidate sets agree; every true direction remains feasible; singleton wrong count 0; singleton count >0; at least one supported unequal-interval legacy wrong output with opposite-direction worlds fitting identical observations; eight effective well-formed corruption controls reject normally. Missing evidence => STOP/HOLD. Complete solver contradiction => FAIL. No legacy discriminator => HOLD_NO_GEOMETRY_DISCRIMINATOR. Exact floating/rational differences are reported, not erased or attributed to geometry automatically. Correct/unknown/wrong counts are separate per arm and geometry.
+
+C: bounded position errors may mask reversal inside an interval. A short interval may match both signs, not a genuine motion change. The family and query time differ from arbitrary live motion. At-most-one-reversal and speed bounds must be justified externally before any adoption. No change to historical gates or data.
+
+U: finite deterministic cases and conditional proof, no natural probabilities, calibrated uncertainty or k. 0.75 px authored errors plus binary64 conversion are within the 1 px assumed model. Software timings are diagnostic only. No model/task/GUI/physical safety/performance/token/product claim. Same-author separate implementation/process is not external review.
+
+Execution: provided Linux container, CPython stdlib; Docker/OrbStack image identity unavailable. Eight excluded unit methods, no measured formal preview. Publish exact source/input/gate bytes before one formal process. subprocess timeout 30 s, enclosing tool 45 s. Audit and controls run in separate calls, never two formal batches in one envelope. Retain every first stdout/stderr/exit. No rerun/replacement/exclusion/tuning.
+
+Roadmap: provenance -> construction -> public freeze/readback -> one allocation -> audit/controls -> evidence PR -> applicable CI/review -> qualified evidence merge/main readback -> supported dependency-safe owned-ref cleanup. Keep global roadmap and parent issues open. Prior source-age STOP remains unchanged; this is not its retry or publication repair.

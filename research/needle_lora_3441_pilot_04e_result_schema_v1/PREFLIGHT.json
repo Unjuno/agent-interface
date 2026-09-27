@@ -1,0 +1,24 @@
+{
+  "schema": "needle-04e-preflight-v2",
+  "issue": 4492,
+  "allocation": "needle-lora-3441-pilot-04e-result-schema-20260926-01",
+  "formalInvocationsAtPreflight": 0,
+  "constructionTests": "17/17 PASS after runner metadata correction",
+  "pyCompile": "PASS",
+  "sourceFreeze": "runner.py metadata corrected and GitHub-readback pinned; FREEZE.json updated; all six frozen source files byte-for-byte verified",
+  "preregInterpretation": {
+    "hostCuda": "REQUIRED; Issue says 'Host CUDA only, not container evidence'",
+    "containerProbe": "not applicable to the prescribed formal environment",
+    "initialStopClassification": "superseded erroneous interpretation; no formal run had started"
+  },
+  "windowsHost": {
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "gpuFreeBytes": 15991832576,
+    "diskCFreeBytes": 318051844096,
+    "python": "3.11.9",
+    "torch": "2.5.1+cu121",
+    "cuda": "12.1"
+  },
+  "decision": "HOST_PREFLIGHT_PASS",
+  "timestampUTC": "2026-09-26T14:37:56Z"
+}

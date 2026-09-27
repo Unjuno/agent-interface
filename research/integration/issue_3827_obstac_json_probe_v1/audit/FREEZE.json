@@ -1,0 +1,24 @@
+{
+  "allocation": "issue3827-obstac-json-probe-orbstack-01",
+  "issue": 3827,
+  "base_commit": "07c231463ebb45074444a957166956711103fadc",
+  "docker_context": "orbstack",
+  "image": "issue3204-epoch-composer@sha256:6a3bb69f7ab1e386ca0fd6421c7194024fd9acd2978d168a5b877949c890fa51",
+  "image_id": "sha256:6a3bb69f7ab1e386ca0fd6421c7194024fd9acd2978d168a5b877949c890fa51",
+  "platform": "linux/arm64",
+  "container_network": "none",
+  "ollama_version": "0.34.2",
+  "model": "qwen2.5vl:7b",
+  "model_digest": "5ced39dfa4bac325dc183dd1e4febaa1c46b3ea28bce48896c8e69c1e79611cc",
+  "options": {"temperature": 0, "seed": 3827, "num_predict": 32},
+  "format": "json",
+  "preregistration_sha256": "7424bf6c14825c786728a774bd4806006cf04d5c71814477abf1bfb9068cba4c",
+  "sha256": {
+    "manifest.json": "98f72d0ba2ba602555f7088cf6877409d3c932693f7a902131f8cf83215c9245",
+    "runner.py": "98c619f67629e8a8b4e912b78767dfbbfb7786560f8ea0de719a7ed13bc55457",
+    "host_bridge.py": "d0cad06a5d9f608245e375cb2a546fecc563eb850dbe36fc891934cd4e526482",
+    "audit.py": "b18644e06334ba91134cd4e20b896de2956acbe774e60d22f8d7e3cd09e135bf",
+    "launcher.py": "144ea3edf29f6d0baac82b78abaf7dc5b0fcb9b7fddea6a11c067e90d4fec495",
+    "audit_launcher.py": "f201ae255fe13be2d50b99cd61bbb454f9fa4d0ae9f0bcd590315bd5b39dbc8a"
+  }
+}

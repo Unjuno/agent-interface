@@ -1,0 +1,4875 @@
+[
+  {
+    "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+    "app_release_ns": 1588711572824,
+    "authority_deadline_ms": 150,
+    "case_index": 0,
+    "cleanup": {
+      "observer": {
+        "exited": true,
+        "pid": 12,
+        "returncode": 0,
+        "stopped_ns": 1588759439262
+      },
+      "openbox": {
+        "exited": true,
+        "pid": null,
+        "returncode": null
+      },
+      "xvfb": {
+        "exited": true,
+        "pid": 7,
+        "returncode": 0,
+        "stopped_ns": 1588775404429
+      }
+    },
+    "config": "bare",
+    "display": ":610",
+    "ended_ns": 1588757925147,
+    "expected_input": "F8",
+    "grace_ms": 50,
+    "key_down_observed": {
+      "keycode": 74,
+      "kind": "press",
+      "monotonic_ns": 1588681273215,
+      "server_time": 1588680,
+      "window_id": 4194304
+    },
+    "key_down_observer_ns": 1588681273215,
+    "keymap_release_upper_bound_ns": 1588710548876,
+    "keymap_transitions": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 1587926618321
+      },
+      {
+        "down": true,
+        "kind": "transition",
+        "observed_ns": 1588681152848
+      },
+      {
+        "down": false,
+        "kind": "transition",
+        "observed_ns": 1588710548876
+      }
+    ],
+    "observer_events": [
+      {
+        "keycode": 74,
+        "kind": "press",
+        "monotonic_ns": 1588681273215,
+        "server_time": 1588680,
+        "window_id": 4194304
+      },
+      {
+        "keycode": 74,
+        "kind": "release",
+        "monotonic_ns": 1588711572824,
+        "server_time": 1588710,
+        "window_id": 4194304
+      }
+    ],
+    "observer_pid": 12,
+    "parent_stdout_link": "pipe:[44072]",
+    "processes": [
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/exp/run.py",
+          "--formal",
+          "/work"
+        ],
+        "display": null,
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[30197]",
+          "11": "pipe:[44073]",
+          "2": "pipe:[30198]",
+          "3": "socket:[44069]",
+          "4": "pipe:[44064]",
+          "6": "pipe:[44065]",
+          "7": "pipe:[44070]",
+          "8": "pipe:[44072]",
+          "9": "pipe:[44071]"
+        },
+        "fd_snapshot_races": [
+          "5"
+        ],
+        "pid": 1,
+        "ppid": 0,
+        "present": true,
+        "role": "runner",
+        "state": "R",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "Xvfb",
+          ":610",
+          "-screen",
+          "0",
+          "640x480x24",
+          "-nolisten",
+          "tcp",
+          "-ac"
+        ],
+        "display": ":610",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[44064]",
+          "2": "pipe:[44065]",
+          "3": "anon_inode:[eventpoll]",
+          "4": "pipe:[13245]",
+          "5": "pipe:[13245]",
+          "6": "socket:[13246]",
+          "7": "socket:[13247]",
+          "8": "socket:[13250]",
+          "9": "socket:[13252]"
+        },
+        "pid": 7,
+        "ppid": 1,
+        "present": true,
+        "role": "xvfb",
+        "state": "S",
+        "unix_socket_paths": [
+          "/tmp/.X11-unix/X610",
+          "@/tmp/.X11-unix/X610"
+        ]
+      },
+      {
+        "pid": null,
+        "present": false,
+        "role": "openbox",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/observer.py",
+          "--meta",
+          "/work/00-bare-normal/observer.meta.json",
+          "--events",
+          "/work/00-bare-normal/observer.events.jsonl"
+        ],
+        "display": ":610",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[44070]",
+          "2": "pipe:[44071]",
+          "3": "socket:[40108]",
+          "4": "/work/00-bare-normal/observer.events.jsonl"
+        },
+        "pid": 12,
+        "ppid": 1,
+        "present": true,
+        "role": "observer",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/run.py",
+          "--worker",
+          "--display",
+          ":610",
+          "--xid",
+          "4194304",
+          "--schedule",
+          "normal",
+          "--start-receipt",
+          "/work/00-bare-normal/worker.start.json"
+        ],
+        "display": ":610",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[44072]",
+          "2": "pipe:[44073]",
+          "3": "socket:[42012]",
+          "4": "socket:[42013]"
+        },
+        "pid": 14,
+        "ppid": 1,
+        "present": true,
+        "role": "worker",
+        "state": "S",
+        "unix_socket_paths": []
+      }
+    ],
+    "release_witness_upper_bound_ns": 1588710548876,
+    "result_pipe_read_ns": 1588751043890,
+    "runner_pid": 1,
+    "schedule": "normal",
+    "schedule_order": [
+      "normal",
+      "ipc_delay",
+      "display_stall",
+      "owner_death",
+      "target_replacement",
+      "cleanup_failure",
+      "unknown_dependency"
+    ],
+    "started_ns": 1587724295171,
+    "target_mapped_ns": 1588142825006,
+    "target_xid": 4194304,
+    "terminal_key_down": false,
+    "unix_sockets_by_inode": {
+      "13246": "@/tmp/.X11-unix/X610",
+      "13247": "/tmp/.X11-unix/X610",
+      "13250": "/tmp/.X11-unix/X610",
+      "13252": "/tmp/.X11-unix/X610",
+      "40108": "",
+      "44069": ""
+    },
+    "wm_pid": null,
+    "worker_pid": 14,
+    "worker_receipt": {
+      "authority_deadline_ns": 1588821953684,
+      "authority_lease_ms": 150,
+      "dispatch_result": {
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "emissions": 2,
+            "ended_ns": 1588710717996,
+            "observations": [],
+            "program_emissions": 2,
+            "releases": [
+              {
+                "buttons_down": [],
+                "keys_down": [],
+                "monotonic_ns": 1588710715420,
+                "verified": true
+              }
+            ],
+            "started_ns": 1588679706765,
+            "waits": [
+              {
+                "completed": true,
+                "ended_ns": 1588710363895,
+                "kind": "fixed_delay",
+                "operation_index": 2,
+                "requested_ms": 30,
+                "started_ns": 1588680173398,
+                "update_observed": null
+              }
+            ]
+          },
+          "recovery_required": false,
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "window.focus"
+          ],
+          "status": "completed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      },
+      "fault_injected_release_method": false,
+      "finished_ns": 1588710800786,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 14,
+      "schedule": "normal",
+      "started_ns": 1588671953684,
+      "wait_update_ms": 30
+    },
+    "worker_returncode": 0,
+    "worker_snapshot_after": {
+      "pid": 14,
+      "present": false,
+      "role": "worker"
+    },
+    "worker_snapshot_at_keydown": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":610",
+        "--xid",
+        "4194304",
+        "--schedule",
+        "normal",
+        "--start-receipt",
+        "/work/00-bare-normal/worker.start.json"
+      ],
+      "display": ":610",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[44072]",
+        "2": "pipe:[44073]",
+        "3": "socket:[42012]",
+        "4": "socket:[42013]"
+      },
+      "pid": 14,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "S",
+      "unix_socket_paths": []
+    },
+    "worker_snapshot_start": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":610",
+        "--xid",
+        "4194304",
+        "--schedule",
+        "normal",
+        "--start-receipt",
+        "/work/00-bare-normal/worker.start.json"
+      ],
+      "display": ":610",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[44072]",
+        "2": "pipe:[44073]"
+      },
+      "pid": 14,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "R"
+    },
+    "worker_start_receipt": {
+      "authority_deadline_ns": 1588821953684,
+      "authority_lease_ms": 150,
+      "fault_injected_release_method": false,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 14,
+      "schedule": "normal",
+      "started_ns": 1588671953684,
+      "wait_update_ms": 30
+    },
+    "worker_stderr": "",
+    "worker_stdout": "Xlib.xauth: warning, no xauthority details available\nXlib.xauth: warning, no xauthority details available\n{\"authority_deadline_ns\": 1588821953684, \"authority_lease_ms\": 150, \"dispatch_result\": {\"result\": {\"admission\": \"accepted\", \"execution\": {\"completed_ops\": [0, 1, 2, 3], \"emissions\": 2, \"ended_ns\": 1588710717996, \"observations\": [], \"program_emissions\": 2, \"releases\": [{\"buttons_down\": [], \"keys_down\": [], \"monotonic_ns\": 1588710715420, \"verified\": true}], \"started_ns\": 1588679706765, \"waits\": [{\"completed\": true, \"ended_ns\": 1588710363895, \"kind\": \"fixed_delay\", \"operation_index\": 2, \"requested_ms\": 30, \"started_ns\": 1588680173398, \"update_observed\": null}]}, \"recovery_required\": false, \"required_capabilities\": [\"clock.monotonic\", \"event.feedback\", \"input.keyboard\", \"input.release_all\", \"window.focus\"], \"status\": \"completed\"}, \"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\"}, \"fault_injected_release_method\": false, \"finished_ns\": 1588710800786, \"loaded_runtime\": {\"backend\": \"runtime.backends.x11_v1.backend.X11Backend\", \"dispatch_facade\": \"runtime.cli_v1.api.dispatch\", \"session\": \"runtime.backends.x11_v1.session.X11RuntimeSession\"}, \"pid\": 14, \"schedule\": \"normal\", \"started_ns\": 1588671953684, \"wait_update_ms\": 30}\n",
+    "worker_stdout_fd": 8,
+    "worker_stdout_link": "pipe:[44072]",
+    "xvfb_pid": 7
+  },
+  {
+    "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+    "app_release_ns": 1589578954523,
+    "authority_deadline_ms": 150,
+    "case_index": 1,
+    "cleanup": {
+      "observer": {
+        "exited": true,
+        "pid": 22,
+        "returncode": 0,
+        "stopped_ns": 1589824773054
+      },
+      "openbox": {
+        "exited": true,
+        "pid": null,
+        "returncode": null
+      },
+      "xvfb": {
+        "exited": true,
+        "pid": 18,
+        "returncode": 0,
+        "stopped_ns": 1589840342683
+      }
+    },
+    "config": "bare",
+    "display": ":611",
+    "ended_ns": 1589824468369,
+    "expected_input": "F8",
+    "grace_ms": 50,
+    "key_down_observed": {
+      "keycode": 74,
+      "kind": "press",
+      "monotonic_ns": 1589548325128,
+      "server_time": 1589548,
+      "window_id": 4194304
+    },
+    "key_down_observer_ns": 1589548325128,
+    "keymap_release_upper_bound_ns": 1589579659679,
+    "keymap_transitions": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 1588828758662
+      },
+      {
+        "down": true,
+        "kind": "transition",
+        "observed_ns": 1589548995909
+      },
+      {
+        "down": false,
+        "kind": "transition",
+        "observed_ns": 1589579659679
+      }
+    ],
+    "observer_events": [
+      {
+        "keycode": 74,
+        "kind": "press",
+        "monotonic_ns": 1589548325128,
+        "server_time": 1589548,
+        "window_id": 4194304
+      },
+      {
+        "keycode": 74,
+        "kind": "release",
+        "monotonic_ns": 1589578954523,
+        "server_time": 1589578,
+        "window_id": 4194304
+      }
+    ],
+    "observer_pid": 22,
+    "parent_stdout_link": "pipe:[31316]",
+    "processes": [
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/exp/run.py",
+          "--formal",
+          "/work"
+        ],
+        "display": null,
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[30197]",
+          "11": "pipe:[31317]",
+          "2": "pipe:[30198]",
+          "3": "socket:[31313]",
+          "4": "pipe:[31310]",
+          "6": "pipe:[31311]",
+          "7": "pipe:[31314]",
+          "8": "pipe:[31316]",
+          "9": "pipe:[31315]"
+        },
+        "fd_snapshot_races": [
+          "5"
+        ],
+        "pid": 1,
+        "ppid": 0,
+        "present": true,
+        "role": "runner",
+        "state": "R",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "Xvfb",
+          ":611",
+          "-screen",
+          "0",
+          "640x480x24",
+          "-nolisten",
+          "tcp",
+          "-ac"
+        ],
+        "display": ":611",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[31310]",
+          "2": "pipe:[31311]",
+          "3": "anon_inode:[eventpoll]",
+          "4": "pipe:[33251]",
+          "5": "pipe:[33251]",
+          "6": "socket:[33252]",
+          "7": "socket:[33253]",
+          "8": "socket:[33256]",
+          "9": "socket:[33257]"
+        },
+        "pid": 18,
+        "ppid": 1,
+        "present": true,
+        "role": "xvfb",
+        "state": "S",
+        "unix_socket_paths": [
+          "/tmp/.X11-unix/X611",
+          "@/tmp/.X11-unix/X611"
+        ]
+      },
+      {
+        "pid": null,
+        "present": false,
+        "role": "openbox",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/observer.py",
+          "--meta",
+          "/work/01-bare-ipc_delay/observer.meta.json",
+          "--events",
+          "/work/01-bare-ipc_delay/observer.events.jsonl"
+        ],
+        "display": ":611",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[31314]",
+          "2": "pipe:[31315]",
+          "3": "socket:[40113]",
+          "4": "/work/01-bare-ipc_delay/observer.events.jsonl"
+        },
+        "pid": 22,
+        "ppid": 1,
+        "present": true,
+        "role": "observer",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/run.py",
+          "--worker",
+          "--display",
+          ":611",
+          "--xid",
+          "4194304",
+          "--schedule",
+          "ipc_delay",
+          "--start-receipt",
+          "/work/01-bare-ipc_delay/worker.start.json"
+        ],
+        "display": ":611",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[31316]",
+          "2": "pipe:[31317]",
+          "3": "socket:[31328]",
+          "4": "socket:[31329]"
+        },
+        "pid": 24,
+        "ppid": 1,
+        "present": true,
+        "role": "worker",
+        "state": "S",
+        "unix_socket_paths": []
+      }
+    ],
+    "release_witness_upper_bound_ns": 1589578954523,
+    "result_delivery_delay_ms": 239.284844,
+    "result_pipe_read_not_before_ns": 1589817916331,
+    "result_pipe_read_ns": 1589818095848,
+    "runner_pid": 1,
+    "schedule": "ipc_delay",
+    "schedule_order": [
+      "normal",
+      "ipc_delay",
+      "display_stall",
+      "owner_death",
+      "target_replacement",
+      "cleanup_failure",
+      "unknown_dependency"
+    ],
+    "started_ns": 1588798410777,
+    "target_mapped_ns": 1589039579169,
+    "target_xid": 4194304,
+    "terminal_key_down": false,
+    "unix_sockets_by_inode": {
+      "31313": "",
+      "33252": "@/tmp/.X11-unix/X611",
+      "33253": "/tmp/.X11-unix/X611",
+      "33256": "/tmp/.X11-unix/X611",
+      "33257": "/tmp/.X11-unix/X611",
+      "40113": ""
+    },
+    "wm_pid": null,
+    "worker_finished_before_result_read": true,
+    "worker_pid": 24,
+    "worker_receipt": {
+      "authority_deadline_ns": 1589691949313,
+      "authority_lease_ms": 150,
+      "dispatch_result": {
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "emissions": 2,
+            "ended_ns": 1589578721059,
+            "observations": [],
+            "program_emissions": 2,
+            "releases": [
+              {
+                "buttons_down": [],
+                "keys_down": [],
+                "monotonic_ns": 1589578717851,
+                "verified": true
+              }
+            ],
+            "started_ns": 1589547768180,
+            "waits": [
+              {
+                "completed": true,
+                "ended_ns": 1589578283753,
+                "kind": "fixed_delay",
+                "operation_index": 2,
+                "requested_ms": 30,
+                "started_ns": 1589548106545,
+                "update_observed": null
+              }
+            ]
+          },
+          "recovery_required": false,
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "window.focus"
+          ],
+          "status": "completed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      },
+      "fault_injected_release_method": false,
+      "finished_ns": 1589578811004,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 24,
+      "schedule": "ipc_delay",
+      "started_ns": 1589541949313,
+      "wait_update_ms": 30
+    },
+    "worker_returncode": 0,
+    "worker_snapshot_after": {
+      "pid": 24,
+      "present": false,
+      "role": "worker"
+    },
+    "worker_snapshot_at_keydown": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":611",
+        "--xid",
+        "4194304",
+        "--schedule",
+        "ipc_delay",
+        "--start-receipt",
+        "/work/01-bare-ipc_delay/worker.start.json"
+      ],
+      "display": ":611",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[31316]",
+        "2": "pipe:[31317]",
+        "3": "socket:[31328]",
+        "4": "socket:[31329]"
+      },
+      "pid": 24,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "S",
+      "unix_socket_paths": []
+    },
+    "worker_snapshot_start": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":611",
+        "--xid",
+        "4194304",
+        "--schedule",
+        "ipc_delay",
+        "--start-receipt",
+        "/work/01-bare-ipc_delay/worker.start.json"
+      ],
+      "display": ":611",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[31316]",
+        "2": "pipe:[31317]"
+      },
+      "pid": 24,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "R"
+    },
+    "worker_start_receipt": {
+      "authority_deadline_ns": 1589691949313,
+      "authority_lease_ms": 150,
+      "fault_injected_release_method": false,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 24,
+      "schedule": "ipc_delay",
+      "started_ns": 1589541949313,
+      "wait_update_ms": 30
+    },
+    "worker_stderr": "",
+    "worker_stdout": "Xlib.xauth: warning, no xauthority details available\nXlib.xauth: warning, no xauthority details available\n{\"authority_deadline_ns\": 1589691949313, \"authority_lease_ms\": 150, \"dispatch_result\": {\"result\": {\"admission\": \"accepted\", \"execution\": {\"completed_ops\": [0, 1, 2, 3], \"emissions\": 2, \"ended_ns\": 1589578721059, \"observations\": [], \"program_emissions\": 2, \"releases\": [{\"buttons_down\": [], \"keys_down\": [], \"monotonic_ns\": 1589578717851, \"verified\": true}], \"started_ns\": 1589547768180, \"waits\": [{\"completed\": true, \"ended_ns\": 1589578283753, \"kind\": \"fixed_delay\", \"operation_index\": 2, \"requested_ms\": 30, \"started_ns\": 1589548106545, \"update_observed\": null}]}, \"recovery_required\": false, \"required_capabilities\": [\"clock.monotonic\", \"event.feedback\", \"input.keyboard\", \"input.release_all\", \"window.focus\"], \"status\": \"completed\"}, \"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\"}, \"fault_injected_release_method\": false, \"finished_ns\": 1589578811004, \"loaded_runtime\": {\"backend\": \"runtime.backends.x11_v1.backend.X11Backend\", \"dispatch_facade\": \"runtime.cli_v1.api.dispatch\", \"session\": \"runtime.backends.x11_v1.session.X11RuntimeSession\"}, \"pid\": 24, \"schedule\": \"ipc_delay\", \"started_ns\": 1589541949313, \"wait_update_ms\": 30}\n",
+    "worker_stdout_fd": 8,
+    "worker_stdout_link": "pipe:[31316]",
+    "xvfb_pid": 18
+  },
+  {
+    "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+    "app_release_ns": 1590739718935,
+    "authority_deadline_ms": 150,
+    "case_index": 2,
+    "cleanup": {
+      "observer": {
+        "exited": true,
+        "pid": 32,
+        "returncode": 0,
+        "stopped_ns": 1590783983262
+      },
+      "openbox": {
+        "exited": true,
+        "pid": null,
+        "returncode": null
+      },
+      "xvfb": {
+        "exited": true,
+        "pid": 28,
+        "returncode": 0,
+        "stopped_ns": 1590816147113
+      }
+    },
+    "config": "bare",
+    "display": ":612",
+    "ended_ns": 1590783100029,
+    "expected_input": "F8",
+    "grace_ms": 50,
+    "key_down_observed": {
+      "keycode": 74,
+      "kind": "press",
+      "monotonic_ns": 1590552864270,
+      "server_time": 1590551,
+      "window_id": 4194304
+    },
+    "key_down_observer_ns": 1590552864270,
+    "keymap_release_upper_bound_ns": 1590738722223,
+    "keymap_transitions": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 1589882625684
+      },
+      {
+        "down": true,
+        "kind": "transition",
+        "observed_ns": 1590552297091
+      },
+      {
+        "down": false,
+        "kind": "transition",
+        "observed_ns": 1590738722223
+      }
+    ],
+    "observer_events": [
+      {
+        "keycode": 74,
+        "kind": "press",
+        "monotonic_ns": 1590552864270,
+        "server_time": 1590551,
+        "window_id": 4194304
+      },
+      {
+        "keycode": 74,
+        "kind": "release",
+        "monotonic_ns": 1590739718935,
+        "server_time": 1590738,
+        "window_id": 4194304
+      }
+    ],
+    "observer_pid": 32,
+    "parent_stdout_link": "pipe:[44115]",
+    "post_stall_release_transition": {
+      "down": false,
+      "kind": "transition",
+      "observed_ns": 1590738722223
+    },
+    "processes": [
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/exp/run.py",
+          "--formal",
+          "/work"
+        ],
+        "display": null,
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[30197]",
+          "11": "pipe:[44116]",
+          "2": "pipe:[30198]",
+          "3": "socket:[44112]",
+          "4": "pipe:[44109]",
+          "6": "pipe:[44110]",
+          "7": "pipe:[44113]",
+          "8": "pipe:[44115]",
+          "9": "pipe:[44114]"
+        },
+        "fd_snapshot_races": [
+          "5"
+        ],
+        "pid": 1,
+        "ppid": 0,
+        "present": true,
+        "role": "runner",
+        "state": "R",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "Xvfb",
+          ":612",
+          "-screen",
+          "0",
+          "640x480x24",
+          "-nolisten",
+          "tcp",
+          "-ac"
+        ],
+        "display": ":612",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[44109]",
+          "2": "pipe:[44110]",
+          "3": "anon_inode:[eventpoll]",
+          "4": "pipe:[29409]",
+          "5": "pipe:[29409]",
+          "6": "socket:[29410]",
+          "7": "socket:[29411]",
+          "8": "socket:[29414]",
+          "9": "socket:[29415]"
+        },
+        "pid": 28,
+        "ppid": 1,
+        "present": true,
+        "role": "xvfb",
+        "state": "S",
+        "unix_socket_paths": [
+          "/tmp/.X11-unix/X612",
+          "@/tmp/.X11-unix/X612"
+        ]
+      },
+      {
+        "pid": null,
+        "present": false,
+        "role": "openbox",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/observer.py",
+          "--meta",
+          "/work/02-bare-display_stall/observer.meta.json",
+          "--events",
+          "/work/02-bare-display_stall/observer.events.jsonl"
+        ],
+        "display": ":612",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[44113]",
+          "2": "pipe:[44114]",
+          "3": "socket:[36084]",
+          "4": "/work/02-bare-display_stall/observer.events.jsonl"
+        },
+        "pid": 32,
+        "ppid": 1,
+        "present": true,
+        "role": "observer",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/run.py",
+          "--worker",
+          "--display",
+          ":612",
+          "--xid",
+          "4194304",
+          "--schedule",
+          "display_stall",
+          "--start-receipt",
+          "/work/02-bare-display_stall/worker.start.json"
+        ],
+        "display": ":612",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[44115]",
+          "2": "pipe:[44116]",
+          "3": "socket:[13261]",
+          "4": "socket:[13262]"
+        },
+        "pid": 34,
+        "ppid": 1,
+        "present": true,
+        "role": "worker",
+        "state": "S",
+        "unix_socket_paths": []
+      }
+    ],
+    "release_witness_upper_bound_ns": 1590738722223,
+    "result_pipe_read_ns": 1590770893385,
+    "runner_pid": 1,
+    "schedule": "display_stall",
+    "schedule_order": [
+      "normal",
+      "ipc_delay",
+      "display_stall",
+      "owner_death",
+      "target_replacement",
+      "cleanup_failure",
+      "unknown_dependency"
+    ],
+    "started_ns": 1589852166885,
+    "target_mapped_ns": 1590095723573,
+    "target_xid": 4194304,
+    "terminal_key_down": false,
+    "unix_sockets_by_inode": {
+      "29410": "@/tmp/.X11-unix/X612",
+      "29411": "/tmp/.X11-unix/X612",
+      "29414": "/tmp/.X11-unix/X612",
+      "29415": "/tmp/.X11-unix/X612",
+      "36084": "",
+      "44112": ""
+    },
+    "wm_pid": null,
+    "worker_pid": 34,
+    "worker_receipt": {
+      "authority_deadline_ns": 1590696348608,
+      "authority_lease_ms": 150,
+      "dispatch_result": {
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "emissions": 2,
+            "ended_ns": 1590739318802,
+            "observations": [],
+            "program_emissions": 2,
+            "releases": [
+              {
+                "buttons_down": [],
+                "keys_down": [],
+                "monotonic_ns": 1590739314470,
+                "verified": true
+              }
+            ],
+            "started_ns": 1590551470827,
+            "waits": [
+              {
+                "completed": true,
+                "ended_ns": 1590582201215,
+                "kind": "fixed_delay",
+                "operation_index": 2,
+                "requested_ms": 30,
+                "started_ns": 1590552042775,
+                "update_observed": null
+              }
+            ]
+          },
+          "recovery_required": false,
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "window.focus"
+          ],
+          "status": "completed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      },
+      "fault_injected_release_method": false,
+      "finished_ns": 1590739451197,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 34,
+      "schedule": "display_stall",
+      "started_ns": 1590546348608,
+      "wait_update_ms": 30
+    },
+    "worker_returncode": 0,
+    "worker_snapshot_after": {
+      "pid": 34,
+      "present": false,
+      "role": "worker"
+    },
+    "worker_snapshot_at_keydown": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":612",
+        "--xid",
+        "4194304",
+        "--schedule",
+        "display_stall",
+        "--start-receipt",
+        "/work/02-bare-display_stall/worker.start.json"
+      ],
+      "display": ":612",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[44115]",
+        "2": "pipe:[44116]",
+        "3": "socket:[13261]",
+        "4": "socket:[13262]"
+      },
+      "pid": 34,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "S",
+      "unix_socket_paths": []
+    },
+    "worker_snapshot_start": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":612",
+        "--xid",
+        "4194304",
+        "--schedule",
+        "display_stall",
+        "--start-receipt",
+        "/work/02-bare-display_stall/worker.start.json"
+      ],
+      "display": ":612",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[44115]",
+        "2": "pipe:[44116]"
+      },
+      "pid": 34,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "R"
+    },
+    "worker_start_receipt": {
+      "authority_deadline_ns": 1590696348608,
+      "authority_lease_ms": 150,
+      "fault_injected_release_method": false,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 34,
+      "schedule": "display_stall",
+      "started_ns": 1590546348608,
+      "wait_update_ms": 30
+    },
+    "worker_stderr": "",
+    "worker_stdout": "Xlib.xauth: warning, no xauthority details available\nXlib.xauth: warning, no xauthority details available\n{\"authority_deadline_ns\": 1590696348608, \"authority_lease_ms\": 150, \"dispatch_result\": {\"result\": {\"admission\": \"accepted\", \"execution\": {\"completed_ops\": [0, 1, 2, 3], \"emissions\": 2, \"ended_ns\": 1590739318802, \"observations\": [], \"program_emissions\": 2, \"releases\": [{\"buttons_down\": [], \"keys_down\": [], \"monotonic_ns\": 1590739314470, \"verified\": true}], \"started_ns\": 1590551470827, \"waits\": [{\"completed\": true, \"ended_ns\": 1590582201215, \"kind\": \"fixed_delay\", \"operation_index\": 2, \"requested_ms\": 30, \"started_ns\": 1590552042775, \"update_observed\": null}]}, \"recovery_required\": false, \"required_capabilities\": [\"clock.monotonic\", \"event.feedback\", \"input.keyboard\", \"input.release_all\", \"window.focus\"], \"status\": \"completed\"}, \"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\"}, \"fault_injected_release_method\": false, \"finished_ns\": 1590739451197, \"loaded_runtime\": {\"backend\": \"runtime.backends.x11_v1.backend.X11Backend\", \"dispatch_facade\": \"runtime.cli_v1.api.dispatch\", \"session\": \"runtime.backends.x11_v1.session.X11RuntimeSession\"}, \"pid\": 34, \"schedule\": \"display_stall\", \"started_ns\": 1590546348608, \"wait_update_ms\": 30}\n",
+    "worker_stdout_fd": 8,
+    "worker_stdout_link": "pipe:[44115]",
+    "xvfb_pid": 28,
+    "xvfb_sigcont_ns": 1590738349415,
+    "xvfb_sigstop_ns": 1590558155375
+  },
+  {
+    "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+    "app_release_ns": 1591558396140,
+    "authority_deadline_ms": 150,
+    "case_index": 3,
+    "cleanup": {
+      "observer": {
+        "exited": true,
+        "pid": 42,
+        "returncode": 0,
+        "stopped_ns": 1591566586670
+      },
+      "openbox": {
+        "exited": true,
+        "pid": null,
+        "returncode": null
+      },
+      "xvfb": {
+        "exited": true,
+        "pid": 38,
+        "returncode": 0,
+        "stopped_ns": 1591582134463
+      }
+    },
+    "cleanup_supervisor_pid": 1,
+    "config": "bare",
+    "display": ":613",
+    "ended_ns": 1591565747307,
+    "expected_input": "F8",
+    "grace_ms": 50,
+    "key_down_observed": {
+      "keycode": 74,
+      "kind": "press",
+      "monotonic_ns": 1591548975717,
+      "server_time": 1591548,
+      "window_id": 4194304
+    },
+    "key_down_observer_ns": 1591548975717,
+    "keymap_release_upper_bound_ns": 1591558848978,
+    "keymap_transitions": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 1590869945257
+      },
+      {
+        "down": true,
+        "kind": "transition",
+        "observed_ns": 1591548801017
+      },
+      {
+        "down": false,
+        "kind": "transition",
+        "observed_ns": 1591558848978
+      }
+    ],
+    "observer_events": [
+      {
+        "keycode": 74,
+        "kind": "press",
+        "monotonic_ns": 1591548975717,
+        "server_time": 1591548,
+        "window_id": 4194304
+      },
+      {
+        "keycode": 74,
+        "kind": "release",
+        "monotonic_ns": 1591558396140,
+        "server_time": 1591558,
+        "window_id": 4194304
+      }
+    ],
+    "observer_pid": 42,
+    "parent_stdout_link": "pipe:[44156]",
+    "processes": [
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/exp/run.py",
+          "--formal",
+          "/work"
+        ],
+        "display": null,
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[30197]",
+          "11": "pipe:[44157]",
+          "2": "pipe:[30198]",
+          "3": "socket:[44153]",
+          "4": "pipe:[44150]",
+          "6": "pipe:[44151]",
+          "7": "pipe:[44154]",
+          "8": "pipe:[44156]",
+          "9": "pipe:[44155]"
+        },
+        "fd_snapshot_races": [
+          "5"
+        ],
+        "pid": 1,
+        "ppid": 0,
+        "present": true,
+        "role": "runner",
+        "state": "R",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "Xvfb",
+          ":613",
+          "-screen",
+          "0",
+          "640x480x24",
+          "-nolisten",
+          "tcp",
+          "-ac"
+        ],
+        "display": ":613",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[44150]",
+          "2": "pipe:[44151]",
+          "3": "anon_inode:[eventpoll]",
+          "4": "pipe:[29423]",
+          "5": "pipe:[29423]",
+          "6": "socket:[29424]",
+          "7": "socket:[29425]",
+          "8": "socket:[28600]",
+          "9": "socket:[28601]"
+        },
+        "pid": 38,
+        "ppid": 1,
+        "present": true,
+        "role": "xvfb",
+        "state": "R",
+        "unix_socket_paths": [
+          "/tmp/.X11-unix/X613",
+          "@/tmp/.X11-unix/X613"
+        ]
+      },
+      {
+        "pid": null,
+        "present": false,
+        "role": "openbox",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/observer.py",
+          "--meta",
+          "/work/03-bare-owner_death/observer.meta.json",
+          "--events",
+          "/work/03-bare-owner_death/observer.events.jsonl"
+        ],
+        "display": ":613",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[44154]",
+          "2": "pipe:[44155]",
+          "3": "socket:[36089]",
+          "4": "/work/03-bare-owner_death/observer.events.jsonl"
+        },
+        "pid": 42,
+        "ppid": 1,
+        "present": true,
+        "role": "observer",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/run.py",
+          "--worker",
+          "--display",
+          ":613",
+          "--xid",
+          "4194304",
+          "--schedule",
+          "owner_death",
+          "--start-receipt",
+          "/work/03-bare-owner_death/worker.start.json"
+        ],
+        "display": ":613",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[44156]",
+          "2": "pipe:[44157]",
+          "3": "socket:[30224]",
+          "4": "socket:[30225]"
+        },
+        "pid": 44,
+        "ppid": 1,
+        "present": true,
+        "role": "worker",
+        "state": "S",
+        "unix_socket_paths": []
+      }
+    ],
+    "release_witness_upper_bound_ns": 1591558396140,
+    "runner_pid": 1,
+    "schedule": "owner_death",
+    "schedule_order": [
+      "normal",
+      "ipc_delay",
+      "display_stall",
+      "owner_death",
+      "target_replacement",
+      "cleanup_failure",
+      "unknown_dependency"
+    ],
+    "started_ns": 1590832331066,
+    "supervisor_release": {
+      "finished_ns": 1591558478267,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "monotonic_ns": 1591558477084,
+        "verified": true
+      },
+      "started_ns": 1591558145844
+    },
+    "target_mapped_ns": 1591087819563,
+    "target_xid": 4194304,
+    "terminal_key_down": false,
+    "unix_sockets_by_inode": {
+      "28600": "/tmp/.X11-unix/X613",
+      "28601": "/tmp/.X11-unix/X613",
+      "29424": "@/tmp/.X11-unix/X613",
+      "29425": "/tmp/.X11-unix/X613",
+      "36089": "",
+      "44153": ""
+    },
+    "wm_pid": null,
+    "worker_pid": 44,
+    "worker_returncode": -9,
+    "worker_sigkill_ns": 1591553155761,
+    "worker_snapshot_after": {
+      "pid": 44,
+      "present": false,
+      "role": "worker"
+    },
+    "worker_snapshot_at_death": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":613",
+        "--xid",
+        "4194304",
+        "--schedule",
+        "owner_death",
+        "--start-receipt",
+        "/work/03-bare-owner_death/worker.start.json"
+      ],
+      "display": ":613",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[44156]",
+        "2": "pipe:[44157]"
+      },
+      "pid": 44,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "R"
+    },
+    "worker_snapshot_at_keydown": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":613",
+        "--xid",
+        "4194304",
+        "--schedule",
+        "owner_death",
+        "--start-receipt",
+        "/work/03-bare-owner_death/worker.start.json"
+      ],
+      "display": ":613",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[44156]",
+        "2": "pipe:[44157]",
+        "3": "socket:[30224]",
+        "4": "socket:[30225]"
+      },
+      "pid": 44,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "S",
+      "unix_socket_paths": []
+    },
+    "worker_snapshot_start": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":613",
+        "--xid",
+        "4194304",
+        "--schedule",
+        "owner_death",
+        "--start-receipt",
+        "/work/03-bare-owner_death/worker.start.json"
+      ],
+      "display": ":613",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[44156]",
+        "2": "pipe:[44157]"
+      },
+      "pid": 44,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "R"
+    },
+    "worker_start_receipt": {
+      "authority_deadline_ns": 1591690934306,
+      "authority_lease_ms": 150,
+      "fault_injected_release_method": false,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 44,
+      "schedule": "owner_death",
+      "started_ns": 1591540934306,
+      "wait_update_ms": 4000
+    },
+    "worker_stderr": "",
+    "worker_stdout": "",
+    "worker_stdout_fd": 8,
+    "worker_stdout_link": "pipe:[44156]",
+    "xvfb_pid": 38
+  },
+  {
+    "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+    "app_release_ns": null,
+    "authority_deadline_ms": 150,
+    "case_index": 4,
+    "cleanup": {
+      "observer": {
+        "exited": true,
+        "pid": 52,
+        "returncode": -9,
+        "stopped_ns": 1592380899187
+      },
+      "openbox": {
+        "exited": true,
+        "pid": null,
+        "returncode": null
+      },
+      "xvfb": {
+        "exited": true,
+        "pid": 48,
+        "returncode": 0,
+        "stopped_ns": 1592380902742
+      }
+    },
+    "config": "bare",
+    "display": ":614",
+    "ended_ns": 1592380074046,
+    "expected_input": "F8",
+    "grace_ms": 50,
+    "key_down_observed": {
+      "keycode": 74,
+      "kind": "press",
+      "monotonic_ns": 1592302755978,
+      "server_time": 1592302,
+      "window_id": 4194304
+    },
+    "key_down_observer_ns": 1592302755978,
+    "keymap_release_upper_bound_ns": 1592333327960,
+    "keymap_transitions": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 1591627497887
+      },
+      {
+        "down": true,
+        "kind": "transition",
+        "observed_ns": 1592303064738
+      },
+      {
+        "down": false,
+        "kind": "transition",
+        "observed_ns": 1592333327960
+      }
+    ],
+    "observer_events": [
+      {
+        "keycode": 74,
+        "kind": "press",
+        "monotonic_ns": 1592302755978,
+        "server_time": 1592302,
+        "window_id": 4194304
+      }
+    ],
+    "observer_pid": 52,
+    "parent_stdout_link": "pipe:[44198]",
+    "processes": [
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/exp/run.py",
+          "--formal",
+          "/work"
+        ],
+        "display": null,
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[30197]",
+          "11": "pipe:[44199]",
+          "2": "pipe:[30198]",
+          "3": "socket:[44195]",
+          "4": "pipe:[44192]",
+          "6": "pipe:[44193]",
+          "7": "pipe:[44196]",
+          "8": "pipe:[44198]",
+          "9": "pipe:[44197]"
+        },
+        "fd_snapshot_races": [
+          "5"
+        ],
+        "pid": 1,
+        "ppid": 0,
+        "present": true,
+        "role": "runner",
+        "state": "R",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "Xvfb",
+          ":614",
+          "-screen",
+          "0",
+          "640x480x24",
+          "-nolisten",
+          "tcp",
+          "-ac"
+        ],
+        "display": ":614",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[44192]",
+          "2": "pipe:[44193]",
+          "3": "anon_inode:[eventpoll]",
+          "4": "pipe:[33265]",
+          "5": "pipe:[33265]",
+          "6": "socket:[33266]",
+          "7": "socket:[33267]",
+          "8": "socket:[34318]"
+        },
+        "pid": 48,
+        "ppid": 1,
+        "present": true,
+        "role": "xvfb",
+        "state": "S",
+        "unix_socket_paths": [
+          "/tmp/.X11-unix/X614",
+          "@/tmp/.X11-unix/X614"
+        ]
+      },
+      {
+        "pid": null,
+        "present": false,
+        "role": "openbox",
+        "unix_socket_paths": []
+      },
+      {
+        "pid": 52,
+        "present": false,
+        "role": "observer",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/run.py",
+          "--worker",
+          "--display",
+          ":614",
+          "--xid",
+          "4194304",
+          "--schedule",
+          "target_replacement",
+          "--start-receipt",
+          "/work/04-bare-target_replacement/worker.start.json"
+        ],
+        "display": ":614",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[44198]",
+          "2": "pipe:[44199]",
+          "3": "socket:[13267]",
+          "4": "socket:[13268]"
+        },
+        "pid": 54,
+        "ppid": 1,
+        "present": true,
+        "role": "worker",
+        "state": "S",
+        "unix_socket_paths": []
+      }
+    ],
+    "release_witness_upper_bound_ns": 1592333327960,
+    "result_pipe_read_ns": 1592371633183,
+    "runner_pid": 1,
+    "schedule": "target_replacement",
+    "schedule_order": [
+      "normal",
+      "ipc_delay",
+      "display_stall",
+      "owner_death",
+      "target_replacement",
+      "cleanup_failure",
+      "unknown_dependency"
+    ],
+    "started_ns": 1591596859601,
+    "target_mapped_ns": 1591835556028,
+    "target_returncode": -9,
+    "target_terminate_ns": 1592306614492,
+    "target_xid": 4194304,
+    "terminal_key_down": false,
+    "unix_sockets_by_inode": {
+      "33266": "@/tmp/.X11-unix/X614",
+      "33267": "/tmp/.X11-unix/X614",
+      "34318": "/tmp/.X11-unix/X614",
+      "44195": ""
+    },
+    "wm_pid": null,
+    "worker_pid": 54,
+    "worker_receipt": {
+      "authority_deadline_ns": 1592446315406,
+      "authority_lease_ms": 150,
+      "dispatch_result": {
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "emissions": 2,
+            "ended_ns": 1592332679877,
+            "observations": [],
+            "program_emissions": 2,
+            "releases": [
+              {
+                "buttons_down": [],
+                "keys_down": [],
+                "monotonic_ns": 1592332677448,
+                "verified": true
+              }
+            ],
+            "started_ns": 1592301818620,
+            "waits": [
+              {
+                "completed": true,
+                "ended_ns": 1592332254566,
+                "kind": "fixed_delay",
+                "operation_index": 2,
+                "requested_ms": 30,
+                "started_ns": 1592302165173,
+                "update_observed": null
+              }
+            ]
+          },
+          "recovery_required": false,
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "window.focus"
+          ],
+          "status": "completed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      },
+      "fault_injected_release_method": false,
+      "finished_ns": 1592332763331,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 54,
+      "schedule": "target_replacement",
+      "started_ns": 1592296315406,
+      "wait_update_ms": 30
+    },
+    "worker_returncode": 0,
+    "worker_snapshot_after": {
+      "pid": 54,
+      "present": false,
+      "role": "worker"
+    },
+    "worker_snapshot_at_keydown": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":614",
+        "--xid",
+        "4194304",
+        "--schedule",
+        "target_replacement",
+        "--start-receipt",
+        "/work/04-bare-target_replacement/worker.start.json"
+      ],
+      "display": ":614",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[44198]",
+        "2": "pipe:[44199]",
+        "3": "socket:[13267]",
+        "4": "socket:[13268]"
+      },
+      "pid": 54,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "S",
+      "unix_socket_paths": []
+    },
+    "worker_snapshot_start": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":614",
+        "--xid",
+        "4194304",
+        "--schedule",
+        "target_replacement",
+        "--start-receipt",
+        "/work/04-bare-target_replacement/worker.start.json"
+      ],
+      "display": ":614",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[44198]",
+        "2": "pipe:[44199]"
+      },
+      "pid": 54,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "R"
+    },
+    "worker_start_receipt": {
+      "authority_deadline_ns": 1592446315406,
+      "authority_lease_ms": 150,
+      "fault_injected_release_method": false,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 54,
+      "schedule": "target_replacement",
+      "started_ns": 1592296315406,
+      "wait_update_ms": 30
+    },
+    "worker_stderr": "",
+    "worker_stdout": "Xlib.xauth: warning, no xauthority details available\nXlib.xauth: warning, no xauthority details available\n{\"authority_deadline_ns\": 1592446315406, \"authority_lease_ms\": 150, \"dispatch_result\": {\"result\": {\"admission\": \"accepted\", \"execution\": {\"completed_ops\": [0, 1, 2, 3], \"emissions\": 2, \"ended_ns\": 1592332679877, \"observations\": [], \"program_emissions\": 2, \"releases\": [{\"buttons_down\": [], \"keys_down\": [], \"monotonic_ns\": 1592332677448, \"verified\": true}], \"started_ns\": 1592301818620, \"waits\": [{\"completed\": true, \"ended_ns\": 1592332254566, \"kind\": \"fixed_delay\", \"operation_index\": 2, \"requested_ms\": 30, \"started_ns\": 1592302165173, \"update_observed\": null}]}, \"recovery_required\": false, \"required_capabilities\": [\"clock.monotonic\", \"event.feedback\", \"input.keyboard\", \"input.release_all\", \"window.focus\"], \"status\": \"completed\"}, \"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\"}, \"fault_injected_release_method\": false, \"finished_ns\": 1592332763331, \"loaded_runtime\": {\"backend\": \"runtime.backends.x11_v1.backend.X11Backend\", \"dispatch_facade\": \"runtime.cli_v1.api.dispatch\", \"session\": \"runtime.backends.x11_v1.session.X11RuntimeSession\"}, \"pid\": 54, \"schedule\": \"target_replacement\", \"started_ns\": 1592296315406, \"wait_update_ms\": 30}\n",
+    "worker_stdout_fd": 8,
+    "worker_stdout_link": "pipe:[44198]",
+    "xvfb_pid": 48
+  },
+  {
+    "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+    "app_release_ns": null,
+    "authority_deadline_ms": 150,
+    "case_index": 5,
+    "cleanup": {
+      "observer": {
+        "exited": true,
+        "pid": 60,
+        "returncode": 0,
+        "stopped_ns": 1593335020502
+      },
+      "openbox": {
+        "exited": true,
+        "pid": null,
+        "returncode": null
+      },
+      "xvfb": {
+        "exited": true,
+        "pid": 56,
+        "returncode": 0,
+        "stopped_ns": 1593350716330
+      }
+    },
+    "cleanup_supervisor_pid": 1,
+    "config": "bare",
+    "display": ":615",
+    "ended_ns": 1593334037568,
+    "expected_input": "F8",
+    "grace_ms": 50,
+    "key_down_observed": {
+      "keycode": 74,
+      "kind": "press",
+      "monotonic_ns": 1593109108815,
+      "server_time": 1593107,
+      "window_id": 4194304
+    },
+    "key_down_observer_ns": 1593109108815,
+    "keymap_release_upper_bound_ns": null,
+    "keymap_transitions": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 1592420930021
+      },
+      {
+        "down": true,
+        "kind": "transition",
+        "observed_ns": 1593108911306
+      }
+    ],
+    "keymap_transitions_after_cleanup": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 1592420930021
+      },
+      {
+        "down": true,
+        "kind": "transition",
+        "observed_ns": 1593108911306
+      },
+      {
+        "down": false,
+        "kind": "transition",
+        "observed_ns": 1593327653780
+      }
+    ],
+    "observer_events": [
+      {
+        "keycode": 74,
+        "kind": "press",
+        "monotonic_ns": 1593109108815,
+        "server_time": 1593107,
+        "window_id": 4194304
+      }
+    ],
+    "observer_pid": 60,
+    "parent_stdout_link": "pipe:[31332]",
+    "post_cleanup_key_down": false,
+    "processes": [
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/exp/run.py",
+          "--formal",
+          "/work"
+        ],
+        "display": null,
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[30197]",
+          "11": "pipe:[31333]",
+          "2": "pipe:[30198]",
+          "3": "socket:[26346]",
+          "4": "pipe:[26343]",
+          "6": "pipe:[26344]",
+          "7": "pipe:[26347]",
+          "8": "pipe:[31332]",
+          "9": "pipe:[26348]"
+        },
+        "fd_snapshot_races": [
+          "5"
+        ],
+        "pid": 1,
+        "ppid": 0,
+        "present": true,
+        "role": "runner",
+        "state": "R",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "Xvfb",
+          ":615",
+          "-screen",
+          "0",
+          "640x480x24",
+          "-nolisten",
+          "tcp",
+          "-ac"
+        ],
+        "display": ":615",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[26343]",
+          "2": "pipe:[26344]",
+          "3": "anon_inode:[eventpoll]",
+          "4": "pipe:[40121]",
+          "5": "pipe:[40121]",
+          "6": "socket:[40122]",
+          "7": "socket:[40123]",
+          "8": "socket:[40126]",
+          "9": "socket:[40127]"
+        },
+        "pid": 56,
+        "ppid": 1,
+        "present": true,
+        "role": "xvfb",
+        "state": "S",
+        "unix_socket_paths": [
+          "/tmp/.X11-unix/X615",
+          "@/tmp/.X11-unix/X615"
+        ]
+      },
+      {
+        "pid": null,
+        "present": false,
+        "role": "openbox",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/observer.py",
+          "--meta",
+          "/work/05-bare-cleanup_failure/observer.meta.json",
+          "--events",
+          "/work/05-bare-cleanup_failure/observer.events.jsonl"
+        ],
+        "display": ":615",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[26347]",
+          "2": "pipe:[26348]",
+          "3": "socket:[41060]",
+          "4": "/work/05-bare-cleanup_failure/observer.events.jsonl"
+        },
+        "pid": 60,
+        "ppid": 1,
+        "present": true,
+        "role": "observer",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/run.py",
+          "--worker",
+          "--display",
+          ":615",
+          "--xid",
+          "4194304",
+          "--schedule",
+          "cleanup_failure",
+          "--start-receipt",
+          "/work/05-bare-cleanup_failure/worker.start.json"
+        ],
+        "display": ":615",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[31332]",
+          "2": "pipe:[31333]",
+          "3": "socket:[32319]"
+        },
+        "pid": 62,
+        "ppid": 1,
+        "present": true,
+        "role": "worker",
+        "state": "S",
+        "unix_socket_paths": []
+      }
+    ],
+    "release_witness_upper_bound_ns": null,
+    "result_pipe_read_ns": 1593277959244,
+    "runner_pid": 1,
+    "schedule": "cleanup_failure",
+    "schedule_order": [
+      "normal",
+      "ipc_delay",
+      "display_stall",
+      "owner_death",
+      "target_replacement",
+      "cleanup_failure",
+      "unknown_dependency"
+    ],
+    "started_ns": 1592389277329,
+    "supervisor_release": {
+      "finished_ns": 1593326037859,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "monotonic_ns": 1593326036314,
+        "verified": true
+      },
+      "started_ns": 1593325713384
+    },
+    "target_mapped_ns": 1592630884239,
+    "target_xid": 4194304,
+    "terminal_key_down": false,
+    "unix_sockets_by_inode": {
+      "26346": "",
+      "40122": "@/tmp/.X11-unix/X615",
+      "40123": "/tmp/.X11-unix/X615",
+      "40126": "/tmp/.X11-unix/X615",
+      "40127": "/tmp/.X11-unix/X615",
+      "41060": ""
+    },
+    "wm_pid": null,
+    "worker_pid": 62,
+    "worker_receipt": {
+      "authority_deadline_ns": 1593254860668,
+      "authority_lease_ms": 150,
+      "dispatch_result": {
+        "result": {
+          "admission": "accepted",
+          "error": "BACKEND_EXECUTION_FAILED",
+          "execution": {
+            "completed_ops": [
+              0,
+              1,
+              2
+            ],
+            "emissions": 1,
+            "ended_ns": 1593228182171,
+            "error": "RuntimeError('INJECTED_RELEASE_PATH_FAILURE')",
+            "failed_op": 3,
+            "failed_op_effect": "unknown; may have emitted partial input",
+            "observations": [],
+            "program_emissions": 1,
+            "releases": [
+              {
+                "error": "RuntimeError('INJECTED_RELEASE_PATH_FAILURE')",
+                "monotonic_ns": 1593228179874,
+                "verified": false
+              }
+            ],
+            "started_ns": 1593107511807,
+            "waits": [
+              {
+                "completed": true,
+                "ended_ns": 1593228162941,
+                "kind": "fixed_delay",
+                "operation_index": 2,
+                "requested_ms": 120,
+                "started_ns": 1593108066453,
+                "update_observed": null
+              }
+            ]
+          },
+          "recovery_required": true,
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "window.focus"
+          ],
+          "status": "execution_failed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      },
+      "fault_injected_release_method": true,
+      "finished_ns": 1593228283101,
+      "loaded_runtime": {
+        "backend": "__main__.FailingReleaseBackend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 62,
+      "schedule": "cleanup_failure",
+      "started_ns": 1593104860668,
+      "wait_update_ms": 120
+    },
+    "worker_returncode": 0,
+    "worker_snapshot_after": {
+      "pid": 62,
+      "present": false,
+      "role": "worker"
+    },
+    "worker_snapshot_at_keydown": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":615",
+        "--xid",
+        "4194304",
+        "--schedule",
+        "cleanup_failure",
+        "--start-receipt",
+        "/work/05-bare-cleanup_failure/worker.start.json"
+      ],
+      "display": ":615",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[31332]",
+        "2": "pipe:[31333]",
+        "3": "socket:[32319]"
+      },
+      "pid": 62,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "S",
+      "unix_socket_paths": []
+    },
+    "worker_snapshot_start": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":615",
+        "--xid",
+        "4194304",
+        "--schedule",
+        "cleanup_failure",
+        "--start-receipt",
+        "/work/05-bare-cleanup_failure/worker.start.json"
+      ],
+      "display": ":615",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[31332]",
+        "2": "pipe:[31333]"
+      },
+      "pid": 62,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "R"
+    },
+    "worker_start_receipt": {
+      "authority_deadline_ns": 1593254860668,
+      "authority_lease_ms": 150,
+      "fault_injected_release_method": true,
+      "loaded_runtime": {
+        "backend": "__main__.FailingReleaseBackend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 62,
+      "schedule": "cleanup_failure",
+      "started_ns": 1593104860668,
+      "wait_update_ms": 120
+    },
+    "worker_stderr": "",
+    "worker_stdout": "Xlib.xauth: warning, no xauthority details available\n{\"authority_deadline_ns\": 1593254860668, \"authority_lease_ms\": 150, \"dispatch_result\": {\"result\": {\"admission\": \"accepted\", \"error\": \"BACKEND_EXECUTION_FAILED\", \"execution\": {\"completed_ops\": [0, 1, 2], \"emissions\": 1, \"ended_ns\": 1593228182171, \"error\": \"RuntimeError('INJECTED_RELEASE_PATH_FAILURE')\", \"failed_op\": 3, \"failed_op_effect\": \"unknown; may have emitted partial input\", \"observations\": [], \"program_emissions\": 1, \"releases\": [{\"error\": \"RuntimeError('INJECTED_RELEASE_PATH_FAILURE')\", \"monotonic_ns\": 1593228179874, \"verified\": false}], \"started_ns\": 1593107511807, \"waits\": [{\"completed\": true, \"ended_ns\": 1593228162941, \"kind\": \"fixed_delay\", \"operation_index\": 2, \"requested_ms\": 120, \"started_ns\": 1593108066453, \"update_observed\": null}]}, \"recovery_required\": true, \"required_capabilities\": [\"clock.monotonic\", \"event.feedback\", \"input.keyboard\", \"input.release_all\", \"window.focus\"], \"status\": \"execution_failed\"}, \"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\"}, \"fault_injected_release_method\": true, \"finished_ns\": 1593228283101, \"loaded_runtime\": {\"backend\": \"__main__.FailingReleaseBackend\", \"dispatch_facade\": \"runtime.cli_v1.api.dispatch\", \"session\": \"runtime.backends.x11_v1.session.X11RuntimeSession\"}, \"pid\": 62, \"schedule\": \"cleanup_failure\", \"started_ns\": 1593104860668, \"wait_update_ms\": 120}\n",
+    "worker_stdout_fd": 8,
+    "worker_stdout_link": "pipe:[31332]",
+    "xvfb_pid": 56
+  },
+  {
+    "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+    "app_release_ns": null,
+    "authority_deadline_ms": 150,
+    "case_index": 6,
+    "cleanup": {
+      "observer": {
+        "exited": true,
+        "pid": 70,
+        "returncode": 0,
+        "stopped_ns": 1593626966452
+      },
+      "openbox": {
+        "exited": true,
+        "pid": null,
+        "returncode": null
+      },
+      "xvfb": {
+        "exited": true,
+        "pid": 66,
+        "returncode": 0,
+        "stopped_ns": 1593642629362
+      }
+    },
+    "config": "bare",
+    "display": ":616",
+    "ended_ns": 1593626296571,
+    "execution_disposition": "STOP_UNKNOWN_DEPENDENCY",
+    "expected_input": "F8",
+    "grace_ms": 50,
+    "input_dispatched": false,
+    "keymap_release_upper_bound_ns": null,
+    "keymap_transitions": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 1593393726416
+      }
+    ],
+    "observer_events": [],
+    "observer_pid": 70,
+    "processes": [
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/exp/run.py",
+          "--formal",
+          "/work"
+        ],
+        "display": null,
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[30197]",
+          "2": "pipe:[30198]",
+          "3": "socket:[38182]",
+          "4": "pipe:[38179]",
+          "6": "pipe:[38180]",
+          "7": "pipe:[38183]",
+          "9": "pipe:[38184]"
+        },
+        "fd_snapshot_races": [
+          "5"
+        ],
+        "pid": 1,
+        "ppid": 0,
+        "present": true,
+        "role": "runner",
+        "state": "R",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "Xvfb",
+          ":616",
+          "-screen",
+          "0",
+          "640x480x24",
+          "-nolisten",
+          "tcp",
+          "-ac"
+        ],
+        "display": ":616",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[38179]",
+          "2": "pipe:[38180]",
+          "3": "anon_inode:[eventpoll]",
+          "4": "pipe:[32322]",
+          "5": "pipe:[32322]",
+          "6": "socket:[32323]",
+          "7": "socket:[32324]",
+          "8": "socket:[32327]",
+          "9": "socket:[32328]"
+        },
+        "pid": 66,
+        "ppid": 1,
+        "present": true,
+        "role": "xvfb",
+        "state": "S",
+        "unix_socket_paths": [
+          "/tmp/.X11-unix/X616",
+          "@/tmp/.X11-unix/X616"
+        ]
+      },
+      {
+        "pid": null,
+        "present": false,
+        "role": "openbox",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/observer.py",
+          "--meta",
+          "/work/06-bare-unknown_dependency/observer.meta.json",
+          "--events",
+          "/work/06-bare-unknown_dependency/observer.events.jsonl"
+        ],
+        "display": ":616",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[38183]",
+          "2": "pipe:[38184]",
+          "3": "socket:[39197]",
+          "4": "/work/06-bare-unknown_dependency/observer.events.jsonl"
+        },
+        "pid": 70,
+        "ppid": 1,
+        "present": true,
+        "role": "observer",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "pid": null,
+        "present": false,
+        "role": "worker",
+        "unix_socket_paths": []
+      }
+    ],
+    "release_witness_upper_bound_ns": null,
+    "runner_pid": 1,
+    "schedule": "unknown_dependency",
+    "schedule_order": [
+      "normal",
+      "ipc_delay",
+      "display_stall",
+      "owner_death",
+      "target_replacement",
+      "cleanup_failure",
+      "unknown_dependency"
+    ],
+    "started_ns": 1593363041240,
+    "target_mapped_ns": 1593600309707,
+    "target_xid": 4194304,
+    "terminal_key_down": false,
+    "typed_stop": true,
+    "unix_sockets_by_inode": {
+      "32323": "@/tmp/.X11-unix/X616",
+      "32324": "/tmp/.X11-unix/X616",
+      "32327": "/tmp/.X11-unix/X616",
+      "32328": "/tmp/.X11-unix/X616",
+      "38182": "",
+      "39197": ""
+    },
+    "unknown_dependency": "unclassified_server_side_input_owner",
+    "unknown_guard_ns": 1593620482811,
+    "wm_pid": null,
+    "xvfb_pid": 66
+  },
+  {
+    "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+    "app_release_ns": 1594631739287,
+    "authority_deadline_ms": 150,
+    "case_index": 7,
+    "cleanup": {
+      "observer": {
+        "exited": true,
+        "pid": 81,
+        "returncode": 0,
+        "stopped_ns": 1594685380514
+      },
+      "openbox": {
+        "exited": true,
+        "pid": 75,
+        "returncode": 0,
+        "stopped_ns": 1594717221347
+      },
+      "xvfb": {
+        "exited": true,
+        "pid": 74,
+        "returncode": 0,
+        "stopped_ns": 1594724754790
+      }
+    },
+    "config": "openbox",
+    "display": ":617",
+    "ended_ns": 1594684534115,
+    "expected_input": "F8",
+    "grace_ms": 50,
+    "key_down_observed": {
+      "keycode": 74,
+      "kind": "press",
+      "monotonic_ns": 1594601724551,
+      "server_time": 1594600,
+      "window_id": 6291456
+    },
+    "key_down_observer_ns": 1594601724551,
+    "keymap_release_upper_bound_ns": 1594631384311,
+    "keymap_transitions": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 1593791819772
+      },
+      {
+        "down": true,
+        "kind": "transition",
+        "observed_ns": 1594601180188
+      },
+      {
+        "down": false,
+        "kind": "transition",
+        "observed_ns": 1594631384311
+      }
+    ],
+    "observer_events": [
+      {
+        "keycode": 74,
+        "kind": "press",
+        "monotonic_ns": 1594601724551,
+        "server_time": 1594600,
+        "window_id": 6291456
+      },
+      {
+        "keycode": 74,
+        "kind": "release",
+        "monotonic_ns": 1594631739287,
+        "server_time": 1594631,
+        "window_id": 6291456
+      }
+    ],
+    "observer_pid": 81,
+    "parent_stdout_link": "pipe:[31342]",
+    "processes": [
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/exp/run.py",
+          "--formal",
+          "/work"
+        ],
+        "display": null,
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[30197]",
+          "10": "pipe:[31342]",
+          "11": "pipe:[38216]",
+          "13": "pipe:[31343]",
+          "2": "pipe:[30198]",
+          "3": "socket:[38214]",
+          "4": "pipe:[38208]",
+          "5": "pipe:[38211]",
+          "6": "pipe:[38209]",
+          "8": "pipe:[38212]",
+          "9": "pipe:[38215]"
+        },
+        "fd_snapshot_races": [
+          "7"
+        ],
+        "pid": 1,
+        "ppid": 0,
+        "present": true,
+        "role": "runner",
+        "state": "R",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "Xvfb",
+          ":617",
+          "-screen",
+          "0",
+          "640x480x24",
+          "-nolisten",
+          "tcp",
+          "-ac"
+        ],
+        "display": ":617",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[38208]",
+          "10": "socket:[38217]",
+          "2": "pipe:[38209]",
+          "3": "anon_inode:[eventpoll]",
+          "4": "pipe:[32334]",
+          "5": "pipe:[32334]",
+          "6": "socket:[32335]",
+          "7": "socket:[32336]",
+          "8": "socket:[32339]",
+          "9": "socket:[32341]"
+        },
+        "pid": 74,
+        "ppid": 1,
+        "present": true,
+        "role": "xvfb",
+        "state": "S",
+        "unix_socket_paths": [
+          "/tmp/.X11-unix/X617",
+          "@/tmp/.X11-unix/X617"
+        ]
+      },
+      {
+        "argv": [
+          "openbox"
+        ],
+        "display": ":617",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[38211]",
+          "2": "pipe:[38212]",
+          "3": "anon_inode:[eventfd]",
+          "4": "socket:[30232]"
+        },
+        "pid": 75,
+        "ppid": 1,
+        "present": true,
+        "role": "openbox",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/observer.py",
+          "--meta",
+          "/work/07-openbox-normal/observer.meta.json",
+          "--events",
+          "/work/07-openbox-normal/observer.events.jsonl"
+        ],
+        "display": ":617",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[38215]",
+          "2": "pipe:[38216]",
+          "3": "socket:[43076]",
+          "4": "/work/07-openbox-normal/observer.events.jsonl"
+        },
+        "pid": 81,
+        "ppid": 1,
+        "present": true,
+        "role": "observer",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/run.py",
+          "--worker",
+          "--display",
+          ":617",
+          "--xid",
+          "6291456",
+          "--schedule",
+          "normal",
+          "--start-receipt",
+          "/work/07-openbox-normal/worker.start.json"
+        ],
+        "display": ":617",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[31342]",
+          "2": "pipe:[31343]",
+          "3": "socket:[33272]",
+          "4": "socket:[33273]"
+        },
+        "pid": 97,
+        "ppid": 1,
+        "present": true,
+        "role": "worker",
+        "state": "S",
+        "unix_socket_paths": []
+      }
+    ],
+    "release_witness_upper_bound_ns": 1594631384311,
+    "result_pipe_read_ns": 1594671446505,
+    "runner_pid": 1,
+    "schedule": "normal",
+    "schedule_order": [
+      "normal",
+      "ipc_delay",
+      "display_stall",
+      "owner_death",
+      "target_replacement",
+      "cleanup_failure",
+      "unknown_dependency"
+    ],
+    "started_ns": 1593656290355,
+    "target_mapped_ns": 1594018548431,
+    "target_xid": 6291456,
+    "terminal_key_down": false,
+    "unix_sockets_by_inode": {
+      "30232": "",
+      "32335": "@/tmp/.X11-unix/X617",
+      "32336": "/tmp/.X11-unix/X617",
+      "32339": "@/tmp/.X11-unix/X617",
+      "32341": "/tmp/.X11-unix/X617",
+      "38214": "",
+      "38217": "/tmp/.X11-unix/X617",
+      "43076": ""
+    },
+    "wm_pid": 75,
+    "worker_pid": 97,
+    "worker_receipt": {
+      "authority_deadline_ns": 1594743322911,
+      "authority_lease_ms": 150,
+      "dispatch_result": {
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "emissions": 2,
+            "ended_ns": 1594631590391,
+            "observations": [],
+            "program_emissions": 2,
+            "releases": [
+              {
+                "buttons_down": [],
+                "keys_down": [],
+                "monotonic_ns": 1594631587457,
+                "verified": true
+              }
+            ],
+            "started_ns": 1594600544305,
+            "waits": [
+              {
+                "completed": true,
+                "ended_ns": 1594631064365,
+                "kind": "fixed_delay",
+                "operation_index": 2,
+                "requested_ms": 30,
+                "started_ns": 1594600973889,
+                "update_observed": null
+              }
+            ]
+          },
+          "recovery_required": false,
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "window.focus"
+          ],
+          "status": "completed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      },
+      "fault_injected_release_method": false,
+      "finished_ns": 1594631679848,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 97,
+      "schedule": "normal",
+      "started_ns": 1594593322911,
+      "wait_update_ms": 30
+    },
+    "worker_returncode": 0,
+    "worker_snapshot_after": {
+      "pid": 97,
+      "present": false,
+      "role": "worker"
+    },
+    "worker_snapshot_at_keydown": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":617",
+        "--xid",
+        "6291456",
+        "--schedule",
+        "normal",
+        "--start-receipt",
+        "/work/07-openbox-normal/worker.start.json"
+      ],
+      "display": ":617",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[31342]",
+        "2": "pipe:[31343]",
+        "3": "socket:[33272]",
+        "4": "socket:[33273]"
+      },
+      "pid": 97,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "S",
+      "unix_socket_paths": []
+    },
+    "worker_snapshot_start": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":617",
+        "--xid",
+        "6291456",
+        "--schedule",
+        "normal",
+        "--start-receipt",
+        "/work/07-openbox-normal/worker.start.json"
+      ],
+      "display": ":617",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[31342]",
+        "2": "pipe:[31343]"
+      },
+      "pid": 97,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "R"
+    },
+    "worker_start_receipt": {
+      "authority_deadline_ns": 1594743322911,
+      "authority_lease_ms": 150,
+      "fault_injected_release_method": false,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 97,
+      "schedule": "normal",
+      "started_ns": 1594593322911,
+      "wait_update_ms": 30
+    },
+    "worker_stderr": "",
+    "worker_stdout": "Xlib.xauth: warning, no xauthority details available\nXlib.xauth: warning, no xauthority details available\n{\"authority_deadline_ns\": 1594743322911, \"authority_lease_ms\": 150, \"dispatch_result\": {\"result\": {\"admission\": \"accepted\", \"execution\": {\"completed_ops\": [0, 1, 2, 3], \"emissions\": 2, \"ended_ns\": 1594631590391, \"observations\": [], \"program_emissions\": 2, \"releases\": [{\"buttons_down\": [], \"keys_down\": [], \"monotonic_ns\": 1594631587457, \"verified\": true}], \"started_ns\": 1594600544305, \"waits\": [{\"completed\": true, \"ended_ns\": 1594631064365, \"kind\": \"fixed_delay\", \"operation_index\": 2, \"requested_ms\": 30, \"started_ns\": 1594600973889, \"update_observed\": null}]}, \"recovery_required\": false, \"required_capabilities\": [\"clock.monotonic\", \"event.feedback\", \"input.keyboard\", \"input.release_all\", \"window.focus\"], \"status\": \"completed\"}, \"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\"}, \"fault_injected_release_method\": false, \"finished_ns\": 1594631679848, \"loaded_runtime\": {\"backend\": \"runtime.backends.x11_v1.backend.X11Backend\", \"dispatch_facade\": \"runtime.cli_v1.api.dispatch\", \"session\": \"runtime.backends.x11_v1.session.X11RuntimeSession\"}, \"pid\": 97, \"schedule\": \"normal\", \"started_ns\": 1594593322911, \"wait_update_ms\": 30}\n",
+    "worker_stdout_fd": 10,
+    "worker_stdout_link": "pipe:[31342]",
+    "xvfb_pid": 74
+  },
+  {
+    "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+    "app_release_ns": 1595633185373,
+    "authority_deadline_ms": 150,
+    "case_index": 8,
+    "cleanup": {
+      "observer": {
+        "exited": true,
+        "pid": 108,
+        "returncode": 0,
+        "stopped_ns": 1595881097910
+      },
+      "openbox": {
+        "exited": true,
+        "pid": 102,
+        "returncode": 0,
+        "stopped_ns": 1595896539630
+      },
+      "xvfb": {
+        "exited": true,
+        "pid": 101,
+        "returncode": 0,
+        "stopped_ns": 1595899756192
+      }
+    },
+    "config": "openbox",
+    "display": ":618",
+    "ended_ns": 1595880570970,
+    "expected_input": "F8",
+    "grace_ms": 50,
+    "key_down_observed": {
+      "keycode": 74,
+      "kind": "press",
+      "monotonic_ns": 1595602932884,
+      "server_time": 1595602,
+      "window_id": 6291456
+    },
+    "key_down_observer_ns": 1595602932884,
+    "keymap_release_upper_bound_ns": 1595633914501,
+    "keymap_transitions": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 1594903824016
+      },
+      {
+        "down": true,
+        "kind": "transition",
+        "observed_ns": 1595603550136
+      },
+      {
+        "down": false,
+        "kind": "transition",
+        "observed_ns": 1595633914501
+      }
+    ],
+    "observer_events": [
+      {
+        "keycode": 74,
+        "kind": "press",
+        "monotonic_ns": 1595602932884,
+        "server_time": 1595602,
+        "window_id": 6291456
+      },
+      {
+        "keycode": 74,
+        "kind": "release",
+        "monotonic_ns": 1595633185373,
+        "server_time": 1595632,
+        "window_id": 6291456
+      }
+    ],
+    "observer_pid": 108,
+    "parent_stdout_link": "pipe:[38223]",
+    "processes": [
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/exp/run.py",
+          "--formal",
+          "/work"
+        ],
+        "display": null,
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[30197]",
+          "10": "pipe:[38223]",
+          "11": "pipe:[35230]",
+          "13": "pipe:[38224]",
+          "2": "pipe:[30198]",
+          "3": "socket:[35228]",
+          "4": "pipe:[35221]",
+          "5": "pipe:[35224]",
+          "6": "pipe:[35222]",
+          "8": "pipe:[35225]",
+          "9": "pipe:[35229]"
+        },
+        "fd_snapshot_races": [
+          "7"
+        ],
+        "pid": 1,
+        "ppid": 0,
+        "present": true,
+        "role": "runner",
+        "state": "R",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "Xvfb",
+          ":618",
+          "-screen",
+          "0",
+          "640x480x24",
+          "-nolisten",
+          "tcp",
+          "-ac"
+        ],
+        "display": ":618",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[35221]",
+          "10": "socket:[39208]",
+          "2": "pipe:[35222]",
+          "3": "anon_inode:[eventpoll]",
+          "4": "pipe:[39200]",
+          "5": "pipe:[39200]",
+          "6": "socket:[39201]",
+          "7": "socket:[39202]",
+          "8": "socket:[39205]",
+          "9": "socket:[39207]"
+        },
+        "pid": 101,
+        "ppid": 1,
+        "present": true,
+        "role": "xvfb",
+        "state": "S",
+        "unix_socket_paths": [
+          "/tmp/.X11-unix/X618",
+          "@/tmp/.X11-unix/X618"
+        ]
+      },
+      {
+        "argv": [
+          "openbox"
+        ],
+        "display": ":618",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[35224]",
+          "2": "pipe:[35225]",
+          "3": "anon_inode:[eventfd]",
+          "4": "socket:[33278]"
+        },
+        "pid": 102,
+        "ppid": 1,
+        "present": true,
+        "role": "openbox",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/observer.py",
+          "--meta",
+          "/work/08-openbox-ipc_delay/observer.meta.json",
+          "--events",
+          "/work/08-openbox-ipc_delay/observer.events.jsonl"
+        ],
+        "display": ":618",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[35229]",
+          "2": "pipe:[35230]",
+          "3": "socket:[42016]",
+          "4": "/work/08-openbox-ipc_delay/observer.events.jsonl"
+        },
+        "pid": 108,
+        "ppid": 1,
+        "present": true,
+        "role": "observer",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/run.py",
+          "--worker",
+          "--display",
+          ":618",
+          "--xid",
+          "6291456",
+          "--schedule",
+          "ipc_delay",
+          "--start-receipt",
+          "/work/08-openbox-ipc_delay/worker.start.json"
+        ],
+        "display": ":618",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[38223]",
+          "2": "pipe:[38224]",
+          "3": "socket:[34326]",
+          "4": "socket:[34327]"
+        },
+        "pid": 124,
+        "ppid": 1,
+        "present": true,
+        "role": "worker",
+        "state": "S",
+        "unix_socket_paths": []
+      }
+    ],
+    "release_witness_upper_bound_ns": 1595633185373,
+    "result_delivery_delay_ms": 239.366827,
+    "result_pipe_read_not_before_ns": 1595872428124,
+    "result_pipe_read_ns": 1595872673917,
+    "runner_pid": 1,
+    "schedule": "ipc_delay",
+    "schedule_order": [
+      "normal",
+      "ipc_delay",
+      "display_stall",
+      "owner_death",
+      "target_replacement",
+      "cleanup_failure",
+      "unknown_dependency"
+    ],
+    "started_ns": 1594768993307,
+    "target_mapped_ns": 1595128372526,
+    "target_xid": 6291456,
+    "terminal_key_down": false,
+    "unix_sockets_by_inode": {
+      "33278": "",
+      "35228": "",
+      "39201": "@/tmp/.X11-unix/X618",
+      "39202": "/tmp/.X11-unix/X618",
+      "39205": "@/tmp/.X11-unix/X618",
+      "39207": "/tmp/.X11-unix/X618",
+      "39208": "/tmp/.X11-unix/X618",
+      "42016": ""
+    },
+    "wm_pid": 102,
+    "worker_finished_before_result_read": true,
+    "worker_pid": 124,
+    "worker_receipt": {
+      "authority_deadline_ns": 1595746593251,
+      "authority_lease_ms": 150,
+      "dispatch_result": {
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "emissions": 2,
+            "ended_ns": 1595633222884,
+            "observations": [],
+            "program_emissions": 2,
+            "releases": [
+              {
+                "buttons_down": [],
+                "keys_down": [],
+                "monotonic_ns": 1595633220692,
+                "verified": true
+              }
+            ],
+            "started_ns": 1595602329184,
+            "waits": [
+              {
+                "completed": true,
+                "ended_ns": 1595632790846,
+                "kind": "fixed_delay",
+                "operation_index": 2,
+                "requested_ms": 30,
+                "started_ns": 1595602710268,
+                "update_observed": null
+              }
+            ]
+          },
+          "recovery_required": false,
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "window.focus"
+          ],
+          "status": "completed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      },
+      "fault_injected_release_method": false,
+      "finished_ns": 1595633307090,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 124,
+      "schedule": "ipc_delay",
+      "started_ns": 1595596593251,
+      "wait_update_ms": 30
+    },
+    "worker_returncode": 0,
+    "worker_snapshot_after": {
+      "pid": 124,
+      "present": false,
+      "role": "worker"
+    },
+    "worker_snapshot_at_keydown": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":618",
+        "--xid",
+        "6291456",
+        "--schedule",
+        "ipc_delay",
+        "--start-receipt",
+        "/work/08-openbox-ipc_delay/worker.start.json"
+      ],
+      "display": ":618",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[38223]",
+        "2": "pipe:[38224]",
+        "3": "socket:[34326]",
+        "4": "socket:[34327]"
+      },
+      "pid": 124,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "S",
+      "unix_socket_paths": []
+    },
+    "worker_snapshot_start": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":618",
+        "--xid",
+        "6291456",
+        "--schedule",
+        "ipc_delay",
+        "--start-receipt",
+        "/work/08-openbox-ipc_delay/worker.start.json"
+      ],
+      "display": ":618",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[38223]",
+        "2": "pipe:[38224]"
+      },
+      "pid": 124,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "R"
+    },
+    "worker_start_receipt": {
+      "authority_deadline_ns": 1595746593251,
+      "authority_lease_ms": 150,
+      "fault_injected_release_method": false,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 124,
+      "schedule": "ipc_delay",
+      "started_ns": 1595596593251,
+      "wait_update_ms": 30
+    },
+    "worker_stderr": "",
+    "worker_stdout": "Xlib.xauth: warning, no xauthority details available\nXlib.xauth: warning, no xauthority details available\n{\"authority_deadline_ns\": 1595746593251, \"authority_lease_ms\": 150, \"dispatch_result\": {\"result\": {\"admission\": \"accepted\", \"execution\": {\"completed_ops\": [0, 1, 2, 3], \"emissions\": 2, \"ended_ns\": 1595633222884, \"observations\": [], \"program_emissions\": 2, \"releases\": [{\"buttons_down\": [], \"keys_down\": [], \"monotonic_ns\": 1595633220692, \"verified\": true}], \"started_ns\": 1595602329184, \"waits\": [{\"completed\": true, \"ended_ns\": 1595632790846, \"kind\": \"fixed_delay\", \"operation_index\": 2, \"requested_ms\": 30, \"started_ns\": 1595602710268, \"update_observed\": null}]}, \"recovery_required\": false, \"required_capabilities\": [\"clock.monotonic\", \"event.feedback\", \"input.keyboard\", \"input.release_all\", \"window.focus\"], \"status\": \"completed\"}, \"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\"}, \"fault_injected_release_method\": false, \"finished_ns\": 1595633307090, \"loaded_runtime\": {\"backend\": \"runtime.backends.x11_v1.backend.X11Backend\", \"dispatch_facade\": \"runtime.cli_v1.api.dispatch\", \"session\": \"runtime.backends.x11_v1.session.X11RuntimeSession\"}, \"pid\": 124, \"schedule\": \"ipc_delay\", \"started_ns\": 1595596593251, \"wait_update_ms\": 30}\n",
+    "worker_stdout_fd": 10,
+    "worker_stdout_link": "pipe:[38223]",
+    "xvfb_pid": 101
+  },
+  {
+    "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+    "app_release_ns": 1596920293938,
+    "authority_deadline_ms": 150,
+    "case_index": 9,
+    "cleanup": {
+      "observer": {
+        "exited": true,
+        "pid": 135,
+        "returncode": 0,
+        "stopped_ns": 1596943965110
+      },
+      "openbox": {
+        "exited": true,
+        "pid": 129,
+        "returncode": 0,
+        "stopped_ns": 1596959837550
+      },
+      "xvfb": {
+        "exited": true,
+        "pid": 128,
+        "returncode": 0,
+        "stopped_ns": 1596963216121
+      }
+    },
+    "config": "openbox",
+    "display": ":619",
+    "ended_ns": 1596943633398,
+    "expected_input": "F8",
+    "grace_ms": 50,
+    "key_down_observed": {
+      "keycode": 74,
+      "kind": "press",
+      "monotonic_ns": 1596735407485,
+      "server_time": 1596734,
+      "window_id": 6291456
+    },
+    "key_down_observer_ns": 1596735407485,
+    "keymap_release_upper_bound_ns": 1596920101636,
+    "keymap_transitions": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 1596054676678
+      },
+      {
+        "down": true,
+        "kind": "transition",
+        "observed_ns": 1596734791529
+      },
+      {
+        "down": false,
+        "kind": "transition",
+        "observed_ns": 1596920101636
+      }
+    ],
+    "observer_events": [
+      {
+        "keycode": 74,
+        "kind": "press",
+        "monotonic_ns": 1596735407485,
+        "server_time": 1596734,
+        "window_id": 6291456
+      },
+      {
+        "keycode": 74,
+        "kind": "release",
+        "monotonic_ns": 1596920293938,
+        "server_time": 1596919,
+        "window_id": 6291456
+      }
+    ],
+    "observer_pid": 135,
+    "parent_stdout_link": "pipe:[35231]",
+    "post_stall_release_transition": {
+      "down": false,
+      "kind": "transition",
+      "observed_ns": 1596920101636
+    },
+    "processes": [
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/exp/run.py",
+          "--formal",
+          "/work"
+        ],
+        "display": null,
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[30197]",
+          "10": "pipe:[35231]",
+          "11": "pipe:[38275]",
+          "13": "pipe:[35232]",
+          "2": "pipe:[30198]",
+          "3": "socket:[38273]",
+          "4": "pipe:[38267]",
+          "5": "pipe:[38270]",
+          "6": "pipe:[38268]",
+          "8": "pipe:[38271]",
+          "9": "pipe:[38274]"
+        },
+        "fd_snapshot_races": [
+          "7"
+        ],
+        "pid": 1,
+        "ppid": 0,
+        "present": true,
+        "role": "runner",
+        "state": "R",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "Xvfb",
+          ":619",
+          "-screen",
+          "0",
+          "640x480x24",
+          "-nolisten",
+          "tcp",
+          "-ac"
+        ],
+        "display": ":619",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[38267]",
+          "10": "socket:[43079]",
+          "2": "pipe:[38268]",
+          "3": "anon_inode:[eventpoll]",
+          "4": "pipe:[33282]",
+          "5": "pipe:[33282]",
+          "6": "socket:[33283]",
+          "7": "socket:[33284]",
+          "8": "socket:[33287]",
+          "9": "socket:[33289]"
+        },
+        "pid": 128,
+        "ppid": 1,
+        "present": true,
+        "role": "xvfb",
+        "state": "S",
+        "unix_socket_paths": [
+          "/tmp/.X11-unix/X619",
+          "@/tmp/.X11-unix/X619"
+        ]
+      },
+      {
+        "argv": [
+          "openbox"
+        ],
+        "display": ":619",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[38270]",
+          "2": "pipe:[38271]",
+          "3": "anon_inode:[eventfd]",
+          "4": "socket:[32346]"
+        },
+        "pid": 129,
+        "ppid": 1,
+        "present": true,
+        "role": "openbox",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/observer.py",
+          "--meta",
+          "/work/09-openbox-display_stall/observer.meta.json",
+          "--events",
+          "/work/09-openbox-display_stall/observer.events.jsonl"
+        ],
+        "display": ":619",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[38274]",
+          "2": "pipe:[38275]",
+          "3": "socket:[38278]",
+          "4": "/work/09-openbox-display_stall/observer.events.jsonl"
+        },
+        "pid": 135,
+        "ppid": 1,
+        "present": true,
+        "role": "observer",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/run.py",
+          "--worker",
+          "--display",
+          ":619",
+          "--xid",
+          "6291456",
+          "--schedule",
+          "display_stall",
+          "--start-receipt",
+          "/work/09-openbox-display_stall/worker.start.json"
+        ],
+        "display": ":619",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[35231]",
+          "2": "pipe:[35232]",
+          "3": "socket:[28611]",
+          "4": "socket:[28612]"
+        },
+        "pid": 151,
+        "ppid": 1,
+        "present": true,
+        "role": "worker",
+        "state": "S",
+        "unix_socket_paths": []
+      }
+    ],
+    "release_witness_upper_bound_ns": 1596920101636,
+    "result_pipe_read_ns": 1596936261777,
+    "runner_pid": 1,
+    "schedule": "display_stall",
+    "schedule_order": [
+      "normal",
+      "ipc_delay",
+      "display_stall",
+      "owner_death",
+      "target_replacement",
+      "cleanup_failure",
+      "unknown_dependency"
+    ],
+    "started_ns": 1595920371223,
+    "target_mapped_ns": 1596256184795,
+    "target_xid": 6291456,
+    "terminal_key_down": false,
+    "unix_sockets_by_inode": {
+      "32346": "",
+      "33283": "@/tmp/.X11-unix/X619",
+      "33284": "/tmp/.X11-unix/X619",
+      "33287": "@/tmp/.X11-unix/X619",
+      "33289": "/tmp/.X11-unix/X619",
+      "38273": "",
+      "38278": "",
+      "43079": "/tmp/.X11-unix/X619"
+    },
+    "wm_pid": 129,
+    "worker_pid": 151,
+    "worker_receipt": {
+      "authority_deadline_ns": 1596877807122,
+      "authority_lease_ms": 150,
+      "dispatch_result": {
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "emissions": 2,
+            "ended_ns": 1596920556320,
+            "observations": [],
+            "program_emissions": 2,
+            "releases": [
+              {
+                "buttons_down": [],
+                "keys_down": [],
+                "monotonic_ns": 1596920553110,
+                "verified": true
+              }
+            ],
+            "started_ns": 1596734243016,
+            "waits": [
+              {
+                "completed": true,
+                "ended_ns": 1596764740611,
+                "kind": "fixed_delay",
+                "operation_index": 2,
+                "requested_ms": 30,
+                "started_ns": 1596734599371,
+                "update_observed": null
+              }
+            ]
+          },
+          "recovery_required": false,
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "window.focus"
+          ],
+          "status": "completed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      },
+      "fault_injected_release_method": false,
+      "finished_ns": 1596920642446,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 151,
+      "schedule": "display_stall",
+      "started_ns": 1596727807122,
+      "wait_update_ms": 30
+    },
+    "worker_returncode": 0,
+    "worker_snapshot_after": {
+      "pid": 151,
+      "present": false,
+      "role": "worker"
+    },
+    "worker_snapshot_at_keydown": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":619",
+        "--xid",
+        "6291456",
+        "--schedule",
+        "display_stall",
+        "--start-receipt",
+        "/work/09-openbox-display_stall/worker.start.json"
+      ],
+      "display": ":619",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[35231]",
+        "2": "pipe:[35232]",
+        "3": "socket:[28611]",
+        "4": "socket:[28612]"
+      },
+      "pid": 151,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "S",
+      "unix_socket_paths": []
+    },
+    "worker_snapshot_start": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":619",
+        "--xid",
+        "6291456",
+        "--schedule",
+        "display_stall",
+        "--start-receipt",
+        "/work/09-openbox-display_stall/worker.start.json"
+      ],
+      "display": ":619",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[35231]",
+        "2": "pipe:[35232]"
+      },
+      "pid": 151,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "R"
+    },
+    "worker_start_receipt": {
+      "authority_deadline_ns": 1596877807122,
+      "authority_lease_ms": 150,
+      "fault_injected_release_method": false,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 151,
+      "schedule": "display_stall",
+      "started_ns": 1596727807122,
+      "wait_update_ms": 30
+    },
+    "worker_stderr": "",
+    "worker_stdout": "Xlib.xauth: warning, no xauthority details available\nXlib.xauth: warning, no xauthority details available\n{\"authority_deadline_ns\": 1596877807122, \"authority_lease_ms\": 150, \"dispatch_result\": {\"result\": {\"admission\": \"accepted\", \"execution\": {\"completed_ops\": [0, 1, 2, 3], \"emissions\": 2, \"ended_ns\": 1596920556320, \"observations\": [], \"program_emissions\": 2, \"releases\": [{\"buttons_down\": [], \"keys_down\": [], \"monotonic_ns\": 1596920553110, \"verified\": true}], \"started_ns\": 1596734243016, \"waits\": [{\"completed\": true, \"ended_ns\": 1596764740611, \"kind\": \"fixed_delay\", \"operation_index\": 2, \"requested_ms\": 30, \"started_ns\": 1596734599371, \"update_observed\": null}]}, \"recovery_required\": false, \"required_capabilities\": [\"clock.monotonic\", \"event.feedback\", \"input.keyboard\", \"input.release_all\", \"window.focus\"], \"status\": \"completed\"}, \"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\"}, \"fault_injected_release_method\": false, \"finished_ns\": 1596920642446, \"loaded_runtime\": {\"backend\": \"runtime.backends.x11_v1.backend.X11Backend\", \"dispatch_facade\": \"runtime.cli_v1.api.dispatch\", \"session\": \"runtime.backends.x11_v1.session.X11RuntimeSession\"}, \"pid\": 151, \"schedule\": \"display_stall\", \"started_ns\": 1596727807122, \"wait_update_ms\": 30}\n",
+    "worker_stdout_fd": 10,
+    "worker_stdout_link": "pipe:[35231]",
+    "xvfb_pid": 128,
+    "xvfb_sigcont_ns": 1596919722769,
+    "xvfb_sigstop_ns": 1596739510467
+  },
+  {
+    "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+    "app_release_ns": 1597862336845,
+    "authority_deadline_ms": 150,
+    "case_index": 10,
+    "cleanup": {
+      "observer": {
+        "exited": true,
+        "pid": 162,
+        "returncode": 0,
+        "stopped_ns": 1597870060137
+      },
+      "openbox": {
+        "exited": true,
+        "pid": 156,
+        "returncode": 0,
+        "stopped_ns": 1597885666898
+      },
+      "xvfb": {
+        "exited": true,
+        "pid": 155,
+        "returncode": 0,
+        "stopped_ns": 1597889038135
+      }
+    },
+    "cleanup_supervisor_pid": 1,
+    "config": "openbox",
+    "display": ":620",
+    "ended_ns": 1597869075309,
+    "expected_input": "F8",
+    "grace_ms": 50,
+    "key_down_observed": {
+      "keycode": 74,
+      "kind": "press",
+      "monotonic_ns": 1597851930756,
+      "server_time": 1597850,
+      "window_id": 6291456
+    },
+    "key_down_observer_ns": 1597851930756,
+    "keymap_release_upper_bound_ns": 1597863767811,
+    "keymap_transitions": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 1597138507420
+      },
+      {
+        "down": true,
+        "kind": "transition",
+        "observed_ns": 1597851285026
+      },
+      {
+        "down": false,
+        "kind": "transition",
+        "observed_ns": 1597863767811
+      }
+    ],
+    "observer_events": [
+      {
+        "keycode": 74,
+        "kind": "press",
+        "monotonic_ns": 1597851930756,
+        "server_time": 1597850,
+        "window_id": 6291456
+      },
+      {
+        "keycode": 74,
+        "kind": "release",
+        "monotonic_ns": 1597862336845,
+        "server_time": 1597862,
+        "window_id": 6291456
+      }
+    ],
+    "observer_pid": 162,
+    "parent_stdout_link": "pipe:[32355]",
+    "processes": [
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/exp/run.py",
+          "--formal",
+          "/work"
+        ],
+        "display": null,
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[30197]",
+          "10": "pipe:[32355]",
+          "11": "pipe:[35283]",
+          "13": "pipe:[32356]",
+          "2": "pipe:[30198]",
+          "3": "socket:[35281]",
+          "4": "pipe:[35275]",
+          "5": "pipe:[35278]",
+          "6": "pipe:[35276]",
+          "8": "pipe:[35279]",
+          "9": "pipe:[35282]"
+        },
+        "fd_snapshot_races": [
+          "7"
+        ],
+        "pid": 1,
+        "ppid": 0,
+        "present": true,
+        "role": "runner",
+        "state": "R",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "Xvfb",
+          ":620",
+          "-screen",
+          "0",
+          "640x480x24",
+          "-nolisten",
+          "tcp",
+          "-ac"
+        ],
+        "display": ":620",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[35275]",
+          "10": "socket:[28623]",
+          "2": "pipe:[35276]",
+          "3": "anon_inode:[eventpoll]",
+          "4": "pipe:[33292]",
+          "5": "pipe:[33292]",
+          "6": "socket:[33293]",
+          "7": "socket:[33294]",
+          "8": "socket:[33297]",
+          "9": "socket:[33299]"
+        },
+        "pid": 155,
+        "ppid": 1,
+        "present": true,
+        "role": "xvfb",
+        "state": "S",
+        "unix_socket_paths": [
+          "/tmp/.X11-unix/X620",
+          "@/tmp/.X11-unix/X620"
+        ]
+      },
+      {
+        "argv": [
+          "openbox"
+        ],
+        "display": ":620",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[35278]",
+          "2": "pipe:[35279]",
+          "3": "anon_inode:[eventfd]",
+          "4": "socket:[30240]"
+        },
+        "pid": 156,
+        "ppid": 1,
+        "present": true,
+        "role": "openbox",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/observer.py",
+          "--meta",
+          "/work/10-openbox-owner_death/observer.meta.json",
+          "--events",
+          "/work/10-openbox-owner_death/observer.events.jsonl"
+        ],
+        "display": ":620",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[35282]",
+          "2": "pipe:[35283]",
+          "3": "socket:[31361]",
+          "4": "/work/10-openbox-owner_death/observer.events.jsonl"
+        },
+        "pid": 162,
+        "ppid": 1,
+        "present": true,
+        "role": "observer",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/run.py",
+          "--worker",
+          "--display",
+          ":620",
+          "--xid",
+          "6291456",
+          "--schedule",
+          "owner_death",
+          "--start-receipt",
+          "/work/10-openbox-owner_death/worker.start.json"
+        ],
+        "display": ":620",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[32355]",
+          "2": "pipe:[32356]",
+          "3": "socket:[42019]",
+          "4": "socket:[42020]"
+        },
+        "pid": 178,
+        "ppid": 1,
+        "present": true,
+        "role": "worker",
+        "state": "S",
+        "unix_socket_paths": []
+      }
+    ],
+    "release_witness_upper_bound_ns": 1597862336845,
+    "runner_pid": 1,
+    "schedule": "owner_death",
+    "schedule_order": [
+      "normal",
+      "ipc_delay",
+      "display_stall",
+      "owner_death",
+      "target_replacement",
+      "cleanup_failure",
+      "unknown_dependency"
+    ],
+    "started_ns": 1597003374087,
+    "supervisor_release": {
+      "finished_ns": 1597862440544,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "monotonic_ns": 1597862439602,
+        "verified": true
+      },
+      "started_ns": 1597862129155
+    },
+    "target_mapped_ns": 1597385487942,
+    "target_xid": 6291456,
+    "terminal_key_down": false,
+    "unix_sockets_by_inode": {
+      "28623": "/tmp/.X11-unix/X620",
+      "30240": "",
+      "31361": "",
+      "33293": "@/tmp/.X11-unix/X620",
+      "33294": "/tmp/.X11-unix/X620",
+      "33297": "@/tmp/.X11-unix/X620",
+      "33299": "/tmp/.X11-unix/X620",
+      "35281": ""
+    },
+    "wm_pid": 156,
+    "worker_pid": 178,
+    "worker_returncode": -9,
+    "worker_sigkill_ns": 1597857783054,
+    "worker_snapshot_after": {
+      "pid": 178,
+      "present": false,
+      "role": "worker"
+    },
+    "worker_snapshot_at_death": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":620",
+        "--xid",
+        "6291456",
+        "--schedule",
+        "owner_death",
+        "--start-receipt",
+        "/work/10-openbox-owner_death/worker.start.json"
+      ],
+      "display": ":620",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[32355]",
+        "2": "pipe:[32356]"
+      },
+      "fd_snapshot_races": [
+        "3"
+      ],
+      "pid": 178,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "R"
+    },
+    "worker_snapshot_at_keydown": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":620",
+        "--xid",
+        "6291456",
+        "--schedule",
+        "owner_death",
+        "--start-receipt",
+        "/work/10-openbox-owner_death/worker.start.json"
+      ],
+      "display": ":620",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[32355]",
+        "2": "pipe:[32356]",
+        "3": "socket:[42019]",
+        "4": "socket:[42020]"
+      },
+      "pid": 178,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "S",
+      "unix_socket_paths": []
+    },
+    "worker_snapshot_start": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":620",
+        "--xid",
+        "6291456",
+        "--schedule",
+        "owner_death",
+        "--start-receipt",
+        "/work/10-openbox-owner_death/worker.start.json"
+      ],
+      "display": ":620",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[32355]",
+        "2": "pipe:[32356]"
+      },
+      "fd_snapshot_races": [
+        "3"
+      ],
+      "pid": 178,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "R"
+    },
+    "worker_start_receipt": {
+      "authority_deadline_ns": 1597995178099,
+      "authority_lease_ms": 150,
+      "fault_injected_release_method": false,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 178,
+      "schedule": "owner_death",
+      "started_ns": 1597845178099,
+      "wait_update_ms": 4000
+    },
+    "worker_stderr": "",
+    "worker_stdout": "",
+    "worker_stdout_fd": 10,
+    "worker_stdout_link": "pipe:[32355]",
+    "xvfb_pid": 155
+  },
+  {
+    "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+    "app_release_ns": null,
+    "authority_deadline_ms": 150,
+    "case_index": 11,
+    "cleanup": {
+      "observer": {
+        "exited": true,
+        "pid": 189,
+        "returncode": -9,
+        "stopped_ns": 1598806208912
+      },
+      "openbox": {
+        "exited": true,
+        "pid": 183,
+        "returncode": 0,
+        "stopped_ns": 1598806211457
+      },
+      "xvfb": {
+        "exited": true,
+        "pid": 182,
+        "returncode": 0,
+        "stopped_ns": 1598809934554
+      }
+    },
+    "config": "openbox",
+    "display": ":621",
+    "ended_ns": 1598805588566,
+    "expected_input": "F8",
+    "grace_ms": 50,
+    "key_down_observed": {
+      "keycode": 74,
+      "kind": "press",
+      "monotonic_ns": 1598725397524,
+      "server_time": 1598724,
+      "window_id": 6291456
+    },
+    "key_down_observer_ns": 1598725397524,
+    "keymap_release_upper_bound_ns": 1598756164051,
+    "keymap_transitions": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 1598046639016
+      },
+      {
+        "down": true,
+        "kind": "transition",
+        "observed_ns": 1598725948552
+      },
+      {
+        "down": false,
+        "kind": "transition",
+        "observed_ns": 1598756164051
+      }
+    ],
+    "observer_events": [
+      {
+        "keycode": 74,
+        "kind": "press",
+        "monotonic_ns": 1598725397524,
+        "server_time": 1598724,
+        "window_id": 6291456
+      }
+    ],
+    "observer_pid": 189,
+    "parent_stdout_link": "pipe:[45131]",
+    "processes": [
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/exp/run.py",
+          "--formal",
+          "/work"
+        ],
+        "display": null,
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[30197]",
+          "10": "pipe:[45131]",
+          "11": "pipe:[45130]",
+          "13": "pipe:[45132]",
+          "2": "pipe:[30198]",
+          "3": "socket:[45128]",
+          "4": "pipe:[45122]",
+          "5": "pipe:[45125]",
+          "6": "pipe:[45123]",
+          "8": "pipe:[45126]",
+          "9": "pipe:[45129]"
+        },
+        "fd_snapshot_races": [
+          "7"
+        ],
+        "pid": 1,
+        "ppid": 0,
+        "present": true,
+        "role": "runner",
+        "state": "R",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "Xvfb",
+          ":621",
+          "-screen",
+          "0",
+          "640x480x24",
+          "-nolisten",
+          "tcp",
+          "-ac"
+        ],
+        "display": ":621",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[45122]",
+          "2": "pipe:[45123]",
+          "3": "anon_inode:[eventpoll]",
+          "4": "pipe:[13286]",
+          "5": "pipe:[13286]",
+          "6": "socket:[13287]",
+          "7": "socket:[13288]",
+          "8": "socket:[13291]",
+          "9": "socket:[30263]"
+        },
+        "pid": 182,
+        "ppid": 1,
+        "present": true,
+        "role": "xvfb",
+        "state": "S",
+        "unix_socket_paths": [
+          "/tmp/.X11-unix/X621",
+          "@/tmp/.X11-unix/X621"
+        ]
+      },
+      {
+        "argv": [
+          "openbox"
+        ],
+        "display": ":621",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[45125]",
+          "2": "pipe:[45126]",
+          "3": "anon_inode:[eventfd]",
+          "4": "socket:[28634]"
+        },
+        "pid": 183,
+        "ppid": 1,
+        "present": true,
+        "role": "openbox",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "pid": 189,
+        "present": false,
+        "role": "observer",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/run.py",
+          "--worker",
+          "--display",
+          ":621",
+          "--xid",
+          "6291456",
+          "--schedule",
+          "target_replacement",
+          "--start-receipt",
+          "/work/11-openbox-target_replacement/worker.start.json"
+        ],
+        "display": ":621",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[45131]",
+          "2": "pipe:[45132]",
+          "3": "socket:[28639]",
+          "4": "socket:[28640]"
+        },
+        "pid": 205,
+        "ppid": 1,
+        "present": true,
+        "role": "worker",
+        "state": "S",
+        "unix_socket_paths": []
+      }
+    ],
+    "release_witness_upper_bound_ns": 1598756164051,
+    "result_pipe_read_ns": 1598795445209,
+    "runner_pid": 1,
+    "schedule": "target_replacement",
+    "schedule_order": [
+      "normal",
+      "ipc_delay",
+      "display_stall",
+      "owner_death",
+      "target_replacement",
+      "cleanup_failure",
+      "unknown_dependency"
+    ],
+    "started_ns": 1597911915774,
+    "target_mapped_ns": 1598256668663,
+    "target_returncode": -9,
+    "target_terminate_ns": 1598730471086,
+    "target_xid": 6291456,
+    "terminal_key_down": false,
+    "unix_sockets_by_inode": {
+      "13287": "@/tmp/.X11-unix/X621",
+      "13288": "/tmp/.X11-unix/X621",
+      "13291": "@/tmp/.X11-unix/X621",
+      "28634": "",
+      "30263": "/tmp/.X11-unix/X621",
+      "45128": ""
+    },
+    "wm_pid": 183,
+    "worker_pid": 205,
+    "worker_receipt": {
+      "authority_deadline_ns": 1598868045153,
+      "authority_lease_ms": 150,
+      "dispatch_result": {
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "emissions": 2,
+            "ended_ns": 1598755368580,
+            "observations": [],
+            "program_emissions": 2,
+            "releases": [
+              {
+                "buttons_down": [],
+                "keys_down": [],
+                "monotonic_ns": 1598755365514,
+                "verified": true
+              }
+            ],
+            "started_ns": 1598724442673,
+            "waits": [
+              {
+                "completed": true,
+                "ended_ns": 1598754947896,
+                "kind": "fixed_delay",
+                "operation_index": 2,
+                "requested_ms": 30,
+                "started_ns": 1598724848704,
+                "update_observed": null
+              }
+            ]
+          },
+          "recovery_required": false,
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "window.focus"
+          ],
+          "status": "completed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      },
+      "fault_injected_release_method": false,
+      "finished_ns": 1598755451489,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 205,
+      "schedule": "target_replacement",
+      "started_ns": 1598718045153,
+      "wait_update_ms": 30
+    },
+    "worker_returncode": 0,
+    "worker_snapshot_after": {
+      "pid": 205,
+      "present": false,
+      "role": "worker"
+    },
+    "worker_snapshot_at_keydown": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":621",
+        "--xid",
+        "6291456",
+        "--schedule",
+        "target_replacement",
+        "--start-receipt",
+        "/work/11-openbox-target_replacement/worker.start.json"
+      ],
+      "display": ":621",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[45131]",
+        "2": "pipe:[45132]",
+        "3": "socket:[28639]",
+        "4": "socket:[28640]"
+      },
+      "pid": 205,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "S",
+      "unix_socket_paths": []
+    },
+    "worker_snapshot_start": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":621",
+        "--xid",
+        "6291456",
+        "--schedule",
+        "target_replacement",
+        "--start-receipt",
+        "/work/11-openbox-target_replacement/worker.start.json"
+      ],
+      "display": ":621",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[45131]",
+        "2": "pipe:[45132]"
+      },
+      "pid": 205,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "R"
+    },
+    "worker_start_receipt": {
+      "authority_deadline_ns": 1598868045153,
+      "authority_lease_ms": 150,
+      "fault_injected_release_method": false,
+      "loaded_runtime": {
+        "backend": "runtime.backends.x11_v1.backend.X11Backend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 205,
+      "schedule": "target_replacement",
+      "started_ns": 1598718045153,
+      "wait_update_ms": 30
+    },
+    "worker_stderr": "",
+    "worker_stdout": "Xlib.xauth: warning, no xauthority details available\nXlib.xauth: warning, no xauthority details available\n{\"authority_deadline_ns\": 1598868045153, \"authority_lease_ms\": 150, \"dispatch_result\": {\"result\": {\"admission\": \"accepted\", \"execution\": {\"completed_ops\": [0, 1, 2, 3], \"emissions\": 2, \"ended_ns\": 1598755368580, \"observations\": [], \"program_emissions\": 2, \"releases\": [{\"buttons_down\": [], \"keys_down\": [], \"monotonic_ns\": 1598755365514, \"verified\": true}], \"started_ns\": 1598724442673, \"waits\": [{\"completed\": true, \"ended_ns\": 1598754947896, \"kind\": \"fixed_delay\", \"operation_index\": 2, \"requested_ms\": 30, \"started_ns\": 1598724848704, \"update_observed\": null}]}, \"recovery_required\": false, \"required_capabilities\": [\"clock.monotonic\", \"event.feedback\", \"input.keyboard\", \"input.release_all\", \"window.focus\"], \"status\": \"completed\"}, \"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\"}, \"fault_injected_release_method\": false, \"finished_ns\": 1598755451489, \"loaded_runtime\": {\"backend\": \"runtime.backends.x11_v1.backend.X11Backend\", \"dispatch_facade\": \"runtime.cli_v1.api.dispatch\", \"session\": \"runtime.backends.x11_v1.session.X11RuntimeSession\"}, \"pid\": 205, \"schedule\": \"target_replacement\", \"started_ns\": 1598718045153, \"wait_update_ms\": 30}\n",
+    "worker_stdout_fd": 10,
+    "worker_stdout_link": "pipe:[45131]",
+    "xvfb_pid": 182
+  },
+  {
+    "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+    "app_release_ns": null,
+    "authority_deadline_ms": 150,
+    "case_index": 12,
+    "cleanup": {
+      "observer": {
+        "exited": true,
+        "pid": 216,
+        "returncode": 0,
+        "stopped_ns": 1599908742909
+      },
+      "openbox": {
+        "exited": true,
+        "pid": 210,
+        "returncode": 0,
+        "stopped_ns": 1599924181252
+      },
+      "xvfb": {
+        "exited": true,
+        "pid": 209,
+        "returncode": 0,
+        "stopped_ns": 1599927633042
+      }
+    },
+    "cleanup_supervisor_pid": 1,
+    "config": "openbox",
+    "display": ":622",
+    "ended_ns": 1599907544277,
+    "expected_input": "F8",
+    "grace_ms": 50,
+    "key_down_observed": {
+      "keycode": 74,
+      "kind": "press",
+      "monotonic_ns": 1599682804817,
+      "server_time": 1599682,
+      "window_id": 6291456
+    },
+    "key_down_observer_ns": 1599682804817,
+    "keymap_release_upper_bound_ns": null,
+    "keymap_transitions": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 1598965103578
+      },
+      {
+        "down": true,
+        "kind": "transition",
+        "observed_ns": 1599683428876
+      }
+    ],
+    "keymap_transitions_after_cleanup": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 1598965103578
+      },
+      {
+        "down": true,
+        "kind": "transition",
+        "observed_ns": 1599683428876
+      },
+      {
+        "down": false,
+        "kind": "transition",
+        "observed_ns": 1599901578699
+      }
+    ],
+    "observer_events": [
+      {
+        "keycode": 74,
+        "kind": "press",
+        "monotonic_ns": 1599682804817,
+        "server_time": 1599682,
+        "window_id": 6291456
+      }
+    ],
+    "observer_pid": 216,
+    "parent_stdout_link": "pipe:[33319]",
+    "post_cleanup_key_down": false,
+    "processes": [
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/exp/run.py",
+          "--formal",
+          "/work"
+        ],
+        "display": null,
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[30197]",
+          "10": "pipe:[33319]",
+          "11": "pipe:[45174]",
+          "13": "pipe:[33320]",
+          "2": "pipe:[30198]",
+          "3": "socket:[45172]",
+          "4": "pipe:[45166]",
+          "5": "pipe:[45169]",
+          "6": "pipe:[45167]",
+          "8": "pipe:[45170]",
+          "9": "pipe:[45173]"
+        },
+        "fd_snapshot_races": [
+          "7"
+        ],
+        "pid": 1,
+        "ppid": 0,
+        "present": true,
+        "role": "runner",
+        "state": "R",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "Xvfb",
+          ":622",
+          "-screen",
+          "0",
+          "640x480x24",
+          "-nolisten",
+          "tcp",
+          "-ac"
+        ],
+        "display": ":622",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[45166]",
+          "10": "socket:[30280]",
+          "2": "pipe:[45167]",
+          "3": "anon_inode:[eventpoll]",
+          "4": "pipe:[30272]",
+          "5": "pipe:[30272]",
+          "6": "socket:[30273]",
+          "7": "socket:[30274]",
+          "8": "socket:[30277]",
+          "9": "socket:[30279]"
+        },
+        "pid": 209,
+        "ppid": 1,
+        "present": true,
+        "role": "xvfb",
+        "state": "S",
+        "unix_socket_paths": [
+          "/tmp/.X11-unix/X622",
+          "@/tmp/.X11-unix/X622"
+        ]
+      },
+      {
+        "argv": [
+          "openbox"
+        ],
+        "display": ":622",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[45169]",
+          "2": "pipe:[45170]",
+          "3": "anon_inode:[eventfd]",
+          "4": "socket:[40159]"
+        },
+        "pid": 210,
+        "ppid": 1,
+        "present": true,
+        "role": "openbox",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/observer.py",
+          "--meta",
+          "/work/12-openbox-cleanup_failure/observer.meta.json",
+          "--events",
+          "/work/12-openbox-cleanup_failure/observer.events.jsonl"
+        ],
+        "display": ":622",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[45173]",
+          "2": "pipe:[45174]",
+          "3": "socket:[41079]",
+          "4": "/work/12-openbox-cleanup_failure/observer.events.jsonl"
+        },
+        "pid": 216,
+        "ppid": 1,
+        "present": true,
+        "role": "observer",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/run.py",
+          "--worker",
+          "--display",
+          ":622",
+          "--xid",
+          "6291456",
+          "--schedule",
+          "cleanup_failure",
+          "--start-receipt",
+          "/work/12-openbox-cleanup_failure/worker.start.json"
+        ],
+        "display": ":622",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[33319]",
+          "2": "pipe:[33320]",
+          "3": "socket:[29428]"
+        },
+        "pid": 232,
+        "ppid": 1,
+        "present": true,
+        "role": "worker",
+        "state": "S",
+        "unix_socket_paths": []
+      }
+    ],
+    "release_witness_upper_bound_ns": null,
+    "result_pipe_read_ns": 1599852223032,
+    "runner_pid": 1,
+    "schedule": "cleanup_failure",
+    "schedule_order": [
+      "normal",
+      "ipc_delay",
+      "display_stall",
+      "owner_death",
+      "target_replacement",
+      "cleanup_failure",
+      "unknown_dependency"
+    ],
+    "started_ns": 1598830558523,
+    "supervisor_release": {
+      "finished_ns": 1599900264068,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "monotonic_ns": 1599900262507,
+        "verified": true
+      },
+      "started_ns": 1599899886457
+    },
+    "target_mapped_ns": 1599182019864,
+    "target_xid": 6291456,
+    "terminal_key_down": false,
+    "unix_sockets_by_inode": {
+      "30273": "@/tmp/.X11-unix/X622",
+      "30274": "/tmp/.X11-unix/X622",
+      "30277": "@/tmp/.X11-unix/X622",
+      "30279": "/tmp/.X11-unix/X622",
+      "30280": "/tmp/.X11-unix/X622",
+      "40159": "",
+      "41079": "",
+      "45172": ""
+    },
+    "wm_pid": 210,
+    "worker_pid": 232,
+    "worker_receipt": {
+      "authority_deadline_ns": 1599829360616,
+      "authority_lease_ms": 150,
+      "dispatch_result": {
+        "result": {
+          "admission": "accepted",
+          "error": "BACKEND_EXECUTION_FAILED",
+          "execution": {
+            "completed_ops": [
+              0,
+              1,
+              2
+            ],
+            "emissions": 1,
+            "ended_ns": 1599802939690,
+            "error": "RuntimeError('INJECTED_RELEASE_PATH_FAILURE')",
+            "failed_op": 3,
+            "failed_op_effect": "unknown; may have emitted partial input",
+            "observations": [],
+            "program_emissions": 1,
+            "releases": [
+              {
+                "error": "RuntimeError('INJECTED_RELEASE_PATH_FAILURE')",
+                "monotonic_ns": 1599802937116,
+                "verified": false
+              }
+            ],
+            "started_ns": 1599682310183,
+            "waits": [
+              {
+                "completed": true,
+                "ended_ns": 1599802919863,
+                "kind": "fixed_delay",
+                "operation_index": 2,
+                "requested_ms": 120,
+                "started_ns": 1599682680007,
+                "update_observed": null
+              }
+            ]
+          },
+          "recovery_required": true,
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "window.focus"
+          ],
+          "status": "execution_failed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      },
+      "fault_injected_release_method": true,
+      "finished_ns": 1599803036004,
+      "loaded_runtime": {
+        "backend": "__main__.FailingReleaseBackend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 232,
+      "schedule": "cleanup_failure",
+      "started_ns": 1599679360616,
+      "wait_update_ms": 120
+    },
+    "worker_returncode": 0,
+    "worker_snapshot_after": {
+      "pid": 232,
+      "present": false,
+      "role": "worker"
+    },
+    "worker_snapshot_at_keydown": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":622",
+        "--xid",
+        "6291456",
+        "--schedule",
+        "cleanup_failure",
+        "--start-receipt",
+        "/work/12-openbox-cleanup_failure/worker.start.json"
+      ],
+      "display": ":622",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[33319]",
+        "2": "pipe:[33320]",
+        "3": "socket:[29428]"
+      },
+      "pid": 232,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "S",
+      "unix_socket_paths": []
+    },
+    "worker_snapshot_start": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":622",
+        "--xid",
+        "6291456",
+        "--schedule",
+        "cleanup_failure",
+        "--start-receipt",
+        "/work/12-openbox-cleanup_failure/worker.start.json"
+      ],
+      "display": ":622",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[33319]",
+        "2": "pipe:[33320]"
+      },
+      "pid": 232,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "R"
+    },
+    "worker_start_receipt": {
+      "authority_deadline_ns": 1599829360616,
+      "authority_lease_ms": 150,
+      "fault_injected_release_method": true,
+      "loaded_runtime": {
+        "backend": "__main__.FailingReleaseBackend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 232,
+      "schedule": "cleanup_failure",
+      "started_ns": 1599679360616,
+      "wait_update_ms": 120
+    },
+    "worker_stderr": "",
+    "worker_stdout": "Xlib.xauth: warning, no xauthority details available\n{\"authority_deadline_ns\": 1599829360616, \"authority_lease_ms\": 150, \"dispatch_result\": {\"result\": {\"admission\": \"accepted\", \"error\": \"BACKEND_EXECUTION_FAILED\", \"execution\": {\"completed_ops\": [0, 1, 2], \"emissions\": 1, \"ended_ns\": 1599802939690, \"error\": \"RuntimeError('INJECTED_RELEASE_PATH_FAILURE')\", \"failed_op\": 3, \"failed_op_effect\": \"unknown; may have emitted partial input\", \"observations\": [], \"program_emissions\": 1, \"releases\": [{\"error\": \"RuntimeError('INJECTED_RELEASE_PATH_FAILURE')\", \"monotonic_ns\": 1599802937116, \"verified\": false}], \"started_ns\": 1599682310183, \"waits\": [{\"completed\": true, \"ended_ns\": 1599802919863, \"kind\": \"fixed_delay\", \"operation_index\": 2, \"requested_ms\": 120, \"started_ns\": 1599682680007, \"update_observed\": null}]}, \"recovery_required\": true, \"required_capabilities\": [\"clock.monotonic\", \"event.feedback\", \"input.keyboard\", \"input.release_all\", \"window.focus\"], \"status\": \"execution_failed\"}, \"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\"}, \"fault_injected_release_method\": true, \"finished_ns\": 1599803036004, \"loaded_runtime\": {\"backend\": \"__main__.FailingReleaseBackend\", \"dispatch_facade\": \"runtime.cli_v1.api.dispatch\", \"session\": \"runtime.backends.x11_v1.session.X11RuntimeSession\"}, \"pid\": 232, \"schedule\": \"cleanup_failure\", \"started_ns\": 1599679360616, \"wait_update_ms\": 120}\n",
+    "worker_stdout_fd": 10,
+    "worker_stdout_link": "pipe:[33319]",
+    "xvfb_pid": 209
+  },
+  {
+    "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+    "app_release_ns": null,
+    "authority_deadline_ms": 150,
+    "case_index": 13,
+    "cleanup": {
+      "observer": {
+        "exited": true,
+        "pid": 243,
+        "returncode": 0,
+        "stopped_ns": 1600308450038
+      },
+      "openbox": {
+        "exited": true,
+        "pid": 237,
+        "returncode": 0,
+        "stopped_ns": 1600324066453
+      },
+      "xvfb": {
+        "exited": true,
+        "pid": 236,
+        "returncode": 0,
+        "stopped_ns": 1600327420687
+      }
+    },
+    "config": "openbox",
+    "display": ":623",
+    "ended_ns": 1600307942906,
+    "execution_disposition": "STOP_UNKNOWN_DEPENDENCY",
+    "expected_input": "F8",
+    "grace_ms": 50,
+    "input_dispatched": false,
+    "keymap_release_upper_bound_ns": null,
+    "keymap_transitions": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 1600084174637
+      }
+    ],
+    "observer_events": [],
+    "observer_pid": 243,
+    "processes": [
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/exp/run.py",
+          "--formal",
+          "/work"
+        ],
+        "display": null,
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[30197]",
+          "11": "pipe:[33373]",
+          "2": "pipe:[30198]",
+          "3": "socket:[33371]",
+          "4": "pipe:[33365]",
+          "5": "pipe:[33368]",
+          "6": "pipe:[33366]",
+          "8": "pipe:[33369]",
+          "9": "pipe:[33372]"
+        },
+        "fd_snapshot_races": [
+          "7"
+        ],
+        "pid": 1,
+        "ppid": 0,
+        "present": true,
+        "role": "runner",
+        "state": "R",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "Xvfb",
+          ":623",
+          "-screen",
+          "0",
+          "640x480x24",
+          "-nolisten",
+          "tcp",
+          "-ac"
+        ],
+        "display": ":623",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[33365]",
+          "10": "socket:[45191]",
+          "2": "pipe:[33366]",
+          "3": "anon_inode:[eventpoll]",
+          "4": "pipe:[45183]",
+          "5": "pipe:[45183]",
+          "6": "socket:[45184]",
+          "7": "socket:[45185]",
+          "8": "socket:[45188]",
+          "9": "socket:[45190]"
+        },
+        "pid": 236,
+        "ppid": 1,
+        "present": true,
+        "role": "xvfb",
+        "state": "S",
+        "unix_socket_paths": [
+          "/tmp/.X11-unix/X623",
+          "@/tmp/.X11-unix/X623"
+        ]
+      },
+      {
+        "argv": [
+          "openbox"
+        ],
+        "display": ":623",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[33368]",
+          "2": "pipe:[33369]",
+          "3": "anon_inode:[eventfd]",
+          "4": "socket:[13297]"
+        },
+        "pid": 237,
+        "ppid": 1,
+        "present": true,
+        "role": "openbox",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/observer.py",
+          "--meta",
+          "/work/13-openbox-unknown_dependency/observer.meta.json",
+          "--events",
+          "/work/13-openbox-unknown_dependency/observer.events.jsonl"
+        ],
+        "display": ":623",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[33372]",
+          "2": "pipe:[33373]",
+          "3": "socket:[28646]",
+          "4": "/work/13-openbox-unknown_dependency/observer.events.jsonl"
+        },
+        "pid": 243,
+        "ppid": 1,
+        "present": true,
+        "role": "observer",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "pid": null,
+        "present": false,
+        "role": "worker",
+        "unix_socket_paths": []
+      }
+    ],
+    "release_witness_upper_bound_ns": null,
+    "runner_pid": 1,
+    "schedule": "unknown_dependency",
+    "schedule_order": [
+      "normal",
+      "ipc_delay",
+      "display_stall",
+      "owner_death",
+      "target_replacement",
+      "cleanup_failure",
+      "unknown_dependency"
+    ],
+    "started_ns": 1599949826654,
+    "target_mapped_ns": 1600292603352,
+    "target_xid": 6291456,
+    "terminal_key_down": false,
+    "typed_stop": true,
+    "unix_sockets_by_inode": {
+      "13297": "",
+      "28646": "",
+      "33371": "",
+      "45184": "@/tmp/.X11-unix/X623",
+      "45185": "/tmp/.X11-unix/X623",
+      "45188": "@/tmp/.X11-unix/X623",
+      "45190": "/tmp/.X11-unix/X623",
+      "45191": "/tmp/.X11-unix/X623"
+    },
+    "unknown_dependency": "unclassified_server_side_input_owner",
+    "unknown_guard_ns": 1600301899702,
+    "wm_pid": 237,
+    "xvfb_pid": 236
+  }
+]

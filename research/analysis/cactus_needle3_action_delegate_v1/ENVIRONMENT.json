@@ -1,0 +1,48 @@
+{
+  "allocation_id": "cactus-needle3-action-delegate-v1-20260927-01",
+  "repository": "Unjuno/agent-interface",
+  "source_commit": "48c887cd909a353fe82e6b955e6a471440e136af",
+  "branch": "research/cactus-needle3-action-delegate-20260927",
+  "base_main_sha": "09822fef59f19bbb3f0c0c62e765a21df41e4cca",
+  "host": {
+    "cpu": "Intel Core i7-12700H, 14 cores / 20 threads",
+    "ram_bytes": 34030264320,
+    "gpu": "NVIDIA RTX 3080 Laptop GPU (4 GiB reported by Windows); unused",
+    "os": "Windows 11 with Docker Desktop Linux VM"
+  },
+  "docker": {
+    "server_version": "29.8.0",
+    "server_os": "Docker Desktop",
+    "container_os": "Linux 6.6.114.1-microsoft-standard-WSL2 x86_64",
+    "image": "cactus-needle3-action:v1-frozen",
+    "image_id": "sha256:268ca519beed0aa750ef44c8cbc47e66dcf824b885591f905009127233bb5151",
+    "base_image": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "network": "none",
+    "cpus": 2,
+    "memory_bytes": 2147483648,
+    "pids_limit": 64,
+    "root_filesystem": "read-only",
+    "tmpfs_bytes": 67108864
+  },
+  "model": {
+    "repo": "Cactus-Compute/needle3",
+    "revision": "b274efcb211a9eef48c9a88da4b43bd569696a39",
+    "file": "needle3.cact",
+    "bytes": 35335380,
+    "sha256": "c9d915eca282ed42d1a09b143b592adb4cc6744ffe2d294adf5cfc5548170c38"
+  },
+  "runtime": {
+    "package": "cactus-needle",
+    "version": "3.0.1",
+    "python": "3.12.14",
+    "engine_file": "libneedle.so",
+    "engine_bytes": 1294696,
+    "engine_sha256": "978fce130aac08af506b5fe8bb2950da58e9479d0de69d972d9bd69db953568d"
+  },
+  "formal_invocations": 1,
+  "preflight_stops_before_model_initialization": 2,
+  "formal_exit_code": 0,
+  "audit_exit_code": 0,
+  "raw_result_sha256": "c362c42ec959c9321cfc6179c5d2f8a995b0add7586bdedbe72568bd8a3ce668",
+  "audit_sha256": "42210698e9a42078dfc03317257bffbfd2f2351e789b6c829642cd951cafbb4e"
+}

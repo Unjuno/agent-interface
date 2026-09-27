@@ -1,0 +1,68 @@
+{
+  "schema": "agent-interface/local-native-check-v1",
+  "status": "PASS",
+  "suites": [
+    {
+      "suite": "protocol",
+      "command": [
+        "/usr/local/bin/python",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.cli_v1.test_observe",
+        "runtime.selector_v1.test_selector",
+        "runtime.cli_v1.test_mcp_server",
+        "runtime.cli_v1.test_cli",
+        "runtime.core_v1.test_contract",
+        "runtime.cli_v1.test_review",
+        "test_agent_review",
+        "test_receipt_references",
+        "test_native_exchange_v1",
+        "test_native_mcp_v1",
+        "test_native_allocation_v1",
+        "test_native_mcp_relay_v1"
+      ],
+      "returncode": 0,
+      "duration_ns": 25927506336,
+      "logs": {
+        "stdout": {
+          "file": "protocol.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "file": "protocol.stderr.log",
+          "sha256": "d51f2c6d1f5f788d6a7a58c8ea6b3aaeca86d427eb882a85d1d2ac1ca818ecc5"
+        }
+      }
+    },
+    {
+      "suite": "harness",
+      "command": [
+        "/usr/local/bin/python",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.backends.x11_v1.test_text_plan",
+        "runtime.backends.x11_v1.test_partial_execution",
+        "test_native_finish_after_v1",
+        "test_native_cleanup_v1",
+        "test_native_handle_bridge_v1",
+        "test_native_tail_v1"
+      ],
+      "returncode": 0,
+      "duration_ns": 1609271025,
+      "logs": {
+        "stdout": {
+          "file": "harness.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "file": "harness.stderr.log",
+          "sha256": "293f7f72618726e23af5e78ffad483ed70e4d4262d58e6d3d4bef1697b6adbc3"
+        }
+      }
+    }
+  ],
+  "scope": "contract tests; not a live GUI experiment or independent adoption audit",
+  "runner_sha256": "d87048f1b3f7c7deff2c112c7f53e6418226180c0324d56b0745e1deaab06fa0"
+}

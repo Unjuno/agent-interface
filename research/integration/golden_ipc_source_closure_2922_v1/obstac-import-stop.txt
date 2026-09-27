@@ -1,0 +1,7 @@
+Container image: issue-3300-obstac-probe:v1
+Image ID: sha256:57ad79ade1fc4d961017fb46575af305b12dc552fa54ea9369c32733cc2017f9
+Platform: linux/arm64
+Command: docker run --rm --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=64m --mount source tree read-only --workdir /repo/research/live_control --env PYTHONPATH=/repo/research/live_control:/repo/research/observation_gating --entrypoint python issue-3300-obstac-probe:v1 -c 'import session_v4'
+Outcome: STOP_IMPORT_PIL_MISSING
+Traceback tail: ModuleNotFoundError: No module named 'PIL'
+Meaning: this cached probe image is not a usable GUI runtime for the #2922 startup gate. No package install or image pull was performed.

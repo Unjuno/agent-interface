@@ -1,0 +1,21 @@
+{
+  "schema": "issue2922_no_gui_import_probe_v1",
+  "allocation": "issue2922-no-gui-import-20260927-r1",
+  "source_commit": "01349d7bc76e5635f5568c53ffeec4d9ff49abb1",
+  "container_image": "issue-2849-task1-runtime:v3-20260921",
+  "container_image_id": "sha256:436172d89b145c6a9f9a57e655422c9558b3b0235347dd77607e9d61bcfa6393",
+  "platform": "linux/arm64",
+  "network_disabled": true,
+  "root_read_only": true,
+  "source_mount_read_only": true,
+  "xvfb_invoked": false,
+  "chromium_invoked": false,
+  "command": "python3 -c 'import session_v4; print(\"IMPORT_OK\")'",
+  "exit_code": 0,
+  "stdout_terminal_marker": "IMPORT_OK",
+  "stderr": "",
+  "task_allocation": false,
+  "task_input": false,
+  "task_effect": "not tested",
+  "disposition": "PASS_IMPORT_ONLY"
+}

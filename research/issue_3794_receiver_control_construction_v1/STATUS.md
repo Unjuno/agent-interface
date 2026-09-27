@@ -1,0 +1,9 @@
+# Status — construction evidence only; formal allocation suppressed
+
+This bundle records independent construction pilots for successor Issue #3794. It does **not** contain a formal-01 result. The proposed formal run was not invoked.
+
+Immediately before formal freeze/commit, GitHub branch reconnaissance found a concurrent active branch, `research/issue-3794-german-xkb-formal01-20260921`, already implementing the same successor hypothesis and using the exact intended research path `research/issue_3784_focused_receiver_v1/`. To avoid overwriting or duplicating that work, this worker stopped its formal allocation and moved its completed construction-only package to the unique path `research/issue_3794_receiver_control_construction_v1/`.
+
+The pilot evidence answers a useful narrow question: an InputOnly receiver can be mapped and focused, an attached `xev -id` process receives the diagnostic XTEST key pair, and the current-main candidate's German formula delivery succeeds in all three DE fixtures and the US control. In the received XLookupString data, KeyRelease events may carry the same lookup bytes as KeyPress; counting text from KeyPress only and checking KeyRelease by keycode/state correctly accepts the pair. This supports the cause recorded in #3789 but does not supersede its formal STOP, prove independent task effects, or replace the concurrent formal allocation.
+
+`PREREGISTRATION.md`, `ALLOCATION_FREEZE.json`, commands and pilot source files are the exact pre-collision proposal snapshot. Their freeze hashes describe those original contents and historical intended path. Construction raw outputs and receiver logs are retained byte-for-byte. Do not execute the proposed formal command from this archive; use the concurrent branch's reviewed allocation or create a genuinely distinct successor if that run does not answer the remaining hypothesis.

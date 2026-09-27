@@ -1,0 +1,83 @@
+{
+  "broker_receipt": {
+    "authority_granted": false,
+    "boundary": "host-local-codex-exe",
+    "exited_ns": 4164600191680,
+    "request_id": "req-23",
+    "returncode": 23,
+    "started_ns": 4164496366989,
+    "stderr": "fake-stderr\n"
+  },
+  "broker_receipt_bytes_hex": "7b22726571756573745f6964223a20227265712d3233222c202272657475726e636f6465223a2032332c2022737464657272223a202266616b652d7374646572725c6e222c2022626f756e64617279223a2022686f73742d6c6f63616c2d636f6465782d657865222c2022617574686f726974795f6772616e746564223a2066616c73652c2022737461727465645f6e73223a20343136343439363336363938392c20226578697465645f6e73223a20343136343630303139313638307d0a",
+  "broker_stderr_text": "fake-stderr\n",
+  "case": "exit-23",
+  "child": {
+    "argv": [
+      "exec",
+      "--ignore-user-config",
+      "--ignore-rules",
+      "--ephemeral",
+      "--sandbox",
+      "read-only",
+      "--skip-git-repo-check",
+      "--json",
+      "--model",
+      "gpt-5.6-luna",
+      "-c",
+      "model_reasoning_effort=\"low\"",
+      "-c",
+      "project_doc_max_bytes=0",
+      "--output-schema",
+      "/source/runtime/fake-schema.json",
+      "-C",
+      "/source",
+      "-"
+    ],
+    "configured_exit": 23,
+    "configured_sleep_s": 0.0,
+    "stdin": "deterministic fake-only probe\n"
+  },
+  "child_stdout_bytes_hex": "7b2266616b65223a747275657d0a",
+  "command": [
+    "/usr/local/bin/python",
+    "/source/runtime/host_model_ipc_broker_v1.py",
+    "--ipc",
+    "/tmp/ipc-exit-23-pdbfao7d",
+    "--repo",
+    "/source",
+    "--once"
+  ],
+  "execution_config": {
+    "broker_timeout_s": 2.0,
+    "executable": "/tmp/broker-contract-tzbmhf9y/fake-codex",
+    "executable_sha256": "f730498c1158b55c0af45036e350090eecad7042d79c4e35be625d87e20e78eb",
+    "fake_exit": 23,
+    "fake_sleep_s": 0.0,
+    "idle_observation_s": null
+  },
+  "fake_source_sha256": "f730498c1158b55c0af45036e350090eecad7042d79c4e35be625d87e20e78eb",
+  "ipc_files": [
+    "01.request.json",
+    "req-23.broker.json",
+    "req-23.response.jsonl"
+  ],
+  "observed": {
+    "receipt_count": 1,
+    "response_count": 1
+  },
+  "process": {
+    "duration_ns": 324139515,
+    "returncode": 23,
+    "stderr": "",
+    "stdout": ""
+  },
+  "requests": [
+    {
+      "bytes_hex": "7b2270726f6d7074223a202264657465726d696e69737469632066616b652d6f6e6c792070726f6265222c2022726571756573745f6964223a20227265712d3233222c2022736368656d61223a20222f7265706f2f72756e74696d652f66616b652d736368656d612e6a736f6e222c2022776f726b696e67223a20222f7265706f227d0a",
+      "filename": "01.request.json",
+      "sha256": "02c483edb0a3a6d8da2e173c7f811becf36f470235c7d7b0fef4131bc44d619c"
+    }
+  ],
+  "response_bytes_hex": "7b2266616b65223a747275657d0a",
+  "response_sha256": "b28bcfde70deb3d1d3df713f2a79e3e670074dc9838ba985475732160c048ca7"
+}

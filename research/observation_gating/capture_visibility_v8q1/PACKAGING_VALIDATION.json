@@ -1,0 +1,87 @@
+{
+  "all_original_member_bytes_equal": true,
+  "archive_sha256": "e22ad6845b6cfe115a840540c43cb8f7697446e94df401ea5b254f94265ebbf9",
+  "audit_bytes_equal": true,
+  "controls_bytes_equal": true,
+  "formal_reruns": 0,
+  "packaging_controls": [
+    {
+      "name": "altered_part",
+      "rejected": true
+    },
+    {
+      "name": "reversed_parts",
+      "rejected": true
+    },
+    {
+      "name": "wrong_count",
+      "rejected": true
+    },
+    {
+      "name": "wrong_expansion",
+      "rejected": true
+    },
+    {
+      "name": "existing_destination",
+      "rejected": true
+    }
+  ],
+  "restored_files": 215,
+  "units": 10,
+  "validation_processes": [
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "/mnt/data/visibility_capture_v8q1/publication/unpack_evidence.py",
+        "/mnt/data/visibility_evidence_verify_01"
+      ],
+      "end_ns": 2519985978178,
+      "exit": 0,
+      "name": "restore",
+      "start_ns": 2518490664417,
+      "stdout_sha256": "2e3798be3804cba850a992949c6ed1c4ec536f4279aca2d9f2df8c390fe9a77a"
+    },
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "/mnt/data/visibility_evidence_verify_01/audit.py",
+        "/mnt/data/visibility_evidence_verify_01/formal"
+      ],
+      "end_ns": 2521403757965,
+      "exit": 0,
+      "name": "audit",
+      "start_ns": 2520026235943,
+      "stdout_sha256": "0deb299ca3901f802f2329dcb419a0a0907f952cbc0133e807e9a39fb0e278ca"
+    },
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "/mnt/data/visibility_evidence_verify_01/controls.py",
+        "/mnt/data/visibility_evidence_verify_01/formal"
+      ],
+      "end_ns": 2523004580866,
+      "exit": 0,
+      "name": "controls",
+      "start_ns": 2521404044988,
+      "stdout_sha256": "f5ba723e47ef4fdaeb674830d690c6c9ccbb62de25efd067ed10ad5360bf032b"
+    },
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_policy"
+      ],
+      "end_ns": 2524373054450,
+      "exit": 0,
+      "name": "units",
+      "start_ns": 2523004758666,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

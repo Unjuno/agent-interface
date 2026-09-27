@@ -1,0 +1,26 @@
+{
+  "schema": "issue-3188-audit-v3-control-schema-freeze-v1",
+  "allocation": "issue3188-audit-v3-control-schema-20260921-01",
+  "base_commit": "e6f74d3b9fef0467327823ab97cb15f0dbe59ac4",
+  "protocol_path": "research/integration/issue_3188_source_bound_entry_gate_v1/audit_v3_control_hardening_v1/PROTOCOL.md",
+  "protocol_sha256": "aa4c7f9cb2099289c193899cba8b73f0b7f305f2aab4d13bf1532b253d9a6156",
+  "candidate": {
+    "path": "research/integration/issue_3188_source_bound_entry_gate_v1/audit_v3_control_hardening_v1/independent_audit_v3.py",
+    "sha256": "3839e9c47e3f8cd59901b7cc99a9fdacda3ece6ed3b873c4bf1692c000c96f76"
+  },
+  "tests": {
+    "path": "research/integration/issue_3188_source_bound_entry_gate_v1/audit_v3_control_hardening_v1/test_audit_v3.py",
+    "sha256": "1ce5e9fe5b8198156221a58b8b2f4b965d42a1f02b56dec3723716f448421070"
+  },
+  "inputs": {
+    "raw_sha256": "8460a9ca79611929cbd6d2f6930067a06c6f177e7da3287ad07d1b7f483cb324",
+    "run_sha256": "e104bf12925ef7878e7972c768cb19ecfdfe699303667bebf0ee6a0276f05822",
+    "candidate_audit_sha256": "72a5f6dcffff0e9d3a5e2daa58937bb4ab440ca789d824f183f168abc57e458d"
+  },
+  "execution": {
+    "max_test_suite_invocations": 1,
+    "formal_raw_mutation": "none",
+    "post_freeze_source_edits": 0,
+    "docker_container_required_for_separate_validation": true
+  }
+}

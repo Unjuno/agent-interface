@@ -36,6 +36,20 @@ python /absolute/agent-interface-runtime.pyz mcp \
 The archive includes the adapter, not its third-party dependencies. Ordinary CLI
 commands do not import MCP. Missing MCP dependencies affect only `mcp` mode.
 
+Requests and reports use the CLI's temporary-file, flush/fsync, then replace
+writer. The final report name is published only after the write completes.
+A failed request write returns `REQUEST_PERSISTENCE_FAILED` with
+`operation_invoked=false` and sends no input. A failed report write preserves
+the action outcome in the immediate response, adds `persistence_error` and
+`replay_allowed=false`, and sets the MCP error flag. Inspect the outcome even
+when that flag is set: the action may have completed. The call registry still
+reports the worker as finished, but a missing final report yields
+`receipt_unavailable`; result lookup does not promote a temporary file or repeat
+input. Temporary files remain for inspection. This shares the CLI's persistence
+mechanism, not a guarantee of directory durability after a machine crash or
+server-restart recovery. Storage flush cost has not been measured as a model
+latency benefit.
+
 For module launch, set the host's working directory to the repository root.
 For portable launch, use the absolute archive path. `targets.json` is a
 nonempty mapping such as `{"editor":12345}`, with the actual native window ID
@@ -60,12 +74,39 @@ environment. With no explicit display, normal environment selection applies.
   include_image=true, report_refs=false)` lists calls or reads a retained result without input or
   capture. See the result-retrieval section below.
 
-All three tools keep v1/v2 receipt selection with `compact=true` alone.
+These three tools keep v1/v2 receipt selection with `compact=true` alone.
 A consumer with the v3 decoder can explicitly set both `compact=true` and
 `report_refs=true` to allow a duplicate report to reference `source.raw_report`
 in the same response. `report_refs=true` without compact mode is rejected before
 operation scheduling. Images and outcomes are unchanged. A retained-result read
 can change the receipt format without capturing or replaying the operation.
+
+To read a v3 response directly, check `receipt.schema` is
+`agent-interface/receipt-view-v3-report-ref`: its `receipt.report` is a marker,
+and the complete report is `receipt.source.raw_report` in the same response.
+`/source/raw_report` is relative to the receipt, not a filesystem path or a
+request to another tool. Inspect `outcome_summary` for execution/release/cleanup
+and the returned image for visible application state; the reference itself is
+not evidence of task completion or freshness. Interpret only the declared v3
+reference; similarly shaped objects elsewhere remain ordinary data. A caller
+that does not understand this format should leave `report_refs=false`.
+
+[Primary v3 use](../results/mcp-report-refs-use-01/README.md) records one
+SDK-mediated input/save and read-only result comparison, including identical
+images and exact reconstruction. It does not establish token or speed savings.
+
+`interface_validate(program)` optionally checks a draft using the same static
+inspector as CLI `validate`, without opening a backend or issuing input. It
+returns static validity, required capabilities or bounded diagnostics with
+operation positions where available. Invalid drafts set `isError=true` and
+`static_valid=false`. Even an expired lease may be statically valid: this is not
+a runtime admission. A nesting-limit failure returns `status=input_error`,
+`error=INPUT_NESTING_LIMIT`, `static_valid=null` and `isError=true`, matching the
+file inspector's unassessed-input distinction. Validation does not constitute
+a capability, freshness, authority or task-success check. Dispatch still performs
+its existing checks; calling validation first is optional. It creates no action
+call ID, image, persisted request or `interface_results` entry. The usual fixed
+server startup configuration is still required.
 See [receipt formats](README.md#compact-received-report-references).
 
 The dispatch tool advertises the program envelope, bounded operation examples and
@@ -174,3 +215,13 @@ from the index during the process lifetime; deployments should account for its
 memory use. This is result retrieval, not automatic restart recovery or polling
 of application state. Current `operation_invoked=false` describes the retrieval
 call, not whether the retained original call emitted input.
+
+By-ID results also retain the original call's `backend_attempted` and
+`persistence_failure` (`null`, `request`, or `report`) in `call` for pending or
+unavailable results, or `retained_call` for a readable report. These are in-memory
+process facts. `backend_attempted=true` marks entry to the backend attempt, not
+input emission, execution success or task effect. A finished call with
+`backend_attempted=false` and `persistence_failure=request` stopped before that
+attempt; a report-save failure may follow input. A running call with false can
+still proceed later. An unavailable receipt explicitly has `replay_allowed=false`.
+These fields do not grant replay permission or survive a server restart.

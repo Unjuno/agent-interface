@@ -1,0 +1,375 @@
+{
+  "controller_exit": 0,
+  "controller_image_id": "sha256:871f65d890fe4b0ad5d6cc6c14bc156f98b479f46d1a7852cb2d804fd4ed1acd",
+  "controller_probe": {
+    "capture_bytes": 1923179,
+    "capture_exit": 0,
+    "capture_header_size": 107,
+    "capture_sha256": "299eaa210190ec71042f20ba3ef2143f448f18b36b41dc3d9a5e2196e78359fd",
+    "key_action": "w",
+    "key_exit": 0,
+    "key_stderr": "XGetInputFocus returned the focused window of 1. This is likely a bug in the X server.\nXGetInputFocus returned the focused window of 1. This is likely a bug in the X server.\n",
+    "key_stdout": "",
+    "path_access": {
+      "/evidence/report.json": false,
+      "/opt/arena/arena.py": false,
+      "/opt/arena/engine.py": false,
+      "/workspace/arena.py": false
+    },
+    "proc_cmdlines": {
+      "1": "python /opt/probe.py"
+    },
+    "window_id": "0x20001b",
+    "window_tree": "\nxwininfo: Window id: 0x21f (the root window) (has no name)\n\n  Root window id: 0x21f (the root window) (has no name)\n  Parent window id: 0x0 (none)\n     2 children:\n     0x20001b \"Procedural Control Arena v0\": (\"tk\" \"Tk\")  640x480+0+0  +0+0\n        1 child:\n        0x20001a (has no name): ()  640x480+0+0  +0+0\n           1 child:\n           0x20001c (has no name): ()  640x480+0+0  +0+0\n     0x200001 (has no name): ()  1x1+0+0  +0+0\n\n",
+    "xdpyinfo_exit": 0
+  },
+  "evaluator_argv": "python /opt/arena/arena.py --seed 2002 --difficulty 1.0 --clock fixed --report /evidence/report.json --autoclose 30",
+  "evaluator_image_id": "sha256:ed7cb174bbe07d676e5fd0c41dd869923f20559569ccfee55e336265ce6f4fe3",
+  "report": {
+    "episode": {
+      "difficulty": {
+        "distractor_count": 10,
+        "level": 1.0,
+        "move_deadline": 4.0,
+        "move_zone_radius": 24.0,
+        "switch_deadline": 2.2,
+        "switch_wait": 0.6499999999999999,
+        "target_deadline": 2.5999999999999996,
+        "target_radius": 10.0,
+        "target_speed": 165.0,
+        "typing_deadline": 4.0,
+        "typing_length": 10
+      },
+      "schema": "procedural-control-arena-v0",
+      "seed": 2002,
+      "stages": [
+        {
+          "kind": "target",
+          "payload": {
+            "deadline": 2.5999999999999996,
+            "objects": [
+              {
+                "color": "yellow",
+                "object_id": "obj-0",
+                "radius": 10.0,
+                "shape": "triangle",
+                "vx": 107.35369173083548,
+                "vy": 94.78500396115463,
+                "x": 233.8157397408951,
+                "y": 318.81194553417043
+              },
+              {
+                "color": "blue",
+                "object_id": "obj-1",
+                "radius": 10.0,
+                "shape": "diamond",
+                "vx": 120.31917483892938,
+                "vy": -44.832553666404436,
+                "x": 266.8202905039353,
+                "y": 256.74598021888926
+              },
+              {
+                "color": "blue",
+                "object_id": "obj-2",
+                "radius": 10.0,
+                "shape": "square",
+                "vx": -134.53203254181713,
+                "vy": -22.13279736548921,
+                "x": 136.23583471736055,
+                "y": 290.22366148006233
+              },
+              {
+                "color": "blue",
+                "object_id": "obj-3",
+                "radius": 10.0,
+                "shape": "triangle",
+                "vx": -53.019409673024995,
+                "vy": -127.40677839937923,
+                "x": 189.23659774837805,
+                "y": 172.99858311047677
+              },
+              {
+                "color": "red",
+                "object_id": "obj-4",
+                "radius": 10.0,
+                "shape": "triangle",
+                "vx": 105.5091038632125,
+                "vy": 27.581465724410073,
+                "x": 494.2227362918558,
+                "y": 122.03077244698477
+              },
+              {
+                "color": "green",
+                "object_id": "obj-5",
+                "radius": 10.0,
+                "shape": "triangle",
+                "vx": -74.29272099129317,
+                "vy": 114.09409845345353,
+                "x": 400.45620860050116,
+                "y": 370.7239763631935
+              },
+              {
+                "color": "green",
+                "object_id": "obj-6",
+                "radius": 10.0,
+                "shape": "square",
+                "vx": 86.10014467038366,
+                "vy": 116.57041119410178,
+                "x": 272.950771633399,
+                "y": 283.14651421448923
+              },
+              {
+                "color": "orange",
+                "object_id": "obj-7",
+                "radius": 10.0,
+                "shape": "square",
+                "vx": 137.92073629577328,
+                "vy": 3.4370972777813904,
+                "x": 514.4001268954414,
+                "y": 316.87666891455854
+              },
+              {
+                "color": "purple",
+                "object_id": "obj-8",
+                "radius": 10.0,
+                "shape": "diamond",
+                "vx": 154.6775414072812,
+                "vy": 34.32330389536574,
+                "x": 443.95525505795126,
+                "y": 181.0473453624591
+              },
+              {
+                "color": "red",
+                "object_id": "obj-9",
+                "radius": 10.0,
+                "shape": "circle",
+                "vx": 118.845370233121,
+                "vy": -77.31284611423102,
+                "x": 580.7472429874393,
+                "y": 422.24893989253457
+              },
+              {
+                "color": "yellow",
+                "object_id": "obj-10",
+                "radius": 10.0,
+                "shape": "square",
+                "vx": -15.639939119294626,
+                "vy": -141.2834867366446,
+                "x": 536.2308423977266,
+                "y": 205.80962060368125
+              }
+            ],
+            "target_id": "obj-10"
+          }
+        },
+        {
+          "kind": "switch",
+          "payload": {
+            "active_id": "obj-0",
+            "deadline": 2.2,
+            "objects": [
+              {
+                "color": "yellow",
+                "object_id": "obj-0",
+                "radius": 10.0,
+                "shape": "triangle",
+                "vx": -106.7767362043486,
+                "vy": 20.720587971351744,
+                "x": 567.5472200021077,
+                "y": 194.6554531281118
+              },
+              {
+                "color": "red",
+                "object_id": "obj-1",
+                "radius": 10.0,
+                "shape": "triangle",
+                "vx": -77.94075587609893,
+                "vy": 83.88090773644879,
+                "x": 295.7430823818981,
+                "y": 325.3485060568548
+              },
+              {
+                "color": "orange",
+                "object_id": "obj-2",
+                "radius": 10.0,
+                "shape": "triangle",
+                "vx": 64.64443302256446,
+                "vy": 118.40703447924072,
+                "x": 500.9237969600347,
+                "y": 177.2070931162527
+              },
+              {
+                "color": "purple",
+                "object_id": "obj-3",
+                "radius": 10.0,
+                "shape": "triangle",
+                "vx": -96.6371839253162,
+                "vy": 83.1119712064857,
+                "x": 465.1839153055478,
+                "y": 229.34938829151463
+              },
+              {
+                "color": "orange",
+                "object_id": "obj-4",
+                "radius": 10.0,
+                "shape": "square",
+                "vx": 131.55196119382828,
+                "vy": -95.63429261490752,
+                "x": 436.6622560415973,
+                "y": 170.54363373035864
+              },
+              {
+                "color": "green",
+                "object_id": "obj-5",
+                "radius": 10.0,
+                "shape": "circle",
+                "vx": -48.32119491245064,
+                "vy": -82.85643909738916,
+                "x": 406.44554272237264,
+                "y": 296.48735807985304
+              },
+              {
+                "color": "yellow",
+                "object_id": "obj-6",
+                "radius": 10.0,
+                "shape": "square",
+                "vx": -49.7644974024972,
+                "vy": -139.51131550116068,
+                "x": 312.9743437011521,
+                "y": 373.29830075568117
+              },
+              {
+                "color": "red",
+                "object_id": "obj-7",
+                "radius": 10.0,
+                "shape": "square",
+                "vx": -98.74273602405759,
+                "vy": 49.93689319817562,
+                "x": 293.4067899274929,
+                "y": 122.75924296359028
+              },
+              {
+                "color": "blue",
+                "object_id": "obj-8",
+                "radius": 10.0,
+                "shape": "square",
+                "vx": 149.9030556779109,
+                "vy": 12.649184815503697,
+                "x": 385.41028308183184,
+                "y": 368.12954950870227
+              },
+              {
+                "color": "purple",
+                "object_id": "obj-9",
+                "radius": 10.0,
+                "shape": "diamond",
+                "vx": -40.808945886676646,
+                "vy": 98.36098315444117,
+                "x": 199.51039296924444,
+                "y": 160.06157964944973
+              },
+              {
+                "color": "green",
+                "object_id": "obj-10",
+                "radius": 10.0,
+                "shape": "triangle",
+                "vx": -17.07980367334231,
+                "vy": 131.50001865552179,
+                "x": 193.49456761620402,
+                "y": 341.06326718456035
+              },
+              {
+                "color": "yellow",
+                "object_id": "obj-11",
+                "radius": 10.0,
+                "shape": "circle",
+                "vx": 128.18891255478175,
+                "vy": 66.86346142201263,
+                "x": 298.40634719878176,
+                "y": 243.71065568378108
+              }
+            ],
+            "prepared_id": "obj-6",
+            "wait_seconds": 0.6499999999999999
+          }
+        },
+        {
+          "kind": "move",
+          "payload": {
+            "deadline": 4.0,
+            "zone_radius": 24.0,
+            "zone_x": 449.2149677294111,
+            "zone_y": 278.0827637202018
+          }
+        },
+        {
+          "kind": "typing",
+          "payload": {
+            "code": "HQSAHR6TED",
+            "deadline": 4.0,
+            "terminal_h": 46.0,
+            "terminal_w": 125.0,
+            "terminal_x": 182.0374975160029,
+            "terminal_y": 226.90855385277587
+          }
+        }
+      ]
+    },
+    "events": [
+      {
+        "detail": {
+          "kind": "target"
+        },
+        "event": "stage_start",
+        "sim_time": 0.0,
+        "stage_index": 0,
+        "wall_offset": 2.3e-05
+      },
+      {
+        "detail": {
+          "fingerprint": "836b8594fb654b0a"
+        },
+        "event": "episode_start",
+        "sim_time": 0.0,
+        "stage_index": 0,
+        "wall_offset": 0.000353
+      },
+      {
+        "detail": {
+          "key": "w"
+        },
+        "event": "key_down",
+        "sim_time": 0.916667,
+        "stage_index": 0,
+        "wall_offset": 1.172429
+      },
+      {
+        "detail": {
+          "key": "w"
+        },
+        "event": "key_up",
+        "sim_time": 0.933333,
+        "stage_index": 0,
+        "wall_offset": 1.179625
+      },
+      {
+        "detail": {
+          "reason": "deadline_miss",
+          "stage": "target"
+        },
+        "event": "episode_failure",
+        "sim_time": 2.616667,
+        "stage_index": 0,
+        "wall_offset": 3.087881
+      }
+    ],
+    "failure_reason": "deadline_miss",
+    "fingerprint": "836b8594fb654b0a",
+    "peak_rss_kb": 33744,
+    "process_cpu_seconds": 0.902929,
+    "schema": "procedural-control-arena-report-v0",
+    "sim_time": 2.616667,
+    "success": false,
+    "wall_time": 3.094123
+  }
+}

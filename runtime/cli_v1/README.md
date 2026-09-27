@@ -2,6 +2,22 @@
 
 This is the model/vendor-neutral local entry point over promoted Agent Interface backends.
 
+Check a local program before attempting input:
+
+```sh
+python -m runtime.cli_v1 validate --program program.json
+```
+
+This uses the existing display-free validator and dispatch's sequence expanders.
+It returns bounded diagnostics and original/expanded operation positions when
+available, without opening a backend or modifying the file. Exit codes are
+0 for static validity, 1 for an invalid program, and 2 for input-loading errors.
+The file must be UTF-8 JSON, at most 1 MiB. This command does not accept stdin.
+Static validity does not check live capabilities, target identity, observation
+freshness, lease expiry, release or task success. Dispatch still performs its
+normal checks. Validation is optional; it is not an automatic extra round trip.
+The standalone `python -m runtime.cli_v1.validate_program` entry remains available.
+
 For a retained `prepared_exchange` action report, inspect the result and latest
 observation without printing the full routine event history:
 
@@ -510,3 +526,29 @@ null character index. Other operations use one-based `expanded_occurrence`.
 Malformed mappings produce null, and partial-effect uncertainty remains unchanged.
 A character location does not authorize retrying the remainder of an uncertain
 operation. The same program syntax works through CLI, Python API and public MCP.
+
+### Caller-owned Python sessions
+
+Use `dispatch_in_session(session, program, current_observation_seq=...,
+current_binding_revision=...)` when a caller already owns a backend session.
+It shares the public compiler, validation, result envelope and diagnostics with
+one-shot `dispatch`, while retaining that session after success, refusal or error.
+The caller must serialize access and close its backend when finished. The API
+does not clear recovery state, refresh targets or authority, or retry input.
+CLI and public MCP one-shot lifecycle remain unchanged.
+
+The native guarded bridge now uses this function and retains a public dispatch
+report alongside its guard receipts. See
+[the primary Calc run](../results/public-owned-session-live-01/README.md).
+
+For read-only capture on that same caller-owned connection, use
+`runtime.cli_v1.observe.observe_in_session(session, target=..., frame=...,
+region=[x,y,width,height])`. It shares one-shot observation validation and
+failure reporting, but never closes the supplied backend. Capturing remains
+available when input recovery is required and does not clear that state.
+The caller still serializes access and closes its own session.
+
+The native bridge uses this API and retains a public observation report before
+its existing binding/image checks. A returned public capture is not an accepted
+bridge source: if binding changed, the bridge still refuses to advance its source.
+No new readiness detection, automatic capture retry or lease renewal is added.

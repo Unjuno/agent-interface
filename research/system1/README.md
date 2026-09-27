@@ -69,3 +69,16 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Role graph as a reloadable skill
 
 - [`needle_role_skill_reload_3780_v1/REPORT.md`](../needle_role_skill_reload_3780_v1/REPORT.md) — successor #3890; three-seed, CPU Docker, cross-process JSON-tensor reload PASS with two fresh loaders per seed and a scoped independent audit. Seed 3789 / role C is a narrow threshold pass; no production skill authority is claimed.
+
+## Local decoder readout and cache mechanics
+
+- [`typed_readout_prefix_gpu_1014_v1/STOP_RECORD.md`](typed_readout_prefix_gpu_1014_v1/STOP_RECORD.md) — successor #4623 materialized a pinned Qwen2.5-0.5B model in a network-disabled RTX 3080 Docker container. Independent construction audit reproduced the FP16 full-vocabulary logit-tolerance failure; the formal latency block did not run. No typed-decision competence or runtime claim.
+- [`typed_readout_code_projection_1014_v2/STOP_RECORD.md`](typed_readout_code_projection_1014_v2/STOP_RECORD.md) — successor #4639 separately tested the eight answer-code logits on the same pinned GPU assets. Independent audit reproduced a selected-score tolerance failure (B00/slot 15); the formal latency block did not run. This does not modify #4623.
+
+## Concurrent Needle online-LoRA / System-1 inference
+
+- [`needle_concurrent_online_lora_4631_v1/RESULT_SUMMARY.md`](needle_concurrent_online_lora_4631_v1/RESULT_SUMMARY.md) — successor #4621; the sole frozen training orchestration completed, but a scalar/vector shape bug in the independent auditor stopped certification. No retry or model-quality claim.
+
+## Concurrent Needle online-LoRA/System-1 successor
+
+- [`needle_concurrent_online_lora_4653_v2/RESULT_SUMMARY.md`](needle_concurrent_online_lora_4653_v2/RESULT_SUMMARY.md) — successor to #4631; corrected auditor passed with zero errors, but the fourfold fixed training batch still produced fewer than eight overlapping query intervals in every seed, and one seed had two 60 Hz deadline misses. No COW candidate qualifies.

@@ -1,0 +1,64 @@
+{
+  "classification": "CONSTRUCTION_ONLY_DOCKER_DESKTOP",
+  "clock_bounds": {
+    "max_bound_width_ns": 610305440,
+    "max_lower_ns": -2352568099854,
+    "max_upper_ns": -2351958263939,
+    "median_roundtrip_ns": 812800,
+    "min_lower_ns": -2352568682770,
+    "min_upper_ns": -2352567527543
+  },
+  "clock_samples": 41,
+  "controls": [
+    {
+      "container_deadline_ns": 1652176216630,
+      "container_remaining_at_receive_ns": 24998815938,
+      "container_request_sent": true,
+      "host_deadline_ns": 4004744899400,
+      "host_now_ns": 3979744902700,
+      "host_remaining_at_send_ns": 24999996700,
+      "id": "live-25s",
+      "offset_lower_ns": -2352568682770,
+      "outcome": "accepted",
+      "transport_rtt_ns": 691800
+    },
+    {
+      "container_deadline_ns": 1627175924630,
+      "container_remaining_at_receive_ns": -2258266,
+      "container_request_sent": true,
+      "host_deadline_ns": 3979744607400,
+      "host_now_ns": 3979745609700,
+      "host_remaining_at_send_ns": -1002300,
+      "id": "expired",
+      "offset_lower_ns": -2352568682770,
+      "outcome": "expired",
+      "transport_rtt_ns": 683400
+    },
+    {
+      "container_deadline_ns": 1658177621230,
+      "container_remaining_at_receive_ns": 30998812534,
+      "container_request_sent": true,
+      "host_deadline_ns": 4010746304000,
+      "host_now_ns": 3979746305700,
+      "host_remaining_at_send_ns": 30999998300,
+      "id": "over-30s",
+      "offset_lower_ns": -2352568682770,
+      "outcome": "rejected_horizon",
+      "transport_rtt_ns": 607600
+    },
+    {
+      "container_request_sent": false,
+      "host_deadline_ns": 4004746924600,
+      "host_remaining_at_send_ns": 18999645200,
+      "host_send_ns": 3985747279400,
+      "id": "delayed-under-20s",
+      "outcome": "host_fail_closed_insufficient_remaining"
+    }
+  ],
+  "engine": "Docker Desktop linux/amd64",
+  "image": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+  "lease_source_sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+  "schema": "issue-3880-dockerdesktop-construction-v1",
+  "stderr": "",
+  "worker_sha256": "550bb7cfe7a389876a88aa5ffae9c0bedb1044fc36abf1c7611187c687a09fc1"
+}

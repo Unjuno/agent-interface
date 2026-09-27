@@ -1,0 +1,2376 @@
+{
+  "cell": 32,
+  "families": [
+    {
+      "family_id": "family-01",
+      "geometry": {
+        "field": [
+          432,
+          528
+        ],
+        "left": 160,
+        "submit": [
+          816,
+          752
+        ],
+        "top": 240,
+        "width": 768
+      },
+      "split": "train"
+    },
+    {
+      "family_id": "family-02",
+      "geometry": {
+        "field": [
+          464,
+          464
+        ],
+        "left": 224,
+        "submit": [
+          816,
+          752
+        ],
+        "top": 208,
+        "width": 704
+      },
+      "split": "train"
+    },
+    {
+      "family_id": "family-03",
+      "geometry": {
+        "field": [
+          496,
+          400
+        ],
+        "left": 288,
+        "submit": [
+          976,
+          656
+        ],
+        "top": 176,
+        "width": 800
+      },
+      "split": "train"
+    },
+    {
+      "family_id": "family-04",
+      "geometry": {
+        "field": [
+          304,
+          432
+        ],
+        "left": 128,
+        "submit": [
+          752,
+          656
+        ],
+        "top": 144,
+        "width": 736
+      },
+      "split": "train"
+    },
+    {
+      "family_id": "family-05",
+      "geometry": {
+        "field": [
+          464,
+          368
+        ],
+        "left": 192,
+        "submit": [
+          752,
+          656
+        ],
+        "top": 112,
+        "width": 672
+      },
+      "split": "train"
+    },
+    {
+      "family_id": "family-06",
+      "geometry": {
+        "field": [
+          496,
+          464
+        ],
+        "left": 256,
+        "submit": [
+          912,
+          720
+        ],
+        "top": 240,
+        "width": 768
+      },
+      "split": "train"
+    },
+    {
+      "family_id": "family-07",
+      "geometry": {
+        "field": [
+          304,
+          496
+        ],
+        "left": 96,
+        "submit": [
+          688,
+          720
+        ],
+        "top": 208,
+        "width": 704
+      },
+      "split": "train"
+    },
+    {
+      "family_id": "family-08",
+      "geometry": {
+        "field": [
+          336,
+          432
+        ],
+        "left": 160,
+        "submit": [
+          848,
+          720
+        ],
+        "top": 176,
+        "width": 800
+      },
+      "split": "train"
+    },
+    {
+      "family_id": "family-09",
+      "geometry": {
+        "field": [
+          496,
+          368
+        ],
+        "left": 224,
+        "submit": [
+          848,
+          624
+        ],
+        "top": 144,
+        "width": 736
+      },
+      "split": "held_out"
+    },
+    {
+      "family_id": "family-10",
+      "geometry": {
+        "field": [
+          528,
+          400
+        ],
+        "left": 288,
+        "submit": [
+          848,
+          624
+        ],
+        "top": 112,
+        "width": 672
+      },
+      "split": "held_out"
+    },
+    {
+      "family_id": "family-11",
+      "geometry": {
+        "field": [
+          336,
+          496
+        ],
+        "left": 128,
+        "submit": [
+          784,
+          784
+        ],
+        "top": 240,
+        "width": 768
+      },
+      "split": "held_out"
+    },
+    {
+      "family_id": "family-12",
+      "geometry": {
+        "field": [
+          368,
+          432
+        ],
+        "left": 192,
+        "submit": [
+          784,
+          688
+        ],
+        "top": 208,
+        "width": 704
+      },
+      "split": "held_out"
+    }
+  ],
+  "format": "gpu-grounding-template-diversity-cpu-gate-v1",
+  "records": [
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 432,
+            "y": 528
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 816,
+            "y": 752
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-01",
+      "geometry": {
+        "field": [
+          432,
+          528
+        ],
+        "left": 160,
+        "submit": [
+          816,
+          752
+        ],
+        "top": 240,
+        "width": 768
+      },
+      "png_sha256": "2c749d7f63e4418e6a39566488052d51c67312561ad4920c4ba28296982f2238",
+      "rgb_sha256": "14feb9410ce6b42e02248272205d3fa727d24c89f9c2dd5cfaabffbd14654f3f",
+      "split": "train",
+      "variant": 0
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 432,
+            "y": 528
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 816,
+            "y": 752
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-01",
+      "geometry": {
+        "field": [
+          432,
+          528
+        ],
+        "left": 160,
+        "submit": [
+          816,
+          752
+        ],
+        "top": 240,
+        "width": 768
+      },
+      "png_sha256": "391d51d465044409b17a9a3fcb811a8587872ec17b2534040099cf8a86768d4f",
+      "rgb_sha256": "387819e016e48f349bfeff971a36d9a58be44791dd74a9d40892bb4b1bcb35bc",
+      "split": "train",
+      "variant": 1
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 432,
+            "y": 528
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 816,
+            "y": 752
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-01",
+      "geometry": {
+        "field": [
+          432,
+          528
+        ],
+        "left": 160,
+        "submit": [
+          816,
+          752
+        ],
+        "top": 240,
+        "width": 768
+      },
+      "png_sha256": "dcc65b4d4830dc796fe445fd374ba50dbc67f1d8449d6c504529a4f57299ffdc",
+      "rgb_sha256": "2c74245b9b70b475dccb509b16739da3cc3785c778b6398e67fdfd9d4de38656",
+      "split": "train",
+      "variant": 2
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 432,
+            "y": 528
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 816,
+            "y": 752
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-01",
+      "geometry": {
+        "field": [
+          432,
+          528
+        ],
+        "left": 160,
+        "submit": [
+          816,
+          752
+        ],
+        "top": 240,
+        "width": 768
+      },
+      "png_sha256": "141eb9ac470ff6814071415d8a02ece3a2f8a59c3973c0312802125c1c4188cf",
+      "rgb_sha256": "087e1b2691cfe92111d855f97889c7bdcba89bd558665490e17af6c7aa05d3f2",
+      "split": "train",
+      "variant": 3
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 464,
+            "y": 464
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 816,
+            "y": 752
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-02",
+      "geometry": {
+        "field": [
+          464,
+          464
+        ],
+        "left": 224,
+        "submit": [
+          816,
+          752
+        ],
+        "top": 208,
+        "width": 704
+      },
+      "png_sha256": "57852c15dff231d80e5f50fc166fdecddb95974815683d5f72846d3e4b586173",
+      "rgb_sha256": "4f4b3bce6613a424b8dae2fb649c4a5a16acc801ebc23c7baac535636db97516",
+      "split": "train",
+      "variant": 0
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 464,
+            "y": 464
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 816,
+            "y": 752
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-02",
+      "geometry": {
+        "field": [
+          464,
+          464
+        ],
+        "left": 224,
+        "submit": [
+          816,
+          752
+        ],
+        "top": 208,
+        "width": 704
+      },
+      "png_sha256": "8159bf58bfcc9a7496006d46885cb8dff52b0c4bcd13ec9800905660ea42836f",
+      "rgb_sha256": "23d61f3cdf2b018bb219cda092fb287640ebabaea6a44dda1f852adfdfd2f496",
+      "split": "train",
+      "variant": 1
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 464,
+            "y": 464
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 816,
+            "y": 752
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-02",
+      "geometry": {
+        "field": [
+          464,
+          464
+        ],
+        "left": 224,
+        "submit": [
+          816,
+          752
+        ],
+        "top": 208,
+        "width": 704
+      },
+      "png_sha256": "958f47db68476d19f95e2d7a13baf467235d652ffb7930b4ffec69f3856b8c50",
+      "rgb_sha256": "02cca856202a08ae8ca99363912374a4f580e0b4794863e6829083af62d0e1bd",
+      "split": "train",
+      "variant": 2
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 464,
+            "y": 464
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 816,
+            "y": 752
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-02",
+      "geometry": {
+        "field": [
+          464,
+          464
+        ],
+        "left": 224,
+        "submit": [
+          816,
+          752
+        ],
+        "top": 208,
+        "width": 704
+      },
+      "png_sha256": "4f85f683cdac7cfee8b84df5991c15028aa8d6395eaee4fee2b57e9e02ca866e",
+      "rgb_sha256": "79949ae3c9807871c2aca38c39dcff1dcafa35f3efd76040e4fd6f246133213f",
+      "split": "train",
+      "variant": 3
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 496,
+            "y": 400
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 976,
+            "y": 656
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-03",
+      "geometry": {
+        "field": [
+          496,
+          400
+        ],
+        "left": 288,
+        "submit": [
+          976,
+          656
+        ],
+        "top": 176,
+        "width": 800
+      },
+      "png_sha256": "72ff124346edd58161dea56cbee646dafc8b73a04377e120efd45e1839428a0a",
+      "rgb_sha256": "2c5413920360b3774acf3b45131de2acbf91299d4dd05b7e46831571e8c137d8",
+      "split": "train",
+      "variant": 0
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 496,
+            "y": 400
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 976,
+            "y": 656
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-03",
+      "geometry": {
+        "field": [
+          496,
+          400
+        ],
+        "left": 288,
+        "submit": [
+          976,
+          656
+        ],
+        "top": 176,
+        "width": 800
+      },
+      "png_sha256": "5c8fb6e02cb5f9d925517f1caae7a8b5fd404b5657750fc3eedc7c01cfba33e2",
+      "rgb_sha256": "1f6420cb644652613cb64e265ec046043f7e9ae8746b11e86ff041f4163fd51c",
+      "split": "train",
+      "variant": 1
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 496,
+            "y": 400
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 976,
+            "y": 656
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-03",
+      "geometry": {
+        "field": [
+          496,
+          400
+        ],
+        "left": 288,
+        "submit": [
+          976,
+          656
+        ],
+        "top": 176,
+        "width": 800
+      },
+      "png_sha256": "93d60855486981732cc3287fc7376c31ca74eab97db000175cef7e224df2ff2f",
+      "rgb_sha256": "a28278ff6bd2906a27f5e9dff3fbf602c007e34708a9e5185805db436113c4c8",
+      "split": "train",
+      "variant": 2
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 496,
+            "y": 400
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 976,
+            "y": 656
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-03",
+      "geometry": {
+        "field": [
+          496,
+          400
+        ],
+        "left": 288,
+        "submit": [
+          976,
+          656
+        ],
+        "top": 176,
+        "width": 800
+      },
+      "png_sha256": "cb3f10a445951450a67763cd2e2950b8bd901f85e5b8d078f76d92888c7b0221",
+      "rgb_sha256": "aa5695be470e886038978503464aecee35cc43b7984db01c01a14208d7154256",
+      "split": "train",
+      "variant": 3
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 304,
+            "y": 432
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 752,
+            "y": 656
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-04",
+      "geometry": {
+        "field": [
+          304,
+          432
+        ],
+        "left": 128,
+        "submit": [
+          752,
+          656
+        ],
+        "top": 144,
+        "width": 736
+      },
+      "png_sha256": "c68d6891e4015fa76b03c4541e49a787abaff6b46242b20abd8237850fc890d8",
+      "rgb_sha256": "5aa921b6ce62e41aaeb69632ff133b2c8bb802320b93846c3ef65209768c5577",
+      "split": "train",
+      "variant": 0
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 304,
+            "y": 432
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 752,
+            "y": 656
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-04",
+      "geometry": {
+        "field": [
+          304,
+          432
+        ],
+        "left": 128,
+        "submit": [
+          752,
+          656
+        ],
+        "top": 144,
+        "width": 736
+      },
+      "png_sha256": "aa9865e2f7377dfab46f38fe1f85ae873cf2b372bfe6e2db3ed0a4d515d2a2e6",
+      "rgb_sha256": "32c75c9d8a071f7f2ee67ab6b5f6f5f06046d65f40dc53447aa4634d8e8e17bb",
+      "split": "train",
+      "variant": 1
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 304,
+            "y": 432
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 752,
+            "y": 656
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-04",
+      "geometry": {
+        "field": [
+          304,
+          432
+        ],
+        "left": 128,
+        "submit": [
+          752,
+          656
+        ],
+        "top": 144,
+        "width": 736
+      },
+      "png_sha256": "fa12b91cb08002f097bf0a77d304dee986ec6c70cf31b2edeee11d0018326177",
+      "rgb_sha256": "ca64d977048a6cba21ab079bb92b13b0e7f48ef301a8831e377e7f5b00ce0757",
+      "split": "train",
+      "variant": 2
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 304,
+            "y": 432
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 752,
+            "y": 656
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-04",
+      "geometry": {
+        "field": [
+          304,
+          432
+        ],
+        "left": 128,
+        "submit": [
+          752,
+          656
+        ],
+        "top": 144,
+        "width": 736
+      },
+      "png_sha256": "0036ac9f6e7d33bb547c63d3d3032999404bcf36ab08e9dd35f049064b507174",
+      "rgb_sha256": "d43324ea35dd8c6f8db0b8e7c096ecc239807b27e1cfaca8f3b2d485da22ca1b",
+      "split": "train",
+      "variant": 3
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 464,
+            "y": 368
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 752,
+            "y": 656
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-05",
+      "geometry": {
+        "field": [
+          464,
+          368
+        ],
+        "left": 192,
+        "submit": [
+          752,
+          656
+        ],
+        "top": 112,
+        "width": 672
+      },
+      "png_sha256": "571351bc06c65ae71c07d37818a44edc2096e645a6309db6b5d33ab2de3d13c1",
+      "rgb_sha256": "ec08f731e0e8231775d5b1e524c3ba36a7f4f1e45d02ddd8a297be3cd5a0ac2e",
+      "split": "train",
+      "variant": 0
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 464,
+            "y": 368
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 752,
+            "y": 656
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-05",
+      "geometry": {
+        "field": [
+          464,
+          368
+        ],
+        "left": 192,
+        "submit": [
+          752,
+          656
+        ],
+        "top": 112,
+        "width": 672
+      },
+      "png_sha256": "a2d8f9540be5744e1b43166ef63aa6f2233220abb9ffe66e14680e0b60239399",
+      "rgb_sha256": "e348e59949d506aaf6af9b1ba785048842f6d6671d0fd777ac59c2df31e44206",
+      "split": "train",
+      "variant": 1
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 464,
+            "y": 368
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 752,
+            "y": 656
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-05",
+      "geometry": {
+        "field": [
+          464,
+          368
+        ],
+        "left": 192,
+        "submit": [
+          752,
+          656
+        ],
+        "top": 112,
+        "width": 672
+      },
+      "png_sha256": "3562fe6308ac9e387a31851773a7958a64590535944beaea039dcb97b323279d",
+      "rgb_sha256": "5f48e56b2d49ea77b33713d6769d8abe97c05f3aa9d756a9a1ac16309c767691",
+      "split": "train",
+      "variant": 2
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 464,
+            "y": 368
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 752,
+            "y": 656
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-05",
+      "geometry": {
+        "field": [
+          464,
+          368
+        ],
+        "left": 192,
+        "submit": [
+          752,
+          656
+        ],
+        "top": 112,
+        "width": 672
+      },
+      "png_sha256": "877b7608ea55c824311bb32f132d3be2dbdb16a904a2f4a2c192ec7fd82fd26e",
+      "rgb_sha256": "9c855afe8e1c6ac2267ad6417672512c25fa757b79b3f6ece71a83ee3a211a26",
+      "split": "train",
+      "variant": 3
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 496,
+            "y": 464
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 912,
+            "y": 720
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-06",
+      "geometry": {
+        "field": [
+          496,
+          464
+        ],
+        "left": 256,
+        "submit": [
+          912,
+          720
+        ],
+        "top": 240,
+        "width": 768
+      },
+      "png_sha256": "02c9cebf0de13d21a570a0bc03afcefecb78c667aab46aadf3bc02f725f9aec3",
+      "rgb_sha256": "90d11cf7459262f3591ca0a2df0443263e863cb6a19eb36d2b9e0467e8413001",
+      "split": "train",
+      "variant": 0
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 496,
+            "y": 464
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 912,
+            "y": 720
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-06",
+      "geometry": {
+        "field": [
+          496,
+          464
+        ],
+        "left": 256,
+        "submit": [
+          912,
+          720
+        ],
+        "top": 240,
+        "width": 768
+      },
+      "png_sha256": "143ea607634e3d753b5c85914cc6dff4285941f19cb9bfe5fdc3965830f7c53f",
+      "rgb_sha256": "0716424601c214800af0227e75b9d98d90f1232a98cd87caaa308b2c377f86fa",
+      "split": "train",
+      "variant": 1
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 496,
+            "y": 464
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 912,
+            "y": 720
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-06",
+      "geometry": {
+        "field": [
+          496,
+          464
+        ],
+        "left": 256,
+        "submit": [
+          912,
+          720
+        ],
+        "top": 240,
+        "width": 768
+      },
+      "png_sha256": "a29a931d964e04bb6ff3f87b68f0d0997ab7ec8742be5834bda86c7a8e139b5d",
+      "rgb_sha256": "e241b98a453c242443f551f701067a1a0108e644cbcedf5f684adbd685d3572c",
+      "split": "train",
+      "variant": 2
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 496,
+            "y": 464
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 912,
+            "y": 720
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-06",
+      "geometry": {
+        "field": [
+          496,
+          464
+        ],
+        "left": 256,
+        "submit": [
+          912,
+          720
+        ],
+        "top": 240,
+        "width": 768
+      },
+      "png_sha256": "34b1a716dcb0f6b598b3228bf50afa81b5eaf4bdcdf81fe48625bec86d81ecd6",
+      "rgb_sha256": "7853905e38378bbf7d2cc8dba4d99f1bc462eceb8a302c028e260cebe82c1799",
+      "split": "train",
+      "variant": 3
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 304,
+            "y": 496
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 688,
+            "y": 720
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-07",
+      "geometry": {
+        "field": [
+          304,
+          496
+        ],
+        "left": 96,
+        "submit": [
+          688,
+          720
+        ],
+        "top": 208,
+        "width": 704
+      },
+      "png_sha256": "25d5b2e6b685d9d6d5330abde220227106ecd293e7193c22b251ae112f343f63",
+      "rgb_sha256": "ed1833cc0965416cba63b92efd5324a162302e1802c6a4211beab848a5c5fdd0",
+      "split": "train",
+      "variant": 0
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 304,
+            "y": 496
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 688,
+            "y": 720
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-07",
+      "geometry": {
+        "field": [
+          304,
+          496
+        ],
+        "left": 96,
+        "submit": [
+          688,
+          720
+        ],
+        "top": 208,
+        "width": 704
+      },
+      "png_sha256": "3f8d40955c23c169b0d94e06a64d8cdedaba8eae3dc7422ccd3fb6d278c53897",
+      "rgb_sha256": "20f4657e95364ec1a4e2eebcc803cd2d5b4a7f6e8ec55c35de61e6ef6a370cdf",
+      "split": "train",
+      "variant": 1
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 304,
+            "y": 496
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 688,
+            "y": 720
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-07",
+      "geometry": {
+        "field": [
+          304,
+          496
+        ],
+        "left": 96,
+        "submit": [
+          688,
+          720
+        ],
+        "top": 208,
+        "width": 704
+      },
+      "png_sha256": "d349b3a254f76d4ed31b492448964a710c60b72fad47fc6740670b882ba6a065",
+      "rgb_sha256": "818bc9899e161067da162be4df5f40efe77796e5dbe2f257cc1d52740fe9c245",
+      "split": "train",
+      "variant": 2
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 304,
+            "y": 496
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 688,
+            "y": 720
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-07",
+      "geometry": {
+        "field": [
+          304,
+          496
+        ],
+        "left": 96,
+        "submit": [
+          688,
+          720
+        ],
+        "top": 208,
+        "width": 704
+      },
+      "png_sha256": "4644fc941cfd8b1801a8f439817d150303ae015d2e5406faca73a1ac9f6e8371",
+      "rgb_sha256": "2b2292bb243266671c7cb6d4f4e48342c33cf058cf35335ce586c2cc7d941962",
+      "split": "train",
+      "variant": 3
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 336,
+            "y": 432
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 848,
+            "y": 720
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-08",
+      "geometry": {
+        "field": [
+          336,
+          432
+        ],
+        "left": 160,
+        "submit": [
+          848,
+          720
+        ],
+        "top": 176,
+        "width": 800
+      },
+      "png_sha256": "e12fe1592d897c64b6d3f155137ea054804df58505281b96a8c302638d8560b0",
+      "rgb_sha256": "9e16690006e38e4495d5eeae80a83c613493b86e24babd47d639d16df30ba87a",
+      "split": "train",
+      "variant": 0
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 336,
+            "y": 432
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 848,
+            "y": 720
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-08",
+      "geometry": {
+        "field": [
+          336,
+          432
+        ],
+        "left": 160,
+        "submit": [
+          848,
+          720
+        ],
+        "top": 176,
+        "width": 800
+      },
+      "png_sha256": "8180836f0d0ceb63faede3a7c787690944fcd37e86bff90362027cc8e5088e20",
+      "rgb_sha256": "8c1a1bcfef53b825d6725858ee94a11c2a937dbecc9fa056a002acaf5b502e97",
+      "split": "train",
+      "variant": 1
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 336,
+            "y": 432
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 848,
+            "y": 720
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-08",
+      "geometry": {
+        "field": [
+          336,
+          432
+        ],
+        "left": 160,
+        "submit": [
+          848,
+          720
+        ],
+        "top": 176,
+        "width": 800
+      },
+      "png_sha256": "715d8ffc4369b91a95737343cab4650a25f259284ba77ead59bd0f99b117ab90",
+      "rgb_sha256": "8786caf2118e1547a6180b0cf42cbc205a17491d718a7deb5dc8c537bcae60f6",
+      "split": "train",
+      "variant": 2
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 336,
+            "y": 432
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 848,
+            "y": 720
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-08",
+      "geometry": {
+        "field": [
+          336,
+          432
+        ],
+        "left": 160,
+        "submit": [
+          848,
+          720
+        ],
+        "top": 176,
+        "width": 800
+      },
+      "png_sha256": "22f4a51ef246d966406293d0058bfa405575e6e2eff68bdca30813da9da9d822",
+      "rgb_sha256": "7af5e866b78139b4cc1faa9e0855cbe7c09062f9fe8835729b2363a4a9ac63e7",
+      "split": "train",
+      "variant": 3
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 496,
+            "y": 368
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 848,
+            "y": 624
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-09",
+      "geometry": {
+        "field": [
+          496,
+          368
+        ],
+        "left": 224,
+        "submit": [
+          848,
+          624
+        ],
+        "top": 144,
+        "width": 736
+      },
+      "png_sha256": "5f4d0798ad9bdeefcf2cf86457393730c7aca0172b30c56a8be52d6938a8f39f",
+      "rgb_sha256": "4254d2b1bc94bef568459cc82c6576cc54d2d6b638d16e6b285d65b3097058b1",
+      "split": "held_out",
+      "variant": 0
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 496,
+            "y": 368
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 848,
+            "y": 624
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-09",
+      "geometry": {
+        "field": [
+          496,
+          368
+        ],
+        "left": 224,
+        "submit": [
+          848,
+          624
+        ],
+        "top": 144,
+        "width": 736
+      },
+      "png_sha256": "351dbf04ade794c7486395e6e65211f0a8a9e46c92363e2e26ddd7b1386ac029",
+      "rgb_sha256": "a1a8d7e30c31078ea04c4b69dd212117a0d6a661c725580426d72c086ae3d859",
+      "split": "held_out",
+      "variant": 1
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 496,
+            "y": 368
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 848,
+            "y": 624
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-09",
+      "geometry": {
+        "field": [
+          496,
+          368
+        ],
+        "left": 224,
+        "submit": [
+          848,
+          624
+        ],
+        "top": 144,
+        "width": 736
+      },
+      "png_sha256": "9e1a438746e35da572b59e23e976097a29de6b9fe33aefa17d34b7048c0351d6",
+      "rgb_sha256": "faeebbfba30c4cc143d3d47913bab93302742acf9248a4a6bb6589d3c332fe8f",
+      "split": "held_out",
+      "variant": 2
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 496,
+            "y": 368
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 848,
+            "y": 624
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-09",
+      "geometry": {
+        "field": [
+          496,
+          368
+        ],
+        "left": 224,
+        "submit": [
+          848,
+          624
+        ],
+        "top": 144,
+        "width": 736
+      },
+      "png_sha256": "4bfe6e1f4aa093b5ef13c9e6acac985106f413480023887447d301cab831db7c",
+      "rgb_sha256": "410b79fe16e57a48e99f3c87816decbff4766fce79bf35d416cf0f1fa9157c61",
+      "split": "held_out",
+      "variant": 3
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 528,
+            "y": 400
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 848,
+            "y": 624
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-10",
+      "geometry": {
+        "field": [
+          528,
+          400
+        ],
+        "left": 288,
+        "submit": [
+          848,
+          624
+        ],
+        "top": 112,
+        "width": 672
+      },
+      "png_sha256": "77e1271158d5a3b0682a7c813acbe5294ec0239d2614e8e5de75007f48657ce8",
+      "rgb_sha256": "25e51db4cddaa3574f5b00b46636f553db45ac44456dc9733e40cd02550f07d6",
+      "split": "held_out",
+      "variant": 0
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 528,
+            "y": 400
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 848,
+            "y": 624
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-10",
+      "geometry": {
+        "field": [
+          528,
+          400
+        ],
+        "left": 288,
+        "submit": [
+          848,
+          624
+        ],
+        "top": 112,
+        "width": 672
+      },
+      "png_sha256": "867990b5f0be219e17233db50af44fb49d423f30ada248e9d5f26b5d717aa9ae",
+      "rgb_sha256": "c211e7044afd116c7ef85e27ca0461ba345e4d88b15b3c4e3dc9cd65ae4c6e05",
+      "split": "held_out",
+      "variant": 1
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 528,
+            "y": 400
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 848,
+            "y": 624
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-10",
+      "geometry": {
+        "field": [
+          528,
+          400
+        ],
+        "left": 288,
+        "submit": [
+          848,
+          624
+        ],
+        "top": 112,
+        "width": 672
+      },
+      "png_sha256": "9602d555fbdb7f1dbabeaeeb13eb5512cc8ee31b13581373f19a2943b59a7a88",
+      "rgb_sha256": "fe3a5b6d312086e41c1591e3e715a8f9f786067cfa40ef4194c8d1dd10b95eb4",
+      "split": "held_out",
+      "variant": 2
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 528,
+            "y": 400
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 848,
+            "y": 624
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-10",
+      "geometry": {
+        "field": [
+          528,
+          400
+        ],
+        "left": 288,
+        "submit": [
+          848,
+          624
+        ],
+        "top": 112,
+        "width": 672
+      },
+      "png_sha256": "36cb9f5b7ced01d07e293ee2138a44606e0aaabc5d373bc0d1f9734fca075879",
+      "rgb_sha256": "e221429f4836c87a51b5d0ff1ab664800b24a4dfcde250bb71a57e3792f84009",
+      "split": "held_out",
+      "variant": 3
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 336,
+            "y": 496
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 784,
+            "y": 784
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-11",
+      "geometry": {
+        "field": [
+          336,
+          496
+        ],
+        "left": 128,
+        "submit": [
+          784,
+          784
+        ],
+        "top": 240,
+        "width": 768
+      },
+      "png_sha256": "419df3bfba69005c2d51bef601647ebe77e2672917c8515feba9909954656452",
+      "rgb_sha256": "97bc7b3de0cc536b52ae45068cd6d6767cfc9ea70261f220dec162037c27ba16",
+      "split": "held_out",
+      "variant": 0
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 336,
+            "y": 496
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 784,
+            "y": 784
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-11",
+      "geometry": {
+        "field": [
+          336,
+          496
+        ],
+        "left": 128,
+        "submit": [
+          784,
+          784
+        ],
+        "top": 240,
+        "width": 768
+      },
+      "png_sha256": "56266a5a37d82cbbaa2bf91b866c064225813781ea75ba558932cd8375f21fa3",
+      "rgb_sha256": "75e8e4e88ba70948aa44fd42bc0a9c0b15f99fddc19e121fce249fa7ec731aec",
+      "split": "held_out",
+      "variant": 1
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 336,
+            "y": 496
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 784,
+            "y": 784
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-11",
+      "geometry": {
+        "field": [
+          336,
+          496
+        ],
+        "left": 128,
+        "submit": [
+          784,
+          784
+        ],
+        "top": 240,
+        "width": 768
+      },
+      "png_sha256": "7f263859179904eaba2820517ffb03f62a0998335f73746508ddae8bf72a66d6",
+      "rgb_sha256": "1fee4bed2cf6b5e9c22db83a545ee02b100ef4d1df6b0e528cf4c637ab330918",
+      "split": "held_out",
+      "variant": 2
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 336,
+            "y": 496
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 784,
+            "y": 784
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-11",
+      "geometry": {
+        "field": [
+          336,
+          496
+        ],
+        "left": 128,
+        "submit": [
+          784,
+          784
+        ],
+        "top": 240,
+        "width": 768
+      },
+      "png_sha256": "6bdc2fbb151d845b7377e13da957fd7c661400009e72c75176f6bd33b60dba3f",
+      "rgb_sha256": "c650ada207b1e86f673d1531a3c22dd790e03f8a981e7fb02b2d0c70eb740196",
+      "split": "held_out",
+      "variant": 3
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 368,
+            "y": 432
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 784,
+            "y": 688
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-12",
+      "geometry": {
+        "field": [
+          368,
+          432
+        ],
+        "left": 192,
+        "submit": [
+          784,
+          688
+        ],
+        "top": 208,
+        "width": 704
+      },
+      "png_sha256": "933c92497085876aed08ac07800b11c797828d7002cadc71d5e32c159667b15e",
+      "rgb_sha256": "3e1985a42d4ca02b827cdb861383828214abd49e2157949662c6187eef42e975",
+      "split": "held_out",
+      "variant": 0
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 368,
+            "y": 432
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 784,
+            "y": 688
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-12",
+      "geometry": {
+        "field": [
+          368,
+          432
+        ],
+        "left": 192,
+        "submit": [
+          784,
+          688
+        ],
+        "top": 208,
+        "width": 704
+      },
+      "png_sha256": "39dae4954870a84034fe8cc670a180cc248b2934a0c222e0a844be4825a0a04a",
+      "rgb_sha256": "ef49146d710b2ba1922e2a42cdd182e47b861f89ea00a57bc67a536ee17b1495",
+      "split": "held_out",
+      "variant": 1
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 368,
+            "y": 432
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 784,
+            "y": 688
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-12",
+      "geometry": {
+        "field": [
+          368,
+          432
+        ],
+        "left": 192,
+        "submit": [
+          784,
+          688
+        ],
+        "top": 208,
+        "width": 704
+      },
+      "png_sha256": "2dd4d841d90f34b8c0603a98fccbf711fe80b385c0d41f9cd6e4e757e5fd137e",
+      "rgb_sha256": "fe7830bad68a65de4d39946d14e864542badd67da3ab2d24581e3cbab6ff8f7c",
+      "split": "held_out",
+      "variant": 2
+    },
+    {
+      "candidate": {
+        "field": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 368,
+            "y": 432
+          },
+          "point_space": "source_observation_pixels"
+        },
+        "format": "compiled-form-grounding-v1",
+        "method": {
+          "complete_when": "submission_pixels_changed_then_independent_score",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "first_action": "enter_exact_token",
+          "second_action": "activate_submit"
+        },
+        "submit": {
+          "motion_model": "surface_origin_translation",
+          "point": {
+            "x": 784,
+            "y": 688
+          },
+          "point_space": "source_observation_pixels"
+        }
+      },
+      "family_id": "family-12",
+      "geometry": {
+        "field": [
+          368,
+          432
+        ],
+        "left": 192,
+        "submit": [
+          784,
+          688
+        ],
+        "top": 208,
+        "width": 704
+      },
+      "png_sha256": "45266feff7de46d40a350d544e0bd80c7202c2b087d007d7fc0ba577b51c849d",
+      "rgb_sha256": "20031f9f2f14516e8a9ce987a62e730cee1261631c25b211b9b3de6b898072ef",
+      "split": "held_out",
+      "variant": 3
+    }
+  ],
+  "size": [
+    1280,
+    800
+  ]
+}

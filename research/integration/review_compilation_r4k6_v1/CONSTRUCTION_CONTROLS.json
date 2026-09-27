@@ -1,0 +1,64 @@
+{
+  "baseline_passed": true,
+  "controls": [
+    {
+      "errors": [
+        "h02/file/0:validation_source"
+      ],
+      "mutation": "source_index",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "h02/file/0:execution_status"
+      ],
+      "mutation": "execution_status",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "h02/file/0:release"
+      ],
+      "mutation": "release",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "h04/file/0:partial_uncertainty"
+      ],
+      "mutation": "partial_effect",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "h02/file/0:source_digest"
+      ],
+      "mutation": "report_hash",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "denominator",
+        "row_identity"
+      ],
+      "mutation": "missing_row",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "row_identity"
+      ],
+      "mutation": "duplicate_row",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "image_missing/file/0:exit"
+      ],
+      "mutation": "image_exit",
+      "rejected": true
+    }
+  ],
+  "effective": 8,
+  "rejected": 8
+}

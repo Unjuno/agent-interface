@@ -17,6 +17,8 @@ from scoped_target_handle_v3 import TargetHandleStore
 from runtime.backends.x11_v1.backend import X11Backend, X11BackendError
 from runtime.backends.x11_v1.session import X11RuntimeSession
 from runtime.core_v1.contract import SCHEMA_PROGRAM
+from runtime.cli_v1.api import dispatch_in_session
+from runtime.cli_v1.observe import observe_in_session
 
 
 class _GuardedBackend(X11Backend):
@@ -104,8 +106,14 @@ class NativeHandleBridge:
     def observe(self):
         before = self._binding()
         screen = self.backend.d.screen()
-        native = self.backend.capture(self.target, "screen_physical_px", 0, 0,
-                                      screen.width_in_pixels, screen.height_in_pixels)
+        report = observe_in_session(self.session, target=self.target,
+            frame="screen_physical_px",
+            region=[0, 0, screen.width_in_pixels, screen.height_in_pixels])
+        self._save("public-observation-" + report["observation_id"] + ".json", report)
+        if report["status"] != "returned":
+            raise X11BackendError("public observation failed; inspect retained report: "
+                                  + str(report.get("error", report["status"])))
+        native = report["observation"]
         after = self._binding()
         if before != after:
             raise X11BackendError("binding changed during native capture")
@@ -338,8 +346,14 @@ class NativeHandleBridge:
                             *tail, {"op": "release_all"}],
                 }
                 self._save("program-" + program["program_id"] + ".json", program)
-                row = self.session.dispatch(program, current_observation_seq=self.sequence,
-                                            current_binding_revision=self.binding_revision)
+                report = dispatch_in_session(self.session, program,
+                    current_observation_seq=self.sequence,
+                    current_binding_revision=self.binding_revision)
+                self._save("public-dispatch-" + program["program_id"] + ".json", report)
+                if report["status"] != "returned":
+                    raise RuntimeError("public dispatch failed; inspect retained report: "
+                                       + str(report.get("error", report["status"])))
+                row = report["result"]
             row["guard_checks"] = list(self.checks)
             self._save("result-" + uuid.uuid4().hex + ".json", row)
             return row
