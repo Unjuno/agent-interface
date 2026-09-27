@@ -1,0 +1,39 @@
+{
+  "schema": "unjuno.needle.generation-fence-freeze.v1",
+  "allocation": "needle-adaptive-generation-fence-4840-v1",
+  "issue": 4840,
+  "branch": "research/needle-adaptive-generation-fence-4840-v1-20260927",
+  "additive_path": "research/system1/needle_adaptive_generation_fence_4840_v1/",
+  "intake_main": "a07fa7c1539316d9f951767649c6555d63faf10b",
+  "image": "needle-pilot05:local",
+  "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+  "platform": "linux/amd64",
+  "source_sha256": {
+    "study.py": "0090e4320e445f1f8fbb9b048e5cde1b1a02ced3650b42fa7918cb6ace1fdc8c",
+    "audit.py": "e0e9ecbd2316dad0f5b3fb61aae2df7c013e867cc7cbd883590ec32a142fb0bc",
+    "test.py": "be6249321d67aa4f615145fc030f919703d6f7dd05bfbc9bc9089081710caeb"
+  },
+  "invocation_count": {"formal_study": 1, "independent_audit": 1, "training_updates": 0},
+  "container": {"network": "none", "root_read_only": true, "source_read_only": true, "cpus": 1, "memory": "2g", "pids_limit": 64, "no_new_privileges": true},
+  "construction": {"docker_tests_passed": 11, "construction_optimizer_updates": 0, "prior_failed_test_invocation_preserved": true},
+  "design": {"rows": 64, "strata": 8, "repetitions_per_stratum": 8, "tamper_controls": 15, "active_generation": 2, "previous_generation": 1, "rollback_generation": 2, "proposal_authority": false},
+  "gates": [
+    "independent envelope/oracle exact agreement on all 64 rows",
+    "zero unsafe eligible outcomes on 56 directed negative rows",
+    "zero false YIELD outcomes on 8 CURRENT_VALID rows",
+    "confidence-only comparator admits at least 40/56 negative rows",
+    "all 15 mutation controls YIELD without state mutation or authority",
+    "independent audit errors=[]",
+    "no post-freeze source/test/gate changes, retry, or model training"
+  ],
+  "decision": {
+    "pass": "PASS_GENERATION_FENCE_SCOPED",
+    "unsafe": "FAIL_GENERATION_FENCE_UNSAFE_ADMISSION",
+    "overrefusal": "FAIL_GENERATION_FENCE_OVERREFUSAL",
+    "weak_comparator": "HOLD_COMPARATOR_NOT_DISCRIMINATING",
+    "provenance_or_environment": "STOP_PROVENANCE_OR_ENVIRONMENT"
+  },
+  "formal_seed_reuse": "not_applicable_deterministic_finite_matrix",
+  "network_or_runtime_authority": false,
+  "frozen_at_utc": "2026-09-27T10:20:00Z"
+}
