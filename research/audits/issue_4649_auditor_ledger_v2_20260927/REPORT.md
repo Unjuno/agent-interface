@@ -10,7 +10,7 @@ This does not change formal01's overall **FAIL_AUDITOR_ROBUSTNESS** disposition,
 
 - Allocation: `issue4649-auditor-ledger-v2-20260927-02`; Issue #4649.
 - Intake main: `51263d3997e860d01fbe7387104dbf211bfcde10`.
-- Allocation plan blob: `bd90f9d1e33b080644b5ab9c43a1f8df950c56e6`; source blob: `1d570ffaa8b0cab1b1dd806d4b99eee1232b22d3`.
+- Allocation plan blob: `bd90f9d1e33b080644b5ab9c43a1f8df950c56e6`; source blob: `1d570ffaa8b0cab1b1dd806d4b99eee1232b22d3`. The v1 auditor and control harness are frozen in predecessor branch/PR #4659; their hashes are listed below and that additive-source PR remains a separate integration dependency.
 - v2 source SHA-256: `500946223763825cd7773dacae55ab67cc3b624b958c941fdd84b2b877f73630`; allocation freeze SHA-256: `5ff753fd82eb15a1220b8021afe2f1e3569233be34ab2530a67bb96067a6fd2d`.
 - Formal01 input artifacts remained pinned: manifest `8180a34bb58ca94ac2734baba0cc84e6316144f37ffac7bb5977d2d6927e7438`, predecessor freeze `4665fbf32c86d66dcea3c6efdd6b073c39486321fae48ec8f07104de325b2a9f`, formal result `aa7de87e5cf0644eb5bbe645d34d9273a8fbefccf041faea12b4e6933886f6b7`, v1 auditor `dc12e14860296b0d8900aaa66d1465101a0fcd7d4ede69d0b24dd775ad5fee66`, controls harness `5893bb46ac503943cd0b2d329a18f8dca2267a83b345e82059b5b3103dcb1938`.
 - Local Docker Desktop 29.8.0; cached image `sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9`; Linux/amd64, CPython 3.12.14. `--pull=never --network none --cpus=1 --memory=1g --pids-limit=64 --read-only`, 64 MiB noexec/nosuid tmpfs, readonly study/input/result/source, dedicated writable output.
@@ -18,7 +18,7 @@ This does not change formal01's overall **FAIL_AUDITOR_ROBUSTNESS** disposition,
 
 ## Result details
 
-Untouched baseline: v1 `PASS_INDEPENDENT`, v2 `PASS_INDEPENDENT`, errors `[]`, stderr empty, exit 0. The separately executed unchanged v1 control harness generated 8 rows; each was structurally rejected (exit 1, nonempty auditor errors, empty stderr). The v2 output auditor independently rechecked the baseline and every row: 8 checks passed. Raw row-level details are in `controls02/CONTROLS.json`; separate audit summary is `controls02/INDEPENDENT_AUDIT.json`.
+Untouched baseline: v1 `PASS_INDEPENDENT`, v2 `PASS_INDEPENDENT`, errors `[]`, stderr empty, exit 0. The separately executed unchanged v1 control harness generated 8 rows; each was structurally rejected (exit 1, nonempty auditor errors, empty stderr). The v2 output auditor independently rechecked the baseline and every row: 8 checks passed. Raw row-level details are in `results/formal01/CONTROLS.json`; separate audit summary is `results/formal01/INDEPENDENT_AUDIT.json`.
 
 The correction is a full equality check between the candidate result's `input_sha256` object and the independently recomputed manifest path+digest table, in addition to checking those bytes against the separately frozen hashes. No v1 source or formal01 artifact was changed.
 
