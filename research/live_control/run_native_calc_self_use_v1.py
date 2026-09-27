@@ -16,20 +16,17 @@ from scoped_target_handle_v2 import FlatTargetRefused
 
 
 def paced_text_tail(ops, gap_ms):
-    """Explicit research policy compiled to ordinary native text/wait ops."""
+    """Set a research default; explicit per-operation pacing takes precedence."""
     if type(gap_ms) is not int or gap_ms not in (0, 2, 10):
-        raise ValueError('supported text gaps are 0, 2, 10 ms')
-    if gap_ms == 0:
-        return list(ops)
+        raise ValueError("supported text gaps are 0, 2, 10 ms")
     result = []
     for op in ops:
-        if op.get('op') != 'text' or not op.get('text'):
-            result.append(op)
-            continue
-        for i, ch in enumerate(op['text']):
-            if i:
-                result.append({'op': 'wait_update', 'timeout_ms': gap_ms})
-            result.append(dict(op, text=ch))
+        if not isinstance(op, dict):
+            raise ValueError("operation must be an object")
+        item = dict(op)
+        if gap_ms and item.get("op") == "text":
+            item.setdefault("gap_ms", gap_ms)
+        result.append(item)
     return result
 
 

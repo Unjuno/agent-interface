@@ -38,6 +38,53 @@ class NativeTailTests(unittest.TestCase):
             expand_tail([chord, {'op': 'observe'}], max_ops=123)
         self.assertEqual(len(expand_tail([dict(chord, repeat=126)], max_ops=126)), 126)
 
+    def test_text_gap_matches_public_compiler(self):
+        from runtime.core_v1.sequence import expand_text_gaps
+        request = [{'op': 'text', 'text': '858', 'gap_ms': 20},
+                   {'op': 'key_chord', 'keys': ['Right'], 'repeat': 2}]
+        self.assertEqual(expand_tail(request, max_ops=123),
+                         expand_text_gaps(request, max_ops=123)[0])
+        self.assertEqual(expand_tail(request, max_ops=123)[:5],
+                         [{'op': 'text', 'text': '8'},
+                          {'op': 'wait_update', 'timeout_ms': 20},
+                          {'op': 'text', 'text': '5'},
+                          {'op': 'wait_update', 'timeout_ms': 20},
+                          {'op': 'text', 'text': '8'}])
+        self.assertEqual(request[0]['text'], '858')
+
+    def test_explicit_gap_overrides_research_default(self):
+        from run_native_calc_self_use_v1 import paced_text_tail
+        request = [{'op': 'text', 'text': 'ab', 'gap_ms': 0},
+                   {'op': 'text', 'text': 'cd', 'gap_ms': 20},
+                   {'op': 'text', 'text': 'ef'}]
+        prepared = paced_text_tail(request, 2)
+        self.assertEqual([op['gap_ms'] for op in prepared], [0, 20, 2])
+        result = expand_tail(prepared, max_ops=123)
+        self.assertEqual(result[0], {'op': 'text', 'text': 'ab'})
+        self.assertEqual([op['timeout_ms'] for op in result
+                          if op['op'] == 'wait_update'], [20, 2])
+        self.assertNotIn('gap_ms', request[2])
+
+    def test_gap_capacity_shares_key_repeat_budget(self):
+        request = [{'op': 'text', 'text': 'ab', 'gap_ms': 2},
+                   {'op': 'key_chord', 'keys': ['Right'], 'repeat': 120}]
+        self.assertEqual(len(expand_tail(request, max_ops=123)), 123)
+        with self.assertRaises(ValueError):
+            expand_tail(request, max_ops=122)
+
+    def test_invalid_gap_rejected_before_guard_and_dispatch(self):
+        bridge = object.__new__(NativeHandleBridge)
+        bridge.active = None
+        bridge.check = Mock()
+        bridge.session = SimpleNamespace(recovery_required=False, dispatch=Mock())
+        for gap in (True, -1, 1001, '2', None):
+            for activate in (True, False):
+                with self.subTest(gap=gap, activate=activate), self.assertRaises(ValueError):
+                    bridge._run_guarded('alias', [0, 0], tail=[
+                        {'op': 'text', 'text': 'ab', 'gap_ms': gap}], activate=activate)
+        bridge.check.assert_not_called()
+        bridge.session.dispatch.assert_not_called()
+
     def test_bridge_rejects_before_guard_or_dispatch(self):
         bridge = object.__new__(NativeHandleBridge)
         bridge.active = None
