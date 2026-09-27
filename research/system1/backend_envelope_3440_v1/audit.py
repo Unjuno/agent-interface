@@ -36,6 +36,10 @@ def rule(x):
     if abs(px)>abs(py):return 0 if px<0 else 1
     return 0 if py<0 else 1
 
+def controls():
+    base=[.3,.1,0.,0.,.9,.1,1.,0.,.5,1.,1.,0.]
+    return [base[:9]+[0.,1.,0.],base[:9]+[1.,0.,0.],base[:4]+[.2,.1]+base[6:],base[:11]+[1.]]
+
 def tree_predict(t,x):
     while "feature" in t:t=t["left"] if x[t["feature"]]<=t["cut"] else t["right"]
     return t["pred"]
@@ -67,6 +71,10 @@ def main(path):
             prec=sum(pred[i]==labels[i] for i in safe)/max(1,sum(pred[i] in (0,1,2) for i in safe))
             assert abs(m["coverage"]-cov)<1e-12 and abs(m["actionable_precision"]-prec)<1e-12
     cg=d["groups"]["controls"]
+    base=[.3,.1,0.,0.,.9,.1,1.,0.,.5,1.,1.,0.]
+    expected_controls=[base[:9]+[0.,1.,0.],base[:9]+[1.,0.,0.],base[:4]+[.2,.1]+base[6:],base[:11]+[1.]]
+    assert cg["rows"]==expected_controls,"control-case regeneration mismatch"
+    assert cg["rows"]==controls(),"control-case regeneration mismatch"
     assert len(cg["rows"])==4
     for i,x in enumerate(cg["rows"]):assert oracle(x)==cg["labels"][i]
     summary={b:d["groups"]["shift"]["metrics"][b] for b in ("rule","tree","mlp")}
