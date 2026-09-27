@@ -1,4 +1,4 @@
-"""Frozen finite-schedule multi-process publisher/reader probe for #5045.
+"""Frozen finite-schedule multi-process publisher/reader probe for #5066.
 
 Formal invocation only inside the pinned offline Docker image. Construction
 unit tests must not import or invoke main().
@@ -31,7 +31,7 @@ from protocol import (
     validate_package,
 )
 
-SRC = Path("/src/research/system1/needle_cross_process_publication_5045_v1")
+SRC = Path("/src/research/system1/needle_cross_process_publication_5045_v2_20260928")
 OUT = Path("/out")
 SEED_PACKAGE = Path("/src/research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/skill.json")
 
@@ -242,8 +242,8 @@ def main() -> int:
     diagnostic = run_arm(root, "diagnostic", old_raw, old, new)
     candidate_raw = canonical_bytes(new)
     raw = {
-        "allocation": "needle-cross-process-publication-5045-v1",
-        "issue": 5045,
+        "allocation": "needle-cross-process-publication-5045-v2-20260928-01",
+        "issue": 5066,
         "formal_invocations": 1,
         "publisher_container_pid": os.getpid(),
         "python": sys.version,
@@ -280,5 +280,6 @@ if __name__ == "__main__":
             encoding="utf-8",
         )
         raise
+
 
 
