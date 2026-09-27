@@ -1,0 +1,46 @@
+{
+  "allocation": "broker-fake-child-boundary-4485-20260928-01",
+  "branch": "research/broker-fake-child-boundary-4485-20260928",
+  "base_sha": "7eb56d16fd51e5852cfa77faa3395317f14beaa6",
+  "broker_git_blob": "5734f54f318db9ac5e96b2bed6f6bed105ac39ff",
+  "mock_test_git_blob_reference_only": "79405a089708a3f2d7c0982192592041125cf0dd",
+  "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+  "platform": "linux/amd64",
+  "network": "none",
+  "pull": "never",
+  "cpu": "0.25",
+  "memory": "256m",
+  "pids": 32,
+  "read_only_root": true,
+  "source_read_only": true,
+  "output_fresh_and_writable": true,
+  "gpu": false,
+  "cases": [
+    "exit-0",
+    "exit-23",
+    "timeout",
+    "missing-executable",
+    "malformed-json",
+    "idle-once",
+    "sorted-once"
+  ],
+  "formal_invocations": 1,
+  "formal_command": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --security-opt=no-new-privileges --cap-drop=ALL --cpus=0.25 --memory=256m --pids-limit=32 --tmpfs /tmp:rw,nosuid,size=16m --mount type=bind,source=<src>,target=/src,readonly --mount type=bind,source=<out>,target=/out sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e python /src/formal.py",
+  "source_sha256_in_container": {
+    "host_model_ipc_broker_v1.py": "e44822269b921aa6327563b27e48a6d8ef4ebe35a182f50de541cf66fce6199c",
+    "runner.py": "ae6c070cf05c607f605c8b0fc322e6007f543d9d677d29005e89494f159c065a",
+    "audit.py": "42b9e99318adc09157aa5277386574933327cf4b5062abe02d01c9aae2947c23",
+    "formal.py": "1130ea5b31a46883512d4a1010f43b171ae20e53a480e84181ed6a5d199f6e1d",
+    "test_harness.py": "721aacc84675204318acdb9ee7878f2293e442a0165989ea19250fc248956e06"
+  },
+  "construction_tests": {
+    "command": "python -m unittest -v",
+    "result": "2 passed",
+    "preformal_only": true
+  },
+  "formal_preflight": [
+    "source_sha256_matches_FREEZE.json",
+    "image_id_environment_matches_FREEZE.json",
+    "fresh_empty_output_directory"
+  ]
+}
