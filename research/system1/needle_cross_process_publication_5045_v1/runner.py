@@ -21,6 +21,8 @@ from typing import Any
 from protocol import (
     NEW_GENERATION,
     OLD_GENERATION,
+    EXPECTED_SEED_PACKAGE_SHA256,
+    FROZEN_IMAGE_ID,
     READER_COUNT,
     candidate_from,
     canonical_bytes,
@@ -29,9 +31,9 @@ from protocol import (
     validate_package,
 )
 
-SRC = Path("/src")
+SRC = Path("/src/research/system1/needle_cross_process_publication_5045_v1")
 OUT = Path("/out")
-SEED_PACKAGE = SRC / "skill3788.json"
+SEED_PACKAGE = Path("/src/research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/skill.json")
 
 
 def sha(data: bytes) -> str:
@@ -223,17 +225,22 @@ def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     if any(OUT.iterdir()):
         raise RuntimeError("formal output directory is not empty")
+    if os.environ.get("FROZEN_IMAGE_ID") != FROZEN_IMAGE_ID:
+        raise RuntimeError("container image identity environment mismatch")
     old_raw = SEED_PACKAGE.read_bytes()
+    if sha(old_raw) != EXPECTED_SEED_PACKAGE_SHA256:
+        raise RuntimeError("seed package SHA-256 differs from the exact #3890 seed-3788 artifact")
     old = json.loads(old_raw)
     if old.get("generation") != OLD_GENERATION or not validate_package(old):
         raise RuntimeError("exact seed package failed frozen schema/digest gate")
     new = candidate_from(old)
     if not validate_package(new) or new.get("generation") != NEW_GENERATION:
         raise RuntimeError("candidate construction failed")
-    root = Path("/tmp/issue5045")
+    root = OUT / "work"
     root.mkdir()
     atomic = run_arm(root, "atomic", old_raw, old, new)
     diagnostic = run_arm(root, "diagnostic", old_raw, old, new)
+    candidate_raw = canonical_bytes(new)
     raw = {
         "allocation": "needle-cross-process-publication-5045-v1",
         "issue": 5045,
@@ -245,8 +252,12 @@ def main() -> int:
         "command": shlex.join([sys.executable, str(SRC / "runner.py")]),
         "input_git_blob": "45b80150dac503f4eb6f3cb5d82f9afa2c587107",
         "input_sha256": sha(old_raw),
+        "old_raw_sha256": sha(old_raw),
+        "old_payload_sha256": old["payload_sha256"],
         "input_bytes": len(old_raw),
         "candidate_sha256": new["payload_sha256"],
+        "candidate_raw_sha256": sha(candidate_raw),
+        "candidate_raw_bytes": len(candidate_raw),
         "reader_count_per_arm": READER_COUNT,
         "query_count": len(atomic["observations"]) + len(diagnostic["observations"]),
         "dispatch_count": 0,
@@ -269,4 +280,5 @@ if __name__ == "__main__":
             encoding="utf-8",
         )
         raise
+
 
