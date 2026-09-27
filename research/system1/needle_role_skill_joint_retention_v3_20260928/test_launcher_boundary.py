@@ -27,6 +27,7 @@ class LauncherBoundaryTests(unittest.TestCase):
                 result = launcher.run(source, output, logs)
             self.assertEqual(result["status"], "CONSTRUCTION_EXIT_0")
             self.assertEqual(called.call_count, 1)
+            self.assertEqual(called.call_args.args[0][-2:], ["--seed", "9934014"])
             self.assertEqual(sorted(p.name for p in output.iterdir()), ["construction_raw.json"])
             self.assertEqual(sorted(p.name for p in logs.iterdir()),
                              ["launcher_receipt.json", "stderr.txt", "stdout.txt"])
