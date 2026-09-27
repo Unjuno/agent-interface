@@ -78,4 +78,33 @@ class OptimizationControls(unittest.TestCase):
             self.assertNotEqual(result.returncode,0,(mode,result.stdout,result.stderr))
             self.assertIn("budget_changed_hard_outcome",result.stderr)
 
+
+    def test_legacy_assert_bypass_is_exposed_and_candidate_fails_closed(self):
+        legacy=HERE/"predecessor_contract.py"
+        original=legacy.read_text(encoding="utf-8")
+        before='    if not e["fresh"]:\n'
+        self.assertIn(before,original)
+        mutated=original.replace(before,'    if True:\n',1)
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/"legacy_mutated.py"
+            path.write_text(mutated,encoding="utf-8")
+            normal=self.invoke("normal",path)
+            self.assertNotEqual(normal.returncode,0,(normal.stdout,normal.stderr))
+            self.assertNotIn("PASS_TYPED_NEGATIVE_OUTCOMES_SCOPED",normal.stdout)
+            for mode in ("opt_flag","env_opt"):
+                optimized=self.invoke(mode,path)
+                self.assertEqual(optimized.returncode,0,(mode,optimized.stdout,optimized.stderr))
+                self.assertIn("PASS_TYPED_NEGATIVE_OUTCOMES_SCOPED",optimized.stdout)
+        candidate=CANDIDATE.read_text(encoding="utf-8")
+        candidate_mutation=candidate.replace(
+            'value = ("FAILED_UNKNOWN", False, "NEW_OBSERVATION")',
+            'value = ("SUCCEEDED", False, "NONE")',1)
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/"candidate_mutated.py"
+            path.write_text(candidate_mutation,encoding="utf-8")
+            for mode in ("normal","opt_flag","env_opt"):
+                result=self.invoke(mode,path)
+                self.assertNotEqual(result.returncode,0,(mode,result.stdout,result.stderr))
+                self.assertNotIn(MARKER,result.stdout,(mode,result.stdout))
+
 if __name__=="__main__": unittest.main(verbosity=2)
