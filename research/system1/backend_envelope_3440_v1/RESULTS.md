@@ -45,5 +45,12 @@ This is a static synthetic 2D proposal-classification study, not a temporal roll
 - `formal-8304421.json`: `B502656FB2EC1A0B85912FAFF83FF11366C8E0104E341B96282A5779DAB85509` (356,083 bytes)
 - `formal-8304431.json`: `617FCF8D28A89E9F8F47F658A20AA8342933650517C5015E7875C226208F9BFB` (356,037 bytes)
 
+## Frozen source SHA-256
+
+- `experiment.py`: `0E5504019C134473884088FB2FC51E530778E56E4F86F5BE166D3DE674505F3A`
+- `audit.py` (strengthened post-run audit-only revision): `F44D1952B38D796567011ADAECFB242141A5C9951143234410E58752D865C5B1`
+- `test_experiment.py`: `42E038E0A6C0A3AAD200AC9A01FF310C7E2A4B65266F2A9746082240443D3CAE`
+- `PLAN.md`: `31E263596525A36F5F2FA16AE97172773626FEFABBA8D20CA8FF1336269FBA9F`
+
 The trained candidates are not eligible for integration. The reusable artifacts are the frozen harness, the independent audit, and this explicitly negative result.
 
