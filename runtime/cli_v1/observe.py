@@ -8,6 +8,26 @@ SCHEMA = "agent-interface/runtime-observation-v1"
 
 
 def observe(targets, *, target, frame, region, capture_directory=None, display_name=None):
+    return _observe(targets, target=target, frame=frame, region=region,
+                    capture_directory=capture_directory, display_name=display_name)
+
+
+def observe_in_session(session, *, target, frame, region, capture_directory=None):
+    """Capture through a caller-owned session without closing it or clearing recovery.
+
+    The caller serializes access and owns closure. No input, source/binding update,
+    recovery reset or authority renewal is performed by this facade.
+    """
+    if session is None or getattr(session, "backend", None) is None:
+        return {"schema": SCHEMA, "observation_id": uuid.uuid4().hex,
+                "status": "invalid_request", "error": "INVALID_SESSION",
+                "side_effect_authority": False, "input_dispatched": False}
+    return _observe({}, target=target, frame=frame, region=region,
+                    capture_directory=capture_directory, supplied_session=session)
+
+
+def _observe(targets, *, target, frame, region, capture_directory=None,
+             display_name=None, supplied_session=None):
     row = {"schema": SCHEMA, "observation_id": uuid.uuid4().hex,
            "side_effect_authority": False, "input_dispatched": False}
     if (type(target) is not str or frame not in ("window_client", "screen_physical_px") or
@@ -18,7 +38,8 @@ def observe(targets, *, target, frame, region, capture_directory=None, display_n
                  region[2] * region[3] <= 16_777_216)):
         return dict(row, status="invalid_request", error="INVALID_OBSERVATION_REGION")
     try:
-        session = open_session(targets, display_name=display_name)
+        session = (supplied_session if supplied_session is not None
+                   else open_session(targets, display_name=display_name))
     except BackendUnavailable as error:
         return dict(row, status="backend_unavailable", error=str(error))
     except Exception as error:
@@ -39,7 +60,8 @@ def observe(targets, *, target, frame, region, capture_directory=None, display_n
     except Exception as error:
         row.update(status="observation_failed", error=repr(error))
     finally:
-        close = getattr(session.backend, "close", None)
+        close = (getattr(session.backend, "close", None)
+                 if supplied_session is None else None)
         if callable(close):
             try:
                 close()

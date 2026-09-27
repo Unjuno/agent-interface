@@ -12,6 +12,8 @@ import time
 import traceback
 
 HERE = Path(__file__).resolve().parent
+# Direct script execution needs both local research modules and the runtime package.
+sys.path.insert(0, str(HERE.parents[1]))
 sys.path.insert(0, str(HERE.parent / "observation_gating"))
 import gui_suite as suite
 from integrated_efficiency_fixture_v1 import Fixture

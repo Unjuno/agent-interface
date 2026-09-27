@@ -139,6 +139,23 @@ still requires a matched measurement.
 
 ## Native decision loop
 
+Native MCP checks explicitly supplied text gaps, key repetitions and their
+expanded tail capacity before publishing a stage request. Invalid compact
+syntax returns a tool validation error; the owner receives no request from
+that call. Valid requests keep their original compact representation.
+This checks explicit syntax only: configured default pacing can expand an
+otherwise unpaced tail further, and ordinary source, target, capability and
+lease checks still apply at execution. A passed syntax check is not admission.
+
+Initial native context includes the recorded `text_policy` when available.
+Its `value.gap_ms` is the harness default for text operations that omit
+`gap_ms`; an explicit per-operation value, including zero, takes precedence.
+The recorded harness defaults are 0, 2 or 10 ms, while explicit operation gaps
+accept 0..1000 ms. Missing records return `unavailable`; invalid records return
+`needs_review` without an invented default. The source path and byte hash are
+retained. This is historical configuration context, not runtime admission,
+application readiness or an optimal-typing-speed recommendation.
+
 Native MCP image responses include `window_inventory` when a stage's recorded
 listing is available. Read its complete application/dialog titles alongside the
 image for exact-title feedback; no separate shell discovery is needed. The
@@ -215,3 +232,27 @@ These checks do not start an application or model. Passing them does not establi
 human-tempo operation, cross-application reliability, token/cost reduction or
 current-model compatibility. Frozen experiments remain evidence for their pinned
 sources; integration commits do not extend those claims to a newer build.
+
+### Choose a visually matchable point
+
+Native click and keyboard context checks match a local image patch around the
+specified point. A uniform fill can be refused even when a human recognizes the
+whole object. For clicks, choose a point inside the intended clickable target
+with a visible border or text nearby; choosing another control changes the action.
+For keyboard input, the point is a context anchor, not a click destination.
+
+If a response reports `visually_flat_source_region` and `input_dispatched=false`,
+inspect the returned image and explicitly choose a new point with its new source
+sequence. A refused action is not automatically replayed. See the
+[mixed Calc/Inkscape primary run](results/public-owned-mixed-live-01/README.md):
+a center-point refusal added one round trip before an edge-point correction.
+This observation motivates guidance; it does not measure the guidance's benefit.
+
+When an input field has focus, avoid a patch containing its blinking caret or
+text that the planned action will change. A stable border inside the intended
+target may preserve context better. This is guidance for the primary model,
+not automatic point selection. The [six-task construction pair](results/stable-anchor-six-pair-01/README.md)
+retains both correctness and the tradeoff: fewer grounding requests, but more
+internal captures and slower local application-feedback handling.
+
+Capture-stage timing is available in X11 image artifacts; see [interval definitions](backends/x11_v1/CAPTURE_TIMING.md). Treat these as local processing measurements, not model-visible completion. The [primary-operated Calc PNG comparison](results/calc-png-integration-01/README.md) retained a faster first response but a slower second response and different final visual readiness with level1 compression. Standard compression remains unchanged; lower encoder time alone is not an adoption criterion.

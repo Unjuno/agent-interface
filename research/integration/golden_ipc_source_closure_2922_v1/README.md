@@ -26,6 +26,12 @@ the configured local fixture endpoint was not requested by Chromium, and no
 task effect was tested. The original Issue #2922 STOP and all predecessor
 artifacts remain unchanged.
 
+A later, separate no-GUI import-only rung passed in the same pinned historical
+GUI runtime image, with no Xvfb or Chromium invocation. See
+[`NO_GUI_IMPORT.md`](NO_GUI_IMPORT.md) and `NO_GUI_IMPORT_RESULT.json`. This
+narrows uncertainty about Python import closure only; it does not upgrade the
+earlier startup HOLD or establish runtime readiness.
+
 ## H / T / D / C / U
 
 - **H** — Supplying the retained route's transitive import roots will allow
@@ -63,9 +69,13 @@ artifacts remain unchanged.
 - `environment.json` records both container images, platform, and runtime
   limits.
 - `source_snapshot/` retains all eight hash-pinned historical source files.
-- `audit.py` recomputes source identities and checks the raw event contract
-  without importing the runner; `test_audit.py` has one baseline and five
-  corruption tests.
+- `audit.py` recomputes source identities and checks the raw event and separate
+  no-GUI import-only result contracts without importing the runner;
+  `test_audit.py` includes the startup and direct-Xvfb raw bundles, five
+  historical-event mutation controls, and contract checks for the two later
+  import/readiness rungs. A separate host-only AST-extracted GET-handler probe
+  records the fixture response without output mutation; it is explicitly not
+  containerized or an integrated-session result.
 - `001.png` is the retained first observation (Chromium `about:blank`), not a
   task-effect image.
 
