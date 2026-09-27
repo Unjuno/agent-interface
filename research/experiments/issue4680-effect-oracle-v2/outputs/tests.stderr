@@ -1,0 +1,25 @@
+test_expected_effect_tampering_is_detected (test_effect_oracle.IndependentOracleTests.test_expected_effect_tampering_is_detected) ... ok
+test_field_action_is_staged_not_persisted (test_effect_oracle.IndependentOracleTests.test_field_action_is_staged_not_persisted) ... ok
+test_missing_row_is_detected (test_effect_oracle.IndependentOracleTests.test_missing_row_is_detected) ... ok
+test_multistep_save_commits_staged_value (test_effect_oracle.IndependentOracleTests.test_multistep_save_commits_staged_value) ... ok
+test_proposal_tampering_is_detected_even_if_claimed_effect_matches (test_effect_oracle.IndependentOracleTests.test_proposal_tampering_is_detected_even_if_claimed_effect_matches) ... ok
+test_retained_formal_rows_match_independent_transitions (test_effect_oracle.IndependentOracleTests.test_retained_formal_rows_match_independent_transitions) ... FAIL
+test_save_without_stage_refuses (test_effect_oracle.IndependentOracleTests.test_save_without_stage_refuses) ... ok
+test_toggle_computes_persisted_boolean_effect (test_effect_oracle.IndependentOracleTests.test_toggle_computes_persisted_boolean_effect) ... ok
+
+======================================================================
+FAIL: test_retained_formal_rows_match_independent_transitions (test_effect_oracle.IndependentOracleTests.test_retained_formal_rows_match_independent_transitions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/work/issue4680-effect-oracle-v2/test_effect_oracle.py", line 16, in test_retained_formal_rows_match_independent_transitions
+    self.assertEqual(report["decision"], "PASS_EFFECT_ORACLE_SCOPED", report["errors"])
+AssertionError: 'FAIL_EFFECT_ORACLE' != 'PASS_EFFECT_ORACLE_SCOPED'
+- FAIL_EFFECT_ORACLE
++ PASS_EFFECT_ORACLE_SCOPED
+ : ['INDEPENDENT_EFFECT_MISMATCH:already_satisfied', 'CLAIMED_EFFECT_MISMATCH:already_satisfied']
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.007s
+
+FAILED (failures=1)
+
