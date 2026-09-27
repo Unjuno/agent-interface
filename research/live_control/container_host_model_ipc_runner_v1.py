@@ -1,6 +1,7 @@
 """Container-side model runner using a host-local Codex broker over a shared volume."""
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 import os
@@ -70,12 +71,15 @@ def main() -> int:
                "working": str(Path(working).resolve()),
                "image": None if image_path is None else str(image_path),
                "image_sha256": None if image_path is None else sha(image_path),
-               "instructions": str(Path(instructions).resolve()),
+               "instructions_b64": base64.b64encode(
+                   Path(instructions).read_bytes()).decode("ascii"),
                "instructions_sha256": sha(Path(instructions)),
                "schema": str(Path(schema).resolve()), "schema_sha256": sha(Path(schema)),
                "runner": "container_host_model_ipc_runner_v1", "authority_granted": False}
     (root / "prompt.txt").write_text(prompt, encoding="utf-8", newline="\n")
-    (root / "plan.json").write_text(json.dumps(request, indent=2) + "\n", encoding="utf-8", newline="\n")
+    plan = {key: value for key, value in request.items() if key != "instructions_b64"}
+    plan["instructions_bytes"] = len(base64.b64decode(request["instructions_b64"]))
+    (root / "plan.json").write_text(json.dumps(plan, indent=2) + "\n", encoding="utf-8", newline="\n")
     request_path = ipc / f"{request_id}.request.json"
     response_path = ipc / f"{request_id}.response.jsonl"
     started_ns = time.perf_counter_ns()

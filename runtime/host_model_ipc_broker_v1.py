@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import argparse
+import base64
+import binascii
 import hashlib
 import hmac
 import json
@@ -26,26 +28,30 @@ def host_path(value: str | None, repo: Path) -> str | None:
     return value
 
 
-def verified_instruction_bytes(request: dict, repo: Path) -> bytes | None:
-    value = request.get("instructions")
+MAX_INSTRUCTION_BYTES = 1024 * 1024
+
+
+def verified_instruction_bytes(request: dict) -> bytes | None:
+    value = request.get("instructions_b64")
     if value is None:
+        if request.get("instructions") is not None:
+            raise ValueError("path-based instructions are not accepted")
         return None
-    mapped = host_path(value, repo)
-    if mapped is None:
-        raise ValueError("instruction path is absent")
-    repo_root = repo.resolve(strict=True)
-    instruction_path = Path(mapped).resolve(strict=True)
+    if not isinstance(value, str):
+        raise ValueError("instructions_b64 must be a string")
+    if len(value) > ((MAX_INSTRUCTION_BYTES + 2) // 3) * 4:
+        raise ValueError("instruction payload exceeds size limit")
     try:
-        instruction_path.relative_to(repo_root)
-    except ValueError as exc:
-        raise ValueError("instruction path escapes the declared repo") from exc
-    data = instruction_path.read_bytes()
+        data = base64.b64decode(value, validate=True)
+    except (binascii.Error, ValueError) as exc:
+        raise ValueError("instruction payload is not valid base64") from exc
+    if len(data) > MAX_INSTRUCTION_BYTES:
+        raise ValueError("instruction payload exceeds size limit")
     expected = request.get("instructions_sha256")
     actual = hashlib.sha256(data).hexdigest()
     if not isinstance(expected, str) or not hmac.compare_digest(expected, actual):
         raise ValueError("instruction SHA-256 mismatch")
     return data
-
 
 def serve(ipc: Path, repo: Path, once: bool = False) -> int:
     cli = os.environ.get("CODEX_EXE", "codex.exe")
@@ -60,7 +66,7 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                 continue
             started_ns = time.perf_counter_ns()
             try:
-                instruction_bytes = verified_instruction_bytes(request, repo)
+                instruction_bytes = verified_instruction_bytes(request)
             except (OSError, ValueError) as exc:
                 broker = {"request_id": request_id, "returncode": None,
                           "error_class": "InvalidInstructions",
