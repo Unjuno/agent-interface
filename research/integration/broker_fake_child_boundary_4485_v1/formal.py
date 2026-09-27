@@ -29,6 +29,18 @@ def invoke(script: str):
 
 
 def main() -> int:
+    freeze = json.loads((SRC / "FREEZE.json").read_text(encoding="utf-8"))
+    actual_sources = {
+        name: sha(SRC / name) for name in
+        ("host_model_ipc_broker_v1.py", "runner.py", "audit.py", "formal.py",
+         "test_harness.py")
+    }
+    if actual_sources != freeze.get("source_sha256_in_container"):
+        raise RuntimeError("frozen source SHA-256 mismatch")
+    if os.environ.get("FROZEN_IMAGE_ID") != freeze.get("image_id"):
+        raise RuntimeError("frozen image identity mismatch")
+    if any(OUT.iterdir()):
+        raise RuntimeError("formal output directory is not empty")
     runner = invoke("runner.py")
     audit = invoke("audit.py") if runner["exit"] == 0 else {
         "exit": None, "stdout": "", "stderr": "not run: runner failed"
