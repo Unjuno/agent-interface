@@ -1,0 +1,101 @@
+{
+  "issue": 4912,
+  "allocation": "typed-readout-precision-boundary-1014-v4-20260928-01",
+  "branch": "research/typed-readout-precision-boundary-1014-v4-20260928",
+  "main_sha": "f3dc0f18b0aaef241a6cd34124b68439c3434b05",
+  "source_files": [
+    {
+      "path": "audit_core.py",
+      "sha256": "6e808d444a00878fc192e12083700f704703355ceb7a0b44bd606c17bf84c64c",
+      "bytes": 3337
+    },
+    {
+      "path": "audit_raw.py",
+      "sha256": "251435daa93d496f1665f430ef5700ee3b3d8189e59c8fb0be640e77ae7eec08",
+      "bytes": 2714
+    },
+    {
+      "path": "cache_mechanics.py",
+      "sha256": "3915a26f23c108b67fc9a36838fec4894509f9c8e630c46881cbbfa81f4d2638",
+      "bytes": 1700
+    },
+    {
+      "path": "corpus.jsonl",
+      "sha256": "85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c",
+      "bytes": 270292
+    },
+    {
+      "path": "MODEL_MANIFEST.json",
+      "sha256": "b3f45e24433287c029c4a24b93e47cc5b62348651b512f12f47df755e6ab1854",
+      "bytes": 1694
+    },
+    {
+      "path": "README.md",
+      "sha256": "22f3931917390a9d7a83c797e8076d3f4af03685872c245e769bffe67bad6d45",
+      "bytes": 2572
+    },
+    {
+      "path": "run_construction.py",
+      "sha256": "adc5b89c2baf03d0480f64678e5209a20b36fc7a44a13e4dcbaa28b14fa47c52",
+      "bytes": 8024
+    },
+    {
+      "path": "SOURCE_MANIFEST.json",
+      "sha256": "0200742648e56933535449ebb6d2137aec44f9c6ff085ff708bc8a2a6b18784f",
+      "bytes": 1396
+    },
+    {
+      "path": "test_audit_core.py",
+      "sha256": "cb95a951b56fbfb268dba7c65b6e05639ad8a797c7afadc4014d657fb306a6bf",
+      "bytes": 1843
+    }
+  ],
+  "corpus": {
+    "sha256": "85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c",
+    "bytes": 270292
+  },
+  "model": {
+    "weights_sha256": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe",
+    "revision": "7ae557604adf67be50417f59c2c2f167def9a775"
+  },
+  "image": {
+    "transformers": "5.16.1",
+    "id": "sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261",
+    "safetensors": "0.8.0",
+    "platform": "linux/amd64",
+    "torch": "2.5.1+cu121"
+  },
+  "rows": {
+    "answer_token_ids": [
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "bundles": [
+      "B00",
+      "B17",
+      "B63"
+    ],
+    "modes": [
+      "fp16",
+      "bf16",
+      "fp32"
+    ],
+    "suffix_slots": [
+      0,
+      7,
+      15
+    ],
+    "formal_rows": 0
+  },
+  "execution": {
+    "raw_output_and_logs": "separate mounts",
+    "reason": "awaiting concurrent GPU allocation clearance",
+    "gpu_experiment": "NOT_RUN"
+  }
+}
