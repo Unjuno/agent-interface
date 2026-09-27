@@ -111,7 +111,7 @@ def main():
         "seed": SEED,
         "source_contract": "Issue #4749 support-count construction protocol, independently transcribed; no formal runner or loader invoked",
         "configuration": {"base_examples": 512, "base_steps": 400, "adapter_steps": 120, "batch": 32, "lr_base": .025, "lr_adapter": .04, "heldout_c": 4096, "rng_streams": [1, 2, 3, 4, 5, 6, 10, 11, 12]},
-        "pairing": {"support16_is_prefix_of_64": bool(torch.equal(data(16, SEED + 2), xc64[:16])), "shared_initialization": True, "same_heldout": True, "A_base_immutable": all(torch.equal(v, base_before[k]) for k, v in base.state_dict().items()), "A_B_hash_equal_across_arms": arms["control16"]["a_state_sha256"] == arms["treatment64"]["a_state_sha256"] and arms["control16"]["b_state_sha256"] == arms["treatment64"]["b_state_sha256"]},
+        "pairing": {"support16_is_prefix_of_64": bool(torch.equal(xc64[:16], xc64)), "shared_initialization": True, "same_heldout": True, "A_base_immutable": all(torch.equal(v, base_before[k]) for k, v in base.state_dict().items()), "A_B_hash_equal_across_arms": arms["control16"]["a_state_sha256"] == arms["treatment64"]["a_state_sha256"] and arms["control16"]["b_state_sha256"] == arms["treatment64"]["b_state_sha256"]},
         "arms": arms,
         "delta_treatment_minus_control": arms["treatment64"]["accuracy"] - arms["control16"]["accuracy"],
         "environment": {"python": sys.version, "torch": torch.__version__, "platform": platform.platform(), "device": "cpu", "threads": torch.get_num_threads(), "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e"},
