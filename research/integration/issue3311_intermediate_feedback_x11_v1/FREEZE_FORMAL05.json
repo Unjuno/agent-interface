@@ -24,6 +24,17 @@
     "research/integration/issue3311_intermediate_feedback_x11_v1/audit_raw.py": "b8259f7cdf07b5d4af3e33fcf3f51bbc0c4df304f9c1e4bb71650765187ef08c"
   },
   "preflight_sha256": "931ae3773eeea196f0d7726247820c7a5ec0e075ed335a578a267642457ebb9f",
+  "docker_argv": [
+    "docker", "--context", "orbstack", "run", "--rm", "--network", "none", "--read-only",
+    "--tmpfs", "/tmp:rw,nosuid,size=512m", "--cpus=1", "--memory=2g", "--pids-limit=512",
+    "--shm-size=128m", "-e", "DISPLAY=:97",
+    "-e", "ISSUE3311_ALLOCATION_ID=ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-05",
+    "-e", "PYTHONPATH=/src/research/live_control", "-e", "XDG_CACHE_HOME=/tmp/cache",
+    "-e", "XDG_CONFIG_HOME=/tmp/config", "-v", "<repo>:/src:ro",
+    "-v", "<formal05>:/out:rw", "-w", "/src", "--entrypoint", "python3.11",
+    "sha256:dff1c7b56201b4c299883655d98aee3b3f8d7c0c6dd1e4ad6320b942fb5d17fb",
+    "/src/research/integration/issue3311_intermediate_feedback_x11_v1/runner.py"
+  ],
   "stop_rule": "Run the exact interface preflight once before GUI allocation. If it fails, stop without launching the GUI. If it passes, run the formal runner once. Stop at first launch, observation, admission, execution, effect, timeout, ambiguous state, or audit failure; no retry. Success requires one matching exact server-side submission, TASK_SUCCEEDED after two transitions, two fresh admissions, independent stage checks, and X11 pointer Button1-up readback after both clicks.",
   "scope_limit": "One synthetic Chromium fixture and title-based local X11 observation. No provider/model, user data, matched baseline, multi-task reuse, measured economics, or #3311 six-task acceptance claim. Does not consume or replace #4710 formal-01."
 }
