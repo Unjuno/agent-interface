@@ -85,4 +85,4 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 
 ## Concurrent Needle workload-scale successor
 
-- [`needle_concurrent_online_lora_4658_v3/RESULT_SUMMARY.md`](needle_concurrent_online_lora_4658_v3/RESULT_SUMMARY.md) — #4658; fresh-seed 2048-row support-load allocation; pending its one frozen local Docker run.
+- [`needle_concurrent_online_lora_4658_v3/RESULT_SUMMARY.md`](needle_concurrent_online_lora_4658_v3/RESULT_SUMMARY.md) — #4658; fresh-seed 2048-row support-load allocation; one frozen Docker run completed with `HOLD_LATENCY_BUDGET` (three deadline misses in one seed).
