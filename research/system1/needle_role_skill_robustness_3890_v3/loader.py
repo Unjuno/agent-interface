@@ -183,6 +183,29 @@ def main():
                   "package_sha256_before": package_before,
                   "package_sha256_after": package_after,
                   "predictions": preds, "graphs": graphs}
+        original = open(args.artifact, "rb").read()
+        corrupted = bytes([original[0] ^ 1]) + original[1:]
+        corruption_path = os.path.join(os.path.dirname(args.out), "corrupted_skill.json")
+        with open(corruption_path, "xb") as f:
+            f.write(corrupted)
+        try:
+            validate(corruption_path, seed)
+            rejected = False
+            rejection = "unexpected_accept"
+        except Exception as exc:
+            rejected = True
+            rejection = type(exc).__name__
+        proof = {"control": "first_byte_flip", "byte_index": 0,
+                 "original_byte": original[0], "corrupted_byte": corrupted[0],
+                 "changed_byte_count": sum(a != b for a, b in zip(original, corrupted)),
+                 "original_sha256": hashlib.sha256(original).hexdigest(),
+                 "corrupted_sha256": hashlib.sha256(corrupted).hexdigest(),
+                 "rejected": rejected, "rejection": rejection}
+        with open(os.path.join(os.path.dirname(args.out), "corruption_control.json"),
+                  "x", encoding="utf-8") as f:
+            json.dump(proof, f, sort_keys=True, separators=(",", ":"), allow_nan=False)
+        if not rejected or proof["changed_byte_count"] != 1:
+            raise ValueError("corruption_control_failed")
     except Exception as exc:
         result = {"accepted": False, "error": repr(exc), "type": type(exc).__name__}
     with open(args.out, "x", encoding="utf-8") as f:
