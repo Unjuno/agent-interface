@@ -85,12 +85,32 @@ def run(source, root):
         raise SystemExit("STOP_FREEZE_IDENTITY")
     if not freeze.get("github_readback", {}).get("verified"):
         raise SystemExit("STOP_GITHUB_READBACK_NOT_VERIFIED")
-    if not freeze["github_readback"].get("main_sha") or not freeze["github_readback"].get("issue_body_sha256"):
+    readback = freeze["github_readback"]
+    if not readback.get("main_sha") or len(readback.get("main_sha", "")) != 40:
         raise SystemExit("STOP_GITHUB_READBACK_IDENTITY")
-    if not freeze["github_readback"].get("files"):
+    if len(readback.get("issue_body_sha256", "")) != 64:
+        raise SystemExit("STOP_GITHUB_ISSUE_HASH")
+    entries = readback.get("files", [])
+    if not entries:
         raise SystemExit("STOP_GITHUB_FILE_READBACK_MISSING")
+    prefix = "research/system1/needle_role_skill_c_support64_4749_v1/"
+    recorded = {item.get("path"): item for item in entries}
+    expected_paths = {prefix + name for name in freeze["source_sha256"]}
+    if set(recorded) != expected_paths:
+        raise SystemExit("STOP_GITHUB_FILE_READBACK_SET")
+    for name, expected in freeze["source_sha256"].items():
+        item = recorded[prefix + name]
+        if item.get("sha256") != expected or len(item.get("blob_sha", "")) != 40:
+            raise SystemExit(f"STOP_GITHUB_FILE_READBACK_HASH:{name}")
     if not freeze.get("collision_audit", {}).get("verified"):
         raise SystemExit("STOP_COLLISION_AUDIT_NOT_VERIFIED")
+    collision = freeze["collision_audit"]
+    if tuple(collision.get("formal_seeds", ())) != SEEDS:
+        raise SystemExit("STOP_COLLISION_SEED_SET")
+    if any(collision.get(bucket) != [] for bucket in ("issue_hits", "pr_hits", "branch_hits", "commit_hits")):
+        raise SystemExit("STOP_COLLISION_HITS")
+    if collision.get("main_code_hits") != {str(seed): 0 for seed in SEEDS}:
+        raise SystemExit("STOP_MAIN_CODE_COLLISIONS")
     for name, expected in freeze["source_sha256"].items():
         if sha(source / name) != expected:
             raise SystemExit(f"STOP_SOURCE_HASH:{name}")
