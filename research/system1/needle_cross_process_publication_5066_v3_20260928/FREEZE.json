@@ -1,0 +1,91 @@
+{
+  "additive_path": "research/system1/needle_cross_process_publication_5066_v3_20260928",
+  "design": {
+    "max_observations_per_reader": 50000,
+    "retry": "none",
+    "formal_orchestrations": 1,
+    "overlap_minimum": 32,
+    "diagnostic_readers_required": 4,
+    "mutation_controls_required": 8,
+    "docker_run_invocations": 2,
+    "arms": [
+      "atomic",
+      "diagnostic"
+    ],
+    "stages": [
+      "construction-only local tests",
+      "one runner invocation",
+      "one independent raw-only auditor invocation"
+    ],
+    "readers_per_arm": 4,
+    "distinct_atomic_reader_pids_minimum": 2,
+    "publications": 4096,
+    "reader_identity_controls": 5,
+    "all_readers_ready_before_publication": true,
+    "read_intervals_after_per_reader_ready": true
+  },
+  "branch": "research/needle-cross-process-publication-overlap-5066-v3-20260928",
+  "allocation": "needle-cross-process-publication-overlap-5066-v3-20260928-01",
+  "schema": "needle-publication-overlap-freeze-v1",
+  "source_sha256": {
+    "runner.py": "20a4320d8809b2ac25faff93d226040aafd9cb4ee89249891e7057a508d9bd3b",
+    "seed_skill.json.b64": "cd8eadfa76a2a2a969b5c6871bf7bb0b6cd47ebad0b7c7cfd89ac5cff9b1c6ac",
+    ".gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+    "audit.py": "4f4706cb71ef2efbc0b72ab9c9a1f2f2683a80405cb3420972c122d5d2084063",
+    "formal.py": "0df2a53d6cd6e4f79affdcd4f89f56cb2c776f6b0ed74384b6d5e977990a1b8f",
+    "model.py": "9f9e063bd2b4a47a44e3404fb3ebaf7a15009b64712eeb03fdd131a68ddca12e",
+    "test_protocol.py": "9d8f1fd0d91437aed52467fddb4352f66fef489dfc82e141da5c66461f7b0ea1",
+    "test_audit.py": "b40414fb5e369aa2156f1aa201cd7ef3e588e6eaa78853a27e6af29020befeb5",
+    "PLAN.md": "f63270cccdc74055a933915437d88a92b151827f5c0a7b298ce805be905149c1"
+  },
+  "source_sizes": {
+    "runner.py": 12153,
+    "seed_skill.json.b64": 20373,
+    ".gitattributes": 8,
+    "audit.py": 21335,
+    "formal.py": 7470,
+    "model.py": 2556,
+    "test_protocol.py": 1614,
+    "test_audit.py": 3369,
+    "PLAN.md": 3861
+  },
+  "intake_main": "d739d70bb1ea2210bdeef488f1385c93e5902715",
+  "source_publication_main": "c7140ca0095554f8af8c8296c8f4de8e8ce26ba5",
+  "input": {
+    "path": "seed_skill.json.b64",
+    "sha256": "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a",
+    "git_blob": "45b80150dac503f4eb6f3cb5d82f9afa2c587107",
+    "bytes": 15279,
+    "generation": 3788
+  },
+  "issue": 5082,
+  "docker": {
+    "cap_drop": "ALL",
+    "no_new_privileges": true,
+    "engine": "28.5.1 linux/x86_64",
+    "context": "desktop-linux",
+    "invocation_context": "desktop-linux",
+    "pids": 32,
+    "cpu": 0.5,
+    "network": "none",
+    "memory": "256m",
+    "image": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "read_only_root": true,
+    "source_read_only": true,
+    "pull": "never",
+    "platform": "linux/amd64",
+    "shm": "32m",
+    "publication_scratch": "tmpfs:/scratch:rw,nosuid,size=32m"
+  },
+  "source_git_blobs": {
+    "runner.py": "ad23e904adce628be38dac9958c08db301a82353",
+    "seed_skill.json.b64": "90500b6cfe1c30d30fe546f7b577f1b75fa42905",
+    ".gitattributes": "fa1385d99a319b43c06f5309d1aae9fdd3adea46",
+    "audit.py": "b168b2ca0a68a68c832b910c4f53f605f1d84d53",
+    "formal.py": "d8f8890eac6beb751b139c9d7b0f24f451ecf139",
+    "model.py": "6fcfe702fe8bb636300fff81a5d5e32f57021808",
+    "test_protocol.py": "992c0a609b821a762ec3fe5575366440f3413aaf",
+    "test_audit.py": "0d728db2003176a10d624009cca143c04734f9bf",
+    "PLAN.md": "1faf89345ad4ea00bfb077951684f96c9ca9936f"
+  }
+}
