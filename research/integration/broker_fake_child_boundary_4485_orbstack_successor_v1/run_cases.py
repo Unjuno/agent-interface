@@ -57,6 +57,8 @@ def run_case(case_id, requests, *, child_exit="0", child_sleep="0", timeout="2",
         encoding="utf-8",
     )
     fake.chmod(0o700)
+    if fake.stat().st_mode & 0o111 == 0 or not os.access(fake, os.X_OK):
+        raise SystemExit("STOP_FAKE_CHILD_NOT_EXECUTABLE")
     call_log = case_dir / "fake_calls.txt"
     env = os.environ.copy()
     env.update({
@@ -109,7 +111,9 @@ def run_case(case_id, requests, *, child_exit="0", child_sleep="0", timeout="2",
 
 
 def main():
-    OUT.mkdir(parents=True, exist_ok=False)
+    OUT.mkdir(parents=True, exist_ok=True)
+    if any(OUT.iterdir()):
+        raise SystemExit("STOP_OUTPUT_NOT_EMPTY")
     rows = []
     rows.append(run_case("exit_0", [request("exit-0")], child_exit="0"))
     rows.append(run_case("exit_23", [request("exit-23")], child_exit="23"))
