@@ -73,7 +73,9 @@ earlier startup HOLD or establish runtime readiness.
   no-GUI import-only result contracts without importing the runner;
   `test_audit.py` includes the startup and direct-Xvfb raw bundles, five
   historical-event mutation controls, and contract checks for the two later
-  import/readiness rungs.
+  import/readiness rungs. A separate host-only AST-extracted GET-handler probe
+  records the fixture response without output mutation; it is explicitly not
+  containerized or an integrated-session result.
 - `001.png` is the retained first observation (Chromium `about:blank`), not a
   task-effect image.
 
