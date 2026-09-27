@@ -109,13 +109,15 @@ def negative_controls():
         candidate.load_selected_detail(s, ident("LOAD_SELECTED_DETAIL", s), base_model,
                                        dict(own, source_provenance="forged"))
     out.append(run_control("tampered_provenance", tampered_provenance))
-    out.append(run_control(
-        "hint_role_promotion",
-        lambda s: (_ for _ in ()).throw(candidate.BoundaryError("registry_promotion_rejected"))
-        if not base_model.validate_registry_entry({
+    def hint_role_promotion(s):
+        valid, reason = base_model.validate_registry_entry({
             **asdict(base_model.REGISTRY["cached_route_v1"]),
             "mutate_hint_in_place_to_admission": True,
-        })[0] else None))
+        })
+        if not valid:
+            raise candidate.BoundaryError(f"registry_promotion_rejected:{reason}")
+        raise RuntimeError("unsafe_role_promotion_was_accepted")
+    out.append(run_control("hint_role_promotion", hint_role_promotion))
     return out
 
 def main(out_path: str):
