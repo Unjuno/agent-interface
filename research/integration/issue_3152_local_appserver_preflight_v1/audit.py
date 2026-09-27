@@ -23,7 +23,7 @@ def main() -> int:
     errors: list[str] = []
     if r.get("schema") != "issue3152-local-appserver-preflight-v1":
         errors.append("schema mismatch")
-    if r.get("decision") != "PASS_LOCAL_APPSERVER_JSON_TURN_PREFLIGHT":
+    if r.get("decision") != "RETAINED_LOCAL_APPSERVER_PREFLIGHT_SUMMARY":
         errors.append("decision mismatch")
     if r.get("formal_allocation_count") != 0 or r.get("prospectively_frozen") is not False:
         errors.append("construction/formal scope misreported")
@@ -47,10 +47,11 @@ def main() -> int:
     if r.get("failed_launcher_attempt", {}).get("model_calls") != 0:
         errors.append("failed construction attempt incorrectly counted a model call")
     out = {
-        "audit": "PASS_PREFLIGHT_RECORD_INTEGRITY" if not errors else "HOLD_PREFLIGHT_RECORD_INTEGRITY",
+        "audit": "PASS_PREFLIGHT_SUMMARY_SHAPE_ONLY" if not errors else "HOLD_PREFLIGHT_SUMMARY_SHAPE",
         "checks": 11,
         "errors": errors,
         "source_hashes_recomputed": True,
+        "protocol_transcript_present": False,
         "model_call_replayed": False,
         "scientific_acceptance": False,
     }
@@ -60,4 +61,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
