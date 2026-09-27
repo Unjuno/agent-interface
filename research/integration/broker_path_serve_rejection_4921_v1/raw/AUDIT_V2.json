@@ -1,0 +1,45 @@
+{
+  "corruption_controls": {
+    "controls": [
+      {
+        "name": "missing_row",
+        "rejected": true
+      },
+      {
+        "name": "authority_flip",
+        "rejected": true
+      },
+      {
+        "name": "rejected_subprocess",
+        "rejected": true
+      },
+      {
+        "name": "invalid_receipt_flip",
+        "rejected": true
+      },
+      {
+        "name": "duplicate_row",
+        "rejected": true
+      },
+      {
+        "name": "accepted_call_missing",
+        "rejected": true
+      }
+    ],
+    "rejected": 6,
+    "total": 6
+  },
+  "decision": "PASS_INDEPENDENT_AUDIT_RAW_SCOPED",
+  "limitations": [
+    "raw-only recomputation; temporary fixture tree was not retained for post-run lstat/readlink verification",
+    "in-root symlink destinations are checked against the frozen runner's declared fixture mapping"
+  ],
+  "schema": "broker-path-serve-rejection-4921-audit-v2",
+  "summary": {
+    "accepted": 5,
+    "errors": [],
+    "rejected": 18,
+    "rows": 23
+  }
+}
+
