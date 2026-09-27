@@ -32,7 +32,7 @@ def main() -> int:
     args = parser.parse_args()
 
     study = Path(__file__).resolve().parent
-    repo = study.parents[3]
+    repo = study.parents[2]
     output = Path(args.output).resolve()
     ipc = Path(args.ipc).resolve()
     formal = output / "formal01"
