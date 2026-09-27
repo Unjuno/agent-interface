@@ -1,0 +1,39 @@
+{
+  "issue": 4242,
+  "allocation": "native-handle-destroy-generation-20260923-01",
+  "intake_main": "030b9f9c7c753674c4f25835f29a6803386e9e15",
+  "pre_freeze_head": "d33fff803f66b38b9acc4929e8bfa90236d794d2",
+  "formal_invocations_allowed": 1,
+  "formal_retries_allowed": 0,
+  "construction": {
+    "local_fixture_xid_reuse": "PASS",
+    "actual_bridge_execution": "formal_only_exact_checkout"
+  },
+  "branch_blobs": {
+    "experiment.py": "6569f4ca2cfb1a561a6676b07d3fa0ae75182f4b",
+    "audit.py": "7abf408662ac35f46566d2f6146d6511b94bb461",
+    "controls.py": "999f09e2549a9c38041bcafe151cfce3db2bc0cd",
+    "PLAN.md": "68e04144819476e019fc48d7fc87b9303dda6482",
+    "workflow": "d1f0ca0466ae7aed1aabe45ccdd6a408c6443f3f"
+  },
+  "intake_dependency_blobs": {
+    "native_handle_bridge_v1.py": "aa72a835a60ab9bf9f053c680a1a3d81e49c14d5",
+    "scoped_target_handle_v3.py": "dd4f8c48c0617f4a6ad96565631efd54e0abaa62",
+    "scoped_target_handle_v2.py": "736e1f073a7cf78cf473343f32d41c16bfb70e24",
+    "scoped_target_handle_v1.py": "c4482bb7cd9c3a3e780c05bafa34073491a33ece",
+    "coordinate_frame_transform_v1.py": "972daffee40a38d3effbd8155f3da133d664e445",
+    "native_tail_v1.py": "29437a165d3f04a06a5ddd63744929bdb8ecb61e",
+    "x11_backend.py": "9cae101a219348077668c8fc086acf8e13154afe",
+    "capture_artifacts.py": "d20d67bc06d92d99859681f62fbeb9c2f13aab70",
+    "x11_session.py": "e973b2f3f827951634344a320cd833a80a899d9e",
+    "core_contract.py": "87154518107e4231a6f8ec06e976d2856b375d1d",
+    "core_sequence.py": "af7951e6b70193411b464e56c39c9c6dd7a4cd7e"
+  },
+  "decision": {
+    "pass": "PASS_NATIVE_DESTROY_GENERATION_COMPOSITION_SCOPED",
+    "fail_escape": "FAIL_GENERATION_ESCAPE",
+    "fail_overinvalid": "FAIL_GENERATION_OVERINVALIDATION",
+    "hold_stop": "typed HOLD/STOP for source, DestroyNotify, XID/pixel, release, cleanup or audit incompleteness"
+  },
+  "scope": "Exact NativeHandleBridge integration on four private Xvfb/Openbox sessions; no automatic production watcher, public CLI, model, token/latency, cross-platform or product claim."
+}

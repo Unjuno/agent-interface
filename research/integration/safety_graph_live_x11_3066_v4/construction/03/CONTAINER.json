@@ -1,0 +1,37 @@
+{
+  "auto_removed": true,
+  "cell_count": 2,
+  "command": "docker run --rm --name ai3066-v4-construction-20260927-03 --memory=1g --cpus=2 --pids-limit=96 --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m --tmpfs /run:rw,noexec,nosuid,size=16m -e PYTHONPATH=/src --mount experiment=v4:readonly:/exp --mount runtime=v4/source/runtime:readonly:/src/runtime --mount result=/work sha256:03bb8f908cc4d0bcfcda4e521c5318c651543bb8dffc2f6b09bb874a1d4f9adc python3 -B /exp/run.py --construction /work",
+  "container_id": null,
+  "formal_invocations": 0,
+  "image_id": "sha256:03bb8f908cc4d0bcfcda4e521c5318c651543bb8dffc2f6b09bb874a1d4f9adc",
+  "limits": {
+    "cpus": 2,
+    "memory": "1g",
+    "pids": 96
+  },
+  "network": "none",
+  "platform": "linux/amd64",
+  "purpose": "construction_only",
+  "raw_bytes": 12400,
+  "raw_sha256": "2e4004c12a2e95dea0a8286eb6e040eb80cffd0e9724f5c9d8826e18557d5ca7",
+  "rootfs": "read-only",
+  "row_dispositions": [
+    {
+      "case": "bare/cleanup_failure",
+      "construction_only": true,
+      "execution_disposition": "completed-construction",
+      "key_down_observed": true,
+      "supervisor_attempt_count": 1,
+      "terminal_key_down": false
+    },
+    {
+      "case": "openbox/cleanup_failure",
+      "construction_only": true,
+      "execution_disposition": "STOP_CONSTRUCTION_ONLY",
+      "key_down_observed": false,
+      "supervisor_attempt_count": null,
+      "terminal_key_down": null
+    }
+  ]
+}

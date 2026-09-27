@@ -1,0 +1,34 @@
+{
+  "container_id": "342f0ec45294b5bccc1832d09f23c11051af314614efc5e6decf75403d5e5176",
+  "image_id": "sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+  "configured_image": "python@sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+  "state": "created",
+  "network_mode": "none",
+  "readonly_rootfs": true,
+  "nano_cpus": 2000000000,
+  "memory_bytes": 4294967296,
+  "pids_limit": 64,
+  "argv": [
+    null,
+    "python3",
+    "-B",
+    "/launch_once.py"
+  ],
+  "mounts": [
+    {
+      "destination": "/launch_once.py",
+      "rw": false,
+      "type": "bind"
+    },
+    {
+      "destination": "/src",
+      "rw": false,
+      "type": "bind"
+    },
+    {
+      "destination": "/work",
+      "rw": true,
+      "type": "bind"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "pointer_grab_hit_target_publication_check_v1",
+  "formal_reruns_during_publication": 0,
+  "remote_evidence_git_blob": "0b9371d54e8432b9888a6d6b56ed93ea037e068a",
+  "remote_evidence_bytes": 5057,
+  "remote_evidence_sha256": "e0dffb2636cc81e8c4ffc6091d670da0105a250f31621a58d36cad7e220f8717",
+  "restored_files": 24,
+  "restored_rows_sha256": "c8eacbfab33a367140242833282940024f511e4b2bb08b78bb3cdebcf7af5e1a",
+  "retained_audit_sha256": "eb1de5c91c8f9cd678b5c1b207461254c1e2d85889d55fff81542cdcecc902d9",
+  "reaudit_sha256": "eb1de5c91c8f9cd678b5c1b207461254c1e2d85889d55fff81542cdcecc902d9",
+  "retained_controls_sha256": "445998e98728dad094a4d4496e2a2f155336f4269790b63adfeb5484c223dfef",
+  "recontrols_sha256": "445998e98728dad094a4d4496e2a2f155336f4269790b63adfeb5484c223dfef",
+  "execution_sha256": "26e55d9a4641a891dea3ba1ce872fdd020459f3eb7b2868faa785ac97f46bdbc",
+  "audit_errors": [],
+  "decision": "PASS_POINTER_GRAB_BOUNDARY_SCOPED",
+  "corruption_controls_rejected": 9,
+  "first_restore_incident": "STOP_PUBLICATION_HELPER_BASE64_LF",
+  "incident_resolution": "restore helper now verifies the unchanged Base64 file hash, strips surrounding whitespace, checks frozen payload length, then strict-decodes; raw/scientific bytes unchanged"
+}

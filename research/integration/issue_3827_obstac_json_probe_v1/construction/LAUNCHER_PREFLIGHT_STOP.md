@@ -1,0 +1,3 @@
+# Construction launcher preflight STOP (not formal)
+
+The first attempt to start the mock-only construction runner stopped on the host before Docker or Ollama was invoked. Exact exception: `FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/issue3827-obstac-json-probe-v1/research/integration/issue_3827_obstac_json_probe_v1/src/construction/output'`. Cause: the host launcher treated its `src/` directory as the experiment root. The launcher root calculation was corrected and the source re-frozen before any formal request. This setup failure does not change the preregistered formal case or consume its one request.

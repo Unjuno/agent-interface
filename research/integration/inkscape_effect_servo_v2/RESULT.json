@@ -1,0 +1,253 @@
+{
+  "allocation": "inkscape-effect-servo-4424-20260926-02",
+  "audit": {
+    "audit_pass": true,
+    "cases_loaded": 12,
+    "checks": 117,
+    "errors": []
+  },
+  "corruption_controls_rejected": 11,
+  "corruption_controls_total": 12,
+  "corruption_harness_all_rejected": false,
+  "corruption_harness_note": "saved_error mutation altered a derived field not consumed by the frozen raw auditor; 11 other mutations were rejected and exceed the frozen >=10 gate",
+  "decision": "PASS_MID_DRAG_EFFECT_SERVO_SCOPED",
+  "final_cleanup_neutral": 12,
+  "formal_cases": 12,
+  "formal_reruns": 0,
+  "held_observed": 12,
+  "limits": [
+    "single selected red rectangle",
+    "Inkscape 1.4/X11 fixture",
+    "two technical repetitions",
+    "screen pixels are not generalized as SVG user units",
+    "no model/planner or public runtime",
+    "no token/latency/human-tempo/product claim"
+  ],
+  "outer_exits_zero": 12,
+  "policies": {
+    "MID_EFFECT_SERVO": {
+      "cases": 4,
+      "correction_counts": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "decisions": [
+        "CORRECT_ONCE",
+        "CORRECT_ONCE",
+        "CORRECT_ONCE",
+        "CORRECT_ONCE"
+      ],
+      "pointer_final": [
+        [
+          55,
+          33
+        ],
+        [
+          60,
+          36
+        ],
+        [
+          60,
+          36
+        ],
+        [
+          55,
+          33
+        ]
+      ],
+      "saved_effect_deltas": [
+        [
+          50.0,
+          30.0
+        ],
+        [
+          50.0,
+          30.0
+        ],
+        [
+          50.0,
+          30.0
+        ],
+        [
+          50.0,
+          30.0
+        ]
+      ],
+      "saved_errors": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "OPEN_LOOP": {
+      "cases": 4,
+      "correction_counts": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "decisions": [
+        "OPEN_LOOP",
+        "OPEN_LOOP",
+        "OPEN_LOOP",
+        "OPEN_LOOP"
+      ],
+      "pointer_final": [
+        [
+          50,
+          30
+        ],
+        [
+          50,
+          30
+        ],
+        [
+          50,
+          30
+        ],
+        [
+          50,
+          30
+        ]
+      ],
+      "saved_effect_deltas": [
+        [
+          45.0,
+          27.0
+        ],
+        [
+          40.0,
+          24.0
+        ],
+        [
+          40.0,
+          24.0
+        ],
+        [
+          45.0,
+          27.0
+        ]
+      ],
+      "saved_errors": [
+        [
+          5.0,
+          3.0
+        ],
+        [
+          10.0,
+          6.0
+        ],
+        [
+          10.0,
+          6.0
+        ],
+        [
+          5.0,
+          3.0
+        ]
+      ]
+    },
+    "SERVO_OBSERVER_UNAVAILABLE": {
+      "cases": 4,
+      "correction_counts": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "decisions": [
+        "YIELD_OBSERVER_UNAVAILABLE",
+        "YIELD_OBSERVER_UNAVAILABLE",
+        "YIELD_OBSERVER_UNAVAILABLE",
+        "YIELD_OBSERVER_UNAVAILABLE"
+      ],
+      "pointer_final": [
+        [
+          30,
+          18
+        ],
+        [
+          30,
+          18
+        ],
+        [
+          30,
+          18
+        ],
+        [
+          30,
+          18
+        ]
+      ],
+      "saved_effect_deltas": [
+        [
+          25.0,
+          15.0
+        ],
+        [
+          20.0,
+          12.0
+        ],
+        [
+          20.0,
+          12.0
+        ],
+        [
+          25.0,
+          15.0
+        ]
+      ],
+      "saved_errors": [
+        [
+          25.0,
+          15.0
+        ],
+        [
+          30.0,
+          18.0
+        ],
+        [
+          30.0,
+          18.0
+        ],
+        [
+          25.0,
+          15.0
+        ]
+      ]
+    }
+  },
+  "pooling": 0,
+  "postfreeze_tuning": 0,
+  "predecessor_allocation": "inkscape-effect-servo-4424-20260926-01",
+  "predecessor_disposition": "STOP_EXECUTION_SURFACE_TIMEOUT_CASE5_INCOMPLETE",
+  "process_exits": {
+    "inkscape": [
+      -15
+    ],
+    "openbox": [
+      0
+    ],
+    "xvfb": [
+      0
+    ]
+  },
+  "replacements": 0,
+  "worker_exits_zero": 12
+}

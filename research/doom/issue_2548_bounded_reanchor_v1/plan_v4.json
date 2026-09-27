@@ -1,0 +1,13 @@
+{
+  "schema": "issue-2548-formal-plan-v4",
+  "allocation": "formal_v4",
+  "cases": [
+    {"id":"c01-coast-guard-only","seed":254811,"arm":"coast","capture_fresh":false,"candidate":"none"},
+    {"id":"c02-drift-guard-only","seed":254812,"arm":"recovery","capture_fresh":false,"candidate":"none"},
+    {"id":"c03-drift-fresh-reanchor","seed":254813,"arm":"recovery","capture_fresh":true,"candidate":"fresh"},
+    {"id":"c04-coast-fresh-reanchor","seed":254814,"arm":"coast","capture_fresh":true,"candidate":"fresh"},
+    {"id":"c05-stale-receipt-control","seed":254815,"arm":"recovery","capture_fresh":true,"candidate":"stale"},
+    {"id":"c06-cross-session-control","seed":254816,"arm":"recovery","capture_fresh":true,"candidate":"cross_session","foreign_from":"c04-coast-fresh-reanchor"},
+    {"id":"c07-incomplete-receipt-control","seed":254817,"arm":"recovery","capture_fresh":true,"candidate":"ambiguous"}
+  ]
+}

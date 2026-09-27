@@ -1,0 +1,8 @@
+FORMAL_CASE_RETAINED case=exit0 broker_rc=1 timeout_kill=False fake_invocations=1
+FORMAL_CASE_RETAINED case=exit23 broker_rc=23 timeout_kill=False fake_invocations=1
+FORMAL_CASE_RETAINED case=timeout broker_rc=1 timeout_kill=False fake_invocations=1
+FORMAL_CASE_RETAINED case=unavailable broker_rc=1 timeout_kill=False fake_invocations=0
+FORMAL_CASE_RETAINED case=malformed broker_rc=1 timeout_kill=False fake_invocations=0
+FORMAL_CASE_RETAINED case=one-shot-idle broker_rc=-9 timeout_kill=True fake_invocations=0
+FORMAL_CASE_RETAINED case=two-queued broker_rc=1 timeout_kill=False fake_invocations=1
+FORMAL_MATRIX_COMPLETE allocation=issue3924-orbstac-broker-contract-v2-20260926-01 cases=7 fake_only=1

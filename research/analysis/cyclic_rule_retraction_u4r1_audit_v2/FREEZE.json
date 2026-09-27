@@ -1,0 +1,85 @@
+{
+  "schema": "cyclic-rule-retraction-posthoc-audit-freeze-v1",
+  "issue": 4583,
+  "input_main": "a4eafc937cc3636e83ef63aaa8e2a18d977f9eec",
+  "branch": "research/issue-4449-raw-audit-v2-20260927",
+  "path": "research/analysis/cyclic_rule_retraction_u4r1_audit_v2",
+  "original_issue": 4449,
+  "original_allocation": "issue4449-cyclic-rule-retraction-u4r1-current-main-20260927-formal01",
+  "original_disposition": "STOP_AUDIT",
+  "original_files": {
+    "FREEZE.json": {
+      "git_blob": "9c96e846d9c5ea267eaa887b617fa0d26c12bbb8",
+      "sha256": "4a49f99f98b94551ba2e1a4cf95423c85c5d7d68109bca1d40647454df652394"
+    },
+    "study.py": {
+      "git_blob": "328a4f74bed1428238eb2efdc5666d00fd60ecb9",
+      "sha256": "c28df3d35bba2a385fb5bc7d115e44a69c45ff338a198bdfe02fbdd1a383acd9"
+    },
+    "audit.py": {
+      "git_blob": "47577e4528a138d0a09702efbc88881abc6ac146",
+      "sha256": "f9146d0d1ca1b79601b08408186aa92dafcd119ce933f2de87c49c383308f2cd"
+    },
+    "results/formal01/rows.jsonl": {
+      "git_blob": "75735e5f456c98142d1b0b8b729a14b7bb51564d",
+      "sha256": "c7b2f3dacf65a5d5c1799883ce037d8ffab039de10472e9efb2c4f238b0c5a0e"
+    },
+    "results/formal01/conditions.jsonl": {
+      "git_blob": "45acc18b76e427f8b2576866ee8ae9b109567802",
+      "sha256": "80469fe9fd4434682ff00eb101417b053cd5b683edde7573043d3de1b24461a9"
+    },
+    "results/formal01/input.json": {
+      "git_blob": "607412c8fb862b73c79234c926447eebf87a1a68",
+      "sha256": "1e77ec3e055ede32a4ccaf4158487f8cb19d4444ed7f0816f68787a83fc6c88f"
+    },
+    "results/formal01/process.json": {
+      "git_blob": "fd6e871c4c30736051ff9f1d065bc0b832607eb4",
+      "sha256": "34ad0d94cde899a56a7b5ae2408adbc816c7954bdfda17f1c5da49b57608fcc8"
+    },
+    "results/formal01/audit.json": {
+      "git_blob": "978fd53a362065cf49090b4244d8d68ac70e68c8",
+      "sha256": "37f3b9b5ef9374f7cb0582638b105d9810ec9439816c218441b7fe784595fabc"
+    }
+  },
+  "formal_files": {
+    "rows": {"sha256": "c7b2f3dacf65a5d5c1799883ce037d8ffab039de10472e9efb2c4f238b0c5a0e"},
+    "conditions": {"sha256": "80469fe9fd4434682ff00eb101417b053cd5b683edde7573043d3de1b24461a9"},
+    "input": {"sha256": "1e77ec3e055ede32a4ccaf4158487f8cb19d4444ed7f0816f68787a83fc6c88f"},
+    "process": {"sha256": "34ad0d94cde899a56a7b5ae2408adbc816c7954bdfda17f1c5da49b57608fcc8"},
+    "original_audit": {"sha256": "37f3b9b5ef9374f7cb0582638b105d9810ec9439816c218441b7fe784595fabc"}
+  },
+  "original_frozen_condition_sha256": "0af2eedbb7586a0d45b8a0b651833813f406c0dea57523b08e16cd450e17aa57",
+  "actual_newline_condition_sha256": "80469fe9fd4434682ff00eb101417b053cd5b683edde7573043d3de1b24461a9",
+  "expected_escaped_separator_sha256": "0af2eedbb7586a0d45b8a0b651833813f406c0dea57523b08e16cd450e17aa57",
+  "construction_self_test": {
+    "rows": 10,
+    "decision": "PASS_SELF_TEST",
+    "effective_corruptions_rejected": 10
+  },
+  "audit_source_sha256": {
+    "README.md": "e4ace8307eb3d5f930c001ec4220f2daf109c0ae9cb55a373d2b12359f792d28",
+    "PLAN.md": "041d690788896fd53a5725f934b0e5cb4da136e7a666c53c9edc25abece2efb0",
+    "CONSTRUCTION.md": "39866e5ed71cdd5378308f1eadc89734207cd156d74e68ce0c743b6d5cd0c4b2",
+    "audit.py": "5da1fed96e313a5758a17d70b90076817ffc6283d8bb04a15fc3e9a49ddb63e5"
+  },
+  "container": {
+    "engine": "OrbStack",
+    "context": "orbstack",
+    "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "platform": "linux/arm64",
+    "python": "3.12.14",
+    "network": "none",
+    "rootfs_read_only": true,
+    "raw_mount_read_only": true,
+    "auditor_mount_read_only": true,
+    "cpus": 1,
+    "memory_bytes": 268435456,
+    "pids_limit": 32,
+    "cap_drop": "ALL",
+    "no_new_privileges": true
+  },
+  "audit_invocations_before_freeze": 0,
+  "audit_invocations_authorized": 1,
+  "candidate_or_formal_invocations_authorized": 0,
+  "retry_policy": "One immutable raw-only audit. No candidate rerun, raw edit, retry, replacement, or relabeling of original Issue #4449."
+}

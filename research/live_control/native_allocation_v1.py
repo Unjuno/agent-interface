@@ -27,6 +27,25 @@ class NativeAllocation:
         self.attempted = False
         self.error = None
 
+    def _terminal_status(self, base, code):
+        result = dict(base, status='terminal', pid=self.process.pid, returncode=code,
+                      task_success=None, cleanup_verified=False, restart_allowed=False)
+        if code != 0:
+            path = self.directory/'stderr.log'
+            diagnostic = {'kind':'process_stderr', 'authority':'none',
+                          'path':str(path), 'byte_limit':2048}
+            try:
+                with path.open('rb') as stream:
+                    size = stream.seek(0, os.SEEK_END)
+                    stream.seek(max(0, size-2048))
+                    tail = stream.read(2048)
+                diagnostic.update(status='read', tail=tail.decode('utf-8', errors='replace'),
+                                  truncated=size > 2048)
+            except OSError:
+                diagnostic.update(status='unavailable')
+            result['diagnostic'] = diagnostic
+        return result
+
     def status(self):
         base = {'authority':'none', 'run_directory':str(self.run_directory),
                 'app':self.app, 'seed':self.seed, 'max_stages':self.max_stages,
@@ -40,16 +59,14 @@ class NativeAllocation:
             return dict(base, status='not_started')
         code = self.process.poll()
         if code is not None:
-            return dict(base, status='terminal', pid=self.process.pid, returncode=code,
-                        task_success=None, cleanup_verified=False, restart_allowed=False)
+            return self._terminal_status(base, code)
         owner = owner_state(self.run_directory)
         if owner is not None and owner['state'] == 'terminal':
             # Exit may become visible between poll and the owner-state read.
             # Reap only if already available: no wait, restart, or guessed code.
             code = self.process.poll()
             if code is not None:
-                return dict(base, status='terminal', pid=self.process.pid, returncode=code,
-                            task_success=None, cleanup_verified=False, restart_allowed=False)
+                return self._terminal_status(base, code)
         if owner is not None and owner['state'] != 'live':
             return dict(base, status='needs_review', pid=self.process.pid, owner=owner,
                         restart_allowed=False)

@@ -15,22 +15,7 @@ from native_cleanup_v1 import finish_allocation
 from scoped_target_handle_v2 import FlatTargetRefused
 
 
-def paced_text_tail(ops, gap_ms):
-    """Explicit research policy compiled to ordinary native text/wait ops."""
-    if type(gap_ms) is not int or gap_ms not in (0, 2, 10):
-        raise ValueError('supported text gaps are 0, 2, 10 ms')
-    if gap_ms == 0:
-        return list(ops)
-    result = []
-    for op in ops:
-        if op.get('op') != 'text' or not op.get('text'):
-            result.append(op)
-            continue
-        for i, ch in enumerate(op['text']):
-            if i:
-                result.append({'op': 'wait_update', 'timeout_ms': gap_ms})
-            result.append(dict(op, text=ch))
-    return result
+from native_tail_v1 import paced_text_tail
 
 
 def review_current_window(bridge):
@@ -68,6 +53,12 @@ def main():
     def save(name, value):
         (out/name).write_text(json.dumps(value, indent=2)+'\n')
 
+    def publish_source(stage, source):
+        # A source/reply can become visible immediately to an MCP reader.
+        # Publish the already-required listing first, once per stage.
+        publish(out/f'windows-{stage}.json', encoded(session.windows()))
+        publish(out/f'source-{stage}.json', encoded(source))
+
     try:
         session = PrivateSession()
         apps = ('calc', 'inkscape') if args.app == 'calc-inkscape' else (args.app,)
@@ -97,11 +88,10 @@ def main():
         bridge = NativeHandleBridge(session.name, {'app': window}, 'app', out/'bridge')
         source = bridge.observe()
         for stage in range(1, args.max_stages + 1):
-            windows = session.windows()
             decision_hash = None
             if not (out/f'source-{stage}.json').exists():
-                publish(out/f'source-{stage}.json', encoded(source))
-            save(f'windows-{stage}.json', windows)
+                publish_source(stage, source)
+            windows = json.loads((out/f'windows-{stage}.json').read_bytes())
             request = out/f'request-{stage}.json'
             print(json.dumps({'stage': stage, 'goal': goal,
                 'source_sequence': source['sequence'], 'image': source['native']['artifact']['path'],
@@ -141,7 +131,7 @@ def main():
                     terminal_context = {'observation': source,
                                         'observation_only': observation_only}
                     raise RuntimeError('bounded action stages exhausted without explicit finish')
-                publish(out/f'source-{stage+1}.json', encoded(source))
+                publish_source(stage+1, source)
                 publish(out/f'reply-{stage}.json', encoded({'status': 'boundary', 'stage': stage,
                     'decision_sha256': decision_hash, 'observation': source,
                     'observation_only': observation_only,
@@ -166,7 +156,7 @@ def main():
                 if review['status'] != 'reviewed':
                     raise RuntimeError('window review failed after target refusal') from error
                 source = review['observation']
-                publish(out/f'source-{stage+1}.json', encoded(source))
+                publish_source(stage+1, source)
                 publish(out/f'reply-{stage}.json', encoded({'status': 'boundary', 'stage': stage,
                     'decision_sha256': decision_hash, 'observation': source,
                     'target_refusal': {'reason': 'visually_flat_source_region',
@@ -229,7 +219,7 @@ def main():
             if stage >= args.max_stages:
                 terminal_context = {'action': row, 'observation': source}
                 raise RuntimeError('bounded action stages exhausted without explicit finish')
-            publish(out/f'source-{stage+1}.json', encoded(source))
+            publish_source(stage+1, source)
             publish(out/f'reply-{stage}.json', encoded({'status': 'boundary', 'stage': stage,
                 'decision_sha256': decision_hash, 'action': row, 'observation': source,
                 'authority_granted': False, 'task_success': None}))

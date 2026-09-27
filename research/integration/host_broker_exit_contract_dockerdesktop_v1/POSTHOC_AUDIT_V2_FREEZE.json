@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "audit_allocation_id": "dockerdesktop-20260926-posthoc-audit-v2-01",
+  "formal_allocation_id": "dockerdesktop-20260926-02",
+  "container_name": "agent-interface-3926-posthoc-audit02-20260926",
+  "result_path": "formal/dockerdesktop-20260926-02/posthoc_audit_v2",
+  "image": {
+    "reference": "python:3.12-slim",
+    "id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64"
+  },
+  "policy": {
+    "network": "none",
+    "read_only_rootfs": true,
+    "study_mount": "readonly",
+    "runtime_mount": "readonly",
+    "raw_evidence_mount": "readonly",
+    "audit_output_mount": "read-write",
+    "cpus": 1,
+    "memory_bytes": 268435456,
+    "pids_limit": 64,
+    "cap_drop": ["ALL"],
+    "security_opt": "no-new-privileges"
+  },
+  "formal_summary_sha256": "723dfc60e38c507c63f53ace5b4b9d39197c5542e86ac4c331aa5b1d12e53ee5",
+  "audit01_sha256": "64f315e6a361f4a6f8d164447ec92cf75d5735d4542a516c6f33c5f4e0a81389",
+  "pinned_sha256": {
+    "FREEZE.json": "43b0bf608a3660c46f0823aa26be3b0d0b6dbb892c3b7de386399197f84be98b",
+    "audit_contract_posthoc_v2.py": "5741d64667d4ac1716faffbadb14801e233ee529b2c12c28a8d63c392f5a63be",
+    "POSTHOC_AUDIT_V2.md": "b4cc137b4aefedc5f7447c065acd66a03e46dd8afbb5a8a3a7ca9daf4d78ac25",
+    "formal/dockerdesktop-20260926-02/formal_run.json": "d7ecad51fad3431ac78d8e2e65b0f10699c3576bc2b5e2db6650cbe739dfe653",
+    "formal/dockerdesktop-20260926-02/WRAPPER_STOP.md": "abe747f0509f514f26c149ae691a83723732f074c2f4fa52b2cc63e292e14aa3",
+    "formal/dockerdesktop-20260926-02/formal-container-inspect.json": "559c8de6f69d46d6310909b325d7a2230b9f88cb231cc55d3e0250198dbc193e",
+    "formal/dockerdesktop-20260926-02/formal-docker-stdout.txt": "1835432aa39e619e7bd236e197a1ff7e7eddddcd7facdd430ecec8a28e6a8798",
+    "formal/dockerdesktop-20260926-02/raw/raw_inventory.json": "dfb157e5549f74e6089187749d7bd92566e8645ca83be1d5fcd29f8f3dae0415",
+    "formal/dockerdesktop-20260926-02/raw/formal_summary.json": "723dfc60e38c507c63f53ace5b4b9d39197c5542e86ac4c331aa5b1d12e53ee5",
+    "formal/dockerdesktop-20260926-02/audit/audit.json": "64f315e6a361f4a6f8d164447ec92cf75d5735d4542a516c6f33c5f4e0a81389"
+  }
+}

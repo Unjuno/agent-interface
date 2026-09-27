@@ -1,0 +1,172 @@
+{
+  "app_fixture": "bare Xlib window; no toolkit or task semantics",
+  "auth_file_absent_after_cleanup": true,
+  "decision": "EMIT",
+  "emission_requests": [
+    {
+      "detail": 37,
+      "monotonic_ns": 14449396185800,
+      "type": "KeyPress"
+    },
+    {
+      "detail": 29,
+      "monotonic_ns": 14449398858828,
+      "type": "KeyPress"
+    },
+    {
+      "detail": 29,
+      "monotonic_ns": 14449401380437,
+      "type": "KeyRelease"
+    },
+    {
+      "detail": 37,
+      "monotonic_ns": 14449403897171,
+      "type": "KeyRelease"
+    }
+  ],
+  "error": null,
+  "finished_monotonic_ns": 14449523254014,
+  "image_id": "sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+  "key_state_after_request": [
+    {
+      "after_request": 0,
+      "control_down": true,
+      "detail": 37,
+      "request": "KeyPress",
+      "target_down": true
+    },
+    {
+      "after_request": 1,
+      "control_down": true,
+      "detail": 29,
+      "request": "KeyPress",
+      "target_down": true
+    },
+    {
+      "after_request": 2,
+      "control_down": true,
+      "detail": 29,
+      "request": "KeyRelease",
+      "target_down": false
+    },
+    {
+      "after_request": 3,
+      "control_down": false,
+      "detail": 37,
+      "request": "KeyRelease",
+      "target_down": false
+    }
+  ],
+  "mapping": {
+    "control_keycode": 37,
+    "fresh_z_keycode": 29,
+    "retained_map_stale": true,
+    "retained_z_keycode": 52,
+    "server_changed": true,
+    "server_de_sha256": "71e9bec0040c9689a16a03f5647d73aec9433d11db31c35fcc016826d757ffd7",
+    "server_us_sha256": "0e0746bf5f507ac5d73d7614f65d4c1c6bafcebf64edff570957cc2ddc0a75e5"
+  },
+  "process_receipts": {
+    "xev_alive_before_cleanup": true,
+    "xev_exit": -15,
+    "xev_pid": 21,
+    "xev_reaped": true,
+    "xvfb_alive_before_cleanup": true,
+    "xvfb_exit": 0,
+    "xvfb_pid": 8,
+    "xvfb_reaped": true
+  },
+  "server_events": [
+    {
+      "detail": 37,
+      "keysym": "Control_L",
+      "keysym_hex": 65507,
+      "state": 0,
+      "type": "KeyRelease"
+    },
+    {
+      "detail": 37,
+      "keysym": "Control_L",
+      "keysym_hex": 65507,
+      "state": 0,
+      "type": "KeyPress"
+    },
+    {
+      "detail": 29,
+      "keysym": "z",
+      "keysym_hex": 122,
+      "state": 4,
+      "type": "KeyRelease"
+    },
+    {
+      "detail": 29,
+      "keysym": "z",
+      "keysym_hex": 122,
+      "state": 4,
+      "type": "KeyPress"
+    },
+    {
+      "detail": 29,
+      "keysym": "z",
+      "keysym_hex": 122,
+      "state": 4,
+      "type": "KeyRelease"
+    },
+    {
+      "detail": 37,
+      "keysym": "Control_L",
+      "keysym_hex": 65507,
+      "state": 4,
+      "type": "KeyRelease"
+    }
+  ],
+  "server_map_us": "0e0746bf5f507ac5d73d7614f65d4c1c6bafcebf64edff570957cc2ddc0a75e5",
+  "socket_absent_after_cleanup": true,
+  "source_commit": "4c3d6f1240896d4441ecb37e447760a3847012ae",
+  "spec": {
+    "condition": "US_TO_DE_KEYMAP_CHANGE",
+    "index": 2,
+    "policy": "CURRENT_FRESH_MAP",
+    "rep": 0
+  },
+  "started_monotonic_ns": 14449135794852,
+  "terminal_state": {
+    "keymap": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "monotonic_ns": 14449515220932,
+    "neutral": true,
+    "pointer_mask": 0
+  }
+}

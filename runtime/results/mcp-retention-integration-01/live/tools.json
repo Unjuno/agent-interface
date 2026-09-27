@@ -1,0 +1,180 @@
+{
+  "meta": null,
+  "nextCursor": null,
+  "tools": [
+    {
+      "name": "interface_validate",
+      "title": null,
+      "description": "Check a draft program's static syntax/expansion without input or a backend.\n\n        Optional; not a prerequisite for dispatch. Does not check live capability,\n        freshness, lease expiry or task success, and grants no runtime admission.\n        No action call ID or retained result is created. Invalid programs return\n        static_valid=false; correct the draft explicitly rather than retrying input.\n        A nesting-limit input error returns static_valid=null, not a validity verdict.\n        ",
+      "inputSchema": {
+        "properties": {
+          "program": {
+            "additionalProperties": true,
+            "title": "Program",
+            "type": "object"
+          }
+        },
+        "required": [
+          "program"
+        ],
+        "title": "interface_validateArguments",
+        "type": "object"
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "interface_observe",
+      "title": null,
+      "description": "Capture once without input; return receipt and native image block.\n\n        Region is [x, y, width, height]. On X11, window_client coordinates are\n        relative to the target client; overlapping dialogs may be absent or black.\n        screen_physical_px coordinates are relative to the display and include\n        other visible windows in that region. Choose an explicit screen region\n        when an overlapping dialog is needed to interpret the target's state.\n        A capture is not a redraw or task-completion acknowledgement.\n        report_refs requires compact=true and a v3 receipt decoder.\n        ",
+      "inputSchema": {
+        "properties": {
+          "target": {
+            "title": "Target",
+            "type": "string"
+          },
+          "frame": {
+            "enum": [
+              "window_client",
+              "screen_physical_px"
+            ],
+            "title": "Frame",
+            "type": "string"
+          },
+          "region": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Region",
+            "type": "array"
+          },
+          "compact": {
+            "default": false,
+            "title": "Compact",
+            "type": "boolean"
+          },
+          "report_refs": {
+            "default": false,
+            "title": "Report Refs",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "target",
+          "frame",
+          "region"
+        ],
+        "title": "interface_observeArguments",
+        "type": "object"
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "interface_dispatch",
+      "title": null,
+      "description": "Dispatch once through core admission. Include observe for an image; no implicit replay.\n\n        Sequence/binding values are caller assertions, not server-issued freshness.\n        A returned image may precede redraw. Release and cleanup failures remain visible.\n        report_refs requires compact=true and a v3 receipt decoder.\n        ",
+      "inputSchema": {
+        "properties": {
+          "program": {
+            "additionalProperties": true,
+            "description": "Bounded agent-interface/program-v1 object. Required fields: schema=\"agent-interface/program-v1\", program_id (1..64 letters/digits/._-), source={observation_seq: integer, binding_revision: integer}, authority={lease_id: identifier, expires_at_ns: integer in the execution host monotonic clock}, terminal={release_all_required: true}, and ops (ordered objects). The caller must supply a valid current lease and matching source/binding assertions; this server does not mint them. Begin with {\"op\":\"focus\",\"target\":\"configured-name\"} when input requires focus. Operation examples: {\"op\":\"text\",\"text\":\"abc\",\"gap_ms\":20}, {\"op\":\"key_chord\",\"keys\":[\"Left\"],\"repeat\":2}, {\"op\":\"key_chord\",\"keys\":[\"CTRL\",\"s\"]}, {\"op\":\"observe\",\"frame\":\"window_client\",\"x\":0,\"y\":0,\"w\":400,\"h\":180}. Use the actual target and observed region; examples do not select them for you. End with exactly one {\"op\":\"release_all\"}. Expanded ops must fit 128. gap_ms is optional integer 0..1000; key_chord repeat is optional integer 1..126. Observation captures once and does not pause for a model decision. On X11, window_client uses target-client coordinates and may omit overlapping dialogs; screen_physical_px uses display coordinates and includes other visible windows in the explicit region. wait_update with timeout_ms is a fixed delay on X11, not a redraw acknowledgement.",
+            "title": "Program",
+            "type": "object"
+          },
+          "current_observation_seq": {
+            "title": "Current Observation Seq",
+            "type": "integer"
+          },
+          "current_binding_revision": {
+            "title": "Current Binding Revision",
+            "type": "integer"
+          },
+          "compact": {
+            "default": false,
+            "title": "Compact",
+            "type": "boolean"
+          },
+          "report_refs": {
+            "default": false,
+            "title": "Report Refs",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "program",
+          "current_observation_seq",
+          "current_binding_revision"
+        ],
+        "title": "interface_dispatchArguments",
+        "type": "object"
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "interface_results",
+      "title": null,
+      "description": "List this server's calls or reread one retained result. Never dispatch or observe.\n\n        A finished worker is not proof of task success. Unknown calls are not replayed.\n        This registry lasts only for this server process; no restart recovery is implied.\n        Set include_image=false to inspect metadata without resending a retained image.\n        report_refs requires compact=true and a v3 receipt decoder.\n        ",
+      "inputSchema": {
+        "properties": {
+          "call_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Call Id"
+          },
+          "before_call_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Before Call Id"
+          },
+          "compact": {
+            "default": false,
+            "title": "Compact",
+            "type": "boolean"
+          },
+          "include_image": {
+            "default": true,
+            "title": "Include Image",
+            "type": "boolean"
+          },
+          "report_refs": {
+            "default": false,
+            "title": "Report Refs",
+            "type": "boolean"
+          }
+        },
+        "title": "interface_resultsArguments",
+        "type": "object"
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    }
+  ]
+}

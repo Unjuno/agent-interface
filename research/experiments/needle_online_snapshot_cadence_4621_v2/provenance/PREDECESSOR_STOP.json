@@ -1,0 +1,19 @@
+{
+  "schema": "needle-snapshot-cadence-stop-v1",
+  "status": "STOP_BEFORE_CONTAINER_OR_TRAINING",
+  "issue": 4615,
+  "allocation": "needle-online-snapshot-cadence-4615-v1",
+  "phase": "host_formal_wrapper_freeze_preflight",
+  "command": "py -3.11 formal.py --source . --out outputs/formal01",
+  "host_orchestrator_invocations": 1,
+  "training_container_invocations": 0,
+  "audit_container_invocations": 0,
+  "optimizer_updates": 0,
+  "model_evaluations": 0,
+  "retries": 0,
+  "exit_code": 1,
+  "exception": "KeyError: 'environment'",
+  "cause": "formal.py expected FREEZE.json['environment']; frozen manifest stores runtime details in FREEZE.json['construction']['runtime'] and FREEZE.json['runtime'].",
+  "traceback": "Traceback (most recent call last):\n  File \"formal.py\", line 138, in <module>\n    raise SystemExit(main())\n  File \"formal.py\", line 66, in main\n    for relative, expected in freeze[\"environment\"].items():\n                              ~~~~~~^^^^^^^^^^^^^^^\nKeyError: 'environment'\n"
+}
+

@@ -1,0 +1,11 @@
+{
+  "allocation": "formal_run_01",
+  "decision": "STOP_RUNNER_FREEZE_SCHEMA_MISMATCH",
+  "container_exit_code": 1,
+  "formal_cases_started": 0,
+  "broker_invocations": 0,
+  "fake_invocations": 0,
+  "error": "KeyError: broker_sha256; runner expected a top-level key while FREEZE.json stores it under source.broker_sha256",
+  "raw_tool_output": "Traceback in formal_runner.py line 15 while reading FREEZE.json; process exited before first case.",
+  "retry_policy": "No case was entered or retried. A distinct allocation with a distinct freeze and evidence root is required after correcting the runner."
+}

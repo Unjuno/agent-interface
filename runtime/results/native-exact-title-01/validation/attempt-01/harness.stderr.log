@@ -1,0 +1,563 @@
+test_formula_symbol_in_unsupported_level_emits_no_prefix (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_formula_symbol_in_unsupported_level_emits_no_prefix) ... ok
+test_formula_symbols_follow_unshifted_or_shifted_live_mapping (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_formula_symbols_follow_unshifted_or_shifted_live_mapping) ... ok
+test_paced_text_preflights_all_characters_before_any_operation (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_paced_text_preflights_all_characters_before_any_operation) ... ok
+test_supported_punctuation_uses_x_keysym_names_and_shift (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_supported_punctuation_uses_x_keysym_names_and_shift) ... ok
+test_unmapped_late_character_emits_no_prefix (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_unmapped_late_character_emits_no_prefix) ... ok
+test_uppercase_arrow_refusal_explains_canonical_name_without_emission (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_uppercase_arrow_refusal_explains_canonical_name_without_emission) ... ok
+test_url_symbol_in_unsupported_group_emits_no_prefix (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_url_symbol_in_unsupported_group_emits_no_prefix) ... ok
+test_url_symbols_follow_live_keymap_levels (runtime.backends.x11_v1.test_text_plan.TextPlanTests.test_url_symbols_follow_live_keymap_levels) ... ok
+test_partial_operation_and_observation_survive_failure_and_close (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_partial_operation_and_observation_survive_failure_and_close) ... ok
+test_unexpected_execution_exception_leaves_session_blocked (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_unexpected_execution_exception_leaves_session_blocked) ... ok
+test_unverified_release_blocks_later_dispatch_before_backend_access (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_unverified_release_blocks_later_dispatch_before_backend_access) ... ok
+test_wait_receipt_survives_later_failure_without_claiming_an_update (runtime.backends.x11_v1.test_partial_execution.PartialExecutionTests.test_wait_receipt_survives_later_failure_without_claiming_an_update) ... ok
+test_arbitrary_mint_error_does_not_continue (test_native_finish_after_v1.NativeFinishAfterTests.test_arbitrary_mint_error_does_not_continue) ... ERROR
+test_cleanup_failure_preserves_action_image_and_evaluation (test_native_finish_after_v1.NativeFinishAfterTests.test_cleanup_failure_preserves_action_image_and_evaluation) ... ERROR
+test_default_and_false_still_wait_for_explicit_finish (test_native_finish_after_v1.NativeFinishAfterTests.test_default_and_false_still_wait_for_explicit_finish) ... 
+  test_default_and_false_still_wait_for_explicit_finish (test_native_finish_after_v1.NativeFinishAfterTests.test_default_and_false_still_wait_for_explicit_finish) (extra={}) ... ERROR
+  test_default_and_false_still_wait_for_explicit_finish (test_native_finish_after_v1.NativeFinishAfterTests.test_default_and_false_still_wait_for_explicit_finish) (extra={'finish_after': False}) ... ERROR
+test_directional_task_is_public_before_first_decision (test_native_finish_after_v1.NativeFinishAfterTests.test_directional_task_is_public_before_first_decision) ... ERROR
+test_explicit_observation_neither_mints_nor_dispatches_input (test_native_finish_after_v1.NativeFinishAfterTests.test_explicit_observation_neither_mints_nor_dispatches_input) ... ERROR
+test_failed_input_is_not_evaluated_or_replayed (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_input_is_not_evaluated_or_replayed) ... 
+  test_failed_input_is_not_evaluated_or_replayed (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_input_is_not_evaluated_or_replayed) (status='refused') ... ERROR
+  test_failed_input_is_not_evaluated_or_replayed (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_input_is_not_evaluated_or_replayed) (status='release_unverified') ... ERROR
+test_failed_review_after_refusal_stays_terminal (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_review_after_refusal_stays_terminal) ... ERROR
+test_failed_task_is_retained_in_finished_session (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_task_is_retained_in_finished_session) ... ERROR
+test_finish_after_on_last_permitted_stage (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_after_on_last_permitted_stage) ... ERROR
+test_finish_after_one_response_after_cleanup (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_after_one_response_after_cleanup) ... ERROR
+test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) ... 
+  test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'tail': [{'op': 'key_chord', 'keys': ['CTRL', 's']}]}) ... ERROR
+  test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'tail': []}) ... ERROR
+  test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'point': [600, 378]}) ... ERROR
+  test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'interaction': 'click'}) ... ERROR
+  test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'finish_after': False}) ... ERROR
+  test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'unknown': None}) ... ERROR
+test_flat_refusal_at_stage_limit_does_not_publish_next_source (test_native_finish_after_v1.NativeFinishAfterTests.test_flat_refusal_at_stage_limit_does_not_publish_next_source) ... ERROR
+test_flat_refusal_returns_new_boundary_then_explicit_action (test_native_finish_after_v1.NativeFinishAfterTests.test_flat_refusal_returns_new_boundary_then_explicit_action) ... ERROR
+test_invalid_or_conflicting_flags_precede_mint (test_native_finish_after_v1.NativeFinishAfterTests.test_invalid_or_conflicting_flags_precede_mint) ... 
+  test_invalid_or_conflicting_flags_precede_mint (test_native_finish_after_v1.NativeFinishAfterTests.test_invalid_or_conflicting_flags_precede_mint) (decision={'finish_after': 'true'}) ... ERROR
+  test_invalid_or_conflicting_flags_precede_mint (test_native_finish_after_v1.NativeFinishAfterTests.test_invalid_or_conflicting_flags_precede_mint) (decision={'finish_after': 1}) ... ERROR
+  test_invalid_or_conflicting_flags_precede_mint (test_native_finish_after_v1.NativeFinishAfterTests.test_invalid_or_conflicting_flags_precede_mint) (decision={'finish_after': True, 'finish': True}) ... ERROR
+test_last_stage_returns_terminal_evidence_without_unusable_source (test_native_finish_after_v1.NativeFinishAfterTests.test_last_stage_returns_terminal_evidence_without_unusable_source) ... 
+  test_last_stage_returns_terminal_evidence_without_unusable_source (test_native_finish_after_v1.NativeFinishAfterTests.test_last_stage_returns_terminal_evidence_without_unusable_source) (last={'interaction': 'observe'}) ... ERROR
+  test_last_stage_returns_terminal_evidence_without_unusable_source (test_native_finish_after_v1.NativeFinishAfterTests.test_last_stage_returns_terminal_evidence_without_unusable_source) (last={'point': [600, 378], 'expected_title': 'shape.svg - Inkscape', 'tail': []}) ... ERROR
+test_observation_failed_window_review_never_publishes_next_source (test_native_finish_after_v1.NativeFinishAfterTests.test_observation_failed_window_review_never_publishes_next_source) ... ERROR
+test_observation_rejects_hidden_input_fields (test_native_finish_after_v1.NativeFinishAfterTests.test_observation_rejects_hidden_input_fields) ... ERROR
+test_observation_reviews_changed_focus_without_input (test_native_finish_after_v1.NativeFinishAfterTests.test_observation_reviews_changed_focus_without_input) ... ERROR
+test_cleanup_does_not_replace_original_action_error (test_native_cleanup_v1.CleanupTests.test_cleanup_does_not_replace_original_action_error) ... ok
+test_copy_and_close_failures_do_not_skip_session (test_native_cleanup_v1.CleanupTests.test_copy_and_close_failures_do_not_skip_session) ... ok
+test_live_process_prevents_finished (test_native_cleanup_v1.CleanupTests.test_live_process_prevents_finished) ... ok
+test_persistence_failure_in_returned_reply (test_native_cleanup_v1.CleanupTests.test_persistence_failure_in_returned_reply) ... ok
+test_poll_failure_prevents_finished (test_native_cleanup_v1.CleanupTests.test_poll_failure_prevents_finished) ... ok
+test_publication_follows_cleanup (test_native_cleanup_v1.CleanupTests.test_publication_follows_cleanup) ... ok
+test_session_failure_still_checks_processes (test_native_cleanup_v1.CleanupTests.test_session_failure_still_checks_processes) ... ok
+test_task_failure_is_not_cleanup_failure (test_native_cleanup_v1.CleanupTests.test_task_failure_is_not_cleanup_failure) ... ok
+test_child_focus_ancestry_is_bounded_and_does_not_grant_other_surface (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_child_focus_ancestry_is_bounded_and_does_not_grant_other_surface) ... ok
+test_existing_store_refuses_changed_pixels_at_native_check (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_existing_store_refuses_changed_pixels_at_native_check) ... ok
+test_expired_guard_does_not_capture_or_resolve (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_expired_guard_does_not_capture_or_resolve) ... ok
+test_failed_window_review_blocks_input_and_mint_until_success (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_failed_window_review_blocks_input_and_mint_until_success) ... ok
+test_feedback_capture_failure_is_retained_without_retry (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_feedback_capture_failure_is_retained_without_retry) ... ok
+test_feedback_changed_title_or_focus_requires_review (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_feedback_changed_title_or_focus_requires_review) ... ok
+test_feedback_match_is_observed_cue_not_task_success (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_feedback_match_is_observed_cue_not_task_success) ... ok
+test_feedback_rejection_and_timeout_are_distinct (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_feedback_rejection_and_timeout_are_distinct) ... ok
+test_feedback_title_prefers_utf8_net_name_and_falls_back_only_if_absent (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_feedback_title_prefers_utf8_net_name_and_falls_back_only_if_absent) ... ok
+test_focused_client_missing_list_cycle_unknown_and_read_failure_stop (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_focused_client_missing_list_cycle_unknown_and_read_failure_stop) ... ok
+test_focused_client_uses_managed_ancestor_without_mutation_or_input (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_focused_client_uses_managed_ancestor_without_mutation_or_input) ... ok
+test_guarded_focus_preserves_validated_child_and_refuses_outsider (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_guarded_focus_preserves_validated_child_and_refuses_outsider) ... ok
+test_keyboard_continuation_has_no_pointer_ops_and_requires_release (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_keyboard_continuation_has_no_pointer_ops_and_requires_release) ... ok
+test_keyboard_refusal_does_not_fall_back_to_click (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_keyboard_refusal_does_not_fall_back_to_click) ... ok
+test_keyboard_rejects_empty_or_pointer_tail_before_admission (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_keyboard_rejects_empty_or_pointer_tail_before_admission) ... ok
+test_mint_requires_explicit_retained_source (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_mint_requires_explicit_retained_source) ... ok
+test_point_change_after_move_prevents_native_press (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_point_change_after_move_prevents_native_press) ... ok
+test_refusal_before_admission_never_dispatches (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_refusal_before_admission_never_dispatches) ... ok
+test_release_is_not_blocked_by_guard_refusal (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_release_is_not_blocked_by_guard_refusal) ... ok
+test_stale_drawable_recovery_uses_read_only_discovery_then_explicit_review (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_stale_drawable_recovery_uses_read_only_discovery_then_explicit_review) ... ok
+test_window_review_cannot_mutate_scope_during_input (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_window_review_cannot_mutate_scope_during_input) ... ok
+test_window_review_capture_failure_requires_fresh_successful_review (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_window_review_capture_failure_requires_fresh_successful_review) ... ok
+test_window_review_does_not_clear_unverified_input_release (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_window_review_does_not_clear_unverified_input_release) ... ok
+test_window_review_revokes_old_sources_and_prevents_alias_rebinding (test_native_handle_bridge_v1.NativeHandleBridgeTests.test_window_review_revokes_old_sources_and_prevents_alias_rebinding) ... ok
+test_bad_counts_and_types (test_native_tail_v1.NativeTailTests.test_bad_counts_and_types) ... ok
+test_bridge_rejects_before_guard_or_dispatch (test_native_tail_v1.NativeTailTests.test_bridge_rejects_before_guard_or_dispatch) ... ok
+test_capacity_includes_flat_and_expanded_ops (test_native_tail_v1.NativeTailTests.test_capacity_includes_flat_and_expanded_ops) ... ok
+test_independent_copies_preserve_caller (test_native_tail_v1.NativeTailTests.test_independent_copies_preserve_caller) ... ok
+test_matches_flat_order_without_implicit_wait (test_native_tail_v1.NativeTailTests.test_matches_flat_order_without_implicit_wait) ... ok
+test_repeat_on_other_operations_refused (test_native_tail_v1.NativeTailTests.test_repeat_on_other_operations_refused) ... ok
+
+======================================================================
+ERROR: test_arbitrary_mint_error_does_not_continue (test_native_finish_after_v1.NativeFinishAfterTests.test_arbitrary_mint_error_does_not_continue)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 283, in test_arbitrary_mint_error_does_not_continue
+    replies, sources, events = self.exercise([self.action()],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_cleanup_failure_preserves_action_image_and_evaluation (test_native_finish_after_v1.NativeFinishAfterTests.test_cleanup_failure_preserves_action_image_and_evaluation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 248, in test_cleanup_failure_preserves_action_image_and_evaluation
+    replies, _, _ = self.exercise([self.action(finish_after=True)],
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_default_and_false_still_wait_for_explicit_finish (test_native_finish_after_v1.NativeFinishAfterTests.test_default_and_false_still_wait_for_explicit_finish) (extra={})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 162, in test_default_and_false_still_wait_for_explicit_finish
+    replies, sources, _ = self.exercise([self.action(**extra), {'finish': True}])
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_default_and_false_still_wait_for_explicit_finish (test_native_finish_after_v1.NativeFinishAfterTests.test_default_and_false_still_wait_for_explicit_finish) (extra={'finish_after': False})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 162, in test_default_and_false_still_wait_for_explicit_finish
+    replies, sources, _ = self.exercise([self.action(**extra), {'finish': True}])
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_directional_task_is_public_before_first_decision (test_native_finish_after_v1.NativeFinishAfterTests.test_directional_task_is_public_before_first_decision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 147, in test_directional_task_is_public_before_first_decision
+    self.exercise([self.action(finish_after=True)], inspect_goal=inspect)
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_explicit_observation_neither_mints_nor_dispatches_input (test_native_finish_after_v1.NativeFinishAfterTests.test_explicit_observation_neither_mints_nor_dispatches_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 172, in test_explicit_observation_neither_mints_nor_dispatches_input
+    replies, sources, events = self.exercise([{'interaction': 'observe'}, {'finish': True}])
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_failed_input_is_not_evaluated_or_replayed (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_input_is_not_evaluated_or_replayed) (status='refused')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 234, in test_failed_input_is_not_evaluated_or_replayed
+    replies, sources, events = self.exercise([self.action(finish_after=True)],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_failed_input_is_not_evaluated_or_replayed (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_input_is_not_evaluated_or_replayed) (status='release_unverified')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 234, in test_failed_input_is_not_evaluated_or_replayed
+    replies, sources, events = self.exercise([self.action(finish_after=True)],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_failed_review_after_refusal_stays_terminal (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_review_after_refusal_stays_terminal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 299, in test_failed_review_after_refusal_stays_terminal
+    replies, sources, events = self.exercise([self.action()],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_failed_task_is_retained_in_finished_session (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_task_is_retained_in_finished_session)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 167, in test_failed_task_is_retained_in_finished_session
+    replies, _, _ = self.exercise([self.action(finish_after=True)], task_success=False)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_finish_after_on_last_permitted_stage (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_after_on_last_permitted_stage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 151, in test_finish_after_on_last_permitted_stage
+    replies,sources,events=self.exercise(
+                           ^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_finish_after_one_response_after_cleanup (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_after_one_response_after_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 127, in test_finish_after_one_response_after_cleanup
+    replies, sources, events = self.exercise([self.action(finish_after=True)])
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'tail': [{'op': 'key_chord', 'keys': ['CTRL', 's']}]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 261, in test_finish_with_action_fields_never_silently_evaluates
+    replies, sources, events = self.exercise(
+                               ^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'tail': []})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 261, in test_finish_with_action_fields_never_silently_evaluates
+    replies, sources, events = self.exercise(
+                               ^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'point': [600, 378]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 261, in test_finish_with_action_fields_never_silently_evaluates
+    replies, sources, events = self.exercise(
+                               ^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'interaction': 'click'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 261, in test_finish_with_action_fields_never_silently_evaluates
+    replies, sources, events = self.exercise(
+                               ^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'finish_after': False})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 261, in test_finish_with_action_fields_never_silently_evaluates
+    replies, sources, events = self.exercise(
+                               ^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'unknown': None})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 261, in test_finish_with_action_fields_never_silently_evaluates
+    replies, sources, events = self.exercise(
+                               ^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_flat_refusal_at_stage_limit_does_not_publish_next_source (test_native_finish_after_v1.NativeFinishAfterTests.test_flat_refusal_at_stage_limit_does_not_publish_next_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 291, in test_flat_refusal_at_stage_limit_does_not_publish_next_source
+    replies, sources, events = self.exercise([self.action(), self.action()], max_stages=2,
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_flat_refusal_returns_new_boundary_then_explicit_action (test_native_finish_after_v1.NativeFinishAfterTests.test_flat_refusal_returns_new_boundary_then_explicit_action)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 271, in test_flat_refusal_returns_new_boundary_then_explicit_action
+    replies, sources, events = self.exercise(
+                               ^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_invalid_or_conflicting_flags_precede_mint (test_native_finish_after_v1.NativeFinishAfterTests.test_invalid_or_conflicting_flags_precede_mint) (decision={'finish_after': 'true'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 226, in test_invalid_or_conflicting_flags_precede_mint
+    replies, _, events = self.exercise([decision], expected_error=ValueError)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_invalid_or_conflicting_flags_precede_mint (test_native_finish_after_v1.NativeFinishAfterTests.test_invalid_or_conflicting_flags_precede_mint) (decision={'finish_after': 1})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 226, in test_invalid_or_conflicting_flags_precede_mint
+    replies, _, events = self.exercise([decision], expected_error=ValueError)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_invalid_or_conflicting_flags_precede_mint (test_native_finish_after_v1.NativeFinishAfterTests.test_invalid_or_conflicting_flags_precede_mint) (decision={'finish_after': True, 'finish': True})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 226, in test_invalid_or_conflicting_flags_precede_mint
+    replies, _, events = self.exercise([decision], expected_error=ValueError)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_last_stage_returns_terminal_evidence_without_unusable_source (test_native_finish_after_v1.NativeFinishAfterTests.test_last_stage_returns_terminal_evidence_without_unusable_source) (last={'interaction': 'observe'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 206, in test_last_stage_returns_terminal_evidence_without_unusable_source
+    replies, sources, events = self.exercise(
+                               ^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_last_stage_returns_terminal_evidence_without_unusable_source (test_native_finish_after_v1.NativeFinishAfterTests.test_last_stage_returns_terminal_evidence_without_unusable_source) (last={'point': [600, 378], 'expected_title': 'shape.svg - Inkscape', 'tail': []})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 206, in test_last_stage_returns_terminal_evidence_without_unusable_source
+    replies, sources, events = self.exercise(
+                               ^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_observation_failed_window_review_never_publishes_next_source (test_native_finish_after_v1.NativeFinishAfterTests.test_observation_failed_window_review_never_publishes_next_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 196, in test_observation_failed_window_review_never_publishes_next_source
+    replies, sources, events = self.exercise([{'interaction': 'observe'}],
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_observation_rejects_hidden_input_fields (test_native_finish_after_v1.NativeFinishAfterTests.test_observation_rejects_hidden_input_fields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 182, in test_observation_rejects_hidden_input_fields
+    replies, _, events = self.exercise([{'interaction': 'observe', 'tail': []}],
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+======================================================================
+ERROR: test_observation_reviews_changed_focus_without_input (test_native_finish_after_v1.NativeFinishAfterTests.test_observation_reviews_changed_focus_without_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 188, in test_observation_reviews_changed_focus_without_input
+    replies, _, events = self.exercise([{'interaction': 'observe'}, {'finish': True}],
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/test_native_finish_after_v1.py", line 92, in exercise
+    spec.loader.exec_module(subject)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/run_native_calc_self_use_v1.py", line 12, in <module>
+    from native_visual_watch_v1 import NativeVisualWatch
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/research/live_control/native_visual_watch_v1.py", line 9, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+
+----------------------------------------------------------------------
+Ran 68 tests in 0.991s
+
+FAILED (errors=28)

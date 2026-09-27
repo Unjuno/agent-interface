@@ -1,0 +1,46 @@
+{
+  "allocation": "issue3711-downstream-truncation-audit-v3-03",
+  "audit_invocations": 1,
+  "audit_source_commit": "209fdb3db8e59b07adb8d4d03fcc7cccc08ab86a",
+  "baseline": {
+    "accepted_bytes": 246,
+    "accepted_sha256": "e8ef9f6dd897325a22b1927d27e7fba2948051bb309cc472bbf2a1bfaba863d1",
+    "delivered_bytes": 23,
+    "delivered_sha256": "0450145d98f8ff197766d91827a438db1aa5800d556b4bee24eb57b33e168d4a",
+    "errors": [],
+    "raw_sha256": "3f51dc5a4c9c8acb48fc2929a8219260575271e5794cd5bd4afedf6f712afc73"
+  },
+  "disposition": "PASS_AUDIT_BINDING_SCOPED",
+  "errors": [],
+  "formal_experiment_invocations": 0,
+  "frozen_pr_head": "8bac49525c93835a69b6d441740a1c424faaecb2",
+  "image": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "issue": 3816,
+  "mutations": {
+    "accepted_same_length_path_change": {
+      "bytes_after": 246,
+      "bytes_before": 246,
+      "changed_occurrences": 1,
+      "control_sound": true,
+      "errors": [
+        "ACCEPTED_SHA256_MISMATCH"
+      ],
+      "rejected_by_receipt_hash": true
+    },
+    "delivered_prefix_23_to_22_bytes": {
+      "bytes_after": 22,
+      "bytes_before": 23,
+      "control_sound": true,
+      "errors": [
+        "DELIVERED_BYTES_MISMATCH",
+        "DELIVERED_SHA256_MISMATCH"
+      ],
+      "rejected_by_receipt_hash": true,
+      "rejected_by_receipt_length": true
+    }
+  },
+  "network": "none",
+  "platform": "aarch64",
+  "result_sha256": "e7bff711eb1a8407ea1335ea9da231e7a402dd3077debebddf94c2130153e672",
+  "schema": "agent-interface/issue-3816-audit-result-v1"
+}

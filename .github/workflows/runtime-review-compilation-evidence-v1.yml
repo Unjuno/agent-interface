@@ -1,0 +1,23 @@
+name: Runtime review retained evidence
+on:
+  push:
+    paths:
+      - 'research/integration/review_compilation_r4k6_v1/**'
+      - '.github/workflows/runtime-review-compilation-evidence-v1.yml'
+  pull_request:
+    paths:
+      - 'research/integration/review_compilation_r4k6_v1/**'
+      - '.github/workflows/runtime-review-compilation-evidence-v1.yml'
+permissions:
+  contents: read
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Decode exact records and run frozen audits only
+        run: python -S -B research/integration/review_compilation_r4k6_v1/verify_publication.py
