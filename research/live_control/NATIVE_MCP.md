@@ -344,3 +344,6 @@ the tool is not exposed. The EOF error covers either server exit or explicit sto
 ### Node-mediated self-use and legacy X11 titles
 
 The sequential relay forwards the opt-in native_stop tool. Native private-session discovery and feedback can fall back to the window manager's UTF-8 visible title when the client lacks _NET_WM_NAME; titles remain observation cues, never input authority. See [retained primary self-use](../../runtime/results/native-node-relay-01/README.md) for the failed startup, title diagnosis, same-response image delivery and independently scored Calc save. This Node-mediated route does not imply registered MCP reconnection or measured speed/token improvement.
+
+
+The [persistent Node host client](NATIVE_RELAY_CLIENT.md) provides a reusable adapter to the existing relay, with one outstanding request, retained replies and same-request waiting after host interruption.
