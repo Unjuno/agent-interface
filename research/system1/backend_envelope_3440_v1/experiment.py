@@ -135,7 +135,7 @@ def mlp_predict(state, x):
 
 def metrics(xs, ys, preds):
     safe = [i for i, x in enumerate(xs) if x[9] > .5 and x[10] > .5 and x[11] < .5 and x[4] >= .28 and x[5] <= .72]
-    return {"coverage": sum(preds[i] == ys[i] for i in safe) / len(safe),
+    return {"coverage": sum(preds[i] == ys[i] for i in safe) / max(1, len(safe)),
             "actionable_precision": sum(preds[i] == ys[i] for i in safe) / max(1, sum(preds[i] in (0,1,2) for i in safe)),
             "controls_exact": all(preds[i] == ys[i] for i in range(len(xs)) if i not in safe)}
 
