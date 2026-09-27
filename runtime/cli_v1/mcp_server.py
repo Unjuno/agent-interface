@@ -152,8 +152,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 elif operation in ('inspect_target', 'review_target'):
                     try:
                         review_options = dict(kwargs)
-                        if operation == 'inspect_target':
-                            review_options['capture_directory'] = str(call_root / 'images')
+                        review_options['capture_directory'] = str(call_root / 'images')
                         report = getattr(owner, operation)(**review_options)
                     except Exception as error:
                         report = {'status': 'needs_review', 'error': repr(error),
@@ -247,15 +246,20 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
 
         @server.tool()
         async def interface_review_target(target: StrictStr, window_id: StrictInt,
-                                          review_id: StrictStr) -> CallToolResult:
+                                          review_id: StrictStr,
+                                          screen_region: list[StrictInt] | None = None) -> CallToolResult:
             """Explicitly select the inspected client after rechecking its evidence.
 
             Sends no input, never clears recovery, consumes the review ID and
-            advances the session binding revision. Capture the selected surface
-            before dispatch; use the returned revision in new source assertions.
+            advances the session binding revision. Optional screen_region returns
+            a fresh image after selection, with a metadata recheck. Selection stays
+            committed even if capture fails or metadata changes. Review image and
+            capture_consistency before input; otherwise capture the surface separately.
+            Use the returned revision in new source assertions. No redraw acknowledgement.
             """
             return await submit('review_target', {'target': target, 'window_id': window_id,
-                                                 'review_id': review_id}, False, False)
+                                                 'review_id': review_id,
+                                                 'screen_region': screen_region}, False, False)
 
         @server.tool()
         async def interface_close() -> CallToolResult:
