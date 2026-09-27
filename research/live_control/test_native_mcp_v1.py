@@ -15,6 +15,42 @@ from native_exchange_v1 import encoded
 
 
 class MCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_stdio_pacing_refusal_keeps_connection_and_request_slot_usable(self):
+        # Real transport/publication, synthetic source, no GUI or input owner.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root/'source-1.json').write_text(json.dumps({'sequence': 1}))
+            (root/'text-policy.json').write_text(json.dumps({'gap_ms': 2, 'default_changed': False}))
+            params = StdioServerParameters(command=sys.executable, args=[
+                str(Path(__file__).with_name('native_mcp_v1.py')), '--run-directory', str(root)],
+                env=dict(os.environ))
+            async with stdio_client(params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    decision = {'source_sequence': 1, 'interaction': 'keyboard',
+                        'point': [1, 2], 'expected_title': 'fixture',
+                        'tail': [{'op': 'text', 'text': 'x' * 64}]}
+                    refused = await client.call_tool('native_submit',
+                        {'stage': 1, 'decision': decision, 'timeout': 0})
+                    self.assertTrue(refused.isError)
+                    detail = json.loads(refused.content[0].text)['error']
+                    self.assertIn('capacity 126', detail)
+                    self.assertIn('gap_ms=2', detail)
+                    self.assertNotIn('x' * 64, detail)
+                    self.assertFalse((root/'request-1.json').exists())
+                    decision['tail'][0]['gap_ms'] = 0
+                    accepted = await client.call_tool('native_submit',
+                        {'stage': 1, 'decision': decision, 'timeout': 0})
+                    self.assertFalse(accepted.isError)
+                    receipt = json.loads(accepted.content[0].text)
+                    self.assertEqual(receipt['status'], 'pending')
+                    retained = (root/'request-1.json').read_bytes()
+                    self.assertEqual(json.loads(retained), decision)
+                    resumed = await client.call_tool('native_resume', {'stage': 1,
+                        'decision_sha256': receipt['decision_sha256'], 'timeout': 0})
+                    self.assertFalse(resumed.isError)
+                    self.assertEqual((root/'request-1.json').read_bytes(), retained)
+
     async def test_recorded_default_expansion_refuses_before_publication(self):
         from native_mcp_v1 import create_server
         with tempfile.TemporaryDirectory() as tmp:
