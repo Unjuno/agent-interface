@@ -16,6 +16,11 @@
     "python": "3.11.16",
     "numpy_spec": null
   },
+  "runtime_probe": {
+    "command": "docker run --pull never --rm --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=16m --entrypoint python sha256:ba509e8a38d311c07539c49a7a2970b6f19869de42b8008be07a85568e2c9824 -c \"import sys; print(sys.version); import importlib.util; print('numpy',importlib.util.find_spec('numpy'))\"",
+    "exit_code": 0,
+    "stdout": "3.11.16 (main, Sep 19 2026, 03:41:12) [GCC 12.2.0]\nnumpy None"
+  },
   "preflight": {
     "command": "docker run --pull never --rm --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=64m --mount type=bind,source=<frozen-source>,target=/src,readonly --workdir /src --cpus=1 --memory=2g --pids-limit=64 --security-opt no-new-privileges --env PYTHONDONTWRITEBYTECODE=1 --entrypoint python sha256:ba509e8a38d311c07539c49a7a2970b6f19869de42b8008be07a85568e2c9824 -B /src/test_construction.py",
     "exit_code": 1,
@@ -23,6 +28,9 @@
     "network": "none",
     "source_mount": "read-only",
     "rootfs": "read-only",
+    "cpu_limit": 1,
+    "memory_limit": "2g",
+    "pids_limit": 64,
     "gpu_requested": false,
     "training_started": false
   },
