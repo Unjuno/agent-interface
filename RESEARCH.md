@@ -119,9 +119,20 @@ preserves #4623 and projects only the eight typed answer-code logits from the
 same pinned model, corpus, CUDA image and RTX 3080. Construction controls passed
 and all nine winners matched, but B00/slot 15 exceeded the frozen selected-score
 tolerance (max absolute `0.078125`, max relative `0.003224`). An independent
-implementation reconstructed all nine vectors with `errors=[]`; the preregistered
-all-comparisons gate therefore failed. No formal timing or semantic block ran.
-See the [successor STOP record](research/system1/typed_readout_code_projection_1014_v2/STOP_RECORD.md).
+  implementation reconstructed all nine vectors with `errors=[]`; the preregistered
+  all-comparisons gate therefore failed. No formal timing or semantic block ran.
+  See the [successor STOP record](research/system1/typed_readout_code_projection_1014_v2/STOP_RECORD.md).
+
+### Issue #4652 — full-corpus typed decision equivalence
+
+Successor [#4652](https://github.com/Unjuno/agent-interface/issues/4652)
+compares full-prefill and shared-prefix-cache categorical output across all
+1,024 questions in the same immutable synthetic corpus, after the distinct
+score-tolerance STOPs in #4623 and #4639. On the RTX 3080, all 1,024 eight-code
+winners matched; an independent GPU reconstruction rebuilt all 1,024 pairs
+with zero errors and zero mismatches. This scoped categorical-equivalence PASS
+does not establish semantic correctness, GUI task quality, or cache speedup and
+does not modify either predecessor result. Corpus LF/CRLF byte provenance and source-hash metadata normalization are disclosed in the [formal report and freeze audit](research/system1/typed_readout_decision_equivalence_1014_v3/formal/REPORT.md).
 
 ### Issue #3849 — independent audit of retained #3442 intent-alignment result
 
