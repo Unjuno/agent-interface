@@ -175,6 +175,11 @@ def main():
         OUT.mkdir(parents=True, exist_ok=True)
         (OUT / "session_cli_stdout.jsonl").write_text("".join(raw_lines))
         (OUT / "session_cli_result.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+        entries = []
+        for artifact in sorted(OUT.rglob("*")):
+            if artifact.is_file() and artifact.name != "SHA256SUMS":
+                entries.append(f"{hashlib.sha256(artifact.read_bytes()).hexdigest()}  {artifact.relative_to(OUT).as_posix()}")
+        (OUT / "SHA256SUMS").write_text("\n".join(entries) + "\n")
     print(json.dumps(result, sort_keys=True), flush=True)
     return 0 if result.get("container_exit_code") == 0 else 1
 
