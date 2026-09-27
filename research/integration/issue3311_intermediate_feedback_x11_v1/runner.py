@@ -212,16 +212,18 @@ def main():
         def admit(payload):
             title = window_title(window).split(" - Chromium")[0]
             active = xdotool("getactivewindow", check=False).stdout.strip()
+            focused = xdotool("getwindowfocus", check=False).stdout.strip()
             action = payload["action"]
             required_state = "EDITING" if action == "request_save" else "CONFIRMING"
             symbol = payload["symbol"]["target_reference"]
-            eligible = (active == str(window) and title == required_state and
+            eligible = (focused == str(window) and title == required_state and
                         symbol == f"window:{window}/#" + ("save" if action == "request_save" else "confirm"))
             row = {"eligible": eligible, "status": "revalidated" if eligible else "stale",
                    "authorization": f"local-expiring-{seq}" if eligible else None,
                    "expected_sequence": payload["observation"]["sequence"],
                    "valid_until_ns": time.monotonic_ns() + 2_000_000_000 if eligible else 0}
             admits.append({"action": action, "title": title, "active_window": active,
+                           "focused_window": focused,
                            "symbol": symbol, "result": row})
             return row
 
