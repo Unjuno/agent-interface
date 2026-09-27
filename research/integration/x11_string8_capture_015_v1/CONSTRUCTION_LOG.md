@@ -37,4 +37,3 @@ An initial runner launch failed before creating output because the mounted outpu
 Construction outcome: 2/2 complete; one str payload and one bytes payload; one legacy bytes(str) TypeError; candidate/native byte mismatches=0; pixel-oracle mismatches=0; both fixture and Xvfb exits=0; cleanup=2/2; TCP listening=false; Xauthority mode 0600. Construction raw.jsonl SHA256 fd19a0102c7d0381bc98dadac909164ebbe505413e79cc7e45a41a003183bfc5; summary.json SHA256 7c0d1f6d1a9b7a9f1fff654eccda30cfc99d52b4dd138d6abeabe109124902f4. These two rows are excluded and will not be pooled into the 30-case formal matrix.
 
 The hypothesis discriminator and native oracle were exercised successfully at construction only. Formal remains unstarted; source/environment/gate freeze must be published and read back before formal case 0.
-
