@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 166 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 168 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
@@ -136,6 +136,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`altgr_preflight_contract_successor_2171_v1/`](altgr_preflight_contract_successor_2171_v1/)
 - [`anytime_fidelity_typed_admission_r0_v1/`](anytime_fidelity_typed_admission_r0_v1/)
 - [`arena_v1_cv_grounding_rescue_4695_v1/`](arena_v1_cv_grounding_rescue_4695_v1/)
+- [`arena_v1_cv_grounding_rescue_4695_v2/`](arena_v1_cv_grounding_rescue_4695_v2/)
 - [`attention_budgeting_successor_1940_v1/`](attention_budgeting_successor_1940_v1/)
 - [`attention_cue_provenance_diagnostic_2755_v1/`](attention_cue_provenance_diagnostic_2755_v1/)
 - [`attention_provenance_successor_1936_v1/`](attention_provenance_successor_1936_v1/)
@@ -263,6 +264,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`temporal_ring_provenance_repair_successor_2053_v1/`](temporal_ring_provenance_repair_successor_2053_v1/)
 - [`temporal_sample_cost_identifiability_v1/`](temporal_sample_cost_identifiability_v1/)
 - [`tiny_predicate_specialist_4218_v1/`](tiny_predicate_specialist_4218_v1/)
+- [`tiny_visual_target_position_2564_v1/`](tiny_visual_target_position_2564_v1/)
 - [`transactional_belief_action_safe_a2_v1/`](transactional_belief_action_safe_a2_v1/)
 - [`transactional_belief_action_safe_r0_v1/`](transactional_belief_action_safe_r0_v1/)
 - [`transactional_belief_action_safe_r1_batched_v1/`](transactional_belief_action_safe_r1_batched_v1/)
