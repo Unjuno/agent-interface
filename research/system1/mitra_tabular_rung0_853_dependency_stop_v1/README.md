@@ -15,6 +15,7 @@ Can the exact pinned Python 3.11 CUDA image dependency lock import the preregist
 - A first acquisition attempt stopped when its container `/tmp` tmpfs filled; no model or GPU action occurred. A distinct `wheelhouse-attempt02` completed and is the source for the retained exact log.
 - With networking disabled and no GPU device request, pip installed the exact lock successfully (`OFFLINE_INSTALL_EXIT=0`). The direct import reached AutoGluon's Mitra module but stopped at `ModuleNotFoundError: No module named 'omegaconf'`.
 - Raw log SHA-256: `85fbafaf2397165491b9b6eaaf3445d40c7cb77ec687cb5d342a8f10ce7a8f2f`.
+- GitHub text storage normalizes line endings. To retain the exact original lock, wheel manifest, and raw-log bytes independently of that display normalization, byte-exact base64 envelopes are also stored as `requirements.lock.raw.b64`, `wheelhouse-manifest.json.raw.b64`, and `offline-install-import-preflight.log.raw.b64`. The auditor verifies their hashes and checks normalized text against each envelope.
 - No checkpoint was mounted or loaded; zero fit, prediction, optimizer, formal rows, or GPU invocations occurred. The unrelated Ollama container was not touched.
 
 Earlier #4745 comments record a distinct construction install/import probe in which another Mitra module imported. This STOP is narrowly about the exact frozen lock and direct `sklearn_interface.MitraClassifier` import path captured by this log. It does not claim that no repaired closure can work or that CUDA forward is incompatible.
