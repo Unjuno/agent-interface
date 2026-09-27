@@ -8,10 +8,10 @@ from __future__ import annotations
 import hashlib
 import time
 from typing import Any
-from Xlib import X, XK, display
+from Xlib import X, XK, display, protocol
 from Xlib.ext import xtest
 
-from runtime.core_v1.contract import OFFICE_FLOOR, capability_manifest, validate_backend_manifest
+from runtime.core_v1.contract import OFFICE_FLOOR, WINDOW_ACTIVATE, capability_manifest, validate_backend_manifest
 
 BUTTON_MAP = {"left": 1, "middle": 2, "right": 3, "x1": 8, "x2": 9}
 BUTTON_MASKS = {1: X.Button1Mask, 2: X.Button2Mask, 3: X.Button3Mask}
@@ -60,12 +60,13 @@ class X11Backend:
             "x11-v1",
             "linux",
             "x11",
-            OFFICE_FLOOR,
+            OFFICE_FLOOR | ({WINDOW_ACTIVATE} if self._activation_supported() else set()),
             frames=("screen_physical_px", "window_client"),
             permissions=("x11-display-access",),
         )
         row["capabilities"]["input.text"]["detail"] = "strict ASCII letters/digits/space/._- plus layout-checked :/"
         row["capabilities"]["event.feedback"]["detail"] = "wait_update is a fixed delay; verify is a no-op; neither proves redraw or task effect"
+        row["capabilities"][WINDOW_ACTIVATE]["detail"] = "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
         return validate_backend_manifest(row)
 
     def monotonic_ns(self) -> int:
@@ -102,6 +103,57 @@ class X11Backend:
         self.d.sync()
         if not self._focus_within(win.id):
             raise X11BackendError("focus verification failed")
+
+    def _window_property(self, name):
+        prop = self.root.get_full_property(self.d.intern_atom(name), X.AnyPropertyType)
+        if prop is None or prop.format != 32 or len(prop.value) > 4096:
+            return []
+        return [int(value) for value in prop.value]
+
+    def _activation_supported(self):
+        try:
+            return self.d.intern_atom('_NET_ACTIVE_WINDOW') in self._window_property('_NET_SUPPORTED')
+        except Exception:
+            return False
+
+    def _activation_target(self, target):
+        win = self._target(target)
+        if not self._activation_supported():
+            raise X11BackendError('EWMH activation unavailable')
+        if win.id not in self._window_property('_NET_CLIENT_LIST'):
+            raise X11BackendError('activation target is not a managed client')
+        return win
+
+    def activate(self, target, timeout_ms, receipt):
+        win = self._activation_target(target)
+        started = time.monotonic_ns()
+        receipt.update(target=target, window_id=win.id, started_ns=started,
+                       requested_ms=timeout_ms, request_attempted=False,
+                       status='unconfirmed', visual_confirmation=False)
+        # External window controller, like a task switcher. No fabricated user
+        # timestamp or client identity; the WM may ignore this request.
+        event = protocol.event.ClientMessage(window=win.id,
+            client_type=self.d.intern_atom('_NET_ACTIVE_WINDOW'),
+            data=(32, [2, X.CurrentTime, 0, 0, 0]))
+        try:
+            receipt['request_attempted'] = True
+            self.root.send_event(event, event_mask=X.SubstructureRedirectMask | X.SubstructureNotifyMask)
+            self.d.flush()
+            deadline = started + timeout_ms * 1_000_000
+            while True:
+                active = self._window_property('_NET_ACTIVE_WINDOW')
+                receipt['active_window_ids'] = active
+                receipt['focus_within_target'] = self._focus_within(win.id)
+                if active == [win.id] and receipt['focus_within_target']:
+                    receipt['status'] = 'active_and_focused'
+                    return
+                remaining = deadline - time.monotonic_ns()
+                if remaining <= 0:
+                    receipt['status'] = 'timeout'
+                    raise X11BackendError('activation not confirmed; request may take effect later')
+                time.sleep(min(.01, remaining / 1_000_000_000))
+        finally:
+            receipt['ended_ns'] = time.monotonic_ns()
 
     def geometry(self, target: str) -> dict[str, int]:
         win = self._target(target)
@@ -169,8 +221,10 @@ class X11Backend:
         focused = False
         for op in program["ops"]:
             kind = op["op"]
-            if kind == "focus":
+            if kind in {"focus", "activate"}:
                 self._target(op["target"])
+                if kind == 'activate':
+                    self._activation_target(op['target'])
                 focused = True
             elif kind in {"pointer_move", "observe"} and not focused:
                 raise X11BackendError(f"{kind} requires focused target")
@@ -304,6 +358,7 @@ class X11Backend:
         observations: list[dict[str, Any]] = []
         releases: list[dict[str, Any]] = []
         waits: list[dict[str, Any]] = []
+        activations: list[dict[str, Any]] = []
         started = time.monotonic_ns()
         emissions_before = self.emissions
         completed_ops = []
@@ -316,6 +371,7 @@ class X11Backend:
                 "program_emissions": self.emissions - emissions_before,
                 "observations": observations, "releases": releases,
                 "waits": waits,
+                "activations": activations,
                 "completed_ops": completed_ops,
             }
 
@@ -325,6 +381,11 @@ class X11Backend:
                 if kind == "focus":
                     current_target = op["target"]
                     self.focus(current_target)
+                elif kind == 'activate':
+                    current_target = op['target']
+                    receipt = {'operation_index': index}
+                    activations.append(receipt)
+                    self.activate(current_target, op['timeout_ms'], receipt)
                 elif kind == "key_chord": self.key_chord(op["keys"])
                 elif kind == "key_state": self.key_state(op["key"], op["down"])
                 elif kind == "text": self.text(op["text"])
