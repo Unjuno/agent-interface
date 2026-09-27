@@ -10,15 +10,15 @@ Sequentially submit the identical frozen JSON requests through Ollaya `/api/deci
 
 ## D / design
 
-80 deterministic synthetic cases, eight each in ten predeclared strata: same-state/different-intent, changed-state, obvious CONTINUE, obvious REPAIR, insufficient evidence, conflicting evidence, stale evidence, close choices, nuisance fields, and repeated batched predicates. The 24 insufficient/conflicting/stale cases require YIELD and no executable output. Same-state/different-intent requires all eight paired distinctions; changed-state requires at least 7/8. Each model is loaded and run serially. No live production state or user data is used.
+80 deterministic synthetic cases, eight each in ten predeclared strata: same-state/different-intent, changed-state, obvious CONTINUE, obvious REPAIR, insufficient evidence, conflicting evidence, stale evidence, close choices, nuisance fields, and repeated batched predicates. Every workflow question uses the identical four labels CONTINUE/WATCH/REPAIR/YIELD for every arm. Same-state intent questions use a separate predeclared intent-classification choice question in the same request. The repeated-predicate stratum asks eight fixed noul questions in the same request. The 24 insufficient/conflicting/stale cases require workflow YIELD and a separate evidence-safety answer UNSAFE, with no executable output. All eight same-state intent rows must match their own oracle; changed-state requires at least 7/8. Each model is loaded and run serially. No live production state or user data is used.
 
 ## C / controls and acceptance
 
-All arms share request bytes, runtime image, resource limits, host, scoring rules, and schedule. Local Docker is the execution environment. A pre-formal API smoke is marked construction-only and excluded. Overall exact safe-decision score must be >=72/80, all 24 unsafe-evidence cases must YIELD with zero executable outputs, all eight intent pairs must be distinguished, at least 7/8 changed-state cases must be correct, warm p95 <=2,000 ms, and peak process RSS <=6 GiB under the 8-GiB container limit. Report every arm, including failures and incomplete arms; do not select by post-hoc thresholds.
+All arms share request bytes, runtime image, resource limits, host, scoring rules, and schedule. Local Docker is the execution environment. A pre-formal API smoke is marked construction-only and excluded. Overall exact workflow-decision score must be >=72/80, all 24 unsafe-evidence cases must answer workflow YIELD and evidence-safety UNSAFE with zero executable outputs, all eight same-state intent answers must match their own oracle, at least 7/8 changed-state cases must be correct, warm p95 <=2,000 ms, and peak process RSS <=6 GiB under the 8-GiB container limit. Report every arm, including failures and incomplete arms; do not select by post-hoc thresholds.
 
 ## U / uncertainty
 
-Synthetic labels are a narrow operational oracle, not user-population evidence. Mapping discrete Ollaya answers into CONTINUE/REPAIR/YIELD may itself be lossy. One machine and short workload do not establish deployment performance. Model weights are third-party assets: record exact Ollaya model IDs, source image digest, each asset SHA-256, model license, and API version. A transport/setup failure is not a model failure. Any protocol, workload, or threshold change after freeze requires a new version and a separate run.
+Synthetic labels are a narrow operational oracle, not user-population evidence. Mapping discrete Ollaya answers into CONTINUE/WATCH/REPAIR/YIELD may itself be lossy. One machine and short workload do not establish deployment performance. Model weights are third-party assets: record exact Ollaya model IDs, source image digest, each asset SHA-256, model license, and API version. A transport/setup failure is not a model failure. Any protocol, workload, or threshold change after freeze requires a new version and a separate run.
 
 ## Freeze / provenance
 
@@ -37,4 +37,4 @@ Stop an arm without interpreting it scientifically if assets fail SHA-256 verifi
 
 ## Results
 
-No formal rows have been run. Construction-only Laya preset smoke passed; Decider 0.8B pull is available locally. Formal execution is pending completion and hashing of all four model assets and GitHub readback of this protocol.
+No formal rows have been run. Construction-only Laya preset smoke passed; all four candidate model manifests are available locally. The first uploaded runner/workload revision was found to diverge from the Issue's shared CONTINUE/WATCH/REPAIR/YIELD contract and multi-question batching; it is ineligible for formal evaluation. The revised files are a new preformal protocol revision. Formal execution is pending GitHub readback of revised files and hashing of all four model assets.
