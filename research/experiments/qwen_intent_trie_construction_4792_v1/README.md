@@ -12,6 +12,8 @@ Raw timings were 1,040,935,238 ns free and 1,177,437,485 ns trie. One observatio
 
 Use the immutable image ID, cached model snapshot, source SHA-256 and exact Docker invocation in `FREEZE.json`. `construction-result.json` is the unmodified container output. The container was CPU-only, offline, read-only except `/out`, limited to 2 CPUs / 8 GiB / 64 pids.
 
+An independent raw-only container process passed 21 checks, including 8/8 effective copied-result mutation controls (`independent-audit.json`). It imports neither the runner nor its trie implementation.
+
 ## Next rung
 
 This only validates decoder mechanics. A separate fresh paired held-out allocation is required to test whether constrained decoding changes semantic intent quality with the same fitted #4792 adapter, prompt, rows, binder and simulator. Do not train again or infer safety from syntax.
