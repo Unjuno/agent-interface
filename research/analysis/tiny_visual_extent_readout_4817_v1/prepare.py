@@ -17,4 +17,3 @@ def dataset(seed):
     base=tiles(80,seed+2,((20,15),))
     held={str(c):tiles(80,seed+10+i,(c,)) for i,c in enumerate(((14,8),(26,8),(14,22),(26,22),(8,15),(20,25),(32,15),(20,8)))}
     return train,base,held
-
