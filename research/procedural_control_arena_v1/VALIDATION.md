@@ -47,3 +47,26 @@ A Dockerfile is provided for a minimal Python/Tk/Xvfb image, but this execution 
 5. Add held-out composition/generator families generated after candidate freeze where feasible.
 6. Add external model/image/token/cache/resource accounting in the paired harness.
 7. Replicate retained mechanisms on independent real-app/domain tasks before any general capability claim.
+
+
+## Presentation-validity repair — Issue #4695
+
+Evaluation criteria were frozen before this audit in `EVALUATION_CRITERIA.md` and Issue #4695. The pre-repair audit retained **FAIL** for construct-valid presentation (E1) and task-specification separation (E12), with related partial failures for controller-visible diagnostics/generalization.
+
+Repair scope was intentionally limited to the presentation/controller-visible boundary; hidden scorer semantics were not weakened.
+
+Changes:
+- removed visible mechanic/stage names, stage count and exact deadline countdown;
+- removed imperative motor-policy prose such as `MOVE: use WASD`, `TARGET: click...`, `COMBO: hold...click...`, and `TRACE: hold the mouse...`;
+- replaced prose with desired-state cues: visual target sample, pending/active readiness state, keycap constraint, visible typing code, ghost geometry, path/checkpoints, and actual recovery relocation;
+- removed visible PASS/FAIL, failure reason and fingerprint from the completion surface;
+- reduced `public_state()` to `schema / sim_time / done`;
+- replaced the obsolete text-size axis `instruction_font_px` with `objective_sample_radius`;
+- added GUI regression checks that reject known policy-coaching/diagnostic strings and require the TYPE code to remain visible as task data.
+
+GitHub Actions run `36299998588` (`procedural-control-arena-v1`) completed successfully on the repair branch:
+- unit tests PASS;
+- Xvfb/Tk render and presentation-leak smoke PASS for all 9 primitives;
+- Python compile PASS.
+
+This is a **benchmark-instrument construction PASS only**. E4 held-out generator families, E8 formal repeated paired allocation, E9 model/token/cache accounting, and E10 cross-domain transfer remain open.
