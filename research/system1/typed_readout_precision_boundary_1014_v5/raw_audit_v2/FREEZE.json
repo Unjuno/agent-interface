@@ -7,10 +7,15 @@
   "branch": "research/raw-audit-integrity-4939-20260928",
   "path": "research/system1/typed_readout_precision_boundary_1014_v5/raw_audit_v2/",
   "expected_raw_sha256": "c1a2256d8b117d7dc0ec7d90c7333f3356378313d7f735fb7aa7700278183624",
-  "source_sha256": {
-    "audit_core_v2.py": "3efdea53cfb449d5c07f025ba62d20cabaa6df0722d7faaee7040b1ce9ed5752",
-    "audit_raw_v2.py": "5ae187f86d8e88c901100e54b2be492832becd8fd010da4d6a6d0e7b2d4e655c",
-    "test_audit_v2.py": "dbc4c89b926402f42a062434fe4b20cec4a68ab5518402cdab1af84cf2d9dbe9"
+  "frozen_source_sha256": {
+    "audit_core_v2.py": "6fb5f3a16e8639f2645576e985869948aa59efea5546a9093829065a8580b77c",
+    "audit_raw_v2.py": "6726eac3b3eb49820cbd3526ec3c932652bd81c8089e5c097c240e669cba7880",
+    "test_audit_v2.py": "3a72f44de313e36a7b8eae94c13c74f979499f0133332c03016f9042c698d7c6"
+  },
+  "frozen_git_blobs": {
+    "audit_core_v2.py": "a342d6a0f48f2f759bb55c0ba21960cda513bee0",
+    "audit_raw_v2.py": "26b20f00b9ca67fd1b664bc38272bf6e77cc7c1f",
+    "test_audit_v2.py": "01d68df40b0c8463465bbbf0c62527943e6a56bb"
   },
   "decision": "exact raw passes; self-consistent mutation and all corruption controls reject under normal, -O, and PYTHONOPTIMIZE=1",
   "forbidden": ["model load", "inference", "generation", "fit", "optimizer step", "GPU", "retry", "seed substitution"]
