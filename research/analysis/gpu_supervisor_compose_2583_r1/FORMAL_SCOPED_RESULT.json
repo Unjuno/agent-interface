@@ -1,0 +1,22 @@
+{
+  "status": "PASS_FORMAL_SCOPED_COMPOSED_GATE",
+  "scope": "single local Docker GPU allocation; synthetic typed traces only",
+  "image": "pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime",
+  "device": "NVIDIA GeForce RTX 3080 Laptop GPU",
+  "torch": "2.5.1+cu121",
+  "cuda_runtime": "12.1",
+  "rows": 256,
+  "mismatches": 0,
+  "forced_yield_rows": 96,
+  "authority_grants": 0,
+  "input_grants": 0,
+  "raw_sha256": "ca364df14e19979a31802cb7631f1edc14f5836a0951196fbc113a31f9d88cbf",
+  "oracle": "independent deterministic final gate over fresh/ambiguous flags",
+  "limitations": [
+    "no GUI or real application",
+    "no model provider or network",
+    "no task-success or token-saving claim",
+    "no end-to-end model-boundary measurement",
+    "single host/GPU/image allocation"
+  ]
+}
