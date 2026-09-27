@@ -235,8 +235,16 @@ def audit_raw(raw, seed_raw, seed):
         ready_by_index, readiness_errors = validate_readiness_records(
             arm.get("reader_readiness"), READERS, first_publication_ns)
         errors.extend(name + "_" + error for error in readiness_errors)
-        if arm.get("writer_error") is not None or arm.get("writer_start_ns") is None or arm.get("writer_end_ns") is None:
+        writer_start = arm.get("writer_start_ns")
+        writer_end = arm.get("writer_end_ns")
+        writer_valid = (type(writer_start) is int and type(writer_end) is int
+                        and 0 < writer_start < writer_end)
+        if arm.get("writer_error") is not None or not writer_valid:
             errors.append(name + "_writer_receipt")
+        if writer_valid and valid_events and any(
+                event["start_ns"] < writer_start or event["end_ns"] > writer_end
+                for event in pubs):
+            errors.append(name + "_publication_outside_writer_envelope")
         if arm.get("reader_initial_samples_ready") != READERS:
             errors.append(name + "_initial_samples_not_ready")
         if name == "diagnostic" and arm.get("reader_partial_barrier_ready") != READERS:
@@ -301,8 +309,14 @@ def audit_raw(raw, seed_raw, seed):
                 if (exit_rows and (exit_rows[0].get("reader_index") != reader_index or
                         exit_rows[0].get("pid") != pid or exit_rows[0].get("read_count") != len(read_rows))):
                     errors.append(name + "_reader_exit_row_join")
+                last_read_end = max(
+                    (row.get("read_end_ns") for row in read_rows
+                     if isinstance(row, dict) and type(row.get("read_end_ns")) is int),
+                    default=None,
+                )
                 if (not exit_rows or type(exit_rows[0].get("exit_ns")) is not int or
-                        exit_rows[0].get("exit_ns", 0) <= 0):
+                        exit_rows[0].get("exit_ns", 0) <= 0 or
+                        last_read_end is None or exit_rows[0]["exit_ns"] < last_read_end):
                     errors.append(name + "_reader_exit_timestamp")
                 count = len(read_rows)
                 trace_errors = validate_reader_trace_rows(
