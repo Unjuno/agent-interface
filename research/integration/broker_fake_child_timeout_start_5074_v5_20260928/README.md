@@ -72,7 +72,7 @@ not occupy a shared parent-level `research/integration/` destination.
    to 3 s for both records; missing marker is a typed STOP. Independent audit
    reconciles row tables to hashed child-call, receipt and response bytes.
 6. Run `audit.py` in one distinct fresh restricted container against raw output;
-   it must reject all eleven frozen evidence mutations.
+   it must reject all seventeen frozen evidence mutations (15 semantic in-memory controls plus two raw-file controls).
 7. Publish raw output, hashes, dispositions and limitations through a reviewable
    additive PR. Keep all historical branches and results intact.
 

@@ -75,8 +75,15 @@ class AuditContractTest(unittest.TestCase):
         self.assertEqual(AUDIT.inspect(fixture(), verify_files=False,
                                        verify_queued_file=False), [])
 
-    def test_fourteen_in_memory_corruption_controls_are_rejected(self):
-        self.assertEqual(AUDIT.corruption_controls(fixture(), verify_files=False), 14)
+    def test_child_start_before_broker_and_after_deadline_are_rejected(self):
+        for started_ns, marker_ns in ((1, 101), (5_000_000_050, 5_000_000_050)):
+            candidate = fixture()
+            candidate["cases"][2]["child_start_record"]["started_ns"] = started_ns
+            candidate["cases"][2]["child_start_marker_ns"] = marker_ns
+            with self.assertRaisesRegex(ValueError, "child start was not before broker deadline"):
+                AUDIT.inspect(candidate, verify_files=False, verify_queued_file=False)
+    def test_fifteen_in_memory_corruption_controls_are_rejected(self):
+        self.assertEqual(AUDIT.corruption_controls(fixture(), verify_files=False), 15)
 
     def test_invocation_receipt_freezes_network_cpu_and_slot_ownership(self):
         value = fixture()["invocation_receipt"]

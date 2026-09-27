@@ -2,7 +2,7 @@
   "schema": "broker-timeout-start-freeze-v1",
   "issue": 5074,
   "allocation": "broker-fake-child-timeout-start-20260928-01",
-  "base_main": "eb3c8d108b8ddd090e5e81a22c7d5db9c367552c",
+  "base_main": "4481fea7e96419b9973e5da4820cf0f1f61b2c6b",
   "branch": "research/broker-fake-child-timeout-start-5074-v5-20260928",
   "additive_path": "research/integration/broker_fake_child_timeout_start_5074_v5_20260928/",
   "source": {
@@ -11,15 +11,15 @@
     "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
     "platform": "linux/amd64",
     "sha256": {
-      "audit.py": "0742bf7dab44a844540e56f1563d975320a7dd9f7d7480f792a396c4e04557da",
+      "audit.py": "a9510570891435a6e733da12c3658f6b3301f3d1f56f4fb488750144655e49d7",
       "CONSTRUCTION_HOST.json": "8a61d6697b58d90f3289897a24b3bee5c984fd08cc7c33c66ba3ba10b990e2e2",
       "CONSTRUCTION_HOST_V2.json": "e586fc9f3ade2850030844c241d65b048ae0cd46396175fb7086d0cc02fc5567",
-      "formal.py": "111f4f709cd91d45fa3f0280f2a97d2b93adfc50cfbf65299563ba5932e312ed",
+      "formal.py": "024bb029c28733b8a6d8550a5d09d07802d58adbcf807bb2402ec88022bf4860",
       "marker_probe.py": "c41bb1c130bbf2a01b930c17ecbe92de5987c974a0341e790a3346c1f928d649",
       "protocol.py": "4989263bb509f6ecc17a0baf61be2a39e7e6fda8afcf9acea0e503ac3f761252",
-      "README.md": "6d56a5e09d48698cc7040c67662421122c669b175270ebec11710457fe81566f",
+      "README.md": "fe2d695816bd05daa41ce16648518cb12ccffaabed0e5c020cdaca7a7cfceecc",
       "runner.py": "7d01599fdae07a357d9be08676a120859692b870dd50ed50774aa0346608aa70",
-      "test_audit_contract.py": "e063e76557e09c85fa066d64665cef06514f051c2b9784aa47e3ab1b07bfb8b2",
+      "test_audit_contract.py": "363d70ebcefc4da2da048dcb91dcdd980dbde91dbe6630e9c084c5f5df94261b",
       "test_formal_helpers.py": "c4af0192c6eebc0712b2a7d3deba529ae211c0766c250edcf9b14cd7935465dd",
       "test_marker_probe.py": "5183902d1e2fc3253f91e6b822318bed4faeb296428a7aa0fb397d101bc54442"
     }
@@ -66,7 +66,7 @@
     "audit_source": "read-only",
     "raw_input": "read-only",
     "audit_report": "separate fresh writable directory",
-    "corruption_controls": 16
+    "corruption_controls": 17
   },
   "expected": {
     "exit-0": 0,

@@ -10,7 +10,7 @@ import sys
 
 EXPECTED = ("exit-0", "exit-23", "timeout-after-start", "missing-executable",
             "malformed-json", "idle-once", "sorted-once")
-CORRUPTION_CONTROL_COUNT = 16
+CORRUPTION_CONTROL_COUNT = 17
 
 
 def require(ok: bool, message: str) -> None:
@@ -270,6 +270,7 @@ def corruption_controls(raw: dict, verify_files: bool = True) -> int:
         lambda x: x["cases"][0]["receipts"]["exit-0.broker.json"].update(returncode=1),
         lambda x: x["cases"][2].update(child_start_marker=False),
         lambda x: x["cases"][2]["child_start_record"].update(started_ns=1),
+        lambda x: x["cases"][2]["child_start_record"].update(started_ns=5_000_000_050),
         lambda x: x["cases"][6]["child_calls"][0].update(stdin="prompt:z\n"),
         lambda x: x["cases"][0]["receipts"]["exit-0.broker.json"].update(stderr="tampered"),
         lambda x: x["cases"][6]["responses"].update({"a.response.jsonl": "tampered"}),
@@ -282,8 +283,7 @@ def corruption_controls(raw: dict, verify_files: bool = True) -> int:
         lambda x: x["invocation_receipt"]["ownership_release"].update(released=False),
         lambda x: x["invocation_receipt"].update(docker_inventory_before=["unowned-container"]),
     )
-    selected = mutations if verify_files else tuple(
-        mutation for index, mutation in enumerate(mutations) if index not in (6, 7))
+    selected = mutations if verify_files else mutations[:7] + mutations[9:]
     rejected = 0
     for mutate in selected:
         candidate = copy.deepcopy(raw)
