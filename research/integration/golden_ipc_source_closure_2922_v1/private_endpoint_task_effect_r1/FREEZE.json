@@ -1,0 +1,94 @@
+{
+  "schema": "issue2924_chromium_fixture_task_effect_freeze_v1",
+  "issue": 4924,
+  "related_issue": 2922,
+  "main_intake_sha": "519f2c1bdb219697c2f5e92ae6c27714265d60e0",
+  "branch": "research/issue-4924-chromium-task-effect-20260928-r1",
+  "allocation": "issue2922-chromium-task-effect-20260928-r1",
+  "seed": 992928,
+  "formal_invocations_before_freeze": 0,
+  "predecessor_seed_992927_preserved": true,
+  "source_commit": "01349d7bc76e5635f5568c53ffeec4d9ff49abb1",
+  "image": "sha256:436172d89b145c6a9f9a57e655422c9558b3b0235347dd77607e9d61bcfa6393",
+  "platform": "linux/arm64",
+  "python": "3.11.2",
+  "source_sha256": {
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "research/live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+    "research/observation_gating/exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944",
+    "research/observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+    "research/observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e",
+    "research/observation_tiles/tile_transport.py": "f74caf4f2bea59fe3a73b3f04975384d8520bb06c296765566c4dd2542ef12b0",
+    "research/real_apps_v1/real_app_suite_v1.py": "22b4cc86af68a0ae866fe24735faaeefa40c0e1722238ab8c04723e1a564db24"
+  },
+  "runner_path": "research/integration/golden_ipc_source_closure_2922_v1/private_endpoint_task_effect_r1/session_cli_chromium_task_effect_probe.py",
+  "runner_sha256": "258ba79c9530187ec3b6eb4bc752b0891d40d7e432bf6eaf84d9a5c41a89e3cd",
+  "auditor_path": "research/integration/golden_ipc_source_closure_2922_v1/private_endpoint_task_effect_r1/audit_task_effect.py",
+  "auditor_sha256": "c7d342f766b0f1045f8436f2247741a02e91c9c1d21b6e9e1819f9ecc974e491",
+  "test_path": "research/integration/golden_ipc_source_closure_2922_v1/private_endpoint_task_effect_r1/test_audit_task_effect.py",
+  "test_sha256": "d55903bf171e473c737ed8ab862d8024e73743625637040ef75ca9b505da6658",
+  "preformal_construction": {
+    "verdict": "PASS_FROZEN_PREFORMAL_PREFLIGHT",
+    "command": "docker run --rm --pull=never --network none --read-only --cpus=0.25 --memory=1024m --pids-limit=64 --security-opt=no-new-privileges --cap-drop=ALL --tmpfs /tmp:rw,nosuid,nodev,size=64m --mount type=bind,src=/tmp/unjuno-4924.XzoUGY/repo,dst=/repo,readonly --workdir /repo --entrypoint python3 sha256:436172d89b145c6a9f9a57e655422c9558b3b0235347dd77607e9d61bcfa6393 -c '<exact source hash, AST, import, and binary preflight>'",
+    "passed": "8/8 source SHA-256 identities; AST parse for eight historical source files and runner/auditor/test; all imports; Xvfb/Openbox/wmctrl and pinned Chromium present",
+    "scope": "Construction only. No session CLI, GUI, input, task allocation, output file, model, or formal seed use."
+  },
+  "program": [
+    {
+      "op": "chord",
+      "modifier": "Control_L",
+      "key": "l"
+    },
+    {
+      "op": "text",
+      "text": "exact session URL from ready"
+    },
+    {
+      "op": "key",
+      "key": "Return"
+    },
+    {
+      "op": "wait_title",
+      "contains": "AI FORM READY",
+      "timeout_ms": 5000
+    },
+    {
+      "op": "text",
+      "text": "exact token from same ready event"
+    },
+    {
+      "op": "key",
+      "key": "Tab"
+    },
+    {
+      "op": "key",
+      "key": "Return"
+    },
+    {
+      "op": "wait_title",
+      "contains": "AI FORM SAVED",
+      "timeout_ms": 5000
+    },
+    {
+      "op": "observe"
+    }
+  ],
+  "constraints": {
+    "network": "none",
+    "source_mount": "read-only",
+    "output_mount": "fresh dedicated writable path only",
+    "cpus": 1,
+    "memory": "1536m",
+    "pids": 256,
+    "retries": 0,
+    "model_calls": 0,
+    "broker_calls": 0,
+    "server_post_counter": "not instrumented"
+  },
+  "decision": {
+    "pass": "The one program completes with verified release/no keys down; ready and saved UI states are observed; exact URL-encoded submitted bytes and independent evaluator both equal the same ready-event token; source/output hashes and independent raw audit pass.",
+    "fail": "Integrity-valid complete execution produces a missing/wrong submitted value, missing saved marker, or evaluator mismatch.",
+    "stop": "Any source/ready/sequence/URL/protocol/runtime/timeout/release/integrity failure; preserve first output and do not rerun or replace seed."
+  }
+}
