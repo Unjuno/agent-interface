@@ -100,7 +100,8 @@ def main():
     root.canvas = tk.Canvas(root, width=W, height=H, highlightthickness=0, bd=0)
     root.canvas.pack(fill="both", expand=True)
     wait_idle(root)
-    winid = int(root.winfo_id())
+    # Capture the actual canvas child drawable: the Tk toplevel parent does not include child pixels.
+    winid = int(root.canvas.winfo_id())
     dpy = display.Display()
     visual = dpy.screen().root_visual
     fmt = next(x for x in dpy.allowed_depths if x.depth == root.winfo_depth()).visuals
