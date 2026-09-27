@@ -22,5 +22,5 @@ The diagnostic uses a separate fixed schedule: truncate active, write and flush 
 
 - #4986 Stage 1 tested four reader threads in one process and observed construction-level atomic/in-place behavior; that is related evidence, not a duplicate of this fresh process-overlap question.
 - #5066 post-merge review found its atomic readers completed before replacement and frozen source hashes disagreed with Git bytes. Preserve its PASS/raw/branch unchanged; #5082 is the fresh successor.
-- Local pure helper/full raw-auditor fixture tests: 8/8 pass. These test arithmetic, raw reconstruction, and mutation rejection only; no actual process concurrency was run.
+- Local pure helper/full raw-auditor fixture tests: 9/9 pass, including reader-index/PID binding, readiness/exit identity, unknown-row and duplicate-row corruption controls. These test arithmetic, raw reconstruction, and mutation rejection only; no actual process concurrency was run.
 - Formal Docker slot currently belongs to another active lane. No output path is created and no formal invocation has occurred.

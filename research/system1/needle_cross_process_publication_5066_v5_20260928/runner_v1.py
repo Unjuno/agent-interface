@@ -105,6 +105,7 @@ def _publisher(active: str, seed: dict, start, finished, out_file: str,
                     tmp.unlink()
             append_jsonl(out, {"kind": "replace", "replace_index": index,
                                "generation": generation, "sha256": digest(payload),
+                               "publisher_pid": os.getpid(),
                                "start_ns": call_start, "end_ns": call_end})
     except BaseException as exc:
         append_jsonl(out, {"kind": "publisher_error", "error": type(exc).__name__,
@@ -165,6 +166,10 @@ def run_diagnostic(seed_bytes: bytes, seed: dict, out: Path) -> bool:
             os.fsync(stream.fileno())
         for proc in readers:
             proc.join(timeout=5)
+        exits = [{"reader_index": i, "pid": proc.pid, "exitcode": proc.exitcode}
+                 for i, proc in enumerate(readers)]
+        (root / "process_exits.json").write_text(
+            json.dumps(exits, sort_keys=True) + "\n", encoding="utf-8")
         (root / "observations.json").write_text(
             json.dumps(observations, sort_keys=True) + "\n", encoding="utf-8")
         return (len(observations) == READERS and all(x.get("ok") for x in observations)
@@ -204,6 +209,8 @@ def run_atomic(seed_path: Path, out: Path) -> int:
         except queue.Empty:
             if any(not proc.is_alive() for proc in readers):
                 break
+    (root / "readiness.json").write_text(
+        json.dumps(announced, sort_keys=True) + "\n", encoding="utf-8")
     if len(announced) == READERS:
         _publisher(str(active), seed, start, finished, root / "publisher.jsonl", len(announced))
     else:

@@ -36,6 +36,8 @@ def audit(seed_path: Path, raw: Path) -> dict:
     seed = json.loads(seed_bytes)
     atomic = raw / "atomic"
     publisher = jsonl(atomic / "publisher.jsonl")
+    if any(r.get("kind") not in {"replace", "publisher_error"} for r in publisher):
+        errors.append("publisher_unknown_row_kind")
     replace_rows = [r for r in publisher if r.get("kind") == "replace"]
     if any(r.get("kind") == "publisher_error" for r in publisher):
         errors.append("publisher_error")
@@ -44,6 +46,7 @@ def audit(seed_path: Path, raw: Path) -> dict:
     expected = {i: canonical_package(seed, 3789 + i) for i in range(4096)}
     expected_hash = {i: hashlib.sha256(b).hexdigest() for i, b in expected.items()}
     replace_intervals = []
+    publisher_pids = set()
     for r in replace_rows:
         i, begin, end = r.get("replace_index"), r.get("start_ns"), r.get("end_ns")
         if type(i) is not int or type(begin) is not int or type(end) is not int or begin >= end:
@@ -51,12 +54,33 @@ def audit(seed_path: Path, raw: Path) -> dict:
             continue
         if r.get("generation") != 3789 + i or r.get("sha256") != expected_hash.get(i):
             errors.append("replacement_payload_mismatch")
+        if type(r.get("publisher_pid")) is not int or r["publisher_pid"] <= 0:
+            errors.append("invalid_publisher_pid")
+        else:
+            publisher_pids.add(r["publisher_pid"])
         replace_intervals.append((begin, end))
+    if len(publisher_pids) != 1:
+        errors.append("publisher_process_identity")
+    readiness = json.loads((atomic / "readiness.json").read_text(encoding="utf-8"))
+    ready_pids = {}
+    for row in readiness:
+        index, pid, ready_ns = row.get("reader_index"), row.get("pid"), row.get("ready_ns")
+        if (type(index) is not int or type(pid) is not int or type(ready_ns) is not int or
+                index in ready_pids):
+            errors.append("invalid_or_duplicate_readiness")
+            continue
+        ready_pids[index] = pid
+    if set(ready_pids) != set(range(4)) or len(set(ready_pids.values())) != 4:
+        errors.append("readiness_process_identity")
     reads: list[dict] = []
     exits = []
     for index in range(4):
         rows = jsonl(atomic / f"reader-{index}.jsonl")
+        if any(r.get("kind") not in {"read", "reader_exit", "reader_error"} for r in rows):
+            errors.append(f"reader_{index}_unknown_row_kind")
         reader_rows = [r for r in rows if r.get("kind") == "read"]
+        if any(r.get("reader_index") != index for r in reader_rows):
+            errors.append(f"reader_{index}_index_mismatch")
         reads.extend(reader_rows)
         reader_exits = [r for r in rows if r.get("kind") == "reader_exit"]
         exits.extend(reader_exits)
@@ -104,11 +128,21 @@ def audit(seed_path: Path, raw: Path) -> dict:
             overlap_keys.add(key)
     if len(pids) != 4 or len(set(pids.values())) != 4:
         errors.append("reader_process_identity")
+    if pids != ready_pids:
+        errors.append("readiness_to_reads_identity_mismatch")
     if len(exits) != 4 or {r.get("reader_index") for r in exits} != set(range(4)):
         errors.append("reader_exit_denominator")
     exit_file = json.loads((atomic / "process_exits.json").read_text(encoding="utf-8"))
-    if (len(exit_file) != 4 or any(r.get("exitcode") != 0 for r in exit_file) or
-            {r.get("pid") for r in exit_file} != set(pids.values())):
+    exit_by_index = {r.get("reader_index"): r for r in exit_file
+                     if type(r.get("reader_index")) is int}
+    raw_exit_by_index = {r.get("reader_index"): r for r in exits
+                         if type(r.get("reader_index")) is int}
+    if (len(exit_file) != 4 or len(exit_by_index) != 4 or
+            any(r.get("exitcode") != 0 for r in exit_file) or
+            set(exit_by_index) != set(range(4)) or
+            any(exit_by_index[i].get("pid") != pids.get(i) or
+                raw_exit_by_index.get(i, {}).get("reader_pid") != pids.get(i)
+                for i in range(4))):
         errors.append("process_exit_mismatch")
     if len(overlap_keys) < 32 or len({pid for pid, _ in overlap_keys}) < 2:
         errors.append("overlap_gate")
@@ -119,13 +153,26 @@ def audit(seed_path: Path, raw: Path) -> dict:
     if (len(observed) != 4 or len({r.get("pid") for r in observed}) != 4 or
             not all(r.get("ok") for r in observed)):
         errors.append("diagnostic_reader_gate")
+    diagnostic_pids = {}
     for index in range(4):
         rows = jsonl(diagnostic / f"reader-{index}.jsonl")
+        if any(r.get("kind") != "diagnostic_read" for r in rows):
+            errors.append("diagnostic_unknown_or_extra_row")
         matching = [r for r in rows if r.get("kind") == "diagnostic_read"]
         if len(matching) != 1:
             errors.append("diagnostic_raw_row_count")
             continue
         row = matching[0]
+        if row.get("reader_index") != index or type(row.get("reader_pid")) is not int:
+            errors.append("diagnostic_reader_identity")
+        else:
+            diagnostic_pids[index] = row["reader_pid"]
+        acknowledgement = next((item for item in observed
+                                if item.get("reader_index") == index), None)
+        if (acknowledgement is None or acknowledgement.get("pid") != row.get("reader_pid") or
+                acknowledgement.get("sha256") != row.get("sha256") or
+                acknowledgement.get("bytes") != row.get("bytes")):
+            errors.append("diagnostic_ack_raw_mismatch")
         try:
             partial = base64.b64decode(row["partial_b64"], validate=True)
         except Exception:
@@ -141,6 +188,18 @@ def audit(seed_path: Path, raw: Path) -> dict:
                 row.get("sha256") != hashlib.sha256(partial).hexdigest() or
                 row.get("bytes") != len(partial)):
             errors.append("diagnostic_partial_not_proven")
+    diagnostic_exits = json.loads((diagnostic / "process_exits.json").read_text(encoding="utf-8"))
+    diagnostic_exit_by_index = {r.get("reader_index"): r for r in diagnostic_exits
+                                if type(r.get("reader_index")) is int}
+    observed_pid_by_index = {r.get("reader_index"): r.get("pid") for r in observed
+                             if type(r.get("reader_index")) is int}
+    if (len(diagnostic_exits) != 4 or len(diagnostic_exit_by_index) != 4 or
+            any(row.get("exitcode") != 0 for row in diagnostic_exits) or
+            set(diagnostic_exit_by_index) != set(range(4)) or
+            any(diagnostic_exit_by_index[i].get("pid") != diagnostic_pids.get(i) or
+                observed_pid_by_index.get(i) != diagnostic_pids.get(i)
+                for i in range(4))):
+        errors.append("diagnostic_process_exit_mismatch")
     if (diagnostic / "active.json").read_bytes() != final_candidate:
         errors.append("diagnostic_final_candidate_mismatch")
     return {"status": "PASS_ATOMIC_REPLACEMENT_OVERLAP_SCOPED" if not errors else "HOLD_EVIDENCE_INCOMPLETE",
