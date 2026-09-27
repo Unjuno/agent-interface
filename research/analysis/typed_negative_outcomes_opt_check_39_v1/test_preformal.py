@@ -1,7 +1,8 @@
 """Frozen construction controls, executed before formal test."""
-import json
+import os
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -9,27 +10,22 @@ HERE=Path(__file__).resolve().parent
 CANDIDATE=HERE/"candidate.py"
 AUDIT=HERE/"audit.py"
 MARKER="PASS_OPTIMIZATION_RESILIENT_CONTRACT_SCOPED"
-CONTROLS=("stale_success","authority_success","retry_nonblocked","budget_monotonicity","row_count","outcome_count","oracle")
+CONTROLS={
+    "stale_success":('value = ("FAILED_UNKNOWN", False, "NEW_OBSERVATION")','value = ("SUCCEEDED", False, "NONE")'),
+    "authority_success":('value = ("AUTHORITY_REQUIRED", False, "FOCUS_OR_LEASE")','value = ("SUCCEEDED", False, "NONE")'),
+    "retry_nonblocked":('elif e["blocked"] is True:\n        value = ("BLOCKED", budget > 0, "UNBLOCK_OR_WAIT")','elif e["blocked"] is True:\n        value = ("BLOCKED", budget > 0, "UNBLOCK_OR_WAIT")\n    elif e["fresh"] is True:\n        value = ("NO_ACTION", True, "NONE")'),
+    "row_count":('if len(rows)!=384: fail("row_count",len(rows))','if len(rows)!=385: fail("row_count",len(rows))'),
+    "outcome_count":('if counts!=EXPECTED_COUNTS: fail("outcome_counts",counts)','if counts!={}: fail("outcome_counts",counts)'),
+    "oracle":('if e["fresh"] is not True: r=("FAILED_UNKNOWN",False,"NEW_OBSERVATION")','if e["fresh"] is not True: r=("SUCCEEDED",False,"NONE")'),
+}
 
 class OptimizationControls(unittest.TestCase):
-    def invoke(self, mode, mutation=None):
-        code=(
-            "import contextlib,io,json,runpy; "
-            f"ns=runpy.run_path({str(CANDIDATE)!r}); "
-            "buf=io.StringIO(); err=None; passed=False; "
-            "\ntry:\n with contextlib.redirect_stdout(buf): ns['run'](); passed=True"
-            "\nexcept Exception as exc: err=type(exc).__name__+':'+str(exc)"
-            "\nprint(json.dumps({'passed':passed,'pass_marker_seen':('PASS_OPTIMIZATION_RESILIENT_CONTRACT_SCOPED' in buf.getvalue()),'error':err}))"
-        )
+    def invoke(self, mode, candidate=CANDIDATE):
         env=None
-        if mode=="opt_flag": args=[sys.executable,"-O","-c",code]
+        if mode=="opt_flag": args=[sys.executable,"-O",str(candidate)]
         elif mode=="env_opt":
-            import os
-            env=os.environ.copy(); env["PYTHONOPTIMIZE"]="1"; args=[sys.executable,"-c",code]
-        else: args=[sys.executable,"-c",code]
-        if mutation:
-            # Re-execute an additive in-memory module whose selected gate is deliberately bypassed.
-            code += "\n"
+            env=os.environ.copy(); env["PYTHONOPTIMIZE"]="1"; args=[sys.executable,str(candidate)]
+        else: args=[sys.executable,str(candidate)]
         return subprocess.run(args,capture_output=True,text=True,env=env)
 
     def test_valid_exact_equivalence_each_mode(self):
@@ -49,7 +45,35 @@ class OptimizationControls(unittest.TestCase):
         self.assertNotIn("assert ",source)
         self.assertIn("if not condition: errors.append(label)",source)
 
-    def test_mutation_control_list_is_frozen(self):
-        self.assertEqual(CONTROLS,("stale_success","authority_success","retry_nonblocked","budget_monotonicity","row_count","outcome_count","oracle"))
+    def test_each_mutation_is_rejected_in_all_modes(self):
+        original=CANDIDATE.read_text(encoding="utf-8")
+        for name,(before,after) in CONTROLS.items():
+            self.assertIn(before,original,name)
+            mutated=original.replace(before,after,1)
+            self.assertNotEqual(mutated,original,name)
+            with tempfile.TemporaryDirectory() as directory:
+                path=Path(directory)/"candidate.py"
+                path.write_text(mutated,encoding="utf-8")
+                for mode in ("normal","opt_flag","env_opt"):
+                    result=self.invoke(mode,path)
+                    self.assertNotEqual(result.returncode,0,(name,mode,result.stdout,result.stderr))
+                    self.assertNotIn(MARKER,result.stdout,(name,mode,result.stdout))
+
+    def test_budget_monotonicity_corruption_rejected_in_all_modes(self):
+        code=(
+            "import runpy; ns=runpy.run_path(" + repr(str(CANDIDATE)) + "); "
+            "ns['validate_budget_monotonicity']("
+            "{'outcome':'SUCCEEDED','retryable':False},"
+            "{'outcome':'BLOCKED','retryable':True},{'probe':'hard-outcome'})"
+        )
+        for mode in ("normal","opt_flag","env_opt"):
+            env=None
+            args=[sys.executable,"-c",code]
+            if mode=="opt_flag": args=[sys.executable,"-O","-c",code]
+            elif mode=="env_opt":
+                env=os.environ.copy(); env["PYTHONOPTIMIZE"]="1"
+            result=subprocess.run(args,capture_output=True,text=True,env=env)
+            self.assertNotEqual(result.returncode,0,(mode,result.stdout,result.stderr))
+            self.assertIn("budget_changed_hard_outcome",result.stderr)
 
 if __name__=="__main__": unittest.main(verbosity=2)
