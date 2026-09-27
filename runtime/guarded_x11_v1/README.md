@@ -3,7 +3,7 @@
 The portable runtime includes the same scoped target handles and guarded input
 implementation used by the native research callers. This is an explicit Linux/X11
 API requiring Pillow and python-xlib. It does not open a connection on import and
-is not a cross-platform handle API or a new MCP tool.
+is not a cross-platform handle API. An opt-in public MCP mode is described below.
 
 ```python
 import sys
@@ -60,3 +60,36 @@ helper completes known wrapper-based manifests and refuses conflicting pins.
 Historical frozen results require their original recorded source; they are not
 silently rebound to current main. See the
 [source-provenance integration evidence](../results/guarded-source-provenance-01/README.md).
+
+## Explicit public guarded MCP mode
+
+The public MCP server can expose this shared implementation with
+`--session-mode guarded-x11`. Exactly one target must be configured. It adds
+`interface_guarded_observe`, `interface_guarded_mint`,
+`interface_guarded_input` and `interface_guarded_review_window`, using the
+existing retained requests/results, busy lock and `interface_close` lifecycle.
+Ordinary dispatch and transient-family review tools are not registered in this
+mode. Existing default and persistent modes are unchanged.
+
+```sh
+python runtime.pyz mcp --targets /absolute/targets.json --output-directory /absolute/fresh-calls --display :99 --session-mode guarded-x11
+```
+
+The target file maps one caller-selected alias to its explicit X11 window ID.
+Observe and view the image, mint a point with that source sequence, then issue
+input with the returned alias/offset. Review the returned input receipt and image
+separately. Capturing after input does not wait for a redraw; `wait_update` is a
+bounded delay, not semantic acknowledgement. In particular, address-field focus
+or CTRL+A emission does not prove readiness or selection. Verify entered text
+before a consequential submission. No automatic polling, semantic action
+selection, or input replay is introduced.
+
+`interface_results` retrieves retained evidence without new input, including
+after close. Guarded reports remain full reports, regardless of compact result
+options. Explicit window review revokes old aliases; it uses the bridge's
+focused-window contract, not authenticated identity or transient-family review.
+
+The first public-MCP primary trial was interrupted and has invalid review-source
+attribution; see [preserved evidence](../results/guarded-mcp-primary-interrupted-01/README.md).
+Contract tests do not substitute for a completed fresh primary trial. Production
+adoption and efficiency claims remain pending that validation.

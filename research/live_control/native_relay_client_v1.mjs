@@ -116,3 +116,45 @@ export async function presentRelayResponse(row, { text, image }) {
     else await text(block);
   }
 }
+/** Record a caller's review against one explicit retained reply, never mutable latest state.
+ * This records attribution, not proof that the caller saw or understood an image.
+ */
+export async function recordRelayReview({ replyPath, receiptPath, task, phase, reason }) {
+  for (const value of [replyPath, receiptPath, task, phase, reason]) {
+    if (typeof value !== 'string' || !value.trim()) throw new TypeError('explicit paths and review text required');
+  }
+  const { readFile } = await import('node:fs/promises');
+  const { createHash } = await import('node:crypto');
+  const bytes = await readFile(replyPath);
+  const reply = JSON.parse(bytes);
+  if (reply.status !== 'returned' || !Number.isSafeInteger(reply.id) || !Array.isArray(reply.result?.content)) {
+    throw new Error('retained returned relay reply required');
+  }
+  const reports = [];
+  const images = [];
+  for (const block of reply.result.content) {
+    if (block.type === 'text') {
+      try {
+        const value = JSON.parse(block.text);
+        if (value?.call_id && value?.source) reports.push(value);
+      } catch { /* Other text blocks are not report metadata. */ }
+    } else if (block.type === 'image') {
+      images.push({ mime_type: block.mimeType,
+        sha256: createHash('sha256').update(Buffer.from(block.data, 'base64')).digest('hex') });
+    }
+  }
+  if (reports.length !== 1 || images.length === 0) throw new Error('one sourced report and delivered image required');
+  const report = reports[0];
+  if (typeof report.call_id !== 'string' || !Number.isSafeInteger(report.source.sequence) ||
+      typeof report.source.observation_id !== 'string') throw new Error('complete source identity required');
+  const receipt = {
+    schema: 'agent-interface/primary-review-receipt-v1',
+    task, phase, reason, recorded_at: new Date().toISOString(),
+    relay_id: reply.id, tool: reply.tool, call_id: report.call_id,
+    source_sequence: report.source.sequence, observation_id: report.source.observation_id,
+    reply_sha256: createHash('sha256').update(bytes).digest('hex'), images,
+    evidence_scope: 'caller-declared review; attribution only; not semantic success or measured model latency',
+  };
+  await writeFile(receiptPath, JSON.stringify(receipt, null, 2) + '\n', { flag: 'wx' });
+  return receipt;
+}
