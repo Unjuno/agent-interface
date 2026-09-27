@@ -16,6 +16,7 @@ Then audit the exact recovery (set `MODEL_DIR` to the locally cached snapshot fo
 
 ```sh
 python -B audit_raw_v2.py --result ../raw_recovery_v1/raw_result.json --corpus ../raw_recovery_v1/corpus.jsonl --model "$MODEL_DIR" --out audit.json
+python -B verify_audit_v2.py --result ../raw_recovery_v1/raw_result.json --corpus ../raw_recovery_v1/corpus.jsonl --weights "$MODEL_DIR/model.safetensors" --report audit.json
 ```
 
-Expected: `AUDIT_PASS_RAW_ONLY`, 27 rows, zero errors, five corruption controls rejected, and raw SHA-256 `c1a2256d8b117d7dc0ec7d90c7333f3356378313d7f735fb7aa7700278183624`. Any different raw bytes stop before parse or pass emission. This audit does not re-run the CUDA construction or alter its scientific interpretation.
+Expected: `AUDIT_PASS_RAW_ONLY`, 27 rows, zero errors, five corruption controls rejected, and raw SHA-256 `c1a2256d8b117d7dc0ec7d90c7333f3356378313d7f735fb7aa7700278183624`. The independent verifier rechecks raw/corpus/weight hashes and report invariants without importing the primary auditor. Any different raw bytes stop before parse or pass emission. This audit does not re-run the CUDA construction or alter its scientific interpretation.
