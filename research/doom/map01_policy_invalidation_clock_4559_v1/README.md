@@ -19,3 +19,7 @@ No Obstac-specific MCP, executable, or local configuration was available in this
 ## 2026-09-27 experiment update
 
 Preflight seed `990643` has now been consumed by a zero-model Docker MAP01 observe/release run, and a controlled real-observation timestamp-boundary replay has passed. These scoped results do not reproduce the natural #4544 inversion or clear the formal-seed gate. Full hypotheses, controls, uncertainty, commands, evidence hashes, and retained output paths are in [EXPERIMENT_20260927.md](EXPERIMENT_20260927.md).
+
+## 2026-09-27 boundary-gate revalidation
+
+Post-merge review PR [#4593](https://github.com/Unjuno/agent-interface/pull/4593) tightened the replay PASS predicate. The retained real-observation boundary was rerun using that corrected main-branch gate at `results/real-observation-boundary-v13-20260927-02/`; see [REVALIDATION_20260927.md](REVALIDATION_20260927.md). The original `-01` output remains unchanged.
