@@ -27,6 +27,24 @@ Next: a new successor should first demonstrate train/base competence on a constr
 - Source, frozen recipes, initial audit HOLD, corrected audit, and evidence manifest are adjacent in this directory.
 - Formal seed allocation: `tiny-visual-equivariant-cnn-2564-20260927-01`.
 - Formal output bundle manifest: `MANIFEST.json` (all raw files and byte-level SHA-256 digests).
-- The full 4.17 MB raw output is retained locally at `work/formal_tiny_visual_equivariant_4814_v1/` and is not duplicated into the source branch; `MANIFEST.json` identifies all bytes. Per-row data and weights can be attached in a later artifact commit if needed.
+- The full 4.17 MB raw output is retained locally at `work/formal_tiny_visual_equivariant_4814_v1/` and compressed into `work/formal_tiny_visual_equivariant_4814_v1.zip` (847,667 bytes, SHA-256 `4edc2022cd1b911a57f702c3d3ccbb7208c42afc90721dd40001986197fd81c7`). The archive was expanded and byte-checked (16 files, 4,168,206 bytes); the predictions digest reproduced exactly. GitHub MCP contents uploads are text-only and local `gh` has no authentication in this workspace, so the archive remains local pending an authorized binary artifact upload mechanism.
 - The initial audit mistake and its correction are recorded in `FAILED_FIRST_AUDIT.json` and `STOP.json`; the original output directory was never rerun or overwritten.
+
+## Formal seed results
+
+| Seed | CNN base positive ACCEPT | CNN heldout positive ACCEPT | MLP heldout positive ACCEPT |
+|---:|---:|---:|---:|
+| 8963800 | 0/40 | 0/320 | 40/320 |
+| 8963900 | 0/40 | 0/320 | 40/320 |
+| 8964000 | 0/40 | 0/320 | 40/320 |
+| 8964100 | 0/40 | 0/320 | 40/320 |
+| 8964200 | 0/40 | 0/320 | 40/320 |
+
+## Key file digests
+
+- `predictions.jsonl`: `1b0d1dbb713a80eed9ca3b4d52fb41ea8cf22afb20ad59af82edc286597dd205`
+- `training_manifest.jsonl`: `d49ed8e0b6e0ca35679067bba811adb45398e1304416a480d9d31062cc6829ac`
+- `evaluation_manifest.jsonl`: `5b32b4f3eae28f56123e40977a23b3d0e614e4f7dc9448e9ad11953b12f46987`
+- `training_receipts.jsonl`: `d8f2d4eb86833be7849e8b0d288f6d2f0401a21b71715aeefa17982d5c31a043`
+- `environment.json`: `1a126506542d6e818f5daaecc49f75ed3ff311f11108482f2ebe5d61bb7d4726`
 
