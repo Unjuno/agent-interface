@@ -29,7 +29,7 @@ class NativeDecision(BaseModel):
     source_sequence: StrictInt = Field(ge=1, description='Exact sequence of the source image you viewed.')
     point: list[StrictInt | StrictFloat] | None = Field(default=None, min_length=2, max_length=2,
         description=('Observed [x,y] in screen physical pixels; required for click and keyboard context binding. '
-                     'Local visual matching needs a distinctive surrounding patch: avoid uniform fill or blank space. '
+                     'Local visual matching needs a stable distinctive patch: avoid uniform fill, blinking carets and changing text. '
                      'For click, stay inside the intended clickable target near a visible border or text; '
                      'do not move to a different control merely to obtain texture. '
                      'For keyboard, choose a visible feature in the intended focused window; '
