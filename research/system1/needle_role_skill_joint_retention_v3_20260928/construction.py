@@ -1,4 +1,5 @@
 """Excluded-seed full-pipeline smoke run; never uses a formal seed."""
+import argparse
 import json
 import os
 from pathlib import Path
@@ -9,7 +10,11 @@ import runner
 
 
 def main():
-    seed = 736514
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--seed", type=int, required=True)
+    seed = parser.parse_args().seed
+    if seed != 9934014:
+        raise SystemExit("STOP_CONSTRUCTION_SEED_MISMATCH")
     target = os.environ.get("NEEDLE_CONSTRUCTION_OUTPUT", "")
     if not target:
         raise SystemExit("STOP_CONSTRUCTION_OUTPUT_MISSING")
