@@ -60,7 +60,7 @@ def main(out_path):
             receipt=json.loads((ipc/f"{request_id}.broker.json").read_text())
             response=(ipc/f"{request_id}.response.jsonl").read_text()
             results.append({"case_id":case_id,"field":field,"class":kind,"expected":expected,
-                "path_values":values,"exit_code":exit_code,"receipt":receipt,"response":response,
+                "request_id":request_id,"path_values":values,"exit_code":exit_code,"receipt":receipt,"response":response,
                 "subprocess_calls":added,"response_exists":(ipc/f"{request_id}.response.jsonl").is_file(),
                 "broker_receipt_count":len(list(ipc.glob("*.broker.json")))})
         raw={"schema":"broker-path-serve-rejection-4921-raw-v1","repo_root":str(root),
