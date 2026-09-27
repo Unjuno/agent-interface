@@ -1,5 +1,6 @@
 """Minimal stdlib-only frozen workload runner for Ollaya /api/decide."""
 import argparse
+import hashlib
 import json
 import time
 import urllib.error
@@ -29,7 +30,7 @@ WORKFLOW_LABELS = {k: OPTIONS[k] for k in ("CONTINUE", "WATCH", "REPAIR", "YIELD
 
 
 def request_for(model, row):
-    criteria = INTENT_LABELS if row["stratum"] in ("same-state-different-intent", "close-choices") else WORKFLOW_LABELS
+    criteria = {k: INTENT_LABELS[k] for k in row["options"]} if "options" in row else WORKFLOW_LABELS
     intent_prompt = row["intent"] + ". Choose the best matching intent; choose YIELD if the state does not support any choice."
     questions = {"decision": {
         "type": "choice",
@@ -64,6 +65,7 @@ def request_for(model, row):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True)
+    ap.add_argument("--warmup-id", action="append", default=[])
     ap.add_argument("--workload", default="study/workload.jsonl")
     ap.add_argument("--output", required=True)
     ap.add_argument("--base-url", default="http://127.0.0.1:11435")
@@ -82,7 +84,10 @@ def main():
                     response = json.loads(res.read())
             except (urllib.error.URLError, TimeoutError, ValueError) as exc:
                 error = repr(exc)
-            elapsed_ms = (time.perf_counter_ns() - start) / 1e6
+            wall_ms = (time.perf_counter_ns() - start) / 1e6
+            elapsed_ms = wall_ms
+            if response and isinstance(response.get("total_duration"), (int, float)):
+                elapsed_ms = max(0.0, (response["total_duration"] - response.get("load_duration", 0)) / 1e6)
             answer = None
             evidence_safe = None
             predicate_answers = {}
@@ -95,10 +100,12 @@ def main():
             record = {"id": row["id"], "stratum": row["stratum"], "model": args.model,
                       "request": payload, "status": status, "response": response,
                       "answer": answer, "evidence_safe": evidence_safe, "predicate_answers": predicate_answers,
-                      "elapsed_ms": elapsed_ms, "error": error}
+                      "elapsed_ms": elapsed_ms, "wall_ms": wall_ms, "error": error,
+                      "workload_sha256": hashlib.sha256(Path(args.workload).read_bytes()).hexdigest(),
+                      "warmup": row["id"] in args.warmup_id}
             out.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
             out.flush()
-            print(json.dumps({"id": row["id"], "answer": answer, "status": status, "elapsed_ms": round(elapsed_ms, 2)}), flush=True)
+            print(json.dumps({"id": row["id"], "answer": answer, "status": status, "elapsed_ms": round(elapsed_ms, 2), "warmup": row["id"] in args.warmup_id}), flush=True)
 
 
 if __name__ == "__main__":
