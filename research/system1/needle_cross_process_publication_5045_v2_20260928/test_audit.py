@@ -56,8 +56,8 @@ def valid_raw():
             item.update({"partial_invalid_reader_count": 4, "dispatch_count": 0})
         arms.append(item)
     return {
-        "allocation": "needle-cross-process-publication-5045-v1",
-        "issue": 5045,
+        "allocation": "needle-cross-process-publication-5045-v2-20260928-01",
+        "issue": 5066,
         "formal_invocations": 1,
         "publisher_container_pid": 999,
         "input_git_blob": "45b80150dac503f4eb6f3cb5d82f9afa2c587107",
@@ -89,5 +89,6 @@ class AuditContractTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
 
 
