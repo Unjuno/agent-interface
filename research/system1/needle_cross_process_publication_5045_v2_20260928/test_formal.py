@@ -35,6 +35,7 @@ class FrozenPreflightTests(unittest.TestCase):
             )
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn('"docker_invocations": 0', result.stdout)
+            self.assertEqual(result.stderr, "")
             self.assertFalse(output.exists())
 
     def test_misnested_digest_is_rejected_by_contract(self):
