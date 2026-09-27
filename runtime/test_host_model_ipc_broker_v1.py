@@ -6,6 +6,10 @@ import unittest
 from unittest.mock import patch
 
 
+import hashlib
+import os
+from types import SimpleNamespace
+
 class HostBrokerContractTest(unittest.TestCase):
     def _run_once(self, child_result=None, child_error=None):
         from runtime.host_model_ipc_broker_v1 import serve
@@ -69,6 +73,118 @@ class HostBrokerContractTest(unittest.TestCase):
         from runtime.host_model_ipc_broker_v1 import host_path
         self.assertEqual(Path(host_path("/workspace/runtime/a.png", Path("C:/repo"))),
                          Path("C:/repo/runtime/a.png"))
+
+    def _run_broker(self, request, *, instruction_bytes=b"fixed test instructions"):
+        from runtime.host_model_ipc_broker_v1 import host_path, serve
+
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            repo = base / "repo"
+            repo.mkdir()
+            request = dict(request)
+            if request.get("instructions") is not None:
+                instruction_path = Path(host_path(request["instructions"], repo))
+                instruction_path.parent.mkdir(parents=True, exist_ok=True)
+                instruction_path.write_bytes(instruction_bytes)
+                request.setdefault("instructions_sha256",
+                                   hashlib.sha256(instruction_bytes).hexdigest())
+            request.setdefault("request_id", "probe")
+            request.setdefault("prompt", "fixed prompt")
+            request.setdefault("working", "/repo")
+            request.setdefault("schema", "/repo/schema.json")
+            request.setdefault("image", None)
+            ipc = base / "ipc"
+            ipc.mkdir()
+            (ipc / "probe.request.json").write_text(json.dumps(request), encoding="utf-8")
+            observed = {}
+
+            def fake_run(args, **kwargs):
+                observed["args"] = args
+                observed["input"] = kwargs["input"]
+                config = next((arg for arg in args
+                               if arg.startswith("model_instructions_file=")), None)
+                if config is not None:
+                    private_path = Path(json.loads(config.split("=", 1)[1]))
+                    observed["instructions"] = private_path.read_bytes()
+                    observed["private_path"] = private_path
+                return SimpleNamespace(stdout="{}\n", stderr="", returncode=0)
+
+            with patch.dict(os.environ, {"CODEX_EXE": "codex.exe"}), patch(
+                "runtime.host_model_ipc_broker_v1.subprocess.run", side_effect=fake_run
+            ) as run:
+                status = serve(ipc, repo, once=True)
+            receipt = json.loads((ipc / "probe.broker.json").read_text(encoding="utf-8"))
+            response = (ipc / "probe.response.jsonl").read_text(encoding="utf-8")
+            return status, receipt, response, observed, run.call_count
+
+    def test_forwards_verified_repo_instructions_via_private_temporary_copy(self):
+        _, receipt, response, observed, calls = self._run_broker({
+            "instructions": "/repo/instructions.txt",
+        })
+        self.assertEqual(calls, 1)
+        self.assertEqual(observed["instructions"], b"fixed test instructions")
+        self.assertTrue(any(arg.startswith("model_instructions_file=")
+                            for arg in observed["args"]))
+        self.assertEqual(receipt["returncode"], 0)
+        self.assertEqual(response, "{}\n")
+        self.assertFalse(observed["private_path"].exists())
+
+    def test_forwards_verified_workspace_mapped_instructions(self):
+        _, _, _, observed, calls = self._run_broker({
+            "instructions": "/workspace/instructions.txt",
+        })
+        self.assertEqual(calls, 1)
+        self.assertEqual(observed["instructions"], b"fixed test instructions")
+
+    def test_handles_quoted_container_path_without_cli_argument_injection(self):
+        _, _, _, observed, calls = self._run_broker({
+            "instructions": '/repo/a "quoted" instructions.txt',
+        })
+        self.assertEqual(calls, 1)
+        config = next(arg for arg in observed["args"]
+                      if arg.startswith("model_instructions_file="))
+        self.assertEqual(Path(json.loads(config.split("=", 1)[1])).name, "instructions.txt")
+        self.assertEqual(observed["instructions"], b"fixed test instructions")
+
+    def test_preserves_schema_image_and_prompt_arguments(self):
+        _, _, _, observed, calls = self._run_broker({
+            "instructions": "/repo/instructions.txt",
+            "image": "/repo/input.png",
+        })
+        self.assertEqual(calls, 1)
+        args = observed["args"]
+        self.assertTrue(args[args.index("--output-schema") + 1].replace("\\", "/")
+                        .endswith("/repo/schema.json"))
+        self.assertTrue(args[args.index("--image") + 1].replace("\\", "/")
+                        .endswith("/repo/input.png"))
+        self.assertEqual(observed["input"], "fixed prompt\n")
+
+    def test_instructionless_schema_bridge_request_remains_supported(self):
+        _, receipt, response, observed, calls = self._run_broker({})
+        self.assertEqual(calls, 1)
+        self.assertFalse(any(arg.startswith("model_instructions_file=")
+                             for arg in observed["args"]))
+        self.assertEqual(receipt["returncode"], 0)
+        self.assertEqual(response, "{}\n")
+
+    def test_rejects_instruction_path_escape_without_cli_invocation(self):
+        _, receipt, response, _, calls = self._run_broker({
+            "instructions": "/repo/../outside.txt",
+        })
+        self.assertEqual(calls, 0)
+        self.assertEqual(receipt["error_class"], "InvalidInstructions")
+        self.assertEqual(receipt["stop_reason"], "HOST_MODEL_INSTRUCTIONS_REJECTED")
+        self.assertEqual(response, "")
+
+    def test_rejects_instruction_hash_mismatch_without_cli_invocation(self):
+        _, receipt, response, _, calls = self._run_broker({
+            "instructions": "/repo/instructions.txt",
+            "instructions_sha256": "0" * 64,
+        })
+        self.assertEqual(calls, 0)
+        self.assertEqual(receipt["error_class"], "InvalidInstructions")
+        self.assertEqual(receipt["stop_reason"], "HOST_MODEL_INSTRUCTIONS_REJECTED")
+        self.assertEqual(response, "")
 
     def test_broker_is_non_authoritative(self):
         source = Path(__file__).with_name("host_model_ipc_broker_v1.py").read_text()

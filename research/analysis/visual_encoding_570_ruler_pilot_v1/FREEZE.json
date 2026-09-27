@@ -1,0 +1,58 @@
+{
+  "schema": "visual-encoding-ruler-pilot-freeze-v1",
+  "issue": 570,
+  "allocation": "visual-ruler-570-r1-20260927-01",
+  "base_commit": "407bea640ad46827f58bd7e30979e52096fff092",
+  "source": {
+    "runner_sha256": "e1635e42cf43ff299a0c969476a064bb4510d8f4c7a2849612f3a15cd1939277",
+    "auditor_sha256": "08f99bdae542f7684ac0a78097cb847d427cc405cb041e7b86d331be1346d7ec",
+    "python": "3.11.9",
+    "pillow": "10.4.0",
+    "font": "C:/Windows/Fonts/arial.ttf",
+    "font_sha256": "b3658eadae55e682b5f69eb64c439c1ecc8f196c0bb8d4756d145d13bc86476a"
+  },
+  "hypothesis": "For identical synthetic source screenshots, a non-occluding border ruler improves paired normalized target-center localization error over RAW without reducing target-hit correctness or increasing false selection on absent-target controls.",
+  "treatment": "RAW versus BORDER_RULER only. Ruler ticks/labels occupy pre-reserved blank 72px left and 64px top margins; source UI pixels, dimensions, coordinates, and prompts are otherwise identical.",
+  "model": {
+    "provider": "local Ollama only",
+    "name": "qwen2.5vl:3b",
+    "digest": "fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1",
+    "quantization": "Q4_K_M",
+    "temperature": 0,
+    "seed": 57020260927,
+    "num_predict": 64
+  },
+  "allocation": {
+    "case_seed": 57020260927,
+    "paired_cases": 12,
+    "positive_target_cases": 10,
+    "target_absent_cases": 2,
+    "model_calls": 24,
+    "per_case_order": "deterministically counterbalanced from case index; fixed before calls",
+    "output_schema": {
+      "x_norm": "number in [0,1] or null",
+      "y_norm": "number in [0,1] or null",
+      "abstain": "boolean"
+    }
+  },
+  "decision": {
+    "retain_scoped": "RULER positive-case hit count is not lower than RAW; absent-target false-selection count is not higher; and paired mean normalized center error improves by at least 0.02 screen-diagonals. All source maps and response payloads audit with zero errors.",
+    "reject_scoped": "Any correctness regression or no material paired error improvement with complete valid evidence.",
+    "hold": "Fewer than 8 valid positive paired responses, model/transport/provenance mismatch, or independent audit cannot bind every response to source and arm.",
+    "no_tuning": true,
+    "no_retries": true
+  },
+  "controls": [
+    "Same exact source PNG bytes for paired arms.",
+    "Same task prompt and source-normalized JSON schema for both arms.",
+    "No clicks, OS input, provider cloud calls, user data, GUI mutation, or model updates.",
+    "First outcome retained; a call failure is not silently retried.",
+    "Ruler pixels are restricted to pre-reserved blank margins; target/UI pixels are unchanged."
+  ],
+  "limits": [
+    "Synthetic rendered controls only; no real-application or unseen-real-layout claim.",
+    "One local quantized model, one PC, 12 paired cases; exploratory screening only.",
+    "This tests visual presentation, not training/fine-tuning or action authority.",
+    "No token-cost inference from PNG bytes or local model output length."
+  ]
+}

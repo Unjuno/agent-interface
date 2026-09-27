@@ -1,0 +1,15 @@
+# Issue 3943 — frozen live cancellation geometry study
+
+Parent #771; motivated by #706; #2197 and #57/#2789 remain open.
+Intake main: b2457b746a6df06f6536585dfe2ab937aff639f4.
+Allocation: semantic-abort-geometry-20260922-01.
+
+H: A previously outside cancellation point can become an ordinary Tk Button commit target. Fresh geometry avoids relocation before observation, not relocation after observation.
+T: 3 policies x 3 layout schedules x 3 repetitions plus 3 no-input controls = 30 fresh private Xvfb/Tk/observer triples. Exact schedule is the frozen run.py schedule; audit.py independently reconstructs it. Button starts at [90,110,120,60], relocates to [360,110,120,60]; press [150,140]; cached escape [420,140]; fresh fallback [30,40]. Native XTEST only; unmodified Button class; separate read-only X11 observer. No model, host display, external network or shared runtime mutation. Cookie authentication and TCP-disabled fresh Xvfb; generated ephemeral cookies are removed after server exit and are not evidence.
+D: Stable ordinary release commits 3/3. Stable cached/fresh move-out each commits 0/3. Cached move-out commits 3/3 in each relocation schedule. Fresh move-out commits 0/3 for before-refresh and 3/3 for after-refresh. No-input emits no input/effect. All 30 rows, native/app/IPC/pixel evidence, neutral state, source identities, clean exits and 10 corruption controls must reconcile. PASS_ABORT_GEOMETRY_BOUNDARY_SCOPED supports this counterexample pattern, not safe cancellation. Contrary complete data is FAIL_BOUNDARY_HYPOTHESIS; incomplete data/source/cleanup is STOP/HOLD. No formal rerun or source editing after freeze.
+C: Layout changes are fixture-controlled with IPC barriers, not random races. The controller receives actual X11 geometry, never expected effects. Screenshot marker and journal both reflect this one fixture command; neither proves real-document rollback. Readback is not atomic with input. Mandatory release is never skipped.
+U: No model-policy, performance, reliability-population, physical HID, XI2, cross-toolkit, Docker/OrbStack, or production claim. Current execution container only; Docker CLI unavailable. Parallel #3930 studies explicit application disable acknowledgement, not move-out geometry; paths and experimental factors are distinct.
+
+Roadmap: intake/collision -> excluded construction -> exact freeze -> one 30-case formal -> raw-only audit/corruptions -> report/PR -> verified main readback. The global ROADMAP is not completed by this study.
+
+Construction: 01 missing private Xauthority (before input); 02 installed Xlib string-valued pixels (before input); 03 ten native cases completed, initial auditor overconstrained initialization Enter ordering, corrected preformal auditor passes; 04 final source construction ten cases plus ten mutations pass. Xlib distribution metadata lookup and the first metadata ready-record selector failed before environment collection; recorded module version0.15 and exact selected file hashes instead. Construction outputs are retained separately; no construction observation is pooled with formal evidence.

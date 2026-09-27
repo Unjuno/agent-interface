@@ -104,11 +104,13 @@ class NativeHandleBridge:
         return False
 
     def observe(self):
+        started_ns = time.monotonic_ns()
         before = self._binding()
         screen = self.backend.d.screen()
         report = observe_in_session(self.session, target=self.target,
             frame="screen_physical_px",
             region=[0, 0, screen.width_in_pixels, screen.height_in_pixels])
+        public_returned_ns = time.monotonic_ns()
         self._save("public-observation-" + report["observation_id"] + ".json", report)
         if report["status"] != "returned":
             raise X11BackendError("public observation failed; inspect retained report: "
@@ -117,17 +119,26 @@ class NativeHandleBridge:
         after = self._binding()
         if before != after:
             raise X11BackendError("binding changed during native capture")
+        binding_checked_ns = time.monotonic_ns()
         artifact = native["artifact"]
         data = Path(artifact["path"]).read_bytes()
         if (hashlib.sha256(data).hexdigest() != artifact["sha256"] or
                 artifact["source_raw_sha256"] != native["sha256"]):
             raise X11BackendError("native artifact identity mismatch")
+        artifact_verified_ns = time.monotonic_ns()
         with Image.open(io.BytesIO(data)) as opened:
             image = opened.convert("RGB")
+        decoded_ns = time.monotonic_ns()
         self.sequence += 1
         observation = {"sequence": self.sequence, "binding_revision": self.binding_revision,
                        "capture_ns": native["capture_started_ns"],
-                       "pointer_binding": before, "native": native}
+                       "pointer_binding": before, "native": native,
+                       # Ends before history publication; not model-visible latency.
+                       "timing_ns": {"started": started_ns,
+                                     "public_returned": public_returned_ns,
+                                     "binding_checked": binding_checked_ns,
+                                     "artifact_verified": artifact_verified_ns,
+                                     "decoded": decoded_ns}}
         self.history[self.sequence] = (observation, image)
         self._save(f"observation-{self.sequence}.json", observation)
         return observation

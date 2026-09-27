@@ -1,0 +1,38 @@
+{
+  "issue": 4242,
+  "allocation": "native-handle-destroy-generation-20260923-02",
+  "base_main": "4a1e54cfe81b64fefc840e2afedc5a14afc42dfc",
+  "pre_freeze_head": "ae227102cab277c40bc226afa4bad9cae7b8bc7e",
+  "formal_rows_before_freeze": 0,
+  "formal_invocations_allowed": 1,
+  "formal_retries_allowed": 0,
+  "allocation01": {
+    "decision": "STOP_FIXTURE_PIXEL_CAPTURE_BADMATCH_BEFORE_BRIDGE",
+    "formal_rows": 0,
+    "preserved_on_main": "4a1e54cfe81b64fefc840e2afedc5a14afc42dfc"
+  },
+  "construction": {
+    "first_failure_run": 35821558853,
+    "first_failure": "FlatTargetRefused at visually flat mint patch; zero input",
+    "first_failure_artifact_sha256": "2430b3d4200d9a1ff0a913a1831bf087b89a8a42e2ae81679e53142badaa1f83",
+    "final_pass_run": 35821932965,
+    "final_pass_head": "a94632a2dd4a40042f4914de4cf498c1f1b89407",
+    "final_pass_artifact_sha256": "cbf2b27b672fa0a905343ea97fd0c91aa76eafa3d41d82c8b4803bf0d48fffc8",
+    "decision": "PASS_CONSTRUCTION_EXACT_BRIDGE_TOPOLOGY",
+    "input_emissions": 0
+  },
+  "source_blobs": {
+    "construction.py": "bfebc835cb50b6f7e7f94ad9ddd477a067bee4fb",
+    "formal.py": "d57e88fa99b03f6f8d97a806bde2ee47d2c6f259",
+    "audit.py": "298873183890fc235632944ff5040ec87eaf98f5",
+    "controls.py": "4673e515ba1d322aef95e9ffcb6b397d31ff49a4",
+    "PLAN.md": "b744bd233e4f10dd1d2e3b2bf86780a461b72c25",
+    "formal_workflow": "bc55dbff015cf6927d42c8ac57ee5b0518993488",
+    "native_handle_bridge_v1.py": "aa72a835a60ab9bf9f053c680a1a3d81e49c14d5"
+  },
+  "H": "Observed exact bound-client DestroyNotify followed by explicit NativeHandleBridge review/rebind advances one binding generation/scope and revokes the predecessor alias before native input while a fresh replacement alias remains usable.",
+  "T": "Four fresh Xvfb/Openbox sessions x three counterordered cases = 12 formal rows. Shared exact construction.py fixture. Static replacement diagnostic emits no task input. Candidate tests old alias after review/rebind, then one fresh click only. One formal invocation; retries/replacements/tuning 0.",
+  "D": "PASS_NATIVE_DESTROY_GENERATION_COMPOSITION_SCOPED only on 12 complete rows, stable/fresh exact effects and releases, static same-XID/pixel old eligibility with zero input, candidate exact DestroyNotify + revision/scope change + old zero-input refusal + fresh exact effect, clean terminal state/cleanup, raw audit and corruption controls.",
+  "C": "Caller-driven explicit review only; no automatic lifecycle observer wiring, public CLI, model, token/latency, broad toolkit/backend or product claim.",
+  "U": "Automatic production generation plumbing and matched #2789/#3311 six-task evaluation remain open."
+}

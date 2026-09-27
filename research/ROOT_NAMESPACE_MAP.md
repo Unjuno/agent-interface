@@ -206,7 +206,7 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 
 
 - [`procedural_control_arena_v0/`](procedural_control_arena_v0/) — dependency-light mechanics/regression prototype; see its README and validation record for limits. It is not evidence of candidate or cross-domain performance.
-- [`procedural_control_arena_v1/`](procedural_control_arena_v1/) — real-time GUI construction/screening environment; paired baseline/candidate, held-out promotion, evaluator isolation, and domain replication gates remain open.
+- [`procedural_control_arena_v1/`](procedural_control_arena_v1/) — construction GUI benchmark with compound input primitives; paired baseline/candidate, held-out promotion, evaluator isolation, formal performance, and cross-domain transfer remain unvalidated.
 
 ### Needle / System-1 adapter research
 

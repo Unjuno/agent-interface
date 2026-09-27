@@ -61,9 +61,31 @@ docker run --rm --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=64m
   --entrypoint python issue-3300-obstac-probe:v1 -m unittest -v test_audit
 ```
 
-Result before the separate no-GUI rung: 6/6 tests passed (one baseline plus
-five mutation tests); after recording that rung, two additional tests cover
-the import-only contract. The raw-only audit checks four event rows, eight
-source files, and the separate import-only result. The raw mutations cover
-ready identity, endpoint, submit, source digest, and event/input evidence.
-No experiment output was regenerated for this audit.
+Result after recording the no-GUI and direct-Xvfb rungs: 10/10 tests passed.
+This consists of the baseline, five historical-event mutation controls, two
+import-only contract tests, and two direct-Xvfb contract tests. The raw-only
+audit checks both four-event logs, eight source files, image/source receipts,
+and both later result contracts. No experiment output was regenerated for
+this audit.
+
+## Direct-Xvfb pre-task ready rung
+
+Allocation `issue2922-direct-xvfb-ready-20260927-r1`; seed `992924`;
+namespace `ready-gate-03`. The container invoked the retained script directly:
+
+```sh
+docker run --rm -i --network none --read-only \
+  --tmpfs /tmp:rw,nosuid,nodev,size=256m \
+  --tmpfs /dev/shm:rw,nosuid,nodev,size=128m \
+  --mount type=bind,src=<package>/source_snapshot/research,dst=/repo/research,readonly \
+  --mount type=bind,src=<fresh-evidence-parent>,dst=/evidence \
+  --mount type=bind,src=<package>/ready_gate_03/run-direct-xvfb.sh,dst=/experiment/run.sh,readonly \
+  --workdir /repo/research/live_control \
+  --env PYTHONPATH=/repo/research/live_control:/repo/research/observation_gating \
+  --entrypoint /bin/bash issue-2849-task1-runtime:v3-20260921 /experiment/run.sh
+```
+
+Exit code 0; stdout contains `X_DISPLAY_READY` followed by the four retained
+events. The first attempted allocation seed 992923 stopped before session
+startup because its output directory had been pre-created; see
+`READY_GATE_03_SETUP_STOP.txt`. Both seed identities are consumed.

@@ -65,6 +65,23 @@ class CaptureArtifactTests(unittest.TestCase):
                 self.assertEqual(row['source_raw_sha256'], hashlib.sha256(raw).hexdigest())
                 self.assertEqual(row['sha256'], hashlib.sha256(Path(row['path']).read_bytes()).hexdigest())
 
+    def test_stage_brackets_retain_exact_artifact_identity(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sink = CaptureArtifacts(tmp)
+            raw = bytes([0, 0, 255, 0])
+            with mock.patch("runtime.backends.x11_v1.capture_artifacts.time.monotonic_ns",
+                            side_effect=[10, 20, 40, 70, 80]):
+                row = sink.write(raw, 1, 1, depth=24, bits_per_pixel=32,
+                    scanline_pad=32, byte_order=0,
+                    masks=(0xff0000, 0xff00, 0xff), true_color=True)
+            self.assertEqual(row['timing_ns'], {'started': 10, 'converted': 20,
+                'encoded': 40, 'written': 70, 'hashed': 80})
+            data = Path(row['path']).read_bytes()
+            self.assertEqual(row['sha256'], hashlib.sha256(data).hexdigest())
+            self.assertEqual(row['source_raw_sha256'], hashlib.sha256(raw).hexdigest())
+            with Image.open(row['path']) as image:
+                self.assertEqual(image.getpixel((0, 0)), (255, 0, 0))
+
     def test_unsupported_format_writes_no_image(self):
         with tempfile.TemporaryDirectory() as tmp:
             sink = CaptureArtifacts(tmp)
