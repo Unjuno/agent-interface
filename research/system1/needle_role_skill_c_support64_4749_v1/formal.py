@@ -107,7 +107,8 @@ def run(source, root):
     collision = freeze["collision_audit"]
     if tuple(collision.get("formal_seeds", ())) != SEEDS:
         raise SystemExit("STOP_COLLISION_SEED_SET")
-    if any(collision.get(bucket) != [] for bucket in ("issue_hits", "pr_hits", "branch_hits", "commit_hits")):
+    if any(collision.get(bucket) != [] for bucket in
+           ("issue_hits_other", "pr_hits", "branch_hits", "commit_hits")):
         raise SystemExit("STOP_COLLISION_HITS")
     if collision.get("main_code_hits") != {str(seed): 0 for seed in SEEDS}:
         raise SystemExit("STOP_MAIN_CODE_COLLISIONS")
