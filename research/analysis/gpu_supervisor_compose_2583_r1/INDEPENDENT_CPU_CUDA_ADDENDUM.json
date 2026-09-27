@@ -1,0 +1,19 @@
+{
+  "status": "PASS_INDEPENDENT_CPU_CUDA_ADDENDUM",
+  "scope": "addendum; preserves original scoped result unchanged",
+  "image": "pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime",
+  "device": "NVIDIA GeForce RTX 3080 Laptop GPU",
+  "torch": "2.5.1+cu121",
+  "cuda_runtime": "12.1",
+  "rows": 256,
+  "cpu_cuda_label_agreement": 256,
+  "blocked_oracle_rows": 96,
+  "gpu_blocked_oracle_agreement": 96,
+  "cpu_blocked_oracle_agreement": 96,
+  "gpu_labels_sha256": "2661920f2409dd6c8adeb0c44972959f232b6429afa913845d0fd95e7e768234",
+  "cpu_labels_sha256": "2661920f2409dd6c8adeb0c44972959f232b6429afa913845d0fd95e7e768234",
+  "authority_grants": 0,
+  "input_grants": 0,
+  "task_success_claims": 0,
+  "note": "Fresh-row correctness is not independently task-oracle-scored; this addendum establishes CPU/CUDA implementation agreement and independently checks fail-closed blocked rows."
+}
