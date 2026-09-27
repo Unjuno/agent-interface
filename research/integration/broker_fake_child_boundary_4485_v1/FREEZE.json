@@ -30,12 +30,17 @@
     "host_model_ipc_broker_v1.py": "e44822269b921aa6327563b27e48a6d8ef4ebe35a182f50de541cf66fce6199c",
     "runner.py": "ae6c070cf05c607f605c8b0fc322e6007f543d9d677d29005e89494f159c065a",
     "audit.py": "42b9e99318adc09157aa5277386574933327cf4b5062abe02d01c9aae2947c23",
-    "formal.py": "bd0d7ab0356fc2a64e996f7cf19b328fa02f7dd6acc3945c01974dbf24e3ba33",
+    "formal.py": "1130ea5b31a46883512d4a1010f43b171ae20e53a480e84181ed6a5d199f6e1d",
     "test_harness.py": "721aacc84675204318acdb9ee7878f2293e442a0165989ea19250fc248956e06"
   },
   "construction_tests": {
     "command": "python -m unittest -v",
     "result": "2 passed",
     "preformal_only": true
-  }
+  },
+  "formal_preflight": [
+    "source_sha256_matches_FREEZE.json",
+    "image_id_environment_matches_FREEZE.json",
+    "fresh_empty_output_directory"
+  ]
 }
