@@ -1624,7 +1624,7 @@ A fresh local Docker CPU successor corrected the predecessor auditor schema, add
 
 A fresh-seed CPU Docker formal run applied 32 online rank-2 correction batches to a frozen A-trained base. The independent audit passed 99/99 arrival curves and all integrity/scope/corruption checks. Two seeds crossed to B >=0.90 while candidate A retention fell to 0/256; the third seed failed to acquire B (147/256) and retained A at 104/256. The untouched base stayed at 256/256 A in all seeds. Disposition: **FAIL_ONLINE_CORRECTION_FORGETTING**, with substantial seed variance and no inference-latency, GUI, Astra, or runtime claim. Construction-only #4826 signal and #4824's uninformative HOLD remain separate.
 
-See [formal report, audit, freeze, and ordered raw parts](research/system1/needle_online_correction_frontier_3441_v3/), [Issue #4829](https://github.com/Unjuno/agent-interface/issues/4829), and the [formal evidence PR](https://github.com/Unjuno/agent-interface/pull/RESEARCH_PR_PENDING).
+See [formal report, audit, freeze, and ordered raw parts](research/system1/needle_online_correction_frontier_3441_v3/), [Issue #4829](https://github.com/Unjuno/agent-interface/issues/4829), and the [formal evidence PR](https://github.com/Unjuno/agent-interface/pull/4836).
 
 ### Online LoRA skill snapshot/resume — Issue #3911
 
