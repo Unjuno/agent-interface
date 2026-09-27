@@ -6,7 +6,11 @@
 
 Image: agent-interface-gtk-preflight:local, ID sha256:e2a7634d2b9627ec037c488d6aa472c6c00d5ef0dda6e302f7dced8b9b8752d4, linux/amd64. CPython 3.11.16, GCC 12.2.0, Linux x86_64. No network, package installation, GPU access, GUI input, provider, or host display.
 
-Construction command (inside the container):
+Host command used:
+
+    docker run --rm --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=32m --entrypoint /bin/sh -v "${PWD}:/src:ro" -v "${PWD}/results/construction05:/results:rw" agent-interface-gtk-preflight:local -ec '<compile native.c to /results/xdamage-construction; start Xvfb :96 with -nolisten tcp -ac; execute harness; save stdout, compiler stderr, Xvfb stderr and RGB artifacts>'
+
+The command was run from the experiment directory shown in the archive. Runner and audit process exits were 0. Exact inner operations:
 
     gcc -O2 -Wall -Wextra /src/native.c -o /results/xdamage-construction -lX11 -ldl
     Xvfb :96 -screen 0 128x128x24 -nolisten tcp -ac
@@ -35,7 +39,7 @@ Per-file SHA-256:
 - ABA_2X2: 5f1c7a5f1ce4242ed7911733a92ac2de226f292dbfdfef803aeb65be234102e8
 - ABA_8X8: 536a29b7a6502fb795ced9905de864b3d8642675d35c04700d0138eb916eef17
 
-Lossless artifact archive: construction05_raw.tar.gz, 6,279 bytes, SHA-256 b393d9ae3b7c8fbfe46242553058346d57442ed2c32197453feb3ccca3ddfe50. It is stored in the branch as base64 text so GitHub Contents can preserve the exact compressed bytes. Construction stdout SHA-256: 5a6c1ed3d8e7ae9fcefca223debcbc23095a0afb695f3161876fc0ac53baf81f.
+Lossless artifact archive: construction05_raw.tar.gz, 7,483 bytes, SHA-256 29abfba7c742645ad06e17628eb6aff336621ec02093e40df6c97e18dd3e64bb; this version includes the construction manifest, compiler diagnostics and raw RGB output. It is stored in the branch as base64 text so GitHub Contents can preserve the exact compressed bytes. Construction stdout SHA-256: 5a6c1ed3d8e7ae9fcefca223debcbc23095a0afb695f3161876fc0ac53baf81f.
 
 ## Construction-only limits and remaining gates
 
