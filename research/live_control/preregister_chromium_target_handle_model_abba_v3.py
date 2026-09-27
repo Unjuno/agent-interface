@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 import subprocess
 
 
@@ -70,7 +71,7 @@ def main():
         ),
         "codex_cli": version,
         "predecessor_plan_sha256": sha(PREVIOUS),
-        "sources": {name: sha(HERE / name) for name in dict.fromkeys(sources)},
+        "sources": complete_guarded_hashes({name: sha(HERE / name) for name in dict.fromkeys(sources)}, base=HERE),
         "scope": (
             "four fresh private Chromium X11 sessions over two new seeds; one final "
             "model choice per session; isolated alias change; no causal latency, "

@@ -52,3 +52,11 @@ Research module names remain compatibility entry points to these exact classes
 and functions. The portable archive contains no research modules, fixtures or
 model calls. Packaging this API establishes availability, not faster operation,
 reduced tokens, semantic completion or human-tempo performance.
+
+New research source manifests must record the implementation here as well as
+compatibility wrappers. The read-only
+[`complete_guarded_hashes`](../../research/live_control/guarded_source_dependencies_v1.py)
+helper completes known wrapper-based manifests and refuses conflicting pins.
+Historical frozen results require their original recorded source; they are not
+silently rebound to current main. See the
+[source-provenance integration evidence](../results/guarded-source-provenance-01/README.md).

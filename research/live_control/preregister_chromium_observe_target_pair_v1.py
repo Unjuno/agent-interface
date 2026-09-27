@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 
 
 HERE = Path(__file__).resolve().parent
@@ -47,7 +48,7 @@ def main():
             "first extracted probe revision retained obsolete Backend name",
             "second extracted probe revision omitted fixture observation method",
         ],
-        "sources": {name: sha(HERE / name) for name in names},
+        "sources": complete_guarded_hashes({name: sha(HERE / name) for name in names}, base=HERE),
         "scope": (
             "two fresh scripted Chromium X11 sessions on one new seed; matched "
             "operation-level integration; no model call, causal latency, token, "

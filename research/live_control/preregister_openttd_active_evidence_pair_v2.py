@@ -1,6 +1,7 @@
 """Freeze screen-derived local toolbar probing before fresh execution."""
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 
 import preregister_openttd_active_evidence_pair_v1 as prior
 
@@ -44,10 +45,10 @@ def main():
             "reverse the first batch receipt association after actual hover execution; composition "
             "must refuse before the second model call and target input"),
         "failure_policy": "retain both first formal sessions; no model or runtime retry and no repair",
-        "sources": {
+        "sources": complete_guarded_hashes({
             **{name: prior.sha(HERE / name) for name in dict.fromkeys(LIVE)},
             **{name: prior.sha(HERE.parent / name) for name in prior.TASK_SOURCES},
-        },
+        }, base=HERE),
         "scope": (
             "two fresh same-seed X11 cases and one OpenTTD toolbar task; same Luna-low model; "
             "model supplies the coarse anchor and selects runtime evidence; no broad unknown-GUI, "

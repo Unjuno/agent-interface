@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 
 
 HERE = Path(__file__).resolve().parent
@@ -41,7 +42,7 @@ def main():
         "metrics": ["task correctness", "action-to-first-useful-feedback",
                     "action-to-independent-semantic-completion", "durable calls"],
         "failure_policy": "retain first fresh result for each case; no coordinate, box, threshold or order correction",
-        "sources": {name: sha(HERE / name) for name in sources},
+        "sources": complete_guarded_hashes({name: sha(HERE / name) for name in sources}, base=HERE),
         "scope": "two fresh scripted same-seed private Chromium X11 sessions; no model calls, human-speed, token, general semantic-identity or default-promotion claim"}
     (OUT / "preregistration.json").write_text(json.dumps(plan, indent=2) + "\n",
                                                 encoding="utf-8", newline="\n")

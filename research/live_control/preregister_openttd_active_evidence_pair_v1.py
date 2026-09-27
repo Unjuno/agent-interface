@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 
 
 HERE = Path(__file__).resolve().parent
@@ -75,10 +76,10 @@ def main():
             "two fresh same-seed X11 cases and one toolbar task; candidate positions are authored "
             "by the model with no answer coordinate in the runner; this does not establish broad "
             "unknown-GUI grounding, latency improvement, token reduction, or human tempo"),
-        "sources": {
+        "sources": complete_guarded_hashes({
             **{name: sha(HERE / name) for name in LIVE_SOURCES},
             **{name: sha(HERE.parent / name) for name in TASK_SOURCES},
-        },
+        }, base=HERE),
     }
     (OUT / "preregistration.json").write_text(
         json.dumps(plan, indent=2) + "\n", encoding="utf-8", newline="\n")

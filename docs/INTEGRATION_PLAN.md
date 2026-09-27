@@ -1,3 +1,13 @@
+## Moved implementation source pins (2026-09-28)
+
+The #5107 review identified wrapper-only hashes in experiment preregistrations.
+[Source-provenance integration](../runtime/results/guarded-source-provenance-01/README.md)
+updates 32 future manifest producers to include shared scoped-X11 implementation
+bytes and the resolver itself. Historical frozen outputs are unchanged; stale
+or conflicting pins are refused. Local checks pass 231 protocol and 106
+harness/distribution tests. This repairs experimental source identity after the
+move, not UI latency, model-token accounting or semantic task verification.
+
 ## Shared X11 runtime checkpoint (2026-09-28)
 
 The native scoped target store, guarded bridge and form method now live in

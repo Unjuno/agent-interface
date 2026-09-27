@@ -1,6 +1,7 @@
 """Freeze v2 after retaining the generic-anchor-task failure."""
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 import shutil
 
 import preregister_openttd_active_evidence_pair_v1 as prior
@@ -49,8 +50,8 @@ def main():
         "fault_injection": {"source": ARCHIVED_WRONG.relative_to(HERE).as_posix(),
             "source_sha256": prior.sha(ARCHIVED_WRONG), "archived_wrong_point": [436, 51]},
         "baseline_report": BASELINE.relative_to(HERE).as_posix(), "baseline_sha256": prior.sha(BASELINE),
-        "sources": {**{name: prior.sha(HERE / name) for name in dict.fromkeys(SOURCES)},
-            **{name: prior.sha(HERE.parent / name) for name in prior.TASK_SOURCES}},
+        "sources": complete_guarded_hashes({**{name: prior.sha(HERE / name) for name in dict.fromkeys(SOURCES)},
+            **{name: prior.sha(HERE.parent / name) for name in prior.TASK_SOURCES}}, base=HERE),
         "schema_cache_sources": {source.relative_to(HERE).as_posix(): prior.sha(source) for source in CACHE_SOURCES},
         "schema_cache": {(cache / source.name).name: prior.sha(cache / source.name) for source in CACHE_SOURCES},
         "scope": "one fixed-seed positive/no-match OpenTTD pair with deterministic wrong-anchor injection; no natural error rate, causal speedup, token saving, broad reliability or human-tempo claim",
