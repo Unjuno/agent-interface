@@ -40,7 +40,7 @@ def main():
       'baseline':(True,True,3788,sha(b)),
       'safe_staged_before_publish':(True,True,3788,sha(b)),
       'safe_after_publish':(True,True,3789,sha(c)),
-      'unsafe_after_write':(True,True,3788,sha(b)),
+      'unsafe_after_write':(True,True,3789,sha(c)),
     }
     for e in events:
         phase=e.get('phase')
