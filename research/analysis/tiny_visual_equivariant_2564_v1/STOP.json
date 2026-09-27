@@ -1,12 +1,13 @@
 {
   "allocation": "tiny-visual-equivariant-cnn-2564-20260927-01",
-  "status": "HOLD_STOP",
+  "status": "FAIL_AFTER_REPLAY; INITIAL_AUDIT_HOLD_PRESERVED",
   "formal_training_completed": true,
-  "efficacy_result_accepted": false,
+  "efficacy_result_accepted": true,
+  "efficacy_outcome": "FAIL; CNN heldout ACCEPT 0/1600 and base ACCEPT 0/200, zero false accepts, paired MLP heldout ACCEPT 200/1600; not an adoptable result.",
   "formal_outputs_preserved_at": "work/formal_tiny_visual_equivariant_4814_v1/",
   "independent_audit_initial_failure": "Frozen audit expected 19,217 control parameters, while the exact saved MLP state contains 19,233 values (including its 16 unused first-layer bias slots).",
-  "corrective_action": "No model/source/result output was overwritten. A corrected, new successor allocation uses an independent audit that asserts 19,233 stored control values and 45 CNN values, then replays all 10 fits and compares every prediction and saved weight hash.",
-  "stop_reason": "The first formal audit did not pass; this allocation is not retried and no efficacy claim is made from the preserved output until a new successor independently verifies it.",
+  "corrective_action": "No model/source/result output was overwritten. Independent Docker replay in a separate audit directory asserted 19,233 stored control values and 45 CNN values, replayed all 10 fits, and matched every prediction, initialization, saved weight digest, and regenerated input digest. The initial assertion failure remains preserved in FAILED_FIRST_AUDIT.json.",
+  "stop_reason": "Formal allocation is closed after complete audit. Efficacy gates failed (base competence, pooled/per-center acceptance, and comparator lift); do not retry this allocation. Investigate optimization and comparator/data-design limits only in a new successor.",
   "recorded_at_utc": "2026-09-27T09:24:00Z"
 }
 
