@@ -1,0 +1,56 @@
+{
+  "schema": "needle-native-volume-result-v1",
+  "issue": 4714,
+  "allocation": "needle-native-volume-checkpoint-6842731-6842733-6842737-v1",
+  "freeze_sha256": "a47acfbab106c9cbe72d1a9384a6280bb1cdb81f7cbcc5fe6eae1b31216ba871",
+  "formal_trainer_runs": 1,
+  "formal_auditor_runs": 1,
+  "retry_count": 0,
+  "decision": "HOLD_LATENCY_BUDGET",
+  "integrity": {
+    "checked_arm_snapshots": 72,
+    "audit_errors": 0,
+    "corruption_controls_rejected": 5,
+    "exact_request_state_prediction_parity": true,
+    "actual_bind_and_volume_final_bytes_verified": true,
+    "missed_acknowledged_arrivals": 0
+  },
+  "gates": {
+    "native_volume_p95_ms_max": 60,
+    "volume_to_bind_p95_ratio_max": 0.5,
+    "passed": false
+  },
+  "seeds": [
+    {
+      "seed": 6842731,
+      "arm_order": ["bind", "volume"],
+      "bind_request_ack_p95_ms": 110.419562,
+      "volume_request_ack_p95_ms": 104.591588,
+      "volume_to_bind_p95_ratio": 0.9472197326774399,
+      "bind_commit_p95_ms": 100.934338,
+      "volume_commit_p95_ms": 20.089163,
+      "volume_final_sha256": "dbadb69fb124dec7659ef26c81ba35d126cc09dfb09984c3fce1f51ac89c2012"
+    },
+    {
+      "seed": 6842733,
+      "arm_order": ["volume", "bind"],
+      "bind_request_ack_p95_ms": 134.049221,
+      "volume_request_ack_p95_ms": 104.898416,
+      "volume_to_bind_p95_ratio": 0.7825365579707472,
+      "bind_commit_p95_ms": 121.151645,
+      "volume_commit_p95_ms": 19.848012,
+      "volume_final_sha256": "1fc6ab84aaaa53c7fd34b0081d5068be4fb7ee65f1c494fa20e68ac931f8b99e"
+    },
+    {
+      "seed": 6842737,
+      "arm_order": ["bind", "volume"],
+      "bind_request_ack_p95_ms": 183.292237,
+      "volume_request_ack_p95_ms": 180.214187,
+      "volume_to_bind_p95_ratio": 0.9832068719855277,
+      "bind_commit_p95_ms": 114.108947,
+      "volume_commit_p95_ms": 19.91872,
+      "volume_final_sha256": "76b4fa2f1b2a4b52ca0e4db6cfc3c6954873a6c4e185080dd8aac63cec44268c"
+    }
+  ],
+  "scope": "local Docker filesystem commit component only; no physical power-loss, adaptation-quality, production, or integrated runtime claim"
+}
