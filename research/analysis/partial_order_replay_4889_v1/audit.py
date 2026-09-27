@@ -153,7 +153,9 @@ def main():
     raw_path, result_path = folder / "RAW.jsonl", folder / "RESULT.json"
     ok, audit = validate(raw_path, result_path)
     # Eight effective copied-record corruptions; the independent row oracle must reject each.
-    target = reference_record(("OPEN", "CLOSE"), {a: {b: commutes(a, b, discover_states()) for b in ALPHABET} for a in ALPHABET})
+    control_states = discover_states()
+    control_relation = {a: {b: commutes(a, b, control_states) for b in ALPHABET} for a in ALPHABET}
+    target = reference_record(("OPEN", "CLOSE"), control_relation)
     mutations = {
         "events": lambda r: r.update(events=["CLOSE", "OPEN"]),
         "edges": lambda r: r.update(dependent_edges=[]),
