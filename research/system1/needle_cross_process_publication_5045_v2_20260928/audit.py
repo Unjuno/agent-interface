@@ -1,4 +1,4 @@
-"""Independent raw-only audit for #5045; imports neither runner nor protocol."""
+"""Independent raw-only audit for #5066; imports neither runner nor protocol."""
 from __future__ import annotations
 
 import copy
@@ -31,8 +31,8 @@ def validate(raw: Any) -> list[str]:
     if not isinstance(raw, dict):
         return ["raw_not_object"]
     for key, value in {
-        "allocation": "needle-cross-process-publication-5045-v1",
-        "issue": 5045,
+        "allocation": "needle-cross-process-publication-5045-v2-20260928-01",
+        "issue": 5066,
         "formal_invocations": 1,
         "reader_count_per_arm": READERS,
         "dispatch_count": 0,
@@ -192,5 +192,6 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
 
 
