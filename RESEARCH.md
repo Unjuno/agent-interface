@@ -80,6 +80,23 @@ reliability, or authorize changing the X11 backend. Preserve #4455's HOLD and
 raw rows and audits are in the [retained successor evidence](research/integration/x11_string8_capture_015_v1/formal/run01/REPORT.md)
 and [Issue #4638](https://github.com/Unjuno/agent-interface/issues/4638).
 
+### Issue #4666 — Procedural Control Arena evaluator-isolation canary
+
+The additive construction smoke in [PR #4684](https://github.com/Unjuno/agent-interface/pull/4684)
+used separate pinned-base evaluator/controller containers and passed a disposable
+seed-2002 Xvfb capture/key probe. The single preregistered seed-2001 formal
+allocation then **STOPPED**: controller capture and isolation metadata were
+retained, but the evaluator report disappeared with its short-lived tmpfs before
+collection. A separate read-only posthoc audit verified the capture hash and
+scoped process/path isolation while preserving the STOP; it cannot verify the
+evaluator's key-event ledger or failure reason. The original frozen auditor also
+crashed on a Docker inspect array. Do not retry formal/001 or infer a PASS. This
+is not a B0/C1 comparison or a hardened hostile-agent security boundary. Raw
+outputs, STOP record, and protocol are in
+[`research/procedural_control_arena_v0/evaluator_isolation_v1/`](research/procedural_control_arena_v0/evaluator_isolation_v1/).
+A distinct successor allocation needs durable result collection and a corrected
+Successor v2 construction passed its seed-2002 smoke; its single frozen seed-2003 formal allocation then passed a separate raw-only audit with zero errors and zero leaks. The evaluator-only `/evidence` bind retained the report after container exit, which records the `w` key-down/up and natural `deadline_miss`; the controller had no mounts or seed/source/report paths, and the 1,923,179-byte XWD matched its capture digest. Disposition: `PASS_EVALUATOR_PROCESS_AND_SOURCE_ISOLATION_SCOPED`, limited to this inert-input single-seed isolation canary; this does not establish B0/C1 performance or hostile-X11 security, and does not retry or replace v1 formal/001 STOP.
+
 ### Issue #4623 — GPU shared-prefix readout construction stop
 
 Successor [#4623](https://github.com/Unjuno/agent-interface/issues/4623)
