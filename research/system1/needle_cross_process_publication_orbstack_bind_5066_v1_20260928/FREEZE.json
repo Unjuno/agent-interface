@@ -5,7 +5,7 @@
   "predecessors": [5045, 5066],
   "branch": "research/needle-publication-orbstack-bind-5066-20260928",
   "path": "research/system1/needle_cross_process_publication_orbstack_bind_5066_v1_20260928/",
-  "base_main_sha": "31e904c2529ed26d79897fa8e4b346eba4e60927",
+  "base_main_sha": "ca107f4b7c319b7f03b54e2d86c8a53d28e3442d",
   "H": "On the pinned macOS-host OrbStack bind mount, seven monotonic package transitions (3788 to 3789..3795) each use one validated same-directory os.replace. All four independent atomic readers per phase open ACTIVE before replacement, retain/read the old descriptor only after replace returns, then read exact digest-valid next-generation bytes through a fresh path open. Actual invalid-digest and stale-base proposal attempts yield without changing ACTIVE. Matched diagnostic in-place writes expose incomplete bytes.",
   "T": {
     "host": "macOS; Docker context orbstack",
@@ -14,13 +14,14 @@
     "input": {"path":"research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/skill.json","git_blob":"45b80150dac503f4eb6f3cb5d82f9afa2c587107","sha256":"2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a","bytes":15279,"generation":3788},
     "candidate": "generations 3789 through 3795; each changes only generation and inert provenance allocation/predecessor fields from the exact seed; payload digest recomputed",
     "image_id":"sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "slot_release":"The latest GitHub issue-#5074 comment by Unjuno must contain exactly `SLOT_RELEASE: #5074 -> #5073 allocation=needle-publication-orbstack-bind-5066-20260928-01 main=<frozen current main SHA>`; formal.py fetches and checks this comment before any Docker access.",
     "schedule":{"arms":["validated same-directory os.replace","diagnostic in-place rewrite"],"concurrent_rows":56,"post_rows":28,"phases_per_arm":7,"readers_per_arm":4,"reader_processes":8,"atomic_replacements_per_phase":1,"generation_transitions":[3788,3789,3790,3791,3792,3793,3794,3795],"fd_order":"fd_open < replace_start < replace_return < fd_read_start < fd_read_end; then fresh path read sees exact next generation","unsafe_partial_barrier":"each phase; every reader opens exact strict-prefix bytes before writer completes the same next-generation payload","raw_bytes":"base64 retained for independent reconstruction","proposal_gate":"real admission function stages/revalidates/renames eligible proposals; digest-invalid and stale-base attempts are recorded and must leave ACTIVE hashes unchanged","dispatches":0,"authority_granted":false},
     "formal_orchestrations":1,
     "container":"docker --context orbstack run --pull=never --platform linux/arm64 --network none --read-only --cpus 0.25 --memory 512m --pids-limit 32 --shm-size 32m --cap-drop ALL --security-opt no-new-privileges; source/input read-only; output-only host bind writable",
     "receipt_env":["OBSTAC_SOURCE_COMMIT","OBSTAC_IMAGE_ID","OBSTAC_FREEZE_SHA256","OBSTAC_CONSTRUCTION=0"]
   },
   "D": {
-    "PASS_ORBSTACK_CROSS_PROCESS_PUBLICATION_SCOPED":"56 phase-reader rows and 28 post reads reconcile; all four readers in every phase satisfy the frozen fd timestamp order; held descriptors return exact previous generation and fresh path reads return exact next generation; all seven real admission calls publish; invalid/stale proposal attempts yield with ACTIVE unchanged; matched unsafe arm exposes exact partial prefixes; independent raw-only derivation/reconstruction and seven mutation controls pass.",
+    "PASS_ORBSTACK_CROSS_PROCESS_PUBLICATION_SCOPED":"56 phase-reader rows and 28 post reads reconcile; all four readers in every phase satisfy the frozen fd timestamp order; held descriptors return exact previous generation and fresh path reads return exact next generation; all seven real admission calls publish; invalid/stale proposal attempts yield with ACTIVE unchanged; matched unsafe arm exposes exact partial prefixes; each complete read is after and bound to its writer interval; independent raw-only derivation/reconstruction and ten mutation controls pass.",
     "FAIL_ORBSTACK_ATOMIC_PUBLICATION_BOUNDARY":"Independent reconstruction finds a contrary complete observation or invalid/stale mutation/admission.",
     "STOP_PROVENANCE_ENVIRONMENT_OR_AUDIT":"Source, image, platform, OrbStack, denominator, fresh output, process or audit gate fails. No scientific claim and no retry."
   },
@@ -28,12 +29,12 @@
   "U": "One macOS host, one OrbStack version/context, one Linux/arm64 image, one bind-mounted path, synthetic package and fixed schedule only. No Windows equivalence, other filesystems, crash durability, production safety, model/task quality, GUI, dispatch authority or latency claim.",
   "retry_policy":"Construction may be corrected before formal. Once formal invocation begins or output is created, retain all evidence and do not retry this allocation.",
   "source_sha256": {
-    "PLAN.md": "54ee8ea0b61221c102581ca73dd7b95d12c66d9420a664277d7caded51594d80",
+    "PLAN.md": "88119ca11b78f6c0ce832ff0279293f163e7285066d7bb47b668239035f39be2",
     "protocol.py": "17f930d71e36ce57bdf596f8ce59fa298921d98666b05b19fac213abea311c25",
-    "runner.py": "48fc06ff9de2a104ec18389ac419adfd12a169821120f0f7e6a9b6e6141da875",
-    "audit.py": "61c4d0a719f0fcf74098c4d95041a552a660c877d65061700b8b671b6e1bd1cf",
-    "formal.py": "676c1e8fc727f1f4a78508a00741f3ad469395c514d03de0a3e54114f591086b",
-    "test_construction.py": "488b48f2de7478d87185969f76d74c32efafc289b709e82226f6d7a1764fb2a7"
+    "runner.py": "e3cebd7c9d67f289d11433faa91c194852cb661298bcf34fea177d8911b0f693",
+    "audit.py": "607f9f00be8bb07b2e746cfb65903ca6905063caee7d3ccf11339c596a1f909c",
+    "formal.py": "13af2b0f9ca3fbe0920f436ec0daa49bfc3043840b950da35e1433306e50fc2b",
+    "test_construction.py": "43daecbf2e11b60947bb844fafa9a5feaa6ff35288cdb3467240e5c993fd5286"
   },
   "freeze_self_hash":"omitted; freeze blob and commit identity are authoritative"
 }

@@ -200,7 +200,7 @@ def run_unsafe(root: Path, old_raw: bytes, candidates: list[tuple[dict,bytes]]) 
             complete = []
             for i, (_, _, r) in enumerate(workers):
                 row = r.get(timeout=30)
-                if row.get("request") != phase + ":partial" or row.get("reader") != i or row.get("action") != "read_complete":
+                if row.get("request") != phase + ":partial" or row.get("phase") != phase or row.get("reader") != i or row.get("action") != "read_complete":
                     raise RuntimeError("completion read mismatch: " + repr(row))
                 complete.append(row)
             by_reader = {r["reader"]: r for r in complete}

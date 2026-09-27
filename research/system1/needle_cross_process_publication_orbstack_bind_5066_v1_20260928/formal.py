@@ -31,8 +31,27 @@ def inspect_container(name):
 def write_json(path,value):path.write_text(json.dumps(value,sort_keys=True,indent=2)+"\n")
 
 
+def release_marker(allocation:str,main_sha:str)->str:
+    return f"SLOT_RELEASE: #5074 -> #5073 allocation={allocation} main={main_sha}"
+
+
+def verify_slot_release(comments:list,comment_id:int,allocation:str,main_sha:str)->dict:
+    if not isinstance(comments,list):raise RuntimeError("slot release comments are not a list")
+    owner_comments=[c for c in comments if isinstance(c,dict) and
+                    isinstance(c.get("user"),dict) and c["user"].get("login")=="Unjuno"]
+    if not owner_comments:raise RuntimeError("no slot-owner comments available")
+    latest=max(owner_comments,key=lambda c:(str(c.get("created_at","")),int(c.get("id",0))))
+    if latest.get("id")!=comment_id:raise RuntimeError("slot release comment is not the owner's latest comment")
+    expected=release_marker(allocation,main_sha)
+    if expected not in str(latest.get("body","")):
+        raise RuntimeError("owner comment does not explicitly release the exact allocation on current main")
+    return {"issue":5074,"comment_id":comment_id,"owner":latest["user"]["login"],
+            "created_at":latest.get("created_at"),"marker":expected}
+
+
 def main():
     ap=argparse.ArgumentParser();ap.add_argument("--output",required=True);ap.add_argument("--preflight-only",action="store_true")
+    ap.add_argument("--slot-release-comment-id",type=int)
     args=ap.parse_args();out=Path(args.output).resolve()
     if out.exists():raise RuntimeError("output destination already exists")
     if sha(SEED.read_bytes())!="2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a":raise RuntimeError("seed identity mismatch")
@@ -52,6 +71,17 @@ def main():
     if args.preflight_only:
         print(json.dumps({"preflight":"PASS_STATIC","source_commit":commit,"source_tree_sha":tree,
                           "live_main_sha":live_main_sha,"docker_invocations":0,"output_created":False}));return 0
+    if args.slot_release_comment_id is None:
+        raise RuntimeError("formal launch requires the exact #5074 owner release comment id")
+    comments_run=run(["gh","api","--paginate","--slurp","repos/Unjuno/agent-interface/issues/5074/comments?per_page=100"])
+    if comments_run.returncode:raise RuntimeError("cannot read GitHub slot-owner release: "+comments_run.stderr)
+    try:
+        pages=json.loads(comments_run.stdout)
+        comments=[comment for page in pages for comment in page] if pages and isinstance(pages[0],list) else pages
+        slot_release=verify_slot_release(comments,args.slot_release_comment_id,
+              "needle-publication-orbstack-bind-5066-20260928-01",live_main_sha)
+    except (ValueError,TypeError,IndexError) as exc:
+        raise RuntimeError("cannot verify GitHub slot-owner release: "+str(exc)) from exc
     context=run(["docker","--context",CONTEXT,"context","show"])
     if context.returncode or context.stdout.strip()!=CONTEXT:raise RuntimeError("wrong/unavailable Docker context")
     image=run(["docker","--context",CONTEXT,"image","inspect",IMAGE,"--format","{{.Id}} {{.Os}}/{{.Architecture}}"])
@@ -75,6 +105,7 @@ def main():
     fargv=["docker","--context",CONTEXT,"run","--name",cname,*common,*envargs,IMAGE,"python","-B",exp_container+"/runner.py"]
     aargv=["docker","--context",CONTEXT,"run","--name",aname,*common,*envargs,IMAGE,"python","-B",exp_container+"/audit.py"]
     receipt={"allocation":"needle-publication-orbstack-bind-5066-20260928-01","source_commit":commit,
+             "slot_release":slot_release,
              "source_tree_sha":tree,"source_sha256":source_actual,"source_blob_sha256":blob_ids,
              "live_main_sha":live_main_sha,
              "seed_blob":"45b80150dac503f4eb6f3cb5d82f9afa2c587107","seed_sha256":sha(SEED.read_bytes()),

@@ -53,6 +53,18 @@ def exact_raw_matches(row:object,expected:bytes)->bool:
     return rebuilt is not None and rebuilt["raw"]==expected
 
 
+def unsafe_completion_errors(row:dict,interval:dict)->list[str]:
+    errors=[]
+    if row.get("phase")!=interval.get("phase"):
+        errors.append("phase")
+    if row.get("write_start_ns")!=interval.get("start_ns") or row.get("write_end_ns")!=interval.get("end_ns"):
+        errors.append("interval_binding")
+    times=[row.get(k) for k in ("write_start_ns","partial_start_ns","partial_end_ns","write_end_ns","complete_start_ns","complete_end_ns")]
+    if any(not isinstance(value,int) or isinstance(value,bool) for value in times) or times!=sorted(times):
+        errors.append("completion_order")
+    return errors
+
+
 def audit(raw: object, receipt: object) -> list[str]:
     e = []
     if not isinstance(raw, dict) or not isinstance(receipt, dict): return ["input_not_object"]
@@ -137,6 +149,16 @@ def audit(raw: object, receipt: object) -> list[str]:
                 if actual[target].get("Source")!=wanted.get("Source") or bool(actual[target].get("RW"))!=wanted.get("RW"):
                     e.append("formal_actual_mount_"+target)
     for name, arm, prefix in (("atomic",raw.get("atomic",{}),"phase_"),("unsafe",raw.get("unsafe",{}),"phase_")):
+        unsafe_intervals={}
+        if name=="unsafe":
+            intervals=arm.get("write_intervals")
+            if not isinstance(intervals,list) or len(intervals)!=PHASES:
+                e.append("unsafe_write_interval_count")
+            else:
+                for interval in intervals:
+                    if not isinstance(interval,dict) or interval.get("phase") in unsafe_intervals:
+                        e.append("unsafe_write_interval_identity");continue
+                    unsafe_intervals[interval.get("phase")]=interval
         roster=arm.get("reader_pids")
         if not isinstance(roster,list) or len(roster)!=READERS or len(set(roster))!=READERS:
             e.append(name+"_pid_roster"); continue
@@ -178,6 +200,8 @@ def audit(raw: object, receipt: object) -> list[str]:
                 if partial_rebuilt is None or complete_rebuilt is None: e.append("unsafe_raw_reconstruction_"+phase)
                 if not (row.get("write_start_ns",0)<=row.get("partial_start_ns",0)<=row.get("partial_end_ns",0)<=row.get("write_end_ns",0)):
                     e.append("partial_window_order_"+phase)
+                completion_errors=unsafe_completion_errors(row,unsafe_intervals.get(phase,{}))
+                for error in completion_errors:e.append("unsafe_completion_"+error+"_"+phase)
                 if partial.get("valid") is not False or not (0<partial.get("bytes",0)<raw.get("candidate_bytes",0)):
                     e.append("partial_bytes_"+phase)
                 phase_number=int(phase.split("_")[-1]) if phase.startswith("phase_") else 0
@@ -247,6 +271,9 @@ def mutations(raw,receipt):
     x=copy.deepcopy(raw); x["atomic"]["rows"][0]["replace_return_ns"]=0; tests["fd_order"]=(x,receipt)
     x=copy.deepcopy(raw); x["atomic"]["post_rows"][0]["path"]["raw_sha256"]="0"*64; tests["wrong_path_bytes"]=(x,receipt)
     x=copy.deepcopy(raw); x["unsafe"]["rows"][0]["partial"]["valid"]=True; tests["partial_claimed_valid"]=(x,receipt)
+    x=copy.deepcopy(raw); x["unsafe"]["rows"][0]["complete_start_ns"]=x["unsafe"]["rows"][0]["write_end_ns"]-1; tests["completion_before_writer_end"]=(x,receipt)
+    x=copy.deepcopy(raw); x["unsafe"]["rows"][0]["complete_end_ns"]=x["unsafe"]["rows"][0]["complete_start_ns"]-1; tests["completion_timestamp_reversed"]=(x,receipt)
+    x=copy.deepcopy(raw); x["unsafe"]["write_intervals"][0]["end_ns"]+=1; tests["wrong_write_interval_binding"]=(x,receipt)
     x=copy.deepcopy(receipt); x["mounts"][0]["RW"]=True; tests["writable_source"]=(raw,x)
     x=copy.deepcopy(raw); item=x["atomic"]["post_rows"][0]["path"]
     package=json.loads(base64.b64decode(item["raw_b64"]));package["provenance"]["allocation"]="unregistered-allocation"

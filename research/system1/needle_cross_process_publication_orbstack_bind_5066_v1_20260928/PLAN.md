@@ -28,8 +28,11 @@ The unsafe arm has seven truncate/prefix/write/completion phases using the same
 generation-3789..3795 package sequence. In each,
 the writer pauses at a barrier after truncate and a strict prefix; each reader
 opens and retains the observed partial bytes before the writer completes. The
-readers then verify exact complete next-generation bytes. Digest-invalid and
-stale-base proposals go through the same actual admission function and must
+readers then verify exact complete next-generation bytes. Each completion read
+must begin after the writer's recorded end and match that phase's write
+interval; the independent auditor rejects missing, reversed, cross-phase, or
+mismatched interval timestamps. Digest-invalid and stale-base proposals go
+through the same actual admission function and must
 not mutate ACTIVE. All 56 phase-reader rows
 retain raw bytes in base64 so the independent auditor can reconstruct hashes,
 JSON and package digests without importing the runner.
@@ -43,6 +46,11 @@ read-only, output-only writable bind, network none, pull-never, read-only root,
 bounded resources, dropped capabilities, and no-new-privileges. Any formal
 invocation or output creation consumes the sole allocation; preserve failure
 and do not retry.
+
+Before any Docker query or launch, `formal.py` fetches #5074 issue comments
+through authenticated `gh api` and requires the latest owner comment to contain
+the exact frozen allocation/current-main release marker. Missing, stale-main,
+superseded, or wrong-recipient releases fail closed.
 
 ## Integration
 

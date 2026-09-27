@@ -10,6 +10,7 @@ import tempfile
 import unittest
 
 import audit
+import formal
 import protocol
 import runner
 
@@ -105,6 +106,36 @@ class ConstructionTests(unittest.TestCase):
             self.assertEqual(stale["disposition"],"YIELD_STALE_GENERATION")
             self.assertEqual(hashlib.sha256(active.read_bytes()).hexdigest(),active_after)
             self.assertFalse(temporary.exists())
+
+    def test_formal_launch_requires_latest_exact_owner_release_on_frozen_main(self):
+        allocation="needle-publication-orbstack-bind-5066-20260928-01"
+        main_sha="a"*40
+        marker=formal.release_marker(allocation,main_sha)
+        comments=[{"id":10,"created_at":"2026-09-28T10:00:00Z","user":{"login":"Unjuno"},"body":marker}]
+        accepted=formal.verify_slot_release(comments,10,allocation,main_sha)
+        self.assertEqual(accepted["comment_id"],10)
+        for bad_comments,bad_id in (
+            (comments,11),
+            ([*comments,{"id":12,"created_at":"2026-09-28T10:01:00Z","user":{"login":"Unjuno"},"body":"hold"}],10),
+            ([{"id":10,"created_at":"2026-09-28T10:00:00Z","user":{"login":"someone-else"},"body":marker}],10),
+        ):
+            with self.assertRaises(RuntimeError):
+                formal.verify_slot_release(bad_comments,bad_id,allocation,main_sha)
+        with self.assertRaises(RuntimeError):
+            formal.verify_slot_release(comments,10,allocation,"b"*40)
+
+    def test_unsafe_completion_must_follow_and_match_writer_interval(self):
+        row={"phase":"phase_1","write_start_ns":10,"partial_start_ns":20,"partial_end_ns":30,
+             "write_end_ns":40,"complete_start_ns":41,"complete_end_ns":50}
+        interval={"phase":"phase_1","start_ns":10,"end_ns":40}
+        self.assertEqual(audit.unsafe_completion_errors(row,interval),[])
+        for key,value in (("complete_start_ns",39),("complete_end_ns",40),("write_end_ns",42)):
+            damaged=dict(row);damaged[key]=value
+            self.assertIn("completion_order",audit.unsafe_completion_errors(damaged,interval))
+        wrong_interval={**interval,"phase":"phase_2"}
+        self.assertIn("phase",audit.unsafe_completion_errors(row,wrong_interval))
+        wrong_interval={**interval,"end_ns":39}
+        self.assertIn("interval_binding",audit.unsafe_completion_errors(row,wrong_interval))
 
 
 if __name__ == "__main__":
