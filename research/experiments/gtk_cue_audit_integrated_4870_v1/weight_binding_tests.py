@@ -26,12 +26,14 @@ def run():
     assert weight_digest(adjacent) != expected
     large = original.copy()
     large[0] = np.float32(float(large[0]) + 2.0)
-    assert abs(probability(frame, large) - probability(frame, original)) > 1e-6
+    large_delta = abs(probability(frame, large) - probability(frame, original))
+    assert large_delta > 1e-6
     assert weight_digest(large) != expected
     assert weight_digest(original.astype(np.float64)) != expected
     assert weight_digest(original.reshape(1, 1)) != expected
-    print({"pass": True, "tiny_delta": tiny_delta,
-           "large_delta": abs(probability(frame, large) - probability(frame, original)),
+    print({"pass": True, "tiny_delta": tiny_delta, "large_delta": large_delta,
            "dtype_and_shape_bound": True})
 
 if __name__ == "__main__": run()
+
+
