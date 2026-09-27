@@ -1,0 +1,1 @@
+See repository Issue #4881 and FORMAL_STOP.md. The frozen command/source hashes were preserved in the local task scratch. Container preflight passed; formal attempt STOPped before training at upstream import because NEEDLE_SEED was omitted; dedicated volume empty. No retry. Image sha256:6ab7a93188ddf4232a0be8b5266418e0de1253159c5c66e64562a85fd4a10e.
