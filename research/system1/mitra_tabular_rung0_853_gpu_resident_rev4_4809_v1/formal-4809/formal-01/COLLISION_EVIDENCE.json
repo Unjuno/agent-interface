@@ -1,0 +1,59 @@
+{
+  "schema": "shared-rtx3080-collision-clear-v1",
+  "issue": 4809,
+  "clear": true,
+  "checked_at_utc": "2026-09-27T09:12:57.6257958+00:00",
+  "active_gpu_allocations": [],
+  "active_codex_gpu_tasks": [],
+  "terminal_gpu_allocations": [
+    {
+      "evidence": "PR4574 merged formal HOLD, 2400 steps; PR4770 merged audit-only; main raw result read back",
+      "issue": 4561
+    },
+    {
+      "evidence": "PR4490 merged one-shot STOP",
+      "issue": 4471
+    },
+    {
+      "evidence": "formal FAIL_BINDING_OR_SAFETY, issue comment reports release",
+      "issue": 4792
+    },
+    {
+      "evidence": "PR4648 retained construction STOP",
+      "issue": 4639
+    }
+  ],
+  "active_codex_task_audit": [
+    {
+      "issue": 4813,
+      "mode": "CPU-only",
+      "evidence": "issue body frozen image notes CPU-only"
+    },
+    {
+      "issue": 4814,
+      "mode": "CPU-only",
+      "evidence": "issue T says CPU"
+    },
+    {
+      "issue": 4817,
+      "mode": "CPU-only",
+      "evidence": "issue C says NumPy CPU Docker"
+    },
+    {
+      "issue": 2907,
+      "mode": "GUI/MCP, no RTX",
+      "evidence": "active thread latest work uses Xvfb/GUI"
+    }
+  ],
+  "allowed_running_containers": [
+    {
+      "id": "f65288efc4b4458371f68479c7ce86666ab9d00eaf60ee38097f80ba603004c1",
+      "image": "sha256:8262851b2846b87c649eddf3e76beb270c52f4d1bc94559f47efde16b0841551",
+      "name": "agent-interface-570-r3-ollama",
+      "status": "running"
+    }
+  ],
+  "gpu_snapshot": [
+    "NVIDIA GeForce RTX 3080 Laptop GPU, 16384 MiB, 0 MiB, 0 %"
+  ]
+}
