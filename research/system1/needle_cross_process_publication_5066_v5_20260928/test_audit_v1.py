@@ -41,7 +41,7 @@ def fixture(root: Path):
     dump_jsonl(atomic / "publisher.jsonl", replacements)
     pids = [101, 202, 303, 404]
     (atomic / "readiness.json").write_text(json.dumps([
-        {"reader_index": i, "pid": pid, "ready_ns": 1} for i, pid in enumerate(pids)
+        {"reader_index": i, "pid": pid, "ready_ns": 0} for i, pid in enumerate(pids)
     ]), encoding="utf-8")
     exits = []
     for reader_index, pid in enumerate(pids):
@@ -106,7 +106,8 @@ class FullAuditTests(unittest.TestCase):
     def test_auditor_binds_process_identity_and_rejects_unknown_or_duplicate_rows(self):
         for mutation in ("read_index_swap", "read_pid_swap", "exit_pid_swap",
                          "readiness_pid_swap", "unknown_kind", "duplicate_read",
-                         "diagnostic_ack_swap"):
+                         "diagnostic_ack_swap", "readiness_after_publication",
+                         "read_before_ready"):
             with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as td:
                 seed, raw = fixture(Path(td))
                 atomic = raw / "atomic"
@@ -131,6 +132,16 @@ class FullAuditTests(unittest.TestCase):
                     path = atomic / "readiness.json"
                     rows = json.loads(path.read_text(encoding="utf-8"))
                     rows[0]["pid"], rows[1]["pid"] = rows[1]["pid"], rows[0]["pid"]
+                    path.write_text(json.dumps(rows), encoding="utf-8")
+                elif mutation == "readiness_after_publication":
+                    path = atomic / "readiness.json"
+                    rows = json.loads(path.read_text(encoding="utf-8"))
+                    rows[0]["ready_ns"] = 99999
+                    path.write_text(json.dumps(rows), encoding="utf-8")
+                elif mutation == "read_before_ready":
+                    path = atomic / "readiness.json"
+                    rows = json.loads(path.read_text(encoding="utf-8"))
+                    rows[0]["ready_ns"] = 1
                     path.write_text(json.dumps(rows), encoding="utf-8")
                 else:
                     path = raw / "diagnostic" / "observations.json"

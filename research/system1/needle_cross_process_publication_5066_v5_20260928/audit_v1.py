@@ -72,6 +72,15 @@ def audit(seed_path: Path, raw: Path) -> dict:
         ready_pids[index] = pid
     if set(ready_pids) != set(range(4)) or len(set(ready_pids.values())) != 4:
         errors.append("readiness_process_identity")
+    ready_ns_by_index = {row.get("reader_index"): row.get("ready_ns") for row in readiness
+                         if type(row.get("reader_index")) is int and
+                         type(row.get("ready_ns")) is int}
+    if (len(ready_ns_by_index) != 4 or len(replace_rows) != 4096 or
+            (ready_ns_by_index and replace_rows and
+             max(ready_ns_by_index.values()) > min(
+                 (row.get("start_ns") for row in replace_rows
+                  if type(row.get("start_ns")) is int), default=-1))):
+        errors.append("publication_started_before_all_readers_ready")
     reads: list[dict] = []
     exits = []
     for index in range(4):
@@ -103,6 +112,9 @@ def audit(seed_path: Path, raw: Path) -> dict:
         if index in pids and pids[index] != pid:
             errors.append("reader_pid_changed")
         pids[index] = pid
+        if (index not in ready_ns_by_index or
+                begin < ready_ns_by_index.get(index, begin)):
+            errors.append("read_started_before_reader_ready")
         key = (pid, read_id)
         if key in read_keys:
             errors.append("duplicate_read")
