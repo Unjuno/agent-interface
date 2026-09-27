@@ -1,7 +1,7 @@
 """Fast construction checks; these never launch the formal runner."""
 from __future__ import annotations
 
-import copy
+import base64
 import hashlib
 import json
 from pathlib import Path
@@ -33,8 +33,22 @@ class ConstructionTests(unittest.TestCase):
         self.assertEqual(7 * 4, 28)
 
     def test_auditor_rejects_malformed_input(self):
-        self.assertTrue(audit.audit(None))
-        self.assertTrue(audit.audit({}))
+        self.assertTrue(audit.audit(None, None))
+        self.assertTrue(audit.audit({}, {}))
+
+    def test_independent_auditor_reconstructs_raw_package_bytes(self):
+        seed = json.loads(SEED.read_bytes())
+        raw = protocol.canonical_bytes(protocol.successor(seed))
+        value = json.loads(raw)
+        row = {"raw_b64":base64.b64encode(raw).decode(),"bytes":len(raw),
+               "raw_sha256":hashlib.sha256(raw).hexdigest(),"parse_ok":True,
+               "valid":True,"generation":value["generation"],
+               "embedded_digest":value["payload_sha256"]}
+        rebuilt = audit.reconstructed(row)
+        self.assertIsNotNone(rebuilt)
+        self.assertEqual(rebuilt["raw"], raw)
+        row["raw_sha256"] = "0" * 64
+        self.assertIsNone(audit.reconstructed(row))
 
 
 if __name__ == "__main__":

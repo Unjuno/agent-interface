@@ -10,13 +10,11 @@ NEW = 3789
 SEED_SHA256 = "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a"
 IMAGE_ID = "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e"
 PHASES = (
-    "publish_1", "publish_2", "publish_3", "publish_4", "publish_5",
-    "publish_6", "publish_7",
+    "phase_1", "phase_2", "phase_3", "phase_4", "phase_5", "phase_6", "phase_7",
 )
 UNSAFE_PHASES = (
-    "write_1", "write_2", "write_3", "write_4", "write_5", "write_6", "write_7",
+    "phase_1", "phase_2", "phase_3", "phase_4", "phase_5", "phase_6", "phase_7",
 )
-SNAPSHOTS_PER_BATCH = 32
 
 
 def canonical_bytes(value: Any) -> bytes:

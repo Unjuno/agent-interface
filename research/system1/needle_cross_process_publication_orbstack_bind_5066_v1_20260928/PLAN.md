@@ -13,19 +13,21 @@ is no model, network, GUI, dispatch, or authority grant.
 ## Corrected concurrency gate
 
 Eight persistent reader processes (four per arm) receive commands through
-independent queues. Each row records PID and monotonic read interval. In the
-atomic arm, each of seven replacements is repeated in an open publication
-window while the four readers each perform one synchronized observation batch
-(32 snapshots). The audit requires every reader's read interval to overlap the
-union of actual `os.replace` syscall intervals in every phase. A further read
-from each reader is requested only after each replacement returns (28 post
-rows). This corrects the serial-before/after schedule in #5066.
+independent queues. In each of seven atomic phases, all four readers open and
+retain the current ACTIVE descriptor before exactly one measured `os.replace`.
+After replacement returns, each reader reads the held descriptor and then
+opens the path afresh. The auditor checks `fd_open < replace_start <
+replace_return < fd_read_end`, the exact old bytes through the retained handle,
+and exact candidate bytes through the fresh path handle. This matches the
+append-only validity clarification on #5073 and closes the serialized
+pre/post-read defect in #5066.
 
-The unsafe arm has the corresponding seven synchronized read batches. At the
-partial-write phase, the writer pauses at a barrier after truncate/partial
-write while all four readers each take 32 snapshots; incomplete bytes must be
-observed. The remaining phases use equivalent windows, changing only the
-publication strategy.
+The unsafe arm has seven truncate/prefix/write/completion phases. In each,
+the writer pauses at a barrier after truncate and a strict prefix; each reader
+opens and retains the observed partial bytes before the writer completes. The
+readers then verify exact complete candidate bytes. All 56 phase-reader rows
+retain raw bytes in base64 so the independent auditor can reconstruct hashes,
+JSON and package digests without importing the runner.
 
 ## Formal boundary
 
