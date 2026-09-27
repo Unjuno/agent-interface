@@ -42,6 +42,13 @@ def parse(raw):
     if ids != expected_ids(): errors.append(f"case coverage mismatch missing={sorted(expected_ids()-ids)} extra={sorted(ids-expected_ids())}")
     for r in rows:
         if r.get("mode") not in MODES: errors.append(f"invalid mode {r.get('case_id')}"); continue
+        if not isinstance(r.get("pre_recovery_files"), dict) or not r["pre_recovery_files"]:
+            errors.append(f"missing pre-recovery bytes {r.get('case_id')}")
+        for name, meta in r.get("pre_recovery_files", {}).items():
+            try: data = bytes.fromhex(meta["hex"])
+            except Exception: errors.append(f"invalid hex {r.get('case_id')}:{name}"); continue
+            if len(data) != meta.get("bytes") or hashlib.sha256(data).hexdigest() != meta.get("sha256"):
+                errors.append(f"byte hash mismatch {r.get('case_id')}:{name}")
         if r.get("case_id", "").startswith(r["mode"]+"-CONTROL-"):
             c = r.get("control")
             want = {"missing_identity": (0, False), "empty_identity": (0, False),
@@ -61,21 +68,14 @@ def parse(raw):
             want = (0, False, False) if protocol != "ATOMIC_LOCAL" else (0, False, False)
         elif protocol == "RECEIPT_FIRST" and cut == "AFTER_FIRST": want = (0, True, True)
         elif protocol == "ATOMIC_LOCAL": want = (1, True, True)
-        elif protocol == "EFFECT_FIRST" and cut == "AFTER_FIRST": want = (1, True, False)
-        elif protocol == "ATOMIC_EXTERNAL" and cut == "AFTER_FIRST": want = (1, True, False)
+        elif protocol == "EFFECT_FIRST" and cut == "AFTER_FIRST": want = (2, True, False)
+        elif protocol == "ATOMIC_EXTERNAL" and cut == "AFTER_FIRST": want = (2, True, False)
         elif protocol == "RECEIPT_FIRST" and cut != "BEFORE": want = (1, True, True)
         else: want = (1, True, True)
         if cut == "BEFORE" and protocol == "RECEIPT_FIRST":
             pass
         if (effect, receipt, pre_receipt) != want:
             errors.append(f"registered pattern mismatch {r.get('case_id')} got={(effect,receipt,pre_receipt)} want={want}")
-        if not isinstance(r.get("pre_recovery_files"), dict) or not r["pre_recovery_files"]:
-            errors.append(f"missing pre-recovery bytes {r.get('case_id')}")
-        for name, meta in r.get("pre_recovery_files", {}).items():
-            try: data = bytes.fromhex(meta["hex"])
-            except Exception: errors.append(f"invalid hex {r.get('case_id')}:{name}"); continue
-            if len(data) != meta.get("bytes") or hashlib.sha256(data).hexdigest() != meta.get("sha256"):
-                errors.append(f"byte hash mismatch {r.get('case_id')}:{name}")
     return obj, errors
 
 
