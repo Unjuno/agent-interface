@@ -224,3 +224,5 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`needle_lora_3441_rank4_minibatch_seed_corrected_v1/`](needle_lora_3441_rank4_minibatch_seed_corrected_v1/) — Issue #3887 frozen sampler-stream successor HOLD; legacy collapse gate was not reproduced, and full independent audit STOP is retained.
 - [`needle_lora_3441_rank4_minibatch_seed_corrected_audit_v1/`](needle_lora_3441_rank4_minibatch_seed_corrected_audit_v1/) — Issue #3887 independent audit stopped before scoring because the frozen source/checksum pins do not match the committed artifacts; the original HOLD remains unchanged.
 - [`needle_lora_3441_rank4_online_multiseed_gpu_v1/`](needle_lora_3441_rank4_online_multiseed_gpu_v1/) — Issues #3807/#3819 GPU rank-capacity failure evidence; #3822 separately records the learning-curve HOLD.
+
+- [`procedural_control_arena_v0/`](procedural_control_arena_v0/) — Procedural control arena; consult its README and VALIDATION for scope and current evidence.
