@@ -63,7 +63,7 @@ def main():
         raw_relevant = box_hit(changed, row["task_roi"])
         raw_critical = box_hit(changed, row["critical_roi"])
         label_relevant = bool(row["label_relevant"])
-        if raw_relevant != label_relevant:
+        if (raw_relevant or raw_critical) != label_relevant:
             o3_mismatch += 1
         if row["critical"] != raw_critical:
             errors.append(row["id"] + ":critical_mask_label")
