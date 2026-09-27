@@ -60,6 +60,23 @@ class NativeExchangeTests(unittest.TestCase):
                 self.assertEqual(result['status'],'needs_review')
                 self.assertNotIn('source_sequence',result)
 
+    def test_review_recovery_forbids_input_without_consuming_request(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            source={'sequence':9,'capture_ns':123,'native':{'artifact':{'sha256':'pixels'}},
+                    'review_recovery':{'status':'observation_required'}}
+            (root/'source-2.json').write_bytes(encoded(source))
+            displayed={'image_status':'image','image_reference':{'sequence':9,'capture_ns':123,'sha256':'pixels'},
+                       'receipt':{'native_result':{'status':'boundary','observation':source}}}
+            result=continuation(root,1,4,displayed)
+            self.assertEqual(result['status'],'observation_required')
+            self.assertEqual(result['allowed_decisions'],['observe','finish'])
+            with self.assertRaisesRegex(ValueError,'only explicit observe'):
+                run(root,2,{'source_sequence':9,'interaction':'keyboard'},timeout=0)
+            self.assertFalse((root/'request-2.json').exists())
+            pending=run(root,2,{'source_sequence':9,'interaction':'observe'},timeout=0)
+            self.assertEqual(pending['status'],'pending')
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
