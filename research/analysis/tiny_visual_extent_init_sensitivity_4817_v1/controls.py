@@ -17,10 +17,14 @@ def main(result):
   for name,mutate in mutations.items():
    case=root/name; shutil.copytree(result,case); data=copy.deepcopy(original); mutate(data)
    (case/"RAW.json").write_text(json.dumps(data,sort_keys=True,separators=(",",":"))+"\n")
-   rejected=not verify(case)["integrity_pass"]; rows.append({"name":name,"rejected":rejected})
+   try: rejected=not verify(case)["integrity_pass"]
+   except Exception: rejected=True
+   rows.append({"name":name,"rejected":rejected})
   for name,file in (("corrupt_input","INPUTS.npz"),("corrupt_weights","WEIGHTS.npz"),("corrupt_initial","INITIAL_WEIGHTS.npz")):
    case=root/name; shutil.copytree(result,case); data=bytearray((case/file).read_bytes()); data[len(data)//2]^=1; (case/file).write_bytes(data)
-   rejected=not verify(case)["integrity_pass"]; rows.append({"name":name,"rejected":rejected})
+   try: rejected=not verify(case)["integrity_pass"]
+   except Exception: rejected=True
+   rows.append({"name":name,"rejected":rejected})
  out={"schema":"extent-init-sensitivity-controls-v1","cases":rows,"rejected":sum(x["rejected"] for x in rows),"total":len(rows),"pass":all(x["rejected"] for x in rows)}
  (result/"CONTROL_RESULTS.json").write_text(json.dumps(out,sort_keys=True,separators=(",",":"))+"\n")
  print(json.dumps(out,sort_keys=True)); return 0 if out["pass"] else 2
