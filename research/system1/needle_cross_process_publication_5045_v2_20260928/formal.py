@@ -139,7 +139,7 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         raise SystemExit(main())
-    except BaseException as exc:
+    except Exception as exc:
         print(json.dumps({"formal_preflight_orchestration_error": type(exc).__name__, "error": str(exc)}, sort_keys=True), file=sys.stderr)
         raise
 
