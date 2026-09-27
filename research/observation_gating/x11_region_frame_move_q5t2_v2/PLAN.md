@@ -1,6 +1,6 @@
 # X11 window-relative region across window moves — successor allocation v2, Issue #4902
 
-Predecessor Issue #4439 allocation `x11-region-frame-move-4439-localdocker-v1-20260927` is frozen STOP before formal case 0. Its one runner invocation failed because a Docker bind-mount pre-created `/out`, which the frozen runner requires creating itself. It produced zero raw rows and zero X11 sessions. Preserve that record unchanged: [predecessor STOP receipt](../x11_region_frame_move_q5t2_v1/FORMAL_01_STOP.json), [predecessor branch](https://github.com/Unjuno/agent-interface/tree/research/x11-region-frame-move-4439-20260927).
+Predecessor Issue #4439 allocation `x11-region-frame-move-4439-localdocker-v1-20260927` is frozen STOP before formal case 0. Its one runner invocation failed because a Docker bind-mount pre-created `/out`, which the frozen runner requires creating itself. It produced zero raw rows and zero X11 sessions. Preserve that record unchanged: [predecessor STOP receipt](https://github.com/Unjuno/agent-interface/blob/research/x11-region-frame-move-4439-20260927/research/observation_gating/x11_region_frame_move_q5t2_v1/FORMAL_01_STOP.json), [predecessor branch](https://github.com/Unjuno/agent-interface/tree/research/x11-region-frame-move-4439-20260927).
 
 This successor corrects only the mount contract and uses a new additive allocation/path. Hypothesis, source, treatment matrix, quality gates, and limits are unchanged.
 
