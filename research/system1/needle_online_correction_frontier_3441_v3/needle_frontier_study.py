@@ -2,7 +2,7 @@ import argparse, itertools, json, time
 import torch
 from torch import nn
 
-SEEDS=(67117,67229,67341); N=256; ARRIVALS=32; WIDTH=16
+SEEDS=(66117,66229,66341); N=256; ARRIVALS=32; WIDTH=16
 
 class Net(nn.Module):
     def __init__(self):
@@ -67,4 +67,5 @@ if __name__=="__main__":
     p=argparse.ArgumentParser();p.add_argument("--output");args=p.parse_args();doc=run();raw=json.dumps(doc,separators=(",",":"))
     if args.output: open(args.output,"w",encoding="utf-8").write(raw+"\n")
     else: print(raw)
+
 
