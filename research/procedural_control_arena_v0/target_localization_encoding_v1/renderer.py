@@ -94,8 +94,9 @@ class Raster:
                 for row, bits in enumerate(rows):
                     for col in range(3):
                         if bits & (1 << (2 - col)):
-                            self.put(x + col, y + row, color)
-            x += 5
+                            self.rect(x + col * 2, y + row * 2, x + col * 2 + 1, y + row * 2 + 1,
+                                      color, fill=True)
+            x += 8
 
     def png(self) -> bytes:
         raw = b"".join(b"\0" + self.pixels[y * self.width * 3:(y + 1) * self.width * 3] for y in range(self.height))

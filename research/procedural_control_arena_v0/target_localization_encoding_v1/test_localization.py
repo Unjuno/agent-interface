@@ -57,6 +57,22 @@ class TargetLocalizationEncodingTest(unittest.TestCase):
                 break
         self.assertTrue(found_overlay_pixel, "no foreground grid pixel crossed an object")
 
+    def test_grid_axis_labels_use_legible_scaled_glyphs(self):
+        import struct
+        import zlib
+        _, grid, _ = render_pair(8866601, 0.35)
+        offset = 8
+        compressed = bytearray()
+        while offset < len(grid):
+            size = struct.unpack(">I", grid[offset:offset + 4])[0]
+            if grid[offset + 4:offset + 8] == b"IDAT":
+                compressed.extend(grid[offset + 8:offset + 8 + size])
+            offset += 12 + size
+        pixels = zlib.decompress(compressed)
+        x, y = 2, 99  # first lit pixel of the 2x-scaled "0" at source origin
+        offset = y * (640 * 3 + 1) + 1 + x * 3
+        self.assertEqual(tuple(pixels[offset:offset + 3]), (120, 128, 141))
+
     def test_expected_scene_uses_only_target_stage(self):
         session, truth = expected_scene(8866603)
         self.assertEqual(len(session.spec.stages), 1)

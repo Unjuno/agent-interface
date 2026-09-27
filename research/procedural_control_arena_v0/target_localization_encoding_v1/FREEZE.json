@@ -1,9 +1,15 @@
 {
   "schema": "arena-v0-grid-localization-freeze-v1",
+  "freeze_revision": 2,
   "allocation": "arena-v0-target-grid-4666-v1-20260927-01",
   "issue": "Unjuno/agent-interface#4666",
   "preregistration_comment": "https://github.com/Unjuno/agent-interface/issues/4666#issuecomment-5853058335",
   "freeze_base_commit": "086233b30090d56b117a648226367a529dd553ad",
+  "supersedes_freeze": {
+    "commit": "29c7ef07543abb5fbf8fb4719bbfce3fd3528dba",
+    "sha256": "5582fb2f11908305042fd205c0d358f2525f49025e7be94e8a108629142cf82e",
+    "reason": "Preformal visual QA found the initial 3x7 numeric grid labels too small at native 640x480. This revision renders each glyph at 2x scale. No formal seed, prompt, task, scorer, threshold, model, or decoding setting changed; predecessor construction artifacts remain intact."
+  },
   "model": {
     "name": "qwen2.5vl:7b",
     "digest": "5ced39dfa4bac325dc183dd1e4febaa1c46b3ea28bce48896c8e69c1e79611cc",
@@ -24,9 +30,9 @@
     "research/procedural_control_arena_v0/engine.py": "3de14c8d46cc20b51f4bd371a6af66fe7cb6b6743e72e3eaa31943fdd94e2c34",
     "research/procedural_control_arena_v0/target_localization_encoding_v1/README.md": "e3be8783e44f56cebe622f89de8f97d2cac67a69c12deaade3caffc329b042fc",
     "research/procedural_control_arena_v0/target_localization_encoding_v1/PROTOCOL.md": "4fb1c145b549a68268950abec5f4809dd283a03ebdafedb752b6d705a244299e",
-    "research/procedural_control_arena_v0/target_localization_encoding_v1/renderer.py": "fe5e774cd0b0c96d2a64af3a195272d2675275a9e53a9fdeab1aa7b24f89c7e7",
+    "research/procedural_control_arena_v0/target_localization_encoding_v1/renderer.py": "1de702ca13afd17ceb1ac17b8924fd2a6784620c966999c123b97bbc9fb85b99",
     "research/procedural_control_arena_v0/target_localization_encoding_v1/runner.py": "b737160dcef30fac74268cfa814cba0a3835750276ab2cb47e7cbaf4946e134f",
     "research/procedural_control_arena_v0/target_localization_encoding_v1/audit.py": "9f1254125e09723d528b5b2c44e3bd25e9ccb53f76b2d42a4c2880ac24190c13",
-    "research/procedural_control_arena_v0/target_localization_encoding_v1/test_localization.py": "36bcaf578962df65980b0d86e4e0b570595000fa3f0f571c98889041cfd54447"
+    "research/procedural_control_arena_v0/target_localization_encoding_v1/test_localization.py": "4cb521ff438beb9d0178c4f38c8e368203c58add34c8cff3c13fd8267c6e3992"
   }
 }
