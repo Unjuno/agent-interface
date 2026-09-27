@@ -1,0 +1,59 @@
+{
+  "allocation": "xdamage-temporal-boundary-3935-v2-20260927-01",
+  "base_main_sha": "c1e6f24d259f96b4d4dbf211e83fcdf6b9e0a4dd",
+  "image": "agent-interface-gtk-preflight:local",
+  "image_id": "sha256:e2a7634d2b9627ec037c488d6aa472c6c00d5ef0dda6e302f7dced8b9b8752d4",
+  "platform": "linux/amd64",
+  "python": "3.11.16",
+  "gcc": "12.2.0",
+  "network": "none",
+  "gpu_used": false,
+  "exact_gate_git_blob": "d2629bc94d40cc0a8e1bf9e053585549218629ed",
+  "source_sha256": {
+    "run_container.sh": "1eed244df971bc16945e9f80a9461324f60a3d488358e23db7c0fa7c4577e5f3",
+    "temporal_protocol.py": "82533297eea3d1cfd8b941b1ae6fe2c8463a463b8abe917a41fee41d75fa37a4",
+    "audit_formal.py": "59bc884ed2cda5ba72585e8d499ab819644a2130c828a422abad0a07ca3a18ab",
+    "xdamage_native.c": "082e8e53ab63504959d60a18c2ca939f7f4bae1afcc5b912ee1893a57e711e28",
+    "test_temporal_protocol.py": "34f91f68a90fedf0fd02c90790b87616588f00fab404390d92712ab1e342b591",
+    "run_formal.py": "d4848a80102c48d2e38e2ae5f25548f0d5acf7665e2a4b7664de8547f860d26a",
+    "exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944"
+  },
+  "source_git_blobs": {
+    "run_container.sh": "239d1bb9e660ed76629b6f787f7fb42e2b0f9fb5",
+    "temporal_protocol.py": "66940b5b6c4805218f53ee3a79752325ac1cba3a",
+    "audit_formal.py": "9061da38d6a402529e7c55f1287b40e17e72e4b6",
+    "xdamage_native.c": "b7c0b671b9a0c71ec73b65b070fdebaaa822b040",
+    "test_temporal_protocol.py": "bae81de88e04fc037d77fdc0cc2348c25baa96b2",
+    "run_formal.py": "4e172314cf3df6c1381c2ddd7047529dd8a9c9a7",
+    "exact_gate.py": "d2629bc94d40cc0a8e1bf9e053585549218629ed"
+  },
+  "sessions": 8,
+  "cases": [
+    "QUIET",
+    "REPAINT_A",
+    "PERSIST_B",
+    "ABA_1PX",
+    "ABA_2X2",
+    "ABA_8X8"
+  ],
+  "session_order": "rotate CASES left by (session-1) modulo 6",
+  "decision": {
+    "unknown_negative_control": true,
+    "repaint_damage_count": 1,
+    "action_authority": false,
+    "candidate_gate": "ExactGate O1 sees baseline then endpoint only",
+    "rows": 48,
+    "quiet_damage_count": 0,
+    "independent_audit_errors": 0,
+    "retry_allowed": false,
+    "formal_invocations": 1,
+    "persistent_damage_count": 1,
+    "per_case": 8,
+    "aba": {
+      "endpoint_equal": true,
+      "damage_count": 1,
+      "middle_differs": true
+    },
+    "corruption_controls_required": 8
+  }
+}
