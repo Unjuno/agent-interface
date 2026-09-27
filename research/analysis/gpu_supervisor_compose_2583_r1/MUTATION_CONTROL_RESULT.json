@@ -1,0 +1,15 @@
+{
+  "status": "PASS_MUTATION_GATE",
+  "scope": "container mutation control for scoped composed gate",
+  "image": "pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime",
+  "device": "NVIDIA GeForce RTX 3080 Laptop GPU",
+  "torch": "2.5.1+cu121",
+  "cuda_runtime": "12.1",
+  "forced_rows": 96,
+  "mutated_rows": 96,
+  "bypass_count": 0,
+  "authority_grants": 0,
+  "input_grants": 0,
+  "task_success_claims": 0,
+  "mutation": "replace every forced-row GPU hint with CONTINUE; final gate must still emit YIELD"
+}
