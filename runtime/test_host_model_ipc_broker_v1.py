@@ -1,5 +1,9 @@
 from pathlib import Path
+import json
+import os
+import tempfile
 import unittest
+from unittest.mock import patch
 
 
 class HostBrokerContractTest(unittest.TestCase):
@@ -20,9 +24,10 @@ class HostBrokerContractTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             ipc = Path(directory)
             (ipc / "probe.request.json").write_text(json.dumps(request), encoding="utf-8")
-            with patch.dict(os.environ, {"CODEX_EXE": "codex.exe"}), \\
-                 patch("runtime.host_model_ipc_broker_v1.subprocess.run") as run:
-                run.return_value.stdout = "{}\\n"
+            with patch.dict(os.environ, {"CODEX_EXE": "codex.exe"}), patch(
+                "runtime.host_model_ipc_broker_v1.subprocess.run"
+            ) as run:
+                run.return_value.stdout = "{}" + chr(10)
                 run.return_value.stderr = ""
                 run.return_value.returncode = 0
                 serve(ipc, Path("C:/checkout"), once=True)
@@ -52,8 +57,10 @@ class HostBrokerContractTest(unittest.TestCase):
             "schema": "/repo/schema.json", "instructions": '/repo/a "quoted" file.txt',
             "image": None,
         })
-        self.assertIn('model_instructions_file="C:/checkout/a \\"quoted\\" file.txt"',
-                      call.args[0])
+        expected = "model_instructions_file=" + json.dumps(
+            'C:/checkout/a "quoted" file.txt'
+        )
+        self.assertIn(expected, call.args[0])
 
     def test_preserves_image_schema_and_prompt_arguments(self):
         call = self._invoke_broker({
@@ -64,7 +71,7 @@ class HostBrokerContractTest(unittest.TestCase):
         args = call.args[0]
         self.assertEqual(args[args.index("--output-schema") + 1], "C:/checkout/schema.json")
         self.assertEqual(args[args.index("--image") + 1], "C:/checkout/input.png")
-        self.assertEqual(call.kwargs["input"], "fixed prompt\\n")
+        self.assertEqual(call.kwargs["input"], "fixed prompt" + chr(10))
 
     def test_broker_is_non_authoritative(self):
         source = Path(__file__).with_name("host_model_ipc_broker_v1.py").read_text()
