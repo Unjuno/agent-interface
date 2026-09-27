@@ -15,6 +15,27 @@ from native_exchange_v1 import encoded
 
 
 class MCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_stop_tool_is_opt_in_and_stopping_refuses_new_input(self):
+        from native_mcp_v1 import create_server
+        with tempfile.TemporaryDirectory() as tmp:
+            allocation = Mock(run_directory=Path(tmp), owner_lifetime=True)
+            allocation.request_stop.return_value = {'status': 'stopping', 'stop_requested': True}
+            allocation.status.return_value = {'status': 'stopping', 'stop_requested': True}
+            server = create_server(None, allocation=allocation)
+            self.assertIn('native_stop', {t.name for t in await server.list_tools()})
+            reply = await server.call_tool('native_stop', {})
+            self.assertFalse(reply.isError)
+            self.assertEqual(json.loads(reply.content[0].text)['allocation']['status'], 'stopping')
+            with patch('native_mcp_v1.run') as run:
+                refused = await server.call_tool('native_submit', {'stage': 1,
+                    'decision': {'source_sequence': 1, 'finish': True}})
+            self.assertTrue(refused.isError)
+            run.assert_not_called()
+            allocation.owner_lifetime = False
+            server = create_server(None, allocation=allocation)
+            self.assertNotIn('native_stop', {t.name for t in await server.list_tools()})
+
+
     async def test_stdio_pacing_refusal_keeps_connection_and_request_slot_usable(self):
         # Real transport/publication, synthetic source, no GUI or input owner.
         with tempfile.TemporaryDirectory() as tmp:

@@ -10,6 +10,34 @@ from native_exchange_v1 import current_owner_identity
 
 
 class AllocationTests(unittest.TestCase):
+    def test_stop_is_opt_in_idempotent_and_never_relaunches(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            off = NativeAllocation(Path(tmp)/'off', 'calc')
+            with self.assertRaises(ValueError):
+                off.request_stop()
+            on = NativeAllocation(Path(tmp)/'on', 'calc', owner_lifetime=True)
+            self.assertEqual(on.request_stop()['status'], 'not_started')
+            self.assertFalse(on.directory.exists())
+            process = Mock(pid=os.getpid())
+            process.poll.return_value = None
+            with patch('native_allocation_v1.subprocess.Popen', return_value=process) as spawn:
+                on.start(timeout=0)
+                writer = on._owner_writer
+                stopped = on.request_stop()
+                self.assertEqual(stopped['status'], 'stopping')
+                self.assertTrue(stopped['stop_requested'])
+                with self.assertRaises(OSError):
+                    os.fstat(writer)
+                self.assertEqual(on.request_stop()['status'], 'stopping')
+                self.assertEqual(on.start(timeout=0)['status'], 'stopping')
+                process.poll.return_value = 1
+                self.assertEqual(on.status()['status'], 'terminal')
+                self.assertEqual(on.request_stop()['status'], 'terminal')
+                spawn.assert_called_once()
+                process.terminate.assert_not_called()
+                process.kill.assert_not_called()
+
+
     def test_owner_lifetime_pipe_closes_on_setup_and_spawn_failure(self):
         real_pipe = os.pipe
         for phase in ('launch_record', 'spawn'):

@@ -20,7 +20,7 @@ class NativeExchangeTests(unittest.TestCase):
             lifetime.check()
             os.close(writer)
             writer = None
-            with self.assertRaisesRegex(RuntimeError, 'owning server ended'):
+            with self.assertRaisesRegex(RuntimeError, 'owner lifetime ended'):
                 lifetime.check()
         finally:
             if writer is not None:

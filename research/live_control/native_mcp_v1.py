@@ -227,6 +227,20 @@ def create_server(run_directory, *, allocation=None):
             """Read the launched process state; never starts, kills or restarts it."""
             return invoke(lambda: {'allocation':allocation.status(),'image':None,'authority':'none'})
 
+    if allocation is not None and allocation.owner_lifetime is True:
+        @server.tool(structured_output=False)
+        def native_stop() -> CallToolResult:
+            """Request cooperative stop of this managed allocation, without input.
+
+            Only available in owner-lifetime mode. Closes the owned lifetime pipe;
+            in-progress operations can continue until the next boundary. Repeated
+            calls do not restart or send signals. Poll native_status for terminal
+            process state; stopping is not cleanup completion or task success.
+            Exact-request native_resume remains available for prior receipts.
+            """
+            return invoke(lambda: {'allocation': allocation.request_stop(),
+                                  'image': None, 'authority': 'none'})
+
     @server.tool(structured_output=False)
     def native_observe(stage: StrictInt) -> CallToolResult:
         """Read the retained source for an explicit stage; no recapture or input.
