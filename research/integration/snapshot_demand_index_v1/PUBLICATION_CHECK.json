@@ -1,0 +1,35 @@
+{
+  "audit_byte_identical": true,
+  "audit_returncode": 0,
+  "audit_sha256": "e4d58d83ea997e36fdca96213065b1e2841308520e08b6fc4dd93c6bae19308c",
+  "files_byte_identical": 103,
+  "files_restored": 103,
+  "formal_reexecutions": 0,
+  "packaging_controls": [
+    {
+      "case": "changed_part",
+      "rejected": true
+    },
+    {
+      "case": "wrong_order",
+      "rejected": true
+    },
+    {
+      "case": "missing_part",
+      "rejected": true
+    },
+    {
+      "case": "wrong_count",
+      "rejected": true
+    },
+    {
+      "case": "existing_destination",
+      "rejected": true
+    }
+  ],
+  "remote_parts_git_ids_verified": 5,
+  "scope": "same-author local restoration of content-addressed parts; remote subtree readback and CI are separate",
+  "status": "PASS_LOCAL_PUBLICATION_RECONSTRUCTION",
+  "unit_tests": 5,
+  "unit_tests_returncode": 0
+}

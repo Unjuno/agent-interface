@@ -1,0 +1,37 @@
+{
+  "kind": "construction_environment",
+  "formal_started": false,
+  "hardware": {
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "vram_bytes": 17179869184,
+    "driver": "581.57"
+  },
+  "container": {
+    "builder": "Docker Desktop 29.8.0, desktop-linux",
+    "base": "pytorch/pytorch@sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067",
+    "local_image_tag": "codex-typed-readout-4623:construction",
+    "local_image_id": "sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261",
+    "base_torch": "2.5.1+cu121",
+    "cuda_runtime": "12.1",
+    "transformers": "5.16.1",
+    "safetensors": "0.8.0",
+    "complete_python_package_inventory": "pip-freeze.txt"
+  },
+  "model": {
+    "repo": "Qwen/Qwen2.5-0.5B-Instruct",
+    "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "license": "Apache-2.0 (upstream model card)",
+    "asset_manifest": "MODEL_MANIFEST.json",
+    "formal_container_mount": "read-only"
+  },
+  "construction_container_limits": {
+    "network": "none",
+    "root_filesystem": "read-only",
+    "cpu_cores": 2,
+    "memory_bytes": 8589934592,
+    "pids": 64,
+    "tmpfs_bytes": 268435456,
+    "gpu": "visible to construction/audit containers only"
+  },
+  "formal_timing_rows": 0
+}

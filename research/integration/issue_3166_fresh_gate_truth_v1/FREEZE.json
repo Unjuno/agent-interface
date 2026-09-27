@@ -1,0 +1,69 @@
+{
+  "allocation": "issue3166-fresh-gate-truth-rung1-20260926-01",
+  "issue": "Unjuno/agent-interface#3166",
+  "status_before_formal": "FROZEN_NOT_YET_RUN",
+  "formal_runs_allowed": 1,
+  "reruns_allowed": 0,
+  "source_commit": "27cb529f694609581c4a5b39e85ac782772e9aab",
+  "branch": "research/issue-3166-gate-truth-first-rung-20260926",
+  "paths": {
+    "study": "research/integration/issue_3166_fresh_gate_truth_v1",
+    "fixture": "research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py"
+  },
+  "container": {
+    "runtime": "OrbStack",
+    "image_id": "sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+    "platform": "linux/arm64",
+    "network": "none",
+    "rootfs": "read-only",
+    "capabilities": "drop-all",
+    "no_new_privileges": true,
+    "pids_limit": 256,
+    "memory_limit": "2g",
+    "cpu_limit": 2
+  },
+  "matrix": {
+    "policies": [
+      "TWO_TIER_FRESH_GATE",
+      "DEPENDENCY_ONLY",
+      "GATE_ONLY",
+      "CACHED_PREPARE_GATE"
+    ],
+    "gate_contexts": [
+      "live_true",
+      "fresh_false",
+      "fresh_unknown",
+      "stale_true",
+      "intent_mismatch",
+      "epoch_mismatch"
+    ],
+    "policy_rows": 24,
+    "no_effect_control_rows": 1,
+    "total_rows": 25,
+    "preregistration_sha256": "06264f38ceb63ca40fe0b195c56846d6996cb807ee41de4fa7a488580e617f37",
+    "formal_runner_sha256": "1f4689fd1631419b8401c80deefc59c1f9a25a68ed9ecf092fa60d527474964d",
+    "raw_auditor_sha256": "b4a476dcadccf6207929125877afe1701150122480ba250293bf8c9d8e37b443",
+    "construction_smoke_sha256": "92c6c5fbd14a9bb876c3210ae892b7b3c424416d39310ecb29aaa3d1e7398cb1"
+  },
+  "source_sha256": {
+    "runtime/cli_v1/golden_v3.py": "4325c6e5b662adaa36138dc2f895d31938541a8e030e59b096c60521bb424d5d",
+    "runtime/cli_v1/api.py": "a04d1fa2819d9f7199210cc4ac602de020fdf849fa9e3edf0d44568c9a51ddcd",
+    "runtime/selector_v1/__init__.py": "66bc2fcb2797b108cd739b1c000352932dbdd7a16c186c1104cd8d26d0645881",
+    "runtime/selector_v1/selector.py": "7f3db522b2250fcd3d8960c87b1d87ad078bf1b2b565900b4210836f6b7ca764",
+    "runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+    "runtime/core_v1/contract.py": "f053f73ccdeb67175068bf4d663bd484d886beb83305ed679510292809afd536",
+    "runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+    "runtime/backends/x11_v1/__init__.py": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b",
+    "runtime/backends/x11_v1/backend.py": "3429a422e61ecb8b1f1f278540d0696842d8197d7967803e01bc8d9453bcb4a8",
+    "runtime/backends/x11_v1/session.py": "70ffb0167a70efcf629221c8236dd19ba9fbc2ff3ffc18454f13a0f656b86a93",
+    "research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py": "a89740107f5b544cde8a0ab1ae9f1af1764498889f85c982d106301577685f4a"
+  },
+  "scope_exclusions": [
+    "stale prepared dependency",
+    "malformed evidence",
+    "duplicate commit",
+    "full Issue #3166 acceptance matrix",
+    "integrated product or production safety"
+  ],
+  "decision_rule": "See PREREG.md; no post-freeze changes, reruns, or relabeling."
+}

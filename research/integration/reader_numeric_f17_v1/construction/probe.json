@@ -1,0 +1,36 @@
+[
+  {
+    "policy": "upstream",
+    "argv": [
+      "/opt/pyvenv/bin/python",
+      "-S",
+      "-B",
+      "-m",
+      "upstream",
+      "--stream",
+      "/mnt/data/reader_numeric_f17/construction/probe.jsonl",
+      "--stream-id",
+      "construction-f17"
+    ],
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/mnt/data/reader_numeric_f17/upstream/__main__.py\", line 44, in <module>\n    raise SystemExit(main())\n                     ~~~~^^\n  File \"/mnt/data/reader_numeric_f17/upstream/__main__.py\", line 36, in main\n    encoded = json.dumps(result, allow_nan=False) + '\\n'\n              ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/json/__init__.py\", line 238, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/usr/lib/python3.13/json/encoder.py\", line 200, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/usr/lib/python3.13/json/encoder.py\", line 261, in iterencode\n    return _iterencode(o, 0)\nValueError: Out of range float values are not JSON compliant: inf\n"
+  },
+  {
+    "policy": "candidate",
+    "argv": [
+      "/opt/pyvenv/bin/python",
+      "-S",
+      "-B",
+      "-m",
+      "candidate",
+      "--stream",
+      "/mnt/data/reader_numeric_f17/construction/probe.jsonl",
+      "--stream-id",
+      "construction-f17"
+    ],
+    "returncode": 2,
+    "stdout": "{\"schema\": \"agent-interface/experimental-inbox-read-v1\", \"records\": [{\"event\": \"prefix\", \"delivery_id\": \"delivery:1\", \"value\": 7}], \"tail_state\": \"blocked\", \"problem\": \"INVALID_JSON_RECORD\", \"next_cursor\": {\"schema\": \"agent-interface/experimental-read-cursor-v1\", \"stream_id\": \"construction-f17\", \"offset\": 56, \"prefix_sha256\": \"ec1741679eac138938d2515dad539da568d4c2f24cdcf54f9ae1c733e03c2669\", \"next_sequence\": 2}, \"authority\": \"none\", \"acknowledged\": false, \"input_dispatched\": false}\n",
+    "stderr": ""
+  }
+]

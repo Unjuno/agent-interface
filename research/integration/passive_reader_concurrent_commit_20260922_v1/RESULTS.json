@@ -1,0 +1,44 @@
+{
+  "audit_errors": [],
+  "audit_sha256": "3bd1bddc81c50aee7421721763bcefd5934cb44cd863f70b0649214b113ba270",
+  "construction_cases_excluded": 12,
+  "decision": "PASS_CONCURRENT_READER_COMMIT_BOUNDARY_SCOPED",
+  "duplicate_unit": "excess locally retained payload entries, not observed delivery or consumption",
+  "formal_cases": 36,
+  "formal_invocations": 1,
+  "formal_source_changes": 0,
+  "original_audit_invocations": 1,
+  "policies": {
+    "BLIND_REPLACE": {
+      "cases": 12,
+      "duplicates": 24,
+      "omitted": 0,
+      "regressions": 3,
+      "stale_rejections": 0
+    },
+    "OFFSET_MAX": {
+      "cases": 12,
+      "duplicates": 18,
+      "omitted": 0,
+      "regressions": 0,
+      "stale_rejections": 0
+    },
+    "REVISION_CAS": {
+      "cases": 12,
+      "duplicates": 0,
+      "omitted": 0,
+      "regressions": 0,
+      "stale_rejections": 9
+    }
+  },
+  "postformal_transfer_verification": {
+    "audit_stdout_byte_identical": true,
+    "files_byte_identical": 346,
+    "formal_reruns": 0
+  },
+  "run_sha256": "077c2e05a32ca909cfdbb810ec79bd6e8db54a6b691a3e641c214ff8d9fac18e",
+  "schema": "reader3941-result-v1",
+  "scope": "fixed trusted six-record stream; local host retention only; no action, ACK, model, GUI, epoch or crash claim",
+  "semantic_mutations_rejected": 8,
+  "worker_processes": 108
+}

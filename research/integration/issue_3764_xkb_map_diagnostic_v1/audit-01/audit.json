@@ -1,0 +1,40 @@
+{
+  "actual_artifact_count": 44,
+  "allocation": "issue3733-german-xkb-map-diagnostic-formal-01",
+  "disposition": "PASS_AUDIT_CONFIRMED_DIAGNOSTIC",
+  "errors": [],
+  "raw_disposition": "PASS_DIAGNOSTIC",
+  "raw_sha256": "45a7cb25a9854b5ccee6ffbd712e1ade381fb25f5f1041657eec0fac3c7d7604",
+  "rows": [
+    {
+      "case_id": "de-01",
+      "fresh_connections_agree": true,
+      "layout": "de",
+      "xkbcomp_dump_changed": true,
+      "xlib_core_map_changed": true
+    },
+    {
+      "case_id": "de-02",
+      "fresh_connections_agree": true,
+      "layout": "de",
+      "xkbcomp_dump_changed": true,
+      "xlib_core_map_changed": true
+    },
+    {
+      "case_id": "de-03",
+      "fresh_connections_agree": true,
+      "layout": "de",
+      "xkbcomp_dump_changed": true,
+      "xlib_core_map_changed": true
+    },
+    {
+      "case_id": "us-control",
+      "fresh_connections_agree": true,
+      "layout": "us",
+      "xkbcomp_dump_changed": false,
+      "xlib_core_map_changed": false
+    }
+  ],
+  "runner_sha256": "e726578c43725060bcafb4fd65cd39d3735b727a4fa3c606f70d6f23b02284e2",
+  "schema": "agent-interface/issue3764-xkb-map-audit-v1"
+}

@@ -1,0 +1,48 @@
+{
+  "broker_receipt": null,
+  "broker_receipt_bytes_hex": null,
+  "broker_stderr_text": null,
+  "case": "malformed",
+  "child": null,
+  "child_stdout_bytes_hex": null,
+  "command": [
+    "/usr/local/bin/python",
+    "/source/runtime/host_model_ipc_broker_v1.py",
+    "--ipc",
+    "/tmp/ipc-malformed-4au48fg3",
+    "--repo",
+    "/source",
+    "--once"
+  ],
+  "execution_config": {
+    "broker_timeout_s": 2.0,
+    "executable": "/tmp/broker-contract-tzbmhf9y/fake-codex",
+    "executable_sha256": "f730498c1158b55c0af45036e350090eecad7042d79c4e35be625d87e20e78eb",
+    "fake_exit": 0,
+    "fake_sleep_s": 0.0,
+    "idle_observation_s": null
+  },
+  "fake_source_sha256": "f730498c1158b55c0af45036e350090eecad7042d79c4e35be625d87e20e78eb",
+  "ipc_files": [
+    "01.request.json"
+  ],
+  "observed": {
+    "receipt_count": 0,
+    "response_count": 0
+  },
+  "process": {
+    "duration_ns": 225633784,
+    "returncode": 1,
+    "stderr": "Traceback (most recent call last):\n  File \"/source/runtime/host_model_ipc_broker_v1.py\", line 88, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/source/runtime/host_model_ipc_broker_v1.py\", line 84, in main\n    return serve(args.ipc.resolve(), args.repo.resolve(), args.once)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/source/runtime/host_model_ipc_broker_v1.py\", line 33, in serve\n    request = json.loads(path.read_text(encoding=\"utf-8\"))\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/json/__init__.py\", line 346, in loads\n    return _default_decoder.decode(s)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/json/decoder.py\", line 338, in decode\n    obj, end = self.raw_decode(s, idx=_w(s, 0).end())\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/json/decoder.py\", line 354, in raw_decode\n    obj, end = self.scan_once(s, idx)\n               ^^^^^^^^^^^^^^^^^^^^^^\njson.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\n",
+    "stdout": ""
+  },
+  "requests": [
+    {
+      "bytes_hex": "7b6e6f742d6a736f6e0a",
+      "filename": "01.request.json",
+      "sha256": "5715ea11351f96c1faee52d83ceb8edf41612427a452f7acc780b6bc05072500"
+    }
+  ],
+  "response_bytes_hex": null,
+  "response_sha256": null
+}

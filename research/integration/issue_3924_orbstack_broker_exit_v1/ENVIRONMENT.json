@@ -1,0 +1,22 @@
+{
+  "host_runtime": "OrbStack 29.4.0 Docker context orbstack",
+  "container_engine": "29.4.0",
+  "container_platform": "linux/arm64",
+  "image": "sha256:436172d89b145c6a9f9a57e655422c9558b3b0235347dd77607e9d61bcfa6393",
+  "container_command_constraints": {
+    "network": "none",
+    "root_filesystem": "read-only",
+    "tmpfs": "/tmp rw,noexec,nosuid,size=32m",
+    "pids_limit": 32,
+    "cpus": 1,
+    "memory": "256m",
+    "capabilities": "all dropped",
+    "no_new_privileges": true,
+    "evidence_mount": "writable",
+    "pinned_source_mount": "read-only"
+  },
+  "formal_cases": 7,
+  "fake_executable_invocations": 5,
+  "real_model_provider_gui_or_task_effect_calls": 0,
+  "credentials_mounted": false
+}

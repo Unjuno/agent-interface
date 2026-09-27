@@ -1,0 +1,1358 @@
+{
+  "allocation": "temporal-stream-resume-20260926-01",
+  "batch": 5,
+  "complete": true,
+  "end_ns": 1436786411059,
+  "outer_process_receipt": "this JSON is written before successful batch exit",
+  "range": [
+    45,
+    53
+  ],
+  "rows": [
+    {
+      "case_id": 45,
+      "end_ns": 1433887005081,
+      "parsed": {
+        "authority": "none",
+        "candidate": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/resume_worker.py"
+          ],
+          "end_ns": 1433767057595,
+          "parsed": {
+            "authority": "none",
+            "input_dispatched": false,
+            "status": "OK",
+            "suffix": [
+              {
+                "co_timestamp": "SATISFIED",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              },
+              {
+                "co_timestamp": "SATISFIED",
+                "ordered": "SATISFIED",
+                "strict_time": "PENDING"
+              },
+              {
+                "co_timestamp": "SATISFIED",
+                "ordered": "SATISFIED",
+                "strict_time": "EXPIRED"
+              }
+            ],
+            "task_success": null
+          },
+          "request_sha256": "6185a7bd05a1bbbff8f088a79331a3101fc38ea4c200885c191c24223607a8bc",
+          "returncode": 0,
+          "start_ns": 1433663389669,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"OK\",\"suffix\":[{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"EXPIRED\"}],\"task_success\":null}\n"
+        },
+        "case_id": 45,
+        "checkpoint": {
+          "epoch": "a942033888389254388a9736a4efa78d",
+          "historical_result": {
+            "co_timestamp": "PENDING",
+            "ordered": "PENDING",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 1,
+          "last_tick": 348660,
+          "prefix_sha256": "feda8cafb0471610deda793e35c63521562da325aa9ef7dfccea338d71aef3a9"
+        },
+        "comparator": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/resume_worker.py"
+          ],
+          "end_ns": 1433882644065,
+          "parsed": {
+            "authority": "none",
+            "input_dispatched": false,
+            "status": "OK",
+            "suffix": [
+              {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              },
+              {
+                "co_timestamp": "SATISFIED",
+                "ordered": "SATISFIED",
+                "strict_time": "PENDING"
+              },
+              {
+                "co_timestamp": "SATISFIED",
+                "ordered": "SATISFIED",
+                "strict_time": "EXPIRED"
+              }
+            ],
+            "task_success": null
+          },
+          "request_sha256": "74901057cf7723526c1add0bb8ffd3de5cdf006cab00af9dbb129d9475b50d46",
+          "returncode": 0,
+          "start_ns": 1433767151980,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"OK\",\"suffix\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"EXPIRED\"}],\"task_success\":null}\n"
+        },
+        "cut": 1,
+        "effective_checkpoint": {
+          "epoch": "a942033888389254388a9736a4efa78d",
+          "historical_result": {
+            "co_timestamp": "PENDING",
+            "ordered": "PENDING",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 1,
+          "last_tick": 348660,
+          "prefix_sha256": "feda8cafb0471610deda793e35c63521562da325aa9ef7dfccea338d71aef3a9"
+        },
+        "effective_prefix": [
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "B",
+            "ordinal": 1,
+            "server_ms": 348660
+          }
+        ],
+        "epoch": "a942033888389254388a9736a4efa78d",
+        "fixture_index": 23,
+        "input_dispatched": false,
+        "mutation": null,
+        "prefix": [
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "B",
+            "ordinal": 1,
+            "server_ms": 348660
+          }
+        ],
+        "prepare": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/prepare_worker.py"
+          ],
+          "end_ns": 1433657893158,
+          "parsed": {
+            "authority": "none",
+            "checkpoint": {
+              "epoch": "a942033888389254388a9736a4efa78d",
+              "historical_result": {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              },
+              "last_ordinal": 1,
+              "last_tick": 348660,
+              "prefix_sha256": "feda8cafb0471610deda793e35c63521562da325aa9ef7dfccea338d71aef3a9"
+            },
+            "input_dispatched": false,
+            "prefix_states": [
+              {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              }
+            ],
+            "status": "OK",
+            "task_success": null
+          },
+          "request_sha256": "4d03559fdae688f4ea93ef31f19aad9d62b2390c0b1708d6a375d9e7888ba131",
+          "returncode": 0,
+          "start_ns": 1433537822164,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":348660,\"prefix_sha256\":\"feda8cafb0471610deda793e35c63521562da325aa9ef7dfccea338d71aef3a9\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null}\n"
+        },
+        "suffix": [
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "A",
+            "ordinal": 2,
+            "server_ms": 348660
+          },
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "B",
+            "ordinal": 3,
+            "server_ms": 348660
+          },
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "H",
+            "ordinal": 4,
+            "server_ms": 348781
+          }
+        ],
+        "task_success": null
+      },
+      "request_sha256": "b4a2913e8be70de01348988d15125602add89675fde93860c2533517232081bc",
+      "returncode": 0,
+      "start_ns": 1433401310021,
+      "stderr": "",
+      "stdout": "{\"authority\":\"none\",\"candidate\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/resume_worker.py\"],\"end_ns\":1433767057595,\"parsed\":{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"OK\",\"suffix\":[{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"EXPIRED\"}],\"task_success\":null},\"request_sha256\":\"6185a7bd05a1bbbff8f088a79331a3101fc38ea4c200885c191c24223607a8bc\",\"returncode\":0,\"start_ns\":1433663389669,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"input_dispatched\\\":false,\\\"status\\\":\\\"OK\\\",\\\"suffix\\\":[{\\\"co_timestamp\\\":\\\"SATISFIED\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"},{\\\"co_timestamp\\\":\\\"SATISFIED\\\",\\\"ordered\\\":\\\"SATISFIED\\\",\\\"strict_time\\\":\\\"PENDING\\\"},{\\\"co_timestamp\\\":\\\"SATISFIED\\\",\\\"ordered\\\":\\\"SATISFIED\\\",\\\"strict_time\\\":\\\"EXPIRED\\\"}],\\\"task_success\\\":null}\\n\"},\"case_id\":45,\"checkpoint\":{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":348660,\"prefix_sha256\":\"feda8cafb0471610deda793e35c63521562da325aa9ef7dfccea338d71aef3a9\"},\"comparator\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/resume_worker.py\"],\"end_ns\":1433882644065,\"parsed\":{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"OK\",\"suffix\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"EXPIRED\"}],\"task_success\":null},\"request_sha256\":\"74901057cf7723526c1add0bb8ffd3de5cdf006cab00af9dbb129d9475b50d46\",\"returncode\":0,\"start_ns\":1433767151980,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"input_dispatched\\\":false,\\\"status\\\":\\\"OK\\\",\\\"suffix\\\":[{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"},{\\\"co_timestamp\\\":\\\"SATISFIED\\\",\\\"ordered\\\":\\\"SATISFIED\\\",\\\"strict_time\\\":\\\"PENDING\\\"},{\\\"co_timestamp\\\":\\\"SATISFIED\\\",\\\"ordered\\\":\\\"SATISFIED\\\",\\\"strict_time\\\":\\\"EXPIRED\\\"}],\\\"task_success\\\":null}\\n\"},\"cut\":1,\"effective_checkpoint\":{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":348660,\"prefix_sha256\":\"feda8cafb0471610deda793e35c63521562da325aa9ef7dfccea338d71aef3a9\"},\"effective_prefix\":[{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"B\",\"ordinal\":1,\"server_ms\":348660}],\"epoch\":\"a942033888389254388a9736a4efa78d\",\"fixture_index\":23,\"input_dispatched\":false,\"mutation\":null,\"prefix\":[{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"B\",\"ordinal\":1,\"server_ms\":348660}],\"prepare\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/prepare_worker.py\"],\"end_ns\":1433657893158,\"parsed\":{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":348660,\"prefix_sha256\":\"feda8cafb0471610deda793e35c63521562da325aa9ef7dfccea338d71aef3a9\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null},\"request_sha256\":\"4d03559fdae688f4ea93ef31f19aad9d62b2390c0b1708d6a375d9e7888ba131\",\"returncode\":0,\"start_ns\":1433537822164,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"checkpoint\\\":{\\\"epoch\\\":\\\"a942033888389254388a9736a4efa78d\\\",\\\"historical_result\\\":{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"},\\\"last_ordinal\\\":1,\\\"last_tick\\\":348660,\\\"prefix_sha256\\\":\\\"feda8cafb0471610deda793e35c63521562da325aa9ef7dfccea338d71aef3a9\\\"},\\\"input_dispatched\\\":false,\\\"prefix_states\\\":[{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"}],\\\"status\\\":\\\"OK\\\",\\\"task_success\\\":null}\\n\"},\"suffix\":[{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"A\",\"ordinal\":2,\"server_ms\":348660},{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"B\",\"ordinal\":3,\"server_ms\":348660},{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"H\",\"ordinal\":4,\"server_ms\":348781}],\"task_success\":null}\n",
+      "timeout": false
+    },
+    {
+      "case_id": 46,
+      "end_ns": 1434315411448,
+      "parsed": {
+        "authority": "none",
+        "candidate": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/resume_worker.py"
+          ],
+          "end_ns": 1434216924383,
+          "parsed": {
+            "authority": "none",
+            "input_dispatched": false,
+            "status": "OK",
+            "suffix": [
+              {
+                "co_timestamp": "SATISFIED",
+                "ordered": "SATISFIED",
+                "strict_time": "PENDING"
+              },
+              {
+                "co_timestamp": "SATISFIED",
+                "ordered": "SATISFIED",
+                "strict_time": "EXPIRED"
+              }
+            ],
+            "task_success": null
+          },
+          "request_sha256": "0e652c83db3f493fdb967f0ebae130a06c7be116b402a8ae7bd885117be2fffc",
+          "returncode": 0,
+          "start_ns": 1434121481024,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"OK\",\"suffix\":[{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"EXPIRED\"}],\"task_success\":null}\n"
+        },
+        "case_id": 46,
+        "checkpoint": {
+          "epoch": "a942033888389254388a9736a4efa78d",
+          "historical_result": {
+            "co_timestamp": "SATISFIED",
+            "ordered": "PENDING",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 2,
+          "last_tick": 348660,
+          "prefix_sha256": "44d2dcee1a2e6077c072833e3b78ded8bc98d0f74af507aa1d11dac061cc9aaf"
+        },
+        "comparator": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/resume_worker.py"
+          ],
+          "end_ns": 1434310767336,
+          "parsed": {
+            "authority": "none",
+            "input_dispatched": false,
+            "status": "OK",
+            "suffix": [
+              {
+                "co_timestamp": "SATISFIED",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              },
+              {
+                "co_timestamp": "SATISFIED",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              }
+            ],
+            "task_success": null
+          },
+          "request_sha256": "f726667db6bbaf4b14e9e47a6d10a8429d424f7933d9ae7cd9cb614db9b2c565",
+          "returncode": 0,
+          "start_ns": 1434217008401,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"OK\",\"suffix\":[{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"task_success\":null}\n"
+        },
+        "cut": 2,
+        "effective_checkpoint": {
+          "epoch": "a942033888389254388a9736a4efa78d",
+          "historical_result": {
+            "co_timestamp": "SATISFIED",
+            "ordered": "PENDING",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 2,
+          "last_tick": 348660,
+          "prefix_sha256": "44d2dcee1a2e6077c072833e3b78ded8bc98d0f74af507aa1d11dac061cc9aaf"
+        },
+        "effective_prefix": [
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "B",
+            "ordinal": 1,
+            "server_ms": 348660
+          },
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "A",
+            "ordinal": 2,
+            "server_ms": 348660
+          }
+        ],
+        "epoch": "a942033888389254388a9736a4efa78d",
+        "fixture_index": 23,
+        "input_dispatched": false,
+        "mutation": null,
+        "prefix": [
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "B",
+            "ordinal": 1,
+            "server_ms": 348660
+          },
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "A",
+            "ordinal": 2,
+            "server_ms": 348660
+          }
+        ],
+        "prepare": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/prepare_worker.py"
+          ],
+          "end_ns": 1434116474419,
+          "parsed": {
+            "authority": "none",
+            "checkpoint": {
+              "epoch": "a942033888389254388a9736a4efa78d",
+              "historical_result": {
+                "co_timestamp": "SATISFIED",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              },
+              "last_ordinal": 2,
+              "last_tick": 348660,
+              "prefix_sha256": "44d2dcee1a2e6077c072833e3b78ded8bc98d0f74af507aa1d11dac061cc9aaf"
+            },
+            "input_dispatched": false,
+            "prefix_states": [
+              {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              },
+              {
+                "co_timestamp": "SATISFIED",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              }
+            ],
+            "status": "OK",
+            "task_success": null
+          },
+          "request_sha256": "cd33a392dcc2e98e458d9f9ab1a38a17640ff217e5a5b964eab08038bc19c2ec",
+          "returncode": 0,
+          "start_ns": 1434019950954,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"historical_result\":{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":2,\"last_tick\":348660,\"prefix_sha256\":\"44d2dcee1a2e6077c072833e3b78ded8bc98d0f74af507aa1d11dac061cc9aaf\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null}\n"
+        },
+        "suffix": [
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "B",
+            "ordinal": 3,
+            "server_ms": 348660
+          },
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "H",
+            "ordinal": 4,
+            "server_ms": 348781
+          }
+        ],
+        "task_success": null
+      },
+      "request_sha256": "52d159fe3ebd1e47fcad40c3d7013b3c9f8b3b3d1e08255fcbcb0bc5ad9ebfc8",
+      "returncode": 0,
+      "start_ns": 1433887107279,
+      "stderr": "",
+      "stdout": "{\"authority\":\"none\",\"candidate\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/resume_worker.py\"],\"end_ns\":1434216924383,\"parsed\":{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"OK\",\"suffix\":[{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"EXPIRED\"}],\"task_success\":null},\"request_sha256\":\"0e652c83db3f493fdb967f0ebae130a06c7be116b402a8ae7bd885117be2fffc\",\"returncode\":0,\"start_ns\":1434121481024,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"input_dispatched\\\":false,\\\"status\\\":\\\"OK\\\",\\\"suffix\\\":[{\\\"co_timestamp\\\":\\\"SATISFIED\\\",\\\"ordered\\\":\\\"SATISFIED\\\",\\\"strict_time\\\":\\\"PENDING\\\"},{\\\"co_timestamp\\\":\\\"SATISFIED\\\",\\\"ordered\\\":\\\"SATISFIED\\\",\\\"strict_time\\\":\\\"EXPIRED\\\"}],\\\"task_success\\\":null}\\n\"},\"case_id\":46,\"checkpoint\":{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"historical_result\":{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":2,\"last_tick\":348660,\"prefix_sha256\":\"44d2dcee1a2e6077c072833e3b78ded8bc98d0f74af507aa1d11dac061cc9aaf\"},\"comparator\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/resume_worker.py\"],\"end_ns\":1434310767336,\"parsed\":{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"OK\",\"suffix\":[{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"task_success\":null},\"request_sha256\":\"f726667db6bbaf4b14e9e47a6d10a8429d424f7933d9ae7cd9cb614db9b2c565\",\"returncode\":0,\"start_ns\":1434217008401,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"input_dispatched\\\":false,\\\"status\\\":\\\"OK\\\",\\\"suffix\\\":[{\\\"co_timestamp\\\":\\\"SATISFIED\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"},{\\\"co_timestamp\\\":\\\"SATISFIED\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"}],\\\"task_success\\\":null}\\n\"},\"cut\":2,\"effective_checkpoint\":{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"historical_result\":{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":2,\"last_tick\":348660,\"prefix_sha256\":\"44d2dcee1a2e6077c072833e3b78ded8bc98d0f74af507aa1d11dac061cc9aaf\"},\"effective_prefix\":[{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"B\",\"ordinal\":1,\"server_ms\":348660},{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"A\",\"ordinal\":2,\"server_ms\":348660}],\"epoch\":\"a942033888389254388a9736a4efa78d\",\"fixture_index\":23,\"input_dispatched\":false,\"mutation\":null,\"prefix\":[{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"B\",\"ordinal\":1,\"server_ms\":348660},{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"A\",\"ordinal\":2,\"server_ms\":348660}],\"prepare\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/prepare_worker.py\"],\"end_ns\":1434116474419,\"parsed\":{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"historical_result\":{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":2,\"last_tick\":348660,\"prefix_sha256\":\"44d2dcee1a2e6077c072833e3b78ded8bc98d0f74af507aa1d11dac061cc9aaf\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null},\"request_sha256\":\"cd33a392dcc2e98e458d9f9ab1a38a17640ff217e5a5b964eab08038bc19c2ec\",\"returncode\":0,\"start_ns\":1434019950954,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"checkpoint\\\":{\\\"epoch\\\":\\\"a942033888389254388a9736a4efa78d\\\",\\\"historical_result\\\":{\\\"co_timestamp\\\":\\\"SATISFIED\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"},\\\"last_ordinal\\\":2,\\\"last_tick\\\":348660,\\\"prefix_sha256\\\":\\\"44d2dcee1a2e6077c072833e3b78ded8bc98d0f74af507aa1d11dac061cc9aaf\\\"},\\\"input_dispatched\\\":false,\\\"prefix_states\\\":[{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"},{\\\"co_timestamp\\\":\\\"SATISFIED\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"}],\\\"status\\\":\\\"OK\\\",\\\"task_success\\\":null}\\n\"},\"suffix\":[{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"B\",\"ordinal\":3,\"server_ms\":348660},{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"H\",\"ordinal\":4,\"server_ms\":348781}],\"task_success\":null}\n",
+      "timeout": false
+    },
+    {
+      "case_id": 47,
+      "end_ns": 1434726375094,
+      "parsed": {
+        "authority": "none",
+        "candidate": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/resume_worker.py"
+          ],
+          "end_ns": 1434628198760,
+          "parsed": {
+            "authority": "none",
+            "input_dispatched": false,
+            "status": "OK",
+            "suffix": [
+              {
+                "co_timestamp": "SATISFIED",
+                "ordered": "SATISFIED",
+                "strict_time": "EXPIRED"
+              }
+            ],
+            "task_success": null
+          },
+          "request_sha256": "3ee2cbeab92b10b38698a86bfa56159a99418204f89d1f0c16667bcbece32b38",
+          "returncode": 0,
+          "start_ns": 1434529568251,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"OK\",\"suffix\":[{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"EXPIRED\"}],\"task_success\":null}\n"
+        },
+        "case_id": 47,
+        "checkpoint": {
+          "epoch": "a942033888389254388a9736a4efa78d",
+          "historical_result": {
+            "co_timestamp": "SATISFIED",
+            "ordered": "SATISFIED",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 3,
+          "last_tick": 348660,
+          "prefix_sha256": "48e475c766c87862a23e26e3fd5d516d94e769a7448c2abb82dc12ab47f2696b"
+        },
+        "comparator": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/resume_worker.py"
+          ],
+          "end_ns": 1434721511782,
+          "parsed": {
+            "authority": "none",
+            "input_dispatched": false,
+            "status": "OK",
+            "suffix": [
+              {
+                "co_timestamp": "SATISFIED",
+                "ordered": "SATISFIED",
+                "strict_time": "PENDING"
+              }
+            ],
+            "task_success": null
+          },
+          "request_sha256": "f25e7b67f23e07a17868b478a88d2b192e4596de7b95d4ab4bc5aed66f9e3576",
+          "returncode": 0,
+          "start_ns": 1434628285457,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"OK\",\"suffix\":[{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"PENDING\"}],\"task_success\":null}\n"
+        },
+        "cut": 3,
+        "effective_checkpoint": {
+          "epoch": "a942033888389254388a9736a4efa78d",
+          "historical_result": {
+            "co_timestamp": "SATISFIED",
+            "ordered": "SATISFIED",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 3,
+          "last_tick": 348660,
+          "prefix_sha256": "48e475c766c87862a23e26e3fd5d516d94e769a7448c2abb82dc12ab47f2696b"
+        },
+        "effective_prefix": [
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "B",
+            "ordinal": 1,
+            "server_ms": 348660
+          },
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "A",
+            "ordinal": 2,
+            "server_ms": 348660
+          },
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "B",
+            "ordinal": 3,
+            "server_ms": 348660
+          }
+        ],
+        "epoch": "a942033888389254388a9736a4efa78d",
+        "fixture_index": 23,
+        "input_dispatched": false,
+        "mutation": null,
+        "prefix": [
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "B",
+            "ordinal": 1,
+            "server_ms": 348660
+          },
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "A",
+            "ordinal": 2,
+            "server_ms": 348660
+          },
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "B",
+            "ordinal": 3,
+            "server_ms": 348660
+          }
+        ],
+        "prepare": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/prepare_worker.py"
+          ],
+          "end_ns": 1434524487963,
+          "parsed": {
+            "authority": "none",
+            "checkpoint": {
+              "epoch": "a942033888389254388a9736a4efa78d",
+              "historical_result": {
+                "co_timestamp": "SATISFIED",
+                "ordered": "SATISFIED",
+                "strict_time": "PENDING"
+              },
+              "last_ordinal": 3,
+              "last_tick": 348660,
+              "prefix_sha256": "48e475c766c87862a23e26e3fd5d516d94e769a7448c2abb82dc12ab47f2696b"
+            },
+            "input_dispatched": false,
+            "prefix_states": [
+              {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              },
+              {
+                "co_timestamp": "SATISFIED",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              },
+              {
+                "co_timestamp": "SATISFIED",
+                "ordered": "SATISFIED",
+                "strict_time": "PENDING"
+              }
+            ],
+            "status": "OK",
+            "task_success": null
+          },
+          "request_sha256": "7481f785325f2cb98498f0b6ff05b8c477fa8ad6304e52ea2e8bfe0d2c7398b2",
+          "returncode": 0,
+          "start_ns": 1434429288896,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"historical_result\":{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"PENDING\"},\"last_ordinal\":3,\"last_tick\":348660,\"prefix_sha256\":\"48e475c766c87862a23e26e3fd5d516d94e769a7448c2abb82dc12ab47f2696b\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null}\n"
+        },
+        "suffix": [
+          {
+            "epoch": "a942033888389254388a9736a4efa78d",
+            "label": "H",
+            "ordinal": 4,
+            "server_ms": 348781
+          }
+        ],
+        "task_success": null
+      },
+      "request_sha256": "e9d151ccb4d24fb7712ce9eb7e62eb9019f30f8cb201191b54247c1e6ac4f95f",
+      "returncode": 0,
+      "start_ns": 1434315493881,
+      "stderr": "",
+      "stdout": "{\"authority\":\"none\",\"candidate\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/resume_worker.py\"],\"end_ns\":1434628198760,\"parsed\":{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"OK\",\"suffix\":[{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"EXPIRED\"}],\"task_success\":null},\"request_sha256\":\"3ee2cbeab92b10b38698a86bfa56159a99418204f89d1f0c16667bcbece32b38\",\"returncode\":0,\"start_ns\":1434529568251,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"input_dispatched\\\":false,\\\"status\\\":\\\"OK\\\",\\\"suffix\\\":[{\\\"co_timestamp\\\":\\\"SATISFIED\\\",\\\"ordered\\\":\\\"SATISFIED\\\",\\\"strict_time\\\":\\\"EXPIRED\\\"}],\\\"task_success\\\":null}\\n\"},\"case_id\":47,\"checkpoint\":{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"historical_result\":{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"PENDING\"},\"last_ordinal\":3,\"last_tick\":348660,\"prefix_sha256\":\"48e475c766c87862a23e26e3fd5d516d94e769a7448c2abb82dc12ab47f2696b\"},\"comparator\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/resume_worker.py\"],\"end_ns\":1434721511782,\"parsed\":{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"OK\",\"suffix\":[{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"PENDING\"}],\"task_success\":null},\"request_sha256\":\"f25e7b67f23e07a17868b478a88d2b192e4596de7b95d4ab4bc5aed66f9e3576\",\"returncode\":0,\"start_ns\":1434628285457,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"input_dispatched\\\":false,\\\"status\\\":\\\"OK\\\",\\\"suffix\\\":[{\\\"co_timestamp\\\":\\\"SATISFIED\\\",\\\"ordered\\\":\\\"SATISFIED\\\",\\\"strict_time\\\":\\\"PENDING\\\"}],\\\"task_success\\\":null}\\n\"},\"cut\":3,\"effective_checkpoint\":{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"historical_result\":{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"PENDING\"},\"last_ordinal\":3,\"last_tick\":348660,\"prefix_sha256\":\"48e475c766c87862a23e26e3fd5d516d94e769a7448c2abb82dc12ab47f2696b\"},\"effective_prefix\":[{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"B\",\"ordinal\":1,\"server_ms\":348660},{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"A\",\"ordinal\":2,\"server_ms\":348660},{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"B\",\"ordinal\":3,\"server_ms\":348660}],\"epoch\":\"a942033888389254388a9736a4efa78d\",\"fixture_index\":23,\"input_dispatched\":false,\"mutation\":null,\"prefix\":[{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"B\",\"ordinal\":1,\"server_ms\":348660},{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"A\",\"ordinal\":2,\"server_ms\":348660},{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"B\",\"ordinal\":3,\"server_ms\":348660}],\"prepare\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/prepare_worker.py\"],\"end_ns\":1434524487963,\"parsed\":{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"historical_result\":{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"PENDING\"},\"last_ordinal\":3,\"last_tick\":348660,\"prefix_sha256\":\"48e475c766c87862a23e26e3fd5d516d94e769a7448c2abb82dc12ab47f2696b\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},{\"co_timestamp\":\"SATISFIED\",\"ordered\":\"SATISFIED\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null},\"request_sha256\":\"7481f785325f2cb98498f0b6ff05b8c477fa8ad6304e52ea2e8bfe0d2c7398b2\",\"returncode\":0,\"start_ns\":1434429288896,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"checkpoint\\\":{\\\"epoch\\\":\\\"a942033888389254388a9736a4efa78d\\\",\\\"historical_result\\\":{\\\"co_timestamp\\\":\\\"SATISFIED\\\",\\\"ordered\\\":\\\"SATISFIED\\\",\\\"strict_time\\\":\\\"PENDING\\\"},\\\"last_ordinal\\\":3,\\\"last_tick\\\":348660,\\\"prefix_sha256\\\":\\\"48e475c766c87862a23e26e3fd5d516d94e769a7448c2abb82dc12ab47f2696b\\\"},\\\"input_dispatched\\\":false,\\\"prefix_states\\\":[{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"},{\\\"co_timestamp\\\":\\\"SATISFIED\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"},{\\\"co_timestamp\\\":\\\"SATISFIED\\\",\\\"ordered\\\":\\\"SATISFIED\\\",\\\"strict_time\\\":\\\"PENDING\\\"}],\\\"status\\\":\\\"OK\\\",\\\"task_success\\\":null}\\n\"},\"suffix\":[{\"epoch\":\"a942033888389254388a9736a4efa78d\",\"label\":\"H\",\"ordinal\":4,\"server_ms\":348781}],\"task_success\":null}\n",
+      "timeout": false
+    },
+    {
+      "case_id": 48,
+      "end_ns": 1435069696320,
+      "parsed": {
+        "authority": "none",
+        "candidate": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/resume_worker.py"
+          ],
+          "end_ns": 1435064852090,
+          "parsed": {
+            "authority": "none",
+            "input_dispatched": false,
+            "status": "REFUSE_CHECKPOINT",
+            "suffix": [],
+            "task_success": null
+          },
+          "request_sha256": "a8d72b57fbdb8708d60c0b63e050aa739d5c44e192c94f723b29f6efcc4d253b",
+          "returncode": 3,
+          "start_ns": 1434957689470,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"REFUSE_CHECKPOINT\",\"suffix\":[],\"task_success\":null}\n"
+        },
+        "case_id": 48,
+        "checkpoint": {
+          "epoch": "b1830c2521a86098b7f50ba844ba8771",
+          "historical_result": {
+            "co_timestamp": "PENDING",
+            "ordered": "PENDING",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 1,
+          "last_tick": 301898,
+          "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+        },
+        "comparator": null,
+        "cut": 1,
+        "effective_checkpoint": {
+          "epoch": "foreign",
+          "historical_result": {
+            "co_timestamp": "PENDING",
+            "ordered": "PENDING",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 1,
+          "last_tick": 301898,
+          "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+        },
+        "effective_prefix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "A",
+            "ordinal": 1,
+            "server_ms": 301898
+          }
+        ],
+        "epoch": "b1830c2521a86098b7f50ba844ba8771",
+        "fixture_index": 0,
+        "input_dispatched": false,
+        "mutation": "foreign_epoch",
+        "prefix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "A",
+            "ordinal": 1,
+            "server_ms": 301898
+          }
+        ],
+        "prepare": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/prepare_worker.py"
+          ],
+          "end_ns": 1434952363726,
+          "parsed": {
+            "authority": "none",
+            "checkpoint": {
+              "epoch": "b1830c2521a86098b7f50ba844ba8771",
+              "historical_result": {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              },
+              "last_ordinal": 1,
+              "last_tick": 301898,
+              "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+            },
+            "input_dispatched": false,
+            "prefix_states": [
+              {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              }
+            ],
+            "status": "OK",
+            "task_success": null
+          },
+          "request_sha256": "bbe0ae4757f4f3347de76861a6584acf64fb9ca63798352df783536a1198ad3a",
+          "returncode": 0,
+          "start_ns": 1434839729386,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null}\n"
+        },
+        "suffix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "B",
+            "ordinal": 2,
+            "server_ms": 301898
+          },
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "H",
+            "ordinal": 3,
+            "server_ms": 302018
+          }
+        ],
+        "task_success": null
+      },
+      "request_sha256": "26af568700c200a28d507374e76e07a8abd45f40923bd3948fe642f7cc55d76a",
+      "returncode": 0,
+      "start_ns": 1434726460778,
+      "stderr": "",
+      "stdout": "{\"authority\":\"none\",\"candidate\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/resume_worker.py\"],\"end_ns\":1435064852090,\"parsed\":{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"REFUSE_CHECKPOINT\",\"suffix\":[],\"task_success\":null},\"request_sha256\":\"a8d72b57fbdb8708d60c0b63e050aa739d5c44e192c94f723b29f6efcc4d253b\",\"returncode\":3,\"start_ns\":1434957689470,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"input_dispatched\\\":false,\\\"status\\\":\\\"REFUSE_CHECKPOINT\\\",\\\"suffix\\\":[],\\\"task_success\\\":null}\\n\"},\"case_id\":48,\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"comparator\":null,\"cut\":1,\"effective_checkpoint\":{\"epoch\":\"foreign\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"effective_prefix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"A\",\"ordinal\":1,\"server_ms\":301898}],\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"fixture_index\":0,\"input_dispatched\":false,\"mutation\":\"foreign_epoch\",\"prefix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"A\",\"ordinal\":1,\"server_ms\":301898}],\"prepare\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/prepare_worker.py\"],\"end_ns\":1434952363726,\"parsed\":{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null},\"request_sha256\":\"bbe0ae4757f4f3347de76861a6584acf64fb9ca63798352df783536a1198ad3a\",\"returncode\":0,\"start_ns\":1434839729386,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"checkpoint\\\":{\\\"epoch\\\":\\\"b1830c2521a86098b7f50ba844ba8771\\\",\\\"historical_result\\\":{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"},\\\"last_ordinal\\\":1,\\\"last_tick\\\":301898,\\\"prefix_sha256\\\":\\\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\\\"},\\\"input_dispatched\\\":false,\\\"prefix_states\\\":[{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"}],\\\"status\\\":\\\"OK\\\",\\\"task_success\\\":null}\\n\"},\"suffix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"B\",\"ordinal\":2,\"server_ms\":301898},{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"H\",\"ordinal\":3,\"server_ms\":302018}],\"task_success\":null}\n",
+      "timeout": false
+    },
+    {
+      "case_id": 49,
+      "end_ns": 1435400343520,
+      "parsed": {
+        "authority": "none",
+        "candidate": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/resume_worker.py"
+          ],
+          "end_ns": 1435395674526,
+          "parsed": {
+            "authority": "none",
+            "input_dispatched": false,
+            "status": "REFUSE_CHECKPOINT",
+            "suffix": [],
+            "task_success": null
+          },
+          "request_sha256": "f216c2a0efcb5b4d93470bc1728c5bec20d40322065cf5af991ae6381dc0c25a",
+          "returncode": 3,
+          "start_ns": 1435295863996,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"REFUSE_CHECKPOINT\",\"suffix\":[],\"task_success\":null}\n"
+        },
+        "case_id": 49,
+        "checkpoint": {
+          "epoch": "b1830c2521a86098b7f50ba844ba8771",
+          "historical_result": {
+            "co_timestamp": "PENDING",
+            "ordered": "PENDING",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 1,
+          "last_tick": 301898,
+          "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+        },
+        "comparator": null,
+        "cut": 1,
+        "effective_checkpoint": {
+          "epoch": "b1830c2521a86098b7f50ba844ba8771",
+          "historical_result": {
+            "co_timestamp": "PENDING",
+            "ordered": "PENDING",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 2,
+          "last_tick": 301898,
+          "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+        },
+        "effective_prefix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "A",
+            "ordinal": 1,
+            "server_ms": 301898
+          }
+        ],
+        "epoch": "b1830c2521a86098b7f50ba844ba8771",
+        "fixture_index": 0,
+        "input_dispatched": false,
+        "mutation": "wrong_ordinal",
+        "prefix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "A",
+            "ordinal": 1,
+            "server_ms": 301898
+          }
+        ],
+        "prepare": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/prepare_worker.py"
+          ],
+          "end_ns": 1435290403123,
+          "parsed": {
+            "authority": "none",
+            "checkpoint": {
+              "epoch": "b1830c2521a86098b7f50ba844ba8771",
+              "historical_result": {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              },
+              "last_ordinal": 1,
+              "last_tick": 301898,
+              "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+            },
+            "input_dispatched": false,
+            "prefix_states": [
+              {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              }
+            ],
+            "status": "OK",
+            "task_success": null
+          },
+          "request_sha256": "bbe0ae4757f4f3347de76861a6584acf64fb9ca63798352df783536a1198ad3a",
+          "returncode": 0,
+          "start_ns": 1435190313290,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null}\n"
+        },
+        "suffix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "B",
+            "ordinal": 2,
+            "server_ms": 301898
+          },
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "H",
+            "ordinal": 3,
+            "server_ms": 302018
+          }
+        ],
+        "task_success": null
+      },
+      "request_sha256": "f4c0c8a8f7ec62b3eede6eb847641096274b5cdcdd82683400ced45a6aa27bad",
+      "returncode": 0,
+      "start_ns": 1435069767639,
+      "stderr": "",
+      "stdout": "{\"authority\":\"none\",\"candidate\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/resume_worker.py\"],\"end_ns\":1435395674526,\"parsed\":{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"REFUSE_CHECKPOINT\",\"suffix\":[],\"task_success\":null},\"request_sha256\":\"f216c2a0efcb5b4d93470bc1728c5bec20d40322065cf5af991ae6381dc0c25a\",\"returncode\":3,\"start_ns\":1435295863996,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"input_dispatched\\\":false,\\\"status\\\":\\\"REFUSE_CHECKPOINT\\\",\\\"suffix\\\":[],\\\"task_success\\\":null}\\n\"},\"case_id\":49,\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"comparator\":null,\"cut\":1,\"effective_checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":2,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"effective_prefix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"A\",\"ordinal\":1,\"server_ms\":301898}],\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"fixture_index\":0,\"input_dispatched\":false,\"mutation\":\"wrong_ordinal\",\"prefix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"A\",\"ordinal\":1,\"server_ms\":301898}],\"prepare\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/prepare_worker.py\"],\"end_ns\":1435290403123,\"parsed\":{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null},\"request_sha256\":\"bbe0ae4757f4f3347de76861a6584acf64fb9ca63798352df783536a1198ad3a\",\"returncode\":0,\"start_ns\":1435190313290,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"checkpoint\\\":{\\\"epoch\\\":\\\"b1830c2521a86098b7f50ba844ba8771\\\",\\\"historical_result\\\":{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"},\\\"last_ordinal\\\":1,\\\"last_tick\\\":301898,\\\"prefix_sha256\\\":\\\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\\\"},\\\"input_dispatched\\\":false,\\\"prefix_states\\\":[{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"}],\\\"status\\\":\\\"OK\\\",\\\"task_success\\\":null}\\n\"},\"suffix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"B\",\"ordinal\":2,\"server_ms\":301898},{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"H\",\"ordinal\":3,\"server_ms\":302018}],\"task_success\":null}\n",
+      "timeout": false
+    },
+    {
+      "case_id": 50,
+      "end_ns": 1435749821186,
+      "parsed": {
+        "authority": "none",
+        "candidate": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/resume_worker.py"
+          ],
+          "end_ns": 1435744916812,
+          "parsed": {
+            "authority": "none",
+            "input_dispatched": false,
+            "status": "REFUSE_CHECKPOINT",
+            "suffix": [],
+            "task_success": null
+          },
+          "request_sha256": "c73969544e6ccc29ca3dd6c43dfa95f454f12c0ce83fa6dab2bed052f1406871",
+          "returncode": 3,
+          "start_ns": 1435636077783,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"REFUSE_CHECKPOINT\",\"suffix\":[],\"task_success\":null}\n"
+        },
+        "case_id": 50,
+        "checkpoint": {
+          "epoch": "b1830c2521a86098b7f50ba844ba8771",
+          "historical_result": {
+            "co_timestamp": "PENDING",
+            "ordered": "PENDING",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 1,
+          "last_tick": 301898,
+          "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+        },
+        "comparator": null,
+        "cut": 1,
+        "effective_checkpoint": {
+          "epoch": "b1830c2521a86098b7f50ba844ba8771",
+          "historical_result": {
+            "co_timestamp": "PENDING",
+            "ordered": "PENDING",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 1,
+          "last_tick": 301899,
+          "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+        },
+        "effective_prefix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "A",
+            "ordinal": 1,
+            "server_ms": 301898
+          }
+        ],
+        "epoch": "b1830c2521a86098b7f50ba844ba8771",
+        "fixture_index": 0,
+        "input_dispatched": false,
+        "mutation": "wrong_tick",
+        "prefix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "A",
+            "ordinal": 1,
+            "server_ms": 301898
+          }
+        ],
+        "prepare": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/prepare_worker.py"
+          ],
+          "end_ns": 1435630343953,
+          "parsed": {
+            "authority": "none",
+            "checkpoint": {
+              "epoch": "b1830c2521a86098b7f50ba844ba8771",
+              "historical_result": {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              },
+              "last_ordinal": 1,
+              "last_tick": 301898,
+              "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+            },
+            "input_dispatched": false,
+            "prefix_states": [
+              {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              }
+            ],
+            "status": "OK",
+            "task_success": null
+          },
+          "request_sha256": "bbe0ae4757f4f3347de76861a6584acf64fb9ca63798352df783536a1198ad3a",
+          "returncode": 0,
+          "start_ns": 1435523865411,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null}\n"
+        },
+        "suffix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "B",
+            "ordinal": 2,
+            "server_ms": 301898
+          },
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "H",
+            "ordinal": 3,
+            "server_ms": 302018
+          }
+        ],
+        "task_success": null
+      },
+      "request_sha256": "df028c5e64863a303b330c69b1f09e1345fca3f3a9ff3dea3c3e94a138a414ad",
+      "returncode": 0,
+      "start_ns": 1435400416993,
+      "stderr": "",
+      "stdout": "{\"authority\":\"none\",\"candidate\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/resume_worker.py\"],\"end_ns\":1435744916812,\"parsed\":{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"REFUSE_CHECKPOINT\",\"suffix\":[],\"task_success\":null},\"request_sha256\":\"c73969544e6ccc29ca3dd6c43dfa95f454f12c0ce83fa6dab2bed052f1406871\",\"returncode\":3,\"start_ns\":1435636077783,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"input_dispatched\\\":false,\\\"status\\\":\\\"REFUSE_CHECKPOINT\\\",\\\"suffix\\\":[],\\\"task_success\\\":null}\\n\"},\"case_id\":50,\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"comparator\":null,\"cut\":1,\"effective_checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301899,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"effective_prefix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"A\",\"ordinal\":1,\"server_ms\":301898}],\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"fixture_index\":0,\"input_dispatched\":false,\"mutation\":\"wrong_tick\",\"prefix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"A\",\"ordinal\":1,\"server_ms\":301898}],\"prepare\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/prepare_worker.py\"],\"end_ns\":1435630343953,\"parsed\":{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null},\"request_sha256\":\"bbe0ae4757f4f3347de76861a6584acf64fb9ca63798352df783536a1198ad3a\",\"returncode\":0,\"start_ns\":1435523865411,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"checkpoint\\\":{\\\"epoch\\\":\\\"b1830c2521a86098b7f50ba844ba8771\\\",\\\"historical_result\\\":{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"},\\\"last_ordinal\\\":1,\\\"last_tick\\\":301898,\\\"prefix_sha256\\\":\\\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\\\"},\\\"input_dispatched\\\":false,\\\"prefix_states\\\":[{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"}],\\\"status\\\":\\\"OK\\\",\\\"task_success\\\":null}\\n\"},\"suffix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"B\",\"ordinal\":2,\"server_ms\":301898},{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"H\",\"ordinal\":3,\"server_ms\":302018}],\"task_success\":null}\n",
+      "timeout": false
+    },
+    {
+      "case_id": 51,
+      "end_ns": 1436118425034,
+      "parsed": {
+        "authority": "none",
+        "candidate": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/resume_worker.py"
+          ],
+          "end_ns": 1436113520061,
+          "parsed": {
+            "authority": "none",
+            "input_dispatched": false,
+            "status": "REFUSE_CHECKPOINT",
+            "suffix": [],
+            "task_success": null
+          },
+          "request_sha256": "7c4b7ae0bb0f1ded32a68cdb21d58ae92eedd518d37718bfed851f475273c2e1",
+          "returncode": 3,
+          "start_ns": 1436002186307,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"REFUSE_CHECKPOINT\",\"suffix\":[],\"task_success\":null}\n"
+        },
+        "case_id": 51,
+        "checkpoint": {
+          "epoch": "b1830c2521a86098b7f50ba844ba8771",
+          "historical_result": {
+            "co_timestamp": "PENDING",
+            "ordered": "PENDING",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 1,
+          "last_tick": 301898,
+          "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+        },
+        "comparator": null,
+        "cut": 1,
+        "effective_checkpoint": {
+          "epoch": "b1830c2521a86098b7f50ba844ba8771",
+          "historical_result": {
+            "co_timestamp": "PENDING",
+            "ordered": "PENDING",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 1,
+          "last_tick": 301898,
+          "prefix_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "effective_prefix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "A",
+            "ordinal": 1,
+            "server_ms": 301898
+          }
+        ],
+        "epoch": "b1830c2521a86098b7f50ba844ba8771",
+        "fixture_index": 0,
+        "input_dispatched": false,
+        "mutation": "wrong_digest",
+        "prefix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "A",
+            "ordinal": 1,
+            "server_ms": 301898
+          }
+        ],
+        "prepare": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/prepare_worker.py"
+          ],
+          "end_ns": 1435996846109,
+          "parsed": {
+            "authority": "none",
+            "checkpoint": {
+              "epoch": "b1830c2521a86098b7f50ba844ba8771",
+              "historical_result": {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              },
+              "last_ordinal": 1,
+              "last_tick": 301898,
+              "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+            },
+            "input_dispatched": false,
+            "prefix_states": [
+              {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              }
+            ],
+            "status": "OK",
+            "task_success": null
+          },
+          "request_sha256": "bbe0ae4757f4f3347de76861a6584acf64fb9ca63798352df783536a1198ad3a",
+          "returncode": 0,
+          "start_ns": 1435884186980,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null}\n"
+        },
+        "suffix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "B",
+            "ordinal": 2,
+            "server_ms": 301898
+          },
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "H",
+            "ordinal": 3,
+            "server_ms": 302018
+          }
+        ],
+        "task_success": null
+      },
+      "request_sha256": "e8914100a2bb312c0c3603de7e0319ebcf798210c311a8430d060a23b53fd9f2",
+      "returncode": 0,
+      "start_ns": 1435749911301,
+      "stderr": "",
+      "stdout": "{\"authority\":\"none\",\"candidate\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/resume_worker.py\"],\"end_ns\":1436113520061,\"parsed\":{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"REFUSE_CHECKPOINT\",\"suffix\":[],\"task_success\":null},\"request_sha256\":\"7c4b7ae0bb0f1ded32a68cdb21d58ae92eedd518d37718bfed851f475273c2e1\",\"returncode\":3,\"start_ns\":1436002186307,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"input_dispatched\\\":false,\\\"status\\\":\\\"REFUSE_CHECKPOINT\\\",\\\"suffix\\\":[],\\\"task_success\\\":null}\\n\"},\"case_id\":51,\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"comparator\":null,\"cut\":1,\"effective_checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"0000000000000000000000000000000000000000000000000000000000000000\"},\"effective_prefix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"A\",\"ordinal\":1,\"server_ms\":301898}],\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"fixture_index\":0,\"input_dispatched\":false,\"mutation\":\"wrong_digest\",\"prefix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"A\",\"ordinal\":1,\"server_ms\":301898}],\"prepare\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/prepare_worker.py\"],\"end_ns\":1435996846109,\"parsed\":{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null},\"request_sha256\":\"bbe0ae4757f4f3347de76861a6584acf64fb9ca63798352df783536a1198ad3a\",\"returncode\":0,\"start_ns\":1435884186980,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"checkpoint\\\":{\\\"epoch\\\":\\\"b1830c2521a86098b7f50ba844ba8771\\\",\\\"historical_result\\\":{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"},\\\"last_ordinal\\\":1,\\\"last_tick\\\":301898,\\\"prefix_sha256\\\":\\\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\\\"},\\\"input_dispatched\\\":false,\\\"prefix_states\\\":[{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"}],\\\"status\\\":\\\"OK\\\",\\\"task_success\\\":null}\\n\"},\"suffix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"B\",\"ordinal\":2,\"server_ms\":301898},{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"H\",\"ordinal\":3,\"server_ms\":302018}],\"task_success\":null}\n",
+      "timeout": false
+    },
+    {
+      "case_id": 52,
+      "end_ns": 1436463518977,
+      "parsed": {
+        "authority": "none",
+        "candidate": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/resume_worker.py"
+          ],
+          "end_ns": 1436459003086,
+          "parsed": {
+            "authority": "none",
+            "input_dispatched": false,
+            "status": "REFUSE_CHECKPOINT",
+            "suffix": [],
+            "task_success": null
+          },
+          "request_sha256": "b8e4c148d2b0404ed71dd7050b880a69673c70182394a95d6f364440e7318e7f",
+          "returncode": 3,
+          "start_ns": 1436357103677,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"REFUSE_CHECKPOINT\",\"suffix\":[],\"task_success\":null}\n"
+        },
+        "case_id": 52,
+        "checkpoint": {
+          "epoch": "b1830c2521a86098b7f50ba844ba8771",
+          "historical_result": {
+            "co_timestamp": "PENDING",
+            "ordered": "PENDING",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 1,
+          "last_tick": 301898,
+          "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+        },
+        "comparator": null,
+        "cut": 1,
+        "effective_checkpoint": {
+          "epoch": "b1830c2521a86098b7f50ba844ba8771",
+          "historical_result": {
+            "co_timestamp": "PENDING",
+            "ordered": "SATISFIED",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 1,
+          "last_tick": 301898,
+          "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+        },
+        "effective_prefix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "A",
+            "ordinal": 1,
+            "server_ms": 301898
+          }
+        ],
+        "epoch": "b1830c2521a86098b7f50ba844ba8771",
+        "fixture_index": 0,
+        "input_dispatched": false,
+        "mutation": "wrong_result",
+        "prefix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "A",
+            "ordinal": 1,
+            "server_ms": 301898
+          }
+        ],
+        "prepare": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/prepare_worker.py"
+          ],
+          "end_ns": 1436351532477,
+          "parsed": {
+            "authority": "none",
+            "checkpoint": {
+              "epoch": "b1830c2521a86098b7f50ba844ba8771",
+              "historical_result": {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              },
+              "last_ordinal": 1,
+              "last_tick": 301898,
+              "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+            },
+            "input_dispatched": false,
+            "prefix_states": [
+              {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              }
+            ],
+            "status": "OK",
+            "task_success": null
+          },
+          "request_sha256": "bbe0ae4757f4f3347de76861a6584acf64fb9ca63798352df783536a1198ad3a",
+          "returncode": 0,
+          "start_ns": 1436249312137,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null}\n"
+        },
+        "suffix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "B",
+            "ordinal": 2,
+            "server_ms": 301898
+          },
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "H",
+            "ordinal": 3,
+            "server_ms": 302018
+          }
+        ],
+        "task_success": null
+      },
+      "request_sha256": "b32eddfa331fff2250167880bc6d8c49d26aa8f4b0c516fd917b641b2137e439",
+      "returncode": 0,
+      "start_ns": 1436118499893,
+      "stderr": "",
+      "stdout": "{\"authority\":\"none\",\"candidate\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/resume_worker.py\"],\"end_ns\":1436459003086,\"parsed\":{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"REFUSE_CHECKPOINT\",\"suffix\":[],\"task_success\":null},\"request_sha256\":\"b8e4c148d2b0404ed71dd7050b880a69673c70182394a95d6f364440e7318e7f\",\"returncode\":3,\"start_ns\":1436357103677,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"input_dispatched\\\":false,\\\"status\\\":\\\"REFUSE_CHECKPOINT\\\",\\\"suffix\\\":[],\\\"task_success\\\":null}\\n\"},\"case_id\":52,\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"comparator\":null,\"cut\":1,\"effective_checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"SATISFIED\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"effective_prefix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"A\",\"ordinal\":1,\"server_ms\":301898}],\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"fixture_index\":0,\"input_dispatched\":false,\"mutation\":\"wrong_result\",\"prefix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"A\",\"ordinal\":1,\"server_ms\":301898}],\"prepare\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/prepare_worker.py\"],\"end_ns\":1436351532477,\"parsed\":{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null},\"request_sha256\":\"bbe0ae4757f4f3347de76861a6584acf64fb9ca63798352df783536a1198ad3a\",\"returncode\":0,\"start_ns\":1436249312137,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"checkpoint\\\":{\\\"epoch\\\":\\\"b1830c2521a86098b7f50ba844ba8771\\\",\\\"historical_result\\\":{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"},\\\"last_ordinal\\\":1,\\\"last_tick\\\":301898,\\\"prefix_sha256\\\":\\\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\\\"},\\\"input_dispatched\\\":false,\\\"prefix_states\\\":[{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"}],\\\"status\\\":\\\"OK\\\",\\\"task_success\\\":null}\\n\"},\"suffix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"B\",\"ordinal\":2,\"server_ms\":301898},{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"H\",\"ordinal\":3,\"server_ms\":302018}],\"task_success\":null}\n",
+      "timeout": false
+    },
+    {
+      "case_id": 53,
+      "end_ns": 1436786360702,
+      "parsed": {
+        "authority": "none",
+        "candidate": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/resume_worker.py"
+          ],
+          "end_ns": 1436781760669,
+          "parsed": {
+            "authority": "none",
+            "input_dispatched": false,
+            "status": "REFUSE_CHECKPOINT",
+            "suffix": [],
+            "task_success": null
+          },
+          "request_sha256": "9354e4142e1a0e5242d28717a0b38d4464934dba1a746f4bc00d8a2e0f8c1430",
+          "returncode": 3,
+          "start_ns": 1436684105925,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"REFUSE_CHECKPOINT\",\"suffix\":[],\"task_success\":null}\n"
+        },
+        "case_id": 53,
+        "checkpoint": {
+          "epoch": "b1830c2521a86098b7f50ba844ba8771",
+          "historical_result": {
+            "co_timestamp": "PENDING",
+            "ordered": "PENDING",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 1,
+          "last_tick": 301898,
+          "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+        },
+        "comparator": null,
+        "cut": 1,
+        "effective_checkpoint": {
+          "epoch": "b1830c2521a86098b7f50ba844ba8771",
+          "historical_result": {
+            "co_timestamp": "PENDING",
+            "ordered": "PENDING",
+            "strict_time": "PENDING"
+          },
+          "last_ordinal": 1,
+          "last_tick": 301898,
+          "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+        },
+        "effective_prefix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "B",
+            "ordinal": 1,
+            "server_ms": 301898
+          }
+        ],
+        "epoch": "b1830c2521a86098b7f50ba844ba8771",
+        "fixture_index": 0,
+        "input_dispatched": false,
+        "mutation": "altered_prefix",
+        "prefix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "A",
+            "ordinal": 1,
+            "server_ms": 301898
+          }
+        ],
+        "prepare": {
+          "argv": [
+            "/usr/local/bin/python",
+            "-B",
+            "/study/prepare_worker.py"
+          ],
+          "end_ns": 1436679086790,
+          "parsed": {
+            "authority": "none",
+            "checkpoint": {
+              "epoch": "b1830c2521a86098b7f50ba844ba8771",
+              "historical_result": {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              },
+              "last_ordinal": 1,
+              "last_tick": 301898,
+              "prefix_sha256": "2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b"
+            },
+            "input_dispatched": false,
+            "prefix_states": [
+              {
+                "co_timestamp": "PENDING",
+                "ordered": "PENDING",
+                "strict_time": "PENDING"
+              }
+            ],
+            "status": "OK",
+            "task_success": null
+          },
+          "request_sha256": "bbe0ae4757f4f3347de76861a6584acf64fb9ca63798352df783536a1198ad3a",
+          "returncode": 0,
+          "start_ns": 1436580624018,
+          "stderr": "",
+          "stdout": "{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null}\n"
+        },
+        "suffix": [
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "B",
+            "ordinal": 2,
+            "server_ms": 301898
+          },
+          {
+            "epoch": "b1830c2521a86098b7f50ba844ba8771",
+            "label": "H",
+            "ordinal": 3,
+            "server_ms": 302018
+          }
+        ],
+        "task_success": null
+      },
+      "request_sha256": "15485a13d774cd85263b9631307e1d50921bb58bba0dbd2b8c7ecca1e4ab456e",
+      "returncode": 0,
+      "start_ns": 1436463590997,
+      "stderr": "",
+      "stdout": "{\"authority\":\"none\",\"candidate\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/resume_worker.py\"],\"end_ns\":1436781760669,\"parsed\":{\"authority\":\"none\",\"input_dispatched\":false,\"status\":\"REFUSE_CHECKPOINT\",\"suffix\":[],\"task_success\":null},\"request_sha256\":\"9354e4142e1a0e5242d28717a0b38d4464934dba1a746f4bc00d8a2e0f8c1430\",\"returncode\":3,\"start_ns\":1436684105925,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"input_dispatched\\\":false,\\\"status\\\":\\\"REFUSE_CHECKPOINT\\\",\\\"suffix\\\":[],\\\"task_success\\\":null}\\n\"},\"case_id\":53,\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"comparator\":null,\"cut\":1,\"effective_checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"effective_prefix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"B\",\"ordinal\":1,\"server_ms\":301898}],\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"fixture_index\":0,\"input_dispatched\":false,\"mutation\":\"altered_prefix\",\"prefix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"A\",\"ordinal\":1,\"server_ms\":301898}],\"prepare\":{\"argv\":[\"/usr/local/bin/python\",\"-B\",\"/study/prepare_worker.py\"],\"end_ns\":1436679086790,\"parsed\":{\"authority\":\"none\",\"checkpoint\":{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"historical_result\":{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"},\"last_ordinal\":1,\"last_tick\":301898,\"prefix_sha256\":\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\"},\"input_dispatched\":false,\"prefix_states\":[{\"co_timestamp\":\"PENDING\",\"ordered\":\"PENDING\",\"strict_time\":\"PENDING\"}],\"status\":\"OK\",\"task_success\":null},\"request_sha256\":\"bbe0ae4757f4f3347de76861a6584acf64fb9ca63798352df783536a1198ad3a\",\"returncode\":0,\"start_ns\":1436580624018,\"stderr\":\"\",\"stdout\":\"{\\\"authority\\\":\\\"none\\\",\\\"checkpoint\\\":{\\\"epoch\\\":\\\"b1830c2521a86098b7f50ba844ba8771\\\",\\\"historical_result\\\":{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"},\\\"last_ordinal\\\":1,\\\"last_tick\\\":301898,\\\"prefix_sha256\\\":\\\"2b6376c23cb1070f6266f577dd7b5089382686e40d300cb547316345acb3fc4b\\\"},\\\"input_dispatched\\\":false,\\\"prefix_states\\\":[{\\\"co_timestamp\\\":\\\"PENDING\\\",\\\"ordered\\\":\\\"PENDING\\\",\\\"strict_time\\\":\\\"PENDING\\\"}],\\\"status\\\":\\\"OK\\\",\\\"task_success\\\":null}\\n\"},\"suffix\":[{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"B\",\"ordinal\":2,\"server_ms\":301898},{\"epoch\":\"b1830c2521a86098b7f50ba844ba8771\",\"label\":\"H\",\"ordinal\":3,\"server_ms\":302018}],\"task_success\":null}\n",
+      "timeout": false
+    }
+  ],
+  "start_ns": 1433401278141
+}

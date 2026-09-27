@@ -1,0 +1,35 @@
+{
+  "schema": "issue3690-dockerdesktop-host-validation-v1",
+  "allocation": "issue-3690-dockerdesktop-host-01",
+  "issue": 3690,
+  "target_source_commit": "de9acd02b50fac4e9b8c46ed961d923181cbbece",
+  "validation_base": "a0f0ca37c88ad46f3f98485483453cedbe432723",
+  "host_engine": {
+    "context": "desktop-linux",
+    "server": "28.5.1",
+    "platform": "linux/amd64",
+    "daemon_reported_architecture": "x86_64"
+  },
+  "image": {
+    "id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "pull": false
+  },
+  "protocol": {
+    "invocations": 2,
+    "first": "python -B -m unittest -v test_audit.py",
+    "second": "python -B audit.py evidence/raw.json --freeze evidence/predecessor_FREEZE.json --study-freeze evidence/FREEZE.json --output /out/hardening_audit.json",
+    "expected_test_count": 5,
+    "expected_mutations_rejected": 21,
+    "expected_cli_sha256": "e2ac7b32c1da563cbcd3cbea285ac5ace4f98d43b3cb9ea046d2bf6c1adbbbc0"
+  },
+  "files": [
+    {"path": "audit.py", "git_blob": "011d272a0d3f099e798f59dcc6b6e9310a653b62", "sha256": "b03d7539e1d77c75a07cf3012b7f3614b8ad251eb1b7edcf6e9663e02b77a7f9"},
+    {"path": "test_audit.py", "git_blob": "5cfd0fbd3fdbd61737540bc7d89e7d29b0ec4f45", "sha256": "9cbec2bd644005f356af36cf395827e32525cd283c7face314f698eb8b21e8a9"},
+    {"path": "evidence/FREEZE.json", "git_blob": "15d645cf063b4735d736d95ef3621ee139f4555e", "sha256": "452decd0418db0f2b6ea8e0b823eb68cbb4e339cd532c2fbcccea5b990f1b22f"},
+    {"path": "evidence/predecessor_FREEZE.json", "git_blob": "4831ebb5657789fd12e694d366844d1a2432ba36", "sha256": "f40494b1be99fb1e68d7b09c498297df35a72c043740b5f09d3faec7e059acfe"},
+    {"path": "evidence/raw.json", "git_blob": "5bea90956ecf5cf0ec130f72b18769bebb01f9b0", "sha256": "ccb9a75eefb7df73cb13dbc9191d33334fb672c2fd58fcc5fa32be998e182807"},
+    {"path": "evidence/hardening_audit.json", "git_blob": "0054d09fb8b2ea28ec3de78f7449ec907451d41c", "sha256": "e2ac7b32c1da563cbcd3cbea285ac5ace4f98d43b3cb9ea046d2bf6c1adbbbc0"}
+  ],
+  "formal_runner_sha256": "72ea4fe26f9b87d1ccc911665c4a887c15a7191c69ff8cdf8ca3270caf2ef7b3"
+}

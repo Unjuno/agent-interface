@@ -1,0 +1,11 @@
+FROM pytorch/pytorch@sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067
+
+ENV HF_HUB_OFFLINE=1 \
+    HF_HUB_DISABLE_TELEMETRY=1 \
+    TOKENIZERS_PARALLELISM=false \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+RUN pip install --no-cache-dir transformers==5.16.1 safetensors==0.8.0
+WORKDIR /experiment
+ENTRYPOINT ["python"]
