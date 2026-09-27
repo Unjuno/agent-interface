@@ -75,6 +75,39 @@ def dispatch(
     display_name: str | None = None,
     capture_directory: str | None = None,
 ) -> dict[str, Any]:
+    return _dispatch(program, targets,
+        current_observation_seq=current_observation_seq,
+        current_binding_revision=current_binding_revision,
+        display_name=display_name, capture_directory=capture_directory)
+
+
+def dispatch_in_session(session, program: dict[str, Any], *,
+                        current_observation_seq: int,
+                        current_binding_revision: int,
+                        capture_directory: str | None = None) -> dict[str, Any]:
+    """Use a caller-owned session; caller serializes use and owns closure.
+
+    No target refresh, recovery reset, authority issuance or concurrency support.
+    """
+    if session is None or not callable(getattr(session, 'dispatch', None)):
+        return {"schema": SCHEMA_DISPATCH, "status": "invalid_request",
+                "error": "INVALID_SESSION"}
+    return _dispatch(program, {},
+        current_observation_seq=current_observation_seq,
+        current_binding_revision=current_binding_revision,
+        capture_directory=capture_directory, supplied_session=session)
+
+
+def _dispatch(
+    program: dict[str, Any],
+    targets: Mapping[str, int],
+    *,
+    current_observation_seq: int,
+    current_binding_revision: int,
+    display_name: str | None = None,
+    capture_directory: str | None = None,
+    supplied_session=None,
+) -> dict[str, Any]:
     if type(current_observation_seq) is not int or current_observation_seq < 0:
         return {"schema": SCHEMA_DISPATCH, "status": "invalid_request", "error": "INVALID_OBSERVATION_SEQ"}
     if type(current_binding_revision) is not int or current_binding_revision < 0:
@@ -107,7 +140,8 @@ def dispatch(
         program = deepcopy(program)
         program['ops'] = expanded
     try:
-        session = open_session(targets, display_name=display_name)
+        session = (supplied_session if supplied_session is not None
+                   else open_session(targets, display_name=display_name))
     except BackendUnavailable as error:
         row = {"schema": SCHEMA_DISPATCH, "status": "backend_unavailable", "error": str(error)}
         if compilation is not None:
@@ -139,9 +173,10 @@ def dispatch(
     except Exception as error:
         row = {"schema": SCHEMA_DISPATCH, "status": "runtime_failed", "error": repr(error)}
     finally:
-        # This facade owns the session it opens. In particular, X11 holds a
+        # This facade closes only sessions it opens. In particular, X11 holds a
         # display connection even if core admission refuses the program.
-        close = getattr(getattr(session, "backend", None), "close", None)
+        close = (getattr(getattr(session, "backend", None), "close", None)
+                 if supplied_session is None else None)
         if callable(close):
             try:
                 close()
