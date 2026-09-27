@@ -23,7 +23,7 @@
 
 ## Frozen environment and integrity
 
-- Image: sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9, linux/amd64; Docker Desktop desktop-linux. `/scratch` is a dedicated 32 MiB tmpfs for the active package and rename candidates; `/out` is only a persistent evidence bind mount. The runner refuses to start unless `/scratch` is mounted as tmpfs.
+- Image: sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9, linux/amd64; Docker Desktop desktop-linux. Every inspect/info/ps/run call explicitly pins `--context desktop-linux`. `/scratch` is a dedicated 32 MiB tmpfs for the active package and rename candidates; `/out` is only a persistent evidence bind mount. The runner refuses to start unless `/scratch` is mounted as tmpfs.
 - Network disabled, pull never, root/source read-only, CPU 0.5, memory 256 MiB, PIDs 32, shm 32 MiB, all capabilities dropped, no-new-privileges.
 - Nested .gitattributes uses * -text, preserving exact committed/check-out bytes across Windows and Linux. The freeze binds both SHA-256 and Git blob identity for every source and the copied input.
 - Stage 0 tests are construction-only and excluded. Preflight rejects source/input/image/context mismatch, existing output and any running Docker container before output creation. A fresh exclusive slot is required immediately before the sole formal orchestration.

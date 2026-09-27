@@ -29,6 +29,10 @@ def run(argv: list[str], timeout: int = 20) -> subprocess.CompletedProcess:
                           capture_output=True, timeout=timeout, check=False)
 
 
+def docker(argv: list[str], timeout: int = 20) -> subprocess.CompletedProcess:
+    return run(["docker", "--context", "desktop-linux", *argv], timeout=timeout)
+
+
 def preflight(output: Path) -> dict:
     if not output.is_absolute() or output.exists() or not output.parent.is_dir():
         raise RuntimeError("output must be an absolute fresh path under an existing parent")
@@ -53,13 +57,13 @@ def preflight(output: Path) -> dict:
     context = run(["docker", "context", "show"])
     if context.returncode != 0 or context.stdout.strip() != "desktop-linux":
         raise RuntimeError("Docker context is not desktop-linux")
-    image = run(["docker", "image", "inspect", IMAGE, "--format", "{{.Id}} {{.Os}}/{{.Architecture}}"])
+    image = docker(["image", "inspect", IMAGE, "--format", "{{.Id}} {{.Os}}/{{.Architecture}}"])
     if image.returncode != 0 or image.stdout.strip() != IMAGE + " linux/amd64":
         raise RuntimeError("pinned image missing or platform mismatch")
-    engine = run(["docker", "info", "--format", "{{.ServerVersion}} {{.OSType}}/{{.Architecture}}"], timeout=30)
+    engine = docker(["info", "--format", "{{.ServerVersion}} {{.OSType}}/{{.Architecture}}"], timeout=30)
     if engine.returncode != 0:
         raise RuntimeError("Docker Desktop engine identity unavailable")
-    inventory = run(["docker", "ps", "--filter", "status=running", "--format", "{{.ID}} {{.Names}}"])
+    inventory = docker(["ps", "--filter", "status=running", "--format", "{{.ID}} {{.Names}}"])
     if inventory.returncode != 0:
         raise RuntimeError("Docker running-container inventory failed")
     running = [line for line in inventory.stdout.splitlines() if line.strip()]
@@ -68,6 +72,7 @@ def preflight(output: Path) -> dict:
         "input_sha256": hashlib.sha256(seed).hexdigest(),
         "input_git_blob": blob,
         "docker_context": context.stdout.strip(),
+        "docker_invocation_context": "desktop-linux",
         "docker_engine": engine.stdout.strip(),
         "docker_version_image": image.stdout.strip(),
         "running_containers": running,
@@ -91,7 +96,7 @@ def main() -> int:
     source_mount = f"type=bind,source={EXP},target=/src,readonly"
     output_mount = f"type=bind,source={output},target=/out"
     common = [
-        "docker", "run", *CONTAINER_OPTS,
+        "docker", "--context", "desktop-linux", "run", *CONTAINER_OPTS,
         "--mount", source_mount, "--mount", output_mount,
         "-e", f"FROZEN_IMAGE_ID={IMAGE}", IMAGE,
     ]
