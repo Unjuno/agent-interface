@@ -3,7 +3,6 @@ import argparse
 import asyncio
 from copy import deepcopy
 from contextlib import asynccontextmanager
-import anyio
 import json
 from itertools import islice, dropwhile
 from pathlib import Path
@@ -12,6 +11,7 @@ from typing import Annotated, Literal
 import uuid
 
 from mcp.server.fastmcp import FastMCP
+import anyio
 from mcp.types import CallToolResult, ImageContent, TextContent
 from pydantic import Field, StrictBool, StrictInt, StrictStr
 
