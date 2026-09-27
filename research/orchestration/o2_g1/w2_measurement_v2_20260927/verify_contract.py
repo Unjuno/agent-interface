@@ -180,10 +180,10 @@ def compare(case, observed):
     for key,value in expected.items():
         if key in ("input_decision_may_be_correct","key_intervals_counted_as_union","authorized_guaranteed_ns","upper_bound","causality","input_authority_remains_separate"):
             continue
-        require(key in observed,f"{case['case_id']}: unsupported expected field {key}")
         if key=="terminal_not_release":
             require(not any(e["event_type"]=="INPUT_EDGE_BRACKET" and e["payload"].get("edge")=="up" for e in case["events"]),"terminal promoted to release")
             continue
+        require(key in observed,f"{case['case_id']}: unsupported expected field {key}")
         require(observed.get(key)==value,f"{case['case_id']}: {key} expected {value!r} got {observed.get(key)!r}")
 
 def main():
