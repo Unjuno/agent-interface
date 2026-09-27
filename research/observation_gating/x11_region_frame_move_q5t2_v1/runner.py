@@ -54,18 +54,30 @@ def xauthority(path, display_no):
     return cookie
 
 
-def wait_x(display_no, auth_path, timeout=5.0):
+def wait_x(display_no, auth_path, xvfb, timeout=5.0):
     env = dict(os.environ, DISPLAY=f":{display_no}", XAUTHORITY=str(auth_path))
     until = time.monotonic() + timeout
     while time.monotonic() < until:
-        record = None
         try:
+            old = os.environ.copy()
+            os.environ.update(env)
             d = display.Display(env["DISPLAY"])
             d.close()
             return env
         except Exception:
             time.sleep(.025)
-    raise TimeoutError("Xvfb did not accept authenticated local connection")
+        finally:
+            os.environ.clear(); os.environ.update(old)
+    xvfb.terminate()
+    try:
+        xvfb.wait(timeout=2)
+    except subprocess.TimeoutExpired:
+        xvfb.kill(); xvfb.wait(timeout=2)
+    stdout, stderr = xvfb.communicate()
+    raise TimeoutError(json.dumps({"message": "Xvfb did not accept authenticated local connection",
+        "xvfb_returncode": xvfb.returncode,
+        "stdout": (stdout or b"").decode("utf-8", "replace"),
+        "stderr": (stderr or b"").decode("utf-8", "replace")}))
 
 
 def target_pattern(win, d):
@@ -96,11 +108,12 @@ def run_case(case_id, policy, schedule, repetition):
     # the server accepts only the one temporary MIT-MAGIC-COOKIE authority.
     display_no = 80 + case_id
     with tempfile.TemporaryDirectory(prefix=f"x11-4439-{case_id}-") as td:
+        record = None
         auth = Path(td) / "Xauthority"
         xauthority(auth, display_no)
         xvfb = subprocess.Popen(["Xvfb", f":{display_no}", "-screen", "0", "400x300x24", "-nolisten", "tcp", "-auth", str(auth)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         try:
-            env = wait_x(display_no, auth)
+            env = wait_x(display_no, auth, xvfb)
             old_env = os.environ.copy()
             os.environ.update(env)
             try:
@@ -162,8 +175,11 @@ def run_case(case_id, policy, schedule, repetition):
                 xvfb.wait(timeout=2)
             except subprocess.TimeoutExpired:
                 xvfb.kill(); xvfb.wait(timeout=2)
+            stdout, stderr = xvfb.communicate()
             if record is not None:
                 record["xvfb_returncode"] = xvfb.returncode
+                record["xvfb_stdout_sha256"] = sha(stdout or b"")
+                record["xvfb_stderr_sha256"] = sha(stderr or b"")
         if record is None:
             raise RuntimeError("case did not produce a complete record")
         return record

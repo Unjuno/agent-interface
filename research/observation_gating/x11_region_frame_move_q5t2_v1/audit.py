@@ -48,6 +48,8 @@ def validate(rows, mode):
             key = (row["policy"], row["schedule"], row["repetition"])
             if row["case_id"] != i:
                 errors.append(f"case_order:{i}")
+            if row.get("display") != 80 + i:
+                errors.append(f"display_identity:{i}")
             if key in seen:
                 errors.append(f"duplicate:{i}")
             seen.add(key)
@@ -84,6 +86,10 @@ def validate(rows, mode):
                 errors.append(f"clock:{i}")
             if not row.get("xvfb_pid") or row.get("xvfb_returncode") != -15:
                 errors.append(f"process_exit:{i}")
+            for log_key in ("xvfb_stdout_sha256", "xvfb_stderr_sha256"):
+                value = row.get(log_key, "")
+                if len(value) != 64 or any(c not in "0123456789abcdef" for c in value):
+                    errors.append(f"process_log_hash:{i}")
             if row.get("authority_file_mode") != "0o600":
                 errors.append(f"authority_mode:{i}")
             if actual_match is not expected(row["policy"], row["schedule"]):
