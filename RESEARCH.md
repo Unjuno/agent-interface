@@ -80,6 +80,19 @@ reliability, or authorize changing the X11 backend. Preserve #4455's HOLD and
 raw rows and audits are in the [retained successor evidence](research/integration/x11_string8_capture_015_v1/formal/run01/REPORT.md)
 and [Issue #4638](https://github.com/Unjuno/agent-interface/issues/4638).
 
+### Issue #4666 — Procedural Control Arena evaluator-isolation construction
+
+The additive construction smoke in [PR #4684](https://github.com/Unjuno/agent-interface/pull/4684)
+builds separate pinned-base evaluator/controller containers from the exact
+Arena v0 source. A disposable seed-2002 Xvfb run passed display-cookie access,
+screen capture, one `w` event, and path/process separation probes; the arena
+naturally ended at target-stage `deadline_miss`. This is construction evidence
+only: it is not the preregistered seed-2001 trial, a B0/C1 comparison, or a
+hardened hostile-agent security boundary. The one-shot runner, frozen manifest,
+and independent auditor must be completed before formal use. Raw construction
+outputs and protocol are in
+[`research/procedural_control_arena_v0/evaluator_isolation_v1/`](research/procedural_control_arena_v0/evaluator_isolation_v1/).
+
 ### Issue #4623 — GPU shared-prefix readout construction stop
 
 Successor [#4623](https://github.com/Unjuno/agent-interface/issues/4623)
