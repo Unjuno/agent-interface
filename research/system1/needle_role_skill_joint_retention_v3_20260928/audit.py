@@ -9,9 +9,9 @@ from pathlib import Path
 import torch
 import torch.nn.functional as F
 
-SEEDS = (736711, 736811, 736911)
+SEEDS = (9934211, 9934311, 9934411)
 ARMS = ("SHARED_B_ONLY", "SHARED_A_REPLAY", "ROUTED_SHARED_ADAPTER", "ROUTED_SEPARATE_SKILLS")
-ALLOCATION = "needle-role-skill-joint-retention-20260928-v1"
+ALLOCATION = "needle-role-skill-joint-retention-20260928-v3"
 IMAGE = "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e"
 
 
