@@ -33,3 +33,16 @@
 ## Next evidence needed (not performed in this allocation)
 
 A separately frozen, independently implemented posthoc verifier could reconstruct the expected action for all 256 rows and require the exact state-space set. A new allocation would be required to retain ACTIVE before/after bytes/digests and actual activation result, since those were not included in this raw result. Neither step may overwrite this allocation's raw files or convert its initial outcome retroactively.
+
+## Addendum — posthoc independent matrix audit v2
+
+An audit-only successor was separately frozen and run after the initial report. It did not invoke the study or candidate. The independent verifier reconstructed the expected action for every state from the frozen policy description, required the exact 256-state Cartesian set, and checked each of the recorded \`direct\`, \`compiled\`, and \`oracle\` outputs against that reconstruction.
+
+- V2 result: \`PASS_INDEPENDENT_MATRIX_AUDIT_SCOPED\`; 256 rows independently reconstructed; semantic mismatches 0.
+- Ten copied-evidence corruptions (decision fields, match claim, missing/duplicate/changed row, scope, invocation count, image identity) were all rejected.
+- Raw input binding: unchanged RESULT SHA-256 \`0d6c75e32d1efa6a2b365df0bccf6b100d197dbd8c157879bfd9db9cdd643f71\`.
+- V2 audit output SHA-256: \`e82d87fba6016f2fc0e0deb5496ec74f772f4ee7b25ef76b03277b27e4eb9667b\`.
+- V2 auditor source SHA-256: \`006f357895e1f64a5d2c2aff714d169f83b5ef434cf22975ae7559687fcddbc4\`; source and freeze were committed/read back before the audit-only invocation.
+- V2 audit invocations: 1; study invocations by v2: 0; Docker exit 0.
+
+This closes the independent-verification gap for the finite decision matrix only. It does **not** supply the missing ACTIVE before/after byte receipt, so the accepted disposition of the whole original allocation remains **HOLD_ACTIVE_SNAPSHOT_RECEIPT_MISSING**. The initial v1 audit output is preserved unchanged as historical evidence.
