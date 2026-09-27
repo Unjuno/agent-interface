@@ -2,7 +2,7 @@ import unittest
 from types import SimpleNamespace
 from unittest import mock
 
-from runtime.cli_v1.observe import observe
+from runtime.cli_v1.observe import observe, observe_in_session
 
 
 class ObserveTests(unittest.TestCase):
@@ -17,6 +17,45 @@ class ObserveTests(unittest.TestCase):
                 self.assertEqual(row['error'], repr(error))
                 self.assertFalse(row['input_dispatched'])
                 self.assertNotIn('observation', row)
+
+    def test_caller_owned_capture_preserves_recovery_and_connection(self):
+        backend = mock.Mock()
+        backend.observe_read_only.return_value = {"sha256": "source"}
+        session = SimpleNamespace(backend=backend, recovery_required=True,
+                                  dispatch=mock.Mock())
+        with mock.patch("runtime.cli_v1.observe.open_session") as opened:
+            first = observe_in_session(session, target="fixture", frame="window_client",
+                                       region=[0, 0, 400, 180])
+            second = observe_in_session(session, target="fixture", frame="window_client",
+                                        region=[0, 0, 400, 180])
+        self.assertEqual(first["status"], "returned")
+        self.assertNotEqual(first["observation_id"], second["observation_id"])
+        self.assertFalse(first["input_dispatched"])
+        self.assertFalse(first["side_effect_authority"])
+        self.assertTrue(session.recovery_required)
+        self.assertEqual(backend.mock_calls, [
+            mock.call.observe_read_only("fixture", "window_client", [0, 0, 400, 180]),
+            mock.call.observe_read_only("fixture", "window_client", [0, 0, 400, 180])])
+        opened.assert_not_called()
+        session.dispatch.assert_not_called()
+
+    def test_caller_owned_failure_and_invalid_request_never_close_or_retry(self):
+        backend = mock.Mock()
+        backend.observe_read_only.side_effect = OSError("capture")
+        session = SimpleNamespace(backend=backend, recovery_required=True)
+        row = observe_in_session(session, target="fixture", frame="window_client",
+                                 region=[0, 0, 400, 180])
+        self.assertEqual(row["status"], "observation_failed")
+        self.assertTrue(session.recovery_required)
+        self.assertEqual(backend.mock_calls, [
+            mock.call.observe_read_only("fixture", "window_client", [0, 0, 400, 180])])
+        backend.reset_mock()
+        row = observe_in_session(session, target="fixture", frame="window_client",
+                                 region=[False, 0, 400, 180])
+        self.assertEqual(row["status"], "invalid_request")
+        self.assertEqual(backend.mock_calls, [])
+        self.assertEqual(observe_in_session(None, target="fixture", frame="window_client",
+                         region=[0, 0, 400, 180])["error"], "INVALID_SESSION")
 
     def call(self, **options):
         return observe({"fixture": 42}, target="fixture", frame="window_client",

@@ -35,6 +35,44 @@ class NativeHandleBridgeTests(unittest.TestCase):
         bridge.observe = mock.Mock(side_effect=observe)
         return bridge
 
+    def test_public_observation_failure_retains_error_without_advancing_source(self):
+        bridge = self.review_bridge()
+        bridge._binding = mock.Mock(return_value={"focus": 20})
+        bridge.backend = mock.Mock()
+        bridge.backend.d.screen.return_value = SimpleNamespace(
+            width_in_pixels=1280, height_in_pixels=800)
+        bridge.backend.observe_read_only.side_effect = OSError("capture unavailable")
+        bridge.session.backend = bridge.backend
+        bridge.session.recovery_required = True
+        with self.assertRaisesRegex(X11BackendError, "public observation failed"):
+            NativeHandleBridge.observe(bridge)
+        self.assertEqual(bridge.sequence, 7)
+        self.assertEqual(set(bridge.history), {7})
+        self.assertTrue(bridge.session.recovery_required)
+        bridge.backend.observe_read_only.assert_called_once_with(
+            "app", "screen_physical_px", [0, 0, 1280, 800])
+        bridge.backend.close.assert_not_called()
+        bridge.session.dispatch.assert_not_called()
+        report = bridge._save.call_args.args[1]
+        self.assertEqual(report["status"], "observation_failed")
+        self.assertFalse(report["input_dispatched"])
+
+    def test_public_observation_keeps_binding_change_refusal(self):
+        bridge = self.review_bridge()
+        bridge._binding = mock.Mock(side_effect=[{"focus": 20}, {"focus": 21}])
+        bridge.backend = mock.Mock()
+        bridge.backend.d.screen.return_value = SimpleNamespace(
+            width_in_pixels=1280, height_in_pixels=800)
+        bridge.backend.observe_read_only.return_value = {"sha256": "captured"}
+        bridge.session.backend = bridge.backend
+        with self.assertRaisesRegex(X11BackendError, "binding changed"):
+            NativeHandleBridge.observe(bridge)
+        self.assertEqual(bridge.sequence, 7)
+        self.assertEqual(set(bridge.history), {7})
+        bridge.backend.close.assert_not_called()
+        bridge.session.dispatch.assert_not_called()
+        self.assertEqual(bridge._save.call_args.args[1]["status"], "returned")
+
     def test_public_dispatch_retains_report_and_caller_owned_session(self):
         bridge = self.review_bridge()
         bridge.binding_revision = 0
