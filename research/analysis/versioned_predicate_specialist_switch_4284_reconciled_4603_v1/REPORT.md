@@ -4,15 +4,16 @@
 
 Local read-only reconciliation **PASS**. Delivery to current `main` remains pending this PR; this is not a new scientific allocation and does not close #4284 or #4295.
 
-The 60-case PR #4293 bundle is independently readable and internally consistent with its frozen manifest, source hashes, raw denominator, result summary, and corruption-control record. The distinct 24-row #4292 result remains present on the frozen current-main snapshot and is not merged or relabeled with the 60-case result.
+The 60-case PR #4293 bundle is independently readable and internally consistent with its frozen manifest, source hashes, raw denominator, result summary, and corruption-control record. The distinct 24-row #4292 result remains present on the frozen delivery-main snapshot and is not merged or relabeled with the 60-case result.
 
 ## Frozen inputs and preservation
 
-- Repository: `Unjuno/agent-interface`; intake `main` SHA: `d6dacd3507ea23a7c5aafe82788c0a9d8b452834`. Before publication, main advanced independently to `a1a9a7d0abdcdf65d5aba3b74e7f7caf171f2ca4`; the unchanged #4292 raw/report blobs were re-read there and the additive PR is based on that latest SHA.
+- Repository: `Unjuno/agent-interface`; intake `main` SHA: `d6dacd3507ea23a7c5aafe82788c0a9d8b452834`. During preparation, main advanced through `a1a9a7d0abdcdf65d5aba3b74e7f7caf171f2ca4`, `f5fdbcef6596e4d343492e1436642739566cae5b`, and `3842e8921bd587af6ce9c13664d087b377366747`. The unchanged #4292 raw/report blobs were verified at the delivery base; the PR branch was updated through GitHub's normal branch-update operation before the generated index was appended.
 - Source PR #4293: head `393c4115add5e602ed279388a93dad4094daa687`, base `14cfdf1a5f31138b308f98fd0e80fa75e887e65d`; open and non-mergeable at intake. The head is not presented as current main.
 - Issue #4284 and #4295 were both open at intake. No prior allocation was run, changed, replaced, or rerun.
+- During this work, report-only PR #4612 was merged at `6fbd529f16d0ebe21548d1be3da83bac335ecba3`. It uses a distinct integration path and does not contain the 60-case bundle or independent verifier; this PR supplies those missing evidence artifacts additively without replacing #4612's report.
 - All 18 files in PR #4293's changed-file list were read back from GitHub at the frozen PR head. Every computed Git blob SHA-1 matched the GitHub file record. Exact byte counts and SHA-256 values are retained in `READBACK.json`.
-- The changed generated `research/analysis/README.md` was read back and blob-verified but intentionally not copied: this reconciliation does not regenerate or rewrite the current-main index.
+- The changed generated `research/analysis/README.md` in #4293 was read back and blob-verified, but it was not reused because it came from the stale PR base. Instead, `research/analysis/check_index.py` was read from delivery-base main and run exactly as prescribed with `--write` in a reconstructed analysis tree containing all 156 retained result directories from that commit plus this new report directory. Its generated README (34,734 bytes; Git blob `13581dcc5af1f26e89cdf0c7981528b5cc98b6bc`) then passed the same script's read-only check: `analysis index OK: 157 retained result/failure directories indexed`. The generated file is included in this PR; no hand-edited index entries were used.
 
 ## Independent read-only audit
 
@@ -30,7 +31,7 @@ The audit ran in Docker Desktop Engine 28.5.1, image `python:3.12-slim@sha256:2f
 
 ## Distinct 24-row control
 
-On intake main, #4292's `research/analysis/predicate_specialist_switch_4284_v1/FORMAL_RESULT.json.zlib.b64` had Git blob `92a32126cc76e4e663d7604ba454b666ec95b356`, identical to the merged #4292 file record. Its independently Base64/zlib-decoded bytes hash to `dbf74500b348c9a3503e0dd489bb04d9d00f5d6a47a0c9163d4cc615ea90bb31`; decoded timeline length is 24. The #4292 report file blob also matches its merged-PR file record (`6b7065deca1ba5e3a252964c0e27cb9905e257d0`).
+On delivery-base main, #4292's `research/analysis/predicate_specialist_switch_4284_v1/FORMAL_RESULT.json.zlib.b64` had Git blob `92a32126cc76e4e663d7604ba454b666ec95b356`, identical to the merged #4292 file record. Its independently Base64/zlib-decoded bytes hash to `dbf74500b348c9a3503e0dd489bb04d9d00f5d6a47a0c9163d4cc615ea90bb31`; decoded timeline length is 24. The #4292 report file blob also matches its merged-PR file record (`6b7065deca1ba5e3a252964c0e27cb9905e257d0`).
 
 The 24-row baseline and 60-case result remain separate. This audit does not answer the regeneration-versus-lifecycle call-count question in #4295, does not make either predecessor issue complete, and makes no learned-model, live-task, token, runtime, or product claim.
 

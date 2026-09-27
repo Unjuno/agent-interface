@@ -2,7 +2,7 @@
   "schema": "issue4603_github_readback_manifest_v1",
   "repository": "Unjuno/agent-interface",
   "main_sha": "d6dacd3507ea23a7c5aafe82788c0a9d8b452834",
-  "delivery_base_main_sha": "a1a9a7d0abdcdf65d5aba3b74e7f7caf171f2ca4",
+  "delivery_base_main_sha": "3842e8921bd587af6ce9c13664d087b377366747",
   "source_pr": 4293,
   "source_pr_head": "393c4115add5e602ed279388a93dad4094daa687",
   "source_pr_base": "14cfdf1a5f31138b308f98fd0e80fa75e887e65d",
@@ -27,5 +27,17 @@
     {"path":"research/analysis/versioned_predicate_specialist_switch_4284_v1/unpack_evidence.py","bytes":1478,"github_blob":"b97433d777b6576a27b25b1b95ba9c034ecb9007","readback_blob":"b97433d777b6576a27b25b1b95ba9c034ecb9007","sha256":"9768759de4f846898a2bfca6de28e56f4a331b7b76409aacd8958e35375693bd"
     }
   ],
-  "generated_research_index_read_back_but_not_copied": "research/analysis/README.md"
+  "generated_research_index_from_source_pr_read_back_but_not_reused": "research/analysis/README.md",
+  "current_main_index_regeneration": {
+    "generator": "research/analysis/check_index.py",
+    "generator_blob": "c3b14d5f0e62b103916d2c00b318dd1a527d35d1",
+    "base_main": "3842e8921bd587af6ce9c13664d087b377366747",
+    "base_readme_blob": "7e0b7e116eeb90dbe5a60d5250862443c8151d53",
+    "retained_directories_before": 156,
+    "retained_directories_after": 157,
+    "generated_readme_bytes": 34734,
+    "generated_readme_blob": "13581dcc5af1f26e89cdf0c7981528b5cc98b6bc",
+    "generated_readme_sha256": "69979f4a59d851f0e866fb59a16f1f5978f65f9aa5bea68d88863fcf8dec9efa",
+    "generator_write_and_check": "PASS_IN_PINNED_OFFLINE_DOCKER"
+  }
 }
