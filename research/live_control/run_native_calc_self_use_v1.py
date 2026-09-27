@@ -125,7 +125,8 @@ def main():
                 review = review_current_window(bridge)
                 source = review_source(source, review)
                 observation_only = {'started_ns': started, 'ended_ns': time.monotonic_ns(),
-                                    'input_dispatched': False, 'captures': 1,
+                                    'input_dispatched': False,
+                                    'captures': 1 if review['status'] == 'reviewed' else None,
                                     'window_review': review}
                 if stage >= args.max_stages:
                     terminal_context = {'observation': source,

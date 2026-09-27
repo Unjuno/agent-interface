@@ -208,6 +208,8 @@ class NativeFinishAfterTests(unittest.TestCase):
             focus_within=False, review_status=['needs_review', 'reviewed'])
         self.assertEqual(replies[0]['observation']['review_recovery']['status'], 'observation_required')
         self.assertNotIn('review_recovery', replies[1]['observation'])
+        self.assertIsNone(replies[0]['observation_only']['captures'])
+        self.assertEqual(replies[1]['observation_only']['captures'], 1)
         self.assertNotIn('input', events)
 
     def test_post_input_failed_review_never_replays_and_ignores_finish_after(self):
@@ -220,6 +222,16 @@ class NativeFinishAfterTests(unittest.TestCase):
         self.assertEqual(events.count('input'), 1)
         self.assertEqual(events.count('evaluate'), 1)
         self.assertEqual(replies[-1]['status'], 'finished')
+
+    def test_repeated_review_failure_exhausts_stage_bound_without_input(self):
+        replies, sources, events = self.exercise(
+            [{'interaction': 'observe'}, {'interaction': 'observe'}],
+            max_stages=2, review_status='needs_review', expected_error=RuntimeError)
+        self.assertEqual(replies[-1]['status'], 'needs_review')
+        self.assertIsNone(replies[-1]['observation_only']['captures'])
+        self.assertEqual(set(sources), {'source-1.json', 'source-2.json'})
+        self.assertNotIn('input', events)
+        self.assertNotIn('evaluate', events)
 
     def test_pending_review_rejects_input_before_mint(self):
         replies, sources, events = self.exercise([self.action(), self.action()],
