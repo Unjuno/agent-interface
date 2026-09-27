@@ -17,6 +17,7 @@ def retained_reads_valid(bundle):
     trace = bundle.get("trace", {})
     calls = trace.get("calls", [])
     transport = trace.get("retained_transport", {})
+    read_rows = {row.get("source_label"): row for row in trace.get("retained_reads", [])}
     root = Path(bundle.get("bundle_path", ""))
     valid = (transport.get("scope") == "single-public-stdio-client-session"
              and transport.get("same_client_context") is True
@@ -36,7 +37,9 @@ def retained_reads_valid(bundle):
             valid = valid and receipt.get("call_id") == call.get("payload", {}).get("call_id")
             valid = valid and receipt.get("retained_call", {}).get("state") == "finished"
             valid = valid and receipt.get("operation_invoked") is False
-            valid = valid and call.get("session_id") == trace.get("session_id")
+            retained = read_rows.get(call.get("label"), {})
+            valid = valid and retained.get("session_id") == trace.get("session_id")
+            valid = valid and retained.get("state") == receipt.get("retained_call", {}).get("state")
     except (OSError, KeyError, ValueError, TypeError):
         return False
     return valid
