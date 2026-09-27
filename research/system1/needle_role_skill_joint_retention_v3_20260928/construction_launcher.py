@@ -39,7 +39,7 @@ def run(source, output, logs, python=sys.executable):
     env["NEEDLE_CONSTRUCTION_OUTPUT"] = str(output)
     env.pop("NEEDLE_OUTPUT", None)
     env.pop("NEEDLE_SEEDS", None)
-    command = [python, "-B", str(source / "construction.py")]
+    command = [python, "-B", str(source / "construction.py"), "--seed", "9934014"]
     completed = subprocess.run(command, cwd=source, env=env, text=True,
                                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                check=False)
