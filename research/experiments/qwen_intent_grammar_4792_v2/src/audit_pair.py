@@ -167,11 +167,14 @@ def main():
     check(header.get("seed") == SEED and header.get("input_sha256") == input_sha, "raw_input_identity")
     check(header.get("input_bytes") == len(data_bytes), "raw_input_size")
     check(header.get("device") == "cpu" and header.get("dtype") == "float32" and header.get("attn_implementation") == "eager", "cpu_execution_identity")
+    check(header.get("image_id") == freeze["docker_image_id"], "docker_image_identity")
+    check(header.get("threads") == freeze["cpu_threads"] and header.get("interop_threads") == freeze["interop_threads"], "thread_identity")
     check(header.get("model_load_count") == 1 and header.get("fit_count") == 0, "load_and_fit_counts")
     check(header.get("max_new_tokens") == 48 and header.get("do_sample") is False, "decode_protocol")
     check(header.get("source_sha256") == freeze["source_sha256"], "raw_source_manifest")
     check(header.get("model_sha256") == freeze["model_sha256"], "raw_model_manifest")
     check(header.get("adapter_sha256") == freeze["adapter_basename_sha256"], "raw_adapter_manifest")
+    check(header.get("prompt_sha256") == hashlib.sha256(b"Return only a compact intent JSON object; do not emit scope_id or generation.").hexdigest(), "system_prompt_identity")
 
     model_path = Path(args.model)
     model_hashes = {name: sha_file(model_path / name) for name in freeze["model_sha256"]}
@@ -211,6 +214,7 @@ def main():
             check(receipt.get("input_tokens") == len(prompt_ids), f"input_token_count:{i}:{arm}")
             token_ids = receipt.get("output_token_ids")
             check(isinstance(token_ids, list) and len(token_ids) == receipt.get("output_tokens") and all(isinstance(t, int) and t >= 0 for t in token_ids), f"output_tokens:{i}:{arm}")
+            check(isinstance(token_ids, list) and len(token_ids) <= 48 and tokenizer.decode(token_ids, skip_special_tokens=True).strip() == receipt.get("raw_text"), f"token_text_roundtrip:{i}:{arm}")
             check(isinstance(receipt.get("latency_ns"), int) and receipt["latency_ns"] > 0, f"latency:{i}:{arm}")
             parsed = None
             parse_error = None
