@@ -14,3 +14,17 @@ The post-hoc classifier and four standard-library unit tests ran in the pinned L
 ## Reproduction
 
 Run `python3 -m unittest discover -s . -p 'test_*.py' -v` from `posthoc_v1/` and invoke `run_classification.py --raw <raw.json> --audit <audit.json> --out <new-output-path>`. The container should be pinned to `issue-2849-task1-runtime:v3-20260921` (linux/arm64, image digest recorded in `RESULT.md`). Inputs are read-only; choose a new output path because the CLI refuses overwrite.
+
+### Executable checkout command (review correction)
+
+The initial `posthoc_v1/` reference above predates publication of its CLI and is superseded. The additive runnable entry point and adjacent classifier are in `posthoc_v3/`. From the repository root, use a fresh output directory:
+
+```sh
+OUT_DIR="$(mktemp -d)"
+python3 research/integration/calc_effect_contract_34_pilot_v1/posthoc_v3/run_classification.py \
+  --raw research/integration/calc_effect_contract_34_pilot_v1/results/calc-effect-contract-34-pilot-20260927-01/raw.json \
+  --audit research/integration/calc_effect_contract_34_pilot_v1/results/calc-effect-contract-34-pilot-20260927-01/audit.json \
+  --out "$OUT_DIR/classification.json"
+```
+
+This is a posthoc JSON classifier only; it does not launch Calc or represent a fresh experiment. Its output is written outside the tracked, occupied `results/` tree.
