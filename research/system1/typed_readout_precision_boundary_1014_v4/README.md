@@ -1,0 +1,3 @@
+Branch `research/typed-readout-precision-boundary-1014-v4-20260928` is based on current main `f3dc0f18b0aaef241a6cd34124b68439c3434b05`. Candidate path is `research/system1/typed_readout_precision_boundary_1014_v4/`.
+
+This branch is reserved for the proposed v4 successor. It does not yet contain the frozen source bundle; no source hashes have been published and no model/GPU command has run. The previous v3 STOPs remain valid and unchanged. Before execution, carry forward the exact corpus/model identities and gates from #4875, adapt the allocation IDs, freeze source/auditor/tests, keep all host logs outside the empty mounted /out directory, and check GPU/concurrent work again.
