@@ -52,7 +52,8 @@ def main() -> int:
     if version.returncode or version.stdout.strip() != manifest["codex_cli_version"]:
         errors.append("Codex CLI version mismatch")
     login = run([str(codex), "login", "status"])
-    if login.returncode or "Logged in using ChatGPT" not in login.stdout:
+    login_text = login.stdout + "\n" + login.stderr
+    if login.returncode or "Logged in using ChatGPT" not in login_text:
         errors.append("Codex login unavailable")
 
     context = run(["docker", "context", "show"])
@@ -92,7 +93,7 @@ def main() -> int:
         "image_platform": manifest["image_platform"],
         "codex_cli_version": version.stdout.strip(),
         "codex_exe_sha256": digest(codex) if codex.is_file() else None,
-        "codex_login_status": login.stdout.strip() if login.returncode == 0 else "unavailable",
+        "codex_login_status": login_text.strip() if login.returncode == 0 else "unavailable",
         "container_name": args.container_name,
         "source_sha256": {p: digest(repo / p) for p in manifest["source_sha256"] if (repo / p).is_file()},
         "preflight_time_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
