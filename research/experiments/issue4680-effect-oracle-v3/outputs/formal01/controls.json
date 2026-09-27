@@ -1,0 +1,38 @@
+{
+  "control_count": 4,
+  "controls": {
+    "broken_link": {
+      "errors": [
+        "MULTISTEP_LINK_INVALID"
+      ],
+      "mutated_result_sha256": "369aea932235fdd8e0a68cf9f42a997aa45a8247a79476ed25e16e46c5ea3aa4",
+      "rejected": true
+    },
+    "missing_row": {
+      "errors": [
+        "ROW_CARDINALITY_OR_DUPLICATE",
+        "ROW_CASE_SET"
+      ],
+      "mutated_result_sha256": "bb5d52b81f3b4f3331ed543c3776b0a729ff1963dffab09ba43392bd6264b837",
+      "rejected": true
+    },
+    "wrong_expected_postcondition": {
+      "errors": [
+        "INDEPENDENT_POSTCONDITION_MISMATCH:nominal_toggle"
+      ],
+      "mutated_result_sha256": "28047a1e091e8340c7d6c252af48c5418cddc115183a28e52256a66c59a0072c",
+      "rejected": true
+    },
+    "wrong_target": {
+      "errors": [
+        "PROPOSAL_MISMATCH:nominal_toggle",
+        "TRANSITION_REJECTED:nominal_toggle:TARGET_NOT_VISIBLE"
+      ],
+      "mutated_result_sha256": "ebbeb3db96f57bb2c87a12d076ef44068b4920f5956157aafedf044f521cc2d9",
+      "rejected": true
+    }
+  },
+  "rejected_count": 4,
+  "schema": "issue4680-postcondition-controls-v3"
+}
+
