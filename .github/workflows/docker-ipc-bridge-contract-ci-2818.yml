@@ -71,6 +71,7 @@ jobs:
           git init
           git remote add origin https://github.com/Unjuno/agent-interface.git
           while IFS= read -r revision; do
+            revision="${revision%$'\r'}"
             git fetch --no-tags --depth=1 --filter=blob:none origin "$revision"
           done < <(python -c 'import json; print("\n".join(json.load(open("research/live_control/issue_3311_host_ipc_v1/source-revisions.json")).values()))')
       - name: Verify portable raw-manifest handling and retained evidence
