@@ -1,0 +1,31 @@
+{
+  "allocation": "visual-encoding-570-grid-context-r5-20260927-01",
+  "network": [
+    "docker",
+    "network",
+    "create",
+    "--internal",
+    "agent-interface-570-r5-grid-context-internal"
+  ],
+  "ollama": [
+    "docker",
+    "run",
+    "-d",
+    "--platform",
+    "linux/amd64",
+    "--network",
+    "agent-interface-570-r5-grid-context-internal",
+    "--network-alias",
+    "ollama",
+    "--gpus",
+    "all",
+    "--mount",
+    "<MODEL_STORE>:/models:ro",
+    "--env",
+    "OLLAMA_NO_CLOUD=true",
+    "sha256:8262851b2846b87c649eddf3e76beb270c52f4d1bc94559f47efde16b0841551",
+    "serve"
+  ],
+  "formal": "60 sequential calls, no retry",
+  "audit": "pinned helper image, --network none, separate process"
+}
