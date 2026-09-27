@@ -16,6 +16,7 @@ from scoped_target_handle_v2 import FlatTargetRefused
 
 
 from native_tail_v1 import paced_text_tail
+from native_review_recovery_v1 import review_source, validate_recovery_decision
 
 
 def review_current_window(bridge):
@@ -104,6 +105,7 @@ def main():
             request_bytes = request.read_bytes()
             decision_hash = hashlib.sha256(request_bytes).hexdigest()
             decision = json.loads(request_bytes)
+            validate_recovery_decision(source, decision)
             if decision['source_sequence'] != source['sequence']:
                 raise ValueError('decision must refer to exact presented source')
             if decision.get('interaction') == 'observe' and set(decision) - {'source_sequence', 'interaction'}:
@@ -121,9 +123,7 @@ def main():
             if interaction == 'observe':
                 started = time.monotonic_ns()
                 review = review_current_window(bridge)
-                if review['status'] != 'reviewed':
-                    raise RuntimeError('window review failed; no automatic input or replay')
-                source = review['observation']
+                source = review_source(source, review)
                 observation_only = {'started_ns': started, 'ended_ns': time.monotonic_ns(),
                                     'input_dispatched': False, 'captures': 1,
                                     'window_review': review}
@@ -187,10 +187,18 @@ def main():
             row['ended_ns'] = time.monotonic_ns()
             save('actions.json', rows)
             row['window_review'] = review_current_window(bridge)
-            if row['window_review']['status'] != 'reviewed':
+            source = review_source(source, row['window_review'])
+            if 'review_recovery' in source:
+                row['review_recovery'] = source['review_recovery']
                 save('actions.json', rows)
-                raise RuntimeError('window review failed; no automatic input or replay')
-            source = row['window_review']['observation']
+                if stage >= args.max_stages:
+                    terminal_context = {'action': row, 'observation': source}
+                    raise RuntimeError('bounded stages exhausted during window review; no input replay')
+                publish_source(stage+1, source)
+                publish(out/f'reply-{stage}.json', encoded({'status': 'boundary', 'stage': stage,
+                    'decision_sha256': decision_hash, 'action': row, 'observation': source,
+                    'authority_granted': False, 'task_success': None}))
+                continue
             if args.probe_old_target:
                 before = bridge.backend.emissions
                 stale = bridge.click(alias, offset)
