@@ -27,8 +27,8 @@ def sha256(data: bytes) -> str:
 
 
 def load_inputs(repo_root: Path):
-    source_path = repo_root / SOURCE_RELATIVE
-    transport_path = repo_root / TRANSPORT_RELATIVE
+    source_path = repo_root / "audit.py" if repo_root.is_dir() and repo_root.name == "source" else repo_root / SOURCE_RELATIVE
+    transport_path = repo_root / "RAW_AND_AUDIT.zip.base64" if repo_root.is_dir() and repo_root.name == "input" else repo_root / TRANSPORT_RELATIVE
     source_bytes = source_path.read_bytes()
     transport_bytes = transport_path.read_bytes()
     identities = {
@@ -147,8 +147,8 @@ def execute(repo_root: Path, environment: dict) -> dict:
 
 
 def main() -> int:
-    if len(sys.argv) != 3:
-        print("usage: run_probe.py REPO_ROOT OUTPUT_JSON", file=sys.stderr)
+    if len(sys.argv) != 4:
+        print("usage: run_probe.py SOURCE_PATH TRANSPORT_PATH OUTPUT_JSON", file=sys.stderr)
         return 64
     output = Path(sys.argv[2])
     if output.exists():
@@ -159,6 +159,10 @@ def main() -> int:
                "executable": sys.executable,
                "runtime_mode": os.environ.get("PROBE_RUNTIME_MODE", "unspecified")}
         result = execute(Path(sys.argv[1]), env)
+        # The transport path is separately mounted read-only; verify the same bytes
+        # the standard repository-relative loader would consume.
+        if sha256(Path(sys.argv[2]).read_bytes()) != TRANSPORT_SHA256:
+            raise ValueError("STOP_TRANSPORT_MOUNT_MISMATCH")
     except Exception as exc:
         result = {"schema": "predicate-order-audit-integrity-4733-probe-v1",
                   "issue": 4953, "allocation": "predicate-order-audit-integrity-4733-20260928-01",
