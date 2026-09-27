@@ -1,0 +1,360 @@
+{
+  "allocation": "issue4680-skillpackage-construction-20260927-01",
+  "candidate_sha256": "022bf4bda5773b578cdb211e547628367ba8708b294fd4269c3b40db2e1cc92a",
+  "case_count": 10,
+  "freeze_sha256": "14332efe92338a8252b3ad31f80ef6dab0c26a178bcf936366d16d1c7e67c3ef",
+  "invalid_candidate_install_accepted": false,
+  "invalid_candidate_preserved_active": true,
+  "package_sha256": "d251cad5aab70f4c66578a83ad4eb08ddebb8bdc79cd0ccc1696e39ceb09f958",
+  "rollback_accepted": true,
+  "rollback_restored_active": true,
+  "rows": [
+    {
+      "authority": {
+        "allowed_actions": [
+          "CLICK",
+          "YIELD",
+          "NO_ACTION"
+        ],
+        "allowed_effects": [
+          "toggle_email_reminders"
+        ],
+        "generation": 12,
+        "scope_id": "workspace-7"
+      },
+      "effect": {
+        "email_reminders": true
+      },
+      "expected": {
+        "arguments": {
+          "generation": 12,
+          "scope_id": "workspace-7",
+          "target": "toggle_email_reminders"
+        },
+        "name": "CLICK"
+      },
+      "id": "nominal_toggle",
+      "prior_step_id": null,
+      "prior_step_ok": null,
+      "proposal": {
+        "arguments": {
+          "generation": 12,
+          "scope_id": "workspace-7",
+          "target": "toggle_email_reminders"
+        },
+        "name": "CLICK"
+      }
+    },
+    {
+      "authority": {
+        "allowed_actions": [
+          "SET_FIELD",
+          "CLICK",
+          "YIELD"
+        ],
+        "allowed_effects": [
+          "set_digest_frequency",
+          "save_settings"
+        ],
+        "generation": 12,
+        "scope_id": "workspace-7"
+      },
+      "effect": {},
+      "expected": {
+        "arguments": {
+          "field": "digest_frequency",
+          "generation": 12,
+          "scope_id": "workspace-7",
+          "value": "weekly"
+        },
+        "name": "SET_FIELD"
+      },
+      "id": "multistep_set_field",
+      "prior_step_id": null,
+      "prior_step_ok": null,
+      "proposal": {
+        "arguments": {
+          "field": "digest_frequency",
+          "generation": 12,
+          "scope_id": "workspace-7",
+          "value": "weekly"
+        },
+        "name": "SET_FIELD"
+      }
+    },
+    {
+      "authority": {
+        "allowed_actions": [
+          "SET_FIELD",
+          "CLICK",
+          "YIELD"
+        ],
+        "allowed_effects": [
+          "set_digest_frequency",
+          "save_settings"
+        ],
+        "generation": 12,
+        "scope_id": "workspace-7"
+      },
+      "effect": {
+        "digest_frequency": "weekly",
+        "saved": true
+      },
+      "expected": {
+        "arguments": {
+          "generation": 12,
+          "scope_id": "workspace-7",
+          "target": "save_settings"
+        },
+        "name": "CLICK"
+      },
+      "id": "multistep_save",
+      "prior_step_id": "multistep_set_field",
+      "prior_step_ok": true,
+      "proposal": {
+        "arguments": {
+          "generation": 12,
+          "scope_id": "workspace-7",
+          "target": "save_settings"
+        },
+        "name": "CLICK"
+      }
+    },
+    {
+      "authority": {
+        "allowed_actions": [
+          "SET_FIELD",
+          "CLICK",
+          "YIELD"
+        ],
+        "allowed_effects": [
+          "set_timezone",
+          "save_settings"
+        ],
+        "generation": 12,
+        "scope_id": "workspace-7"
+      },
+      "effect": {},
+      "expected": {
+        "arguments": {
+          "field": "timezone",
+          "generation": 12,
+          "scope_id": "workspace-7",
+          "value": "Asia/Tokyo"
+        },
+        "name": "SET_FIELD"
+      },
+      "id": "same_state_different_intent",
+      "prior_step_id": null,
+      "prior_step_ok": null,
+      "proposal": {
+        "arguments": {
+          "field": "timezone",
+          "generation": 12,
+          "scope_id": "workspace-7",
+          "value": "Asia/Tokyo"
+        },
+        "name": "SET_FIELD"
+      }
+    },
+    {
+      "authority": {
+        "allowed_actions": [
+          "CLICK",
+          "YIELD"
+        ],
+        "allowed_effects": [
+          "delete_workspace"
+        ],
+        "generation": 12,
+        "scope_id": "workspace-7"
+      },
+      "effect": {},
+      "expected": {
+        "arguments": {
+          "reason": "forbidden"
+        },
+        "name": "YIELD"
+      },
+      "id": "forbidden_effect",
+      "prior_step_id": null,
+      "prior_step_ok": null,
+      "proposal": {
+        "arguments": {
+          "reason": "forbidden"
+        },
+        "name": "YIELD"
+      }
+    },
+    {
+      "authority": {
+        "allowed_actions": [
+          "SET_FIELD",
+          "YIELD"
+        ],
+        "allowed_effects": [
+          "set_sharing_visibility"
+        ],
+        "generation": 12,
+        "scope_id": "workspace-7"
+      },
+      "effect": {},
+      "expected": {
+        "arguments": {
+          "reason": "ambiguous"
+        },
+        "name": "YIELD"
+      },
+      "id": "ambiguous_missing_value",
+      "prior_step_id": null,
+      "prior_step_ok": null,
+      "proposal": {
+        "arguments": {
+          "reason": "ambiguous"
+        },
+        "name": "YIELD"
+      }
+    },
+    {
+      "authority": {
+        "allowed_actions": [
+          "SET_FIELD",
+          "YIELD"
+        ],
+        "allowed_effects": [
+          "set_display_name"
+        ],
+        "generation": 12,
+        "scope_id": "workspace-7"
+      },
+      "effect": {},
+      "expected": {
+        "arguments": {
+          "reason": "stale_scope"
+        },
+        "name": "YIELD"
+      },
+      "id": "stale_generation",
+      "prior_step_id": null,
+      "prior_step_ok": null,
+      "proposal": {
+        "arguments": {
+          "reason": "stale_scope"
+        },
+        "name": "YIELD"
+      }
+    },
+    {
+      "authority": {
+        "allowed_actions": [
+          "CLICK",
+          "YIELD",
+          "NO_ACTION"
+        ],
+        "allowed_effects": [
+          "toggle_email_reminders"
+        ],
+        "generation": 12,
+        "scope_id": "workspace-7"
+      },
+      "effect": {
+        "email_reminders": true
+      },
+      "expected": {
+        "arguments": {
+          "reason": "already_satisfied"
+        },
+        "name": "NO_ACTION"
+      },
+      "id": "already_satisfied",
+      "prior_step_id": null,
+      "prior_step_ok": null,
+      "proposal": {
+        "arguments": {
+          "reason": "already_satisfied"
+        },
+        "name": "NO_ACTION"
+      }
+    },
+    {
+      "authority": {
+        "allowed_actions": [
+          "SET_FIELD",
+          "CLICK",
+          "YIELD"
+        ],
+        "allowed_effects": [
+          "set_digest_frequency",
+          "save_settings"
+        ],
+        "generation": 12,
+        "scope_id": "workspace-7"
+      },
+      "effect": {},
+      "expected": {
+        "arguments": {
+          "field": "digest_frequency",
+          "generation": 12,
+          "scope_id": "workspace-7",
+          "value": "monthly"
+        },
+        "name": "SET_FIELD"
+      },
+      "id": "local_correction",
+      "prior_step_id": null,
+      "prior_step_ok": null,
+      "proposal": {
+        "arguments": {
+          "field": "digest_frequency",
+          "generation": 12,
+          "scope_id": "workspace-7",
+          "value": "monthly"
+        },
+        "name": "SET_FIELD"
+      }
+    },
+    {
+      "authority": {
+        "allowed_actions": [
+          "SET_FIELD",
+          "YIELD"
+        ],
+        "allowed_effects": [
+          "toggle_email_reminders"
+        ],
+        "generation": 12,
+        "scope_id": "workspace-7"
+      },
+      "effect": {},
+      "expected": {
+        "arguments": {
+          "reason": "unsupported"
+        },
+        "name": "YIELD"
+      },
+      "id": "runtime_authority_narrower_than_package",
+      "prior_step_id": null,
+      "prior_step_ok": null,
+      "proposal": {
+        "arguments": {
+          "reason": "unsupported"
+        },
+        "name": "YIELD"
+      }
+    }
+  ],
+  "schema": "issue4680-skillpackage-construction-result-v1",
+  "source_sha256": {
+    "PLAN.md": "89a1534bf455069d787d5d9d9241bf39dabcc898ab834260619ac601ba885fa7",
+    "audit.py": "da2a666a6f5bd469b8dcd0f7dac45ddcf5fe7319bbecb2a5e472b2147341a4bc",
+    "cases.json": "c0ace2e31e5312560475b5b186a9a3ac8f0921ae679a542bd920396b141d4754",
+    "controls.py": "13aa85f7236bfaf55463cce1c711cfe71a9d60e2a2f1626265571d2f5046c759",
+    "execute.py": "85fa9c16032e09029b39c4d9784ba6baa1a252da1c0cca5217c6cb18c9833e1e",
+    "package.json": "d251cad5aab70f4c66578a83ad4eb08ddebb8bdc79cd0ccc1696e39ceb09f958",
+    "run.py": "1af07f3e7966e43b1645026a6e12cb09045500a7694a5da00e69a3d930834a7f",
+    "skill_package.py": "65bd2bcd9865129964406c2a21a158eaef6115bfb80fedcb1fd3162f4eb06833",
+    "test_skill_package.py": "431ba57eee9db7de2d3a6c4313812b04eb6a73c502bc75a17b9df901afb726ae"
+  },
+  "valid_candidate_switch_accepted": true
+}
+
