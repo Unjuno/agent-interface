@@ -12,7 +12,6 @@ jobs:
   replay-gate:
     timeout-minutes: 5
     runs-on: ubuntu-24.04
-    container: python:3.12-slim
     steps:
       - name: Shallow checkout
         uses: actions/checkout@v4
@@ -23,4 +22,7 @@ jobs:
             /research/doom/test_map01_scorer_scheduler_replay_3270.py
       - name: Run deterministic replay gate
         run: |
-          python -m unittest -v research/doom/test_map01_scorer_scheduler_replay_3270.py
+          docker run --rm --network none \
+            --mount "type=bind,source=$GITHUB_WORKSPACE,target=/workspace,readonly" \
+            --workdir /workspace python:3.12-slim \
+            python -m unittest -v research/doom/test_map01_scorer_scheduler_replay_3270.py
