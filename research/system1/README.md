@@ -96,3 +96,7 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Local Needle training invocation guard
 
 - [`needle_single_invocation_guard_4678_v1/README.md`](needle_single_invocation_guard_4678_v1/README.md) — Issue #4678 preflight STOP: the exact #4205 GPU image is cached and matches, but its pinned safetensors checkpoint is absent; no training-image container or optimizer step ran. Two offline CPU-only audit containers validated the retained STOP record.
+
+## Construction-only online Needle batch-cadence probe — Issue #4824 successor
+
+- [`needle_online_correction_4824_batched_v1/README.md`](needle_online_correction_4824_batched_v1/README.md) — Distinct three-seed construction-only single-row vs batch-2 comparison. Trainer-reported A/B accuracy stayed 1.00/0.50; batch-2 lowered B cross-entropy but not held-out accuracy. Initial audit PASS label withdrawn because model logits/base weights were not independently replayed; corrected disposition `STOP_AUDIT_INCOMPLETE`. Raw is retained as 28 ordered compressed parts with exact local comparison. Does not modify #4824/#4829 formal outcomes.
