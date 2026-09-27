@@ -10,7 +10,7 @@
 - Seeds: 735211, 735311, 735411; 3 arms × 16 arrivals × 3 seeds = 144 checkpoints.
 - Container exit 0; one formal orchestration, zero retries; UTC elapsed 3.762 s.
 - Raw JSON: 964,795 bytes; SHA-256 `ed4560d01c99adb74230758c6c6bb22458159d1b76e790836c0936c3cac15349`.
-- Lossless compressed copy: `formal_result.json.gz` (SHA-256 `8754ceac5be2c46bb876ca0703a824337e395409caa8a69fe2eea72a1b00ab8`). Gunzip it to recover the raw JSON; decoded bytes must match the raw size and SHA above.
+- Lossless compressed copy: `formal_result.json.gz` (SHA-256 `8754ceac5be2c46bb876ca0703a824337e395409caa8a69fef2eea72a1b00ab8`). Gunzip it to recover the raw JSON; decoded bytes must match the raw size and SHA above.
 
 ## Auditor disposition and diagnosis
 
@@ -35,6 +35,6 @@ Rehearsal was unstable: none of the three seeds simultaneously retained A and ac
 
 ## Excluded construction
 
-Construction seed 735014 is separate from formal. One wrapper invocation stopped before fitting because it placed its own logs inside the required-empty raw directory (0 optimizer steps); a corrected wrapper ran construction once and its independent audit passed after adding an explicit base-immutability assertion. Construction final A/B: B_ONLY 0/1; duplicate control 0/1; rehearsal 0.773/0.027. This points in the same direction—preserving old-task performance can prevent B acquisition—but is not a formal row and is not pooled with the formal seeds.
+Construction seed 735014 is separate from formal. One wrapper invocation stopped before fitting because it placed its own logs inside the required-empty raw directory (0 optimizer steps); a corrected wrapper ran construction once and its independent audit passed after adding an explicit base-immutability assertion. Construction final A/B: B_ONLY 0/1; duplicate control 0/1; rehearsal 0.969/0.281. This points in the same direction—preserving old-task performance can prevent B acquisition—but is not a formal row and is not pooled with the formal seeds.
 
 The runtime/product is untouched. No claim is made about natural feedback, real-time systems, routing quality, production promotion, or action safety.
