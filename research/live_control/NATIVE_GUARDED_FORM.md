@@ -1,6 +1,7 @@
 # Reusable native guarded form method
 
-`native_guarded_form_v1.fill_and_submit` extracts the existing native six-task
+`native_guarded_form_v1.fill_and_submit` is a compatibility import of
+`runtime.guarded_x11_v1.form.fill_and_submit`, which extracts the existing native six-task
 form operation into an importable method. It accepts a live NativeHandleBridge,
 explicit field/submit `(alias, offset)` references, text, a caller-selected fixed
 wait and a receipt persistence callback. The six-task harness now uses this
@@ -38,6 +39,7 @@ compiled_gui_interface_v1 conditional state graph.
 records cold grounding, reuse, a changed-layout refusal, manual repair and reuse
 through this extracted method. Tests cover failed/unverified release, retained
 partial results, persistence failure, uncertain dispatch and pre-input reference
-validation. Public CLI/MCP method exposure and matched efficiency measurement
-remain later integration work; the importable native function is not a portable
-public API guarantee.
+validation. The shared implementation is included in the portable runtime as an explicit
+[Linux/X11 Python API](../../runtime/guarded_x11_v1/README.md). Public CLI/MCP
+method exposure, semantic form verification and matched efficiency measurement
+remain later integration work.
