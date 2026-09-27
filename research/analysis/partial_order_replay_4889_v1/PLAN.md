@@ -38,4 +38,3 @@ Before source freeze, a network-disabled read-only Docker smoke checked state cl
 ## Reproduction
 
 From a clean output directory, run `python -S -B runner.py` with `OUT=/evidence/formal01`, mounting the frozen source read-only and the evidence root writable. Then run `python -S -B audit.py` with `EVIDENCE=/evidence/formal01`, keeping source read-only. The formal runner is invoked exactly once; the audit is a separate verification pass, not a scientific rerun. Complete exact commands, stdout/stderr, exit codes, file hashes and outputs are retained alongside this plan.
-
