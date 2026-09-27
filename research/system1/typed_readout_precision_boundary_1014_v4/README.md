@@ -1,25 +1,16 @@
 # Issue #4912 — selected-code precision construction
 
-This one-shot construction-only allocation compares full-prefill and shared-prefix KV-cache logits for the eight answer codes consumed by the typed readout. It uses three previously excluded corpus rows under FP16, BF16 and FP32. It performs no text generation, training, formal timing block, semantic scoring, GUI action or authority change.
+This is a one-shot, construction-only successor to #4875's pre-load `STOP_OUTPUT_NOT_EMPTY`. It preserves the exact frozen comparison: full-prefill versus shared-prefix KV-cache logits for answer IDs 15–22, using FP16/BF16/FP32 on excluded rows B00/B17/B63 × suffix slots 0/7/15. It performs no generation, training, semantic scoring, GUI action or formal timing schedule.
 
 ## Frozen identity
 
 - Main parent: `f3dc0f18b0aaef241a6cd34124b68439c3434b05`.
-- Exact corpus: 270,292 bytes, SHA-256 `85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c`. Preserved from the pre-existing local checkout and matches the original source manifest. Main currently contains a distinct 270,228-byte corpus; it is not used.
-- Model: `Qwen/Qwen2.5-0.5B-Instruct`, revision `7ae557604adf67be50417f59c2c2f167def9a775`; every asset is checked against the original MODEL_MANIFEST before loading.
-- CUDA image: `sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261` (linux/amd64), PyTorch 2.5.1+cu121, Transformers 5.16.1, safetensors 0.8.0.
-- Hardware: NVIDIA GeForce RTX 3080 Laptop GPU, 16 GiB.
+- Corpus: 270,292 bytes, SHA-256 `85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c`.
+- Model: Qwen/Qwen2.5-0.5B-Instruct revision `7ae557604adf67be50417f59c2c2f167def9a775`; weights SHA-256 `fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe`.
+- Image: `sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261`, linux/amd64, PyTorch 2.5.1+cu121, Transformers 5.16.1, safetensors 0.8.0.
 
-## One-shot construction command
+## Output and log isolation
 
-The command and absolute paths are recorded verbatim in `FREEZE.json`. Source, corpus and model are mounted read-only; the only writable mount is a new empty output directory. Network is disabled. The existing Ollama container is left untouched.
+Before the sole invocation, create a new empty host directory mounted writable at `/out`. Docker stdout, stderr and the invocation receipt must be stored in a separate sibling log directory that is not mounted into the container. The source/corpus and model are read-only mounts; network is disabled. Audit output is a separate writable directory, and the auditor mounts construction output read-only. Do not stop or alter the resident Ollama/X11 containers. Immediately before execution, verify RTX 3080 utilization and check for active concurrent GPU allocations. If another allocation is running, do not launch this one.
 
-```powershell
-docker run --rm --pull=never --network none --read-only --gpus all --cpus=2 --memory=8g --pids-limit=64 --tmpfs /tmp:rw,noexec,nosuid,size=512m -v "<SOURCE>:/src:ro" -v "<MODEL>:/models/model:ro" -v "<FRESH_OUTPUT>:/out:rw" -e HF_HOME=/tmp/hf -e TRANSFORMERS_OFFLINE=1 --entrypoint python sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261 -B /src/run_construction.py --model /models/model --corpus /src/corpus.jsonl --out /out
-```
-
-## Frozen construction rows and decisions
-
-Rows are B00/B17/B63 × suffix slots 0/7/15 (nine pairs). The same cache helpers, tokenizer, prefixes, suffixes, and eight token IDs `[15,16,17,18,19,20,21,22]` are used across precisions. PASS requires at least one of BF16/FP32 to meet both max absolute and max relative error <=0.002 on all nine pairs, unchanged winners on every pair, suffix isolation, verified hashes, and a zero-error raw-only audit with all five corruption controls rejected. No formal 64×16 timing schedule runs here.
-
-Three raw-audit tests passed in the pinned CPU container before the freeze; see `FREEZE.json` for the exact invocation, image, hashes and test result.
+PASS requires one candidate precision (BF16 or FP32) to meet both absolute and relative <=0.002 bounds for all nine pairs, unchanged winners, cache isolation, controls, and zero independent raw-audit errors. A failure or gate mismatch is retained without retry. Scope is only these three excluded synthetic bundles, one model snapshot, one RTX 3080 and one image; no speedup, semantic accuracy, GUI, authority, deployment or product claim follows.
