@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 
 
 HERE = Path(__file__).resolve().parent
@@ -60,8 +61,8 @@ def main():
             "strict contract2/2 and input range<=128; stable moved handle plus all engine "
             "checks; transient selected-target patch refuses before handle"),
         "failure_policy": "retain both first sessions; no retry or prompt/point/frame/size/order repair",
-        "sources": {**{name: sha(HERE / name) for name in live},
-                    **{name: sha(HERE.parent / name) for name in task}},
+        "sources": complete_guarded_hashes({**{name: sha(HERE / name) for name in live},
+                    **{name: sha(HERE.parent / name) for name in task}}, base=HERE),
         "scope": (
             "two fresh same-save seed991004 OpenTTD X11 sessions and two Luna-low image "
             "calls; one scripted guarded L plus selected-target negative; independent engine "

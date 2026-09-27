@@ -3,6 +3,7 @@
 import hashlib
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 
 
 HERE = Path(__file__).resolve().parent
@@ -85,13 +86,13 @@ def main():
             "reject": "persistent correctness/safety/repair fails, or frozen token/generation/break-even gates fail",
             "timing": "descriptive for this one allocation; faster only when persistent total elapsed is lower than both references"},
         "failure_policy": "preserve the first result and do not retry; a formal repair invalidates this allocation, which must HOLD before any new version or allocation",
-        "sources": {name: sha(HERE / name) for name in sources},
+        "sources": complete_guarded_hashes({name: sha(HERE / name) for name in sources}, base=HERE),
         "scope": "one finite same-model three-arm allocation; no population success rate, generality, human-speed, product-completion or DOOM claim",
     }
     (OUT / "preregistration.json").write_text(json.dumps(plan, indent=2) + "\n",
                                                 encoding="utf-8", newline="\n")
     print(json.dumps({"study": plan["study"], "status": plan["status"],
-                      "source_count": len(sources)}, indent=2))
+                      "source_count": len(plan["sources"])}, indent=2))
 
 
 if __name__ == "__main__":

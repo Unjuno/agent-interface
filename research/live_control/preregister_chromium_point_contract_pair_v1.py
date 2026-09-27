@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 import subprocess
 
 
@@ -56,7 +57,7 @@ def main():
             "surface origin and saves independently; changed patch refuses before handle"),
         "failure_policy": "retain both first sessions; no retry or prompt/point/frame/size/order repair",
         "codex_cli": version,
-        "sources": {name: sha(HERE / name) for name in names},
+        "sources": complete_guarded_hashes({name: sha(HERE / name) for name in names}, base=HERE),
         "scope": (
             "two fresh same-seed Chromium sessions and two Luna-low image calls; "
             "explicit model-authored point space/motion contract on one known button; "
