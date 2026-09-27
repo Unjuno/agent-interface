@@ -17,7 +17,12 @@ def main():
     paths = sorted(root.glob("adapter_model.safetensors.part-*.b64"))
     if len(paths) != 6:
         raise SystemExit(f"expected 6 ordered base64 parts; found {len(paths)}")
-    chunks = [base64.b64decode(path.read_bytes(), validate=True) for path in paths]
+    chunks = []
+    for path in paths:
+        encoded = path.read_bytes()
+        if encoded.startswith(b"\xef\xbb\xbf"):
+            encoded = encoded[3:]
+        chunks.append(base64.b64decode(encoded, validate=True))
     payload = b"".join(chunks)
     digest = hashlib.sha256(payload).hexdigest()
     if len(payload) != args.expected_bytes or digest != args.expected_sha256:
