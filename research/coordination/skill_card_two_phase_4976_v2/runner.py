@@ -126,7 +126,7 @@ def main(out_path: str):
     payload = {
         "schema": "skill-card-two-phase-4976-raw-v1",
         "issue": 4998,
-        "allocation": "skill-card-two-phase-4976-20260928-01",
+        "allocation": "skill-card-two-phase-4976-20260928-02",
         "main_commit": "4fa988e2872e20f4da840c91fbdd83a8d0ff8d12",
         "source_hashes": {name: sha(path.read_bytes()) for name, path in SOURCE_FILES.items()},
         "registry_sha256_before": before,
