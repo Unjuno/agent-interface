@@ -28,7 +28,7 @@ class TaskEffectAuditTests(unittest.TestCase):
         events = copy.deepcopy(EVENTS)
         terminal = next(e for e in events if e.get("event") == "terminal")
         terminal["release"]["verified"] = False
-        self.assertIn("release_verified", self.audit_events(events)["errors"])
+        receipt = self.audit_events(events)\n        self.assertIn("release_verified", receipt["errors"])\n        self.assertEqual(receipt["verdict"], "STOP_CHROMIUM_FIXTURE_TASK_EFFECT")
 
     def test_missing_saved_render_is_rejected(self):
         events = copy.deepcopy(EVENTS)
@@ -41,7 +41,7 @@ class TaskEffectAuditTests(unittest.TestCase):
         events = copy.deepcopy(EVENTS)
         evaluation = next(e for e in events if e.get("event") == "independent_evaluation")
         evaluation["actual"] = {"value": ["wrong"]}
-        self.assertIn("evaluator_exact_value", self.audit_events(events)["errors"])
+        receipt = self.audit_events(events)\n        self.assertIn("evaluator_exact_value", receipt["errors"])\n        self.assertEqual(receipt["verdict"], "FAIL_CHROMIUM_FIXTURE_TASK_EFFECT")
 
     def test_second_program_is_rejected(self):
         events = copy.deepcopy(EVENTS)
