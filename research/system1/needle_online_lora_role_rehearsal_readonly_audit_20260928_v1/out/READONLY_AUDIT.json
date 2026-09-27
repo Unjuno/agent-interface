@@ -1,0 +1,105 @@
+{
+  "all_three_per_seed_quality_gates_pass": false,
+  "allocation": "needle-online-lora-role-rehearsal-20260927-v1",
+  "audit_schema": "issue4895-readonly-stdlib-raw-audit-v1",
+  "decision": "PASS_RAW_IDENTITY_AND_DESCRIPTIVE_RECOMPUTATION",
+  "duplicate_control_comparison": {
+    "checkpoints": 48,
+    "exact_full_record_differences": 48,
+    "interpretation": "Exact trajectory JSON equality is stronger than prediction equivalence; this read-only comparison does not declare the formal allocation valid or revise its HOLD.",
+    "maximum_adapter_scalar_absolute_difference": 3.5762786865234375e-07,
+    "maximum_optimizer_scalar_absolute_difference": 1.7881393432617188e-07,
+    "predictions_identical_at_every_checkpoint": true
+  },
+  "errors": [],
+  "mean_rehearsal_A_gain_vs_duplicate_control": 0.5872395833333334,
+  "registered_audit_errors": [
+    "freeze_hash",
+    "735211:duplicate_control_not_equivalent",
+    "735311:duplicate_control_not_equivalent",
+    "735411:duplicate_control_not_equivalent"
+  ],
+  "retained_artifacts": {
+    "checkpoint_rows": 144,
+    "formal_exit_code": 0,
+    "formal_orchestrations": 1,
+    "gzip_bytes": 361312,
+    "gzip_git_blob": "fa2c21de7f55fa9c5c50c06c01e450120106efce",
+    "gzip_sha256": "8754ceac5be2c46bb876ca0703a824337e395409caa8a69fef2eea72a1b00ab8",
+    "raw_bytes": 964795,
+    "raw_sha256": "ed4560d01c99adb74230758c6c6bb22458159d1b76e790836c0936c3cac15349",
+    "retries": 0
+  },
+  "scope": "Retained bytes and recorded predictions only; no optimizer replay, model fit, GPU, Docker, or change to registered audit/source/raw.",
+  "seed_results": [
+    {
+      "final_accuracy_recomputed_from_recorded_predictions": {
+        "A_REHEARSAL": {
+          "A": 0.19921875,
+          "B": 0.79296875
+        },
+        "B_DUPLICATE_CONTROL": {
+          "A": 0.0,
+          "B": 1.0
+        },
+        "B_ONLY": {
+          "A": 0.0,
+          "B": 1.0
+        }
+      },
+      "passes_per_seed_quality_gate": false,
+      "rehearsal_A_gain_vs_duplicate_control": 0.19921875,
+      "rehearsal_B_gap_vs_duplicate_control": 0.20703125,
+      "seed": 735211
+    },
+    {
+      "final_accuracy_recomputed_from_recorded_predictions": {
+        "A_REHEARSAL": {
+          "A": 0.58984375,
+          "B": 0.48828125
+        },
+        "B_DUPLICATE_CONTROL": {
+          "A": 0.0,
+          "B": 1.0
+        },
+        "B_ONLY": {
+          "A": 0.0,
+          "B": 1.0
+        }
+      },
+      "passes_per_seed_quality_gate": false,
+      "rehearsal_A_gain_vs_duplicate_control": 0.58984375,
+      "rehearsal_B_gap_vs_duplicate_control": 0.51171875,
+      "seed": 735311
+    },
+    {
+      "final_accuracy_recomputed_from_recorded_predictions": {
+        "A_REHEARSAL": {
+          "A": 0.97265625,
+          "B": 0.02734375
+        },
+        "B_DUPLICATE_CONTROL": {
+          "A": 0.0,
+          "B": 1.0
+        },
+        "B_ONLY": {
+          "A": 0.0,
+          "B": 1.0
+        }
+      },
+      "passes_per_seed_quality_gate": false,
+      "rehearsal_A_gain_vs_duplicate_control": 0.97265625,
+      "rehearsal_B_gap_vs_duplicate_control": 0.97265625,
+      "seed": 735411
+    }
+  ],
+  "source_identity": {
+    "audit_py_git_blob": "697c6068cbfe878338f78347fd4fa1e7b7e9a651",
+    "audit_py_sha256": "02d9a98a6eee494ef8f04edee22b84224312dfc8cd33f26ba96039f197f49b32",
+    "freeze_sha256": "cffa4feaf36cdaeaf899e0f4ddadefb30ae2d0c59059a87dc76dd7b93c705d9b",
+    "frozen_audit_py_sha256": "02d9a98a6eee494ef8f04edee22b84224312dfc8cd33f26ba96039f197f49b32",
+    "matches": true,
+    "sidecar_digest_token": "cffa4feaf36cdaeaf899e0f4ddadefb30ae2d0c59059a87dc76dd7b93c705d9b",
+    "sidecar_has_sha256sum_filename_suffix": true
+  }
+}
