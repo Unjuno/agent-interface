@@ -2,10 +2,13 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import hmac
 import json
 import os
 from pathlib import Path
 import subprocess
+import tempfile
 import time
 
 
@@ -23,6 +26,27 @@ def host_path(value: str | None, repo: Path) -> str | None:
     return value
 
 
+def verified_instruction_bytes(request: dict, repo: Path) -> bytes | None:
+    value = request.get("instructions")
+    if value is None:
+        return None
+    mapped = host_path(value, repo)
+    if mapped is None:
+        raise ValueError("instruction path is absent")
+    repo_root = repo.resolve(strict=True)
+    instruction_path = Path(mapped).resolve(strict=True)
+    try:
+        instruction_path.relative_to(repo_root)
+    except ValueError as exc:
+        raise ValueError("instruction path escapes the declared repo") from exc
+    data = instruction_path.read_bytes()
+    expected = request.get("instructions_sha256")
+    actual = hashlib.sha256(data).hexdigest()
+    if not isinstance(expected, str) or not hmac.compare_digest(expected, actual):
+        raise ValueError("instruction SHA-256 mismatch")
+    return data
+
+
 def serve(ipc: Path, repo: Path, once: bool = False) -> int:
     cli = os.environ.get("CODEX_EXE", "codex.exe")
     timeout_s = float(os.environ.get("HOST_MODEL_BROKER_TIMEOUT_S", "90"))
@@ -34,39 +58,56 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
             request_id = request["request_id"]
             if request_id in handled:
                 continue
-            args = [cli, "exec", "--ignore-user-config", "--ignore-rules", "--ephemeral",
-                    "--sandbox", "read-only", "--skip-git-repo-check", "--json",
-                    "--model", "gpt-5.6-luna", "-c", 'model_reasoning_effort="low"',
-                    "-c", "project_doc_max_bytes=0", "--output-schema",
-                    host_path(request["schema"], repo)]
-            if request.get("image"):
-                args.extend(["--image", host_path(request["image"], repo)])
-            args.extend(["-C", host_path(request["working"], repo), "-"])
             started_ns = time.perf_counter_ns()
             try:
-                completed = subprocess.run(args, input=request["prompt"] + "\n",
-                                           text=True, encoding="utf-8", errors="replace",
-                                           capture_output=True, check=False, timeout=timeout_s)
-                broker = {"request_id": request_id, "returncode": completed.returncode,
-                          "stderr": (completed.stderr or "")[-2000:],
-                          "boundary": "host-local-codex-exe", "authority_granted": False,
-                          "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
-                response = completed.stdout or ""
-            except subprocess.TimeoutExpired as exc:
+                instruction_bytes = verified_instruction_bytes(request, repo)
+            except (OSError, ValueError) as exc:
                 broker = {"request_id": request_id, "returncode": None,
-                          "error_class": "TimeoutExpired", "stop_reason": "HOST_BROKER_SUBPROCESS_TIMEOUT",
-                          "timeout_s": timeout_s, "stderr": str(exc)[-2000:],
-                          "boundary": "host-local-codex-exe", "authority_granted": False,
-                          "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
-                response = ""
-            except OSError as exc:
-                broker = {"request_id": request_id, "returncode": None,
-                          "error_class": type(exc).__name__,
-                          "stop_reason": "HOST_BROKER_EXECUTABLE_UNAVAILABLE",
+                          "error_class": "InvalidInstructions",
+                          "stop_reason": "HOST_MODEL_INSTRUCTIONS_REJECTED",
                           "stderr": str(exc)[-2000:],
                           "boundary": "host-local-codex-exe", "authority_granted": False,
                           "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
                 response = ""
+            else:
+                try:
+                    with tempfile.TemporaryDirectory(prefix="host-model-instructions-") as temp_dir:
+                        args = [cli, "exec", "--ignore-user-config", "--ignore-rules", "--ephemeral",
+                                "--sandbox", "read-only", "--skip-git-repo-check", "--json",
+                                "--model", "gpt-5.6-luna", "-c", 'model_reasoning_effort="low"',
+                                "-c", "project_doc_max_bytes=0"]
+                        if instruction_bytes is not None:
+                            private_instructions = Path(temp_dir) / "instructions.txt"
+                            private_instructions.write_bytes(instruction_bytes)
+                            args.extend(["-c", "model_instructions_file=" + json.dumps(
+                                private_instructions.as_posix())])
+                        args.extend(["--output-schema", host_path(request["schema"], repo)])
+                        if request.get("image"):
+                            args.extend(["--image", host_path(request["image"], repo)])
+                        args.extend(["-C", host_path(request["working"], repo), "-"])
+                        completed = subprocess.run(args, input=request["prompt"] + "\n",
+                                                   text=True, encoding="utf-8", errors="replace",
+                                                   capture_output=True, check=False, timeout=timeout_s)
+                    broker = {"request_id": request_id, "returncode": completed.returncode,
+                              "stderr": (completed.stderr or "")[-2000:],
+                              "boundary": "host-local-codex-exe", "authority_granted": False,
+                              "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
+                    response = completed.stdout or ""
+                except subprocess.TimeoutExpired as exc:
+                    broker = {"request_id": request_id, "returncode": None,
+                              "error_class": "TimeoutExpired", "stop_reason": "HOST_BROKER_SUBPROCESS_TIMEOUT",
+                              "timeout_s": timeout_s, "stderr": str(exc)[-2000:],
+                              "boundary": "host-local-codex-exe", "authority_granted": False,
+                              "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
+                    response = ""
+                except OSError as exc:
+                    broker = {"request_id": request_id, "returncode": None,
+                              "error_class": type(exc).__name__,
+                              "stop_reason": "HOST_BROKER_EXECUTABLE_UNAVAILABLE",
+                              "stderr": str(exc)[-2000:],
+                              "boundary": "host-local-codex-exe", "authority_granted": False,
+                              "started_ns": started_ns, "exited_ns": time.perf_counter_ns()}
+                    response = ""
             (ipc / f"{request_id}.response.jsonl").write_text(
                 response, encoding="utf-8", newline="\n")
             (ipc / f"{request_id}.broker.json").write_text(
