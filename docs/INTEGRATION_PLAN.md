@@ -1,3 +1,17 @@
+## Native method reuse checkpoint (2026-09-28)
+
+The existing native enter/submit operation is now an importable
+`native_guarded_form_v1.fill_and_submit` function. It retains each step before
+continuing and requires completed execution plus verified empty release. The
+six-task harness uses it for normal execution and one explicit repair only after
+zero-emission initial refusal. [Primary evidence](../runtime/results/native-method-primary-01/README.md)
+retains six exact submissions, layout-change refusal and manual repair.
+
+This closes inline-method reuse, not public CLI/MCP exposure or semantic form
+verification. The compiled conditional state graph remains distinct. No new
+model, sensor, wait default or automatic retry is introduced. Actual primary
+model usage and matched end-to-end efficiency remain unmeasured.
+
 ## Current integration checkpoint: optional native summaries (2026-09-28)
 
 Native submit/resume now offer explicit `detail="brief"` using the existing
