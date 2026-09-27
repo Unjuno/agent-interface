@@ -13,7 +13,7 @@ MANIFEST_NAMES = EXPECTED_NAMES - {"SHA256SUMS"}
 
 def blob_sha(content):
     raw = content.encode("utf-8")
-    return hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\\0" + raw).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\\x00" + raw).hexdigest()
 
 def inspect_bundle(bundle):
     errors = []
