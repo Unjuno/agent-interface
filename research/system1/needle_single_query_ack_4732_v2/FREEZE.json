@@ -5,6 +5,7 @@
   "branch": "research/needle-single-query-ack-4813-current-main-20260927",
   "evidence_path": "research/system1/needle_single_query_ack_4732_v2/",
   "base_main_sha_before_artifact_upload": "38720c4e459b503c45eda36fa1fa5f89e551909e",
+  "issue_body_sha256_at_freeze": "0b34bf2b3ba4ba4ccb8151274088dc633636f5aa99c1164d54d2b17e2bb98a49",
   "construction_seed": 6911101,
   "formal_seeds": [6911201, 6911301, 6911401],
   "source_sha256": {
@@ -52,6 +53,10 @@
     "mount": "/volume"
   },
   "formal_paths": {"training": "formal/training", "audit": "formal/audit", "must_be_absent_before_freeze": true},
+  "formal_commands": {
+    "trainer": "docker run --rm --network none --pull=never --read-only --cpus=1 --memory=2g --pids-limit=64 --security-opt=no-new-privileges --workdir /src --tmpfs /tmp:rw,noexec,nosuid,size=128m --mount type=bind,source=<SOURCE>,destination=/src,readonly --mount type=bind,source=<SOURCE>/baseline,destination=/baseline,readonly --mount type=bind,source=<EMPTY_FORMAL_TRAINING>,destination=/out --mount type=volume,source=unjuno-needle-single-query-ack-4813-formal-v2,target=/volume --entrypoint /usr/local/bin/python needle-pilot05:local -B runner.py --orchestrate --out /out --volume-root /volume",
+    "auditor": "docker run --rm --network none --pull=never --read-only --cpus=1 --memory=2g --pids-limit=64 --security-opt=no-new-privileges --workdir /src --tmpfs /tmp:rw,noexec,nosuid,size=128m --mount type=bind,source=<SOURCE>,destination=/src,readonly --mount type=bind,source=<SOURCE>/baseline,destination=/baseline,readonly --mount type=bind,source=<FORMAL_TRAINING>,destination=/raw,readonly --mount type=bind,source=<EMPTY_FORMAL_AUDIT>,destination=/out --mount type=volume,source=unjuno-needle-single-query-ack-4813-formal-v2,target=/volume,readonly --entrypoint /usr/local/bin/python needle-pilot05:local -B audit.py --raw /raw --out /out --volume-root /volume"
+  },
   "formal_invocations_at_freeze": {"trainer": 0, "auditor": 0},
   "freeze_sha256_sidecar": "FREEZE.sha256",
   "stop_if": ["issue body hash changed", "source or blob readback mismatch", "branch/main collision", "formal volume/output path not absent/empty", "image id mismatch", "readback truncation or malformed raw chunks"],
