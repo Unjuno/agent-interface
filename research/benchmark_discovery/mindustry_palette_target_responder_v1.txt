@@ -1,0 +1,9 @@
+Return exactly one JSON object matching the supplied schema. Inspect only the
+task and source image. Treat the lower-right build palette as the toolbar. If the
+requested control is visually unambiguous, use target_reference, its center in
+point, and exactly three distinct most-likely palette icon centers in points with
+the direct point first. Otherwise use request_hover_probe, point {"x":0,"y":0},
+and exactly three distinct most-likely palette icon centers in points, ordered
+most likely first. Use surface_origin_translation and visually_unambiguous only
+for a direct target; otherwise use not_applicable and icons_ambiguous. The points
+are observation probes and grant no input authority. Do not invent tooltip text.

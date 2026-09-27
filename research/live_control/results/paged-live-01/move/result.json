@@ -1,0 +1,26 @@
+{
+  "page": {
+    "format": "report-page-v2",
+    "sha256": "f8462f6efb1badf755fe8ab2e49c7a41234a6d2b154adfbc827bc07f1532aae5",
+    "total_bytes": 23777,
+    "after": 0,
+    "next": 3366,
+    "source_end": false,
+    "starts_mid_line": false,
+    "ends_mid_line": false,
+    "coverage": "this byte slice only; prior pages and model receipt unverified",
+    "authority": "none; fragment is not a runtime receipt or input approval",
+    "text": "{\n  \"format\": \"pointer-report-view-v1\",\n  \"payload\": {\n    \"state\": \"terminal\",\n    \"exchanges\": [\n      {\n        \"request\": {\n          \"after\": 2,\n          \"events\": [\n            \"clock\"\n          ],\n          \"timeout\": 5,\n          \"request_id\": \"clock-1fb48907adf742ee839db32eca49bbe2\",\n          \"command\": {\n            \"op\": \"clock\"\n          }\n        },\n        \"started_ns\": 30921974599,\n        \"returned_ns\": 30963202623,\n        \"reply\": {\n          \"status\": \"boundary\",\n          \"records\": [\n            {\n              \"event\": \"command\",\n              \"command\": {\n                \"op\": \"clock\",\n                \"transport_request_id\": \"clock-1fb48907adf742ee839db32eca49bbe2\"\n              },\n              \"received_ns\": 30937030147,\n              \"emit_started_ns\": 30937033445\n            },\n            {\n              \"event\": \"clock\",\n              \"runtime_ns\": 30946177284,\n              \"sequence\": 1,\n              \"emit_started_ns\": 30946182498\n            }\n          ],\n          \"cursor\": 4,\n          \"returned_ns\": 30956731622,\n          \"authority\": \"none\",\n          \"acknowledgement\": \"not implied\",\n          \"command_receipt\": {\n            \"request_id\": \"clock-1fb48907adf742ee839db32eca49bbe2\",\n            \"replayed\": false,\n            \"state\": \"stdin_flushed\"\n          }\n        }\n      },\n      {\n        \"request\": {\n          \"after\": 4,\n          \"events\": [\n            \"terminal\"\n          ],\n          \"timeout\": 15,\n          \"action_id\": \"move-save\",\n          \"request_id\": \"program-5479c2924b634dc6984edc834f1b0932\",\n          \"command\": {\n            \"op\": \"submit\",\n            \"id\": \"move-save\",\n            \"steps\": [\n              {\n                \"op\": \"pointer_click\",\n                \"x\": 618,\n                \"y\": 391\n              },\n              {\n                \"op\": \"hold\",\n                \"keys\": [\n                  \"Right\"\n                ],\n                \"duration_ms\": 80\n              },\n              {\n                \"op\": \"chord\",\n                \"modifier\": \"Control_L\",\n                \"key\": \"s\"\n              },\n              {\n                \"op\": \"settle\",\n                \"quiet_ms\": 80,\n                \"timeout_ms\": 500\n              }\n            ],\n            \"expected_sequence\": 1,\n            \"valid_until_ns\": 60946177284\n          }\n        },\n        \"started_ns\": 30968423745,\n        \"returned_ns\": 31771984910,\n        \"reply\": {\n          \"status\": \"boundary\",\n          \"records\": [\n            {\n              \"event\": \"command\",\n              \"command\": {\n                \"expected_sequence\": 1,\n                \"id\": \"move-save\",\n                \"op\": \"submit\",\n                \"steps\": [\n                  {\n                    \"op\": \"pointer_click\",\n                    \"x\": 618,\n                    \"y\": 391\n                  },\n                  {\n                    \"duration_ms\": 80,\n                    \"keys\": [\n                      \"Right\"\n                    ],\n                    \"op\": \"hold\"\n                  },\n                  {\n                    \"key\": \"s\",\n                    \"modifier\": \"Control_L\",\n                    \"op\": \"chord\"\n                  },\n                  {\n                    \"op\": \"settle\",\n                    \"quiet_ms\": 80,\n                    \"timeout_ms\": 500\n                  }\n                ],\n"
+  },
+  "image": {
+    "status": "image",
+    "sequence": 8,
+    "capture_ns": 31693284725,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/paged-live-01/runtime/006.png",
+    "relative_path": "006.png",
+    "sha256": "6e468f5cc862ce22c8da169ba5e18840307bfca7a5ed7f2684402e6d80f937d5",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "notice": "Read all pages before treating this report as reviewed; original image is separate."
+}

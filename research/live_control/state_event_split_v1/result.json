@@ -1,0 +1,247 @@
+{
+  "cases": {
+    "cross_session": {
+      "authored_records": 110,
+      "expected_event_ids": [
+        "a-focus-lost"
+      ],
+      "expected_latest_state": {
+        "A": 10,
+        "B": 100
+      },
+      "policies": {
+        "all_records": {
+          "critical_event_ids": [
+            "a-focus-lost"
+          ],
+          "event_identity_exact": true,
+          "latest_state_exact": true,
+          "latest_state_seq": {
+            "A": 10,
+            "B": 100
+          },
+          "planner_visible_count": 110
+        },
+        "naive_latest_only": {
+          "critical_event_ids": [],
+          "event_identity_exact": false,
+          "latest_state_exact": true,
+          "latest_state_seq": {
+            "A": 10,
+            "B": 100
+          },
+          "planner_visible_count": 2
+        },
+        "split_state_event": {
+          "critical_event_ids": [
+            "a-focus-lost"
+          ],
+          "event_identity_exact": true,
+          "latest_state_exact": true,
+          "latest_state_seq": {
+            "A": 10,
+            "B": 100
+          },
+          "planner_visible_count": 3
+        }
+      }
+    },
+    "lease_release": {
+      "authored_records": 10,
+      "expected_event_ids": [
+        "lease-expired-1",
+        "release-verified-1"
+      ],
+      "expected_latest_state": {
+        "A": 10
+      },
+      "policies": {
+        "all_records": {
+          "critical_event_ids": [
+            "lease-expired-1",
+            "release-verified-1"
+          ],
+          "event_identity_exact": true,
+          "latest_state_exact": true,
+          "latest_state_seq": {
+            "A": 10
+          },
+          "planner_visible_count": 10
+        },
+        "naive_latest_only": {
+          "critical_event_ids": [],
+          "event_identity_exact": false,
+          "latest_state_exact": true,
+          "latest_state_seq": {
+            "A": 10
+          },
+          "planner_visible_count": 1
+        },
+        "split_state_event": {
+          "critical_event_ids": [
+            "lease-expired-1",
+            "release-verified-1"
+          ],
+          "event_identity_exact": true,
+          "latest_state_exact": true,
+          "latest_state_seq": {
+            "A": 10
+          },
+          "planner_visible_count": 3
+        }
+      }
+    },
+    "progress_storm": {
+      "authored_records": 100,
+      "expected_event_ids": [],
+      "expected_latest_state": {
+        "A": 100
+      },
+      "policies": {
+        "all_records": {
+          "critical_event_ids": [],
+          "event_identity_exact": true,
+          "latest_state_exact": true,
+          "latest_state_seq": {
+            "A": 100
+          },
+          "planner_visible_count": 100
+        },
+        "naive_latest_only": {
+          "critical_event_ids": [],
+          "event_identity_exact": true,
+          "latest_state_exact": true,
+          "latest_state_seq": {
+            "A": 100
+          },
+          "planner_visible_count": 1
+        },
+        "split_state_event": {
+          "critical_event_ids": [],
+          "event_identity_exact": true,
+          "latest_state_exact": true,
+          "latest_state_seq": {
+            "A": 100
+          },
+          "planner_visible_count": 1
+        }
+      }
+    },
+    "target_terminal": {
+      "authored_records": 9,
+      "expected_event_ids": [
+        "target-lost-1",
+        "terminal-1"
+      ],
+      "expected_latest_state": {
+        "A": 9
+      },
+      "policies": {
+        "all_records": {
+          "critical_event_ids": [
+            "target-lost-1",
+            "terminal-1"
+          ],
+          "event_identity_exact": true,
+          "latest_state_exact": true,
+          "latest_state_seq": {
+            "A": 9
+          },
+          "planner_visible_count": 9
+        },
+        "naive_latest_only": {
+          "critical_event_ids": [],
+          "event_identity_exact": false,
+          "latest_state_exact": true,
+          "latest_state_seq": {
+            "A": 9
+          },
+          "planner_visible_count": 1
+        },
+        "split_state_event": {
+          "critical_event_ids": [
+            "target-lost-1",
+            "terminal-1"
+          ],
+          "event_identity_exact": true,
+          "latest_state_exact": true,
+          "latest_state_seq": {
+            "A": 9
+          },
+          "planner_visible_count": 3
+        }
+      }
+    },
+    "transient_focus": {
+      "authored_records": 30,
+      "expected_event_ids": [
+        "focus-lost-1",
+        "focus-restored-1"
+      ],
+      "expected_latest_state": {
+        "A": 30
+      },
+      "policies": {
+        "all_records": {
+          "critical_event_ids": [
+            "focus-lost-1",
+            "focus-restored-1"
+          ],
+          "event_identity_exact": true,
+          "latest_state_exact": true,
+          "latest_state_seq": {
+            "A": 30
+          },
+          "planner_visible_count": 30
+        },
+        "naive_latest_only": {
+          "critical_event_ids": [],
+          "event_identity_exact": false,
+          "latest_state_exact": true,
+          "latest_state_seq": {
+            "A": 30
+          },
+          "planner_visible_count": 1
+        },
+        "split_state_event": {
+          "critical_event_ids": [
+            "focus-lost-1",
+            "focus-restored-1"
+          ],
+          "event_identity_exact": true,
+          "latest_state_exact": true,
+          "latest_state_seq": {
+            "A": 30
+          },
+          "planner_visible_count": 3
+        }
+      }
+    }
+  },
+  "decision": "PASS_SPLIT_STATE_EVENT_RETENTION_SCOPED",
+  "formal_reruns": 0,
+  "gates": {
+    "cross_session_event_scoped": true,
+    "cross_session_latest_state_scoped": true,
+    "naive_loses_authored_critical_event": true,
+    "progress_storm_reference_count_100": true,
+    "progress_storm_split_count_1": true,
+    "split_latest_state_exact_all_cases": true,
+    "split_retains_all_authored_events": true
+  },
+  "notes": [
+    "Deterministic single-process container fixture.",
+    "Critical-event classification is fixture-authored.",
+    "No ACK, priority, batching, or event-capacity semantics are claimed in this rung."
+  ],
+  "summary": {
+    "naive_lost_critical_events": 7,
+    "progress_storm_state_reduction": {
+      "all_records": 100,
+      "split_state_event": 1
+    },
+    "split_expected_critical_events": 7,
+    "split_retained_critical_events": 7
+  },
+  "task": "EVENT-STATE-SPLIT-20260917-001"
+}

@@ -1,0 +1,68 @@
+{
+  "arm": "recovery",
+  "candidate": "cross_session",
+  "candidate_receipt": {
+    "capture_ns": 2723642896105,
+    "frame_rgb_sha256": "341f653bc757fdc6f6c205754c7556e6821caa09618499af4c2420cd65a377fc",
+    "image": "/work/out/c04-coast-fresh-reanchor/runtime/008.png",
+    "sequence": 8,
+    "session_id": "a6864f3ce57f454fa4c3595136f2ad69"
+  },
+  "capture_fresh": true,
+  "captured_fresh_receipt": {
+    "capture_ns": 2737837032921,
+    "frame_rgb_sha256": "5bcc9833c8601dd86f695776b2df1b20993ca4625af0e57556c67752d8dbceed",
+    "image": "/work/out/c06-cross-session-control/runtime/022.png",
+    "sequence": 22,
+    "session_id": "86a75c9749b14c26b26bb21fff400463"
+  },
+  "event_count": 90,
+  "foreign_from": "c04-coast-fresh-reanchor",
+  "fresh_observation_count": 1,
+  "guard_only": {
+    "admission": "REJECT_CONTEXT_CHANGED",
+    "mae": 0.04444694519042969
+  },
+  "id": "c06-cross-session-control",
+  "old_receipt": {
+    "capture_ns": 2737756106562,
+    "frame_rgb_sha256": "050f1a49f9a6ad6f9c2c0fb441fcdc457ab940645213e0d482cf8d095d694096",
+    "image": "/work/out/c06-cross-session-control/runtime/021.png",
+    "sequence": 21,
+    "session_id": "86a75c9749b14c26b26bb21fff400463"
+  },
+  "reanchor": {
+    "admission": "REJECT_PROVENANCE",
+    "fresh_receipt_id": "a6864f3ce57f454fa4c3595136f2ad69:8",
+    "mae": null,
+    "old_receipt_id": "86a75c9749b14c26b26bb21fff400463:21",
+    "reason": "CROSS_SESSION"
+  },
+  "release": {
+    "buttons_down": [],
+    "event": "owner_release",
+    "keys_down": [],
+    "reason": "release",
+    "valid_until_ns": 2740882095545,
+    "verified": true,
+    "verified_ns": 2737908318486
+  },
+  "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+  "schema": "bounded-fresh-reanchor-case-v2",
+  "score": {
+    "death_count": 0,
+    "kill_count": 0,
+    "map_exit": false,
+    "player_dead": false
+  },
+  "seed": 254816,
+  "session_id": "86a75c9749b14c26b26bb21fff400463",
+  "source_receipt": {
+    "capture_ns": 2735813747775,
+    "frame_rgb_sha256": "660239613e924063fd7fbba6c0c2b90305550c0158e2e08fe5096ddc7a8f53af",
+    "image": "/work/out/c06-cross-session-control/runtime/001.png",
+    "sequence": 1,
+    "session_id": "86a75c9749b14c26b26bb21fff400463"
+  },
+  "terminal_status": "completed"
+}

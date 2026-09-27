@@ -1,0 +1,40 @@
+{
+  "study": "issue_3924_orbstac_broker_contract_v1",
+  "allocation": "formal_run_02",
+  "issue": 3924,
+  "predecessor": "formal_run_01 STOP_RUNNER_FREEZE_SCHEMA_MISMATCH; formal cases=0",
+  "base_main": "c83ddb057c680a126144d000bf7ef7ba2274652a",
+  "branch": "research/issue-3924-orbstac-broker-contract-20260926-mainrun",
+  "source": {
+    "broker_path": "runtime/host_model_ipc_broker_v1.py",
+    "broker_git_blob": "f307daafdfd36d1ab4faf39bb36c36350e6e67e4",
+    "broker_sha256": "034b2e72a28fc3defb1b48195a2a8d3450e850895a4b3b7b7919dca44e198775",
+    "existing_test_path": "runtime/test_host_model_ipc_broker_v1.py",
+    "existing_test_git_blob": "e645ae575cd6fdae02556df9facc9919739584f3",
+    "existing_test_sha256": "a28b59232e55956a11bd87a35812b7d77df16febe5510c68fb80eda03a3ede1c"
+  },
+  "environment": {
+    "engine": "OrbStack 29.4.0",
+    "daemon_platform": "linux/arm64",
+    "image": "python:3.12-slim",
+    "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "network": "none",
+    "rootfs": "read-only",
+    "source_and_study_mounts": "read-only",
+    "evidence_mount": "writable isolated study path",
+    "limits": {"cpus": 1, "memory": "256m", "memory_swap": "256m", "pids": 32, "tmpfs": "/tmp 16m noexec,nosuid", "capabilities": "ALL dropped", "no_new_privileges": true},
+    "container_environment": "allowlisted PATH/PYTHONIOENCODING and per-case fake-only variables; host environment and credentials not forwarded"
+  },
+  "formal_matrix": ["exit0", "exit23", "timeout", "unavailable", "malformed", "one-shot-idle", "two-queued"],
+  "decision_gates": {
+    "hypothesis_failure": "exit0 fake returns 0 and receipt records 0 while broker process exits 1",
+    "required_controls": "exit23 propagated exactly; timeout and unavailable executable typed and nonzero; malformed request fails; --once with no request is bounded externally and emits no receipt; two queued requests produce exactly one response/receipt/fake invocation for lexicographically first request",
+    "pass": "all expectations above match raw evidence; every request/response/receipt ID reconciles; independent raw audit errors=0",
+    "stop": "source/image/runtime/network/provenance/audit infrastructure failure; preserve outputs and do not rerun a formal case"
+  },
+  "preregistration_manifest_sha256": "9b0b32514fec0ba8cf69577aeb615897116aa9fc4760a7898d0469118541e8c9",
+  "formal_cases_before_allocation": 0,
+  "real_model_calls": 0,
+  "credentials_forwarded": false,
+  "created_before_allocation_02": true
+}

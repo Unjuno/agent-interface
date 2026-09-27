@@ -1,0 +1,5 @@
+Docker source-restoration STOP — no #4511 verifier invocation.
+
+The frozen Docker wrapper mounted the #4447 branch's Windows working-copy source capsule and attempted `restore_source.py`. It stopped with `SOURCE.part00.b64: identity`; inspection confirms CRLF-expanded part sizes 5002/5002/5002/1926 versus manifest sizes 5001/5001/5001/1925. The shell used `&&`, so `run_controls.py` was not invoked. No #4447 raw evidence bytes were read by the verifier.
+
+This is a local source-hydration failure caused by core.autocrlf, not a corpus/auditor outcome. Formal verifier invocation count remains 0. The separately restored canonical source was then rechecked against all 14 entries in SOURCE_HASHES.json; fixtures and schedule hashes match the pinned commitments. Preserve the failed outer Docker receipt unchanged. The one formal verifier run will consume that verified restored source read-only.

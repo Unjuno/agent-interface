@@ -1,0 +1,108 @@
+{
+  "schema": "needle-multiskill-freeze-v1",
+  "issue": 3912,
+  "allocation": "needle-lora-3441-pilot-04d-multiskill-400base",
+  "seed": 3914,
+  "repository": "Unjuno/agent-interface",
+  "mainBase": "8085e682f6363ec4cd95648e55c16dfca9049dd0",
+  "latestMainBeforeFormal": "fab3b392fb854696312a85a6b859a78369c3e737",
+  "mainAdvancedAfterBranchCreation": true,
+  "branch": "research/needle-lora-3441-pilot-04d-20260921",
+  "path": "research/needle_lora_3441_pilot_04d_multiskill_400base/",
+  "predecessor": {
+    "issue": 3714,
+    "sourceIssue": 3701,
+    "seed3443Disposition": "HOLD_PROTOCOL_DEVIATION",
+    "preserveAllPriorBytes": true,
+    "referenceRunnerSha256": "4081a3d1e7f353440a2bd6ab45f7d030f6dcfba0f52cfb904c99e79a2fb1cb1e",
+    "referenceRunnerGitBlob": "b5689ddeaf88715217ad69b4ce46d56ec75a7491"
+  },
+  "sources": {
+    "runner.py": "63fb993cbcc2668643577ad23f26cdbc1942f6ff407b7091f7b60a299833f99b",
+    "audit.py": "56ca3ba7a71743ce8fe13c9f36bb714817f4f6481e484edbd032f36cff7b3ff7",
+    "test_construction.py": "adede786ced90bddc232157efcc0cc6f6f1ebfd6c5bc3549bafdbb97ba39b9ab",
+    "test_audit.py": "6347868a9bfb24dc04c09a53af58f6b60e9ff88ffb29db9fa1b7d160912451f3"
+  },
+  "gitBlobSha1": {
+    "runner.py": "3fdb93fff18a01ab86f01fd052138e6c28e5cbf6",
+    "audit.py": "0ccf40f9156f8b9f5e176301d10e0d34969b4352",
+    "test_construction.py": "392361e92edf49ab5f6e7cc23a9c181b06acceeb",
+    "test_audit.py": "da5323b9ae9651201d9d17a39800e5db044d1181"
+  },
+  "H": "With the same explicit routing, separate rank-2 adapters can preserve A/B/C quality at >=0.90 while the shared B-then-C adapter exhibits interference; full evidence permits independent audit.",
+  "T": {
+    "seed": 3914,
+    "features": 8,
+    "hidden": 16,
+    "classes": 4,
+    "rank": 2,
+    "baseRows": 512,
+    "baseUpdates": 400,
+    "supportRowsPerNewSkill": 16,
+    "heldoutRowsPerSkill": 4096,
+    "stepsPerUpdate": 120,
+    "batch": 32,
+    "lr": 0.04,
+    "dataSeeds": {
+      "base": "seed+1",
+      "bSupport": "seed+2",
+      "cSupport": "seed+3",
+      "aEval": "seed+4",
+      "bEval": "seed+5",
+      "cEval": "seed+6"
+    },
+    "updateSeeds": {
+      "base": "seed+10",
+      "globalInit": "seed+11",
+      "bInit": "seed+12",
+      "cInit": "seed+13",
+      "globalB": "seed+20",
+      "globalC": "seed+21",
+      "adapterB": "seed+22",
+      "adapterC": "seed+23"
+    },
+    "arms": [
+      "base_A",
+      "routed_BC",
+      "shared_B_then_C"
+    ],
+    "details": "Same #3701 synthetic task and hyperparameters; fresh seed 3914; base pretraining is corrected to exactly 400 optimizer updates; each B/C and shared adapter update remains 120. Dispatch returns the exact model scored. Retain every heldout row. Full module state_dict roundtrip/rollback exact."
+  },
+  "D": {
+    "pass": "PASS_MULTI_SKILL_ROUTING_SCOPED only if all routed A/B/C >=0.90; all invalid routes YIELD; base immutable; full module snapshot/rollback exact; independent auditor regenerates expected labels and recomputes every retained row metric; setup and four update timings separately recorded.",
+    "fail": "FAIL_MULTI_SKILL_INTERFERENCE for audited routed quality miss; FAIL_SNAPSHOT_INTEGRITY for full-state mismatch; FAIL_ROUTE_OR_AUDIT_INTEGRITY on route, row, or audit violation; typed STOP/HOLD for environment/provenance ambiguity.",
+    "invocations": 1,
+    "retries": 0,
+    "tuning": 0
+  },
+  "C": {
+    "host": "local Windows RTX 3080 Laptop GPU",
+    "python": "3.11.9",
+    "torch": "2.5.1+cu121",
+    "cuda": "12.1",
+    "workspace": ":4096:8",
+    "deterministic": true,
+    "tf32": false,
+    "minDiskFreeBytes": 1073741824,
+    "minGpuFreeBytes": 2147483648,
+    "containerClaim": false,
+    "noNetwork": true,
+    "preflight": {
+      "observedAtLocal": "2026-09-21T07:21:30+09:00",
+      "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+      "freeVramBytes": 15991832576,
+      "freeSystemDiskBytes": 421272723456,
+      "dockerService": "not installed or not found",
+      "dockerBackendPipePresent": false,
+      "cudaMatmulTf32": false,
+      "cudnnTf32BeforeRunner": true,
+      "disposition": "HOST_GPU_ALLOWED; no container claim"
+    }
+  },
+  "U": "One new seed in one related synthetic family only. No general transfer, concurrency/crash durability, runtime integration, GUI usefulness, inference/model-load latency or action safety claim. No causal conclusion about #3701/HOLD.",
+  "construction": {
+    "result": "PASS: construction 9/9; auditor corruption tests 4/4",
+    "optimizerSteps": 0,
+    "formalTrainingStarted": false
+  }
+}

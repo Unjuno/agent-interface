@@ -1,0 +1,111 @@
+{
+  "audit_errors": 0,
+  "by_app": {
+    "calc": {
+      "O1": {
+        "episodes": 2,
+        "wire_bytes": 765441
+      },
+      "O2": {
+        "episodes": 2,
+        "wire_bytes": 236351
+      }
+    },
+    "chromium": {
+      "O1": {
+        "episodes": 2,
+        "wire_bytes": 765929
+      },
+      "O2": {
+        "episodes": 2,
+        "wire_bytes": 333064
+      }
+    },
+    "inkscape": {
+      "O1": {
+        "episodes": 2,
+        "wire_bytes": 1783395
+      },
+      "O2": {
+        "episodes": 2,
+        "wire_bytes": 312586
+      }
+    },
+    "xterm": {
+      "O1": {
+        "episodes": 2,
+        "wire_bytes": 123199
+      },
+      "O2": {
+        "episodes": 2,
+        "wire_bytes": 48284
+      }
+    }
+  },
+  "correctness_gate": "PASS",
+  "decode_ms": {
+    "O1": {
+      "p50": 3.056301,
+      "p95": 4.0330042,
+      "p99": 4.203389279999999
+    },
+    "O2": {
+      "p50": 1.0304,
+      "p95": 3.2363146,
+      "p99": 3.628768679999993
+    }
+  },
+  "encode_ms": {
+    "O1": {
+      "p50": 5.140772,
+      "p95": 6.031129,
+      "p99": 6.27906108
+    },
+    "O2": {
+      "p50": 7.239989,
+      "p95": 10.886249799999996,
+      "p99": 14.643949159999977
+    }
+  },
+  "episodes": 16,
+  "first_feedback_ms": {
+    "O1": {
+      "p50": 21.6601015,
+      "p95": 64.57635709999994,
+      "p99": 82.38388248
+    },
+    "O2": {
+      "p50": 24.5552975,
+      "p95": 69.24980044999992,
+      "p99": 95.07618713000001
+    }
+  },
+  "live_wire": {
+    "ci95_percent": [
+      60.43449922397992,
+      79.6025063804735
+    ],
+    "o1_bytes": 3437964,
+    "o2_bytes": 930285,
+    "reduction_percent": 72.94081613420036
+  },
+  "paired_wall_delta_ms": {
+    "ci95": [
+      -13.214402000000007,
+      81.52188699999999
+    ],
+    "median": 15.060040499999992
+  },
+  "pairs": 8,
+  "same_trace_wire": {
+    "ci95_percent": [
+      58.08731915522702,
+      79.15449936150193
+    ],
+    "o1_bytes": 6937439,
+    "o2_bytes": 1950435,
+    "reduction_percent": 71.88537441554442
+  },
+  "sampled_frames": 138,
+  "scope": "serialized local transport, reconstructed full model image; not image-token savings"
+}

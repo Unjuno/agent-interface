@@ -1,0 +1,44 @@
+{
+  "allocation": "semantic-truth-maintenance-4259-20260923-01",
+  "audit_command": "python -B audit.py formal-01/RAW.jsonl --out formal-01/AUDIT.json",
+  "authority": "none",
+  "base_main": "affe58482c57317f135b15b65f8e94beb8fe42ac",
+  "branch": "research/semantic-truth-maintenance-4259-20260923",
+  "construction_controls_rejected": "12/12",
+  "construction_global_recomputes": 84,
+  "construction_rows": 28,
+  "construction_support_recomputes": 51,
+  "controls_command": "python -B test_audit.py formal-01/RAW.jsonl",
+  "decision_gate": "PASS only exact lattice/provenance equality with support recomputes < global; else Issue #4259 classes",
+  "formal_command": "python -B runner.py --mode formal --out formal-01",
+  "formal_invocations": 0,
+  "formal_reruns": 0,
+  "issue": 4259,
+  "schema": "agent-interface/semantic-truth-maintenance-freeze-v1",
+  "source": {
+    "ENVIRONMENT.json": {
+      "bytes": 177,
+      "sha256": "0a4d40e3677a85213ac1e39283cbc765981940af7e6b4736dbcc98c1265a268a"
+    },
+    "PLAN.md": {
+      "bytes": 2021,
+      "sha256": "6abee03561f4fed7570e91254df13362ef52a1330c4e36a90928700fa75fa7ff"
+    },
+    "SOURCE.tar.xz": {
+      "bytes": 4912,
+      "sha256": "9b523a33e403ded82e4cdbbb9a7b000c25bd9b303b4f246e5988864f4afd411d"
+    },
+    "audit.py": {
+      "bytes": 6266,
+      "sha256": "47a645587a284b379147fd050492ca72237422d5bb97d683e100a15f1c7fc85d"
+    },
+    "runner.py": {
+      "bytes": 5922,
+      "sha256": "68ba2281188cca7f1838a696ee64cb859fab4554a92e881bce58fb14de33d81f"
+    },
+    "test_audit.py": {
+      "bytes": 1479,
+      "sha256": "f877e885c498d08d10c1797bfdead21a3368d21de2aae266c1aeb8636e534a55"
+    }
+  }
+}

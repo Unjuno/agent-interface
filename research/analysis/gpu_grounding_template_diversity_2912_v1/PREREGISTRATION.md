@@ -1,0 +1,17 @@
+# Issue #4546 — pre-training allocation record
+
+## H / T / D / C / U
+
+**H.** At fixed architecture, optimizer-step count, and total sampled examples, broad exposure to independently authored form-template families (8 families) improves exact field/submit coordinate prediction on four wholly held-out families over narrow exposure to two training families. Each emitted candidate must pass the current main `compiled_form_grounding_v1.validate` contract, and no accepted coordinate may be wrong.
+
+**T.** Allocation `gpu-grounding-template-diversity-2912-successor-01`; branch `research/gpu-grounding-template-diversity-4546-main2-20260927`; additive path `research/analysis/gpu_grounding_template_diversity_2912_v1/`. Source intake is current `main` commit `a778bdd577b149a5ec964bbe19da533311335e2f`. Use 12 newly authored raster-rendered template source specifications, each uniquely identified and hashed, with labels derived from renderer geometry. Split 8/4 by source family before variants. Compare 2-family narrow and 8-family broad arms at the same sample count, model, initialization per seed, preprocessing, optimizer, and fixed steps; evaluate both only on the same four held-out families. Three fresh seeds are planned only if the pre-training gates pass. Training is RTX 3080 CUDA local-only. The host-local PyTorch fallback is explicitly permitted by Issue #4546 because the available Docker GPU image is not locally cached and repeated registry retrieval stalled; the compatible lightweight CUDA diagnostic container confirmed GPU visibility. No remote training.
+
+**D.** Before any optimizer step, prove source-family disjointness, deterministic rendering and labels, exact oracle coordinates, strict current-main validator acceptance/rejection, deterministic model shape and optimizer forward/backward, and independent audit controls. If every gate passes, exactly one frozen three-seed allocation may run, without retry or tuning. Scoped PASS requires broad exact-coordinate accuracy >=0.90 on every held-out family, >=0.10 aggregate absolute improvement over narrow, zero accepted wrong coordinates, and zero independent audit errors. Construction/environment failure before training is retained as STOP with exact evidence. This allocation STOPped at deterministic CUDA adaptive-pooling backward; therefore formal invocation count and optimizer steps are both zero and no scientific arm ran.
+
+**C.** GPU-verified small model only. Hold architecture, per-seed initialization, preprocessing, optimizer, examples, updates, and held-out images fixed; vary only the count of training families. No held-out augmentation, GUI input, task submission, authority, external training, or runtime promotion. A schema/bounds validator PASS is not task correctness.
+
+**U.** Whether broad template diversity improves exact coordinate generalization remains untested. Synthetic-to-real transfer, corpus sufficiency, CUDA determinism with a different pooling operator or framework version, and live GUI utility are unknown.
+
+## STOP boundary
+
+Strict deterministic backward was a mandatory pre-training gate. With PyTorch 2.5.1+cu121 on the local RTX 3080, both the full model and a minimal `adaptive_avg_pool2d` reproducer raise `adaptive_avg_pool2d_backward_cuda does not have a deterministic implementation`. No operator substitution, nondeterministic override, dependency upgrade, rerun, or training was made after observing this result. Any different pooling operator or framework stack requires a successor allocation and a new freeze.

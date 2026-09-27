@@ -1,0 +1,40 @@
+{
+  "after": 12,
+  "events": [
+    "terminal"
+  ],
+  "timeout": 15,
+  "action_id": "move-save",
+  "request_id": "program-6309a2d056b84378908cfc3a344fa6a3",
+  "command": {
+    "op": "submit",
+    "id": "move-save",
+    "steps": [
+      {
+        "op": "pointer_click",
+        "x": 618,
+        "y": 391,
+        "duration_ms": 80
+      },
+      {
+        "op": "hold",
+        "keys": [
+          "Right"
+        ],
+        "duration_ms": 80
+      },
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "s"
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 80,
+        "timeout_ms": 500
+      }
+    ],
+    "expected_sequence": 2,
+    "valid_until_ns": 103198195580
+  }
+}

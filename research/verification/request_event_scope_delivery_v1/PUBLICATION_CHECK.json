@@ -1,0 +1,137 @@
+{
+  "kind": "postformal_read_only_publication_validation",
+  "new_formal_runs": 0,
+  "source_preservation": {
+    "checked_utc": "2026-09-21T22:12:08.847463+00:00",
+    "original_members": 110,
+    "sha256sum_entries": 109,
+    "original_members_unchanged": true,
+    "reaudit_identical": true,
+    "reaudit_sha256": "9b130e98abed8ca1c05a59cd15e9267f33813864b8535f468004fc7ef4dafcdb",
+    "formal_reruns": 0,
+    "receipts": [
+      {
+        "name": "audit",
+        "cmd": [
+          "/opt/pyvenv/bin/python",
+          "-B",
+          "-S",
+          "audit.py",
+          "formal-01/data",
+          "--report",
+          "/mnt/data/request-event-publication/validation/AUDIT.json",
+          "--controls"
+        ],
+        "cwd": "/mnt/data/request-event-publication/original/research/verification/request_effect_scope_34_20260922_v1",
+        "exit": 0,
+        "stdout_sha256": "69d807e788dcfafcab52f360d734b21ccad7f2d808ae41c43ea9f3e2de28f98f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "units",
+        "cmd": [
+          "/opt/pyvenv/bin/python",
+          "-B",
+          "-S",
+          "-m",
+          "unittest",
+          "-v",
+          "test_binding"
+        ],
+        "cwd": "/mnt/data/request-event-publication/original/research/verification/request_effect_scope_34_20260922_v1",
+        "exit": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "ad88563209883e9a27708327af81d7801114801e3184d5d4c2fbd1aaa30de744"
+      }
+    ]
+  },
+  "pack_restore": {
+    "original_files": 110,
+    "restored_files_exact": 110,
+    "restored_audit_exit": 0,
+    "restored_audit_byte_identical": true,
+    "audit_sha256": "9b130e98abed8ca1c05a59cd15e9267f33813864b8535f468004fc7ef4dafcdb",
+    "packaging_controls": {
+      "../outside": true,
+      "/absolute": true,
+      "a/../b": true,
+      "a\\b": true,
+      "a//b": true,
+      "C:/drive": true,
+      "existing_output": true,
+      "boolean_count": true,
+      "duplicate_member": true,
+      "bad_archive_digest": true,
+      "missing_part": true
+    },
+    "formal_reruns": 0,
+    "note": "Packaging controls are postformal engineering checks, not new scientific trials."
+  },
+  "remote_blob_checks": {
+    "evidence-00.b64": "6b8539a0261565e03883e26995a7bdb623163c41",
+    "evidence-01.b64": "60e0b2db415fe5c99719457be533ce6750acc8b1",
+    "evidence-02.b64": "b02f9bca7dd370ccf4f338c34f9fb3cf5094a9d7",
+    "evidence-03.b64": "b548005d7929cd5981159f30f672d0232189c80c",
+    "evidence-04.b64": "229efe3e1cc8be2b03775a90b4b3bb9a5be03d39",
+    "evidence-05.b64": "8a32d88f4143fb2f4de257123200437e595597c6",
+    "evidence-06.b64": "ca9e3ea7a57f0c50a420a9dde4057d8720580fa7",
+    "evidence-07.b64": "7fb24d3e3c06ce5b8b7e0ee7b0173b15c4983fe9"
+  },
+  "remote_note": "Returned create_blob identities matched these local Git IDs. Exact committed-tree readback and PR checks remain separate.",
+  "final_format_validation": {
+    "original_files": 110,
+    "restored_exact": 110,
+    "raw_audit_identical": true,
+    "raw_audit_sha256": "9b130e98abed8ca1c05a59cd15e9267f33813864b8535f468004fc7ef4dafcdb",
+    "receipts": [
+      {
+        "name": "final-audit",
+        "command": [
+          "/opt/pyvenv/bin/python",
+          "-B",
+          "-S",
+          "audit.py",
+          "formal-01/data",
+          "--report",
+          "/mnt/data/request-event-publication/validation/FINAL_AUDIT.json",
+          "--controls"
+        ],
+        "exit": 0,
+        "stdout_sha256": "69d807e788dcfafcab52f360d734b21ccad7f2d808ae41c43ea9f3e2de28f98f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "final-units",
+        "command": [
+          "/opt/pyvenv/bin/python",
+          "-B",
+          "-S",
+          "-m",
+          "unittest",
+          "-v",
+          "test_binding"
+        ],
+        "exit": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "ad88563209883e9a27708327af81d7801114801e3184d5d4c2fbd1aaa30de744"
+      }
+    ],
+    "final_unpacker_controls": {
+      "../outside": true,
+      "/absolute": true,
+      "a/../b": true,
+      "a\\b": true,
+      "a//b": true,
+      "C:/drive": true,
+      "existing_output": true,
+      "manifest_bad_digest": true,
+      "manifest_truncated": true,
+      "part_bad_digest": true,
+      "missing_part": true
+    },
+    "controls_count": 11,
+    "format_note": "PACK.meta.b64 restores the byte-exact pre-encoding JSON manifest. This is postformal publication engineering; original source/raw unchanged.",
+    "manifest_original_sha256": "650fee94ec02b8287e83705a923a53201683d021309a9d1b2a2d0f6c69535ca0",
+    "formal_reruns": 0
+  }
+}

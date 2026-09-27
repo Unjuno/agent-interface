@@ -1,0 +1,68 @@
+{
+  "schema": "agent-interface/local-native-check-v1",
+  "status": "PASS",
+  "suites": [
+    {
+      "suite": "protocol",
+      "command": [
+        "/tmp/agent-interface-mcp-venv/bin/python",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.cli_v1.test_observe",
+        "runtime.selector_v1.test_selector",
+        "runtime.cli_v1.test_mcp_server",
+        "runtime.cli_v1.test_cli",
+        "runtime.core_v1.test_contract",
+        "runtime.cli_v1.test_review",
+        "test_agent_review",
+        "test_receipt_references",
+        "test_native_exchange_v1",
+        "test_native_mcp_v1",
+        "test_native_allocation_v1",
+        "test_native_mcp_relay_v1"
+      ],
+      "returncode": 0,
+      "duration_ns": 20533280629,
+      "logs": {
+        "stdout": {
+          "file": "protocol.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "file": "protocol.stderr.log",
+          "sha256": "52b6f12a37c57c15ae75638a3989c7b114db0fdecd9967cb64e688297ceff794"
+        }
+      }
+    },
+    {
+      "suite": "harness",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.backends.x11_v1.test_text_plan",
+        "runtime.backends.x11_v1.test_partial_execution",
+        "test_native_finish_after_v1",
+        "test_native_cleanup_v1",
+        "test_native_handle_bridge_v1",
+        "test_native_tail_v1"
+      ],
+      "returncode": 0,
+      "duration_ns": 4249736721,
+      "logs": {
+        "stdout": {
+          "file": "harness.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "file": "harness.stderr.log",
+          "sha256": "3a5538993dfd0cc47706d7299c2c9b86c60a391e52ec64d98b53994b5a472026"
+        }
+      }
+    }
+  ],
+  "scope": "contract tests; not a live GUI experiment or independent adoption audit",
+  "runner_sha256": "d87048f1b3f7c7deff2c112c7f53e6418226180c0324d56b0745e1deaab06fa0"
+}

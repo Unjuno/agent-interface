@@ -1,0 +1,10 @@
+{
+  "decision": "PASS_QUERY_VERSION_WRITER_ATOMICITY_SCOPED",
+  "directions": {"insert": 1, "remove": 1},
+  "summary": {
+    "ATOMIC": {"accepted": 2, "false_invalidations": 0, "rejected": 2, "unsafe_acceptances": 0},
+    "MEMBERSHIP_FIRST": {"accepted": 4, "false_invalidations": 0, "rejected": 2, "unsafe_acceptances": 2},
+    "NO_VERSION": {"accepted": 4, "false_invalidations": 0, "rejected": 0, "unsafe_acceptances": 2},
+    "VERSION_FIRST": {"accepted": 2, "false_invalidations": 2, "rejected": 4, "unsafe_acceptances": 0}
+  }
+}

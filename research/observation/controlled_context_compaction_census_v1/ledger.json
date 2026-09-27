@@ -1,0 +1,16 @@
+{
+  "schema":"controlled-compaction-census-ledger-v1",
+  "task":"CONTROLLED-CONTEXT-COMPACTION-PRIMITIVE-CENSUS-20260918-001",
+  "sources":[
+    {"path":"research/live_control/codex_app_server_client_v2.py","git_blob":"bbfad463d7428dd80b7dca533d518a77604e69f1"},
+    {"path":"research/live_control/persistent_planner_adapter_v2.py","git_blob":"1a09c8752dff6a87bf8c180cb2e6fa7f43d4ad77"},
+    {"path":"research/live_control/RECOVERY_PAIR3.md","git_blob":"1fba23a5070885cc6e933d982f0dcc12a9170498"}
+  ],
+  "negative_searches":["thread compact app-server","compact/start","context compaction app server method","compacted thread codex"],
+  "candidates":[
+    {"id":"generic_request","operation":"request(method, params)","explicit_request":true,"target_bound":false,"completion_observable":true,"boundary_identity":false,"retained_demonstration":false,"is_compaction_operation":false},
+    {"id":"thread_start","operation":"thread/start","explicit_request":true,"target_bound":true,"completion_observable":true,"boundary_identity":true,"retained_demonstration":true,"is_compaction_operation":false},
+    {"id":"turn_interrupt","operation":"turn/interrupt","explicit_request":true,"target_bound":true,"completion_observable":true,"boundary_identity":false,"retained_demonstration":true,"is_compaction_operation":false},
+    {"id":"natural_context_compaction","operation":"spontaneous context compaction observed in recovery pair3","explicit_request":false,"target_bound":false,"completion_observable":false,"boundary_identity":false,"retained_demonstration":true,"is_compaction_operation":true}
+  ]
+}

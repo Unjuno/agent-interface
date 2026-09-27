@@ -1,0 +1,7 @@
+{
+  "schema": "adaptive-witness-coherence-sqlite-v1",
+  "nontransactional": {"rows": 100, "wrong_effects": 100},
+  "transaction_writer_first": {"rows": 50, "correct_rejects": 50},
+  "transaction_checker_first": {"rows": 50, "correct_effect_first_linearizations": 50, "writer_wait_ms_median": 8.303367},
+  "decision": "RETAIN coherent/atomic final-admission validation with effect linearization. Adaptive witnesses are only a semantic short-circuit; witness/fallback reads may not be treated as independent fresh observations across a mutation boundary."
+}

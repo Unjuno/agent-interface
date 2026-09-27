@@ -1,0 +1,23 @@
+name: GTK Xlib dependency preflight #2844
+
+on:
+  pull_request:
+    paths:
+      - "research/integration/gtk_fixture_dependency_2606_v3/**"
+      - ".github/workflows/gtk-xlib-dependency-2844.yml"
+  push:
+    branches:
+      - "research/gtk-xlib-dependency-2844"
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build additive GTK/Xlib image
+        run: docker build --pull=false -f research/integration/gtk_fixture_dependency_2606_v3/Dockerfile -t agent-interface-gtk-fixture-v3:xlib .
+      - name: Run dependency-only import preflight
+        run: |
+          docker run --rm --network none --read-only --tmpfs /tmp             -e PYTHONPATH=/workspace:/usr/lib/python3/dist-packages             -v "$GITHUB_WORKSPACE:/workspace:ro"             -w /workspace             agent-interface-gtk-fixture-v3:xlib             python3 -c "import gi; gi.require_version('Gtk', '3.0'); from gi.repository import Gtk; import Xlib; from Xlib import display; print('PASS_GTK_XLIB_DEPENDENCY_READY')"

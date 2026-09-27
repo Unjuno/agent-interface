@@ -1,0 +1,19 @@
+{
+  "issue": 2833,
+  "status": "PASS_BOUNDED_TIMEOUT_DIAGNOSIS",
+  "tests": {"host_broker_contract": "3/3", "schema_bridge_contract": "6/6"},
+  "diagnostic": {
+    "timeout_s": 5.0,
+    "stop_reason": "HOST_BROKER_SUBPROCESS_TIMEOUT",
+    "response_bytes": 0,
+    "authority_granted": false,
+    "request_id": "diag-2833-01",
+    "started_ns_recorded": true,
+    "exited_ns_recorded": true,
+    "gui_operations": 0,
+    "input_authority": false
+  },
+  "model_compatibility": false,
+  "task_route": false,
+  "next_entry_condition": "Use the retained timeout evidence to diagnose the local Codex CLI startup/provider wait; do not extend the timeout and reinterpret the missing response as success."
+}

@@ -1,0 +1,45 @@
+{
+  "schema": "gpu-photometric-2912-v4-freeze-v1",
+  "issue": 4482,
+  "allocation": "gpu-photometric-2912-cnn-shape-4482-01",
+  "formal_invocations_allowed": 1,
+  "formal_invocations_completed_before_freeze": 0,
+  "source_commit": "21dd6a26dbd9f5cb4a6e11b1060902799a76a733",
+  "runner_sha256": "ff4c9150e37e69201498fd32cf26139c058cd9a07af575b743f88a64bf00384e",
+  "audit_sha256": "d7dfb21cf5edb07b383cb9967a8134a69a4f5760fbe0b338899d47304f3306b5",
+  "preregistration_sha256": "457e5d34a3e0b27bcb28d24c05cdad3d9ac29aac0455c20d94e173c68f31f0a3",
+  "construction_sha256": "feefb08b0fab81c733d9588aae55d6727eba92c396460e5c2f7363dcccb4b7ab",
+  "construction_test_sha256": "532809390ae3398dd72b5a410053eac382fae68bbb76e3e9a8ad57177e0c4496",
+  "audit_control_test_sha256": "1fb0b434bc9439df1e8a518f412d48cebac0c36daee2a5d104e3bb8be217c122",
+  "manifest_sha256": "dc86185fdec9a1605548861519fa6777c1153948c032c49a7fa1557160c77bc8",
+  "image_sha256": {
+    "task-1": "3fd0c515a1f0358fb4afa328f60d2a1b82a748018ff4295fad5ec3922f3640ec",
+    "task-2": "8ce9f5bdb642592122e0f7ed2c84656729564ced3d25c14af6b787c71ef8ce7a",
+    "task-3": "3e81cc92439d01aeabd69c8cfd9f2a2eb842b3433f41771fe3b0409e331f9349",
+    "task-4": "ae2974269932d767fbfba536287c2f8c02c1ffb77efaed6c3c87b20c250fbad4",
+    "task-5": "7216758322e41ff158751f70623401089df7080011fdac5c9ea59ea7b49b559a",
+    "task-6": "ccc8662251de86ee477e8ff149ce19c67de8e26bb93f5ead264fe268438118bd"
+  },
+  "pooling_matrix_sha256": "2fa2fe70c6da3cacf2dcd4592d1bda1073b9c885c804cf681735150a554bb3a7",
+  "formal_design": {
+    "seed": 3926,
+    "optimizer_steps_per_arm": 300,
+    "batch_size": 16,
+    "train_task_ids": ["task-1", "task-2", "task-4", "task-5"],
+    "held_out_task_ids": ["task-3", "task-6"],
+    "evaluation_factors": [1.0, 0.85, 1.15],
+    "training_brightness_range": [0.70, 1.30],
+    "confidence_routes": {"accept_min": 0.75, "yield_min": 0.25},
+    "deterministic_algorithms": true,
+    "tf32": false,
+    "cublas_workspace_config": ":4096:8"
+  },
+  "construction_environment": {
+    "python": "3.11.9",
+    "torch": "2.5.1+cu121",
+    "cuda": "12.1",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "driver": "581.57"
+  },
+  "formal_result_exists": false
+}

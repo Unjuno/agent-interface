@@ -1,0 +1,597 @@
+{
+  "schema": "offline-evidence-lineage-v1",
+  "nodes": [
+    {
+      "id": "event:1",
+      "source_line": 1,
+      "kind": "ready"
+    },
+    {
+      "id": "event:2",
+      "source_line": 2,
+      "kind": "observation",
+      "sequence": 1,
+      "image": "001.png"
+    },
+    {
+      "id": "event:3",
+      "source_line": 3,
+      "kind": "command"
+    },
+    {
+      "id": "event:4",
+      "source_line": 4,
+      "kind": "clock"
+    },
+    {
+      "id": "event:5",
+      "source_line": 5,
+      "kind": "command"
+    },
+    {
+      "id": "event:6",
+      "source_line": 6,
+      "kind": "accepted"
+    },
+    {
+      "id": "event:7",
+      "source_line": 7,
+      "kind": "step_started"
+    },
+    {
+      "id": "event:8",
+      "source_line": 8,
+      "kind": "pointer_admission"
+    },
+    {
+      "id": "event:9",
+      "source_line": 9,
+      "kind": "pointer_admission"
+    },
+    {
+      "id": "event:10",
+      "source_line": 10,
+      "kind": "pointer_admission"
+    },
+    {
+      "id": "event:11",
+      "source_line": 11,
+      "kind": "environment_fixture"
+    },
+    {
+      "id": "event:12",
+      "source_line": 12,
+      "kind": "observation",
+      "sequence": 2,
+      "image": "002.png"
+    },
+    {
+      "id": "event:13",
+      "source_line": 13,
+      "kind": "pointer_yield"
+    },
+    {
+      "id": "event:14",
+      "source_line": 14,
+      "kind": "servo_feedback",
+      "producer": "patch_servo",
+      "reason": "local_goal_reached"
+    },
+    {
+      "id": "event:15",
+      "source_line": 15,
+      "kind": "observation",
+      "sequence": 3,
+      "image": "003.png"
+    },
+    {
+      "id": "event:16",
+      "source_line": 16,
+      "kind": "servo_outcome"
+    },
+    {
+      "id": "event:17",
+      "source_line": 17,
+      "kind": "environment_fixture"
+    },
+    {
+      "id": "event:18",
+      "source_line": 18,
+      "kind": "step_completed"
+    },
+    {
+      "id": "event:19",
+      "source_line": 19,
+      "kind": "terminal"
+    },
+    {
+      "id": "event:20",
+      "source_line": 20,
+      "kind": "command"
+    },
+    {
+      "id": "event:21",
+      "source_line": 21,
+      "kind": "accepted"
+    },
+    {
+      "id": "event:22",
+      "source_line": 22,
+      "kind": "step_started"
+    },
+    {
+      "id": "event:23",
+      "source_line": 23,
+      "kind": "input_admission"
+    },
+    {
+      "id": "event:24",
+      "source_line": 24,
+      "kind": "observation",
+      "sequence": 4,
+      "image": "004.png"
+    },
+    {
+      "id": "event:25",
+      "source_line": 25,
+      "kind": "step_completed"
+    },
+    {
+      "id": "event:26",
+      "source_line": 26,
+      "kind": "step_started"
+    },
+    {
+      "id": "event:27",
+      "source_line": 27,
+      "kind": "observation",
+      "sequence": 5,
+      "image": "005.png"
+    },
+    {
+      "id": "event:28",
+      "source_line": 28,
+      "kind": "observation",
+      "sequence": 6,
+      "image": "006.png"
+    },
+    {
+      "id": "event:29",
+      "source_line": 29,
+      "kind": "observation",
+      "sequence": 7,
+      "image": "006.png"
+    },
+    {
+      "id": "event:30",
+      "source_line": 30,
+      "kind": "observation",
+      "sequence": 8,
+      "image": "006.png"
+    },
+    {
+      "id": "event:31",
+      "source_line": 31,
+      "kind": "settle_result"
+    },
+    {
+      "id": "event:32",
+      "source_line": 32,
+      "kind": "step_completed"
+    },
+    {
+      "id": "event:33",
+      "source_line": 33,
+      "kind": "terminal"
+    },
+    {
+      "id": "event:34",
+      "source_line": 34,
+      "kind": "command"
+    },
+    {
+      "id": "event:35",
+      "source_line": 35,
+      "kind": "accepted"
+    },
+    {
+      "id": "event:36",
+      "source_line": 36,
+      "kind": "step_started"
+    },
+    {
+      "id": "event:37",
+      "source_line": 37,
+      "kind": "pointer_admission"
+    },
+    {
+      "id": "event:38",
+      "source_line": 38,
+      "kind": "pointer_admission"
+    },
+    {
+      "id": "event:39",
+      "source_line": 39,
+      "kind": "pointer_admission"
+    },
+    {
+      "id": "event:40",
+      "source_line": 40,
+      "kind": "observation",
+      "sequence": 9,
+      "image": "009.png"
+    },
+    {
+      "id": "event:41",
+      "source_line": 41,
+      "kind": "pointer_yield"
+    },
+    {
+      "id": "event:42",
+      "source_line": 42,
+      "kind": "servo_feedback",
+      "producer": "patch_servo",
+      "reason": "correct"
+    },
+    {
+      "id": "event:43",
+      "source_line": 43,
+      "kind": "pointer_admission"
+    },
+    {
+      "id": "event:44",
+      "source_line": 44,
+      "kind": "observation",
+      "sequence": 10,
+      "image": "010.png"
+    },
+    {
+      "id": "event:45",
+      "source_line": 45,
+      "kind": "pointer_yield"
+    },
+    {
+      "id": "event:46",
+      "source_line": 46,
+      "kind": "servo_feedback",
+      "producer": "patch_servo",
+      "reason": "local_goal_reached"
+    },
+    {
+      "id": "event:47",
+      "source_line": 47,
+      "kind": "observation",
+      "sequence": 11,
+      "image": "011.png"
+    },
+    {
+      "id": "event:48",
+      "source_line": 48,
+      "kind": "servo_outcome"
+    },
+    {
+      "id": "event:49",
+      "source_line": 49,
+      "kind": "step_completed"
+    },
+    {
+      "id": "event:50",
+      "source_line": 50,
+      "kind": "terminal"
+    },
+    {
+      "id": "event:51",
+      "source_line": 51,
+      "kind": "command"
+    },
+    {
+      "id": "event:52",
+      "source_line": 52,
+      "kind": "accepted"
+    },
+    {
+      "id": "event:53",
+      "source_line": 53,
+      "kind": "step_started"
+    },
+    {
+      "id": "event:54",
+      "source_line": 54,
+      "kind": "input_admission"
+    },
+    {
+      "id": "event:55",
+      "source_line": 55,
+      "kind": "input_admission"
+    },
+    {
+      "id": "event:56",
+      "source_line": 56,
+      "kind": "observation",
+      "sequence": 12,
+      "image": "012.png"
+    },
+    {
+      "id": "event:57",
+      "source_line": 57,
+      "kind": "step_completed"
+    },
+    {
+      "id": "event:58",
+      "source_line": 58,
+      "kind": "step_started"
+    },
+    {
+      "id": "event:59",
+      "source_line": 59,
+      "kind": "observation",
+      "sequence": 13,
+      "image": "013.png"
+    },
+    {
+      "id": "event:60",
+      "source_line": 60,
+      "kind": "observation",
+      "sequence": 14,
+      "image": "013.png"
+    },
+    {
+      "id": "event:61",
+      "source_line": 61,
+      "kind": "observation",
+      "sequence": 15,
+      "image": "013.png"
+    },
+    {
+      "id": "event:62",
+      "source_line": 62,
+      "kind": "settle_result"
+    },
+    {
+      "id": "event:63",
+      "source_line": 63,
+      "kind": "step_completed"
+    },
+    {
+      "id": "event:64",
+      "source_line": 64,
+      "kind": "terminal"
+    },
+    {
+      "id": "event:65",
+      "source_line": 65,
+      "kind": "command"
+    },
+    {
+      "id": "event:66",
+      "source_line": 66,
+      "kind": "independent_evaluation",
+      "success": true,
+      "actual": {
+        "x": "70.338982",
+        "y": "50",
+        "width": "40",
+        "height": "30",
+        "transform": null
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "event:2",
+      "relation": "declared_expected_observation_for",
+      "target": "event:5"
+    },
+    {
+      "source": "event:2",
+      "relation": "declared_controller_source_for",
+      "target": "event:5"
+    },
+    {
+      "source": "event:5",
+      "relation": "accepted_as",
+      "target": "event:6"
+    },
+    {
+      "source": "event:6",
+      "relation": "recorded_admission_for",
+      "target": "event:8"
+    },
+    {
+      "source": "event:6",
+      "relation": "recorded_admission_for",
+      "target": "event:9"
+    },
+    {
+      "source": "event:6",
+      "relation": "recorded_admission_for",
+      "target": "event:10"
+    },
+    {
+      "source": "event:12",
+      "relation": "explicit_feedback_input_for",
+      "target": "event:14"
+    },
+    {
+      "source": "event:6",
+      "relation": "program_terminal",
+      "target": "event:19"
+    },
+    {
+      "source": "event:15",
+      "relation": "declared_expected_observation_for",
+      "target": "event:20"
+    },
+    {
+      "source": "event:19",
+      "relation": "observed_before",
+      "target": "event:20"
+    },
+    {
+      "source": "event:20",
+      "relation": "accepted_as",
+      "target": "event:21"
+    },
+    {
+      "source": "event:21",
+      "relation": "program_terminal",
+      "target": "event:33"
+    },
+    {
+      "source": "event:30",
+      "relation": "declared_expected_observation_for",
+      "target": "event:34"
+    },
+    {
+      "source": "event:30",
+      "relation": "declared_controller_source_for",
+      "target": "event:34"
+    },
+    {
+      "source": "event:33",
+      "relation": "observed_before",
+      "target": "event:34"
+    },
+    {
+      "source": "event:34",
+      "relation": "accepted_as",
+      "target": "event:35"
+    },
+    {
+      "source": "event:35",
+      "relation": "recorded_admission_for",
+      "target": "event:37"
+    },
+    {
+      "source": "event:35",
+      "relation": "recorded_admission_for",
+      "target": "event:38"
+    },
+    {
+      "source": "event:35",
+      "relation": "recorded_admission_for",
+      "target": "event:39"
+    },
+    {
+      "source": "event:40",
+      "relation": "explicit_feedback_input_for",
+      "target": "event:42"
+    },
+    {
+      "source": "event:35",
+      "relation": "recorded_admission_for",
+      "target": "event:43"
+    },
+    {
+      "source": "event:44",
+      "relation": "explicit_feedback_input_for",
+      "target": "event:46"
+    },
+    {
+      "source": "event:35",
+      "relation": "program_terminal",
+      "target": "event:50"
+    },
+    {
+      "source": "event:47",
+      "relation": "declared_expected_observation_for",
+      "target": "event:51"
+    },
+    {
+      "source": "event:50",
+      "relation": "observed_before",
+      "target": "event:51"
+    },
+    {
+      "source": "event:51",
+      "relation": "accepted_as",
+      "target": "event:52"
+    },
+    {
+      "source": "event:52",
+      "relation": "program_terminal",
+      "target": "event:64"
+    },
+    {
+      "source": "event:19",
+      "relation": "observed_before_evaluation",
+      "target": "event:66"
+    },
+    {
+      "source": "event:33",
+      "relation": "observed_before_evaluation",
+      "target": "event:66"
+    },
+    {
+      "source": "event:50",
+      "relation": "observed_before_evaluation",
+      "target": "event:66"
+    },
+    {
+      "source": "event:64",
+      "relation": "observed_before_evaluation",
+      "target": "event:66"
+    }
+  ],
+  "gaps": [
+    {
+      "previous": "attempt",
+      "next": "reobserve",
+      "terminal_to_command_ms": 7712.513461
+    },
+    {
+      "previous": "reobserve",
+      "next": "recover",
+      "terminal_to_command_ms": 11138.762699
+    },
+    {
+      "previous": "recover",
+      "next": "save",
+      "terminal_to_command_ms": 9022.501981
+    }
+  ],
+  "unresolved": [
+    "Expected sequence does not prove which image the model viewed.",
+    "No model decision IDs, delivery completion or reply computation endpoints.",
+    "Pointer admission links are not complete key/release action lineage.",
+    "Historical authority IDs are represented by acceptance references only.",
+    "Feedback command is a proposal; execution causality needs explicit reply IDs.",
+    "Final evaluation follows programs; individual action effect causality is unknown.",
+    "No token measurement, live tracing overhead measurement or held-out claim."
+  ],
+  "artifacts": {
+    "causal_trace.py": "c8d885ea1c8b2dc0974b050bc4dd6be6ca9984ae3b2e57c96d2e13891abc6642",
+    "results/servo-recovery-02/events.jsonl": "585e4a66ec48313693db44e703c200f982cf1dff487bf50926558c99690d58ca",
+    "results/servo-recovery-02/delivered.jsonl": "e8f7537e23a950416e44dc30dfc31374bd73fd3c7ec96918688d30aea8e1aa83",
+    "results/servo-recovery-02/owner-events.json": "fb5b09f619fd6e1408d55a3026c215229549cc8b226e8c56069497526e6d9b01",
+    "results/servo-recovery-02/shape.svg": "19a29f168fb2897d33719caf98af6d1b2be2a3cc146b7b91ba2893ceffea376c",
+    "results/servo-recovery-02/sources.json": "283f1a925bfdf6ba01b134bffabe1d4c9bd54ef2792328a1d3082297f8e707a2",
+    "results/servo-recovery-02/001.png": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "results/servo-recovery-02/002.png": "3bedea3d25f8b23135452d851ee1f96d0cead9329bc7d21981eaaaedc7290e5d",
+    "results/servo-recovery-02/003.png": "f4c0a62c0fe8a29c137895794809096a0d1fd1feee8e15a6e52d419925f1c944",
+    "results/servo-recovery-02/004.png": "6c193268b3e644a64d178c8e5212c36130d969da03b2361d75b1625a52cba00f",
+    "results/servo-recovery-02/005.png": "38f4770c6490f9e6f34baa711d9903d011e3996fb30122919770a7bf6dc7a485",
+    "results/servo-recovery-02/006.png": "d0a72e21182cb1c2a876911f05d261bced70509134eb11dd95705aba3348605b",
+    "results/servo-recovery-02/009.png": "5bf4805b8dd38e74239d8e0019187fc4bf4fc082d9c4d7e8056c46e763e4d944",
+    "results/servo-recovery-02/010.png": "f48d6cd33e045b9dd027c4aeb421f92829833b34ed0bc439795e71ec2c6d6dbc",
+    "results/servo-recovery-02/011.png": "f30092553246342549d9df48f29e98a2b8bb385cd6573eb24b1c4f854447c961",
+    "results/servo-recovery-02/012.png": "e72cf1718e287ede5ca27caf5cde87810a7193ae08e0ebb2b09f9a8789234be0",
+    "results/servo-recovery-02/013.png": "03b1fbfb2536c2161931430f9320f3c70e46d2856da0ea1d82f7e779c44cfa5d",
+    "results/servo-recovery-02/001.ait": "40eaf7a1998101dc2688cdfa1ed87ca33a7d7032d7c60a0ceda28788ed3fd9b4",
+    "results/servo-recovery-02/002.ait": "ab04f182cdb15428e2f1a1d0cfe228734ce288cde19184cffd0faa5405acb068",
+    "results/servo-recovery-02/003.ait": "a217e78ea07ba24e18d8d9bdf3b6bfd3944b3e5a12908b31bd0af04dd3b309c3",
+    "results/servo-recovery-02/004.ait": "744b846731ce38c511ddc1fd1e2c55340634a8e90e7d3a38ace5e1217068578d",
+    "results/servo-recovery-02/005.ait": "2b81b4a8e02f1e97ddd4e0983a420706a4db50c3fd7644bdb94e7777f249487e",
+    "results/servo-recovery-02/006.ait": "2cc534c1fbd64e5ff3c34a41c261b828e06d9606df063631b026d96c6bdb7a74",
+    "results/servo-recovery-02/007.ait": "7972251aa591158a7a6f295861ecfacdcdd1866bf2c88c189e77cb4a39da16c1",
+    "results/servo-recovery-02/008.ait": "18fb8efbdfebd54b88e8e492eeef5cdc3d385e82a6adb88c788266e5c155cab3",
+    "results/servo-recovery-02/009.ait": "85129352ca1f682ebf25cfbc504185b782990eddd496607e43876b6edf36f508",
+    "results/servo-recovery-02/010.ait": "e202ed73e76e3f7afeb45e6503a18d15802f05984448403bf70db50252547e95",
+    "results/servo-recovery-02/011.ait": "f52f27dae7eb3a0780be35715b140a1c256cb75253fdc5868f5f50217424b444",
+    "results/servo-recovery-02/012.ait": "4780008fcd448adbbdad07a0f4e211cc25972309cf3c8ce4a87a921dee719a1a",
+    "results/servo-recovery-02/013.ait": "c00e7da5d99cb4e8cafcca37dc861f167121721d47d7f005a7e4aeab24d8ab9e",
+    "results/servo-recovery-02/014.ait": "d637314fdbb66160bc4283322a1674f1d148a3d805c25a5b912560a96dddb6c1",
+    "results/servo-recovery-02/015.ait": "d014f47f40b11807bbc17641a36bb56b13675da47fa208187f72d5b2eed14c45"
+  },
+  "evaluation_artifact": "results/servo-recovery-02/shape.svg"
+}

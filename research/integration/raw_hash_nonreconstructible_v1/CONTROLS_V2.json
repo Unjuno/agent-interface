@@ -1,0 +1,125 @@
+{
+  "all_rejected": true,
+  "controls": [
+    {
+      "name": "raw_hex",
+      "rejected": true,
+      "errors": [
+        [
+          "BGRX_BASE",
+          "raw_sha"
+        ]
+      ]
+    },
+    {
+      "name": "raw_sha",
+      "rejected": true,
+      "errors": [
+        [
+          "BGRX_BASE",
+          "raw_sha"
+        ],
+        [
+          "BGRX_BASE",
+          "source_raw"
+        ]
+      ]
+    },
+    {
+      "name": "source_raw_sha",
+      "rejected": true,
+      "errors": [
+        [
+          "BGRX_BASE",
+          "source_raw"
+        ]
+      ]
+    },
+    {
+      "name": "png_sha",
+      "rejected": true,
+      "errors": [
+        [
+          "BGRX_BASE",
+          "png_sha"
+        ],
+        [
+          "BGRX",
+          "x_not_erased"
+        ]
+      ]
+    },
+    {
+      "name": "artifact_png_sha",
+      "rejected": true,
+      "errors": [
+        [
+          "BGRX_BASE",
+          "png_sha"
+        ]
+      ]
+    },
+    {
+      "name": "decoded_rgb",
+      "rejected": true,
+      "errors": [
+        [
+          "BGRX_BASE",
+          "decode_claim"
+        ],
+        [
+          "BGRX",
+          "x_not_erased"
+        ]
+      ]
+    },
+    {
+      "name": "byte_order",
+      "rejected": true,
+      "errors": [
+        [
+          "BGRX_BASE",
+          "byte_order"
+        ]
+      ]
+    },
+    {
+      "name": "artifact_width",
+      "rejected": true,
+      "errors": [
+        [
+          "BGRX_BASE",
+          "artifact_geometry"
+        ]
+      ]
+    },
+    {
+      "name": "case_name",
+      "rejected": true,
+      "errors": [
+        [
+          "global",
+          "case_set"
+        ],
+        [
+          "BGRX_BASE",
+          "missing"
+        ]
+      ]
+    },
+    {
+      "name": "png_hex",
+      "rejected": true,
+      "errors": [
+        [
+          "BGRX_BASE",
+          "decode_input"
+        ],
+        [
+          "BGRX",
+          "x_not_erased"
+        ]
+      ]
+    }
+  ]
+}

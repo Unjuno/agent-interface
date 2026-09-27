@@ -1,0 +1,21 @@
+{
+  "schema": "staged-promotion-freeze-v1",
+  "task": "O3-STAGED-PROMOTION-20260916-001",
+  "plan_sha256": "50eaf2f0dc4ff1c2ff894a685d1e5cf29fd54eb329b19ed206a0ff99fc70e63f",
+  "measured_case_count": 16,
+  "prefreeze_tests": 3,
+  "excluded_development": ["pre-naive", "pre-gate", "pre2-naive", "pre2-gate"],
+  "source_hashes": {
+    "research/cross_domain/staged_promotion_v1/contract.py": "f5826195e228e01cbbbe5056d065abd450e3064134178b71ffebc6e1ab40c5db",
+    "research/cross_domain/staged_promotion_v1/worker.py": "e4434c8c1e0d39e50f81c519f715f217513d62c1f218df2c2f6313689476db63",
+    "research/cross_domain/staged_promotion_v1/bench.py": "1785c0e5f0b1a66b60e8605e194684db49d8b7cf67470c1d040a29bdf6749cef",
+    "research/cross_domain/staged_promotion_v1/audit.py": "7a60d5923b17feba4f48f85689d74087cb13c94c4206990f6058b5dac745309b",
+    "research/cross_domain/staged_promotion_v1/test_contract.py": "9d2153941fc3791bbadfce331857a3ec4cd36f74a3aba57c573e2380730b0b55"
+  },
+  "fixture_hashes": {
+    "fixtures/a.mkv": "52bfa3db4e9ec283a2b3afebaea6fd20e47cfc521203a022f6df8e87e06663fe",
+    "fixtures/b.mkv": "2fa5d984184f6fed0ca59cee13bcaf8c0c7f8e9f07c63f209cc41ec6a6c03875",
+    "fixtures/expected.json": "5fbcc142b7d2a8fabcc2c37f7dd1d2f5322cd24c96ec53dd6c022b758a904584"
+  },
+  "development_note": "A first real-XTEST preflight established mechanism semantics. Instrumentation was then improved before freeze to record A actual reap in a dedicated wait thread and require B actual reap before A actual reap. Final preflight2 passed naive A / gate B."
+}

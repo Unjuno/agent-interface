@@ -1,0 +1,259 @@
+{
+  "all_release_receipts_verified": true,
+  "capabilities": {
+    "capture.frame": true,
+    "clock.monotonic": true,
+    "display.geometry": true,
+    "event.feedback": true,
+    "input.keyboard": true,
+    "input.pointer": true,
+    "input.release_all": true,
+    "input.scroll": true,
+    "input.text": true,
+    "window.focus": true
+  },
+  "capture_changed_after_delivered_effects": true,
+  "cases": [
+    {
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "capture.frame",
+          "clock.monotonic",
+          "display.geometry",
+          "event.feedback",
+          "input.keyboard",
+          "input.pointer",
+          "input.release_all",
+          "input.scroll",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "emissions_after": 21,
+      "emissions_before": 0,
+      "execution": {
+        "emissions": 21,
+        "ended_ns": 5545290651404,
+        "observations": [
+          {
+            "bytes": 65536,
+            "height": 128,
+            "sha256": "968ea47edd4a9d027a19cc4d90c8718e654706581400d7734305b7565f32b947",
+            "width": 128
+          }
+        ],
+        "releases": [
+          {
+            "buttons_down": [],
+            "keys_down": [],
+            "monotonic_ns": 5545290647448,
+            "verified": true
+          }
+        ],
+        "started_ns": 5545277660093
+      },
+      "fixture_events_after": 25,
+      "fixture_events_before": 0,
+      "fixture_summary": {
+        "button_presses": [
+          {
+            "button": 1,
+            "x": 40,
+            "y": 50
+          },
+          {
+            "button": 4,
+            "x": 40,
+            "y": 50
+          }
+        ],
+        "key_press_keysyms": [
+          "o",
+          "f",
+          "f",
+          "i",
+          "c",
+          "e",
+          "Control_L",
+          "s"
+        ],
+        "kinds": [
+          "focus_out",
+          "focus_in",
+          "motion",
+          "button_press",
+          "button_release",
+          "other",
+          "other",
+          "key_press",
+          "key_release",
+          "key_press",
+          "key_release",
+          "key_press",
+          "key_release",
+          "key_press",
+          "key_release",
+          "key_press",
+          "key_release",
+          "key_press",
+          "key_release",
+          "key_press",
+          "key_press",
+          "key_release",
+          "key_release",
+          "button_press",
+          "button_release"
+        ]
+      },
+      "name": "valid_effect"
+    },
+    {
+      "admission": {
+        "accepted": false,
+        "error": "STALE_OBSERVATION",
+        "required_capabilities": [
+          "input.keyboard",
+          "input.release_all",
+          "window.focus"
+        ]
+      },
+      "emissions_after": 21,
+      "emissions_before": 21,
+      "fixture_events_after": 25,
+      "fixture_events_before": 25,
+      "fixture_summary": {
+        "button_presses": [],
+        "key_press_keysyms": [],
+        "kinds": []
+      },
+      "name": "stale_observation_zero_input"
+    },
+    {
+      "admission": {
+        "accepted": false,
+        "error": "STALE_BINDING",
+        "required_capabilities": [
+          "input.keyboard",
+          "input.release_all",
+          "window.focus"
+        ]
+      },
+      "emissions_after": 21,
+      "emissions_before": 21,
+      "fixture_events_after": 25,
+      "fixture_events_before": 25,
+      "fixture_summary": {
+        "button_presses": [],
+        "key_press_keysyms": [],
+        "kinds": []
+      },
+      "name": "stale_binding_zero_input"
+    },
+    {
+      "admission": {
+        "accepted": false,
+        "error": "LEASE_EXPIRED",
+        "required_capabilities": [
+          "input.keyboard",
+          "input.release_all",
+          "window.focus"
+        ]
+      },
+      "emissions_after": 21,
+      "emissions_before": 21,
+      "fixture_events_after": 25,
+      "fixture_events_before": 25,
+      "fixture_summary": {
+        "button_presses": [],
+        "key_press_keysyms": [],
+        "kinds": []
+      },
+      "name": "expired_zero_input"
+    },
+    {
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "clock.monotonic",
+          "display.geometry",
+          "event.feedback",
+          "input.keyboard",
+          "input.pointer",
+          "input.release_all",
+          "window.focus"
+        ]
+      },
+      "emissions_after": 25,
+      "emissions_before": 21,
+      "execution": {
+        "emissions": 25,
+        "ended_ns": 5545327251307,
+        "observations": [],
+        "releases": [
+          {
+            "buttons_down": [],
+            "keys_down": [],
+            "monotonic_ns": 5545327246449,
+            "verified": true
+          }
+        ],
+        "started_ns": 5545321627826
+      },
+      "fixture_events_after": 29,
+      "fixture_events_before": 25,
+      "fixture_summary": {
+        "button_presses": [
+          {
+            "button": 1,
+            "x": 40,
+            "y": 50
+          }
+        ],
+        "key_press_keysyms": [
+          "Shift_L"
+        ],
+        "kinds": [
+          "key_press",
+          "button_press",
+          "key_release",
+          "button_release"
+        ]
+      },
+      "name": "held_release"
+    }
+  ],
+  "display": ":198",
+  "final_capture": {
+    "bytes": 65536,
+    "height": 128,
+    "sha256": "0e8a139f35cba6b367d54e80d2d3a4c92111ab25e2505a1b6b7d7d100e202b98",
+    "width": 128
+  },
+  "fixture_effect_event_count": 76,
+  "fixture_event_count": 221,
+  "geometry": {
+    "height": 240,
+    "width": 360,
+    "x": 80,
+    "y": 90
+  },
+  "initial_capture": {
+    "bytes": 65536,
+    "height": 128,
+    "sha256": "141f15a1790fdb06502147306e1f0b5fb30ef8301ac6bc1b176e4661be1cf651",
+    "width": 128
+  },
+  "passed": true,
+  "rejected_zero_backend_input": true,
+  "schema": "agent-interface/x11-backend-conformance-v0",
+  "scope": "private Xvfb/XTEST/Xlib fixture; X11 reference only; no model/token/native-Windows/macOS/Wayland claim",
+  "seed": 20260915,
+  "stress_all_admitted": true,
+  "stress_all_released": true,
+  "stress_count": 64,
+  "valid_effect_exact": true,
+  "window_id": 2097152
+}

@@ -1,0 +1,150 @@
+{
+  "allocation_id": "map01-early-typed-cancel-live-01",
+  "allocation_passed": false,
+  "wrapper_exit_code": 1,
+  "child_process_exit_code": "not serialized; post_control_score and owner close retained",
+  "failure_class": "executor_exception_identity_mismatch",
+  "failure": "typed coast backend raises executor_v3.Cancelled while executor_v10 catches a separately defined Cancelled class; terminal is failed rather than cancelled",
+  "evidence": {
+    "frozen_sources_match": true,
+    "three_typed_full_pairs_reconcile": true,
+    "natural_visible_ammo_decrement": true,
+    "attested_acceptance": true,
+    "matched_cancel": true,
+    "cancel_before_artifact": true,
+    "owner_cancel_release_empty": true,
+    "no_later_input_admission": true,
+    "terminal_failed_wrong_exception_identity": true,
+    "terminal_release_empty": true,
+    "score_and_owner_close_retained": true
+  },
+  "threshold_outcomes": {
+    "capture_to_cancel_requested": true,
+    "capture_to_terminal_release": false,
+    "capture_to_guard_decision": "unknown because the frozen wrapper failed before report serialization"
+  },
+  "metrics_ms": {
+    "capture_to_typed_ready_ms": 15.843639,
+    "capture_to_typed_emit_ms": 20.856376,
+    "typed_emit_to_cancel_requested_ms": 26.672838,
+    "capture_to_cancel_requested_ms": 47.529214,
+    "capture_to_owner_cancel_release_ms": 50.100178,
+    "capture_to_terminal_release_ms": 128.856297,
+    "capture_to_artifact_ready_ms": 119.166684,
+    "cancel_requested_before_artifact_ms": 71.63747
+  },
+  "accepted": {
+    "event": "accepted",
+    "id": "early-typed-running-action-fire-01",
+    "steps": 1,
+    "program_sha256": "0e2755c69e424c37ada3d0635490ec0117226d73f83e473b1df07eab7a076e62",
+    "valid_until_ns": 36966929233463,
+    "accepted_ns": 36961938902579,
+    "emit_ns": 36961938906261
+  },
+  "cancel_requested": {
+    "event": "cancel_requested",
+    "id": "early-typed-running-action-fire-01",
+    "matched": true,
+    "requested_ns": 36962230742738,
+    "emit_ns": 36962230747519
+  },
+  "terminal": {
+    "event": "terminal",
+    "id": "early-typed-running-action-fire-01",
+    "status": "failed",
+    "error": "Cancelled()",
+    "steps_completed": 0,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 36962312069821,
+      "valid_until_ns": null
+    },
+    "terminal_ns": 36962312115013,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_ns": 36962312128423
+  },
+  "owner_cancel_release": {
+    "event": "owner_release",
+    "reason": "cancelled",
+    "verified": true,
+    "buttons_down": [],
+    "keys_down": [],
+    "verified_ns": 36962233313702,
+    "valid_until_ns": 36966929233463
+  },
+  "typed_artifact_reconciliations": [
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "0d5f0b9b18d3ced8f2a5eade87b8cc722438ea6253dba05f5b7f19b3cb900a00",
+      "artifact_rgb_sha256": "0d5f0b9b18d3ced8f2a5eade87b8cc722438ea6253dba05f5b7f19b3cb900a00",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-early-typed-cancel-live-01/runtime/001.png",
+      "sequence": 1
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "d6dca2577cb7557a5106484be0a5b40614029511a7f7a6e442fee0032e5f68d9",
+      "artifact_rgb_sha256": "d6dca2577cb7557a5106484be0a5b40614029511a7f7a6e442fee0032e5f68d9",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-early-typed-cancel-live-01/runtime/002.png",
+      "sequence": 2
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "a79edd512e03f1f2356b3921849a88795cf6c447b624ff9ebc79719f2a804b9f",
+      "artifact_rgb_sha256": "a79edd512e03f1f2356b3921849a88795cf6c447b624ff9ebc79719f2a804b9f",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-early-typed-cancel-live-01/runtime/003.png",
+      "sequence": 3
+    }
+  ],
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": true,
+    "episode_finished": true,
+    "player_dead": false,
+    "wall_control_ns": 722392222,
+    "death_count": 0,
+    "kill_count": 0,
+    "one_life_map_exit": true,
+    "episode_timeout_seconds": 30,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1
+  },
+  "repair_candidate": "version Executor again and reuse executor_v3 Cancelled/DecisionRequired identities while retaining program attestation; do not alter frozen v10 or retry this allocation",
+  "limits": "posthoc recovery from retained raw events; exact guard-decision timestamp and child exit code were not serialized"
+}

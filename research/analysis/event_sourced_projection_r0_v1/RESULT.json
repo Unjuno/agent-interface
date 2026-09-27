@@ -1,0 +1,117 @@
+{
+  "checkpoint_checks": 380713,
+  "checkpoint_controls": {
+    "index_corruption": true,
+    "prefix_corruption": true,
+    "state_corruption": true
+  },
+  "checkpoint_mismatches": 0,
+  "decision": "PASS_EVENT_SOURCED_PROJECTION_CHECKPOINT_SCOPED",
+  "digest": "ce8ad63d696a674838ae748ac83308ea8c2ee20d7a52dcca51ca5083b284b7dd",
+  "event_count": 6,
+  "formal_invocations": 1,
+  "negative_divergence_counts": {
+    "DUPLICATE_APPLY": 33475,
+    "INDEX_ONLY": 1,
+    "MISSING_EVENT": 176948,
+    "ORDERLESS": 1,
+    "OUT_OF_BAND": 55987
+  },
+  "projection_mismatches": 0,
+  "replacements": 0,
+  "reruns": 0,
+  "sequence_controls": {
+    "duplicate_seq": true,
+    "gap_seq": true,
+    "unknown_event": true
+  },
+  "sequence_max_length": 6,
+  "sequences": 55987,
+  "task": "EVENT-SOURCED-PROJECTION-CHECKPOINT-R0-20260919-001",
+  "tuning_after_freeze": 0,
+  "witnesses": {
+    "DUPLICATE_APPLY": {
+      "duplicate_final": [
+        2,
+        false,
+        0
+      ],
+      "expected": [
+        1,
+        false,
+        0
+      ],
+      "seq": [
+        "INC"
+      ]
+    },
+    "INDEX_ONLY": {
+      "index": 1,
+      "prefix_a": [
+        "SET0"
+      ],
+      "prefix_b": [
+        "SET1"
+      ],
+      "state_a": [
+        0,
+        false,
+        0
+      ],
+      "state_b": [
+        1,
+        false,
+        0
+      ]
+    },
+    "MISSING_EVENT": {
+      "drop_index": 0,
+      "expected": [
+        1,
+        false,
+        0
+      ],
+      "missing_final": [
+        0,
+        false,
+        0
+      ],
+      "seq": [
+        "SET1"
+      ]
+    },
+    "ORDERLESS": {
+      "a": [
+        "SET0",
+        "SET1"
+      ],
+      "b": [
+        "SET1",
+        "SET0"
+      ],
+      "out_a": [
+        1,
+        false,
+        0
+      ],
+      "out_b": [
+        0,
+        false,
+        0
+      ]
+    },
+    "OUT_OF_BAND": {
+      "expected": [
+        0,
+        false,
+        0
+      ],
+      "mutated": [
+        1,
+        false,
+        0
+      ],
+      "seq": []
+    }
+  }
+}

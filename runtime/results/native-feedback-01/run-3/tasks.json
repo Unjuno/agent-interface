@@ -1,0 +1,926 @@
+[
+  {
+    "task_id": "task-1",
+    "navigation": {
+      "elapsed_ms": 580.321929,
+      "input_events": 68,
+      "path": "runtime.cli_v1.api.dispatch",
+      "result": {
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned",
+        "result": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "input.text",
+            "window.focus"
+          ],
+          "execution": {
+            "started_ns": 1212876788480,
+            "ended_ns": 1213098412737,
+            "emissions": 68,
+            "program_emissions": 68,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 1213098407802
+              }
+            ],
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          }
+        }
+      }
+    },
+    "entered": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 1237301770479,
+        "ended_ns": 1237584842284,
+        "emissions": 25,
+        "program_emissions": 25,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 1237584839932
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 3,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 3,
+          "valid_until_ns": 1238732532023,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 4,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 4,
+          "valid_until_ns": 1238802475248,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 5,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 5,
+          "valid_until_ns": 1238862183682,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 6,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 6,
+          "valid_until_ns": 1238928830651,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "saved": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 1237661873680,
+        "ended_ns": 1237935778391,
+        "emissions": 28,
+        "program_emissions": 3,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 1237935775921
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 7,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 7,
+          "valid_until_ns": 1239099207381,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 8,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 8,
+          "valid_until_ns": 1239162503426,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 9,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 9,
+          "valid_until_ns": 1239224791504,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 10,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 10,
+          "valid_until_ns": 1239281376748,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "local_elapsed_ms": 712.20319,
+    "feedback": {
+      "status": "matched",
+      "task_success": null,
+      "authority_granted": false,
+      "input_dispatched": false,
+      "expected_title": "AI INTEGRATED SAVED - Google Chrome for Testing",
+      "rejected_titles": [
+        "AI INTEGRATED REJECTED - Google Chrome for Testing"
+      ],
+      "samples": [
+        {
+          "known_ns": 1237951873886,
+          "title": "AI INTEGRATED SAVED - Google Chrome for Testing",
+          "binding": {
+            "focus": 6291459,
+            "surface": 6291459,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          }
+        }
+      ],
+      "started_ns": 1237950354865,
+      "observation": {
+        "sequence": 11,
+        "capture_ns": 1237952365105,
+        "pointer_binding": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "93d6f5537519a36362e359903bc61f9f87cd917e0266bee73626ad18b972c371",
+          "width": 1280,
+          "height": 800,
+          "target": "browser",
+          "native_window_id": 6291459,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 1237952365105,
+          "capture_ended_ns": 1237963635882,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-feedback-03/bridge/images/18b1cb3f449e446f9051fcd31d591e0f.png",
+            "sha256": "c02034388b01537cb6d4fcaef975c181a53e821da8417e01a1e999359c0fbf05",
+            "bytes": 27087,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "93d6f5537519a36362e359903bc61f9f87cd917e0266bee73626ad18b972c371"
+          }
+        }
+      },
+      "title": "AI INTEGRATED SAVED - Google Chrome for Testing",
+      "after_title": "AI INTEGRATED SAVED - Google Chrome for Testing",
+      "ended_ns": 1238013848852
+    },
+    "through_feedback_ms": 787.480461
+  },
+  {
+    "task_id": "task-2",
+    "navigation": {
+      "elapsed_ms": 540.204502,
+      "input_events": 68,
+      "path": "runtime.cli_v1.api.dispatch",
+      "result": {
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned",
+        "result": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "input.text",
+            "window.focus"
+          ],
+          "execution": {
+            "started_ns": 1238097232746,
+            "ended_ns": 1238318024406,
+            "emissions": 68,
+            "program_emissions": 68,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 1238318020996
+              }
+            ],
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          }
+        }
+      }
+    },
+    "entered": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 1238635234427,
+        "ended_ns": 1238930155313,
+        "emissions": 65,
+        "program_emissions": 37,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 1238930152802
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 13,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 13,
+          "valid_until_ns": 1240066120576,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 14,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 14,
+          "valid_until_ns": 1240135701926,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 15,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 15,
+          "valid_until_ns": 1240194593401,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 16,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 16,
+          "valid_until_ns": 1240254463135,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "saved": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 1239004719910,
+        "ended_ns": 1239284198394,
+        "emissions": 68,
+        "program_emissions": 3,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 1239284195563
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 17,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 17,
+          "valid_until_ns": 1240442328758,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 18,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 18,
+          "valid_until_ns": 1240505269843,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 19,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 19,
+          "valid_until_ns": 1240561186540,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 20,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 20,
+          "valid_until_ns": 1240622028283,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "local_elapsed_ms": 725.260685,
+    "feedback": {
+      "status": "rejected",
+      "task_success": null,
+      "authority_granted": false,
+      "input_dispatched": false,
+      "expected_title": "AI INTEGRATED SAVED - Google Chrome for Testing",
+      "rejected_titles": [
+        "AI INTEGRATED REJECTED - Google Chrome for Testing"
+      ],
+      "samples": [
+        {
+          "known_ns": 1239298070040,
+          "title": "AI INTEGRATED REJECTED - Google Chrome for Testing",
+          "binding": {
+            "focus": 6291459,
+            "surface": 6291459,
+            "geometry": [
+              10,
+              10,
+              1050,
+              780
+            ]
+          }
+        }
+      ],
+      "started_ns": 1239297088658,
+      "observation": {
+        "sequence": 21,
+        "capture_ns": 1239298366459,
+        "pointer_binding": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "b6832e890a645d0e5c54420fce8cd35f3ffe86fadccff62fb3f4ad6d5ca5ebba",
+          "width": 1280,
+          "height": 800,
+          "target": "browser",
+          "native_window_id": 6291459,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 1239298366459,
+          "capture_ended_ns": 1239307815383,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-feedback-03/bridge/images/28262c2bcafe4703acb7bee2082cf7af.png",
+            "sha256": "afd70d9534ec951c960cdf3b66a623abb4ded9d0408b2c750b8f7e0ad6e2f5ea",
+            "bytes": 26775,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "b6832e890a645d0e5c54420fce8cd35f3ffe86fadccff62fb3f4ad6d5ca5ebba"
+          }
+        }
+      },
+      "title": "AI INTEGRATED REJECTED - Google Chrome for Testing",
+      "after_title": "AI INTEGRATED REJECTED - Google Chrome for Testing",
+      "ended_ns": 1239363395121
+    },
+    "through_feedback_ms": 803.855985
+  }
+]

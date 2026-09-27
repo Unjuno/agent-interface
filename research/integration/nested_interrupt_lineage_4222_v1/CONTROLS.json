@@ -1,0 +1,130 @@
+{
+  "controls": [
+    {
+      "effective": true,
+      "errors": [
+        "denominator"
+      ],
+      "name": "drop_case",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "errors": [
+        "denominator"
+      ],
+      "name": "duplicate_case",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "errors": [
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:snapshot_lineage",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:terminal_effect",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:root_effect",
+        "aggregate_gates"
+      ],
+      "name": "wrong_root_effect",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "errors": [
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:final_neutral"
+      ],
+      "name": "nonneutral_release",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "errors": [
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:malformed:KeyError",
+        "aggregate_gates"
+      ],
+      "name": "missing_process_exit",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "errors": [
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:transition"
+      ],
+      "name": "authority_escalation",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "errors": [
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:transition"
+      ],
+      "name": "wrong_acceptance",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "errors": [
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:delivery_schedule",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:transition",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:stack_before",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:transition",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:final_stack",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:suffix_count",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:native_edges",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:app_press",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:independent_value_trace"
+      ],
+      "name": "receipt_foreign",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "errors": [
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:transition",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:stack_before",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:transition",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:final_stack",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:suffix_count",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:native_edges",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:app_press",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:independent_value_trace"
+      ],
+      "name": "receipt_boolean_generation",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "errors": [
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:app_release"
+      ],
+      "name": "missing_app_release",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "errors": [
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:app_release",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:wrong_surface_discriminator",
+        "aggregate_gates"
+      ],
+      "name": "wrong_input_destination",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "errors": [
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:delivery_schedule",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:stack_before",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:transition",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:final_stack",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:suffix_count",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:native_edges",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:app_press",
+        "r0-01-NORMAL-LINEAGE_BOUND_POP:independent_value_trace"
+      ],
+      "name": "missing_notification",
+      "rejected": true
+    }
+  ],
+  "effective": 12,
+  "rejected": 12
+}

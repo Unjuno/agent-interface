@@ -1,0 +1,179 @@
+{
+  "base_image": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "created_utc": "2026-09-27T02:45:22.280313+00:00",
+  "freeze_commit_parent_must_equal": "da083bc6eea8f59e367008ca67d5047da5008f09",
+  "images": {
+    "controller": {
+      "base": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+      "id": "sha256:4a800a24ca4ed4e8249cf35559b37ffca7e23a8cd76e7df1434fe4622e22d389",
+      "tag": "agent-arena-isolation-controller:20260927"
+    },
+    "evaluator": {
+      "base": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+      "id": "sha256:1381f1d3522c69e011e62340167497b02b3b5e81bc4d719641f7e3b34b905ecd",
+      "tag": "agent-arena-isolation-evaluator:20260927"
+    }
+  },
+  "issue": 4666,
+  "schema": "agent-interface-arena-isolation-freeze-v1",
+  "source_commit": "da083bc6eea8f59e367008ca67d5047da5008f09",
+  "source_hashes": {
+    "RESEARCH.md": {
+      "git_blob_oid": "17f522320b25771c1ed4552e4271779aaac01f5a",
+      "sha256_worktree_bytes": "b119a9e7e257943a9ac7780efa75b52e224e6da8e47a568bdc3cf5e9795830ef"
+    },
+    "research/procedural_control_arena_v0/arena.py": {
+      "git_blob_oid": "e3a4a8a9701c7273d6ce55f9ef15626e25d93d4c",
+      "sha256_worktree_bytes": "4e555e479ce665af77eedf444cd6bf82b4f93ccfbec52033df7ce8368c533527"
+    },
+    "research/procedural_control_arena_v0/engine.py": {
+      "git_blob_oid": "c114f62d79d81969d6eb110b7dbcb787c4d100a4",
+      "sha256_worktree_bytes": "573927ac68772c1d24715a04f7e070360d5632fb599c9821926fc01143d8810f"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/PROTOCOL.md": {
+      "git_blob_oid": "f4dc5fa7e4b63f35200cb0f67aee1b325d9cc4cb",
+      "sha256_worktree_bytes": "ac4e8aa97e9532dc4d39fda7565fe59f0dde81ac822c6d319f8b44e3e9d442a3"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/audit.py": {
+      "git_blob_oid": "09b7af363f513404a9627a2e1461a85c51e196e9",
+      "sha256_worktree_bytes": "e2d1fe0f1711e04ffb9c03622e1658a157a73c6a5f3814662134a544bbadf6cc"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/build_images.py": {
+      "git_blob_oid": "abe7e46a3da023113e82b9c7109934cce7fed497",
+      "sha256_worktree_bytes": "2e1a21e8338c847710ea7f02aef906b9264ef672607b842f3d675d1d771f8a49"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/BUILD_RECORD.json": {
+      "git_blob_oid": "e716776e62255f3be82542bd969fcd0a9e9b851e",
+      "sha256_worktree_bytes": "0810094045fd935229eb1d8140d92e8181a9cc15e50d79d3fb3e573c7e203df6"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/CONSTRUCTION_ATTEMPTS.md": {
+      "git_blob_oid": "3c692f1b6d2158048f7b6638f09daabdfae3bfcb",
+      "sha256_worktree_bytes": "45f2c608e9def4566e732ed345d76def4915276137c396c0c95e4948429b1715"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/CONSTRUCTION_SMOKE.json": {
+      "git_blob_oid": "e04719a2319351fdaed040770e1b8c3d67559d29",
+      "sha256_worktree_bytes": "37d49412a951ac0370bee149ecb8644f750ac9ad2efb4e53e4601716fb4ee6e2"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/SMOKE_IMAGE_BUILD_RECORD.json": {
+      "git_blob_oid": "eddfe29fa9a0c2bc7c48f4d87dec14f38ffa37cd",
+      "sha256_worktree_bytes": "0ebd9b0a295792f8deb3ff55c8351328ef7bb134efdf4fe75ecd38e193ae0588"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/controller-build.log": {
+      "git_blob_oid": "f372b6987c08d662c68b2539f5dee8f57abf58b6",
+      "sha256_worktree_bytes": "4fd982ff9fb5adb1ace4151f85c4aa922a325b84efca09f82030f76443fccec0"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/controller-image-inspect.json": {
+      "git_blob_oid": "577503731970df8677f568a89ea115c062e35590",
+      "sha256_worktree_bytes": "3596f20adf0773f0ad02e4c3786700591670d982282fcea896d23b84abe7685f"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/evaluator-build.log": {
+      "git_blob_oid": "35cfdffb30aa4fee2ef058e82238085ef0440c88",
+      "sha256_worktree_bytes": "fb40b9f24131814f5ca9ee8d51502af85fc6a90cd11809fed22c4cdc61864806"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/evaluator-image-inspect.json": {
+      "git_blob_oid": "475d9f4e43cdb25aef7b01b9955ea64a43238b87",
+      "sha256_worktree_bytes": "0f9cf48b9c3b7fd0461d4156ef1317dac3f1754497c5fb24a2ebf1e0403b98db"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/smoke-02/CONSTRUCTION_SMOKE.json": {
+      "git_blob_oid": "27b5a9ee63b0eecfcf45e742025ad3e9b9a6329b",
+      "sha256_worktree_bytes": "f597cb076c39eb9fe1599f6d584c1186b1410a6df6c856dd11d18553f323c624"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/smoke-02/controller-probe.json": {
+      "git_blob_oid": "072cb638c0f612e4c4f45e458e6b295ae7668c0e",
+      "sha256_worktree_bytes": "20e9ff77feb8c89497d41a82eea0c4eab96cdbe9245be51d91c94033d09530d5"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/smoke-02/screen.xwd": {
+      "git_blob_oid": "b9318bccda6572d1881c002efb90578bce2c4d69",
+      "sha256_worktree_bytes": "6d7027d0a77e3e961c027e942b66497f5c32d94b56e55a51ab4868ed13670392"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/smoke-02/smoke-controller-inspect.json": {
+      "git_blob_oid": "881be6ec9f9bce7bf9c5f06979ba46b730da3de8",
+      "sha256_worktree_bytes": "66b0ca354497891fe9d1f6e80aaa8e2c1413fd082bcedd6194c7df98deddaed5"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/smoke-02/smoke-controller.stderr": {
+      "git_blob_oid": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256_worktree_bytes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/smoke-02/smoke-controller.stdout": {
+      "git_blob_oid": "1bc6b92fbdb5dbbd48b8fce012a761d92f1a391d",
+      "sha256_worktree_bytes": "3e4988d92ab1f2a48e8cbdc1a24ada8e2b843030ed78b4f4b04f8d4dfeadf648"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/smoke-02/smoke-evaluator-inspect.json": {
+      "git_blob_oid": "888e2530f9a3964d2c76bedd4d840b6b18a35467",
+      "sha256_worktree_bytes": "79dc45d3ce8f0bd80c1da6739ab163b5c4add288203fa7a51b49f54a67034ac3"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/smoke-02/smoke-network-inspect.json": {
+      "git_blob_oid": "39a6b2a5c2f8bd701a9d0234e16f855341e0e2a4",
+      "sha256_worktree_bytes": "438c36f66669603e2d2483657c32d992825a2d8e18c50059c77216e6cf181f21"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/smoke-02/smoke-report.json": {
+      "git_blob_oid": "322db6d799605685dee7a0d626b1a8dce5077b1a",
+      "sha256_worktree_bytes": "3a9fa69dc816ce048ec0f08bc34ed6f9c3e9803f1e90a86433eb7606f39a8398"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/smoke-controller.stderr": {
+      "git_blob_oid": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256_worktree_bytes": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/smoke-controller.stdout": {
+      "git_blob_oid": "b816743cefe12d3df5fd24cea6af201bddcf01b1",
+      "sha256_worktree_bytes": "dac1dcb0dfb62dcdd37ffb45e01f28699e3f2aa954e9090f09c999c4e588806f"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/smoke-evaluator-inspect.json": {
+      "git_blob_oid": "8f608a8e6d3e0425ced8680be33e6b3623c6482b",
+      "sha256_worktree_bytes": "7d9d1f5227065d7d1b830ed69234463dd6a61ee97b28bc1b199c9d2c7dacb51f"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/smoke-evaluator.log": {
+      "git_blob_oid": "3cb156fd05df53ce7aff4862da7d78936ae8450a",
+      "sha256_worktree_bytes": "8f2dc65eb55355602d6bb75b5879d37458d0c1833108dd53e08db45b1450de26"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction/smoke-report.json": {
+      "git_blob_oid": "303b3910287f358d536043326415beca1ee262b1",
+      "sha256_worktree_bytes": "36325024e873d78d58b4810205ec884a90c17e37611ab24f42c236754d10ad15"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/construction_smoke.py": {
+      "git_blob_oid": "fed90fdd3bc079a77a3ba3fcae86489d3bfbab8c",
+      "sha256_worktree_bytes": "11703c352872230948a69fc64baac4919aab17bbe129b24d80d029e5bc7def8b"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/freeze_sources.py": {
+      "git_blob_oid": "f1d9cb057d6a95d134c444af1a9bb8343d338f59",
+      "sha256_worktree_bytes": "4a314df3282dbff5d74163980d5f44476eac7e98b1cd6932958af34f939c4ad6"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/images/controller/Dockerfile": {
+      "git_blob_oid": "0c13e5842ed50893747979f363158c84912c027d",
+      "sha256_worktree_bytes": "46b7f6b4d30798bb06a41fa6225c5bfdb1107d6ffeeeffd4e334bb1af879eaf2"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/images/controller/probe.py": {
+      "git_blob_oid": "e8d895171ae27aab1a837c2c85a297339821a5d4",
+      "sha256_worktree_bytes": "55c6b42dc3fb88436c5b671fb5932b5b2769f0fef9a3428390605397e7f8137e"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/images/evaluator/Dockerfile": {
+      "git_blob_oid": "b631fab56670fc418a1cfe387c3f63ff6b6a4604",
+      "sha256_worktree_bytes": "2f66c38a9a86c3f79b10ff668c400dfbfbd69fbf1e19a87d2be503f188e9a942"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/images/evaluator/arena.py": {
+      "git_blob_oid": "e3a4a8a9701c7273d6ce55f9ef15626e25d93d4c",
+      "sha256_worktree_bytes": "4e555e479ce665af77eedf444cd6bf82b4f93ccfbec52033df7ce8368c533527"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/images/evaluator/engine.py": {
+      "git_blob_oid": "c114f62d79d81969d6eb110b7dbcb787c4d100a4",
+      "sha256_worktree_bytes": "573927ac68772c1d24715a04f7e070360d5632fb599c9821926fc01143d8810f"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/images/evaluator/entrypoint.sh": {
+      "git_blob_oid": "558a529412c2505a75882a25a3e0e4c04f2aa6e8",
+      "sha256_worktree_bytes": "53ba30882122b04bb70e6d8ae11f4e6f8dbf1314fc0d3dfbd36f75e48962842f"
+    },
+    "research/procedural_control_arena_v0/evaluator_isolation_v1/run_formal.py": {
+      "git_blob_oid": "c36a7c852f39231f3b5abe7e8f18391fd85afc84",
+      "sha256_worktree_bytes": "54e4874b2ad8e5894c5cdb0ed765f081bd6a42439565ef37cf83998060b0e37e"
+    }
+  },
+  "trial": {
+    "clock": "fixed",
+    "controller_action": "send exactly one w key-down/key-up",
+    "deadline_seconds": 2.6,
+    "difficulty": 1.0,
+    "first_stage": "target",
+    "formal_allocation": "formal/001 only; one attempt",
+    "seed": 2001
+  }
+}

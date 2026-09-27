@@ -1,0 +1,8 @@
+Allocation seed 992923; output namespace ready-gate-02. The host created the
+mounted output directory before launching the runner. The runner confirmed
+X_DISPLAY_READY, then stopped before session startup because its own
+`args.out.mkdir(parents=True, exist_ok=False)` raised:
+
+FileExistsError: [Errno 17] File exists: '/evidence/ready-gate-02'
+
+The route session did not start. Seed 992923 is consumed; it was not reused.

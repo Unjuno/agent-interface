@@ -1,0 +1,410 @@
+......................................................E.................E.....................................................................EEEEE.Es.................................E..............................FFFFFF.E....FFFFFFEEE......
+======================================================================
+ERROR: cli_v1.test_mcp_server (unittest.loader._FailedTest.cli_v1.test_mcp_server)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: cli_v1.test_mcp_server
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/repo/runtime/cli_v1/test_mcp_server.py", line 12, in <module>
+    from runtime.cli_v1.mcp_server import create_server
+  File "/repo/runtime/cli_v1/mcp_server.py", line 12, in <module>
+    from mcp.server.fastmcp import FastMCP
+ModuleNotFoundError: No module named 'mcp'
+
+
+======================================================================
+ERROR: cli_v1.test_receipt_composition_2916 (unittest.loader._FailedTest.cli_v1.test_receipt_composition_2916)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: cli_v1.test_receipt_composition_2916
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/repo/runtime/cli_v1/test_receipt_composition_2916.py", line 3, in <module>
+    from research.integration.golden_v3_receipt_composition_2916.test_receipt_composition import ReceiptCompositionTests
+ModuleNotFoundError: No module named 'research.integration.golden_v3_receipt_composition_2916'
+
+
+======================================================================
+ERROR: test_archive_closure_has_only_promoted_executable_modules (distribution_v2.test_distribution.PortableDistributionTests.test_archive_closure_has_only_promoted_executable_modules)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/distribution_v2/build.py", line 88, in _source_revision
+    value = subprocess.check_output(
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.12/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/repo/runtime/distribution_v2/test_distribution.py", line 120, in test_archive_closure_has_only_promoted_executable_modules
+    result = build(root, out, td / "manifest.json", td / "sum")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/repo/runtime/distribution_v2/build.py", line 120, in build
+    revision = _source_revision(root)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/repo/runtime/distribution_v2/build.py", line 95, in _source_revision
+    raise RuntimeError('cannot pin committed build source') from error
+RuntimeError: cannot pin committed build source
+
+======================================================================
+ERROR: test_build_is_byte_deterministic_and_doctor_runs (distribution_v2.test_distribution.PortableDistributionTests.test_build_is_byte_deterministic_and_doctor_runs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/distribution_v2/build.py", line 88, in _source_revision
+    value = subprocess.check_output(
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.12/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/repo/runtime/distribution_v2/test_distribution.py", line 106, in test_build_is_byte_deterministic_and_doctor_runs
+    ra = build(root, a, ma, sa); rb = build(root, b, mb, sb)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/repo/runtime/distribution_v2/build.py", line 120, in build
+    revision = _source_revision(root)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/repo/runtime/distribution_v2/build.py", line 95, in _source_revision
+    raise RuntimeError('cannot pin committed build source') from error
+RuntimeError: cannot pin committed build source
+
+======================================================================
+ERROR: test_build_pins_source_even_when_head_moves_between_files (distribution_v2.test_distribution.PortableDistributionTests.test_build_pins_source_even_when_head_moves_between_files)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/distribution_v2/test_distribution.py", line 66, in test_build_pins_source_even_when_head_moves_between_files
+    git('init')
+  File "/repo/runtime/distribution_v2/test_distribution.py", line 65, in git
+    return subprocess.check_output(['git', '-C', str(root), *args], stderr=subprocess.STDOUT).decode().strip()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.12/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+
+======================================================================
+ERROR: test_cli_remains_usable_without_optional_mcp_dependency (distribution_v2.test_distribution.PortableDistributionTests.test_cli_remains_usable_without_optional_mcp_dependency)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/distribution_v2/build.py", line 88, in _source_revision
+    value = subprocess.check_output(
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.12/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/repo/runtime/distribution_v2/test_distribution.py", line 47, in test_cli_remains_usable_without_optional_mcp_dependency
+    build(root, out, td/'manifest.json', td/'sum')
+  File "/repo/runtime/distribution_v2/build.py", line 120, in build
+    revision = _source_revision(root)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/repo/runtime/distribution_v2/build.py", line 95, in _source_revision
+    raise RuntimeError('cannot pin committed build source') from error
+RuntimeError: cannot pin committed build source
+
+======================================================================
+ERROR: test_malformed_targets_fail_before_native_backend (distribution_v2.test_distribution.PortableDistributionTests.test_malformed_targets_fail_before_native_backend)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/distribution_v2/build.py", line 88, in _source_revision
+    value = subprocess.check_output(
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.12/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/repo/runtime/distribution_v2/test_distribution.py", line 136, in test_malformed_targets_fail_before_native_backend
+    build(root, out, td / "manifest.json", td / "sum")
+  File "/repo/runtime/distribution_v2/build.py", line 120, in build
+    revision = _source_revision(root)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/repo/runtime/distribution_v2/build.py", line 95, in _source_revision
+    raise RuntimeError('cannot pin committed build source') from error
+RuntimeError: cannot pin committed build source
+
+======================================================================
+ERROR: test_public_validation_outside_checkout_without_dependencies (distribution_v2.test_distribution.PortableDistributionTests.test_public_validation_outside_checkout_without_dependencies)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/distribution_v2/build.py", line 88, in _source_revision
+    value = subprocess.check_output(
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.12/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/repo/runtime/distribution_v2/test_distribution.py", line 21, in test_public_validation_outside_checkout_without_dependencies
+    build(root, out, td / 'manifest.json', td / 'sum')
+  File "/repo/runtime/distribution_v2/build.py", line 120, in build
+    revision = _source_revision(root)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/repo/runtime/distribution_v2/build.py", line 95, in _source_revision
+    raise RuntimeError('cannot pin committed build source') from error
+RuntimeError: cannot pin committed build source
+
+======================================================================
+ERROR: local_supervisor_v1 (unittest.loader._FailedTest.local_supervisor_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: local_supervisor_v1
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 427, in _find_test_path
+    package = self._get_module_from_name(name)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/repo/runtime/local_supervisor_v1/__init__.py", line 1, in <module>
+    from .supervisor import CONTINUE, FEATURES, YIELD, Decision, LocalSupervisor, build
+  File "/repo/runtime/local_supervisor_v1/supervisor.py", line 40, in <module>
+    class LocalSupervisor:
+  File "/repo/runtime/local_supervisor_v1/supervisor.py", line 50, in LocalSupervisor
+    @torch.inference_mode()
+     ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'inference_mode'
+
+
+======================================================================
+ERROR: test_missing_referencing_dependency_stops_cleanly (test_docker_schema_preflight_v1.DockerSchemaPreflightAdapterTest.test_missing_referencing_dependency_stops_cleanly)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/test_docker_schema_preflight_v1.py", line 200, in test_missing_referencing_dependency_stops_cleanly
+    import jsonschema
+ModuleNotFoundError: No module named 'jsonschema'
+
+======================================================================
+ERROR: test_validator_registry_refuses_unlisted_remote_retrieval (test_docker_schema_preflight_v1.DockerSchemaPreflightAdapterTest.test_validator_registry_refuses_unlisted_remote_retrieval)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/test_docker_schema_preflight_v1.py", line 153, in test_validator_registry_refuses_unlisted_remote_retrieval
+    import jsonschema
+ModuleNotFoundError: No module named 'jsonschema'
+
+======================================================================
+ERROR: test_golden_desktop_demo_v2 (unittest.loader._FailedTest.test_golden_desktop_demo_v2)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_golden_desktop_demo_v2
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/repo/runtime/test_golden_desktop_demo_v2.py", line 7, in <module>
+    import runtime.golden_desktop_demo_v2 as demo
+  File "/repo/runtime/golden_desktop_demo_v2.py", line 18, in <module>
+    from integrated_efficiency_app_server_model_v1 import PersistentGroundingModel
+ModuleNotFoundError: No module named 'integrated_efficiency_app_server_model_v1'
+
+
+======================================================================
+ERROR: test_golden_desktop_demo_v3 (unittest.loader._FailedTest.test_golden_desktop_demo_v3)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_golden_desktop_demo_v3
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/repo/runtime/test_golden_desktop_demo_v3.py", line 4, in <module>
+    import runtime.golden_desktop_demo_v3 as demo
+  File "/repo/runtime/golden_desktop_demo_v3.py", line 16, in <module>
+    import golden_desktop_demo_v2 as previous
+  File "/repo/runtime/golden_desktop_demo_v2.py", line 18, in <module>
+    from integrated_efficiency_app_server_model_v1 import PersistentGroundingModel
+ModuleNotFoundError: No module named 'integrated_efficiency_app_server_model_v1'
+
+
+======================================================================
+FAIL: test_current_integrated_efficiency_schemas_accept_valid_outputs (test_docker_schema_preflight_v1.DockerSchemaPreflightAdapterTest.test_current_integrated_efficiency_schemas_accept_valid_outputs) (schema='compiled_form_grounding_schema_v1.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/test_docker_schema_preflight_v1.py", line 110, in test_current_integrated_efficiency_schemas_accept_valid_outputs
+    self.assertTrue(schema_path.is_file())
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_current_integrated_efficiency_schemas_accept_valid_outputs (test_docker_schema_preflight_v1.DockerSchemaPreflightAdapterTest.test_current_integrated_efficiency_schemas_accept_valid_outputs) (schema='plain_form_points_schema_v1.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/test_docker_schema_preflight_v1.py", line 110, in test_current_integrated_efficiency_schemas_accept_valid_outputs
+    self.assertTrue(schema_path.is_file())
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_invalid_schema_is_stop (test_docker_schema_preflight_v1.DockerSchemaPreflightAdapterTest.test_invalid_schema_is_stop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/test_docker_schema_preflight_v1.py", line 131, in test_invalid_schema_is_stop
+    self.assertEqual(validate_model_response(self.events, self.schema)["status"],
+AssertionError: 'STOP_SCHEMA_VALIDATOR_UNAVAILABLE' != 'STOP_INVALID_OUTPUT_SCHEMA'
+- STOP_SCHEMA_VALIDATOR_UNAVAILABLE
++ STOP_INVALID_OUTPUT_SCHEMA
+
+
+======================================================================
+FAIL: test_local_reference_must_resolve (test_docker_schema_preflight_v1.DockerSchemaPreflightAdapterTest.test_local_reference_must_resolve)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/test_docker_schema_preflight_v1.py", line 177, in test_local_reference_must_resolve
+    self.assertEqual(validate_model_response(self.events, self.schema)["status"],
+AssertionError: 'STOP_SCHEMA_VALIDATOR_UNAVAILABLE' != 'STOP_INVALID_OUTPUT_SCHEMA'
+- STOP_SCHEMA_VALIDATOR_UNAVAILABLE
++ STOP_INVALID_OUTPUT_SCHEMA
+
+
+======================================================================
+FAIL: test_main_passes_only_after_schema_validation (test_docker_schema_preflight_v1.DockerSchemaPreflightAdapterTest.test_main_passes_only_after_schema_validation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/test_docker_schema_preflight_v1.py", line 242, in test_main_passes_only_after_schema_validation
+    self.assertEqual(return_code, 0)
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_main_returns_nonzero_and_safe_report_for_schema_mismatch (test_docker_schema_preflight_v1.DockerSchemaPreflightAdapterTest.test_main_returns_nonzero_and_safe_report_for_schema_mismatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/test_docker_schema_preflight_v1.py", line 249, in test_main_returns_nonzero_and_safe_report_for_schema_mismatch
+    self.assertEqual(report["status"], "STOP_SCHEMA_OUTPUT_INVALID")
+AssertionError: 'STOP_SCHEMA_VALIDATOR_UNAVAILABLE' != 'STOP_SCHEMA_OUTPUT_INVALID'
+- STOP_SCHEMA_VALIDATOR_UNAVAILABLE
++ STOP_SCHEMA_OUTPUT_INVALID
+
+
+======================================================================
+FAIL: test_pass_requires_one_agent_message_matching_schema (test_docker_schema_preflight_v1.DockerSchemaPreflightAdapterTest.test_pass_requires_one_agent_message_matching_schema)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/test_docker_schema_preflight_v1.py", line 47, in test_pass_requires_one_agent_message_matching_schema
+    self.assertEqual(result["status"], "PASS")
+AssertionError: 'STOP_SCHEMA_VALIDATOR_UNAVAILABLE' != 'PASS'
+- STOP_SCHEMA_VALIDATOR_UNAVAILABLE
++ PASS
+
+
+======================================================================
+FAIL: test_prefix_items_remote_reference_is_rejected (test_docker_schema_preflight_v1.DockerSchemaPreflightAdapterTest.test_prefix_items_remote_reference_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/test_docker_schema_preflight_v1.py", line 149, in test_prefix_items_remote_reference_is_rejected
+    self.assertEqual(validate_model_response(self.events, self.schema)["status"],
+AssertionError: 'STOP_SCHEMA_VALIDATOR_UNAVAILABLE' != 'STOP_REMOTE_SCHEMA_REFERENCE'
+- STOP_SCHEMA_VALIDATOR_UNAVAILABLE
++ STOP_REMOTE_SCHEMA_REFERENCE
+
+
+======================================================================
+FAIL: test_ref_like_value_inside_const_is_not_a_schema_reference (test_docker_schema_preflight_v1.DockerSchemaPreflightAdapterTest.test_ref_like_value_inside_const_is_not_a_schema_reference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/test_docker_schema_preflight_v1.py", line 77, in test_ref_like_value_inside_const_is_not_a_schema_reference
+    self.assertEqual(validate_model_response(self.events, self.schema)["status"],
+AssertionError: 'STOP_SCHEMA_VALIDATOR_UNAVAILABLE' != 'PASS'
+- STOP_SCHEMA_VALIDATOR_UNAVAILABLE
++ PASS
+
+
+======================================================================
+FAIL: test_remote_schema_reference_is_rejected_without_resolution (test_docker_schema_preflight_v1.DockerSchemaPreflightAdapterTest.test_remote_schema_reference_is_rejected_without_resolution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/test_docker_schema_preflight_v1.py", line 140, in test_remote_schema_reference_is_rejected_without_resolution
+    self.assertEqual(validate_model_response(self.events, self.schema)["status"],
+AssertionError: 'STOP_SCHEMA_VALIDATOR_UNAVAILABLE' != 'STOP_REMOTE_SCHEMA_REFERENCE'
+- STOP_SCHEMA_VALIDATOR_UNAVAILABLE
++ STOP_REMOTE_SCHEMA_REFERENCE
+
+
+======================================================================
+FAIL: test_schema_dialect_must_be_declared (test_docker_schema_preflight_v1.DockerSchemaPreflightAdapterTest.test_schema_dialect_must_be_declared)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/test_docker_schema_preflight_v1.py", line 183, in test_schema_dialect_must_be_declared
+    self.assertEqual(validate_model_response(self.events, self.schema)["status"],
+AssertionError: 'STOP_SCHEMA_VALIDATOR_UNAVAILABLE' != 'STOP_SCHEMA_DIALECT_UNDECLARED'
+- STOP_SCHEMA_VALIDATOR_UNAVAILABLE
++ STOP_SCHEMA_DIALECT_UNDECLARED
+
+
+======================================================================
+FAIL: test_valid_json_that_violates_schema_is_stop (test_docker_schema_preflight_v1.DockerSchemaPreflightAdapterTest.test_valid_json_that_violates_schema_is_stop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/repo/runtime/test_docker_schema_preflight_v1.py", line 56, in test_valid_json_that_violates_schema_is_stop
+    self.assertEqual(result["status"], "STOP_SCHEMA_OUTPUT_INVALID")
+AssertionError: 'STOP_SCHEMA_VALIDATOR_UNAVAILABLE' != 'STOP_SCHEMA_OUTPUT_INVALID'
+- STOP_SCHEMA_VALIDATOR_UNAVAILABLE
++ STOP_SCHEMA_OUTPUT_INVALID
+
+
+----------------------------------------------------------------------
+Ran 240 tests in 1.388s
+
+FAILED (failures=12, errors=13, skipped=1)

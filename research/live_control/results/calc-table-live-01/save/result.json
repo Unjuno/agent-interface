@@ -1,0 +1,353 @@
+{
+  "receipt": {
+    "format": "decision-receipt-v4",
+    "source": {
+      "sha256": "5a096bc94051dfe1ec15026e41020f4c77c0bc431942c5780c6c30ac4624290e",
+      "bytes": 21004
+    },
+    "reported_state": "terminal",
+    "reported_reason": null,
+    "program_write_may_have_been_attempted": true,
+    "terminals": [
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          6
+        ],
+        "record": {
+          "event": "terminal",
+          "id": "save",
+          "status": "needs_decision",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 48055358059,
+            "valid_until_ns": null
+          },
+          "interruption": {
+            "intent_token": "f4bb9583dd04496c9e3b73ea6fa59e73",
+            "record": {
+              "event": "owner_release",
+              "reason": "focus_changed",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 47975905250,
+              "valid_until_ns": 77849244513
+            }
+          },
+          "decision_reason": "focus_changed",
+          "terminal_ns": 48055439138,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 48055442453
+        }
+      }
+    ],
+    "image": {
+      "status": "image",
+      "sequence": 11,
+      "capture_ns": 47976289715,
+      "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/calc-table-live-01/runtime/011.png",
+      "relative_path": "011.png",
+      "sha256": "3dc6113b5e554659e76b74047891a0b018924c7591d17948c9a8b5926607b2a4",
+      "authority": "none",
+      "freshness": "historical referenced capture; no new observation"
+    },
+    "event_index": {
+      "command": {
+        "count": 2,
+        "paths": [
+          [
+            "exchanges",
+            0,
+            "reply",
+            "records",
+            0
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            0
+          ]
+        ]
+      },
+      "clock": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            0,
+            "reply",
+            "records",
+            1
+          ]
+        ]
+      },
+      "accepted": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            1
+          ]
+        ]
+      },
+      "step_started": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            2
+          ]
+        ]
+      },
+      "input_admission": {
+        "count": 2,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            3
+          ],
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            4
+          ]
+        ]
+      },
+      "observation": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ]
+        ]
+      },
+      "terminal": {
+        "count": 1,
+        "paths": [
+          [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            6
+          ]
+        ]
+      }
+    },
+    "attention": [
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          5
+        ],
+        "reason": "unknown event fields",
+        "fields": [
+          "input_state_after",
+          "input_state_before",
+          "input_state_scope",
+          "owner_revision_unchanged"
+        ]
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          5
+        ],
+        "reason": "inexact image or focus mismatch"
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          6
+        ],
+        "reason": "terminal interruption/error/unverified release"
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          5,
+          "focus_samples_match"
+        ],
+        "reason": "nested exception or negative evidence"
+      },
+      {
+        "path": [
+          "last_reply",
+          "records",
+          5,
+          "focus_samples_match"
+        ],
+        "reason": "nested exception or negative evidence"
+      },
+      {
+        "path": [
+          "continuation_batch",
+          "records",
+          5,
+          "focus_samples_match"
+        ],
+        "reason": "nested exception or negative evidence"
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          6
+        ],
+        "reason": "recorded interruption/decision reason requires review regardless of terminal status"
+      }
+    ],
+    "detail_review_required": true,
+    "task_success": "unknown; program completion is not independent task scoring",
+    "coverage": "Index of exchange events only; routine payloads and other report fields remain in source. Not full review or schema validation.",
+    "authority": "none; no new input approval, refreshed image, or model receipt",
+    "limits": "Binding checks only recorded consistency, not authenticity or full nested schema semantics. No attention is not approval. Unknown nested fields may need manual review.",
+    "program_binding": {
+      "program_id": "save",
+      "request_id": "program-2846954e01de4e6db1864174b2335721",
+      "terminal": {
+        "event": "terminal",
+        "id": "save",
+        "status": "needs_decision",
+        "error": null,
+        "steps_completed": 0,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 48055358059,
+          "valid_until_ns": null
+        },
+        "interruption": {
+          "intent_token": "f4bb9583dd04496c9e3b73ea6fa59e73",
+          "record": {
+            "event": "owner_release",
+            "reason": "focus_changed",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 47975905250,
+            "valid_until_ns": 77849244513
+          }
+        },
+        "decision_reason": "focus_changed",
+        "terminal_ns": 48055439138,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 48055442453
+      },
+      "meaning": "internally consistent recorded program binding; not task success, provenance, current lease or input approval"
+    },
+    "tracking_metrics": [],
+    "servo_feedback": []
+  },
+  "state_table": {
+    "format": "input-state-table-v1",
+    "source_sha256": "5a096bc94051dfe1ec15026e41020f4c77c0bc431942c5780c6c30ac4624290e",
+    "table": {
+      "common_state": {
+        "owner_id": "65c7aebd56d642a6af2ff5fe63b39aa4",
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "cancel_requested": false
+      },
+      "common_observation": {
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "owner_revision_unchanged": false
+      },
+      "observations": [
+        {
+          "path": [
+            "exchanges",
+            1,
+            "reply",
+            "records",
+            5
+          ],
+          "sequence": 11,
+          "fields": {
+            "input_state_before": {
+              "delta": {
+                "revision": 21,
+                "sample_started_ns": 47968582943,
+                "sample_finished_ns": 47968910722,
+                "focus": 8389124,
+                "active_lease_deadline_ns": 77849244513,
+                "active_lease_time_valid": true
+              }
+            },
+            "input_state_after": {
+              "delta": {
+                "revision": 22,
+                "sample_started_ns": 48044940688,
+                "sample_finished_ns": 48045329007,
+                "focus": 8390836,
+                "active_lease_deadline_ns": null,
+                "active_lease_time_valid": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "coverage": "Four named input-state fields of every exchange observation; all other fields/events/images remain in the original report and receipt.",
+    "authority": "none; historical values only; no attention cleared, lease renewed, or task success inferred"
+  },
+  "image": {
+    "status": "image",
+    "sequence": 11,
+    "capture_ns": 47976289715,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/calc-table-live-01/runtime/011.png",
+    "relative_path": "011.png",
+    "sha256": "3dc6113b5e554659e76b74047891a0b018924c7591d17948c9a8b5926607b2a4",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  }
+}

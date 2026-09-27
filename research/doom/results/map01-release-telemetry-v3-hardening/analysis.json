@@ -1,0 +1,77 @@
+{
+  "schema": "map01-release-telemetry-v3-hardening-v1",
+  "task": "O3-G4-RELEASE-TELEMETRY-V3-001",
+  "base_commit": "9aed27c74c968bec71ef2e3fdf965d43332a8dd5",
+  "status": {
+    "v1_map01_integration": "HOLD_MULTI_KEY_MEASUREMENT_PERTURBATION",
+    "v2_retained": "PASS_BATCH_ORDER_BUT_STALE_ATTRIBUTION_AND_ANALYZER_COMPATIBILITY_GAPS",
+    "v3_deterministic_gate": "PASS",
+    "v3_xvfb_development_gate": "PASS",
+    "map01_vizdoom_integration": "NOT_RUN",
+    "formal_live_allocation": "NONE"
+  },
+  "tests": {
+    "input_transition_owner_v3": {"passed": 8, "failed": 0},
+    "doom_retained_input_backend_v3": {"passed": 11, "failed": 0},
+    "total": {"passed": 19, "failed": 0},
+    "py_compile": "PASS"
+  },
+  "xvfb_probe": {
+    "single": {
+      "trials": 500,
+      "physical_down_verified": 500,
+      "physical_up_verified": 500,
+      "exact_operation_order": 500,
+      "verified_telemetry_batches": 500,
+      "release_call_window_ns": {"min": 52956, "median": 56284, "p95": 155923, "p99": 277123, "max": 1383352},
+      "batch_window_ns": {"min": 52956, "median": 56284, "p95": 155923, "p99": 277123, "max": 1383352},
+      "post_final_release_sample_and_publish_delay_ns": {"min": 24022, "median": 25559, "p95": 86705, "p99": 292265, "max": 636436}
+    },
+    "two_key": {
+      "trials": 500,
+      "physical_down_verified": 500,
+      "physical_up_verified": 500,
+      "exact_operation_order": 500,
+      "verified_telemetry_batches": 500,
+      "release_call_window_ns": {"min": 49893, "median": 55000, "p95": 158366, "p99": 385406, "max": 1404063},
+      "between_release_local_gap_ns": {"min": 745, "median": 1034, "p95": 1424, "p99": 1955, "max": 25039},
+      "batch_window_ns": {"min": 104457, "median": 114107, "p95": 339993, "p99": 535839, "max": 2264001},
+      "post_final_release_sample_and_publish_delay_ns": {"min": 23860, "median": 24847, "p95": 57593, "p99": 152904, "max": 595336}
+    }
+  },
+  "environment": {
+    "python": "3.13.5",
+    "kernel": "Linux 6.18.44 x86_64",
+    "cpu": "Intel Xeon Platinum 8370C @ 2.80 GHz",
+    "process_cpu_affinity": [0, 1, 2, 3, 4],
+    "xvfb": "800x600x24, -ac, local UNIX socket",
+    "batch_trials": {"single": 500, "two_key": 500},
+    "vizdoom_used": false
+  },
+  "source_sha256": {
+    "research/live_control/input_transition_owner_v3.py": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6",
+    "research/live_control/test_input_transition_owner_v3.py": "d48223f70393aa2cbd7fa17d20aec506580df6b73cc84db544bc9a5c7e12a83a",
+    "research/live_control/probe_x11_release_batch_v3.py": "1b774f07477d9ac54795f1160c2747871058553042cf1414ebfdb96fe91c0137",
+    "research/doom/doom_retained_input_backend_v3.py": "cad7de4769e574f78663e8351a8c2f8c714d51dfa7f9c41bcfb9716f06bef309",
+    "research/doom/test_doom_retained_input_backend_v3.py": "7b3037eefa733587c3eb8601c2c34a8d915c9496ceef133eb9def4b3c619e9d4"
+  },
+  "proof_obligations": {
+    "no_owner_or_x11_sample_between_key_releases": true,
+    "no_telemetry_publication_between_key_releases": true,
+    "stale_expired_cancelled_focus_invalid_cleanup_rejected": true,
+    "post_batch_sample_order_checked": true,
+    "owner_identity_checked": true,
+    "intent_identity_checked": true,
+    "owner_empty_checked": true,
+    "backend_ownership_checked": true,
+    "incomplete_batch_context_discarded": true,
+    "retained_direct_analyzer_event_contract_preserved": true
+  },
+  "decision": "PASS offline v3 hardening and development Xvfb gate; MAP01/VizDoom integration remains separately gated and no formal/live allocation is authorized.",
+  "limits": [
+    "Caller timestamps bound but do not exactly timestamp the internal X11 state transition.",
+    "Post-batch owner state is not continuous physical keyboard occupancy.",
+    "Development Xvfb timing is not MAP01 runtime latency or a hard real-time bound.",
+    "Independent progress-clock session isolation/polling integration remains unproven."
+  ]
+}

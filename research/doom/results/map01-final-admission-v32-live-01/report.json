@@ -1,0 +1,1607 @@
+{
+  "claim": "persistent typed planner invalidation from a fixed real-MAP01 threat state",
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "iterations": 6,
+  "decisions": [
+    {
+      "iteration": 0,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-final-admission-v32-live-01/runtime/001.png",
+      "model_image": "results-local/doom/map01-final-admission-v32-live-01/decision-0/temporal-sheet.png",
+      "model_image_sha256": "bb7855e2feb900276019b5088af706d58beb1c5d1567fa8e52ee72baa20fbfc0",
+      "action": null,
+      "effect_memory": [],
+      "usage": null,
+      "model_ns": 9570608812,
+      "prior_soft_event_summary": null,
+      "model_session_id": "01a0a373-30f2-7920-9c87-87f28d1e2d8a",
+      "planner_turn_id": "01a0a373-4feb-7193-a871-99232e10c30e",
+      "planner_turn_status": "interrupted",
+      "planner_answer_eligible": false,
+      "planner_terminal_observed_ns": 54096510596472,
+      "final_action_admission": {
+        "schema": "final-action-admission-v1",
+        "status": "REJECTED_POLICY_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "planner_terminal": {
+          "turn_id": "01a0a373-4feb-7193-a871-99232e10c30e",
+          "status": "interrupted",
+          "answer_eligible": false,
+          "terminal_observed_ns": 54096510596472
+        },
+        "policy_invalidation": {
+          "sequence": 32,
+          "signal": {
+            "format": "observable-signal-v1",
+            "status": "observed",
+            "signal_id": "health",
+            "value": 91,
+            "sequence": 32,
+            "capture_ns": 54096382054218,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "slots": [
+              {
+                "slot": 0,
+                "digit": null,
+                "best_digit": 5,
+                "best_score": 0.058165548098434,
+                "second_score": 0.055762081784386616
+              },
+              {
+                "slot": 1,
+                "digit": 9,
+                "best_digit": 9,
+                "best_score": 0.9274193548387096,
+                "second_score": 0.31413612565445026
+              },
+              {
+                "slot": 2,
+                "digit": 1,
+                "best_digit": 1,
+                "best_score": 0.9591078066914498,
+                "second_score": 0.21144278606965175
+              }
+            ],
+            "evidence": "hash-bound WAD glyph foreground exact-match",
+            "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+          },
+          "outcome": {
+            "format": "observable-signal-guard-outcome-v1",
+            "guard_id": "map01-0",
+            "signal_id": "health",
+            "status": "HARD_INVALIDATED",
+            "reason": "below_hard_minimum",
+            "source_value": 97,
+            "current_value": 91,
+            "hard_minimum": 97,
+            "source_age_ms": 9891.042931,
+            "keep_existing_policy": false,
+            "requires_new_decision": true,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "semantic_change_identified": true,
+            "task_success_verified": false
+          },
+          "monitor_received_ns": 54096459168858,
+          "signal_extracted_ns": 54096474580004,
+          "outcome_evaluated_ns": 54096474610661,
+          "signal_extraction_ms": 15.411146,
+          "outcome_evaluation_ms": 0.030657
+        },
+        "controller_decided_ns": 54096510760707,
+        "input_authority_admitted": false,
+        "executor_admission": null,
+        "revocation": null,
+        "grants_input_authority": false
+      },
+      "planner_cancellation_requested": true,
+      "planner_interrupt": {
+        "outcome": "requested",
+        "response": {}
+      },
+      "controller_model_started_ns": 54086940148262,
+      "controller_model_ended_ns": 54096510757074,
+      "cover_program_ids": [
+        "cover-0"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "cover_validity_admission": {
+        "status": "admitted",
+        "authored": null,
+        "effective": {
+          "signal_id": "health",
+          "critical_health_minimum": 97,
+          "maximum_health_loss": 0,
+          "hard_minimum": 97,
+          "max_source_age_ms": 30000
+        },
+        "source_signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 97,
+          "sequence": 1,
+          "capture_ns": 54086491011287,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 9,
+              "best_digit": 9,
+              "best_score": 0.9274193548387096,
+              "second_score": 0.31413612565445026
+            },
+            {
+              "slot": 2,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9368421052631579,
+              "second_score": 0.3586387434554974
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "grants_input_authority": false
+      },
+      "cover_validity_soft_events": 0,
+      "cover_validity_latest_soft_event": null,
+      "policy_invalidation": {
+        "sequence": 32,
+        "signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 91,
+          "sequence": 32,
+          "capture_ns": 54096382054218,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 9,
+              "best_digit": 9,
+              "best_score": 0.9274193548387096,
+              "second_score": 0.31413612565445026
+            },
+            {
+              "slot": 2,
+              "digit": 1,
+              "best_digit": 1,
+              "best_score": 0.9591078066914498,
+              "second_score": 0.21144278606965175
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "outcome": {
+          "format": "observable-signal-guard-outcome-v1",
+          "guard_id": "map01-0",
+          "signal_id": "health",
+          "status": "HARD_INVALIDATED",
+          "reason": "below_hard_minimum",
+          "source_value": 97,
+          "current_value": 91,
+          "hard_minimum": 97,
+          "source_age_ms": 9891.042931,
+          "keep_existing_policy": false,
+          "requires_new_decision": true,
+          "grants_input_authority": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "semantic_change_identified": true,
+          "task_success_verified": false
+        },
+        "monitor_received_ns": 54096459168858,
+        "signal_extracted_ns": 54096474580004,
+        "outcome_evaluated_ns": 54096474610661,
+        "signal_extraction_ms": 15.411146,
+        "outcome_evaluation_ms": 0.030657
+      },
+      "model_action_discarded": true,
+      "discard_reason": "policy_dependency_invalidated",
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "not_admitted"
+    },
+    {
+      "iteration": 1,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-final-admission-v32-live-01/runtime/032.png",
+      "model_image": "results-local/doom/map01-final-admission-v32-live-01/decision-1/temporal-sheet.png",
+      "model_image_sha256": "a036b5cfe376d6bb0909ccf00b0c08c75b82e16f091281e0a5713e6d31f0010e",
+      "action": null,
+      "effect_memory": [],
+      "usage": null,
+      "model_ns": 12734493064,
+      "prior_soft_event_summary": null,
+      "model_session_id": "01a0a373-30f2-7920-9c87-87f28d1e2d8a",
+      "planner_turn_id": "01a0a373-7645-7212-84ea-c248964ebb49",
+      "planner_turn_status": "interrupted",
+      "planner_answer_eligible": false,
+      "planner_terminal_observed_ns": 54109495024098,
+      "final_action_admission": {
+        "schema": "final-action-admission-v1",
+        "status": "REJECTED_POLICY_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "planner_terminal": {
+          "turn_id": "01a0a373-7645-7212-84ea-c248964ebb49",
+          "status": "interrupted",
+          "answer_eligible": false,
+          "terminal_observed_ns": 54109495024098
+        },
+        "policy_invalidation": {
+          "sequence": 74,
+          "signal": {
+            "format": "observable-signal-v1",
+            "status": "observed",
+            "signal_id": "health",
+            "value": 85,
+            "sequence": 74,
+            "capture_ns": 54109347790981,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "slots": [
+              {
+                "slot": 0,
+                "digit": null,
+                "best_digit": 5,
+                "best_score": 0.058165548098434,
+                "second_score": 0.055762081784386616
+              },
+              {
+                "slot": 1,
+                "digit": 8,
+                "best_digit": 8,
+                "best_score": 0.9328358208955224,
+                "second_score": 0.34430379746835443
+              },
+              {
+                "slot": 2,
+                "digit": 5,
+                "best_digit": 5,
+                "best_score": 0.9239373601789709,
+                "second_score": 0.3394736842105263
+              }
+            ],
+            "evidence": "hash-bound WAD glyph foreground exact-match",
+            "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+          },
+          "outcome": {
+            "format": "observable-signal-guard-outcome-v1",
+            "guard_id": "map01-1",
+            "signal_id": "health",
+            "status": "HARD_INVALIDATED",
+            "reason": "below_hard_minimum",
+            "source_value": 91,
+            "current_value": 85,
+            "hard_minimum": 91,
+            "source_age_ms": 12965.736763,
+            "keep_existing_policy": false,
+            "requires_new_decision": true,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "semantic_change_identified": true,
+            "task_success_verified": false
+          },
+          "monitor_received_ns": 54109438477952,
+          "signal_extracted_ns": 54109455319924,
+          "outcome_evaluated_ns": 54109455354025,
+          "signal_extraction_ms": 16.841972,
+          "outcome_evaluation_ms": 0.034101
+        },
+        "controller_decided_ns": 54109495279229,
+        "input_authority_admitted": false,
+        "executor_admission": null,
+        "revocation": null,
+        "grants_input_authority": false
+      },
+      "planner_cancellation_requested": true,
+      "planner_interrupt": {
+        "outcome": "requested",
+        "response": {}
+      },
+      "controller_model_started_ns": 54096760782091,
+      "controller_model_ended_ns": 54109495275155,
+      "cover_program_ids": [
+        "cover-1",
+        "cover-1-renew-1"
+      ],
+      "cover_renewals": 1,
+      "cover_renewal_gaps_ms": [
+        21.671036
+      ],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "cover_validity_admission": {
+        "status": "admitted",
+        "authored": null,
+        "effective": {
+          "signal_id": "health",
+          "critical_health_minimum": 91,
+          "maximum_health_loss": 0,
+          "hard_minimum": 91,
+          "max_source_age_ms": 30000
+        },
+        "source_signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 91,
+          "sequence": 32,
+          "capture_ns": 54096382054218,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 9,
+              "best_digit": 9,
+              "best_score": 0.9274193548387096,
+              "second_score": 0.31413612565445026
+            },
+            {
+              "slot": 2,
+              "digit": 1,
+              "best_digit": 1,
+              "best_score": 0.9591078066914498,
+              "second_score": 0.21144278606965175
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "grants_input_authority": false
+      },
+      "cover_validity_soft_events": 0,
+      "cover_validity_latest_soft_event": null,
+      "policy_invalidation": {
+        "sequence": 74,
+        "signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 85,
+          "sequence": 74,
+          "capture_ns": 54109347790981,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 8,
+              "best_digit": 8,
+              "best_score": 0.9328358208955224,
+              "second_score": 0.34430379746835443
+            },
+            {
+              "slot": 2,
+              "digit": 5,
+              "best_digit": 5,
+              "best_score": 0.9239373601789709,
+              "second_score": 0.3394736842105263
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "outcome": {
+          "format": "observable-signal-guard-outcome-v1",
+          "guard_id": "map01-1",
+          "signal_id": "health",
+          "status": "HARD_INVALIDATED",
+          "reason": "below_hard_minimum",
+          "source_value": 91,
+          "current_value": 85,
+          "hard_minimum": 91,
+          "source_age_ms": 12965.736763,
+          "keep_existing_policy": false,
+          "requires_new_decision": true,
+          "grants_input_authority": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "semantic_change_identified": true,
+          "task_success_verified": false
+        },
+        "monitor_received_ns": 54109438477952,
+        "signal_extracted_ns": 54109455319924,
+        "outcome_evaluated_ns": 54109455354025,
+        "signal_extraction_ms": 16.841972,
+        "outcome_evaluation_ms": 0.034101
+      },
+      "model_action_discarded": true,
+      "discard_reason": "policy_dependency_invalidated",
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "not_admitted"
+    },
+    {
+      "iteration": 2,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-final-admission-v32-live-01/runtime/074.png",
+      "model_image": "results-local/doom/map01-final-admission-v32-live-01/decision-2/temporal-sheet.png",
+      "model_image_sha256": "44a2c39da0743da7daaa4e58db139dabe45dca316ec7a8da20f8bcae19a49755",
+      "action": null,
+      "effect_memory": [],
+      "usage": null,
+      "model_ns": 974349391,
+      "prior_soft_event_summary": null,
+      "model_session_id": "01a0a373-30f2-7920-9c87-87f28d1e2d8a",
+      "planner_turn_id": "01a0a373-a909-77f2-b68f-f597255c9378",
+      "planner_turn_status": "interrupted",
+      "planner_answer_eligible": false,
+      "planner_terminal_observed_ns": 54110731179263,
+      "final_action_admission": {
+        "schema": "final-action-admission-v1",
+        "status": "REJECTED_POLICY_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "planner_terminal": {
+          "turn_id": "01a0a373-a909-77f2-b68f-f597255c9378",
+          "status": "interrupted",
+          "answer_eligible": false,
+          "terminal_observed_ns": 54110731179263
+        },
+        "policy_invalidation": {
+          "sequence": 78,
+          "signal": {
+            "format": "observable-signal-v1",
+            "status": "observed",
+            "signal_id": "health",
+            "value": 79,
+            "sequence": 78,
+            "capture_ns": 54110591133815,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "slots": [
+              {
+                "slot": 0,
+                "digit": null,
+                "best_digit": 5,
+                "best_score": 0.058165548098434,
+                "second_score": 0.055762081784386616
+              },
+              {
+                "slot": 1,
+                "digit": 7,
+                "best_digit": 7,
+                "best_score": 0.9342105263157895,
+                "second_score": 0.3586387434554974
+              },
+              {
+                "slot": 2,
+                "digit": 9,
+                "best_digit": 9,
+                "best_score": 0.9301075268817204,
+                "second_score": 0.31413612565445026
+              }
+            ],
+            "evidence": "hash-bound WAD glyph foreground exact-match",
+            "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+          },
+          "outcome": {
+            "format": "observable-signal-guard-outcome-v1",
+            "guard_id": "map01-2",
+            "signal_id": "health",
+            "status": "HARD_INVALIDATED",
+            "reason": "below_hard_minimum",
+            "source_value": 85,
+            "current_value": 79,
+            "hard_minimum": 85,
+            "source_age_ms": 1243.342834,
+            "keep_existing_policy": false,
+            "requires_new_decision": true,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "semantic_change_identified": true,
+            "task_success_verified": false
+          },
+          "monitor_received_ns": 54110677676112,
+          "signal_extracted_ns": 54110694028607,
+          "outcome_evaluated_ns": 54110694058676,
+          "signal_extraction_ms": 16.352495,
+          "outcome_evaluation_ms": 0.030069
+        },
+        "controller_decided_ns": 54110731392571,
+        "input_authority_admitted": false,
+        "executor_admission": null,
+        "revocation": null,
+        "grants_input_authority": false
+      },
+      "planner_cancellation_requested": true,
+      "planner_interrupt": {
+        "outcome": "requested",
+        "response": {}
+      },
+      "controller_model_started_ns": 54109757041346,
+      "controller_model_ended_ns": 54110731390737,
+      "cover_program_ids": [
+        "cover-2"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "cover_validity_admission": {
+        "status": "admitted",
+        "authored": null,
+        "effective": {
+          "signal_id": "health",
+          "critical_health_minimum": 85,
+          "maximum_health_loss": 0,
+          "hard_minimum": 85,
+          "max_source_age_ms": 30000
+        },
+        "source_signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 85,
+          "sequence": 74,
+          "capture_ns": 54109347790981,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 8,
+              "best_digit": 8,
+              "best_score": 0.9328358208955224,
+              "second_score": 0.34430379746835443
+            },
+            {
+              "slot": 2,
+              "digit": 5,
+              "best_digit": 5,
+              "best_score": 0.9239373601789709,
+              "second_score": 0.3394736842105263
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "grants_input_authority": false
+      },
+      "cover_validity_soft_events": 0,
+      "cover_validity_latest_soft_event": null,
+      "policy_invalidation": {
+        "sequence": 78,
+        "signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 79,
+          "sequence": 78,
+          "capture_ns": 54110591133815,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9342105263157895,
+              "second_score": 0.3586387434554974
+            },
+            {
+              "slot": 2,
+              "digit": 9,
+              "best_digit": 9,
+              "best_score": 0.9301075268817204,
+              "second_score": 0.31413612565445026
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "outcome": {
+          "format": "observable-signal-guard-outcome-v1",
+          "guard_id": "map01-2",
+          "signal_id": "health",
+          "status": "HARD_INVALIDATED",
+          "reason": "below_hard_minimum",
+          "source_value": 85,
+          "current_value": 79,
+          "hard_minimum": 85,
+          "source_age_ms": 1243.342834,
+          "keep_existing_policy": false,
+          "requires_new_decision": true,
+          "grants_input_authority": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "semantic_change_identified": true,
+          "task_success_verified": false
+        },
+        "monitor_received_ns": 54110677676112,
+        "signal_extracted_ns": 54110694028607,
+        "outcome_evaluated_ns": 54110694058676,
+        "signal_extraction_ms": 16.352495,
+        "outcome_evaluation_ms": 0.030069
+      },
+      "model_action_discarded": true,
+      "discard_reason": "policy_dependency_invalidated",
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "not_admitted"
+    },
+    {
+      "iteration": 3,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-final-admission-v32-live-01/runtime/078.png",
+      "model_image": "results-local/doom/map01-final-admission-v32-live-01/decision-3/temporal-sheet.png",
+      "model_image_sha256": "10d3cad553679a640eb3cf237c88d7a84ff667049ece0c281e1adaf1495fe16b",
+      "action": {
+        "assessment": "Visible enemy ahead with recent sustained damage; engage while retreating to reduce exposure.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "retreat_fire",
+            "extent": "medium"
+          }
+        ],
+        "contingencies": [],
+        "next_cover": [
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          },
+          {
+            "action": "retreat_fire",
+            "extent": "short"
+          }
+        ],
+        "next_cover_validity": [
+          {
+            "signal_id": "health",
+            "critical_health_minimum": 30,
+            "maximum_health_loss": 10,
+            "max_source_age_ms": 12000
+          }
+        ]
+      },
+      "usage": {
+        "total": {
+          "totalTokens": 10907,
+          "inputTokens": 10726,
+          "cachedInputTokens": 9088,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 181,
+          "reasoningOutputTokens": 59
+        },
+        "last": {
+          "totalTokens": 10907,
+          "inputTokens": 10726,
+          "cachedInputTokens": 9088,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 181,
+          "reasoningOutputTokens": 59
+        },
+        "modelContextWindow": 258400
+      },
+      "model_ns": 11322249759,
+      "prior_soft_event_summary": null,
+      "effect_memory": [],
+      "effect_receipts": [
+        {
+          "action": "retreat_fire",
+          "extent": "medium",
+          "result": "visible_change",
+          "normalized_mae": 0.06063997821350762,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 121,
+          "effect_observed_ns": 54122965354889,
+          "samples": 5,
+          "plan_accept_to_first_capture_ms": 61.542,
+          "plan_accept_to_last_capture_ms": 562.263545,
+          "capture_ms_total": 16.850774,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 5,
+      "effect_observation_capture_ms": 16.850774,
+      "execution_trace": [
+        {
+          "id": "plan-3-primary-0-0",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "retreat_fire",
+            "extent": "medium"
+          },
+          "accepted_ns": 54122403091344,
+          "terminal_ns": 54123081941775,
+          "receipt": {
+            "action": "retreat_fire",
+            "extent": "medium",
+            "result": "visible_change",
+            "normalized_mae": 0.06063997821350762,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 121,
+            "effect_observed_ns": 54122965354889,
+            "samples": 5,
+            "plan_accept_to_first_capture_ms": 61.542,
+            "plan_accept_to_last_capture_ms": 562.263545,
+            "capture_ms_total": 16.850774,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 5,
+          "observation_capture_ms": 16.850774
+        }
+      ],
+      "contingency_branch": null,
+      "compiled_commands": [
+        {
+          "action": "retreat_fire",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a373-30f2-7920-9c87-87f28d1e2d8a",
+      "planner_turn_id": "01a0a373-adf7-7293-8832-23697af0335b",
+      "planner_turn_status": "completed",
+      "planner_answer_eligible": true,
+      "planner_terminal_observed_ns": 54122342058555,
+      "final_action_admission": {
+        "schema": "final-action-admission-v1",
+        "status": "INPUT_ADMITTED",
+        "reason": "fresh_executor_acceptance_observed",
+        "planner_terminal": {
+          "turn_id": "01a0a373-adf7-7293-8832-23697af0335b",
+          "status": "completed",
+          "answer_eligible": true,
+          "terminal_observed_ns": 54122342058555
+        },
+        "policy_invalidation": null,
+        "controller_decided_ns": 54122391610408,
+        "input_authority_admitted": true,
+        "executor_admission": {
+          "event": "accepted",
+          "id": "plan-3-primary-0-0",
+          "accepted_ns": 54122403091344
+        },
+        "revocation": null,
+        "grants_input_authority": false
+      },
+      "planner_cancellation_requested": false,
+      "planner_interrupt": null,
+      "controller_model_started_ns": 54111019943983,
+      "controller_model_ended_ns": 54122342193742,
+      "model_image_to_plan_accept_ns": 11811957529,
+      "fresh_observation_to_plan_accept_ns": 122586730,
+      "fresh_sequence_at_plan": 116,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-3",
+        "cover-3-renew-1"
+      ],
+      "cover_renewals": 1,
+      "cover_renewal_gaps_ms": [
+        22.21845
+      ],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "cover_validity_admission": {
+        "status": "admitted",
+        "authored": null,
+        "effective": {
+          "signal_id": "health",
+          "critical_health_minimum": 79,
+          "maximum_health_loss": 0,
+          "hard_minimum": 79,
+          "max_source_age_ms": 30000
+        },
+        "source_signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 79,
+          "sequence": 78,
+          "capture_ns": 54110591133815,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9342105263157895,
+              "second_score": 0.3586387434554974
+            },
+            {
+              "slot": 2,
+              "digit": 9,
+              "best_digit": 9,
+              "best_score": 0.9301075268817204,
+              "second_score": 0.31413612565445026
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "grants_input_authority": false
+      },
+      "cover_validity_soft_events": 0,
+      "cover_validity_latest_soft_event": null,
+      "plan_terminal": "completed",
+      "model_action_discarded": false
+    },
+    {
+      "iteration": 4,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-final-admission-v32-live-01/runtime/121.png",
+      "model_image": "results-local/doom/map01-final-admission-v32-live-01/decision-4/temporal-sheet.png",
+      "model_image_sha256": "bb7e833ffe8f87f3f1b647739ad62451f29a5babda11a4bd06d8c33d15989aed",
+      "action": {
+        "assessment": "The last attack produced visible progress and the view is now farther into the room; a distant enemy remains ahead. Advance while firing with a lateral correction.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "advance_fire",
+            "extent": "medium"
+          },
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          }
+        ],
+        "contingencies": [],
+        "next_cover": [
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          },
+          {
+            "action": "fire",
+            "extent": "pulse"
+          }
+        ],
+        "next_cover_validity": [
+          {
+            "signal_id": "health",
+            "critical_health_minimum": 30,
+            "maximum_health_loss": 10,
+            "max_source_age_ms": 12000
+          }
+        ]
+      },
+      "effect_memory": [],
+      "usage": {
+        "total": {
+          "totalTokens": 22502,
+          "inputTokens": 22133,
+          "cachedInputTokens": 19328,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 369,
+          "reasoningOutputTokens": 104
+        },
+        "last": {
+          "totalTokens": 11595,
+          "inputTokens": 11407,
+          "cachedInputTokens": 10240,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 188,
+          "reasoningOutputTokens": 45
+        },
+        "modelContextWindow": 258400
+      },
+      "model_ns": 11780840843,
+      "prior_soft_event_summary": null,
+      "model_session_id": "01a0a373-30f2-7920-9c87-87f28d1e2d8a",
+      "planner_turn_id": "01a0a373-de93-75a3-b8a7-1fbc6bf2634c",
+      "planner_turn_status": "completed",
+      "planner_answer_eligible": true,
+      "planner_terminal_observed_ns": 54135241690609,
+      "final_action_admission": {
+        "schema": "final-action-admission-v1",
+        "status": "REJECTED_POLICY_INVALIDATED",
+        "reason": "source_expired",
+        "planner_terminal": {
+          "turn_id": "01a0a373-de93-75a3-b8a7-1fbc6bf2634c",
+          "status": "completed",
+          "answer_eligible": true,
+          "terminal_observed_ns": 54135241690609
+        },
+        "policy_invalidation": {
+          "sequence": 192,
+          "signal": {
+            "format": "observable-signal-v1",
+            "status": "observed",
+            "signal_id": "health",
+            "value": 79,
+            "sequence": 192,
+            "capture_ns": 54135179590197,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "slots": [
+              {
+                "slot": 0,
+                "digit": null,
+                "best_digit": 5,
+                "best_score": 0.058165548098434,
+                "second_score": 0.055762081784386616
+              },
+              {
+                "slot": 1,
+                "digit": 7,
+                "best_digit": 7,
+                "best_score": 0.9342105263157895,
+                "second_score": 0.3586387434554974
+              },
+              {
+                "slot": 2,
+                "digit": 9,
+                "best_digit": 9,
+                "best_score": 0.9301075268817204,
+                "second_score": 0.31413612565445026
+              }
+            ],
+            "evidence": "hash-bound WAD glyph foreground exact-match",
+            "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+          },
+          "outcome": {
+            "format": "observable-signal-guard-outcome-v1",
+            "guard_id": "map01-4",
+            "signal_id": "health",
+            "status": "UNKNOWN",
+            "reason": "source_expired",
+            "source_value": 79,
+            "current_value": 79,
+            "hard_minimum": 69,
+            "source_age_ms": 12214.235308,
+            "keep_existing_policy": false,
+            "requires_new_decision": true,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "semantic_change_identified": false,
+            "task_success_verified": false
+          },
+          "monitor_received_ns": 54135277146981,
+          "signal_extracted_ns": 54135300095359,
+          "outcome_evaluated_ns": 54135300135025,
+          "signal_extraction_ms": 22.948378,
+          "outcome_evaluation_ms": 0.039666
+        },
+        "controller_decided_ns": 54135300167159,
+        "input_authority_admitted": false,
+        "executor_admission": null,
+        "revocation": null,
+        "grants_input_authority": false
+      },
+      "planner_cancellation_requested": false,
+      "planner_interrupt": {
+        "outcome": "already_terminal",
+        "status": "completed"
+      },
+      "controller_model_started_ns": 54123460974851,
+      "controller_model_ended_ns": 54135241815694,
+      "cover_program_ids": [
+        "cover-4"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        },
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        }
+      ],
+      "cover_policy_source_iteration": 3,
+      "cover_validity_admission": {
+        "status": "admitted",
+        "authored": {
+          "signal_id": "health",
+          "critical_health_minimum": 30,
+          "maximum_health_loss": 10,
+          "max_source_age_ms": 12000
+        },
+        "effective": {
+          "signal_id": "health",
+          "critical_health_minimum": 30,
+          "maximum_health_loss": 10,
+          "hard_minimum": 69,
+          "max_source_age_ms": 12000
+        },
+        "source_signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 79,
+          "sequence": 121,
+          "capture_ns": 54122965354889,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9342105263157895,
+              "second_score": 0.3586387434554974
+            },
+            {
+              "slot": 2,
+              "digit": 9,
+              "best_digit": 9,
+              "best_score": 0.9301075268817204,
+              "second_score": 0.31413612565445026
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "grants_input_authority": false
+      },
+      "cover_validity_soft_events": 0,
+      "cover_validity_latest_soft_event": null,
+      "policy_invalidation": {
+        "sequence": 192,
+        "signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 79,
+          "sequence": 192,
+          "capture_ns": 54135179590197,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9342105263157895,
+              "second_score": 0.3586387434554974
+            },
+            {
+              "slot": 2,
+              "digit": 9,
+              "best_digit": 9,
+              "best_score": 0.9301075268817204,
+              "second_score": 0.31413612565445026
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "outcome": {
+          "format": "observable-signal-guard-outcome-v1",
+          "guard_id": "map01-4",
+          "signal_id": "health",
+          "status": "UNKNOWN",
+          "reason": "source_expired",
+          "source_value": 79,
+          "current_value": 79,
+          "hard_minimum": 69,
+          "source_age_ms": 12214.235308,
+          "keep_existing_policy": false,
+          "requires_new_decision": true,
+          "grants_input_authority": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "semantic_change_identified": false,
+          "task_success_verified": false
+        },
+        "monitor_received_ns": 54135277146981,
+        "signal_extracted_ns": 54135300095359,
+        "outcome_evaluated_ns": 54135300135025,
+        "signal_extraction_ms": 22.948378,
+        "outcome_evaluation_ms": 0.039666
+      },
+      "model_action_discarded": true,
+      "discard_reason": "policy_dependency_invalidated",
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "not_admitted"
+    },
+    {
+      "iteration": 5,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-final-admission-v32-live-01/runtime/192.png",
+      "model_image": "results-local/doom/map01-final-admission-v32-live-01/decision-5/temporal-sheet.png",
+      "model_image_sha256": "2c36015009997257ba72e5ad7f0dbab4c88cd19c756bd5571127ec40311d128e",
+      "action": null,
+      "effect_memory": [],
+      "usage": {
+        "total": {
+          "totalTokens": 22502,
+          "inputTokens": 22133,
+          "cachedInputTokens": 19328,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 369,
+          "reasoningOutputTokens": 104
+        },
+        "last": {
+          "totalTokens": 11595,
+          "inputTokens": 11407,
+          "cachedInputTokens": 10240,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 188,
+          "reasoningOutputTokens": 45
+        },
+        "modelContextWindow": 258400
+      },
+      "model_ns": 10767345365,
+      "prior_soft_event_summary": null,
+      "model_session_id": "01a0a373-30f2-7920-9c87-87f28d1e2d8a",
+      "planner_turn_id": "01a0a374-0e03-7452-810b-cc85df472215",
+      "planner_turn_status": "interrupted",
+      "planner_answer_eligible": false,
+      "planner_terminal_observed_ns": 54146372924236,
+      "final_action_admission": {
+        "schema": "final-action-admission-v1",
+        "status": "REJECTED_POLICY_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "planner_terminal": {
+          "turn_id": "01a0a374-0e03-7452-810b-cc85df472215",
+          "status": "interrupted",
+          "answer_eligible": false,
+          "terminal_observed_ns": 54146372924236
+        },
+        "policy_invalidation": {
+          "sequence": 229,
+          "signal": {
+            "format": "observable-signal-v1",
+            "status": "observed",
+            "signal_id": "health",
+            "value": 76,
+            "sequence": 229,
+            "capture_ns": 54146249440421,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "slots": [
+              {
+                "slot": 0,
+                "digit": null,
+                "best_digit": 5,
+                "best_score": 0.058165548098434,
+                "second_score": 0.055762081784386616
+              },
+              {
+                "slot": 1,
+                "digit": 7,
+                "best_digit": 7,
+                "best_score": 0.9342105263157895,
+                "second_score": 0.3586387434554974
+              },
+              {
+                "slot": 2,
+                "digit": 6,
+                "best_digit": 6,
+                "best_score": 0.9392405063291139,
+                "second_score": 0.36069651741293535
+              }
+            ],
+            "evidence": "hash-bound WAD glyph foreground exact-match",
+            "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+          },
+          "outcome": {
+            "format": "observable-signal-guard-outcome-v1",
+            "guard_id": "map01-5",
+            "signal_id": "health",
+            "status": "HARD_INVALIDATED",
+            "reason": "below_hard_minimum",
+            "source_value": 79,
+            "current_value": 76,
+            "hard_minimum": 79,
+            "source_age_ms": 11069.850224,
+            "keep_existing_policy": false,
+            "requires_new_decision": true,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "semantic_change_identified": true,
+            "task_success_verified": false
+          },
+          "monitor_received_ns": 54146325782252,
+          "signal_extracted_ns": 54146340416110,
+          "outcome_evaluated_ns": 54146340449856,
+          "signal_extraction_ms": 14.633858,
+          "outcome_evaluation_ms": 0.033746
+        },
+        "controller_decided_ns": 54146373058636,
+        "input_authority_admitted": false,
+        "executor_admission": null,
+        "revocation": null,
+        "grants_input_authority": false
+      },
+      "planner_cancellation_requested": true,
+      "planner_interrupt": {
+        "outcome": "requested",
+        "response": {}
+      },
+      "controller_model_started_ns": 54135605711527,
+      "controller_model_ended_ns": 54146373056892,
+      "cover_program_ids": [
+        "cover-5",
+        "cover-5-renew-1"
+      ],
+      "cover_renewals": 1,
+      "cover_renewal_gaps_ms": [
+        22.592726
+      ],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "cover_validity_admission": {
+        "status": "admitted",
+        "authored": null,
+        "effective": {
+          "signal_id": "health",
+          "critical_health_minimum": 79,
+          "maximum_health_loss": 0,
+          "hard_minimum": 79,
+          "max_source_age_ms": 30000
+        },
+        "source_signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 79,
+          "sequence": 192,
+          "capture_ns": 54135179590197,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9342105263157895,
+              "second_score": 0.3586387434554974
+            },
+            {
+              "slot": 2,
+              "digit": 9,
+              "best_digit": 9,
+              "best_score": 0.9301075268817204,
+              "second_score": 0.31413612565445026
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "grants_input_authority": false
+      },
+      "cover_validity_soft_events": 0,
+      "cover_validity_latest_soft_event": null,
+      "policy_invalidation": {
+        "sequence": 229,
+        "signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 76,
+          "sequence": 229,
+          "capture_ns": 54146249440421,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9342105263157895,
+              "second_score": 0.3586387434554974
+            },
+            {
+              "slot": 2,
+              "digit": 6,
+              "best_digit": 6,
+              "best_score": 0.9392405063291139,
+              "second_score": 0.36069651741293535
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "outcome": {
+          "format": "observable-signal-guard-outcome-v1",
+          "guard_id": "map01-5",
+          "signal_id": "health",
+          "status": "HARD_INVALIDATED",
+          "reason": "below_hard_minimum",
+          "source_value": 79,
+          "current_value": 76,
+          "hard_minimum": 79,
+          "source_age_ms": 11069.850224,
+          "keep_existing_policy": false,
+          "requires_new_decision": true,
+          "grants_input_authority": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "semantic_change_identified": true,
+          "task_success_verified": false
+        },
+        "monitor_received_ns": 54146325782252,
+        "signal_extracted_ns": 54146340416110,
+        "outcome_evaluated_ns": 54146340449856,
+        "signal_extraction_ms": 14.633858,
+        "outcome_evaluation_ms": 0.033746
+      },
+      "model_action_discarded": true,
+      "discard_reason": "policy_dependency_invalidated",
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "not_admitted"
+    }
+  ],
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 59752496663,
+    "death_count": 0,
+    "kill_count": 1,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 54146419766140
+  },
+  "model_session_span": 6,
+  "model_session_ids": [
+    "01a0a373-30f2-7920-9c87-87f28d1e2d8a"
+  ],
+  "motor_contract": "semantic commands compiled to <=450ms turns and <=900ms movement",
+  "effect_receipt_contract": "reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
+  "soft_event_context_contract": "expose only the newest validated typed soft event from the preceding control interval in the already-required next planner turn; add no image, model call, input authority or mid-turn boundary",
+  "final_action_admission_contract": "planner eligibility, controller policy/validation decision and fresh Executor acceptance are distinct typed states; hard evidence observed before admission wins under either terminal ordering",
+  "effect_receipt_extra_steps": 0,
+  "contingency_contract": "preplanned no-visible-effect fallback skips the primary tail and runs without another model call",
+  "contingencies_authored": 0,
+  "contingency_branches_taken": 0,
+  "contingency_branch_latency_ms": [],
+  "program_admissions": 1,
+  "extra_program_admissions_vs_one_bundle": 0,
+  "effect_receipt_commands": 1,
+  "effect_observation_samples": 5,
+  "effect_observation_capture_ms": 16.850774,
+  "game_continued_during_model_calls": true,
+  "runtime_fixture": {
+    "manifest": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/fixtures/map01-threat-contact-v2/fixture.json",
+    "manifest_sha256": "e57e21fd6d85d4b0720b3b3d5a52ad538fde45c50c58651ff754638f93f182e4",
+    "save": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/fixtures/map01-threat-contact-v2/save.png",
+    "save_sha256": "cc5302aa9cda3960248733caa96da1b53adcc4b6a1a2dcfb80675650c9350401",
+    "before_load_tic": 95,
+    "after_load_tic": 1366,
+    "source_episode_tic": 1366,
+    "setup_input_contract": "fixture state reached through the same X11 Executor and recorded OS-input/coast programs; save is setup-only"
+  },
+  "fixture_contract": "hash/IWAD/engine/map/skill checked before load; measured control begins after load; fixture grants no action authority",
+  "planner_contract": "one capability-minimized app-server process; stable typed thread/turn ownership; invalidation interrupts the matching turn and no cancelled or stale answer is admitted",
+  "planner_turns": 6,
+  "planner_interruption_requests": 5,
+  "planner_interrupted_completions": 4,
+  "planner_ineligible_answers": 4,
+  "policy_invalidation_contract": "effective health floor is max(critical_health_minimum, fresh source health - schema-bounded maximum_health_loss); soft change may only preserve admitted cover; hard, unknown, expired or binding-mismatched evidence cancels cover and discards the dependent model action; it never grants input authority or proves success",
+  "policy_invalidations": 5,
+  "cover_validity_soft_events": 0,
+  "cover_validity_admission_rejections": 0,
+  "model_actions_discarded": 5,
+  "final_action_admission_statuses": {
+    "REJECTED_POLICY_INVALIDATED": 5,
+    "INPUT_ADMITTED": 1
+  },
+  "cover_programs": 9,
+  "cover_renewals": 3,
+  "cover_renewal_gaps_ms": [
+    21.671036,
+    22.21845,
+    22.592726
+  ],
+  "model_authored_cover_policies": 1,
+  "model_authored_cover_validity_envelopes": 1,
+  "model_wall_seconds": 57.149887234
+}

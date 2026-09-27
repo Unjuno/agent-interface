@@ -1,0 +1,27 @@
+name: GTK immutable source bundle contract
+
+on:
+  pull_request:
+    paths:
+      - "research/integration/golden_v3_second_domain_2246_v1/source_bundle_2780/**"
+      - ".github/workflows/gtk-source-bundle-2780.yml"
+  push:
+    branches:
+      - "research/immutable-source-bundle-2780"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test dependency
+        run: python -m pip install --disable-pip-version-check --no-cache-dir pytest
+      - name: Run source bundle contract
+        run: python -m pytest -q research/integration/golden_v3_second_domain_2246_v1/source_bundle_2780/test_audit_source_bundle.py
+      - name: Audit checked-out bundle
+        run: python research/integration/golden_v3_second_domain_2246_v1/source_bundle_2780/audit_source_bundle.py --root .

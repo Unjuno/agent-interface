@@ -1,0 +1,38 @@
+{
+  "allocation_verdict": "HOLD_INCOMPLETE_30_CASE_LOCAL_PILOT",
+  "checks": [
+    {
+      "byte_identical": true,
+      "report": "FROZEN_FULL_AUDIT.json",
+      "returncode": 1
+    },
+    {
+      "byte_identical": true,
+      "report": "POSTHOC_PREFIX_AUDIT.json",
+      "returncode": 0
+    },
+    {
+      "byte_identical": true,
+      "report": "POSTHOC_PREFIX_CONTROLS.json",
+      "returncode": 0
+    },
+    {
+      "byte_identical": true,
+      "report": "CONSTRUCTION_AUDIT_FINAL.json",
+      "returncode": 0
+    },
+    {
+      "baseline_block_preserved": true,
+      "mutations_run": 0,
+      "report": "frozen pilot controls",
+      "returncode": 1
+    }
+  ],
+  "decision": "PASS_READONLY_STOP_RECONSTRUCTION",
+  "first_outcome_files_unchanged": 308,
+  "frozen_source_files": 16,
+  "manifest_members": 334,
+  "new_gui_cases": 0,
+  "new_policy_workers": 0,
+  "scientific_reruns": 0
+}

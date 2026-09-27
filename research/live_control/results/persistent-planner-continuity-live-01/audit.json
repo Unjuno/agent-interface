@@ -1,0 +1,28 @@
+{
+  "schema": "persistent-planner-continuity-audit-v1",
+  "passed": true,
+  "allocation_id": "persistent-planner-continuity-live-01",
+  "thread_count": 1,
+  "turn_count": 2,
+  "distinct_turn_ids": 2,
+  "context_recall_passed": true,
+  "first_turn_local_images": 1,
+  "second_turn_local_images": 0,
+  "interrupts": 0,
+  "mcp_startup_notifications": 0,
+  "turn_elapsed_ms": [
+    2655.4638,
+    2643.9472
+  ],
+  "thread_start_ms": 441.6168,
+  "total_usage": {
+    "totalTokens": 15583,
+    "inputTokens": 15531,
+    "cachedInputTokens": 6912,
+    "cacheWriteInputTokens": 0,
+    "outputTokens": 52,
+    "reasoningOutputTokens": 18
+  },
+  "decision": "retain persistent typed thread continuity and proceed to a separately frozen live mid-generation invalidation test",
+  "limits": "one two-turn nonce task on one host; no controller-loop, cancellation, semantic task quality, latency distribution or cross-machine claim"
+}

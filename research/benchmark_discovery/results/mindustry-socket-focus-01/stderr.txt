@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/mindustry_focus_fixture_v1.py", line 23, in <module>
+    if __name__=='__main__':entry.main()
+                            ^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/mindustry_bend_interactive_v2.py", line 99, in main
+    s._wait(lambda:(data/'evaluated.txt').exists(),30,'post-control delivery evaluation')
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface/research/observation_gating/gui_suite.py", line 119, in _wait
+    return super()._wait(fn, timeout, label)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface/research/real_apps_v1/real_app_suite_v1.py", line 44, in _wait
+    raise TimeoutError(label)
+TimeoutError: post-control delivery evaluation

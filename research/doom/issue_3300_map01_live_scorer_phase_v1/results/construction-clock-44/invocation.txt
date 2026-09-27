@@ -1,0 +1,20 @@
+Construction-clock-44 exact read-only kernel tracing feasibility check
+
+Image: `agent-interface-map01-clock-entry-v2:20260920`, manifest `sha256:9a623562c180e5b3ff1e20a764d7a71cd7a0823bf5e97666d02472949b877770`, linux/arm64. No game/WAD was launched. The image source/build provenance is in sibling `construction-clock-43/invocation.txt`.
+
+From the repository root:
+
+```sh
+docker run --rm --platform linux/arm64 --network none --read-only \
+  --workdir /tmp --tmpfs /tmp:rw,noexec,nosuid,size=8m \
+  -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-44/probe.py:/probe.py:ro" \
+  --entrypoint python agent-interface-map01-clock-entry-v2:20260920 /probe.py \
+  > research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-44/container.log 2>&1
+```
+
+Probe SHA-256 and captured stdout/stderr are recorded after execution in this directory. No capability was added and no privileged runtime was attempted.
+
+SHA-256 (shasum -a 256):
+- `probe.py`: `f7e0b1590c157720508e87eae43a8612f36c271cb9e9c74fd5b0c0b3b32aea2a`
+- `container.log`: `ca5430288da5e5533b17c7f2046f4fb7ddc5f9d52bb5e5df1b8866b89964685e`
+- `STOP.md`: `8be5ef3f48035cf077b6b3f0903c5fa68e147c6bbc8d02f69403c266c7ad869d`

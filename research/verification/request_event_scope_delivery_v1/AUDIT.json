@@ -1,0 +1,122 @@
+{
+  "actual_model_calls": 0,
+  "complete_this_request": 9,
+  "corruption_controls": {
+    "boolean_complete": {
+      "errors": [
+        "row:0:candidate_oracle"
+      ],
+      "rejected": true
+    },
+    "boolean_exit": {
+      "errors": [
+        "row:0:application_exit"
+      ],
+      "rejected": true
+    },
+    "boolean_floor": {
+      "errors": [
+        "row:0:acceptance"
+      ],
+      "rejected": true
+    },
+    "changed_db_digest": {
+      "errors": [
+        "row:0:database_hash_read_only"
+      ],
+      "rejected": true
+    },
+    "changed_event": {
+      "errors": [
+        "row:0:registered_transport_intervention"
+      ],
+      "rejected": true
+    },
+    "changed_previous_verdict": {
+      "errors": [
+        "row:0:previous_value_oracle"
+      ],
+      "rejected": true
+    },
+    "changed_request": {
+      "errors": [
+        "row:0:request_contract",
+        "row:0:application_stdin",
+        "row:0:acceptance"
+      ],
+      "rejected": true
+    },
+    "duplicate_row": {
+      "errors": [
+        "row:1:index",
+        "row:1:schedule",
+        "row:1:request_contract"
+      ],
+      "rejected": true
+    },
+    "lost_observer_output": {
+      "errors": [
+        "row:0:KeyError:'pid'",
+        "value_pass_total",
+        "complete_request_total"
+      ],
+      "rejected": true
+    },
+    "missing_history": {
+      "errors": [
+        "row:0:registered_transport_intervention"
+      ],
+      "rejected": true
+    },
+    "missing_row": {
+      "errors": [
+        "denominator",
+        "terminal_rows",
+        "value_pass_total"
+      ],
+      "rejected": true
+    },
+    "promoted_unknown": {
+      "errors": [
+        "row:9:candidate_oracle"
+      ],
+      "rejected": true
+    },
+    "row_order": {
+      "errors": [
+        "row:0:index",
+        "row:0:schedule",
+        "row:0:request_contract"
+      ],
+      "rejected": true
+    },
+    "source_binding": {
+      "errors": [
+        "freeze_binding"
+      ],
+      "rejected": true
+    },
+    "wrong_snapshot_identity": {
+      "errors": [
+        "row:0:registered_transport_intervention"
+      ],
+      "rejected": true
+    }
+  },
+  "counterfactual_causality_established": false,
+  "decision": "PASS_REQUEST_EVENT_SCOPE_SCOPED",
+  "errors": [],
+  "event_counts": {
+    "APPLIED_MULTIPLE": 3,
+    "APPLIED_ONCE": 12,
+    "NOT_APPLIED_IN_WINDOW": 12,
+    "REQUEST_CONFLICT": 3,
+    "UNKNOWN": 6
+  },
+  "journal_matches_raw": true,
+  "previous_value_pass": 33,
+  "raw_sha256": "b9b9c26c21284c153193ac352b8315b89485f340858c597246d1c706e32f9180",
+  "rows": 36,
+  "source_errors": [],
+  "unsupported_naive_promotion": 24
+}

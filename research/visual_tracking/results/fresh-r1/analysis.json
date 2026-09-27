@@ -1,0 +1,65 @@
+{
+  "episodes": 12,
+  "failed": 0,
+  "groups": [
+    {
+      "delay_ms": 250,
+      "valid_pairs": 3,
+      "pairs": [
+        {
+          "seed": 860201,
+          "error_local_minus_delayed": -18.0167502569544,
+          "within_local_minus_delayed": 0.42262152992675406
+        },
+        {
+          "seed": 860202,
+          "error_local_minus_delayed": -19.441671744880924,
+          "within_local_minus_delayed": 0.41933338662172903
+        },
+        {
+          "seed": 860203,
+          "error_local_minus_delayed": -20.97403023071549,
+          "within_local_minus_delayed": 0.4865867225105306
+        }
+      ],
+      "arm_mean_error_px": {
+        "local": 20.043102679538954,
+        "delayed": 39.520586757055895
+      },
+      "arm_mean_within_30": {
+        "local": 0.8999920769348096,
+        "delayed": 0.45714486391513837
+      }
+    },
+    {
+      "delay_ms": 1000,
+      "valid_pairs": 3,
+      "pairs": [
+        {
+          "seed": 860201,
+          "error_local_minus_delayed": -219.99617459298804,
+          "within_local_minus_delayed": 0.79939883174262
+        },
+        {
+          "seed": 860202,
+          "error_local_minus_delayed": -221.64251528832492,
+          "within_local_minus_delayed": 0.7963821286380519
+        },
+        {
+          "seed": 860203,
+          "error_local_minus_delayed": -224.50432837469134,
+          "within_local_minus_delayed": 0.7633310909229998
+        }
+      ],
+      "arm_mean_error_px": {
+        "local": 20.260894691661804,
+        "delayed": 242.30856744366324
+      },
+      "arm_mean_within_30": {
+        "local": 0.9018796453875265,
+        "delayed": 0.11550896161963592
+      }
+    }
+  ],
+  "scope": "three seeded synthetic trajectories; simulated decision cadence; no inference overlap or LLM measurement"
+}

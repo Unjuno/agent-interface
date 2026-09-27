@@ -1,0 +1,31 @@
+{
+  "schema": "issue4561-template-diversity-result-v1",
+  "allocation": "gpu-grounding-template-diversity-4546-successor-01-fixedpool",
+  "decision": "HOLD_OR_FAIL_FROZEN_GATES_NOT_MET",
+  "audit_errors": [],
+  "case_count": 96,
+  "formal_invocations": 1,
+  "optimizer_steps": 2400,
+  "narrow_exact": 12,
+  "narrow_cases": 48,
+  "narrow_accuracy": 0.25,
+  "broad_exact": 10,
+  "broad_cases": 48,
+  "broad_accuracy": 0.20833333333333334,
+  "broad_minus_narrow": -0.04166666666666666,
+  "broad_accuracy_by_heldout_family": {
+    "family-09": 0.25,
+    "family-10": 0.5833333333333334,
+    "family-11": 0.0,
+    "family-12": 0.0
+  },
+  "accepted_candidates": 0,
+  "accepted_wrong_coordinates": 0,
+  "yielded_cases": 96,
+  "raw_results_sha256": "5ff992341e4f28357a4b0bdd1166d7c2a33e1aadab80fd8b576500c3a3b9fe97",
+  "independent_audit_sha256": "7a3c50690607645ba24b9fe463f7c23dd9dfce123b2a3fc0ddc23e7127f278c6",
+  "corpus_manifest_sha256": "7e4958551a229d75ba8da8fe23fb47b7c013d3228a7c6aabf745848b5004c9f7",
+  "reruns": 0,
+  "post_result_tuning": 0,
+  "scope": "synthetic local-only; no GUI/runtime action or real-interface generalization claim"
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "agent-interface/persistent-caller-binding-generation-result-v1",
+  "task_id": "PERSISTENT-CALLER-UNIFIED-BINDING-CONFORMANCE-20260917-001",
+  "decision": "PASS_PERSISTENT_CALLER_UNIFIED_GENERATION_CONFORMANCE_SCOPED",
+  "publication_base": "be33a94034bd26703726d6474af327d9a171a905",
+  "formal": {
+    "trace_length": 13,
+    "traces": 8192,
+    "tasks_total": 212992,
+    "candidate_tasks": 106496,
+    "candidate_successes": 106496,
+    "candidate_stale_execute_presentations": 0,
+    "candidate_safe_stops": 0,
+    "candidate_repairs": 53248,
+    "candidate_stable_model_calls": 0,
+    "comparator_tasks": 106496,
+    "comparator_successes": 8191,
+    "comparator_stale_execute_presentations": 98305,
+    "comparator_safe_stops": 98305,
+    "comparator_restart_traces_with_counterexample": 8191,
+    "formal_invocations": 1,
+    "reruns": 0,
+    "replacements": 0,
+    "extensions": 0
+  },
+  "audit": {
+    "passed": true,
+    "errors": 0,
+    "trace_rows": 8192,
+    "full_binary_coverage": true,
+    "mutation_controls_rejected": "6/6"
+  },
+  "limits": "Deterministic caller/target-handle composition only. Generation transitions are authored by the fixture; no live X11 lifecycle detection, provider/model call, token/latency/economic benefit, GUI task effect, check-to-input atomicity or production reliability claim."
+}

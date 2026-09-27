@@ -1,0 +1,11 @@
+{
+  "task": "ROUTE-CAPABILITY-CONTRACT-20260917-002",
+  "issue": 839,
+  "base": "f9989b833611fb9cb8708007445b94a95d70c516",
+  "formal_invocation_budget": 1,
+  "changed_factor": "audit baseline semantic-weakening enumeration only",
+  "v1_formal_sha256": "3fc69fe7b0c73dad773719005dbf860c6a78696296bb91aacc76ed94e3a4e525",
+  "expected_baseline_semantic_weakening_rows": ["center-fallback-wheel","center-native-only","center-insufficient-only"],
+  "expected_candidate_semantic_weakening_rows": [],
+  "decision": "PASS_EFFECT_DIMENSION_CAPABILITY_NEGOTIATION_AUDITED_SCOPED iff all 10 baseline/candidate decisions equal v1, complete generic audit and independent verifier both recover baseline weakening set of exactly three frozen rows and candidate empty set, structured corruption controls reject all five controls, evidence/source integrity passes, and formal invocations=1 reruns=0."
+}

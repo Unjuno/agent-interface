@@ -1,0 +1,43 @@
+{
+  "task": "VISUAL-INVALIDATION-ROI-TRANSLATION-ENVELOPE-A2-20260918-002",
+  "issue": 1522,
+  "base": "9eae81b19bd8c8cad64ea4c85ab7793eb012c46e",
+  "branch": "research/visual-invalidation-roi-translation-a2-1522",
+  "status": "SOURCE_FROZEN_BEFORE_CHARACTERIZATION",
+  "characterization_seed": 149520260918002,
+  "characterization_seed_used": false,
+  "trials_per_class_per_cell": 1000,
+  "characterization_invocations": 0,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "remote_git_blobs": {
+    "PLAN.md": "9024e23f87563bb8e30ff6e9bedef572384766c8",
+    "experiment.py": "246aafe59aeeea8a6d917ba90200a2b57c79c71f",
+    "audit.py": "96f924bd99d34b6e241a44a4c7368817e5d6ca84",
+    "independent_audit.py": "cc5f7e749ec9f178d48a9acdc5cc8f0e2877df29",
+    "construction.json.gz.b64": "93dfbbb957ab263ab8f846b6c123ec5a4d666374",
+    "construction_independent_audit_v1_failed.json": "68ae4bd24d0c7c3785d4c024114b0873a645c4f9",
+    "construction_independent_audit.json": "30395624bbf842570984d02f9d6bb89aeabdb405",
+    "construction_manifest.json": "ffbd8a94a7e496b62dc0c6fd0a57abdecc6dcb70"
+  },
+  "local_sha256": {
+    "PLAN.md": "8884522780d2d298f878897397b7976af79e220454d1d43fbea3256dd4663033",
+    "experiment.py": "eda54ca738228691f677b6ac1f2d54b2315ab4bf06a82c5d6decc06a926d7076",
+    "audit.py": "d8d05bc29e7ef332b166071987c279d64b70cdf7ad942d5c45c312c697848bad",
+    "independent_audit.py": "d037d2b64a9fb1fded8dbb9c231b13a192264021d07133c194dbe56913fc7200",
+    "construction.json.gz.b64": "b8e6f50a64a385c7807970e5ee123313499534dd428d06d55fbd6168c4bc680e",
+    "construction_independent_audit_v1_failed.json": "5e99658c61b27c207cf1b621e2493f1d5cd429ce33bff86d900b6ac68e498a28",
+    "construction_independent_audit.json": "e074c2ca68177bdf00d172a3b2d8db9ae227162b0f52a8554892f532dd345deb",
+    "construction_manifest.json": "d70b9673c09f1d3e8f2dc6f6f06ac92b4edcf0e130fc882d8ff5620889b169f0"
+  },
+  "construction": {
+    "decision": "PASS_CONSTRUCTION_ELIGIBLE",
+    "runtime_seconds": 1.05,
+    "geometry_mismatches": 0,
+    "scalar_batch_mismatches": 0,
+    "independent_audit_v1": "FAILED_HARNESS_PHASE_UNSUPPORTED",
+    "independent_audit_v2": "PASS_SAME_RAW_NO_RERUN"
+  },
+  "retained_preseed_defect": "initial independent audit did not implement construction phase; audit only was repaired and the same construction raw was re-audited; construction was not rerun"
+}

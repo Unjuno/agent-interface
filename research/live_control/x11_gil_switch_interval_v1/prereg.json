@@ -1,0 +1,74 @@
+{
+  "base": "b104db1b17fa717eecefca0209d243ca35332524",
+  "binary_sha256": "95fd9c13b67e2e41dd3a242c8599fae9c9b73da61a0ffe9be813a371e07cf811",
+  "constants": {
+    "acquisitions_per_case": 32,
+    "pairs": 6,
+    "period_ns": 2000000,
+    "switch_intervals": {
+      "gil1ms": 0.001,
+      "gil5ms": 0.005
+    }
+  },
+  "construction": {
+    "excluded_preflight_pairs": 1,
+    "static_counts": [
+      0,
+      1,
+      511,
+      512,
+      513,
+      1023,
+      1024
+    ],
+    "timing_not_used_to_tune_gate": true
+  },
+  "cpus": {
+    "allowed": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "competitor": 1,
+    "observer": 0,
+    "server": 2,
+    "topology": {
+      "0": {"core_id": "0", "physical_package_id": "0", "thread_siblings_list": "0"},
+      "1": {"core_id": "1", "physical_package_id": "0", "thread_siblings_list": "1"},
+      "2": {"core_id": "2", "physical_package_id": "0", "thread_siblings_list": "2"},
+      "3": {"core_id": "3", "physical_package_id": "0", "thread_siblings_list": "3"},
+      "4": {"core_id": "4", "physical_package_id": "0", "thread_siblings_list": "4"}
+    }
+  },
+  "gate": {
+    "candidate_over_baseline_ratio_max": 0.4,
+    "candidate_post_native_median_ns_max": 2000000,
+    "pairs_required": 4
+  },
+  "schedule": [
+    {"arm": "gil5ms", "count": 0, "order": 0, "pair": 0},
+    {"arm": "gil1ms", "count": 0, "order": 1, "pair": 0},
+    {"arm": "gil1ms", "count": 511, "order": 2, "pair": 1},
+    {"arm": "gil5ms", "count": 511, "order": 3, "pair": 1},
+    {"arm": "gil5ms", "count": 512, "order": 4, "pair": 2},
+    {"arm": "gil1ms", "count": 512, "order": 5, "pair": 2},
+    {"arm": "gil1ms", "count": 513, "order": 6, "pair": 3},
+    {"arm": "gil5ms", "count": 513, "order": 7, "pair": 3},
+    {"arm": "gil5ms", "count": 1023, "order": 8, "pair": 4},
+    {"arm": "gil1ms", "count": 1023, "order": 9, "pair": 4},
+    {"arm": "gil1ms", "count": 1024, "order": 10, "pair": 5},
+    {"arm": "gil5ms", "count": 1024, "order": 11, "pair": 5}
+  ],
+  "schema": "x11_gil_switch_interval_v1_prereg",
+  "sources": {
+    "audit.py": "644b6b5d3687046b0a90af940630b04adbe2b9ece2023f87d0df83d2bc3bb3ff",
+    "build.py": "7a6efe03ef3e231afc701afa619ba4b337fab2da44b9fb62ab7efeb66a410ba8",
+    "native.c": "770bc2faf360f4331549c9703af3d3125b35a47cfd14d56f6eafd0d097d94251",
+    "run.py": "0539353fde2ceb8ab2d8dcc54ede0f43f9c660728b3b5a29ad4be8ccf2412175",
+    "test_audit.py": "ba5be92805945778c0c021b06359508239b39543f45beeb648499f71ad6a9a82"
+  },
+  "stopping_rule": "one formal block; no retry, replacement, extension, or post-data threshold tuning",
+  "task": "X11-GIL-SWITCH-INTERVAL-20260916-001"
+}

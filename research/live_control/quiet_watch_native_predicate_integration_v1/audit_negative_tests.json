@@ -1,0 +1,35 @@
+{
+  "rows": [
+    {
+      "checks_false": [
+        "pixel_semantics_and_timing_brackets"
+      ],
+      "frozen_audit_pass": false,
+      "frozen_decision": "FAIL_SEMANTICS_OR_SAFETY",
+      "mutation": "match_count"
+    },
+    {
+      "checks_false": [
+        "source_hashes"
+      ],
+      "frozen_audit_pass": false,
+      "frozen_decision": "FAIL_SEMANTICS_OR_SAFETY",
+      "mutation": "source_hash"
+    },
+    {
+      "checks_false": [
+        "input_integrity"
+      ],
+      "frozen_audit_pass": false,
+      "frozen_decision": "FAIL_SEMANTICS_OR_SAFETY",
+      "mutation": "release_flag"
+    },
+    {
+      "checks_false": [],
+      "frozen_audit_pass": true,
+      "frozen_decision": "PASS_INTEGRATION_SCOPED",
+      "mutation": "timing_1ns"
+    }
+  ],
+  "schema": "quiet_watch_native_predicate_integration_v1_frozen_audit_negative_tests"
+}

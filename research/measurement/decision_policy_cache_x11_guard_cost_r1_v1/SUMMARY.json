@@ -1,0 +1,67 @@
+{
+  "audit_pass": true,
+  "audit_sha256": "6a883c47b034efd3fbb774f87536753a805e58e17acddcf6799d4f3f1645ae0b",
+  "authority_actions": 0,
+  "cleanup": {
+    "fixture_exit": true,
+    "xvfb_exit": true
+  },
+  "decision": "PASS_X11_ACTION_GUARD_ROI_COST_SCOPED",
+  "exceptions": [],
+  "formal_invocations": 1,
+  "full": {
+    "action_start_lag_max_ns": 1163583,
+    "action_start_lag_p95_ns": 20975,
+    "ambiguous_effects": 0,
+    "cases": 24,
+    "cases_completed": 24,
+    "guard_bytes_each": [
+      307200
+    ],
+    "guard_bytes_total": 125337600,
+    "guard_duration_max_ns": 3917766,
+    "guard_duration_p50_ns": 1014986,
+    "guard_duration_p95_ns": 1454179,
+    "guard_duration_p99_ns": 1832951,
+    "guards": 408,
+    "hard_invalid_effects": 0,
+    "hard_invalidation_to_stop_max_ns": 4762501,
+    "hard_invalidation_to_stop_p50_ns": 3280564,
+    "hard_invalidation_to_stop_p95_ns": 3816848,
+    "host_noise_cases": 0,
+    "nonoverlap_mismatch": 0,
+    "transition_overlap_captures": 0
+  },
+  "matched": {
+    "roi_all_pairs_fewer_bytes": true,
+    "roi_full_p95_ratio": 0.1521394546338518
+  },
+  "pairs": 24,
+  "reruns": 0,
+  "result_sha256": "9b2f0900326684a9203306648bb672c80626a89251945ecb9da3f3ea09e2198b",
+  "roi": {
+    "action_start_lag_max_ns": 77779,
+    "action_start_lag_p95_ns": 15730,
+    "ambiguous_effects": 0,
+    "cases": 24,
+    "cases_completed": 24,
+    "guard_bytes_each": [
+      4096
+    ],
+    "guard_bytes_total": 1671168,
+    "guard_duration_max_ns": 1288133,
+    "guard_duration_p50_ns": 114951,
+    "guard_duration_p95_ns": 221238,
+    "guard_duration_p99_ns": 318803,
+    "guards": 408,
+    "hard_invalid_effects": 0,
+    "hard_invalidation_to_stop_max_ns": 2532479,
+    "hard_invalidation_to_stop_p50_ns": 2438826,
+    "hard_invalidation_to_stop_p95_ns": 2475851,
+    "host_noise_cases": 0,
+    "nonoverlap_mismatch": 0,
+    "transition_overlap_captures": 0
+  },
+  "task": "DECISION-POLICY-CACHE-X11-GUARD-COST-R1-20260918-001",
+  "wall_ns": 7270455341
+}

@@ -1,0 +1,80 @@
+{
+  "all_rejected": true,
+  "controls": [
+    {
+      "errors": [
+        "count",
+        "order",
+        "classification_counts"
+      ],
+      "kind": "missing_row",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "exit:release_expired_static:source"
+      ],
+      "kind": "wrong_exit",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "parity:release_expired_static",
+        "authority:release_expired_static:source"
+      ],
+      "kind": "authority",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "parity:release_expired_static",
+        "task:release_expired_static:source"
+      ],
+      "kind": "task_success",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "input_unchanged:release_expired_static:source"
+      ],
+      "kind": "wrong_hash",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "parity:release_expired_static",
+        "non_echo:release_expired_static:source"
+      ],
+      "kind": "echo_payload",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "time_order:release_expired_static:source"
+      ],
+      "kind": "reversed_time",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "isolated_python:release_expired_static:source"
+      ],
+      "kind": "not_isolated",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "launcher"
+      ],
+      "kind": "bad_launcher",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "determinism"
+      ],
+      "kind": "changed_archive",
+      "rejected": true
+    }
+  ]
+}

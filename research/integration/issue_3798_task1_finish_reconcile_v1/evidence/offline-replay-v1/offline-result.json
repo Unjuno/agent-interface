@@ -1,0 +1,88 @@
+{
+  "authority_granted": false,
+  "checks": {
+    "derived_single_task_scope_passes": true,
+    "derived_trace_agrees_with_exact_history": true,
+    "history_exactly_matches_frozen_token": true,
+    "no_task_model_gui_or_ipc_activity": true,
+    "reference_source_has_finish_time_reconciliation": true,
+    "six_task_boundary_remains_unmet": true,
+    "v29_original_outcome_still_fail": true,
+    "v29_original_trace_still_pre_finish_value": true,
+    "v29_source_inventory_unchanged": true
+  },
+  "formal_outcome": "FAIL_TASK1_SCOPED",
+  "gui_actions": 0,
+  "input_hashes": {
+    "frozen_task": "f8a7c5dfd7a99c65ac0e225d3be15192823b7a91e567ac2934f843d998ec1fea",
+    "predecessor_audit": "8345fa7aae6958b537740116f85dd3088d9c64674e909abf2fc51414aa149310",
+    "reconciler": "62d86a00f436c8ede94b7830063fcdb0c2a1b3687ece97fc9dbb43b6b16f2201",
+    "reference_runner": "cadb3e068dbe1474541371cb70d87a4681eed9d2d8639ce159962e179f648e83",
+    "submission_history": "7c72ca157fd2107a29f3bdcb1d2e8310ac3c293f93826f4690d2496b73dc4552",
+    "task_trace": "95c309c719143c1d78524bd77b44a62122df0a41624f36111f08283132bbab12"
+  },
+  "ipc_calls": 0,
+  "issue": 3798,
+  "model_calls": 0,
+  "parent_issue": 2849,
+  "predecessor_formal_outcome": "FAIL_TASK1_SCOPED",
+  "reconciled_scope": {
+    "authority_granted": false,
+    "exact_submission_count": 1,
+    "model_call_count": 1,
+    "runtime_releases_verified": true,
+    "status": "PASS_TASK1_SCOPED",
+    "total_fixture_submission_count": 1
+  },
+  "reconciled_trace": {
+    "arm": "plain",
+    "durable_calls": 6,
+    "elapsed_ns": 10186099816,
+    "exact_submission": true,
+    "input_feedback_ns": [
+      87673464,
+      89199105
+    ],
+    "layout": "A",
+    "local_observations": 22,
+    "model_calls": [
+      {
+        "call_id": "01a0c05d-fea2-7741-ad4f-b25ffa1ac9e7",
+        "requested_effort": "low",
+        "requested_model": "gpt-5.6-luna",
+        "stage": "anchor_model",
+        "usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 11043,
+          "output_tokens": 115,
+          "reasoning_output_tokens": 51
+        }
+      }
+    ],
+    "model_visible_images": 1,
+    "old_target_pointer_admissions": 0,
+    "planner_generations": 1,
+    "pointer_admissions": 2,
+    "releases_verified": true,
+    "repair": {
+      "attempted": false,
+      "old_reference_pointer_admissions": 0,
+      "old_reference_status": null,
+      "required": false,
+      "succeeded": false
+    },
+    "route": "cold",
+    "source_to_completion_ns": null,
+    "submission_count": 1,
+    "task_id": "task-1",
+    "typed_outcome": "completed"
+  },
+  "scope": "offline accounting replay only; not formal task success",
+  "seed": 284929,
+  "six_task_success": false,
+  "status": "PASS_OFFLINE_RECONCILIATION",
+  "task_started": false,
+  "v29_source_file_count": 79,
+  "v29_source_inventory_unchanged": true
+}

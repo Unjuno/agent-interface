@@ -1,0 +1,22 @@
+{
+  "allocation": "skill-router-adapter-selection-3446-20260923-02",
+  "audit_command": "python3 -B audit.py formal02/FORMAL_RAW.json CORPUS.json --out formal02/AUDIT.json",
+  "audit_sha256": "59f75ef6c3e483048669acd8ed60850d04f7c908d347bd3108252ccd610a3367",
+  "change_only": "write formal raw to pre-created formal02 subdirectory using root/container execution surface; no policy/corpus/threshold/oracle/gate change",
+  "controls_command": "cp formal02/FORMAL_RAW.json FORMAL_RAW.json && python3 -B controls.py && cp CONTROLS.json formal02/CONTROLS.json",
+  "controls_note": "copy retained formal02/FORMAL_RAW.json byte-identically to FORMAL_RAW.json only so frozen controls.py can read its hard-coded path; no rerun or row mutation",
+  "controls_sha256": "e4401f4a1bd9157379ba90f42fb2148062c73b7f13f9d05cc03ac33f2eeeb208",
+  "corpus_sha256": "4bfbc2cf65ce533a061ca47af718b67d7ddbb1a604470858a92964fded47bd74",
+  "formal_command": "mkdir -p formal02 && python3 -B runner.py formal --corpus CORPUS.json --out formal02/FORMAL_RAW.json",
+  "formal_invocations_before_freeze": 0,
+  "formal_reruns_before_freeze": 0,
+  "predecessor": {
+    "allocation": "skill-router-adapter-selection-3446-20260923-01",
+    "disposition": "STOP_FORMAL_EVIDENCE_WRITE_PERMISSION",
+    "invocations": 1,
+    "retained_raw": false
+  },
+  "runner_sha256": "90f725016fa8affc172a5f0af70a7e32522f2fab00204c2e216e737ed4f00180",
+  "scientific_freeze_sha256": "2b7e07179250908c5fbc85aba41ee0e376650fb3a051252e83a54f21ff412f9b",
+  "scientific_source_unchanged": true
+}

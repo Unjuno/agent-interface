@@ -1,0 +1,31 @@
+{
+  "schema": "issue4680-skillpackage-construction-freeze-v1",
+  "allocation": "issue4680-skillpackage-construction-20260927-01",
+  "issue": 4680,
+  "intake_main": "407bea640ad46827f58bd7e30979e52096fff092",
+  "parent_case_path": "research/experiments/cactus_needle3_structured_delegate_v1/CASES.json",
+  "parent_case_blob": "4250f1bf5429907234aca2e0a5c6c714db3daaa1",
+  "parent_baseline": {"exact_cases": "7/7", "model_decisions": 0, "audit_errors": 0},
+  "prerequisites": {"issue_4205": "HOLD_PROTOCOL_DEVIATION; no validated adapted candidate", "issue_4670": "not yet measured; no learned backend selected"},
+  "treatment_scope": "deterministic SkillPackage construction only; not adaptation/model/speed/amortization evaluation",
+  "case_count": 10,
+  "formal_reruns": 0,
+  "optimizer_steps": 0,
+  "model_calls": 0,
+  "docker_image": "python:3.11-slim",
+  "docker_image_id": "sha256:da047cb8f9d1d98e5c070f5300ba9f7274e33b8fc0e5be5ed88740aed1b95ba9",
+  "platform": "linux/amd64",
+  "container": {"network": "none", "cpus": 1, "memory": "256m", "pids": 32, "rootfs": "read-only", "source_mount": "read-only", "tmpfs": "/tmp:rw,noexec,nosuid,size=16m", "no_new_privileges": true, "capabilities_dropped": "ALL"},
+  "sha256": {
+    "PLAN.md": "89a1534bf455069d787d5d9d9241bf39dabcc898ab834260619ac601ba885fa7",
+    "skill_package.py": "65bd2bcd9865129964406c2a21a158eaef6115bfb80fedcb1fd3162f4eb06833",
+    "cases.json": "c0ace2e31e5312560475b5b186a9a3ac8f0921ae679a542bd920396b141d4754",
+    "package.json": "d251cad5aab70f4c66578a83ad4eb08ddebb8bdc79cd0ccc1696e39ceb09f958",
+    "run.py": "1af07f3e7966e43b1645026a6e12cb09045500a7694a5da00e69a3d930834a7f",
+    "audit.py": "da2a666a6f5bd469b8dcd0f7dac45ddcf5fe7319bbecb2a5e472b2147341a4bc",
+    "test_skill_package.py": "431ba57eee9db7de2d3a6c4313812b04eb6a73c502bc75a17b9df901afb726ae",
+    "controls.py": "13aa85f7236bfaf55463cce1c711cfe71a9d60e2a2f1626265571d2f5046c759",
+    "execute.py": "85fa9c16032e09029b39c4d9784ba6baa1a252da1c0cca5217c6cb18c9833e1e"
+  }
+}
+

@@ -1,0 +1,878 @@
+{
+  "allocation_id": "map01-running-action-cancel-live-02",
+  "passed": true,
+  "verification": {
+    "research/doom/map01_running_action_cancel_live_v2.py": true,
+    "research/doom/audit_map01_running_action_cancel_live_v2.py": true,
+    "research/doom/map01_overlap_controller_v34.py": true,
+    "research/live_control/running_action_guard_v1.py": true,
+    "research/doom/doom_action_snapshot_v1.py": true,
+    "research/doom/doom_action_validity_contract_v1.py": true,
+    "research/doom/doom_hud_signal_v1.py": true,
+    "research/doom/doom_hud_signal_v2.py": true,
+    "research/doom/session_map01_v7.py": true,
+    "research/live_control/executor_v3.py": true,
+    "research/live_control/coast_backend_v1.py": true,
+    "research/doom/fixtures/map01-threat-contact-v2/fixture.json": true,
+    "research/doom/fixtures/map01-threat-contact-v2/save.png": true,
+    "research/doom/fixtures/map01-threat-contact-v2/source.png": true,
+    "output_absent": true,
+    "one_episode_no_retry": true,
+    "no_model": true,
+    "latency_thresholds": true
+  },
+  "checks": {
+    "ammo_decreased_on_screen": true,
+    "ammo_predicate_triggered": true,
+    "matched_cancel": true,
+    "cancelled_terminal": true,
+    "empty_release": true,
+    "capture_to_cancel_within_threshold": true,
+    "capture_to_release_within_threshold": true,
+    "process_exit_zero": true
+  },
+  "ready": {
+    "event": "ready",
+    "presentation": "full",
+    "operations": [
+      "submit",
+      "cancel",
+      "clock",
+      "finish"
+    ],
+    "command_contract": {
+      "submit": {
+        "op": "submit",
+        "id": "new nonempty string",
+        "expected_sequence": "latest integer observation sequence",
+        "valid_until_ns": "runtime monotonic ns, at most 30s ahead",
+        "steps": [
+          {
+            "op": "hold",
+            "keys": [
+              "1-4 exact binding names"
+            ],
+            "duration_ms": "1-5000"
+          },
+          {
+            "op": "observe"
+          }
+        ]
+      },
+      "coast": {
+        "op": "coast",
+        "duration_ms": "1-5000",
+        "sample_ms": "50-1000",
+        "input_authority": false
+      },
+      "limits": {
+        "steps": "1-16",
+        "total_hold_ms": 10000,
+        "implicit_queue": false
+      }
+    },
+    "task": "Exit continuously advancing Freedoom MAP01",
+    "bindings": {
+      "Left/Right": "turn",
+      "Up or w": "forward",
+      "Down or s": "back",
+      "a/d": "strafe",
+      "e or Return": "use",
+      "space": "attack",
+      "Shift_L": "run"
+    },
+    "fixture": {
+      "manifest": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/fixtures/map01-threat-contact-v2/fixture.json",
+      "manifest_sha256": "e57e21fd6d85d4b0720b3b3d5a52ad538fde45c50c58651ff754638f93f182e4",
+      "save": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/fixtures/map01-threat-contact-v2/save.png",
+      "save_sha256": "cc5302aa9cda3960248733caa96da1b53adcc4b6a1a2dcfb80675650c9350401",
+      "before_load_tic": 93,
+      "after_load_tic": 1366,
+      "source_episode_tic": 1366,
+      "setup_input_contract": "fixture state reached through the same X11 Executor and recorded OS-input/coast programs; save is setup-only"
+    },
+    "prohibited": [
+      "pause",
+      "API action selection",
+      "automap",
+      "object labels",
+      "sector labels",
+      "save state"
+    ],
+    "emit_ns": 34108786126844
+  },
+  "action": [
+    {
+      "action": "fire",
+      "extent": "long"
+    }
+  ],
+  "authored_validity": {
+    "critical_health_minimum": 1,
+    "maximum_health_loss": 20,
+    "minimum_ammo": 48,
+    "max_current_age_ms": 500
+  },
+  "source_signals": {
+    "health": {
+      "format": "observable-signal-v1",
+      "status": "observed",
+      "signal_id": "health",
+      "value": 97,
+      "sequence": 1,
+      "capture_ns": 34108803746196,
+      "binding": {
+        "focus": 6291472,
+        "surface": 6291472,
+        "geometry": [
+          321,
+          180,
+          640,
+          480
+        ]
+      },
+      "slots": [
+        {
+          "slot": 0,
+          "digit": null,
+          "best_digit": 5,
+          "best_score": 0.058165548098434,
+          "second_score": 0.055762081784386616
+        },
+        {
+          "slot": 1,
+          "digit": 9,
+          "best_digit": 9,
+          "best_score": 0.9274193548387096,
+          "second_score": 0.31413612565445026
+        },
+        {
+          "slot": 2,
+          "digit": 7,
+          "best_digit": 7,
+          "best_score": 0.9368421052631579,
+          "second_score": 0.3586387434554974
+        }
+      ],
+      "evidence": "hash-bound WAD glyph foreground exact-match",
+      "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+    },
+    "ammo": {
+      "format": "observable-signal-v1",
+      "status": "observed",
+      "signal_id": "ammo",
+      "value": 48,
+      "sequence": 1,
+      "capture_ns": 34108803746196,
+      "binding": {
+        "focus": 6291472,
+        "surface": 6291472,
+        "geometry": [
+          321,
+          180,
+          640,
+          480
+        ]
+      },
+      "slots": [
+        {
+          "slot": 0,
+          "digit": null,
+          "best_digit": 7,
+          "best_score": 0.060526315789473685,
+          "second_score": 0.05204460966542751
+        },
+        {
+          "slot": 1,
+          "digit": 4,
+          "best_digit": 4,
+          "best_score": 0.9386189258312021,
+          "second_score": 0.2905759162303665
+        },
+        {
+          "slot": 2,
+          "digit": 8,
+          "best_digit": 8,
+          "best_score": 0.9353233830845771,
+          "second_score": 0.3518987341772152
+        }
+      ],
+      "evidence": "hash-bound WAD glyph foreground exact-match",
+      "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+    }
+  },
+  "initial_validity": {
+    "format": "action-validity-admission-v1",
+    "status": "VALID_CURRENT",
+    "reason": "all_authored_observable_predicates_hold",
+    "action_may_proceed_to_executor_admission": true,
+    "requires_new_decision": false,
+    "grants_input_authority": false,
+    "contract": {
+      "format": "action-validity-contract-v1",
+      "action_fingerprint": "3fa362c8e6183a19392132836f629dd5b4bc041f4f8994c7b2c4f4498b46f3fe",
+      "source": {
+        "sequence": 1,
+        "capture_ns": 34108803746196,
+        "binding": {
+          "focus": 6291472,
+          "surface": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ]
+        },
+        "signals": {
+          "health": {
+            "status": "observed",
+            "value": 97
+          },
+          "ammo": {
+            "status": "observed",
+            "value": 48
+          }
+        }
+      },
+      "max_current_age_ms": 500,
+      "predicates": [
+        {
+          "signal_id": "health",
+          "operator": "minimum",
+          "value": 1
+        },
+        {
+          "signal_id": "health",
+          "operator": "max_decrease_from_source",
+          "value": 20
+        },
+        {
+          "signal_id": "ammo",
+          "operator": "minimum",
+          "value": 48
+        }
+      ]
+    },
+    "snapshot": {
+      "format": "action-admission-snapshot-v1",
+      "sequence": 1,
+      "capture_ns": 34108803746196,
+      "binding": {
+        "focus": 6291472,
+        "surface": 6291472,
+        "geometry": [
+          321,
+          180,
+          640,
+          480
+        ]
+      },
+      "signals": {
+        "ammo": {
+          "status": "observed",
+          "value": 48
+        },
+        "health": {
+          "status": "observed",
+          "value": 97
+        }
+      }
+    },
+    "controller_decided_ns": 34109045313535,
+    "checks": [
+      {
+        "signal_id": "health",
+        "operator": "minimum",
+        "expected": 1,
+        "observed": 97,
+        "passed": true
+      },
+      {
+        "signal_id": "health",
+        "operator": "max_decrease_from_source",
+        "expected": 20,
+        "observed": 97,
+        "passed": true
+      },
+      {
+        "signal_id": "ammo",
+        "operator": "minimum",
+        "expected": 48,
+        "observed": 48,
+        "passed": true
+      }
+    ]
+  },
+  "running_guard": {
+    "schema": "running-action-guard-v1",
+    "state": "REVOKED_ACTION_NOT_CURRENT",
+    "action": [
+      {
+        "action": "fire",
+        "extent": "long"
+      }
+    ],
+    "contract": {
+      "format": "action-validity-contract-v1",
+      "action_fingerprint": "3fa362c8e6183a19392132836f629dd5b4bc041f4f8994c7b2c4f4498b46f3fe",
+      "source": {
+        "sequence": 1,
+        "capture_ns": 34108803746196,
+        "binding": {
+          "focus": 6291472,
+          "surface": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ]
+        },
+        "signals": {
+          "health": {
+            "status": "observed",
+            "value": 97
+          },
+          "ammo": {
+            "status": "observed",
+            "value": 48
+          }
+        }
+      },
+      "max_current_age_ms": 500,
+      "predicates": [
+        {
+          "signal_id": "health",
+          "operator": "minimum",
+          "value": 1
+        },
+        {
+          "signal_id": "health",
+          "operator": "max_decrease_from_source",
+          "value": 20
+        },
+        {
+          "signal_id": "ammo",
+          "operator": "minimum",
+          "value": 48
+        }
+      ]
+    },
+    "active_program": null,
+    "program_admissions": [
+      {
+        "event": "accepted",
+        "id": "running-action-fire-02",
+        "accepted_ns": 34109056878541
+      }
+    ],
+    "program_terminals": [
+      {
+        "event": "terminal",
+        "id": "running-action-fire-02",
+        "status": "cancelled",
+        "error": null,
+        "steps_completed": 0,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 34109409296386,
+          "valid_until_ns": null
+        },
+        "terminal_ns": 34109420708104,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_ns": 34109420726048
+      }
+    ],
+    "validity_checks": [
+      {
+        "format": "action-validity-admission-v1",
+        "status": "VALID_CURRENT",
+        "reason": "all_authored_observable_predicates_hold",
+        "action_may_proceed_to_executor_admission": true,
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "contract": {
+          "format": "action-validity-contract-v1",
+          "action_fingerprint": "3fa362c8e6183a19392132836f629dd5b4bc041f4f8994c7b2c4f4498b46f3fe",
+          "source": {
+            "sequence": 1,
+            "capture_ns": 34108803746196,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "signals": {
+              "health": {
+                "status": "observed",
+                "value": 97
+              },
+              "ammo": {
+                "status": "observed",
+                "value": 48
+              }
+            }
+          },
+          "max_current_age_ms": 500,
+          "predicates": [
+            {
+              "signal_id": "health",
+              "operator": "minimum",
+              "value": 1
+            },
+            {
+              "signal_id": "health",
+              "operator": "max_decrease_from_source",
+              "value": 20
+            },
+            {
+              "signal_id": "ammo",
+              "operator": "minimum",
+              "value": 48
+            }
+          ]
+        },
+        "snapshot": {
+          "format": "action-admission-snapshot-v1",
+          "sequence": 1,
+          "capture_ns": 34108803746196,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "signals": {
+            "ammo": {
+              "status": "observed",
+              "value": 48
+            },
+            "health": {
+              "status": "observed",
+              "value": 97
+            }
+          }
+        },
+        "controller_decided_ns": 34109045313535,
+        "checks": [
+          {
+            "signal_id": "health",
+            "operator": "minimum",
+            "expected": 1,
+            "observed": 97,
+            "passed": true
+          },
+          {
+            "signal_id": "health",
+            "operator": "max_decrease_from_source",
+            "expected": 20,
+            "observed": 97,
+            "passed": true
+          },
+          {
+            "signal_id": "ammo",
+            "operator": "minimum",
+            "expected": 48,
+            "observed": 48,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "format": "action-validity-admission-v1",
+        "status": "VALID_CURRENT",
+        "reason": "all_authored_observable_predicates_hold",
+        "action_may_proceed_to_executor_admission": true,
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "contract": {
+          "format": "action-validity-contract-v1",
+          "action_fingerprint": "3fa362c8e6183a19392132836f629dd5b4bc041f4f8994c7b2c4f4498b46f3fe",
+          "source": {
+            "sequence": 1,
+            "capture_ns": 34108803746196,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "signals": {
+              "health": {
+                "status": "observed",
+                "value": 97
+              },
+              "ammo": {
+                "status": "observed",
+                "value": 48
+              }
+            }
+          },
+          "max_current_age_ms": 500,
+          "predicates": [
+            {
+              "signal_id": "health",
+              "operator": "minimum",
+              "value": 1
+            },
+            {
+              "signal_id": "health",
+              "operator": "max_decrease_from_source",
+              "value": 20
+            },
+            {
+              "signal_id": "ammo",
+              "operator": "minimum",
+              "value": 48
+            }
+          ]
+        },
+        "snapshot": {
+          "format": "action-admission-snapshot-v1",
+          "sequence": 2,
+          "capture_ns": 34109116424309,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "signals": {
+            "ammo": {
+              "status": "observed",
+              "value": 48
+            },
+            "health": {
+              "status": "observed",
+              "value": 97
+            }
+          }
+        },
+        "controller_decided_ns": 34109250775215,
+        "checks": [
+          {
+            "signal_id": "health",
+            "operator": "minimum",
+            "expected": 1,
+            "observed": 97,
+            "passed": true
+          },
+          {
+            "signal_id": "health",
+            "operator": "max_decrease_from_source",
+            "expected": 20,
+            "observed": 97,
+            "passed": true
+          },
+          {
+            "signal_id": "ammo",
+            "operator": "minimum",
+            "expected": 48,
+            "observed": 48,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "format": "action-validity-admission-v1",
+        "status": "REJECTED_PREDICATE",
+        "reason": "ammo_minimum_failed",
+        "action_may_proceed_to_executor_admission": false,
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "contract": {
+          "format": "action-validity-contract-v1",
+          "action_fingerprint": "3fa362c8e6183a19392132836f629dd5b4bc041f4f8994c7b2c4f4498b46f3fe",
+          "source": {
+            "sequence": 1,
+            "capture_ns": 34108803746196,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "signals": {
+              "health": {
+                "status": "observed",
+                "value": 97
+              },
+              "ammo": {
+                "status": "observed",
+                "value": 48
+              }
+            }
+          },
+          "max_current_age_ms": 500,
+          "predicates": [
+            {
+              "signal_id": "health",
+              "operator": "minimum",
+              "value": 1
+            },
+            {
+              "signal_id": "health",
+              "operator": "max_decrease_from_source",
+              "value": 20
+            },
+            {
+              "signal_id": "ammo",
+              "operator": "minimum",
+              "value": 48
+            }
+          ]
+        },
+        "snapshot": {
+          "format": "action-admission-snapshot-v1",
+          "sequence": 3,
+          "capture_ns": 34109270602450,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "signals": {
+            "ammo": {
+              "status": "observed",
+              "value": 47
+            },
+            "health": {
+              "status": "observed",
+              "value": 97
+            }
+          }
+        },
+        "controller_decided_ns": 34109399090828,
+        "checks": [
+          {
+            "signal_id": "health",
+            "operator": "minimum",
+            "expected": 1,
+            "observed": 97,
+            "passed": true
+          },
+          {
+            "signal_id": "health",
+            "operator": "max_decrease_from_source",
+            "expected": 20,
+            "observed": 97,
+            "passed": true
+          },
+          {
+            "signal_id": "ammo",
+            "operator": "minimum",
+            "expected": 48,
+            "observed": 47,
+            "passed": false
+          }
+        ]
+      }
+    ],
+    "invalidation": {
+      "kind": "action_validity",
+      "result": {
+        "format": "action-validity-admission-v1",
+        "status": "REJECTED_PREDICATE",
+        "reason": "ammo_minimum_failed",
+        "action_may_proceed_to_executor_admission": false,
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "contract": {
+          "format": "action-validity-contract-v1",
+          "action_fingerprint": "3fa362c8e6183a19392132836f629dd5b4bc041f4f8994c7b2c4f4498b46f3fe",
+          "source": {
+            "sequence": 1,
+            "capture_ns": 34108803746196,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "signals": {
+              "health": {
+                "status": "observed",
+                "value": 97
+              },
+              "ammo": {
+                "status": "observed",
+                "value": 48
+              }
+            }
+          },
+          "max_current_age_ms": 500,
+          "predicates": [
+            {
+              "signal_id": "health",
+              "operator": "minimum",
+              "value": 1
+            },
+            {
+              "signal_id": "health",
+              "operator": "max_decrease_from_source",
+              "value": 20
+            },
+            {
+              "signal_id": "ammo",
+              "operator": "minimum",
+              "value": 48
+            }
+          ]
+        },
+        "snapshot": {
+          "format": "action-admission-snapshot-v1",
+          "sequence": 3,
+          "capture_ns": 34109270602450,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "signals": {
+            "ammo": {
+              "status": "observed",
+              "value": 47
+            },
+            "health": {
+              "status": "observed",
+              "value": 97
+            }
+          }
+        },
+        "controller_decided_ns": 34109399090828,
+        "checks": [
+          {
+            "signal_id": "health",
+            "operator": "minimum",
+            "expected": 1,
+            "observed": 97,
+            "passed": true
+          },
+          {
+            "signal_id": "health",
+            "operator": "max_decrease_from_source",
+            "expected": 20,
+            "observed": 97,
+            "passed": true
+          },
+          {
+            "signal_id": "ammo",
+            "operator": "minimum",
+            "expected": 48,
+            "observed": 47,
+            "passed": false
+          }
+        ]
+      },
+      "requires_new_decision": true,
+      "grants_input_authority": false
+    },
+    "cancellation": {
+      "event": "cancel_requested",
+      "id": "running-action-fire-02",
+      "matched": true,
+      "requested_ns": 34109407382096
+    },
+    "current_input_authority": false,
+    "physical_input_may_be_down": false,
+    "physical_release_verified": true,
+    "requires_new_decision": true,
+    "grants_input_authority": false
+  },
+  "cancel_event": {
+    "event": "cancel_requested",
+    "id": "running-action-fire-02",
+    "matched": true,
+    "requested_ns": 34109407382096,
+    "emit_ns": 34109407386371
+  },
+  "terminal": {
+    "event": "terminal",
+    "id": "running-action-fire-02",
+    "status": "cancelled",
+    "error": null,
+    "steps_completed": 0,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 34109409296386,
+      "valid_until_ns": null
+    },
+    "terminal_ns": 34109420708104,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_ns": 34109420726048
+  },
+  "metrics_ms": {
+    "submit_send_to_accept_ms": 11.191601,
+    "accept_to_first_observation_capture_ms": 59.545768,
+    "accept_to_first_observation_emit_ms": 149.840825,
+    "accept_to_invalidation_capture_ms": 213.723909,
+    "capture_to_guard_decision_ms": 128.488378,
+    "capture_to_cancel_requested_ms": 136.779646,
+    "guard_decision_to_cancel_requested_ms": 8.291268,
+    "capture_to_release_verified_ms": 138.693936,
+    "guard_decision_to_release_verified_ms": 10.205558
+  },
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": true,
+    "episode_finished": true,
+    "player_dead": false,
+    "wall_control_ns": 518162754,
+    "death_count": 0,
+    "kill_count": 0,
+    "one_life_map_exit": true,
+    "episode_timeout_seconds": 30,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 34109452890665
+  },
+  "runtime_process_exit": 0,
+  "model_calls": 0,
+  "scope": "one real continuously advancing Freedoom/X11 held-input cancellation episode; controller-authored probe threshold, no planner/model call, no task-completion or gameplay-gain claim"
+}

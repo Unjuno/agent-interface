@@ -1,0 +1,230 @@
+{
+  "request": {
+    "after": 47,
+    "events": [
+      "independent_evaluation"
+    ],
+    "timeout": 3,
+    "command": {
+      "op": "finish"
+    },
+    "request_id": "finish-once"
+  },
+  "reply": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "op": "finish",
+          "transport_request_id": "finish-once"
+        },
+        "received_ns": 15985226476,
+        "emit_started_ns": 15985229852
+      },
+      {
+        "event": "independent_evaluation",
+        "success": true,
+        "actual": {
+          "x": "88",
+          "y": "50",
+          "width": "40",
+          "height": "30",
+          "transform": null
+        },
+        "known_ns": 15992592475,
+        "emit_started_ns": 15992599036
+      }
+    ],
+    "cursor": 49,
+    "returned_ns": 16005404412,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "finish-once",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "continuation": {
+    "authority": "none",
+    "channel_closed": false,
+    "clocks": {
+      "052263686e7e4a33be7389c80b3467a7": {
+        "echo_cursor": 3,
+        "record": {
+          "emit_started_ns": 7395085380,
+          "event": "clock",
+          "runtime_ns": 7395081748,
+          "sequence": 1
+        },
+        "record_cursor": 4
+      },
+      "937003b0f5fc4c92a2ea937236ef3b56": {
+        "echo_cursor": 16,
+        "record": {
+          "emit_started_ns": 7806835403,
+          "event": "clock",
+          "runtime_ns": 7806827354,
+          "sequence": 3
+        },
+        "record_cursor": 17
+      }
+    },
+    "cursor": 49,
+    "format": "received-continuation-v1",
+    "observation": {
+      "event": "observation",
+      "id": "durable-d2dc934954c642c793b7d211f0b12a9a",
+      "step": 5,
+      "sequence": 9,
+      "capture_ns": 8696711873,
+      "context_ns": 8702161526,
+      "context": [
+        [
+          "windows",
+          "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+        ],
+        [
+          "active_window",
+          6291463
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/auto-recover-ink-01/runtime/009.png",
+      "image_reused": false,
+      "image_prepare_ns": 28381246,
+      "image_ready_ns": 8744721026,
+      "input_focus_before": 6291464,
+      "input_focus_after": 6291464,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 3.655965,
+      "wire_bytes": 5186,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "input_state_before": {
+        "owner_id": "e1060a39a144430daee39cea5455ec71",
+        "revision": 21,
+        "sample_started_ns": 8691780376,
+        "sample_finished_ns": 8692140539,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          550,
+          106
+        ],
+        "focus": 6291464,
+        "active_lease_deadline_ns": 37806827354,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "input_state_after": {
+        "owner_id": "e1060a39a144430daee39cea5455ec71",
+        "revision": 21,
+        "sample_started_ns": 8754332279,
+        "sample_finished_ns": 8754583921,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          550,
+          106
+        ],
+        "focus": 6291464,
+        "active_lease_deadline_ns": 37806827354,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "owner_revision_unchanged": true,
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "emit_started_ns": 8754652002
+    },
+    "observation_cursor": 45,
+    "pending_clock": null,
+    "record_hashes": [
+      "7f28c8a9f2ae4fa8099a9af75dc8377f458ec8f7da1134d2ba789b20dd74611e",
+      "3f695c309a48dfad79bc846dfe37df723a22d2485290fa00ab7df2d20819330e",
+      "d71f046e435740b7d0728494abfe7f01c55941710f9db5e3cb5acfdff36c2e85",
+      "bb4bbcbed014833f3259979683a550c24cfcf6b42026ff3e7ef58e7d88e74ca5",
+      "785c3a2ac40b45e0417c4ef22a6ebfebd072df272bb478309120aa3189808703",
+      "297ce9b1a1c9225feabd6702cd53927d485494a06ea3a66472564edbc5f8a0b9",
+      "111bfed8862695a119cfbffbb020869f79930017fc22d6b9afd9da5dc50a21ae",
+      "872563437ac9e08f2ec057d42ceb8a81429f7f55e46a34dc6e742ab03e5227de",
+      "79e20aa404869a1a44d6ed3df8b8f9837a21fef18bd1b362dacfd55cf912001f",
+      "12327ca836a88078428b2405a8075a4e7b0dda40a67e2155829c8528e1434014",
+      "5500cce158a737bf32bd3802a079bbdb69fa0031613519e26ea6617319f6e9b1",
+      "e6a70e3093167f29c30a3c18cd9a41feccefab20255e09c8506afbe651f0bd2c",
+      "ecadb75a5ab85791cc5dd53a1a5555565902abf102843bff26ed1cdb0b71797e",
+      "689dc3ae34f8385f93e416458d3d7b8230093400222fe1cd202bf3965c646fb5",
+      "65a1af3efdda92ac68dad0f4222d6858590797e97bfb60d2df2258e3a8a97946",
+      "c5ff0ee8ba0a8b2f0472ebd11caca2c3c72a2a005cdd32860bd7da770479afd5",
+      "62c59f88d034f138a1053a84a0c8163fe234c8e66ac69935a45a35fdfa6836e5",
+      "f0dcde689ea3ea88c3da1def30cda7c445e85f85ee524188c4e2b49f2048e544",
+      "579fb7c29b8f551d48c5605b60290c4dba17d5b827ba375292f75294cfc6cd2d",
+      "6b73c376e7217c43c070976588326574f41c100a0206ceffed87c8b0ad6f8866",
+      "e1086b992a0cf79093506902140be589ee6481223976d359fbeb688c5ee86b69",
+      "cb46bb0cba3f72822f5331a61f4bdbb4fd62d48561b4259e772ba837b848ad61",
+      "c6c9eb70326453f0e21ad537a0f8f75a32860cc4ee9777e1bd8a2a2059b19d0d",
+      "5d3d4b75ab229b23091fcda47b1fbb4167e2f070ffae55d03fc8364f6451baf1",
+      "286bc26803dd5b6f2f250d8e32525b8a34a7e128ea8e005457f6c77148451708",
+      "b0a6e9463f40c5aec10f666a3dc244f71b16463a58f6875a15a1b9461c77fb28",
+      "b8013daea286903f5ac359d69e812ae4697174d11288f8648463f4fe7e387ee6",
+      "66f48a4f6f8d4f0ccf6915abea23becbfc746b26a52e4821bb93947f62c254d7",
+      "8c95321a62e82f4825683c97d8694d698c7b2c7717377cf68207d565ddbee72b",
+      "9474ddcab23a09a9ab4fadaf8f7a9092c63851719a192615d2254d3021a48987",
+      "111b4ce483b28474827082beed92a1cf5da43735dbbf0a81a250be46dce4246e",
+      "20fd1e2b69944878e51cc3d38a27a98047a93a0bbb52bcf004443b4421f3ac80",
+      "ce51e8a1a25737dd9d0cc898256dd4b63126d4cef662f521fbdb573e5354e624",
+      "6384e69ef2741889540d4fe88eae0fafb2d10a364da562452b0c54c8d9b6a33c",
+      "67321ec645cdfe5486cd95227b2502a9b4ecc90ad01c68e96dec2b0421e32749",
+      "914738b4e9149e32a1878501d2773578eb97e1b380feb704401a552701bc2333",
+      "923b42379e0d6bc8139dec808e4b4def4f8309cd98f4c6780e662e95284ceff9",
+      "1eac3952a6cf640660c95cf556dcd496c88f67f37b28628929ce9ef3c0e84292",
+      "7c67b59b71410cfee20ea3fa2e5096e611e005755a4ebd27de28f55ff73646d6",
+      "48c9b2a6c96e86cbf3aead0f0e0d4ca83171b2057bb72b78bc5460c2a293a593",
+      "2e18479d7fd2510fc29648f2ba9ac2da078078186db598a75771ebc6fd7e4dd1",
+      "7847eed9ed59520202f2a3618fd33af1ba5e7a066672d50b34d58bddb49973aa",
+      "968663ec3d2cdbb7afb3af9f6132b9bde409417ca480e6d1e0ccf3f963dcbeb1",
+      "ef48e577120f515cf9f47709055a196e683dc6ff39d775a0e3c5c26270bccf70",
+      "5f94d6e8c8ad50d418c33b4cef2ab4f80803144dd594ca2180c5b42aade0e9c1",
+      "5ad61cc8a52eb843b4e4ae35c62a1bf76f543681e42d4af7a26f76c722aed0b7",
+      "b1295bb210569518c8a067dd85c13dcfbe1466b3f6cbffe29a24c0f3fa96e392",
+      "be52c00405927e20b64bf9790bcb3cfb43d259cfb56794e288bb07e4ef1fe090",
+      "d9c8093a3f50cc4d567e9870cc536d6f855ee26a3ea06fde258b90a25ecab793"
+    ],
+    "session": "/tmp/agent-interface-events-zmlyj9yq/events.sock"
+  },
+  "requested_clock_id": null,
+  "matched_clock": null,
+  "authority": "none; current observation and admission still required"
+}

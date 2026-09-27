@@ -1,0 +1,108 @@
+{
+  "status": "preregistered_before_fresh_x11_execution",
+  "correction": "v1 target was safely interrupted by focus_changed immediately after button-down; partial and guard passed; v2 reverses order and preserves all three new allocations",
+  "order": [
+    "guard",
+    "partial",
+    "target"
+  ],
+  "seed": 991003,
+  "condition": {
+    "op": "local_target_guard_postcondition",
+    "postcondition_id": "red-placement-right-24",
+    "source_sequence": 1,
+    "target_boxes": [
+      [
+        664,
+        376,
+        3,
+        28
+      ]
+    ],
+    "guard_boxes": [
+      [
+        600,
+        354,
+        30,
+        15
+      ]
+    ],
+    "pixel_delta_threshold": 24,
+    "minimum_target_changed_pixels": 50,
+    "maximum_guard_changed_pixels": 20,
+    "required_samples": 2,
+    "sample_interval_ms": 50,
+    "timeout_ms": 500,
+    "on_unmet": "needs_decision"
+  },
+  "allocations": {
+    "target": {
+      "pointer_delta": [
+        28,
+        0
+      ],
+      "expected_visual_delta": [
+        24,
+        0
+      ],
+      "expected_reason": "met",
+      "save": true
+    },
+    "partial": {
+      "pointer_delta": [
+        24,
+        0
+      ],
+      "expected_visual_delta": [
+        20,
+        0
+      ],
+      "expected_reason": "target_not_reached",
+      "save": false
+    },
+    "guard": {
+      "pointer_delta": [
+        0,
+        -24
+      ],
+      "expected_visual_delta": [
+        0,
+        -20
+      ],
+      "expected_reason": "guard_changed",
+      "save": false
+    }
+  },
+  "primary_endpoint": "only target24px starts Save; partial20px and upward guard intrusion stop before Save",
+  "failure_policy": "retain first result of every ordered allocation; no retry; early terminal is typed failure",
+  "sources": {
+    "preregister_local_target_guard_x11_v2.py": "e6c8d168ac2e97a3d86f88da2f32b6e2f666f714f908aedf013034bf3536eb8b",
+    "run_local_target_guard_x11_v2.py": "8dcb7199c45c01d20516d0feac9c6fa4f4c7da337201e6194928a005f2ad967c",
+    "run_local_target_guard_x11_v1.py": "7e095ae6067e41be765c93f8f2fd34732b70b4affa2cfffd8b3c9731304675d9",
+    "session_v25.py": "3f6c0a6c973bc66c69681456bfedce9362f563d9460000e78217b63148bab057",
+    "local_target_guard_postcondition_v1.py": "c28509ff0ae060f6a1410f559bb100662a2cec9b37479a628d3d4d3df61dbf06",
+    "session_v24.py": "193c389b053f90dcc07b869c29cfcb77c4272525eb873239112cb2d696037ae1",
+    "local_displacement_postcondition_v1.py": "03ceb1dda1c64de76a8968c825e3731eea038158e84cfe8f541cfc12dc45566d",
+    "visual_anchor.py": "98275ec4781976ee566872915b3e5403f9c548fac5b37f091b9a66f2329ada7b",
+    "session_v23.py": "25bbd068829bba9849fbc4cf540ec265b0b2296dc4cf6c54c77da794e56a760c",
+    "local_visual_barrier_program_v1.py": "1c0a89679e2f0702459782ed072c7b9d65caa4cb579afcde4905efb16fc5aaf5",
+    "local_visual_barrier_v1.py": "c6f98eb1cb77383e627f21a24103c32e477a51e8b3d157f2e7b1f1a04ce51d99",
+    "session_v22.py": "a6b59b442f4d96e2e502c0955ebffb2c929399303759d5d53ea456ba92b44a05",
+    "session_v21.py": "5cfe02fb5531c1a3607dd7221f7e7d5f720ee283454c28e5cc7b6c4a5960c3b8",
+    "session_v20.py": "db1ae660b795c4bc103d83a89e15501ce37cc897a6983cdeb1d18b9b3ccb4c1f",
+    "session_v19.py": "fcab83eedc51d470d07a9e3badf6f41256625061b6e3d9d30c610df1b5cd5182",
+    "session_v18.py": "39b32667afb86964ee7baa00604114d32d9b0c9275fb2cdf269cbf41df107835",
+    "session_v17.py": "1ff934d6cced82070bff680485251432bb1ee2defa4d494fb1eecb78ac3e7a14",
+    "session_v16.py": "7d53912c86793df95a11f5a1d22aa05c4c539153fdea31c04a870f7bcc2b6afa",
+    "session_v15.py": "cc66baf54f6236d822ee13d50f093a8e4cac2787ba74673617f91ec946cb9b8f",
+    "session_v14.py": "3237bbe8860b9a46e7f7a9555cd5c159a7ce8fedb8749437a2bcac9333bd3b61",
+    "session_v13.py": "71b406bc6acbcd05b51196c9eaa5623a5cdfc78cce9c7edf6378529bdd3e997d",
+    "session_v12.py": "52c81ce7afb2fc4d945ef76919a235245b2741f845cf0883ad5109d6f6c31563",
+    "session_v11.py": "59cf664e8fb8a9b735a0cdbbc2cb5969916eff57326d2154b365a16550f896a3",
+    "session_v10.py": "a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d",
+    "session_v9.py": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0",
+    "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+  },
+  "scope": "fresh scripted Inkscape integration of the target/guard operator; no model call, OpenTTD live transfer, semantic success, speed or generalization claim"
+}

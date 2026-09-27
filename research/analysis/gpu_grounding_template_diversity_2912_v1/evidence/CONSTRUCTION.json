@@ -1,0 +1,25 @@
+{
+  "allocation": "gpu-grounding-template-diversity-2912-successor-01",
+  "status": "STOP_CUDA_DETERMINISTIC_ADAPTIVE_POOL_BACKWARD",
+  "formal_invocations": 0,
+  "optimizer_steps": 0,
+  "checks": {
+    "host_cuda_visible": true,
+    "docker_gpu_visible": true,
+    "tinygrounder_forward_shape": {
+      "passed": true,
+      "logits": [16, 2]
+    },
+    "deterministic_full_model_backward": {
+      "passed": false,
+      "reason": "adaptive_avg_pool2d_backward_cuda does not have a deterministic implementation"
+    },
+    "minimal_adaptive_pool_backward": {
+      "passed": false,
+      "reason": "same deterministic-algorithm RuntimeError on minimal CUDA operator reproduction"
+    },
+    "formal_model_steps": 0,
+    "formal_data_rendered": false
+  },
+  "scope": "pre-training environment/operator STOP; no scientific comparison and no H decision"
+}

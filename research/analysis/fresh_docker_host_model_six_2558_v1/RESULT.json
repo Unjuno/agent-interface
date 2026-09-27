@@ -1,0 +1,19 @@
+{
+  "schema": "fresh-docker-host-model-six-v1",
+  "count": 6,
+  "successes": 5,
+  "bridge_rejections": 1,
+  "task_success_rate_observed": "5/5 admitted actions; 5/6 model attempts passed admission",
+  "action_to_scored_effect_ms": {"values": [209.342031, 182.993753, 207.157718, 200.386743, 196.150789], "median": 200.386743},
+  "authority_grants": 0,
+  "scope": "Six independent fresh Docker allocations with host-local model bridge; no retry of rejected model output.",
+  "results": [
+    {"index": 1, "status": "PASS", "task_success": true, "actual": {"saved": true, "text": "docker2558"}, "action_to_scored_effect_ms": 209.342031, "focus_guard": "SCOPE_MISMATCH", "focus_guard_emissions_delta": 0, "usage": {"input_tokens": 14227, "cached_input_tokens": 13056, "output_tokens": 203, "reasoning_output_tokens": 88}, "call_id": "01a0ba94-3b62-7e90-b7af-9b3377fa0d43"},
+    {"index": 2, "status": "PASS", "task_success": true, "actual": {"saved": true, "text": "docker2558"}, "action_to_scored_effect_ms": 182.993753, "focus_guard": "SCOPE_MISMATCH", "focus_guard_emissions_delta": 0, "usage": {"input_tokens": 14227, "cached_input_tokens": 13056, "output_tokens": 199, "reasoning_output_tokens": 84}, "call_id": "01a0ba94-7542-7532-9482-7266ebad9f7d"},
+    {"index": 3, "status": "PASS", "task_success": true, "actual": {"saved": true, "text": "docker2558"}, "action_to_scored_effect_ms": 207.157718, "focus_guard": "SCOPE_MISMATCH", "focus_guard_emissions_delta": 0, "usage": {"input_tokens": 14227, "output_tokens": 221, "reasoning_output_tokens": 106}, "call_id": "01a0ba94-9fea-7741-9205-c6e18a9ad3d8"},
+    {"index": 4, "status": "BRIDGE_FAILED_VALIDATOR", "reason": "field and submit points must differ", "native_action_emitted": false, "retry": false},
+    {"index": 5, "status": "PASS", "task_success": true, "actual": {"saved": true, "text": "docker2558"}, "action_to_scored_effect_ms": 200.386743, "focus_guard": "SCOPE_MISMATCH", "focus_guard_emissions_delta": 0, "usage": {"input_tokens": 14227, "cached_input_tokens": 13056, "output_tokens": 243, "reasoning_output_tokens": 128}, "call_id": "01a0ba95-065c-7803-a364-927af9edc7ab"},
+    {"index": 6, "status": "PASS", "task_success": true, "actual": {"saved": true, "text": "docker2558"}, "action_to_scored_effect_ms": 196.150789, "focus_guard": "SCOPE_MISMATCH", "focus_guard_emissions_delta": 0, "usage": {"input_tokens": 14227, "cached_input_tokens": 13056, "output_tokens": 195, "reasoning_output_tokens": 80}, "call_id": "01a0ba95-3273-7ee3-b74d-6243a7dcc3ed"}
+  ],
+  "invariants": {"all_admitted_effects_exact": true, "all_releases_verified": true, "all_focus_reuse_probes_refused": true, "all_focus_reuse_emissions_delta_zero": true}
+}

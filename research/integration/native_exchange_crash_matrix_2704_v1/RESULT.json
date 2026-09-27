@@ -1,0 +1,16 @@
+{
+  "schema": "native_exchange_crash_matrix_2704_result_v1",
+  "status": "HOLD_NATIVE_FIXTURE_UNAVAILABLE",
+  "issue": 2704,
+  "transport_preflight": {"tests": 2, "passed": 2, "loss_points": 6, "replay_allowed": false},
+  "container_checks": {
+    "codex-gtk-model:local": {"xvfb": true, "libreoffice": false, "soffice": false, "gtk_introspection": false},
+    "agent-interface-gtk-fixture-v2:2748": {"gtk_introspection": true, "libreoffice": false, "soffice": false}
+  },
+  "formal_allocation": "not_started",
+  "reason": "The preregistered private X11/Calc owner cannot be instantiated in the available local images. No substitute application was promoted.",
+  "preserved": ["#2607", "#2704", "native-owner-stop-01"],
+  "next_entry_condition": "Provide or build a bounded local image containing the exact private Calc fixture, then run one fresh no-retry allocation with independent input/effect/release audit.",
+  "authority_granted": false,
+  "scope": "transport preflight and dependency stop only; no native emission, effect, replay, or reliability claim"
+}

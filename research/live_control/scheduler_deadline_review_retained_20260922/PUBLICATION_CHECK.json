@@ -1,0 +1,51 @@
+{
+  "audit_sha256": "96830fbd27d208420e6f7522023079503322447b8e455f62308ebd1c7ab02cf7",
+  "byte_exact_restore": true,
+  "controls_rejected": 6,
+  "independent_human_review": false,
+  "kind": "POSTHOC_DELIVERY_VALIDATION",
+  "new_scientific_allocations": 0,
+  "original_file_bytes": 4692380,
+  "original_file_count": 168,
+  "packaging_controls": [
+    {
+      "case": "part_changed",
+      "no_destination_created": true,
+      "reason": "part digest",
+      "rejected": true
+    },
+    {
+      "case": "part_missing",
+      "no_destination_created": true,
+      "reason": "[Errno 2] No such file or directory: '/tmp/deadline-package-review-mabja0tk/part_missing/package/capsule-07.b64'",
+      "rejected": true
+    },
+    {
+      "case": "part_order",
+      "no_destination_created": true,
+      "reason": "part order",
+      "rejected": true
+    },
+    {
+      "case": "member_count",
+      "no_destination_created": true,
+      "reason": "manifest denominator",
+      "rejected": true
+    },
+    {
+      "case": "expanded_limit",
+      "no_destination_created": true,
+      "reason": "expanded size",
+      "rejected": true
+    },
+    {
+      "case": "existing_destination",
+      "no_destination_created": true,
+      "reason": "destination must be new",
+      "rejected": true
+    }
+  ],
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "reaudit_byte_equal": true,
+  "scope": "Read-only retained-data validation, not a fresh scheduler or synthetic-worker allocation."
+}

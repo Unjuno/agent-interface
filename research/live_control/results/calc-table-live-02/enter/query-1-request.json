@@ -1,0 +1,38 @@
+{
+  "after": 4,
+  "events": [
+    "terminal"
+  ],
+  "timeout": 15,
+  "action_id": "enter",
+  "request_id": "program-f6f18aeb3b6148649351fa9e27c4a8ad",
+  "command": {
+    "op": "submit",
+    "id": "enter",
+    "steps": [
+      {
+        "op": "text",
+        "text": "816"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "text",
+        "text": "345"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 80,
+        "timeout_ms": 500
+      }
+    ],
+    "expected_sequence": 1,
+    "valid_until_ns": 117781288413
+  }
+}

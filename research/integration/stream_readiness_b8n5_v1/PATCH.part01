@@ -1,0 +1,1000 @@
+diff --git a/research/integration/stream_readiness_b8n5_v1/AUDIT.json b/research/integration/stream_readiness_b8n5_v1/AUDIT.json
+new file mode 100644
+index 0000000..8eeff4c
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/AUDIT.json
+@@ -0,0 +1,804 @@
++{
++  "actor_pids": 96,
++  "batches": [
++    0,
++    1,
++    2
++  ],
++  "cases": 48,
++  "checks": 2432,
++  "decision": "PASS_LOCAL_BUFFERED_READINESS_BOUNDARY",
++  "errors": [],
++  "production_authority": false,
++  "public_preregistration": false,
++  "rows": [
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "00-SINGLE-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 0.163224,
++      "scenario": "SINGLE",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "01-SINGLE-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.220409,
++      "scenario": "SINGLE",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 2,
++      "batch": 0,
++      "case": "02-COALESCED_TWO-EXPLICIT_BUFFER",
++      "expected_frames": 2,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.158037,
++      "scenario": "COALESCED_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 2,
++      "batch": 0,
++      "case": "03-COALESCED_TWO-FD_THEN_BUFFERED",
++      "expected_frames": 2,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.273776,
++      "return_ms": 200.273776,
++      "scenario": "COALESCED_TWO",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 3,
++      "batch": 0,
++      "case": "04-COALESCED_THREE-FD_THEN_BUFFERED",
++      "expected_frames": 3,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.306822,
++      "return_ms": 200.306822,
++      "scenario": "COALESCED_THREE",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 3,
++      "batch": 0,
++      "case": "05-COALESCED_THREE-EXPLICIT_BUFFER",
++      "expected_frames": 3,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.216048,
++      "scenario": "COALESCED_THREE",
++      "status": "COMPLETE",
++      "timely_frames": 3
++    },
++    {
++      "all_frames": 2,
++      "batch": 0,
++      "case": "06-SEPARATE_TWO-EXPLICIT_BUFFER",
++      "expected_frames": 2,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 60.250204,
++      "scenario": "SEPARATE_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 2,
++      "batch": 0,
++      "case": "07-SEPARATE_TWO-FD_THEN_BUFFERED",
++      "expected_frames": 2,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 60.239263,
++      "scenario": "SEPARATE_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "08-SPLIT_EARLY-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 60.286308,
++      "scenario": "SPLIT_EARLY",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "09-SPLIT_EARLY-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 60.313252,
++      "scenario": "SPLIT_EARLY",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "10-SPLIT_LATE-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0.262654,
++      "return_ms": 200.262654,
++      "scenario": "SPLIT_LATE",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 1,
++      "batch": 0,
++      "case": "11-SPLIT_LATE-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 140.261046,
++      "return_ms": 340.261046,
++      "scenario": "SPLIT_LATE",
++      "status": "COMPLETE_LATE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 0,
++      "case": "12-TRUNCATED_EOF-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 80.203858,
++      "scenario": "TRUNCATED_EOF",
++      "status": "EOF_INCOMPLETE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 0,
++      "case": "13-TRUNCATED_EOF-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 80.204189,
++      "scenario": "TRUNCATED_EOF",
++      "status": "EOF_INCOMPLETE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 0,
++      "case": "14-SILENT_OPEN-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0.306055,
++      "return_ms": 200.306055,
++      "scenario": "SILENT_OPEN",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 0,
++      "case": "15-SILENT_OPEN-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.316285,
++      "return_ms": 200.316285,
++      "scenario": "SILENT_OPEN",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 1,
++      "batch": 1,
++      "case": "00-SINGLE-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.143524,
++      "scenario": "SINGLE",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 1,
++      "case": "01-SINGLE-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 0.146815,
++      "scenario": "SINGLE",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 2,
++      "batch": 1,
++      "case": "02-COALESCED_TWO-FD_THEN_BUFFERED",
++      "expected_frames": 2,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.272029,
++      "return_ms": 200.272029,
++      "scenario": "COALESCED_TWO",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 2,
++      "batch": 1,
++      "case": "03-COALESCED_TWO-EXPLICIT_BUFFER",
++      "expected_frames": 2,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.155743,
++      "scenario": "COALESCED_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 3,
++      "batch": 1,
++      "case": "04-COALESCED_THREE-EXPLICIT_BUFFER",
++      "expected_frames": 3,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.147876,
++      "scenario": "COALESCED_THREE",
++      "status": "COMPLETE",
++      "timely_frames": 3
++    },
++    {
++      "all_frames": 3,
++      "batch": 1,
++      "case": "05-COALESCED_THREE-FD_THEN_BUFFERED",
++      "expected_frames": 3,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.272782,
++      "return_ms": 200.272782,
++      "scenario": "COALESCED_THREE",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 2,
++      "batch": 1,
++      "case": "06-SEPARATE_TWO-FD_THEN_BUFFERED",
++      "expected_frames": 2,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 60.209487,
++      "scenario": "SEPARATE_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 2,
++      "batch": 1,
++      "case": "07-SEPARATE_TWO-EXPLICIT_BUFFER",
++      "expected_frames": 2,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 60.20934,
++      "scenario": "SEPARATE_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 1,
++      "batch": 1,
++      "case": "08-SPLIT_EARLY-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 60.247168,
++      "scenario": "SPLIT_EARLY",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 1,
++      "case": "09-SPLIT_EARLY-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 60.219321,
++      "scenario": "SPLIT_EARLY",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 1,
++      "case": "10-SPLIT_LATE-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 140.257063,
++      "return_ms": 340.257063,
++      "scenario": "SPLIT_LATE",
++      "status": "COMPLETE_LATE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 1,
++      "batch": 1,
++      "case": "11-SPLIT_LATE-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0.271294,
++      "return_ms": 200.271294,
++      "scenario": "SPLIT_LATE",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 1,
++      "case": "12-TRUNCATED_EOF-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 80.177549,
++      "scenario": "TRUNCATED_EOF",
++      "status": "EOF_INCOMPLETE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 1,
++      "case": "13-TRUNCATED_EOF-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 80.17876,
++      "scenario": "TRUNCATED_EOF",
++      "status": "EOF_INCOMPLETE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 1,
++      "case": "14-SILENT_OPEN-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.303155,
++      "return_ms": 200.303155,
++      "scenario": "SILENT_OPEN",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 1,
++      "case": "15-SILENT_OPEN-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0.276872,
++      "return_ms": 200.276872,
++      "scenario": "SILENT_OPEN",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 1,
++      "batch": 2,
++      "case": "00-SINGLE-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 0.158673,
++      "scenario": "SINGLE",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 2,
++      "case": "01-SINGLE-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.149634,
++      "scenario": "SINGLE",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 2,
++      "batch": 2,
++      "case": "02-COALESCED_TWO-EXPLICIT_BUFFER",
++      "expected_frames": 2,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.1538,
++      "scenario": "COALESCED_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 2,
++      "batch": 2,
++      "case": "03-COALESCED_TWO-FD_THEN_BUFFERED",
++      "expected_frames": 2,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.293339,
++      "return_ms": 200.293339,
++      "scenario": "COALESCED_TWO",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 3,
++      "batch": 2,
++      "case": "04-COALESCED_THREE-FD_THEN_BUFFERED",
++      "expected_frames": 3,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.276259,
++      "return_ms": 200.276259,
++      "scenario": "COALESCED_THREE",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 3,
++      "batch": 2,
++      "case": "05-COALESCED_THREE-EXPLICIT_BUFFER",
++      "expected_frames": 3,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 0.167971,
++      "scenario": "COALESCED_THREE",
++      "status": "COMPLETE",
++      "timely_frames": 3
++    },
++    {
++      "all_frames": 2,
++      "batch": 2,
++      "case": "06-SEPARATE_TWO-EXPLICIT_BUFFER",
++      "expected_frames": 2,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 60.22852,
++      "scenario": "SEPARATE_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 2,
++      "batch": 2,
++      "case": "07-SEPARATE_TWO-FD_THEN_BUFFERED",
++      "expected_frames": 2,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 60.34533,
++      "scenario": "SEPARATE_TWO",
++      "status": "COMPLETE",
++      "timely_frames": 2
++    },
++    {
++      "all_frames": 1,
++      "batch": 2,
++      "case": "08-SPLIT_EARLY-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 60.244469,
++      "scenario": "SPLIT_EARLY",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 2,
++      "case": "09-SPLIT_EARLY-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 60.249293,
++      "scenario": "SPLIT_EARLY",
++      "status": "COMPLETE",
++      "timely_frames": 1
++    },
++    {
++      "all_frames": 1,
++      "batch": 2,
++      "case": "10-SPLIT_LATE-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0.271517,
++      "return_ms": 200.271517,
++      "scenario": "SPLIT_LATE",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 1,
++      "batch": 2,
++      "case": "11-SPLIT_LATE-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 140.253969,
++      "return_ms": 340.253969,
++      "scenario": "SPLIT_LATE",
++      "status": "COMPLETE_LATE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 2,
++      "case": "12-TRUNCATED_EOF-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0,
++      "return_ms": 80.189867,
++      "scenario": "TRUNCATED_EOF",
++      "status": "EOF_INCOMPLETE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 2,
++      "case": "13-TRUNCATED_EOF-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0,
++      "return_ms": 80.20171,
++      "scenario": "TRUNCATED_EOF",
++      "status": "EOF_INCOMPLETE",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 2,
++      "case": "14-SILENT_OPEN-EXPLICIT_BUFFER",
++      "expected_frames": 1,
++      "mode": "EXPLICIT_BUFFER",
++      "overrun_ms": 0.302433,
++      "return_ms": 200.302433,
++      "scenario": "SILENT_OPEN",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    },
++    {
++      "all_frames": 0,
++      "batch": 2,
++      "case": "15-SILENT_OPEN-FD_THEN_BUFFERED",
++      "expected_frames": 1,
++      "mode": "FD_THEN_BUFFERED",
++      "overrun_ms": 0.308122,
++      "return_ms": 200.308122,
++      "scenario": "SILENT_OPEN",
++      "status": "BUDGET_EXHAUSTED",
++      "timely_frames": 0
++    }
++  ],
++  "scientific_actor_reruns": 0,
++  "stage": "pilot",
++  "summary": {
++    "COALESCED_THREE/EXPLICIT_BUFFER": {
++      "expected_frames": 9,
++      "n": 3,
++      "return_ms_median": 0.167971,
++      "return_ms_range": [
++        0.147876,
++        0.216048
++      ],
++      "status_counts": {
++        "COMPLETE": 3
++      },
++      "timely_frames": 9
++    },
++    "COALESCED_THREE/FD_THEN_BUFFERED": {
++      "expected_frames": 9,
++      "n": 3,
++      "return_ms_median": 200.276259,
++      "return_ms_range": [
++        200.272782,
++        200.306822
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 3
++      },
++      "timely_frames": 3
++    },
++    "COALESCED_TWO/EXPLICIT_BUFFER": {
++      "expected_frames": 6,
++      "n": 3,
++      "return_ms_median": 0.155743,
++      "return_ms_range": [
++        0.1538,
++        0.158037
++      ],
++      "status_counts": {
++        "COMPLETE": 3
++      },
++      "timely_frames": 6
++    },
++    "COALESCED_TWO/FD_THEN_BUFFERED": {
++      "expected_frames": 6,
++      "n": 3,
++      "return_ms_median": 200.273776,
++      "return_ms_range": [
++        200.272029,
++        200.293339
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 3
++      },
++      "timely_frames": 3
++    },
++    "SEPARATE_TWO/EXPLICIT_BUFFER": {
++      "expected_frames": 6,
++      "n": 3,
++      "return_ms_median": 60.22852,
++      "return_ms_range": [
++        60.20934,
++        60.250204
++      ],
++      "status_counts": {
++        "COMPLETE": 3
++      },
++      "timely_frames": 6
++    },
++    "SEPARATE_TWO/FD_THEN_BUFFERED": {
++      "expected_frames": 6,
++      "n": 3,
++      "return_ms_median": 60.239263,
++      "return_ms_range": [
++        60.209487,
++        60.34533
++      ],
++      "status_counts": {
++        "COMPLETE": 3
++      },
++      "timely_frames": 6
++    },
++    "SILENT_OPEN/EXPLICIT_BUFFER": {
++      "expected_frames": 3,
++      "n": 3,
++      "return_ms_median": 200.302433,
++      "return_ms_range": [
++        200.276872,
++        200.306055
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 3
++      },
++      "timely_frames": 0
++    },
++    "SILENT_OPEN/FD_THEN_BUFFERED": {
++      "expected_frames": 3,
++      "n": 3,
++      "return_ms_median": 200.308122,
++      "return_ms_range": [
++        200.303155,
++        200.316285
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 3
++      },
++      "timely_frames": 0
++    },
++    "SINGLE/EXPLICIT_BUFFER": {
++      "expected_frames": 3,
++      "n": 3,
++      "return_ms_median": 0.149634,
++      "return_ms_range": [
++        0.143524,
++        0.220409
++      ],
++      "status_counts": {
++        "COMPLETE": 3
++      },
++      "timely_frames": 3
++    },
++    "SINGLE/FD_THEN_BUFFERED": {
++      "expected_frames": 3,
++      "n": 3,
++      "return_ms_median": 0.158673,
++      "return_ms_range": [
++        0.146815,
++        0.163224
++      ],
++      "status_counts": {
++        "COMPLETE": 3
++      },
++      "timely_frames": 3
++    },
++    "SPLIT_EARLY/EXPLICIT_BUFFER": {
++      "expected_frames": 3,
++      "n": 3,
++      "return_ms_median": 60.249293,
++      "return_ms_range": [
++        60.247168,
++        60.313252
++      ],
++      "status_counts": {
++        "COMPLETE": 3
++      },
++      "timely_frames": 3
++    },
++    "SPLIT_EARLY/FD_THEN_BUFFERED": {
++      "expected_frames": 3,
++      "n": 3,
++      "return_ms_median": 60.244469,
++      "return_ms_range": [
++        60.219321,
++        60.286308
++      ],
++      "status_counts": {
++        "COMPLETE": 3
++      },
++      "timely_frames": 3
++    },
++    "SPLIT_LATE/EXPLICIT_BUFFER": {
++      "expected_frames": 3,
++      "n": 3,
++      "return_ms_median": 200.271294,
++      "return_ms_range": [
++        200.262654,
++        200.271517
++      ],
++      "status_counts": {
++        "BUDGET_EXHAUSTED": 3
++      },
++      "timely_frames": 0
++    },
++    "SPLIT_LATE/FD_THEN_BUFFERED": {
++      "expected_frames": 3,
++      "n": 3,
++      "return_ms_median": 340.257063,
++      "return_ms_range": [
++        340.253969,
++        340.261046
++      ],
++      "status_counts": {
++        "COMPLETE_LATE": 3
++      },
++      "timely_frames": 0
++    },
++    "TRUNCATED_EOF/EXPLICIT_BUFFER": {
++      "expected_frames": 3,
++      "n": 3,
++      "return_ms_median": 80.20171,
++      "return_ms_range": [
++        80.177549,
++        80.204189
++      ],
++      "status_counts": {
++        "EOF_INCOMPLETE": 3
++      },
++      "timely_frames": 0
++    },
++    "TRUNCATED_EOF/FD_THEN_BUFFERED": {
++      "expected_frames": 3,
++      "n": 3,
++      "return_ms_median": 80.189867,
++      "return_ms_range": [
++        80.17876,
++        80.203858
++      ],
++      "status_counts": {
++        "EOF_INCOMPLETE": 3
++      },
++      "timely_frames": 0
++    }
++  }
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/AUDIT.stderr b/research/integration/stream_readiness_b8n5_v1/AUDIT.stderr
+new file mode 100644
+index 0000000..e69de29
+diff --git a/research/integration/stream_readiness_b8n5_v1/AUDIT.stdout b/research/integration/stream_readiness_b8n5_v1/AUDIT.stdout
+new file mode 100644
+index 0000000..2c1ec98
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/AUDIT.stdout
+@@ -0,0 +1 @@
++{"actor_pids": 96, "batches": [0, 1, 2], "cases": 48, "checks": 2432, "decision": "PASS_LOCAL_BUFFERED_READINESS_BOUNDARY", "errors": [], "production_authority": false, "public_preregistration": false, "scientific_actor_reruns": 0, "stage": "pilot"}
+diff --git a/research/integration/stream_readiness_b8n5_v1/AUDIT_EXECUTION.json b/research/integration/stream_readiness_b8n5_v1/AUDIT_EXECUTION.json
+new file mode 100644
+index 0000000..5215758
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/AUDIT_EXECUTION.json
+@@ -0,0 +1,19 @@
++{
++  "argv": [
++    "/opt/pyvenv/bin/python",
++    "-S",
++    "-B",
++    "source/audit.py",
++    ".",
++    "pilot",
++    "0,1,2",
++    "AUDIT.json"
++  ],
++  "end_ns": 643959696220,
++  "label": "AUDIT",
++  "pid": 919,
++  "returncode": 0,
++  "start_ns": 643914596769,
++  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
++  "stdout_sha256": "b7a85f0d7a11345f2e6bda2cba7fe4f31cec8da8212e9303cdb3c151fc081e77"
++}
+diff --git a/research/integration/stream_readiness_b8n5_v1/CONTROLS.json b/research/integration/stream_readiness_b8n5_v1/CONTROLS.json
+new file mode 100644
+index 0000000..a6599ac
+--- /dev/null
++++ b/research/integration/stream_readiness_b8n5_v1/CONTROLS.json
+@@ -0,0 +1,205 @@
++{
++  "all_rejected": true,
++  "controls": [
++    {
++      "changed_sha256": "3a7234acb1887ea671d718bfd6d7fd174a047d4053acd33314e4176937da8736",
++      "effective": true,
++      "errors": [
++        "case_order_count"
++      ],
++      "name": "denominator",
++      "original_sha256": "c1b6d7d696813abc7f68bb28f70a5a2e902cbf5a119deb94cc1e50345968cd99",
++      "parser_failure": false,
++      "path": "pilot/batch-0/END.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "458fe99a10f4fe0665fe947824da39127a59e9e41a1980333b96045bd22c5300",
++      "effective": true,
++      "errors": [
++        "repetition"
++      ],
++      "name": "boolean_repetition",
++      "original_sha256": "05e25064e3ed94a371f84a861b4332fb29fe72f4e011bc7179220a1ca0344d89",
++      "parser_failure": false,
++      "path": "pilot/batch-0/01-SINGLE-EXPLICIT_BUFFER/CONFIG.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "09676233cb81bea7220815a549073237d7f3c7736f56874e878787df0a9079de",
++      "effective": true,
++      "errors": [
++        "primary_reconstruction",
++        "expected_first_outcome"
++      ],
++      "name": "false_complete",
++      "original_sha256": "122413e3c55f3d3fe95f4c7c951aab77ea020ca543ae19bacfec48edddb44ef1",
++      "parser_failure": false,
++      "path": "pilot/batch-0/03-COALESCED_TWO-FD_THEN_BUFFERED/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "2df49880f0770f7df34e81f8d21a4213679cc110772f8cdbff568c0ab048eeb0",
++      "effective": true,
++      "errors": [
++        "expected_first_outcome",
++        "primary_eof_truth"
++      ],
++      "name": "false_empty_eof",
++      "original_sha256": "2e221abe2a6481c0d0593a1fb210e7c7cf43fab72df55f8bab4b4203bc2adcae",
++      "parser_failure": false,
++      "path": "pilot/batch-0/14-SILENT_OPEN-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "83d8320cf1b6bdb997e67fa8bfeb5068878e436fd8709d7f061e053a63453b44",
++      "effective": true,
++      "errors": [
++        "reader_order"
++      ],
++      "name": "wrong_deadline",
++      "original_sha256": "bbf38fd38356d584c5bb80c0c972d78bda1097838123e5d6674fc8dec8376ec7",
++      "parser_failure": false,
++      "path": "pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "b65bcfe6abcf257dab9d4b317d58442cc02d328b434baad29c3c2f8b38af5240",
++      "effective": true,
++      "errors": [
++        "pending_before_late_tail"
++      ],
++      "name": "lost_partial_prefix",
++      "original_sha256": "bbf38fd38356d584c5bb80c0c972d78bda1097838123e5d6674fc8dec8376ec7",
++      "parser_failure": false,
++      "path": "pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "669904b6c4a8662808034a8d396f544412fd109d04bad02395e996e406873fbb",
++      "effective": true,
++      "errors": [
++        "primary_reconstruction",
++        "postparse_deadline",
++        "pending_before_late_tail"
++      ],
++      "name": "diagnostic_promoted",
++      "original_sha256": "bbf38fd38356d584c5bb80c0c972d78bda1097838123e5d6674fc8dec8376ec7",
++      "parser_failure": false,
++      "path": "pilot/batch-0/10-SPLIT_LATE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "fa88a546d0b0fbdc44f4b71016eca59373482a9eeaf8785adcfd2622a9ad1553",
++      "effective": true,
++      "errors": [
++        "actor_authority"
++      ],
++      "name": "authority_grant",
++      "original_sha256": "23da9889f9e2d83d6a4fd599a144a5fd21d6ba153d3cf8ded9a1f73b6f5acec3",
++      "parser_failure": false,
++      "path": "pilot/batch-0/01-SINGLE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "397589af6d39161c862edc062e6d51644af6a7e93acf7c6fe03e29a7c30e7246",
++      "effective": true,
++      "errors": [
++        "collection_authority"
++      ],
++      "name": "retry_grant",
++      "original_sha256": "23da9889f9e2d83d6a4fd599a144a5fd21d6ba153d3cf8ded9a1f73b6f5acec3",
++      "parser_failure": false,
++      "path": "pilot/batch-0/01-SINGLE-EXPLICIT_BUFFER/reader.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "cd8178d7393cff6cf019c4c822a3607c3fb3d8638d612a8f27a17d928c9dbd83",
++      "effective": true,
++      "errors": [
++        "actor_exit"
++      ],
++      "name": "wrong_wait_status",
++      "original_sha256": "e0d605284fe1fae5e334bbe60b1e4cea7190187ff9751413df47d3185c25a2f1",
++      "parser_failure": false,
++      "path": "pilot/batch-0/01-SINGLE-EXPLICIT_BUFFER/EXECUTION.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "7515a2d58a58fcb12a8dd1d903fdf132da0745796b1b4f1faa8679b22a99cdfe",
++      "effective": true,
++      "errors": [
++        "same_pipe"
++      ],
++      "name": "false_pipe_identity",
++      "original_sha256": "e0d605284fe1fae5e334bbe60b1e4cea7190187ff9751413df47d3185c25a2f1",
++      "parser_failure": false,
++      "path": "pilot/batch-0/01-SINGLE-EXPLICIT_BUFFER/EXECUTION.json",
++      "rejected": true
++    },
++    {
++      "changed_sha256": "d2f29ac81e58e2ac5f0ec5a81fa134ee81f9ee092e5e7a9959241c64d638305a",
++      "effective": true,
++      "errors": [
++        "writer_bytes",
++        "raw_syscall_bytes"
++      ],
++      "name": "writer_wrong_byte",
++      "original_sha256": "103e0fb0d3e65f74888430da836ea3b2870256b80126705c1c49aa9b81db65f3",
++      "parser_failure": false,

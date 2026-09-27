@@ -1,0 +1,328 @@
+{
+  "actual_executor_synthetic_backend": {
+    "legacy_pass": true,
+    "supplement": {
+      "bridge_status": "BOUND_MAP01_PHYSICAL_BATCH",
+      "errors": [],
+      "full_r1_gate_eligible": false,
+      "grants_input_authority": false,
+      "passed": true,
+      "program_id": "r1-physical-occupancy-1",
+      "schema": "map01-physical-admission-supplement-v2",
+      "scope": "source/accepted-program/step/lease/terminal linkage supplement only",
+      "separate_gates": [
+        "launch uniqueness and lease",
+        "fixture/engine identity",
+        "physical precision",
+        "external process cleanup",
+        "task-useful effect and recovery efficacy"
+      ]
+    }
+  },
+  "code_sha256_lf_normalized": {
+    "audit.py": "3caafd250bd9f2fcc8e09f49659740c9cfee7e0106bc394da25fca87048299da",
+    "record_controls.py": "b3bfe9fb454989d9059667aa1164dc7fe7db5d1219338c089ab7c6662c339a17",
+    "test_audit.py": "f17299884bcc331aab951fcff75e0d643dfe9deda108705882e95c8b98998c51"
+  },
+  "comparison": {
+    "corruptions": [
+      {
+        "errors": [
+          "one_acceptance",
+          "program_identity",
+          "accepted_program_attestation",
+          "accepted_intent_token",
+          "accepted_terminal_order",
+          "admitted_deadline",
+          "terminal_release_order",
+          "accepted_lease_a",
+          "release_deadline_a",
+          "edge_timestamps_a",
+          "accepted_lease_d",
+          "release_deadline_d",
+          "edge_timestamps_d"
+        ],
+        "legacy_pass": true,
+        "name": "missing_acceptance",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "one_acceptance",
+          "program_identity",
+          "accepted_program_attestation",
+          "accepted_intent_token",
+          "accepted_terminal_order",
+          "admitted_deadline",
+          "terminal_release_order",
+          "accepted_lease_a",
+          "release_deadline_a",
+          "edge_timestamps_a",
+          "accepted_lease_d",
+          "release_deadline_d",
+          "edge_timestamps_d"
+        ],
+        "legacy_pass": true,
+        "name": "duplicate_acceptance",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "accepted_lease_a",
+          "accepted_lease_d"
+        ],
+        "legacy_pass": true,
+        "name": "accepted_token_mismatch",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "accepted_program_attestation"
+        ],
+        "legacy_pass": true,
+        "name": "accepted_program_mismatch",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "program_identity"
+        ],
+        "legacy_pass": true,
+        "name": "accepted_program_id_mismatch",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "one_submit",
+          "program_identity",
+          "fixed_r1_program",
+          "admitted_deadline"
+        ],
+        "legacy_pass": true,
+        "name": "missing_submit",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "fixed_r1_program"
+        ],
+        "legacy_pass": true,
+        "name": "different_submitted_keys",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "release_step_a",
+          "release_step_d"
+        ],
+        "legacy_pass": true,
+        "name": "release_batch_attached_to_observe",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "admitted_step_edge_order_a",
+          "admitted_step_edge_order_d"
+        ],
+        "legacy_pass": true,
+        "name": "acceptance_after_down",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "terminal_release_order",
+          "admitted_step_edge_order_a",
+          "admitted_step_edge_order_d"
+        ],
+        "legacy_pass": true,
+        "name": "terminal_before_up",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "terminal_verified_empty"
+        ],
+        "legacy_pass": true,
+        "name": "terminal_keys_not_empty",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "terminal_verified_empty"
+        ],
+        "legacy_pass": true,
+        "name": "terminal_release_unverified",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "completed_two_step_terminal"
+        ],
+        "legacy_pass": true,
+        "name": "terminal_step_count_wrong",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "required_source_identity"
+        ],
+        "legacy_pass": true,
+        "name": "missing_sources",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "required_source_identity"
+        ],
+        "legacy_pass": true,
+        "name": "source_digest_mismatch",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "admitted_deadline",
+          "release_deadline_a",
+          "release_deadline_d"
+        ],
+        "legacy_pass": true,
+        "name": "accepted_deadline_mismatch",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "final_step_release_order"
+        ],
+        "legacy_pass": true,
+        "name": "terminal_release_before_up",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "terminal_verified_empty"
+        ],
+        "legacy_pass": true,
+        "name": "terminal_buttons_not_empty",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "completed_two_step_terminal"
+        ],
+        "legacy_pass": true,
+        "name": "terminal_noninteger_step_count",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "accepted_program_attestation"
+        ],
+        "legacy_pass": true,
+        "name": "accepted_noninteger_step_count",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "accepted_lease_a"
+        ],
+        "legacy_pass": true,
+        "name": "down_outer_token_mismatch",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "final_step_release_order"
+        ],
+        "legacy_pass": true,
+        "name": "observe_before_hold_completion",
+        "supplement_pass": false
+      },
+      {
+        "errors": [
+          "final_step_release_order"
+        ],
+        "legacy_pass": true,
+        "name": "observe_completion_time_missing",
+        "supplement_pass": false
+      }
+    ],
+    "positive_legacy_pass": true,
+    "positive_supplement": {
+      "bridge_status": "BOUND_MAP01_PHYSICAL_BATCH",
+      "errors": [],
+      "full_r1_gate_eligible": false,
+      "grants_input_authority": false,
+      "passed": true,
+      "program_id": "r1-physical-occupancy-1",
+      "schema": "map01-physical-admission-supplement-v2",
+      "scope": "source/accepted-program/step/lease/terminal linkage supplement only",
+      "separate_gates": [
+        "launch uniqueness and lease",
+        "fixture/engine identity",
+        "physical precision",
+        "external process cleanup",
+        "task-useful effect and recovery efficacy"
+      ]
+    }
+  },
+  "construction_base": "5432f3aa2374753e7ab206ad5e1f3f093ac0a641",
+  "counts": {
+    "legacy_accepts_corruptions": 23,
+    "supplement_rejects_corruptions": 23,
+    "synthetic_integrity_corruptions": 23
+  },
+  "decision": "PASS_OFFLINE_ADMISSION_CONTROLS",
+  "dependency_git_blobs": {
+    "research/doom/map01_v12_physical_occupancy_live_r1_v1/SOURCE_FREEZE.json": "fdbb0159e2c77c5dcc5ada26592c374f56b2d39b",
+    "research/doom/map01_v12_physical_occupancy_live_r1_v1/evaluate.py": "1b7fd5672c07ebabb3118dd8a49650ca168b3f56",
+    "research/doom/map01_v12_physical_occupancy_live_r1_v1/r0_bridge_snapshot.py": "62fa3fc17951a324c4207ff51f9989f81d53103d",
+    "research/live_control/executor_v11.py": "8dc84dc83bd3bb17ec5354d768383738e683d9d4",
+    "research/live_control/executor_v12.py": "a51358a771810207ac031ebf56b3e63a4fda5a5d",
+    "research/live_control/executor_v5.py": "742f7a5368b0bf6c202fdbe0856494abb5795dce",
+    "research/live_control/lease.py": "b9dac6bb4063928354733d79bf371909a288a3d1",
+    "research/live_control/lease_cause_v1.py": "310a3b0ee8f0cca050cc55cadcb635cee2cbc474",
+    "research/live_control/lease_cause_v2.py": "7428e22919b019a62fa80f2162ce5c0bc1d9231b",
+    "research/live_control/lease_release_v1.py": "e325bd358874ae003e066f5d592c045b0ebef56e"
+  },
+  "execution_counts_this_supplement_only": {
+    "live_x11_sessions": 0,
+    "map01_sessions": 0,
+    "model_calls": 0,
+    "r1_construction_sessions": 0,
+    "r1_formal_sessions": 0
+  },
+  "frozen_runtime_reported_sources": {
+    "doom/doom_retained_input_backend_v3.py": "cad7de4769e574f78663e8351a8c2f8c714d51dfa7f9c41bcfb9716f06bef309",
+    "doom/session_map01_v13.py": "1a6da676db9c6b2aa61ccf0f600a1565395e906736bb07a50b2006e100d7ca98",
+    "external/adapter_contract.py": "ed7e4f00675e79a9ef86984c7c129bb6c3eda64855c6c71821c313c9feb9badf",
+    "external/input_owner_v12.py": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+    "external/map01_v12_transition_owner.py": "4832212b700d9c55220178d6452c01e8f1dc60a29dee9cb436dc5ff9135823c2",
+    "live_control/input_transition_owner_v3.py": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6"
+  },
+  "full_r1_gate_eligible": false,
+  "incomplete_physical_control": {
+    "legacy_pass": false,
+    "supplement": {
+      "bridge_status": "INCOMPLETE_PHYSICAL_EVIDENCE",
+      "errors": [
+        "edge_timestamps_a",
+        "r0_physical_batch"
+      ],
+      "full_r1_gate_eligible": false,
+      "grants_input_authority": false,
+      "passed": false,
+      "program_id": "r1-physical-occupancy-1",
+      "schema": "map01-physical-admission-supplement-v2",
+      "scope": "source/accepted-program/step/lease/terminal linkage supplement only",
+      "separate_gates": [
+        "launch uniqueness and lease",
+        "fixture/engine identity",
+        "physical precision",
+        "external process cleanup",
+        "task-useful effect and recovery efficacy"
+      ]
+    }
+  },
+  "performance_claims": [],
+  "schema": "map01-admission-offline-controls-v2",
+  "scope": "offline controls only; physical edges and sources in fixtures are synthetic"
+}

@@ -1,0 +1,95 @@
+{
+  "case": "partial",
+  "pointer_delta": 24,
+  "before_bbox": [
+    596,
+    373,
+    643,
+    408
+  ],
+  "after_bbox": [
+    616,
+    373,
+    663,
+    408
+  ],
+  "observed_delta": [
+    20,
+    0
+  ],
+  "terminal": {
+    "event": "terminal",
+    "id": "partial",
+    "status": "needs_decision",
+    "error": null,
+    "steps_completed": 2,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 27742753358216,
+      "valid_until_ns": 27747924793722
+    },
+    "terminal_ns": 27742753425454,
+    "semantic_completion": "program status only; task scoring is separate"
+  },
+  "postcondition": {
+    "event": "local_displacement_postcondition",
+    "id": "partial",
+    "step": 2,
+    "sequence": 4,
+    "format": "local-displacement-postcondition-outcome-v1",
+    "postcondition_id": "red-rectangle-24px",
+    "reason": "lost",
+    "continue_program": false,
+    "needs_decision": true,
+    "target_delta": [
+      24,
+      0
+    ],
+    "tolerance_px": 1,
+    "tracking": [
+      {
+        "status": "lost",
+        "error": 0.056133817163228926,
+        "margin": 0.053945441813088864,
+        "source_observation": 1,
+        "observation": 3,
+        "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+        "patch_sha256": "87765ac1f76508ecded989749724fbea2b8c88dc2ab3ab9c4ff5fdb2eaa96adc"
+      },
+      {
+        "status": "matched",
+        "error": 0.0,
+        "margin": 0.057467532467532466,
+        "source_observation": 1,
+        "observation": 4,
+        "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+        "patch_sha256": "87765ac1f76508ecded989749724fbea2b8c88dc2ab3ab9c4ff5fdb2eaa96adc",
+        "box": [
+          612,
+          369,
+          56,
+          44
+        ],
+        "delta": [
+          20,
+          0
+        ]
+      }
+    ],
+    "sample_span_ms": 131.914436,
+    "semantic_effect_verified": false,
+    "task_success_verified": false,
+    "grants_input_authority": false,
+    "scope": "task-relative visual condition for already admitted later steps only"
+  },
+  "steps_started": [
+    0,
+    1,
+    2
+  ],
+  "later_save_step_started": false
+}

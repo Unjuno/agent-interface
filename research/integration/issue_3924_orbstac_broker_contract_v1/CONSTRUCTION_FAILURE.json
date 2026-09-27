@@ -1,0 +1,18 @@
+{
+  "classification": "STOP_CONSTRUCTION_MOUNT_CONFIGURATION",
+  "container_exit_code": 1,
+  "formal_cases": 0,
+  "fake_invocations": 0,
+  "broker_invocations": 0,
+  "cause": "The first excluded construction container used a read-only root and omitted the writable evidence bind mount; fixture creation failed with OSError errno 30.",
+  "preserved_as": "historical construction failure; corrected excluded construction subsequently completed",
+  "corrective_change": "Added the dedicated evidence bind mount and reran only excluded fixture construction.",
+  "corrected_construction_result": "CONSTRUCTION_FIXTURES_READY cases=7 formal_invocations=0",
+  "additional_excluded_probe": {
+    "classification": "STOP_CONSTRUCTION_WORKDIR_CONFIGURATION",
+    "container_exit_code": 1,
+    "formal_cases": 0,
+    "cause": "Read-only current-main checkout was mounted at /repo but the construction-check command retained container cwd /; relative runtime source lookup failed.",
+    "correction": "Run the same read-only construction check with container working directory /repo."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "audit_passed": true,
+  "preregistered_sources_match": true,
+  "compact_presentations_rebuilt": 2,
+  "calls": [
+    {
+      "name": "correct-1",
+      "condition": "correct",
+      "op": "target_reference",
+      "point": {
+        "x": 506,
+        "y": 79
+      },
+      "input_tokens": 8096
+    },
+    {
+      "name": "wrong-1",
+      "condition": "wrong",
+      "op": "expand_search",
+      "point": {
+        "x": 436,
+        "y": 51
+      },
+      "input_tokens": 8096
+    },
+    {
+      "name": "wrong-2",
+      "condition": "wrong",
+      "op": "expand_search",
+      "point": {
+        "x": 436,
+        "y": 51
+      },
+      "input_tokens": 8096
+    },
+    {
+      "name": "correct-2",
+      "condition": "correct",
+      "op": "target_reference",
+      "point": {
+        "x": 506,
+        "y": 79
+      },
+      "input_tokens": 8096
+    }
+  ],
+  "correct_anchor_accepts": 2,
+  "wrong_anchor_expands": 2,
+  "same_single_model": "gpt-5.6-luna low",
+  "subagents": 0,
+  "observed_model_identity": null,
+  "reported_cost": null,
+  "decision": "RETAIN_ANCHOR_FIRST_EVIDENCE_DECISION",
+  "limits": "four fixed archived-evidence decisions across one correct translated anchor and one retained confidently-wrong anchor; same Luna-low model, no subagents; no live input, dynamic latency, expansion efficacy, broad reliability or human-tempo claim"
+}

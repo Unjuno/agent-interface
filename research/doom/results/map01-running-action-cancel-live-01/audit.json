@@ -1,0 +1,19 @@
+{
+  "audit_passed": true,
+  "allocation_passed": false,
+  "decision": "RETAIN_PRE_INPUT_STALE_FAILURE",
+  "checks": {
+    "frozen_sources_match": true,
+    "only_clock_ready_observation": true,
+    "no_command_or_input": true,
+    "stale_before_input": true,
+    "age_exceeded_frozen_bound": true,
+    "failure_artifacts_not_overclaimed": true
+  },
+  "events": 3,
+  "observations": 1,
+  "initial_image_sha256": "33dd14f7507c2b7c778ed60ca62eda101f44a1536f1d1644ce72749ff5267c0e",
+  "initial_packet_sha256": "f35a64da9acd2f590eb73262230ecfd26f0189495b7a5915b830abad7a451b81",
+  "failure_capture_to_decision_ms": 926.873065,
+  "limits": "pre-input retained failure; absence of a surviving process was inspected posthoc but is not durable cleanup proof"
+}

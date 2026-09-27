@@ -1,0 +1,14 @@
+{
+  "capacity": 2,
+  "cases": [
+    "single_slot_overwrite",
+    "bounded_history_two",
+    "bounded_history_conflict",
+    "bounded_history_eviction"
+  ],
+  "container_first": true,
+  "formal_runner_max_invocations": 1,
+  "github_role": "allocation_and_publication_only",
+  "question": "Does bounded applied-intent history preserve recovery of an older applied intent after a later transition, while retaining explicit same-ID/content conflict and a finite horizon?",
+  "task": "COORD-BOUNDED-INTENT-HISTORY-20260917-021"
+}

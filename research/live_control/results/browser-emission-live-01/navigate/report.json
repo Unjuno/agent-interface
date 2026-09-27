@@ -1,0 +1,3112 @@
+{
+  "state": "terminal_received",
+  "exchanges": [
+    {
+      "request": {
+        "after": 2,
+        "events": [
+          "clock"
+        ],
+        "timeout": 5,
+        "request_id": "clock-740d21aff33f4ec8bfcaae84d6279758",
+        "command": {
+          "op": "clock"
+        }
+      },
+      "started_ns": 56639564846,
+      "returned_ns": 56699509997,
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "clock-740d21aff33f4ec8bfcaae84d6279758"
+            },
+            "received_ns": 56663685905,
+            "emit_started_ns": 56663691281
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 56674621907,
+            "sequence": 1,
+            "emit_started_ns": 56674629519
+          }
+        ],
+        "cursor": 4,
+        "returned_ns": 56691106562,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "clock-740d21aff33f4ec8bfcaae84d6279758",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      }
+    },
+    {
+      "request": {
+        "after": 4,
+        "events": [
+          "input_stopped",
+          "terminal"
+        ],
+        "timeout": 15,
+        "action_id": "navigate",
+        "request_id": "program-91087ef2308741c6a16c8e36029f6ed2",
+        "command": {
+          "op": "submit",
+          "id": "navigate",
+          "steps": [
+            {
+              "op": "chord",
+              "modifier": "Control_L",
+              "key": "l"
+            },
+            {
+              "op": "text",
+              "text": "http://127.0.0.1:34433/"
+            },
+            {
+              "op": "key",
+              "key": "Return"
+            },
+            {
+              "op": "settle",
+              "quiet_ms": 80,
+              "timeout_ms": 500
+            }
+          ],
+          "expected_sequence": 1,
+          "valid_until_ns": 86674621907
+        }
+      },
+      "started_ns": 56705490026,
+      "returned_ns": 57861131584,
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 1,
+              "id": "navigate",
+              "op": "submit",
+              "steps": [
+                {
+                  "key": "l",
+                  "modifier": "Control_L",
+                  "op": "chord"
+                },
+                {
+                  "op": "text",
+                  "text": "http://127.0.0.1:34433/"
+                },
+                {
+                  "key": "Return",
+                  "op": "key"
+                },
+                {
+                  "op": "settle",
+                  "quiet_ms": 80,
+                  "timeout_ms": 500
+                }
+              ],
+              "transport_request_id": "program-91087ef2308741c6a16c8e36029f6ed2",
+              "valid_until_ns": 86674621907
+            },
+            "received_ns": 56730140356,
+            "emit_started_ns": 56730151481
+          },
+          {
+            "event": "accepted",
+            "id": "navigate",
+            "steps": 4,
+            "valid_until_ns": 86674621907,
+            "accepted_ns": 56741392439,
+            "emit_started_ns": 56741394480
+          },
+          {
+            "event": "step_started",
+            "id": "navigate",
+            "step": 0,
+            "operation": "chord",
+            "issued_ns": 56755541078,
+            "emit_started_ns": 56755543481
+          },
+          {
+            "event": "input_admission",
+            "key": "Control_L",
+            "admitted_ns": 56770404754,
+            "input_ack_ns": 56770984365,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 56771279652
+          },
+          {
+            "event": "input_admission",
+            "key": "l",
+            "admitted_ns": 56787759553,
+            "input_ack_ns": 56788075502,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 56788239107
+          },
+          {
+            "event": "observation",
+            "id": "navigate",
+            "step": 0,
+            "sequence": 2,
+            "capture_ns": 56819109195,
+            "context_ns": 56829230381,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/002.png",
+            "image_reused": false,
+            "image_prepare_ns": 25885977,
+            "image_ready_ns": 56874731644,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 13.314564,
+            "wire_bytes": 1072,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+              "revision": 4,
+              "sample_started_ns": 56804367112,
+              "sample_finished_ns": 56804628172,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 6291459,
+              "active_lease_deadline_ns": 86674621907,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+              "revision": 4,
+              "sample_started_ns": 56895701948,
+              "sample_finished_ns": 56896134722,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 6291459,
+              "active_lease_deadline_ns": 86674621907,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 56896210017
+          },
+          {
+            "event": "step_completed",
+            "id": "navigate",
+            "step": 0,
+            "completed_ns": 56907005696,
+            "emit_started_ns": 56907008316
+          },
+          {
+            "event": "step_started",
+            "id": "navigate",
+            "step": 1,
+            "operation": "text",
+            "issued_ns": 56922326066,
+            "emit_started_ns": 56922329232
+          },
+          {
+            "event": "input_admission",
+            "key": "h",
+            "admitted_ns": 56936871958,
+            "input_ack_ns": 56937216875,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 56937355567
+          },
+          {
+            "event": "input_admission",
+            "key": "t",
+            "admitted_ns": 56954726011,
+            "input_ack_ns": 56954953363,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 56955015500
+          },
+          {
+            "event": "input_admission",
+            "key": "t",
+            "admitted_ns": 56973065009,
+            "input_ack_ns": 56973286515,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 56973345804
+          },
+          {
+            "event": "input_admission",
+            "key": "p",
+            "admitted_ns": 56989523541,
+            "input_ack_ns": 56989727782,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 56989848916
+          },
+          {
+            "event": "input_admission",
+            "key": "Shift_L",
+            "admitted_ns": 57004565303,
+            "input_ack_ns": 57004786453,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57004844701
+          },
+          {
+            "event": "input_admission",
+            "key": "semicolon",
+            "admitted_ns": 57016825237,
+            "input_ack_ns": 57017154325,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57017221450
+          },
+          {
+            "event": "input_admission",
+            "key": "slash",
+            "admitted_ns": 57032287357,
+            "input_ack_ns": 57032509019,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57032564262
+          },
+          {
+            "event": "input_admission",
+            "key": "slash",
+            "admitted_ns": 57047450655,
+            "input_ack_ns": 57047674210,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57047758460
+          },
+          {
+            "event": "input_admission",
+            "key": "1",
+            "admitted_ns": 57064382980,
+            "input_ack_ns": 57064586985,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57064661125
+          },
+          {
+            "event": "input_admission",
+            "key": "2",
+            "admitted_ns": 57080522971,
+            "input_ack_ns": 57080713418,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57080773534
+          },
+          {
+            "event": "input_admission",
+            "key": "7",
+            "admitted_ns": 57095277911,
+            "input_ack_ns": 57095521858,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57095601761
+          },
+          {
+            "event": "input_admission",
+            "key": "period",
+            "admitted_ns": 57110577207,
+            "input_ack_ns": 57110971448,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57111137482
+          },
+          {
+            "event": "input_admission",
+            "key": "0",
+            "admitted_ns": 57126235632,
+            "input_ack_ns": 57126452968,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57126521884
+          },
+          {
+            "event": "input_admission",
+            "key": "period",
+            "admitted_ns": 57143460876,
+            "input_ack_ns": 57143850490,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57143979612
+          },
+          {
+            "event": "input_admission",
+            "key": "0",
+            "admitted_ns": 57159322453,
+            "input_ack_ns": 57159572224,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57159670203
+          },
+          {
+            "event": "input_admission",
+            "key": "period",
+            "admitted_ns": 57175287048,
+            "input_ack_ns": 57175519608,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57175583236
+          },
+          {
+            "event": "input_admission",
+            "key": "1",
+            "admitted_ns": 57191355468,
+            "input_ack_ns": 57191551509,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57191643339
+          },
+          {
+            "event": "input_admission",
+            "key": "Shift_L",
+            "admitted_ns": 57207931164,
+            "input_ack_ns": 57208190442,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57208327579
+          },
+          {
+            "event": "input_admission",
+            "key": "semicolon",
+            "admitted_ns": 57219120921,
+            "input_ack_ns": 57219437785,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57219576923
+          },
+          {
+            "event": "input_admission",
+            "key": "3",
+            "admitted_ns": 57236464153,
+            "input_ack_ns": 57236618426,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57236682832
+          },
+          {
+            "event": "input_admission",
+            "key": "4",
+            "admitted_ns": 57252545245,
+            "input_ack_ns": 57252761940,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57252903511
+          },
+          {
+            "event": "input_admission",
+            "key": "4",
+            "admitted_ns": 57268997932,
+            "input_ack_ns": 57269466283,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57269530398
+          },
+          {
+            "event": "input_admission",
+            "key": "3",
+            "admitted_ns": 57284967493,
+            "input_ack_ns": 57285334187,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57285477722
+          },
+          {
+            "event": "input_admission",
+            "key": "3",
+            "admitted_ns": 57303616378,
+            "input_ack_ns": 57303900360,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57303995723
+          },
+          {
+            "event": "input_admission",
+            "key": "slash",
+            "admitted_ns": 57320924263,
+            "input_ack_ns": 57321247835,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57321316293
+          },
+          {
+            "event": "observation",
+            "id": "navigate",
+            "step": 1,
+            "sequence": 3,
+            "capture_ns": 57341725940,
+            "context_ns": 57350044659,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/003.png",
+            "image_reused": false,
+            "image_prepare_ns": 24650418,
+            "image_ready_ns": 57397854923,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 3.289496,
+            "wire_bytes": 23824,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+              "revision": 54,
+              "sample_started_ns": 57337097857,
+              "sample_finished_ns": 57337417621,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 6291459,
+              "active_lease_deadline_ns": 86674621907,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+              "revision": 54,
+              "sample_started_ns": 57417339699,
+              "sample_finished_ns": 57417577517,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 6291459,
+              "active_lease_deadline_ns": 86674621907,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 57417635133
+          },
+          {
+            "event": "step_completed",
+            "id": "navigate",
+            "step": 1,
+            "completed_ns": 57429061820,
+            "emit_started_ns": 57429065160
+          },
+          {
+            "event": "step_started",
+            "id": "navigate",
+            "step": 2,
+            "operation": "key",
+            "issued_ns": 57445488557,
+            "emit_started_ns": 57445491333
+          },
+          {
+            "event": "input_admission",
+            "key": "Return",
+            "admitted_ns": 57458710694,
+            "input_ack_ns": 57459061724,
+            "valid_until_ns": 86674621907,
+            "emit_started_ns": 57459186690
+          },
+          {
+            "event": "observation",
+            "id": "navigate",
+            "step": 2,
+            "sequence": 4,
+            "capture_ns": 57486409328,
+            "context_ns": 57494416187,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/003.png",
+            "image_reused": true,
+            "image_prepare_ns": 6994637,
+            "image_ready_ns": 57512725450,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 4.738948,
+            "wire_bytes": 289,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+              "revision": 56,
+              "sample_started_ns": 57479000405,
+              "sample_finished_ns": 57479458541,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 6291459,
+              "active_lease_deadline_ns": 86674621907,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+              "revision": 56,
+              "sample_started_ns": 57544699714,
+              "sample_finished_ns": 57545100300,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 6291459,
+              "active_lease_deadline_ns": 86674621907,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 57545181159
+          },
+          {
+            "event": "step_completed",
+            "id": "navigate",
+            "step": 2,
+            "completed_ns": 57558197388,
+            "emit_started_ns": 57558198829
+          },
+          {
+            "event": "step_started",
+            "id": "navigate",
+            "step": 3,
+            "operation": "settle",
+            "issued_ns": 57575177090,
+            "emit_started_ns": 57575178475
+          },
+          {
+            "event": "observation",
+            "id": "navigate",
+            "step": 3,
+            "sequence": 5,
+            "capture_ns": 57593069338,
+            "context_ns": 57599736122,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/005.png",
+            "image_reused": false,
+            "image_prepare_ns": 23865123,
+            "image_ready_ns": 57650994786,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 3.699841,
+            "wire_bytes": 30412,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+              "revision": 56,
+              "sample_started_ns": 57588246496,
+              "sample_finished_ns": 57588607868,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 6291459,
+              "active_lease_deadline_ns": 86674621907,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+              "revision": 56,
+              "sample_started_ns": 57667062888,
+              "sample_finished_ns": 57667262944,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 6291459,
+              "active_lease_deadline_ns": 86674621907,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 57667318820
+          },
+          {
+            "event": "observation",
+            "id": "navigate",
+            "step": 3,
+            "sequence": 6,
+            "capture_ns": 57702835232,
+            "context_ns": 57708414713,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/005.png",
+            "image_reused": true,
+            "image_prepare_ns": 5978660,
+            "image_ready_ns": 57724159001,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 5.251377,
+            "wire_bytes": 291,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+              "revision": 56,
+              "sample_started_ns": 57696512314,
+              "sample_finished_ns": 57696724538,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 6291459,
+              "active_lease_deadline_ns": 86674621907,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+              "revision": 56,
+              "sample_started_ns": 57739477357,
+              "sample_finished_ns": 57739653246,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 6291459,
+              "active_lease_deadline_ns": 86674621907,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 57739709031
+          },
+          {
+            "event": "observation",
+            "id": "navigate",
+            "step": 3,
+            "sequence": 7,
+            "capture_ns": 57774746263,
+            "context_ns": 57780814102,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/005.png",
+            "image_reused": true,
+            "image_prepare_ns": 2565123,
+            "image_ready_ns": 57789752949,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 3.378743,
+            "wire_bytes": 291,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+              "revision": 56,
+              "sample_started_ns": 57770567647,
+              "sample_finished_ns": 57770713285,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 6291459,
+              "active_lease_deadline_ns": 86674621907,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+              "revision": 56,
+              "sample_started_ns": 57804245026,
+              "sample_finished_ns": 57804412793,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 6291459,
+              "active_lease_deadline_ns": 86674621907,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 57804468684
+          },
+          {
+            "event": "settle_result",
+            "id": "navigate",
+            "step": 3,
+            "reason": "pixel_quiet",
+            "samples": 3,
+            "sequence": 7,
+            "elapsed_ms": 226.057847,
+            "quiet_ms": 80,
+            "timeout_ms": 500,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 57814217265
+          },
+          {
+            "event": "step_completed",
+            "id": "navigate",
+            "step": 3,
+            "completed_ns": 57826041544,
+            "emit_started_ns": 57826042611
+          },
+          {
+            "event": "terminal",
+            "id": "navigate",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 4,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 57839494938,
+              "valid_until_ns": 86674621907
+            },
+            "interruption": null,
+            "decision_reason": null,
+            "post_release_observation": null,
+            "terminal_ns": 57839581312,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 57839584162
+          }
+        ],
+        "cursor": 50,
+        "returned_ns": 57853318834,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "program-91087ef2308741c6a16c8e36029f6ed2",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      }
+    }
+  ],
+  "program_sent": true,
+  "source_image": {
+    "status": "image",
+    "sequence": 1,
+    "capture_ns": 19718978832,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/001.png",
+    "relative_path": "001.png",
+    "sha256": "03b8fca6a10adcc869cb9ce432753f6e917726d2eeef423b78c0d4a82de26275",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "last_reply": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "expected_sequence": 1,
+          "id": "navigate",
+          "op": "submit",
+          "steps": [
+            {
+              "key": "l",
+              "modifier": "Control_L",
+              "op": "chord"
+            },
+            {
+              "op": "text",
+              "text": "http://127.0.0.1:34433/"
+            },
+            {
+              "key": "Return",
+              "op": "key"
+            },
+            {
+              "op": "settle",
+              "quiet_ms": 80,
+              "timeout_ms": 500
+            }
+          ],
+          "transport_request_id": "program-91087ef2308741c6a16c8e36029f6ed2",
+          "valid_until_ns": 86674621907
+        },
+        "received_ns": 56730140356,
+        "emit_started_ns": 56730151481
+      },
+      {
+        "event": "accepted",
+        "id": "navigate",
+        "steps": 4,
+        "valid_until_ns": 86674621907,
+        "accepted_ns": 56741392439,
+        "emit_started_ns": 56741394480
+      },
+      {
+        "event": "step_started",
+        "id": "navigate",
+        "step": 0,
+        "operation": "chord",
+        "issued_ns": 56755541078,
+        "emit_started_ns": 56755543481
+      },
+      {
+        "event": "input_admission",
+        "key": "Control_L",
+        "admitted_ns": 56770404754,
+        "input_ack_ns": 56770984365,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 56771279652
+      },
+      {
+        "event": "input_admission",
+        "key": "l",
+        "admitted_ns": 56787759553,
+        "input_ack_ns": 56788075502,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 56788239107
+      },
+      {
+        "event": "observation",
+        "id": "navigate",
+        "step": 0,
+        "sequence": 2,
+        "capture_ns": 56819109195,
+        "context_ns": 56829230381,
+        "context": [
+          [
+            "windows",
+            "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+          ],
+          [
+            "active_window",
+            6291459
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/002.png",
+        "image_reused": false,
+        "image_prepare_ns": 25885977,
+        "image_ready_ns": 56874731644,
+        "input_focus_before": 6291459,
+        "input_focus_after": 6291459,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "capture_ms": 13.314564,
+        "wire_bytes": 1072,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 4,
+          "sample_started_ns": 56804367112,
+          "sample_finished_ns": 56804628172,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 4,
+          "sample_started_ns": 56895701948,
+          "sample_finished_ns": 56896134722,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 56896210017
+      },
+      {
+        "event": "step_completed",
+        "id": "navigate",
+        "step": 0,
+        "completed_ns": 56907005696,
+        "emit_started_ns": 56907008316
+      },
+      {
+        "event": "step_started",
+        "id": "navigate",
+        "step": 1,
+        "operation": "text",
+        "issued_ns": 56922326066,
+        "emit_started_ns": 56922329232
+      },
+      {
+        "event": "input_admission",
+        "key": "h",
+        "admitted_ns": 56936871958,
+        "input_ack_ns": 56937216875,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 56937355567
+      },
+      {
+        "event": "input_admission",
+        "key": "t",
+        "admitted_ns": 56954726011,
+        "input_ack_ns": 56954953363,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 56955015500
+      },
+      {
+        "event": "input_admission",
+        "key": "t",
+        "admitted_ns": 56973065009,
+        "input_ack_ns": 56973286515,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 56973345804
+      },
+      {
+        "event": "input_admission",
+        "key": "p",
+        "admitted_ns": 56989523541,
+        "input_ack_ns": 56989727782,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 56989848916
+      },
+      {
+        "event": "input_admission",
+        "key": "Shift_L",
+        "admitted_ns": 57004565303,
+        "input_ack_ns": 57004786453,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57004844701
+      },
+      {
+        "event": "input_admission",
+        "key": "semicolon",
+        "admitted_ns": 57016825237,
+        "input_ack_ns": 57017154325,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57017221450
+      },
+      {
+        "event": "input_admission",
+        "key": "slash",
+        "admitted_ns": 57032287357,
+        "input_ack_ns": 57032509019,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57032564262
+      },
+      {
+        "event": "input_admission",
+        "key": "slash",
+        "admitted_ns": 57047450655,
+        "input_ack_ns": 57047674210,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57047758460
+      },
+      {
+        "event": "input_admission",
+        "key": "1",
+        "admitted_ns": 57064382980,
+        "input_ack_ns": 57064586985,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57064661125
+      },
+      {
+        "event": "input_admission",
+        "key": "2",
+        "admitted_ns": 57080522971,
+        "input_ack_ns": 57080713418,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57080773534
+      },
+      {
+        "event": "input_admission",
+        "key": "7",
+        "admitted_ns": 57095277911,
+        "input_ack_ns": 57095521858,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57095601761
+      },
+      {
+        "event": "input_admission",
+        "key": "period",
+        "admitted_ns": 57110577207,
+        "input_ack_ns": 57110971448,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57111137482
+      },
+      {
+        "event": "input_admission",
+        "key": "0",
+        "admitted_ns": 57126235632,
+        "input_ack_ns": 57126452968,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57126521884
+      },
+      {
+        "event": "input_admission",
+        "key": "period",
+        "admitted_ns": 57143460876,
+        "input_ack_ns": 57143850490,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57143979612
+      },
+      {
+        "event": "input_admission",
+        "key": "0",
+        "admitted_ns": 57159322453,
+        "input_ack_ns": 57159572224,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57159670203
+      },
+      {
+        "event": "input_admission",
+        "key": "period",
+        "admitted_ns": 57175287048,
+        "input_ack_ns": 57175519608,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57175583236
+      },
+      {
+        "event": "input_admission",
+        "key": "1",
+        "admitted_ns": 57191355468,
+        "input_ack_ns": 57191551509,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57191643339
+      },
+      {
+        "event": "input_admission",
+        "key": "Shift_L",
+        "admitted_ns": 57207931164,
+        "input_ack_ns": 57208190442,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57208327579
+      },
+      {
+        "event": "input_admission",
+        "key": "semicolon",
+        "admitted_ns": 57219120921,
+        "input_ack_ns": 57219437785,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57219576923
+      },
+      {
+        "event": "input_admission",
+        "key": "3",
+        "admitted_ns": 57236464153,
+        "input_ack_ns": 57236618426,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57236682832
+      },
+      {
+        "event": "input_admission",
+        "key": "4",
+        "admitted_ns": 57252545245,
+        "input_ack_ns": 57252761940,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57252903511
+      },
+      {
+        "event": "input_admission",
+        "key": "4",
+        "admitted_ns": 57268997932,
+        "input_ack_ns": 57269466283,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57269530398
+      },
+      {
+        "event": "input_admission",
+        "key": "3",
+        "admitted_ns": 57284967493,
+        "input_ack_ns": 57285334187,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57285477722
+      },
+      {
+        "event": "input_admission",
+        "key": "3",
+        "admitted_ns": 57303616378,
+        "input_ack_ns": 57303900360,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57303995723
+      },
+      {
+        "event": "input_admission",
+        "key": "slash",
+        "admitted_ns": 57320924263,
+        "input_ack_ns": 57321247835,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57321316293
+      },
+      {
+        "event": "observation",
+        "id": "navigate",
+        "step": 1,
+        "sequence": 3,
+        "capture_ns": 57341725940,
+        "context_ns": 57350044659,
+        "context": [
+          [
+            "windows",
+            "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+          ],
+          [
+            "active_window",
+            6291459
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/003.png",
+        "image_reused": false,
+        "image_prepare_ns": 24650418,
+        "image_ready_ns": 57397854923,
+        "input_focus_before": 6291459,
+        "input_focus_after": 6291459,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "capture_ms": 3.289496,
+        "wire_bytes": 23824,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 54,
+          "sample_started_ns": 57337097857,
+          "sample_finished_ns": 57337417621,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 54,
+          "sample_started_ns": 57417339699,
+          "sample_finished_ns": 57417577517,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 57417635133
+      },
+      {
+        "event": "step_completed",
+        "id": "navigate",
+        "step": 1,
+        "completed_ns": 57429061820,
+        "emit_started_ns": 57429065160
+      },
+      {
+        "event": "step_started",
+        "id": "navigate",
+        "step": 2,
+        "operation": "key",
+        "issued_ns": 57445488557,
+        "emit_started_ns": 57445491333
+      },
+      {
+        "event": "input_admission",
+        "key": "Return",
+        "admitted_ns": 57458710694,
+        "input_ack_ns": 57459061724,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57459186690
+      },
+      {
+        "event": "observation",
+        "id": "navigate",
+        "step": 2,
+        "sequence": 4,
+        "capture_ns": 57486409328,
+        "context_ns": 57494416187,
+        "context": [
+          [
+            "windows",
+            "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+          ],
+          [
+            "active_window",
+            6291459
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/003.png",
+        "image_reused": true,
+        "image_prepare_ns": 6994637,
+        "image_ready_ns": 57512725450,
+        "input_focus_before": 6291459,
+        "input_focus_after": 6291459,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "capture_ms": 4.738948,
+        "wire_bytes": 289,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 56,
+          "sample_started_ns": 57479000405,
+          "sample_finished_ns": 57479458541,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 56,
+          "sample_started_ns": 57544699714,
+          "sample_finished_ns": 57545100300,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 57545181159
+      },
+      {
+        "event": "step_completed",
+        "id": "navigate",
+        "step": 2,
+        "completed_ns": 57558197388,
+        "emit_started_ns": 57558198829
+      },
+      {
+        "event": "step_started",
+        "id": "navigate",
+        "step": 3,
+        "operation": "settle",
+        "issued_ns": 57575177090,
+        "emit_started_ns": 57575178475
+      },
+      {
+        "event": "observation",
+        "id": "navigate",
+        "step": 3,
+        "sequence": 5,
+        "capture_ns": 57593069338,
+        "context_ns": 57599736122,
+        "context": [
+          [
+            "windows",
+            "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+          ],
+          [
+            "active_window",
+            6291459
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/005.png",
+        "image_reused": false,
+        "image_prepare_ns": 23865123,
+        "image_ready_ns": 57650994786,
+        "input_focus_before": 6291459,
+        "input_focus_after": 6291459,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "capture_ms": 3.699841,
+        "wire_bytes": 30412,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 56,
+          "sample_started_ns": 57588246496,
+          "sample_finished_ns": 57588607868,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 56,
+          "sample_started_ns": 57667062888,
+          "sample_finished_ns": 57667262944,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 57667318820
+      },
+      {
+        "event": "observation",
+        "id": "navigate",
+        "step": 3,
+        "sequence": 6,
+        "capture_ns": 57702835232,
+        "context_ns": 57708414713,
+        "context": [
+          [
+            "windows",
+            "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+          ],
+          [
+            "active_window",
+            6291459
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/005.png",
+        "image_reused": true,
+        "image_prepare_ns": 5978660,
+        "image_ready_ns": 57724159001,
+        "input_focus_before": 6291459,
+        "input_focus_after": 6291459,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "capture_ms": 5.251377,
+        "wire_bytes": 291,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 56,
+          "sample_started_ns": 57696512314,
+          "sample_finished_ns": 57696724538,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 56,
+          "sample_started_ns": 57739477357,
+          "sample_finished_ns": 57739653246,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 57739709031
+      },
+      {
+        "event": "observation",
+        "id": "navigate",
+        "step": 3,
+        "sequence": 7,
+        "capture_ns": 57774746263,
+        "context_ns": 57780814102,
+        "context": [
+          [
+            "windows",
+            "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+          ],
+          [
+            "active_window",
+            6291459
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/005.png",
+        "image_reused": true,
+        "image_prepare_ns": 2565123,
+        "image_ready_ns": 57789752949,
+        "input_focus_before": 6291459,
+        "input_focus_after": 6291459,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "capture_ms": 3.378743,
+        "wire_bytes": 291,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 56,
+          "sample_started_ns": 57770567647,
+          "sample_finished_ns": 57770713285,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 56,
+          "sample_started_ns": 57804245026,
+          "sample_finished_ns": 57804412793,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 57804468684
+      },
+      {
+        "event": "settle_result",
+        "id": "navigate",
+        "step": 3,
+        "reason": "pixel_quiet",
+        "samples": 3,
+        "sequence": 7,
+        "elapsed_ms": 226.057847,
+        "quiet_ms": 80,
+        "timeout_ms": 500,
+        "semantic_completion": "unknown",
+        "emit_started_ns": 57814217265
+      },
+      {
+        "event": "step_completed",
+        "id": "navigate",
+        "step": 3,
+        "completed_ns": 57826041544,
+        "emit_started_ns": 57826042611
+      },
+      {
+        "event": "terminal",
+        "id": "navigate",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 4,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 57839494938,
+          "valid_until_ns": 86674621907
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "post_release_observation": null,
+        "terminal_ns": 57839581312,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 57839584162
+      }
+    ],
+    "cursor": 50,
+    "returned_ns": 57853318834,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "program-91087ef2308741c6a16c8e36029f6ed2",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "lifecycle": {
+    "state": "terminal_received",
+    "action_id": "navigate",
+    "cursor": 50,
+    "uncertainty": null,
+    "stopped": null,
+    "terminal": {
+      "event": "terminal",
+      "id": "navigate",
+      "status": "completed",
+      "error": null,
+      "steps_completed": 4,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 57839494938,
+        "valid_until_ns": 86674621907
+      },
+      "interruption": null,
+      "decision_reason": null,
+      "post_release_observation": null,
+      "terminal_ns": 57839581312,
+      "semantic_completion": "program status only; task scoring is separate",
+      "emit_started_ns": 57839584162
+    },
+    "observation": {
+      "event": "observation",
+      "id": "navigate",
+      "step": 3,
+      "sequence": 7,
+      "capture_ns": 57774746263,
+      "context_ns": 57780814102,
+      "context": [
+        [
+          "windows",
+          "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+        ],
+        [
+          "active_window",
+          6291459
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/005.png",
+      "image_reused": true,
+      "image_prepare_ns": 2565123,
+      "image_ready_ns": 57789752949,
+      "input_focus_before": 6291459,
+      "input_focus_after": 6291459,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "capture_ms": 3.378743,
+      "wire_bytes": 291,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "input_state_before": {
+        "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+        "revision": 56,
+        "sample_started_ns": 57770567647,
+        "sample_finished_ns": 57770713285,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 6291459,
+        "active_lease_deadline_ns": 86674621907,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "input_state_after": {
+        "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+        "revision": 56,
+        "sample_started_ns": 57804245026,
+        "sample_finished_ns": 57804412793,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 6291459,
+        "active_lease_deadline_ns": 86674621907,
+        "active_lease_time_valid": true,
+        "cancel_requested": false
+      },
+      "owner_revision_unchanged": true,
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "emit_started_ns": 57804468684
+    },
+    "input_authority": "none",
+    "meaning": "Historical action state; terminal is not task success or permission to reuse a lease."
+  },
+  "image": {
+    "status": "image",
+    "sequence": 7,
+    "capture_ns": 57774746263,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/005.png",
+    "relative_path": "005.png",
+    "sha256": "56cfc264626892d98c61280edea0198a2cdd3e8b9a831848c1413f2aebe19fdf",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "terminal": {
+    "event": "terminal",
+    "id": "navigate",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 4,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 57839494938,
+      "valid_until_ns": 86674621907
+    },
+    "interruption": null,
+    "decision_reason": null,
+    "post_release_observation": null,
+    "terminal_ns": 57839581312,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_started_ns": 57839584162
+  },
+  "continuation_batch": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "expected_sequence": 1,
+          "id": "navigate",
+          "op": "submit",
+          "steps": [
+            {
+              "key": "l",
+              "modifier": "Control_L",
+              "op": "chord"
+            },
+            {
+              "op": "text",
+              "text": "http://127.0.0.1:34433/"
+            },
+            {
+              "key": "Return",
+              "op": "key"
+            },
+            {
+              "op": "settle",
+              "quiet_ms": 80,
+              "timeout_ms": 500
+            }
+          ],
+          "transport_request_id": "program-91087ef2308741c6a16c8e36029f6ed2",
+          "valid_until_ns": 86674621907
+        },
+        "received_ns": 56730140356,
+        "emit_started_ns": 56730151481
+      },
+      {
+        "event": "accepted",
+        "id": "navigate",
+        "steps": 4,
+        "valid_until_ns": 86674621907,
+        "accepted_ns": 56741392439,
+        "emit_started_ns": 56741394480
+      },
+      {
+        "event": "step_started",
+        "id": "navigate",
+        "step": 0,
+        "operation": "chord",
+        "issued_ns": 56755541078,
+        "emit_started_ns": 56755543481
+      },
+      {
+        "event": "input_admission",
+        "key": "Control_L",
+        "admitted_ns": 56770404754,
+        "input_ack_ns": 56770984365,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 56771279652
+      },
+      {
+        "event": "input_admission",
+        "key": "l",
+        "admitted_ns": 56787759553,
+        "input_ack_ns": 56788075502,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 56788239107
+      },
+      {
+        "event": "observation",
+        "id": "navigate",
+        "step": 0,
+        "sequence": 2,
+        "capture_ns": 56819109195,
+        "context_ns": 56829230381,
+        "context": [
+          [
+            "windows",
+            "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+          ],
+          [
+            "active_window",
+            6291459
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/002.png",
+        "image_reused": false,
+        "image_prepare_ns": 25885977,
+        "image_ready_ns": 56874731644,
+        "input_focus_before": 6291459,
+        "input_focus_after": 6291459,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "capture_ms": 13.314564,
+        "wire_bytes": 1072,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 4,
+          "sample_started_ns": 56804367112,
+          "sample_finished_ns": 56804628172,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 4,
+          "sample_started_ns": 56895701948,
+          "sample_finished_ns": 56896134722,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 56896210017
+      },
+      {
+        "event": "step_completed",
+        "id": "navigate",
+        "step": 0,
+        "completed_ns": 56907005696,
+        "emit_started_ns": 56907008316
+      },
+      {
+        "event": "step_started",
+        "id": "navigate",
+        "step": 1,
+        "operation": "text",
+        "issued_ns": 56922326066,
+        "emit_started_ns": 56922329232
+      },
+      {
+        "event": "input_admission",
+        "key": "h",
+        "admitted_ns": 56936871958,
+        "input_ack_ns": 56937216875,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 56937355567
+      },
+      {
+        "event": "input_admission",
+        "key": "t",
+        "admitted_ns": 56954726011,
+        "input_ack_ns": 56954953363,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 56955015500
+      },
+      {
+        "event": "input_admission",
+        "key": "t",
+        "admitted_ns": 56973065009,
+        "input_ack_ns": 56973286515,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 56973345804
+      },
+      {
+        "event": "input_admission",
+        "key": "p",
+        "admitted_ns": 56989523541,
+        "input_ack_ns": 56989727782,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 56989848916
+      },
+      {
+        "event": "input_admission",
+        "key": "Shift_L",
+        "admitted_ns": 57004565303,
+        "input_ack_ns": 57004786453,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57004844701
+      },
+      {
+        "event": "input_admission",
+        "key": "semicolon",
+        "admitted_ns": 57016825237,
+        "input_ack_ns": 57017154325,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57017221450
+      },
+      {
+        "event": "input_admission",
+        "key": "slash",
+        "admitted_ns": 57032287357,
+        "input_ack_ns": 57032509019,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57032564262
+      },
+      {
+        "event": "input_admission",
+        "key": "slash",
+        "admitted_ns": 57047450655,
+        "input_ack_ns": 57047674210,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57047758460
+      },
+      {
+        "event": "input_admission",
+        "key": "1",
+        "admitted_ns": 57064382980,
+        "input_ack_ns": 57064586985,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57064661125
+      },
+      {
+        "event": "input_admission",
+        "key": "2",
+        "admitted_ns": 57080522971,
+        "input_ack_ns": 57080713418,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57080773534
+      },
+      {
+        "event": "input_admission",
+        "key": "7",
+        "admitted_ns": 57095277911,
+        "input_ack_ns": 57095521858,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57095601761
+      },
+      {
+        "event": "input_admission",
+        "key": "period",
+        "admitted_ns": 57110577207,
+        "input_ack_ns": 57110971448,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57111137482
+      },
+      {
+        "event": "input_admission",
+        "key": "0",
+        "admitted_ns": 57126235632,
+        "input_ack_ns": 57126452968,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57126521884
+      },
+      {
+        "event": "input_admission",
+        "key": "period",
+        "admitted_ns": 57143460876,
+        "input_ack_ns": 57143850490,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57143979612
+      },
+      {
+        "event": "input_admission",
+        "key": "0",
+        "admitted_ns": 57159322453,
+        "input_ack_ns": 57159572224,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57159670203
+      },
+      {
+        "event": "input_admission",
+        "key": "period",
+        "admitted_ns": 57175287048,
+        "input_ack_ns": 57175519608,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57175583236
+      },
+      {
+        "event": "input_admission",
+        "key": "1",
+        "admitted_ns": 57191355468,
+        "input_ack_ns": 57191551509,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57191643339
+      },
+      {
+        "event": "input_admission",
+        "key": "Shift_L",
+        "admitted_ns": 57207931164,
+        "input_ack_ns": 57208190442,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57208327579
+      },
+      {
+        "event": "input_admission",
+        "key": "semicolon",
+        "admitted_ns": 57219120921,
+        "input_ack_ns": 57219437785,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57219576923
+      },
+      {
+        "event": "input_admission",
+        "key": "3",
+        "admitted_ns": 57236464153,
+        "input_ack_ns": 57236618426,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57236682832
+      },
+      {
+        "event": "input_admission",
+        "key": "4",
+        "admitted_ns": 57252545245,
+        "input_ack_ns": 57252761940,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57252903511
+      },
+      {
+        "event": "input_admission",
+        "key": "4",
+        "admitted_ns": 57268997932,
+        "input_ack_ns": 57269466283,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57269530398
+      },
+      {
+        "event": "input_admission",
+        "key": "3",
+        "admitted_ns": 57284967493,
+        "input_ack_ns": 57285334187,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57285477722
+      },
+      {
+        "event": "input_admission",
+        "key": "3",
+        "admitted_ns": 57303616378,
+        "input_ack_ns": 57303900360,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57303995723
+      },
+      {
+        "event": "input_admission",
+        "key": "slash",
+        "admitted_ns": 57320924263,
+        "input_ack_ns": 57321247835,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57321316293
+      },
+      {
+        "event": "observation",
+        "id": "navigate",
+        "step": 1,
+        "sequence": 3,
+        "capture_ns": 57341725940,
+        "context_ns": 57350044659,
+        "context": [
+          [
+            "windows",
+            "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+          ],
+          [
+            "active_window",
+            6291459
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/003.png",
+        "image_reused": false,
+        "image_prepare_ns": 24650418,
+        "image_ready_ns": 57397854923,
+        "input_focus_before": 6291459,
+        "input_focus_after": 6291459,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "capture_ms": 3.289496,
+        "wire_bytes": 23824,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 54,
+          "sample_started_ns": 57337097857,
+          "sample_finished_ns": 57337417621,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 54,
+          "sample_started_ns": 57417339699,
+          "sample_finished_ns": 57417577517,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 57417635133
+      },
+      {
+        "event": "step_completed",
+        "id": "navigate",
+        "step": 1,
+        "completed_ns": 57429061820,
+        "emit_started_ns": 57429065160
+      },
+      {
+        "event": "step_started",
+        "id": "navigate",
+        "step": 2,
+        "operation": "key",
+        "issued_ns": 57445488557,
+        "emit_started_ns": 57445491333
+      },
+      {
+        "event": "input_admission",
+        "key": "Return",
+        "admitted_ns": 57458710694,
+        "input_ack_ns": 57459061724,
+        "valid_until_ns": 86674621907,
+        "emit_started_ns": 57459186690
+      },
+      {
+        "event": "observation",
+        "id": "navigate",
+        "step": 2,
+        "sequence": 4,
+        "capture_ns": 57486409328,
+        "context_ns": 57494416187,
+        "context": [
+          [
+            "windows",
+            "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+          ],
+          [
+            "active_window",
+            6291459
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/003.png",
+        "image_reused": true,
+        "image_prepare_ns": 6994637,
+        "image_ready_ns": 57512725450,
+        "input_focus_before": 6291459,
+        "input_focus_after": 6291459,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "capture_ms": 4.738948,
+        "wire_bytes": 289,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 56,
+          "sample_started_ns": 57479000405,
+          "sample_finished_ns": 57479458541,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 56,
+          "sample_started_ns": 57544699714,
+          "sample_finished_ns": 57545100300,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 57545181159
+      },
+      {
+        "event": "step_completed",
+        "id": "navigate",
+        "step": 2,
+        "completed_ns": 57558197388,
+        "emit_started_ns": 57558198829
+      },
+      {
+        "event": "step_started",
+        "id": "navigate",
+        "step": 3,
+        "operation": "settle",
+        "issued_ns": 57575177090,
+        "emit_started_ns": 57575178475
+      },
+      {
+        "event": "observation",
+        "id": "navigate",
+        "step": 3,
+        "sequence": 5,
+        "capture_ns": 57593069338,
+        "context_ns": 57599736122,
+        "context": [
+          [
+            "windows",
+            "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+          ],
+          [
+            "active_window",
+            6291459
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/005.png",
+        "image_reused": false,
+        "image_prepare_ns": 23865123,
+        "image_ready_ns": 57650994786,
+        "input_focus_before": 6291459,
+        "input_focus_after": 6291459,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "capture_ms": 3.699841,
+        "wire_bytes": 30412,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 56,
+          "sample_started_ns": 57588246496,
+          "sample_finished_ns": 57588607868,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 56,
+          "sample_started_ns": 57667062888,
+          "sample_finished_ns": 57667262944,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 57667318820
+      },
+      {
+        "event": "observation",
+        "id": "navigate",
+        "step": 3,
+        "sequence": 6,
+        "capture_ns": 57702835232,
+        "context_ns": 57708414713,
+        "context": [
+          [
+            "windows",
+            "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+          ],
+          [
+            "active_window",
+            6291459
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/005.png",
+        "image_reused": true,
+        "image_prepare_ns": 5978660,
+        "image_ready_ns": 57724159001,
+        "input_focus_before": 6291459,
+        "input_focus_after": 6291459,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "capture_ms": 5.251377,
+        "wire_bytes": 291,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 56,
+          "sample_started_ns": 57696512314,
+          "sample_finished_ns": 57696724538,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 56,
+          "sample_started_ns": 57739477357,
+          "sample_finished_ns": 57739653246,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 57739709031
+      },
+      {
+        "event": "observation",
+        "id": "navigate",
+        "step": 3,
+        "sequence": 7,
+        "capture_ns": 57774746263,
+        "context_ns": 57780814102,
+        "context": [
+          [
+            "windows",
+            "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+          ],
+          [
+            "active_window",
+            6291459
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/browser-emission-live-01/runtime/005.png",
+        "image_reused": true,
+        "image_prepare_ns": 2565123,
+        "image_ready_ns": 57789752949,
+        "input_focus_before": 6291459,
+        "input_focus_after": 6291459,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "capture_ms": 3.378743,
+        "wire_bytes": 291,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 56,
+          "sample_started_ns": 57770567647,
+          "sample_finished_ns": 57770713285,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "c46d5ba5924b4fac86b1d5df866f0cab",
+          "revision": 56,
+          "sample_started_ns": 57804245026,
+          "sample_finished_ns": 57804412793,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291459,
+          "active_lease_deadline_ns": 86674621907,
+          "active_lease_time_valid": true,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 57804468684
+      },
+      {
+        "event": "settle_result",
+        "id": "navigate",
+        "step": 3,
+        "reason": "pixel_quiet",
+        "samples": 3,
+        "sequence": 7,
+        "elapsed_ms": 226.057847,
+        "quiet_ms": 80,
+        "timeout_ms": 500,
+        "semantic_completion": "unknown",
+        "emit_started_ns": 57814217265
+      },
+      {
+        "event": "step_completed",
+        "id": "navigate",
+        "step": 3,
+        "completed_ns": 57826041544,
+        "emit_started_ns": 57826042611
+      },
+      {
+        "event": "terminal",
+        "id": "navigate",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 4,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 57839494938,
+          "valid_until_ns": 86674621907
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "post_release_observation": null,
+        "terminal_ns": 57839581312,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 57839584162
+      }
+    ],
+    "cursor": 50,
+    "returned_ns": 57853318834,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "program-91087ef2308741c6a16c8e36029f6ed2",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "authority": "none; clock refresh does not refresh image; ordinary v9 admission applies",
+  "outer_operation": {
+    "started_ns": 56604832955,
+    "prepared_ns": 57908314202,
+    "scope": "through exchange and optional followup; report rendering and model receipt not included"
+  }
+}

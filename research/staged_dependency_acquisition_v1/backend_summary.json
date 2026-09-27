@@ -1,0 +1,17 @@
+{
+  "case": {"inactive": 4, "pre": 2, "selected": 4},
+  "environment": {"platform": "Linux-6.18.44-x86_64-with-glibc2.41", "python": "3.13.5", "sqlite": "3.46.1"},
+  "heavy_hash": {
+    "iterations": 5000,
+    "median_staged_vs_union_pct": -39.92349540972458,
+    "staged": {"mean_us": 85.05791099999999, "median_us": 70.674, "p95_us": 139.474},
+    "union": {"mean_us": 150.288689, "median_us": 117.64, "p95_us": 254.736}
+  },
+  "schema": "dependency-backend-cost-v1",
+  "sqlite_scalar": {
+    "iterations": 10000,
+    "median_staged_vs_union_pct": 2.678139804698823,
+    "staged": {"mean_us": 15.469070599999998, "median_us": 10.62, "p95_us": 14.495},
+    "union": {"mean_us": 15.592819299999999, "median_us": 10.343, "p95_us": 14.776}
+  }
+}

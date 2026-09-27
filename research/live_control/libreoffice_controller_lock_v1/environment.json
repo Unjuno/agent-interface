@@ -1,0 +1,12 @@
+{
+  "captured_before_measurement": true,
+  "libreoffice_version": "LibreOffice 25.2.3.2 520(Build:2)",
+  "system_python": "Python 3.13.5 (/usr/bin/python3)",
+  "uno_module": "/usr/lib/python3/dist-packages/uno.py",
+  "kernel": "Linux 6.18.44 x86_64",
+  "transport": "private localhost UNO socket; fresh soffice process/profile per case",
+  "construction_excluded": {
+    "locked_stable": "A 1000->1200, B 5000; lock true during write",
+    "locked_intervening_write": "independent UNO client saw lock true, A 1000->1700; controller then stale-wrote 1200"
+  }
+}

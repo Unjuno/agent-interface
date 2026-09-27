@@ -1,0 +1,2 @@
+RuntimeError: adaptive_avg_pool2d_backward_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation, or you can use the 'warn_only=True' option, if that's acceptable for your application.
+This is the exact reason reported by PyTorch 2.5.1+cu121 for the full TinyGrounder construction backward probe after CUBLAS_WORKSPACE_CONFIG=:4096:8 was set.

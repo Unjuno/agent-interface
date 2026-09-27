@@ -1,0 +1,78 @@
+{
+  "events": 86,
+  "exact_frames": 16,
+  "append_records": 25,
+  "socket_calls": 14,
+  "model_turns": [
+    {
+      "turn": 1,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 12854,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 181,
+        "reasoning_output_tokens": 76
+      },
+      "runner_wall_ms": 8489.085,
+      "supervisor_model_return_to_publish_ms": 14.2152,
+      "supervisor_publish_to_applied_ms": 1278.5833,
+      "linux_proposal_to_result_ms": 1218.857772,
+      "source_to_fresh_capture_ms": 8918.300462
+    },
+    {
+      "turn": 2,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 13332,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 114,
+        "reasoning_output_tokens": 50
+      },
+      "runner_wall_ms": 5833.6072,
+      "supervisor_model_return_to_publish_ms": 16.2471,
+      "supervisor_publish_to_applied_ms": 843.4762,
+      "linux_proposal_to_result_ms": 811.055827,
+      "source_to_fresh_capture_ms": 6213.935139
+    },
+    {
+      "turn": 3,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 13280,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 108,
+        "reasoning_output_tokens": 41
+      },
+      "runner_wall_ms": 7427.7574,
+      "supervisor_model_return_to_publish_ms": 12.3684,
+      "supervisor_publish_to_applied_ms": 697.1077,
+      "linux_proposal_to_result_ms": 610.961225,
+      "source_to_fresh_capture_ms": 7837.275326
+    },
+    {
+      "turn": 4,
+      "kind": "verify",
+      "usage": {
+        "input_tokens": 13120,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 84,
+        "reasoning_output_tokens": 33
+      },
+      "runner_wall_ms": 7055.3873
+    }
+  ],
+  "save_chords": 2,
+  "saved_cells": [
+    480,
+    192
+  ],
+  "xlsx_sha256": "aaf9d18dc12ac63131a3f791a6e1b938614615464ce4bdc463b6688997f619ec",
+  "supervisor_start_to_verified_exit_ms": 39248.6464,
+  "linux_initial_capture_to_evaluation_ms": 32570.12302,
+  "scope": "one automatic typed handoff episode; redundant model-requested second save; changed prompts/action count versus manual baseline, no causal speed ratio or human parity",
+  "audit_sha256": "a0fe7b7d31bd653439fe4197c446eac16bc198b0594f93d16650b89ef7cfed3f"
+}

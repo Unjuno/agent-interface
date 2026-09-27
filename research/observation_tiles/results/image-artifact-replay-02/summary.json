@@ -1,0 +1,39 @@
+{
+  "episodes": 32,
+  "source_frames": 266,
+  "decoded_artifacts": 798,
+  "errors": 0,
+  "policies": {
+    "full6": {
+      "prepared_ms": 8049.723558000001,
+      "files_written": 266,
+      "png_disk_bytes": 11662037
+    },
+    "reuse6": {
+      "prepared_ms": 6714.396793,
+      "files_written": 228,
+      "png_disk_bytes": 9556960
+    },
+    "reuse1": {
+      "prepared_ms": 5637.925001,
+      "files_written": 228,
+      "png_disk_bytes": 12531952
+    }
+  },
+  "comparisons": {
+    "full6->reuse6": {
+      "time_reduction_percent": 16.58847978292275,
+      "ci95_percent": [
+        8.403483185289673,
+        24.453643819539792
+      ]
+    },
+    "reuse6->reuse1": {
+      "time_reduction_percent": 16.032293371792683,
+      "ci95_percent": [
+        12.365892188365907,
+        19.90889533443523
+      ]
+    }
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "audit_sha256": "84c37034617bd75c4c66dced1c78f90f02d4ae3f3c60d8473480c66e30b071b6",
+  "formal_cases": 6,
+  "formal_reruns": 0,
+  "intake_main": "2308b8301d69b7089a2e0636486736ed59b61537",
+  "last_observed_main": "33e86e997d02b769af17a3f03f6035c68927da6e",
+  "main_changed_by_this_work": false,
+  "postinitialization_write_transactions": 768,
+  "publication": "LOCAL_ONLY_HOLD_GITHUB_WRITE_ACTION_UNAVAILABLE",
+  "remote_writes": 0,
+  "scientific_decision": "PASS_WAL_SNAPSHOT_RETENTION_BOUNDARY_SCOPED",
+  "source_edits_after_freeze": 0,
+  "summary": [
+    {
+      "case": "f-r0-HELD_TX",
+      "mode": "HELD_TX",
+      "passive": [
+        [
+          0,
+          16,
+          0
+        ],
+        [
+          0,
+          64,
+          0
+        ],
+        [
+          0,
+          256,
+          0
+        ]
+      ],
+      "post_release_bytes": 0,
+      "pre_release_busy": 1,
+      "rep": 0,
+      "wal_extents": [
+        65952,
+        263712,
+        1054752
+      ],
+      "writes": 128
+    },
+    {
+      "case": "f-r0-COPY_RELEASE",
+      "mode": "COPY_RELEASE",
+      "passive": [
+        [
+          0,
+          2,
+          2
+        ],
+        [
+          0,
+          2,
+          2
+        ],
+        [
+          0,
+          2,
+          2
+        ]
+      ],
+      "post_release_bytes": 0,
+      "pre_release_busy": 0,
+      "rep": 0,
+      "wal_extents": [
+        8272,
+        8272,
+        8272
+      ],
+      "writes": 128
+    },
+    {
+      "case": "f-r0-BEGIN_ONLY",
+      "mode": "BEGIN_ONLY",
+      "passive": [
+        [
+          0,
+          2,
+          2
+        ],
+        [
+          0,
+          2,
+          2
+        ],
+        [
+          0,
+          2,
+          2
+        ]
+      ],
+      "post_release_bytes": 0,
+      "pre_release_busy": 0,
+      "rep": 0,
+      "wal_extents": [
+        8272,
+        8272,
+        8272
+      ],
+      "writes": 128
+    },
+    {
+      "case": "f-r1-BEGIN_ONLY",
+      "mode": "BEGIN_ONLY",
+      "passive": [
+        [
+          0,
+          2,
+          2
+        ],
+        [
+          0,
+          2,
+          2
+        ],
+        [
+          0,
+          2,
+          2
+        ]
+      ],
+      "post_release_bytes": 0,
+      "pre_release_busy": 0,
+      "rep": 1,
+      "wal_extents": [
+        8272,
+        8272,
+        8272
+      ],
+      "writes": 128
+    },
+    {
+      "case": "f-r1-COPY_RELEASE",
+      "mode": "COPY_RELEASE",
+      "passive": [
+        [
+          0,
+          2,
+          2
+        ],
+        [
+          0,
+          2,
+          2
+        ],
+        [
+          0,
+          2,
+          2
+        ]
+      ],
+      "post_release_bytes": 0,
+      "pre_release_busy": 0,
+      "rep": 1,
+      "wal_extents": [
+        8272,
+        8272,
+        8272
+      ],
+      "writes": 128
+    },
+    {
+      "case": "f-r1-HELD_TX",
+      "mode": "HELD_TX",
+      "passive": [
+        [
+          0,
+          16,
+          0
+        ],
+        [
+          0,
+          64,
+          0
+        ],
+        [
+          0,
+          256,
+          0
+        ]
+      ],
+      "post_release_bytes": 0,
+      "pre_release_busy": 1,
+      "rep": 1,
+      "wal_extents": [
+        65952,
+        263712,
+        1054752
+      ],
+      "writes": 128
+    }
+  ]
+}

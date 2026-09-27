@@ -1,0 +1,428 @@
+{
+  "state": "terminal",
+  "exchanges": [
+    {
+      "request": {
+        "after": 2,
+        "events": [
+          "clock"
+        ],
+        "timeout": 5,
+        "request_id": "clock-1e2ced0669c84257bc09d1f3861db795",
+        "command": {
+          "op": "clock"
+        }
+      },
+      "started_ns": 59613357205,
+      "returned_ns": 59641172532,
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "clock-1e2ced0669c84257bc09d1f3861db795"
+            },
+            "received_ns": 59620224974,
+            "emit_started_ns": 59620228851
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 59628510393,
+            "sequence": 1,
+            "emit_started_ns": 59628516937
+          }
+        ],
+        "cursor": 4,
+        "returned_ns": 59641056371,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "clock-1e2ced0669c84257bc09d1f3861db795",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      }
+    },
+    {
+      "request": {
+        "after": 4,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 15,
+        "action_id": "interrupt",
+        "request_id": "program-57e80edbb6f24bbe946201a7256c4105",
+        "command": {
+          "op": "submit",
+          "id": "interrupt",
+          "steps": [
+            {
+              "op": "hold",
+              "keys": [
+                "Control_L"
+              ],
+              "duration_ms": 1000
+            }
+          ],
+          "expected_sequence": 1,
+          "valid_until_ns": 89628510393
+        }
+      },
+      "started_ns": 59647191956,
+      "returned_ns": 59728112236,
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 1,
+              "id": "interrupt",
+              "op": "submit",
+              "steps": [
+                {
+                  "duration_ms": 1000,
+                  "keys": [
+                    "Control_L"
+                  ],
+                  "op": "hold"
+                }
+              ],
+              "transport_request_id": "program-57e80edbb6f24bbe946201a7256c4105",
+              "valid_until_ns": 89628510393
+            },
+            "received_ns": 59655346499,
+            "emit_started_ns": 59655350405
+          },
+          {
+            "event": "accepted",
+            "id": "interrupt",
+            "steps": 1,
+            "valid_until_ns": 89628510393,
+            "accepted_ns": 59665825638,
+            "emit_started_ns": 59665828233
+          },
+          {
+            "event": "step_started",
+            "id": "interrupt",
+            "step": 0,
+            "operation": "hold",
+            "issued_ns": 59678500193,
+            "emit_started_ns": 59678502794
+          },
+          {
+            "event": "input_admission",
+            "key": "Control_L",
+            "admitted_ns": 59690800101,
+            "input_ack_ns": 59691177057,
+            "valid_until_ns": 89628510393,
+            "emit_started_ns": 59691249504
+          },
+          {
+            "event": "keys_held",
+            "id": "interrupt",
+            "step": 0,
+            "keys": [
+              "Control_L"
+            ],
+            "input_ack_ns": 59704853730,
+            "emit_started_ns": 59704858657
+          },
+          {
+            "event": "terminal",
+            "id": "interrupt",
+            "status": "needs_decision",
+            "error": null,
+            "steps_completed": 0,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 59717590065,
+              "valid_until_ns": null
+            },
+            "interruption": {
+              "intent_token": "296288c153614f70a0c0a80316aaa339",
+              "record": {
+                "event": "owner_release",
+                "reason": "focus_changed",
+                "verified": true,
+                "buttons_down": [],
+                "keys_down": [],
+                "verified_ns": 59694701225,
+                "valid_until_ns": 89628510393
+              }
+            },
+            "decision_reason": "focus_changed",
+            "terminal_ns": 59717670057,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 59717695375
+          }
+        ],
+        "cursor": 10,
+        "returned_ns": 59727888691,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "program-57e80edbb6f24bbe946201a7256c4105",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      }
+    }
+  ],
+  "program_sent": true,
+  "source_image": {
+    "status": "image",
+    "sequence": 1,
+    "capture_ns": 40966214709,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/cause-live-02/runtime/001.png",
+    "relative_path": "001.png",
+    "sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "last_reply": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "expected_sequence": 1,
+          "id": "interrupt",
+          "op": "submit",
+          "steps": [
+            {
+              "duration_ms": 1000,
+              "keys": [
+                "Control_L"
+              ],
+              "op": "hold"
+            }
+          ],
+          "transport_request_id": "program-57e80edbb6f24bbe946201a7256c4105",
+          "valid_until_ns": 89628510393
+        },
+        "received_ns": 59655346499,
+        "emit_started_ns": 59655350405
+      },
+      {
+        "event": "accepted",
+        "id": "interrupt",
+        "steps": 1,
+        "valid_until_ns": 89628510393,
+        "accepted_ns": 59665825638,
+        "emit_started_ns": 59665828233
+      },
+      {
+        "event": "step_started",
+        "id": "interrupt",
+        "step": 0,
+        "operation": "hold",
+        "issued_ns": 59678500193,
+        "emit_started_ns": 59678502794
+      },
+      {
+        "event": "input_admission",
+        "key": "Control_L",
+        "admitted_ns": 59690800101,
+        "input_ack_ns": 59691177057,
+        "valid_until_ns": 89628510393,
+        "emit_started_ns": 59691249504
+      },
+      {
+        "event": "keys_held",
+        "id": "interrupt",
+        "step": 0,
+        "keys": [
+          "Control_L"
+        ],
+        "input_ack_ns": 59704853730,
+        "emit_started_ns": 59704858657
+      },
+      {
+        "event": "terminal",
+        "id": "interrupt",
+        "status": "needs_decision",
+        "error": null,
+        "steps_completed": 0,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 59717590065,
+          "valid_until_ns": null
+        },
+        "interruption": {
+          "intent_token": "296288c153614f70a0c0a80316aaa339",
+          "record": {
+            "event": "owner_release",
+            "reason": "focus_changed",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 59694701225,
+            "valid_until_ns": 89628510393
+          }
+        },
+        "decision_reason": "focus_changed",
+        "terminal_ns": 59717670057,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 59717695375
+      }
+    ],
+    "cursor": 10,
+    "returned_ns": 59727888691,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "program-57e80edbb6f24bbe946201a7256c4105",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "terminal": {
+    "event": "terminal",
+    "id": "interrupt",
+    "status": "needs_decision",
+    "error": null,
+    "steps_completed": 0,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 59717590065,
+      "valid_until_ns": null
+    },
+    "interruption": {
+      "intent_token": "296288c153614f70a0c0a80316aaa339",
+      "record": {
+        "event": "owner_release",
+        "reason": "focus_changed",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 59694701225,
+        "valid_until_ns": 89628510393
+      }
+    },
+    "decision_reason": "focus_changed",
+    "terminal_ns": 59717670057,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_started_ns": 59717695375
+  },
+  "image": {
+    "status": "no_observation",
+    "authority": "none"
+  },
+  "continuation_batch": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "expected_sequence": 1,
+          "id": "interrupt",
+          "op": "submit",
+          "steps": [
+            {
+              "duration_ms": 1000,
+              "keys": [
+                "Control_L"
+              ],
+              "op": "hold"
+            }
+          ],
+          "transport_request_id": "program-57e80edbb6f24bbe946201a7256c4105",
+          "valid_until_ns": 89628510393
+        },
+        "received_ns": 59655346499,
+        "emit_started_ns": 59655350405
+      },
+      {
+        "event": "accepted",
+        "id": "interrupt",
+        "steps": 1,
+        "valid_until_ns": 89628510393,
+        "accepted_ns": 59665825638,
+        "emit_started_ns": 59665828233
+      },
+      {
+        "event": "step_started",
+        "id": "interrupt",
+        "step": 0,
+        "operation": "hold",
+        "issued_ns": 59678500193,
+        "emit_started_ns": 59678502794
+      },
+      {
+        "event": "input_admission",
+        "key": "Control_L",
+        "admitted_ns": 59690800101,
+        "input_ack_ns": 59691177057,
+        "valid_until_ns": 89628510393,
+        "emit_started_ns": 59691249504
+      },
+      {
+        "event": "keys_held",
+        "id": "interrupt",
+        "step": 0,
+        "keys": [
+          "Control_L"
+        ],
+        "input_ack_ns": 59704853730,
+        "emit_started_ns": 59704858657
+      },
+      {
+        "event": "terminal",
+        "id": "interrupt",
+        "status": "needs_decision",
+        "error": null,
+        "steps_completed": 0,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 59717590065,
+          "valid_until_ns": null
+        },
+        "interruption": {
+          "intent_token": "296288c153614f70a0c0a80316aaa339",
+          "record": {
+            "event": "owner_release",
+            "reason": "focus_changed",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 59694701225,
+            "valid_until_ns": 89628510393
+          }
+        },
+        "decision_reason": "focus_changed",
+        "terminal_ns": 59717670057,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 59717695375
+      }
+    ],
+    "cursor": 10,
+    "returned_ns": 59727888691,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "program-57e80edbb6f24bbe946201a7256c4105",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "authority": "none; clock refresh does not refresh image; ordinary v9 admission applies"
+}

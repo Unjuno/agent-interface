@@ -1,0 +1,45 @@
+{
+  "schema": "3311-dockerdesktop-windows-mount-mode-treatment-result-v1",
+  "allocation": "dockerdesktop-v1-windows-bind-mode0644-20260927-03",
+  "decision": "PASS_MODE0644_MAKES_SYNTHETIC_FILE_READABLE_NOT_A_SECURE_FIX",
+  "formal_container_invocations": 1,
+  "retries": 0,
+  "container_exit": 0,
+  "container": {
+    "name": "ai3311-winperm-03",
+    "postrun_present": false,
+    "network": "none",
+    "authority_granted": false,
+    "uid": 0,
+    "gid": 0,
+    "mode": "0644",
+    "bytes": 53,
+    "sha256": "56b2e3518a827f52be5f07cc269733cafb857a71ed9750ec729704faa3354bcc"
+  },
+  "windows_host": {
+    "readable": true,
+    "bytes": 53,
+    "sha256": "56B2E3518A827F52BE5F07CC269733CAFB857A71ED9750EC729704FAA3354BCC"
+  },
+  "wsl_host": {
+    "uid_gid_mode_size": "0:0 644 53",
+    "readable": true,
+    "bytes": 53,
+    "sha256": "56b2e3518a827f52be5f07cc269733cafb857a71ed9750ec729704faa3354bcc"
+  },
+  "comparison": {
+    "allocation_02_mode": "0600",
+    "allocation_02_wsl_read": false,
+    "allocation_03_mode": "0644",
+    "allocation_03_wsl_read": true,
+    "payload_bytes_and_hash_identical": true
+  },
+  "interpretation": "On this Docker Desktop Windows-backed mount, the permission-bit treatment changed WSL non-root read outcome for identical fake bytes. This isolates a plausible mechanism for the observed STOP. Mode 0644 broadens local read access and is not accepted as a secure production solution.",
+  "scope_limits": [
+    "Does not execute repository broker/runner or prove full IPC round trip",
+    "Different cached image than the upstream transport test requires",
+    "Does not establish a secure ownership/group/ACL design",
+    "Does not satisfy #3489 or #3311 integrated acceptance"
+  ],
+  "no_retry": true
+}

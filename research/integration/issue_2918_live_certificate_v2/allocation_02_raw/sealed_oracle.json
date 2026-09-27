@@ -1,0 +1,170 @@
+[
+  {
+    "api_status": "returned",
+    "artifact_sha256": "ba5a741d0b8132df5df659f2d40591f955abac982f3660ff52967788198be832",
+    "binding": {
+      "display": ":99",
+      "role": "fixture",
+      "xid": 2097152
+    },
+    "case": "complete_initial",
+    "intent_epoch": "complete-A",
+    "phase": "EFFECT_PENDING",
+    "state": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  {
+    "api_status": "returned",
+    "artifact_sha256": "45ea7e3a18009aa66984464877ee9cd0e643597f8bf486022f06c5e4bee90a10",
+    "binding": {
+      "display": ":99",
+      "role": "fixture",
+      "xid": 2097152
+    },
+    "case": "complete_unmasked_change",
+    "intent_epoch": "complete-A",
+    "phase": "EFFECT_PENDING",
+    "state": [
+      0,
+      0,
+      1,
+      0
+    ]
+  },
+  {
+    "api_status": "returned",
+    "artifact_sha256": "a64ba24520b5c5d53fc5ce40b1918efba6ca3335359ea22565a9d832ff9c6ab4",
+    "binding": {
+      "display": ":99",
+      "role": "fixture",
+      "xid": 2097152
+    },
+    "case": "complete_masked_change",
+    "intent_epoch": "complete-A",
+    "phase": "EFFECT_PENDING",
+    "state": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "api_status": "returned",
+    "artifact_sha256": "2ad4f3d9809c14f42a9e1907f4d225f20b86f689c3921be3c91042e6b0ffd4a8",
+    "binding": {
+      "display": ":99",
+      "role": "fixture",
+      "xid": 2097152
+    },
+    "case": "abort_initial",
+    "intent_epoch": "abort-B",
+    "phase": "PREPARE",
+    "state": [
+      1,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "api_status": "returned",
+    "artifact_sha256": "64af35c7f1c7dc3afcc07eb095b6e67819b55fce088f91400b389f1eab930938",
+    "binding": {
+      "display": ":99",
+      "role": "fixture",
+      "xid": 2097152
+    },
+    "case": "abort_unmasked_change",
+    "intent_epoch": "abort-B",
+    "phase": "PREPARE",
+    "state": [
+      0,
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "api_status": "returned",
+    "artifact_sha256": "ae75cdb90be23545e6fb9557b7a9f18797b1676e2c13425d0fbd756aebd94d64",
+    "case": "missing_fact",
+    "phase": "EFFECT_PENDING",
+    "state": [
+      1,
+      1,
+      null,
+      0
+    ]
+  },
+  {
+    "api_status": "returned",
+    "artifact_sha256": "7b3b4578658edc4c695a9950c606bae0bae43c0a1dbb477669f177261073f773",
+    "case": "contradictory_fact",
+    "phase": "EFFECT_PENDING",
+    "state": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  {
+    "api_status": "returned",
+    "artifact_sha256": "150feda4684a85d5442c4ecf46bdbcab2c5f54335205cfed4425d7bc3221120f",
+    "case": "partial_observation",
+    "phase": "EFFECT_PENDING",
+    "state": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  {
+    "api_status": "returned",
+    "artifact_sha256": "7b3b4578658edc4c695a9950c606bae0bae43c0a1dbb477669f177261073f773",
+    "case": "stale_observation",
+    "phase": "EFFECT_PENDING",
+    "state": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  {
+    "api_status": "returned",
+    "case": "target_replacement",
+    "new_xid": 2097194,
+    "old_xid": 2097152,
+    "state": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  {
+    "api_calls": 0,
+    "case": "ambiguous_target",
+    "matching_xids": [
+      2097194,
+      2097199
+    ]
+  },
+  {
+    "api_status": "returned",
+    "case": "intent_epoch_mismatch",
+    "state": [
+      1,
+      1,
+      1,
+      0
+    ]
+  }
+]

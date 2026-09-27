@@ -1,0 +1,11 @@
+Pre-freeze construction launch — no #4447 evidence mounted or read.
+
+Command: Docker Desktop, python:3.13.5-slim-bookworm, linux/amd64, --network none, --read-only, python -I -S -B /study/test_verify_receipts.py
+
+First outcome:
+Traceback (most recent call last):
+  File "/study/test_verify_receipts.py", line 4, in <module>
+    from verify_receipts import child, co_states, ordered_states
+ModuleNotFoundError: No module named 'verify_receipts'
+
+Cause: Python isolated mode (-I) excludes the script directory from sys.path. This was a launcher/import failure before any corpus or scientific evidence was read; no formal allocation was consumed. The script-relative import was corrected before source freeze.

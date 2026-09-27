@@ -1,0 +1,7 @@
+{
+  "context": "orbstack",
+  "conditions": {
+    "direct_mcp_image": "docker --context orbstack run -d --name issue-3370-pair-direct --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=256m --tmpfs /run:rw,nosuid,nodev,size=64m --mount type=bind,src=/private/tmp/3370-delivery-comparison,dst=/workspace,readonly --mount type=bind,src=/private/tmp/3370-delivery-comparison/research/integration/issue_3370_delivery_comparison_v1/evidence,dst=/evidence --shm-size=512m -e ISSUE3370_SEED=991123 -e DELIVERY_CONDITION=direct_mcp_image --entrypoint /opt/mcp/bin/python issue-3370-native-mcp-orbstack:20260920-r2 /workspace/research/integration/issue_3370_delivery_comparison_v1/client.py",
+    "saved_file_view_image": "docker --context orbstack run -d --name issue-3370-pair-saved --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=256m --tmpfs /run:rw,nosuid,nodev,size=64m --mount type=bind,src=/private/tmp/3370-delivery-comparison,dst=/workspace,readonly --mount type=bind,src=/private/tmp/3370-delivery-comparison/research/integration/issue_3370_delivery_comparison_v1/evidence,dst=/evidence --shm-size=512m -e ISSUE3370_SEED=991123 -e DELIVERY_CONDITION=saved_file_view_image --entrypoint /opt/mcp/bin/python issue-3370-native-mcp-orbstack:20260920-r2 /workspace/research/integration/issue_3370_delivery_comparison_v1/client.py"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "allocation": "Issue 2918 live MANIPULATE_TO certificate transfer allocation 02",
+  "status": "HOLD_LINEAGE_AND_AUDIT_PERSISTENCE",
+  "formal_runner_exit_code": 0,
+  "formal_cases": 12,
+  "public_observation_api_returns": 11,
+  "ambiguous_case_api_calls": 0,
+  "png_artifacts": 11,
+  "candidate_dispositions": {
+    "FORWARD": 3,
+    "SUPPRESS": 2,
+    "YIELD": 7
+  },
+  "observed_suppressions": [
+    {"case": "complete_unmasked_change", "reused_mask": ["E", "S"], "changed": ["D", "T"]},
+    {"case": "abort_unmasked_change", "reused_mask": ["S"], "changed": ["D", "E", "T"]}
+  ],
+  "masked_change": {"case": "complete_masked_change", "disposition": "FORWARD", "changed": ["E"]},
+  "fail_open_cases": ["missing_fact", "contradictory_fact", "partial_observation", "stale_observation", "target_replacement", "ambiguous_target", "intent_epoch_mismatch"],
+  "runner_output": "/tmp/issue2918-formal-v2.797wSL",
+  "independent_audit_exit_code": 1,
+  "independent_audit_failure": "OSError: [Errno 30] Read-only file system: '/out/independent_audit.json'",
+  "audit_assertions": "The frozen auditor reached the final report-write statement, so its preceding assertions did not raise. Its nonzero exit and missing retained report mean the audit is not accepted as a successful audit.",
+  "additional_gate_gap_found_on_read_only_review": "Frozen result rows omit the artifact SHA/native XID/binding/intent epoch/generation lineage for target_replacement and intent_epoch_mismatch. The frozen audit does not require those fields, so it did not independently reconcile every preregistered case. Those two capture PNGs cannot be joined to their oracle rows by hash in the retained JSON.",
+  "unsafe_suppression_observed": 0,
+  "conclusion": "This is a HOLD, not PASS and not a negative hypothesis result. The two observed candidate suppressions are consistent with the frozen masks, the masked change forwards, and all seven fail-open cases yielded; however the full lineage and retained independent-audit gates are incomplete.",
+  "retry": "No runner or auditor retry under allocation 02. Any further validation requires a separately preregistered successor allocation."
+}

@@ -1,0 +1,58 @@
+{
+  "schema": "compact-symbol-preflight-2506-v1",
+  "status": "PASS_COMPACT_SEMANTIC_EQUIVALENCE_PREFLIGHT",
+  "scope": "representation_integrity_only",
+  "model_run": false,
+  "authority_grants": 0,
+  "cases": 9,
+  "passed": 9,
+  "independent_oracle": true,
+  "rows": [
+    {
+      "case": "ordinary",
+      "pass": true,
+      "compact": "G=explore|P=audit|S=ready"
+    },
+    {
+      "case": "all-known",
+      "pass": true,
+      "compact": "G=G1|P=P2|R=low|S=hold"
+    },
+    {
+      "case": "unknown-explicit",
+      "pass": true,
+      "compact": "G=?|?=provider"
+    },
+    {
+      "case": "ordering",
+      "pass": true,
+      "compact": "G=explore|P=audit|S=ready"
+    },
+    {
+      "case": "empty-rejected",
+      "pass": true,
+      "compact": "REJECT"
+    },
+    {
+      "case": "tamper",
+      "pass": true,
+      "expected": "reject"
+    },
+    {
+      "case": "duplicate",
+      "pass": true,
+      "expected": "reject"
+    },
+    {
+      "case": "dictionary-mismatch",
+      "pass": true,
+      "expected": "reject"
+    },
+    {
+      "case": "extra-field",
+      "pass": true,
+      "expected": "reject"
+    }
+  ],
+  "result_sha256": "548d72c83837e143b15a8b087d24f62afbe497f713ec0d393df3f241b5c4369f"
+}

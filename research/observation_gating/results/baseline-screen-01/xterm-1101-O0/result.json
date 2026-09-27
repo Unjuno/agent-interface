@@ -1,0 +1,24 @@
+{
+  "app": "xterm",
+  "audit_pass": false,
+  "elapsed_to_error_ms": 2017.586253,
+  "error": "Traceback (most recent call last):\n  File \"/mnt/c/Users/junny/Documents/New project/agent-interface/research/observation_gating/gui_suite.py\", line 417, in episode\n    session = Session()\n              ^^^^^^^^^\n  File \"/mnt/c/Users/junny/Documents/New project/agent-interface/research/observation_gating/gui_suite.py\", line 81, in __init__\n    super().__init__()\n  File \"/mnt/c/Users/junny/Documents/New project/agent-interface/research/real_apps_v1/real_app_suite_v1.py\", line 27, in __init__\n    self._wait(lambda:sock.exists(),2.0,'Xvfb')\n  File \"/mnt/c/Users/junny/Documents/New project/agent-interface/research/real_apps_v1/real_app_suite_v1.py\", line 44, in _wait\n    raise TimeoutError(label)\nTimeoutError: Xvfb\n",
+  "model_calls": 0,
+  "parameters": {
+    "char_gap_ms": 2.0,
+    "display": "Xvfb 1280x800x24 + Openbox + XTEST",
+    "first_feedback": "fresh image or timestamped unchanged-image reference with public X11 context",
+    "first_feedback_is_semantic_completion": false,
+    "gate": "exact dimensions + mode + immutable pixel bytes; no hash/threshold",
+    "model_calls": 0,
+    "motion_gap_ms": 4.0,
+    "oracle_timeout_s": 3.0,
+    "poll_ms": 16.0,
+    "press_dwell_ms": 5.0,
+    "public_timeout_s": 4.0,
+    "reset": "fresh X server, WM, application process, HOME, XDG and profile per episode"
+  },
+  "seed": 1101,
+  "strategy": "O0",
+  "success": false
+}

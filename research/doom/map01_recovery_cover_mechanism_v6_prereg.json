@@ -1,0 +1,19 @@
+{
+  "schema": "map01-recovery-cover-mechanism-v6-prereg",
+  "allocation_id": "map01-recovery-cover-mechanism-live-v6-01",
+  "status": "FROZEN_CONSTRUCTION_BEFORE_FORMAL_WORKFLOW",
+  "supersedes": {
+    "allocation_id": "map01-recovery-cover-mechanism-live-v5-01",
+    "workflow_run_id": 34981549560,
+    "disposition": "FORMAL_RUN_COMPLETED_BUT_POSTHOC_INVALID_PLANNER_WINDOW_BOUNDARY",
+    "artifact_id": 10401209638,
+    "artifact_sha256": "ac9673b542db674a5dbc43b80202ab553f0d789c9e27f9c443a46ac1a3232bee",
+    "reason": "coast planner windows included the optional three-second release wait because planner_end_ns was sampled after cleanup"
+  },
+  "scientific_condition": "identical to v4/v5: three counterbalanced pairs, map01-threat-contact-v2 seed 990619, 180 ms d prelude, 600 ms fixed delay, five 50 ms d recovery pulses, 400 ms lease, 1000 ms source age, zero model calls",
+  "measurement": "unchanged windowed-any-key-occupancy-v1; planner end now sampled immediately after delay before fallback cleanup",
+  "event_waiting": "retain v5 non-destructive unmatched-event queue",
+  "decision_thresholds": "unchanged from v4: PASS_MECHANISM_ONLY requires every pair continuity-improved and paired median reduction >=10%; HOLD otherwise if valid; hard gate failure => FAIL",
+  "execution_policy": {"one_run_per_allocation":true,"no_retry_same_allocation":true,"retain_first_outcome":true,"construction_and_workflow_separate":true},
+  "claim_scope": "zero-model real-MAP01 local continuation mechanism only; not frontier-model efficacy"
+}

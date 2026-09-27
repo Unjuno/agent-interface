@@ -1,0 +1,28 @@
+{
+  "controls_pass": true,
+  "corruption_controls": {
+    "changed_evidence": true,
+    "frame_shape": true,
+    "pixel_identity": true,
+    "relevant_suppression": true,
+    "stale_suppression": true
+  },
+  "decision": "PASS_O3_X11_RELEVANCE_TRANSFER_SCOPED",
+  "errors": [],
+  "metrics": {
+    "avoided_full_image_bytes": 8988,
+    "candidate_oracle_mismatch": 0,
+    "counts": {
+      "CRITICAL_OUTSIDE": 12,
+      "CURRENT_IRRELEVANT": 12,
+      "CURRENT_RELEVANT": 12,
+      "FRESH_POST_SHIFT_IRRELEVANT": 12,
+      "MISSING_RECEIPT": 12,
+      "SHIFT_STALE_HIDDEN": 12
+    },
+    "rows": 72,
+    "sessions": 12,
+    "static_stale_false_suppressions": 12
+  },
+  "pass": true
+}

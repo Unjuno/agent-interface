@@ -1,0 +1,16 @@
+{
+  "allocation": "issue4466-visibility-formal01",
+  "auditor": "research/integration/gtk_pixel_stability_4466_v1/audit_visibility.py",
+  "frozen_auditor_source_sha256": "490989C3E25D7EA4FAB61731805EB251A0C4EB1BA828628A04327D121EC5D6E5",
+  "status": "AUDIT_RUNTIME_ERROR",
+  "formal_run_rerun": false,
+  "stage": "serializing independently computed audit result",
+  "exception": "TypeError",
+  "message": "keys must be str, int, float, bool or None, not tuple",
+  "trace": [
+    "audit_visibility.py:369 in <module> -> main()",
+    "audit_visibility.py:362 in main -> json.dumps(result, indent=2, sort_keys=True)",
+    "json/encoder.py:432 -> TypeError: keys must be str, int, float, bool or None, not tuple"
+  ],
+  "interpretation": "The frozen independent audit did not emit its JSON decision artifact. This is retained as an audit implementation failure. No formal samples are rerun or replaced; audit-v2 is explicitly posthoc and cannot erase this failure."
+}

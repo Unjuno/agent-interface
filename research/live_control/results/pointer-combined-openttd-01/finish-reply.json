@@ -1,0 +1,35 @@
+{
+  "status": "boundary",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "op": "finish",
+        "transport_request_id": "cdfdb698-c9e9-43d4-b0ef-365669ada236"
+      },
+      "emitted_ns": 362829899763
+    },
+    {
+      "event": "independent_evaluation",
+      "success": true,
+      "checks": {
+        "target_owned_roads": true,
+        "bidirectional_connections": true,
+        "forbidden_row_clear": true,
+        "surrounding_road_owner_unchanged": true
+      },
+      "changed_surrounding_tiles": [],
+      "legacy_success": true,
+      "emitted_ns": 363571089622
+    }
+  ],
+  "cursor": 37,
+  "returned_ns": 363574404584,
+  "authority": "none",
+  "acknowledgement": "not implied",
+  "command_receipt": {
+    "request_id": "cdfdb698-c9e9-43d4-b0ef-365669ada236",
+    "replayed": false,
+    "state": "stdin_flushed"
+  }
+}

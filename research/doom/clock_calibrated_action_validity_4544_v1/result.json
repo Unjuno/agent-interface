@@ -1,0 +1,84 @@
+{
+  "experiment": "clock_calibrated_action_validity_4544_v1",
+  "source_commit": "91b5143989403754b360738c445f72b68b673718",
+  "source_blobs": {
+    "action_validity_admission_v1.py": "31bd30bd9baf6b7d56494cc3a18b2c6c70ffbc5e",
+    "running_action_guard_v1.py": "d54047e78bc76f53ef47c6f70fd4a3be6318f09c"
+  },
+  "source_sha256": {
+    "action_validity_admission_v1.py": "f102cbde4f0e46c9f8e974e9f0a7d1c47f3fc662d7c8ba32699d16799d3db98a",
+    "running_action_guard_v1.py": "2d5feb69efd59fdca22e0db9e561923411490eb758eab9e2b8379714e20e5c62"
+  },
+  "image": "issue2679-map01-runtime@sha256:029e1867aeb843f2d63080343bfbb61540b64852ce00d4d99ec0be51796a093e",
+  "platform": "linux/arm64",
+  "network": "none",
+  "root_read_only": true,
+  "samples": [
+    {
+      "probe": 1,
+      "host_before_ns": 15598434459250,
+      "container_capture_ns": 14859470998659,
+      "host_after_ns": 15598667112375
+    },
+    {
+      "probe": 2,
+      "host_before_ns": 15598769735791,
+      "container_capture_ns": 14859794740452,
+      "host_after_ns": 15599113997750
+    },
+    {
+      "probe": 3,
+      "host_before_ns": 15599194169125,
+      "container_capture_ns": 14860213238731,
+      "host_after_ns": 15599414455083
+    }
+  ],
+  "common_offset_host_minus_container_ns": [
+    738980930394,
+    739196113716
+  ],
+  "uncertainty_ns": 215183322,
+  "conservative_capture_translation": "container_capture + common_offset_lower",
+  "controller_decided_ns": 15599509469625,
+  "max_current_age_ns": 30000000000,
+  "rows": [
+    {
+      "case": "raw_mixed_domain",
+      "capture_ns": 14860213238731,
+      "decision_ns": 15599509469625,
+      "apparent_age_ns": 739296230894,
+      "validity_status": "REJECTED_STALE",
+      "validity_reason": "current_snapshot_too_old",
+      "guard_state": "CANCEL_REQUIRED",
+      "current_input_authority": false,
+      "requires_new_decision": true,
+      "invalidation_kind": "action_validity"
+    },
+    {
+      "case": "conservative_same_session_translation",
+      "capture_ns": 15599194169125,
+      "decision_ns": 15599509469625,
+      "apparent_age_ns": 315300500,
+      "validity_status": "VALID_CURRENT",
+      "validity_reason": "all_authored_observable_predicates_hold",
+      "guard_state": "INPUT_ACTIVE",
+      "current_input_authority": true,
+      "requires_new_decision": false,
+      "invalidation_kind": null
+    },
+    {
+      "case": "translated_31s_older_control",
+      "capture_ns": 15568194169125,
+      "decision_ns": 15599509469625,
+      "apparent_age_ns": 31315300500,
+      "validity_status": "REJECTED_STALE",
+      "validity_reason": "current_snapshot_too_old",
+      "guard_state": "CANCEL_REQUIRED",
+      "current_input_authority": false,
+      "requires_new_decision": true,
+      "invalidation_kind": "action_validity"
+    }
+  ],
+  "disposition": "PASS_SCOPED",
+  "scope": "One construction-only guard fixture; no physical Executor input, model, game, GUI, or formal allocation."
+}

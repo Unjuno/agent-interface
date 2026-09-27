@@ -1,0 +1,33 @@
+{
+  "schema": "agent-interface/text-observed-prefix-resume-publication-v1",
+  "result_id": "text-observed-prefix-resume-v1-20260916-01",
+  "source_plan_freeze": "daecf60811de0acacac115e4e1bc9d0621aa06b4",
+  "formal_gui_reruns": 0,
+  "trial_count": 60,
+  "raw_report": {
+    "sha256": "a3c96f974ba0592808b523dca524b5b8aba366ad9db8cd225616cf99f3caac5f",
+    "bytes": 42726,
+    "published_as": "report.json.gz.b64",
+    "decode": "base64-decode then gzip-decompress"
+  },
+  "published_blobs": {
+    "REPORT.md": "e554ba7b0c868f4f41fcf582abc0ee02ab5e1f9c",
+    "audit-summary.json": "4ceb3c356f35ef98992f693364878c5f4036ea77",
+    "source-check.json": "cc1a7db758827e1321ef2a65185d313ff07ce8cf",
+    "unittest.txt": "e43adfd65694f972988243f1206a6477d9048c05",
+    "receipts.json": "9cf3784d5bf87e5c538b48fd94fcec8d6767c604",
+    "report.json.gz.b64": "b380d228e03bbf4500e25afcd884ccca39492bb6"
+  },
+  "decision_summary": {
+    "blind_full_retry": {"exact": 0, "total": 20, "refusals": 0},
+    "sender_count_suffix": {"exact": 5, "total": 20, "refusals": 0},
+    "observed_prefix_suffix": {"exact": 10, "total": 20, "refusals": 10},
+    "observed_prefix_recoverable_cases": "10/10 exact",
+    "observed_prefix_nonprefix_cases": "10/10 zero-input refusal"
+  },
+  "interpretation_note": "gate_pass for negative controls means the predeclared unsafe outcome was reproduced; it is not task success",
+  "omitted_local_only": [
+    "full stdout/stderr duplication",
+    "temporary Xvfb/Openbox process logs"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "container_engine": "Docker Desktop local daemon",
+  "docker_server": "29.8.0",
+  "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "image_ref": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "image_platform": "linux/amd64",
+  "execution_platform": "linux/amd64",
+  "python": "3.12.14 (main, Sep 19 2026, 01:04:57) [GCC 14.2.0]",
+  "openssl": "OpenSSL 3.5.7 9 Jun 2026",
+  "glibc": "2.41",
+  "kernel": "Linux 6.6.114.1-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+  "docker_limits": {
+    "cpus": 1,
+    "memory": "1g",
+    "pids": 64,
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "input_mount": "read-only",
+    "tmpfs": "/tmp 64 MiB"
+  },
+  "image_pull": false,
+  "packages_installed": false,
+  "arm64_runtime_available": false,
+  "arm64_probe": "docker run --platform linux/arm64 --pull=never ... failed: local image does not provide linux/arm64"
+}

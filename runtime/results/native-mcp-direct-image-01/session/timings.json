@@ -1,0 +1,67 @@
+[
+  {
+    "tool": "native_start",
+    "arguments": {
+      "timeout": 5
+    },
+    "sdk_entry_ns": 27649275102281,
+    "sdk_return_ns": 27654052333430,
+    "is_error": false
+  },
+  {
+    "tool": "native_submit",
+    "arguments": {
+      "stage": 1,
+      "decision": {
+        "source_sequence": 1,
+        "point": [
+          600,
+          378
+        ],
+        "tail": [
+          {
+            "op": "wait_update",
+            "timeout_ms": 50
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "Right"
+            ],
+            "repeat": 18
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 50
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "CTRL",
+              "s"
+            ]
+          }
+        ],
+        "expected_title": "shape.svg - Inkscape",
+        "finish_after": true
+      }
+    },
+    "sdk_entry_ns": 27670159779935,
+    "sdk_return_ns": 27671182249135,
+    "is_error": false
+  },
+  {
+    "tool": "native_status",
+    "arguments": {},
+    "sdk_entry_ns": 27671192462070,
+    "sdk_return_ns": 27671203740624,
+    "is_error": false
+  },
+  {
+    "tool": "native_status",
+    "arguments": {},
+    "sdk_entry_ns": 27671311384735,
+    "sdk_return_ns": 27671313993959,
+    "is_error": false
+  }
+]

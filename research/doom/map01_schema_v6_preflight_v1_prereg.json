@@ -1,0 +1,31 @@
+{
+  "allocation_id": "map01-schema-v6-preflight-01",
+  "frozen_at": "2026-09-15",
+  "schema": "research/doom/map01_cover_policy_schema_v6.json",
+  "output": "results-local/doom/map01-schema-v6-preflight-01",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "low",
+  "endpoint_request_limit": 1,
+  "retry_limit": 0,
+  "image_inputs": 0,
+  "gui_authority": false,
+  "preconditions": [
+    "all source_sha256 entries match",
+    "results-local/doom/map01-schema-v6-preflight-01 is absent",
+    "run from WSL with the recorded Luna-low preflight path"
+  ],
+  "decision_rules": {
+    "ENDPOINT_COMPATIBLE": "record exact output and usage; schema may proceed to a separately preregistered v33 live allocation",
+    "ENDPOINT_INCOMPATIBLE": "retain exact refusal; hold v33 live allocation and version any schema change",
+    "PREFLIGHT_FAILED_OR_EXCEPTION": "retain exact partial artifacts and failure; do not retry this allocation"
+  },
+  "source_sha256": {
+    "research/doom/map01_cover_policy_schema_v6.json": "a77d371468868eb216aeced1adb9b38ca9e1ccbb350fc1404069897686cd7bb1",
+    "research/doom/run_map01_schema_v6_preflight_v1.py": "d1413b1683d1af2babdd277ca5a8b18264b9276884c888819c57b131a4aeda35",
+    "research/doom/audit_map01_schema_v6_preflight_v1.py": "e1ef6f47adb03ceb58a8ed5491a277038ffe86bc805d3b7da2572b172ae98fbd",
+    "research/live_control/schema_preflight_v1.py": "798a0967a65208afb90b7c71aac144a91822bcace69deede3f71c92e9a9fcb9b",
+    "research/live_control/target_handle_model_runner_v2.py": "db7f28c611fe12d648edab3e9fbd54afa89f6764c80b2be9f2642063b31baaf2",
+    "research/live_control/schema_preflight_responder_v1.txt": "fd2785852cd55d2a742fba02f3f214839c912a016e9782339e1eb888d2cfb4ef"
+  },
+  "scope": "one actual no-GUI endpoint schema-compatibility observation; no semantic-quality, timing, gameplay, survival, completion or input-authority claim"
+}

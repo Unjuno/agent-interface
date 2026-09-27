@@ -1,0 +1,3 @@
+# Construction pilot 03 — runner passed, first audit held
+
+The four-row exploratory runner reached all gates: each InputOnly receiver received the diagnostic and candidate formula, all three German rows showed query `de` and a changed client core map, unsupported Euro was refused without emission/log growth, and release state was empty. The first independent audit was held because its own event-order predicate incorrectly assumed one press/release pair per key; X11 chords correctly emit modifier press, key press, key release, modifier release. Raw output and receiver logs are retained. See pilot 04 for the corrected read-only audit and corruption controls. Not formal evidence.

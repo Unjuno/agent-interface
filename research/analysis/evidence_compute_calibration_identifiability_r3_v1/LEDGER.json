@@ -1,0 +1,79 @@
+{
+  "task":"EVIDENCE-COMPUTE-CALIBRATION-IDENTIFIABILITY-R3-20260919-001",
+  "required_fields":["p","g","w","reuse_rate","version_maintenance_cost"],
+  "families":[
+    {
+      "id":"o3_relevance_generation",
+      "source":"relevance_generation",
+      "job_class":"relevance-gating state machine",
+      "population":"authored 200k synthetic family mixture",
+      "fields":{"p":"AUTHORED_CONTROL","g":"MISSING","w":"MISSING","reuse_rate":"MISSING","version_maintenance_cost":"MISSING"},
+      "same_job_population":true,"commensurate_cost_model":false,"representative_population":false,
+      "reason":"40k stale-shift histories prove safety but family counts are preregistered corpus composition, not natural invalidation incidence; no compute/wait/waste/reuse/version-cost measurement"
+    },
+    {
+      "id":"x11_target_revalidation",
+      "source":"target_revalidation",
+      "job_class":"pre-input visual patch revalidation",
+      "population":"authored 2x2 stable/swap x revalidate matrix, 16 X11 sessions",
+      "fields":{"p":"AUTHORED_CONTROL","g":"WRONG_MECHANISM","w":"MISSING","reuse_rate":"MISSING","version_maintenance_cost":"MISSING"},
+      "same_job_population":true,"commensurate_cost_model":false,"representative_population":false,
+      "reason":"median 1.586ms capture is revalidation operation cost, not stable-world WAIT loss for a background compute job; stable/swap frequency is experimental design"
+    },
+    {
+      "id":"adaptive_acquisition_testdouble",
+      "source":"adaptive_acquisition",
+      "job_class":"adaptive model-acquisition caller route",
+      "population":"offline retained-record composition plus typed test doubles",
+      "fields":{"p":"TEST_DOUBLE_MECHANICS","g":"MISSING","w":"MISSING","reuse_rate":"TEST_DOUBLE_MECHANICS","version_maintenance_cost":"MISSING"},
+      "same_job_population":false,"commensurate_cost_model":false,"representative_population":false,
+      "reason":"source explicitly says zero-call reuse and one-call repair are test-double mechanics and do not demonstrate token/cost/latency improvement"
+    },
+    {
+      "id":"x11_phase_overlap",
+      "source":"phase_overlap",
+      "job_class":"effect-tail concurrency schedule",
+      "population":"authored independent/shared resource arms, 24 X11 cases",
+      "fields":{"p":"AUTHORED_CONTROL","g":"WRONG_MECHANISM","w":"WRONG_MECHANISM","reuse_rate":"MISSING","version_maintenance_cost":"MISSING"},
+      "same_job_population":false,"commensurate_cost_model":true,"representative_population":false,
+      "reason":"150.316ms overlap gain is a controlled effect-tail scheduling result, not WAIT loss for a versioned compute job; shared conflict is authored and visible-effect corruption is not obsolete-compute waste"
+    },
+    {
+      "id":"current_evidence_guard_cost",
+      "source":"guard_cost",
+      "job_class":"per-action current-evidence acquisition/validation",
+      "population":"60k matched controlled reads plus 10k authored invalidation probes",
+      "fields":{"p":"AUTHORED_CONTROL","g":"MISSING","w":"MISSING","reuse_rate":"MISSING","version_maintenance_cost":"WRONG_MECHANISM"},
+      "same_job_population":true,"commensurate_cost_model":true,"representative_population":false,
+      "reason":"0.025ms AF_UNIX guard acquisition is measured for a 57-byte action-guard record, not dependency-version maintenance for another background job; invalidations are probe schedule"
+    },
+    {
+      "id":"reuse_semantic_theorem",
+      "source":"reuse_theorem",
+      "job_class":"generic deterministic pure function theorem",
+      "population":"finite analytical state space",
+      "fields":{"p":"ANALYTIC_ONLY","g":"ANALYTIC_ONLY","w":"ANALYTIC_ONLY","reuse_rate":"ANALYTIC_ONLY","version_maintenance_cost":"MISSING"},
+      "same_job_population":false,"commensurate_cost_model":false,"representative_population":false,
+      "reason":"defines exact-version reuse safety assumptions but intentionally makes no scheduling/latency/CPU-saving empirical claim"
+    },
+    {
+      "id":"integrated_efficiency_fixed_sequence",
+      "source":"integrated_sequence",
+      "job_class":"persistent compiled GUI route over six fixed tasks",
+      "population":"one preregistered six-task cold/reuse/layout-change/repair sequence",
+      "fields":{"p":"DESCRIPTIVE_FIXED_SEQUENCE","g":"WRONG_MECHANISM","w":"MISSING","reuse_rate":"DESCRIPTIVE_FIXED_SEQUENCE","version_maintenance_cost":"MISSING"},
+      "same_job_population":true,"commensurate_cost_model":false,"representative_population":false,
+      "reason":"persistent route has cold1/reuse4/repair1 with measured task tokens/wall, but route frequencies are properties of the fixed sequence and task elapsed differences do not isolate background-job WAIT loss or obsolete compute"
+    }
+  ],
+  "forbidden_substitutions":[
+    "o3 authored stale-family fraction -> empirical p",
+    "adaptive acquisition test-double reuse branches -> empirical reuse_rate",
+    "phase-overlap wall reduction -> g for a versioned background compute job",
+    "action-guard acquisition latency -> version_maintenance_cost for another job representation",
+    "integrated fixed six-task route frequency -> generic background-job p or reuse_rate",
+    "cross-family union of individually measured pieces -> one calibrated job population"
+  ],
+  "production_estimate":null,
+  "scheduler_recommendation":null
+}

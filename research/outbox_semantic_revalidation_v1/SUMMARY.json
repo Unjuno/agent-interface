@@ -1,0 +1,47 @@
+{
+  "allocation": "osr-c1",
+  "audit_errors": 0,
+  "base": "9088adefb48b97b79828774dd954bb8161885d59",
+  "corruption_tests": {
+    "context": true,
+    "effect_count": true,
+    "sender_flag": true
+  },
+  "decision": "RETAIN relevant_version; FAIL dedup_only for semantic staleness; HOLD global_epoch as over-broad",
+  "environment": {
+    "batch": 1,
+    "cpu_count": 5,
+    "machine": "x86_64",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5",
+    "sqlite": "3.46.1"
+  },
+  "policies": {
+    "dedup_only": {
+      "cases": 150,
+      "effects": 150,
+      "false_rejects": 0,
+      "stale_effects": 50,
+      "wrong_context_snapshot": 0
+    },
+    "global_epoch": {
+      "cases": 150,
+      "effects": 50,
+      "false_rejects": 50,
+      "stale_effects": 0,
+      "wrong_context_snapshot": 0
+    },
+    "relevant_version": {
+      "cases": 150,
+      "effects": 100,
+      "false_rejects": 0,
+      "stale_effects": 0,
+      "wrong_context_snapshot": 0
+    }
+  },
+  "source_sha256": {
+    "audit.py": "59096243038493ec35cb65e39be2072e105803e07f4117006122595dd16b76f2",
+    "runner.py": "ebb73e795bcafe83e12131c5bb9108224073879f18b166ff3b4d160797c47ca6"
+  },
+  "total_cases": 450
+}

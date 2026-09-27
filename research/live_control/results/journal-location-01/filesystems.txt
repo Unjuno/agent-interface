@@ -1,0 +1,4 @@
+TARGET SOURCE   FSTYPE OPTIONS
+/      /dev/sdd ext4   rw,relatime,discard,errors=remount-ro,data=ordered
+TARGET SOURCE FSTYPE OPTIONS
+/mnt/c C:\    9p     rw,noatime,aname=drvfs;path=C:\;uid=1002;gid=1002;symlinkroot=/mnt/,cache=5,access=client,msize=65536,trans=fd,rfd=5,wfd=5

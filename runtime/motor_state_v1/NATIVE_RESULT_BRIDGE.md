@@ -1,0 +1,1 @@
+Native result to MotorState bridge\n\nPure successor for #2530. Accepts native dispatch-result-shaped data plus explicit identity/context supplied by a separate observation boundary. Never invents IDs, pointer observations, focus, task effect, or authority. Missing context is reported as missing_context; state remains OS_UNCONFIRMED.\n

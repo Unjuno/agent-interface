@@ -1,0 +1,56 @@
+{
+  "study": "openttd-drag-calibration-02",
+  "status": "PREREGISTERED_BEFORE_EXECUTION",
+  "model_calls": 0,
+  "offsets_y": [
+    -16,
+    -12,
+    -8,
+    -4,
+    0,
+    4
+  ],
+  "base_points": [
+    {
+      "x": 705,
+      "y": 240
+    },
+    {
+      "x": 673,
+      "y": 256
+    },
+    {
+      "x": 641,
+      "y": 272
+    }
+  ],
+  "fixed_program": "fresh observe; click known road toolbar; click known first directional road tool; one 600ms three-point drag; observe; independent finish",
+  "target_tiles": [
+    977,
+    978,
+    979,
+    1043,
+    1107
+  ],
+  "comparison_evidence": {
+    "offset_minus_16": "model allocation v2 changed surrounding 912..915",
+    "offset_zero": "model allocation v4 changed no scored tile",
+    "development_failure": "calibration-01 rejected unsupported Shift_L+F8 before drag"
+  },
+  "primary_measurement": "independent changed target and surrounding road-owner tiles per fresh restore",
+  "decision_rule": "use only to diagnose pixel-to-effect sensitivity; do not expose selected coordinates or engine result to a future planner",
+  "scope": "six fresh scripted episodes; no model judgment, autonomous targeting, task success, latency, token or general coordinate claim",
+  "sources": {
+    "preregister_openttd_drag_calibration_v2.py": "9d79a20b180507f82d8a1d12401fa8a037149dc9dc4fa5034994fb3fd4171e7c",
+    "probe_openttd_drag_calibration_v2.py": "095094bfdae660d750d5d742b79905557b76658de5ab14540ec7b43f29c63870",
+    "audit_openttd_drag_calibration_v2.py": "29034b0a627041d3238f897a97d42815a9d5309f434577f9f86fcd8d128057e8",
+    "pointer_socket_entry_v8.py": "01ff225f652d4c4dc400aec60156699b9397ebb0d658883bff6d64a3c05425ab",
+    "durable_submit_v4.py": "a73db793a3238fb5ec6d3e9ecfbe61284ad44d3ebfea769bc531b99d61b1a22b",
+    "received_continuation_v1.py": "7890589fbbc808b914cc6fefa43408cf727bb3b29a7fc8962451bb7a90d5027a",
+    "received_exchange_v2.py": "59353e6d405dee5084870caf4d66aa5546c02771014e7c8f09ad1e7a7901c6c3",
+    "session_v22.py": "a6b59b442f4d96e2e502c0955ebffb2c929399303759d5d53ea456ba92b44a05",
+    "openttd_task/interactive_l_v1.py": "e6c6cbcd9f68d877f4c00aa8fa9cc812bf6acd072f028aed02c1373d7c67d2de",
+    "openttd_task/guarded_l_score_v1.py": "a7f73814928df2d718f9681699cafd2380d184c0ab8abf72454af661e23c4b84",
+    "openttd_task/results/l-geometry-01/baseline.sav": "c91ea76b4dc8c280f98de2e3a4c9b34d6033c833a34fc401bd0c076a15b4bc5b"
+  }
+}

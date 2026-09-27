@@ -1,0 +1,305 @@
+[
+    {
+        "Id": "98fda1ab9b42f4e6777078e670eb27533d89da399d4975154d65cf150b1c0e8c",
+        "Created": "2026-09-26T14:19:43.539533102Z",
+        "Path": "python",
+        "Args": [
+            "/study/audit_contract.py",
+            "--evidence",
+            "/evidence",
+            "--output",
+            "/audit-out/audit.json",
+            "--study",
+            "/study",
+            "--workspace",
+            "/source"
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 1,
+            "Error": "",
+            "StartedAt": "2026-09-26T14:19:43.794009622Z",
+            "FinishedAt": "2026-09-26T14:19:44.402051663Z"
+        },
+        "Image": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+        "ResolvConfPath": "/var/lib/docker/containers/98fda1ab9b42f4e6777078e670eb27533d89da399d4975154d65cf150b1c0e8c/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/98fda1ab9b42f4e6777078e670eb27533d89da399d4975154d65cf150b1c0e8c/hostname",
+        "HostsPath": "/var/lib/docker/containers/98fda1ab9b42f4e6777078e670eb27533d89da399d4975154d65cf150b1c0e8c/hosts",
+        "LogPath": "/var/lib/docker/containers/98fda1ab9b42f4e6777078e670eb27533d89da399d4975154d65cf150b1c0e8c/98fda1ab9b42f4e6777078e670eb27533d89da399d4975154d65cf150b1c0e8c-json.log",
+        "Name": "/agent-interface-3926-audit02-20260926",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "none",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": [
+                "ALL"
+            ],
+            "CgroupnsMode": "private",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": true,
+            "SecurityOpt": [
+                "no-new-privileges"
+            ],
+            "Tmpfs": {
+                "/tmp": "rw,exec,nosuid,nodev,size=32m"
+            },
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 268435456,
+            "NanoCpus": 1000000000,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 536870912,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": 64,
+            "Ulimits": [],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "Mounts": [
+                {
+                    "Type": "bind",
+                    "Source": "C:\\Users\\junny\\Documents\\Codex\\2026-09-21\\agent-interface-3808\\research\\integration\\host_broker_exit_contract_dockerdesktop_v1",
+                    "Target": "/study",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "C:\\Users\\junny\\Documents\\Codex\\2026-09-21\\agent-interface-3808\\runtime",
+                    "Target": "/source/runtime",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "C:\\Users\\junny\\Documents\\Codex\\2026-09-21\\agent-interface-3808\\research\\integration\\host_broker_exit_contract_dockerdesktop_v1\\formal\\dockerdesktop-20260926-02\\raw",
+                    "Target": "/evidence",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "C:\\Users\\junny\\Documents\\Codex\\2026-09-21\\agent-interface-3808\\research\\integration\\host_broker_exit_contract_dockerdesktop_v1\\formal\\dockerdesktop-20260926-02\\audit",
+                    "Target": "/audit-out"
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware",
+                "/sys/devices/virtual/powercap"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": null,
+            "Name": "overlayfs"
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "C:\\Users\\junny\\Documents\\Codex\\2026-09-21\\agent-interface-3808\\research\\integration\\host_broker_exit_contract_dockerdesktop_v1",
+                "Destination": "/study",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "C:\\Users\\junny\\Documents\\Codex\\2026-09-21\\agent-interface-3808\\runtime",
+                "Destination": "/source/runtime",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "C:\\Users\\junny\\Documents\\Codex\\2026-09-21\\agent-interface-3808\\research\\integration\\host_broker_exit_contract_dockerdesktop_v1\\formal\\dockerdesktop-20260926-02\\raw",
+                "Destination": "/evidence",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "C:\\Users\\junny\\Documents\\Codex\\2026-09-21\\agent-interface-3808\\research\\integration\\host_broker_exit_contract_dockerdesktop_v1\\formal\\dockerdesktop-20260926-02\\audit",
+                "Destination": "/audit-out",
+                "Mode": "",
+                "RW": true,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "98fda1ab9b42",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "BROKER_SOURCE_PATH=/source/runtime/host_model_ipc_broker_v1.py",
+                "EVIDENCE_DIR=/evidence",
+                "BROKER_REPO_ROOT=/source",
+                "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+                "PYTHON_VERSION=3.12.14",
+                "PYTHON_SHA256=5c8462af5790baf43a321a1559dbe0db06d1be4300fb85fb53c40060668e548a"
+            ],
+            "Cmd": [
+                "/study/audit_contract.py",
+                "--evidence",
+                "/evidence",
+                "--output",
+                "/audit-out/audit.json",
+                "--study",
+                "/study",
+                "--workspace",
+                "/source"
+            ],
+            "Image": "python:3.12-slim",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "python"
+            ],
+            "OnBuild": null,
+            "Labels": {},
+            "StopTimeout": 1
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "",
+            "SandboxKey": "",
+            "Ports": {},
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "",
+            "Gateway": "",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "",
+            "IPPrefixLen": 0,
+            "IPv6Gateway": "",
+            "MacAddress": "",
+            "Networks": {
+                "none": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "MacAddress": "",
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "60a7de04c18eb1de8314b093e3bc89acdb366436565740377797e50d80a0b5d4",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": null
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:44ff437bba879d4941b710a369a8f19266aea34b29002807f0c487fabc9eec9b",
+            "size": 1746,
+            "annotations": {
+                "com.docker.official-images.bashbrew.arch": "amd64",
+                "org.opencontainers.image.base.digest": "sha256:7792b1f7702a86946cd518db72b6a407302c3e9bc1635634368b878189e8221c",
+                "org.opencontainers.image.base.name": "debian:trixie-slim",
+                "org.opencontainers.image.created": "2026-09-19T00:58:30Z",
+                "org.opencontainers.image.revision": "688a0b86bb44289df16a363e9f41d90514c1a5f9",
+                "org.opencontainers.image.source": "https://github.com/docker-library/python.git#688a0b86bb44289df16a363e9f41d90514c1a5f9:3.12/slim-trixie",
+                "org.opencontainers.image.url": "https://hub.docker.com/_/python",
+                "org.opencontainers.image.version": "3.12.14-slim-trixie"
+            },
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    }
+]

@@ -1,0 +1,19 @@
+{
+  "task":"CURRENTNESS-CRITICAL-VOCABULARY-ADEQUACY-20260918-001",
+  "base":"5f9cf330e4bfed82a5360c0df4853d5c32752347",
+  "sources":{"queue_contract":"404a452aa304b4bde73ec0182450d241e2a744af","guard":"c0955f976e3a0af6ce926f22cee4a5ddf70ef543","#1032_RESULT":"f9afddd78ad2221e45dc9f69d304362ed1a3abbb","#1042_RESULT":"107cc88f4ed3e42c867bbba08ee320050c1611f8"},
+  "kind_predicates":{"FOCUS_CHANGED":["focus_changed"],"AUTHORITY_REVOKED":["authority_revoked"],"LEASE_EXPIRED":["lease_expired"],"ACTION_REJECTED":["action_rejected"],"SAFETY_VIOLATION":["safety_violation"],"EFFECT_VERIFIED":["effect_verified"]},
+  "required_guard_cases":[
+    {"name":"hard_below_minimum","status":"HARD_INVALIDATED","reason":"below_hard_minimum","facts":{"currentness_invalidated":true,"requires_new_decision":true,"focus_changed":false,"authority_revoked":false,"lease_expired":false,"action_rejected":false,"safety_violation":false,"effect_verified":false}},
+    {"name":"unknown_signal_unavailable","status":"UNKNOWN","reason":"signal_unavailable","facts":{"currentness_invalidated":true,"requires_new_decision":true,"focus_changed":false,"authority_revoked":false,"lease_expired":false,"action_rejected":false,"safety_violation":false,"effect_verified":false}},
+    {"name":"unknown_binding_changed","status":"UNKNOWN","reason":"binding_changed","facts":{"currentness_invalidated":true,"requires_new_decision":true,"focus_changed":false,"authority_revoked":false,"lease_expired":false,"action_rejected":false,"safety_violation":false,"effect_verified":false}},
+    {"name":"unknown_source_expired","status":"UNKNOWN","reason":"source_expired","facts":{"currentness_invalidated":true,"requires_new_decision":true,"focus_changed":false,"authority_revoked":false,"lease_expired":false,"action_rejected":false,"safety_violation":false,"effect_verified":false}},
+    {"name":"unknown_nonadvancing_sequence","status":"UNKNOWN","reason":"nonadvancing_sequence","facts":{"currentness_invalidated":true,"requires_new_decision":true,"focus_changed":false,"authority_revoked":false,"lease_expired":false,"action_rejected":false,"safety_violation":false,"effect_verified":false}}
+  ],
+  "controls":[
+    {"name":"verified_focus_release","facts":{"focus_changed":true,"authority_revoked":false,"lease_expired":false,"action_rejected":false,"safety_violation":false,"effect_verified":false},"expected":["FOCUS_CHANGED"]},
+    {"name":"verified_expiry_release","facts":{"focus_changed":false,"authority_revoked":false,"lease_expired":true,"action_rejected":false,"safety_violation":false,"effect_verified":false},"expected":["LEASE_EXPIRED"]},
+    {"name":"owner_failure","facts":{"focus_changed":false,"authority_revoked":false,"lease_expired":false,"action_rejected":false,"safety_violation":true,"effect_verified":false},"expected":["SAFETY_VIOLATION"]},
+    {"name":"viewport_visible_change_only","facts":{"focus_changed":false,"authority_revoked":false,"lease_expired":false,"action_rejected":false,"safety_violation":false,"effect_verified":false},"expected":[]}
+  ]
+}

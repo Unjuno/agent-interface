@@ -1,0 +1,127 @@
+{
+  "actor_server_process_receipts": 27,
+  "construction_audit_checks": 1873,
+  "construction_cases": [
+    {
+      "app_status": "WITHIN_BOUND",
+      "backend_emissions": 2,
+      "case_id": "construction-c01",
+      "config": "bare",
+      "deadline_ns": 488156095744,
+      "interval_ns": [
+        487975498203,
+        487977713533
+      ],
+      "observer_queries": 58,
+      "scenario": "STABLE",
+      "server_status": "WITHIN_BOUND",
+      "terminal_neutral": true
+    },
+    {
+      "app_status": "UNKNOWN",
+      "backend_emissions": 2,
+      "case_id": "construction-c02",
+      "config": "bare",
+      "deadline_ns": 521853714476,
+      "interval_ns": [
+        521673081179,
+        521675369378
+      ],
+      "observer_queries": 58,
+      "scenario": "TARGET_LOSS",
+      "server_status": "WITHIN_BOUND",
+      "terminal_neutral": true
+    },
+    {
+      "app_status": "UNKNOWN",
+      "backend_emissions": 2,
+      "case_id": "construction-c03",
+      "config": "bare",
+      "deadline_ns": 524864885751,
+      "interval_ns": null,
+      "observer_queries": 3,
+      "scenario": "LOSS_OBSERVER_UNAVAILABLE",
+      "server_status": "UNKNOWN",
+      "terminal_neutral": true
+    },
+    {
+      "app_status": "WITHIN_BOUND",
+      "backend_emissions": 2,
+      "case_id": "construction-c04",
+      "config": "openbox",
+      "deadline_ns": 555990591549,
+      "interval_ns": [
+        555811751427,
+        555813978166
+      ],
+      "observer_queries": 58,
+      "scenario": "STABLE",
+      "server_status": "WITHIN_BOUND",
+      "terminal_neutral": true
+    },
+    {
+      "app_status": "UNKNOWN",
+      "backend_emissions": 2,
+      "case_id": "construction-c05",
+      "config": "openbox",
+      "deadline_ns": 559085470603,
+      "interval_ns": [
+        558905017133,
+        558907301658
+      ],
+      "observer_queries": 58,
+      "scenario": "TARGET_LOSS",
+      "server_status": "WITHIN_BOUND",
+      "terminal_neutral": true
+    },
+    {
+      "app_status": "UNKNOWN",
+      "backend_emissions": 2,
+      "case_id": "construction-c06",
+      "config": "openbox",
+      "deadline_ns": 562181256169,
+      "interval_ns": null,
+      "observer_queries": 3,
+      "scenario": "LOSS_OBSERVER_UNAVAILABLE",
+      "server_status": "UNKNOWN",
+      "terminal_neutral": true
+    }
+  ],
+  "construction_controls": 14,
+  "finite": {
+    "checks": 6916,
+    "decision": "PASS_LOCAL_INTERVAL_CONTRACT",
+    "empty_inputs": 9,
+    "errors": [],
+    "feasible_inputs": 486,
+    "hidden_witness_triples": 10296,
+    "live_gui_trials": 0,
+    "narrowed_lower_unsafe_inputs": 330,
+    "narrowed_upper_unsafe_inputs": 330,
+    "original_local_estimator_empty_promotions": 9,
+    "rows": 495
+  },
+  "finite_candidate_invocations": 1,
+  "finite_controls": 12,
+  "github_writes_this_session": 0,
+  "intake_main": "9bc9343564a1522df2cf62f4c5cfcdb38194b7c4",
+  "kind": "CONSTRUCTION_AND_ANALYTICAL_SUPPORT_ONLY",
+  "live_matrix_disposition": "STOP_PARALLEL_OWNERSHIP_BEFORE_PILOT",
+  "live_pilot_cases": 0,
+  "main_end_readback": "9bc9343564a1522df2cf62f4c5cfcdb38194b7c4",
+  "main_integrated_this_session": false,
+  "model_provider_calls": 0,
+  "new_external_scientific_network": false,
+  "no_old_results_pooled": true,
+  "parallel_issue": 4345,
+  "planned_live_pilot": 18,
+  "pr_created": false,
+  "previous_merge": "affe58482c57317f135b15b65f8e94beb8fe42ac",
+  "previous_pr": 4250,
+  "process_exit_counts": {
+    "0": 27
+  },
+  "remote_branch_created": false,
+  "remote_issue_created": false,
+  "unit_methods": 14
+}

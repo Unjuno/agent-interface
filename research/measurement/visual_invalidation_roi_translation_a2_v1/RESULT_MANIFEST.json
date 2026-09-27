@@ -1,0 +1,50 @@
+{
+  "audit_sha256": "fbe372ed3e645681072892249748fd3c2c916dad1e248a705fb19f098af07247",
+  "bounds": {
+    "diagonal": {
+      "first_d_fpr_ge_99pct": 3,
+      "first_d_fpr_gt_1pct": 3,
+      "last_d_fpr_le_1pct": 2
+    },
+    "horizontal": {
+      "first_d_fpr_ge_99pct": 5,
+      "first_d_fpr_gt_1pct": 5,
+      "last_d_fpr_le_1pct": 4
+    },
+    "vertical": {
+      "first_d_fpr_ge_99pct": 5,
+      "first_d_fpr_gt_1pct": 5,
+      "last_d_fpr_le_1pct": 4
+    }
+  },
+  "cells": 75,
+  "characterization_base64_bytes": 3129,
+  "characterization_base64_sha256": "a1c2f3babec80e8845ffbc290a4fa66f280db4c615c9e5bbd8d0f87db68eee77",
+  "characterization_gzip_bytes": 2346,
+  "characterization_gzip_sha256": "33d9890e2513b6f363bae57ed2038af13124f686f31a31f32095ef093792acdb",
+  "characterization_invocations": 1,
+  "characterization_raw_bytes": 38892,
+  "d0_max_fnr": 0.0,
+  "decision": "RETAIN_FIXED_ROI_TRANSLATION_ENVELOPE_SCOPED",
+  "independent_audit_sha256": "7613881bda22f2c6f3b0ebfd4f664d1651f1fd0452e849fc59334c917fcd8b9f",
+  "issue": 1522,
+  "max_fnr_all_cells": 0.0,
+  "pairs_per_class_per_cell": 1000,
+  "replacements": 0,
+  "reruns": 0,
+  "result_sha256": "8b748b4ca1beb4499e442453aabea5fa7283f1d6302a1902c7e78f2505f9ffb8",
+  "runtime_seconds": 10.69,
+  "seed": 149520260918002,
+  "source_git_blobs_post_result": {
+    "PLAN.md": "9024e23f87563bb8e30ff6e9bedef572384766c8",
+    "audit.py": "96f924bd99d34b6e241a44a4c7368817e5d6ca84",
+    "construction.json.gz.b64": "93dfbbb957ab263ab8f846b6c123ec5a4d666374",
+    "construction_independent_audit.json": "30395624bbf842570984d02f9d6bb89aeabdb405",
+    "construction_independent_audit_v1_failed.json": "68ae4bd24d0c7c3785d4c024114b0873a645c4f9",
+    "construction_manifest.json": "ffbd8a94a7e496b62dc0c6fd0a57abdecc6dcb70",
+    "experiment.py": "246aafe59aeeea8a6d917ba90200a2b57c79c71f",
+    "independent_audit.py": "cc5f7e749ec9f178d48a9acdc5cc8f0e2877df29"
+  },
+  "task": "VISUAL-INVALIDATION-ROI-TRANSLATION-ENVELOPE-A2-20260918-002",
+  "tuning": 0
+}

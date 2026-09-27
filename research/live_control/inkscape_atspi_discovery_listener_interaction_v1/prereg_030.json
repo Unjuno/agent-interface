@@ -1,0 +1,44 @@
+{
+  "boundaries": [
+    "path lifetime only; no selection transitions or event-content scoring",
+    "#415 retains selection-event identity allocation",
+    "private chroot fixture; PID attribution unavailable"
+  ],
+  "decision_else": "HOLD",
+  "decision_interaction": "session_listener fails path lifetime 3/3 while other three cells pass 3/3 -> SESSION_DISCOVERY_X_LISTENER_INTERACTION_DEFUNCT_OBSERVED_SCOPED",
+  "decision_reject": "all four cells preserve path/readability/name/input and mode/registration gates 3/3 -> REJECT_SESSION_DISCOVERY_X_LISTENER_INTERACTION_AS_DEFUNCT_CAUSE_SCOPED",
+  "factorial": {
+    "address_mode": ["explicit", "session"],
+    "listener": ["absent", "present"],
+    "repetitions_per_cell": 3
+  },
+  "first_outcomes_only": true,
+  "mechanism_change": false,
+  "no_retry_replacement_tuning": true,
+  "orchestration_change_only": "one case per outer invocation; no completed 029 outcome pooled or rerun",
+  "publication_base": "c79c8e5e038df428a406c72b8df2211ad20c971b",
+  "schedule": [
+    "session_listener",
+    "session_no_listener",
+    "session_listener",
+    "session_no_listener",
+    "explicit_no_listener",
+    "explicit_no_listener",
+    "session_listener",
+    "explicit_listener",
+    "session_no_listener",
+    "explicit_no_listener",
+    "explicit_listener",
+    "explicit_listener"
+  ],
+  "schema": "atspi-discovery-listener-interaction-successor-prereg-v1",
+  "source_sha256": {
+    "audit.py": "489d538bbfd2b65289bf74f7a91ae5e3dee87dd796c8529f423d89d1389aa2df",
+    "native_dbus.py": "3a6044c2f88d0828f50b5234f61390df46ee5876c1f2046fa802c481b6d3ea1e",
+    "register_listener.py": "1641aea9774cefa3ba1a94059cf26d7828b0a1e38db1c88be5ce5b73be4e7234",
+    "run_case.py": "6485d375f5270c5775332e75a7c27982c8bc6743560528b7c23d82a90ca931f5",
+    "schedule.json": "1f69fc275a55d914a4281adfb9c57d559f29117e7a356301952473e585f7dff6"
+  },
+  "successor_of": "INKSCAPE-ATSPI-DISCOVERY-LISTENER-INTERACTION-20260916-029",
+  "task": "INKSCAPE-ATSPI-DISCOVERY-LISTENER-INTERACTION-20260916-030"
+}

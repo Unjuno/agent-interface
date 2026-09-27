@@ -1,0 +1,64 @@
+{
+  "events": 60,
+  "exact_frames": 12,
+  "append_records": 17,
+  "socket_calls": 10,
+  "history_mode": "last",
+  "requested_tier": "fast",
+  "model_turns": [
+    {
+      "turn": 1,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 12857,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 154,
+        "reasoning_output_tokens": 61
+      },
+      "runner_wall_ms": 7146.3587,
+      "supervisor_model_return_to_publish_ms": 12.0855,
+      "supervisor_publish_to_applied_ms": 1101.9921,
+      "linux_proposal_to_result_ms": 1046.671787,
+      "source_to_fresh_capture_ms": 7551.195513
+    },
+    {
+      "turn": 2,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 13315,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 91,
+        "reasoning_output_tokens": 29
+      },
+      "runner_wall_ms": 6336.2383,
+      "supervisor_model_return_to_publish_ms": 13.0169,
+      "supervisor_publish_to_applied_ms": 894.7419,
+      "linux_proposal_to_result_ms": 853.515208,
+      "source_to_fresh_capture_ms": 6718.858711
+    },
+    {
+      "turn": 3,
+      "kind": "verify",
+      "usage": {
+        "input_tokens": 13275,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 109,
+        "reasoning_output_tokens": 57
+      },
+      "runner_wall_ms": 6414.8096
+    }
+  ],
+  "save_chords": 1,
+  "saved_cells": [
+    480,
+    192
+  ],
+  "xlsx_sha256": "32b2545c6c0ea84b668503d004ce39b99ac85c6ea64491f5de6cc0fdade39329",
+  "supervisor_start_to_verified_exit_ms": 26680.9629,
+  "linux_initial_capture_to_evaluation_ms": 22624.889033,
+  "scope": "one predeclared requested-tier comparison episode; current outcome only, no population/human parity claim",
+  "audit_sha256": "bf83ab113717d339af82b438f425777169283eca031f305eb7fe88436d023921"
+}

@@ -1,0 +1,26 @@
+{
+  "bundle_tar_bytes": 40960,
+  "bundle_tar_sha256": "1cd0be0066681d75d9ef7a48d031e4d4d6ad35caeab583b22f0aca9555f56398",
+  "bundle_xz_bytes": 19920,
+  "bundle_xz_sha256": "51363f78f45dc12d5fa0ec4d9e7c460775d8095ff5f3a7a48b0b6602494ffcfb",
+  "canonical_parts": [
+    {"path":"result_bundle.part00.b64","bytes":6000,"git_blob":"f52bdc951da43787697b04671498438dfffdb6c3"},
+    {"path":"result_bundle.part01.b64","bytes":6000,"git_blob":"408d5e64cc8237bff0a1c0c8ec3d61a3448a1c94"},
+    {"path":"result_bundle.part02a_exact.b64","bytes":3000,"git_blob":"2f56dbcccdd794482d61c183abb5067becf86606"},
+    {"path":"result_bundle.part02b.b64","bytes":3000,"git_blob":"6142a78c5c5cad4d6bb357093c59383ec630c3f9"},
+    {"path":"result_bundle.part03.b64","bytes":6000,"git_blob":"065c0666cf673a4cbfc0f0df9ea38578b2150102"},
+    {"path":"result_bundle.part04.b64","bytes":2560,"git_blob":"d278d4ba031616cbc3b30d6a18fb3fbb81d783a6"}
+  ],
+  "files": {
+    "audit_result.json": {"bytes":5864,"sha256":"49c22541d3a85c06d205908e71e013fe67fee4ab2ff40091baf84aedd7ed9812"},
+    "decode_raw.py": {"bytes":475,"sha256":"915420cb4ccafe2623bc6e841a66c4c7010c72a9caf9e01cb7137ff27da76ea4"},
+    "postformal_negative_tests.json": {"bytes":315,"sha256":"a098c65703ce597de754f98aac8eede30d4e65ea4f335b5472fbd478edecb9a3"},
+    "posthoc_alignment.json": {"bytes":6391,"sha256":"28682ada6677ae4b227b2ba1ad1772b583a5a5fc923e5978d9f3c3cd5381ed93"},
+    "publication.json": {"bytes":964,"sha256":"676561eff5b3181530ceff7ff0383313e68453d5c316f5ebc5910d92bc79e5fb"},
+    "raw.json.xz": {"bytes":17160,"sha256":"e594310d910a27d445cfec38582a12346f5a404a20eaa1072b4a7fe8b5537803"}
+  },
+  "formal_raw_bytes": 391120,
+  "formal_raw_sha256": "5618e5df60fae4a52e55cc318e53d0a27c7141586cdabb15a42ea9abd853c68f",
+  "note": "Canonical v3 uses the Git-blob-API exact part02a. Earlier contents-API part02, part02a and part02a1 publication attempts are retained but excluded from reconstruction.",
+  "schema": "x11_gil_switch_live_target_v1_result_publication_v3"
+}

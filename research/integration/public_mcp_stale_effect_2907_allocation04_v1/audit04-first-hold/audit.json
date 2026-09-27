@@ -1,0 +1,16 @@
+{
+  "corruption_control_count": 6,
+  "corruption_controls_rejected": {
+    "drop-retained-read": true,
+    "session-split": true,
+    "split-retained-transport": false,
+    "stale-error": true,
+    "unverified-release": true,
+    "wrong-effect": true
+  },
+  "decision": "HOLD_RAW_AUDIT",
+  "errors": [],
+  "formal_decision": "PASS_PUBLIC_MCP_STALE_EFFECT_RELEASE_SCOPED",
+  "scope": "independent raw response and call-ID audit; retained reads bound to one stdio ClientSession"
+}
+

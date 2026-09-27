@@ -1,0 +1,54 @@
+{
+  "runs": [
+    {
+      "run": 1,
+      "status": "scoped_pass",
+      "saved_x": 80,
+      "watches": [
+        {
+          "stage": 1,
+          "samples": 2,
+          "latest": [
+            {
+              "id": "red-object-and-handles",
+              "changed_pixels": 892,
+              "condition": true
+            },
+            {
+              "id": "blank-page-control",
+              "changed_pixels": 0,
+              "condition": false
+            }
+          ],
+          "watch_ms": 254.784338,
+          "first_changed_known_after_action_started_ms": 776.273137
+        },
+        {
+          "stage": 2,
+          "samples": 1,
+          "latest": [
+            {
+              "id": "red-object-and-handles",
+              "changed_pixels": 3849,
+              "condition": true
+            },
+            {
+              "id": "blank-page-control",
+              "changed_pixels": 0,
+              "condition": false
+            }
+          ],
+          "watch_ms": 116.867527,
+          "first_changed_known_after_action_started_ms": 630.242009
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "status": "STOP_before_watch",
+      "reason": "release_unverified"
+    }
+  ],
+  "claims": "scoped primary-assistant use; not formal sensor acceptance",
+  "image_hash_links": 53
+}

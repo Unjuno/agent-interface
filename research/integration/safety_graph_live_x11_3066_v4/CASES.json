@@ -1,0 +1,17 @@
+{
+  "allocation": "safety-graph-live-x11-3066-20260927-v4-01",
+  "formal_order": [
+    {"case_index": 0, "config": "bare", "schedule": "cleanup_failure", "display": ":630"},
+    {"case_index": 1, "config": "openbox", "schedule": "cleanup_failure", "display": ":631"}
+  ],
+  "authority_lease_ms": 150,
+  "acceptance_grace_ms": 50,
+  "worker_wait_ms": 120,
+  "fault": "inject RuntimeError from the runtime backend release_all method after the synthetic F8 press",
+  "recovery_policy": "after the worker's typed execution_failed/recovery_required receipt is observed, invoke exactly one independent X11 supervisor release immediately",
+  "independent_release_witness": "sampled X-server keymap transition to F8 up",
+  "formal_invocations": 1,
+  "formal_reruns": 0,
+  "cell_replacements": 0,
+  "supervisor_retries": 0
+}

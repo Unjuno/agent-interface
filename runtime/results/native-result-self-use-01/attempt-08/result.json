@@ -1,0 +1,54 @@
+{
+  "schema": "golden-v3-result-v2",
+  "program_completed": true,
+  "task_success": null,
+  "authority_granted": false,
+  "status": "partial",
+  "partial_effects": [],
+  "cleanup_error": null,
+  "lifecycle": [
+    "dispatch"
+  ],
+  "usage": {},
+  "native_status": "completed",
+  "raw_dispatch": {
+    "schema": "agent-interface/runtime-dispatch-result-v1",
+    "status": "returned",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "capture.frame",
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 425400282042,
+        "ended_ns": 425507906163,
+        "emissions": 31,
+        "observations": [
+          {
+            "bytes": 288000,
+            "sha256": "1da7c0c614f7b78b89e5da4b068d7f1fb37b18ab71d2a403ede20b3e895fe353",
+            "width": 400,
+            "height": 180
+          }
+        ],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 425507904702
+          }
+        ]
+      }
+    }
+  }
+}

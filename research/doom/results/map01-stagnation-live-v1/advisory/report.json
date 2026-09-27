@@ -1,0 +1,2380 @@
+{
+  "claim": "pre-formal overlapping inference feasibility",
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "iterations": 40,
+  "decisions": [
+    {
+      "iteration": 0,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/001.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-0/temporal-sheet.png",
+      "model_image_sha256": "5b0effcc885115d152c3b5973c3a4cee48840e4a8f0743b2b7ef990954df2753",
+      "action": {
+        "assessment": "Advance toward the corridor and central doorway.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9056,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 85,
+        "reasoning_output_tokens": 38
+      },
+      "model_ns": 8492286068,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 0
+      },
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b4-89ea-7b23-bf8f-598f235d3485",
+      "controller_model_started_ns": 8028822150814,
+      "controller_model_ended_ns": 8037421251700,
+      "model_image_to_plan_accept_ns": 9032325387,
+      "fresh_observation_to_plan_accept_ns": 104515240,
+      "fresh_sequence_at_plan": 29,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 1,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/038.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-1/temporal-sheet.png",
+      "model_image_sha256": "7579352d9fe8beda4e057014e80f3114a6b027a1f623eb2551d2812ab1c697c4",
+      "action": {
+        "assessment": "Continue into the newly opened room and approach the central panel.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9635,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 94,
+        "reasoning_output_tokens": 43
+      },
+      "model_ns": 6639028952,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 0
+      },
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b4-89ea-7b23-bf8f-598f235d3485",
+      "controller_model_started_ns": 8039002892738,
+      "controller_model_ended_ns": 8045759708181,
+      "model_image_to_plan_accept_ns": 7240014367,
+      "fresh_observation_to_plan_accept_ns": 104228968,
+      "fresh_sequence_at_plan": 62,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 2,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/071.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-2/temporal-sheet.png",
+      "model_image_sha256": "2dea16e9e16b0f1bef51d91db0195310a44c704e0e2f5923db93ce9edba9f0d0",
+      "action": {
+        "assessment": "The view is pressed against a wall; correct orientation with a small left turn, then move forward.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10223,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 100,
+        "reasoning_output_tokens": 40
+      },
+      "model_ns": 7947067388,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 0
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b4-89ea-7b23-bf8f-598f235d3485",
+      "controller_model_started_ns": 8047253922789,
+      "controller_model_ended_ns": 8055298455785,
+      "model_image_to_plan_accept_ns": 8470926491,
+      "fresh_observation_to_plan_accept_ns": 136949033,
+      "fresh_sequence_at_plan": 99,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 3,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/107.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-3/temporal-sheet.png",
+      "model_image_sha256": "4ea604b50c9eab2cc3f91b5e4c745d87322121edfe529288d84ba49ab10767ea",
+      "action": {
+        "assessment": "Still facing a wall; make a larger left correction to reorient toward the room.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "medium"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10817,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 80,
+        "reasoning_output_tokens": 23
+      },
+      "model_ns": 8595076492,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 0
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "medium"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b4-89ea-7b23-bf8f-598f235d3485",
+      "controller_model_started_ns": 8056606883568,
+      "controller_model_ended_ns": 8065298975216,
+      "model_image_to_plan_accept_ns": 9139977501,
+      "fresh_observation_to_plan_accept_ns": 202998403,
+      "fresh_sequence_at_plan": 137,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 4,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/146.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-4/temporal-sheet.png",
+      "model_image_sha256": "3210cb80ed7f4144bc1d4a20707fd10ee5b4b12595f952cab037f8e03fe66c75",
+      "action": {
+        "assessment": "Newest view is pressed against a wall or panel; turn away and advance briefly to reorient.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9056,
+        "cached_input_tokens": 5888,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 103,
+        "reasoning_output_tokens": 44
+      },
+      "model_ns": 7523886652,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 0
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b5-1c61-7c42-8bb8-1fdf1ac7d5ae",
+      "controller_model_started_ns": 8066763801570,
+      "controller_model_ended_ns": 8074383212121,
+      "model_image_to_plan_accept_ns": 6086008333,
+      "fresh_observation_to_plan_accept_ns": 339252061,
+      "fresh_sequence_at_plan": 173,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 5,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/181.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-5/temporal-sheet.png",
+      "model_image_sha256": "f4240d7a186b36c261b08c179c4d70eb0df2fd271a54d1e9ca83875216e8a23c",
+      "action": {
+        "assessment": "The view remains blocked against the wall/panel. Make a stronger rightward correction, then move away.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "medium"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9653,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 83,
+        "reasoning_output_tokens": 22
+      },
+      "model_ns": 6633213324,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 0
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "medium"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b5-1c61-7c42-8bb8-1fdf1ac7d5ae",
+      "controller_model_started_ns": 8075639362789,
+      "controller_model_ended_ns": 8082407050289,
+      "model_image_to_plan_accept_ns": 7013826915,
+      "fresh_observation_to_plan_accept_ns": 152026254,
+      "fresh_sequence_at_plan": 205,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 6,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/214.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-6/temporal-sheet.png",
+      "model_image_sha256": "87aa62ab96900e57bccaa4b6ba1737e6f6f4c299066a7f577c05d6f29e5a72ad",
+      "action": {
+        "assessment": "The turn exposed the corner, but the player is still close to the wall. Continue around the corner and advance briefly.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10230,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 90,
+        "reasoning_output_tokens": 26
+      },
+      "model_ns": 10907358987,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 0
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a0b5-1c61-7c42-8bb8-1fdf1ac7d5ae",
+      "controller_model_started_ns": 8083812311702,
+      "controller_model_ended_ns": 8094811071992,
+      "model_image_to_plan_accept_ns": 11355111788,
+      "fresh_observation_to_plan_accept_ns": 1132471720,
+      "fresh_sequence_at_plan": 248,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 7,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/258.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-7/temporal-sheet.png",
+      "model_image_sha256": "4059e60877c462630e20f37e6822c9c717fb1e56dc6a14ec9ca9c6b28bc93a5e",
+      "action": {
+        "assessment": "The player is still navigating around the wall and bright panel; turn left to face away from the obstruction, then advance.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10814,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 98,
+        "reasoning_output_tokens": 34
+      },
+      "model_ns": 7451271933,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 0
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a0b5-1c61-7c42-8bb8-1fdf1ac7d5ae",
+      "controller_model_started_ns": 8096281477268,
+      "controller_model_ended_ns": 8103862398588,
+      "model_image_to_plan_accept_ns": 7819376141,
+      "fresh_observation_to_plan_accept_ns": 237564011,
+      "fresh_sequence_at_plan": 284,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 8,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/294.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-8/temporal-sheet.png",
+      "model_image_sha256": "0d7c9dc6efecd88cb1ef53f7068d8cf4490d176ed1a4e2214e912ec76105e2ef",
+      "action": {
+        "assessment": "Gray corridor view with no visible threat; make a small rightward correction and advance.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9056,
+        "cached_input_tokens": 5888,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 112,
+        "reasoning_output_tokens": 55
+      },
+      "model_ns": 6669014885,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 0
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a0b5-b2fb-7821-8523-9326f6d51618",
+      "controller_model_started_ns": 8105343096022,
+      "controller_model_ended_ns": 8112107134388,
+      "model_image_to_plan_accept_ns": 6719937749,
+      "fresh_observation_to_plan_accept_ns": 116011236,
+      "fresh_sequence_at_plan": 318,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 9,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/328.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-9/temporal-sheet.png",
+      "model_image_sha256": "c76aef3a35d6289b0692ca14c0aef6674f5f9d29d1ec2eaa87d49195b3389dde",
+      "action": {
+        "assessment": "The view is stalled against corridor geometry with a brown door-like section; change direction and probe forward briefly.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "medium"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9665,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 128,
+        "reasoning_output_tokens": 67
+      },
+      "model_ns": 7432304171,
+      "visual_revisit": {
+        "prior_iteration": 7,
+        "lag": 2,
+        "normalized_mae": 0.046978485838779956,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "isolated_revisit",
+        "matched_iteration": 7,
+        "revisits_in_last_5": 1
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "medium"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b5-b2fb-7821-8523-9326f6d51618",
+      "controller_model_started_ns": 8113565292995,
+      "controller_model_ended_ns": 8121089603159,
+      "model_image_to_plan_accept_ns": 7157839635,
+      "fresh_observation_to_plan_accept_ns": 176692981,
+      "fresh_sequence_at_plan": 355,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 10,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/364.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-10/temporal-sheet.png",
+      "model_image_sha256": "7f7cd8dfaaaf01de3168885c31e64a9cb8a8a01c9ac591576af0663cc01997bd",
+      "action": {
+        "assessment": "The newest view is a close brown door or wall panel, so try activating it and then make a brief advance.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "use",
+            "extent": "pulse"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10290,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 101,
+        "reasoning_output_tokens": 39
+      },
+      "model_ns": 7148590616,
+      "visual_revisit": {
+        "prior_iteration": 3,
+        "lag": 7,
+        "normalized_mae": 0.04085239651416122,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "isolated_revisit",
+        "matched_iteration": 3,
+        "revisits_in_last_5": 2
+      },
+      "compiled_commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b5-b2fb-7821-8523-9326f6d51618",
+      "controller_model_started_ns": 8122409346268,
+      "controller_model_ended_ns": 8129653294347,
+      "model_image_to_plan_accept_ns": 7591788673,
+      "fresh_observation_to_plan_accept_ns": 169129321,
+      "fresh_sequence_at_plan": 389,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 11,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/396.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-11/temporal-sheet.png",
+      "model_image_sha256": "84b282eb79d3608a80dbd7bd25e84545ab14fd21623bb09461de5076e8ae119f",
+      "action": {
+        "assessment": "A new room is open ahead with a visible enemy; advance while firing.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "advance_fire",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10885,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 83,
+        "reasoning_output_tokens": 36
+      },
+      "model_ns": 7448257384,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 2
+      },
+      "compiled_commands": [
+        {
+          "action": "advance_fire",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a0b5-b2fb-7821-8523-9326f6d51618",
+      "controller_model_started_ns": 8130876680468,
+      "controller_model_ended_ns": 8138418105909,
+      "model_image_to_plan_accept_ns": 7959240216,
+      "fresh_observation_to_plan_accept_ns": 277715401,
+      "fresh_sequence_at_plan": 420,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 12,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/426.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-12/temporal-sheet.png",
+      "model_image_sha256": "e76d6fe8a2be3d0abd1356f2461504dea5f51431d66b5d97794b260cf4d537ba",
+      "action": {
+        "assessment": "In an industrial room beside a raised platform; reorient away from the close wall and advance along the route.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9056,
+        "cached_input_tokens": 5888,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 148,
+        "reasoning_output_tokens": 86
+      },
+      "model_ns": 7479928373,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 2
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a0b6-39ac-7e03-813e-32ab2c2e1856",
+      "controller_model_started_ns": 8139741197975,
+      "controller_model_ended_ns": 8147329955156,
+      "model_image_to_plan_accept_ns": 8061524960,
+      "fresh_observation_to_plan_accept_ns": 311514075,
+      "fresh_sequence_at_plan": 464,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 13,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/474.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-13/temporal-sheet.png",
+      "model_image_sha256": "c0e14af29ed53acbb931c7a2453e9753f61a9628ab742dd64309e82b04700af4",
+      "action": {
+        "assessment": "The player is pressed against nearby geometry and has taken heavy damage; back away while reorienting toward the open room.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "backward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9698,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 133,
+        "reasoning_output_tokens": 68
+      },
+      "model_ns": 8116869320,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 2
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "backward",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a0b6-39ac-7e03-813e-32ab2c2e1856",
+      "controller_model_started_ns": 8148913956653,
+      "controller_model_ended_ns": 8157133253273,
+      "model_image_to_plan_accept_ns": 8684786540,
+      "fresh_observation_to_plan_accept_ns": 92166903,
+      "fresh_sequence_at_plan": 503,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 14,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/512.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-14/temporal-sheet.png",
+      "model_image_sha256": "7df418cb1c179775bd8b9ca7db621ddf4d7e0af3ed739032f9689d10dda5cc12",
+      "action": {
+        "assessment": "An enemy is visible on the upper platform; engage while moving out from the wall toward cover.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "advance_fire",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10325,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 123,
+        "reasoning_output_tokens": 63
+      },
+      "model_ns": 7199223011,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 1
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "advance_fire",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a0b6-39ac-7e03-813e-32ab2c2e1856",
+      "controller_model_started_ns": 8158674736698,
+      "controller_model_ended_ns": 8165957177177,
+      "model_image_to_plan_accept_ns": 7816611698,
+      "fresh_observation_to_plan_accept_ns": 148507620,
+      "fresh_sequence_at_plan": 549,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 15,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/558.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-15/temporal-sheet.png",
+      "model_image_sha256": "6fe9541575a4afbd5d5b257413375994acfc7d6864645dc0d1c94f6a2dc56f09",
+      "action": {
+        "assessment": "The player is alive at a stairwell corner, facing close geometry; turn toward the stairs and move up cautiously.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10942,
+        "cached_input_tokens": 10240,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 101,
+        "reasoning_output_tokens": 38
+      },
+      "model_ns": 7071187450,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 0
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a0b6-39ac-7e03-813e-32ab2c2e1856",
+      "controller_model_started_ns": 8167849632685,
+      "controller_model_ended_ns": 8175005480211,
+      "model_image_to_plan_accept_ns": 7752161537,
+      "fresh_observation_to_plan_accept_ns": 123765015,
+      "fresh_sequence_at_plan": 595,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 16,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/605.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-16/temporal-sheet.png",
+      "model_image_sha256": "9039a42f6fcf842ff2125e1662a88802a680bf3c83dff68c1c4723258b836ff9",
+      "action": {
+        "assessment": "Facing a wall after a revisit; make a bounded route change by turning right and advancing briefly.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9059,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 138,
+        "reasoning_output_tokens": 79
+      },
+      "model_ns": 7971706260,
+      "visual_revisit": {
+        "prior_iteration": 10,
+        "lag": 6,
+        "normalized_mae": 0.06037173202614379,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "isolated_revisit",
+        "matched_iteration": 10,
+        "revisits_in_last_5": 1
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a0b6-c9f7-7083-994d-b243732d8f97",
+      "controller_model_started_ns": 8176748989954,
+      "controller_model_ended_ns": 8184842404913,
+      "model_image_to_plan_accept_ns": 8560196485,
+      "fresh_observation_to_plan_accept_ns": 234126671,
+      "fresh_sequence_at_plan": 633,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 17,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/643.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-17/temporal-sheet.png",
+      "model_image_sha256": "5dd2b94070240726db5b95d45bfbf6ae4b02d527a83adf4462bbc32a6f6e9394",
+      "action": {
+        "assessment": "At a likely door or wall seam; try activating it, then move forward briefly.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "use",
+            "extent": "pulse"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9691,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 135,
+        "reasoning_output_tokens": 79
+      },
+      "model_ns": 7668447756,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 1
+      },
+      "compiled_commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b6-c9f7-7083-994d-b243732d8f97",
+      "controller_model_started_ns": 8186456103804,
+      "controller_model_ended_ns": 8194229112818,
+      "model_image_to_plan_accept_ns": 8240742407,
+      "fresh_observation_to_plan_accept_ns": 257794231,
+      "fresh_sequence_at_plan": 670,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 18,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/677.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-18/temporal-sheet.png",
+      "model_image_sha256": "d8c6e7288027e79b89835c421f287872d95e51dd8a5facad5b44e492faa82529",
+      "action": {
+        "assessment": "The view has tightened into a corner, indicating a stall; reverse direction with a bounded turn and advance.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "medium"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10323,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 99,
+        "reasoning_output_tokens": 38
+      },
+      "model_ns": 8808824729,
+      "visual_revisit": {
+        "prior_iteration": 16,
+        "lag": 2,
+        "normalized_mae": 0.05816721132897604,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "isolated_revisit",
+        "matched_iteration": 16,
+        "revisits_in_last_5": 2
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "medium"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a0b6-c9f7-7083-994d-b243732d8f97",
+      "controller_model_started_ns": 8195366042761,
+      "controller_model_ended_ns": 8204272630468,
+      "model_image_to_plan_accept_ns": 9190252696,
+      "fresh_observation_to_plan_accept_ns": 198098351,
+      "fresh_sequence_at_plan": 708,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 19,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/719.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-19/temporal-sheet.png",
+      "model_image_sha256": "77b1e48f6299c1f74aa4bf8a8ae48addc0b27b7553d832c77263a33cfbc120a0",
+      "action": {
+        "assessment": "Sustained revisit and corner view indicate a stall; break the cycle with lateral movement and retreat rather than another turn-forward sequence.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "strafe_left",
+            "extent": "medium"
+          },
+          {
+            "action": "backward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10958,
+        "cached_input_tokens": 10240,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 111,
+        "reasoning_output_tokens": 43
+      },
+      "model_ns": 7403992477,
+      "visual_revisit": {
+        "prior_iteration": 16,
+        "lag": 3,
+        "normalized_mae": 0.05962690631808279,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "sustained_revisit",
+        "matched_iteration": 16,
+        "revisits_in_last_5": 3,
+        "recent_actions": [
+          "turn_left",
+          "forward",
+          "turn_right",
+          "forward",
+          "use",
+          "forward",
+          "turn_right",
+          "forward"
+        ],
+        "instruction": "choose a bounded route change that does not repeat this action cycle"
+      },
+      "compiled_commands": [
+        {
+          "action": "strafe_left",
+          "extent": "medium"
+        },
+        {
+          "action": "backward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b6-c9f7-7083-994d-b243732d8f97",
+      "controller_model_started_ns": 8205982834637,
+      "controller_model_ended_ns": 8213471573058,
+      "model_image_to_plan_accept_ns": 7503423803,
+      "fresh_observation_to_plan_accept_ns": 282540494,
+      "fresh_sequence_at_plan": 745,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 20,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/756.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-20/temporal-sheet.png",
+      "model_image_sha256": "8040fc120ef98d6ccf4e9f679fccb5cd3efdf6827dc6e3159ea8a56b3c5bcc92",
+      "action": {
+        "assessment": "Newest view reveals a nearby open passage to the right; move toward it with a small lateral correction.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9056,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 165,
+        "reasoning_output_tokens": 104
+      },
+      "model_ns": 11269926562,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 3
+      },
+      "compiled_commands": [
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b7-6019-7082-ba86-6ee94ab56498",
+      "controller_model_started_ns": 8215157719880,
+      "controller_model_ended_ns": 8226528434805,
+      "model_image_to_plan_accept_ns": 11789359534,
+      "fresh_observation_to_plan_accept_ns": 1564039998,
+      "fresh_sequence_at_plan": 788,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 21,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/797.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-21/temporal-sheet.png",
+      "model_image_sha256": "9f9a624d7f275917e70d00ec73c33107872c605d9260752540e7c89f693976f5",
+      "action": {
+        "assessment": "The newest frame shows a clear industrial passage ahead with a likely door or control panel; advance carefully toward it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "short"
+          },
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9715,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 101,
+        "reasoning_output_tokens": 40
+      },
+      "model_ns": 7106411382,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 2
+      },
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "short"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "model_session_id": "01a0a0b7-6019-7082-ba86-6ee94ab56498",
+      "controller_model_started_ns": 8228074496365,
+      "controller_model_ended_ns": 8235288458268,
+      "model_image_to_plan_accept_ns": 7704995939,
+      "fresh_observation_to_plan_accept_ns": 317523571,
+      "fresh_sequence_at_plan": 822,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 22,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/828.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-22/temporal-sheet.png",
+      "model_image_sha256": "ec52a27c335ac31b9ef8eb5666c7bf9e5e2760695d8abe001e2c643c6902fc57",
+      "action": {
+        "assessment": "Sustained revisit evidence and the newest close wall view indicate the current approach is stalled; change route by turning left before advancing.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10355,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 154,
+        "reasoning_output_tokens": 88
+      },
+      "model_ns": 8103852924,
+      "visual_revisit": {
+        "prior_iteration": 16,
+        "lag": 6,
+        "normalized_mae": 0.0622739651416122,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "sustained_revisit",
+        "matched_iteration": 16,
+        "revisits_in_last_5": 3,
+        "recent_actions": [
+          "turn_right",
+          "forward",
+          "strafe_left",
+          "backward",
+          "strafe_right",
+          "forward",
+          "forward",
+          "use"
+        ],
+        "instruction": "choose a bounded route change that does not repeat this action cycle"
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b7-6019-7082-ba86-6ee94ab56498",
+      "controller_model_started_ns": 8236455591159,
+      "controller_model_ended_ns": 8244644837207,
+      "model_image_to_plan_accept_ns": 8518198809,
+      "fresh_observation_to_plan_accept_ns": 285963124,
+      "fresh_sequence_at_plan": 857,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 23,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/865.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-23/temporal-sheet.png",
+      "model_image_sha256": "743b39a38b718cc8ccff6257c045ed767348e121f44716aa782566ddf7e52e05",
+      "action": {
+        "assessment": "The newest view remains pressed against the hazard-striped corner; back away and reorient toward the passage.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "backward",
+            "extent": "short"
+          },
+          {
+            "action": "turn_right",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 11003,
+        "cached_input_tokens": 10240,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 106,
+        "reasoning_output_tokens": 45
+      },
+      "model_ns": 7604532673,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 2
+      },
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "short"
+        },
+        {
+          "action": "turn_right",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b7-6019-7082-ba86-6ee94ab56498",
+      "controller_model_started_ns": 8245980982490,
+      "controller_model_ended_ns": 8253698353521,
+      "model_image_to_plan_accept_ns": 8174587488,
+      "fresh_observation_to_plan_accept_ns": 115797250,
+      "fresh_sequence_at_plan": 892,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 24,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/900.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-24/temporal-sheet.png",
+      "model_image_sha256": "5788e7bd6e36716a1fc855fa3e5137d67fe3dfeda7ca0731c2f757ffc85db497",
+      "action": {
+        "assessment": "Isolated against a wall; change route with a controlled turn and brief advance.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "medium"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9059,
+        "cached_input_tokens": 5888,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 139,
+        "reasoning_output_tokens": 83
+      },
+      "model_ns": 8679471116,
+      "visual_revisit": {
+        "prior_iteration": 16,
+        "lag": 8,
+        "normalized_mae": 0.05360702614379085,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "isolated_revisit",
+        "matched_iteration": 16,
+        "revisits_in_last_5": 2
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "medium"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b7-fb99-7351-b1ef-2e79a5320f6b",
+      "controller_model_started_ns": 8254982735233,
+      "controller_model_ended_ns": 8263761446394,
+      "model_image_to_plan_accept_ns": 9198709535,
+      "fresh_observation_to_plan_accept_ns": 285266024,
+      "fresh_sequence_at_plan": 930,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 25,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/939.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-25/temporal-sheet.png",
+      "model_image_sha256": "e6bb6e6e0ffc4724cdcf46f16db582a40c430f84e3c057eb2d49b4a9211d9e72",
+      "action": {
+        "assessment": "Still facing close walls; use a lateral escape with a slight reorientation and brief advance.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9692,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 120,
+        "reasoning_output_tokens": 52
+      },
+      "model_ns": 7243173686,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 2
+      },
+      "compiled_commands": [
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b7-fb99-7351-b1ef-2e79a5320f6b",
+      "controller_model_started_ns": 8265199556848,
+      "controller_model_ended_ns": 8272589619248,
+      "model_image_to_plan_accept_ns": 7823191626,
+      "fresh_observation_to_plan_accept_ns": 109929045,
+      "fresh_sequence_at_plan": 965,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 26,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/977.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-26/temporal-sheet.png",
+      "model_image_sha256": "27b4a7c46e9ae9937218d1656d9ae0ec3cdc5bcd10320b76321e1850c9c522e9",
+      "action": {
+        "assessment": "Sustained wall revisit; break the cycle by backing away and shifting right rather than advancing into the wall.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "backward",
+            "extent": "medium"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10354,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 111,
+        "reasoning_output_tokens": 47
+      },
+      "model_ns": 7552212274,
+      "visual_revisit": {
+        "prior_iteration": 24,
+        "lag": 2,
+        "normalized_mae": 0.05289488017429194,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "sustained_revisit",
+        "matched_iteration": 24,
+        "revisits_in_last_5": 3,
+        "recent_actions": [
+          "turn_left",
+          "forward",
+          "backward",
+          "turn_right",
+          "turn_right",
+          "forward",
+          "strafe_left",
+          "turn_left",
+          "forward"
+        ],
+        "instruction": "choose a bounded route change that does not repeat this action cycle"
+      },
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "medium"
+        },
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b7-fb99-7351-b1ef-2e79a5320f6b",
+      "controller_model_started_ns": 8274346034938,
+      "controller_model_ended_ns": 8282004876157,
+      "model_image_to_plan_accept_ns": 8061640336,
+      "fresh_observation_to_plan_accept_ns": 131720408,
+      "fresh_sequence_at_plan": 1004,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 27,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/1014.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-27/temporal-sheet.png",
+      "model_image_sha256": "beb11cefc06b9347b17b58456c1a8e27d9b86853991c9f1655cbd458775288f2",
+      "action": {
+        "assessment": "The view has shifted to a corner, so continue around it with a small right correction and cautious advance.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10959,
+        "cached_input_tokens": 5888,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 94,
+        "reasoning_output_tokens": 33
+      },
+      "model_ns": 8179017018,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 2
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a0b7-fb99-7351-b1ef-2e79a5320f6b",
+      "controller_model_started_ns": 8283609303359,
+      "controller_model_ended_ns": 8291881949374,
+      "model_image_to_plan_accept_ns": 8740180848,
+      "fresh_observation_to_plan_accept_ns": 110402539,
+      "fresh_sequence_at_plan": 1041,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 28,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/1051.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-28/temporal-sheet.png",
+      "model_image_sha256": "e77651df92c28f2114cbbc1aa57c32e5ded6c498bd4782d09a4b5405ee1d6e85",
+      "action": {
+        "assessment": "Active and stalled near a wall; make a bounded leftward route correction toward the nearby opening.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          },
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9105,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 187,
+        "reasoning_output_tokens": 120
+      },
+      "model_ns": 8263048044,
+      "visual_revisit": {
+        "prior_iteration": 25,
+        "lag": 3,
+        "normalized_mae": 0.05962690631808279,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "sustained_revisit",
+        "matched_iteration": 25,
+        "revisits_in_last_5": 3,
+        "recent_actions": [
+          "turn_right",
+          "forward",
+          "strafe_left",
+          "turn_left",
+          "forward",
+          "backward",
+          "strafe_right",
+          "turn_right",
+          "forward"
+        ],
+        "instruction": "choose a bounded route change that does not repeat this action cycle"
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "model_session_id": "01a0a0b8-9238-79a2-8bc4-675efb3cd7cd",
+      "controller_model_started_ns": 8293465607454,
+      "controller_model_ended_ns": 8301819652910,
+      "model_image_to_plan_accept_ns": 8784098985,
+      "fresh_observation_to_plan_accept_ns": 143309947,
+      "fresh_sequence_at_plan": 1080,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 29,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/1090.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-29/temporal-sheet.png",
+      "model_image_sha256": "13e81c4bffef536e91e9987a1276e83acad57a774f4b1c904c81825a26298f37",
+      "action": {
+        "assessment": "Active; the view has shifted beside a nearby door or opening, so approach it and activate it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          },
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9786,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 146,
+        "reasoning_output_tokens": 78
+      },
+      "model_ns": 7540801324,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 2
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "model_session_id": "01a0a0b8-9238-79a2-8bc4-675efb3cd7cd",
+      "controller_model_started_ns": 8303408212785,
+      "controller_model_ended_ns": 8311045344988,
+      "model_image_to_plan_accept_ns": 7876395244,
+      "fresh_observation_to_plan_accept_ns": 324020128,
+      "fresh_sequence_at_plan": 1116,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 30,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/1126.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-30/temporal-sheet.png",
+      "model_image_sha256": "86a68d4a8f4626c83e22c5c51e68e2eab23288db241f931b0611182bb0cc1a9d",
+      "action": {
+        "assessment": "Active; still pressed against the doorway edge, so back out and reposition left rather than repeating the approach.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "backward",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "turn_left",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10426,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 136,
+        "reasoning_output_tokens": 64
+      },
+      "model_ns": 7478881770,
+      "visual_revisit": null,
+      "visual_memory": {
+        "status": "no_sustained_revisit",
+        "revisits_in_last_5": 2
+      },
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b8-9238-79a2-8bc4-675efb3cd7cd",
+      "controller_model_started_ns": 8312516760312,
+      "controller_model_ended_ns": 8320114113670,
+      "model_image_to_plan_accept_ns": 7985651747,
+      "fresh_observation_to_plan_accept_ns": 257669292,
+      "fresh_sequence_at_plan": 1152,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 31,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/1164.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-31/temporal-sheet.png",
+      "model_image_sha256": "71561a5aa45a41c40055e6a6a04c236bb095056a44511082d63afd3d496ae7fb",
+      "action": {
+        "assessment": "Active; the repositioning has opened a clearer passage, so turn toward it and advance cautiously.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 11059,
+        "cached_input_tokens": 10112,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 146,
+        "reasoning_output_tokens": 87
+      },
+      "model_ns": 8218856320,
+      "visual_revisit": {
+        "prior_iteration": 26,
+        "lag": 5,
+        "normalized_mae": 0.056861383442265795,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "isolated_revisit",
+        "matched_iteration": 26,
+        "revisits_in_last_5": 2
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a0b8-9238-79a2-8bc4-675efb3cd7cd",
+      "controller_model_started_ns": 8321811426473,
+      "controller_model_ended_ns": 8330119571768,
+      "model_image_to_plan_accept_ns": 8681291590,
+      "fresh_observation_to_plan_accept_ns": 388733323,
+      "fresh_sequence_at_plan": 1192,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 32,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/1202.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-32/temporal-sheet.png",
+      "model_image_sha256": "46384200ba358c42ed36b8d533bed515aa9296e7b1ac3feb77bd4fa8d658690e",
+      "action": {
+        "assessment": "Wall/door close-up with no visible threat; break the revisit by backing away and shifting right.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "backward",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9108,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 106,
+        "reasoning_output_tokens": 44
+      },
+      "model_ns": 6921044132,
+      "visual_revisit": {
+        "prior_iteration": 28,
+        "lag": 4,
+        "normalized_mae": 0.03457380174291939,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "sustained_revisit",
+        "matched_iteration": 28,
+        "revisits_in_last_5": 3,
+        "recent_actions": [
+          "turn_left",
+          "forward",
+          "use",
+          "turn_right",
+          "forward",
+          "use",
+          "backward",
+          "strafe_left",
+          "turn_left",
+          "turn_right",
+          "forward"
+        ],
+        "instruction": "choose a bounded route change that does not repeat this action cycle"
+      },
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b9-26de-7ca1-bd78-add09911b884",
+      "controller_model_started_ns": 8331606989126,
+      "controller_model_ended_ns": 8338611925170,
+      "model_image_to_plan_accept_ns": 7369135551,
+      "fresh_observation_to_plan_accept_ns": 308273989,
+      "fresh_sequence_at_plan": 1226,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 33,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/1235.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-33/temporal-sheet.png",
+      "model_image_sha256": "0ade3a11060f93741287f5f2cfcb047fa7274bf8bc29e109d0bcb157e51e2289",
+      "action": {
+        "assessment": "The newest view opens into a corridor beside the marked door; make a small left correction and advance toward the opening.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9760,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 138,
+        "reasoning_output_tokens": 75
+      },
+      "model_ns": 7403395238,
+      "visual_revisit": {
+        "prior_iteration": 27,
+        "lag": 6,
+        "normalized_mae": 0.050754357298474946,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "sustained_revisit",
+        "matched_iteration": 27,
+        "revisits_in_last_5": 3,
+        "recent_actions": [
+          "turn_right",
+          "forward",
+          "use",
+          "backward",
+          "strafe_left",
+          "turn_left",
+          "turn_right",
+          "forward",
+          "backward",
+          "strafe_right"
+        ],
+        "instruction": "choose a bounded route change that does not repeat this action cycle"
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b9-26de-7ca1-bd78-add09911b884",
+      "controller_model_started_ns": 8339978629478,
+      "controller_model_ended_ns": 8347477106271,
+      "model_image_to_plan_accept_ns": 7871618052,
+      "fresh_observation_to_plan_accept_ns": 131654629,
+      "fresh_sequence_at_plan": 1261,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 34,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/1269.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-34/temporal-sheet.png",
+      "model_image_sha256": "ce1ba3386dd9d6cd4c2e9f3004918fbfcc6d3bfb958df9d36e1ff29f739872c0",
+      "action": {
+        "assessment": "Still pressed against the wall beside the marked door; shift left and advance to seek the corridor rather than repeating the recent turn-forward pattern.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10442,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 137,
+        "reasoning_output_tokens": 69
+      },
+      "model_ns": 9488568585,
+      "visual_revisit": {
+        "prior_iteration": 26,
+        "lag": 8,
+        "normalized_mae": 0.06207244008714597,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "sustained_revisit",
+        "matched_iteration": 26,
+        "revisits_in_last_5": 4,
+        "recent_actions": [
+          "backward",
+          "strafe_left",
+          "turn_left",
+          "turn_right",
+          "forward",
+          "backward",
+          "strafe_right",
+          "turn_left",
+          "forward"
+        ],
+        "instruction": "choose a bounded route change that does not repeat this action cycle"
+      },
+      "compiled_commands": [
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a0b9-26de-7ca1-bd78-add09911b884",
+      "controller_model_started_ns": 8348804992996,
+      "controller_model_ended_ns": 8358436983153,
+      "model_image_to_plan_accept_ns": 10012230853,
+      "fresh_observation_to_plan_accept_ns": 174199361,
+      "fresh_sequence_at_plan": 1302,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 35,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/1313.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-35/temporal-sheet.png",
+      "model_image_sha256": "867cd2b9eb051db4e3b1d834a1c8cb653c775326e8b614fc336ed613445800c3",
+      "action": {
+        "assessment": "The view remains obstructed by a close wall; rotate away with a bounded right turn to find a new direction.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 11119,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 119,
+        "reasoning_output_tokens": 64
+      },
+      "model_ns": 7386707175,
+      "visual_revisit": {
+        "prior_iteration": 31,
+        "lag": 4,
+        "normalized_mae": 0.05421840958605664,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "sustained_revisit",
+        "matched_iteration": 31,
+        "revisits_in_last_5": 5,
+        "recent_actions": [
+          "turn_right",
+          "forward",
+          "backward",
+          "strafe_right",
+          "turn_left",
+          "forward",
+          "strafe_left",
+          "forward"
+        ],
+        "instruction": "choose a bounded route change that does not repeat this action cycle"
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a0b9-26de-7ca1-bd78-add09911b884",
+      "controller_model_started_ns": 8360074481929,
+      "controller_model_ended_ns": 8367554167723,
+      "model_image_to_plan_accept_ns": 7878592166,
+      "fresh_observation_to_plan_accept_ns": 98436700,
+      "fresh_sequence_at_plan": 1339,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 36,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/1344.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-36/temporal-sheet.png",
+      "model_image_sha256": "2244923bad08768abbae005cb65cb1b4a8039ee5be5e7ea28f751ca9b3c9e02e",
+      "action": {
+        "assessment": "Facing a wall beside a likely yellow-striped door; change route by turning toward it and trying the nearby door.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          },
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9100,
+        "cached_input_tokens": 5888,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 132,
+        "reasoning_output_tokens": 62
+      },
+      "model_ns": 7083425206,
+      "visual_revisit": {
+        "prior_iteration": 29,
+        "lag": 7,
+        "normalized_mae": 0.058813997821350765,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "sustained_revisit",
+        "matched_iteration": 29,
+        "revisits_in_last_5": 5,
+        "recent_actions": [
+          "backward",
+          "strafe_right",
+          "turn_left",
+          "forward",
+          "strafe_left",
+          "forward",
+          "turn_right"
+        ],
+        "instruction": "choose a bounded route change that does not repeat this action cycle"
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "model_session_id": "01a0a0b9-b6e4-7043-9e5f-f8ada5f3a22b",
+      "controller_model_started_ns": 8368493624229,
+      "controller_model_ended_ns": 8375671055553,
+      "model_image_to_plan_accept_ns": 6286175146,
+      "fresh_observation_to_plan_accept_ns": 287817498,
+      "fresh_sequence_at_plan": 1370,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 37,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/1380.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-37/temporal-sheet.png",
+      "model_image_sha256": "5cd25ac157be4bcf0958f3f4e9625c6b4b19c42ece091071ea4b80db53700937",
+      "action": {
+        "assessment": "The striped door remains immediately beside the player; pivot left toward its center and activate it without repeating the recent movement cycle.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "use",
+            "extent": "pulse"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9770,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 149,
+        "reasoning_output_tokens": 77
+      },
+      "model_ns": 7461063850,
+      "visual_revisit": {
+        "prior_iteration": 33,
+        "lag": 4,
+        "normalized_mae": 0.05327069716775599,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "sustained_revisit",
+        "matched_iteration": 33,
+        "revisits_in_last_5": 5,
+        "recent_actions": [
+          "turn_left",
+          "forward",
+          "strafe_left",
+          "forward",
+          "turn_right",
+          "turn_right",
+          "forward",
+          "use"
+        ],
+        "instruction": "choose a bounded route change that does not repeat this action cycle"
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b9-b6e4-7043-9e5f-f8ada5f3a22b",
+      "controller_model_started_ns": 8377157145767,
+      "controller_model_ended_ns": 8384708960153,
+      "model_image_to_plan_accept_ns": 7947517457,
+      "fresh_observation_to_plan_accept_ns": 224886716,
+      "fresh_sequence_at_plan": 1406,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 38,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/1416.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-38/temporal-sheet.png",
+      "model_image_sha256": "d708c2fb54e5ee35a1360730f69f52714154816be909c620db3b5e8baff523a2",
+      "action": {
+        "assessment": "Still wedged beside the striped door; turn away from the wall and take a short diagonal reposition to break the revisit loop.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10459,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 143,
+        "reasoning_output_tokens": 68
+      },
+      "model_ns": 7548131016,
+      "visual_revisit": {
+        "prior_iteration": 32,
+        "lag": 6,
+        "normalized_mae": 0.02616830065359477,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "sustained_revisit",
+        "matched_iteration": 32,
+        "revisits_in_last_5": 5,
+        "recent_actions": [
+          "strafe_left",
+          "forward",
+          "turn_right",
+          "turn_right",
+          "forward",
+          "use",
+          "turn_left",
+          "use",
+          "forward"
+        ],
+        "instruction": "choose a bounded route change that does not repeat this action cycle"
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b9-b6e4-7043-9e5f-f8ada5f3a22b",
+      "controller_model_started_ns": 8386116442492,
+      "controller_model_ended_ns": 8393765050847,
+      "model_image_to_plan_accept_ns": 8034777148,
+      "fresh_observation_to_plan_accept_ns": 315289495,
+      "fresh_sequence_at_plan": 1442,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 39,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-memory-advisory-live-01/runtime/1454.png",
+      "model_image": "results-local/doom/map01-motor-memory-advisory-live-01/decision-39/temporal-sheet.png",
+      "model_image_sha256": "bcbf19b49d450731ab0e63217876abf5b2ed95cfd4dad17fd879e2c11282e062",
+      "action": {
+        "assessment": "The door has left the view and the player is facing a blank wall; rotate left and advance briefly to find the adjoining route.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 11145,
+        "cached_input_tokens": 10112,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 129,
+        "reasoning_output_tokens": 54
+      },
+      "model_ns": 8107087686,
+      "visual_revisit": {
+        "prior_iteration": 37,
+        "lag": 2,
+        "normalized_mae": 0.04370915032679739,
+        "threshold": 0.065
+      },
+      "visual_memory": {
+        "status": "sustained_revisit",
+        "matched_iteration": 37,
+        "revisits_in_last_5": 5,
+        "recent_actions": [
+          "turn_right",
+          "turn_right",
+          "forward",
+          "use",
+          "turn_left",
+          "use",
+          "forward",
+          "turn_right",
+          "strafe_right",
+          "forward"
+        ],
+        "instruction": "choose a bounded route change that does not repeat this action cycle"
+      },
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a0b9-b6e4-7043-9e5f-f8ada5f3a22b",
+      "controller_model_started_ns": 8395534336116,
+      "controller_model_ended_ns": 8403753528926,
+      "model_image_to_plan_accept_ns": 8642657508,
+      "fresh_observation_to_plan_accept_ns": 324218184,
+      "fresh_sequence_at_plan": 1482,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    }
+  ],
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 376634022258,
+    "death_count": 0,
+    "kill_count": 2,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 8405157997650
+  },
+  "model_session_span": 4,
+  "model_session_ids": [
+    "01a0a0b4-89ea-7b23-bf8f-598f235d3485",
+    "01a0a0b5-1c61-7c42-8bb8-1fdf1ac7d5ae",
+    "01a0a0b5-b2fb-7821-8523-9326f6d51618",
+    "01a0a0b6-39ac-7e03-813e-32ab2c2e1856",
+    "01a0a0b6-c9f7-7083-994d-b243732d8f97",
+    "01a0a0b7-6019-7082-ba86-6ee94ab56498",
+    "01a0a0b7-fb99-7351-b1ef-2e79a5320f6b",
+    "01a0a0b8-9238-79a2-8bc4-675efb3cd7cd",
+    "01a0a0b9-26de-7ca1-bd78-add09911b884",
+    "01a0a0b9-b6e4-7043-9e5f-f8ada5f3a22b"
+  ],
+  "motor_contract": "semantic commands compiled to <=450ms turns and <=900ms movement",
+  "visual_memory_contract": "no forced motor override; planner receives advisory only after >=3 visual revisits in the last 5 decisions",
+  "sustained_revisit_advisories": 12,
+  "game_continued_during_model_calls": true,
+  "model_wall_seconds": 313.247144209
+}

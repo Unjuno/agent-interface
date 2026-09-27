@@ -1,0 +1,59 @@
+{
+  "status": "boundary",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "expected_sequence": 3,
+        "id": "durable-82c14595f2cf475d8a50c3e38d3671b5",
+        "op": "submit",
+        "steps": [
+          {
+            "duration_ms": 80,
+            "op": "pointer_click",
+            "x": 550,
+            "y": 106
+          },
+          {
+            "key": "a",
+            "modifier": "Control_L",
+            "op": "chord"
+          },
+          {
+            "op": "text",
+            "text": "96"
+          },
+          {
+            "key": "Return",
+            "op": "key"
+          },
+          {
+            "key": "s",
+            "modifier": "Control_L",
+            "op": "chord"
+          },
+          {
+            "op": "observe"
+          }
+        ],
+        "transport_request_id": "438a761d9b944330b50ac935e669cec9",
+        "valid_until_ns": 1
+      },
+      "received_ns": 53377936778,
+      "emit_started_ns": 53377939530
+    },
+    {
+      "event": "rejected",
+      "reason": "intent validity expired",
+      "admission": "not_admitted",
+      "op": "submit",
+      "id": "durable-82c14595f2cf475d8a50c3e38d3671b5",
+      "transport_request_id": "438a761d9b944330b50ac935e669cec9",
+      "emit_started_ns": 53385942363
+    }
+  ],
+  "cursor": 19,
+  "returned_ns": 53573016865,
+  "authority": "none",
+  "acknowledgement": "not implied"
+}

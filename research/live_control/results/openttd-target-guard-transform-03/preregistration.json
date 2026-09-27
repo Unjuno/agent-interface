@@ -1,0 +1,91 @@
+{
+  "status": "preregistered_before_fresh_openttd_execution",
+  "study": "openttd-target-guard-transform-03",
+  "seed": 991004,
+  "source_resolution": "1024x720",
+  "held_out_resolution": "1280x720",
+  "coordinate_frames": {
+    "screen_chrome_translation": {
+      "dx": 0,
+      "dy": 0,
+      "applies_to": "Road Construction toolbar and road/one-way controls"
+    },
+    "viewport_content_translation": {
+      "dx": -128,
+      "dy": 0,
+      "applies_to": "map pointer paths and boxes derived from those paths"
+    }
+  },
+  "diagnosis": "failed studies 01/02 show centered toolbar chrome and window-relative saved map content require separate transforms",
+  "order": [
+    "repeat",
+    "target"
+  ],
+  "allocations": [
+    {
+      "name": "repeat",
+      "repeat": true,
+      "expected_reason": "target_not_reached",
+      "expected_success": false
+    },
+    {
+      "name": "target",
+      "repeat": false,
+      "expected_reason": "met",
+      "expected_success": true
+    }
+  ],
+  "fixed_condition": {
+    "pixel_delta_threshold": 24,
+    "minimum_target_changed_pixels": 120,
+    "maximum_guard_changed_pixels": 20,
+    "required_samples": 2,
+    "bounded_settle_before": true
+  },
+  "primary_endpoint": "frame-specific transforms move chrome and viewport intents independently; repeat stops before continuation and target independently completes",
+  "failure_policy": "retain first result in declared order; no visual calibration, coordinate correction, retry or replacement after launch",
+  "sources": {
+    "preregister_openttd_target_guard_transform_v3.py": "ce162abae9ec7361b760b169407f1da0b2baca8ab4c8f2763876672d82ea5721",
+    "run_openttd_target_guard_transform_v3.py": "3b79b54b8c48d4e8ff793e3ed64cd2d78da006e3cfd45e4e4e9eeb8fafdae609",
+    "run_openttd_target_guard_transform_v1.py": "edbfbd516a7010a834b49678aef95c71bb6ac63799a8ca114a456b7b2522c589",
+    "target_guard_from_paths_v1.py": "00af75a8eb95f49cf27684c126f411cb28fbe9223e4850cbb4d02cfa563fbb81",
+    "pointer_socket_entry_v12.py": "a03865e6db23854153579a844de014a987cf82b06c4a529c91a70c8206246eb6",
+    "event_socket_v11.py": "e6988e4f586b1554c40a4969fbb428143cc7e10213bf303cf800d679f9e7e96c",
+    "durable_submit_v4.py": "a73db793a3238fb5ec6d3e9ecfbe61284ad44d3ebfea769bc531b99d61b1a22b",
+    "append_checkpoint_v1.py": "07e5eff9c704af3cf75e0dcb5e7b4c4d57b82e076e4ffafa320d08ee0af51741",
+    "received_continuation_v1.py": "7890589fbbc808b914cc6fefa43408cf727bb3b29a7fc8962451bb7a90d5027a",
+    "received_exchange_v2.py": "59353e6d405dee5084870caf4d66aa5546c02771014e7c8f09ad1e7a7901c6c3",
+    "session_v25.py": "3f6c0a6c973bc66c69681456bfedce9362f563d9460000e78217b63148bab057",
+    "local_target_guard_postcondition_v1.py": "c28509ff0ae060f6a1410f559bb100662a2cec9b37479a628d3d4d3df61dbf06",
+    "session_v24.py": "193c389b053f90dcc07b869c29cfcb77c4272525eb873239112cb2d696037ae1",
+    "local_displacement_postcondition_v1.py": "03ceb1dda1c64de76a8968c825e3731eea038158e84cfe8f541cfc12dc45566d",
+    "visual_anchor.py": "98275ec4781976ee566872915b3e5403f9c548fac5b37f091b9a66f2329ada7b",
+    "session_v23.py": "25bbd068829bba9849fbc4cf540ec265b0b2296dc4cf6c54c77da794e56a760c",
+    "session_v22.py": "a6b59b442f4d96e2e502c0955ebffb2c929399303759d5d53ea456ba92b44a05",
+    "session_v21.py": "5cfe02fb5531c1a3607dd7221f7e7d5f720ee283454c28e5cc7b6c4a5960c3b8",
+    "session_v20.py": "db1ae660b795c4bc103d83a89e15501ce37cc897a6983cdeb1d18b9b3ccb4c1f",
+    "session_v19.py": "fcab83eedc51d470d07a9e3badf6f41256625061b6e3d9d30c610df1b5cd5182",
+    "session_v18.py": "39b32667afb86964ee7baa00604114d32d9b0c9275fb2cdf269cbf41df107835",
+    "session_v17.py": "1ff934d6cced82070bff680485251432bb1ee2defa4d494fb1eecb78ac3e7a14",
+    "session_v16.py": "7d53912c86793df95a11f5a1d22aa05c4c539153fdea31c04a870f7bcc2b6afa",
+    "session_v15.py": "cc66baf54f6236d822ee13d50f093a8e4cac2787ba74673617f91ec946cb9b8f",
+    "session_v14.py": "3237bbe8860b9a46e7f7a9555cd5c159a7ce8fedb8749437a2bcac9333bd3b61",
+    "session_v13.py": "71b406bc6acbcd05b51196c9eaa5623a5cdfc78cce9c7edf6378529bdd3e997d",
+    "session_v12.py": "52c81ce7afb2fc4d945ef76919a235245b2741f845cf0883ad5109d6f6c31563",
+    "session_v11.py": "59cf664e8fb8a9b735a0cdbbc2cb5969916eff57326d2154b365a16550f896a3",
+    "session_v10.py": "a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d",
+    "session_v9.py": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0",
+    "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "results/openttd-target-guard-transform-01/report.json": "2a3275a428d321d73aea7ac0b206963ef0a0efeb308846c2bc7d8bb733aa4f5c",
+    "results/openttd-target-guard-transform-02/report.json": "ed751ad802cc96f4cbbe7dd29b45dbf69dbf0002bf24388a082a0a7ff498cacc",
+    "openttd_task/interactive_l_target_guard_v3.py": "a2936351c63f3706fa69bf4ca9d40d82ad0cc8b44aa1edb6897728828a857192",
+    "openttd_task/interactive_l_target_guard_v2.py": "afe3b872a6a20d7f288018122c9128a3c548c61c4ae3aafb4e6c747fc3c3503b",
+    "openttd_task/guarded_l_score_v1.py": "a7f73814928df2d718f9681699cafd2380d184c0ab8abf72454af661e23c4b84",
+    "openttd_task/observer_l_v1/common.nut": "007f8bd7d2901a6231c6942f8a1a8e1ff4fd92a490dae13fa3b0cfdc96ebaade",
+    "openttd_task/observer_l_v1/main.nut": "06213c30d7505a256dff4ac7719d6504d4ed4202b8a6eb7877bcac7b7e6ffbb3",
+    "openttd_task/observer_l_v1/info.nut": "a35f2791257b13d1f0ebb44572513858b26a7bbe0e77e0a32cf9f0eed1abc735",
+    "openttd_task/results/l-geometry-02/baseline.sav": "88faddae21bd6a24406165941ed02c6746eda8b2cb744747790af6eba786371f"
+  },
+  "scope": "one fresh scripted seed991004 resolution transform repaired from two retained failures, with frame-specific coordinates, path-derived boxes and independent engine score; no model, unseen task, human, token or broad transform claim"
+}

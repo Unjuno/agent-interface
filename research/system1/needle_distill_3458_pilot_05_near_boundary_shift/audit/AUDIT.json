@@ -1,0 +1,197 @@
+{
+  "allocation": "needle-intent-distill-3458-pilot-05-near-boundary-shift",
+  "boundary_yield_counts": [
+    1536,
+    1536,
+    1536
+  ],
+  "decision": "FAIL_OR_HOLD_NEAR_BOUNDARY_SHIFT",
+  "errors": [],
+  "formal_result_sha256": "39577a8750441f6b25c506d8dcc4bf74d6c696cfcd988a2d291dc7be0a95d901",
+  "gates": {
+    "accuracy": 0.95,
+    "coverage": 0.75,
+    "false_correct": 0.005,
+    "p95_ms": 60.0,
+    "recall": 0.95
+  },
+  "reports": [
+    {
+      "accepted": 2615,
+      "accuracy": 0.998470363288719,
+      "by_class": {
+        "CONTINUE": {
+          "accepted": 919,
+          "coverage": 0.8974609375,
+          "n": 1024,
+          "recall": 1.0
+        },
+        "CORRECT": {
+          "accepted": 785,
+          "coverage": 0.7666015625,
+          "n": 1024,
+          "recall": 0.9949044585987261
+        },
+        "WATCH": {
+          "accepted": 911,
+          "coverage": 0.8896484375,
+          "n": 1024,
+          "recall": 1.0
+        }
+      },
+      "false_correct": 0,
+      "false_correct_rate": 0.0,
+      "n": 3072,
+      "seed": 3464,
+      "suite": "iid_control"
+    },
+    {
+      "accepted": 2174,
+      "accuracy": 0.7309107635694572,
+      "by_class": {
+        "CONTINUE": {
+          "accepted": 931,
+          "coverage": 0.9091796875,
+          "n": 1024,
+          "recall": 1.0
+        },
+        "CORRECT": {
+          "accepted": 810,
+          "coverage": 0.791015625,
+          "n": 1024,
+          "recall": 0.27901234567901234
+        },
+        "WATCH": {
+          "accepted": 433,
+          "coverage": 0.4228515625,
+          "n": 1024,
+          "recall": 0.9976905311778291
+        }
+      },
+      "cpu_single_row_p95_ms": 0.036891,
+      "false_correct": 0,
+      "false_correct_rate": 0.0,
+      "n": 3072,
+      "seed": 3464,
+      "suite": "near_boundary_shift"
+    },
+    {
+      "accepted": 2607,
+      "accuracy": 0.9969313387034906,
+      "by_class": {
+        "CONTINUE": {
+          "accepted": 912,
+          "coverage": 0.890625,
+          "n": 1024,
+          "recall": 1.0
+        },
+        "CORRECT": {
+          "accepted": 784,
+          "coverage": 0.765625,
+          "n": 1024,
+          "recall": 1.0
+        },
+        "WATCH": {
+          "accepted": 911,
+          "coverage": 0.8896484375,
+          "n": 1024,
+          "recall": 0.991218441273326
+        }
+      },
+      "false_correct": 7,
+      "false_correct_rate": 0.002685078634445723,
+      "n": 3072,
+      "seed": 3465,
+      "suite": "iid_control"
+    },
+    {
+      "accepted": 2150,
+      "accuracy": 0.7660465116279069,
+      "by_class": {
+        "CONTINUE": {
+          "accepted": 910,
+          "coverage": 0.888671875,
+          "n": 1024,
+          "recall": 1.0
+        },
+        "CORRECT": {
+          "accepted": 809,
+          "coverage": 0.7900390625,
+          "n": 1024,
+          "recall": 0.4227441285537701
+        },
+        "WATCH": {
+          "accepted": 431,
+          "coverage": 0.4208984375,
+          "n": 1024,
+          "recall": 0.9164733178654292
+        }
+      },
+      "cpu_single_row_p95_ms": 0.039764,
+      "false_correct": 0,
+      "false_correct_rate": 0.0,
+      "n": 3072,
+      "seed": 3465,
+      "suite": "near_boundary_shift"
+    },
+    {
+      "accepted": 2608,
+      "accuracy": 0.9938650306748467,
+      "by_class": {
+        "CONTINUE": {
+          "accepted": 909,
+          "coverage": 0.8876953125,
+          "n": 1024,
+          "recall": 1.0
+        },
+        "CORRECT": {
+          "accepted": 778,
+          "coverage": 0.759765625,
+          "n": 1024,
+          "recall": 1.0
+        },
+        "WATCH": {
+          "accepted": 921,
+          "coverage": 0.8994140625,
+          "n": 1024,
+          "recall": 0.9826275787187839
+        }
+      },
+      "false_correct": 15,
+      "false_correct_rate": 0.005751533742331288,
+      "n": 3072,
+      "seed": 3466,
+      "suite": "iid_control"
+    },
+    {
+      "accepted": 2174,
+      "accuracy": 0.6885924563017479,
+      "by_class": {
+        "CONTINUE": {
+          "accepted": 898,
+          "coverage": 0.876953125,
+          "n": 1024,
+          "recall": 1.0
+        },
+        "CORRECT": {
+          "accepted": 842,
+          "coverage": 0.822265625,
+          "n": 1024,
+          "recall": 0.27078384798099764
+        },
+        "WATCH": {
+          "accepted": 434,
+          "coverage": 0.423828125,
+          "n": 1024,
+          "recall": 0.8548387096774194
+        }
+      },
+      "cpu_single_row_p95_ms": 0.044046,
+      "false_correct": 16,
+      "false_correct_rate": 0.007359705611775529,
+      "n": 3072,
+      "seed": 3466,
+      "suite": "near_boundary_shift"
+    }
+  ]
+}

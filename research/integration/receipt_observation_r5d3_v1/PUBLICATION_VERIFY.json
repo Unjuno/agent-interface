@@ -1,0 +1,46 @@
+{
+  "all525_bytes_match": true,
+  "audit_byte_identical": true,
+  "audit_exit": 0,
+  "controls_byte_identical": true,
+  "controls_exit": 0,
+  "packaging_controls": [
+    {
+      "expected_refusal": true,
+      "name": "changed_part",
+      "no_output_written": true,
+      "returncode": 1,
+      "stderr": "part integrity\n"
+    },
+    {
+      "expected_refusal": true,
+      "name": "reordered_parts",
+      "no_output_written": true,
+      "returncode": 1,
+      "stderr": "archive integrity\n"
+    },
+    {
+      "expected_refusal": true,
+      "name": "member_count",
+      "no_output_written": true,
+      "returncode": 1,
+      "stderr": "member denominator\n"
+    },
+    {
+      "expected_refusal": true,
+      "name": "source_member_hash",
+      "no_output_written": true,
+      "returncode": 1,
+      "stderr": "source member integrity\n"
+    },
+    {
+      "expected_refusal": true,
+      "name": "existing_destination",
+      "no_output_written": true,
+      "returncode": 1,
+      "stderr": "destination exists\n"
+    }
+  ],
+  "restore_exit": 0,
+  "units_exit": 0
+}

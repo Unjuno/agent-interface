@@ -1,0 +1,38 @@
+{
+  "construction": false,
+  "corruptions": {
+    "always_yield_overconservative": true,
+    "old_epoch_reuse_detected": true,
+    "semantic_laundering_detected": true,
+    "sticky_detected": true
+  },
+  "decision": "PASS_BELIEF_REPAIR_DECISION_LATTICE_SCOPED",
+  "digest": "9507254655f8f93d6616d3be6425ff49c0bf0b654717655c4995246891f6bf81",
+  "directed": {
+    "keep_current": true,
+    "local_false_reject": true,
+    "local_true_recommit": true,
+    "opaque_changed_yield": true,
+    "opaque_exact_recommit": true,
+    "opaque_expired_yield": true
+  },
+  "formal_invocations": 1,
+  "replacements": 0,
+  "reruns": 0,
+  "stats": {
+    "always_yield_false_yield": 12,
+    "bad_recommit_epoch": 0,
+    "current_path_keep": 32,
+    "current_truth_auto_unsafe": 4,
+    "local_recommit": 8,
+    "local_reject": 8,
+    "mismatch": 0,
+    "opaque_recommit": 4,
+    "opaque_yield": 12,
+    "reuse_old_epoch_violations": 12,
+    "rows": 64,
+    "stale_path_keep": 0,
+    "sticky_unsafe": 32
+  },
+  "tuning": 0
+}

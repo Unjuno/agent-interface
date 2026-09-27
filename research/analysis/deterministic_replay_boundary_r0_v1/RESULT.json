@@ -1,0 +1,209 @@
+{
+  "ambiguity_witnesses": {
+    "AUTH_DROPPED": {
+      "a": [],
+      "b": [
+        [
+          "AUTH_OPEN",
+          null
+        ]
+      ],
+      "out_a": [
+        0,
+        -1,
+        0,
+        false,
+        0,
+        0,
+        -1,
+        [],
+        []
+      ],
+      "out_b": [
+        0,
+        -1,
+        0,
+        true,
+        1,
+        0,
+        1,
+        [],
+        []
+      ]
+    },
+    "CLOCK_DROPPED": {
+      "a": [],
+      "b": [
+        [
+          "TICK",
+          null
+        ]
+      ],
+      "out_a": [
+        0,
+        -1,
+        0,
+        false,
+        0,
+        0,
+        -1,
+        [],
+        []
+      ],
+      "out_b": [
+        0,
+        -1,
+        0,
+        false,
+        0,
+        2,
+        -1,
+        [],
+        []
+      ]
+    },
+    "MODEL_PAYLOAD_DROPPED": {
+      "a": [
+        [
+          "MODEL",
+          0
+        ]
+      ],
+      "b": [
+        [
+          "MODEL",
+          1
+        ]
+      ],
+      "out_a": [
+        0,
+        0,
+        0,
+        false,
+        0,
+        0,
+        -1,
+        [],
+        []
+      ],
+      "out_b": [
+        0,
+        1,
+        0,
+        false,
+        0,
+        0,
+        -1,
+        [],
+        []
+      ]
+    },
+    "ORDERLESS": {
+      "a": [
+        [
+          "OBS",
+          0
+        ],
+        [
+          "OBS",
+          1
+        ]
+      ],
+      "b": [
+        [
+          "OBS",
+          1
+        ],
+        [
+          "OBS",
+          0
+        ]
+      ],
+      "out_a": [
+        1,
+        -1,
+        0,
+        false,
+        0,
+        0,
+        -1,
+        [],
+        []
+      ],
+      "out_b": [
+        0,
+        -1,
+        0,
+        false,
+        0,
+        0,
+        -1,
+        [],
+        []
+      ]
+    },
+    "TOOL_PAYLOAD_DROPPED": {
+      "a": [
+        [
+          "TOOL",
+          0
+        ]
+      ],
+      "b": [
+        [
+          "TOOL",
+          1
+        ]
+      ],
+      "out_a": [
+        0,
+        -1,
+        0,
+        false,
+        0,
+        0,
+        -1,
+        [],
+        []
+      ],
+      "out_b": [
+        0,
+        -1,
+        1,
+        false,
+        0,
+        0,
+        -1,
+        [],
+        []
+      ]
+    }
+  },
+  "ambiguous_signature_counts": {
+    "AUTH_DROPPED": 4681,
+    "CLOCK_DROPPED": 7381,
+    "MODEL_PAYLOAD_DROPPED": 28981,
+    "ORDERLESS": 1406,
+    "TOOL_PAYLOAD_DROPPED": 28981
+  },
+  "corruption_controls": {
+    "bad_initial": true,
+    "bad_kind": true,
+    "bad_payload": true,
+    "duplicate_seq": true
+  },
+  "decision": "PASS_DETERMINISTIC_REPLAY_BOUNDARY_SUFFICIENCY_SCOPED",
+  "digest": "9a53fd3104c3820b6e27ffe3564b50c785d2a1bf31dafe8262695805e8a8644d",
+  "events": 10,
+  "exact_replay_mismatches": 0,
+  "fork_checks": 543210,
+  "fork_mismatches": 0,
+  "formal_invocations": 1,
+  "replacements": 0,
+  "reruns": 0,
+  "sequence_integrity_errors": 0,
+  "sequence_max_length": 5,
+  "sequences": 111111,
+  "task": "DETERMINISTIC-REPLAY-BOUNDARY-SUFFICIENCY-R0-20260919-001",
+  "tuning_after_freeze": 0
+}

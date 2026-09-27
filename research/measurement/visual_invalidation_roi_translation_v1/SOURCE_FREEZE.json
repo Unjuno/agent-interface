@@ -1,0 +1,34 @@
+{
+  "task": "VISUAL-INVALIDATION-ROI-TRANSLATION-ENVELOPE-20260918-001",
+  "issue": 1495,
+  "base": "9d6e4b558edff90b42a416350c43b3d023d219bb",
+  "branch": "research/visual-invalidation-roi-translation-1495",
+  "status": "SOURCE_FROZEN_BEFORE_CHARACTERIZATION",
+  "characterization_seed": 149420260918001,
+  "characterization_seed_used": false,
+  "trials_per_class_per_cell": 1000,
+  "formal_invocations": 0,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "remote_git_blobs": {
+    "PLAN.md": "8db6d39892a43554870c7e78ba943d445ca19e00",
+    "experiment.py": "849fa1f45e8d8af6ee0caadd0baa8f2e2a42b8d6",
+    "audit.py": "52b2e3fceae6e505d6ba42718f0ff346f9e2ba86",
+    "independent_audit.py": "69b8cb15b0c1f4a5a574fa73c8f1cda4ee1b6017",
+    "construction.json.gz.b64": "a5c93eca254c09449aaa78381e43563f44f4b65b",
+    "construction_independent_audit.json": "b432b2d5911b0d8c13b28861d71fd244677be3a9",
+    "construction_manifest.json": "b21d8ab02048b31ba1dbe9aedab1d8532fcf5b35"
+  },
+  "local_sha256": {
+    "PLAN.md": "920b73728cd394209fef8c665cc3276429ccfb3fe77942fe832b09a303484f15",
+    "experiment.py": "5ad807b3261e3b5ec6627390efe4ff3898ade999ea00b454da78081755917dac",
+    "audit.py": "344dd31694c84e4ebb4440b75bc54ed43019def01b9f00a226126dd6a0f7bf7a",
+    "independent_audit.py": "0e63bd17aee827ae52577dbcba2fa5b2063b57d8f48a51145cff8cddd5e2d3b8",
+    "construction_raw": "459fd24abd4f4f8c82eb62e1bb9e4a7ab8de9557e32a13d08945b455b943283a",
+    "construction_independent_audit.json": "3d2b04fba6c6e36f6c62168234625bbd09e559e9091387e31269dac3a1674abf"
+  },
+  "retained_preseed_integrity_event": "initial GitHub upload of experiment.py and independent_audit.py did not match the exact local construction-tested bytes; fixed before characterization seed use, then remote blob readback matched exact local git hashes",
+  "construction_decision": "PASS_CONSTRUCTION_ELIGIBLE",
+  "construction_rerun": false
+}

@@ -1,0 +1,53 @@
+name: Issue 3676 hardened auditor container validation
+on:
+  pull_request:
+    paths:
+      - .github/workflows/issue-3676-hardened-audit.yml
+      - research/issue_3676_audit_hardening_v1/**
+  push:
+    branches:
+      - research/issue-3676-audit-hardening-v1
+jobs:
+  hardened-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests and independent audit in pinned networkless containers
+        shell: bash
+        run: |
+          set -euo pipefail
+          bundle="$GITHUB_WORKSPACE/research/issue_3676_audit_hardening_v1"
+          out="$RUNNER_TEMP/issue-3676-hardened-audit"
+          mkdir -p "$out"
+          image='python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9'
+          docker run --rm --network none --read-only --tmpfs /tmp \
+            -v "$bundle:/work:ro" -w /work -e PYTHONDONTWRITEBYTECODE=1 \
+            "$image" python -m unittest -v test_audit.py
+          docker run --rm --network none --read-only --tmpfs /tmp \
+            -v "$bundle:/work:ro" -v "$out:/out:rw" -w /work \
+            -e PYTHONDONTWRITEBYTECODE=1 "$image" \
+            python audit.py evidence/raw.json \
+              --freeze evidence/predecessor_FREEZE.json \
+              --study-freeze evidence/FREEZE.json \
+              --output /out/hardening_audit.json
+          python3 - "$out/hardening_audit.json" <<'PY'
+          import hashlib, json, pathlib, sys
+          path = pathlib.Path(sys.argv[1])
+          raw = path.read_bytes()
+          result = json.loads(raw)
+          assert result["status"] == "PASS_OFFLINE_STRUCTURAL_AUDIT", result
+          assert result["errors"] == [], result
+          assert result["corruption_controls_rejected"] and all(result["corruption_controls_rejected"].values()), result
+          print("container_output_sha256=" + hashlib.sha256(raw).hexdigest())
+          print(raw.decode("utf-8"), end="")
+          PY
+      - name: Retain isolated audit output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-3676-hardened-audit-container
+          path: ${{ runner.temp }}/issue-3676-hardened-audit
+          if-no-files-found: warn

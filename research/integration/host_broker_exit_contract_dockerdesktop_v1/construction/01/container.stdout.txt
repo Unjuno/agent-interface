@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/study/construction_probe.py", line 11, in <module>
+    from test_contract import BROKER, FAKE_SOURCE
+  File "/study/test_contract.py", line 15, in <module>
+    ROOT = Path(os.environ.get("BROKER_REPO_ROOT", Path(__file__).resolve().parents[3]))
+                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/local/lib/python3.12/pathlib.py", line 282, in __getitem__
+    raise IndexError(idx)
+IndexError: 3
+CONSTRUCTION_CONTAINER_EXIT=1

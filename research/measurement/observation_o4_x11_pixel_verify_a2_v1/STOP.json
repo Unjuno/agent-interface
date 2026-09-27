@@ -1,0 +1,28 @@
+{
+  "batch0_exit_status": 1,
+  "batch0_result_present": false,
+  "batch0_stderr": "parent source mismatch",
+  "batch0_wall_seconds": 0.66,
+  "batch_process_invocations_consumed": 1,
+  "batch_reruns": 0,
+  "consumed_batches": [0],
+  "durable_formal_rows": 0,
+  "interpretation": "Batch0 stopped before durable result because the in-process parent source equality guard returned mismatch. A read-only post-stop recomputation over the same formal_source directory matches all five expected hashes exactly. The mismatch is unexplained and the consumed batch is not rerun; no scientific O4 conclusion is inferred.",
+  "issue": 1870,
+  "logical_formal_allocations": 1,
+  "poststop_source_check": {
+    "PLAN.md": {"actual":"4daeb41eb532ae6ce1ce156d468fd89b9f02665c9e1fdac77a969ffcb883ceeb","expected":"4daeb41eb532ae6ce1ce156d468fd89b9f02665c9e1fdac77a969ffcb883ceeb","match":true},
+    "SCHEDULE.json": {"actual":"0b3a793258bfeccb9c5f6fef1ec4f3565a0ad21ee7938c4b1bfbf5c2f5c5d357","expected":"0b3a793258bfeccb9c5f6fef1ec4f3565a0ad21ee7938c4b1bfbf5c2f5c5d357","match":true},
+    "audit.py": {"actual":"06c2f5c76e1e0d887a565b3126559b3d3dbe2184b70e1e97d447291fe8c59e66","expected":"06c2f5c76e1e0d887a565b3126559b3d3dbe2184b70e1e97d447291fe8c59e66","match":true},
+    "fixture.py": {"actual":"db674dfd0502b3b61011338d43e3583c98489e808187039d16a9514a0aa208ce","expected":"db674dfd0502b3b61011338d43e3583c98489e808187039d16a9514a0aa208ce","match":true},
+    "runner.py": {"actual":"b785cab730f8daa37191de43fe2a19eeb217efe06932732b153f32f927228b28","expected":"b785cab730f8daa37191de43fe2a19eeb217efe06932732b153f32f927228b28","match":true}
+  },
+  "poststop_source_check_exact": true,
+  "replacements": 0,
+  "scientific_disposition": "NONE",
+  "status": "STOP_BATCH0_PARENT_SOURCE_CHECK_NO_RESULT",
+  "surviving_batch_processes_observed_after_stop": 0,
+  "task": "OBSERVATION-GATING-O4-X11-PIXEL-VERIFY-A2-20260919-002",
+  "tuning": 0,
+  "unstarted_batches": [1,2,3,4,5,6,7]
+}

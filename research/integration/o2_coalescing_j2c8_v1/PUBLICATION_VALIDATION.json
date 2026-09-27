@@ -1,0 +1,26 @@
+{
+  "receipts": [
+    {
+      "args": [
+        "verify.py"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout": "{\"audit_byte_identical\": true, \"controls_byte_identical\": true, \"files_restored\": 79, \"frozen_files_equal\": 11, \"scientific_actor_runs\": 0}\n"
+    },
+    {
+      "args": [
+        "-m",
+        "unittest",
+        "-v",
+        "test_restore"
+      ],
+      "exit": 0,
+      "stderr": "test_intact_then_existing (test_restore.RestoreTests.test_intact_then_existing) ... ok\ntest_parts_and_manifest (test_restore.RestoreTests.test_parts_and_manifest) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 0.062s\n\nOK\n",
+      "stdout": ""
+    }
+  ],
+  "remote_CI_claim": false,
+  "scientific_actor_runs": 0,
+  "six_part_git_ids_match": true
+}

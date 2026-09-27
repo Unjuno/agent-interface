@@ -1,0 +1,38 @@
+{
+  "candidate_harness_sha256": "b5784d51ac69cc29273bf31b56675f2f38ec3dc5c07a3345a90036add03bc443",
+  "construction": {
+    "child_ready_to_xterm_exit": {"max_ns":214121977,"min_ns":163900547,"n":4,"p50_ns":163956531.0,"p95_ns":164012400},
+    "correct": 4,
+    "decomposition_error_max_ns": 0,
+    "effect_to_child_ready": {"max_ns":20845431,"min_ns":19367258,"n":4,"p50_ns":19686540.5,"p95_ns":19711220},
+    "marker": 4,
+    "roi_exact": 4,
+    "sessions": 4
+  },
+  "execution": "disposable-container-only",
+  "formal_invocations_before_freeze": 0,
+  "issue": 1352,
+  "parent_harness_sha256": "1de23d87547e1942197db0fc9a781154e10ac0077ed3791c17dd18f3bd8cdc62",
+  "preconstruction_setup_repairs": ["copied unchanged parent controls.py after initial no-GUI setup command failed before construction"],
+  "rerun_budget": 0,
+  "schedule": {
+    "child_tail_p95_max_ns":30000000,
+    "construction_display":805,
+    "decomposition_error_max_ns":2000000,
+    "display":804,
+    "effect_delay_ms":50,
+    "formal_invocations":1,
+    "key_hold_ms":20,
+    "native_exit_p50_min_ns":100000000,
+    "native_exit_spread_min_ns":40000000,
+    "post_effect_delay_ms":20,
+    "reruns":0,
+    "roi":[160,90,320,180],
+    "roi_bytes":230400,
+    "seed":135220260918001,
+    "sessions":64,
+    "task":"TIMING-XTERM-TERMINATION-LAG-DECOMPOSITION-20260918-001"
+  },
+  "source_archive_gzip_sha256":"a0eccd75c97443042264043670254e5a494b26e41c3ca6fed088cd906975d48b",
+  "task":"TIMING-XTERM-TERMINATION-LAG-DECOMPOSITION-20260918-001"
+}

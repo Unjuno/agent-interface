@@ -1,0 +1,13 @@
+Construction-clock-38 invocation and hashes
+
+Image: agent-interface-map01-clock-strace:20260920 (same tracer image digest as run37; see run37 invocation for base-image provenance).
+WAD SHA-256: a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b.
+
+Command shape: `strace -f --absolute-timestamps=unix,precision:us -T -s 4096 -e trace=write,writev -o /results/strace.txt stdbuf -oL python -u /probe.py`, Docker runtime `--platform linux/arm64 --network none --read-only`, `/tmp` tmpfs, WAD and sources mounted read-only, output mounted at `results/construction-clock-38/`.
+
+Probe source: `strace_phase_construction.py` (SHA-256 816edc6b46b505a1f5ffdcecf129785128fc19711c30c6edd2322c559cc532b6).
+Raw SHA-256: 28f2785a80585107fa5511c568f0f67123c7ae1b70946a782f698ea4b48da410.
+Container log SHA-256: 926a56ee9b056fc8393f2f7c472593e48c3a1aacbf1666b3f577ce673c604786.
+strace SHA-256: 5eb28f0b4b5ed75c105477b58006b2c5221dd75292adb371903e9e4b1345c2cc.
+
+Outcome: 3/3 scorer calls and cleanup completed, API tic stayed static, but no post-scorer tic bracket was captured. STOP; formal rows 0/120.

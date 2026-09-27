@@ -1,0 +1,30 @@
+{
+  "network": [
+    "docker",
+    "network",
+    "create",
+    "--internal",
+    "agent-interface-570-r4-local-internal"
+  ],
+  "ollama": [
+    "docker",
+    "run",
+    "-d",
+    "--platform",
+    "linux/amd64",
+    "--network",
+    "agent-interface-570-r4-local-internal",
+    "--network-alias",
+    "ollama",
+    "--gpus",
+    "all",
+    "--mount",
+    "<LOCAL_OLLAMA_MODELS>:/models:ro",
+    "--env",
+    "OLLAMA_NO_CLOUD=true",
+    "<OLLAMA_IMAGE_ID>",
+    "serve"
+  ],
+  "helper": "docker run --rm --platform linux/amd64 --network <R4_INTERNAL_NETWORK> --cpus 2 --memory 4g --pids-limit 64 --mount <FROZEN_SOURCE>:/src:ro --mount <EVIDENCE>:/out --mount <EVIDENCE_DATA>:/data:ro --entrypoint python <PINNED_HELPER_IMAGE> /src/model_runner.py --mode <construction|formal>"
+}
+

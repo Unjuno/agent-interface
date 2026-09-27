@@ -1,0 +1,68 @@
+{
+  "ambiguity_gate": {
+    "no_new_ack_or_effect": true,
+    "ready_pids": [
+      10,
+      13
+    ],
+    "two_distinct_xids": true,
+    "xres_pids": [
+      10,
+      13
+    ]
+  },
+  "derived_coordinate": [
+    236,
+    88
+  ],
+  "events": [
+    {
+      "button_rect": {
+        "height": 32,
+        "width": 120,
+        "x": 176,
+        "y": 72
+      },
+      "count": 0,
+      "kind": "ready",
+      "pid": 10,
+      "version": 1,
+      "window_size": [
+        320,
+        120
+      ]
+    },
+    {
+      "count": 0,
+      "effect_mode": "on",
+      "kind": "click_ack",
+      "version": 1
+    },
+    {
+      "count": 1,
+      "kind": "effect",
+      "value": 1,
+      "version": 2
+    }
+  ],
+  "excluded_from_formal_matrix": true,
+  "initial_xres_pid": 10,
+  "pixel_meta": {
+    "bits_per_pixel": 32,
+    "image_byte_order": 0,
+    "scanline_pad": 32,
+    "visual_masks": {
+      "blue": 255,
+      "depth": 24,
+      "green": 65280,
+      "red": 16711680
+    }
+  },
+  "preflight": "PASS",
+  "release_verified": true,
+  "screenshot_coordinate": [
+    236,
+    88
+  ],
+  "title": "proxy-fixture:1:2"
+}

@@ -1,0 +1,57 @@
+{
+  "accepted_program_sha256": "2cdc1ca779815dd9deba56bb231d3276074d7bee6ca0b96dc7f21cbdb3e3a6c3",
+  "arm": "recovery",
+  "baseline_validity_checks": [
+    {
+      "expected": 50,
+      "observed": 97,
+      "operator": "minimum",
+      "passed": true,
+      "signal_id": "health"
+    },
+    {
+      "expected": 8,
+      "observed": 97,
+      "operator": "max_decrease_from_source",
+      "passed": true,
+      "signal_id": "health"
+    }
+  ],
+  "baseline_validity_reason": "all_authored_observable_predicates_hold",
+  "baseline_validity_status": "VALID_CURRENT",
+  "event_count": 86,
+  "id": "construction-recovery",
+  "pair": 1,
+  "post_ammo": 48,
+  "post_frame_rgb_sha256": "c414caf8b1a8bffa4e5503d734da54837342af75556ddd7e9e64cca726e89b3d",
+  "post_health": 97,
+  "post_image": "/work/out/case/runtime/021.png",
+  "post_sequence": 21,
+  "release": {
+    "buttons_down": [],
+    "event": "owner_release",
+    "keys_down": [],
+    "reason": "release",
+    "valid_until_ns": 233626691595,
+    "verified": true,
+    "verified_ns": 230748142085
+  },
+  "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+  "schema": "recovery-visual-context-guard-case-v1",
+  "score": {
+    "death_count": 0,
+    "kill_count": 0,
+    "map_exit": false,
+    "player_dead": false
+  },
+  "snapshot_age_ms": 87.405604,
+  "source_ammo": 48,
+  "source_frame_rgb_sha256": "19e13ee1965a87584e5b96a0d588039569f2a38dfb73f3e211b1b613b9e44b70",
+  "source_health": 97,
+  "source_image": "/work/out/case/runtime/001.png",
+  "source_sequence": 1,
+  "terminal_status": "completed",
+  "viewport_normalized_mae": 0.04420704022049904,
+  "visual_context_threshold": 0.015,
+  "visual_context_verdict": "REJECT_CONTEXT_CHANGED"
+}

@@ -1,0 +1,51 @@
+{
+  "audit": "PASS_INDEPENDENT_XDAMAGE_RAW_AGGREGATE_AUDIT",
+  "capsule_entries_verified": 23,
+  "capsule_file_count_field": 1505,
+  "capsule_sha256": "a1f90fae8fe927b14cbc708cb09035cfa17ea500935bce330058e719b7dfe51a",
+  "container": {
+    "image": "python:3.11-slim@sha256:da047cb8f9d1d98e5c070f5300ba9f7274e33b8fc0e5be5ed88740aed1b95ba9",
+    "platform": "linux/amd64",
+    "restrictions": ["network=none", "read-only root", "read-only evidence and auditor mounts", "1 CPU", "512 MiB memory", "32 PIDs"]
+  },
+  "counts": {
+    "capture_clear": {
+      "after_correct": 12,
+      "false_suppressions": 12,
+      "middle_losses": 12,
+      "next_captures": 12,
+      "redundant_captures": 0,
+      "rows": 60,
+      "stable_correct": 36
+    },
+    "clear_capture": {
+      "after_correct": 12,
+      "false_suppressions": 0,
+      "middle_losses": 0,
+      "next_captures": 36,
+      "redundant_captures": 24,
+      "rows": 60,
+      "stable_correct": 36
+    }
+  },
+  "errors": [],
+  "formal_rows": 120,
+  "raw_rows_sha256": "e6869cbaa74ec826ea80ebcde01e5811eadbc460f654d0f72b1dae7108687d55",
+  "archived_audit_report": {
+    "decision": "PASS_XDAMAGE_ORDER_BOUNDARY_SCOPED",
+    "integrity": "PASS",
+    "errors": [],
+    "corruption_controls_rejected": 10
+  },
+  "scope_limit": "Recomputes the packed aggregate raw rows; does not recreate omitted per-case filesystem receipts or rerun X11.",
+  "source_branch": "research/issue-3940-xdamage-order-20260922",
+  "source_commit": "3b001a30d0faa442aa5b9fd0f8cc9212b17c6a05",
+  "source_raw_rows_sha256_reported_by_owner": "e6869cbaa74ec826ea80ebcde01e5811eadbc460f654d0f72b1dae7108687d55",
+  "frozen_auditor_reexecution": {
+    "result": "STOP_INCOMPLETE_CAPSULE_FOR_FILE_BINDING_AUDIT",
+    "observation": "audit.py requires per-case files/r0-.../row.json and gate.json; the capsule materializes 23 entries and contains aggregate rows.jsonl, but those per-case directories are absent.",
+    "original_capsule_file_count_field": 1505,
+    "materialized_capsule_entries": 23
+  }
+}
+

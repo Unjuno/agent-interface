@@ -1,0 +1,54 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-S",
+        "-B",
+        "/mnt/data/reconcile_4197_20260926_s4a1/worktree/research/integration/issue4197_readonly_qualification_s4a1/restore.py",
+        "--out",
+        "/mnt/data/reconcile_4197_20260926_s4a1/restore_validation_01"
+      ],
+      "exit": 0,
+      "pid": 967,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "62209712ecc223706bbd115157a6779bdb4eab80f1d2a2475304bd6fb10d0370"
+    },
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-S",
+        "-B",
+        "/mnt/data/reconcile_4197_20260926_s4a1/worktree/research/integration/issue4197_readonly_qualification_s4a1/reconcile.py",
+        "/mnt/data/reconcile_4197_20260926_s4a1/restore_validation_01/study/retained"
+      ],
+      "exit": 0,
+      "pid": 968,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "88d1b76c1a4274055e5483040d1fc02b4c86780a37f44ea0b2d4a998df821553"
+    },
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-S",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_verify",
+        "test_reconcile",
+        "test_restore"
+      ],
+      "exit": 0,
+      "pid": 969,
+      "stderr_sha256": "72b8367bdd3bb4ab6ee3282f02773bdcdc24c8d031042e09db7a59281758e2d4",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "frozen_files_unchanged": true,
+  "manifest_entries": 90,
+  "new_native_runs": 0,
+  "recomputed_audit_byte_identical": true,
+  "restored_files": 91,
+  "test_methods": 20
+}

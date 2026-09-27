@@ -1,0 +1,57 @@
+{
+  "status": "unattributed_rejection",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "expected_sequence": 2,
+        "id": "move-save",
+        "op": "submit",
+        "steps": [
+          {
+            "op": "pointer_click",
+            "x": 618,
+            "y": 391
+          },
+          {
+            "duration_ms": 80,
+            "keys": [
+              "Right"
+            ],
+            "op": "hold"
+          },
+          {
+            "keys": [
+              "ctrl",
+              "s"
+            ],
+            "op": "key"
+          },
+          {
+            "op": "settle",
+            "quiet_ms": 80,
+            "timeout_ms": 500
+          }
+        ],
+        "transport_request_id": "program-80f3194f184c4472a127c53e2070f235",
+        "valid_until_ns": 108849649708
+      },
+      "received_ns": 78873938559,
+      "emit_started_ns": 78873941301
+    },
+    {
+      "event": "rejected",
+      "reason": "unsupported key",
+      "emit_started_ns": 78883936159
+    }
+  ],
+  "cursor": 16,
+  "returned_ns": 78893820446,
+  "authority": "none",
+  "acknowledgement": "not implied",
+  "command_receipt": {
+    "request_id": "program-80f3194f184c4472a127c53e2070f235",
+    "replayed": false,
+    "state": "stdin_flushed"
+  }
+}

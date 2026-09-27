@@ -1,0 +1,28 @@
+{
+  "allocation": "issue3711-shortwrite-requestcrash-localdocker-formal01",
+  "cases": {
+    "request_only_crash": {
+      "backend_invocation_count": 1,
+      "child_returncode": 73,
+      "expected_returncode": 73,
+      "recovery_state": "unknown_or_incomplete",
+      "replayable": false,
+      "report_present": false,
+      "request_exact": true,
+      "request_present": true,
+      "request_sha256": "197387b33ccfc6a8f03c14534c67f6cfa4fcb9a12f1eb5d73e6d70869940458d"
+    },
+    "short_write": {
+      "accepted_bytes": 11,
+      "accepted_sha256": "1fe08c09721a1cd943eb087a2effe100c978f7f7d0c4f81459cb79e7f0b7cf12",
+      "delivery_state": "delivery_incomplete",
+      "expected_bytes": 115,
+      "expected_sha256": "b0ae5a00f9312db49a45995d6a51de740dcabf867c84c7fd6bab051d496421e2",
+      "invocation_count": 1,
+      "recovered_report_exact": true,
+      "recovered_report_sha256": "b0ae5a00f9312db49a45995d6a51de740dcabf867c84c7fd6bab051d496421e2",
+      "writer_return": 11
+    }
+  },
+  "fixture_sha256": "6013f5727f0208cce2f1ffa6b3d0df08bdfa7711fe8994cec39ae52dcebfbe87"
+}

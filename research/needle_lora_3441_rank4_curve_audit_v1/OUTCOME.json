@@ -1,0 +1,28 @@
+{
+  "issue": 3875,
+  "predecessor_formal_issue": 3851,
+  "disposition": "PASS_CURVE_ONLY_AUDIT_SCOPED",
+  "formal_audit_invocations": 1,
+  "retries": 0,
+  "mode": "CPU-only offline; no CUDA, training, or optimizer invocation",
+  "raw_stdout_sha256": "F185E4DEAB4B19BA4B146C723CB03C1078DB53307DCBF1C2D856D9C5728C320E",
+  "canonical_payload_sha256": "7b2547439420aa991668cbffe29eb296a9fc4e921663e3d51053441522ce443b",
+  "audit_result_sha256": "F34346526274BBE7C989BED83B144D0B98C6359C67D3494BC81BFA20D0BFE967",
+  "verified_curve_rows": 160,
+  "heldout_rows_per_curve": 4096,
+  "legacy_arrival16_mean": 0.94189453125,
+  "shared_arrival16_mean": 0.941015625,
+  "paired_mean_shared_minus_legacy": -0.00087890625,
+  "paired_seed_deltas": [
+    0.007568359375,
+    0.01611328125,
+    -0.02490234375,
+    -0.005615234375,
+    0.00244140625
+  ],
+  "legacy_collapse_reproduced": false,
+  "predecessor_post_rollback_final_metrics_used": false,
+  "predecessor_audit_errors_explained": 10,
+  "unexplained_audit_errors": 0,
+  "interpretation": "The earlier rank-4 legacy collapse is not reproduced by the retained pre-rollback trained-adapter curves. The sampler stream change did not materially improve paired accuracy in this five-seed synthetic study. #3851's post-rollback final metric defect remains preserved and unresolved in that predecessor artifact."
+}

@@ -1,0 +1,142 @@
+{
+  "controls": [
+    {
+      "changed": true,
+      "errors": [
+        "denominator"
+      ],
+      "mutation": "missing_case",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "errors": [
+        "c00:schedule_identity",
+        "unique_sessions"
+      ],
+      "mutation": "duplicate_case",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "errors": [
+        "c02:sources"
+      ],
+      "mutation": "source_binding",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "errors": [
+        "c02:malformed_evidence:KeyError:'returncode'"
+      ],
+      "mutation": "missing_launcher_exit",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "errors": [
+        "c02:neutral"
+      ],
+      "mutation": "nonneutral",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "errors": [
+        "c02:key_edges"
+      ],
+      "mutation": "release_claim",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "errors": [
+        "c02:value_lineage"
+      ],
+      "mutation": "wrong_effect",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "errors": [
+        "c02:current_wire_transform"
+      ],
+      "mutation": "foreign_wire",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "errors": [
+        "c14:duplicate_order",
+        "c14:policy_semantics",
+        "c14:dispatch_order",
+        "c14:malformed_evidence:KeyError:None"
+      ],
+      "mutation": "duplicate_erasure",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "errors": [
+        "c02:policy_semantics",
+        "c02:authority"
+      ],
+      "mutation": "authority",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "errors": [
+        "c14:policy_semantics"
+      ],
+      "mutation": "false_eligible",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "errors": [
+        "c02:exit_worker"
+      ],
+      "mutation": "worker_exit",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "errors": [
+        "c02:app_sequence",
+        "c02:reply_lineage",
+        "c02:ipc_clock",
+        "c02:reply_lineage",
+        "c02:ipc_clock",
+        "c02:reply_lineage",
+        "c02:ipc_clock",
+        "c02:event_cardinality",
+        "c02:malformed_evidence:IndexError:list index out of range"
+      ],
+      "mutation": "missing_native_release",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "errors": [
+        "c02:policy_clock"
+      ],
+      "mutation": "policy_clock",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "errors": [
+        "c02:press_lineage",
+        "c02:release_lineage"
+      ],
+      "mutation": "wrong_dispatch_key",
+      "rejected": true
+    }
+  ],
+  "decision": "PASS_EFFECTIVE_CONTROLS",
+  "new_gui_runs": 0,
+  "rejected": 15,
+  "total": 15
+}

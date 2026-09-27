@@ -1,0 +1,162 @@
+{
+  "schema": "held-input-telemetry-source-closure-v1",
+  "task": "O3-G1-MEASUREMENT-TELEMETRY-001",
+  "base_commit": "bc21199ac1e22ac34decc9fa1a73190e402480ee",
+  "allocation": "map01-v39-coast-liveness-live-01",
+  "status": "PARTIAL_RETAINED_TRACE_RECONSTRUCTION_TELEMETRY_GAP_CONFIRMED",
+  "source_sha256": {
+    "runtime/events.jsonl": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381"
+  },
+  "source_blobs": {
+    "research/live_control/input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "research/live_control/session_v4.py": "082aa3931c4f620be28ff782d2c65bac2e61dd39",
+    "research/live_control/session_v5.py": "32fbac18346cb7f9322b8d398d50d83243c18ce4",
+    "research/doom/doom_typed_release_backend_v1.py": "080fa353bc14afc8bc620e80abc38e6cf64d1259"
+  },
+  "sampling": {
+    "program_id": "cover-4",
+    "ordinary_completed_hold_steps": [0, 1, 2, 4, 5, 6],
+    "selection": "first two repeated motor cycles before the next coast; selected structurally, not by outcome",
+    "requested_total_ms": 2000
+  },
+  "completed_hold_bounds": [
+    {
+      "step": 0,
+      "keys": ["d"],
+      "requested_ms": 350,
+      "full_keyset_ack_ns": 55532267448486,
+      "release_issue_lower_ns": 55532712794427,
+      "release_complete_upper_ns": 55532730767803,
+      "owner_commanded_hold_lower_ms": 445.345941,
+      "owner_commanded_hold_upper_ms": 463.319317,
+      "overshoot_lower_ms": 95.345941,
+      "overshoot_upper_ms": 113.319317,
+      "release_bound_width_ms": 17.973376
+    },
+    {
+      "step": 1,
+      "keys": ["a"],
+      "requested_ms": 350,
+      "full_keyset_ack_ns": 55532939174983,
+      "release_issue_lower_ns": 55533354453312,
+      "release_complete_upper_ns": 55533364523493,
+      "owner_commanded_hold_lower_ms": 415.278329,
+      "owner_commanded_hold_upper_ms": 425.348510,
+      "overshoot_lower_ms": 65.278329,
+      "overshoot_upper_ms": 75.348510,
+      "release_bound_width_ms": 10.070181
+    },
+    {
+      "step": 2,
+      "keys": ["Down", "space"],
+      "requested_ms": 300,
+      "full_keyset_ack_ns": 55533483587153,
+      "release_issue_lower_ns": 55533870252074,
+      "release_complete_upper_ns": 55533880548735,
+      "owner_commanded_hold_lower_ms": 386.664921,
+      "owner_commanded_hold_upper_ms": 396.961582,
+      "overshoot_lower_ms": 86.664921,
+      "overshoot_upper_ms": 96.961582,
+      "release_bound_width_ms": 10.296661
+    },
+    {
+      "step": 4,
+      "keys": ["d"],
+      "requested_ms": 350,
+      "full_keyset_ack_ns": 55535605756429,
+      "release_issue_lower_ns": 55535988215923,
+      "release_complete_upper_ns": 55535998859032,
+      "owner_commanded_hold_lower_ms": 382.459494,
+      "owner_commanded_hold_upper_ms": 393.102603,
+      "overshoot_lower_ms": 32.459494,
+      "overshoot_upper_ms": 43.102603,
+      "release_bound_width_ms": 10.643109
+    },
+    {
+      "step": 5,
+      "keys": ["a"],
+      "requested_ms": 350,
+      "full_keyset_ack_ns": 55536113215596,
+      "release_issue_lower_ns": 55536517791345,
+      "release_complete_upper_ns": 55536533080461,
+      "owner_commanded_hold_lower_ms": 404.575749,
+      "owner_commanded_hold_upper_ms": 419.864865,
+      "overshoot_lower_ms": 54.575749,
+      "overshoot_upper_ms": 69.864865,
+      "release_bound_width_ms": 15.289116
+    },
+    {
+      "step": 6,
+      "keys": ["Down", "space"],
+      "requested_ms": 300,
+      "full_keyset_ack_ns": 55536681977504,
+      "release_issue_lower_ns": 55537076256088,
+      "release_complete_upper_ns": 55537086483114,
+      "owner_commanded_hold_lower_ms": 394.278584,
+      "owner_commanded_hold_upper_ms": 404.505610,
+      "overshoot_lower_ms": 94.278584,
+      "overshoot_upper_ms": 104.505610,
+      "release_bound_width_ms": 10.227026
+    }
+  ],
+  "aggregate": {
+    "n": 6,
+    "requested_total_ms": 2000.0,
+    "owner_commanded_hold_total_lower_ms": 2428.603018,
+    "owner_commanded_hold_total_upper_ms": 2503.102487,
+    "overshoot_total_lower_ms": 428.603018,
+    "overshoot_total_upper_ms": 503.102487,
+    "overshoot_fraction_lower": 0.214301509,
+    "overshoot_fraction_upper": 0.2515512435,
+    "median_overshoot_lower_ms": 75.971625,
+    "median_overshoot_upper_ms": 86.155046
+  },
+  "active_revocation_sample": {
+    "program_id": "plan-3-primary-0-1",
+    "typed_health_capture_ns": 55532110564498,
+    "typed_ready_ns": 55532119040635,
+    "typed_event_emit_ns": 55532123318221,
+    "cancel_command_received_ns": 55532135752840,
+    "cancel_requested_ns": 55532146908901,
+    "empty_verified_ns": 55532149408597,
+    "release_published_ns": 55532162310865,
+    "terminal_ns": 55532202369534,
+    "capture_to_typed_ready_ms": 8.476137,
+    "typed_ready_to_emit_ms": 4.277586,
+    "emit_to_cancel_command_received_ms": 12.434619,
+    "cancel_command_received_to_cancel_requested_ms": 11.156061,
+    "cancel_requested_to_empty_verified_ms": 2.499696,
+    "capture_to_empty_verified_ms": 38.844099,
+    "typed_emit_to_empty_verified_ms": 26.090376,
+    "empty_verified_to_publish_ms": 12.902268,
+    "empty_verified_to_terminal_ms": 52.960937
+  },
+  "container_check": {
+    "calculation_executed": true,
+    "checkout_attempt": "FAILED_DNS_RESOLUTION",
+    "checkout_error": "Could not resolve host: github.com",
+    "calculation_input": "SHA-bound timestamps retrieved through GitHub MCP",
+    "fresh_model_calls": 0,
+    "fresh_gui_actions": 0,
+    "fresh_os_input": 0
+  },
+  "interpretation": {
+    "proven": [
+      "ordinary owner key-up has no symmetric timestamped receipt in input_owner_v10/session_v5",
+      "the retained source orders synchronous snapshot/artifact work before ordinary hold release",
+      "for the six selected completed holds, owner key-up could not be issued before the reported lower bound and completed before the reported upper bound"
+    ],
+    "observed": [
+      "the six requested hold durations sum to 2000 ms while the source-bound owner-commanded full-keyset interval sums to 2428.603-2503.102 ms",
+      "one active revocation reaches verified empty owner input 26.090 ms after typed event emission"
+    ],
+    "unknown": [
+      "continuous query_keymap occupancy during each ordinary hold",
+      "whether any external actor injected an unrecorded early key-up",
+      "independently useful task effect for these hold intervals",
+      "population distribution or causal benefit"
+    ]
+  },
+  "disposition": "REPAIR_MEASUREMENT_BEFORE_RECOVERY_POLICY",
+  "next_candidate": "versioned telemetry-only key-up acknowledgement and release-edge evidence; do not change recovery policy yet"
+}

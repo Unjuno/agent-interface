@@ -1,0 +1,22 @@
+{
+  "decision": "PASS_DETERMINISTIC_POSTCONDITION_BOUNDARY_SCOPED",
+  "window": "2097155",
+  "before_digest": null,
+  "after_digest": "55d7049e0ae57619bfc5133c793a8b0121430d4a13aada66441bf0f33a911374",
+  "before_geometry": {"w": 400, "h": 180},
+  "after_geometry": {"w": 520, "h": 220},
+  "rows": [
+    {"case":"file_digest","verdict":"PASS_POSTCONDITION"},
+    {"case":"geometry","verdict":"PASS_POSTCONDITION"},
+    {"case":"typed_state","verdict":"PASS_POSTCONDITION"},
+    {"case":"wrong_target","verdict":"FAIL_POSTCONDITION"},
+    {"case":"stale","verdict":"HOLD_UNKNOWN"},
+    {"case":"pixel_only","verdict":"HOLD_UNKNOWN"},
+    {"case":"missing_receipt","verdict":"HOLD_UNKNOWN"},
+    {"case":"cleanup_failure","verdict":"HOLD_UNKNOWN"}
+  ],
+  "model_calls": 0,
+  "network_calls": 0,
+  "image": "agent-interface-2994:20260920",
+  "image_digest": "sha256:167fd6184cac8729ccfea407938943384d64fe2999e7319bed3587638fa94b7c"
+}

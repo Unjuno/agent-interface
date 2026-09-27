@@ -1,0 +1,691 @@
+{
+  "claim": "pre-formal overlapping inference feasibility",
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "iterations": 20,
+  "decisions": [
+    {
+      "iteration": 0,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/001.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-0/temporal-sheet.png",
+      "model_image_sha256": "330874d3af05b33bb2bed39d7d9d359b117425b3a7e9d01fd470f1044a5183c9",
+      "action": {
+        "assessment": "Facing a clear corridor with no visible threats; advance cautiously.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8975,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 97,
+        "reasoning_output_tokens": 54
+      },
+      "model_ns": 8306071293,
+      "model_session_id": "01a0a091-99f2-75f0-8617-78a8000369ed",
+      "controller_model_started_ns": 5739265732876,
+      "controller_model_ended_ns": 5747671298913,
+      "model_image_to_plan_accept_ns": 8805631489,
+      "fresh_observation_to_plan_accept_ns": 212253337,
+      "fresh_sequence_at_plan": 28,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 1,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/033.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-1/temporal-sheet.png",
+      "model_image_sha256": "48ab059142a9c27f8698fa92981edb975b916d7c44bc294795797a141568fe31",
+      "action": {
+        "assessment": "The corridor opened ahead and remains clear; continue forward.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9538,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 65,
+        "reasoning_output_tokens": 23
+      },
+      "model_ns": 7213050812,
+      "model_session_id": "01a0a091-99f2-75f0-8617-78a8000369ed",
+      "controller_model_started_ns": 5748762875858,
+      "controller_model_ended_ns": 5756075332214,
+      "model_image_to_plan_accept_ns": 7831984047,
+      "fresh_observation_to_plan_accept_ns": 174389829,
+      "fresh_sequence_at_plan": 57,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 2,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/062.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-2/temporal-sheet.png",
+      "model_image_sha256": "a4fb42098154122cf7dede2292eb928e816450b7daae1e604ff7f4683bb57348",
+      "action": {
+        "assessment": "Entering a larger room with a prominent door ahead; approach it cautiously.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10069,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 76,
+        "reasoning_output_tokens": 31
+      },
+      "model_ns": 7123549610,
+      "model_session_id": "01a0a091-99f2-75f0-8617-78a8000369ed",
+      "controller_model_started_ns": 5757164810555,
+      "controller_model_ended_ns": 5764393670994,
+      "model_image_to_plan_accept_ns": 7726917976,
+      "fresh_observation_to_plan_accept_ns": 337343152,
+      "fresh_sequence_at_plan": 86,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 3,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/091.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-3/temporal-sheet.png",
+      "model_image_sha256": "090842e9196769878354124a9b644faaf991e54c5e95865ae16b5bae1f8f193d",
+      "action": {
+        "assessment": "At a closed prominent door with no visible threats; activate it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10611,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 81,
+        "reasoning_output_tokens": 37
+      },
+      "model_ns": 7144481996,
+      "model_session_id": "01a0a091-99f2-75f0-8617-78a8000369ed",
+      "controller_model_started_ns": 5765482803410,
+      "controller_model_ended_ns": 5772730004382,
+      "model_image_to_plan_accept_ns": 7791401916,
+      "fresh_observation_to_plan_accept_ns": 111058501,
+      "fresh_sequence_at_plan": 117,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 4,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/118.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-4/temporal-sheet.png",
+      "model_image_sha256": "0804909f384e658c5f3a0edd27aee9e7e979101fcc5682db266e8568f04d204c",
+      "action": {
+        "assessment": "At the closed AG door directly ahead; activate it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8975,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 89,
+        "reasoning_output_tokens": 47
+      },
+      "model_ns": 9211965520,
+      "model_session_id": "01a0a092-1de8-7de3-a756-c28f96edd7ab",
+      "controller_model_started_ns": 5773431124045,
+      "controller_model_ended_ns": 5782733870439,
+      "model_image_to_plan_accept_ns": 8210894164,
+      "fresh_observation_to_plan_accept_ns": 194752885,
+      "fresh_sequence_at_plan": 153,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 5,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/153.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-5/temporal-sheet.png",
+      "model_image_sha256": "1b2683f30c556834b54a237c247e4fccba21e09ab05004faec1d398d18532d56",
+      "action": {
+        "assessment": "The door remains closed and the view is stationary; try activating it again with a stronger use pulse.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "use",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9530,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 99,
+        "reasoning_output_tokens": 48
+      },
+      "model_ns": 6795025642,
+      "model_session_id": "01a0a092-1de8-7de3-a756-c28f96edd7ab",
+      "controller_model_started_ns": 5783354173803,
+      "controller_model_ended_ns": 5790227636258,
+      "model_image_to_plan_accept_ns": 7310550556,
+      "fresh_observation_to_plan_accept_ns": 261932623,
+      "fresh_sequence_at_plan": 181,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 6,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/181.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-6/temporal-sheet.png",
+      "model_image_sha256": "6f6d067c5232d722286e9139cc909c5405adcd957f513afce4201a3cb4db6c75",
+      "action": {
+        "assessment": "The AG door is not responding after repeated use; turn left briefly to search for the nearby route or switch.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10095,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 143,
+        "reasoning_output_tokens": 89
+      },
+      "model_ns": 8591409229,
+      "model_session_id": "01a0a092-1de8-7de3-a756-c28f96edd7ab",
+      "controller_model_started_ns": 5790967173809,
+      "controller_model_ended_ns": 5799649266902,
+      "model_image_to_plan_accept_ns": 9040016844,
+      "fresh_observation_to_plan_accept_ns": 278594031,
+      "fresh_sequence_at_plan": 215,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 7,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/219.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-7/temporal-sheet.png",
+      "model_image_sha256": "ca996a95f26ab3c3d7b5e8a63307f8596f8677183a1e624884780a1e09cb0b6e",
+      "action": {
+        "assessment": "The turn reveals the door is on the right and a corridor continues left; rotate farther left to face the passage.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10704,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 75,
+        "reasoning_output_tokens": 20
+      },
+      "model_ns": 8909171749,
+      "model_session_id": "01a0a092-1de8-7de3-a756-c28f96edd7ab",
+      "controller_model_started_ns": 5800522836669,
+      "controller_model_ended_ns": 5809531988253,
+      "model_image_to_plan_accept_ns": 9075590467,
+      "fresh_observation_to_plan_accept_ns": 319156162,
+      "fresh_sequence_at_plan": 250,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 8,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/253.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-8/temporal-sheet.png",
+      "model_image_sha256": "512b90aef92af65b40bcf7614d97df9193d78d698df0589f4a8ae75c031120cb",
+      "action": {
+        "assessment": "Turned toward the corridor; advance cautiously.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8975,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 128,
+        "reasoning_output_tokens": 88
+      },
+      "model_ns": 9029418999,
+      "model_session_id": "01a0a092-ae0f-7381-8abe-7c46536c4d53",
+      "controller_model_started_ns": 5810356457591,
+      "controller_model_ended_ns": 5819463027986,
+      "model_image_to_plan_accept_ns": 9429651114,
+      "fresh_observation_to_plan_accept_ns": 237840802,
+      "fresh_sequence_at_plan": 285,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 9,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/290.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-9/temporal-sheet.png",
+      "model_image_sha256": "f8d554994264b8888d297fb90b5dd66cd8a39bc8fa2008376332cfe27ec8e5a1",
+      "action": {
+        "assessment": "Pressed into a wall; correct left toward the visible opening.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9569,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 93,
+        "reasoning_output_tokens": 41
+      },
+      "model_ns": 7464724810,
+      "model_session_id": "01a0a092-ae0f-7381-8abe-7c46536c4d53",
+      "controller_model_started_ns": 5820477674343,
+      "controller_model_ended_ns": 5828036315226,
+      "model_image_to_plan_accept_ns": 8055451603,
+      "fresh_observation_to_plan_accept_ns": 85598738,
+      "fresh_sequence_at_plan": 317,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 10,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/325.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-10/temporal-sheet.png",
+      "model_image_sha256": "34a9b777bd252f1cba7fe7121e48a9a3c65c993ac088fa9ae5c6b2724f8e8624",
+      "action": {
+        "assessment": "Still facing the wall; back away and rotate left to reorient.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "backward",
+            "extent": "short"
+          },
+          {
+            "action": "turn_left",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10128,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 121,
+        "reasoning_output_tokens": 66
+      },
+      "model_ns": 7705552384,
+      "model_session_id": "01a0a092-ae0f-7381-8abe-7c46536c4d53",
+      "controller_model_started_ns": 5829313409435,
+      "controller_model_ended_ns": 5837106668249,
+      "model_image_to_plan_accept_ns": 7825578289,
+      "fresh_observation_to_plan_accept_ns": 259685504,
+      "fresh_sequence_at_plan": 352,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 11,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/361.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-11/temporal-sheet.png",
+      "model_image_sha256": "04c7f0bc1edfe726e41035f3b8c14ab49d3d837c92d68d07346213849e04735e",
+      "action": {
+        "assessment": "The turn revealed an open passage to the left; move through it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10715,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 86,
+        "reasoning_output_tokens": 32
+      },
+      "model_ns": 8674988719,
+      "model_session_id": "01a0a092-ae0f-7381-8abe-7c46536c4d53",
+      "controller_model_started_ns": 5838565362654,
+      "controller_model_ended_ns": 5847365281057,
+      "model_image_to_plan_accept_ns": 9273560252,
+      "fresh_observation_to_plan_accept_ns": 342904284,
+      "fresh_sequence_at_plan": 389,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 12,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/399.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-12/temporal-sheet.png",
+      "model_image_sha256": "30d1cb7a36b3bb55b31e6db4de808083bdb305219b2c38346ca47ad5fef13b54",
+      "action": {
+        "assessment": "No threat visible; newest view is pressed against a wall, so correct orientation toward the nearby passage.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8975,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 142,
+        "reasoning_output_tokens": 82
+      },
+      "model_ns": 9497935508,
+      "model_session_id": "01a0a093-4580-76b3-a148-f49d91c1aecf",
+      "controller_model_started_ns": 5849027768728,
+      "controller_model_ended_ns": 5858665572999,
+      "model_image_to_plan_accept_ns": 10082300667,
+      "fresh_observation_to_plan_accept_ns": 175776087,
+      "fresh_sequence_at_plan": 430,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 13,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/438.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-13/temporal-sheet.png",
+      "model_image_sha256": "4041d6ea4358e30ccdcdac438a4d55380e3c1410f5d62a4014d2c9f4a3f4ef4a",
+      "action": {
+        "assessment": "The newest view opens into a clear room with no visible enemies; advance through it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9583,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 109,
+        "reasoning_output_tokens": 61
+      },
+      "model_ns": 6991900855,
+      "model_session_id": "01a0a093-4580-76b3-a148-f49d91c1aecf",
+      "controller_model_started_ns": 5860043024100,
+      "controller_model_ended_ns": 5867126263349,
+      "model_image_to_plan_accept_ns": 7507282686,
+      "fresh_observation_to_plan_accept_ns": 261017728,
+      "fresh_sequence_at_plan": 461,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 14,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/468.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-14/temporal-sheet.png",
+      "model_image_sha256": "a1b147403b7634f1eb6f0ba130383709e045b57244ff972ac6cd7dd7e54623e9",
+      "action": {
+        "assessment": "The player has entered a clear blue-walled area and gained health; continue advancing with no visible threat.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10158,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 85,
+        "reasoning_output_tokens": 33
+      },
+      "model_ns": 6176164988,
+      "model_session_id": "01a0a093-4580-76b3-a148-f49d91c1aecf",
+      "controller_model_started_ns": 5868467959736,
+      "controller_model_ended_ns": 5874740671458,
+      "model_image_to_plan_accept_ns": 6787468849,
+      "fresh_observation_to_plan_accept_ns": 156320409,
+      "fresh_sequence_at_plan": 489,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 15,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/496.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-15/temporal-sheet.png",
+      "model_image_sha256": "76b10c6e9bf5841a24e6149c9e73b39c4c1c16d101b308b8d0d7af15f92cdb97",
+      "action": {
+        "assessment": "Health dropped while advancing in the blue area, indicating damaging terrain; retreat toward the safer entrance.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "backward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10709,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 96,
+        "reasoning_output_tokens": 45
+      },
+      "model_ns": 7075665368,
+      "model_session_id": "01a0a093-4580-76b3-a148-f49d91c1aecf",
+      "controller_model_started_ns": 5876077310884,
+      "controller_model_ended_ns": 5883254203122,
+      "model_image_to_plan_accept_ns": 7734801066,
+      "fresh_observation_to_plan_accept_ns": 120318433,
+      "fresh_sequence_at_plan": 520,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 16,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/526.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-16/temporal-sheet.png",
+      "model_image_sha256": "68ecb20cbd0b83a9bf3ba5ebd45b8a7a78fab059c0e35203963ef018fb07652f",
+      "action": {
+        "assessment": "Taking heavy damage in the blue room; retreat while firing.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "retreat_fire",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8975,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 141,
+        "reasoning_output_tokens": 96
+      },
+      "model_ns": 7527367384,
+      "model_session_id": "01a0a093-cfd5-7800-a740-bf03c5d71811",
+      "controller_model_started_ns": 5884533147086,
+      "controller_model_ended_ns": 5892181199958,
+      "model_image_to_plan_accept_ns": 8225586639,
+      "fresh_observation_to_plan_accept_ns": 252862325,
+      "fresh_sequence_at_plan": 551,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 17,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/557.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-17/temporal-sheet.png",
+      "model_image_sha256": "e266f30d0ac6d72e8520b395461485ff25cc8e4e2794d25bdb819b04012e6f53",
+      "action": {
+        "assessment": "Enemy is visible at the right edge and health is critically low; fire while backing away.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "retreat_fire",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9582,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 106,
+        "reasoning_output_tokens": 55
+      },
+      "model_ns": 7539714060,
+      "model_session_id": "01a0a093-cfd5-7800-a740-bf03c5d71811",
+      "controller_model_started_ns": 5893491591957,
+      "controller_model_ended_ns": 5901121419567,
+      "model_image_to_plan_accept_ns": 8255336709,
+      "fresh_observation_to_plan_accept_ns": 303287873,
+      "fresh_sequence_at_plan": 591,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 18,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/596.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-18/temporal-sheet.png",
+      "model_image_sha256": "fb237e1df17e21ce8e2be46703a28cf61785a2c15c2fb4e83767658ba75ccf59",
+      "action": {
+        "assessment": "Enemy is directly ahead at close range and health is critical; retreat while firing.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "retreat_fire",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10154,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 87,
+        "reasoning_output_tokens": 38
+      },
+      "model_ns": 7668136769,
+      "model_session_id": "01a0a093-cfd5-7800-a740-bf03c5d71811",
+      "controller_model_started_ns": 5902264860322,
+      "controller_model_ended_ns": 5910039839189,
+      "model_image_to_plan_accept_ns": 8345746945,
+      "fresh_observation_to_plan_accept_ns": 334463927,
+      "fresh_sequence_at_plan": 631,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 19,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-live-01/runtime/636.png",
+      "model_image": "results-local/doom/map01-motor-live-01/decision-19/temporal-sheet.png",
+      "model_image_sha256": "da3cb9fdf415bd16c4f739398ffcf93ff045140727169a930ba13e3d57ac9f9f",
+      "action": {
+        "assessment": "The close enemy is dead; advance through the room toward the visible corridor and panels.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10707,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 84,
+        "reasoning_output_tokens": 36
+      },
+      "model_ns": 7955915642,
+      "model_session_id": "01a0a093-cfd5-7800-a740-bf03c5d71811",
+      "controller_model_started_ns": 5911161890006,
+      "controller_model_ended_ns": 5919200234375,
+      "model_image_to_plan_accept_ns": 8570140540,
+      "fresh_observation_to_plan_accept_ns": 243404381,
+      "fresh_sequence_at_plan": 672,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    }
+  ],
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 181262872999,
+    "death_count": 0,
+    "kill_count": 1,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 5920257318521
+  },
+  "model_session_span": 4,
+  "model_session_ids": [
+    "01a0a091-99f2-75f0-8617-78a8000369ed",
+    "01a0a092-1de8-7de3-a756-c28f96edd7ab",
+    "01a0a092-ae0f-7381-8abe-7c46536c4d53",
+    "01a0a093-4580-76b3-a148-f49d91c1aecf",
+    "01a0a093-cfd5-7800-a740-bf03c5d71811"
+  ],
+  "motor_contract": "semantic commands compiled to <=450ms turns and <=900ms movement",
+  "game_continued_during_model_calls": true,
+  "model_wall_seconds": 156.602211337
+}

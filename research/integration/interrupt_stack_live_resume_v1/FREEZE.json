@@ -1,0 +1,49 @@
+{
+  "allocation": "interrupt-stack-live-resume-4222-20260923-01",
+  "audit_command": "python -B audit.py formal --reps 0 1 --freeze FREEZE.json --out AUDIT.json && python -B controls.py",
+  "batches": [
+    {
+      "display_base": 800,
+      "rep": 0,
+      "rows": 12
+    },
+    {
+      "display_base": 820,
+      "rep": 1,
+      "rows": 12
+    }
+  ],
+  "construction": {
+    "construction-01": "STOP_XAUTH_PARENT_MISWIRE",
+    "construction-02": "excluded rows old audit hash after auditor hardening",
+    "construction-03": "PASS_EXCLUDED_12"
+  },
+  "formal_commands": [
+    "python -B run.py --out formal/batch-0 --rep 0 --display-base 800",
+    "python -B run.py --out formal/batch-1 --rep 1 --display-base 820"
+  ],
+  "formal_reruns": 0,
+  "formal_rows_before_freeze": 0,
+  "policies": [
+    "POP_ONLY",
+    "EVIDENCE_BOUND_RESUME"
+  ],
+  "post_freeze_tuning": 0,
+  "replacements": 0,
+  "scenarios": [
+    "NORMAL",
+    "TARGET_REPLACED",
+    "QUEUE_CHANGED",
+    "SOURCE_STALE",
+    "PENDING_UNKNOWN",
+    "TASK_CANCELED"
+  ],
+  "source_sha256": {
+    "ENVIRONMENT.json": "44b18482f24fee6f264fb2f208792cfca0e339c482e46825a15d82bdf91e042f",
+    "PLAN.md": "65dbaba3434104b771c92387261ae1bf754c9ff5f41823a26209100a28a4f179",
+    "app.py": "e67a6441968924a5523b0d8e648640fb920e7ce6d9ea974039147facfd5643c5",
+    "audit.py": "2e71acb8da1d8efb74d7dd384fc2677f143bb1b0dcdbfc613ddd26354b83254a",
+    "controls.py": "24fbe54715206dd8d229d0dc6319bf9d18e1d26f9c13b7cf669438f15530c5bc",
+    "run.py": "0e614a1e3f4be515f7ed466f5efc768cadf7e727717323c78c9573a2ea102ffa"
+  }
+}

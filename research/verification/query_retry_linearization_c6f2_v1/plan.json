@@ -1,0 +1,12 @@
+{
+  "allocation": "query-retry-c6f2-20260922-01",
+  "policies": ["CACHE_QUERY", "SPLIT_RECHECK", "ATOMIC_DEDUP"],
+  "scenarios": ["FRESH_ONLY", "COMPLETED_BEFORE_QUERY", "ORIGINAL_BETWEEN_QUERY_PREPARE", "ORIGINAL_BETWEEN_PREPARE_COMMIT", "RETRY_BEFORE_ORIGINAL", "CHANGED_PAYLOAD_AFTER_PREPARE", "WRONG_SESSION", "BOOLEAN_DELTA", "NEW_OPERATION"],
+  "formal_repetitions": [0, 1],
+  "cases_per_batch": 27,
+  "worker_timeout_seconds": 3,
+  "batch_timeout_seconds": 30,
+  "environment": "provided Linux execution container; not image-attested Docker or OrbStack",
+  "query_authority": false,
+  "scope": "participating local counter receiver; no GUI or external side effect"
+}

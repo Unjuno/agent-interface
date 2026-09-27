@@ -1,0 +1,25 @@
+{
+  "kind": "submit_once",
+  "steps": [
+    {
+      "op": "pointer_click",
+      "x": 150,
+      "y": 277,
+      "duration_ms": 80
+    },
+    {
+      "op": "chord",
+      "modifier": "Control_L",
+      "key": "a"
+    },
+    {
+      "op": "text",
+      "text": "t000248"
+    },
+    {
+      "op": "key",
+      "key": "Return"
+    }
+  ],
+  "rationale": "Return was outside the completed prefix, so submit exactly once through fresh admission."
+}

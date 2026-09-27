@@ -1,0 +1,77 @@
+{
+  "passed": true,
+  "calls": [
+    {
+      "thread_id": "01a0a079-2b6b-7480-9c56-3761c29a113e",
+      "action": {
+        "assessment": "Advance through the corridor and attempt to operate the control ahead.",
+        "steps": [
+          {
+            "keys": [
+              "Shift_L",
+              "Up"
+            ],
+            "duration_ms": 1800
+          },
+          {
+            "keys": [
+              "e"
+            ],
+            "duration_ms": 250
+          },
+          {
+            "keys": [
+              "Shift_L",
+              "Up"
+            ],
+            "duration_ms": 1800
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9000,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 160,
+        "reasoning_output_tokens": 91
+      }
+    },
+    {
+      "thread_id": "01a0a079-2b6b-7480-9c56-3761c29a113e",
+      "action": {
+        "assessment": "Progress has begun into the newly opened passage; continue forward, then turn right into the dark opening.",
+        "steps": [
+          {
+            "keys": [
+              "Shift_L",
+              "Up"
+            ],
+            "duration_ms": 1400
+          },
+          {
+            "keys": [
+              "Right"
+            ],
+            "duration_ms": 450
+          },
+          {
+            "keys": [
+              "Shift_L",
+              "Up"
+            ],
+            "duration_ms": 1400
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9629,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 147,
+        "reasoning_output_tokens": 70
+      }
+    }
+  ],
+  "same_model_session": true,
+  "claim": "two-call real DOOM image persistence mechanics; no gameplay efficacy claim"
+}

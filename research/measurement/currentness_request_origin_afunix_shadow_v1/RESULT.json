@@ -1,0 +1,353 @@
+{
+  "authority_promotions": 0,
+  "candidate_oracle_mismatches": 0,
+  "cases_per_stratum": 128,
+  "cleanup_residual_processes": 0,
+  "decision": "PASS_REQUEST_ORIGIN_AFUNIX_SHADOW_SCOPED",
+  "exceptions": 0,
+  "parse_errors": 0,
+  "planner_generation_influence": 0,
+  "planner_generations_seen": [
+    0,
+    1,
+    2,
+    100,
+    1000000,
+    2147483647
+  ],
+  "primary_invocations": 1,
+  "reruns": 0,
+  "response_replay_rebinds": 0,
+  "samples": {
+    "INVALIDATE_BEFORE_REQUEST": {
+      "case_id": 0,
+      "exception": null,
+      "final_decisions": 1,
+      "final_epoch": 1,
+      "outputs": {
+        "begin": {
+          "grants_input_authority": false,
+          "request_epoch": 1,
+          "request_id": "r-0",
+          "scope": [
+            "s0",
+            "t1"
+          ],
+          "status": "REQUEST_BEGUN"
+        },
+        "install1": {
+          "decision_id": "d-0",
+          "epoch": 1,
+          "grants_input_authority": false,
+          "planner_generation": 0,
+          "request_id": "r-0",
+          "scope": [
+            "s0",
+            "t1"
+          ],
+          "status": "DECISION_INSTALLED"
+        },
+        "invalidate": {
+          "epoch": 1,
+          "event_id": "e-0",
+          "grants_input_authority": false,
+          "scope": [
+            "s0",
+            "t1"
+          ],
+          "status": "CURRENTNESS_INVALIDATED"
+        },
+        "use": {
+          "decision_epoch": 1,
+          "decision_id": "d-0",
+          "epoch": 1,
+          "grants_input_authority": false,
+          "planner_generation": 0,
+          "request_id": "r-0",
+          "scope": [
+            "s0",
+            "t1"
+          ],
+          "status": "ADMITTED"
+        }
+      },
+      "parse_errors": 0,
+      "planner_generation": 0,
+      "scope": [
+        "s0",
+        "t1"
+      ],
+      "stratum": "INVALIDATE_BEFORE_REQUEST",
+      "timeline": {
+        "ack_received": 2082167735388,
+        "begin_end": 2082157678755,
+        "begin_start": 2082157568130,
+        "install1_end": 2082168818444,
+        "install1_start": 2082168707521,
+        "invalidate_thread_end": 2082156690565,
+        "invalidate_thread_start": 2082156289292,
+        "release_sent": 2082167828579,
+        "request_sent": 2082159325514,
+        "response_received": 2082168561201,
+        "use_end": 2082169001206,
+        "use_start": 2082168860741
+      }
+    },
+    "INVALIDATE_BEFORE_RESPONSE": {
+      "case_id": 3,
+      "exception": null,
+      "final_decisions": 0,
+      "final_epoch": 1,
+      "outputs": {
+        "begin": {
+          "grants_input_authority": false,
+          "request_epoch": 0,
+          "request_id": "r-3",
+          "scope": [
+            "s0",
+            "t0"
+          ],
+          "status": "REQUEST_BEGUN"
+        },
+        "install1": {
+          "decision_id": "d-3",
+          "epoch": 1,
+          "grants_input_authority": false,
+          "planner_generation": 100,
+          "request_epoch": 0,
+          "request_id": "r-3",
+          "scope": [
+            "s0",
+            "t0"
+          ],
+          "status": "STALE_RESPONSE_REFUSED"
+        },
+        "invalidate": {
+          "epoch": 1,
+          "event_id": "e-3",
+          "grants_input_authority": false,
+          "scope": [
+            "s0",
+            "t0"
+          ],
+          "status": "CURRENTNESS_INVALIDATED"
+        },
+        "use": {
+          "decision_id": "d-3",
+          "epoch": 1,
+          "grants_input_authority": false,
+          "scope": [
+            "s0",
+            "t0"
+          ],
+          "status": "UNKNOWN_DECISION"
+        }
+      },
+      "parse_errors": 0,
+      "planner_generation": 100,
+      "scope": [
+        "s0",
+        "t0"
+      ],
+      "stratum": "INVALIDATE_BEFORE_RESPONSE",
+      "timeline": {
+        "ack_received": 2082175057157,
+        "begin_end": 2082174356358,
+        "begin_start": 2082174352713,
+        "install1_end": 2082176140988,
+        "install1_start": 2082176108239,
+        "invalidate_thread_end": 2082175494744,
+        "invalidate_thread_start": 2082175482784,
+        "release_sent": 2082175629885,
+        "request_sent": 2082174398106,
+        "response_received": 2082176099681,
+        "use_end": 2082176148175,
+        "use_start": 2082176144806
+      }
+    },
+    "RESPONSE_BEFORE_INVALIDATE": {
+      "case_id": 1,
+      "exception": null,
+      "final_decisions": 1,
+      "final_epoch": 1,
+      "outputs": {
+        "begin": {
+          "grants_input_authority": false,
+          "request_epoch": 0,
+          "request_id": "r-1",
+          "scope": [
+            "s0",
+            "t1"
+          ],
+          "status": "REQUEST_BEGUN"
+        },
+        "install1": {
+          "decision_id": "d-1",
+          "epoch": 0,
+          "grants_input_authority": false,
+          "planner_generation": 1,
+          "request_id": "r-1",
+          "scope": [
+            "s0",
+            "t1"
+          ],
+          "status": "DECISION_INSTALLED"
+        },
+        "invalidate": {
+          "epoch": 1,
+          "event_id": "e-1",
+          "grants_input_authority": false,
+          "scope": [
+            "s0",
+            "t1"
+          ],
+          "status": "CURRENTNESS_INVALIDATED"
+        },
+        "use": {
+          "decision_epoch": 0,
+          "decision_id": "d-1",
+          "epoch": 1,
+          "grants_input_authority": false,
+          "planner_generation": 1,
+          "request_id": "r-1",
+          "scope": [
+            "s0",
+            "t1"
+          ],
+          "status": "STALE_EPOCH_REFUSED"
+        }
+      },
+      "parse_errors": 0,
+      "planner_generation": 1,
+      "scope": [
+        "s0",
+        "t1"
+      ],
+      "stratum": "RESPONSE_BEFORE_INVALIDATE",
+      "timeline": {
+        "ack_received": 2082169931287,
+        "begin_end": 2082169476621,
+        "begin_start": 2082169470678,
+        "install1_end": 2082170288218,
+        "install1_start": 2082170281102,
+        "invalidate_thread_end": 2082172123572,
+        "invalidate_thread_start": 2082171356511,
+        "release_sent": 2082169959965,
+        "request_sent": 2082169560105,
+        "response_received": 2082170272544,
+        "use_end": 2082172268348,
+        "use_start": 2082172253984
+      }
+    },
+    "TRANSPORT_REPLAY": {
+      "case_id": 9,
+      "exception": null,
+      "final_decisions": 1,
+      "final_epoch": 0,
+      "outputs": {
+        "begin": {
+          "grants_input_authority": false,
+          "request_epoch": 0,
+          "request_id": "r-9",
+          "scope": [
+            "s1",
+            "t0"
+          ],
+          "status": "REQUEST_BEGUN"
+        },
+        "install1": {
+          "decision_id": "d-9",
+          "epoch": 0,
+          "grants_input_authority": false,
+          "planner_generation": 100,
+          "request_id": "r-9",
+          "scope": [
+            "s1",
+            "t0"
+          ],
+          "status": "DECISION_INSTALLED"
+        },
+        "install2": {
+          "decision_id": "d-9",
+          "epoch": 0,
+          "grants_input_authority": false,
+          "planner_generation": 100,
+          "request_epoch": 0,
+          "request_id": "r-9",
+          "scope": [
+            "s1",
+            "t0"
+          ],
+          "status": "RESPONSE_REPLAY_REFUSED"
+        },
+        "replay_decisions_equal": true,
+        "use": {
+          "decision_epoch": 0,
+          "decision_id": "d-9",
+          "epoch": 0,
+          "grants_input_authority": false,
+          "planner_generation": 100,
+          "request_id": "r-9",
+          "scope": [
+            "s1",
+            "t0"
+          ],
+          "status": "ADMITTED"
+        }
+      },
+      "parse_errors": 0,
+      "planner_generation": 100,
+      "scope": [
+        "s1",
+        "t0"
+      ],
+      "stratum": "TRANSPORT_REPLAY",
+      "timeline": {
+        "ack_received": 2082189966272,
+        "begin_end": 2082189668909,
+        "begin_start": 2082189666623,
+        "install1_end": 2082190307129,
+        "install1_start": 2082190303740,
+        "install2_end": 2082190724987,
+        "install2_start": 2082190690981,
+        "release_sent": 2082190019141,
+        "replay_release_sent": 2082190329806,
+        "replay_response_received": 2082190686201,
+        "request_sent": 2082189691178,
+        "response_received": 2082190298870,
+        "use_end": 2082190733381,
+        "use_start": 2082190729725
+      }
+    }
+  },
+  "seed": 124420260918007,
+  "status_counts": {
+    "INVALIDATE_BEFORE_REQUEST": {
+      "DECISION_INSTALLED|ADMITTED|None": 128
+    },
+    "INVALIDATE_BEFORE_RESPONSE": {
+      "STALE_RESPONSE_REFUSED|UNKNOWN_DECISION|None": 128
+    },
+    "RESPONSE_BEFORE_INVALIDATE": {
+      "DECISION_INSTALLED|STALE_EPOCH_REFUSED|None": 128
+    },
+    "TRANSPORT_REPLAY": {
+      "DECISION_INSTALLED|ADMITTED|RESPONSE_REPLAY_REFUSED": 128
+    }
+  },
+  "stop_reply": {
+    "kind": "stopped",
+    "worker_ns": 2082780175306
+  },
+  "stratum_counts": {
+    "INVALIDATE_BEFORE_REQUEST": 128,
+    "INVALIDATE_BEFORE_RESPONSE": 128,
+    "RESPONSE_BEFORE_INVALIDATE": 128,
+    "TRANSPORT_REPLAY": 128
+  },
+  "task": "CURRENTNESS-REQUEST-ORIGIN-AFUNIX-SHADOW-20260918-007",
+  "timeline_violations": 0,
+  "total_cases": 512,
+  "trace_bytes": 610231,
+  "trace_sha256": "3f5f4df95971947e5d3215613be80e70fffc20145068e89fef3cb05e3bab2273"
+}

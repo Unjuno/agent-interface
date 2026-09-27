@@ -1,0 +1,26 @@
+{
+  "allocation": "Issue 2918 live MANIPULATE_TO certificate transfer allocation 03",
+  "status": "HOLD_AUDITOR_EXECUTION_ERROR",
+  "formal_runner_exit_code": 0,
+  "formal_cases": 12,
+  "public_observation_api_returns": 11,
+  "ambiguous_case_api_calls": 0,
+  "png_artifacts": 11,
+  "candidate_dispositions": {"FORWARD": 3, "SUPPRESS": 2, "YIELD": 7},
+  "observed_suppressions": [
+    {"case": "complete_unmasked_change", "mask": ["E", "S"], "changed": ["D", "T"]},
+    {"case": "abort_unmasked_change", "mask": ["S"], "changed": ["D", "E", "T"]}
+  ],
+  "masked_change": {"case": "complete_masked_change", "disposition": "FORWARD", "changed": ["E"]},
+  "fail_open_cases": ["missing_fact", "contradictory_fact", "partial_observation", "stale_observation", "target_replacement", "ambiguous_target", "intent_epoch_mismatch"],
+  "unsafe_suppressions_observed": 0,
+  "all_case_lineage_fields_retained": true,
+  "input_dispatched": false,
+  "side_effect_authority": false,
+  "runner_output": "/tmp/issue2918-formal-v3.MjKq13",
+  "independent_auditor_exit_code": 1,
+  "auditor_failure": "NameError: name 'file' is not defined at audit_live_allocation.py line 58 while opening a PNG after hash lookup",
+  "independent_audit_report": null,
+  "conclusion": "HOLD. Raw outputs show the preregistered candidate decisions and now retain per-case binding/epoch/capture/artifact lineage. The frozen independent auditor did not finish; no PASS is claimed.",
+  "retry": "No allocation-03 runner or auditor rerun. A separate audit-only successor is required to revalidate these immutable raw bytes."
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "mindustry_asset_materializer_freeze_v1",
+  "task": "MINDUSTRY-ASSET-MATERIALIZER-20260917-001",
+  "issue": 887,
+  "base": "7b5287d9657df74a8b9eb230198a3d9eae752d62",
+  "formal_invocations_before_freeze": 0,
+  "formal_output_present_before_freeze": false,
+  "source_git_blobs": {
+    "PLAN.md": "3ae46cf9cfab49b288ee5636553276cff698a203",
+    "fixture.json": "61c94bef9980df0772372e9cf44c8c1869830184",
+    "materialize.py": "b9ce7bdec83b59eafb044113199237fe104b6503",
+    "test_mechanics.py": "55da17772fc6e123e850cc1f66614c5651d2c98c",
+    "run_formal.py": "63d7c75112c7e3f6ea628ed522d0cf4c0939cf75",
+    "audit.py": "6e998a00f440d34f67c188ce959d5f03fedb2a35",
+    "corruption_controls.py": "0c3a73efd3ddc9465ced38a7de9896dc35a3ce23"
+  },
+  "production_identities": {
+    "jar_sha256": "7f210295dfffb4c17b582b27bab41f4dde83f557f00f0877572fdac943f40539",
+    "jar_bytes": 87022576,
+    "save_sha256": "8fff67b0c130ee59a3838c92754b73225a506902bd4838dcc3f1fb5be286cbed",
+    "save_git_blob": "7663b25633d853a257fbb407723fe85579120111"
+  },
+  "construction": {
+    "py_compile": "PASS",
+    "mechanics": "PASS",
+    "wrong_save_partial_publication": "REJECTED_CLEAN",
+    "formal_output": "ABSENT",
+    "network_required": false,
+    "provider_calls": 0,
+    "live_authority": "none"
+  }
+}

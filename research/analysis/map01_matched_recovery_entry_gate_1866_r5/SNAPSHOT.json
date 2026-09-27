@@ -1,0 +1,26 @@
+{
+  "schema": "agent-interface/map01-matched-recovery-entry-gate-r5-snapshot-v1",
+  "issue": 1866,
+  "base_main": "b38806cd09243f7ad18deb61db44048bc3feffae",
+  "previous_snapshot_comment_id": 5778061179,
+  "previous_gate_source": {
+    "path": "research/analysis/map01_matched_recovery_entry_gate_1866_r4/gate.py",
+    "git_blob": "fd1ddd07f4283cb60a20ed3a957dd4727b843958"
+  },
+  "new_endpoint_evidence": {
+    "issue": 4134,
+    "pr": 4164,
+    "pr_head": "8ed7cc392abe2a417acc8edb3e38421a608a4878",
+    "merge_commit": "28e71022cb46ec3a2deaa1053e7ad448c03f27be",
+    "path": "research/measurement/same_run_release_task_effect_v1/RESULT.json",
+    "git_blob": "384328c63f75108e35b8b9126179d6bace478095",
+    "decision": "PASS_SAME_RUN_RELEASE_TASK_EFFECT_ENDPOINT_SCOPED"
+  },
+  "gates": {
+    "physical_task_effect_endpoint": {"ready": true, "basis": "merged #4134 result"},
+    "task_effect_contract": {"ready": true, "basis": "previous #1866 current-main snapshot"},
+    "matched_arm": {"ready": true, "basis": "previous #1866 current-main snapshot"},
+    "arm_bound_audit": {"ready": true, "basis": "previous #1866 current-main snapshot"},
+    "terminal_integrity": {"ready": true, "basis": "previous #1866 current-main snapshot"}
+  }
+}

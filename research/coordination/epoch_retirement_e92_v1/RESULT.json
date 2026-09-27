@@ -1,0 +1,50 @@
+{
+  "actor_exit_counts": {
+    "0": 36,
+    "23": 12
+  },
+  "audit": {
+    "cases": 24,
+    "checks": 475,
+    "child_processes": 48,
+    "decision": "PASS_EPOCH_RETIREMENT_ORDER_SCOPED",
+    "errors": [],
+    "phase": "formal",
+    "totals": {
+      "DELETE_FIRST": {
+        "cases": 12,
+        "maintenance_complete": 2,
+        "new_epoch_eligible": 2,
+        "old_excluded_eligible": 4,
+        "retained_rows": 18
+      },
+      "FENCE_FIRST": {
+        "cases": 12,
+        "maintenance_complete": 2,
+        "new_epoch_eligible": 6,
+        "old_excluded_eligible": 0,
+        "retained_rows": 30
+      }
+    }
+  },
+  "audit_receipt_note": "First shell audit output retained; separate read-only audit records its own real process exit0 and byte-identical output. No first-audit PID/exit is inferred.",
+  "batch_exits": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "case_exclusions": 0,
+  "case_replacements": 0,
+  "decision": "PASS_EPOCH_RETIREMENT_ORDER_SCOPED",
+  "effective_controls": 12,
+  "formal_batch_reruns": 0,
+  "formal_cases": 24,
+  "postfreeze_tuning": 0,
+  "read_only_probes": 96,
+  "rejected_controls": 12,
+  "scope": "header eligibility only; no payload, task or action authority",
+  "source_freeze_unchanged": true
+}

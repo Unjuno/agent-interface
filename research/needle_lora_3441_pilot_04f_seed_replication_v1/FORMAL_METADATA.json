@@ -1,0 +1,31 @@
+{
+  "schema": "needle-04f-formal-metadata-v1",
+  "issue": 4505,
+  "allocation": "needle-lora-3441-pilot-04f-seed-replication-20260926-01",
+  "formalInvocations": 1,
+  "constructionTests": "17/17 PASS",
+  "pyCompile": "PASS",
+  "formal": {
+    "stdoutCreationUtc": "2026-09-26T15:01:35Z",
+    "stdoutFlushUtc": "2026-09-26T15:01:40Z",
+    "exitCode": 0,
+    "command": "py -3.11 runner.py",
+    "environment": {"CUBLAS_WORKSPACE_CONFIG": ":4096:8", "PYTHONHASHSEED": "777731"},
+    "stdout": {"path": "FORMAL_STDOUT.json", "bytes": 817026, "sha256": "74e72f96e29ddbed9891b8b7bf10c67caf83d6de2e251c390c95851f1bdf7894"},
+    "stderr": {"path": "FORMAL_STDERR.txt", "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+  },
+  "audit": {"command": "py -3.11 -B audit.py FORMAL_STDOUT.json", "exitCode": 0, "decision": "PASS_MULTI_SKILL_ROUTING_SCOPED", "errors": [], "rowsRecomputed": 24576},
+  "metrics": {
+    "routedAccuracy": {"A": 0.957275390625, "B": 0.929931640625, "C": 0.915771484375},
+    "sharedSequentialAccuracy": {"A": 0.093505859375, "B": 0.00146484375, "C": 0.88671875},
+    "basePretrainSteps": 400,
+    "adapterStepsPerFit": 120,
+    "baseImmutable": true,
+    "fullStateSnapshotRoundtripExact": true,
+    "rollbackTensorExact": true,
+    "allInvalidRoutesYield": true,
+    "peakMemory": "UNAVAILABLE_WDDM"
+  },
+  "limitations": ["One additional fresh seed only; not a population estimate.", "Synthetic task family only; no realistic transfer, GUI, runtime, action-safety or latency claim."],
+  "preservation": {"issues": [3895, 4471, 4492], "predecessorEvidenceChanged": false}
+}

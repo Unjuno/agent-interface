@@ -1,0 +1,226 @@
+{
+  "audit_passed": true,
+  "preregistered": true,
+  "independent_task_success": true,
+  "controller_verified_hard_success": false,
+  "finish_kind": "bounded_turn_limit",
+  "controller_outcome": "bounded_turn_limit_with_independent_task_success",
+  "independent_checks": {
+    "target_owned_roads": true,
+    "ordered_bidirectional_connections": true,
+    "forbidden_tiles_clear": true,
+    "surrounding_road_owner_unchanged": true
+  },
+  "model_turns": 12,
+  "input_tokens": 204114,
+  "cached_input_tokens": 104448,
+  "output_tokens": 2751,
+  "model_wait_ms": 195604.2648,
+  "proposal_to_feedback_ms": 27466.6396,
+  "initial_to_post_second_drag_feedback_ms": 211631.6066,
+  "semantic_completion_detected_ms": null,
+  "durable_calls": 50,
+  "runtime_exact_frames": 62,
+  "verified_release_terminals": 25,
+  "drag_attempts": [
+    {
+      "turn": 5,
+      "op": "pointer_drag",
+      "points": [
+        {
+          "x": 705,
+          "y": 239
+        },
+        {
+          "x": 673,
+          "y": 255
+        },
+        {
+          "x": 641,
+          "y": 271
+        }
+      ],
+      "duration_ms": 600
+    },
+    {
+      "turn": 11,
+      "op": "pointer_drag",
+      "points": [
+        {
+          "x": 641,
+          "y": 278
+        },
+        {
+          "x": 673,
+          "y": 294
+        },
+        {
+          "x": 705,
+          "y": 310
+        }
+      ],
+      "duration_ms": 600
+    }
+  ],
+  "repeated_completed_segment_drags": 0,
+  "effect_memory_replay": [
+    {
+      "after_turn": 5,
+      "source_turn": 5,
+      "inspection_turns": 0,
+      "checked_in_sha256": "53aafe3163388bd7cedaac75759d8d7f5a36f1fe34aa121b325af8f605a34e33"
+    },
+    {
+      "after_turn": 6,
+      "source_turn": 5,
+      "inspection_turns": 1,
+      "checked_in_sha256": "3b85afca939691d0b510421eaac6409d09cbc5388f9a630c8b16e01827ab0df8"
+    },
+    {
+      "after_turn": 7,
+      "source_turn": 5,
+      "inspection_turns": 2,
+      "checked_in_sha256": "dbde235b7fade6817032aa6dc47e7a1912919c534cd61d80f14d19cf91664245"
+    },
+    {
+      "after_turn": 8,
+      "source_turn": 5,
+      "inspection_turns": 3,
+      "checked_in_sha256": "37404091e878f4750fa3e8a9023f6665bb8913f60d655f50d7ab34682ab0093a"
+    },
+    {
+      "after_turn": 9,
+      "source_turn": 5,
+      "inspection_turns": 4,
+      "checked_in_sha256": "5a4e0c30ee75bd9e6973af84306dc7bb5c187dea2a204e7ec06980ab1f071805"
+    },
+    {
+      "after_turn": 10,
+      "source_turn": 5,
+      "inspection_turns": 5,
+      "checked_in_sha256": "704921892a33e8516876e2677446fa07c7e24fad91b7a215d5f29d86054e67c7"
+    },
+    {
+      "after_turn": 11,
+      "source_turn": 11,
+      "inspection_turns": 0,
+      "checked_in_sha256": "dfa102a2a0ca887362abf2d7741ab0f46224eaba01d60189e76fe90a8a7199db"
+    },
+    {
+      "after_turn": 12,
+      "source_turn": 11,
+      "inspection_turns": 1,
+      "checked_in_sha256": "8dd9c8bd1db54b152a3d130aff82d691c32419c34a1771f0aa8261a61d281286"
+    }
+  ],
+  "observer": {
+    "records": 252,
+    "transition_indices": [
+      94,
+      236
+    ],
+    "transition_tiles": [
+      [
+        684,
+        685,
+        686
+      ],
+      [
+        750,
+        814
+      ]
+    ],
+    "stable_complete_records": 16,
+    "score": {
+      "success": true,
+      "checks": {
+        "target_owned_roads": true,
+        "ordered_bidirectional_connections": true,
+        "forbidden_tiles_clear": true,
+        "surrounding_road_owner_unchanged": true
+      },
+      "changed_surrounding_tiles": [],
+      "contract": {
+        "x": 44,
+        "y": 10,
+        "width": 64,
+        "target": [
+          684,
+          685,
+          686,
+          750,
+          814
+        ],
+        "forbidden": [
+          748,
+          749,
+          812,
+          813
+        ],
+        "owner": 0,
+        "guard": [
+          554,
+          555,
+          556,
+          557,
+          558,
+          559,
+          560,
+          618,
+          619,
+          620,
+          621,
+          622,
+          623,
+          624,
+          682,
+          683,
+          684,
+          685,
+          686,
+          687,
+          688,
+          746,
+          747,
+          748,
+          749,
+          750,
+          751,
+          752,
+          810,
+          811,
+          812,
+          813,
+          814,
+          815,
+          816,
+          874,
+          875,
+          876,
+          877,
+          878,
+          879,
+          880,
+          938,
+          939,
+          940,
+          941,
+          942,
+          943,
+          944
+        ]
+      }
+    },
+    "source_sha256": "73744063a6b16d9253c33067ef686236a941a8ab742fe8f8e56100e5faaf888d"
+  },
+  "defects": {
+    "semantic_completion_not_declared_before_limit": true,
+    "supervisor_expected_failure_filename_after_successful_limit_score": true,
+    "runtime_manifest_scope_retained_seed991003_text": true,
+    "tracked_pointer_v9_was_overwritten_during_v11_and_restored_from_head": true
+  },
+  "frozen_executed_pointer_source_sha256": "74157ecaad18a7a8a93d3712077a0a3e320bf114800184665ce17e02fb6a1cd1",
+  "decision": "HOLD_EFFECT_MEMORY;_FIX_COMPLETION_FEEDBACK_AND_PACKAGING_BEFORE_ANOTHER_GEOMETRY_RUN",
+  "scope": "one changed-geometry episode with independent task success at the turn limit; no verified completion, speed, token, population, human-tempo or cross-domain claim",
+  "audit_sha256": "cc74f8179f99eae9da632507d572b77489f07dd10c2615eb69fbef1df586d2b5"
+}

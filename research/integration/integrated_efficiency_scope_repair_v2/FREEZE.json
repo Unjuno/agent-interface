@@ -1,0 +1,136 @@
+{
+  "archive": {
+    "retained_bytes": 7625,
+    "retained_git_blob": "2b1a394c344c975609518a9ca48bda7d6cde2825",
+    "retained_sha256": "455ecf8a9b2738ef962437e91c53e26cb7373222ebbccfce9975a157881543ec",
+    "tar_bytes": 30720,
+    "tar_sha256": "6ce6e858c025d7de6f5d30108c0bb0da5168cd4c47222c868ea1df62ddf66604",
+    "xz_bytes": 5716,
+    "xz_sha256": "437ad47cba5610b211d9f09090d4a23f44397e4003f0455e63793ad8a2ae89be"
+  },
+  "archive_sources": {
+    "SOURCES.json": {
+      "bytes": 947,
+      "git_blob": "1778cc3ee32158e957f6acb57542da5d2fa96b1a",
+      "sha256": "b37596978307a2eb62bc2a5088331d501f8c9ba3e32805f3a30b9f7dfa989892"
+    },
+    "audit_v2.py": {
+      "bytes": 3869,
+      "git_blob": "60cea3522dd512f8f5fa0f8705c8deb286cdb6fb",
+      "sha256": "46aeeaf9854535393eadca14bd6e9520548b174b5dcf2289aa1384fcc47f691a"
+    },
+    "candidate.patch": {
+      "bytes": 1645,
+      "git_blob": "05f94b8eed75e0901dfc9be5f30bc525fd66e1fc",
+      "sha256": "9a32ee5316970d655ab0fae5a7c041d1ed855d59c6c04b99e5f439e41b69b0df"
+    },
+    "environment.json": {
+      "bytes": 214,
+      "git_blob": "6b3d68c477131f61ea521f7be9b09acc4860b726",
+      "sha256": "7be8171e96ed6c57402754621ed623dc3aff7f7084d45fa41ce9ec4bfbddddd7"
+    },
+    "plan.json": {
+      "bytes": 811,
+      "git_blob": "aafca961fc1d1228fa265c7d7c7feeec3300e605",
+      "sha256": "9b32456a207e693a876e72e6df1ac330772eaf46f54defe0815d0fdcf968cf4a"
+    },
+    "prereg.json": {
+      "bytes": 594,
+      "git_blob": "18d7653a9702f80916394b4c9dc6ecdb195d27a4",
+      "sha256": "8c7887f6523fed7bc533b481433a71e718b295d907f68855783b6539d9a69e74"
+    },
+    "wrapper_harness_v2.py": {
+      "bytes": 7869,
+      "git_blob": "adc819631bd799caa8ea0186cf401631b5012f3f",
+      "sha256": "7afe3e639044994586a1b55bbd37106b7c32af6c5d428e3e4fdc28be297261c4"
+    }
+  },
+  "expected": {
+    "candidate": {
+      "anchor_calls": 64,
+      "attempted": 448,
+      "caller_failed": 0,
+      "errors": 0,
+      "repair_calls": 192,
+      "restart_events": 192,
+      "restart_traces": 63,
+      "safe_stops": 0,
+      "stale_execute": 0,
+      "successes": 448
+    },
+    "historical": {
+      "anchor_calls": 64,
+      "attempted": 448,
+      "caller_failed": 321,
+      "errors": 0,
+      "repair_calls": 0,
+      "restart_events": 192,
+      "restart_traces": 63,
+      "safe_stops": 0,
+      "stale_execute": 0,
+      "successes": 127
+    }
+  },
+  "formal": {
+    "arms": 2,
+    "extension": false,
+    "formal_invocations_max": 1,
+    "replacement": false,
+    "rerun": false,
+    "run_task_executions": 896,
+    "tasks_per_trace": 7,
+    "traces": 64,
+    "transition_bits": 6
+  },
+  "issue": 795,
+  "predecessor_790": {
+    "diagnostic_result_sha256": "951b4d579eba34a7a23e9a3fe3b6781fe2e32f33890231f0e70529b130339605",
+    "diagnostic_trace_sha256": "4144de916e9b2b4139a65c2d8e8d4f5a7e9dd5696b2d5b13e33f43e976c4dc63",
+    "six_task_trace_space_reused": false,
+    "state": "PROCEDURAL_STOP_FULL_PLANNED_SPACE_CONSUMED_BEFORE_REMOTE_FREEZE"
+  },
+  "premeasurement_publication_corrections": [
+    {
+      "commit": "ce3b5b1757ec0ae1f37bb003ae70b5e9bea7a32f",
+      "correction": "replace with exact deterministic source archive before formal",
+      "error": "PLACEHOLDER_CREATED",
+      "path": "research/integration/integrated_efficiency_scope_repair_v2/source.tar.xz.b64",
+      "scientific_traces_executed_before_correction": 0
+    }
+  ],
+  "publication_base": "e43b992a13606e515cba2e77763b27c1188223bc",
+  "schema": "agent-interface/integrated-efficiency-scope-repair-freeze-v2",
+  "static_gate": {
+    "py_compile": "PASS",
+    "seven_task_scientific_traces_executed": 0
+  },
+  "stop": "one source-frozen 64-trace formal invocation plus frozen audit; retain first outcome irrespective of result",
+  "task_id": "INTEGRATED-EFFICIENCY-PERSISTENT-SCOPE-REPAIR-20260917-002",
+  "upstream": {
+    "candidate": {
+      "bytes": 13653,
+      "derived_from": "run_integrated_efficiency_live_v1.py + candidate.patch",
+      "git_blob": "9b128d4ccd6df8f03dc7a238914ce01232190888",
+      "sha256": "598b18e1f42c502b61388f3a6f416883096aeb76cadb7d384f709b769f955a01"
+    },
+    "patch": {
+      "bytes": 1645,
+      "git_blob": "05f94b8eed75e0901dfc9be5f30bc525fd66e1fc",
+      "sha256": "9a32ee5316970d655ab0fae5a7c041d1ed855d59c6c04b99e5f439e41b69b0df"
+    },
+    "publication_base": "e43b992a13606e515cba2e77763b27c1188223bc",
+    "schema": "agent-interface/integrated-efficiency-scope-repair-sources-v2",
+    "upstream": {
+      "adaptive_acquisition_caller_v2.py": {
+        "bytes": 17047,
+        "git_blob": "176b342913ea6b5b704d4c986d5ddbf1dbcd8169",
+        "sha256": "b418b8769078f3406fef2fda3130b8cd6018f61cefbe0b04a0fa94134beb2eb0"
+      },
+      "run_integrated_efficiency_live_v1.py": {
+        "bytes": 13466,
+        "git_blob": "af12b8bbdf11c2c2c9f92fba94646cdc1357f7d8",
+        "sha256": "630972a0402d2c6a1cd6a57237165d5b402cf8fc364ceddb36ac998c143a7410"
+      }
+    }
+  }
+}

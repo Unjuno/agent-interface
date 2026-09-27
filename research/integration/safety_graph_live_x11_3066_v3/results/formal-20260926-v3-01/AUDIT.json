@@ -1,0 +1,504 @@
+{
+  "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+  "case_count": 14,
+  "decision": "FAIL_SAFETY_GRAPH_HIDDEN_DEPENDENCY",
+  "graph_findings": [
+    {
+      "case": "bare/normal",
+      "declared_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "declared_socket_paths": [
+        "/tmp/.X11-unix/X610"
+      ],
+      "fd_snapshot_races": {
+        "runner": [
+          "5"
+        ]
+      },
+      "present_roles": [
+        "observer",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "sampled_socket_inodes": 6
+    },
+    {
+      "case": "bare/ipc_delay",
+      "declared_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "declared_socket_paths": [
+        "/tmp/.X11-unix/X611"
+      ],
+      "fd_snapshot_races": {
+        "runner": [
+          "5"
+        ]
+      },
+      "present_roles": [
+        "observer",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "sampled_socket_inodes": 6
+    },
+    {
+      "case": "bare/display_stall",
+      "declared_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "declared_socket_paths": [
+        "/tmp/.X11-unix/X612"
+      ],
+      "fd_snapshot_races": {
+        "runner": [
+          "5"
+        ]
+      },
+      "present_roles": [
+        "observer",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "sampled_socket_inodes": 6
+    },
+    {
+      "case": "bare/owner_death",
+      "declared_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "declared_socket_paths": [
+        "/tmp/.X11-unix/X613"
+      ],
+      "fd_snapshot_races": {
+        "runner": [
+          "5"
+        ]
+      },
+      "present_roles": [
+        "observer",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "sampled_socket_inodes": 6
+    },
+    {
+      "case": "bare/target_replacement",
+      "declared_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "declared_socket_paths": [
+        "/tmp/.X11-unix/X614"
+      ],
+      "fd_snapshot_races": {
+        "runner": [
+          "5"
+        ]
+      },
+      "present_roles": [
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "sampled_socket_inodes": 4
+    },
+    {
+      "case": "bare/cleanup_failure",
+      "declared_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "declared_socket_paths": [
+        "/tmp/.X11-unix/X615"
+      ],
+      "fd_snapshot_races": {
+        "runner": [
+          "5"
+        ]
+      },
+      "present_roles": [
+        "observer",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "sampled_socket_inodes": 6
+    },
+    {
+      "case": "bare/unknown_dependency",
+      "declared_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "declared_socket_paths": [
+        "/tmp/.X11-unix/X616"
+      ],
+      "fd_snapshot_races": {
+        "runner": [
+          "5"
+        ]
+      },
+      "present_roles": [
+        "observer",
+        "runner",
+        "xvfb"
+      ],
+      "sampled_socket_inodes": 6
+    },
+    {
+      "case": "openbox/normal",
+      "declared_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "declared_socket_paths": [
+        "/tmp/.X11-unix/X617"
+      ],
+      "fd_snapshot_races": {
+        "runner": [
+          "7"
+        ]
+      },
+      "present_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "sampled_socket_inodes": 8
+    },
+    {
+      "case": "openbox/ipc_delay",
+      "declared_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "declared_socket_paths": [
+        "/tmp/.X11-unix/X618"
+      ],
+      "fd_snapshot_races": {
+        "runner": [
+          "7"
+        ]
+      },
+      "present_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "sampled_socket_inodes": 8
+    },
+    {
+      "case": "openbox/display_stall",
+      "declared_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "declared_socket_paths": [
+        "/tmp/.X11-unix/X619"
+      ],
+      "fd_snapshot_races": {
+        "runner": [
+          "7"
+        ]
+      },
+      "present_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "sampled_socket_inodes": 8
+    },
+    {
+      "case": "openbox/owner_death",
+      "declared_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "declared_socket_paths": [
+        "/tmp/.X11-unix/X620"
+      ],
+      "fd_snapshot_races": {
+        "runner": [
+          "7"
+        ]
+      },
+      "present_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "sampled_socket_inodes": 8
+    },
+    {
+      "case": "openbox/target_replacement",
+      "declared_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "declared_socket_paths": [
+        "/tmp/.X11-unix/X621"
+      ],
+      "fd_snapshot_races": {
+        "runner": [
+          "7"
+        ]
+      },
+      "present_roles": [
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "sampled_socket_inodes": 6
+    },
+    {
+      "case": "openbox/cleanup_failure",
+      "declared_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "declared_socket_paths": [
+        "/tmp/.X11-unix/X622"
+      ],
+      "fd_snapshot_races": {
+        "runner": [
+          "7"
+        ]
+      },
+      "present_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "sampled_socket_inodes": 8
+    },
+    {
+      "case": "openbox/unknown_dependency",
+      "declared_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "worker",
+        "xvfb"
+      ],
+      "declared_socket_paths": [
+        "/tmp/.X11-unix/X623"
+      ],
+      "fd_snapshot_races": {
+        "runner": [
+          "7"
+        ]
+      },
+      "present_roles": [
+        "observer",
+        "openbox",
+        "runner",
+        "xvfb"
+      ],
+      "sampled_socket_inodes": 8
+    }
+  ],
+  "hidden_dependencies": [
+    {
+      "case": "bare/normal",
+      "role": "xvfb",
+      "socket": "@/tmp/.X11-unix/X610"
+    },
+    {
+      "case": "bare/ipc_delay",
+      "role": "xvfb",
+      "socket": "@/tmp/.X11-unix/X611"
+    },
+    {
+      "case": "bare/display_stall",
+      "role": "xvfb",
+      "socket": "@/tmp/.X11-unix/X612"
+    },
+    {
+      "case": "bare/owner_death",
+      "role": "xvfb",
+      "socket": "@/tmp/.X11-unix/X613"
+    },
+    {
+      "case": "bare/target_replacement",
+      "role": "xvfb",
+      "socket": "@/tmp/.X11-unix/X614"
+    },
+    {
+      "case": "bare/cleanup_failure",
+      "role": "xvfb",
+      "socket": "@/tmp/.X11-unix/X615"
+    },
+    {
+      "case": "bare/unknown_dependency",
+      "role": "xvfb",
+      "socket": "@/tmp/.X11-unix/X616"
+    },
+    {
+      "case": "openbox/normal",
+      "role": "xvfb",
+      "socket": "@/tmp/.X11-unix/X617"
+    },
+    {
+      "case": "openbox/ipc_delay",
+      "role": "xvfb",
+      "socket": "@/tmp/.X11-unix/X618"
+    },
+    {
+      "case": "openbox/display_stall",
+      "role": "xvfb",
+      "socket": "@/tmp/.X11-unix/X619"
+    },
+    {
+      "case": "openbox/owner_death",
+      "role": "xvfb",
+      "socket": "@/tmp/.X11-unix/X620"
+    },
+    {
+      "case": "openbox/target_replacement",
+      "role": "xvfb",
+      "socket": "@/tmp/.X11-unix/X621"
+    },
+    {
+      "case": "openbox/cleanup_failure",
+      "role": "xvfb",
+      "socket": "@/tmp/.X11-unix/X622"
+    },
+    {
+      "case": "openbox/unknown_dependency",
+      "role": "xvfb",
+      "socket": "@/tmp/.X11-unix/X623"
+    }
+  ],
+  "issues": [
+    "bare/normal:runner:UNCLASSIFIED_SOCKET_FD:44069",
+    "bare/normal:observer:UNCLASSIFIED_SOCKET_FD:40108",
+    "bare/normal:worker:UNCLASSIFIED_SOCKET_FD:42012",
+    "bare/normal:worker:UNCLASSIFIED_SOCKET_FD:42013",
+    "bare/ipc_delay:runner:UNCLASSIFIED_SOCKET_FD:31313",
+    "bare/ipc_delay:observer:UNCLASSIFIED_SOCKET_FD:40113",
+    "bare/ipc_delay:worker:UNCLASSIFIED_SOCKET_FD:31328",
+    "bare/ipc_delay:worker:UNCLASSIFIED_SOCKET_FD:31329",
+    "bare/display_stall:runner:UNCLASSIFIED_SOCKET_FD:44112",
+    "bare/display_stall:observer:UNCLASSIFIED_SOCKET_FD:36084",
+    "bare/display_stall:worker:UNCLASSIFIED_SOCKET_FD:13261",
+    "bare/display_stall:worker:UNCLASSIFIED_SOCKET_FD:13262",
+    "bare/owner_death:runner:UNCLASSIFIED_SOCKET_FD:44153",
+    "bare/owner_death:observer:UNCLASSIFIED_SOCKET_FD:36089",
+    "bare/owner_death:worker:UNCLASSIFIED_SOCKET_FD:30224",
+    "bare/owner_death:worker:UNCLASSIFIED_SOCKET_FD:30225",
+    "bare/target_replacement:runner:UNCLASSIFIED_SOCKET_FD:44195",
+    "bare/target_replacement:worker:UNCLASSIFIED_SOCKET_FD:13267",
+    "bare/target_replacement:worker:UNCLASSIFIED_SOCKET_FD:13268",
+    "bare/cleanup_failure:runner:UNCLASSIFIED_SOCKET_FD:26346",
+    "bare/cleanup_failure:observer:UNCLASSIFIED_SOCKET_FD:41060",
+    "bare/cleanup_failure:worker:UNCLASSIFIED_SOCKET_FD:32319",
+    "bare/unknown_dependency:runner:UNCLASSIFIED_SOCKET_FD:38182",
+    "bare/unknown_dependency:observer:UNCLASSIFIED_SOCKET_FD:39197",
+    "openbox/normal:runner:UNCLASSIFIED_SOCKET_FD:38214",
+    "openbox/normal:openbox:UNCLASSIFIED_SOCKET_FD:30232",
+    "openbox/normal:observer:UNCLASSIFIED_SOCKET_FD:43076",
+    "openbox/normal:worker:UNCLASSIFIED_SOCKET_FD:33272",
+    "openbox/normal:worker:UNCLASSIFIED_SOCKET_FD:33273",
+    "openbox/ipc_delay:runner:UNCLASSIFIED_SOCKET_FD:35228",
+    "openbox/ipc_delay:openbox:UNCLASSIFIED_SOCKET_FD:33278",
+    "openbox/ipc_delay:observer:UNCLASSIFIED_SOCKET_FD:42016",
+    "openbox/ipc_delay:worker:UNCLASSIFIED_SOCKET_FD:34326",
+    "openbox/ipc_delay:worker:UNCLASSIFIED_SOCKET_FD:34327",
+    "openbox/display_stall:runner:UNCLASSIFIED_SOCKET_FD:38273",
+    "openbox/display_stall:openbox:UNCLASSIFIED_SOCKET_FD:32346",
+    "openbox/display_stall:observer:UNCLASSIFIED_SOCKET_FD:38278",
+    "openbox/display_stall:worker:UNCLASSIFIED_SOCKET_FD:28611",
+    "openbox/display_stall:worker:UNCLASSIFIED_SOCKET_FD:28612",
+    "openbox/owner_death:runner:UNCLASSIFIED_SOCKET_FD:35281",
+    "openbox/owner_death:openbox:UNCLASSIFIED_SOCKET_FD:30240",
+    "openbox/owner_death:observer:UNCLASSIFIED_SOCKET_FD:31361",
+    "openbox/owner_death:worker:UNCLASSIFIED_SOCKET_FD:42019",
+    "openbox/owner_death:worker:UNCLASSIFIED_SOCKET_FD:42020",
+    "openbox/target_replacement:runner:UNCLASSIFIED_SOCKET_FD:45128",
+    "openbox/target_replacement:openbox:UNCLASSIFIED_SOCKET_FD:28634",
+    "openbox/target_replacement:worker:UNCLASSIFIED_SOCKET_FD:28639",
+    "openbox/target_replacement:worker:UNCLASSIFIED_SOCKET_FD:28640",
+    "openbox/cleanup_failure:runner:UNCLASSIFIED_SOCKET_FD:45172",
+    "openbox/cleanup_failure:openbox:UNCLASSIFIED_SOCKET_FD:40159",
+    "openbox/cleanup_failure:observer:UNCLASSIFIED_SOCKET_FD:41079",
+    "openbox/cleanup_failure:worker:UNCLASSIFIED_SOCKET_FD:29428",
+    "openbox/unknown_dependency:runner:UNCLASSIFIED_SOCKET_FD:33371",
+    "openbox/unknown_dependency:openbox:UNCLASSIFIED_SOCKET_FD:13297",
+    "openbox/unknown_dependency:observer:UNCLASSIFIED_SOCKET_FD:28646"
+  ],
+  "release_violations": [
+    {
+      "case": "bare/cleanup_failure",
+      "deadline_ns": 1593254860668,
+      "late_ms": 71.177191,
+      "release_ns": 1593326037859
+    },
+    {
+      "case": "openbox/cleanup_failure",
+      "deadline_ns": 1599829360616,
+      "late_ms": 70.903452,
+      "release_ns": 1599900264068
+    }
+  ],
+  "scope": "current-main X11RuntimeSession/X11Backend on pinned local Xvfb/Openbox image; synthetic F8 only"
+}

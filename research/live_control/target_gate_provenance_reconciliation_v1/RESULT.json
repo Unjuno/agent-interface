@@ -1,0 +1,47 @@
+{
+  "task": "TARGET-GATE-PROVENANCE-RECONCILIATION-20260917-001",
+  "issue": 976,
+  "decision": "CONFIRMED_PARALLEL_ALLOCATION_PROVENANCE_CONFLICT",
+  "reruns": 0,
+  "new_gui_or_formal_experiment": false,
+  "lineages": {
+    "issue_965_a1_then_969_a2": {
+      "a1_task": "TARGET-GATE-TOCTOU-20260917-001",
+      "a1_disposition": "STOPPED_OUTER_ORCHESTRATION_TIMEOUT",
+      "a1_completed_rows": 9,
+      "a2_task": "TARGET-GATE-TOCTOU-20260917-002",
+      "a2_disposition": "PASS_TARGET_GATE_TOCTOU_EXPOSED_SCOPED",
+      "scientific_sha256": {
+        "app.py": "301642cf59b5e577effe111c6331397a74dc49074fe8db7584f89bcf374ebe2b",
+        "gate.py": "a21abd2075a522eebc41af0796f8fc2d2784e39b65320d3a0a4e617c8ffb96b0",
+        "run_case.py": "504272d14d49f8b426d1b5165b0e4e2c54348f93825bf95540e3d824c5ff0d18"
+      },
+      "a2_case_ids": "a2-f00..a2-f11",
+      "a2_result_summary_sha256": "80bd4050eb725cc4f6d2e00ac16e176b6ec86ebeed4e06ad80c955670ece5d58",
+      "git_publication_search": "NOT_FOUND_IN_SEARCH_SCOPE"
+    },
+    "pr_968_main_publication": {
+      "task": "TARGET-GATE-TOCTOU-20260917-001",
+      "disposition": "PASS_TARGET_GATE_TOCTOU_EXPOSED_SCOPED",
+      "pr": 968,
+      "merge_commit": "592427d8f70efafed5819acec123f3fd0efa485b",
+      "created_at": "2026-09-17T08:54:48Z",
+      "merged_at": "2026-09-17T08:55:40Z",
+      "case_ids": "p01-stable/p01-swap..p06-stable/p06-swap",
+      "source_sha256": {
+        "app.py": "30a00c4aebe8190606daa7d6c903447e5d7c4c58adb1fe92456544f075c0eef2",
+        "run_case.py": "761df5ada785a025c80ac8e05ecb8c6fec17d964a9f40a76df45ae78684aeab6"
+      },
+      "source_hashes_independently_recomputed_from_git_blob_content": true,
+      "formal_result_git_blob": "0f98ecadfc750d478de3a2ee74e50a589488ed2a",
+      "audit_git_blob": "8c3a7a88ef6f8a3ce9da7a94a9f7351668b3315b"
+    }
+  },
+  "findings": [
+    "PR #968 scientific app.py and run_case.py bytes are not the #965/#969 frozen scientific bytes.",
+    "PR #968 and #969 use distinct case/allocation records and overlap chronologically.",
+    "Current main publication PR #968 must not be described as the #969 A2 result.",
+    "#969 A2 may remain a separately valid scientific first outcome, but no separate Git publication was found in the searched repository scope.",
+    "Future target-gate repair work must name one exact predecessor lineage and must not pool the two PASS labels."
+  ]
+}

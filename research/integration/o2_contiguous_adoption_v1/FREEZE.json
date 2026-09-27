@@ -1,0 +1,19 @@
+{
+  "schema": "o2-contiguous-canonical-adoption-freeze-v1",
+  "issue": 4139,
+  "base_main": "e011d13decdc746dc55b0cd8a372e638a15f6ecd",
+  "branch": "research/o2-contiguous-adoption-20260922",
+  "formal_performance_allocations": 0,
+  "source_git_blobs": {
+    "research/observation_tiles/tile_transport.py": "0fd2b65edaeb8748ccca02fa502051c3bb17f48a",
+    "research/observation_tiles/test_transport.py": "0ba3a74ba17628b93d4f1d226d445e2ef66fffca",
+    "research/conditional_optimization/transport-integration-v2/test_integration.py": "d1cc2578b3082d9605b901644512cdcc0897c013"
+  },
+  "authorized_shared_change": "tile.tobytes() -> np.ascontiguousarray(tile).tobytes()",
+  "performance_sources": [
+    "#4092",
+    "#4103",
+    "PR #4110"
+  ],
+  "decision": "prechange-frozen"
+}

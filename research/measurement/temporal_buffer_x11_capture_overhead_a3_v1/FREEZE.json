@@ -1,0 +1,52 @@
+{
+  "task": "TEMPORAL-BUFFER-X11-CAPTURE-OVERHEAD-20260918-003",
+  "issue": 1057,
+  "predecessor_issues": [1045,1053],
+  "predecessor_statuses": ["STOPPED_OUTER_ORCHESTRATION_TIMEOUT","STOPPED_EXTERNAL_EXECUTION_TIMEOUT"],
+  "partial_predecessor_rows_pooled": false,
+  "base": "64f65aed712cd045aa46236f95b8e6d0b074ce36",
+  "branch": "research/temporal-buffer-x11-capture-overhead-a3-20260918-003",
+  "reservation_commit": "f2aba80cbe1d10b9a8bcfc0881f460ed1fc23efd",
+  "formal_authorized": true,
+  "formal_invocation_budget": 1,
+  "formal_result_absent_at_freeze": true,
+  "formal_pairs": 6,
+  "outer_execution_transport": "one persistent terminal supervisor process; poll same process to completion",
+  "warmup_ms": 300,
+  "measure_ms": 1500,
+  "fixture_callback_ms": 16,
+  "capture_period_ms": 50,
+  "capture_hz": 20,
+  "geometry": [320,240],
+  "ring_age_ms": 500,
+  "xvfb_post_measurement_terminate_wait_ms": 250,
+  "fresh_formal_display_base": 260,
+  "construction_status": "PLUMBING_PASS_ONE_SHORT_PAIR",
+  "construction_wall_seconds": 5.61,
+  "gates": {
+    "capture_count_min_each": 25,
+    "capture_dropped_slots_max_each": 1,
+    "capture_p95_ns_max": 10000000,
+    "capture_cpu_fraction_max_each": 0.2,
+    "ring_frame_multiple_max": 12,
+    "paired_count_ratio_p50_min": 0.97,
+    "paired_count_ratio_p50_max": 1.03,
+    "paired_p95_gap_increase_ns_p50_max": 2000000,
+    "candidate_minus_baseline_max_gap_ns_max_each": 10000000,
+    "baseline_severe_stall_ns": 100000000,
+    "baseline_severe_stall_count_hold": 2
+  },
+  "source_git_blobs": {
+    "PLAN.md": "9bfdde791efda2abe28a15cd6120186527a8c259",
+    "fixture.py": "0843f29618b0aa9010b22789f56d248bbeb8f7a4",
+    "runner.py": "b60f5ec5902a0d9197d810883e24140325fab19d",
+    "audit.py": "0709f34a8b5dc0d4e223e92e1b3f4c4561a12e35"
+  },
+  "source_sha256": {
+    "PLAN.md": "4735c6ffea35f45f1bb2f0f222951339b3d01b3021bb8d09bcd9ee00952f5880",
+    "fixture.py": "f98a6ebe24ec80668b4e45f9b0ebb6e452b60d91737b2edb544b596b7c9c525f",
+    "runner.py": "a459708d788f696ccdb3b983f12a1959e3de2987bd260573b4d8a5484b390fe0",
+    "audit.py": "331b0a8fbb048e0a29c67e0b17e7c985817d73d06ab3548f2b147551b02a9e6b"
+  },
+  "reruns": 0
+}

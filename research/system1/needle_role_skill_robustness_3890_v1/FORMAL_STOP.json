@@ -1,0 +1,21 @@
+{
+  "schema": "needle-formal-stop-evidence.v1",
+  "allocation": "needle-role-skill-robustness-3890-v1",
+  "issue": 4479,
+  "status": "STOP_BEFORE_TRAINING",
+  "orchestrations_attempted": 1,
+  "orchestrations_completed": 0,
+  "containers_completed": 0,
+  "builder_containers_completed": 0,
+  "loader_containers_completed": 0,
+  "first_phase": "seed-3792-builder",
+  "exit_code": 1,
+  "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+  "stderr_sha256": "8d590e1bf6fb47d9a67ae52f0f1047ce4a442fb6f5f482dc855e38cc6f9c03ba",
+  "reason": "Docker builder command mounted /out but omitted NEEDLE_SEED and NEEDLE_OUTPUT; runner exited because its output path was empty.",
+  "scientific_result": null,
+  "retry": false,
+  "seed_replacement": false,
+  "frozen_source_modified_after_formal_start": false,
+  "full_command_and_stdout_stderr": "retained in the sibling dedicated formal output directory formal-01 and summarized by the original STOP JSON"
+}

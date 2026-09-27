@@ -1,0 +1,173 @@
+{
+  "task": "TEMPORAL-SHEET-RETAINED-IDENTIFIABILITY-20260918-001",
+  "base": "18dd04cb494d702aa41c33b23de9146bbf84b6c6",
+  "formal_invocations": 1,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "implementation_blobs": {
+    "v31": "9639bfa7dca0a8709c3a99fc3a410d2bcbe9788e",
+    "v32": "a9245160e4dd9b283446147a00869fc5c86aedac",
+    "v38": "76b1075fa1ba14d3ce99f2248e57c05cf347cc3e",
+    "v39": "321ec02e5c3c8bd87c6370e4a5e90bb3013d4241"
+  },
+  "families": [
+    {
+      "id": "v31_soft_context",
+      "report": "research/doom/results/map01-soft-context-v31-live-01/report.json",
+      "report_blob": "2aed2e7e3f58b4f8b013fc98c79482a4036225ae",
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "presentation": "packed_temporal_sheet",
+      "first_model_image_sha256": "bb7855e2feb900276019b5088af706d58beb1c5d1567fa8e52ee72baa20fbfc0",
+      "first_session_id": "01a0a1f6-5688-72d1-b6bc-dadc2840505e",
+      "first_input_tokens": 9008
+    },
+    {
+      "id": "v32_final_admission",
+      "report": "research/doom/results/map01-final-admission-v32-live-01/report.json",
+      "report_blob": "48f912ce310b598cbc4f4d4c46f8bb9cdff5b1e0",
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "presentation": "packed_temporal_sheet",
+      "first_model_image_sha256": "bb7855e2feb900276019b5088af706d58beb1c5d1567fa8e52ee72baa20fbfc0",
+      "first_session_id": "01a0a373-30f2-7920-9c87-87f28d1e2d8a",
+      "first_input_tokens": null
+    },
+    {
+      "id": "v38_integrated",
+      "report": "research/doom/results/map01-v38-integrated-threat-live-01/report.json",
+      "report_blob": "d96b9032c7f55645dde20a1f95d916c943713914",
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "presentation": "packed_temporal_sheet",
+      "first_model_image_sha256": "8515ecf18e7694ca6c8cc8a1ff7dde4e3236bd15fcec98e0c6330ec7d168bf91",
+      "first_session_id": "01a0a37f-2752-74e2-9bf4-4593d47465aa",
+      "first_input_tokens": 9283
+    },
+    {
+      "id": "v39_coast",
+      "report": "research/doom/results/map01-v39-coast-liveness-live-01/report.json",
+      "report_blob": "bff2459036dcdcc44ed100b0c0bc657e1bb8e69a",
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "presentation": "packed_temporal_sheet",
+      "first_model_image_sha256": "07264083123019fc199f61f7c10ed6879512070102fd35718d27ef6e9ab7ad11",
+      "first_session_id": "01a0a388-c70e-7621-818f-7ec088fb0fb1",
+      "first_input_tokens": 9284
+    },
+    {
+      "id": "stagnation_baseline",
+      "report": "research/doom/results/map01-stagnation-live-v1/baseline/report.json",
+      "report_blob": "4458d169493ce39b673c9145c79011db0a12c847",
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "presentation": "packed_temporal_sheet",
+      "first_model_image_sha256": "330874d3af05b33bb2bed39d7d9d359b117425b3a7e9d01fd470f1044a5183c9",
+      "first_session_id": "01a0a0ab-50cb-7000-9cf5-4d03c78600d4",
+      "first_input_tokens": null
+    },
+    {
+      "id": "stagnation_candidate",
+      "report": "research/doom/results/map01-stagnation-live-v1/candidate/report.json",
+      "report_blob": "fd603a9f300d93b25e635805ba8934f14a4dc957",
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "presentation": "packed_temporal_sheet",
+      "first_model_image_sha256": "5b0effcc885115d152c3b5973c3a4cee48840e4a8f0743b2b7ef990954df2753",
+      "first_session_id": "01a0a0a4-9e6a-7f71-937f-61a8d7121c02",
+      "first_input_tokens": null
+    },
+    {
+      "id": "effect_receipt_long_baseline",
+      "report": "research/doom/results/map01-effect-receipt-v1/long-baseline/report.json",
+      "report_blob": "eaa452b8d1d3aa82cbcd587c5922b649d082d5fd",
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "presentation": "packed_temporal_sheet",
+      "first_model_image_sha256": "4ebebb9d628f820c07083cc4e656972abb64ece7dbde0fa544e45c0a8576374c",
+      "first_session_id": "01a0a0cb-30b6-7813-9dac-cd231ae609f2",
+      "first_input_tokens": null
+    }
+  ],
+  "candidate_pairs": [
+    {
+      "id": "v31_vs_v32_first",
+      "left": "v31_soft_context",
+      "right": "v32_final_admission",
+      "gates": {
+        "same_model": "PASS",
+        "same_effort": "PASS",
+        "same_current_and_packed_image": "PASS",
+        "same_history_set": "PASS_BY_IDENTICAL_PACKED_IMAGE_ONLY",
+        "same_prompt_schema_instructions": "UNKNOWN",
+        "same_session_cache_state": "FAIL",
+        "same_task_oracle": "UNKNOWN",
+        "presentation_differs_only": "FAIL"
+      },
+      "admissible": false,
+      "reason": "both arms use the identical packed temporal-sheet image; sessions differ and prompt/schema/oracle matchedness is not established"
+    },
+    {
+      "id": "v38_vs_v39_first",
+      "left": "v38_integrated",
+      "right": "v39_coast",
+      "gates": {
+        "same_model": "PASS",
+        "same_effort": "PASS",
+        "same_current_and_packed_image": "FAIL",
+        "same_history_set": "UNKNOWN",
+        "same_prompt_schema_instructions": "UNKNOWN",
+        "same_session_cache_state": "FAIL",
+        "same_task_oracle": "UNKNOWN",
+        "presentation_differs_only": "FAIL"
+      },
+      "admissible": false,
+      "reason": "both use packed temporal sheets, but the image/session/controller condition changes"
+    },
+    {
+      "id": "stagnation_baseline_vs_candidate_first",
+      "left": "stagnation_baseline",
+      "right": "stagnation_candidate",
+      "gates": {
+        "same_model": "PASS",
+        "same_effort": "PASS",
+        "same_current_and_packed_image": "FAIL",
+        "same_history_set": "UNKNOWN",
+        "same_prompt_schema_instructions": "UNKNOWN",
+        "same_session_cache_state": "FAIL",
+        "same_task_oracle": "UNKNOWN",
+        "presentation_differs_only": "FAIL"
+      },
+      "admissible": false,
+      "reason": "baseline/candidate are different live sessions/policies and both still use packed temporal sheets"
+    },
+    {
+      "id": "stagnation_vs_effect_receipt_first",
+      "left": "stagnation_baseline",
+      "right": "effect_receipt_long_baseline",
+      "gates": {
+        "same_model": "PASS",
+        "same_effort": "PASS",
+        "same_current_and_packed_image": "FAIL",
+        "same_history_set": "UNKNOWN",
+        "same_prompt_schema_instructions": "UNKNOWN",
+        "same_session_cache_state": "FAIL",
+        "same_task_oracle": "UNKNOWN",
+        "presentation_differs_only": "FAIL"
+      },
+      "admissible": false,
+      "reason": "cross-run historical comparison changes state/session and retains the same packed-sheet presentation"
+    }
+  ],
+  "search_scope_findings": {
+    "packed_temporal_sheet_use": "FOUND_MANY",
+    "matched_separate_frames_arm": "NOT_FOUND_IN_SEARCH_SCOPE",
+    "matched_current_only_arm_for_packing_effect": "NOT_FOUND_IN_SEARCH_SCOPE",
+    "note": "absence is bounded search evidence, not proof no unpushed/private evidence exists"
+  },
+  "non_model_background": {
+    "issue_752": "PASS_AGE_TARGETED_TEMPORAL_SAMPLING_SCOPED; representation timing only",
+    "issue_808": "HOLD_NO_PREDICTION_GAIN; deterministic local predictor, not frontier-model evidence"
+  }
+}

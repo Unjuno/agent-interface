@@ -1,0 +1,29 @@
+{
+  "experiment_id": "calc_continuation_audit_2345_v1",
+  "status": "PASS_EXISTING_CONTINUATION_EVIDENCE_AUDIT_SCOPED",
+  "scope": "Read-only audit of two retained main summaries; no runtime/model/GUI rerun.",
+  "source_refs": {
+    "drain_summary": "main:runtime/results/calc-final-drain-01/SUMMARY.json@97069a9dec75a575b1762be036708a5c78d1db03",
+    "settle_summary": "main:runtime/results/calc-settle-self-use-01/SUMMARY.json@5a61d2e1e3fd1d4078b20872309bcdf8f60379de",
+    "drain_readme": "main:runtime/results/calc-final-drain-01/README.md@cdfa06a73cb40dbdc2669b2dafef85fa4bcd0340",
+    "settle_readme": "main:runtime/results/calc-settle-self-use-01/README.md@feabe82750560681ea5b15fd7aff6f5a44fc0db7"
+  },
+  "checks": {
+    "drain_independent_success": true,
+    "drain_same_response_final_read": true,
+    "drain_cleanup": true,
+    "settle_independent_success": true,
+    "settle_cleanup": true,
+    "settle_semantic_completion_not_claimed": true,
+    "settle_has_independent_effect": true
+  },
+  "counts": {
+    "passed": 7,
+    "total": 7
+  },
+  "H": "Existing continuation mechanisms can present an independently evaluated result within the action response while keeping pixel quiet advisory and semantic completion separate.",
+  "T": "Run an executable audit against the two current-main SUMMARY files; do not pool or rewrite their live evidence.",
+  "D": "The audit runner reads the retained files by repository-relative path and fails if any required field or boundary is absent.",
+  "C": "These are two actual self-use sessions, not a matched comparison; model tokens, human baseline, outer latency and generality remain unavailable.",
+  "U": "No integrated efficiency or task-quality claim. Next acceptance workload must charge caller assembly, observation, model and verification costs across cold/warm/invalidation/repair."
+}

@@ -1,0 +1,23 @@
+{
+  "allocation_id": "issue3572-xserver-lifetime-formal-01",
+  "issue": 3572,
+  "disposition": "STOP_FORMAL_EVIDENCE_NOT_WRITTEN",
+  "formal_invocations": 1,
+  "reruns": 0,
+  "freeze_sha256": "ca8d4a4dd99a3992920529093b2661bf0d0735f1e38da677c64bdd191d6eb412",
+  "source_manifest_sha256": "19d8deabf2054ede185bafdd4e1afc96f12b907c5c00b05397f4e2a6c1bfb660",
+  "image_id": "sha256:fa36aca92a682831d72b7e49bf05a9c6e31e68eadb06f3d2728360ceb1e9f6cb",
+  "platform": "linux/arm64",
+  "exit_code": 1,
+  "failure": "FileNotFoundError: /freeze.json",
+  "traceback": [
+    "Traceback (most recent call last):",
+    "  File \"/candidate/lifetime_experiment.py\", line 289, in <module>",
+    "    run()",
+    "  File \"/candidate/lifetime_experiment.py\", line 269, in run",
+    "    \\\"freeze_sha256\\\": hashlib.sha256(Path(\\\"/freeze.json\\\").read_bytes()).hexdigest(),",
+    "FileNotFoundError: [Errno 2] No such file or directory: '/freeze.json'"
+  ],
+  "interpretation": "The invocation reached final result assembly after executing the matrix, but the runner could not read freeze.json because the formal Docker command mounted candidate sources and /evidence only. No raw.json or independently auditable formal outcome was persisted. Do not infer PASS or reconstruct missing rows.",
+  "preservation": "This allocation is final STOP; no rerun or source edit is allowed under its freeze. A corrected path/mount requires a distinct successor allocation."
+}

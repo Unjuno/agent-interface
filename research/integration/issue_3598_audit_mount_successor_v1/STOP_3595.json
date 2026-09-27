@@ -1,0 +1,12 @@
+{
+  "schema": "agent-interface/issue-3595-audit-startup-stop-v1",
+  "outcome": "STOP_BEFORE_RAW_RECONSTRUCTION",
+  "auditor_sha256": "fd7ae177fd4b701ed45f4db35db8a0fedda41a2cbaaffa4ed3598dbb59be795a",
+  "attempts": 1,
+  "reason": "Only prior_issue_3587/freeze was mounted at /freeze. The frozen auditor resolves container_smoke.py and audit.py at freeze_dir.parent, which was / and did not contain those files. FileNotFoundError occurred before formal allocation JSON was loaded.",
+  "gui_runtime_or_input": false,
+  "raw_allocation_json_read": false,
+  "formal_output": "empty; no AUDIT_V2.json",
+  "retry_under_issue_3595": false,
+  "successor_issue": 3598
+}

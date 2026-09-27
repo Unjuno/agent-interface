@@ -1,0 +1,37 @@
+name: Research Workspace Index
+
+on:
+  pull_request:
+    paths:
+      - 'research/README.md'
+      - 'research/ROOT_NAMESPACE_MAP.md'
+      - 'research/check_workspace_index.py'
+      - 'research/*/*'
+      - '.github/workflows/research-workspace-index.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'research/README.md'
+      - 'research/ROOT_NAMESPACE_MAP.md'
+      - 'research/check_workspace_index.py'
+      - 'research/*/*'
+      - '.github/workflows/research-workspace-index.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  research-workspace-index:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check top-level research directories are indexed
+        run: python research/check_workspace_index.py

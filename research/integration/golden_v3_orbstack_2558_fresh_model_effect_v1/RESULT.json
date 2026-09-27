@@ -1,0 +1,14 @@
+{
+  "schema":"agent_interface_golden_v3_fresh_orbstack_model_effect_v1",
+  "issue":2558,
+  "decision":"PASS_FRESH_MODEL_TO_EFFECT_SCOPED",
+  "container":{"context":"orbstack","docker_server":"29.4.0","architecture":"aarch64","orbstack":"2.2.3","display":"private Xvfb"},
+  "fresh_observation":{"before_sha256":"039709a70f6e2269c33e8eb7425954114aaa4f871dc06b9dc27fc33e248c84db","before_bytes":1920,"after_sha256":"92aabf3c35f987a565382347f9bf0a895796266d4a04ecf5ee46b0330e92cbb5","after_bytes":5234},
+  "model":{"model":"gpt-5.6-luna","effort":"low","input_tokens":15947,"output_tokens":179,"reasoning_output_tokens":64,"field":{"x":130,"y":55},"submit":{"x":51,"y":101}},
+  "independent_validation":{"schema":true,"bounds":true},
+  "action":{"text":"docker2558-fresh","task_success":true,"action_to_scored_effect_ms":112.448655,"release_verified":true,"effect":{"saved":true,"text":"docker2558-fresh"}},
+  "authority_granted":false,
+  "visual_target_revalidation":false,
+  "full_golden_route":false,
+  "claims":[]
+}

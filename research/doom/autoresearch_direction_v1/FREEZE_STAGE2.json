@@ -1,0 +1,19 @@
+{
+  "schema": "map01-autoresearch-successor-freeze-v1",
+  "issue": 121,
+  "allocation": "stage2-mirrored",
+  "plan_sha256": "08afff4cc4b68a53e97d19866e301f3ca1e93720c3e98d328039e5e5af257c74",
+  "runner_sha256": "03849c6d5b0c502a10f9af8d77b8f146eacabcca8af65dc0c12bcddfb5d67bff",
+  "retained_stage1": {
+    "cases": 18,
+    "original": {"attack": "0/3 kills", "back_left": "3/3 kills", "health_last": "97 both"},
+    "left": {"attack": "3/3 kills, health 12", "back_left": "0/3 kills, health 97"},
+    "right": {"attack": "3/3 kills, health 97", "back_left": "0/3 kills, health 97"},
+    "hard_gates": "18/18 pass",
+    "kill_events_observed_before_deadline": 0,
+    "scorer_freshness": "UNPROVEN: all positive events observed after control; separate no-input calibration shows episode/state tic remained 1 after two 200ms sleeps and a zero-tic refresh, then advanced to 17 after one-tic refresh. Keep terminal efficacy distinct from useful-progress timestamp."
+  },
+  "change": "Only direction changes from [s,a,space] to [s,d,space]. Same three saved fixtures, same 3075 ms owner deadline, seed 997201, three restored sessions per state; 9 fresh cases total. No new model/API action selection/shared runtime changes.",
+  "scope": "Sequential development successor, not a contemporaneously paired causal comparison with Stage1. Stop for hard gate/infrastructure failure, retain gameplay failures. No rerun of consumed cases.",
+  "next_measurement_question": "Test a separately versioned scorer refresh on the owner thread; coherence of cached values must not be treated as freshness."
+}

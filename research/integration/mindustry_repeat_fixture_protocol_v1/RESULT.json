@@ -1,0 +1,258 @@
+{
+  "controller_projection": [
+    {
+      "benchmark_epoch": 1,
+      "event": "task_ready",
+      "layout": "A",
+      "task": "Place exactly one north-facing Conveyor in the empty tile directly above the copper item source, then finish paused with no pending build plans.",
+      "task_id": "A1"
+    },
+    {
+      "benchmark_epoch": 2,
+      "event": "task_ready",
+      "layout": "A",
+      "task": "Place exactly one north-facing Conveyor in the empty tile directly above the copper item source, then finish paused with no pending build plans.",
+      "task_id": "A2"
+    },
+    {
+      "benchmark_epoch": 3,
+      "event": "task_ready",
+      "layout": "A",
+      "task": "Place exactly one north-facing Conveyor in the empty tile directly above the copper item source, then finish paused with no pending build plans.",
+      "task_id": "A3"
+    },
+    {
+      "benchmark_epoch": 4,
+      "event": "task_ready",
+      "layout": "B",
+      "task": "Place exactly one north-facing Conveyor in the empty tile directly above the copper item source, then finish paused with no pending build plans.",
+      "task_id": "B1"
+    },
+    {
+      "benchmark_epoch": 5,
+      "event": "task_ready",
+      "layout": "B",
+      "task": "Place exactly one north-facing Conveyor in the empty tile directly above the copper item source, then finish paused with no pending build plans.",
+      "task_id": "B2"
+    },
+    {
+      "benchmark_epoch": 6,
+      "event": "task_ready",
+      "layout": "B",
+      "task": "Place exactly one north-facing Conveyor in the empty tile directly above the copper item source, then finish paused with no pending build plans.",
+      "task_id": "B3"
+    },
+    {
+      "event": "complete"
+    }
+  ],
+  "controls": {
+    "bad_witness_stops": true,
+    "controller_checkpoint": true,
+    "controller_reset": true,
+    "duplicate_checkpoint": true,
+    "duplicate_reset": true,
+    "failed_score_reset": true,
+    "next_ready_before_witness": true,
+    "nonmonotonic_epoch": true,
+    "reset_before_score": true
+  },
+  "decision": "PASS_MINDUSTRY_REPEAT_FIXTURE_PROTOCOL_SCOPED",
+  "events": [
+    {
+      "benchmark_epoch": 1,
+      "event": "task_ready",
+      "layout": "A",
+      "task_id": "A1"
+    },
+    {
+      "epoch": 1,
+      "event": "checkpoint_snapshot"
+    },
+    {
+      "epoch": 1,
+      "event": "score_verified"
+    },
+    {
+      "copper": "canonical",
+      "epoch": 1,
+      "event": "reset_applied",
+      "target": [
+        137,
+        52
+      ]
+    },
+    {
+      "epoch": 1,
+      "event": "reset_witness"
+    },
+    {
+      "benchmark_epoch": 2,
+      "event": "task_ready",
+      "layout": "A",
+      "task_id": "A2"
+    },
+    {
+      "epoch": 2,
+      "event": "checkpoint_snapshot"
+    },
+    {
+      "epoch": 2,
+      "event": "score_verified"
+    },
+    {
+      "copper": "canonical",
+      "epoch": 2,
+      "event": "reset_applied",
+      "target": [
+        137,
+        52
+      ]
+    },
+    {
+      "epoch": 2,
+      "event": "reset_witness"
+    },
+    {
+      "benchmark_epoch": 3,
+      "event": "task_ready",
+      "layout": "A",
+      "task_id": "A3"
+    },
+    {
+      "epoch": 3,
+      "event": "checkpoint_snapshot"
+    },
+    {
+      "epoch": 3,
+      "event": "score_verified"
+    },
+    {
+      "copper": "canonical",
+      "epoch": 3,
+      "event": "reset_applied",
+      "target": [
+        137,
+        52
+      ]
+    },
+    {
+      "epoch": 3,
+      "event": "reset_witness"
+    },
+    {
+      "event": "geometry_mutation",
+      "from_layout": "A",
+      "to_layout": "B"
+    },
+    {
+      "benchmark_epoch": 4,
+      "event": "task_ready",
+      "layout": "B",
+      "task_id": "B1"
+    },
+    {
+      "epoch": 4,
+      "event": "checkpoint_snapshot"
+    },
+    {
+      "epoch": 4,
+      "event": "score_verified"
+    },
+    {
+      "copper": "canonical",
+      "epoch": 4,
+      "event": "reset_applied",
+      "target": [
+        137,
+        52
+      ]
+    },
+    {
+      "epoch": 4,
+      "event": "reset_witness"
+    },
+    {
+      "benchmark_epoch": 5,
+      "event": "task_ready",
+      "layout": "B",
+      "task_id": "B2"
+    },
+    {
+      "epoch": 5,
+      "event": "checkpoint_snapshot"
+    },
+    {
+      "epoch": 5,
+      "event": "score_verified"
+    },
+    {
+      "copper": "canonical",
+      "epoch": 5,
+      "event": "reset_applied",
+      "target": [
+        137,
+        52
+      ]
+    },
+    {
+      "epoch": 5,
+      "event": "reset_witness"
+    },
+    {
+      "benchmark_epoch": 6,
+      "event": "task_ready",
+      "layout": "B",
+      "task_id": "B3"
+    },
+    {
+      "epoch": 6,
+      "event": "checkpoint_snapshot"
+    },
+    {
+      "epoch": 6,
+      "event": "score_verified"
+    },
+    {
+      "copper": "canonical",
+      "epoch": 6,
+      "event": "reset_applied",
+      "target": [
+        137,
+        52
+      ]
+    },
+    {
+      "epoch": 6,
+      "event": "reset_witness"
+    },
+    {
+      "event": "complete"
+    }
+  ],
+  "formal_invocation": 1,
+  "formal_reruns": 0,
+  "gates": {
+    "complete": true,
+    "controller_private_ops_reject": true,
+    "controls": true,
+    "coordinator_a3_order": true,
+    "coordinator_failure_no_reset": true,
+    "geometry_once_between": true,
+    "projection_fields": true,
+    "projection_no_private": true,
+    "six_ready": true,
+    "source_checks": true
+  },
+  "schema": "mindustry_repeat_fixture_protocol_result_v1",
+  "scope": "source/protocol closure only; no live Mindustry/model/token/latency claim",
+  "source_checks": {
+    "controller_ops_only": true,
+    "copper_exact_restore": true,
+    "private_dir_property": true,
+    "score_fail_stops": true,
+    "score_pass_barrier": true,
+    "target_reset": true
+  },
+  "task": "MINDUSTRY-REPEAT-FIXTURE-PROTOCOL-20260917-001"
+}

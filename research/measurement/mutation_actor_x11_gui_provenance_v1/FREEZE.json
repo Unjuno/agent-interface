@@ -1,0 +1,100 @@
+{
+  "base": "04056a3ee9be8c4024df32b9277c2eb70652196a",
+  "branch": "research/mutation-actor-x11-gui-provenance-20260918-001",
+  "construction": {
+    "actors": {
+      "EXTERNAL_PROCESS": 2,
+      "HUMAN": 2,
+      "OS": 2,
+      "THIS_INTENT": 2,
+      "THIS_SESSION_OTHER_INTENT": 2,
+      "UNKNOWN": 8
+    },
+    "authority_promotions": 0,
+    "child_cleanup": 18,
+    "false_self_credit": 0,
+    "fixture_exceptions": [],
+    "fixture_stderr": "",
+    "mismatches": 0,
+    "mode": "construction",
+    "pixel_errors": 0,
+    "records": 18,
+    "reps_per_family": 2,
+    "rows_sha256": "7a67c50f66e378bbe3f367cdbb3391267ca606f179c5a7007391b33dbe83162c",
+    "states": {
+      "EXTERNAL_CONFIRMED": 8,
+      "NO_MUTATION": 2,
+      "SELF_CONFIRMED": 2,
+      "UNATTRIBUTED": 6
+    },
+    "task_success_promotions": 0,
+    "temporal_false_self_credit": 14
+  },
+  "environment": {
+    "capture": "python-xlib root GetImage",
+    "display": "private Xvfb 320x240x24 -ac",
+    "fixture": "Tk",
+    "injector": "fresh os.fork child per case",
+    "python": "3.13.5"
+  },
+  "families": [
+    "self",
+    "other_intent",
+    "external",
+    "human",
+    "os",
+    "unknown",
+    "conflict",
+    "mismatch",
+    "no_mutation"
+  ],
+  "formal_invocations": 0,
+  "formal_records": 360,
+  "formal_reps_per_family": 40,
+  "issue": 1240,
+  "known_warnings": [
+    "Python 3.13 os.fork multi-thread DeprecationWarning; excluded construction had no deadlock/cleanup loss",
+    "python-xlib /dev/null XAUTHORITY ResourceWarning; access control disabled only inside private Xvfb"
+  ],
+  "reruns": 0,
+  "seed": 124020260918001,
+  "source_files": {
+    "EXPERIMENT_CHARTER.md": {
+      "bytes": 554,
+      "sha256": "eea693779f51193dfb1c464a50b5897950ba6b6f1b8e8f5b45edd526e9a6ab02"
+    },
+    "ROADMAP.md": {
+      "bytes": 1970,
+      "sha256": "d8a3440f4beaca8db48153b1a5a883d3014b848ff2caf30043c6a26e117951aa"
+    },
+    "audit.py": {
+      "bytes": 2098,
+      "sha256": "55d1e5029e14c8713907e833a6e91708c2b713db64b0e9d8c4087e2708ec1003"
+    },
+    "candidate.py": {
+      "bytes": 2839,
+      "sha256": "24fa033d1bce9fc36d3d628bf4dd454cfeab2441a6c7ac281c80ce82b3c94e9f"
+    },
+    "fixture.py": {
+      "bytes": 2672,
+      "sha256": "31919829ebd4e5681cb8544f15c0d7e0bf28f458645a9abe23521cdf8bbfda49"
+    },
+    "injector.py": {
+      "bytes": 1709,
+      "sha256": "352ad10b9f6555dfc076c29fc4079749907870e61ecbc31f240715a43ff767e0"
+    },
+    "oracle.py": {
+      "bytes": 671,
+      "sha256": "bf429692cadc51fe70eb404c3653e74c1af4c045e2bd2cf5145a796c45bd8e3a"
+    },
+    "runner.py": {
+      "bytes": 6594,
+      "sha256": "88263c823e6783d2d4b6d0d9aac9ee6a813fb10a0917b6a8c8d8c864f10e7b33"
+    },
+    "scorer.py": {
+      "bytes": 1025,
+      "sha256": "4da693d216f4db4d372e59ac4f5ad40b3de851148aa59e5d8ba6242f19b0490b"
+    }
+  },
+  "task": "MUTATION-ACTOR-X11-GUI-PROVENANCE-20260918-001"
+}

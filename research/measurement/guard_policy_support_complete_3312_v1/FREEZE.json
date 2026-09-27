@@ -1,0 +1,38 @@
+{
+  "allocation": "guard-support-complete-3312-20260923-01",
+  "audit_command": "python audit.py formal/RESULT.json --out formal/AUDIT.json",
+  "base_main": "2aac474ff82b5f8b1a90708850a39bb853ee19c2",
+  "branch": "research/guard-support-complete-3312-20260923",
+  "construction_excluded": true,
+  "decision_gates": "PLAN.md and Issue #3312",
+  "formal_command": "python run.py --out formal/RESULT.json --workdir formal/work --display 274",
+  "formal_invocations_allowed": 1,
+  "formal_rows_expected": 350,
+  "issue": 3312,
+  "owned_path": "research/measurement/guard_policy_support_complete_3312_v1",
+  "parent_contract": {
+    "no_effect_wait_ns": 3000000,
+    "q_levels": [
+      "1/100",
+      "1/20",
+      "1/5",
+      "1/2"
+    ],
+    "roi": "32x32 cached left-target patch",
+    "route": "#2546 / A3",
+    "success_wait_ns": 120000000
+  },
+  "source_sha256": {
+    "CONSTRUCTION.json": "146b5e54535cc33fed36611a32aaa960593d7986141fc597aaac2e7dc98dc4c3",
+    "ENVIRONMENT.json": "cb99f78e5b4e51acd11c6767cde03e39a09f1a12707fd817650cf2faaa77c2cc",
+    "PLAN.md": "0699a986be8f6a614dce91ebe407eed9d5436f6ffc6f25b6bd481c2a24def0b7",
+    "SCHEDULE.json": "ec682fb19d0f39094af3be06901649248d8a3089b22de41958c649628266e39b",
+    "audit.py": "c9f58f4aa704da7f55eb00e80189e0397208428e06fe9dac4d457dd5cb083b72",
+    "construction_live.py": "1172b28613fff72fa3e22169f6442d58940ae48d2ce32ac92cc04d6aab6e4169",
+    "fixture.py": "632d2b850d9d81b8b481085fb7f68b4c56f382091d79311264a89f6c091a7ce7",
+    "parent_experiment.py": "ae3cdf003c096c6458de345b9e061c5fc35fde66ad5ca2c0c3ba2e4361d7be92",
+    "run.py": "7482d5bfedbacea872de5c56f06afaad401ea6027387c6e73b912e014bfca4d4",
+    "test_audit.py": "546a7d8f1004d16c7d650e6e8184219527d6e9b8947e1a65bb4d34d7d148719b"
+  },
+  "status": "FROZEN_BEFORE_FORMAL"
+}

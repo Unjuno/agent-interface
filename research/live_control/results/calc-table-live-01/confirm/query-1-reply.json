@@ -1,0 +1,184 @@
+{
+  "status": "boundary",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "expected_sequence": 12,
+        "id": "confirm",
+        "op": "submit",
+        "steps": [
+          {
+            "key": "Return",
+            "op": "key"
+          }
+        ],
+        "transport_request_id": "program-3370163dc77e46078a1ba22f9484b38c",
+        "valid_until_ns": 108848833229
+      },
+      "received_ns": 78903373760,
+      "emit_started_ns": 78903382143
+    },
+    {
+      "event": "accepted",
+      "id": "confirm",
+      "steps": 1,
+      "valid_until_ns": 108848833229,
+      "accepted_ns": 78914766477,
+      "emit_started_ns": 78914768093
+    },
+    {
+      "event": "step_started",
+      "id": "confirm",
+      "step": 0,
+      "operation": "key",
+      "issued_ns": 78929055383,
+      "emit_started_ns": 78929057168
+    },
+    {
+      "event": "input_admission",
+      "key": "Return",
+      "admitted_ns": 78942023066,
+      "input_ack_ns": 78942373923,
+      "valid_until_ns": 108848833229,
+      "emit_started_ns": 78942440804
+    },
+    {
+      "event": "observation",
+      "id": "confirm",
+      "step": 0,
+      "sequence": 13,
+      "capture_ns": 78964514182,
+      "context_ns": 78971573683,
+      "context": [
+        [
+          "windows",
+          "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+        ],
+        [
+          "active_window",
+          8389124
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/calc-table-live-01/runtime/013.png",
+      "image_reused": false,
+      "image_prepare_ns": 33399425,
+      "image_ready_ns": 79031405720,
+      "input_focus_before": 8389124,
+      "input_focus_after": 8389124,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 8389124,
+        "surface": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 6.040438,
+      "wire_bytes": 24553,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "input_state_before": {
+        "owner_id": "65c7aebd56d642a6af2ff5fe63b39aa4",
+        "revision": 27,
+        "sample_started_ns": 78955856399,
+        "sample_finished_ns": 78956463282,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8389124,
+        "active_lease_deadline_ns": null,
+        "active_lease_time_valid": false,
+        "cancel_requested": false
+      },
+      "input_state_after": {
+        "owner_id": "65c7aebd56d642a6af2ff5fe63b39aa4",
+        "revision": 27,
+        "sample_started_ns": 79055270556,
+        "sample_finished_ns": 79055822565,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 8389124,
+        "active_lease_deadline_ns": null,
+        "active_lease_time_valid": false,
+        "cancel_requested": false
+      },
+      "owner_revision_unchanged": true,
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "emit_started_ns": 79055966795
+    },
+    {
+      "event": "terminal",
+      "id": "confirm",
+      "status": "needs_decision",
+      "error": null,
+      "steps_completed": 0,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 79070372321,
+        "valid_until_ns": null
+      },
+      "interruption": {
+        "intent_token": "34a615f1b7df4b98bbc31ff547828bd7",
+        "record": {
+          "event": "owner_release",
+          "reason": "focus_changed",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 78955780794,
+          "valid_until_ns": 108848833229
+        }
+      },
+      "decision_reason": "focus_changed",
+      "terminal_ns": 79070533829,
+      "semantic_completion": "program status only; task scoring is separate",
+      "emit_started_ns": 79070536612
+    }
+  ],
+  "cursor": 60,
+  "returned_ns": 79085666833,
+  "authority": "none",
+  "acknowledgement": "not implied",
+  "command_receipt": {
+    "request_id": "program-3370163dc77e46078a1ba22f9484b38c",
+    "replayed": false,
+    "state": "stdin_flushed"
+  }
+}

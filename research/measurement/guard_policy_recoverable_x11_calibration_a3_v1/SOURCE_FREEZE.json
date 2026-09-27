@@ -1,0 +1,57 @@
+{
+  "task": "GUARD-POLICY-RECOVERABLE-X11-CALIBRATION-A3-20260918-003",
+  "issue": 1793,
+  "base_main": "34eb0b28a0c303386fc891ac2674e4563bb1e383",
+  "branch": "research/guard-policy-recoverable-x11-calibration-a3-1793",
+  "formal_status": "NOT_RUN",
+  "formal_invocations": 0,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "source_archive": {
+    "tar_bytes": 40960,
+    "tar_sha256": "a97711d155c9e6c62c9e22713c5b0841bd2b38ec2ed23b3a6428faae5166927c",
+    "gzip_bytes": 10070,
+    "gzip_sha256": "7d69bd12d1ba8eb3279fb885748218455fe45dacaef0343c1e18cf6b47e3fe42",
+    "base64_chars": 13428,
+    "base64_sha256": "d76a339dc18cd8392184ee78d1df04fe47db196d79924f883c8d0c380fada090"
+  },
+  "source_chunk_git_blobs": {
+    "source/part00.b64": "7a03f0dc43867dca5dc139ad11cc76867a96264c",
+    "source/part01.b64": "0376adbfcea67df8ad63a44aa3f267430b02d06a",
+    "source/part02.b64": "a4a19ffad0d848dba0c6ba901a30976ea9d99746",
+    "source/part03.b64": "32f4e98d6264ed1894c9d0e849ebd4fa3a220b13",
+    "source/part04.b64": "1441a3e6133e74f53a00ef93fa9673c38c00e0c6",
+    "source/part05.b64": "926feec8f73e87da8dfa7d77adab7fffe306b93e",
+    "source/part06.b64": "a3b6c3aa423faf4413e9aca15fbb1f808167966d"
+  },
+  "source_files_sha256": {
+    "PLAN.md": "0d8ddd61ffb21abafac37e59b50aaf1cf518411d660decbdf56a7eed2b170de5",
+    "PREREG.json": "eb3f16ca2182510776cfe8deb231cc8897090abff07e416a0670aed8635c215d",
+    "fixture.py": "632d2b850d9d81b8b481085fb7f68b4c56f382091d79311264a89f6c091a7ce7",
+    "experiment.py": "ae3cdf003c096c6458de345b9e061c5fc35fde66ad5ca2c0c3ba2e4361d7be92",
+    "audit.py": "87464e2e521de7e104eec74e1476ae302982da6331c823af44c189f389ca7668",
+    "independent_audit.py": "95044f6212d3fe449e90b764b06d32d1c1b8c4ce395c05c4fa3eb6f17ce19cbe"
+  },
+  "formal_shape": {
+    "calibration_groups": 128,
+    "classification_fresh": 128,
+    "classification_stale": 128,
+    "policy_pairs_per_q": 256,
+    "q_levels": [
+      "1/100",
+      "1/20",
+      "1/5",
+      "1/2"
+    ],
+    "success_wait_ns": 120000000,
+    "no_effect_wait_ns": 3000000,
+    "bootstrap_n": 10000,
+    "seed": 179320260918003
+  },
+  "cost_identification": {
+    "estimator": "paired sample mean",
+    "formal_nonnegative_gate": "95% paired bootstrap lower endpoint >= 0",
+    "negative_samples": "retained; no clipping/winsorization"
+  }
+}

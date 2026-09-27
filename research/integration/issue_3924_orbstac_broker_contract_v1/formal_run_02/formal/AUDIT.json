@@ -1,0 +1,119 @@
+{
+  "cases": [
+    {
+      "broker_rc": 1,
+      "case": "exit0",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "FileNotFoundError",
+        "exited_ns": 1385758973414,
+        "request_id": "exit0",
+        "returncode": null,
+        "started_ns": 1385758587503,
+        "stderr": "[Errno 2] No such file or directory: '/study/fake_codex.py'",
+        "stop_reason": "HOST_BROKER_EXECUTABLE_UNAVAILABLE"
+      }
+    },
+    {
+      "broker_rc": 1,
+      "case": "exit23",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "FileNotFoundError",
+        "exited_ns": 1385879944415,
+        "request_id": "exit23",
+        "returncode": null,
+        "started_ns": 1385879705878,
+        "stderr": "[Errno 2] No such file or directory: '/study/fake_codex.py'",
+        "stop_reason": "HOST_BROKER_EXECUTABLE_UNAVAILABLE"
+      }
+    },
+    {
+      "broker_rc": 1,
+      "case": "timeout",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "FileNotFoundError",
+        "exited_ns": 1385999111781,
+        "request_id": "timeout",
+        "returncode": null,
+        "started_ns": 1385998850785,
+        "stderr": "[Errno 2] No such file or directory: '/study/fake_codex.py'",
+        "stop_reason": "HOST_BROKER_EXECUTABLE_UNAVAILABLE"
+      }
+    },
+    {
+      "broker_rc": 1,
+      "case": "unavailable",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "FileNotFoundError",
+        "exited_ns": 1386118209981,
+        "request_id": "unavailable",
+        "returncode": null,
+        "started_ns": 1386117912444,
+        "stderr": "[Errno 2] No such file or directory: '/missing/fake-codex'",
+        "stop_reason": "HOST_BROKER_EXECUTABLE_UNAVAILABLE"
+      }
+    }
+  ],
+  "decision": "HOLD_AUDIT_ERRORS",
+  "errors": [
+    "exit0: fake invocation missing",
+    "successful fake exit missing from receipt",
+    "successful fake response bytes mismatch",
+    "successful fake argv/stdin record mismatch",
+    "exit23: fake invocation missing",
+    "nonzero code mismatch",
+    "timeout: fake invocation missing",
+    "timeout was not typed",
+    "one-shot cardinality not exactly one"
+  ],
+  "sha256": {
+    "exit0/exit0.broker.json": "83418a3bfcc29b9e830190e952de628063f5d1dbfdbfa01edc7bbc7507c7d694",
+    "exit0/exit0.request.json": "8fd89f441094c2b31b20f00cdc84b9c7e2f95daf1b1c82cb46095149427c4128",
+    "exit0/exit0.response.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "exit0/ipc/exit0.broker.json": "83418a3bfcc29b9e830190e952de628063f5d1dbfdbfa01edc7bbc7507c7d694",
+    "exit0/ipc/exit0.request.json": "8fd89f441094c2b31b20f00cdc84b9c7e2f95daf1b1c82cb46095149427c4128",
+    "exit0/ipc/exit0.response.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "exit0/process.json": "dad3aaa5136594f1495280c1e393829ed9825705a6ad89561e1326f6c7da8c3f",
+    "exit23/exit23.broker.json": "88a68e52b44392ac5a8234f3179cad340832edf05a77fbd193f03de1d984c363",
+    "exit23/exit23.request.json": "4009cd34a965e5d10eb4da5f6c0864eba7fe57eb44d710949fb193402c6af1e0",
+    "exit23/exit23.response.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "exit23/ipc/exit23.broker.json": "88a68e52b44392ac5a8234f3179cad340832edf05a77fbd193f03de1d984c363",
+    "exit23/ipc/exit23.request.json": "4009cd34a965e5d10eb4da5f6c0864eba7fe57eb44d710949fb193402c6af1e0",
+    "exit23/ipc/exit23.response.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "exit23/process.json": "19069b7196dcccb33da3f13c865260bc016e1c6d9aeaef9939fb98b009f78095",
+    "malformed/ipc/malformed.request.json": "305c0d6c8e1063329e9502b7da5afb917d819297463091162f906eb93595dd06",
+    "malformed/malformed.request.json": "305c0d6c8e1063329e9502b7da5afb917d819297463091162f906eb93595dd06",
+    "malformed/process.json": "ef148490a62b2f86ff5d1ef671e98174a2e215e673c3a2ee3f714ebd74fdcf56",
+    "one-shot-idle/process.json": "df34c6b3dd5c1c02089ddfc2039e1735a26065a1af5056f5e422de4221d92b1b",
+    "timeout/ipc/timeout.broker.json": "6ead72da7786d061190893567712b5ba3de6dc8c68661ce94bf79e0f4a93515c",
+    "timeout/ipc/timeout.request.json": "c3aaaed271ceeb339a29ff4b08ad2ab432a5977106e09098b383a5f8838eebdf",
+    "timeout/ipc/timeout.response.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "timeout/process.json": "2138242870442fed5b42f95c86b5e87ff9f6de7a3e2230b1c1f62f661c0fcfd2",
+    "timeout/timeout.broker.json": "6ead72da7786d061190893567712b5ba3de6dc8c68661ce94bf79e0f4a93515c",
+    "timeout/timeout.request.json": "c3aaaed271ceeb339a29ff4b08ad2ab432a5977106e09098b383a5f8838eebdf",
+    "timeout/timeout.response.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "two-queued/ipc/queued-a.broker.json": "b811c37a69d033a185f258c38be44e295061db3b172dfc8ae47e3b3242306b5c",
+    "two-queued/ipc/queued-a.request.json": "8385a1b09105821f9175c7b1bbc476e4c2558b8dc8ada3fe931ff352725f489d",
+    "two-queued/ipc/queued-a.response.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "two-queued/ipc/queued-b.request.json": "1b4d71d1f926554b2efb5a5413a4dfcda7aaf15c344a08b9cc6b94fb47fffc03",
+    "two-queued/process.json": "74e40ccb33bcb7774fd2d375728fdad9d69d89cb3239114831a642a541d80411",
+    "two-queued/queued-a.broker.json": "b811c37a69d033a185f258c38be44e295061db3b172dfc8ae47e3b3242306b5c",
+    "two-queued/queued-a.request.json": "8385a1b09105821f9175c7b1bbc476e4c2558b8dc8ada3fe931ff352725f489d",
+    "two-queued/queued-a.response.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "two-queued/queued-b.request.json": "1b4d71d1f926554b2efb5a5413a4dfcda7aaf15c344a08b9cc6b94fb47fffc03",
+    "unavailable/ipc/unavailable.broker.json": "d47279a780b375bf564423c4aee0896c1fe249d8fa6ff36bd7d34b89f2f46dfb",
+    "unavailable/ipc/unavailable.request.json": "a734a99e30e95beaaadf54da26a290bd99561a9568a9a7e0e913c2dc403b16f4",
+    "unavailable/ipc/unavailable.response.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unavailable/process.json": "e37d9431ab110a9267a6523fbace7101744bfd2a35364e08aa76e39a727386af",
+    "unavailable/unavailable.broker.json": "d47279a780b375bf564423c4aee0896c1fe249d8fa6ff36bd7d34b89f2f46dfb",
+    "unavailable/unavailable.request.json": "a734a99e30e95beaaadf54da26a290bd99561a9568a9a7e0e913c2dc403b16f4",
+    "unavailable/unavailable.response.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "issue-experiment-freeze-v1",
+  "allocation_id": "issue3688-raw-byte-binding-formal-01",
+  "frozen_at_utc": "2026-09-20T17:02:31Z",
+  "issue": 3688,
+  "repository": "Unjuno/agent-interface",
+  "source_commit": "b04e93dd2e1fb610ed8761a9a91590fe69a7683b",
+  "branch": "research/issue-3688-raw-byte-binding-v1",
+  "candidate_source_sha256": {
+    "raw_byte_audit.py": "3dac162ff352991610da57983f24b28e73bf7115e9d05a162f6f4cf76518f147",
+    "test_raw_byte_binding.py": "cf3cbf4be7aa03efcafc4f7074a8de2bc1a8bb0509d43207f1807643ab720ce0",
+    "independent_audit.py": "45aeaa76971ae03ce2e29081a3c12013f92a834bd8ea5b76191c224444477e31"
+  },
+  "image": {
+    "base_image_id": "sha256:b138c00ce990cf972f8be1ae4b3f7a11a198ad46e8804b41dabd979052aad8e8",
+    "derived_image_id": "sha256:8c37d3a0ff21d1205a00c567fd184184816ab00d81292cb0feee7be92d572f64",
+    "platform": "linux/arm64"
+  },
+  "predecessor": {
+    "issue": 3676,
+    "study_freeze_sha256": "c038b0b2f5a1c1498613b2b8986d84f70dfc49dfc4e52b051bebe0de5e1deff8",
+    "raw_sha256": "ccb9a75eefb7df73cb13dbc9191d33334fb672c2fd58fcc5fa32be998e182807",
+    "freeze_sha256": "f40494b1be99fb1e68d7b09c498297df35a72c043740b5f09d3faec7e059acfe",
+    "source_sha256": {
+      "audit.py": "c771624bc93ef66f516ccb35c510c5a46ba33a1ec5aef510dcebd98d28a41edd",
+      "test_audit.py": "0066dae870b60d030c062b8ac01e26b58cfcc5c91f998a95f51e08d225b14ce1"
+    }
+  },
+  "H": "A structurally unchanged or semantically equivalent but byte-modified raw JSON must not receive PASS from the Issue #3676 audit successor; the original raw, original freeze and source-manifest bindings must be verified before structural checks.",
+  "T": "Use exact Git-object copies of Issue #3676 raw, predecessor freeze, study freeze, auditor and test. Run one preregistered matrix in one isolated container: exact original raw, whitespace-appended raw, altered-event raw, changed expected raw digest, malformed expected raw digest, changed source-manifest digest, modified predecessor freeze, and modified source bytes. For each case compare direct and CLI results. Preserve mutation copies and both outputs; then run a separately implemented read-only auditor in a fresh container.",
+  "D": "PASS_RAW_BYTE_BINDING only if the exact original reaches structural PASS; all changed raw bytes are rejected at raw-byte binding by direct and CLI routes; both study-freeze digest mutations fail the pinned study-freeze binding; modified source fails source-manifest verification; modified predecessor freeze fails its digest binding; all direct/CLI outputs agree; all upstream input hashes match this freeze; formal and independent Docker containers exit zero and cleanup completes. Any altered raw returning PASS is FAIL. Runtime/image/hash/setup failure is STOP before scientific disposition.",
+  "C": "Audit-only, local OrbStack Docker Engine 29.4.0 linux/arm64, pinned local base image sha256:b138c00ce990cf972f8be1ae4b3f7a11a198ad46e8804b41dabd979052aad8e8, --network none, read-only rootfs and input mount, unique writable output mount and bounded tmpfs. No X11, GUI, input, model, or new XRes runtime claim.",
+  "U": "Finite byte/digest/source tampering cases do not prove arbitrary file provenance or structural-audit completeness.",
+  "controls": [
+    "original raw bytes",
+    "whitespace-appended raw bytes with identical parsed JSON",
+    "valid JSON with altered event value",
+    "study freeze with changed expected raw digest",
+    "study freeze with malformed expected raw digest",
+    "study freeze with changed source-manifest digest",
+    "predecessor freeze with whitespace mutation",
+    "modified predecessor source bytes",
+    "direct and CLI route parity for every case"
+  ],
+  "network": "none",
+  "formal_invocations": 1,
+  "retry_policy": "no retry of formal allocation"
+}

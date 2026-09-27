@@ -1,0 +1,40 @@
+{
+  "schema": "map01-hwbp-source-manifest-v1",
+  "formal_allocation": false,
+  "experiment_base_image": {
+    "tag": "agent-interface-map01-clock-counter-v1:20260920",
+    "image_id": "sha256:fdf45a138d5b025499f6808ae0b8a04a12d2ad4643e6618f913a85e1cfe64e17"
+  },
+  "runtime_engine": {
+    "source_commit": "c8e0a31182d98c6f40a65674283e736b851e8e59",
+    "source_build_binary_sha256": "df948feffe93a27345f02eec891f85d89841a927c6062999b9a42a84f0db40b2",
+    "link_address_viz_tic": "0x3eee80",
+    "linker_map_sha256": "add5dca83f2be7669f5d5a350fbbab97097e8a616aa4b64f07c6598e88e2b057",
+    "build_type": "Release",
+    "cxx_flags_release": "-O3 -DNDEBUG -g",
+    "runtime_source_instrumentation": false,
+    "mounted_read_only_over_package_executable": true,
+    "runtime_process_sha256_verified": true
+  },
+  "scorer_and_adapter": {
+    "session_map01_v13.py": "1a6da676db9c6b2aa61ccf0f600a1565395e906736bb07a50b2006e100d7ca98",
+    "independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "map01_scorer_stdio_adapter_v1.py": "0ba57b240b37d04042915d243d149a1bb65ac689732dfc8e48fb60e880f0198a",
+    "main_thread_scorer_polling_v1.py": "0a82819748603b77726d3d7053da7f6cba5cf0a0d5bcd9a79f4272554cf6af0a"
+  },
+  "measurement": {
+    "container_network": "none",
+    "capabilities_added": ["PERFMON"],
+    "seccomp": 2,
+    "perf_event_paranoid": 2,
+    "perf_type": "PERF_TYPE_BREAKPOINT",
+    "breakpoint_type": "HW_BREAKPOINT_X",
+    "sample_type": ["PERF_SAMPLE_IP", "PERF_SAMPLE_TID", "PERF_SAMPLE_TIME"],
+    "clock_id": "CLOCK_MONOTONIC",
+    "ring_pages": 8,
+    "capture_elapsed_ns": 659069342,
+    "startup_action_refreshes_before_capture": 1,
+    "advancement_api_calls_during_capture": 0
+  },
+  "failed_prelaunch_attempt": "First source-image launch lacked main_thread_scorer_polling_v1.py and stopped before game initialization; exact dependency was then mounted and the succeeding run is the only raw result."
+}

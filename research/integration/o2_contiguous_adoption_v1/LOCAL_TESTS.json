@@ -1,0 +1,33 @@
+{
+  "schema": "o2-contiguous-adoption-local-tests-v1",
+  "issue": 4139,
+  "base_main": "e011d13decdc746dc55b0cd8a372e638a15f6ecd",
+  "branch": "research/o2-contiguous-adoption-20260922",
+  "environment": {
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "pillow": "12.3.0"
+  },
+  "results": [
+    {
+      "suite": "research/observation_tiles/test_transport.py",
+      "tests": 3,
+      "passed": 3
+    },
+    {
+      "suite": "research/integration/o2_contiguous_adoption_v1/test_adoption.py",
+      "scope": "synthetic+rollback only; retained golden images unavailable in local mount",
+      "tests": 2,
+      "passed": 2
+    },
+    {
+      "suite": "research/conditional_optimization/transport-integration-v2/test_integration.py",
+      "tests": 12,
+      "passed": 12
+    }
+  ],
+  "total_tests": 17,
+  "total_passed": 17,
+  "formal_performance_allocations": 0,
+  "note": "Reconstructed from exact GitHub branch source bytes in the provided Linux x86_64 execution container. Full-checkout golden-v3 adoption test is delegated to the one-shot PR workflow."
+}

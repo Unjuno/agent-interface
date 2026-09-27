@@ -1,0 +1,229 @@
+{
+  "allocation": "issue3784-explicit-x11-receiver-formal-01",
+  "artifact_sha256": {
+    "cases/de-01/row.json": "5cebcec1d547e34bf150dab7d6978ea387b153b4c73ad4f8ed9ec96af27bc9ff",
+    "cases/de-01/xvfb.log": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+    "cases/de-02/row.json": "78ef70f0ca2c456cec1afe148ed88857d2c102a7dacfbaa1285d6f3f3ac57112",
+    "cases/de-02/xvfb.log": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+    "cases/de-03/row.json": "89e3219e0376afbb692b0e4ecff5edc9d487bfbd6d87bb3d629ba43b91b75d7c",
+    "cases/de-03/xvfb.log": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+    "cases/us-control/row.json": "645cba0d782865ca1f0f1937ba0d6d695dd7c68a90efa96d92ca3e15805a6616",
+    "cases/us-control/xvfb.log": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416"
+  },
+  "base_commit": "492279afebf6a0bafc31fb1e1558c53805761c0d",
+  "disposition": "STOP_GERMAN_FORMULA_DELIVERY",
+  "image": "agent-interface-2972@sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+  "rows": [
+    {
+      "case_id": "de-01",
+      "focus_verified": true,
+      "layout": "de",
+      "receiver": {
+        "class": "InputOnly",
+        "event_mask": 3,
+        "focus_window_id": 2097152,
+        "mapped": true,
+        "window_id": 2097152
+      },
+      "receiver_control": [
+        {
+          "keycode": 38,
+          "keysym": 97,
+          "lookup_hex": "61",
+          "lookup_text": "a",
+          "state": 0,
+          "type": "KeyPress"
+        },
+        {
+          "keycode": 38,
+          "keysym": 97,
+          "lookup_hex": "61",
+          "lookup_text": "a",
+          "state": 0,
+          "type": "KeyRelease"
+        }
+      ],
+      "receiver_control_ok": false,
+      "status": "STOP_RECEIVER_CONTROL",
+      "xvfb_argv": [
+        "/usr/bin/Xvfb",
+        ":201",
+        "-screen",
+        "0",
+        "800x600x24",
+        "-nolisten",
+        "tcp",
+        "+extension",
+        "XKEYBOARD",
+        "+extension",
+        "XTEST",
+        "-noreset"
+      ],
+      "xvfb_cleanup": {
+        "reaped": true,
+        "returncode": 0
+      },
+      "xvfb_pid": 6,
+      "xvfb_start_ticks": "1476213"
+    },
+    {
+      "case_id": "de-02",
+      "focus_verified": true,
+      "layout": "de",
+      "receiver": {
+        "class": "InputOnly",
+        "event_mask": 3,
+        "focus_window_id": 2097152,
+        "mapped": true,
+        "window_id": 2097152
+      },
+      "receiver_control": [
+        {
+          "keycode": 38,
+          "keysym": 97,
+          "lookup_hex": "61",
+          "lookup_text": "a",
+          "state": 0,
+          "type": "KeyPress"
+        },
+        {
+          "keycode": 38,
+          "keysym": 97,
+          "lookup_hex": "61",
+          "lookup_text": "a",
+          "state": 0,
+          "type": "KeyRelease"
+        }
+      ],
+      "receiver_control_ok": false,
+      "status": "STOP_RECEIVER_CONTROL",
+      "xvfb_argv": [
+        "/usr/bin/Xvfb",
+        ":202",
+        "-screen",
+        "0",
+        "800x600x24",
+        "-nolisten",
+        "tcp",
+        "+extension",
+        "XKEYBOARD",
+        "+extension",
+        "XTEST",
+        "-noreset"
+      ],
+      "xvfb_cleanup": {
+        "reaped": true,
+        "returncode": 0
+      },
+      "xvfb_pid": 10,
+      "xvfb_start_ticks": "1476240"
+    },
+    {
+      "case_id": "de-03",
+      "focus_verified": true,
+      "layout": "de",
+      "receiver": {
+        "class": "InputOnly",
+        "event_mask": 3,
+        "focus_window_id": 2097152,
+        "mapped": true,
+        "window_id": 2097152
+      },
+      "receiver_control": [
+        {
+          "keycode": 38,
+          "keysym": 97,
+          "lookup_hex": "61",
+          "lookup_text": "a",
+          "state": 0,
+          "type": "KeyPress"
+        },
+        {
+          "keycode": 38,
+          "keysym": 97,
+          "lookup_hex": "61",
+          "lookup_text": "a",
+          "state": 0,
+          "type": "KeyRelease"
+        }
+      ],
+      "receiver_control_ok": false,
+      "status": "STOP_RECEIVER_CONTROL",
+      "xvfb_argv": [
+        "/usr/bin/Xvfb",
+        ":203",
+        "-screen",
+        "0",
+        "800x600x24",
+        "-nolisten",
+        "tcp",
+        "+extension",
+        "XKEYBOARD",
+        "+extension",
+        "XTEST",
+        "-noreset"
+      ],
+      "xvfb_cleanup": {
+        "reaped": true,
+        "returncode": 0
+      },
+      "xvfb_pid": 13,
+      "xvfb_start_ticks": "1476267"
+    },
+    {
+      "case_id": "us-control",
+      "focus_verified": true,
+      "layout": "us",
+      "receiver": {
+        "class": "InputOnly",
+        "event_mask": 3,
+        "focus_window_id": 2097152,
+        "mapped": true,
+        "window_id": 2097152
+      },
+      "receiver_control": [
+        {
+          "keycode": 38,
+          "keysym": 97,
+          "lookup_hex": "61",
+          "lookup_text": "a",
+          "state": 0,
+          "type": "KeyPress"
+        },
+        {
+          "keycode": 38,
+          "keysym": 97,
+          "lookup_hex": "61",
+          "lookup_text": "a",
+          "state": 0,
+          "type": "KeyRelease"
+        }
+      ],
+      "receiver_control_ok": false,
+      "status": "STOP_RECEIVER_CONTROL",
+      "xvfb_argv": [
+        "/usr/bin/Xvfb",
+        ":204",
+        "-screen",
+        "0",
+        "800x600x24",
+        "-nolisten",
+        "tcp",
+        "+extension",
+        "XKEYBOARD",
+        "+extension",
+        "XTEST",
+        "-noreset"
+      ],
+      "xvfb_cleanup": {
+        "reaped": true,
+        "returncode": 0
+      },
+      "xvfb_pid": 16,
+      "xvfb_start_ticks": "1476293"
+    }
+  ],
+  "runner_sha256": "bb202694699595887735b9121324b402751c5171087ad993853dde4cde2b1e9e",
+  "schema": "agent-interface/issue3784-raw-v1",
+  "source_manifest_sha256": "a75320185da90945ebca6b442df4972b032c687c6f8710a5aa4856f41ddc9374"
+}

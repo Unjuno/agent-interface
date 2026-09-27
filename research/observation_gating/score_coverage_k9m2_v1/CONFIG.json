@@ -1,0 +1,38 @@
+{
+  "allocation": "score-coverage-4356-20260925-01",
+  "calibration_amplitude": 10,
+  "calibration_rows_per_seed": 999,
+  "claims": [
+    "synthetic statistical boundary only",
+    "no GUI detector calibration",
+    "no action authority"
+  ],
+  "coordinate_count": 4,
+  "coverage": [
+    19,
+    20
+  ],
+  "evaluation_rows_per_profile_seed": 1000,
+  "formal_reruns_allowed": false,
+  "issue": 4356,
+  "outlier_probability": [
+    3,
+    100
+  ],
+  "profiles": [
+    [
+      "IID",
+      10
+    ],
+    [
+      "SHIFTED_AMPLITUDE",
+      30
+    ]
+  ],
+  "seeds": [
+    4356101,
+    4356102,
+    4356103
+  ],
+  "stream_rule": "random.Random(seed*10+split), split0 calibration,1 IID,2 SHIFT; shuffle z then four randrange(100)"
+}

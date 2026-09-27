@@ -1,0 +1,154 @@
+{
+  "checks": 2236,
+  "counts": {
+    "FAIL_EXACT_VALUE": 9,
+    "HOLD_EFFECT_EVIDENCE": 30,
+    "PASS_EXACT_VALUE": 6,
+    "backend_false_claims": 9,
+    "bracket_claims": 9,
+    "bracket_false_claims": 6,
+    "bracket_unconfirmed_but_exact": 3,
+    "cases": 15
+  },
+  "errors": [],
+  "gate_failures": [],
+  "outcome": "PASS_LOCK_ABA_BOUNDARY_SCOPED",
+  "rows": [
+    {
+      "actual": "aB2",
+      "bracket": "CLAIM_EXACT_TEXT",
+      "case_id": "formal-b0-STABLE_OFF",
+      "effect": "PASS_EXACT_VALUE",
+      "post_lock": 0,
+      "pre_lock": 0,
+      "scenario": "STABLE_OFF"
+    },
+    {
+      "actual": "Ab2",
+      "bracket": "UNCONFIRMED_MODIFIER_STATE",
+      "case_id": "formal-b0-LOCK_STAYS_ON",
+      "effect": "FAIL_EXACT_VALUE",
+      "post_lock": 2,
+      "pre_lock": 0,
+      "scenario": "LOCK_STAYS_ON"
+    },
+    {
+      "actual": "Ab2",
+      "bracket": "CLAIM_EXACT_TEXT",
+      "case_id": "formal-b0-ABA_WHOLE",
+      "effect": "FAIL_EXACT_VALUE",
+      "post_lock": 0,
+      "pre_lock": 0,
+      "scenario": "ABA_WHOLE"
+    },
+    {
+      "actual": "ab2",
+      "bracket": "CLAIM_EXACT_TEXT",
+      "case_id": "formal-b0-ABA_MIDDLE",
+      "effect": "FAIL_EXACT_VALUE",
+      "post_lock": 0,
+      "pre_lock": 0,
+      "scenario": "ABA_MIDDLE"
+    },
+    {
+      "actual": "aB2",
+      "bracket": "UNCONFIRMED_MODIFIER_STATE",
+      "case_id": "formal-b0-LOCK_AFTER_TEXT",
+      "effect": "PASS_EXACT_VALUE",
+      "post_lock": 2,
+      "pre_lock": 0,
+      "scenario": "LOCK_AFTER_TEXT"
+    },
+    {
+      "actual": "Ab2",
+      "bracket": "UNCONFIRMED_MODIFIER_STATE",
+      "case_id": "formal-b1-LOCK_STAYS_ON",
+      "effect": "FAIL_EXACT_VALUE",
+      "post_lock": 2,
+      "pre_lock": 0,
+      "scenario": "LOCK_STAYS_ON"
+    },
+    {
+      "actual": "Ab2",
+      "bracket": "CLAIM_EXACT_TEXT",
+      "case_id": "formal-b1-ABA_WHOLE",
+      "effect": "FAIL_EXACT_VALUE",
+      "post_lock": 0,
+      "pre_lock": 0,
+      "scenario": "ABA_WHOLE"
+    },
+    {
+      "actual": "ab2",
+      "bracket": "CLAIM_EXACT_TEXT",
+      "case_id": "formal-b1-ABA_MIDDLE",
+      "effect": "FAIL_EXACT_VALUE",
+      "post_lock": 0,
+      "pre_lock": 0,
+      "scenario": "ABA_MIDDLE"
+    },
+    {
+      "actual": "aB2",
+      "bracket": "UNCONFIRMED_MODIFIER_STATE",
+      "case_id": "formal-b1-LOCK_AFTER_TEXT",
+      "effect": "PASS_EXACT_VALUE",
+      "post_lock": 2,
+      "pre_lock": 0,
+      "scenario": "LOCK_AFTER_TEXT"
+    },
+    {
+      "actual": "aB2",
+      "bracket": "CLAIM_EXACT_TEXT",
+      "case_id": "formal-b1-STABLE_OFF",
+      "effect": "PASS_EXACT_VALUE",
+      "post_lock": 0,
+      "pre_lock": 0,
+      "scenario": "STABLE_OFF"
+    },
+    {
+      "actual": "Ab2",
+      "bracket": "CLAIM_EXACT_TEXT",
+      "case_id": "formal-b2-ABA_WHOLE",
+      "effect": "FAIL_EXACT_VALUE",
+      "post_lock": 0,
+      "pre_lock": 0,
+      "scenario": "ABA_WHOLE"
+    },
+    {
+      "actual": "ab2",
+      "bracket": "CLAIM_EXACT_TEXT",
+      "case_id": "formal-b2-ABA_MIDDLE",
+      "effect": "FAIL_EXACT_VALUE",
+      "post_lock": 0,
+      "pre_lock": 0,
+      "scenario": "ABA_MIDDLE"
+    },
+    {
+      "actual": "aB2",
+      "bracket": "UNCONFIRMED_MODIFIER_STATE",
+      "case_id": "formal-b2-LOCK_AFTER_TEXT",
+      "effect": "PASS_EXACT_VALUE",
+      "post_lock": 2,
+      "pre_lock": 0,
+      "scenario": "LOCK_AFTER_TEXT"
+    },
+    {
+      "actual": "aB2",
+      "bracket": "CLAIM_EXACT_TEXT",
+      "case_id": "formal-b2-STABLE_OFF",
+      "effect": "PASS_EXACT_VALUE",
+      "post_lock": 0,
+      "pre_lock": 0,
+      "scenario": "STABLE_OFF"
+    },
+    {
+      "actual": "Ab2",
+      "bracket": "UNCONFIRMED_MODIFIER_STATE",
+      "case_id": "formal-b2-LOCK_STAYS_ON",
+      "effect": "FAIL_EXACT_VALUE",
+      "post_lock": 2,
+      "pre_lock": 0,
+      "scenario": "LOCK_STAYS_ON"
+    }
+  ],
+  "scope": "private cooperative Tk/XTEST, reporting only; not prevention/rollback/production"
+}

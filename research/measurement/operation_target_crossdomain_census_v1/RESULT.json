@@ -1,0 +1,94 @@
+{
+  "checks": {
+    "decision_oracle": false,
+    "episode_final_oracles_present": true,
+    "operation_classes": false,
+    "positive_rows": false,
+    "raw_operation_diversity_present": true,
+    "semantic_negative_rows": false,
+    "split_units": true,
+    "target_alternatives": false,
+    "yield_no_action": false
+  },
+  "decision": "BLOCKED_DATA",
+  "failed_requirements": [
+    "positive_rows",
+    "semantic_negative_rows",
+    "operation_classes",
+    "target_alternatives",
+    "yield_no_action",
+    "decision_oracle"
+  ],
+  "formal_invocation": 1,
+  "gui_actions": 0,
+  "independent_episode_units": 6,
+  "model_calls": 0,
+  "nonlabels": [
+    "rejected malformed chord schema",
+    "focus/currentness interruption after consequential action",
+    "failed drag displacement final effect",
+    "invalid numeric entry followed by later correction",
+    "stale target or binding rejection"
+  ],
+  "oracle_qualified_operation_families": [],
+  "oracle_qualified_positive_rows": 0,
+  "potential_program_opportunities": 21,
+  "provider_calls": 0,
+  "raw_operation_families": [
+    "CELL_ENTRY",
+    "DRAG",
+    "FIELD_EDIT",
+    "FORM_SUBMIT",
+    "MODAL_CONFIRM",
+    "NAVIGATE",
+    "POINTER_SELECT",
+    "SAVE",
+    "WATCH"
+  ],
+  "reruns": 0,
+  "semantic_negative_rows": 0,
+  "sources": {
+    "browser_audit": {
+      "git_blob": "52ded4fe23e65d2e50d23eb7521a35f418022d49",
+      "path": "research/live_control/audit_browser_combined_v1.py"
+    },
+    "browser_doc": {
+      "git_blob": "32e2ff27bea5bbb75600f3746ae16ef40fecdf71",
+      "path": "research/live_control/BROWSER_COMBINED_LIVE.md"
+    },
+    "calc_audit": {
+      "git_blob": "389b96a488bc9e1017d0800b07e5758a0b649db6",
+      "path": "research/live_control/audit_calc_table_live_v1.py"
+    },
+    "calc_doc": {
+      "git_blob": "8ec64e0bd669b8460915d69f0d479590fa8a5571",
+      "path": "research/live_control/CALC_TABLE_LIVE.md"
+    },
+    "drag_audit": {
+      "git_blob": "f599a2f0667a8a869ac06ae0587649a3b5c4555d",
+      "path": "research/live_control/audit_drag_live_v1.py"
+    },
+    "drag_doc": {
+      "git_blob": "9b3d9e63dc901c4fbf092c22eadc76dbfc5f518e",
+      "path": "research/live_control/DRAG_TASK_ACCURACY.md"
+    },
+    "golden_details": {
+      "git_blob": "021bb3e12182560e6704894e33dc2f2b7e3cf27e",
+      "path": "runtime/results/golden-desktop-app-server-v3-live-01/arms/persistent/task-details.json"
+    },
+    "golden_report": {
+      "git_blob": "e168a9bdc84fc6b807f4e90806ec7c501da89689",
+      "path": "runtime/results/golden-desktop-app-server-v3-live-01/golden-report.json"
+    },
+    "inkscape_audit": {
+      "git_blob": "23469b4bb263532ad2662ecacfb1cc76a0e56386",
+      "path": "research/live_control/audit_inkscape_composed_v1.py"
+    },
+    "inkscape_doc": {
+      "git_blob": "5ed900acb223effd1fc3756efa97490e71debf65",
+      "path": "research/live_control/INKSCAPE_COMPOSED_LIVE.md"
+    }
+  },
+  "task_input_actions": 0,
+  "yield_no_action_rows": 0
+}

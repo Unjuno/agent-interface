@@ -1,0 +1,72 @@
+{
+  "schema": "gpu-lora-formal-metadata-v1",
+  "issue": 4471,
+  "allocation": "needle-lora-3441-pilot-04d-corrected-base-20260926-01",
+  "disposition": "STOP_FORMAL_RESULT_SERIALIZATION_NAMEERROR_AFTER_TRAINING",
+  "formalInvocations": 1,
+  "retries": 0,
+  "tuning": 0,
+  "exitCode": 1,
+  "startedAtUtc": "2026-09-26T14:08:08Z",
+  "endedAtUtc": "2026-09-26T14:08:13Z",
+  "execution": {
+    "host": "Windows local PC",
+    "containerClaim": false,
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "driver": "581.57",
+    "python": "3.11.9",
+    "pytorch": "2.5.1+cu121",
+    "cuda": "12.1",
+    "cublasWorkspaceConfig": ":4096:8",
+    "deterministicAlgorithms": true,
+    "tf32": false,
+    "peakAllocatedBytes": null,
+    "peakMemoryStatus": "UNAVAILABLE_WDDM"
+  },
+  "frozenSource": {
+    "path": "runner.py",
+    "sha256": "b9dcf1e9720adef96e095d02e26bd61171c5453ba382880300cca11efaadd357",
+    "gitBlob": "e76e1582f12db745c5c3b1140b1393079265fff7"
+  },
+  "error": {
+    "type": "NameError",
+    "message": "name 'STEPS' is not defined",
+    "sourceLine": 201,
+    "phase": "result-dictionary construction after the base/adapter fit loops and row scoring"
+  },
+  "controlFlow": {
+    "baseUpdates": 400,
+    "adapterFits": 4,
+    "updatesPerAdapterFit": 120,
+    "optimizerStepCallsImplied": 880,
+    "retainedPerStepReceipts": false,
+    "evaluationRowsPerArm": 4096,
+    "armsScored": [
+      "routed_A",
+      "routed_B",
+      "routed_C",
+      "shared_A",
+      "shared_B",
+      "shared_C"
+    ],
+    "predictionsComputedInMemoryButNotSerialized": true
+  },
+  "output": {
+    "stdoutBytes": 0,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrBytes": 723,
+    "stderrSha256": "26dde93146e5d032aa9339daf04964d2e1a391190ee4a8fdd6459f8935d3f87e",
+    "stderrPreservation": "FORMAL_STDERR.raw.b64 decodes to the exact captured 723-byte stderr",
+    "stderrBase64FileSha256": "25045804a11365038aafaa271b0eddc7174e4fddfd2c93fe4b6a36a7a6d9d047"
+  },
+  "preflight": {
+    "constructionAndAuditTestsPassed": 15,
+    "sourceReadbackExact": true,
+    "sourceBlobPinsMatched": true,
+    "systemDiskFreeBytes": 323757817856,
+    "torchCudaFreeBytes": 15991832576,
+    "cudaStartupDeterminism": "PASS"
+  },
+  "interpretation": "Infrastructure/artifact failure after training and in-memory evaluation. No metric rows, snapshots, model state, or result JSON were persisted. No scientific PASS/FAIL/HOLD can be assigned. The optimizer-step count is inferred from reaching result construction through the frozen runner's fixed loops, not independently receipted.",
+  "noRetryPolicy": "Consumed; no rerun, altered source execution, tuning, or recovery training."
+}

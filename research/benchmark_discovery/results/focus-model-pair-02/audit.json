@@ -1,0 +1,151 @@
+{
+  "rows": [
+    {
+      "name": "unknown-fresh-full",
+      "correct": true,
+      "wrong_fields": {},
+      "answer": {
+        "terminal_status": "needs_decision",
+        "latest_sequence": 3,
+        "historical_target_binding": false,
+        "automatic_tail_replay": false,
+        "reuse_old_lease": false,
+        "proposal": "propose_focus_recovery",
+        "runtime_revalidation_required": true,
+        "record_proves_game_task_success": false
+      },
+      "usage": {
+        "input_tokens": 12646,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 111,
+        "reasoning_output_tokens": 47
+      },
+      "local_run_ms": 6471.5791,
+      "stderr_bytes": 0
+    },
+    {
+      "name": "unknown-fresh-view",
+      "correct": true,
+      "wrong_fields": {},
+      "answer": {
+        "terminal_status": "needs_decision",
+        "latest_sequence": 3,
+        "historical_target_binding": false,
+        "automatic_tail_replay": false,
+        "reuse_old_lease": false,
+        "proposal": "propose_focus_recovery",
+        "runtime_revalidation_required": true,
+        "record_proves_game_task_success": false
+      },
+      "usage": {
+        "input_tokens": 12258,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 105,
+        "reasoning_output_tokens": 41
+      },
+      "local_run_ms": 6007.5813,
+      "stderr_bytes": 0
+    },
+    {
+      "name": "target-fresh-view",
+      "correct": true,
+      "wrong_fields": {},
+      "answer": {
+        "terminal_status": "completed",
+        "latest_sequence": 18,
+        "historical_target_binding": true,
+        "automatic_tail_replay": false,
+        "reuse_old_lease": false,
+        "proposal": "propose_new_target_action",
+        "runtime_revalidation_required": true,
+        "record_proves_game_task_success": false
+      },
+      "usage": {
+        "input_tokens": 12170,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 110,
+        "reasoning_output_tokens": 48
+      },
+      "local_run_ms": 5703.6659,
+      "stderr_bytes": 0
+    },
+    {
+      "name": "target-fresh-full",
+      "correct": true,
+      "wrong_fields": {},
+      "answer": {
+        "terminal_status": "completed",
+        "latest_sequence": 18,
+        "historical_target_binding": true,
+        "automatic_tail_replay": false,
+        "reuse_old_lease": false,
+        "proposal": "propose_new_target_action",
+        "runtime_revalidation_required": true,
+        "record_proves_game_task_success": false
+      },
+      "usage": {
+        "input_tokens": 13556,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 105,
+        "reasoning_output_tokens": 43
+      },
+      "local_run_ms": 6493.8528,
+      "stderr_bytes": 0
+    },
+    {
+      "name": "target-stale-full",
+      "correct": true,
+      "wrong_fields": {},
+      "answer": {
+        "terminal_status": "completed",
+        "latest_sequence": 18,
+        "historical_target_binding": true,
+        "automatic_tail_replay": false,
+        "reuse_old_lease": false,
+        "proposal": "observe_only",
+        "runtime_revalidation_required": true,
+        "record_proves_game_task_success": false
+      },
+      "usage": {
+        "input_tokens": 13557,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 102,
+        "reasoning_output_tokens": 43
+      },
+      "local_run_ms": 6837.7907,
+      "stderr_bytes": 0
+    },
+    {
+      "name": "target-stale-view",
+      "correct": true,
+      "wrong_fields": {},
+      "answer": {
+        "terminal_status": "completed",
+        "latest_sequence": 18,
+        "historical_target_binding": true,
+        "automatic_tail_replay": false,
+        "reuse_old_lease": false,
+        "proposal": "observe_only",
+        "runtime_revalidation_required": true,
+        "record_proves_game_task_success": false
+      },
+      "usage": {
+        "input_tokens": 12171,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 104,
+        "reasoning_output_tokens": 45
+      },
+      "local_run_ms": 8563.7494,
+      "stderr_bytes": 0
+    }
+  ],
+  "all_answers_correct": true,
+  "scope": "archived text-only cases, equal explicit policy with synthetic freshness; full latest records retained; no live recovery, broad reasoning or cost proof",
+  "audit_sha256": "99b37c208ead741ce4851408e8e5b6d72763864ea8e5913caf745729f6db4bc8"
+}

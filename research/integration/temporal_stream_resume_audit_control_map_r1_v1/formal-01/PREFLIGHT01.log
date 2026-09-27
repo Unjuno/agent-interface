@@ -1,0 +1,3 @@
+Docker CLI path-resolution failure — no container/verifier invocation.
+
+The first launch command ran from the parent task workspace instead of this experiment worktree. PowerShell could not resolve the relative study path, so Docker received an empty bind-mount source and exited 125 with `invalid value for 'source': value is empty` before creating a container. The formal scratch directory was created but remained empty. No source, #4447 evidence, or verifier was mounted/read. A later command used validated absolute paths; the one successful container/verifier invocation and its result are recorded in OUTER_RUN.json and CONTROL_RESULTS.json.

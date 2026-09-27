@@ -1,0 +1,40 @@
+{
+  "allocation_id": "map01-running-action-cancel-live-02",
+  "frozen_at": "2026-09-15",
+  "output": "results-local/doom/map01-running-action-cancel-live-02",
+  "fixture_manifest": "research/doom/fixtures/map01-threat-contact-v2/fixture.json",
+  "seed": 990619,
+  "episodes": 1,
+  "retry_limit": 0,
+  "model_calls": 0,
+  "v1_failure_repair": "initialize WAD glyph readers before runtime launch/source capture and register bounded process cleanup before reading runtime events",
+  "action": [
+    {
+      "action": "fire",
+      "extent": "long"
+    }
+  ],
+  "validity_construction": "minimum_ammo equals initial screen-visible ammo, so the first visible decrement invalidates the held fire action",
+  "thresholds_ms": {
+    "capture_to_cancel_requested_lte": 150,
+    "capture_to_release_verified_lte": 200
+  },
+  "decision": "PASS only if a natural visible ammo decrement invalidates active held input, the matching program cancels with empty verified release, no later input admission occurs, both timing thresholds pass, and the process exits zero; otherwise retain the first failure without retry",
+  "source_sha256": {
+    "research/doom/map01_running_action_cancel_live_v2.py": "431362fb8447ccd8ee0f55e3a4293745a1229291fd9d28cdd03b3aff3b06fec4",
+    "research/doom/audit_map01_running_action_cancel_live_v2.py": "5b0188b6ebb1c9d571d7627ccc8ddba4dea6020012e632745eaa21d82dc62463",
+    "research/doom/map01_overlap_controller_v34.py": "4409b0e304ec72824ec25f4fcee956977787cbc94ea0bd8e90220e398462216b",
+    "research/live_control/running_action_guard_v1.py": "2d5feb69efd59fdca22e0db9e561923411490eb758eab9e2b8379714e20e5c62",
+    "research/doom/doom_action_snapshot_v1.py": "69713831fb6fecb285fc6bde7b50d6fabaeb7cc0ddf5b24ae347d1f2c47614f0",
+    "research/doom/doom_action_validity_contract_v1.py": "8ce48e00689eb79b50ace84759381d61781b54d29b2cb8c19c5319226a937982",
+    "research/doom/doom_hud_signal_v1.py": "eecb889ad76fd3d23dfc32ae8c804ecbb32efc7b4d9ac5174ce4aefa7c70514c",
+    "research/doom/doom_hud_signal_v2.py": "c4d5269d258e57b3e04d024f8a3d8948c7bfb73f309f0ca6fe3cd6a44cc755ff",
+    "research/doom/session_map01_v7.py": "5b56129c551dff8fb8e068daa21748dc51b9d0b327306aeb1f381e0e3cc9c1f6",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/coast_backend_v1.py": "fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009",
+    "research/doom/fixtures/map01-threat-contact-v2/fixture.json": "e57e21fd6d85d4b0720b3b3d5a52ad538fde45c50c58651ff754638f93f182e4",
+    "research/doom/fixtures/map01-threat-contact-v2/save.png": "cc5302aa9cda3960248733caa96da1b53adcc4b6a1a2dcfb80675650c9350401",
+    "research/doom/fixtures/map01-threat-contact-v2/source.png": "70723e24d671fd656fa3ba40294b4cd28272493a9ffcacf93843cd86f13ab16d"
+  },
+  "scope": "one real continuously advancing Freedoom/X11 held-input cancellation episode; controller-authored probe threshold, no planner/model call, no task-completion or gameplay-gain claim"
+}

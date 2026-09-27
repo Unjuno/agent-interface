@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "checks": {
+    "manifest": true,
+    "frozen_sources": true,
+    "first_outcome": true,
+    "failure_class": true,
+    "diagnosis": true,
+    "local_arm_completed": true,
+    "model_arm_stopped": true,
+    "model_accounting": true,
+    "model_point_correct_but_stale": true,
+    "safe_prefix_release": true,
+    "comparison_unobserved": true
+  },
+  "allocation_passed": false,
+  "failure_class": "model_reacquisition_outlived_source_observation_freshness",
+  "completed_arms": 1,
+  "started_arms": 2,
+  "successful_model_calls": 3,
+  "input_tokens": 28053,
+  "files_in_manifest": 90,
+  "bytes_before_receipt": 1415626,
+  "scope": "One frozen seed214 Linux/X11 allocation. Arm1 completed one correct local repair; arm2 stopped after its completed reacquisition because the model-visible frame was stale. Arms3-4 did not start. This is failure and safety-boundary evidence, not a balanced token/recovery comparison, rate, general grounding, portability or human-tempo result."
+}

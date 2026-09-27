@@ -1,0 +1,52 @@
+{
+  "task": "MAP01-MATCHED-RECOVERY-ENDPOINT-READINESS-R0-20260919-001",
+  "issue": 1866,
+  "branch": "research/map01-matched-recovery-entry-gate-1866",
+  "base_main_sha": "7eaa6f5ffdf710e729db0abe00a3dfa617979309",
+  "source_freeze_head": "a0d530c4daf3ae8b0abba858969d36ac7b3723a5",
+  "formal_invocations_before_freeze": 0,
+  "reruns_before_freeze": 0,
+  "files": {
+    "PLAN.md": {
+      "git_blob": "e78cb0ceafa790cee2a11bfd92bf257e3eb78488"
+    },
+    "SNAPSHOT.json": {
+      "git_blob": "7e79eb83377f78466d89016602456939b75cff52"
+    },
+    "formal.py": {
+      "git_blob": "7c9a5643ae50a13e3ab12726fb02c714793a2e7b"
+    },
+    "audit.py": {
+      "git_blob": "a71418c0ca79b67d8f9bb67e756247a74038f981"
+    }
+  },
+  "evidence_source_git_blobs": {
+    "map01_held_input_occupancy_partial_posthoc_v2/RESULT_SUMMARY.json": "64ae125866a8e58f6deb90c8433506577ccd0a95",
+    "v39_timing_endpoint_readiness_v1/RESULT.json": "cee63788cab0bab376fd8ecfdb613f7ada01a049",
+    "useful_control_interval_contract_v3/RESULT_SUMMARY.json": "d70d89647f0ec84537ca1e7f567abb45617d8868",
+    "map01_useful_occupied_control_identifiability_v1/RESULT.json": "9046ab6765662ccd648d8a4a4842c567d5adbf14",
+    "map01_first_useful_feedback_posthoc_v1/publication_manifest.json": "40a9e3a0af3446ea3f9887c8ae44f7f0777428c4",
+    "map01_recovery_v6_audit_integrity_v1/RESULT.json": "3c4c0b50259395bbb3f9320b81d3100a580eca0c",
+    "map01_recovery_cover_mechanism_v6_prereg.json": "c8cd4193771d83a0d3ff112dd9c99b8e9664e3c1"
+  },
+  "active_issue_snapshot": {
+    "1632": {
+      "state": "open",
+      "updated_at": "2026-09-18T14:29:01Z",
+      "latest_comment_id": 5731466739,
+      "retained_result": false
+    },
+    "1839": {
+      "state": "open",
+      "updated_at": "2026-09-18T16:56:24Z",
+      "latest_comment_id": 5733313643,
+      "formal_invocations": 0
+    }
+  },
+  "execution_policy": {
+    "formal_invocations": 1,
+    "reruns": 0,
+    "replacements": 0,
+    "tuning_after_freeze": 0
+  }
+}

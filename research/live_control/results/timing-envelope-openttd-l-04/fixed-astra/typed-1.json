@@ -1,0 +1,36 @@
+{
+  "kind": "act",
+  "steps": [
+    {
+      "op": "pointer_move",
+      "x": 820,
+      "y": 51
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    },
+    {
+      "op": "pointer_move",
+      "x": 674,
+      "y": 51
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    },
+    {
+      "op": "pointer_move",
+      "x": 889,
+      "y": 51
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    }
+  ],
+  "rationale": "Inspect three distinct toolbar icons to identify a control explicitly labeled road construction or Build roads before clicking.",
+  "intent": "inspect",
+  "expected_effect": "Labeled tooltip observations identify the purposes of the three toolbar controls.",
+  "checkpoint": null
+}

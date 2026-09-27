@@ -1,0 +1,47 @@
+{
+  "construction_decision": "PASS_CONSTRUCTION_ELIGIBLE",
+  "durable_formal_rows": 0,
+  "formal_invocations": 1,
+  "formal_result_present": false,
+  "interpretation": "The frozen 56-session monolithic formal process exceeded the external execution envelope before writing FORMAL_RESULT.json. No scientific PASS/FAIL/HOLD is inferred; do not rerun this allocation. A successor may change only formal execution/durability packaging while preserving #1847 science.",
+  "issue": 1847,
+  "leftover_case_xauthority_files": 0,
+  "outer_execution_timeout_seconds": 120,
+  "replacements": 0,
+  "reruns": 0,
+  "scientific_disposition": "NONE",
+  "source_checks": {
+    "PLAN.md": {
+      "actual": "4daeb41eb532ae6ce1ce156d468fd89b9f02665c9e1fdac77a969ffcb883ceeb",
+      "expected": "4daeb41eb532ae6ce1ce156d468fd89b9f02665c9e1fdac77a969ffcb883ceeb",
+      "match": true
+    },
+    "SCHEDULE.json": {
+      "actual": "0b3a793258bfeccb9c5f6fef1ec4f3565a0ad21ee7938c4b1bfbf5c2f5c5d357",
+      "expected": "0b3a793258bfeccb9c5f6fef1ec4f3565a0ad21ee7938c4b1bfbf5c2f5c5d357",
+      "match": true
+    },
+    "audit.py": {
+      "actual": "06c2f5c76e1e0d887a565b3126559b3d3dbe2184b70e1e97d447291fe8c59e66",
+      "expected": "06c2f5c76e1e0d887a565b3126559b3d3dbe2184b70e1e97d447291fe8c59e66",
+      "match": true
+    },
+    "fixture.py": {
+      "actual": "db674dfd0502b3b61011338d43e3583c98489e808187039d16a9514a0aa208ce",
+      "expected": "db674dfd0502b3b61011338d43e3583c98489e808187039d16a9514a0aa208ce",
+      "match": true
+    },
+    "runner.py": {
+      "actual": "b785cab730f8daa37191de43fe2a19eeb217efe06932732b153f32f927228b28",
+      "expected": "b785cab730f8daa37191de43fe2a19eeb217efe06932732b153f32f927228b28",
+      "match": true
+    }
+  },
+  "source_rehash_exact": true,
+  "status": "STOP_FORMAL_OUTER_TIMEOUT_NO_RESULT",
+  "stderr_bytes": 0,
+  "stdout_bytes": 0,
+  "surviving_formal_processes_observed_after_stop": 0,
+  "task": "OBSERVATION-GATING-O4-X11-PIXEL-VERIFY-R1-20260919-001",
+  "tuning": 0
+}

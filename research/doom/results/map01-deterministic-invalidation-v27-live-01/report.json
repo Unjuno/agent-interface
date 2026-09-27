@@ -1,0 +1,243 @@
+{
+  "claim": "persistent typed planner invalidation integration feasibility",
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "iterations": 2,
+  "decisions": [
+    {
+      "iteration": 0,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-deterministic-invalidation-v27-live-01/runtime/001.png",
+      "model_image": "results-local/doom/map01-deterministic-invalidation-v27-live-01/decision-0/temporal-sheet.png",
+      "model_image_sha256": "8ca25a520b5a235395cb0531fed70b30ba991faa0da17685ba36d02f0e59edab",
+      "action": null,
+      "effect_memory": [],
+      "usage": null,
+      "model_ns": 804889486,
+      "model_session_id": "01a0a181-fff9-7072-8528-c459def64204",
+      "planner_turn_id": "01a0a182-1c22-7201-92ec-8c9009f5513e",
+      "planner_turn_status": "interrupted",
+      "planner_answer_eligible": false,
+      "planner_cancellation_requested": true,
+      "planner_interrupt": {
+        "outcome": "requested",
+        "response": {}
+      },
+      "controller_model_started_ns": 21502292716709,
+      "controller_model_ended_ns": 21503097606195,
+      "cover_program_ids": [
+        "cover-0"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "policy_invalidation": {
+        "outcome": {
+          "format": "deterministic-invalidation-injection-v1",
+          "status": "INJECTED_INVALIDATION",
+          "reason": "preregistered_one_shot_integration_test",
+          "keep_existing_policy": false,
+          "requires_new_decision": true,
+          "grants_input_authority": false,
+          "may_only_reduce_existing_authority": true,
+          "semantic_change_identified": false,
+          "task_success_verified": false
+        },
+        "sequence": 5,
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-deterministic-invalidation-v27-live-01/runtime/005.png",
+        "capture_ns": 21502986392826,
+        "dequeued_ns": 21503062621179,
+        "evaluated_ns": 21503062621179,
+        "detected_ns": 21503062621179,
+        "evaluation_ms": 0.0,
+        "injection": {
+          "target_iteration": 0,
+          "source_sequence": 1,
+          "after_observations": 4,
+          "observations_seen": 4
+        }
+      },
+      "model_action_discarded": true,
+      "discard_reason": "policy_dependency_invalidated",
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "not_admitted"
+    },
+    {
+      "iteration": 1,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-deterministic-invalidation-v27-live-01/runtime/005.png",
+      "model_image": "results-local/doom/map01-deterministic-invalidation-v27-live-01/decision-1/temporal-sheet.png",
+      "model_image_sha256": "c006947e58d6af8160eb6ed12c83afe9c0cc89c8ee389f530ad2edfe1eca3edb",
+      "action": {
+        "assessment": "Static corridor view with a clear passage toward a doorway or interactable area; no visible threats or damage.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ],
+        "contingencies": [
+          {
+            "after_command": 0,
+            "condition": "no_visible_effect",
+            "commands": [
+              {
+                "action": "use",
+                "extent": "pulse"
+              }
+            ]
+          }
+        ],
+        "next_cover": []
+      },
+      "usage": {
+        "total": {
+          "totalTokens": 9639,
+          "inputTokens": 9357,
+          "cachedInputTokens": 7936,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 282,
+          "reasoningOutputTokens": 197
+        },
+        "last": {
+          "totalTokens": 9639,
+          "inputTokens": 9357,
+          "cachedInputTokens": 7936,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 282,
+          "reasoningOutputTokens": 197
+        },
+        "modelContextWindow": 258400
+      },
+      "model_ns": 8117096022,
+      "effect_memory": [],
+      "effect_receipts": [
+        {
+          "action": "forward",
+          "extent": "medium",
+          "result": "visible_change",
+          "normalized_mae": 0.05712418300653595,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 39,
+          "effect_observed_ns": 21512186289272,
+          "samples": 6,
+          "plan_accept_to_first_capture_ms": 76.938238,
+          "plan_accept_to_last_capture_ms": 675.819217,
+          "capture_ms_total": 21.041536,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 6,
+      "effect_observation_capture_ms": 21.041536,
+      "execution_trace": [
+        {
+          "id": "plan-1-primary-0-0",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "forward",
+            "extent": "medium"
+          },
+          "accepted_ns": 21511510470055,
+          "terminal_ns": 21512266095280,
+          "receipt": {
+            "action": "forward",
+            "extent": "medium",
+            "result": "visible_change",
+            "normalized_mae": 0.05712418300653595,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 39,
+            "effect_observed_ns": 21512186289272,
+            "samples": 6,
+            "plan_accept_to_first_capture_ms": 76.938238,
+            "plan_accept_to_last_capture_ms": 675.819217,
+            "capture_ms_total": 21.041536,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 6,
+          "observation_capture_ms": 21.041536
+        }
+      ],
+      "contingency_branch": null,
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a181-fff9-7072-8528-c459def64204",
+      "planner_turn_id": "01a0a182-2040-7db2-b0e3-5f376302ee52",
+      "planner_turn_status": "completed",
+      "planner_answer_eligible": true,
+      "planner_cancellation_requested": false,
+      "planner_interrupt": null,
+      "controller_model_started_ns": 21503345775144,
+      "controller_model_ended_ns": 21511462871166,
+      "model_image_to_plan_accept_ns": 8524077229,
+      "fresh_observation_to_plan_accept_ns": 125530963,
+      "fresh_sequence_at_plan": 33,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-1"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "plan_terminal": "completed",
+      "model_action_discarded": false
+    }
+  ],
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 10367032683,
+    "death_count": 0,
+    "kill_count": 0,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 21512345263948
+  },
+  "model_session_span": 4,
+  "model_session_ids": [
+    "01a0a181-fff9-7072-8528-c459def64204"
+  ],
+  "motor_contract": "semantic commands compiled to <=450ms turns and <=900ms movement",
+  "effect_receipt_contract": "reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
+  "effect_receipt_extra_steps": 0,
+  "contingency_contract": "preplanned no-visible-effect fallback skips the primary tail and runs without another model call",
+  "contingencies_authored": 1,
+  "contingency_branches_taken": 0,
+  "contingency_branch_latency_ms": [],
+  "program_admissions": 1,
+  "extra_program_admissions_vs_one_bundle": 0,
+  "effect_receipt_commands": 1,
+  "effect_observation_samples": 6,
+  "effect_observation_capture_ms": 21.041536,
+  "game_continued_during_model_calls": true,
+  "planner_contract": "one capability-minimized app-server process; stable typed thread/turn ownership; invalidation interrupts the matching turn and no cancelled or stale answer is admitted",
+  "planner_turns": 2,
+  "planner_interruption_requests": 1,
+  "planner_interrupted_completions": 1,
+  "planner_ineligible_answers": 1,
+  "deterministic_invalidation_injection": {
+    "target_iteration": 0,
+    "after_observations": 4,
+    "fired": true,
+    "fire_sequence": 5
+  },
+  "policy_invalidation_contract": "every dequeued exact observation is evaluated; changed or unknown configured ROI cancels existing cover and discards the dependent model action; it never grants input authority or proves success",
+  "policy_invalidations": 1,
+  "model_actions_discarded": 1,
+  "cover_programs": 2,
+  "cover_renewals": 0,
+  "cover_renewal_gaps_ms": [],
+  "model_authored_cover_policies": 1,
+  "model_wall_seconds": 8.921985508
+}

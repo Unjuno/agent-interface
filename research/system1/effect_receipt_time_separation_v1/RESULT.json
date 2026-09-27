@@ -1,0 +1,48 @@
+{
+  "audit": {
+    "decision": "PASS_EFFECT_RECEIPT_TIME_SEPARATION_SCOPED",
+    "errors": [],
+    "rows": 36
+  },
+  "controls_all_rejected": true,
+  "controls_count": 12,
+  "decision": "PASS_EFFECT_RECEIPT_TIME_SEPARATION_SCOPED",
+  "formal_reruns": 0,
+  "late_commit_owner_policy": {
+    "commit_ms": [150.714,150.568,150.621],
+    "decisions": ["LATE","LATE","LATE"],
+    "effects": 3,
+    "receipt_ms": [171.024,170.991,170.949]
+  },
+  "on_time_late_receipt": {
+    "owner_commit_policy": {
+      "commit_ms": [60.656,60.66,60.718],
+      "decisions": ["ON_TIME","ON_TIME","ON_TIME"],
+      "effects": 3,
+      "receipt_ms": [171.098,170.954,171.032]
+    },
+    "receipt_policy": {
+      "commit_ms": [60.546,60.59,60.616],
+      "decisions": ["LATE","LATE","LATE"],
+      "effects": 3,
+      "receipt_ms": [170.87,170.912,170.924]
+    }
+  },
+  "post_freeze_tuning": 0,
+  "replacements": 0,
+  "rows": 36,
+  "source_unchanged": {
+    "ENVIRONMENT.json": true,
+    "PLAN.md": true,
+    "audit.py": true,
+    "controls.py": true,
+    "owner.py": true,
+    "run.py": true
+  },
+  "unverified_on_time_late_receipt": {
+    "commit_ms": [60.625,60.707,60.587],
+    "decisions": ["UNKNOWN","UNKNOWN","UNKNOWN"],
+    "effects": 3,
+    "receipt_ms": [171.038,171.009,170.883]
+  }
+}

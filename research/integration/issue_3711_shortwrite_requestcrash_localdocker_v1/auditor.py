@@ -1,0 +1,30 @@
+"""Independent raw-file auditor; intentionally does not import runner.py."""
+import hashlib,json,pathlib,sys
+source=pathlib.Path(sys.argv[1])
+result_dir=pathlib.Path(sys.argv[2])
+fixture_bytes=(source/"fixture.json").read_bytes()
+fixture=json.loads(fixture_bytes)
+result=json.loads((result_dir/"RESULT.json").read_bytes())
+errors=[]
+def require(ok,code):
+    if not ok: errors.append(code)
+require(result.get("allocation")==fixture["allocation"],"allocation_mismatch")
+require(result.get("fixture_sha256")==hashlib.sha256(fixture_bytes).hexdigest(),"fixture_hash_mismatch")
+c=result.get("cases",{})
+s=c.get("short_write",{})
+require(s.get("delivery_state")=="delivery_incomplete","short_state_not_incomplete")
+require(s.get("accepted_bytes")==fixture["short_write_limit"],"short_count_mismatch")
+require(s.get("accepted_bytes")<s.get("expected_bytes",0),"short_write_not_strict")
+require(s.get("recovered_report_exact") is True,"report_not_recoverable")
+require(s.get("recovered_report_sha256")==s.get("expected_sha256"),"report_hash_mismatch")
+require(s.get("invocation_count")==1,"short_invocation_count")
+cr=c.get("request_only_crash",{})
+require(cr.get("child_returncode")==fixture["exit_code"],"crash_exit_mismatch")
+require(cr.get("request_present") is True and cr.get("request_exact") is True,"request_not_exact")
+require(cr.get("report_present") is False,"unexpected_report")
+require(cr.get("recovery_state")=="unknown_or_incomplete","crash_state_not_unknown")
+require(cr.get("replayable") is False,"crash_replayable")
+require(cr.get("backend_invocation_count")==1,"crash_invocation_count")
+status="PASS_SYNTHETIC_SHORTWRITE_AND_UNKNOWN_RECOVERY" if not errors else "FAIL_AUDIT"
+print(json.dumps({"status":status,"errors":errors},sort_keys=True))
+sys.exit(0 if not errors else 1)

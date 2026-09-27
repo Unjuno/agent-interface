@@ -1,0 +1,16 @@
+{
+  "pass": true,
+  "errors": [],
+  "flock_rows": 2,
+  "lease_rows": 1,
+  "corruptions": [
+    {"name": "stale-class", "rejected": true},
+    {"name": "path-inode", "rejected": true},
+    {"name": "lease-errno", "rejected": true},
+    {"name": "release", "rejected": true}
+  ],
+  "decision": {
+    "flock": "PERMISSIVE_STALE",
+    "file_lease": "UNAVAILABLE_POST_PRECHECK"
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "arms": [
+    "volatile_pending",
+    "sqlite_pending"
+  ],
+  "construction_excluded": true,
+  "consumer_capacity": 3,
+  "consumer_equivalence": "2/2 exact status+state traces match #680 predecessor",
+  "files": {
+    "audit.py": {
+      "bytes": 2989,
+      "git_blob": "1c8d748ed5a0ce4e76ad69706ce17c892ba72e13",
+      "sha256": "a266acaa5322401293743a6d49c42c3264a2d13daeeb4744f5601f4b7ee26b61"
+    },
+    "construction_audit.json": {
+      "bytes": 148,
+      "git_blob": "e7be2f1d0553298dbb600e60c62190312f53b2a9",
+      "sha256": "c104a067c683829112d1281c4c905ffe37366797c91e2688acedca06f245d399"
+    },
+    "construction_consumer_equivalence.json": {
+      "bytes": 612,
+      "git_blob": "74524d916f157a7733a61c7fd42ed73dde4eafc2",
+      "sha256": "14655d47ddb92368a79d5412a10391b32fdccc09fa31d087f0554df6eaf6459e"
+    },
+    "construction_mutations.txt": {
+      "bytes": 214,
+      "git_blob": "f79abe94dd662b31e835f64aa4b448d497ed960e",
+      "sha256": "cca5b5f13adb84b1c44a3cb660f77b0baf1afeb109ddf397d5c585dbb5dbe29b"
+    },
+    "construction_tests.txt": {
+      "bytes": 398,
+      "git_blob": "ba670a3f271a5ccb672adf70939a53db0e483162",
+      "sha256": "931bca9b073fce59656b25bac9ca4e5953d48967228927d7e01f36b6c97629c8"
+    },
+    "consumer.py": {
+      "bytes": 4184,
+      "git_blob": "0ea59538a2a3df2d2aa60392dd8770adfdbeba8b",
+      "sha256": "0828e5736e8a2a3e427b299bc275fded8e7d85a2774653ad78b6e7f86db5d11f"
+    },
+    "environment.json": {
+      "bytes": 223,
+      "git_blob": "22fc8fb97b98502c4f9ed47714e7b558804ec7cf",
+      "sha256": "70d7ef5f84a3167de949ecafbf20f42f61a67ae25baface8f7db9a87a7ad4a1f"
+    },
+    "plan.json": {
+      "bytes": 1897,
+      "git_blob": "48e55436d572ec1ccd97f2453aaddfb1743120b9",
+      "sha256": "98ac2855f97458975dd1b1a6de21d66c4181cc4a9fdeac7020dfb82a42d35206"
+    },
+    "prefreeze_tests.txt": {
+      "bytes": 97,
+      "git_blob": "bd87629f180681e8ac8a73bca553552a8bb82dc7",
+      "sha256": "75057cfcea28c612b1207c3b4ae99c746bdf2e9a7d0bbe97b8bec7301e2a2b74"
+    },
+    "prereg.json": {
+      "bytes": 245,
+      "git_blob": "3ab36f7c8279dad2e6027104195ed5756047721d",
+      "sha256": "69df2c0acca85728b586ec64d3b547d3eb7f7f7c6defdc3e4f403b64391828ce"
+    },
+    "run_experiment.py": {
+      "bytes": 4636,
+      "git_blob": "0f0a872a95a7054361972c33ced72abec494cd5b",
+      "sha256": "532752b8a107587f0faf9dcfbcfbd03291cd4c7e817ecefc419fc4842ccb954d"
+    },
+    "store.py": {
+      "bytes": 1930,
+      "git_blob": "faef3fbdae1fc38bca4188965d01283760fbed99",
+      "sha256": "1c0dfadb261f0752705f372b90822114ef6a36cfd2ab4f7ba3460fd5653c8499"
+    },
+    "test_audit_mutations.py": {
+      "bytes": 1698,
+      "git_blob": "dd0ddff741f686c69ff0996c758461040a587bdb",
+      "sha256": "ea1bd2a18d7b040284a011fdae565c7c86f154ef03873d6750304507d7a2b1a7"
+    },
+    "test_contract.py": {
+      "bytes": 1358,
+      "git_blob": "e4cf21182ac7c24b15e06a1e83c916867c3b4852",
+      "sha256": "185084083933e06626aa145e4bd14266a1b2d07e51659e3d48f4a3ea4bafced7"
+    },
+    "worker.py": {
+      "bytes": 1396,
+      "git_blob": "3b7baf47f7822b354d0a424d838aa73489de6a88",
+      "sha256": "8b3ed24a9ab46eff43a28de57a3e193b7f107d504f932a277f2a098f654e20c1"
+    }
+  },
+  "formal_executed": 0,
+  "formal_invocations_allowed": 1,
+  "formal_rows": 18,
+  "issue": 708,
+  "prefreeze_tests": "PASS",
+  "producer_pending_capacity_per_session": 1,
+  "publication_base": "65c096610dbcbe63c7a3e649af2665954a1bfb12",
+  "repetitions": 3,
+  "same_id_reruns": 0,
+  "scenarios": [
+    "kill_after_pending_commit",
+    "kill_before_pending_commit",
+    "clear_then_restart"
+  ],
+  "schema": "critical-event-producer-restart-freeze-v1",
+  "source_bundle": {
+    "members": 16,
+    "tar_bytes": 40960,
+    "tar_sha256": "3ec904de0f6b9a020b8249fe92f931b1b80dc76f97b1129190c0b2ff270bf7ff",
+    "xz_bytes": 7040,
+    "xz_git_blob": "278726407c619c6ae64abcc93ce5b95b82e92972",
+    "xz_sha256": "0d2a5664d3a73aecc331ffd52e689fcf46f4113ebb15c0f476d20d0dcac8c304"
+  },
+  "source_manifest_git_blob": "64df6de6168101194331bc4533ea1a3ccf3c0c6e",
+  "source_manifest_sha256": "9f88501e32cca28a78c92262b74a4249771e20d9f0cfeedfa52b5cbfbda0a0ee",
+  "stopping_rule": "one 18-row formal invocation; no retry/replacement/tuning",
+  "task": "CRITICAL-EVENT-PRODUCER-RESTART-20260917-001"
+}

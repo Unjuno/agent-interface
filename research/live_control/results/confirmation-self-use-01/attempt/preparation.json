@@ -1,0 +1,46 @@
+{
+  "command": {
+    "op": "submit",
+    "id": "attempt",
+    "expected_sequence": 9,
+    "valid_until_ns": 77316733484,
+    "decision_evidence": {
+      "delivery_id": "delivery:14",
+      "observation_sequence": 9,
+      "producer": "assistant"
+    },
+    "steps": [
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "a"
+      },
+      {
+        "op": "text",
+        "text": "t991029"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 150,
+        "timeout_ms": 1500
+      }
+    ]
+  },
+  "image": {
+    "status": "image",
+    "sequence": 9,
+    "capture_ns": 47274431092,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/confirmation-self-use-01/005.png",
+    "relative_path": "005.png",
+    "sha256": "bdeeda6b1d639e00dd5dafc8b2dda1160dc9d94f89467908c391c931b2de07c4",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "source_clock_ns": 47316733484,
+  "lease_ms": 30000,
+  "authority": "none; historical deadline, viewing and runtime admission remain required"
+}

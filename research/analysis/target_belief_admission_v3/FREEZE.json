@@ -1,0 +1,25 @@
+{
+  "allocation": "target-belief-admission-4150-20260927-03",
+  "base_main": "91b5143989403754b360738c445f72b68b673718",
+  "predecessors": [
+    {"allocation": "target-belief-admission-4150-20260923-01", "disposition": "STOP_LOCAL_SOURCE_MATERIALIZATION", "scientific_rows": 0},
+    {"allocation": "target-belief-admission-4150-20260923-02", "disposition": "STOP_SOURCE_INTEGRITY", "scientific_rows": 0}
+  ],
+  "repair_factor": "fresh allocation identity and immutable complete source capsule; scientific mechanics unchanged",
+  "formal_invocations_before_freeze": 0,
+  "formal_rows": 64,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning_after_freeze": 0,
+  "container": {"engine": "OrbStack Docker", "platform": "linux/amd64", "image": "python:3.12-slim", "image_id": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f", "network": "none", "source_mount": "read-only"},
+  "source_sha256": {
+    "CONSTRUCTION.md": "76b44e7eebf9684b6ed843300a8c62aa9a340d2193b9fa0354cc10f17a52d1fe",
+    "ENVIRONMENT.json": "5d232537c06436f8eeef17fbe9e0c37f1ee1f37a18cf8206402aeedaf3fb7eb6",
+    "PLAN.md": "126bee4f342b1a4f43e0d0f5cbd8d3e0193168e9fab0ceff59f8dd7be0d50809",
+    "SCHEDULE.json": "7db236c364cf56bdc964116a293aa50edb560537cd4604e657d122363789a03c",
+    "audit.py": "47ed66b5b5d3ae0d08453fe5f084b554e5f8311b35b16694a62079666898a9dd",
+    "controls.py": "e16c585ddd508cb85c1f49a07059306a8b564dbabcb166991d05ffe2b9a1eee6",
+    "experiment.py": "3d117395dba99ec483b7df36b06dc9e9483c8b2881a83f38a1f6a7668c173314",
+    "test_contract.py": "60436833f13b78d91fb8c99025b0f8673d56ea81d15fe5d4ee661c3444e4aea6"
+  }
+}

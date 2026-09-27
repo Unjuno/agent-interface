@@ -1,0 +1,19 @@
+{
+  "decision": "PASS_O3_MULTI_APP_NEGATIVE_MATRIX_SCOPED",
+  "display": ":148",
+  "model_calls": 0,
+  "network_calls": 0,
+  "windows": {"app_a": "4194307", "app_b": "2097155"},
+  "cases": ["complete_current", "stale", "partial", "wrong_region", "ambiguous", "forged_xid"],
+  "summary": {
+    "complete_current": "admitted on both apps",
+    "stale": "denied on both apps: stale_freshness",
+    "partial": "denied on both apps: incomplete_coverage",
+    "wrong_region": "denied on both apps: region_mismatch",
+    "ambiguous": "denied on both apps: ambiguous",
+    "forged_xid": "denied on both apps: source_window_mismatch"
+  },
+  "unit_tests": "4 passed in Docker",
+  "image": "agent-interface-2994:20260920",
+  "image_digest": "sha256:167fd6184cac8729ccfea407938943384d64fe2999e7319bed3587638fa94b7c"
+}

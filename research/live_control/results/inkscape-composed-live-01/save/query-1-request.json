@@ -1,0 +1,28 @@
+{
+  "after": 93,
+  "events": [
+    "input_stopped",
+    "terminal"
+  ],
+  "timeout": 15,
+  "action_id": "save",
+  "request_id": "program-d0aeabbbab2b4a75840a9650c5e90b84",
+  "command": {
+    "op": "submit",
+    "id": "save",
+    "steps": [
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "s"
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 80,
+        "timeout_ms": 500
+      }
+    ],
+    "expected_sequence": 22,
+    "valid_until_ns": 149433885159
+  }
+}

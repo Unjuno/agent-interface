@@ -1,0 +1,39 @@
+{
+  "schema": "issue4603_independent_readonly_audit_v1",
+  "audit": {
+    "archive_members": 19,
+    "candidate_specialist_rows": 52,
+    "control24_lifecycle_rows": 24,
+    "control24_raw_sha256": "dbf74500b348c9a3503e0dd489bb04d9d00f5d6a47a0c9163d4cc615ea90bb31",
+    "corruption_controls_rejected": 13,
+    "execution_paths": ["GENERAL", "GENERAL_SHADOW", "SPECIALIST_ACTIVE", "SPECIALIST_UNGUARDED"],
+    "formal_case_ids": 60,
+    "formal_rows": 462,
+    "frozen_sources_verified": 8,
+    "independent_mutation_controls_rejected": 13,
+    "no_formal_runner_executed": true,
+    "repository_root_cli_mode_verified": true,
+    "policy_schedule_repetitions": 60,
+    "raw_sha256": "711f67b0e615ec6b4fc58dddedd490724369b6476ff6036f52e34536e72114e9",
+    "stable_active_candidate_general_ratio": 0.25,
+    "status": "PASS_READONLY_PUBLICATION_RECONCILIATION",
+    "unguarded_diagnostic_semantic_mismatches": 4,
+    "xz_bytes": 10640,
+    "xz_sha256": "a35457c72f7dffed7351e2f6b9590744e3ab323418a462f413d7ea4f85a6711d"
+  },
+  "container": {
+    "engine": "Docker Desktop 28.5.1",
+    "image": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "network": "none",
+    "root_filesystem": "read-only",
+    "source_mount": "read-only",
+    "writable_tmpfs": "/tmp size=8m"
+  },
+  "intake": {
+    "main_sha": "d6dacd3507ea23a7c5aafe82788c0a9d8b452834",
+    "delivery_base_main_sha": "e786135bf5576f308c7d0185cfb484b9970bf6de",
+    "source_pr": 4293,
+    "source_pr_head": "393c4115add5e602ed279388a93dad4094daa687",
+    "source_pr_base": "14cfdf1a5f31138b308f98fd0e80fa75e887e65d"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "allocation":"needle-intent-distill-3458-pilot-04-multiseed",
+  "outcome":"PASS_HYBRID_MARGIN_SYNTHETIC_3_SEED_SCOPED",
+  "source_sha256":"58437918FB96BE6D31D25C46E9B70A597BCBEC58C22835A953E5160AC1C46D13",
+  "environment":{"torch":"2.5.1+cu121","inference":"host CPU","gpu":"RTX 3080 Laptop GPU","docker":"Docker Desktop Linux-engine daemon unavailable"},
+  "common_parameters":{"seeds":[3461,3462,3463],"train_per_class":2048,"test_per_class":1024,"boundary_cases_per_seed":1536,"model":"6-16-16-3 MLP","steps":700,"state_bytes":4040},
+  "runs":[
+    {"seed":3461,"accepted":2635,"accepted_accuracy":0.9981024861,"coverage":0.8577473958,"coverage_by_class":{"CONTINUE":0.9140625,"CORRECT":0.765625,"WATCH":0.8935546875},"per_class_recall":{"CONTINUE":1.0,"CORRECT":1.0,"WATCH":0.9945355058},"false_CORRECT":4,"boundary_yield":1536,"boundary_total":1536,"train_ms":1608.5409,"cpu_latency_ms":{"p50":0.0383,"p95":0.0891,"p99":0.1867}},
+    {"seed":3462,"accepted":2624,"accepted_accuracy":0.9988567233,"coverage":0.8541666667,"coverage_by_class":{"CONTINUE":0.90625,"CORRECT":0.755859375,"WATCH":0.900390625},"per_class_recall":{"CONTINUE":1.0,"CORRECT":0.9961240292,"WATCH":1.0},"false_CORRECT":0,"boundary_yield":1536,"boundary_total":1536,"train_ms":983.136,"cpu_latency_ms":{"p50":0.05925,"p95":0.147,"p99":0.1926}},
+    {"seed":3463,"accepted":2644,"accepted_accuracy":0.9996218085,"coverage":0.8606770833,"coverage_by_class":{"CONTINUE":0.8916015625,"CORRECT":0.775390625,"WATCH":0.9150390625},"per_class_recall":{"CONTINUE":1.0,"CORRECT":1.0,"WATCH":0.9989327788},"false_CORRECT":0,"boundary_yield":1536,"boundary_total":1536,"train_ms":917.8307,"cpu_latency_ms":{"p50":0.0386,"p95":0.0563,"p99":0.0902}}
+  ],
+  "scope_limits":["three seeds, one synthetic fixed teacher","designed boundaries only","no Astra labels, visual/GUI evidence, task effects or action authority","host execution, not container verification"]
+}

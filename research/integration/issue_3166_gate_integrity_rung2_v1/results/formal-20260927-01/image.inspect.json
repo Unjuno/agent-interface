@@ -1,0 +1,54 @@
+[
+    {
+        "Id": "sha256:167fd6184cac8729ccfea407938943384d64fe2999e7319bed3587638fa94b7c",
+        "RepoTags": [
+            "agent-interface-2994:20260920"
+        ],
+        "RepoDigests": [
+            "agent-interface-2994@sha256:167fd6184cac8729ccfea407938943384d64fe2999e7319bed3587638fa94b7c"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-09-20T04:32:11.749929044+09:00",
+        "Config": {
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "PYTHONUNBUFFERED=1"
+            ],
+            "Entrypoint": [
+                "python3"
+            ],
+            "WorkingDir": "/repo",
+            "Labels": {
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "Architecture": "arm64",
+        "Os": "linux",
+        "Size": 158474574,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:646eea22414270d74b0c9e9d6d3b9550701ae62e658a099825d4d15045a3630b",
+                "sha256:532718b08dd71412e680fb247bf6d2683430248342de8389c28b5fb0406b3035",
+                "sha256:833132b77c5c297dd029014b3402a1a70eebe0a502fa8755b32496f5f2810bad"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-09-19T19:32:20.961531409Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:167fd6184cac8729ccfea407938943384d64fe2999e7319bed3587638fa94b7c",
+            "size": 855
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "pi8d9c3vscmp6fez609jzh246",
+                    "CreatedAt": "2026-09-20T04:32:22.956460365+09:00"
+                }
+            ]
+        }
+    }
+]

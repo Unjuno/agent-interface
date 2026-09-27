@@ -1,0 +1,34 @@
+{
+  "controls": [
+    {
+      "name": "recipient_add_B",
+      "rejected": true,
+      "returncode": 1,
+      "stderr": "",
+      "stdout": "{\"counts\": {\"grantor_revoke/B_change\": 3, \"grantor_revoke/stable\": 3, \"recipient_only/B_change\": 3, \"recipient_only/stable\": 3}, \"decision\": \"FAIL_INTEGRITY\", \"errors\": [[\"n01\", \"recipient\"]]}"
+    },
+    {
+      "name": "grantor_cap_usable",
+      "rejected": true,
+      "returncode": 1,
+      "stderr": "",
+      "stdout": "{\"counts\": {\"grantor_revoke/B_change\": 3, \"grantor_revoke/stable\": 3, \"recipient_only/B_change\": 3, \"recipient_only/stable\": 3}, \"decision\": \"FAIL_INTEGRITY\", \"errors\": [[\"n02\", \"grantor\"]]}"
+    },
+    {
+      "name": "grantor_stale_commit",
+      "rejected": true,
+      "returncode": 1,
+      "stderr": "",
+      "stdout": "{\"counts\": {\"grantor_revoke/B_change\": 3, \"grantor_revoke/stable\": 3, \"recipient_only/B_change\": 3, \"recipient_only/stable\": 3}, \"decision\": \"FAIL_INTEGRITY\", \"errors\": [[\"n04\", \"effect\"]]}"
+    },
+    {
+      "name": "same_pid_false",
+      "rejected": true,
+      "returncode": 1,
+      "stderr": "",
+      "stdout": "{\"counts\": {\"grantor_revoke/B_change\": 3, \"grantor_revoke/stable\": 3, \"recipient_only/B_change\": 3, \"recipient_only/stable\": 3}, \"decision\": \"FAIL_INTEGRITY\", \"errors\": [[\"n05\", \"pid\"]]}"
+    }
+  ],
+  "rejected": 4,
+  "total": 4
+}

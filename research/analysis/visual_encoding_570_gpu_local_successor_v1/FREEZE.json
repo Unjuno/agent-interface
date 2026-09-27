@@ -1,0 +1,47 @@
+{
+  "schema": "visual-encoding-570-local-r4-source-freeze-v1",
+  "repository": "Unjuno/agent-interface",
+  "issue": 4728,
+  "allocation": "visual-ruler-qwen25vl-570-r4-local-20260927-01",
+  "branch": "research/visual-ruler-qwen25vl-570-r4-local-20260927",
+  "base_commit": "eaafadd856457d1c362cf08ddc153708d090eb91",
+  "repo_path": "research/analysis/visual_encoding_570_gpu_local_successor_v1/",
+  "ollama_image_id": "sha256:8262851b2846b87c649eddf3e76beb270c52f4d1bc94559f47efde16b0841551",
+  "ollama_platform": "linux/amd64",
+  "ollama_version": "0.34.4",
+  "helper_image_id": "sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261",
+  "helper_platform": "linux/amd64",
+  "helper_runtime": "PyTorch 2.5.1+cu121, Pillow 10.2.0, requests 2.32.3; no GPU device request",
+  "model": {
+    "name": "qwen2.5vl:3b",
+    "digest": "fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1",
+    "quantization": "Q4_K_M",
+    "layer_sha256": "e9758e589d443f653821b7be9bb9092c1bf7434522b70ec6e83591b1320fdb4d",
+    "layer_bytes": 3200614720
+  },
+  "font": {
+    "family": "Arial",
+    "sha256": "b3658eadae55e682b5f69eb64c439c1ecc8f196c0bb8d4756d145d13bc86476a",
+    "delivery": "local read-only mount only; not redistributed"
+  },
+  "network": "unique Docker internal network; no published port or egress",
+  "formal_budget": {"construction_requests": 1, "formal_requests": 8, "retries": 0, "seed_replacements": 0},
+  "source_sha256": {
+    "prepare.py": "af84544bd73b19e8c59061da425f8f8da005f14514de12879845683e2861a705",
+    "model_runner.py": "884f064f48de138e6edf11916d7e5ba37a7b9729c5b392c5a5c10434b2f02ad4",
+    "sampler.py": "2ff88f3e644a4627f535f85900a0ffa2692b37a4394b594101c543aa6673ca4d",
+    "launch.py": "d0aa21469b9ef69e9c84bee839acb8794a0f71a27d8f9489dcb4ef843b111f3d",
+    "audit.py": "b17d0187b246fbce7f99799a4f25b4849663be9d837a69404c83c0dbf6da7d58",
+    "test_audit.py": "aab5764e3bd83a37820b852df76ef62f36a326ae80d5cc52e7ea7c434f744be7",
+    "bundle_inputs.py": "3a3bd3a2d5427e2376eab1586b3aab9d5d52b6071382eb2ad0bf920dc3309f4f"
+  },
+  "decision": {
+    "pass": "all eight exact input bindings; all eight request intervals overlap a sample with Ollama GPU placement and VRAM above the empty-server baseline; at least 5/6 positive IoU>=0.5; 2/2 absent abstentions; zero independent audit errors",
+    "confirmed_gpu_answer_gate_miss": "FAIL_EASY_LAYOUT_CAPABILITY_NOT_ESTABLISHED",
+    "missing_gpu": "STOP_GPU_OFFLOAD_UNAVAILABLE",
+    "integrity_or_audit_problem": "HOLD"
+  },
+  "formal_model_requests_at_freeze": 0,
+  "source_changes_after_freeze": "forbidden"
+}
+

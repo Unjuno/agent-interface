@@ -1,0 +1,165 @@
+{
+  "allocation_id": "issue3657-launcher-reap-order-formal-01",
+  "audit_unit_tests": {
+    "returncode": 0,
+    "stderr": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.000s\n\nOK\n",
+    "stdout": ""
+  },
+  "cleanup": {
+    "launcher_reaped": true,
+    "launcher_returncode": 255,
+    "x_socket_absent": true,
+    "xvfb_reaped": true,
+    "xvfb_returncode": 0
+  },
+  "decision": "PASS_PRIVATE_PROCESS_GROUP_CLEANUP_SCOPED",
+  "display": ":143",
+  "group_members_before": [
+    {
+      "cmdline": "/usr/lib/libreoffice/program/oosplash --norestore --nofirststartwizard -env:UserInstallation=file:///tmp/issue3657-reap-order-e0tqk6md/lo --calc",
+      "comm": "oosplash",
+      "pgid": 10,
+      "pid": 10,
+      "ppid": 6,
+      "sid": 10,
+      "start_ticks": "182955",
+      "state": "S"
+    },
+    {
+      "cmdline": "/usr/lib/libreoffice/program/soffice.bin -env:UserInstallation=file:///tmp/issue3657-reap-order-e0tqk6md/lo --norestore --nofirststartwizard --calc --splash-pipe=5",
+      "comm": "soffice.bin",
+      "pgid": 10,
+      "pid": 35,
+      "ppid": 10,
+      "sid": 10,
+      "start_ticks": "182970",
+      "state": "S"
+    }
+  ],
+  "image_id_asserted": "sha256:e6ced3789130dae21c7b42b7b9d25cd590a271a77910e16c01d2edf87e44cee6",
+  "image_platform_expected": "linux/arm64",
+  "launch": {
+    "argv": [
+      "libreoffice",
+      "--norestore",
+      "--nofirststartwizard",
+      "-env:UserInstallation=file:///tmp/issue3657-reap-order-e0tqk6md/lo",
+      "--calc"
+    ],
+    "pgid_expected": 10,
+    "pid": 10,
+    "poll_after_group_signal": 255,
+    "poll_before_termination": null,
+    "reap_during_protocol": true,
+    "reap_returncode": 255,
+    "reaped": true,
+    "sid_expected": 10,
+    "start": {
+      "cmdline": "/bin/sh /usr/bin/libreoffice --norestore --nofirststartwizard -env:UserInstallation=file:///tmp/issue3657-reap-order-e0tqk6md/lo --calc",
+      "comm": "libreoffice",
+      "pgid": 10,
+      "pid": 10,
+      "ppid": 6,
+      "sid": 10,
+      "start_ticks": "182955",
+      "state": "R"
+    }
+  },
+  "operations": {
+    "focus": 0,
+    "geometry": 0,
+    "input": 0,
+    "model": 0,
+    "network": 0
+  },
+  "raw_sha256": "e3d6dcec0fd9f0d1bddae7e8b0c86abb284ff09200cf5f86349db21b917a2068",
+  "samples_after": [
+    {
+      "elapsed_s": 0.0649,
+      "group_members": [],
+      "owner_same_identity_alive": false,
+      "xid_visible": false
+    }
+  ],
+  "sentinel": {
+    "alive_after_group_signal": true,
+    "alive_before": true,
+    "identity_before": {
+      "cmdline": "/usr/bin/python3 -c import time; time.sleep(90)",
+      "comm": "python3",
+      "pgid": 9,
+      "pid": 9,
+      "ppid": 6,
+      "sid": 9,
+      "start_ticks": "182955",
+      "state": "S"
+    },
+    "launch": {
+      "cmdline": "/usr/bin/python3 -c import time; time.sleep(90)",
+      "comm": "python3",
+      "pgid": 9,
+      "pid": 9,
+      "ppid": 6,
+      "sid": 9,
+      "start_ticks": "182955",
+      "state": "R"
+    },
+    "pre_cleanup_alive": true,
+    "reaped": true,
+    "returncode": -15
+  },
+  "source_base_commit": "f46f9f3db778443764581d5e7c522d5029fdf7a2",
+  "termination": {
+    "attempts": 1,
+    "os_killpg_returned": true,
+    "sent_at_monotonic": 1830.179808774,
+    "signal": "SIGTERM",
+    "target_pgid": 10
+  },
+  "window_candidates_before": [
+    {
+      "owner_pid": 35,
+      "probe_returncodes": [
+        0
+      ],
+      "title": "Untitled 1 - LibreOffice Calc",
+      "xid": 2097957,
+      "xprop": "_NET_WM_PID(CARDINAL) = 35\nWM_CLASS(STRING) = \"libreoffice\", \"libreoffice-calc\""
+    }
+  ],
+  "window_owner": {
+    "owner_pid": 35,
+    "probe_returncodes": [
+      0
+    ],
+    "proc": {
+      "cmdline": "/usr/lib/libreoffice/program/soffice.bin -env:UserInstallation=file:///tmp/issue3657-reap-order-e0tqk6md/lo --norestore --nofirststartwizard --calc --splash-pipe=5",
+      "comm": "soffice.bin",
+      "pgid": 10,
+      "pid": 35,
+      "ppid": 10,
+      "sid": 10,
+      "start_ticks": "182970",
+      "state": "S"
+    },
+    "title": "Untitled 1 - LibreOffice Calc",
+    "xid": 2097957,
+    "xprop": "_NET_WM_PID(CARDINAL) = 35\nWM_CLASS(STRING) = \"libreoffice\", \"libreoffice-calc\""
+  },
+  "xauth_add": {
+    "display_number": "143",
+    "host_display_mounted": false,
+    "method": "Xvfb -ac on private container display",
+    "returncode": 0
+  },
+  "xvfb_start": {
+    "cmdline": "",
+    "comm": "Xvfb",
+    "pgid": 8,
+    "pid": 8,
+    "ppid": 6,
+    "sid": 8,
+    "start_ticks": "182950",
+    "state": "R"
+  }
+}
