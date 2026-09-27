@@ -203,6 +203,18 @@ def audit(root):
             }
         for loader_name in ("load1", "load2"):
             loaded = load_json(directory / loader_name / "loader.json")
+            corruption = load_json(directory / loader_name / "corruption_control.json")
+            corrupted_path = directory / loader_name / "corrupted_skill.json"
+            original_raw = package_path.read_bytes()
+            corrupted_raw = corrupted_path.read_bytes()
+            changed = [i for i, (a, b) in enumerate(zip(original_raw, corrupted_raw)) if a != b]
+            if (corruption.get("control") != "first_byte_flip" or changed != [0]
+                    or corruption.get("byte_index") != 0
+                    or corruption.get("changed_byte_count") != 1
+                    or corruption.get("original_sha256") != package_sha
+                    or corruption.get("corrupted_sha256") != hashlib.sha256(corrupted_raw).hexdigest()
+                    or corruption.get("rejected") is not True):
+                errors.append(f"{seed}:{loader_name}:corruption_control")
             if loaded.get("accepted") is not True:
                 errors.append(f"{seed}:{loader_name}:load_rejected")
             if loaded.get("artifact_sha256") != package_sha:
