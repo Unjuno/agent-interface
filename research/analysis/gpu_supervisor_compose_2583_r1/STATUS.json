@@ -1,0 +1,38 @@
+{
+  "issue": 4972,
+  "predecessor": 2583,
+  "pr": 4973,
+  "status": "RETAIN_SCOPED_EVIDENCE",
+  "integration_status": "HOLD_FOR_BUNDLE_SELECTION",
+  "branch": "research/gpu-supervisor-compose-2583-r1",
+  "path": "research/analysis/gpu_supervisor_compose_2583_r1/",
+  "environment": {
+    "image": "pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime",
+    "device": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "torch": "2.5.1+cu121",
+    "cuda_runtime": "12.1"
+  },
+  "independent_evidence": {
+    "fresh_oracle_rows": 160,
+    "fresh_oracle_agreement_gpu": 160,
+    "fresh_oracle_agreement_cpu": 160,
+    "blocked_rows": 96,
+    "blocked_oracle_agreement_gpu": 96,
+    "blocked_oracle_agreement_cpu": 96,
+    "cpu_cuda_label_agreement": 256,
+    "mutation_bypass_count": 0,
+    "authority_grants": 0,
+    "input_grants": 0,
+    "task_success_claims": 0
+  },
+  "not_established": [
+    "real GUI/application correctness",
+    "task success rate",
+    "model-boundary or token savings",
+    "end-to-end product latency",
+    "cross-host reproducibility",
+    "production qualification"
+  ],
+  "integration_gate": "Require a new #57-compatible preregistration with cold/warm/invalidation/repair, all-attempt accounting, GPU-resident/transfer provenance, and explicit benefit thresholds.",
+  "historical_integrity": "Earlier self-derived-oracle artifacts remain immutable and are not relabeled as independent evidence."
+}
