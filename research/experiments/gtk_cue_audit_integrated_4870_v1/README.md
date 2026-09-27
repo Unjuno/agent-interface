@@ -1,0 +1,3 @@
+# Integrated raw-only audit — Issue #4870
+
+Allocation `gtk-cue-audit-integrated-4870-20260927-01`. Distinct successor branch/path, preserving #4862/#4866/#4867 history. This experiment integrates exact weight-array digest binding and synthetic corruption controls into the actual raw auditor. Freeze tests and auditor before touching #4862 formal result/NPZ inputs. One offline CPU-only audit is permitted; zero model calls, fitting, predictions or recaptures.
