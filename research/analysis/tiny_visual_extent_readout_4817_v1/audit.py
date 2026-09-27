@@ -147,4 +147,3 @@ if __name__ == "__main__":
     if len(sys.argv) != 7:
         raise SystemExit("usage: audit.py RAW INPUTS WEIGHTS INITIAL_WEIGHTS SOURCE_DIR AUDIT_OUT")
     raise SystemExit(main(*sys.argv[1:]))
-
