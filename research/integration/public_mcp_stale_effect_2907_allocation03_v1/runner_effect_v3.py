@@ -1,6 +1,10 @@
 """Allocation 03 adapter; parent runner remains immutable and imported read-only."""
 import runner_effect_v2 as parent
 
+MARKER = "agent-mcp-effect-2907-20260927-03"
+parent.MARKER = MARKER
+parent.base.MARKER = MARKER
+
 
 async def execute_mcp_v3(targets, html_path):
     trace = await parent.execute_mcp(targets, html_path)
