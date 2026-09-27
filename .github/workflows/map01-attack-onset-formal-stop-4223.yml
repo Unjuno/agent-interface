@@ -1,0 +1,38 @@
+name: MAP01 attack-onset formal stop evidence
+
+on:
+  pull_request:
+    paths:
+      - "research/doom/map01_attack_onset_phase_v1/**"
+      - ".github/workflows/map01-attack-onset-formal-stop-4223.yml"
+  push:
+    branches: [research/map01-attack-onset-phase-stop-4223-20260927]
+    paths:
+      - "research/doom/map01_attack_onset_phase_v1/**"
+      - ".github/workflows/map01-attack-onset-formal-stop-4223.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify-stop-evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13.5"
+      - name: Reconstruct and verify frozen source capsule
+        working-directory: research/doom/map01_attack_onset_phase_v1
+        run: |
+          python restore_source.py
+          sha256sum -c SHA256SUMS.source
+      - name: Verify retained STOP evidence only
+        run: python research/doom/map01_attack_onset_phase_v1/verify_formal_stop.py
+      - name: Compile immutable experiment and stop-audit sources
+        run: >-
+          python -m py_compile
+          research/doom/map01_attack_onset_phase_v1/source/*.py
+          research/doom/map01_attack_onset_phase_v1/verify_formal_stop.py
+      - name: Check patch whitespace
+        run: git diff --check
