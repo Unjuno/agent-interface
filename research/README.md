@@ -67,6 +67,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 - [`integration/`](integration/) — integration-focused experiments.
 - [`public_mcp_stale_effect_2907_allocation04_v1/`](integration/public_mcp_stale_effect_2907_allocation04_v1/REPORT.md) — Issue #2907 source-frozen local Docker stale-refusal/effect result and corrected read-only audit; remains a scoped component result, not the full multi-app integration gate.
 - [`public_mcp_controller_lineage_2907_construction01_v1/`](integration/public_mcp_controller_lineage_2907_construction01_v1/REPORT.md) — local Docker construction boundary: same caller-owned X11 runtime session across three apps; stale observation refused and neutral input released; not MCP-session fusion or the full #2907 integration gate.
+- [`public_mcp_binding_review_2907_construction01_v1/`](integration/public_mcp_binding_review_2907_construction01_v1/REPORT.md) — local Docker public-MCP Calc modal review/rebind; old binding refused with zero emissions, new binding neutral Escape/release; scoped construction only, not observation freshness or full #2907 integration.
 - [`measurement/`](measurement/) — scoped measurement and composition studies.
 - [`cross_domain/`](cross_domain/) — cross-domain transfer work.
 
