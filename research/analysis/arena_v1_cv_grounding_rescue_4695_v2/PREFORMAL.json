@@ -1,0 +1,128 @@
+{
+  "schema": "arena-v1-cv-grounding-rescue-v2-preformal-v1",
+  "issue": 4750,
+  "parent_issue": 4695,
+  "branch": "research/arena-v1-cv-grounding-rescue-4695-v2-20260927",
+  "branch_base_commit": "def11b4da6a27a57537aafa9812374c3fcd6aa39",
+  "frozen_at_utc": "2026-09-27T05:16:58Z",
+  "evidence_path": "research/analysis/arena_v1_cv_grounding_rescue_4695_v2/",
+  "helper_image": {
+    "id": "sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261",
+    "platform": "linux/amd64",
+    "runtime": "Python 3.12, Pillow 10.2.0",
+    "gpu": false,
+    "network": "none",
+    "pull": false
+  },
+  "candidate": {
+    "source": "refine.py byte-identical to v1 frozen source",
+    "sha256": "d243d5febfbbc8ceccf5f707caa81435cfb3cb8a1200c6f38bbbc770c56e3da1"
+  },
+  "prior_regression_cohort": {
+    "path": "research/analysis/arena_v1_cv_grounding_rescue_4695_v1/inputs/",
+    "manifest_sha256": "77a3fc3125c1ce4348f24f4ab4de73c99eb6e7312fd702ae2e9a8f36054ed30a",
+    "rows": 12,
+    "scored_runs": 0
+  },
+  "heldout_cohort": {
+    "path": "inputs/",
+    "manifest_sha256": "bf1410efd3f34963d95cfe6578a6fb272e760ec528b77083956c1965556b37ee",
+    "rows": 12,
+    "total_bytes": 41594,
+    "items": [
+      {
+        "file": "heldout-01-positive-min-area.png",
+        "bytes": 2988,
+        "sha256": "4b30f285d27ce7e53f12958eb88fb442aeab9cc77876fb9c5c3fc454adcbea07"
+      },
+      {
+        "file": "heldout-02-positive-low.png",
+        "bytes": 3096,
+        "sha256": "629676ea37c306f1d54f8c57ad3d860e1f9d941d20ce5e93e208488a43367e3b"
+      },
+      {
+        "file": "heldout-03-positive-mid.png",
+        "bytes": 3111,
+        "sha256": "59c6b99c4890896327828f7d37f8b5058e6e1095a6234d444be9fa7a86cfb3da"
+      },
+      {
+        "file": "heldout-04-positive-max.png",
+        "bytes": 3058,
+        "sha256": "8b169b8961fbde1abe6f751e3d5d0080145209f5bfc900a11134e8ff3c777d83"
+      },
+      {
+        "file": "heldout-05-absent.png",
+        "bytes": 2902,
+        "sha256": "8427b449f24944298246280971d80e88bd2f1926740cb707ab51d445dff21382"
+      },
+      {
+        "file": "heldout-06-circle.png",
+        "bytes": 3300,
+        "sha256": "5a258adeea5aa04b778825b83e8f8f6a14f98df35abca49d879fef2795b9171e"
+      },
+      {
+        "file": "heldout-07-diamond.png",
+        "bytes": 3778,
+        "sha256": "4fafa7253877ec8622e73d19bb5b648d5b0334b40704fd16bf8c175de8939ce0"
+      },
+      {
+        "file": "heldout-08-thin-rectangle.png",
+        "bytes": 2961,
+        "sha256": "af02c5dd433ba3225a09e3c835255e16afdc093e160602eaaa44a2265ac110fa"
+      },
+      {
+        "file": "heldout-09-ambiguous-two.png",
+        "bytes": 3036,
+        "sha256": "7405be2d4c09e7322763e2d57de520460691857d4bf8652e9a61ebbdc6d55e94"
+      },
+      {
+        "file": "heldout-10-ambiguous-three.png",
+        "bytes": 3058,
+        "sha256": "6c2777074685f88f373a1443f3679eabfa56c0429fce626387ea3130b4115480"
+      },
+      {
+        "file": "heldout-11-ambiguous-four.png",
+        "bytes": 3074,
+        "sha256": "91761c83a46eb2c0135a3783d1d1d80e0f5d8537a62448f189f854f4c4437a55"
+      },
+      {
+        "file": "heldout-12-ambiguous-edge.png",
+        "bytes": 2927,
+        "sha256": "3917b24eed80ca0f6226eb0b25b8ac6ebaa4aaa2f339708b00de8bb8ce0f3411"
+      },
+      {
+        "file": "manifest.json",
+        "bytes": 4305,
+        "sha256": "bf1410efd3f34963d95cfe6578a6fb272e760ec528b77083956c1965556b37ee"
+      }
+    ]
+  },
+  "source_sha256": {
+    "run_candidate.py": "62387cb9c5cde7a4150aeee31b3d82aa753020a635e22ba35df0e229462bc1c0",
+    "refine.py": "d243d5febfbbc8ceccf5f707caa81435cfb3cb8a1200c6f38bbbc770c56e3da1",
+    "PREREGISTRATION.md": "de8bcc824116d12d5e51e11d29ad89f23ff297a1f0829f79754a30179dcba2f8",
+    "corruption_test.py": "143d728c6ef80e6b1bf97cda71c0519c6542eaae3857c386f6c910150acfcde0",
+    "generate_heldout.py": "27dd2c4784a36de977d79f88d27f822700b5713a44be61bbca6462f002bbdec2",
+    "test_audit.py": "49a2995611713bb4d9c073335d89f3757bbd86eda3df58a0805e70e38e91a0f9",
+    "audit.py": "08fe9857d1a2145495405ad1c44f4d5d213d2747be939e0bc6650f143c6dfc07"
+  },
+  "decision_gates": {
+    "audit_repair": "12/12 prior rows satisfy corrected structure/output oracle",
+    "heldout_positive": "4/4 IoU >= 0.95",
+    "heldout_controls": "8/8 abstain",
+    "mutation_controls": "6/6 rejected",
+    "retained_source_point": "[920,640] outside 720x520 preserved"
+  },
+  "mutation_controls": [
+    "wrong_positive_box",
+    "guessed_absent",
+    "guessed_ambiguous",
+    "dropped_denominator",
+    "duplicate_identity",
+    "altered_input_binding"
+  ],
+  "formal_candidate_runs": 0,
+  "model_provider_requests": 0,
+  "scored_candidate_runs": 0,
+  "post_freeze_source_or_gate_changes": "forbidden"
+}
