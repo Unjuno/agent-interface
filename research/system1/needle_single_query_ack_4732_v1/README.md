@@ -4,7 +4,7 @@ Issue #4732; successor to #4714. This experiment tests whether the 512-row held-
 
 ## Current status
 
-Source and decision gates are published/frozen before the formal run. Construction-v2 on seed 6842783 passed independent audit but showed little latency separation: ack p95 15.590 ms inline-512 vs 15.121 ms one-query (ratio .970). Formal seeds 6842791/93/97 remain untouched at freeze. Construction output and volume are not formal evidence.
+The frozen formal trainer ran once on seeds 6842791/93/97; the frozen independent auditor ran once and stopped with `KeyError` due to a stale summary field. Disposition: `STOP_AUDITOR_IMPLEMENTATION_DEFECT`, with no scientific verdict and no retry. All six raw trainer/input JSON files and `formal/FORMAL_STOP.json` are retained below. The prior construction-v2 result remains separate and unchanged.
 
 ## Files
 
