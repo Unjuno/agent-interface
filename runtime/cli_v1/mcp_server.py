@@ -98,7 +98,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     server = FastMCP('Agent Interface public API', lifespan=lifespan, instructions=(
         'Configured target names: ' + json.dumps(sorted(targets)) + '. ' +
         ('Each call owns one backend session. ' if owner is None else
-         'One X11 connection is retained until interface_close or transport shutdown; no automatic reopen. ') +
+         'One X11 connection is retained until interface_close or transport shutdown; no automatic reopen. '
+         'Use session.binding_revision (initially 1) for dispatch. Explicit target review advances it. ') +
         'No source/lease is issued by this server. '
         'Caller supplies current observation and binding values. Inspect action, image and cleanup '
         'outcomes separately. Never replay an uncertain action automatically.'))
@@ -185,7 +186,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             if persistence_error is not None:
                 result['persistence_error'] = persistence_error
                 result['replay_allowed'] = False
-            return content(result, error=persistence_error is not None)
+            return content(result, error=persistence_error is not None or (
+                operation in ('close', 'inspect_target', 'review_target') and
+                (report.get('error') is not None or report.get('status') == 'cleanup_failed')))
         finally:
             if call_id is not None:
                 with calls_lock:
@@ -286,7 +289,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                            compact: StrictBool = False, report_refs: StrictBool = False) -> CallToolResult:
         """Dispatch once through core admission. Include observe for an image; no implicit replay.
 
-        Sequence/binding values are caller assertions, not server-issued freshness.
+        Observation sequence is a caller assertion, not server-issued freshness.
+        Persistent mode requires session.binding_revision (initially 1); review
+        advances it. One-shot binding values remain caller assertions.
         A returned image may precede redraw. Release and cleanup failures remain visible.
         report_refs requires compact=true and a v3 receipt decoder.
         In v3, read the full report at receipt.source.raw_report in this response;
@@ -349,7 +354,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             return content({'status': 'receipt_unavailable', 'call': record,
                 'error': repr(error), 'operation_invoked': False,
                 'replay_allowed': False}, error=True)
-        result = await asyncio.to_thread(present_result, report, call_root, compact=compact, report_refs=report_refs)
+        result = (dict(report) if record['operation'] in ('close', 'inspect_target', 'review_target') else
+                  await asyncio.to_thread(present_result, report, call_root, compact=compact, report_refs=report_refs))
         result.update(call_id=call_id, call_directory=str(call_root), retained_call=record,
                       operation_invoked=False)
         return content(result, include_image=include_image)

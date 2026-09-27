@@ -123,6 +123,9 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
             server=create_server({'fixture':123},td,session_mode='persistent-x11')
             inspection=self.row(await server.call_tool('interface_inspect_target',{'target':'fixture'}))
             self.assertEqual(session.backend.targets['fixture'].id,123)
+            retained=self.row(await server.call_tool('interface_results',{'call_id':inspection['call_id']}))
+            self.assertEqual(retained['review_id'],inspection['review_id'])
+            self.assertFalse(retained['operation_invoked'])
             args={'target':'fixture','window_id':456,'review_id':inspection['review_id']}
             reviewed=self.row(await server.call_tool('interface_review_target',args))
             self.assertEqual(reviewed['binding_revision'],2)
