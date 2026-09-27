@@ -12,7 +12,6 @@ import json
 import math
 import subprocess
 from collections import Counter, defaultdict
-from pathlib import PurePosixPath
 
 
 SEEDS = (456101, 456102, 456103)
