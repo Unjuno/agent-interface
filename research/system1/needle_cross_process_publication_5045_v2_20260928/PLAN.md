@@ -1,11 +1,12 @@
-# Issue #5045 — cross-process Needle publication
+# Issue #5066 — cross-process Needle publication successor
 
 ## Allocation and lineage
 
-- Issue: #5045.
-- Branch: `research/needle-cross-process-publication-5045-v1-20260928`.
-- Path: `research/system1/needle_cross_process_publication_5045_v1/`.
-- Base main at branch creation: `2b4891d99e3b938d1595d75ec978eb2e4ce6f5bf`.
+- Predecessor: #5045 (pre-formal freeze-schema STOP; preserved unchanged).
+- Issue: #5066; allocation: `needle-cross-process-publication-5045-v2-20260928-01`.
+- Branch: `research/needle-cross-process-publication-5045-v2-20260928`.
+- Path: `research/system1/needle_cross_process_publication_5045_v2_20260928/`.
+- Base main at branch creation: `c6c28b23ca665eecaf7f8bc12771aa8ac212ec57`.
 - Exact immutable package input: #3890 seed-3788 `skill.json`, Git blob `45b80150dac503f4eb6f3cb5d82f9afa2c587107`.
 
 #3890 already demonstrated static serialization and reload in separate processes. #4986 tested atomic replacement under threads. #4840 tested proposal metadata generation rules in a fixture. This allocation tests only their intersection that remains unmeasured: independent processes observing a live publication boundary and applying the generation fence to observations acquired on either side of it.
@@ -35,4 +36,5 @@
 
 ## Successor correction
 
-This v2 allocation was created after #5045's immutable pre-formal STOP. The v1 host orchestrator read a nonexistent top-level `input_sha256`, while the registered freeze used `input.sha256`. This version adds `--preflight-only`, verifies the nested frozen digest, and has integration regressions that exercise the registered freeze with zero Docker invocations and assert the output path remains absent. The v1 sources/freeze/STOPs remain unchanged.
+This allocation was created after #5045's immutable pre-formal STOP. The v1 host orchestrator read a nonexistent top-level `input_sha256`, while the registered freeze used `input.sha256`. This version adds `--preflight-only`, verifies the nested frozen digest, and has integration regressions that exercise the registered freeze with zero Docker invocations and assert the output path remains absent. The v1 sources/freeze/STOPs remain unchanged.
+
