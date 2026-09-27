@@ -8,9 +8,9 @@
 
 ## H/T/D/C/U
 
-**H:** The corrected local Docker/Xvfb fixture collects mapped direct-child `map_state` and geometry without accessing unsupported attributes, completes 12 sessions, yields 4 CLEAR/8 UNKNOWN assessments, and matches an independent pixel/coverage auditor.
+**H:** The corrected local Docker/Xvfb fixture collects mapped direct-child `map_state`, `win_class`, and geometry through Python-Xlib's verified reply attributes, completes 12 sessions, yields 4 CLEAR/8 UNKNOWN assessments, and matches an independent pixel/coverage auditor.
 
-**T:** Exact merged #4385 capture adapter and policy, plus corrected standalone runner and raw-only auditor. Six conditions × two fresh authenticated TCP-disabled Xvfb sessions; 640×480×24; parent [43,57,120,80]. Sequence CLEAR, SIBLING_HALF, SIBLING_FULL, CHILD_HALF, CHILD_FULL, RESTORED, repeated once. Preserve both root and window-client capture bytes, metadata, events, geometry, process exits and cleanup. One formal producer run and one separate raw auditor run only; fresh output directory; no retry, replacement, pooling or tuning. Full Docker caps: `--pull=never --network none --read-only --cpus=1 --memory=1g --pids-limit=64`.
+**T:** Exact merged #4385 capture adapter and policy, plus corrected standalone runner and raw-only auditor. Six conditions × two fresh authenticated TCP-disabled Xvfb sessions; 640×480×24; parent [43,57,120,80]. Sequence CLEAR, SIBLING_HALF, SIBLING_FULL, CHILD_HALF, CHILD_FULL, RESTORED, repeated once. Preserve both root and window-client capture bytes, metadata, events, geometry, process exits and cleanup. Construction01/02 are separate and excluded; construction02 verifies the policy-required `win_class` field and all child/restored layouts. One formal producer run and one separate raw auditor run only; fresh output directory; no retry, replacement, pooling or tuning. Full Docker caps: `--pull=never --network none --read-only --cpus=1 --memory=1g --pids-limit=64`.
 
 **D:** PASS only for 12/12 complete, 24 attempted captures, exactly 4 CLEAR and 8 UNKNOWN, independent raw/geometric audit errors=[], exact source/image identity, and cleanup. Complete contradiction is scoped FAIL; any prerequisite failure is STOP.
 

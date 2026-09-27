@@ -84,11 +84,11 @@ def run_case(out,index,condition,rep):
         child_rows=[]
         for chwin in tree.children:
             ca=chwin.get_attributes(); cg=chwin.get_geometry()
-            child_rows.append({"xid":int(chwin.id),"map_state":int(ca.map_state),
+            child_rows.append({"xid":int(chwin.id),"map_state":int(ca.map_state),"class":int(ca.win_class),
                                "rect":[int(cg.x),int(cg.y),int(cg.width),int(cg.height)]})
         visibility=states[-1] if states else None
         evidence={"map_state":int(attrs.map_state),"visibility":visibility,"region":[0,0,w,h],
-                  "children":[{"map_state":a["map_state"],"rect":a["rect"]} for a in child_rows],
+                  "children":[{"map_state":a["map_state"],"class":a["class"],"rect":a["rect"]} for a in child_rows],
                   "coverage_complete":True}
         policy_result=assess(evidence)
         row.update({"parent_xid":int(parent.id),"parent_geometry":[x,y,w,h],"map_state":int(attrs.map_state),
