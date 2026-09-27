@@ -20,3 +20,9 @@ python -B verify_audit_v2.py --result ../raw_recovery_v1/raw_result.json --corpu
 ```
 
 Expected: `AUDIT_PASS_RAW_ONLY`, 27 rows, zero errors, five corruption controls rejected, and raw SHA-256 `c1a2256d8b117d7dc0ec7d90c7333f3356378313d7f735fb7aa7700278183624`. The independent verifier rechecks raw/corpus/weight hashes and report invariants without importing the primary auditor. Any different raw bytes stop before parse or pass emission. This audit does not re-run the CUDA construction or alter its scientific interpretation.
+
+## Frozen local Docker verification
+
+The one-shot runner `container_launcher_v1.py` is frozen before execution. It stages only the four pinned audit sources, runs tests and audits under normal, `-O`, and `PYTHONOPTIMIZE=1`, then invokes the independent verifier under normal and `-O`. It does not load the model, perform inference, train, or request a GPU.
+
+On Windows PowerShell, use the cached `python:3.11-slim` image by immutable image ID, with network disabled, read-only root, one CPU, 2 GiB memory, PID limit 64, read-only input/model mounts, and a fresh output mount. Do not pull the image or retry. The exact invocation and output hashes are recorded in the Issue #4939 execution comment and container receipt.
