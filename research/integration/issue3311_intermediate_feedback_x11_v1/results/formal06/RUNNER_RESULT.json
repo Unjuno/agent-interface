@@ -1,0 +1,351 @@
+{
+  "admissions": [
+    {
+      "action": "request_save",
+      "active_window": "",
+      "focused_window": "2097155",
+      "result": {
+        "authorization": "local-expiring-1",
+        "eligible": true,
+        "expected_sequence": 1,
+        "status": "revalidated",
+        "valid_until_ns": 46811297653985
+      },
+      "symbol": "window:2097155/#save",
+      "title": "EDITING"
+    },
+    {
+      "action": "confirm_save",
+      "active_window": "",
+      "focused_window": "2097155",
+      "result": {
+        "authorization": "local-expiring-2",
+        "eligible": true,
+        "expected_sequence": 2,
+        "status": "revalidated",
+        "valid_until_ns": 46811731300776
+      },
+      "symbol": "window:2097155/#confirm",
+      "title": "CONFIRMING"
+    }
+  ],
+  "allocation_id": "ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-06",
+  "container_image_id": "sha256:dff1c7b56201b4c299883655d98aee3b3f8d7c0c6dd1e4ad6320b942fb5d17fb",
+  "independent_effect_checks": [
+    {
+      "expected": "CONFIRMING",
+      "oracle": {
+        "events": [
+          {
+            "event": "stage",
+            "raw": "{\"stage\":\"CONFIRMING\"}",
+            "stage": "CONFIRMING"
+          }
+        ],
+        "submissions": []
+      },
+      "result": {
+        "evidence_ref": "server-oracle-stage-1",
+        "status": "succeeded"
+      }
+    },
+    {
+      "expected": "SAVED",
+      "oracle": {
+        "events": [
+          {
+            "event": "stage",
+            "raw": "{\"stage\":\"CONFIRMING\"}",
+            "stage": "CONFIRMING"
+          },
+          {
+            "event": "stage",
+            "stage": "SAVED"
+          }
+        ],
+        "submissions": [
+          {
+            "raw": "{\"token\":\"AI-3311-UNIT-01\"}",
+            "token": "AI-3311-UNIT-01"
+          }
+        ]
+      },
+      "result": {
+        "evidence_ref": "server-oracle-stage-2",
+        "status": "succeeded"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "event": "observation",
+      "observation": {
+        "captured_ns": 46809291546436,
+        "evidence_digest": "22e51ed6617df5ac5625f4b32f7cda74dfff4095f6a14f2428b0280bcc13fe89",
+        "evidence_ref": "observation-01.png",
+        "predicates": {
+          "confirm_target_present": false,
+          "page_state": "EDITING",
+          "save_target_present": true
+        },
+        "sequence": 1,
+        "surface": "issue3311-chromium-unit-v1"
+      },
+      "window_id": 2097155,
+      "window_pid": "8",
+      "window_title": "EDITING"
+    },
+    {
+      "event": "observation",
+      "observation": {
+        "captured_ns": 46809720380106,
+        "evidence_digest": "2805706f371bc0f018f430e8a199d91c2233cea7db1e7b19c80422c8acdf1f4d",
+        "evidence_ref": "observation-02.png",
+        "predicates": {
+          "confirm_target_present": true,
+          "page_state": "CONFIRMING",
+          "save_target_present": false
+        },
+        "sequence": 2,
+        "surface": "issue3311-chromium-unit-v1"
+      },
+      "window_id": 2097155,
+      "window_pid": "8",
+      "window_title": "CONFIRMING"
+    },
+    {
+      "event": "observation",
+      "observation": {
+        "captured_ns": 46810036430209,
+        "evidence_digest": "14ffe7b4c3b9093ad17c228e2860d904d3b97ecad9780d543f8ecab3a6d21cdf",
+        "evidence_ref": "observation-03.png",
+        "predicates": {
+          "confirm_target_present": false,
+          "page_state": "SAVED",
+          "save_target_present": false
+        },
+        "sequence": 3,
+        "surface": "issue3311-chromium-unit-v1"
+      },
+      "window_id": 2097155,
+      "window_pid": "8",
+      "window_title": "SAVED"
+    }
+  ],
+  "page_sha256": "ae253611acb9c2686dbafd471eacbe499d67470c88b0e23aad7a575731caca59",
+  "runner_exit": 0,
+  "runtime_receipt": {
+    "completed_transitions": 2,
+    "critical_events": [
+      {
+        "action": "request_save",
+        "event": "branch_selected",
+        "evidence_ref": "observation-01.png",
+        "matched_conditions": {
+          "page_state": "EDITING",
+          "save_target_present": true
+        },
+        "outcome": "action",
+        "state": "editing"
+      },
+      {
+        "action": "request_save",
+        "action_id": "x11-click-1",
+        "event": "action_terminal",
+        "release_verified": true,
+        "status": "completed"
+      },
+      {
+        "action": "request_save",
+        "event": "effect_checked",
+        "evidence_ref": "server-oracle-stage-1",
+        "status": "succeeded"
+      },
+      {
+        "action": "confirm_save",
+        "event": "branch_selected",
+        "evidence_ref": "observation-02.png",
+        "matched_conditions": {
+          "confirm_target_present": true,
+          "page_state": "CONFIRMING"
+        },
+        "outcome": "action",
+        "state": "confirming"
+      },
+      {
+        "action": "confirm_save",
+        "action_id": "x11-click-2",
+        "event": "action_terminal",
+        "release_verified": true,
+        "status": "completed"
+      },
+      {
+        "action": "confirm_save",
+        "event": "effect_checked",
+        "evidence_ref": "server-oracle-stage-2",
+        "status": "succeeded"
+      },
+      {
+        "action": null,
+        "event": "branch_selected",
+        "evidence_ref": "observation-03.png",
+        "matched_conditions": {
+          "page_state": "SAVED"
+        },
+        "outcome": "complete",
+        "state": "done"
+      },
+      {
+        "completed_transitions": 2,
+        "event": "runtime_finished",
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "method_complete"
+      }
+    ],
+    "elapsed_ns": 1058406898,
+    "ended_ns": 46810039890028,
+    "format": "compiled-gui-runtime-receipt-v1",
+    "frontier_model_resumptions": 0,
+    "input_authority": "admission_per_action_only",
+    "interface_id": "issue3311-unit-v1",
+    "latest_evidence_ref": "observation-03.png",
+    "method": "save_confirm_once",
+    "method_version": "1",
+    "observations": [
+      {
+        "captured_ns": 46809291546436,
+        "evidence_digest": "22e51ed6617df5ac5625f4b32f7cda74dfff4095f6a14f2428b0280bcc13fe89",
+        "evidence_ref": "observation-01.png",
+        "predicates": {
+          "confirm_target_present": false,
+          "page_state": "EDITING",
+          "save_target_present": true
+        },
+        "sequence": 1
+      },
+      {
+        "captured_ns": 46809720380106,
+        "evidence_digest": "2805706f371bc0f018f430e8a199d91c2233cea7db1e7b19c80422c8acdf1f4d",
+        "evidence_ref": "observation-02.png",
+        "predicates": {
+          "confirm_target_present": true,
+          "page_state": "CONFIRMING",
+          "save_target_present": false
+        },
+        "sequence": 2
+      },
+      {
+        "captured_ns": 46810036430209,
+        "evidence_digest": "14ffe7b4c3b9093ad17c228e2860d904d3b97ecad9780d543f8ecab3a6d21cdf",
+        "evidence_ref": "observation-03.png",
+        "predicates": {
+          "confirm_target_present": false,
+          "page_state": "SAVED",
+          "save_target_present": false
+        },
+        "sequence": 3
+      }
+    ],
+    "outcome": "TASK_SUCCEEDED",
+    "pending_effect": null,
+    "raw_evidence_retention": "adapter_responsibility_unverified",
+    "reason": "method_complete",
+    "session_scope": "single-local-x11-fixture",
+    "started_ns": 46808981483130,
+    "transitions": [
+      {
+        "action": "request_save",
+        "action_id": "x11-click-1",
+        "effect_ref": "fixture-oracle-1",
+        "evidence_ref": "observation-01.png",
+        "from_state": "editing",
+        "matched_conditions": {
+          "page_state": "EDITING",
+          "save_target_present": true
+        },
+        "observation_sequence": 1,
+        "release_verified": true,
+        "to_state": "confirming"
+      },
+      {
+        "action": "confirm_save",
+        "action_id": "x11-click-2",
+        "effect_ref": "fixture-oracle-2",
+        "evidence_ref": "observation-02.png",
+        "from_state": "confirming",
+        "matched_conditions": {
+          "confirm_target_present": true,
+          "page_state": "CONFIRMING"
+        },
+        "observation_sequence": 2,
+        "release_verified": true,
+        "to_state": "done"
+      }
+    ]
+  },
+  "runtime_source_sha256": "93e47e1ab5ae3450bb4acf9ec9d21c9abc44ca93ffaee25683b22039d9a722ca",
+  "schema": "issue3311_intermediate_feedback_x11_v1",
+  "server_oracle": {
+    "events": [
+      {
+        "event": "stage",
+        "raw": "{\"stage\":\"CONFIRMING\"}",
+        "stage": "CONFIRMING"
+      },
+      {
+        "event": "stage",
+        "stage": "SAVED"
+      }
+    ],
+    "submissions": [
+      {
+        "raw": "{\"token\":\"AI-3311-UNIT-01\"}",
+        "token": "AI-3311-UNIT-01"
+      }
+    ]
+  },
+  "terminals": [
+    {
+      "action": "request_save",
+      "before_title": "EDITING",
+      "click_exit": 0,
+      "expected_title": "CONFIRMING",
+      "mouseup_exit": 0,
+      "target": "save",
+      "terminal": {
+        "action_id": "x11-click-1",
+        "effect_ref": "fixture-oracle-1",
+        "release": {
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        },
+        "status": "completed"
+      },
+      "title_observed": true,
+      "x11_button1_mask": false
+    },
+    {
+      "action": "confirm_save",
+      "before_title": "CONFIRMING",
+      "click_exit": 0,
+      "expected_title": "SAVED",
+      "mouseup_exit": 0,
+      "target": "confirm",
+      "terminal": {
+        "action_id": "x11-click-2",
+        "effect_ref": "fixture-oracle-2",
+        "release": {
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        },
+        "status": "completed"
+      },
+      "title_observed": true,
+      "x11_button1_mask": false
+    }
+  ],
+  "window_id": 2097155,
+  "window_pid": 8
+}
