@@ -5,13 +5,16 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from audit import _call_errors, expected_scene
+from audit import _call_errors, expected_scene, median_center_error
 from engine import BenchmarkSession, EpisodeSpec, StageSpec, generate_episode
 from renderer import render_base, render_pair
 from runner import prompt_for
 
 
 class TargetLocalizationEncodingTest(unittest.TestCase):
+    def test_even_sample_median_averages_the_two_middle_values(self):
+        self.assertEqual(median_center_error(list(range(1, 13))), 6.5)
+
     def test_rendering_is_deterministic_and_arms_share_truth(self):
         raw1, grid1, truth1 = render_pair(8866601, 0.35)
         raw2, grid2, truth2 = render_pair(8866601, 0.35)

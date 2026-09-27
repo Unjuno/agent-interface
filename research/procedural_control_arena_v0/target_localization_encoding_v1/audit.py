@@ -5,6 +5,7 @@ import binascii
 import hashlib
 import json
 import math
+import statistics
 from pathlib import Path
 from typing import Any
 
@@ -16,6 +17,10 @@ MODEL = "qwen2.5vl:7b"
 MODEL_DIGEST = "5ced39dfa4bac325dc183dd1e4febaa1c46b3ea28bce48896c8e69c1e79611cc"
 SEEDS = tuple(range(8866601, 8866613))
 DIFFICULTY = 0.35
+
+
+def median_center_error(values: list[float]) -> float | None:
+    return None if not values else statistics.median(values)
 
 
 def expected_scene(seed: int) -> tuple[BenchmarkSession, dict[str, Any]]:
@@ -176,8 +181,7 @@ def audit_tree(root: Path) -> dict[str, Any]:
     by_arm = {}
     for arm in ("RAW", "GRID80"):
         values = [row[arm] for row in results if row[arm]["center_error_px"] is not None]
-        sorted_errors = sorted(v["center_error_px"] for v in values)
-        median = None if not sorted_errors else sorted_errors[(len(sorted_errors) - 1) // 2]
+        median = median_center_error([v["center_error_px"] for v in values])
         by_arm[arm] = {"pairs_scored": len(values), "exact_target": sum(v["exact_target"] for v in values),
                        "engine_hit": sum(v["engine_hit"] for v in values), "median_center_error_px": median,
                        "mean_model_wall_seconds": None if not values else sum(v["wall_seconds"] for v in values) / len(values)}
