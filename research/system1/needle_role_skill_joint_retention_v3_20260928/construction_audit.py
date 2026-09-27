@@ -12,7 +12,7 @@ def main(raw_path, report_path):
     payload = json.loads(raw_bytes, object_pairs_hook=audit.unique_pairs)
     run, seed = payload["run"], payload["seed"]
     errors = []
-    if payload.get("formal") is not False or seed != 736514 or run.get("seed") != seed:
+    if payload.get("formal") is not False or seed != 9934014 or run.get("seed") != seed:
         errors.append("construction_identity")
     core, train_x, train_y, schedule = audit.make_base(seed)
     for parameter in core.parameters():
