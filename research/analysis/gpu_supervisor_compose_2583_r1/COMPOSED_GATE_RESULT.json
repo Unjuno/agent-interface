@@ -1,0 +1,17 @@
+{
+  "status": "PASS_CONTAINER_COMPOSED_GATE",
+  "scope": "container composed non-authoritative gate construction; not formal route or task-quality evidence",
+  "image": "pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime",
+  "device": "NVIDIA GeForce RTX 3080 Laptop GPU",
+  "torch": "2.5.1+cu121",
+  "cuda_runtime": "12.1",
+  "rows": 256,
+  "gpu_hint_rows": 256,
+  "forced_yield_rows": 96,
+  "oracle_agreement": 256,
+  "output_sha256": "2661920f2409dd6c8adeb0c44972959f232b6429afa913845d0fd95e7e768234",
+  "authority_grants": 0,
+  "input_grants": 0,
+  "task_success_claims": 0,
+  "invariant": "stale or ambiguous evidence never admits CONTINUE; GPU emits only a binary hint; final gate owns admission"
+}
