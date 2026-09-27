@@ -64,6 +64,12 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+## Issue #4844 — partial-observation typed-mode successor to #4155
+
+One frozen 4,800-row CPU-only formal allocation was run locally in the pinned, network-disabled Docker image; a separate raw-only Docker audit verified all regenerated rows and predictions with zero errors. The result is **`FAIL_MODE_MISROUTES_RECOVERY`** under the preregistered control hierarchy: one complete LAYOUT_CHANGED prototype produced conservative DIRECT YIELD rather than exact REOBSERVE (14/15 exact prototype matches). On the three partial/composition blocks, wrong recovery was 165/960 vs 180/960 (single missing), 89/960 vs 73/960 (multi missing; 17.98% reduction, below the 25% gate), and 219/960 vs 222/960 (composition holdout). Safe coverage was higher for mode factorization, but no block passed the frozen recovery gate. No retry or post-result tuning. This synthetic classifier-family result does not establish GUI or cross-app performance.
+
+Protocol, immutable formal result, independent audit, checksums, construction failures, nonformal pilot, and lossless raw artifact reconstruction instructions are in [`research/analysis/typed_mode_generalization_4155_v1/`](research/analysis/typed_mode_generalization_4155_v1/) and [Issue #4844](https://github.com/Unjuno/agent-interface/issues/4844).
+
 ## Issue #4638 — Python-Xlib 0.15 XGetImage String8 boundary
 
 Successor to the unresolved historical-version question after #4455's
