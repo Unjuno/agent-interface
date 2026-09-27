@@ -1,0 +1,19 @@
+{
+  "status": "PASS_GPU_BATCH_CONTRAST",
+  "scope": "local GPU-resident supervisor overhead contrast by batch size",
+  "image": "pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime",
+  "device": "NVIDIA GeForce RTX 3080 Laptop GPU",
+  "torch": "2.5.1+cu121",
+  "cuda_runtime": "12.1",
+  "rows": [
+    {"batch": 1, "repetitions": 2000, "resident_ms": 0.04774928699771408, "transfer_ms": 0.08324913699834724, "label_agreement": true},
+    {"batch": 8, "repetitions": 2000, "resident_ms": 0.050751640999806114, "transfer_ms": 0.08906584350188496, "label_agreement": true},
+    {"batch": 64, "repetitions": 500, "resident_ms": 0.04684850599733181, "transfer_ms": 0.09143333201063797, "label_agreement": true},
+    {"batch": 256, "repetitions": 500, "resident_ms": 0.05398260199581273, "transfer_ms": 0.09012276800058316, "label_agreement": true},
+    {"batch": 4096, "repetitions": 500, "resident_ms": 0.05084863799856976, "transfer_ms": 0.15911348999361508, "label_agreement": true}
+  ],
+  "authority_grants": 0,
+  "input_grants": 0,
+  "task_success_claims": 0,
+  "caveat": "Single host/container; synthetic tensors; timing is engineering evidence, not product latency."
+}
