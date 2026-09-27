@@ -10,22 +10,22 @@
   "gpu_used": false,
   "exact_gate_git_blob": "d2629bc94d40cc0a8e1bf9e053585549218629ed",
   "source_sha256": {
-    "run_container.sh": "1eed244df971bc16945e9f80a9461324f60a3d488358e23db7c0fa7c4577e5f3",
-    "temporal_protocol.py": "82533297eea3d1cfd8b941b1ae6fe2c8463a463b8abe917a41fee41d75fa37a4",
-    "audit_formal.py": "59bc884ed2cda5ba72585e8d499ab819644a2130c828a422abad0a07ca3a18ab",
     "xdamage_native.c": "082e8e53ab63504959d60a18c2ca939f7f4bae1afcc5b912ee1893a57e711e28",
-    "test_temporal_protocol.py": "34f91f68a90fedf0fd02c90790b87616588f00fab404390d92712ab1e342b591",
+    "exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944",
     "run_formal.py": "d4848a80102c48d2e38e2ae5f25548f0d5acf7665e2a4b7664de8547f860d26a",
-    "exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944"
+    "test_temporal_protocol.py": "1283653b6aee0ca450263db8726a2ba23128a9f61be55cef8cada08b19745f82",
+    "run_container.sh": "1eed244df971bc16945e9f80a9461324f60a3d488358e23db7c0fa7c4577e5f3",
+    "temporal_protocol.py": "ead93daa14ad8f7e0d936b88336687ec56ee742196266e90f870728bc45aeffc",
+    "audit_formal.py": "84533bdb456520f2be640bb11c5f56e25f9bb7cfe48594dd3945aab0d0c7fd72"
   },
   "source_git_blobs": {
+    "xdamage_native.c": "8b824131b3df76302459a888f5d911600a426b56",
+    "exact_gate.py": "d2629bc94d40cc0a8e1bf9e053585549218629ed",
+    "run_formal.py": "3f620f9604f8ee4bb169170bdd322757fbc8a493",
+    "test_temporal_protocol.py": "fabe62f78e0f8403388a28fcab094fc0b5f6cb0c",
     "run_container.sh": "239d1bb9e660ed76629b6f787f7fb42e2b0f9fb5",
-    "temporal_protocol.py": "66940b5b6c4805218f53ee3a79752325ac1cba3a",
-    "audit_formal.py": "9061da38d6a402529e7c55f1287b40e17e72e4b6",
-    "xdamage_native.c": "b7c0b671b9a0c71ec73b65b070fdebaaa822b040",
-    "test_temporal_protocol.py": "bae81de88e04fc037d77fdc0cc2348c25baa96b2",
-    "run_formal.py": "4e172314cf3df6c1381c2ddd7047529dd8a9c9a7",
-    "exact_gate.py": "d2629bc94d40cc0a8e1bf9e053585549218629ed"
+    "temporal_protocol.py": "82119f4383dbcbf39a1cb0ae598afe4f7daf4a58",
+    "audit_formal.py": "5d1ef73080e59fa9df8573ed566c961ed83e8019"
   },
   "sessions": 8,
   "cases": [
@@ -38,22 +38,22 @@
   ],
   "session_order": "rotate CASES left by (session-1) modulo 6",
   "decision": {
-    "unknown_negative_control": true,
-    "repaint_damage_count": 1,
-    "action_authority": false,
-    "candidate_gate": "ExactGate O1 sees baseline then endpoint only",
+    "corruption_controls_required": 8,
+    "aba": {
+      "damage_count": 1,
+      "endpoint_equal": true,
+      "middle_differs": true
+    },
     "rows": 48,
-    "quiet_damage_count": 0,
-    "independent_audit_errors": 0,
-    "retry_allowed": false,
     "formal_invocations": 1,
     "persistent_damage_count": 1,
     "per_case": 8,
-    "aba": {
-      "endpoint_equal": true,
-      "damage_count": 1,
-      "middle_differs": true
-    },
-    "corruption_controls_required": 8
+    "independent_audit_errors": 0,
+    "quiet_damage_count": 0,
+    "repaint_damage_count": 1,
+    "action_authority": false,
+    "candidate_gate": "ExactGate O1 receives baseline then endpoint only; middle frame is score-only",
+    "malformed_identity_coverage_source": "UNKNOWN with action_authority=false",
+    "retry_allowed": false
   }
 }

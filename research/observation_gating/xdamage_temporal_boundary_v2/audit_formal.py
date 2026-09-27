@@ -134,6 +134,33 @@ def corruption_controls(rows, summary, raw):
     return rejected
 
 
+def independent_disposition(case, damage_count, endpoint_equal, *, identity_valid, coverage_complete, source_fresh):
+    """Auditor's independent implementation of the observation-only status boundary."""
+    if not identity_valid or not coverage_complete or not source_fresh:
+        return "UNKNOWN", False
+    if damage_count > 0:
+        return "DAMAGE_OBSERVED", False
+    if case == "QUIET" and endpoint_equal:
+        return "NO_DAMAGE_OBSERVED_SCOPED", False
+    return "UNKNOWN", False
+
+
+def typed_negative_controls():
+    specs = {
+        "aba_without_damage": ("ABA_1PX", 0, True, True, True, True),
+        "stale_event_identity": ("REPAINT_A", 1, True, False, True, True),
+        "incomplete_coverage": ("QUIET", 0, True, True, False, True),
+        "stale_source": ("PERSIST_B", 1, False, True, True, False),
+        "missing_process_receipt": ("REPAINT_A", 1, True, False, True, True),
+    }
+    results = {}
+    for name, (case, count, equal, identity, coverage, fresh) in specs.items():
+        status, authority = independent_disposition(case, count, equal,
+            identity_valid=identity, coverage_complete=coverage, source_fresh=fresh)
+        results[name] = {"status": status, "action_authority": authority}
+    return results
+
+
 def main(path, source_root=None):
     root = pathlib.Path(path)
     rows = [json.loads(line) for line in (root / "rows.jsonl").read_text().splitlines() if line]
@@ -141,11 +168,14 @@ def main(path, source_root=None):
     raw = {p.name: p.read_bytes() for p in root.glob("*.rgb")}
     errors = check(rows, summary, raw, source_root)
     rejected = corruption_controls(rows, summary, raw)
+    typed = typed_negative_controls()
+    if any(v != {"status": "UNKNOWN", "action_authority": False} for v in typed.values()):
+        errors.append("typed_negative_controls")
     construction = summary.get("mode") == "construction"
     success = not errors and len(rejected) >= 8
     disposition = ("PASS_CONSTRUCTION_PIPELINE" if construction else "PASS_XDAMAGE_TEMPORAL_BOUNDARY_V2_SCOPED") if success else "HOLD_AUDIT"
     result = {"audit_errors": errors, "control_rejections": rejected, "controls_rejected": len(rejected),
-              "controls_required": 8, "rows": len(rows), "disposition": disposition}
+              "controls_required": 8, "typed_negative_controls": typed, "rows": len(rows), "disposition": disposition}
     (root / "audit.json").write_text(json.dumps(result, sort_keys=True, indent=2) + "\n")
     print(json.dumps(result, sort_keys=True))
     return 0 if success else 1
