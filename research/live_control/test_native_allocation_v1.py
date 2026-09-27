@@ -114,6 +114,57 @@ class AllocationTests(unittest.TestCase):
             with self.assertRaises(ValueError):allocation.start(timeout=timeout)
         self.assertFalse(self.path.exists())
 
+    def test_failed_process_reports_bounded_stderr_without_relaunch(self):
+        allocation = NativeAllocation(self.path, 'inkscape')
+        with patch('native_allocation_v1.subprocess.Popen', return_value=self.process) as spawn:
+            allocation.start(timeout=0)
+            failure = b"ModuleNotFoundError: No module named 'research.observation_gating'\n"
+            raw = b'x' * 4096 + failure
+            (self.path/'stderr.log').write_bytes(raw)
+            self.process.poll.return_value = 1
+            result = allocation.start(timeout=0)
+            diagnostic = result['diagnostic']
+            self.assertEqual(diagnostic['tail'], raw[-2048:].decode())
+            self.assertTrue(diagnostic['truncated'])
+            self.assertEqual(diagnostic['byte_limit'], 2048)
+            self.assertEqual(diagnostic['path'], str(self.path/'stderr.log'))
+            self.assertEqual(diagnostic['authority'], 'none')
+            self.assertIsNone(result['task_success'])
+            self.assertFalse(result['cleanup_verified'])
+            self.assertFalse(result['restart_allowed'])
+            self.assertEqual(spawn.call_count, 1)
+
+    def test_failed_process_keeps_terminal_state_when_stderr_unavailable(self):
+        allocation = NativeAllocation(self.path, 'calc')
+        allocation.process = self.process
+        self.process.poll.return_value = 1
+        result = allocation.status()
+        self.assertEqual(result['status'], 'terminal')
+        self.assertEqual(result['diagnostic']['status'], 'unavailable')
+        self.assertNotIn('tail', result['diagnostic'])
+
+    def test_stderr_empty_invalid_encoding_and_boundary(self):
+        self.path.mkdir()
+        allocation = NativeAllocation(self.path, 'calc')
+        allocation.process = self.process
+        self.process.poll.return_value = 1
+        for raw in (b'', b'\xfffailure', b'x'*2048, b'x'*2049):
+            with self.subTest(length=len(raw)):
+                (self.path/'stderr.log').write_bytes(raw)
+                diagnostic = allocation.status()['diagnostic']
+                self.assertEqual(diagnostic['status'], 'read')
+                self.assertEqual(diagnostic['tail'], raw[-2048:].decode('utf-8', errors='replace'))
+                self.assertEqual(diagnostic['truncated'], len(raw) > 2048)
+
+    def test_successful_process_does_not_read_or_return_stderr(self):
+        allocation = NativeAllocation(self.path, 'calc')
+        allocation.process = self.process
+        self.process.poll.return_value = 0
+        with patch.object(Path, 'open', side_effect=AssertionError('unexpected log read')):
+            result = allocation.status()
+        self.assertNotIn('diagnostic', result)
+        self.assertIsNone(result['task_success'])
+
 
 if __name__=='__main__':
     unittest.main()
