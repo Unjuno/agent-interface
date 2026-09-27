@@ -236,8 +236,16 @@ tail is rejected before publication.
 A typed visually-flat target refusal before dispatch may return a fresh boundary
 when stage capacity remains. Its `target_refusal` describes the recorded failure;
 it is not action completion. Choose a new decision from the returned image.
-Arbitrary errors, exhausted capacity or failed review still terminate; no input
-is automatically retried. A refused action does not apply finish_after.
+A failed review after a visually-flat refusal still terminates. For post-action
+review and explicit observation failures, the harness may instead return
+`continuation.status: observation_required` while stage capacity remains.
+The delivered image is the previous retained capture, not post-action evidence.
+Only explicit observe or finish is accepted until a fresh review succeeds; input
+is rejected before publication and is never replayed. Failed post-action review
+also suppresses finish_after. Arbitrary errors and exhausted capacity still
+terminate. A refused action does not apply finish_after. See the
+[retained failure and recovery](../../runtime/results/native-review-recovery-01/README.md)
+and [integrated-main follow-up](../../runtime/results/native-review-recovery-main-01/README.md).
 The published Inkscape task now describes its directional saved-geometry score
 explicitly; nominal drag pixels are not an exact keyboard displacement target.
 
