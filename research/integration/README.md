@@ -53,3 +53,5 @@ Historical and superseded integration paths remain in place when their exact nam
 - [`issue_2907_active_xid_screen_contrast_20260928/REPORT.md`](issue_2907_active_xid_screen_contrast_20260928/REPORT.md) — Docker Desktop/Xvfb construction03 independently audits active-XID versus visible-pixel divergence and its EWMH positive control; scoped synthetic PASS only, not an integrated or product PASS.
 
 - [`golden_v3_audit_input_binding_2198_v1/REPORT.md`](golden_v3_audit_input_binding_2198_v1/REPORT.md) — Docker Desktop audit of #2198's hardcoded checker: six inputs produce identical output; independent raw JSON finds seven absent required fields, one contradictory schema identity, and `usage` present. Checker input-binding FAIL; reconciliation remains HOLD.
+
+- [`golden_v3_docker_slot_correction_2198_v1/RESOURCE_CORRECTION.md`](golden_v3_docker_slot_correction_2198_v1/RESOURCE_CORRECTION.md) — retrospective correction: the #2198 audit launched Docker containers during #5074's exclusive CPU-slot reservation; no further container run until explicit release.
