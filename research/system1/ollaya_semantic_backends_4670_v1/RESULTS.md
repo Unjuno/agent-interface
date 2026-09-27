@@ -40,7 +40,7 @@ The corrected runner uses `"options" in row` to choose the intent-specific promp
 - Python runner image `python:3.11-slim@sha256:da047cb8f9d1d98e5c070f5300ba9f7274e33b8fc0e5be5ed88740aed1b95ba9`.
 - Corrected runner GitHub blob SHA `7fa800ec15e0d064aabe79d6901111907a27a34c`.
 - Frozen workload GitHub blob SHA `c6041a39580689b981ee2d2e5b423c9a796bb785`.
-- Laya corrected raw JSONL: 80 rows, 136,371 bytes, SHA-256 `5d900eac08b87f53ee6ca925b4ef739c21676d896b5462a8967e24694e5222dc6`; compressed text artifact `results/laya-corrected-formal.jsonl.gz.base64`.
+- Laya corrected raw JSONL: 80 rows, 136,886 bytes, SHA-256 `5d900eac08b87f53ee6ca925b4ef739c21676d896b5462a8967e24694e5222dc6`; compressed text artifact `results/laya-corrected-formal.jsonl.gz.base64`.
 - Decider corrected raw JSONL: 80 rows, 138,353 bytes, SHA-256 `5cbe961585d8b7c0b76ef7d417610156399170dea5eb0199c6238dd8c4bf5f05`; compressed text artifact `results/decider-corrected-formal.jsonl.gz.base64`.
 - Both corrected logs were independently gzip/base64 decoded locally and their raw SHA-256 rechecked before publication. To reconstruct, base64-decode each `.gz.base64`, gunzip, then compare the raw hash above.
 - The older `laya-final-formal` and `decider-final-formal` hashes/artifacts remain in the repository but are superseded and ineligible; they must not be pooled with corrected rows.
