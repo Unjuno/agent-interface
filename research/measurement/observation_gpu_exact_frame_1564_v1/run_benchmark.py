@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import os
 import platform
 import statistics
 import sys
@@ -123,6 +124,7 @@ def main():
             "numpy": np.__version__,
             "pytorch": torch.__version__,
             "torch_cuda_runtime": torch.version.cuda,
+            "nvidia_driver_version": os.environ.get("NVIDIA_DRIVER_VERSION"),
             "device": device_name,
             "device_count": torch.cuda.device_count(),
         },
