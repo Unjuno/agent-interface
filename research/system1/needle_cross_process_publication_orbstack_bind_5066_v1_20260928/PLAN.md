@@ -47,10 +47,11 @@ bounded resources, dropped capabilities, and no-new-privileges. Any formal
 invocation or output creation consumes the sole allocation; preserve failure
 and do not retry.
 
-Before any Docker query or launch, `formal.py` fetches #5074 issue comments
-through authenticated `gh api` and requires the latest owner comment to contain
-the exact frozen allocation/current-main release marker. Missing, stale-main,
-superseded, or wrong-recipient releases fail closed.
+Before any Docker query or launch, `formal.py` fetches both #5074 and #5085
+issue comments through authenticated `gh api` and requires each issue's latest
+owner comment to contain its exact frozen allocation/current-main release
+marker. Missing, stale-main, superseded, or wrong-recipient releases fail
+closed; a #5074 lane handoff cannot override #5085's queue ownership by itself.
 
 ## Integration
 

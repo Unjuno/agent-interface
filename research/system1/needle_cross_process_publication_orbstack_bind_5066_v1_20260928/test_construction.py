@@ -110,10 +110,13 @@ class ConstructionTests(unittest.TestCase):
     def test_formal_launch_requires_latest_exact_owner_release_on_frozen_main(self):
         allocation="needle-publication-orbstack-bind-5066-20260928-01"
         main_sha="a"*40
-        marker=formal.release_marker(allocation,main_sha)
+        marker=formal.release_marker(5074,allocation,main_sha)
         comments=[{"id":10,"created_at":"2026-09-28T10:00:00Z","user":{"login":"Unjuno"},"body":marker}]
-        accepted=formal.verify_slot_release(comments,10,allocation,main_sha)
+        accepted=formal.verify_slot_release(comments,10,5074,allocation,main_sha)
         self.assertEqual(accepted["comment_id"],10)
+        queue_marker=formal.release_marker(5085,allocation,main_sha)
+        queue_comments=[{"id":20,"created_at":"2026-09-28T10:00:00Z","user":{"login":"Unjuno"},"body":queue_marker}]
+        self.assertEqual(formal.verify_slot_release(queue_comments,20,5085,allocation,main_sha)["issue"],5085)
         for bad_comments,bad_id in (
             (comments,11),
             ([{"id":10,"created_at":"2026-09-28T10:00:00Z","user":{"login":"Unjuno"},"body":"Quoted request: `"+marker+"`"}],10),
@@ -121,9 +124,11 @@ class ConstructionTests(unittest.TestCase):
             ([{"id":10,"created_at":"2026-09-28T10:00:00Z","user":{"login":"someone-else"},"body":marker}],10),
         ):
             with self.assertRaises(RuntimeError):
-                formal.verify_slot_release(bad_comments,bad_id,allocation,main_sha)
+                formal.verify_slot_release(bad_comments,bad_id,5074,allocation,main_sha)
         with self.assertRaises(RuntimeError):
-            formal.verify_slot_release(comments,10,allocation,"b"*40)
+            formal.verify_slot_release(comments,10,5074,allocation,"b"*40)
+        with self.assertRaises(RuntimeError):
+            formal.verify_slot_release(comments,10,5085,allocation,main_sha)
 
     def test_unsafe_completion_must_follow_and_match_writer_interval(self):
         row={"phase":"phase_1","write_start_ns":10,"partial_start_ns":20,"partial_end_ns":30,

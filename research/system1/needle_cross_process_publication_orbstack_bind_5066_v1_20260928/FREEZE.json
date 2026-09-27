@@ -14,7 +14,7 @@
     "input": {"path":"research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/skill.json","git_blob":"45b80150dac503f4eb6f3cb5d82f9afa2c587107","sha256":"2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a","bytes":15279,"generation":3788},
     "candidate": "generations 3789 through 3795; each changes only generation and inert provenance allocation/predecessor fields from the exact seed; payload digest recomputed",
     "image_id":"sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
-    "slot_release":"The latest GitHub issue-#5074 comment by Unjuno must contain exactly `SLOT_RELEASE: #5074 -> #5073 allocation=needle-publication-orbstack-bind-5066-20260928-01 main=<frozen current main SHA>`; formal.py fetches and checks this comment before any Docker access.",
+    "slot_release":"Before any Docker access, formal.py requires the latest GitHub owner comment on BOTH #5074 and #5085 to contain its standalone exact release marker for allocation needle-publication-orbstack-bind-5066-20260928-01 and the frozen current main SHA: `SLOT_RELEASE: #5074 -> #5073 allocation=needle-publication-orbstack-bind-5066-20260928-01 main=<sha>` and `QUEUE_RELEASE: #5085 authorizes #5073 allocation=needle-publication-orbstack-bind-5066-20260928-01 main=<sha>`.",
     "schedule":{"arms":["validated same-directory os.replace","diagnostic in-place rewrite"],"concurrent_rows":56,"post_rows":28,"phases_per_arm":7,"readers_per_arm":4,"reader_processes":8,"atomic_replacements_per_phase":1,"generation_transitions":[3788,3789,3790,3791,3792,3793,3794,3795],"fd_order":"fd_open < replace_start < replace_return < fd_read_start < fd_read_end; then fresh path read sees exact next generation","unsafe_partial_barrier":"each phase; every reader opens exact strict-prefix bytes before writer completes the same next-generation payload","raw_bytes":"base64 retained for independent reconstruction","proposal_gate":"real admission function stages/revalidates/renames eligible proposals; digest-invalid and stale-base attempts are recorded and must leave ACTIVE hashes unchanged","dispatches":0,"authority_granted":false},
     "formal_orchestrations":1,
     "container":"docker --context orbstack run --pull=never --platform linux/arm64 --network none --read-only --cpus 0.25 --memory 512m --pids-limit 32 --shm-size 32m --cap-drop ALL --security-opt no-new-privileges; source/input read-only; output-only host bind writable",
@@ -29,12 +29,12 @@
   "U": "One macOS host, one OrbStack version/context, one Linux/arm64 image, one bind-mounted path, synthetic package and fixed schedule only. No Windows equivalence, other filesystems, crash durability, production safety, model/task quality, GUI, dispatch authority or latency claim.",
   "retry_policy":"Construction may be corrected before formal. Once formal invocation begins or output is created, retain all evidence and do not retry this allocation.",
   "source_sha256": {
-    "PLAN.md": "88119ca11b78f6c0ce832ff0279293f163e7285066d7bb47b668239035f39be2",
+    "PLAN.md": "e3da1861453aea2a68252d620adfe2c6257e06e9b00ac0bf75e31218e8b9a5f2",
     "protocol.py": "17f930d71e36ce57bdf596f8ce59fa298921d98666b05b19fac213abea311c25",
     "runner.py": "e3cebd7c9d67f289d11433faa91c194852cb661298bcf34fea177d8911b0f693",
     "audit.py": "607f9f00be8bb07b2e746cfb65903ca6905063caee7d3ccf11339c596a1f909c",
-    "formal.py": "2987c2fb1e923e92133c02af4624e1cb6bd16c1b14d0cbb61b699bb7752057a3",
-    "test_construction.py": "c6d45de1acb4cc53af9296a2e2bdb3c9ef22be3da66fff5eef33a703a1c514fb"
+    "formal.py": "3bb421d13e8f51dd47f5f36bc61c2b30841883c066edb34acf5f80c67f8f5446",
+    "test_construction.py": "067677827588e735e1328b4bbb03b3603717c2322cfff316dda6945a2f76be79"
   },
   "freeze_self_hash":"omitted; freeze blob and commit identity are authoritative"
 }
