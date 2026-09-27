@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/opt/experiment/runner.py", line 269, in <module>
+    main()
+  File "/opt/experiment/runner.py", line 237, in main
+    observed_hash = sha256_bytes(source_file.read_bytes())
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/opt/experiment/Dockerfile'
