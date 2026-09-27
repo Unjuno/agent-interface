@@ -62,29 +62,30 @@ def main() -> None:
         if pair[0] != pair[1]
     ]
     checks = {
-        "raw_sha256": sha(raw_bytes) == RAW_SHA256,
-        "initial_weights_sha256": sha(initial_bytes) == INITIAL_WEIGHTS_SHA256,
-        "allocation": raw.get("allocation") == "tiny-visual-extent-init-sensitivity-4817-20260928-01",
-        "init_seed": raw.get("init_seed") == INIT_SEED,
+        "raw_sha256_matches_frozen": sha(raw_bytes) == RAW_SHA256,
+        "initial_weights_sha256_matches_frozen": sha(initial_bytes) == INITIAL_WEIGHTS_SHA256,
+        "allocation_matches": raw.get("allocation") == "tiny-visual-extent-init-sensitivity-4817-20260928-01",
+        "init_seed_matches": raw.get("init_seed") == INIT_SEED,
         "all_initial_tensors_match_seed": all(seed_checks.values()),
-        "held_center_count": len(packed_centers) == 8 and len(recorded_centers or []) == 8,
+        "initial_tensor_count": sum(seed_checks.values()),
+        "held_center_count_matches": len(packed_centers) == 8 and len(recorded_centers or []) == 8,
         "known_label_mismatch_reproduced": mismatch_indices == [0, 2, 4, 6, 7],
     }
     result = {
         "schema": "issue-4983-postrun-audit-v1",
         "status": "PASS_SEED_BINDING_WITH_CENTER_LABEL_CORRECTION"
-                  if all(checks.values()) else "HOLD_POSTRUN_PROVENANCE",
+                  if all(value is True or value == 8 for value in checks.values())
+                  else "HOLD_POSTRUN_PROVENANCE",
         "scientific_disposition": "STOP_NO_CONSTRUCTION_COMPETENCE",
         "historical_integrity": "Original FREEZE.json, RAW.json, and AUDIT.json remain unchanged.",
         "checks": checks,
-        "seed_tensor_checks": seed_checks,
-        "held_centers": {
+        "held_center_correction": {
             "recorded_raw_order": recorded_centers,
             "actual_packed_array_order": packed_centers,
             "mislabeled_indices_zero_based": mismatch_indices,
             "mislabel_count": len(mismatch_indices),
         },
-        "interpretation": "Initial weights bind exactly to INIT_SEED. The raw per-center labels are misordered; use actual_packed_array_order when mapping held_i arrays. This correction does not change the frozen aggregate STOP disposition.",
+        "interpretation": "All retained initial tensors match the declared initialization seed. The raw per-center labels are misordered; use actual_packed_array_order when mapping held_i arrays. Aggregate held-positive ACCEPT remains 1.00 across all eight centers and the frozen scientific disposition remains STOP_NO_CONSTRUCTION_COMPETENCE. No fitting or CUDA run was repeated.",
         "raw_sha256": sha(raw_bytes),
         "initial_weights_sha256": sha(initial_bytes),
     }
