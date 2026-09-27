@@ -1,0 +1,30 @@
+{
+  "schema": "broker-timeout-start-docker-construction-v5",
+  "issue": 5074,
+  "allocation": "broker-fake-child-timeout-start-20260928-01",
+  "disposition": "PASS_CONSTRUCTION_ONLY",
+  "timestamp_utc": "2026-09-27T23:03:14Z",
+  "observed_main": "eb3c8d108b8ddd090e5e81a22c7d5db9c367552c",
+  "frozen_base_main": "eb3c8d108b8ddd090e5e81a22c7d5db9c367552c",
+  "freeze_json_sha256": "2213aeb82d70dce9f6b5bb325f96524bb6e72385cd5196592ffba7fa103a73e0",
+  "docker_context": "desktop-linux",
+  "pinned_image": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+  "platform": "linux/amd64",
+  "command": [
+    "docker", "--context", "desktop-linux", "run", "--rm", "--pull=never",
+    "--platform", "linux/amd64", "--network", "none", "--read-only",
+    "--cpus=0.25", "--memory=256m", "--pids-limit=32", "--cap-drop=ALL",
+    "--security-opt=no-new-privileges:true", "--tmpfs", "/tmp:rw,exec,nosuid,size=16m",
+    "--mount", "type=bind,src=<local-workspace>/work/issue5074v5/construction,dst=/study,readonly",
+    "--workdir", "/study", "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "python", "-B", "-m", "unittest", "discover", "-s", "/study", "-p", "test_*.py", "-v"
+  ],
+  "preflight": {"image_and_platform_match": true, "context_match": true, "running_containers_before": [], "running_containers_after": []},
+  "result": {"exit_code": 0, "tests_passed": 15, "tests_total": 15, "frozen_source_files_verified": 11},
+  "stdout_file": "CONSTRUCTION_DOCKER_EB3C8D1.stdout.txt",
+  "stdout_sha256": "a30ead5da91cd99939e59e587844889b05c6073e036890126f8162211f2848fe",
+  "broker_mounted_or_invoked": false,
+  "formal_cases_invoked": 0,
+  "formal_allocation_consumed": false,
+  "limitations": ["Construction/auditor contract only; no broker result or scientific PASS/FAIL.", "No provider/model, GUI, input, or application effect."]
+}

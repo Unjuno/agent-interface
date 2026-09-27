@@ -1,0 +1,19 @@
+{
+  "schema": "broker-timeout-start-refreeze-stop-v1",
+  "issue": 5074,
+  "allocation": "broker-fake-child-timeout-start-20260928-01",
+  "disposition": "STOP_PRECHECK_ONLY_NOT_FORMAL",
+  "timestamp_utc": "2026-09-27T23:04:51Z",
+  "planned_base_main": "aefe632d5995ad252f225c4ff3830d191661ddaf",
+  "observed_main": "eb3c8d108b8ddd090e5e81a22c7d5db9c367552c",
+  "stop_reasons": [
+    "main advanced during formal preparation; source freeze was refreshed to the new main before proceeding",
+    "planned v5 branch name was already occupied by a concurrent task; no existing branch was modified"
+  ],
+  "formal_cases_invoked": 0,
+  "formal_allocation_consumed": false,
+  "formal_output_created": false,
+  "audit_output_created": false,
+  "invocation_receipt_created": false,
+  "resume_state": "new unique branch/path frozen at eb3c8d1; current-main recheck still required immediately before formal execution"
+}
