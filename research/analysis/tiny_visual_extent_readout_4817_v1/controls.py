@@ -45,4 +45,3 @@ if __name__ == "__main__":
     if len(sys.argv) != 6:
         raise SystemExit("usage: controls.py RAW INPUTS WEIGHTS INITIAL_WEIGHTS SOURCE_DIR")
     raise SystemExit(main(*sys.argv[1:]))
-
