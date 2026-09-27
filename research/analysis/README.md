@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 181 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 182 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
@@ -218,6 +218,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`predicate_dependency_cache_4217_v1/`](predicate_dependency_cache_4217_v1/)
 - [`predicate_dependency_completeness_4217_v1/`](predicate_dependency_completeness_4217_v1/)
 - [`predicate_order_drift_audit_integrity_4733_v1/`](predicate_order_drift_audit_integrity_4733_v1/)
+- [`predicate_order_drift_audit_integrity_4733_successor_v1/`](predicate_order_drift_audit_integrity_4733_successor_v1/)
 - [`predicate_readset_audit_revalidation_4766_v1/`](predicate_readset_audit_revalidation_4766_v1/)
 - [`predicate_readset_runtime_proxy_4233_v1/`](predicate_readset_runtime_proxy_4233_v1/)
 - [`predicate_specialist_switch_4284_v1/`](predicate_specialist_switch_4284_v1/)
