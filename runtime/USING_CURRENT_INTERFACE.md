@@ -146,6 +146,14 @@ still requires a matched measurement.
 
 ## Native decision loop
 
+To reread an exact native result without receiving its image again, call
+`native_resume(stage=..., decision_sha256=..., include_image=false)`.
+Image integrity is still checked, and outcome, continuation and image reference
+remain available. A valid withheld image is marked `image_delivery: omitted_by_request`.
+The default remains image delivery; this option is for outcome retrieval, not
+a fresh observation or permission to choose input without visual grounding.
+
+
 Native MCP checks explicitly supplied text gaps, key repetitions and their
 expanded tail capacity before publishing a stage request. Invalid compact
 syntax returns a tool validation error; the owner receives no request from

@@ -383,6 +383,35 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual((root/'request-1.json').read_bytes(),raw)
                     self.assertEqual((root/'request-1.json').stat().st_mtime_ns,before)
 
+                    metadata_only = await client.call_tool('native_resume', {'stage':1,
+                        'decision_sha256':row['decision_sha256'],'timeout':0,'include_image':False})
+                    self.assertFalse(metadata_only.isError)
+                    self.assertEqual([b.type for b in metadata_only.content], ['text'])
+                    omitted = json.loads(metadata_only.content[0].text)
+                    self.assertEqual(omitted.pop('image_delivery'), 'omitted_by_request')
+                    for key in ('receipt','outcome_summary','image_status','image_reference','continuation'):
+                        self.assertEqual(omitted.get(key), result.get(key), key)
+                    self.assertTrue(omitted['exchange']['resumed_read_only'])
+                    self.assertEqual((root/'request-1.json').read_bytes(),raw)
+                    self.assertEqual((root/'request-1.json').stat().st_mtime_ns,before)
+                    for invalid_flag in (0, 1, 'false', None):
+                        invalid_delivery = await client.call_tool('native_resume', {'stage':1,
+                            'decision_sha256':row['decision_sha256'],'timeout':0,'include_image':invalid_flag})
+                        self.assertTrue(invalid_delivery.isError)
+                    wrong_without_image = await client.call_tool('native_resume', {'stage':1,
+                        'decision_sha256':'0'*64,'timeout':0,'include_image':False})
+                    self.assertTrue(wrong_without_image.isError)
+                    (root/'frame.png').write_bytes(pixels+b'corrupt')
+                    corrupt = await client.call_tool('native_resume', {'stage':1,
+                        'decision_sha256':row['decision_sha256'],'timeout':0,'include_image':False})
+                    corruption = json.loads(corrupt.content[0].text)
+                    self.assertEqual(corruption['image_status'], 'needs_review')
+                    self.assertIn('sha256 mismatch', corruption['image_error'])
+                    self.assertNotIn('image_delivery', corruption)
+                    self.assertFalse(corruption['outcome_summary']['evaluation_success'])
+                    self.assertEqual((root/'request-1.json').read_bytes(),raw)
+                    self.assertEqual((root/'request-1.json').stat().st_mtime_ns,before)
+                    (root/'frame.png').write_bytes(pixels)
                     # An inert boundary fixture exercises the new metadata over real stdio.
                     next_source=dict(source,sequence=2)
                     (root/'source-2.json').write_bytes(encoded(next_source))
