@@ -76,9 +76,18 @@ def main(path):
     assert cg["rows"]==expected_controls,"control-case regeneration mismatch"
     assert cg["rows"]==controls(),"control-case regeneration mismatch"
     assert len(cg["rows"])==4
-    for i,x in enumerate(cg["rows"]):assert oracle(x)==cg["labels"][i]
+    assert cg["labels"]==[3,4,3,5],"control oracle labels mismatch"
+    control_exact={}
+    for backend in ("rule","tree","mlp"):
+        fn={"rule":rule,"tree":lambda x:tree_predict(d["models"]["tree"],x),"mlp":lambda x:mlp_predict(d["models"]["mlp"],x)}[backend]
+        recalculated=[fn(x) for x in expected_controls]
+        stored=cg["predictions"][backend]
+        errors += [("controls",backend,i) for i,(a,b) in enumerate(zip(stored,recalculated)) if a!=b]
+        control_exact[backend]=recalculated==[3,4,3,5]
+        assert cg["metrics"][backend]["controls_exact"]==control_exact[backend],f"{backend} control flag mismatch"
     summary={b:d["groups"]["shift"]["metrics"][b] for b in ("rule","tree","mlp")}
-    print(json.dumps({"audit":"PASS" if not errors else "FAIL","prediction_mismatches":len(errors),"shift_metrics":summary,"latency_records":d["latency"]},sort_keys=True))
+    print(json.dumps({"audit":"PASS" if not errors else "FAIL","prediction_mismatches":len(errors),"control_exact":control_exact,"shift_metrics":summary,"latency_records":d["latency"]},sort_keys=True))
     if errors:sys.exit(2)
 
 if __name__=="__main__":main(sys.argv[1])
+
