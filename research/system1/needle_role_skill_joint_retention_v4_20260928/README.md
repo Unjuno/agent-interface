@@ -1,5 +1,3 @@
-# v4 construction boundary (no fit)
+# v4 role-separated LoRA construction
 
-This directory is an additive successor to #4908/#4911. It preserves the predecessor STOP and checks only the host-to-container output/log separation plus copied zero-update runner tests. It is not an optimizer, quality, or skill-retention result.
-
-Source lineage: #4911 PR's \`research/system1/needle_role_skill_joint_retention_v2/\`. See \`FREEZE.json\` for exact hashes and \`CONSTRUCTION_BOUNDARY.md\` for gates.
+Additive successor to #4929. This source freeze repairs the failed boundary-test fixtures and stages a single excluded-seed construction run behind a passing zero-update gate. It does not change predecessor evidence. See FREEZE.json and CONSTRUCTION_BOUNDARY.md.
