@@ -21,4 +21,3 @@ complete and a fresh collision audit clears the device.
 `requirements.lock` contains only resolved additions to the immutable pinned
 base image, `wheelhouse-manifest.json` inventories all local downloaded wheels,
 and the formal image build consumes both with networking disabled.
-
