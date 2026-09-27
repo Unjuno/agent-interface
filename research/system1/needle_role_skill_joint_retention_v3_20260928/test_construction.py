@@ -11,6 +11,13 @@ import runner
 
 
 class RoleRouterConstruction(unittest.TestCase):
+    def test_excluded_construction_seed_is_successor_only(self):
+        self.assertEqual(runner.ALLOCATION, "needle-role-skill-joint-retention-20260928-v3")
+        self.assertEqual(runner.SEEDS, (9934211, 9934311, 9934411))
+        self.assertNotIn(9934014, runner.SEEDS)
+        self.assertNotIn(736514, runner.SEEDS)
+        self.assertEqual(9934014, 9934014)
+
     def test_fresh_seeds_and_role_conditioned_splits(self):
         self.assertEqual(runner.SEEDS, (9934211, 9934311, 9934411))
         self.assertEqual(runner.ARMS, ("SHARED_B_ONLY", "SHARED_A_REPLAY",
