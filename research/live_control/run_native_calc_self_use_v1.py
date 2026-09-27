@@ -15,22 +15,7 @@ from native_cleanup_v1 import finish_allocation
 from scoped_target_handle_v2 import FlatTargetRefused
 
 
-def paced_text_tail(ops, gap_ms):
-    """Explicit research policy compiled to ordinary native text/wait ops."""
-    if type(gap_ms) is not int or gap_ms not in (0, 2, 10):
-        raise ValueError('supported text gaps are 0, 2, 10 ms')
-    if gap_ms == 0:
-        return list(ops)
-    result = []
-    for op in ops:
-        if op.get('op') != 'text' or not op.get('text'):
-            result.append(op)
-            continue
-        for i, ch in enumerate(op['text']):
-            if i:
-                result.append({'op': 'wait_update', 'timeout_ms': gap_ms})
-            result.append(dict(op, text=ch))
-    return result
+from native_tail_v1 import paced_text_tail
 
 
 def review_current_window(bridge):
