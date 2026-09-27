@@ -25,7 +25,8 @@ def run():
         bound, bind_reason = verify_source_window(evidence, trusted)
         rows.append({"case":name, "observed":observed, "trusted":trusted,
                      "gate_admitted":decision.admitted, "gate_reason":decision.reason,
-                     "verifier_bound":bound, "verifier_reason":bind_reason})
+                     "verifier_bound":bound, "verifier_reason":bind_reason,
+                     "strict_identity_matches":type(observed) is type(trusted) and observed == trusted})
     return rows
 
 if __name__ == "__main__":

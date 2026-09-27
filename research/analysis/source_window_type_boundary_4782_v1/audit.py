@@ -6,8 +6,8 @@ from pathlib import Path
 CASES = [
     ("int_int_same", 2097155, 2097155, True, "admitted", "source_window_bound"),
     ("str_str_same", "2097155", "2097155", True, "admitted", "source_window_bound"),
-    ("int_str_cross", 2097155, "2097155", False, "admitted", "source_window_bound"),
-    ("str_int_cross", "2097155", 2097155, False, "admitted", "source_window_bound"),
+    ("int_str_cross", 2097155, "2097155", True, "admitted", "source_window_bound"),
+    ("str_int_cross", "2097155", 2097155, True, "admitted", "source_window_bound"),
     ("int_str_leading_zero", 2097155, "02097155", False, "source_window_mismatch", "source_window_mismatch"),
     ("str_int_different", "2097155", 2097156, False, "source_window_mismatch", "source_window_mismatch"),
 ]
@@ -21,6 +21,8 @@ def valid(payload):
         if row.get("gate_admitted") is not admitted or row.get("gate_reason") != gate_reason: return False
         if row.get("verifier_bound") is not (verifier_reason == "source_window_bound"): return False
         if row.get("verifier_reason") != verifier_reason: return False
+        strict = type(observed) is type(trusted) and observed == trusted
+        if row.get("strict_identity_matches") is not strict: return False
     return True
 
 def main(path):

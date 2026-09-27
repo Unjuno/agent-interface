@@ -1,5 +1,5 @@
 {
-  "schema": "source-window-type-boundary-freeze-v1",
+  "schema": "source-window-type-boundary-freeze-v2",
   "issue": 4782,
   "base_main": "43ef66afa8ccc2823d8729093e198e0bf4eef40f",
   "source": {
@@ -11,12 +11,16 @@
     "verifier_sha256": "182292735cd58f19e5d4a0784194f2c9320efd77cbaa5f6cab24e65f66a66545"
   },
   "study": {
-    "test_sha256": "e37bc5f28888d096814a4c5ddaf58fabbe5eff03f575a4460045c9b7e148bec34",
-    "audit_sha256": "279f18561d3e82d33e2a445df3783bc5543351e442319f3b0ba54543e50b0108",
+    "test_sha256": "f32ffb2918ba0e87aafc0d8677706bb05f1b76809f472b9685aff2a4cbd02c40",
+    "audit_sha256": "7441eb6073b5dc9a609e6ff236be52db42cbf613d102bbcb3fc845836b71284f",
     "formal_invocations": 1,
     "cases": 6,
     "gpu": false,
-    "network": "none"
+    "network": "none",
+    "excluded_construction_failures": [
+      "Draft mutation auditor did not bind exact reason codes; no candidate invocation.",
+      "First synthetic receipt conflated strict-type oracle with candidate behavior; auditor correctly failed, mutation controls 5/5 rejected; no candidate invocation."
+    ]
   },
   "container": {
     "reference": "python:3.12-slim-bookworm",
