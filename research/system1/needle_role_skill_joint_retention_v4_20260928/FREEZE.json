@@ -1,0 +1,59 @@
+{
+  "schema": "needle-role-skill-joint-retention-freeze-v1",
+  "allocation": "needle-role-skill-joint-retention-20260928-v4",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/4941",
+  "branch": "research/needle-role-skill-joint-retention-v4-20260928",
+  "path": "research/system1/needle_role_skill_joint_retention_v4_20260928",
+  "base_main_sha": "6906d6d9b5679604a5d997c89edd1b1789f849ed",
+  "lineage_pr": 4911,
+  "prior_boundary_pr": 4940,
+  "docker_image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+  "platform": "linux/amd64",
+  "formal_seeds": [
+    9944211,
+    9944311,
+    9944411
+  ],
+  "excluded_construction_seed": 9944014,
+  "formal_orchestrations": 0,
+  "formal_retries": 0,
+  "construction_orchestrations": 0,
+  "construction_retries": 0,
+  "construction_boundary_orchestrations": 0,
+  "construction_boundary_retries": 0,
+  "dataset_hash_fields": [
+    "base_train_x",
+    "base_train_y",
+    "base_row_indices",
+    "memory_x",
+    "memory_y",
+    "support_x",
+    "support_y",
+    "test_a_x",
+    "test_a_y",
+    "test_b_x",
+    "test_b_y"
+  ],
+  "source_github_blob_sha": {
+    "runner_py": "f49067684ce61bcea861fc2b6d308644a960a156",
+    "audit_py": "a553c63324030cc38de97e96fff4990452149076",
+    "test_construction_py": "5ae79d66a58baea99028b01a10692be6c276274c",
+    "construction_py": "cf36313441c1d546377345a2a5586d9238f39cc6",
+    "construction_audit_py": "78eddbb91c9babed74f7b1fe32ddf57ba3f722dc",
+    "construction_launcher_py": "c59ad6cfeab81f5ed8a8cdc22eda0af6752592d8",
+    "test_launcher_boundary_py": "5fba95403cb0b6a527173dc45431884bbb2b68b6",
+    "construction_boundary_md": "d2e0acf828d3852046ab695d3349113b282b6412",
+    "readme_md": "8c8f8ca0f10f7c67b10d9677525a6ec45e31fa80"
+  },
+  "mount_sha256": {
+    "audit_py": "2CB68AFE778836B0ECEC2A015EA45531636CBAFB71DBF69DC2465730CFC0CF72",
+    "construction_audit_py": "04C865EDDD6C1E61627B59AC064027E480ADB0CDB9DBD0E2DDF66FAFF439DDCA",
+    "construction_boundary_md": "CD0F07624EA9CA6A11BA810BAD01E0C255ABFACA7BAD8C2049B022D6A6C77208",
+    "construction_launcher_py": "D528A868F73AE88A4363B0960055565A8F46F7218E70992B68ECAD0C84F32C9F",
+    "construction_py": "7DD4C3E32F5D994772041E4D8B7AAADF806CC060A672AF867ADBF37AE9AA297D",
+    "readme_md": "2C3A2F2C2F692D58B32E59F68738BF15B82EB35122489CEFD58D051FD305FEE0",
+    "runner_py": "79A42CE467945EEF306F714B5D63347700F83032241480940B65C56EE97B2C26",
+    "test_construction_py": "4062E50F41734294A184F48229F724146C520A469005AB91C18D830742600A19",
+    "test_launcher_boundary_py": "28616A26E9B87C45BA9ACD23E4338964E64411D58A91083FFACD0BD3B49FF87C"
+  }
+}
