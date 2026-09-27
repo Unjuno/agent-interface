@@ -1,0 +1,63 @@
+{
+  "schema": "broker-timeout-start-docker-construction-v2",
+  "issue": 5074,
+  "allocation": "broker-fake-child-timeout-start-20260928-01",
+  "disposition": "PASS_CONSTRUCTION_ONLY_FINAL_SOURCE",
+  "timestamp_local": "2026-09-28 Asia/Tokyo",
+  "base_main_for_frozen_broker": "b3af4e85f8bf7d41da5251b1728a6ddab34c3476",
+  "latest_main_at_launch_preflight": "26b4fa1f9099b3761eaba8a48941cac23132af5f",
+  "research_branch": "research/broker-fake-child-timeout-start-5074-v4",
+  "research_commit": "eb74e511e85f91eca34001521cde3adb6ce157fd",
+  "additive_path": "research/integration/broker_fake_child_timeout_start_5074_v2/",
+  "docker_context": "desktop-linux",
+  "pinned_image": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+  "platform": "linux/amd64",
+  "preflight": {
+    "context_match": true,
+    "image_and_platform_match": true,
+    "latest_main_match": true,
+    "research_branch_match": true,
+    "frozen_source_files_verified": 11,
+    "running_containers_before": []
+  },
+  "command": "docker --context desktop-linux run --rm --pull=never --platform linux/amd64 --network none --read-only --cpus=0.25 --memory=256m --pids-limit=32 --cap-drop=ALL --security-opt=no-new-privileges:true --tmpfs /tmp:rw,exec,nosuid,size=16m --mount type=bind,src=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\goal-unjuno-agent-interface-github-mcp-2\\work\\issue5074v4\\construction,dst=/study,readonly --workdir /study sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e python -B -m unittest discover -s /study -p 'test_*.py' -v",
+  "exit_code": 0,
+  "tests_passed": 14,
+  "tests_total": 14,
+  "tests": [
+    "test_accepts_minimal_frozen_semantic_fixture",
+    "test_file_reconciliation_rejects_divergent_hashed_payload_views",
+    "test_fourteen_in_memory_corruption_controls_are_rejected",
+    "test_frozen_formal_control_count_matches_auditor",
+    "test_invocation_receipt_freezes_network_cpu_and_slot_ownership",
+    "test_dry_preflight_returns_command_without_creating_receipt_or_outputs",
+    "test_frozen_source_hashes_match_current_files",
+    "test_preflight_rejects_existing_audit_output_before_receipt",
+    "test_receipt_is_exclusive_and_cannot_be_overwritten",
+    "test_rejects_existing_formal_or_audit_output",
+    "test_frozen_case_matrix_has_seven_unique_cases",
+    "test_parent_observes_started_child_before_deadline",
+    "test_protocol_refuses_missing_marker",
+    "test_timeout_row_serialization_is_complete_without_ambient_state"
+  ],
+  "resource_limits": {
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "cpus": 0.25,
+    "memory": "256m",
+    "pids_limit": 32,
+    "cap_drop": ["ALL"],
+    "security_opt": ["no-new-privileges:true"],
+    "tmpfs": "/tmp:rw,exec,nosuid,size=16m",
+    "pull": "never"
+  },
+  "broker_mounted_or_invoked": false,
+  "formal_cases_invoked": 0,
+  "formal_allocation_consumed": false,
+  "limitations": [
+    "construction and auditor harness only",
+    "no broker process/case, provider/model, GUI, input or application effect",
+    "not a scientific PASS or FAIL"
+  ]
+}
