@@ -1,4 +1,4 @@
-# Needle adaptive generation fence â Issue #4840
+# Needle adaptive generation fence — Issue #4840
 
 ## H/T/D/C/U
 
