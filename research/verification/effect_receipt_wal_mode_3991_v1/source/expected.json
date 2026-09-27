@@ -6,10 +6,10 @@
   "cuts": ["BEFORE", "AFTER_FIRST", "AFTER_SECOND", "AFTER_COMMIT", "NORMAL"],
   "repetitions": 3,
   "registered_patterns": {
-    "EFFECT_FIRST": {"AFTER_FIRST": "effect=1, receipt=absent before retry", "AFTER_SECOND": "effect=1, receipt=present"},
+    "EFFECT_FIRST": {"AFTER_FIRST": "effect=2 after one retry (duplicate), receipt=present; pre-retry effect=1, receipt=absent", "AFTER_SECOND": "effect=1, receipt=present; no retry"},
     "RECEIPT_FIRST": {"AFTER_FIRST": "effect=0, receipt=present", "AFTER_SECOND": "effect=1, receipt=present"},
     "ATOMIC_LOCAL": {"all cuts": "effect=1, receipt=present after one retry when needed"},
-    "ATOMIC_EXTERNAL": {"AFTER_FIRST": "effect=1, receipt=absent before retry", "AFTER_SECOND": "effect=1, receipt=present"}
+    "ATOMIC_EXTERNAL": {"AFTER_FIRST": "effect=2 after one retry (duplicate), receipt=present; pre-retry effect=1, receipt=absent", "AFTER_SECOND": "effect=1, receipt=present; no retry"}
   },
   "control_patterns": {
     "missing_identity": "refuse; effect=0, receipt=0",
