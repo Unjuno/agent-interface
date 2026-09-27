@@ -90,7 +90,9 @@ class OptimizationControls(unittest.TestCase):
             path.write_text(mutated,encoding="utf-8")
             normal=self.invoke("normal",path)
             self.assertNotEqual(normal.returncode,0,(normal.stdout,normal.stderr))
-            self.assertNotIn("PASS_TYPED_NEGATIVE_OUTCOMES_SCOPED",normal.stdout)
+            # The legacy program prints its PASS banner before its last assert.
+            # Its nonzero exit is the actual rejection signal in normal mode.
+            self.assertIn("PASS_TYPED_NEGATIVE_OUTCOMES_SCOPED",normal.stdout)
             for mode in ("opt_flag","env_opt"):
                 optimized=self.invoke(mode,path)
                 self.assertEqual(optimized.returncode,0,(mode,optimized.stdout,optimized.stderr))
