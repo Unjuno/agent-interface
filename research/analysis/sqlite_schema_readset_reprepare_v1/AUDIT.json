@@ -1,0 +1,24 @@
+{
+  "decision": "PASS_SCHEMA_SCOPED_SQL_DEPENDENCY_REPLACE_SCOPED",
+  "errors": [],
+  "gates": {
+    "all_policy_counts": true,
+    "formal_budget": true,
+    "raw_case_count_48": true,
+    "replace_exact": true,
+    "replace_safe_minimal": true,
+    "stale_false": true,
+    "stale_missing": true,
+    "stale_unsafe": true,
+    "union_extra": true,
+    "union_false": true,
+    "union_no_missing": true,
+    "union_no_unsafe": true
+  },
+  "pass": true,
+  "summary": {
+    "LIFETIME_UNION": {"cases": 16, "decision_errors": 0, "extra_dependency_cases": 10, "false_invalidations": 4, "missing_dependency_cases": 0, "unsafe_acceptances": 0},
+    "SCHEMA_SCOPED_REPLACE": {"cases": 16, "decision_errors": 0, "extra_dependency_cases": 0, "false_invalidations": 0, "missing_dependency_cases": 0, "unsafe_acceptances": 0},
+    "STALE_METADATA": {"cases": 16, "decision_errors": 0, "extra_dependency_cases": 6, "false_invalidations": 2, "missing_dependency_cases": 6, "unsafe_acceptances": 2}
+  }
+}

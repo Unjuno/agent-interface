@@ -1,0 +1,52 @@
+{
+  "audit_sha256": "752a5c6e018f463e58fe39c0934d0d5187254145a60fb327a24fe94f701a7b7e",
+  "corruption_controls": 8,
+  "corruption_controls_pass": true,
+  "decision": "PASS_SCHEMA_SCOPED_SQL_DEPENDENCY_REPLACE_SCOPED",
+  "evidence_archive": {
+    "bytes": 22568,
+    "file": "FORMAL_EVIDENCE.tar.xz",
+    "sha256": "efe2a55f2b0f85bcf2921243c622c6e74f20b56a6e99fc67e3e8d9a2eb4dd0da"
+  },
+  "formal_cases": 48,
+  "formal_exit": 0,
+  "formal_invocations": 1,
+  "formal_manifest": {
+    "bytes": 48501,
+    "file_count": 255,
+    "sha256": "e456fc3341af6f6b880d6dbfb38d923242b5f6f9d154e625491faa6b7f033dcc"
+  },
+  "freeze_sha256": "129ef6531f1fdea8ec1fe82a49fbdce7daca866ac8c7ac86f163397f642de074",
+  "issue": 4114,
+  "pass": true,
+  "raw_sha256": "5ef28e111ef253fa442e0c7a149ba1114a10c7bd4d83464439f863efb4df0ca3",
+  "replacements": 0,
+  "reruns": 0,
+  "summary": {
+    "LIFETIME_UNION": {
+      "cases": 16,
+      "decision_errors": 0,
+      "extra_dependency_cases": 10,
+      "false_invalidations": 4,
+      "missing_dependency_cases": 0,
+      "unsafe_acceptances": 0
+    },
+    "SCHEMA_SCOPED_REPLACE": {
+      "cases": 16,
+      "decision_errors": 0,
+      "extra_dependency_cases": 0,
+      "false_invalidations": 0,
+      "missing_dependency_cases": 0,
+      "unsafe_acceptances": 0
+    },
+    "STALE_METADATA": {
+      "cases": 16,
+      "decision_errors": 0,
+      "extra_dependency_cases": 6,
+      "false_invalidations": 2,
+      "missing_dependency_cases": 6,
+      "unsafe_acceptances": 2
+    }
+  },
+  "tuning": 0
+}
