@@ -86,7 +86,7 @@ def audit(root):
         expected = mode in ("opt_flag", "env_opt")
         check(receipt.get("expected_bypass") is expected, stem + ":expected", errors)
         check(receipt.get("assert_bypass_reproduced") is expected, stem + ":observed", errors)
-        check(receipt.get("pass_marker_seen") is True, stem + ":early_pass_banner", errors)
+        check(receipt.get("pass_marker_seen") is expected, stem + ":pass_marker", errors)
         raw_error = (root / (stem + ".stderr")).read_bytes()
         if expected:
             check(raw_error == b"", stem + ":optimized_stderr", errors)
