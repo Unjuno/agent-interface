@@ -103,4 +103,3 @@ def main():
     (OUT/'raw.json').write_bytes(json.dumps(result,sort_keys=True,indent=2).encode()+b'\n')
     if result['disposition'] != 'PASS_ATOMIC_PUBLICATION_CONSTRUCTION_SCOPED': raise SystemExit('construction_gate_failed')
 if __name__ == '__main__': main()
-
