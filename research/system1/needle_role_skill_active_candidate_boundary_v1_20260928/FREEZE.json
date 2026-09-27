@@ -1,0 +1,40 @@
+{
+  "schema": "issue4986-stage0-freeze-v1",
+  "issue": 4986,
+  "allocation": "needle-role-skill-active-candidate-boundary-v1-stage0-20260928-01",
+  "base_main_sha": "b7816b25b452f8411c2690a69297578bdc4c378a",
+  "branch": "research/needle-role-skill-active-candidate-boundary-v1-20260928",
+  "path": "research/system1/needle_role_skill_active_candidate_boundary_v1_20260928/",
+  "hypothesis": "A validated inert role-skill candidate is published only after exact schema/generation/scope and audit receipt checks; failures preserve ACTIVE bytes; retired-generation proposals yield; rollback restores only compatible retained bytes.",
+  "treatment": "Stage 0 synthetic construction contract, 9 transitions, one reused exact source package from #3890 seed 3788, no model/training/GUI/provider/optimizer; runner and raw-only auditor are separate containers.",
+  "decision": "PASS_CONSTRUCTION_CONTRACT_SCOPED iff all 9 expected decisions reconstruct, rejection leaves ACTIVE digest and size unchanged, publication increments generation once, old generation yields without dispatch, exact compatible rollback succeeds, incompatible rollback rejects, audit errors=0.",
+  "confounders": "Single hand-authored inert package and single-process lifecycle model; not concurrent publication or production filesystem/runtime memory ordering. SHA-256 establishes identity, not authenticity.",
+  "limits": "No Stage 1 concurrent reader/writer probe, Needle training/adaptation, semantic routing, real effect, execution authority, production safety, performance, or product claim.",
+  "source": {
+    "skill.json": {"github_blob_sha": "45b80150dac503f4eb6f3cb5d82f9afa2c587107", "sha256": "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a", "bytes": 15279},
+    "runner.py": {"sha256": "695f4f0c105d82c9bad70cdc790d8521d87bd919f034ee6b69b2407242a3360b"},
+    "audit.py": {"sha256": "1624d2afa74c735ae3315e36f7e86c638f126ec14641e1012ca1bae916ef433b"},
+    "test_controls.py": {"sha256": "b0195c36081ce29a482728310a7cfc3db5e4794fae5de9115828e7dc131e31de"}
+  },
+  "container": {
+    "image": "python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "docker_engine": "28.5.1",
+    "network": "none",
+    "cpu": 1,
+    "memory": "512m",
+    "pids_limit": 64,
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "runner_output": "dedicated writable /evidence mount",
+    "audit_raw": "read-only /raw mount",
+    "audit_output": "dedicated writable /audit mount"
+  },
+  "raw_sha256": "84c39bfa134d6b788423378faedb763524f409de4eedfa09ca8c983859663250",
+  "raw_bytes": 167611,
+  "audit_sha256": "ada26163593e23a5a09ce3aaedc542521c56931034b48e170240a02d16d1bf41",
+  "audit_verdict": "PASS_CONSTRUCTION_CONTRACT_SCOPED",
+  "audit_errors": 0,
+  "mutation_controls": {"rejected": 6, "total": 6}
+}
+
