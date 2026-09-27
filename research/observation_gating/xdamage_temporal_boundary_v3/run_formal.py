@@ -60,10 +60,10 @@ def run(args):
     out=pathlib.Path(args.out).resolve()
     out.mkdir(parents=True,exist_ok=False)
     state={"allocation":ALLOC,"mode":args.mode,"sessions":args.sessions,"started_utc":time.strftime("%Y-%m-%dT%H:%M:%SZ",time.gmtime()),"formal_invocation":0}
+    try: freeze=verify_freeze()
+    except Exception as exc:
+        state.update(disposition="STOP_PREFLIGHT",error=repr(exc));write_json(out/"STOP.json",state);return 2
     if args.mode=="formal":
-        try: freeze=verify_freeze()
-        except Exception as exc:
-            state.update(disposition="STOP_PREFLIGHT",error=repr(exc));write_json(out/"STOP.json",state);return 2
         marker=out/"FORMAL_INVOCATION_STARTED.json"
         # O_EXCL makes accidental second use of this exact output impossible.
         fd=os.open(marker,os.O_CREAT|os.O_EXCL|os.O_WRONLY,0o600)
