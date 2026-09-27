@@ -13,6 +13,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, Stri
 from agent_review import review_native
 from runtime.cli_v1.mcp_server import content
 from native_exchange_v1 import run
+from native_brief_review_v1 import brief_native_review
 from native_tail_v1 import expand_tail, paced_text_tail
 
 
@@ -183,11 +184,14 @@ def create_server(run_directory, *, allocation=None):
             result['allocation'] = state
         return result
 
-    def invoke(operation, *, include_image=True):
+    def invoke(operation, *, include_image=True, detail='full'):
         # One bound run, no concurrent submit/resume processing or automatic retry.
         with lock:
             try:
-                return content(operation(), include_image=include_image)
+                result = operation()
+                if detail == 'brief':
+                    result = brief_native_review(result)
+                return content(result, include_image=include_image)
             except Exception as error:
                 return CallToolResult(isError=True, content=[TextContent(type='text', text=json.dumps({
                     'status':'client_error', 'error':str(error), 'authority':'none',
@@ -253,13 +257,17 @@ def create_server(run_directory, *, allocation=None):
         return invoke(observe)
 
     @server.tool(structured_output=False)
-    def native_submit(stage: StrictInt, decision: NativeDecision, timeout: WaitSeconds = 5) -> CallToolResult:
+    def native_submit(stage: StrictInt, decision: NativeDecision, timeout: WaitSeconds = 5,
+                      detail: Literal['full', 'brief'] = 'full') -> CallToolResult:
         """Submit one explicit decision against its viewed source_sequence.
 
         Uses existing guarded click/keyboard tail and immutable stage publication.
         Never retry submit after timeout/error. Pending returns decision_sha256:
         use native_resume. Task success is separate from input completion.
         Inspect image_status and continuation separately from feedback_status.
+        detail=brief requests normal-result receipt projection; critical/unknown
+        outcomes remain full. A brief response supplies exact-request full retrieval.
+        Always inspect the unchanged image; projected completion is not task success.
         When continuation.status=source_available, view the returned image and
         use its stage/source_sequence for a new decision; no source-file read is
         needed. This is retained evidence, not freshness or permission to replay.
@@ -277,11 +285,12 @@ def create_server(run_directory, *, allocation=None):
             validate_recorded_tail(root, decision)
             return with_process_snapshot(run(root, stage, decision.model_dump(mode='json', exclude_unset=True),
                        timeout=timeout, compact=True))
-        return invoke(submit)
+        return invoke(submit, detail=detail)
 
     @server.tool(structured_output=False)
     def native_resume(stage: StrictInt, decision_sha256: str, timeout: WaitSeconds = 5,
-                      include_image: StrictBool = True) -> CallToolResult:
+                      include_image: StrictBool = True,
+                      detail: Literal['full', 'brief'] = 'full') -> CallToolResult:
         """Read/wait for an exact committed request without publishing input.
 
         Supply the original pending response's stage and SHA256. Missing/changed
@@ -289,9 +298,11 @@ def create_server(run_directory, *, allocation=None):
         Set include_image=false only to reread the outcome without redelivering its
         retained image. Image integrity is still checked; metadata and historical
         image reference remain. This does not capture a new frame or justify input.
+        detail=brief uses the same normal-result projection as native_submit;
+        the default full response retains all receipt detail.
         """
         return invoke(lambda: with_process_snapshot(run(root, stage, resume=True, decision_sha256=decision_sha256,
-                                  timeout=timeout, compact=True)), include_image=include_image)
+                                  timeout=timeout, compact=True)), include_image=include_image, detail=detail)
     return server
 
 
