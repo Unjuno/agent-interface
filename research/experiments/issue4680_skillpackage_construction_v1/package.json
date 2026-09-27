@@ -1,0 +1,23 @@
+{
+  "schema": "agent-interface-skill-package-v1",
+  "skill_id": "settings-workspace-v1",
+  "intent_version": "settings-v1",
+  "state_schema": ["scope_id", "generation", "freshness", "ambiguous", "values", "allowed_values", "staged", "visible_targets"],
+  "allowed_actions": ["SET_FIELD", "CLICK", "YIELD", "NO_ACTION"],
+  "forbidden_effects": ["delete_workspace"],
+  "predicates": ["scope_matches", "generation_matches", "evidence_fresh", "not_ambiguous", "effect_allowed", "target_visible", "requested_value_supported", "requested_state_differs", "field_staged"],
+  "decision_choices": ["SET_FIELD", "CLICK", "YIELD", "NO_ACTION"],
+  "macro_bindings": {
+    "enable_email_reminders": {"kind":"toggle","field":"email_reminders","target":"toggle_email_reminders","effect":"toggle_email_reminders","forbidden":false},
+    "set_digest_frequency": {"kind":"field","field":"digest_frequency","target":"save_settings","effect":"set_digest_frequency","forbidden":false},
+    "set_timezone": {"kind":"field","field":"timezone","target":"save_settings","effect":"set_timezone","forbidden":false},
+    "set_display_name": {"kind":"field","field":"display_name","target":"save_settings","effect":"set_display_name","forbidden":false},
+    "set_sharing_visibility": {"kind":"ambiguous","field":"sharing_visibility","target":"save_settings","effect":"set_sharing_visibility","forbidden":false},
+    "delete_workspace": {"kind":"forbidden","field":"","target":"delete_workspace","effect":"delete_workspace","forbidden":true}
+  },
+  "yield_conditions": ["stale_intent_version", "stale_generation", "stale_scope", "ambiguous", "missing_evidence", "forbidden", "unsupported"],
+  "progress_contract": {"max_steps":2,"completion_effects":["toggle_email_reminders","set_digest_frequency","set_timezone","set_display_name"]},
+  "source_adapter_version": "guarded-macro-contract-4204-v1",
+  "validation_scope": ["issue4680-skillpackage-construction-20260927-01"]
+}
+
