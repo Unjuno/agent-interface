@@ -29,3 +29,4 @@ The pre-run frozen command and artifact identities are in `FROZEN.json`. Its Doc
 - Raw manifest `evidence-manifest.json`: SHA-256 `b01654039c7d8e5451852852c58cae50774def132448c3d9006445167ccc8dc1`.
 - Runner SHA-256 `6acd0f71408d81ea0b0b07e05b4018963d7f918c1ea9446f8a2058afdaa049ea`; frozen v7 auditor SHA-256 `d0300acafaa501bf22c83423a8b7ec19b355bfb6da41871c5fd5c50c04b376f7`; posthoc v8 auditor SHA-256 `cc8997f35dc6e4dd11f00026b807bd010bf25c7ee563e3196cbed068a45ec9ff`.
 - The exact raw archive remains separate from the previous case's 33-file archive and is not pooled with it.
+- A separate network-disabled Docker stdlib verifier reopened the ZIP and reconciled all 36 entries against the manifest (sizes and SHA-256): `PASS_EXACT_ARCHIVE_MANIFEST_RECONCILIATION`, errors=[]; result is `ZIP_AUDIT_POSTHOC.json`.
