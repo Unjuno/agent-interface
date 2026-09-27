@@ -74,3 +74,7 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 
 - [`typed_readout_prefix_gpu_1014_v1/STOP_RECORD.md`](typed_readout_prefix_gpu_1014_v1/STOP_RECORD.md) — successor #4623 materialized a pinned Qwen2.5-0.5B model in a network-disabled RTX 3080 Docker container. Independent construction audit reproduced the FP16 full-vocabulary logit-tolerance failure; the formal latency block did not run. No typed-decision competence or runtime claim.
 - [`typed_readout_code_projection_1014_v2/STOP_RECORD.md`](typed_readout_code_projection_1014_v2/STOP_RECORD.md) — successor #4639 separately tested the eight answer-code logits on the same pinned GPU assets. Independent audit reproduced a selected-score tolerance failure (B00/slot 15); the formal latency block did not run. This does not modify #4623.
+
+## Concurrent Needle online-LoRA / System-1 inference
+
+- [`needle_concurrent_online_lora_4631_v1/RESULT_SUMMARY.md`](needle_concurrent_online_lora_4631_v1/RESULT_SUMMARY.md) — successor #4621; the sole frozen training orchestration completed, but a scalar/vector shape bug in the independent auditor stopped certification. No retry or model-quality claim.
