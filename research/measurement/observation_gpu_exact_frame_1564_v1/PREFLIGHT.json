@@ -3,30 +3,30 @@
   "allocation": "gpu-exact-frame-gate-1564-20260928-01",
   "intake_main_sha": "f0b9ed74736729a4fdd04f2205a834a777befde1",
   "image_id": "sha256:01ea4e60b03e8a7d48644d0dce596bd2e42ab3815fdc52b0c7a6d4cbcf757dac",
-  "purpose": "Read-only image entrypoint and dependency introspection before freezing the one formal benchmark invocation. No benchmark runner, GPU kernel, model, or inference code was executed.",
+  "purpose": "Read-only image entrypoint/dependency and audit-construction checks before freezing the one formal benchmark invocation. No benchmark timing row, model, or inference code was executed.",
   "attempts": [
     {
       "kind": "environment_introspection",
+      "exit_code": 1,
       "command": "docker run --rm --pull=never --network none --read-only --cpus=0.25 --memory=1g --pids-limit=32 IMAGE python -c ...",
-      "exit_code": 1,
       "stderr": "python: can't open file '/src/runner.py': [Errno 2] No such file or directory",
-      "cause": "The pinned image has Entrypoint [python, /src/runner.py]; the appended command did not override the entrypoint.",
+      "cause": "The pinned image has Entrypoint [python, /src/runner.py]; appended command did not override the entrypoint.",
       "formal_runner_started": false,
       "gpu_requested": false
     },
     {
       "kind": "environment_introspection",
+      "exit_code": 1,
       "command": "docker run --rm --pull=never --network none --read-only --cpus=0.25 --memory=1g --pids-limit=32 IMAGE -c ...",
-      "exit_code": 1,
       "stderr": "python: can't open file '/src/runner.py': [Errno 2] No such file or directory",
-      "cause": "The pinned image entrypoint remains active unless explicitly overridden.",
+      "cause": "The pinned image entrypoint remained active.",
       "formal_runner_started": false,
       "gpu_requested": false
     },
     {
       "kind": "environment_introspection",
-      "command": "docker run --rm --pull=never --network none --read-only --cpus=0.25 --memory=1g --pids-limit=32 --entrypoint python IMAGE -c <read-only version probe>",
       "exit_code": 0,
+      "command": "docker run --rm --pull=never --network none --read-only --cpus=0.25 --memory=1g --pids-limit=32 --entrypoint python IMAGE -c <read-only version probe>",
       "stdout": {
         "python": "3.11.10 | packaged by conda-forge | (main, Oct 16 2024, 01:27:36) [GCC 13.3.0]",
         "platform": "Linux-6.6.114.1-microsoft-standard-WSL2-x86_64-with-glibc2.35",
@@ -36,14 +36,30 @@
       },
       "gpu_requested": false,
       "formal_runner_started": false
+    },
+    {
+      "kind": "audit_construction",
+      "exit_code": 1,
+      "command": "docker run --rm --pull=never --network none --read-only --cpus=0.25 --memory=1g --pids-limit=32 -v SOURCE:/src:ro --entrypoint python IMAGE /src/test_audit_result.py; then python -m py_compile ...",
+      "stderr": "Unit tests could not create TemporaryDirectory because read-only image had no writable /tmp; py_compile also tried writing /src/__pycache__.",
+      "formal_runner_started": false,
+      "gpu_requested": false
+    },
+    {
+      "kind": "audit_construction",
+      "exit_code": 0,
+      "command": "docker run --rm --pull=never --network none --read-only --cpus=0.25 --memory=1g --pids-limit=32 --tmpfs /tmp:rw,nosuid,nodev,size=256m -e PYTHONDONTWRITEBYTECODE=1 -v SOURCE:/src:ro --entrypoint python IMAGE /src/test_audit_result.py; second no-network readonly container used compile(Path(...), ...), not py_compile.",
+      "stdout": "Ran 3 tests in 0.002s; OK. SOURCE_COMPILE_PASS.",
+      "formal_runner_started": false,
+      "gpu_requested": false
     }
   ],
-  "local_audit_construction_tests": {
+  "host_audit_construction_tests": {
     "command": "python -m unittest -v test_audit_result.py",
     "result": "PASS",
     "tests": 3,
     "failed": 0,
     "py_compile": "PASS"
   },
-  "note": "The two command-entrypoint failures are retained as preflight setup evidence; no formal timing row was attempted or consumed."
+  "note": "Failed preflight commands are retained. The corrected checks used a temporary filesystem only for /tmp and left source read-only; no CUDA work was attempted."
 }
