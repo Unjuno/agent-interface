@@ -320,6 +320,8 @@ This is cooperative boundary handling, not immediate input cancellation: setup,
 input programs and feedback already in progress can continue until a check.
 There remains a check/use race. It does not contain escaped descendants, survive
 a killed harness, prove physical release, or provide restart authority. Initial
-actual-MCP construction used an inert substitute worker; GUI cleanup and held
-input remain unverified for this option. Do not enable it as a production default
-from that construction result.
+actual-MCP construction used an inert substitute worker. One subsequent idle Calc
+case reached existing cleanup after server exit and externally reaped the owner;
+tracked processes were absent. Held input and complete descendant closure remain
+unverified. See [construction evidence](../../runtime/results/native-owner-lifetime-01/README.md).
+Do not enable it as a production default from these bounded results.
