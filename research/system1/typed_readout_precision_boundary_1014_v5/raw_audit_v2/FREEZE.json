@@ -20,5 +20,20 @@
     "verify_audit_v2.py": "5fbe84a60029e6bdfb29e0016f7ca18cdf3d7105"
   },
   "decision": "exact raw passes; self-consistent mutation and all corruption controls reject under normal, -O, and PYTHONOPTIMIZE=1; separate verifier checks raw/corpus/weight digest and report invariants",
-  "forbidden": ["model load", "inference", "generation", "fit", "optimizer step", "GPU", "retry", "seed substitution"]
+  "forbidden": [
+    "model load",
+    "inference",
+    "generation",
+    "fit",
+    "optimizer step",
+    "GPU",
+    "retry",
+    "seed substitution"
+  ],
+  "frozen_container_launcher": {
+    "path": "container_launcher_v1.py",
+    "bytes": 22323,
+    "sha256": "b8993e41273dcb1cda1df31de84e2134ddcbf29d0e0811bf2d92266396d9b877",
+    "git_blob": "15830a00cd0186858f254c03a5710aefa607264b"
+  }
 }
