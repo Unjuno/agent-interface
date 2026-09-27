@@ -1,0 +1,34 @@
+{
+  "schema": "needle-role-skill-environment.v1",
+  "host": {
+    "os": "Windows",
+    "cpu_logical": 20,
+    "ram_gib": 31.7,
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "gpu_vram_mib": 16384
+  },
+  "docker": {
+    "client": "29.8.0",
+    "server": "29.8.0",
+    "engine_os": "linux",
+    "engine_arch": "amd64",
+    "engine_cpus": 20,
+    "engine_memory_bytes": 16633614336,
+    "cached_image": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "image_size_bytes": 1264751150,
+    "container_limits": {
+      "cpus": 1,
+      "memory": "2g",
+      "pids": 64,
+      "tmpfs": "/tmp:rw,nosuid,nodev,size=64m",
+      "network": "none",
+      "root_read_only": true,
+      "source_read_only": true
+    }
+  },
+  "training_device": "cpu",
+  "threads": 1,
+  "package_installs": 0,
+  "image_pull": false
+}
