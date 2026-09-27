@@ -1,0 +1,41 @@
+{
+  "schema": "issue-4959-allocation-stop-v1",
+  "issue": 4959,
+  "allocation": "predicate-order-audit-hardening-4955-v2-20260928-01",
+  "frozen_source_commit": "d0c670f135a4db937a01567dd293529cbc2afd82",
+  "result": "STOP_LAUNCHER_SYNTAX_ERROR",
+  "phase": "python_bootstrap_parse_before_stdin_read",
+  "container_invocation": 1,
+  "retries": 0,
+  "docker": {
+    "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "pull": "never",
+    "network": "none",
+    "root_read_only": true,
+    "cpus": 1,
+    "memory_bytes": 536870912,
+    "pids_limit": 32,
+    "gpu": false,
+    "process_exit_code": 1,
+    "auto_removed": true
+  },
+  "observed_error": "SyntaxError: unexpected character after line continuation character",
+  "reason": "The PowerShell command passed literal escaped newline sequences in the Python -c bootstrap instead of actual statement separators.",
+  "execution_counts": {
+    "unit_tests": 0,
+    "raw_archive_reads": 0,
+    "raw_member_decodes": 0,
+    "auditor_calls": 0,
+    "legacy_audit_calls": 0,
+    "model_loads": 0,
+    "inference_calls": 0
+  },
+  "inputs": {
+    "frozen_sources_read_back": true,
+    "source_hash_checks_reached": false,
+    "archive_blob": "c38dd2002f201d49b6fc261caff019550a4bf4bc",
+    "raw_sha256_expected": "5f48e0274f9fd800ac26af3dd70bd52171700b32ce159f3cdbe0f28c7ec35e7d"
+  },
+  "interpretation": "Execution/setup STOP only; no hypothesis evidence. One-shot allocation is consumed and must not be retried. No source, predecessor, or raw artifact was modified."
+}
