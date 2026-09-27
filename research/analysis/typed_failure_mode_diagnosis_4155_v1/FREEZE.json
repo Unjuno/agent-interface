@@ -1,0 +1,29 @@
+{
+  "allocation": "typed-failure-mode-diagnosis-4155-20260923-01",
+  "base_main": "118b385697a03be6452249bf2a0111718d7535c2",
+  "construction_tests": "4/4 PASS",
+  "decision_gate": [
+    "PASS_TYPED_MODE_DIAGNOSIS_SCOPED",
+    "FAIL_DIAGNOSIS_LAYER_UNNECESSARY",
+    "FAIL_DIAGNOSIS_MISROUTES_RECOVERY",
+    "HOLD_OBSERVATIONS_NOT_IDENTIFIABLE",
+    "FAIL_INTEGRITY"
+  ],
+  "formal_invocations_before_freeze": 0,
+  "formal_rows": 324,
+  "issue": 4155,
+  "replacements": 0,
+  "reruns": 0,
+  "schema": "typed-failure-mode-diagnosis-4155-freeze-v1",
+  "source_sha256": {
+    "CONSTRUCTION.md": "cb682bb414db4afdc935abe0ce100a34fd244219f215d6d24924047ae5b0574c",
+    "ENVIRONMENT.json": "5d232537c06436f8eeef17fbe9e0c37f1ee1f37a18cf8206402aeedaf3fb7eb6",
+    "PLAN.md": "4015bffcd8877ec61c25b90b86ba1099cd424eb57c676ee4bb5afdd74c731d32",
+    "SCHEDULE.json": "477159527ab761abaf8049ed39c0c2b3937b64ebe2146da3068bdbdb1bd12bf4",
+    "audit.py": "c3eeef3ce354b45bffaa6f392092b7b767e06b017c23c253efb3aec73a14de46",
+    "controls.py": "116dfcc6c49797b6763974e7c7bc643a96ae5e3f9cdfb9212124da7da67d52e6",
+    "experiment.py": "b942e9104fb94f2b6f5ca3b303873d5089ab81b14648021db2ccce132c584779",
+    "test_contract.py": "0c1c5b084f81eda123bf8efb8910c086e2405e79a3734510a44e6e576c7097f6"
+  },
+  "tuning_after_freeze": 0
+}
