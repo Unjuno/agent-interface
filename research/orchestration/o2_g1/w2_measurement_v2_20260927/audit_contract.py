@@ -32,6 +32,7 @@ def trace_invariant_errors(raw):
                 if p.get("edge")=="down": downs[k]=ev
                 elif p.get("edge")=="up" and k not in downs: errors.append("up_without_down")
                 if ev.get("source_role")!="backend": errors.append("input_edge_wrong_owner_role")
+                if ev["input_authority"]!="true": errors.append("input_edge_without_true_authority")
                 if not ev["lineage"].get("actuation_id"): errors.append("input_edge_missing_actuation")
                 if not ev["lineage"].get("lease_id"): errors.append("input_edge_missing_lease")
                 if ev["input_authority"]=="true" and not any(x["event_type"]=="LEASE_OPEN" and x["lineage"].get("lease_id")==ev["lineage"].get("lease_id") and x["time"]["lower_ns"]<=bounds[0] for x in case["events"]):
