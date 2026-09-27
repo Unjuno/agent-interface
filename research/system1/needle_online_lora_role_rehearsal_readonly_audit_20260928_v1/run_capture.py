@@ -20,6 +20,8 @@ if len(sys.argv) != 3:
 
 artifact_root = Path(sys.argv[1]).resolve()
 output_dir = Path(sys.argv[2]).resolve()
+if output_dir.exists() and any(output_dir.iterdir()):
+    raise SystemExit("STOP_OUTPUT_NOT_EMPTY")
 output_dir.mkdir(parents=True, exist_ok=True)
 result_path = output_dir / "READONLY_AUDIT.json"
 stdout_path = output_dir / "audit.stdout.bin"
