@@ -1,13 +1,14 @@
 from pathlib import Path
-import hashlib
 import json
-import os
 import subprocess
 import tempfile
 import unittest
-from types import SimpleNamespace
 from unittest.mock import patch
 
+
+import hashlib
+import os
+from types import SimpleNamespace
 
 class HostBrokerContractTest(unittest.TestCase):
     def _run_once(self, child_result=None, child_error=None):
