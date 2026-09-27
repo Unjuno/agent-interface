@@ -22,9 +22,9 @@
   "formal_command": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --cpus 0.25 --memory 256m --pids-limit 32 --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,exec,nosuid,size=16m -e FROZEN_IMAGE_ID=sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e -v <frozen-source>:/src:ro -v <fresh-empty-output>:/out:rw sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e python /src/formal.py",
   "source_sha256_in_container": {
     "host_model_ipc_broker_v1.py": "e44822269b921aa6327563b27e48a6d8ef4ebe35a182f50de541cf66fce6199c",
-    "runner.py": "ce31ff9c1b084037b2006cd6ec82cc33018c7c0970291ae43296a99b5ab42789",
-    "audit.py": "c65a505545c43b1b3adaa881fcdb6981e786fe037bcf0316a856bed29c6e02d2",
-    "formal.py": "3be0fca94cf3c49cb2c0cafa35596ffa470550f02b4aa669b09f03065f0164c9",
-    "test_harness.py": "f7a76bb1fe77fa58ca7f2721b4ede26742da3d64162612d282698c5a10fd7786"
+    "runner.py": "5953d49387accd76e899701b8dc467c39097f4ad5c7ad68aa90b2b3eb9adfcc4",
+    "audit.py": "90347e938dbad9c2476d882295670a2dcd336e3c5589b8dce0f87719eff208e7",
+    "formal.py": "1130ea5b31a46883512d4a1010f43b171ae20e53a480e84181ed6a5d199f6e1d",
+    "test_harness.py": "4618548bccfef9d76500710d014c944ddbf5e84273e8da00f60bd91f72f2f9ad"
   }
 }
