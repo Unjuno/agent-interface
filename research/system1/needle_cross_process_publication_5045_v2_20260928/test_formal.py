@@ -20,6 +20,9 @@ EXP = Path(__file__).resolve().parent
 class FrozenPreflightTests(unittest.TestCase):
     def test_actual_registered_freeze_has_nested_input_digest(self):
         freeze = json.loads((EXP / "FREEZE.json").read_text(encoding="utf-8"))
+        self.assertEqual(freeze["schema"], "needle-cross-process-publication-freeze-v2")
+        self.assertEqual(freeze["allocation"], "needle-cross-process-publication-5045-v2-20260928-01")
+        self.assertEqual(freeze["issue"], 5066)
         self.assertEqual(freeze["input"]["sha256"], EXPECTED_SEED)
         self.assertNotIn("input_sha256", freeze)
 
@@ -35,13 +38,17 @@ class FrozenPreflightTests(unittest.TestCase):
             self.assertFalse(output.exists())
 
     def test_misnested_digest_is_rejected_by_contract(self):
-        freeze = {"schema": "needle-cross-process-publication-freeze-v1",
+        freeze = {"schema": "needle-cross-process-publication-freeze-v2",
+                  "allocation": "needle-cross-process-publication-5045-v2-20260928-01",
+                  "issue": 5066,
                   "image_id": IMAGE, "input_sha256": EXPECTED_SEED}
         with self.assertRaisesRegex(RuntimeError, "input.sha256"):
             validate_freeze_identity(freeze, EXPECTED_SEED)
 
     def test_wrong_image_and_seed_fail_closed(self):
-        good = {"schema": "needle-cross-process-publication-freeze-v1",
+        good = {"schema": "needle-cross-process-publication-freeze-v2",
+                "allocation": "needle-cross-process-publication-5045-v2-20260928-01",
+                "issue": 5066,
                 "image_id": IMAGE, "input": {"sha256": EXPECTED_SEED}}
         bad_image = dict(good, image_id="sha256:" + "0" * 64)
         with self.assertRaisesRegex(RuntimeError, "image"):
