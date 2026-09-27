@@ -8,4 +8,3 @@ def normalize(payload: str | bytes) -> bytes:
     if isinstance(payload, bytes):
         return payload
     return bytes(payload)
-
