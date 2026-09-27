@@ -24,3 +24,8 @@ This additive study tests whether a non-clearing XDamage subscription records dr
 - No network, no package installation, no GPU, no user desktop, no input API.
 
 Formal status remains NOT RUN until the frozen source readback and all preformal gates pass.
+
+
+## Executed construction boundary
+
+Construction 05 ran once in the pinned image and passed a separate RGB-byte audit for the six conditions. Exact command, source and output identities, per-case hashes, lossless raw archive and limitations are in [CONSTRUCTION_05.md](CONSTRUCTION_05.md). This is construction-only on one X client/session; it is not formal evidence and does not satisfy the planned role separation, eight sessions, ExactGate boundary, provenance audit or corruption controls. Formal invocation remains 0/1. The incomplete formal launcher was removed so this branch cannot accidentally report a run that is not implemented.
