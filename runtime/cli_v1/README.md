@@ -540,3 +540,15 @@ CLI and public MCP one-shot lifecycle remain unchanged.
 The native guarded bridge now uses this function and retains a public dispatch
 report alongside its guard receipts. See
 [the primary Calc run](../results/public-owned-session-live-01/README.md).
+
+For read-only capture on that same caller-owned connection, use
+`runtime.cli_v1.observe.observe_in_session(session, target=..., frame=...,
+region=[x,y,width,height])`. It shares one-shot observation validation and
+failure reporting, but never closes the supplied backend. Capturing remains
+available when input recovery is required and does not clear that state.
+The caller still serializes access and closes its own session.
+
+The native bridge uses this API and retains a public observation report before
+its existing binding/image checks. A returned public capture is not an accepted
+bridge source: if binding changed, the bridge still refuses to advance its source.
+No new readiness detection, automatic capture retry or lease renewal is added.
