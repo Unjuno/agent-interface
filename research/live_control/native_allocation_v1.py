@@ -22,6 +22,7 @@ class NativeAllocation:
             raise ValueError('owner lifetime requires an explicit boolean and POSIX')
         self.owner_lifetime = owner_lifetime
         self._owner_writer = None
+        self.stop_requested = False
         self.directory = Path(directory).resolve()
         self.run_directory = self.directory/'run'
         self.app, self.seed, self.max_stages = app, seed, max_stages
@@ -35,6 +36,15 @@ class NativeAllocation:
         if self._owner_writer is not None:
             os.close(self._owner_writer)
             self._owner_writer = None
+
+    def request_stop(self):
+        """Close this allocation's lifetime channel; never signal or relaunch."""
+        if not self.owner_lifetime:
+            raise ValueError('cooperative stop requires owner-lifetime mode')
+        if self._owner_writer is not None:
+            self.stop_requested = True
+            self._close_owner_writer()
+        return self.status()
 
     def _terminal_status(self, base, code):
         self._close_owner_writer()
@@ -59,7 +69,8 @@ class NativeAllocation:
     def status(self):
         base = {'authority':'none', 'run_directory':str(self.run_directory),
                 'app':self.app, 'seed':self.seed, 'max_stages':self.max_stages,
-                'text_gap_ms':self.text_gap_ms}
+                'text_gap_ms':self.text_gap_ms, 'owner_lifetime':self.owner_lifetime,
+                'stop_requested':self.stop_requested}
         if self.error is not None:
             return dict(base, status='needs_review', error=self.error, restart_allowed=False)
         if self.process is None:
@@ -70,6 +81,9 @@ class NativeAllocation:
         code = self.process.poll()
         if code is not None:
             return self._terminal_status(base, code)
+        if self.stop_requested:
+            return dict(base, status='stopping', pid=self.process.pid,
+                        restart_allowed=False, cleanup_verified=False)
         owner = owner_state(self.run_directory)
         if owner is not None and owner['state'] == 'terminal':
             # Exit may become visible between poll and the owner-state read.

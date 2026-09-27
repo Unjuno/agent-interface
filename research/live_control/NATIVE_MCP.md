@@ -325,3 +325,17 @@ case reached existing cleanup after server exit and externally reaped the owner;
 tracked processes were absent. Held input and complete descendant closure remain
 unverified. See [construction evidence](../../runtime/results/native-owner-lifetime-01/README.md).
 Do not enable it as a production default from these bounded results.
+
+### Explicit cooperative stop
+
+In managed `--owner-lifetime` mode, `native_stop()` closes the owned lifetime
+channel while keeping the MCP connection available. It requests stop at the next
+cooperative boundary, not immediate interruption. `allocation.status: stopping`
+with `stop_requested: true` is not terminal or cleanup success. Poll native_status;
+use exact-request native_resume to inspect previously committed outcomes without
+replay. New native_submit calls are refused while stopping. Repeated stop calls
+never relaunch or signal processes. Before startup, stop returns not_started and
+creates nothing; it does not prohibit a later explicit start. Without this mode
+the tool is not exposed. The EOF error covers either server exit or explicit stop.
+
+[Retained idle Calc stop and server-termination cases](../../runtime/results/native-cooperative-stop-01/README.md) verify the limited lifecycle behavior; they do not exercise active input.

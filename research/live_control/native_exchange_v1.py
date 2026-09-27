@@ -32,7 +32,7 @@ class OwnerLifetime:
             data = os.read(self.fd, 1)
             if data:
                 raise RuntimeError('invalid owner lifetime channel payload')
-            raise RuntimeError('owning server ended; stop at cooperative boundary, no input replay')
+            raise RuntimeError('owner lifetime ended (server exit or explicit stop); stop at cooperative boundary, no input replay')
 
     def close(self):
         if self.fd is not None:
