@@ -8,11 +8,11 @@ The preregistered construction asks whether adding per-channel global spatial me
 
 ## Execution and stop
 
-The six frozen Python source files plus `FREEZE.json` were read back from the allocated GitHub branch and their SHA-256 hashes matched local bytes. The frozen Docker image ID was present locally and matched exactly, but its contents did not match the expected environment: the image ran Python 3.11.16 and had no NumPy module, whereas the freeze specified Python 3.11.2 / NumPy 1.24.2.
+The six frozen Python source files plus `FREEZE.json` were read back from the allocated GitHub branch and their SHA-256 hashes matched local bytes. The frozen Docker image ID was present locally and matched exactly, but its contents did not match the expected environment: a read-only runtime probe reported Python 3.11.16 and no NumPy module, whereas the freeze specified Python 3.11.2 / NumPy 1.24.2.
 
 The first network-disabled, read-only Docker construction preflight exited 1 at `import numpy` with `ModuleNotFoundError: No module named 'numpy'`. No dataset generation, training, inference, or audit of model outputs occurred. Formal fits: 0; construction fits: 0; retries: 0; image substitutions: 0. The allocation remains terminal; do not retry it or swap images under #4828.
 
-An independent standard-library-only STOP auditor checks lineage, exact frozen image identity, captured preflight error, and zero-fit discipline. It does not run the model or infer a scientific disposition.
+An independent standard-library-only STOP auditor ran in the same image and checks lineage, exact frozen image identity, captured runtime/preflight evidence, resource limits, and zero-fit discipline. It does not run the model or infer a scientific disposition.
 
 ## Interpretation and limits
 
