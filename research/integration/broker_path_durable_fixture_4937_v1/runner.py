@@ -1,6 +1,6 @@
 """One-shot durable-fixture #4937 actual serve() candidate allocation."""
 from __future__ import annotations
-import hashlib,json,os,stat,sys,tempfile
+import hashlib,json,os,shutil,stat,sys,tempfile
 from pathlib import Path
 from types import SimpleNamespace
 HERE=Path(__file__).resolve().parent
@@ -60,7 +60,7 @@ def main(raw_path,manifest_path):
         elif kind=="external_symlink": values[field]={"schema":"/repo/escape_file","image":"/repo/escape_image","working":"/repo/escape_dir"}[field]
         elif kind=="ambiguous_separator": values[field]="/repo/sub\\..\\outside"
         expected="accept" if kind in ("valid_repo","valid_workspace","inside_symlink") else "reject"
-        rid=f"case-{i:02d}"; ipc=base/f"ipc-{i:02d}"; ipc.mkdir()
+        rid=f"case-{i:02d}"; ipc=Path(tempfile.mkdtemp(prefix=f"broker-4937-{i:02d}-"))
         request={"request_id":rid,"schema":values["schema"],"image":values["image"],"working":values["working"],"prompt":"inert construction probe"}
         (ipc/f"{rid}.request.json").write_text(json.dumps(request))
         before=len(calls); exit_code=broker.serve(ipc,root,once=True); added=calls[before:]
@@ -70,6 +70,7 @@ def main(raw_path,manifest_path):
           "path_values":values,"exit_code":exit_code,"receipt":receipt,"response":response,
           "subprocess_calls":added,"response_exists":(ipc/f"{rid}.response.jsonl").is_file(),
           "broker_receipt_count":len(list(ipc.glob("*.broker.json")))})
+        shutil.rmtree(ipc)
     final=inventory(base)
     manifest={"schema":"broker-path-4937-fixture-manifest-v1","base":str(base),"repo_root":str(root),
       "outside_root":str(outside),"entries":final,"initial_equals_final":initial==final}
