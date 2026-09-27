@@ -64,6 +64,22 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+## Issue #4638 — Python-Xlib 0.15 XGetImage String8 boundary
+
+Successor to the unresolved historical-version question after #4455's
+Python-Xlib 0.33 `HOLD_NO_LIVE_STRING8_DISCRIMINATOR`. One frozen local Docker
+allocation on Python 3.11.16 / python3-xlib 0.15 completed 30/30 synthetic
+Xvfb cases: 12 payloads arrived as `str` and raised the legacy
+`bytes(image.data)` TypeError; 18 arrived as `bytes`. UTF-8/native byte and
+fixture pixel mismatches were zero. A same-author raw-only audit passed 18
+checks; 12/12 evidence-corruption controls were rejected. Disposition:
+`PASS_X11_STRING8_PY015_BOUNDARY_SCOPED`. This does not resolve current-version
+runtime compatibility, establish semantic image correctness or production
+reliability, or authorize changing the X11 backend. Preserve #4455's HOLD and
+#4304 unchanged. Full H/T/D/C/U, attempt history, source/environment hashes,
+raw rows and audits are in the [retained successor evidence](research/integration/x11_string8_capture_015_v1/formal/run01/REPORT.md)
+and [Issue #4638](https://github.com/Unjuno/agent-interface/issues/4638).
+
 ### Issue #4623 — GPU shared-prefix readout construction stop
 
 Successor [#4623](https://github.com/Unjuno/agent-interface/issues/4623)
