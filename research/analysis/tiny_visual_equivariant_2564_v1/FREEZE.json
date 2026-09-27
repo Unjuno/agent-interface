@@ -7,7 +7,7 @@
   "parent_result": "https://github.com/Unjuno/agent-interface/issues/4752",
   "intake_main_sha": "38720c4e459b503c45eda36fa1fa5f89e551909e",
   "source_sha256": {
-    "audit.py": "04837a494fa3ba7bb2e72a7c59999967e39d9a1a0af7652175054682b7c718fd",
+    "audit.py": "b0ee922c0190b309298ac688e5b1f7e6e2e4aa8567831e14162115ce77a907fe",
     "models.py": "af7f037d1732e91a08bb725bdded230647793bae11acdae032474eeb01015543",
     "prepare.py": "7ac6e0c82122673457e7da5e4c7ffe14393210579559ec94859eddd2ffca09ba",
     "test_protocol.py": "b8ecde50d6a103384e5fefd733ab1d24bd7e7338bdcb325285daa2a65fc8225a",
@@ -19,7 +19,7 @@
     "positive_pixels": [9, 9], "negative_distractor_pixels": [5, 5], "support_centers": [[20, 15], [8, 8], [32, 8], [8, 22], [32, 22]],
     "heldout_centers": [[14, 8], [26, 8], [14, 22], [26, 22], [8, 15], [20, 25], [32, 15], [20, 8]],
     "heldout_rows_total": 3200, "heldout_positives": 1600, "heldout_negatives": 1600},
-  "models": {"control": "1200->16 ReLU->1 sigmoid MLP, 250 full-batch GD steps, learning rate 0.8, 19,217 parameters",
+  "models": {"control": "1200->16 ReLU->1 sigmoid MLP, 250 full-batch GD steps, learning rate 0.8, 19,233 stored scalar values including 16 unused first-layer bias parameters",
     "treatment": "shared valid 3x3 convolution, 4 ReLU filters, global spatial max pool, 4->1 sigmoid, 250 full-batch GD steps, learning rate 0.8, 45 parameters"},
   "decision_thresholds": {"accept_min": 0.75, "yield_min": 0.25, "classification": 0.5},
   "pass_criteria": {"heldout_cnn_positive_accept_rate_min": 0.8, "each_heldout_center_positive_accept_rate_min": 0.5,
