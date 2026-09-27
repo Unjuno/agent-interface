@@ -115,6 +115,32 @@ def main():
             json.dumps(control, sort_keys=True) + "\n", encoding="utf-8")
         if control["passed"] or "budget_changed_hard_outcome" not in control["error"]:
             raise RuntimeError("budget_control_not_rejected:" + mode)
+    legacy = (ROOT / "predecessor_contract.py").read_text(encoding="utf-8")
+    legacy_before = '    if not e["fresh"]:\n'
+    if legacy_before not in legacy:
+        raise RuntimeError("legacy_mutation_anchor_missing")
+    legacy_mutated = legacy.replace(legacy_before, "    if True:\n", 1)
+    legacy_path = OUT / "legacy_assert_bypass.py"
+    legacy_path.write_text(legacy_mutated, encoding="utf-8", newline="\n")
+    for mode in MODES:
+        result = invoke(mode, [str(legacy_path)])
+        stem = mode + "-legacy-assert-bypass"
+        save_process(stem, result)
+        pass_seen = b"PASS_TYPED_NEGATIVE_OUTCOMES_SCOPED" in result.stdout
+        expected_vulnerable = mode in ("opt_flag", "env_opt")
+        receipt = {
+            "legacy_mutation": "fresh_false_classified_as_success",
+            "exit": result.returncode,
+            "pass_marker_seen": pass_seen,
+            "assert_bypass_reproduced": result.returncode == 0 and pass_seen,
+            "expected_bypass": expected_vulnerable,
+            "stdout_sha256": hashlib.sha256(result.stdout).hexdigest(),
+            "stderr_sha256": hashlib.sha256(result.stderr).hexdigest(),
+        }
+        (OUT / (stem + ".legacy-control")).write_text(
+            json.dumps(receipt, sort_keys=True) + "\n", encoding="utf-8")
+        if expected_vulnerable != receipt["assert_bypass_reproduced"]:
+            raise RuntimeError("legacy_assert_bypass_expectation_mismatch:" + mode)
     manifest = {p.name: digest(p) for p in sorted(ROOT.iterdir()) if p.is_file()}
     manifest["FREEZE.json"] = digest(ROOT / "FREEZE.json")
     (OUT / "source-manifest.json").write_text(
