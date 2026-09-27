@@ -12,6 +12,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, Stri
 
 from agent_review import review_native
 from native_exchange_v1 import run
+from native_tail_v1 import expand_tail
 
 
 WaitSeconds = Annotated[StrictInt | StrictFloat, Field(ge=0, le=30,
@@ -61,6 +62,10 @@ class NativeDecision(BaseModel):
             return self
         if not self.finish and (self.point is None or self.expected_title is None):
             raise ValueError('action requires point and expected_title')
+        # Check explicit compact operations before publishing a stage request.
+        # Preserve the original payload; harness defaults and runtime admission
+        # are still applied by the owner.
+        expand_tail(self.tail, max_ops=123 if self.interaction == 'click' else 126)
         if (not self.finish and self.interaction == 'keyboard'
                 and not any(op.get('op') in {'text', 'key_chord'} for op in self.tail)):
             raise ValueError('keyboard requires explicit text or key_chord input; '
@@ -71,7 +76,7 @@ class NativeDecision(BaseModel):
 def session_context(root):
     """Present existing public task/limits, not evaluator output or authority."""
     context = {'authority':'none'}
-    for key, filename in [('goal','goal.json'), ('exchange_contract','exchange-contract.json')]:
+    for key, filename in [('goal','goal.json'), ('exchange_contract','exchange-contract.json'), ('text_policy','text-policy.json')]:
         path = root/filename
         try:
             data = path.read_bytes()
@@ -84,6 +89,11 @@ def session_context(root):
                     or type(value.get('max_stages')) is not int
                     or not 2 <= value['max_stages'] <= 64):
                 raise ValueError('invalid native exchange contract')
+            if key == 'text_policy' and (
+                    type(value.get('gap_ms')) is not int
+                    or value['gap_ms'] not in (0, 2, 10)
+                    or type(value.get('default_changed')) is not bool):
+                raise ValueError('invalid recorded text policy')
             context[key] = {'status':'recorded', 'value':value,
                             'source':{'path':str(path),'sha256':hashlib.sha256(data).hexdigest()}}
         except FileNotFoundError:

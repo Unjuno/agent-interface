@@ -308,6 +308,67 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                 'schema':'agent-interface/native-exchange-contract-v1','max_stages':True}))
             self.assertEqual(session_context(root)['exchange_contract']['status'],'needs_review')
 
+    def test_recorded_text_policy_is_read_only_and_strict(self):
+        from native_mcp_v1 import session_context
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.assertEqual(session_context(root)['text_policy']['status'], 'unavailable')
+            path = root/'text-policy.json'
+            for gap in (0, 2, 10):
+                value = {'gap_ms': gap, 'default_changed': False}
+                raw = encoded(value)
+                path.write_bytes(raw)
+                result = session_context(root)['text_policy']
+                self.assertEqual(result['status'], 'recorded')
+                self.assertEqual(result['value'], value)
+                self.assertEqual(result['source']['sha256'], hashlib.sha256(raw).hexdigest())
+                self.assertEqual(path.read_bytes(), raw)
+            for value in ({'gap_ms': True, 'default_changed': False},
+                          {'gap_ms': 20, 'default_changed': False},
+                          {'gap_ms': 2}, {'gap_ms': 2, 'default_changed': 0}):
+                path.write_bytes(encoded(value))
+                result = session_context(root)['text_policy']
+                self.assertEqual(result['status'], 'needs_review')
+                self.assertNotIn('value', result)
+
+    async def test_stdio_invalid_tail_does_not_publish_request(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            parameters = StdioServerParameters(command=sys.executable, args=[
+                str(Path(__file__).with_name('native_mcp_v1.py')),
+                '--run-directory', str(root)], env=dict(os.environ))
+            async with stdio_client(parameters) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    reply = await client.call_tool('native_submit', {
+                        'stage': 1, 'decision': {
+                            'source_sequence': 1, 'point': [1, 1],
+                            'expected_title': 'fixture', 'interaction': 'keyboard',
+                            'tail': [{'op': 'text', 'text': 'ab', 'gap_ms': True}]}})
+                    self.assertTrue(reply.isError)
+                    self.assertIn('gap_ms', reply.content[0].text)
+                    self.assertEqual(list(root.iterdir()), [])
+                    self.assertIn('native_submit', {
+                        tool.name for tool in (await client.list_tools()).tools})
+
+    def test_explicit_tail_compilation_is_checked_before_request_publication(self):
+        from native_mcp_v1 import NativeDecision
+        base = {'source_sequence': 1, 'point': [78, 173],
+                'expected_title': 'sheet.xlsx', 'interaction': 'keyboard'}
+        for tail in (
+            [{'op': 'text', 'text': 'ab', 'gap_ms': True}],
+            [{'op': 'text', 'text': 'ab', 'gap_ms': -1}],
+            [{'op': 'key_chord', 'keys': ['Right'], 'repeat': 127}],
+            [{'op': 'text', 'text': 'a'*64, 'gap_ms': 2}],
+        ):
+            with self.subTest(tail=tail), self.assertRaises(ValueError):
+                NativeDecision.model_validate(dict(base, tail=tail))
+        tail = [{'op': 'text', 'text': 'ab', 'gap_ms': 20},
+                {'op': 'key_chord', 'keys': ['Right'], 'repeat': 2}]
+        request = dict(base, tail=tail)
+        self.assertEqual(NativeDecision.model_validate(request).model_dump(
+            mode='json', exclude_unset=True), request)
+
     def test_typed_decision_preserves_explicit_payload_without_defaults(self):
         from native_mcp_v1 import NativeDecision
         decisions=[{'source_sequence':7,'finish':True},
