@@ -7,10 +7,42 @@ import time
 import unittest
 from unittest.mock import patch
 
-from native_primary_review_v1 import review_task, validate_review
+from native_primary_review_v1 import receipt_summary, review_task, validate_review
 
 
 class PrimaryReviewTests(unittest.TestCase):
+    def test_notice_preserves_partial_failure_and_release_evidence_without_success_inference(self):
+        failed = {'status':'partial', 'error':'interrupted', 'recovery_required':True,
+                  'execution':{'program_emissions':2, 'error':'release failed',
+                               'releases':[{'verified':False, 'keys_down':['CTRL'], 'buttons_down':[]}],
+                               'observations':[{'large':'capture'}]}, 'guard_checks':[{'large':'checks'}]}
+        row = {'direct':{'status':'returned', 'result':failed},
+               'feedback':{'status':'matched', 'observation':{'large':'image'}}, 'refusal_emissions':0}
+        before = json.dumps(row)
+        summary = receipt_summary(row)
+        result = summary['operations']['direct']
+        self.assertEqual(result['status'], 'partial')
+        self.assertTrue(result['recovery_required'])
+        self.assertEqual(result['error'], 'interrupted')
+        self.assertEqual(result['execution']['error'], 'release failed')
+        self.assertEqual(result['execution']['releases'], failed['execution']['releases'])
+        self.assertEqual(summary['refusal_emissions'], 0)
+        self.assertIsNone(summary['task_success'])
+        self.assertNotIn('observation', summary['feedback'])
+        self.assertNotIn('guard_checks', result)
+        self.assertEqual(json.dumps(row), before)
+
+    def test_notice_keeps_refusal_before_repair_and_transport_errors(self):
+        row = {'navigation':{'result':{'status':'error', 'error':'not admitted'}},
+               'entered':{'status':'refused', 'input_dispatched':False, 'error':'MISSING'},
+               'repaired_enter':{'status':'completed'}, 'saved':{'status':'completed'}}
+        summary = receipt_summary(row)
+        self.assertEqual(summary['operations']['navigation']['transport']['error'], 'not admitted')
+        self.assertFalse(summary['operations']['entered']['input_dispatched'])
+        self.assertEqual(summary['operations']['entered']['error'], 'MISSING')
+        self.assertEqual(summary['operations']['repaired_enter']['status'], 'completed')
+        self.assertIsNone(summary['task_success'])
+
     def test_exact_task_source_and_explicit_interpretation(self):
         valid = dict(task_id='task-1', source_sequence=7, outcome='complete', reason='Saved receipt and image agree')
         self.assertEqual(validate_review(valid, 'task-1', 7), valid)
