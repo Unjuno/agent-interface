@@ -10,12 +10,109 @@ import sys
 
 EXPECTED = ("exit-0", "exit-23", "timeout-after-start", "missing-executable",
             "malformed-json", "idle-once", "sorted-once")
-CORRUPTION_CONTROL_COUNT = 11
+CORRUPTION_CONTROL_COUNT = 16
 
 
 def require(ok: bool, message: str) -> None:
     if not ok:
         raise ValueError(message)
+
+
+def expected_docker_commands(receipt: dict, freeze: dict) -> tuple[list[str], list[str]]:
+    formal = freeze["formal_invocation"]
+    audit = freeze["audit_invocation"]
+    image = freeze["source"]["image_id"]
+    platform = freeze["source"]["platform"]
+    limits = ["--network=none", "--read-only",
+              f"--cpus={formal['cpu']}", f"--memory={formal['memory']}",
+              f"--pids-limit={formal['pids_limit']}",
+              "--cap-drop=" + ",".join(formal["cap_drop"]),
+              "--security-opt=" + ",".join(formal["security_opt"])]
+    common = ["docker", "--context", "desktop-linux", "run", "--rm",
+              "--pull=never", "--platform", platform, *limits,
+              "--tmpfs", formal["tmpfs"]]
+    formal_command = [
+        *common,
+        "--mount", f"type=bind,src={receipt['resolved_repo']},dst=/src,readonly",
+        "--mount", f"type=bind,src={receipt['resolved_study']},dst=/study,readonly",
+        "--mount", f"type=bind,src={receipt['resource_release']},dst=/resource-release.json,readonly",
+        "--mount", f"type=bind,src={receipt['resolved_receipt']},dst=/invocation-receipt.json,readonly",
+        "--mount", f"type=bind,src={receipt['resolved_output']},dst=/out",
+        "-e", "EXPECTED_BROKER_SHA256=" + freeze["source"]["broker_raw_sha256"],
+        image, "python", "/study/runner.py",
+    ]
+    audit_limits = ["--network=none", "--read-only",
+                    f"--cpus={audit.get('cpu', formal['cpu'])}",
+                    f"--memory={audit.get('memory', formal['memory'])}",
+                    f"--pids-limit={audit.get('pids_limit', formal['pids_limit'])}",
+                    "--cap-drop=" + ",".join(audit.get("cap_drop", formal["cap_drop"])),
+                    "--security-opt=" + ",".join(audit.get("security_opt", formal["security_opt"]))]
+    audit_command = [
+        "docker", "--context", "desktop-linux", "run", "--rm", "--pull=never",
+        "--platform", platform, *audit_limits,
+        "--mount", f"type=bind,src={receipt['resolved_study']},dst=/study,readonly",
+        "--mount", f"type=bind,src={receipt['resolved_output']},dst=/out,readonly",
+        "--mount", f"type=bind,src={receipt['resolved_audit_output']},dst=/audit-output",
+        image, "python", "/study/audit.py",
+    ]
+    return formal_command, audit_command
+
+
+def validate_invocation_receipt(receipt: dict, freeze: dict) -> None:
+    formal = freeze["formal_invocation"]
+    audit = freeze["audit_invocation"]
+    require(formal.get("count") == 1 and formal.get("network") == "none" and
+            formal.get("rootfs") == "read-only" and
+            formal.get("source_mount") == "read-only" and
+            formal.get("output_mount") == "fresh writable host-only directory" and
+            formal.get("cpu") == 0.25 and formal.get("memory") == "256m" and
+            formal.get("pids_limit") == 32 and formal.get("cap_drop") == ["ALL"] and
+            formal.get("security_opt") == ["no-new-privileges:true"] and
+            formal.get("tmpfs") == "/tmp:rw,exec,nosuid,size=16m" and
+            formal.get("pull") == "never",
+            "frozen formal resource contract is invalid")
+    require(audit.get("count") == 1 and audit.get("network") == "none" and
+            audit.get("rootfs") == "read-only" and
+            audit.get("audit_source") == "read-only" and
+            audit.get("raw_input") == "read-only" and
+            audit.get("audit_report") == "separate fresh writable directory" and
+            audit.get("corruption_controls") == CORRUPTION_CONTROL_COUNT,
+            "frozen audit resource contract is invalid")
+    require(isinstance(receipt, dict), "invocation receipt is not an object")
+    require(receipt.get("allocation") == freeze.get("allocation"), "receipt allocation mismatch")
+    require(receipt.get("issue") == freeze.get("issue"), "receipt issue mismatch")
+    require(receipt.get("base_main") == freeze.get("base_main"), "receipt main mismatch")
+    commit = receipt.get("source_commit_sha")
+    require(isinstance(commit, str) and len(commit) == 40 and
+            all(ch in "0123456789abcdef" for ch in commit), "receipt source commit invalid")
+    source = freeze["source"]
+    require(receipt.get("broker_git_blob") == source["broker_git_blob"],
+            "receipt broker Git blob mismatch")
+    require(receipt.get("broker_sha256") == source["broker_raw_sha256"],
+            "receipt broker SHA-256 mismatch")
+    require(receipt.get("image") == source["image_id"] + " " + source["platform"],
+            "receipt image/platform mismatch")
+    require(receipt.get("formal_source_sha256") == source.get("sha256"),
+            "receipt formal source hash map mismatch")
+    for name, expected in source.get("sha256", {}).items():
+        path = Path(__file__).with_name(name)
+        require(path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest() == expected,
+                "auditor source bundle hash mismatch: " + name)
+    for key in ("resolved_repo", "resolved_study", "resolved_output",
+                "resolved_audit_output", "resolved_receipt", "resource_release"):
+        require(isinstance(receipt.get(key), str) and receipt[key],
+                "receipt path missing: " + key)
+    require(receipt.get("docker_inventory_before") == [], "receipt Docker inventory was not empty")
+    ownership = receipt.get("ownership_release")
+    require(isinstance(ownership, dict) and ownership.get("issue") == freeze["issue"] and
+            ownership.get("released") is True and
+            ownership.get("observed_running_containers") == [],
+            "receipt shared-resource release invalid")
+    expected_formal, expected_audit = expected_docker_commands(receipt, freeze)
+    require(receipt.get("command") == expected_formal,
+            "formal invocation command/resource contract mismatch")
+    require(receipt.get("audit_command_template") == expected_audit,
+            "audit invocation command/resource contract mismatch")
 
 
 def reconcile_case_files(row: dict, case_root: Path) -> None:
@@ -43,6 +140,9 @@ def reconcile_case_files(row: dict, case_root: Path) -> None:
 def inspect(raw: dict, verify_files: bool = True,
             verify_queued_file: bool = True) -> list[str]:
     errors = []
+    freeze = json.loads(Path(__file__).with_name("FREEZE.json").read_text(encoding="utf-8"))
+    receipt = raw.get("invocation_receipt")
+    validate_invocation_receipt(receipt, freeze)
     rows = raw.get("cases")
     require(isinstance(rows, list) and len(rows) == 7, "case count")
     require(tuple(row.get("name") for row in rows) == EXPECTED, "case order/names")
@@ -71,12 +171,13 @@ def inspect(raw: dict, verify_files: bool = True,
             if path.is_file() and path.name != "manifest.json"
         }
         require(manifest == actual, "complete output manifest mismatch")
-        receipt = json.loads(Path("/out/invocation-receipt.json").read_text(encoding="utf-8"))
+        disk_receipt = json.loads(Path("/out/invocation-receipt.json").read_text(encoding="utf-8"))
+        require(receipt == disk_receipt, "raw invocation receipt differs from retained receipt bytes")
         require(receipt.get("allocation") == raw.get("allocation"),
                 "invocation receipt allocation mismatch")
         require(receipt.get("broker_sha256") == raw.get("broker_sha256"),
                 "invocation receipt broker identity mismatch")
-        require(receipt.get("broker_git_blob") == "5734f54f318db9ac5e96b2bed6f6bed105ac39ff",
+        require(receipt.get("broker_git_blob") == freeze["source"]["broker_git_blob"],
                 "invocation receipt broker blob mismatch")
 
     for name, expected_exit in (("exit-0", 0), ("exit-23", 23)):
@@ -167,6 +268,11 @@ def corruption_controls(raw: dict, verify_files: bool = True) -> int:
         lambda x: x["cases"][2].update(broker_timeout_s=8),
         lambda x: x["cases"][2]["receipts"]["timeout-after-start.broker.json"].update(timeout_s=9),
         lambda x: x["cases"][5].update(external_timeout=False),
+        lambda x: x["invocation_receipt"]["command"].__setitem__(8, "--network=host"),
+        lambda x: x["invocation_receipt"]["command"].__setitem__(10, "--cpus=4"),
+        lambda x: x["invocation_receipt"]["audit_command_template"].__setitem__(8, "--network=host"),
+        lambda x: x["invocation_receipt"]["ownership_release"].update(released=False),
+        lambda x: x["invocation_receipt"].update(docker_inventory_before=["unowned-container"]),
     )
     selected = mutations if verify_files else tuple(
         mutation for index, mutation in enumerate(mutations) if index not in (6, 7))

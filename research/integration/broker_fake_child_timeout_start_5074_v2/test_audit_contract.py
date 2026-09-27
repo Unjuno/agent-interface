@@ -46,7 +46,28 @@ def fixture():
         receipts={"a.broker.json": {"returncode": 0, "authority_granted": False}},
         responses={"a.response.jsonl": "ok\n"})
     by["sorted-once"]["child_calls"][0]["stdin"] = "prompt:a\n"
-    return {"schema": "broker-timeout-start-raw-v1", "cases": rows}
+    freeze = json.loads(AUDIT_PATH.with_name("FREEZE.json").read_text())
+    receipt = {
+        "allocation": freeze["allocation"], "issue": freeze["issue"],
+        "base_main": freeze["base_main"], "source_commit_sha": "a" * 40,
+        "broker_git_blob": freeze["source"]["broker_git_blob"],
+        "broker_sha256": freeze["source"]["broker_raw_sha256"],
+        "image": freeze["source"]["image_id"] + " " + freeze["source"]["platform"],
+        "formal_source_sha256": freeze["source"]["sha256"],
+        "resolved_repo": "/host/repo", "resolved_study": "/host/study",
+        "resolved_output": "/host/formal-output",
+        "resolved_audit_output": "/host/audit-output",
+        "resolved_receipt": "/host/invocation-receipt.json",
+        "resource_release": "/host/resource-release.json",
+        "docker_inventory_before": [],
+        "ownership_release": {"issue": freeze["issue"], "released": True,
+                              "observed_running_containers": []},
+    }
+    receipt["command"], receipt["audit_command_template"] = (
+        AUDIT.expected_docker_commands(receipt, freeze))
+    return {"schema": "broker-timeout-start-raw-v1",
+            "allocation": freeze["allocation"], "invocation_receipt": receipt,
+            "cases": rows}
 
 
 class AuditContractTest(unittest.TestCase):
@@ -54,8 +75,27 @@ class AuditContractTest(unittest.TestCase):
         self.assertEqual(AUDIT.inspect(fixture(), verify_files=False,
                                        verify_queued_file=False), [])
 
-    def test_nine_in_memory_corruption_controls_are_rejected(self):
-        self.assertEqual(AUDIT.corruption_controls(fixture(), verify_files=False), 9)
+    def test_fourteen_in_memory_corruption_controls_are_rejected(self):
+        self.assertEqual(AUDIT.corruption_controls(fixture(), verify_files=False), 14)
+
+    def test_invocation_receipt_freezes_network_cpu_and_slot_ownership(self):
+        value = fixture()["invocation_receipt"]
+        freeze = json.loads(AUDIT_PATH.with_name("FREEZE.json").read_text())
+        AUDIT.validate_invocation_receipt(value, freeze)
+        self.assertIn("--network=none", value["command"])
+        self.assertIn("--cpus=0.25", value["command"])
+        self.assertIn("--network=none", value["audit_command_template"])
+        for mutate in (
+            lambda x: x["command"].__setitem__(8, "--network=host"),
+            lambda x: x["command"].__setitem__(10, "--cpus=4"),
+            lambda x: x["audit_command_template"].__setitem__(8, "--network=host"),
+            lambda x: x["ownership_release"].update(released=False),
+            lambda x: x.update(docker_inventory_before=["unowned-container"]),
+        ):
+            candidate = copy.deepcopy(value)
+            mutate(candidate)
+            with self.assertRaises(ValueError):
+                AUDIT.validate_invocation_receipt(candidate, freeze)
 
     def test_frozen_formal_control_count_matches_auditor(self):
         freeze = json.loads(AUDIT_PATH.with_name("FREEZE.json").read_text())

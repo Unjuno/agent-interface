@@ -57,6 +57,7 @@ def preflight_command(source_repo: Path, source: Path, release: Path,
         "resolved_study": str(source.resolve()),
         "resolved_output": str(output.resolve()),
         "resolved_audit_output": str(audit_output.resolve()),
+        "resolved_receipt": str(receipt_path.resolve()),
         "resource_release": str(release.resolve()),
     }
 
@@ -66,8 +67,12 @@ def main() -> int:
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--resource-release", type=Path, required=True)
     parser.add_argument("--observed-main", required=True)
+    parser.add_argument("--source-commit-sha", required=True)
     parser.add_argument("--execute", action="store_true")
     args = parser.parse_args()
+    if len(args.source_commit_sha) != 40 or any(
+            ch not in "0123456789abcdef" for ch in args.source_commit_sha):
+        raise ValueError("--source-commit-sha must be a lowercase 40-character Git SHA")
     source_repo = args.source.resolve(strict=True)
     release = args.resource_release.resolve(strict=True)
     broker = source_repo / "host_model_ipc_broker_v1.py"
@@ -117,7 +122,9 @@ def main() -> int:
     ]
     receipt = {
         "allocation": "broker-fake-child-timeout-start-20260928-01",
-        "issue": 5074, "timestamp_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "issue": 5074, "base_main": EXPECTED_MAIN,
+        "timestamp_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "source_commit_sha": args.source_commit_sha,
         "command": command, "resolved_repo": str(source_repo), "resolved_study": str(source),
         "resolved_output": str(output), "broker_git_blob": "5734f54f318db9ac5e96b2bed6f6bed105ac39ff",
         "broker_sha256": file_sha(broker), "image": image_id,

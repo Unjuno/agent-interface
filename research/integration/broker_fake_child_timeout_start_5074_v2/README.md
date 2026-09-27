@@ -38,7 +38,7 @@ or pooling.
 
 **D.** PASS only if all seven frozen outcomes reconcile, the timeout row proves
 the child started before the deadline, all authority flags are false, the raw
-audit has zero errors, and 11/11 fixed corruption controls reject, including
+audit has zero errors, and 16/16 fixed corruption controls reject, including
 semantic-table/file-byte divergence. A complete
 contradiction is scoped FAIL. Missing start marker, command receipt, hashes,
 resource ownership, or audit is HOLD/STOP, never scientific FAIL/PASS.

@@ -140,6 +140,7 @@ def main() -> int:
     write_json(OUT / "raw.json", {
         "schema": "broker-timeout-start-raw-v1",
         "allocation": "broker-fake-child-timeout-start-20260928-01",
+        "invocation_receipt": json.loads(receipt.read_text(encoding="utf-8")),
         "broker_sha256": sha256(BROKER), "cases": cases,
     })
     manifest = {}

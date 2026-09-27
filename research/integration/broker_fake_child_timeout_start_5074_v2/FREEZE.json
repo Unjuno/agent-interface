@@ -11,14 +11,15 @@
     "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
     "platform": "linux/amd64",
     "sha256": {
-      "audit.py": "69fea77ce94d2209d6def721a9c86b8a9beb97f4ae0761d41df257fb5660f50d",
+      "audit.py": "a145fddc52733d8c1fb81dcaac489222a27c60be7ef6cd40d4a2ec9d592a34b3",
       "CONSTRUCTION_HOST.json": "8a61d6697b58d90f3289897a24b3bee5c984fd08cc7c33c66ba3ba10b990e2e2",
-      "formal.py": "c30f4cea855a067d17f68a7c0d6be17e2079de53e14592df2961a5f848ce8520",
+      "CONSTRUCTION_HOST_V2.json": "e586fc9f3ade2850030844c241d65b048ae0cd46396175fb7086d0cc02fc5567",
+      "formal.py": "b9a49b8fe8e20045c658321e67fe82b12fdcebe9b6ed73adb70e7984b25a8570",
       "marker_probe.py": "c41bb1c130bbf2a01b930c17ecbe92de5987c974a0341e790a3346c1f928d649",
       "protocol.py": "4989263bb509f6ecc17a0baf61be2a39e7e6fda8afcf9acea0e503ac3f761252",
-      "README.md": "02def751e783892986a469750a8d7530b1462d87fcfe492f1f5a8c9d8f614493",
-      "runner.py": "6da1f801a90a1ebb0e8f963b9f3130c3d14774b03ef327831acf9787868619c4",
-      "test_audit_contract.py": "2a760eb20bbc3420f1c3852a2614730359291186f69f343748c8359cb60bae26",
+      "README.md": "f1cedb91b82f7f848883911d889d7b64c02ef78f3ab69055938b96ce0e44b048",
+      "runner.py": "7d01599fdae07a357d9be08676a120859692b870dd50ed50774aa0346608aa70",
+      "test_audit_contract.py": "58804b8d4a244658cc44cd39a01c6b7c64a7717a9ed62298932a1cc13d3ae54d",
       "test_formal_helpers.py": "8d00ba50fb25e615e3c2c7883b44487ba3b861a3251ba3eb20b1fdbf3ca45680",
       "test_marker_probe.py": "5183902d1e2fc3253f91e6b822318bed4faeb296428a7aa0fb397d101bc54442"
     }
@@ -56,7 +57,7 @@
     "audit_source": "read-only",
     "raw_input": "read-only",
     "audit_report": "separate fresh writable directory",
-    "corruption_controls": 11
+    "corruption_controls": 16
   },
   "expected": {
     "exit-0": 0,
