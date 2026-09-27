@@ -25,28 +25,29 @@
   "allocation": "needle-cross-process-publication-overlap-5066-v3-20260928-01",
   "schema": "needle-publication-overlap-freeze-v1",
   "source_sha256": {
-    "runner.py": "86c62a700f905d4e61bf03052f5ae740ce961d93505fe8fce0a879bc4c375c61",
+    "runner.py": "905c0dbb3ef1e6b17634fe14da3e3eeab0e9449c017b6783a8ddea2a233b12d7",
     "seed_skill.json.b64": "cd8eadfa76a2a2a969b5c6871bf7bb0b6cd47ebad0b7c7cfd89ac5cff9b1c6ac",
     ".gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
     "audit.py": "4f6a548d9a4fc3bf802422ef8d3b269f07fbf7fa41268f3f4b5ff9a4f13174aa",
-    "formal.py": "17de5c374bc11fe56296aef2601ecb93621841ee6ac7f090ea615aa3393c14eb",
+    "formal.py": "28b494404b3f209106dd1098435f73a86a2cc7325d8c53a719de46e188461260",
     "model.py": "9f9e063bd2b4a47a44e3404fb3ebaf7a15009b64712eeb03fdd131a68ddca12e",
     "test_protocol.py": "9d8f1fd0d91437aed52467fddb4352f66fef489dfc82e141da5c66461f7b0ea1",
     "test_audit.py": "e2abc161875737498509b1690207ef471e143e14f1da9cc84614e3eeeeba2381",
-    "PLAN.md": "0a7dfe55e03c6a1caab340ebe28c93c16b4036efc0e710fa667342cfd9ddeaab"
+    "PLAN.md": "55b5c75922412a0af30bbbd54300462c8305489f8ff719a6c1d5fe313fa74122"
   },
   "source_sizes": {
-    "runner.py": 10271,
+    "runner.py": 10702,
     "seed_skill.json.b64": 20373,
     ".gitattributes": 8,
     "audit.py": 15424,
-    "formal.py": 7199,
+    "formal.py": 7245,
     "model.py": 2556,
     "test_protocol.py": 1614,
     "test_audit.py": 1476,
-    "PLAN.md": 3543
+    "PLAN.md": 3787
   },
   "intake_main": "d739d70bb1ea2210bdeef488f1385c93e5902715",
+  "source_publication_main": "b3af4e85f8bf7d41da5251b1728a6ddab34c3476",
   "input": {
     "path": "seed_skill.json.b64",
     "sha256": "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a",
@@ -69,17 +70,18 @@
     "source_read_only": true,
     "pull": "never",
     "platform": "linux/amd64",
-    "shm": "32m"
+    "shm": "32m",
+    "publication_scratch": "tmpfs:/scratch:rw,nosuid,size=32m"
   },
   "source_git_blobs": {
-    "runner.py": "39cdc559117ad233813fd2128cea3bd0d2fc50e7",
+    "runner.py": "29edc2d3776afd1e0ff2d69d5bf59fcaf1387880",
     "seed_skill.json.b64": "90500b6cfe1c30d30fe546f7b577f1b75fa42905",
     ".gitattributes": "fa1385d99a319b43c06f5309d1aae9fdd3adea46",
     "audit.py": "66b71a67d593f1eb96d20a8b11d6f856aa86432f",
-    "formal.py": "bc0f6bd0ff6b107417237206ad14927f2c7fca47",
+    "formal.py": "2db83506ef61a158e2b48148d882ab32762eb568",
     "model.py": "6fcfe702fe8bb636300fff81a5d5e32f57021808",
     "test_protocol.py": "992c0a609b821a762ec3fe5575366440f3413aaf",
     "test_audit.py": "de502543a055f3b1d37f9243d62b905da1c09e45",
-    "PLAN.md": "3b3cea28b12302e2d7be7d2f7b58dcecd5188486"
+    "PLAN.md": "5761efb010b62ce624ca26c35d7dd375ee4747b6"
   }
 }

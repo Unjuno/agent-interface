@@ -16,6 +16,7 @@ CONTAINER_OPTS = [
     "--rm", "--pull=never", "--platform", "linux/amd64", "--network", "none",
     "--read-only", "--cpus", "0.5", "--memory", "256m", "--pids-limit", "32",
     "--shm-size", "32m", "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
+    "--tmpfs", "/scratch:rw,nosuid,size=32m",
 ]
 
 

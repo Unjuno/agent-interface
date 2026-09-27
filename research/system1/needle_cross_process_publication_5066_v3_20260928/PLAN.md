@@ -11,7 +11,7 @@
 
 ## H / T / D / C / U
 
-**H.** During 4,096 same-directory atomic os.replace publications, four independent readers opening one package path concurrently observe only complete, digest-valid packages from the frozen generation set. A barrier-controlled truncate/partial-write diagnostic exposes invalid partial bytes.
+**H.** During 4,096 same-directory atomic os.replace publications on a dedicated container-local Linux tmpfs, four independent readers opening one package path concurrently observe only complete, digest-valid packages from the frozen generation set. A barrier-controlled truncate/partial-write diagnostic exposes invalid partial bytes.
 
 **T.** Reuse the exact inert seed-3788 package bytes by Git blob and SHA-256, copied into this additive directory as base64 data. Use one publisher and four fresh reader processes per arm. Each reader takes an initial old-package sample, acknowledges readiness, then loops through bounded open/read/hash/parse observations until the writer stops. Record every row in a distinct JSONL file. Atomic arm uses exactly 4,096 candidate generations, same-directory temporary files and os.replace; record monotonic call brackets. Diagnostic arm sets a phase marker before truncation, writes exactly half of a candidate, and waits until every independent reader has observed invalid partial bytes before completing the write. One runner invocation; separate raw-only auditor invocation; all outputs retained.
 
@@ -23,7 +23,7 @@
 
 ## Frozen environment and integrity
 
-- Image: sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9, linux/amd64; Docker Desktop desktop-linux.
+- Image: sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9, linux/amd64; Docker Desktop desktop-linux. `/scratch` is a dedicated 32 MiB tmpfs for the active package and rename candidates; `/out` is only a persistent evidence bind mount. The runner refuses to start unless `/scratch` is mounted as tmpfs.
 - Network disabled, pull never, root/source read-only, CPU 0.5, memory 256 MiB, PIDs 32, shm 32 MiB, all capabilities dropped, no-new-privileges.
 - Nested .gitattributes uses * -text, preserving exact committed/check-out bytes across Windows and Linux. The freeze binds both SHA-256 and Git blob identity for every source and the copied input.
 - Stage 0 tests are construction-only and excluded. Preflight rejects source/input/image/context mismatch, existing output and any running Docker container before output creation. A fresh exclusive slot is required immediately before the sole formal orchestration.

@@ -107,7 +107,9 @@ def _wait_all(events, timeout, name):
 
 
 def _run_arm(arm, seed_raw, seed_package, out: Path, ctx) -> dict:
-    work = out / "work" / arm
+    # Publication occurs on container-local Linux tmpfs, never the Windows-backed
+    # output bind mount. Only the reader evidence is persisted under /out.
+    work = Path("/scratch") / arm
     work.mkdir(parents=True, exist_ok=False)
     active = work / "ACTIVE.json"
     active.write_bytes(seed_raw)
@@ -219,14 +221,17 @@ def main() -> int:
     out = Path("/out")
     if not out.is_dir():
         raise RuntimeError("/out must be a fresh writable mounted directory")
+    mounts = [line.split() for line in Path("/proc/mounts").read_text(encoding="utf-8").splitlines()]
+    if not any(len(fields) >= 3 and fields[1] == "/scratch" and fields[2] == "tmpfs" for fields in mounts):
+        raise RuntimeError("publication scratch must be a dedicated tmpfs mount")
     frozen_image = os.environ.get("FROZEN_IMAGE_ID")
     if frozen_image != "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9":
         raise RuntimeError("frozen image identity environment mismatch")
     seed_raw, seed_package = load_seed(Path("/src"))
     if git_blob_sha1(seed_raw) != INPUT_GIT_BLOB:
         raise RuntimeError("seed Git blob identity mismatch")
-    if (out / "work").exists() or (out / "reads").exists():
-        raise RuntimeError("formal output contains a pre-existing run directory")
+    if (out / "reads").exists():
+        raise RuntimeError("formal output contains a pre-existing evidence directory")
     (out / "reads").mkdir()
     ctx = mp.get_context("spawn")
     arms = []
