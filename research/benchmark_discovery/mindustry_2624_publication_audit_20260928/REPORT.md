@@ -10,7 +10,7 @@ Audited the four published base64 evidence segments and manifest from branch `re
 
 Executed locally with Docker Desktop, image `python:3.12-slim-bookworm` (linux/amd64; image ID `sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e`). Container had `--network none`, read-only root and source mounts, 0.25 CPU, 512 MiB RAM, 64 PID cap; only a fresh output directory was writable. This was a posthoc publication-integrity audit only, not a scientific-session rerun.
 
-Command ran `python /src/audit_publication_bundle.py`; exit code **2**, the expected non-pass HOLD exit. The exact JSON output is retained in [LOCAL_AUDIT.json](LOCAL_AUDIT.json), SHA-256 `9905B1F98D5014B101969AECA57A7932DFDA9FD0A88CBAD45773B6171A4E84EC`.
+Command ran `python /src/audit_publication_bundle.py`; exit code **2**, the expected non-pass HOLD exit. The exact JSON output is retained in [LOCAL_AUDIT.json](LOCAL_AUDIT.json), SHA-256 `d054e20010aa8978c7b5f4d7859461fcec9c27f4989757dd37db313d58c3f011`.
 
 ## Findings
 
