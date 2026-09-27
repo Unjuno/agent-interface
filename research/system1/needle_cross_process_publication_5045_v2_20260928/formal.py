@@ -27,26 +27,53 @@ def run(argv: list[str]) -> subprocess.CompletedProcess:
     return subprocess.run(argv, text=True, encoding="utf-8", errors="replace", capture_output=True)
 
 
+def frozen_input_sha(freeze: dict) -> str:
+    try:
+        value = freeze["input"]["sha256"]
+    except (KeyError, TypeError) as exc:
+        raise RuntimeError("freeze must store the input digest at input.sha256") from exc
+    if not isinstance(value, str) or len(value) != 64 or any(ch not in "0123456789abcdef" for ch in value):
+        raise RuntimeError("freeze input.sha256 must be 64 lowercase hexadecimal characters")
+    return value
+
+
+def validate_freeze_identity(freeze: dict, seed_sha: str) -> None:
+    if freeze.get("schema") != "needle-cross-process-publication-freeze-v1":
+        raise RuntimeError("freeze schema mismatch")
+    if freeze.get("image_id") != IMAGE:
+        raise RuntimeError("freeze image identity mismatch")
+    if frozen_input_sha(freeze) != seed_sha:
+        raise RuntimeError("freeze input SHA-256 mismatch")
+
+
+def validate_sources(exp: Path, source_hashes: dict) -> dict:
+    results = {}
+    for relative, expected in source_hashes.items():
+        path = exp / relative
+        actual = digest(path)
+        results[relative] = {"expected": expected, "actual": actual, "matches": expected == actual}
+        if actual != expected:
+            raise RuntimeError(f"frozen source mismatch: {relative}")
+    return results
+
+
+def validate_output_path(output: Path) -> None:
+    if not output.is_absolute() or output.exists():
+        raise RuntimeError("formal output path must be absolute and not exist before invocation")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", required=True, help="absolute path to a new, empty output directory")
     parser.add_argument("--preflight-only", action="store_true", help="validate frozen inputs and sources without Docker or output creation")
     args = parser.parse_args()
     output = Path(args.output).resolve()
-    if not output.is_absolute() or output.exists():
-        raise RuntimeError("formal output path must not exist before the frozen invocation")
+    validate_output_path(output)
     if digest(SEED) != EXPECTED_SEED:
         raise RuntimeError("exact seed-3788 skill.json SHA-256 mismatch")
     freeze = json.loads((EXP / "FREEZE.json").read_text(encoding="utf-8"))
-    if freeze["image_id"] != IMAGE or freeze["input"]["sha256"] != EXPECTED_SEED:
-        raise RuntimeError("freeze identity mismatch")
-    source_results = {}
-    for relative, expected in freeze["source_sha256"].items():
-        path = EXP / relative
-        actual = digest(path)
-        source_results[relative] = {"expected": expected, "actual": actual, "matches": expected == actual}
-        if actual != expected:
-            raise RuntimeError(f"frozen source mismatch: {relative}")
+    validate_freeze_identity(freeze, EXPECTED_SEED)
+    source_results = validate_sources(EXP, freeze["source_sha256"])
     if args.preflight_only:
         print(json.dumps({"preflight": "PASS_STATIC", "output_created": False, "docker_invocations": 0}, sort_keys=True))
         return 0
@@ -113,4 +140,5 @@ if __name__ == "__main__":
     except BaseException as exc:
         print(json.dumps({"formal_preflight_orchestration_error": type(exc).__name__, "error": str(exc)}, sort_keys=True), file=sys.stderr)
         raise
+
 
