@@ -17,6 +17,9 @@ def audit(doc):
         check(r["y_b"]==[1-int(x[0]) for x in r["x_b"]],"B label contract")
         check(r["support_y"]==[[1-int(x[0]) for x in batch] for batch in r["support_x"]],"support label contract")
         for batch in r["support_x"]: check(sum(int(x[0]) for x in batch)==4,"support balance")
+        flat=[tuple(x) for batch in r["support_x"] for x in batch]
+        check(len(set(flat))==256,"support uniqueness")
+        check(sum(r["y_a"])==128 and sum(r["y_b"])==128,"heldout balance")
         for k in w: check(w[k]==r["base_initial"][k],"base mutation")
         def base(x): return F.linear(torch.tanh(F.linear(x,torch.tensor(w["l1.weight"]),torch.tensor(w["l1.bias"]))),torch.tensor(w["l2.weight"]),torch.tensor(w["l2.bias"]))
         for j,(snap,row) in enumerate(zip(r["snapshots"],r["curve"])):
@@ -26,6 +29,7 @@ def audit(doc):
                 h=torch.tanh(F.linear(x,torch.tensor(w["l1.weight"]),torch.tensor(w["l1.bias"])))
                 return F.linear(h,torch.tensor(w["l2.weight"]),torch.tensor(w["l2.bias"]))+(h@b.T@a.T)*0.25
             with torch.no_grad(): pa=f(x_a);pb=f(x_b);ca=int((pa.argmax(-1)==y_a).sum());cb=int((pb.argmax(-1)==y_b).sum());cea=float(F.cross_entropy(pa,y_a));ceb=float(F.cross_entropy(pb,y_b))
+            if j==0: check(torch.equal(f(x_a),base(x_a)),"initial candidate/base mismatch")
             check((ca,cb)==(row["a_correct"],row["b_correct"]),f"{seed} step{j} accuracy")
             check(abs(cea-row["ce_a"])<1e-6 and abs(ceb-row["ce_b"])<1e-6,f"{seed} step{j} CE")
             points+=1
@@ -54,4 +58,5 @@ def main(path):
     print(json.dumps(result,separators=(",",":")))
 
 if __name__=="__main__": main(sys.argv[1])
+
 
