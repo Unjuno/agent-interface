@@ -20,6 +20,11 @@ produce output that the independent evaluator scores as an exact match.
 - Runner SHA-256:
   `ad207a27231259f99961dc5875a28097887aca48e02d3c9adff769f0dabf72d4`;
   pre-formal runner/auditor/test commit `594f1800e9525fd794a3e6d44e20ee60f5e0a9e2`.
+- Parallel-work collision: another worker independently froze an alternate
+  nine-step probe in commit `910912761d608561f499561221751ef7dcb2b168`, SHA-256
+  `7a67c411c32a626524f0575e9cef2ba6988130ad55886bc1ebb6019485db7b75`.
+  It is retained and checksummed as an unexecuted alternate; only the runner
+  hash above drove this allocation. No duplicate allocation was run.
 - OrbStack Docker 29.4.0; image
   `sha256:436172d89b145c6a9f9a57e655422c9558b3b0235347dd77607e9d61bcfa6393`
   (`linux/arm64`, CPython 3.11.2). No network, read-only source and runner,

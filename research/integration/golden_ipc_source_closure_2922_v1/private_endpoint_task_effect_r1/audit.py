@@ -8,6 +8,7 @@ from pathlib import Path
 COMMIT = "01349d7bc76e5635f5568c53ffeec4d9ff49abb1"
 ALLOCATION = "issue2922-chromium-task-effect-20260928-r1"
 RUNNER_SHA256 = "ad207a27231259f99961dc5875a28097887aca48e02d3c9adff769f0dabf72d4"
+ALTERNATE_RUNNER_SHA256 = "7a67c411c32a626524f0575e9cef2ba6988130ad55886bc1ebb6019485db7b75"
 SOURCES = {
     "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
     "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
@@ -51,6 +52,9 @@ def audit(result, repo, raw):
             errors.append("source_blob:" + path)
     runner = Path(repo) / "research/integration/golden_ipc_source_closure_2922_v1/private_endpoint_task_effect_r1/run_task_effect.py"
     checks["runner_hash"] = runner.is_file() and hashlib.sha256(runner.read_bytes()).hexdigest() == RUNNER_SHA256
+    alternate = Path(repo) / "research/integration/golden_ipc_source_closure_2922_v1/private_endpoint_task_effect_r1/session_cli_chromium_task_effect_probe.py"
+    checks["retained_alternate_runner_hash"] = (
+        alternate.is_file() and hashlib.sha256(alternate.read_bytes()).hexdigest() == ALTERNATE_RUNNER_SHA256)
     events_file = Path(raw) / "session/events.jsonl"
     output_file = Path(raw) / "session/submitted.txt"
     try:
@@ -105,7 +109,8 @@ def audit(result, repo, raw):
                 manifest_ok = False
             seen.add(name)
         expected_raw = {str(p.relative_to(sums.parent)) for p in (Path(raw)).rglob("*") if p.is_file()}
-        expected = expected_raw | {runner_rel, "REPORT.md", "audit.py", "test_audit.py", "write_manifest.py"}
+        expected = expected_raw | {runner_rel, "REPORT.md", "audit.py", "test_audit.py", "write_manifest.py",
+                                   "session_cli_chromium_task_effect_probe.py"}
         checks["sha256_manifest"] = manifest_ok and seen == expected
     except (OSError, ValueError):
         checks["sha256_manifest"] = False
