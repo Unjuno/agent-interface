@@ -1,47 +1,61 @@
-"""Inference helpers. The audit program deliberately reimplements these."""
+"""Generation-bound immutable prefix-cache handles for Issue #4639."""
 
 from __future__ import annotations
 
 import copy
+from dataclasses import dataclass
 from typing import Any
 
 import torch
 
 
-def run_full(model: Any, prefix_ids: torch.Tensor, suffix_ids: torch.Tensor) -> torch.Tensor:
-    ids = torch.cat((prefix_ids, suffix_ids), dim=1)
+@dataclass(frozen=True)
+class CacheHandle:
+    cache: Any
+    bundle_id: str
+    generation: int
+    prefix_sha256: str
+    prefix_length: int
+
+    def private_copy(self, *, bundle_id: str, generation: int, prefix_sha256: str) -> Any:
+        if (bundle_id, generation, prefix_sha256) != (
+            self.bundle_id, self.generation, self.prefix_sha256
+        ):
+            raise ValueError("stale_or_foreign_prefix_cache")
+        return copy.deepcopy(self.cache)
+
+
+def full_logits(model: Any, prefix_ids: torch.Tensor, suffix_ids: torch.Tensor) -> torch.Tensor:
+    input_ids = torch.cat((prefix_ids, suffix_ids), dim=1)
     with torch.inference_mode():
-        out = model(input_ids=ids, use_cache=False, return_dict=True)
-    return out.logits[0, -1].float()
+        output = model(input_ids=input_ids, use_cache=False, return_dict=True)
+    return output.logits[0, -1].float()
 
 
-def run_cached(model: Any, prefix_cache: Any, prefix_len: int, suffix_ids: torch.Tensor) -> torch.Tensor:
-    # Transformers' DynamicCache is mutable. Each independent suffix receives a
-    # private copy so one question can never advance another question's state.
-    cache = copy.deepcopy(prefix_cache)
-    cache_position = torch.arange(
-        prefix_len, prefix_len + suffix_ids.shape[1], dtype=torch.long, device=suffix_ids.device
+def cached_logits(
+    model: Any,
+    handle: CacheHandle,
+    *,
+    bundle_id: str,
+    generation: int,
+    prefix_sha256: str,
+    suffix_ids: torch.Tensor,
+) -> torch.Tensor:
+    cache = handle.private_copy(
+        bundle_id=bundle_id, generation=generation, prefix_sha256=prefix_sha256
     )
-    attention_mask = torch.ones(
-        (1, prefix_len + suffix_ids.shape[1]), dtype=torch.long, device=suffix_ids.device
+    position = torch.arange(
+        handle.prefix_length,
+        handle.prefix_length + suffix_ids.shape[1],
+        device=suffix_ids.device,
+    )
+    mask = torch.ones(
+        (1, handle.prefix_length + suffix_ids.shape[1]),
+        dtype=torch.long,
+        device=suffix_ids.device,
     )
     with torch.inference_mode():
-        out = model(
-            input_ids=suffix_ids,
-            past_key_values=cache,
-            cache_position=cache_position,
-            attention_mask=attention_mask,
-            use_cache=True,
-            return_dict=True,
-        )
-    return out.logits[0, -1].float()
-
-
-def load_corpus(path: str) -> list[dict[str, Any]]:
-    import json
-
-    with open(path, encoding="utf-8") as f:
-        rows = [json.loads(line) for line in f]
-    if len(rows) != 64 or any(len(row["suffixes"]) != 16 for row in rows):
-        raise ValueError("frozen corpus dimensions differ")
-    return rows
+        output = model(input_ids=suffix_ids, past_key_values=cache,
+                       cache_position=position, attention_mask=mask,
+                       use_cache=True, return_dict=True)
+    return output.logits[0, -1].float()
