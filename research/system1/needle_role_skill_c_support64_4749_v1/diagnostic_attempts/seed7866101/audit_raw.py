@@ -28,6 +28,8 @@ for name, n in (("control16", 16), ("treatment64", 64)):
         errors.append(name + ":accuracy")
 if arms and raw.get("delta_treatment_minus_control") != arms["treatment64"].get("accuracy", 0) - arms["control16"].get("accuracy", 0):
     errors.append("delta")
+if raw.get("raw_payload_sha256") != "e24eb708ab5de7d1c3beaafa8ac2fba795c46ccf35e447dd82184438134ae9dc":
+    errors.append("raw_payload_sha256_expected")
 # Reconstruct the self-hash over the record excluding its self-hash field.
 payload = dict(raw)
 payload.pop("raw_payload_sha256", None)
