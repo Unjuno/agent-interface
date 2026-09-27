@@ -57,6 +57,15 @@ class FrozenTargetAuditTests(unittest.TestCase):
         self.assertIn("family ID disagrees with frozen image manifest", errors)
         self.assertIn("unknown or non-held-out image ID", errors)
 
+    def test_seed_arm_and_target_point_substitution_are_rejected(self):
+        raw, manifest = fixture()
+        raw["cases"][0]["seed"] = 0
+        raw["cases"][1]["arm"] = "unregistered_arm"
+        raw["cases"][2]["target_points"][0][0] += 1
+        errors = audit_data(raw, manifest)["errors"]
+        self.assertIn("case outside exact frozen seed/arm/image population", errors)
+        self.assertIn("self-reported target points disagree with frozen manifest", errors)
+
     def test_duplicate_missing_and_extra_cases_are_rejected(self):
         raw, manifest = fixture()
         raw["cases"].pop()
