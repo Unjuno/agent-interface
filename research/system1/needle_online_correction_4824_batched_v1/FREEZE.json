@@ -5,21 +5,32 @@
   "branch": "research/needle-online-correction-4824-batched-20260927",
   "path": "research/system1/needle_online_correction_4824_batched_v1/",
   "formal_invocations": 0,
+  "source_blob_ids": {
+    "runner.py": "4d485ec748299cc26c9c9ec321a6c5ab3ce41b4c",
+    "audit_initial_incomplete.py": "f064f28e73104ed9e071e3f193ea3d17903342c5",
+    "audit_corrected_partial.py": "3af0ac116e1611975697e245f5f353dcbf3e0485"
+  },
+  "raw_storage": {
+    "format": "base64-encoded gzip stream split into 28 ordered UTF-8 text parts",
+    "bytes_uncompressed": 2299063,
+    "sha256_uncompressed": "9feb483c29c71191d519eb1be3842de44ead6e4df6c751defabd5fa40795af97"
+  },
   "seeds": [
     6811701,
     6812701,
     6813701
   ],
   "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
-  "runner_sha256": "A2064F69E802D8A3ACE6CEDAD4368EA59CF7AD9926432023298466BB0FDC415D",
-  "auditor_sha256": "A1843E24B8D538BFA45B78C0C0E62FE8EFA756FCC0B35CC97089F4F2104C85DE",
-  "raw_sha256": "9feb483c29c71191d519eb1be3842de44ead6e4df6c751defabd5fa40795af97",
   "raw_bytes": 2299063,
-  "construction_result": "HOLD_CONSTRUCTION_GRADIENT_PATH_INACTIVE",
-  "formal_result": "NOT_RUN",
   "scope": "construction-only synthetic support/update-boundary diagnostic; proposal-only; authority=false",
-  "readme_sha256": "13DB464EC49A68D454447CA1586A41455231288E2648A9AB6FF7B2655196ADE8",
   "commands_sha256": "F36587E21929FA35A73259A14CEFD4B8F69BA836ABCA63928B10CE1A33549F95",
-  "manifest_sha256": "A93B2407EEA4DAC4BCB7B13A7CA590FC881586240933EADD08AC628B06F16649"
+  "manifest_sha256": "A93B2407EEA4DAC4BCB7B13A7CA590FC881586240933EADD08AC628B06F16649",
+  "runner_sha256": "A2064F69E802D8A3ACE6CEDAD4368EA59CF7AD9926432023298466BB0FDC415D",
+  "auditor_sha256": "D4F12239A6C1A37FE9B561887BB8B8DB19F1F17AFD169B2E70D9ECF88AFC1725",
+  "readme_sha256": "DB341D024378A6136745A1E2094024E8A5AF97260AB4DE4F436CA193307E4ECC",
+  "raw_sha256": "9feb483c29c71191d519eb1be3842de44ead6e4df6c751defabd5fa40795af97",
+  "formal_result": "STOP_AUDIT_INCOMPLETE_NO_FORMAL_DECISION",
+  "construction_result": "HOLD_NO_HELDOUT_ACQUISITION_AT_FROZEN_UPDATE_BUDGET",
+  "audit_scope": "partial logged-metric consistency only; no independent model replay"
 }
 
