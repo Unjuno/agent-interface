@@ -42,14 +42,17 @@ class NativeDecision(BaseModel):
                      'An unmatched title can wait until the feedback timeout and remain pending. '
                      'Required for an action; a title match is not a task success assertion.'))
     interaction: Literal['click','keyboard','observe'] = Field(default='click',
-        description='click then tail, keyboard-only tail, or observe for one fresh capture without input; observe consumes a stage.')
+        description=('click then tail, keyboard-only tail, or observe for one fresh capture without input; observe consumes a stage. '
+                     'When a returned frame leaves completion unclear, observe can inspect the new state without replaying the action. '
+                     'For observe supply only source_sequence and interaction; do not include point, title, tail or finish.'))
     tail: list[dict] = Field(default_factory=list, description=(
         'Explicit ordered native operations. Examples: {"op":"text","text":"190","gap_ms":10}, '
         '{"op":"key_chord","keys":["CTRL","s"]}, '
         '{"op":"key_chord","keys":["Right"],"repeat":18}, '
         '{"op":"wait_update","timeout_ms":50}. Text gap_ms is an integer in 0..1000; it overrides the configured text-gap default (zero disables character gaps). Omit gap_ms to use that default. Text gaps and key repeats expand within the same tail limit: 123 operations for click, 126 for keyboard. No automatic retries.'))
     finish: StrictBool = Field(default=False,
-        description='End and evaluate without new input; requires only source_sequence. Session closes even if scoring fails.')
+        description=('End and evaluate without new input; requires only source_sequence. Session closes even if scoring fails. '
+                     'Evaluation is separate from visual completion; use interaction=observe first if another fresh frame is needed.'))
     finish_after: StrictBool = Field(default=False,
         description='End/evaluate after this explicit action. Do not use if a new dialog may need a decision.')
 
@@ -207,6 +210,9 @@ def create_server(run_directory, *, allocation=None):
         Includes recorded public goal and exchange limits when available.
         View its image before choosing an action. A historical frame is not fresh
         authority. No latest-stage guessing and no session allocation.
+        To request a new frame, use native_submit at the explicit continuation
+        stage with only source_sequence and interaction="observe" in decision.
+        That consumes one stage without replaying the preceding input.
         """
         def observe():
             if not 1 <= stage <= 64:
