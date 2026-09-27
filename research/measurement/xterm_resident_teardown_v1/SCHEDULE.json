@@ -1,0 +1,22 @@
+{
+  "task": "issue-4448-xterm-resident-teardown-v1",
+  "schedule_id": "xterm-resident-teardown-20260927-r1",
+  "pairs": 12,
+  "actions_per_arm": 4,
+  "order_rule": "even pair ids EPHEMERAL_XTERM then RESIDENT_XTERM; odd pair ids RESIDENT_XTERM then EPHEMERAL_XTERM",
+  "construction_excluded": true,
+  "items": [
+    {"pair": 0, "order": ["EPHEMERAL_XTERM", "RESIDENT_XTERM"]},
+    {"pair": 1, "order": ["RESIDENT_XTERM", "EPHEMERAL_XTERM"]},
+    {"pair": 2, "order": ["EPHEMERAL_XTERM", "RESIDENT_XTERM"]},
+    {"pair": 3, "order": ["RESIDENT_XTERM", "EPHEMERAL_XTERM"]},
+    {"pair": 4, "order": ["EPHEMERAL_XTERM", "RESIDENT_XTERM"]},
+    {"pair": 5, "order": ["RESIDENT_XTERM", "EPHEMERAL_XTERM"]},
+    {"pair": 6, "order": ["EPHEMERAL_XTERM", "RESIDENT_XTERM"]},
+    {"pair": 7, "order": ["RESIDENT_XTERM", "EPHEMERAL_XTERM"]},
+    {"pair": 8, "order": ["EPHEMERAL_XTERM", "RESIDENT_XTERM"]},
+    {"pair": 9, "order": ["RESIDENT_XTERM", "EPHEMERAL_XTERM"]},
+    {"pair": 10, "order": ["EPHEMERAL_XTERM", "RESIDENT_XTERM"]},
+    {"pair": 11, "order": ["RESIDENT_XTERM", "EPHEMERAL_XTERM"]}
+  ]
+}
