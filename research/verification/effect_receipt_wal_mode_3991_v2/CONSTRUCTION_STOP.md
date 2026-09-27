@@ -16,4 +16,8 @@ The one excluded Docker construction invocation ran the frozen 40-cell represent
 
 The audit is not eligible to accept the data. It incorrectly applies the formal 120-row / 30-control matrix cardinalities to the expressly excluded 40-row / 10-control construction matrix. Separately, its expected retry policy treats every protocol's `AFTER_SECOND` as retryable. For split protocols both independent commits have already completed at that cut, so receipt-only status must be `COMPLETED` and retry must be forbidden. (For `ATOMIC_LOCAL`, `AFTER_SECOND` is still before the shared commit and retry is allowed.) The runner and raw state therefore cannot be promoted from the auditor's partial counters.
 
+## Coordination failure
+
+Before this construction started, another collaborator had posted Issue comment [#5858244498](https://github.com/Unjuno/agent-interface/issues/4945#issuecomment-5858244498) identifying the exact `AFTER_SECOND` audit mismatch and explicitly requesting a corrected immutable freeze before construction. I re-read the Issue body and branch but failed to re-read its comments at the final launch gate, then ran the already-frozen construction. This was a missed parallel-work stop signal. The invocation is retained as run; no formal work followed. Every successor launch gate must inspect the latest Issue comments as well as branch/PR/Issue state.
+
 This is a construction/auditor design STOP, not a scientific contradiction or evidence against WAL. No formal row was started. Any correction must be frozen under a new successor allocation and run with fresh storage/identities; these 50 construction cases are not pooled or reused.
