@@ -14,7 +14,7 @@
 
 ## Environment and resource receipts
 
-- Python `3.11.10`, PyTorch `2.5.1+cu121`, CUDA `12.1`, NumPy `2.6.2`.
+- Python `3.11.10`, PyTorch `2.5.1+cu121`, CUDA `12.1`, NumPy `2.1.2`.
 - Peak CUDA allocated: 82,928,128 bytes.
 - Fit times (descriptive only): max-only 1.204 s, max+mean 1.175 s.
 - Full pre-run GPU XML snapshot remains local; SHA-256 `7fa754f9a2d29b4c1a81e961df3d99cb98868605fde7258a0a78420d7cea46c0`.
