@@ -58,7 +58,7 @@ not occupy a shared parent-level `research/integration/` destination.
 
 ## One-shot protocol
 
-1. Verify current main `821482e56d5e0e4557fda86da53c12dd44d0e012` and exact broker blob; check issue/branch/path collisions.
+1. Verify current main `eb3c8d108b8ddd090e5e81a22c7d5db9c367552c` and exact broker blob; check issue/branch/path collisions.
 2. Run only construction checks. They never import or invoke the broker.
 3. Confirm explicit shared Docker slot ownership and fresh inventory in the
    `desktop-linux` context. Never

@@ -25,6 +25,10 @@ class FormalFreshnessTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             verify_source_identity("0" * 40, "0" * 40)
 
+    def test_formal_main_calls_source_identity_gate(self):
+        source = Path(__file__).with_name("formal.py").read_text(encoding="utf-8")
+        self.assertIn("verify_source_identity(args.observed_main, args.source_commit_sha)", source)
+
     def test_rejects_existing_formal_or_audit_output(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)

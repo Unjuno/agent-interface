@@ -16,7 +16,7 @@ RECEIPT_PATH = ROOT / "invocation-receipt.json"
 FREEZE_PATH = ROOT / "FREEZE.json"
 IMAGE = "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e"
 EXPECTED_BROKER_SHA = "e44822269b921aa6327563b27e48a6d8ef4ebe35a182f50de541cf66fce6199c"
-EXPECTED_MAIN = "821482e56d5e0e4557fda86da53c12dd44d0e012"
+EXPECTED_MAIN = "eb3c8d108b8ddd090e5e81a22c7d5db9c367552c"
 EXPECTED_BROKER_BLOB = "5734f54f318db9ac5e96b2bed6f6bed105ac39ff"
 
 
@@ -93,8 +93,7 @@ def main() -> int:
                               capture_output=True, text=True).stdout.strip()
     if blob_sha != EXPECTED_BROKER_BLOB:
         raise ValueError("broker Git blob mismatch: " + blob_sha)
-    if args.observed_main != EXPECTED_MAIN:
-        raise ValueError("main advanced; re-read and re-freeze before invocation")
+    verify_source_identity(args.observed_main, args.source_commit_sha)
     require_fresh_paths(OUT, AUDIT_OUT, RECEIPT_PATH)
     image_id = subprocess.run(["docker", "--context", "desktop-linux", "image", "inspect", IMAGE,
                                "--format", "{{.Id}} {{.Os}}/{{.Architecture}}"],
