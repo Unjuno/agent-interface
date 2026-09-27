@@ -1,0 +1,1 @@
+seed 7866401; support64 minus support16 role-C accuracy = +0.05126953125; A/B exactly unchanged; independent raw audit PASS. Single synthetic diagnostic only; no generalization or runtime claim.
