@@ -1,6 +1,7 @@
 """Construction-only tests. No trainer/optimizer allocation is invoked."""
 import importlib.util
 import platform
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -55,6 +56,15 @@ class Construction(unittest.TestCase):
         x = torch.zeros((1, 8))
         self.assertEqual(study.guard(NoCall(), x, "unknown", 32)["decision"], "YIELD")
         self.assertEqual(study.guard(NoCall(), x, "B", 31)["decision"], "YIELD")
+
+    def test_output_writer_accepts_existing_mount_and_refuses_overwrite(self):
+        with tempfile.TemporaryDirectory() as temp:
+            output = Path(temp) / "mounted-volume" / "raw.json"
+            output.parent.mkdir()
+            study.write_raw({"construction": True}, output)
+            self.assertIn('"construction":true', output.read_text(encoding="utf-8"))
+            with self.assertRaises(FileExistsError):
+                study.write_raw({"replacement": True}, output)
 
     def test_independent_auditor_accepts_seeded_no_update_fixture(self):
         runs = []

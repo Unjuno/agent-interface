@@ -226,14 +226,20 @@ def run() -> dict:
     }
 
 
+def write_raw(document: dict, output: Path) -> None:
+    if output.exists():
+        raise FileExistsError(f"formal output already exists: {output}")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    payload = json.dumps(document, separators=(",", ":"), allow_nan=False) + "\n"
+    output.write_text(payload, encoding="utf-8")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     document = run()
-    args.output.parent.mkdir(parents=True, exist_ok=False)
-    payload = json.dumps(document, separators=(",", ":"), allow_nan=False) + "\n"
-    args.output.write_text(payload, encoding="utf-8")
+    write_raw(document, args.output)
     print(json.dumps({
         "schema": document["schema"],
         "seeds": [row["seed"] for row in document["runs"]],
