@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 188 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 189 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
@@ -154,6 +154,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cegis_skill_4262_v1/`](cegis_skill_4262_v1/)
 - [`censored_useful_effect_integrity_2514_v1/`](censored_useful_effect_integrity_2514_v1/)
 - [`censored_useful_effect_membership_successor_1838_v1/`](censored_useful_effect_membership_successor_1838_v1/)
+- [`cache_partial_effect_replay_boundary_2928_v1/`](cache_partial_effect_replay_boundary_2928_v1/)
 - [`cli_v1_lineage_direct_tests_2428_v1/`](cli_v1_lineage_direct_tests_2428_v1/)
 - [`composition_heldout_fixture_2068_v1/`](composition_heldout_fixture_2068_v1/)
 - [`cost_predicate_order_4258_v1/`](cost_predicate_order_4258_v1/)
