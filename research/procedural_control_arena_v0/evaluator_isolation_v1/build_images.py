@@ -16,6 +16,7 @@ for source in ('arena.py', 'engine.py'):
     if hashlib.sha256(src.read_bytes()).digest() != hashlib.sha256(dst.read_bytes()).digest():
         raise SystemExit(f'copy mismatch: {source}')
 records = []
+source_hashes = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in ('arena.py', 'engine.py')}
 for name in ('evaluator', 'controller'):
     context = HERE / 'images' / name
     tag = f'agent-arena-isolation-{name}:20260927'
@@ -29,5 +30,5 @@ for name in ('evaluator', 'controller'):
     (BUILD / f'{name}-image-inspect.json').write_text(inspected.stdout, encoding='utf-8')
     image = json.loads(inspected.stdout)[0]
     records.append({'name': name, 'tag': tag, 'image_id': image['Id'], 'repo_digests': image.get('RepoDigests', []), 'base': BASE, 'build_command': cmd, 'log_sha256': hashlib.sha256(proc.stdout.encode()).hexdigest()})
-(BUILD / 'BUILD_RECORD.json').write_text(json.dumps({'built_unix': time.time(), 'images': records}, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+(BUILD / 'BUILD_RECORD.json').write_text(json.dumps({'built_unix': time.time(), 'arena_source_sha256': source_hashes, 'images': records}, indent=2, sort_keys=True) + '\n', encoding='utf-8')
 print(json.dumps(records, indent=2))
