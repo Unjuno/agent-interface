@@ -14,8 +14,12 @@ def audit(root):
     lock_raw = base64.b64decode((root / "requirements.lock.raw.b64").read_text(encoding="ascii"))
     manifest_raw = base64.b64decode((root / "wheelhouse-manifest.json.raw.b64").read_text(encoding="ascii"))
     log_raw = base64.b64decode((root / "offline-install-import-preflight.log.raw.b64").read_text(encoding="ascii"))
+    provenance_raw = base64.b64decode((root / "ACQUISITION_PROVENANCE.json.raw.b64").read_text(encoding="ascii"))
     lock = (root / "requirements.lock").read_bytes()
-    prov = json.loads((root / "ACQUISITION_PROVENANCE.json").read_text(encoding="utf-8"))
+    provenance_text = (root / "ACQUISITION_PROVENANCE.json").read_bytes()
+    if provenance_text.replace(b"\r\n", b"\n") != provenance_raw.replace(b"\r\n", b"\n"):
+        errors.append("provenance_raw_text_mismatch")
+    prov = json.loads(provenance_raw.decode("utf-8"))
     log = (root / "offline-install-import-preflight.log").read_bytes()
     if lock.replace(b"\r\n", b"\n") != lock_raw.replace(b"\r\n", b"\n"):
         errors.append("lock_raw_text_mismatch")
@@ -36,6 +40,8 @@ def audit(root):
         errors.append("manifest_sha256")
     if hashlib.sha256(log_raw).hexdigest() != "85fbaFaf2397165491b9b6eAaF3445D40c7CB77EC687cB5D342A8F10CE7A8F2F".lower():
         errors.append("log_sha256")
+    if hashlib.sha256(provenance_raw).hexdigest() != "6af75de734b1e505935a5e993a905acbcbc28e7910dbd8e2efeb70c21d3ce3d8":
+        errors.append("provenance_sha256")
     if len(manifest) != 59 or len(artifacts) != 59 or prov.get("count") != 59:
         errors.append("artifact_count")
     total = sum(x.get("bytes", -1) for x in manifest)
