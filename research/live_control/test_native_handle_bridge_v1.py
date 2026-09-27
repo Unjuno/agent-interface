@@ -6,10 +6,36 @@ from types import SimpleNamespace
 from unittest import mock
 
 from PIL import Image
-from native_handle_bridge_v1 import NativeHandleBridge, _GuardedBackend
+from native_handle_bridge_v1 import NativeHandleBridge, _GuardedBackend, read_window_title
 from scoped_target_handle_v3 import TargetHandleStore
 from runtime.backends.x11_v1.backend import X11Backend, X11BackendError
 
+
+class WindowTitleTests(unittest.TestCase):
+    def test_visible_utf8_fallback_when_client_name_missing(self):
+        d = mock.Mock()
+        d.intern_atom.side_effect = lambda name: name
+        window = mock.Mock()
+        window.get_full_property.side_effect = [None, SimpleNamespace(value='sheet.xlsx — Calc'.encode())]
+        self.assertEqual(read_window_title(d, window), 'sheet.xlsx — Calc')
+        window.get_wm_name.assert_not_called()
+
+    def test_client_title_precedes_visible_decoration(self):
+        d = mock.Mock()
+        window = mock.Mock()
+        window.get_full_property.return_value = SimpleNamespace(value=b'client')
+        self.assertEqual(read_window_title(d, window), 'client')
+        self.assertEqual(window.get_full_property.call_count, 1)
+
+    def test_legacy_fallback_and_invalid_utf8(self):
+        d = mock.Mock()
+        window = mock.Mock()
+        window.get_full_property.return_value = None
+        window.get_wm_name.return_value = 'legacy'
+        self.assertEqual(read_window_title(d, window), 'legacy')
+        window.get_full_property.return_value = SimpleNamespace(value=b'\xff')
+        with self.assertRaises(UnicodeDecodeError):
+            read_window_title(d, window)
 
 class NativeHandleBridgeTests(unittest.TestCase):
     def review_bridge(self, focus=20, captured_focus=20):

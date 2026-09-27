@@ -18,12 +18,29 @@ sys.path.insert(0, str(HERE.parent / "observation_gating"))
 import gui_suite as suite
 from integrated_efficiency_fixture_v1 import Fixture
 import integrated_efficiency_runtime_v1 as integrated
-from native_handle_bridge_v1 import NativeHandleBridge
+from native_handle_bridge_v1 import NativeHandleBridge, read_window_title
 from runtime.cli_v1.api import dispatch
 from runtime.core_v1.contract import SCHEMA_PROGRAM
 
 
 class PrivateSession(suite.Session):
+    def windows(self):
+        lines = []
+        for line in super().windows().splitlines():
+            fields = line.split(None, 3)
+            if len(fields) == 4 and fields[3] == 'N/A':
+                try:
+                    window = self.d.create_resource_object('window', int(fields[0], 16))
+                    title = read_window_title(self.d, window)
+                    if title:
+                        fields[3] = title.replace('\n', ' ').replace('\r', ' ')
+                        line = ' '.join(fields)
+                except Exception:
+                    # Disappearing/unreadable clients remain unrecognized.
+                    pass
+            lines.append(line)
+        return '\n'.join(lines) + ('\n' if lines else '')
+
     def _popen(self, args, **kwargs):
         if Path(args[0]).name == "Xvfb":
             args = [*args, "-nolisten", "unix"]
