@@ -19,7 +19,40 @@ permissions:
   contents: read
 
 jobs:
+  windows-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package only files used by the Windows contract tests
+        run: |
+          git archive --format=tar HEAD \
+            runtime/docker_schema_preflight_v1.py \
+            runtime/test_docker_schema_preflight_v1.py \
+            runtime/requirements-docker-schema-preflight.txt \
+            research/live_control/docker_model_call_backend_v1.py \
+            research/live_control/test_docker_model_call_backend_v1.py \
+            research/live_control/model_call_backend_v1.py \
+            research/live_control/test_model_call_backend_v1.py \
+            research/live_control/integrated_efficiency_model_v1.py \
+            research/live_control/test_integrated_efficiency_probe_injection_v1.py \
+            research/live_control/probe_integrated_efficiency_live_orchestration_v1.py \
+            research/live_control/compiled_form_grounding_v1.py \
+            research/live_control/plain_form_points_v1.py \
+            research/live_control/compiled_form_grounding_schema_v1.json \
+            research/live_control/plain_form_points_schema_v1.json \
+            research/live_control/compiled_form_grounding_responder_v1.txt \
+            research/live_control/plain_form_points_responder_v1.txt \
+            research/live_control/target_handle_model_runner_v2.py \
+            > output-contract-windows.tar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: output-contract-windows-inputs
+          path: output-contract-windows.tar
+          if-no-files-found: error
+          retention-days: 1
+
   output-contract:
+    needs: windows-inputs
     strategy:
       fail-fast: false
       matrix:
@@ -27,6 +60,15 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+        if: matrix.os == 'ubuntu-latest'
+      - uses: actions/download-artifact@v4
+        if: matrix.os == 'windows-latest'
+        with:
+          name: output-contract-windows-inputs
+      - name: Extract scoped test inputs on Windows
+        if: matrix.os == 'windows-latest'
+        shell: bash
+        run: tar -xf output-contract-windows.tar
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
