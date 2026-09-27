@@ -24,7 +24,11 @@ def audit(root):
     if log.replace(b"\r\n", b"\n") != log_raw.replace(b"\r\n", b"\n"):
         errors.append("log_raw_text_mismatch")
     log_text = log.decode("utf-8", "replace")
-    manifest = json.loads(manifest_raw)
+    try:
+        manifest = json.loads(manifest_raw)
+    except Exception:
+        errors.append("manifest_json")
+        manifest = []
     artifacts = prov.get("artifacts", [])
     if hashlib.sha256(lock_raw).hexdigest() != "d871eb53e8ed38d5ee5d2c8fbae8ed0b2a3f265523bbf24b0573f42b17864ec9":
         errors.append("lock_sha256")
