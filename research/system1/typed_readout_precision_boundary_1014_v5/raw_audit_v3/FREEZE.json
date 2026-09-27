@@ -1,0 +1,92 @@
+{
+  "schema": "issue4960-audit-freeze-v1",
+  "issue": 4960,
+  "parent_issue": 4939,
+  "allocation": "raw-audit-integrity-v3-4960-20260928",
+  "base_ref": "research/raw-audit-integrity-4939-20260928",
+  "branch": "research/raw-audit-integrity-v3-4960-20260928",
+  "path": "research/system1/typed_readout_precision_boundary_1014_v5/raw_audit_v3/",
+  "inputs": {
+    "raw_sha256": "c1a2256d8b117d7dc0ec7d90c7333f3356378313d7f735fb7aa7700278183624",
+    "corpus_sha256": "85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c",
+    "weights_sha256": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe"
+  },
+  "sources": {
+    "audit_core_v2.py": {
+      "bytes": 4408,
+      "sha256": "6fb5f3a16e8639f2645576e985869948aa59efea5546a9093829065a8580b77c",
+      "git_blob": "a342d6a0f48f2f759bb55c0ba21960cda513bee0"
+    },
+    "audit_raw_v2.py": {
+      "bytes": 2969,
+      "sha256": "6726eac3b3eb49820cbd3526ec3c932652bd81c8089e5c097c240e669cba7880",
+      "git_blob": "26b20f00b9ca67fd1b664bc38272bf6e77cc7c1f"
+    },
+    "test_audit_v2.py": {
+      "bytes": 2404,
+      "sha256": "3a72f44de313e36a7b8eae94c13c74f979499f0133332c03016f9042c698d7c6",
+      "git_blob": "01d68df40b0c8463465bbbf0c62527943e6a56bb"
+    },
+    "verify_audit_v2.py": {
+      "bytes": 3287,
+      "sha256": "5b8965cf5042de9d148dfd23708a24a31ae11ef575828da177b8e50ebc628f1e",
+      "git_blob": "5fbe84a60029e6bdfb29e0016f7ca18cdf3d7105"
+    }
+  },
+  "launcher": {
+    "path": "container_launcher_v1.py",
+    "bytes": 22705,
+    "sha256": "9b1e2eadc610323bd34d22a2c43a75035a5e644136f6a02634ac768842faabdd",
+    "git_blob": "7d6353040c0d5573ce822803e756fe2b4388f46a"
+  },
+  "preflight": {
+    "path": "preflight_v1.py",
+    "bytes": 1083,
+    "sha256": "db25b9e510ba016d68dedb18f6b3b6617165c3f1a0765ca30ee3f6b3c9f34169",
+    "git_blob": "a4812ec707a1a67c5702f6c77b297fc8c1f541b1"
+  },
+  "preflight_result": {
+    "path": "preflight_result.json",
+    "bytes": 851,
+    "sha256": "3376672da0af863e47c81e70001f761cd616c9ac54de8dd2c9ac71156535070d",
+    "git_blob": "58728a675b8110ccde38ed5d2dab4c82586bd4bf"
+  },
+  "container": {
+    "image_id": "sha256:da047cb8f9d1d98e5c070f5300ba9f7274e33b8fc0e5be5ed88740aed1b95ba9",
+    "network": "none",
+    "pull": "never",
+    "cpu": "1",
+    "memory": "2g",
+    "pids_limit": 64,
+    "rootfs": "read-only",
+    "tmpfs": "/tmp:rw,noexec,nosuid,size=64m",
+    "gpu_requested": false,
+    "model_load": false,
+    "inference": false,
+    "training": false,
+    "optimizer_steps": 0,
+    "retries": 0,
+    "formal_invocations": "exactly one",
+    "interpreter_modes": [
+      "normal",
+      "-O",
+      "PYTHONOPTIMIZE=1"
+    ],
+    "expected_rows": 27,
+    "expected_corruption_rejections": 5,
+    "expected_report_bytes": 1052,
+    "expected_report_sha256": "eb0c16487bd4635582df9f2e5337db38a1080105ae44558f6dc165ebaf3001d1"
+  },
+  "forbidden": [
+    "model load",
+    "inference",
+    "generation",
+    "training",
+    "optimizer step",
+    "GPU",
+    "retry",
+    "input/seed substitution",
+    "modification of Issue #4939 artifacts"
+  ]
+}
+
