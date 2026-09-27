@@ -37,7 +37,8 @@ class ArenaV1Test(unittest.TestCase):
         session = BenchmarkSession(spec)
         public_state = session.public_state()
         public = json.dumps(public_state, sort_keys=True)
-        self.assertNotIn("fingerprint", public_state)
+        self.assertEqual(set(public_state), {"schema", "sim_time", "done"})
+        self.assertFalse(hasattr(session, "instruction"))
         self.assertNotIn(str(spec.seed), public)
         for stage in spec.stages:
             for key in ("target_id", "active_id", "prepared_id", "recovery_x", "recovery_y"):
@@ -55,6 +56,7 @@ class ArenaV1Test(unittest.TestCase):
         self.assertLess(easy.assembly_pieces, hard.assembly_pieces)
         self.assertGreater(easy.trace_tolerance, hard.trace_tolerance)
         self.assertLess(easy.trace_checkpoints, hard.trace_checkpoints)
+        self.assertGreater(easy.objective_sample_radius, hard.objective_sample_radius)
 
     def test_axis_override_changes_only_requested_axis(self):
         base = DifficultyProfile.from_level(0.5)
@@ -72,6 +74,7 @@ class ArenaV1Test(unittest.TestCase):
             {"trace_tolerance": 0},
             {"recovery_displacement": -1},
             {"typing_length": 0},
+            {"objective_sample_radius": 2},
         ):
             with self.subTest(overrides=overrides):
                 with self.assertRaises(ValueError):
