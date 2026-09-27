@@ -30,3 +30,4 @@ def dump(name,obj): (OUT/name).write_bytes(json.dumps(obj,sort_keys=True,separat
 dump("result.json",result)
 for arm,z in arms.items(): dump(arm+".json",{"seed":SEED,"arm":arm,"roles":z["roles"],"base_immutable":z["base_immutable"]})
 print(json.dumps(result,sort_keys=True),flush=True)
+
