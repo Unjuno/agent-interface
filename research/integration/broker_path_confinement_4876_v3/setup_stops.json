@@ -1,0 +1,22 @@
+[
+  {
+    "allocation": "broker-path-confinement-4876-20260927-01",
+    "decision": "STOP_SETUP_OUTPUT_DIR_PREEXISTS",
+    "container_started": true,
+    "path_rows": 0,
+    "mock_subprocess_calls": 0,
+    "cause": "The host mounted an already-created directory at /out while runner required its argument path not to exist.",
+    "retry": false
+  },
+  {
+    "allocation": "broker-path-confinement-4876-20260927-02",
+    "decision": "STOP_SETUP_NO_TMPFS",
+    "container_started": true,
+    "path_rows": 0,
+    "mock_subprocess_calls": 0,
+    "cause": "Read-only container root had no writable temporary directory; tempfile could not initialize.",
+    "retry": false
+  }
+]
+
+
