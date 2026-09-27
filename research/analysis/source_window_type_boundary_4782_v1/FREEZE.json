@@ -1,0 +1,35 @@
+{
+  "schema": "source-window-type-boundary-freeze-v1",
+  "issue": 4782,
+  "base_main": "43ef66afa8ccc2823d8729093e198e0bf4eef40f",
+  "source": {
+    "evaluator_path": "research/observation_gating/o3_relevant_region_successor_v1/gate.py",
+    "evaluator_git_blob": "50c27bd4e8651da74163c786daeb654928b08958",
+    "evaluator_sha256": "042df7f03687680a0133cfe5ad0a208ec05d5dc27afa7e4e60543560dde9eb1a",
+    "verifier_path": "research/observation_gating/o3_relevant_region_3131_v1/source_window_verifier.py",
+    "verifier_git_blob": "c7bb7b0ea4a7646a0c4208ac4729a68b25a49575",
+    "verifier_sha256": "182292735cd58f19e5d4a0784194f2c9320efd77cbaa5f6cab24e65f66a66545"
+  },
+  "study": {
+    "test_sha256": "e37bc5f28888d096814a4c5ddaf58fabbe5eff03f575a4460045c9b7e148bec34",
+    "audit_sha256": "279f18561d3e82d33e2a445df3783bc5543351e442319f3b0ba54543e50b0108",
+    "formal_invocations": 1,
+    "cases": 6,
+    "gpu": false,
+    "network": "none"
+  },
+  "container": {
+    "reference": "python:3.12-slim-bookworm",
+    "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "platform": "linux/amd64",
+    "cpu_limit": 1,
+    "memory_limit": "512m",
+    "pids_limit": 64,
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "capabilities": "all-dropped",
+    "no_new_privileges": true
+  },
+  "formal_command": "python -B test.py /out/raw.json",
+  "audit_command": "python -B audit.py /input/raw.json"
+}
