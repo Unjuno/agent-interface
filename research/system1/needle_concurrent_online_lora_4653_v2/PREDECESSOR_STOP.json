@@ -1,0 +1,14 @@
+{
+  "schema": "needle-concurrent-online-lora.predecessor-stop.v1",
+  "issue": 4631,
+  "merged_evidence_pr": 4650,
+  "merge_sha": "27c7f38c9bb072e0462b07edd06d6cf9ef46bb0a",
+  "freeze_sha256": "9f6fc9e20776fd3ba33c7a240f45b9fd3a08e17c13ada1045445e2965de676ea",
+  "raw_bundle_sha256": "3d975a3a0b44e6f3077b4aa7ee90dab458547fe8ce62e3817a084da3b07edebf",
+  "trainer_exit_code": 0,
+  "auditor_exit_code": 2,
+  "auditor_error_count": 1079,
+  "disposition": "STOP_AUDIT_IMPLEMENTATION_BUG_AFTER_TRAINING",
+  "source_review": "The frozen independent oracle receives a one-dimensional [8] input, F.linear returns [4], and indexing [0] reduces it to a scalar before comparison with the trainer's four-logit vector. Even BASELINE rows therefore fail recomputation.",
+  "preservation": "No auditor rerun, source edit, model retry, or metric correction was performed on #4631. This v2 allocation uses fresh seeds and includes a corrected-oracle construction regression test."
+}
