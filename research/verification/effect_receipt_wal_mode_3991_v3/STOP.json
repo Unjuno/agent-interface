@@ -1,0 +1,31 @@
+{
+  "schema": "effect-receipt-wal-stop-v1",
+  "allocation": "effect-receipt-wal-vs-delete-3991-20260928-03",
+  "issue": 4945,
+  "status": "STOP_HARNESS_INDEPENDENT_AUDIT",
+  "reason": "Independent construction audit failed to read final WAL-mode databases from the read-only evidence mount.",
+  "construction": {
+    "status": "PASS_CONSTRUCTION",
+    "rows": 50,
+    "unit_tests_passed": 4,
+    "runner_exit_code": 0,
+    "raw_bytes": 208159,
+    "raw_sha256": "f72c6d0bde34e676e52c3af6881e6a204ec23198fe9343b6b9f7d84123337e51"
+  },
+  "independent_audit": {
+    "status": "FAIL_AUDIT",
+    "exit_code": 2,
+    "rows": 50,
+    "errors": 25,
+    "error_class": "independent_database_read:OperationalError",
+    "affected_rows": "all 25 WAL-mode rows",
+    "corruption_controls_rejected": 8,
+    "audit_json_sha256": "c66722e62b8af8279d4a2b3ec07535f757d222296f0625e3a5c701ea1e643feb"
+  },
+  "formal_invocations": 0,
+  "formal_output_exists": false,
+  "retry_authorized": false,
+  "scientific_result": false,
+  "exception_message_retained": false,
+  "stop_rule": "Construction audit failure consumes allocation-03; do not repair, retry, replace, pool, or run formal under this allocation."
+}
