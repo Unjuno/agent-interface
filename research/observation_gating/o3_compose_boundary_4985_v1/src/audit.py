@@ -22,8 +22,8 @@ CASES = [
     ("same_string", "2097155", "2097155", True, True, True, "admitted"),
     ("mixed_int_receipt_string_trusted", 2097155, "2097155", True, True, False, "source_window_mismatch"),
     ("mixed_string_receipt_int_trusted", "2097155", 2097155, True, True, False, "source_window_mismatch"),
-    ("unequal_int", 2097155, 2097156, False, False, False, "source_window_mismatch"),
-    ("unequal_string", "2097155", "02097155", False, False, False, "source_window_mismatch"),
+    ("unequal_int", 2097155, 2097156, False, False, False, "source_window_mismatch;gate:source_window_mismatch"),
+    ("unequal_string", "2097155", "02097155", False, False, False, "source_window_mismatch;gate:source_window_mismatch"),
     ("bool_equals_int", True, 1, False, False, False, "gate:source_window_mismatch"),
     ("float_equals_int", 1.0, 1, False, False, False, "gate:source_window_mismatch"),
 ]
