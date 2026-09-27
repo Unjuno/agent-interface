@@ -75,7 +75,7 @@ The authoritative pre-preregistration ledger is
 `integrated_efficiency_discoveries_v1.json`.  It records the blocking
 requirement, smallest repair, composed-path regression, status, allocation
 effect and measured engineering overhead for each discovery.  Allocation totals
-are explicitly non-additive when more than one defect shares a run.  The six
+are explicitly non-additive when more than one defect shares a run.  The eight
 current discoveries are three interface mismatches and five benchmark/setup/
 accounting defects; none demonstrates a regression in an established safety
 requirement or a need for a new cross-cutting capability.
@@ -211,7 +211,7 @@ unobserved break-even as a measured result.
 | Effect/evidence | Program completion is not task success; completed prefix and raw evidence remain | Local predicate check, append-only independent HTTP scorer, raw event/frame hashes | Exact expected token once, no unexpected/duplicate token, raw artifact reconstruction |
 | #12 / #46 | Comparison capabilities, endpoints and assistance must be explicit | Same fixture, model/settings, scorer, display, checked input and clocks | Plain batching retained; mismatches listed; complete per-phase timing and environment record |
 | #56 | Intermediate local evidence must affect a later authorized action | Compiled method observes field effect and current Submit dependency before branch/action | B/C mechanics audit plus C live transitions with zero frontier-model resumption |
-| #57 integration gaps | Composition failures need explicit provenance, smallest repair, regression and overhead; a formal-invalidating repair cannot continue silently | `integrated_efficiency_discoveries_v1.json` plus protocol-wide discovery validation | Six retained pre-prereg discoveries; missing provenance and silent formal-repair controls; invalidated formal trace returns HOLD |
+| #57 integration gaps | Composition failures need explicit provenance, smallest repair, regression and overhead; a formal-invalidating repair cannot continue silently | `integrated_efficiency_discoveries_v1.json` plus protocol-wide discovery validation | Eight retained pre-prereg discoveries; missing provenance and silent formal-repair controls; invalidated formal trace returns HOLD |
 
 ## Frozen decision rule to place in preregistration
 
