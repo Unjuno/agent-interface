@@ -1,0 +1,44 @@
+{
+  "allocation_id": "ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-02",
+  "issue": 3311,
+  "predecessor": {
+    "allocation_id": "ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-01",
+    "disposition": "STOP_CONTAINER_ENTRYPOINT_PREEMPTED_RUNNER",
+    "path": "research/integration/issue3311_intermediate_feedback_x11_v1/results/formal01/REPORT.md",
+    "change_for_successor": "Override the image default ENTRYPOINT explicitly. Formal-01 remains unchanged and is not retried."
+  },
+  "base_commit": "6906d6d9b5679604a5d997c89edd1b1789f849ed",
+  "hypothesis": "One live local Chromium/X11 task can use a fresh intermediate window observation after Save to select Confirm, complete one exact fixture submission, and refuse when the required intermediate state is not present.",
+  "test": {
+    "tasks": 1,
+    "task_token": "AI-3311-UNIT-01",
+    "route": ["observe_EDITING", "admit_and_click_Save", "observe_CONFIRMING", "admit_and_click_Confirm", "observe_SAVED", "independent_exact_submission_score"],
+    "runner_invocations": 1,
+    "retries": 0,
+    "negative_control": "Confirm admission is refused unless the active X11 window is the same fixture window and its current title is exactly CONFIRMING.",
+    "model_calls": 0,
+    "external_network": false
+  },
+  "container": {
+    "image_id": "sha256:dff1c7b56201b4c299883655d98aee3b3f8d7c0c6dd1e4ad6320b942fb5d17fb",
+    "platform": "linux/arm64",
+    "entrypoint": ["python3.11"],
+    "network": "none",
+    "source_mount": "read-only",
+    "cpus": 1,
+    "memory_bytes": 536870912,
+    "pids_limit": 64
+  },
+  "runtime_source": {
+    "path": "research/live_control/compiled_gui_interface_v1.py",
+    "sha256": "93e47e1ab5ae3450bb4acf9ec9d21c9abc44ca93ffaee25683b22039d9a722ca"
+  },
+  "page_sha256": "ae253611acb9c2686dbafd471eacbe499d67470c88b0e23aad7a575731caca59",
+  "harness_sha256": {
+    "research/integration/issue3311_intermediate_feedback_x11_v1/runner.py": "f1338ac0701146e583e45a1bdc52bf3e48489ba5eb0c932da50113e4c744ecd2",
+    "research/integration/issue3311_intermediate_feedback_x11_v1/audit_raw.py": "0d056fde4ddc1b7fecfe96c2f32efa5db7a93141392ae416f02188e9702a2ad4"
+  },
+  "docker_command": "docker run --rm --network none --read-only --tmpfs /tmp:rw,nosuid,size=512m --cpus=1 --memory=512m --pids-limit=64 --shm-size=128m -e DISPLAY=:97 -e ISSUE3311_ALLOCATION_ID=ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-02 -e PYTHONPATH=/src/research/live_control -e XDG_CACHE_HOME=/tmp/cache -e XDG_CONFIG_HOME=/tmp/config -v <repo>:/src:ro -v <formal02>:/out:rw -w /src --entrypoint python3.11 sha256:dff1c7b56201b4c299883655d98aee3b3f8d7c0c6dd1e4ad6320b942fb5d17fb /src/research/integration/issue3311_intermediate_feedback_x11_v1/runner.py",
+  "stop_rule": "One run only. Stop on first launch, observation, admission, execution, effect, timeout, ambiguous state, or audit failure. No rerun. Success requires exactly one matching server-side submission, runtime TASK_SUCCEEDED after two transitions, two fresh admissions, two successful independent stage checks, and X11 root-pointer Button1-up readback after both clicks.",
+  "scope_limit": "One synthetic Chromium fixture and title-based local X11 observation. No provider/model, user data, matched baseline, multi-task reuse, measured economics, or #3311 six-task acceptance claim. Does not consume or replace issue #4710 formal-01."
+}
