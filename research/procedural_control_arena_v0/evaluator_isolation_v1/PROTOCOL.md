@@ -10,9 +10,9 @@ PASS requires: valid XWD capture; evaluator report shows seed 2001, target-first
 
 ## Construction and formal sequence
 
-1. Run `python build_images.py`; it copies the exact tracked `arena.py` and `engine.py`, hashes them, builds separate pinned-base images and records their ids.
+1. Run `python build_images.py`; it copies the exact tracked `arena.py` and `engine.py`, hashes them, builds separate pinned-base images and records their ids. Apt package resolution is time-dependent; the built image IDs, rather than a future rebuild from the Dockerfiles, are the formal execution artifacts.
 2. Run `python construction_smoke.py` before freeze. It uses seed 2002 and is not formal evidence. Preserve each bring-up outcome in the construction attempt ledger; the passing smoke stores the raw XWD and its digest under `construction/smoke-02/`.
-3. Before any formal run, implement and independently inspect a one-shot runner, a frozen manifest, and a raw-artifact auditor. Freeze them in a pushed commit and inspect the GitHub commit first.
+3. Run `python freeze_sources.py`; commit and push only the generated `FREEZE.json`, then inspect that exact GitHub commit and source parent before proceeding. Do not rebuild images after freeze.
 4. A future formal run must use exclusive creation under `formal/001`, execute once, and preserve all raw evidence. Audit it in a separate network-disabled, read-only, pinned Python container.
 
 Construction has passed, but steps 3-4 are not implemented in this snapshot. There is no formal result and no basis to infer one from the construction smoke. The formal trial must use Docker Desktop's Linux container backend and amd64, preserving build logs, container inspection JSON, evaluator/controller outputs, report, capture, and independent audit JSON.
