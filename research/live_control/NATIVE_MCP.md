@@ -25,7 +25,7 @@ install a plugin or add tools to the current Codex conversation.
   contract, with exact source hashes. Missing or malformed context stays explicit
   and does not erase a valid image. No evaluator output is read. Context describes
   the task; it grants no authority and is not an atomic snapshot with the image.
-- `native_submit(stage, decision, timeout=5)` uses existing immutable publication
+- `native_submit(stage, decision, timeout=5, detail="full")` uses existing immutable publication
   and guarded action execution. After pending/error, never retry submit.
   The tool schema describes source_sequence, point, expected_title, interaction,
   tail and strict boolean finish/finish_after. Action decisions need point/title;
@@ -33,7 +33,7 @@ install a plugin or add tools to the current Codex conversation.
   publication. Unspecified defaults are not inserted into the saved request;
   extension fields remain available. Tail/runtime admission is still checked
   by the existing harness and backend, not certified by this input schema.
-- `native_resume(stage, decision_sha256, timeout=5, include_image=true)` follows the existing
+- `native_resume(stage, decision_sha256, timeout=5, include_image=true, detail="full")` follows the existing
   read-only digest-bound path. It does not create a missing request.
 
 The run is bound at server startup; tools cannot select another filesystem path.
@@ -350,3 +350,35 @@ The [persistent Node host client](NATIVE_RELAY_CLIENT.md) provides a reusable ad
 
 
 For outcome-only rereading, native_resume accepts include_image=false. It still validates the retained image and exact request, preserves image_status/image_reference, and adds image_delivery=omitted_by_request only when a valid image block was suppressed. It does not recapture or grant input authority. The default delivers the image. See [paired retained retrieval](../../runtime/results/native-resume-image-delivery-01/README.md).
+
+## Optional normal-result summary
+
+Submit and resume accept `detail="brief"`; the default remains `"full"`.
+This reuses the existing primary-review receipt projection only for completed,
+matched, reviewed boundary results with valid guards, verified releases and no
+recovery requirement. Unsupported, failed, pending and recovery results retain
+the full receipt. A normal result also stays full if the projection is larger.
+
+A brief result uses `receipt_summary`, not `receipt`. Its `presentation` records
+omitted detail counts, the full receipt path/hash, and an exact `native_resume`
+call with `detail="full", include_image=false`. Follow that call when guard,
+wait, completed-operation or feedback-sample detail is needed. This retrieval
+reads the committed request; it does not replay input. It requires the same run
+and retained files to remain available.
+
+The image, outcome summary, continuation and contextual metadata are unchanged.
+Inspect the returned image even when action execution and feedback are normal:
+a matched boundary can still show an unpainted dialog. Neither the summary nor
+input completion establishes task success. Unknown fields outside the explicitly
+omitted detail sections remain visible. The summary is a lossy presentation,
+not a replacement for the retained full receipt.
+
+Local retrospective checks on the existing two-app primary-use record reduced
+serialized metadata from 54,164 to 47,307 bytes across 11 responses (12.7%), with
+only three responses summarized. This is not an actual model-token, cost or
+latency measurement, and no fresh GUI trial is implied. Real MCP retrieval on
+five retained stages preserved images and exact full receipts without modifying
+request bytes or modification times. Further primary-use evaluation is needed
+before changing the default.
+
+A subsequent [primary two-app trial](../../runtime/results/native-primary-brief-01/README.md) completed both saved effects using brief output, while retaining recovery errors and one caller schema failure. It does not establish a performance improvement.

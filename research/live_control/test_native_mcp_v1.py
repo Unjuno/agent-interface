@@ -15,6 +15,46 @@ from native_exchange_v1 import encoded
 
 
 class MCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_stdio_brief_receipt_has_exact_full_retrieval_and_same_image(self):
+        from test_native_brief_review_v1 import fixture
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            pixels=base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a9xkAAAAASUVORK5CYII=')
+            (root/'frame.png').write_bytes(pixels)
+            source={'sequence':2,'capture_ns':123,'native':{'sha256':'raw','capture_started_ns':123,
+                'artifact':{'path':str(root/'frame.png'),'sha256':hashlib.sha256(pixels).hexdigest(),
+                            'source_raw_sha256':'raw','mime_type':'image/png'}}}
+            request=encoded({'source_sequence':1,'interaction':'keyboard','point':[1,2],
+                             'expected_title':'app','tail':[{'op':'key_chord','keys':['Return']}]})
+            digest=hashlib.sha256(request).hexdigest()
+            (root/'request-1.json').write_bytes(request)
+            (root/'source-2.json').write_bytes(encoded(source))
+            (root/'source-1.json').write_bytes(encoded(dict(source, sequence=1)))
+            report=fixture()['receipt']['native_result']
+            report.update(stage=1,decision_sha256=digest,observation=source)
+            (root/'reply-1.json').write_bytes(encoded(report))
+            parameters=StdioServerParameters(command=sys.executable,args=[
+                str(Path(__file__).with_name('native_mcp_v1.py')),'--run-directory',tmp],env=dict(os.environ))
+            async with stdio_client(parameters) as (reader,writer):
+                async with ClientSession(reader,writer) as client:
+                    await client.initialize()
+                    arguments={'stage':1,'decision_sha256':digest,'timeout':0}
+                    full=await client.call_tool('native_resume',arguments)
+                    brief=await client.call_tool('native_resume',dict(arguments,detail='brief'))
+                    self.assertFalse(brief.isError, brief.content)
+                    shown=json.loads(brief.content[0].text)
+                    self.assertEqual(shown['presentation']['returned'],'brief')
+                    self.assertNotIn('receipt',shown)
+                    self.assertEqual(brief.content[1].data,full.content[1].data)
+                    retrieval=shown['presentation']['retrieve']
+                    restored=await client.call_tool(retrieval['tool'],retrieval['arguments'])
+                    self.assertEqual([b.type for b in restored.content],['text'])
+                    self.assertEqual(json.loads(restored.content[0].text)['receipt'],
+                                     json.loads(full.content[0].text)['receipt'])
+                    self.assertEqual((root/'request-1.json').read_bytes(),request)
+                    for invalid in ('tiny',True,1):
+                        rejected=await client.call_tool('native_resume',dict(arguments,detail=invalid))
+                        self.assertTrue(rejected.isError)
     async def test_stop_tool_is_opt_in_and_stopping_refuses_new_input(self):
         from native_mcp_v1 import create_server
         with tempfile.TemporaryDirectory() as tmp:

@@ -1,3 +1,15 @@
+## Current integration checkpoint: optional native summaries (2026-09-28)
+
+Native submit/resume now offer explicit `detail="brief"` using the existing
+primary-review projection. Full remains default; critical and unsupported
+outcomes remain full. Brief responses supply exact-request full retrieval.
+[Primary two-app use](../runtime/results/native-primary-brief-01/README.md)
+passed saved-file scoring while preserving recovery failures and one caller
+schema error. Local checks passed 217 protocol and 97 harness tests.
+Actual model tokens/cost, matched latency comparison and human-tempo evidence
+remain unavailable. This checkpoint does not close #57 or change pacing,
+capture, guards or sensor policy.
+
 # Current integration checkpoint — primary host use, 2026-09-28
 
 Current exercised main: b3af4e85f8bf7d41da5251b1728a6ddab34c3476. Older dated checkpoints below remain historical and may describe limitations since repaired.
