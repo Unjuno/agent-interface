@@ -14,16 +14,17 @@ def sha(path):
 def audit(root: Path, source: Path):
     errors = []
     result_path = root / "RUNNER_RESULT.json"
-    freeze_v1 = source / "research/integration/issue3311_intermediate_feedback_x11_v1/FREEZE.json"
-    freeze_v2 = source / "research/integration/issue3311_intermediate_feedback_x11_v1/FREEZE_FORMAL02.json"
+    base = source / "research/integration/issue3311_intermediate_feedback_x11_v1"
+    freeze_v1 = base / "FREEZE.json"
+    freeze_v2 = base / "FREEZE_FORMAL02.json"
     runtime_path = source / "research/live_control/compiled_gui_interface_v1.py"
     if not result_path.is_file() or not freeze_v1.is_file() or not freeze_v2.is_file() or not runtime_path.is_file():
         return {"schema": "issue3311_intermediate_feedback_x11_audit_v1",
                 "status": "FAIL_RAW_MISSING", "errors": ["required_file_missing"]}
     result = json.loads(result_path.read_text())
     allocation = result.get("allocation_id", "")
-    freeze_path = (source / "research/integration/issue3311_intermediate_feedback_x11_v1/FREEZE_FORMAL03.json"
-                   if allocation.endswith("-03") else
+    freeze_path = (base / "FREEZE_FORMAL04.json" if allocation.endswith("-04") else
+                   base / "FREEZE_FORMAL03.json" if allocation.endswith("-03") else
                    freeze_v2 if allocation.endswith("-02") else freeze_v1)
     freeze = json.loads(freeze_path.read_text())
     check = lambda name, ok: None if ok else errors.append(name)
@@ -34,6 +35,9 @@ def audit(root: Path, source: Path):
     auditor_path = source / "research/integration/issue3311_intermediate_feedback_x11_v1/audit_raw.py"
     check("runner_harness_hash", sha(runner_path) == freeze["harness_sha256"][str(runner_path.relative_to(source))])
     check("auditor_harness_hash", sha(auditor_path) == freeze["harness_sha256"][str(auditor_path.relative_to(source))])
+    if "preflight_sha256" in freeze:
+        preflight_path = source / "research/integration/issue3311_intermediate_feedback_x11_v1/preflight_interface.py"
+        check("interface_preflight_hash", sha(preflight_path) == freeze["preflight_sha256"])
     check("runner_exit_zero", result.get("runner_exit") == 0)
     check("runtime_task_succeeded", result.get("runtime_receipt", {}).get("outcome") == "TASK_SUCCEEDED")
     receipt = result.get("runtime_receipt", {})
@@ -69,7 +73,7 @@ def audit(root: Path, source: Path):
     check("page_hash", result.get("page_sha256") == freeze.get("page_sha256"))
     return {"schema": "issue3311_intermediate_feedback_x11_audit_v1",
             "status": "PASS_LIVE_INTERMEDIATE_FEEDBACK_AND_EXACT_EFFECT" if not errors else "FAIL_RAW_AUDIT",
-            "checks": 29, "passed": 29 - len(errors), "errors": errors,
+            "checks": 30, "passed": 30 - len(errors), "errors": errors,
             "source_sha256": sha(runtime_path), "result_sha256": sha(result_path)}
 
 

@@ -171,7 +171,7 @@ def main():
                                  "expected_effect": {"page_state": "SAVED"}}},
             "method": {"name": "save_confirm_once", "version": "1",
                        "initial_state": "editing", "max_transitions": 2,
-                       "max_runtime_ms": 15000,
+                       "max_runtime_ms": 10000,
                        "states": {
                            "editing": {"branches": [{"when": {"page_state": "EDITING",
                                "save_target_present": True}, "outcome": "action",
