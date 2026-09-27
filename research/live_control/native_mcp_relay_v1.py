@@ -24,7 +24,7 @@ class Relay:
             if type(request['id']) is not int or request['id'] != self.next_id:
                 raise ValueError(f'next id must be {self.next_id}; never resend an accepted id')
             if request['tool'] not in ('list_tools', 'native_start', 'native_status',
-                                       'native_observe', 'native_submit', 'native_resume'):
+                                       'native_observe', 'native_submit', 'native_resume', 'native_stop'):
                 raise ValueError('unknown native relay tool')
             if not isinstance(request['arguments'], dict):
                 raise ValueError('arguments object required')

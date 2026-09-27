@@ -14,6 +14,31 @@ from native_mcp_relay_v1 import Relay
 
 
 class RelayTests(unittest.IsolatedAsyncioTestCase):
+    async def test_real_relay_forwards_opt_in_stop_without_starting_allocation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'allocation'
+            process=await asyncio.create_subprocess_exec(sys.executable,
+                str(Path(__file__).with_name('native_mcp_relay_v1.py')),'--',
+                '--allocation-directory',str(path),'--app','calc','--owner-lifetime',
+                stdin=asyncio.subprocess.PIPE,stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,env=dict(os.environ))
+            requests=[{'id':1,'tool':'list_tools','arguments':{}},
+                      {'id':2,'tool':'native_stop','arguments':{}},
+                      {'id':2,'tool':'native_stop','arguments':{}}]
+            stdout,stderr=await asyncio.wait_for(process.communicate(
+                ''.join(json.dumps(r)+'\n' for r in requests).encode()),timeout=20)
+            self.assertEqual(process.returncode,0,stderr.decode())
+            rows=[json.loads(line) for line in stdout.splitlines()]
+            self.assertIn('native_stop',{t['name'] for t in rows[0]['result']['tools']})
+            self.assertEqual(rows[1]['status'],'returned')
+            self.assertFalse(rows[1]['result']['isError'])
+            self.assertEqual(json.loads(rows[1]['result']['content'][0]['text'])['allocation']['status'],'not_started')
+            self.assertEqual(rows[2]['status'],'refused')
+            self.assertFalse(rows[2]['dispatched'])
+            self.assertEqual(rows[2]['next_id'],3)
+            self.assertFalse(path.exists())
+
+
     async def test_real_relay_pending_resume_then_second_stage(self):
         # Inert file-exchange fixture: verifies transport composition, not GUI effects.
         with tempfile.TemporaryDirectory() as tmp:
