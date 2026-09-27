@@ -149,6 +149,7 @@ These are research predecessors. Current promoted executable organization lives 
 
 ## Cross-engine JSONL framing replication
 
+- [`issue_3814_jsonl_framing_v1/`](issue_3814_jsonl_framing_v1/) — Issue #3814 Docker Desktop/Linux amd64 newline-framing audit; retain the overall `HOLD_EVIDENCE_INCOMPLETE` (75/76) and the single-dispatch receipt without replay.
 - [`experiments/issue_3840_newline_frame_v2/`](experiments/issue_3840_newline_frame_v2/) — Issue #3840 Docker Desktop/Linux amd64 replication of the terminal-LF strict-prefix result; `RESULT.md` separates the corroborated row-level observation from the unresolved audit-provenance HOLD.
 
 ## Navigation check
