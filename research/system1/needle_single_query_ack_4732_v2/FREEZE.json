@@ -13,7 +13,7 @@
     "test_study.py": "365edc9f578bfea682bbfe13169898140aa9d0f4166da550aa196e01045c8dea",
     "README.md": "e3da2308a637d4d5ee0a629f65a0c4b58921077c965cc6d1763affca1ced9223",
     "CONSTRUCTION_HISTORY.md": "e3a1d2a12653d27d828bab18693f866055d3f735216d4c626e3b07347506daae",
-    "CONSTRUCTION_MANIFEST.json": "MANIFEST_HASH_PENDING",
+    "CONSTRUCTION_MANIFEST.json": "1e83ff9d0e9822e9db4b735cebc715f532951ca7da80cada59ec1719aff489c8",
     "PREREGISTRATION.md": "40a7913623e25e27a570357412cb93f70291bcda2dda58ef9392ecae7131aba7",
     "baseline/study.py": "14d403f5f394fc4ac228609c5c137f09c153b777a45cedfe4abd895ff72ebf74"
   },
@@ -53,6 +53,7 @@
   },
   "formal_paths": {"training": "formal/training", "audit": "formal/audit", "must_be_absent_before_freeze": true},
   "formal_invocations_at_freeze": {"trainer": 0, "auditor": 0},
+  "freeze_sha256_sidecar": "FREEZE.sha256",
   "stop_if": ["issue body hash changed", "source or blob readback mismatch", "branch/main collision", "formal volume/output path not absent/empty", "image id mismatch", "readback truncation or malformed raw chunks"],
   "scope": "synthetic local CPU adapter; query-vs-full-batch acknowledgement placement only; not quality or action readiness"
 }
