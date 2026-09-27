@@ -1,0 +1,82 @@
+{
+  "schema": "scheduler-selection-reaudit-freeze-v1",
+  "issue": 2868,
+  "allocation": "issue2868-scheduler-selection-reaudit-20260928-01",
+  "base_main": "e7a2cbe54cf5885044d103fff0a6a8f99adf908e",
+  "branch": "research/scheduler-2868-reaudit-20260928",
+  "path": "research/coordination/scheduler_2868_reason_reaudit_20260928_v1/",
+  "scope": "posthoc raw-only independent-auditor correction check; no scheduler workers or formal allocation rerun",
+  "hypothesis": "The preserved #2868 raw is semantically consistent with an independent reference model once the trace reason field is computed; the corrected auditor will reject a forged reason field and preserve all previously frozen rejection controls.",
+  "decision_rule": {
+    "pass": "No provenance/reference errors; all 48 preserved rows reconcile; all 11 corruption controls reject, including a reason-field mutation. This is an audit-only scoped pass and does not relabel the consumed allocation.",
+    "hold_or_fail": "Any identity mismatch, audit error, row mismatch, or un-rejected control."
+  },
+  "file_paths": {
+    "original_freeze": "FREEZE.json",
+    "scenarios": "scenarios.json",
+    "original_audit": "audit_original.py",
+    "original_runner": "runner_original.py",
+    "original_tests": "test_protocol_original.py",
+    "corrected_audit": "audit_corrected.py",
+    "reaudit_entry": "reaudit_entry.py",
+    "stop_report": "STOP_REPORT.json",
+    "previous_audit": "previous_audit.json"
+  },
+  "file_sha256": {
+    "original_freeze": "4af433f835a2cd26cb6888d1454ba8e2c9cdc66dfe76921cd111d3e041266c07",
+    "scenarios": "5e6a8e501f09765b1a406f4df61874236712454f2766ad04577aba2994c1c9aa",
+    "original_audit": "dfc8f80933305508d70018019a2f54abb54293298614704d77599ed516defa3f",
+    "original_runner": "aac57e15632490e8b19c0146caeaddb03c87c208fcbe6e1e2a4becfc5d823ef8",
+    "original_tests": "332df46319b367a33bd187037dea28c3040ca8df7a96f942f9d693dbcd3ed7ad",
+    "corrected_audit": "57d645bb6ef778b2989c1e827f1a1f0fe25c378cc4da9dbe982e1b7b26424af2",
+    "reaudit_entry": "00c83228ee2d1fc7c8b44dcd3411e8dc292fc0fd5175a3a1a658f87a7ea2239e",
+    "stop_report": "51625ecb5063ac2d1f709a06c9d6e51acd34e292b315762ea8fab242baf51770",
+    "previous_audit": "f2b451461b496c4d7e02d9025d15554b6f6737882fc68f5c4aab450bcb4bbac7"
+  },
+  "preserved_raw": {
+    "path_on_main": "research/coordination/scheduler_selection_2868_v1/formal-raw/raw.json",
+    "git_blob": "27c9bb9d92ab823096557111d66c1548f28f6270",
+    "sha256": "8d8495dd0bfeced7d2278a59ce66d6137cbba1223a665bb6dcbcc69d67e36216",
+    "bytes": 64292,
+    "rows": 48,
+    "original_worker_processes": 48,
+    "new_worker_processes": 0,
+    "original_allocation_reruns": 0
+  },
+  "prior_stop": {
+    "decision": "STOP_AUDIT_DEFECT",
+    "audit_errors": 24,
+    "reason": "Reference trace omitted the raw trace.reason field."
+  },
+  "corruption_controls": [
+    "row_drop",
+    "duplicate_row",
+    "source_hash",
+    "denominator",
+    "unknown_selection",
+    "worker_exit",
+    "scenario_identity",
+    "repeat_identity",
+    "idle_receipt",
+    "state_omission",
+    "trace_reason"
+  ],
+  "environment": {
+    "docker_context": "desktop-linux",
+    "image": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "network": "none",
+    "read_only_root_and_source": true,
+    "cpu": "0.25",
+    "memory": "512m",
+    "pids_limit": 64,
+    "pull": "never"
+  },
+  "execution": {
+    "formal_runner_invocations": 0,
+    "raw_only_reaudit_invocations": 1,
+    "argv": "python -B /src/reaudit_entry.py /input/raw.json /out/REAUDIT.json",
+    "output_isolated_and_empty_before_run": true,
+    "scientific_run_or_policy_timing": false
+  }
+}
