@@ -25,7 +25,7 @@ Before formal, a separate synthetic auditor-shape test copied the nine Construct
 
 `PASS_X11_REGION_FRAME_MOVE_BOUNDARY_SCOPED` requires 27/27 unique sessions; correct frozen geometry and candidate coordinate receipts; every mapped target's exact image hash differs from the black pre-map background; STABLE all 9 matches; MOVE_BEFORE `PINNED_SCREEN` 0/3 and other policies 3/3; MOVE_BETWEEN `WINDOW_CLIENT` 3/3 and root-coordinate policies 0/3; candidate/oracle/exposed/background pixel bytes and hashes reconcile; all owned Xvfb processes exit 0 after controlled termination, private auth files are mode 0600; independent audit errors are empty and all 14 corruption controls reject. Any complete contrary coordinate result is `FAIL_COORDINATE_FRAME_PREDICTION`; any source, image, process, coverage, pixel, or audit discrepancy is `HOLD/STOP`. No retry, replacement, post-result tuning or pooling.
 
-Construction uses the amended frozen code but a disjoint 9-case one-repetition subset; it is excluded from the 27 formal rows. Only after source/gate GitHub readback and construction audit pass will the single formal invocation occur.
+Construction uses the amended frozen code but a disjoint 9-case one-repetition subset; it is excluded from the 27 formal rows. Source/gate GitHub readback and construction plus synthetic audits passed. Formal invocation 01 then stopped before case 0: Docker's pre-created bind mount `/out` collided with the runner's `mkdir(..., exist_ok=False)`. No raw file or X11 session was created (`formal_rows=0`). This allocation is frozen as STOP with no retry/replacement; see `FORMAL_01_STOP.json`. Any corrected execution requires a successor allocation and a distinct additive path.
 
 ## C — alternatives/confounds
 
