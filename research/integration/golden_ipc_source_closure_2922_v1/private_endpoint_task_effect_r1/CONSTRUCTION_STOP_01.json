@@ -1,0 +1,29 @@
+{
+  "schema": "issue2924_construction_stop_v1",
+  "issue": 4924,
+  "allocation": "issue2922-chromium-task-effect-20260928-r1",
+  "attempt": "preformal source/auditor/test construction preflight 01",
+  "verdict": "STOP_PREFORMAL_AUDIT_TEST_SYNTAX",
+  "formal_invocations": 0,
+  "formal_seed_used": false,
+  "environment": {
+    "image": "sha256:436172d89b145c6a9f9a57e655422c9558b3b0235347dd77607e9d61bcfa6393",
+    "platform": "linux/arm64",
+    "python": "3.11.2",
+    "network": "none",
+    "source_mount": "read-only",
+    "cpus": 0.25
+  },
+  "command": "docker run --rm --pull=never --network none --read-only --cpus=0.25 --memory=1024m --pids-limit=64 --security-opt=no-new-privileges --cap-drop=ALL --tmpfs /tmp:rw,nosuid,nodev,size=64m --mount type=bind,src=/tmp/unjuno-4924.XzoUGY/repo,dst=/repo,readonly --workdir /repo --entrypoint python3 sha256:436172d89b145c6a9f9a57e655422c9558b3b0235347dd77607e9d61bcfa6393 research/integration/golden_ipc_source_closure_2922_v1/private_endpoint_task_effect_r1/preflight_4924.py",
+  "exit_code": 1,
+  "failure": "AST parse rejected test_audit_task_effect.py line 31 because a source replacement inserted literal backslash-n sequences after a Python statement.",
+  "exact_diagnostic": "SyntaxError: unexpected character after line continuation character",
+  "classification": "Construction/test source defect, not a scientific FAIL. The preflight stopped before CLI startup, X server creation, Chromium, GUI input, task output, or use of seed 992928.",
+  "failed_source_sha256": {
+    "runner": "258ba79c9530187ec3b6eb4bc752b0891d40d7e432bf6eaf84d9a5c41a89e3cd",
+    "auditor": "9704ea7fad000eb1d7212f4f0eef6c2d2a2583ceba31564af5425c371fd914f3",
+    "test": "85cb26995c7de69a85f4b66637517272617a4f15ef908ba68a5651ef8ef1251d",
+    "preflight": "1b8e7593fc9973ceb0e94a463b656b027fb520d51e96b1991639385e7457bbd2"
+  },
+  "preservation": "This first STOP and its frozen sources remain unchanged. Any corrected test/preflight is a new construction revision; the single formal allocation remains untouched."
+}
