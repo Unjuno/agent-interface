@@ -331,6 +331,44 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(result['status'], 'needs_review')
                 self.assertNotIn('value', result)
 
+    async def test_stdio_invalid_tail_does_not_publish_request(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            parameters = StdioServerParameters(command=sys.executable, args=[
+                str(Path(__file__).with_name('native_mcp_v1.py')),
+                '--run-directory', str(root)], env=dict(os.environ))
+            async with stdio_client(parameters) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    reply = await client.call_tool('native_submit', {
+                        'stage': 1, 'decision': {
+                            'source_sequence': 1, 'point': [1, 1],
+                            'expected_title': 'fixture', 'interaction': 'keyboard',
+                            'tail': [{'op': 'text', 'text': 'ab', 'gap_ms': True}]}})
+                    self.assertTrue(reply.isError)
+                    self.assertIn('gap_ms', reply.content[0].text)
+                    self.assertEqual(list(root.iterdir()), [])
+                    self.assertIn('native_submit', {
+                        tool.name for tool in (await client.list_tools()).tools})
+
+    def test_explicit_tail_compilation_is_checked_before_request_publication(self):
+        from native_mcp_v1 import NativeDecision
+        base = {'source_sequence': 1, 'point': [78, 173],
+                'expected_title': 'sheet.xlsx', 'interaction': 'keyboard'}
+        for tail in (
+            [{'op': 'text', 'text': 'ab', 'gap_ms': True}],
+            [{'op': 'text', 'text': 'ab', 'gap_ms': -1}],
+            [{'op': 'key_chord', 'keys': ['Right'], 'repeat': 127}],
+            [{'op': 'text', 'text': 'a'*64, 'gap_ms': 2}],
+        ):
+            with self.subTest(tail=tail), self.assertRaises(ValueError):
+                NativeDecision.model_validate(dict(base, tail=tail))
+        tail = [{'op': 'text', 'text': 'ab', 'gap_ms': 20},
+                {'op': 'key_chord', 'keys': ['Right'], 'repeat': 2}]
+        request = dict(base, tail=tail)
+        self.assertEqual(NativeDecision.model_validate(request).model_dump(
+            mode='json', exclude_unset=True), request)
+
     def test_typed_decision_preserves_explicit_payload_without_defaults(self):
         from native_mcp_v1 import NativeDecision
         decisions=[{'source_sequence':7,'finish':True},

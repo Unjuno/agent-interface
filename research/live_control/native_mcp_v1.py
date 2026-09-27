@@ -12,6 +12,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, Stri
 
 from agent_review import review_native
 from native_exchange_v1 import run
+from native_tail_v1 import expand_tail
 
 
 WaitSeconds = Annotated[StrictInt | StrictFloat, Field(ge=0, le=30,
@@ -61,6 +62,10 @@ class NativeDecision(BaseModel):
             return self
         if not self.finish and (self.point is None or self.expected_title is None):
             raise ValueError('action requires point and expected_title')
+        # Check explicit compact operations before publishing a stage request.
+        # Preserve the original payload; harness defaults and runtime admission
+        # are still applied by the owner.
+        expand_tail(self.tail, max_ops=123 if self.interaction == 'click' else 126)
         if (not self.finish and self.interaction == 'keyboard'
                 and not any(op.get('op') in {'text', 'key_chord'} for op in self.tail)):
             raise ValueError('keyboard requires explicit text or key_chord input; '
