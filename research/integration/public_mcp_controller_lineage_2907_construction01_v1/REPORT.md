@@ -16,3 +16,9 @@ The raw-only independent audit is a separate network-disabled/read-only Docker i
 
 This tests a caller-owned runtime session, not the session privately owned inside the public MCP server. It does not execute the full frozen four-transition mixed-app schedule, exercise typed controller binding refresh for focus/modal/window replacement, or independently score app-specific effects. It is not the #2907 integrated-controller PASS, #2789 six-task convergence PASS, a runtime promotion, model/task success, or a roadmap-completion claim. No runtime implementation was changed.
 
+## Additive construction05 — independent stale binding axis
+
+Construction05 is a separate Docker session and does not alter construction04. It repeated the three-app observations through one caller-owned session and added a second negative control: with observation sequence current (3) but program binding revision stale (1 vs current 2), runtime admission returned STALE_BINDING with zero backend emissions. The original stale observation control still returned STALE_OBSERVATION with zero emissions. A current seq/revision harmless ESC + release_all completed and both action/final release were neutral. Independent network-disabled, read-only Docker audit: PASS_RAW_AUDIT, errors=[]; the five checked main runtime Git blobs still match. Exact source/raw/audit/PNG identity and hashes are in EVIDENCE_MANIFEST_CONSTRUCTION05.json; full freeze is FREEZE_CONSTRUCTION05.md.
+
+Construction05 confirms two bounded contract gates on caller-supplied admission inputs. It does not prove those values were freshly derived from real focus/modal/window replacement evidence, and it does not connect the public MCP server's private session to the caller-owned runtime session. Full #2907 and #2789 remain open.
+
