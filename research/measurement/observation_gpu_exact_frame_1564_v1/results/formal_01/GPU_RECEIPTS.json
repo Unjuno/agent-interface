@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+  "driver": "581.57",
+  "prelaunch": {
+    "command": "nvidia-smi --query-gpu=name,driver_version,memory.total,memory.used,utilization.gpu --format=csv,noheader",
+    "stdout": "NVIDIA GeForce RTX 3080 Laptop GPU, 581.57, 16384 MiB, 0 MiB, 0 %"
+  },
+  "post_run_and_audit": {
+    "command": "nvidia-smi --query-gpu=name,driver_version,memory.used,utilization.gpu --format=csv,noheader",
+    "stdout": "NVIDIA GeForce RTX 3080 Laptop GPU, 581.57, 0 MiB, 0 %"
+  },
+  "containers_left_untouched": [
+    "cranky_panini (CPU 0.00% at checks)",
+    "agent-interface-570-r3-ollama (CPU 0.00%, GPU memory 0 MiB at checks)"
+  ]
+}
