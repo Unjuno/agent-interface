@@ -22,12 +22,12 @@ Disposition: **HOLD_LIVE_EVIDENCE_INCOMPLETE**. This is a post-hoc audit of one 
 ## Provenance and command
 
 Base/current-main commit at audit: `cd2b5e9ae174737c30ca94ac60ef943a77c2b159`.
-Image: `python:3.12-slim`, Python 3.12, Linux/amd64. The runtime command used `wsl.exe -d Ubuntu -- docker run` because Windows Docker client could not see WSL ext4 paths directly. Source and case were read-only; network was disabled; output was a separate writable path; container ran as WSL UID/GID 1002.
+Image: `python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9`, Python 3.12.14, Linux/amd64. The runtime command used `wsl.exe -d Ubuntu -- docker run` because Windows Docker client could not see WSL ext4 paths directly. Source and case were read-only; network was disabled; output was a separate writable path; container ran as WSL UID/GID 1002.
 
 Exact command:
 
 ```sh
-docker run --rm --name typed-admission-3152-retained-case-audit-v1b \
+docker run --rm --name typed-admission-3152-retained-case-audit-v1c \
   --network none --read-only --cap-drop ALL \
   --security-opt no-new-privileges --pids-limit 32 --memory 256m --cpus 1 \
   --user 1002:1002 \
@@ -35,12 +35,12 @@ docker run --rm --name typed-admission-3152-retained-case-audit-v1b \
   --mount type=bind,source=/home/taka/agent-interface-3152-sparse/research/live_control/results/adaptive-semantic-repair-live-02/case-02-model,target=/case,readonly \
   --mount type=bind,source=/home/taka/agent-interface-3152-sparse/research/integration/typed_admission_live_transfer_3152_v1/raw,target=/out \
   --tmpfs /tmp:rw,nosuid,nodev,noexec,size=16777216 --workdir /src \
-  --entrypoint python python:3.12-slim -B /src/audit_case.py /case /out/AUDIT.json
+  --entrypoint python python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 -B /src/audit_case.py /case /out/AUDIT.json
 ```
 
-The initial attempt omitted `--user 1002:1002` and the container correctly refused to write into the WSL-owned 0755 output directory. It did not modify source or formal data. The corrected construction audit completed once. An independently structured raw-only assertion rechecked the five missing fields, completed actions, empty releases, zero formal allocations, and the retained report hash.
+The initial attempt omitted `--user 1002:1002` and the container correctly refused to write into the WSL-owned 0755 output directory. It did not modify source or formal data. The corrected audit first passed, then the auditor was strengthened to recursively inspect nested report keys and rerun once as v1c; the output and decision were unchanged. An independently structured raw-only assertion rechecked the five missing fields, completed actions, empty releases, zero formal allocations, and the retained report hash.
 
-- auditor SHA-256: `6e60d3172ca9831e40a297e203b75bf84884bac4c527403b1a0abf168ecde121`
+- auditor SHA-256: `3ee001825ca85a1bdb644ccbac9c4f9f9f208e59570e554a637ffeba1b9b960f`
 - audit output SHA-256: `9df7070c61d95bc3058047bfccd26c542f469b1961d63094d634bca36cf9f16e`
 - audit status: `HOLD_LIVE_EVIDENCE_INCOMPLETE`; independent raw-only reconstruction: PASS
 

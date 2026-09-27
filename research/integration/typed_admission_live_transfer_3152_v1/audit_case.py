@@ -11,18 +11,31 @@ def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def all_keys(value: object) -> set[str]:
+    found: set[str] = set()
+    if isinstance(value, dict):
+        for key, child in value.items():
+            found.add(str(key).lower())
+            found.update(all_keys(child))
+    elif isinstance(value, list):
+        for child in value:
+            found.update(all_keys(child))
+    return found
+
+
 def main(case: Path, out: Path) -> int:
     report_path = case / "report.json"
     report = json.loads(report_path.read_text(encoding="utf-8"))
     actions = report.get("actions", [])
     releases = [a.get("terminal", {}).get("release", {}) for a in actions]
     actual = report.get("actual")
+    keys = all_keys(report)
     required = {
-        "required_evidence_role": any("role" in k.lower() for k in report),
-        "measured_observation_cost": any("observation_cost" in k.lower() for k in report),
-        "downstream_reserve": any("reserve" in k.lower() for k in report),
-        "typed_policy_decision": any("typed" in k.lower() for k in report),
-        "scalar_policy_decision": any("scalar" in k.lower() for k in report),
+        "required_evidence_role": any("role" in k for k in keys),
+        "measured_observation_cost": any("observation_cost" in k for k in keys),
+        "downstream_reserve": any("reserve" in k for k in keys),
+        "typed_policy_decision": any("typed" in k for k in keys),
+        "scalar_policy_decision": any("scalar" in k for k in keys),
         "final_task_disposition": isinstance(actual, dict) and bool(actual),
     }
     result = {
