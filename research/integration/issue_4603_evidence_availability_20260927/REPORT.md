@@ -1,34 +1,38 @@
-# Issue #4603 — immutable 60-case evidence availability STOP
+# Issue #4603 — immutable #4293 evidence reconciliation
 
 ## H / T / D / C / U
 
-**H.** The 60-case #4284 allocation recorded by PR #4293 can be independently reconciled from its immutable GitHub evidence without rerunning either historical allocation, while leaving the separately merged 24-row PR #4292 unchanged.
+**H.** The 60-case #4284 allocation recorded by PR #4293 can be independently reconciled from its immutable Git evidence without rerunning either historical allocation, while preserving the separate merged 24-row PR #4292.
 
-**T.** On 2026-09-27, GitHub MCP confirmed:
-- PR #4292 is merged; its body states 24 lifecycle rows and raw SHA-256 `dbf74500b348c9a3503e0dd489bb04d9d00f5d6a47a0c9163d4cc615ea90bb31`.
-- PR #4293 is open, head `393c4115add5e602ed279388a93dad4094daa687`, base SHA `14cfdf1a5f31138b308f98fd0e80fa75e887e65d`, mergeable=false; its body states 60 cases / 462 rows and raw SHA-256 `711f67b0e615ec6b4fc58dddedd490724369b6476ff6036f52e34536e72114e9`.
-- #4284's frozen PLAN at its evidence branch specifies 10 schedules × 3 policies × 2 repetitions = 60 cases. PR #4293's diff independently exposes FINAL_RESULT (60 cases/462 rows), formal RESULT (60/462), AUDIT (60, errors=[]), CONTROLS (13/13), FREEZE (10 schedules/3 policies/2 repetitions), and REPORT with matching identities.
-- PR changed-file enumeration and GitHub PR patches are readable; GitHub Contents readback of the same evidence paths returned 404 for both `main` and the source branch. Thus the compressed evidence parts and frozen source capsule cannot currently be retrieved as whole file bytes through the available MCP surface. No lossless raw XZ decode or SHA-256 recomputation was possible.
-- The 24-row and 60-case raw hashes differ. They remain distinct; this report does not choose an authoritative replacement.
-- No formal runner or row generator was executed.
+**T.** Read-only GitHub MCP intake found PR #4292 merged with 24 lifecycle rows/raw SHA-256 `dbf74500b348c9a3503e0dd489bb04d9d00f5d6a47a0c9163d4cc615ea90bb31`; PR #4293 remains open/non-mergeable, with 60 formal cases / 462 nested rows/raw SHA-256 `711f67b0e615ec6b4fc58dddedd490724369b6476ff6036f52e34536e72114e9`. Both records were preserved as distinct.
 
-**D.** `STOP_SOURCE_UNAVAILABLE` for the exact immutable raw/source bundle: structured result metadata and patches corroborate the stated count and hashes but do not suffice to decode/recompute the raw artifact hashes or independently check every raw row. Do not treat this as `PASS_EVIDENCE_RECONCILED_60_CASE_DELIVERY`, and do not integrate or relabel the 60-case artifact from patch snippets alone.
+The PR #4293 tip `393c4115add5e602ed279388a93dad4094daa687` contains only the generated index refresh; it points to an earlier frozen evidence branch state. Authenticated read-only Git fetch and `git cat-file blob` extracted the exact frozen evidence files without checking out/modifying a worktree. All four compressed evidence-part blobs matched their declared byte counts and SHA-256 values. The frozen `unpack_evidence.py` was run once in local Docker `python:3.12-slim-bookworm`, image ID `sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e`, linux/amd64, with `--pull=never --network none --read-only --memory=512m --cpus=1 --pids-limit=32`, read-only source mount and separate empty output. It verified concatenated XZ bytes and source/raw hashes before safely extracting 19 files.
 
-**C.** Authority-neutral, read-only GitHub metadata/patch inspection only. Prior allocations, branches, PRs, raw bundles and outcomes were not changed. The independent confirmation is limited to freeze/result/audit summaries plus the visible four-part compressed-data patches. The source branch remains available and untouched.
+Verified raw:
+- `formal-01/RAW.json`: 217,321 bytes; SHA-256 `711f67b0e615ec6b4fc58dddedd490724369b6476ff6036f52e34536e72114e9`.
+- 60 cases; 10 schedules × 3 policies × 2 repetitions. Each of the three policies has 20 cases; each of ten schedules has six cases.
+- Nested lifecycle `rows`: 462.
+- No row authority grants.
 
-**U.** Whether the exact EVIDENCE parts, source capsule, raw rows and frozen source files can be fetched via git clone/archive or a future authorized artifact endpoint; whether those bytes match all declared hashes and the 60/462 denominator; whether the original 24 and 60 row sets are distinct allocations or a publication/scope mismatch; and whether safe additive delivery can pass the current generated index/CI checks.
+Independent local Docker verification (same pinned image/constraints):
+- Frozen raw-only `audit.py` recomputation: decision `PASS_VERSIONED_PREDICATE_SPECIALIST_SWITCH_SCOPED`, case_count 60, stable ratios [0.25, 0.25], errors=[].
+- Frozen copied-evidence corruption test: pass=true, 13/13 declared mutations rejected.
+- Formal runner was not invoked; no case/row was generated.
+
+The initial GitHub Contents route returned 404; authenticated Git object fetch was the successful retrieval path. Two wrapper-only Docker attempts are retained in the task transcript: an existing-output refusal, then an audit output mistakenly mounted read-only. Both stopped before changing source/raw or running a formal study. The successful run used a distinct empty output and separate writable audit directory; raw inputs remained read-only.
+
+**D.** `PASS_EVIDENCE_RECONCILED_60_CASE_DELIVERY` for immutable artifact integrity and the frozen raw-only audit. This does not retroactively merge PR #4293, rewrite Issue #4284's closure scope, select between the distinct 24-row and 60-case historical outcomes, or establish Issue #4295's regeneration comparison.
+
+**C.** Existing authored deterministic evidence only; no model/provider/GUI/OS input/networked container, no credential inspection, no runtime modification, no formal rerun. PR #4292, PR #4293 and predecessor files were not edited.
+
+**U.** Which distinct historical result controls #4284 closure remains a repository governance/integration decision. The separate regeneration-vs-versioned-lifecycle hypothesis remains untested. No learned-model quality, natural drift economics, latency, energy, token, task/product or production claim follows.
 
 ## Provenance
 
-- Issue: #4603; parent reconciliation: #4284/#4293; regeneration question #4295 remains untested.
-- Current main at branch creation: not independently exposed as a ref SHA by the available GitHub MCP tool in this check; PR #4602 has since merged at `d6dacd3507ea23a7c5aafe82788c0a9d8b452834`.
+- Successor Issue: #4603; related #4284/#4295.
+- PR #4293 frozen source branch: `research/versioned-predicate-specialist-switch-4284-20260923`.
+- PR #4293 reviewed tip: `393c4115add5e602ed279388a93dad4094daa687`.
 - New evidence-only branch: `research/issue4603-evidence-availability-20260927`.
-- New additive path: `research/integration/issue_4603_evidence_availability_20260927/REPORT.md`.
-- No model/provider/GUI/OS-input/runtime call; no credentials; no networked container operation.
-
-## Evidence references
-
-- PR #4292: merged 24-row result, raw SHA-256 `dbf74500b348c9a3503e0dd489bb04d9d00f5d6a47a0c9163d4cc615ea90bb31`.
-- PR #4293: unmerged 60-case result, raw SHA-256 `711f67b0e615ec6b4fc58dddedd490724369b6476ff6036f52e34536e72114e9`.
-- #4284 latest reconciliation comment says no new run/replacement is requested.
-- #4295 prior construction-02's generated 128 formal-shaped draft rows remain retired, not formal evidence.
+- Additive delivery path: `research/integration/issue_4603_evidence_availability_20260927/`.
+- Docker image: `python:3.12-slim-bookworm`, `sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e`.
+- No edits to #4292/#4293 artifacts, generated indices, runtime, or roadmap.
