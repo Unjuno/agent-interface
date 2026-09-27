@@ -49,26 +49,20 @@ jobs:
   evidence-audit-windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          sparse-checkout-cone-mode: false
-          sparse-checkout: |
-            /*
-            !/*/
-            /research/
-            !/research/*/
-            /research/live_control/
-            !/research/live_control/*/
-            /research/live_control/issue_3311_host_ipc_v1/
-      - name: Fetch retained source commits for provenance
-        shell: bash
-        run: |
-          while IFS= read -r revision; do
-            git fetch --no-tags origin "$revision"
-          done < <(python -c 'import json; print("\n".join(json.load(open("research/live_control/issue_3311_host_ipc_v1/source-revisions.json")).values()))')
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Prepare only the evidence subtree on Windows
+        shell: bash
+        env:
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          git init
+          git remote add origin https://github.com/Unjuno/agent-interface.git
+          git fetch --no-tags --depth=1 --filter=blob:none origin "$PR_HEAD"
+          git archive FETCH_HEAD research/live_control/issue_3311_host_ipc_v1 | tar -xf -
+          while IFS= read -r revision; do
+            git fetch --no-tags --depth=1 --filter=blob:none origin "$revision"
+          done < <(python -c 'import json; print("\n".join(json.load(open("research/live_control/issue_3311_host_ipc_v1/source-revisions.json")).values()))')
       - name: Verify portable raw-manifest handling and retained evidence
         run: python -m unittest research.live_control.issue_3311_host_ipc_v1.test_audit_orbstack_v1_transport -v
