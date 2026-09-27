@@ -1,3 +1,0 @@
-docker --context orbstack run --rm --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m -e PYTHONDONTWRITEBYTECODE=1 -v "$PWD:/repo:ro" -v /tmp/issue2918-audit-v4.Zcmzcg:/report:rw -w /repo issue-3548-route-unit:20260920 python3 -B research/integration/issue_2918_live_certificate_audit_v4/audit_allocation03.py /repo/research/integration/issue_2918_live_certificate_v3/allocation_03_raw /report
-
-Exit code 1. This audit-only allocation did not start Xvfb, call the public API, or modify the allocation-03 input. It detected obscured/invalid intent-mismatch pixels and wrote no PASS report.

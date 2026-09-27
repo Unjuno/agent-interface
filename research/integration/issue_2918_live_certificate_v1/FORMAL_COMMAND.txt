@@ -1,9 +1,0 @@
-docker --context orbstack run --rm --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=128m -e PYTHONDONTWRITEBYTECODE=1 -e OUT=/out -v "$PWD:/repo:ro" -v /tmp/issue2918-formal.apfRs5:/out:rw -w /repo --entrypoint /bin/sh issue-3548-route-unit:20260920 -lc 'Xvfb :99 -screen 0 1280x800x24 -nolisten tcp >/tmp/xvfb2918.log 2>&1 & xp=$!; trap "kill $xp 2>/dev/null || true" EXIT; export DISPLAY=:99; n=0; while [ $n -lt 50 ] && ! xdpyinfo >/dev/null 2>&1; do sleep 0.1; n=$((n+1)); done; xdpyinfo >/dev/null; python3 -B research/integration/issue_2918_live_certificate_v1/run_live_allocation.py'
-
-Observed exit code: 1
-Observed stderr: Traceback (most recent call last):
-  File "/repo/research/integration/issue_2918_live_certificate_v1/run_live_allocation.py", line 11, in <module>
-    from runtime.cli_v1.observe import observe
-ModuleNotFoundError: No module named 'runtime'
-
-The source tree did contain /repo/runtime; the command omitted PYTHONPATH=/repo. This one-shot formal allocation was not rerun.

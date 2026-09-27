@@ -1,5 +1,0 @@
-Concatenate evidence.part.* in lexical order, then decode Base64:
-  cat evidence.part.* | tr -d '\n' | base64 -d > evidence.tar.gz
-Verify:
-  sha256sum -c EVIDENCE_SHA256.txt
-The archive contains model.py, test_model.py, run_experiment.py, verify.py, fixtures.json, source_sha256.txt, freeze.json, plan.json, environment.json, formal_run.log, result.json, artifact_sha256.txt, and REPORT.md.
