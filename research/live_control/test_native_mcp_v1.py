@@ -331,6 +331,24 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(result['status'], 'needs_review')
                 self.assertNotIn('value', result)
 
+    def test_explicit_tail_compilation_is_checked_before_request_publication(self):
+        from native_mcp_v1 import NativeDecision
+        base = {'source_sequence': 1, 'point': [78, 173],
+                'expected_title': 'sheet.xlsx', 'interaction': 'keyboard'}
+        for tail in (
+            [{'op': 'text', 'text': 'ab', 'gap_ms': True}],
+            [{'op': 'text', 'text': 'ab', 'gap_ms': -1}],
+            [{'op': 'key_chord', 'keys': ['Right'], 'repeat': 127}],
+            [{'op': 'text', 'text': 'a'*64, 'gap_ms': 2}],
+        ):
+            with self.subTest(tail=tail), self.assertRaises(ValueError):
+                NativeDecision.model_validate(dict(base, tail=tail))
+        tail = [{'op': 'text', 'text': 'ab', 'gap_ms': 20},
+                {'op': 'key_chord', 'keys': ['Right'], 'repeat': 2}]
+        request = dict(base, tail=tail)
+        self.assertEqual(NativeDecision.model_validate(request).model_dump(
+            mode='json', exclude_unset=True), request)
+
     def test_typed_decision_preserves_explicit_payload_without_defaults(self):
         from native_mcp_v1 import NativeDecision
         decisions=[{'source_sequence':7,'finish':True},
