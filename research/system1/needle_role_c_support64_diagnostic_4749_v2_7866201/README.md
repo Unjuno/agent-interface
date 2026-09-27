@@ -1,6 +1,6 @@
 # Diagnostic successor to #4767 — seed 7866201
 
-This is one paired, synthetic role-C support-count diagnostic, not a repeat of any consumed allocation and not a replacement for #4749's completed ten-seed result. It tests only support16 versus support64 with the first 16 rows byte-identical.
+This was one paired, synthetic role-C support-count diagnostic, not a repeat of any consumed allocation and not a replacement for #4749's completed ten-seed result. It stopped before model construction because the wrapper's raw-byte serialization raised a TypeError. See `STOP_REPORT.md`; no score exists.
 
 ## Provenance
 
@@ -18,5 +18,5 @@ Independent audit: separate CPU container, network none, root read-only, raw out
 
 ## Scope
 
-Even a clean positive result is one descriptive synthetic seed. It does not show realtime online learning, live Astra supervision, role-network transfer to GUI tasks, concurrency, natural-skill transfer, production readiness, or action authority. See `RESULT.md` for the frozen outcome and exact limitations.
+Even a future clean positive result is one descriptive synthetic seed. It does not show realtime online learning, live Astra supervision, role-network transfer to GUI tasks, concurrency, natural-skill transfer, production readiness, or action authority. See `STOP_REPORT.md` for the outcome and exact limitations.
 
