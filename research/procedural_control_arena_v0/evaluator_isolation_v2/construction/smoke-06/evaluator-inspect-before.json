@@ -1,0 +1,218 @@
+[
+  {
+    "AppArmorProfile": "",
+    "Args": [],
+    "Config": {
+      "AttachStderr": false,
+      "AttachStdin": false,
+      "AttachStdout": false,
+      "Cmd": null,
+      "Domainname": "",
+      "Entrypoint": [
+        "/opt/entrypoint.sh"
+      ],
+      "Env": [
+        "ARENA_AUTOCLOSE=30",
+        "ARENA_SEED=2002",
+        "X11_COOKIE_SHA256=e3fd88928c85fe49eb56251dcfb0b81ca8c063b29b63fe510b6321fc88e7e080",
+        "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "LANG=C.UTF-8",
+        "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+        "PYTHON_VERSION=3.12.14",
+        "PYTHON_SHA256=5c8462af5790baf43a321a1559dbe0db06d1be4300fb85fb53c40060668e548a"
+      ],
+      "Hostname": "9c35ca860604",
+      "Image": "agent-arena-isolation-evaluator-v2:20260927",
+      "Labels": {},
+      "OpenStdin": false,
+      "StdinOnce": false,
+      "Tty": false,
+      "User": "",
+      "Volumes": null,
+      "WorkingDir": "/opt/arena"
+    },
+    "Created": "2026-09-27T03:06:12.662736476Z",
+    "Driver": "overlayfs",
+    "ExecIDs": null,
+    "HostConfig": {
+      "AutoRemove": false,
+      "Binds": [
+        "<redacted>/smoke-06:/evidence:rw"
+      ],
+      "BlkioDeviceReadBps": [],
+      "BlkioDeviceReadIOps": [],
+      "BlkioDeviceWriteBps": [],
+      "BlkioDeviceWriteIOps": [],
+      "BlkioWeight": 0,
+      "BlkioWeightDevice": [],
+      "CapAdd": null,
+      "CapDrop": [
+        "ALL"
+      ],
+      "Cgroup": "",
+      "CgroupParent": "",
+      "CgroupnsMode": "private",
+      "ConsoleSize": [
+        0,
+        0
+      ],
+      "ContainerIDFile": "",
+      "CpuCount": 0,
+      "CpuPercent": 0,
+      "CpuPeriod": 0,
+      "CpuQuota": 0,
+      "CpuRealtimePeriod": 0,
+      "CpuRealtimeRuntime": 0,
+      "CpuShares": 0,
+      "CpusetCpus": "",
+      "CpusetMems": "",
+      "DeviceCgroupRules": null,
+      "DeviceRequests": null,
+      "Devices": [],
+      "Dns": null,
+      "DnsOptions": [],
+      "DnsSearch": [],
+      "ExtraHosts": null,
+      "GroupAdd": null,
+      "IOMaximumBandwidth": 0,
+      "IOMaximumIOps": 0,
+      "IpcMode": "private",
+      "Isolation": "",
+      "Links": null,
+      "LogConfig": {
+        "Config": {},
+        "Type": "json-file"
+      },
+      "MaskedPaths": [
+        "/proc/acpi",
+        "/proc/asound",
+        "/proc/interrupts",
+        "/proc/kcore",
+        "/proc/keys",
+        "/proc/latency_stats",
+        "/proc/sched_debug",
+        "/proc/scsi",
+        "/proc/timer_list",
+        "/proc/timer_stats",
+        "/sys/devices/virtual/powercap",
+        "/sys/firmware"
+      ],
+      "Memory": 0,
+      "MemoryReservation": 0,
+      "MemorySwap": 0,
+      "MemorySwappiness": null,
+      "NanoCpus": 0,
+      "NetworkMode": "arena-isolation-v2-smoke",
+      "OomKillDisable": null,
+      "OomScoreAdj": 0,
+      "PidMode": "",
+      "PidsLimit": null,
+      "PortBindings": {},
+      "Privileged": false,
+      "PublishAllPorts": false,
+      "ReadonlyPaths": [
+        "/proc/bus",
+        "/proc/fs",
+        "/proc/irq",
+        "/proc/sys",
+        "/proc/sysrq-trigger"
+      ],
+      "ReadonlyRootfs": true,
+      "RestartPolicy": {
+        "MaximumRetryCount": 0,
+        "Name": "no"
+      },
+      "Runtime": "runc",
+      "SecurityOpt": [
+        "no-new-privileges"
+      ],
+      "ShmSize": 67108864,
+      "Tmpfs": {
+        "/tmp": "rw,noexec,nosuid,size=8m"
+      },
+      "UTSMode": "",
+      "Ulimits": null,
+      "UsernsMode": "",
+      "VolumeDriver": "",
+      "VolumesFrom": null
+    },
+    "HostnamePath": "/var/lib/docker/containers/9c35ca8606046758587bd5fb0794758797e4c1f9ef143cd8fea4540682fffaa5/hostname",
+    "HostsPath": "/var/lib/docker/containers/9c35ca8606046758587bd5fb0794758797e4c1f9ef143cd8fea4540682fffaa5/hosts",
+    "Id": "9c35ca8606046758587bd5fb0794758797e4c1f9ef143cd8fea4540682fffaa5",
+    "Image": "sha256:ed7cb174bbe07d676e5fd0c41dd869923f20559569ccfee55e336265ce6f4fe3",
+    "ImageManifestDescriptor": {
+      "digest": "sha256:7c1d9ceeda73c1bd0a57fccea043b3d272c5050fe1f8632b68ca98ffab009cb6",
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "platform": {
+        "architecture": "amd64",
+        "os": "linux"
+      },
+      "size": 2001
+    },
+    "LogPath": "/var/lib/docker/containers/9c35ca8606046758587bd5fb0794758797e4c1f9ef143cd8fea4540682fffaa5/9c35ca8606046758587bd5fb0794758797e4c1f9ef143cd8fea4540682fffaa5-json.log",
+    "MountLabel": "",
+    "Mounts": [
+      {
+        "Destination": "/evidence",
+        "Mode": "rw",
+        "Propagation": "rprivate",
+        "RW": true,
+        "Source": "<redacted>/smoke-06",
+        "Type": "bind"
+      }
+    ],
+    "Name": "/arena-isolation-v2-smoke-eval",
+    "NetworkSettings": {
+      "Networks": {
+        "arena-isolation-v2-smoke": {
+          "Aliases": null,
+          "DNSNames": [
+            "arena-isolation-v2-smoke-eval",
+            "9c35ca860604"
+          ],
+          "DriverOpts": null,
+          "EndpointID": "5f56754cd76c64eaefd5a2cf5fa3c3939811171e9c046c9d8394558e053e0a25",
+          "Gateway": "",
+          "GlobalIPv6Address": "",
+          "GlobalIPv6PrefixLen": 0,
+          "GwPriority": 0,
+          "IPAMConfig": null,
+          "IPAddress": "172.19.0.2",
+          "IPPrefixLen": 16,
+          "IPv6Gateway": "",
+          "Links": null,
+          "MacAddress": "e2:aa:f8:0f:88:94",
+          "NetworkID": "db9fea6f022e398cc626ce6b28de000d6cdd64a56f5d82c0827f1211f93e20c6"
+        }
+      },
+      "Ports": {},
+      "SandboxID": "407f2a54cbeefd80b99fa26c5b6b83b9e6556d15804ee2589e4fd0f343293fd7",
+      "SandboxKey": "/var/run/docker/netns/407f2a54cbee"
+    },
+    "Path": "/opt/entrypoint.sh",
+    "Platform": "linux",
+    "ProcessLabel": "",
+    "ResolvConfPath": "/var/lib/docker/containers/9c35ca8606046758587bd5fb0794758797e4c1f9ef143cd8fea4540682fffaa5/resolv.conf",
+    "RestartCount": 0,
+    "State": {
+      "Dead": false,
+      "Error": "",
+      "ExitCode": 0,
+      "FinishedAt": "0001-01-01T00:00:00Z",
+      "OOMKilled": false,
+      "Paused": false,
+      "Pid": 19723,
+      "Restarting": false,
+      "Running": true,
+      "StartedAt": "2026-09-27T03:06:12.864370944Z",
+      "Status": "running"
+    },
+    "Storage": {
+      "RootFS": {
+        "Snapshot": {
+          "Name": "overlayfs"
+        }
+      }
+    }
+  }
+]

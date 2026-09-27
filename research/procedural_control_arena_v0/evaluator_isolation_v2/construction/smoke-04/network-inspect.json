@@ -1,0 +1,52 @@
+[
+    {
+        "Name": "arena-isolation-v2-smoke",
+        "Id": "38bc38deb6fc007aa66346f6d7a7568eb07e249d20f3974ce7ad9fdc6268fb76",
+        "Created": "2026-09-27T03:05:01.756382888Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "172.19.0.0/16",
+                    "Gateway": "172.19.0.1"
+                }
+            ]
+        },
+        "Internal": true,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {
+            "com.docker.network.enable_ipv4": "true",
+            "com.docker.network.enable_ipv6": "false"
+        },
+        "Labels": {},
+        "Containers": {
+            "a83016cff348746fbbac72ace7519baaa6bd237832e5cea2bb8916ca1b24a8f5": {
+                "Name": "arena-isolation-v2-smoke-eval",
+                "EndpointID": "5a1c352f2e95d0e0a536d53a406cf91054913b8f151372de62db283761cfc9a5",
+                "MacAddress": "66:2a:1a:48:e2:4c",
+                "IPv4Address": "172.19.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "172.19.0.0/16": {
+                        "IPsInUse": 4,
+                        "DynamicIPsAvailable": 65532
+                    }
+                }
+            }
+        }
+    }
+]
