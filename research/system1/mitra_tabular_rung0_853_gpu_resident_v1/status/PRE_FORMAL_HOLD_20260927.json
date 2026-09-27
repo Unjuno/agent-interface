@@ -1,0 +1,39 @@
+{
+  "schema": "issue-4745-preformal-hold-v1",
+  "issue": 4745,
+  "allocation": "mitra-gpu-rung0-853-successor-local-20260927-01",
+  "disposition": "HOLD_SHARED_GPU_ALLOCATION_4754_OPEN",
+  "formal_invocations": 0,
+  "model_loads": 0,
+  "fit_calls": 0,
+  "predict_calls": 0,
+  "optimizer_steps": 0,
+  "gpu_requested": false,
+  "reason": "Frozen protocol requires all overlapping RTX 3080 issues complete. Issue #4754 remains OPEN. Its latest recorded R6 allocation STOP was 0/36 calls; R7 completion is separately recorded under #4763 and merged PR #4772, but #4754 itself remains open, so completion is not assumed.",
+  "local_preflight": {
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "nvidia_smi_at_check": "0 MiB / 0%",
+    "containers": [
+      {
+        "name": "agent-interface-570-r3-ollama",
+        "state": "running; left untouched"
+      }
+    ],
+    "formal_output_path_present": false,
+    "model": {
+      "bytes": 302717904,
+      "sha256": "5ffab0e2cf52f61c5b7c7eb1e8542996736d1023a0212190cc09abc2119a1e09"
+    },
+    "config_sha256": "2c96c24dd25f64e92753f6f2ba00cc7833b9923459403dcd8504e8700c0995df",
+    "model_card_sha256": "baab54ff0be437c82b1ae616cf19a41820815e274cdda017f0046dd541c86ca8",
+    "support_sha256": "bf4d64cf826ea2d727990bd799d7e6d0f813a97a64119751e05d22a819fdf785",
+    "queries_sha256": "dc68fe551034d6f961900e0300af8c41fea641e058380d21c904bc4146df7fd1",
+    "frozen_source_hashes": "9/9 match",
+    "wheelhouse_manifest_sha256": "158297ee664e598b0648970eb9b630dce7055f0fa75f2ce85a0bb8d700e2e48b",
+    "construction_image_id": "sha256:ce4a0987e3add295fb9e9f38ef4badb9b078b83bc5e6874a20c333665101d5bc",
+    "construction_audit_unit_tests": "4/4 passed; synthetic records only; network none; read-only source; no GPU device request"
+  },
+  "scope_note": "This is a GPU inference/runtime ABI candidate with fine_tune=false and fine_tune_steps=0. It is not fine-tuning evidence and makes no quality/accuracy claim.",
+  "next_gate": "Resolve the stale #4754 issue state, then repeat the GitHub and local process/container/GPU collision audit immediately before any single formal launch.",
+  "created_utc": "2026-09-27"
+}
