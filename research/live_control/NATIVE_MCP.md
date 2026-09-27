@@ -337,3 +337,5 @@ replay. New native_submit calls are refused while stopping. Repeated stop calls
 never relaunch or signal processes. Before startup, stop returns not_started and
 creates nothing; it does not prohibit a later explicit start. Without this mode
 the tool is not exposed. The EOF error covers either server exit or explicit stop.
+
+[Retained idle Calc stop and server-termination cases](../../runtime/results/native-cooperative-stop-01/README.md) verify the limited lifecycle behavior; they do not exercise active input.

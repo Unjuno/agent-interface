@@ -234,6 +234,14 @@ The original cleanup receipt is preserved. The managed `allocation` object is a
 process snapshot: its `task_success: null` does not override a recorded
 `evaluation_success: true`, and a zero process exit code does not prove task success.
 
+For managed research sessions explicitly started with `--owner-lifetime`,
+`native_stop()` requests cooperative shutdown without closing the MCP connection.
+`stopping` is not terminal or cleanup success: poll `native_status`, and use
+`native_resume` only for an exact previously committed request. New input is
+refused after stop is requested. This is not immediate interruption; an in-progress
+operation can continue until a checked boundary. The default mode is unchanged.
+See [the lifecycle contract and retained idle cases](../research/live_control/NATIVE_MCP.md#explicit-cooperative-stop).
+
 ## Validate an integration
 
 Follow [the shared check instructions](integration_checks/README.md) for a single
