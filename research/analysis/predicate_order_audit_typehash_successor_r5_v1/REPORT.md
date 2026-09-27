@@ -14,6 +14,14 @@ Issue #5018 successor allocation 05. Preserve predecessor allocations 01–04, i
 
 **U.** No general security or JSON interoperability claim, new predicate-order science, performance claim, GUI/task effect, GPU, provider, or production authority.
 
-## Status
+## Formal result
 
-Pre-registration only. Formal allocation has not run. See `FREEZE.json` for exact source/input identities and execution limits. Results and all logs will be appended after the single run.
+`PASS_AUDIT_BOUNDARY_REPAIRED_SCOPED` in the single frozen Docker allocation; container exit 0. All four unit tests passed, Python AST and shell syntax passed, and the excluded baseline construction probe reconstructed 336 rows / 21 distributions. That excluded probe accepted six of seven listed mutations; its separate replay-cost mutation was rejected by replay consistency and was not pooled into the formal denominator.
+
+The formal unchanged raw input matched SHA-256 `5f48e0274f9fd800ac26af3dd70bd52171700b32ce159f3cdbe0f28c7ec35e7d`, 186,739 bytes. Baseline was 336/336 rows, 21 distributions, errors empty. Each of the seven frozen canaries was accepted by the retained auditor and rejected by the strict candidate. Independent audit: `PASS_RAW_AUDIT`, errors empty, seven candidate rejections. Manifest: `PASS_MANIFEST_BINDING_SCOPED`, exact positive map bound 11 source files and four input/output paths; empty maps, omitted path, and changed digest all rejected.
+
+The Docker invocation aliased `/out`, `/repo/out`, `/evidence`, and `/audit` to the same fresh writable directory while keeping the two source and input aliases read-only. This resolved allocation 04's read-only audit-output failure without changing gates after execution. All 26 frozen output artifacts and their SHA-256 digests are recorded in `RESULT.json` and committed verbatim under `result/`. No retries or post-result gate changes occurred.
+
+## Limits
+
+One retained synthetic corpus and one pinned Linux/amd64 Docker Desktop host. This supports only the bounded type/binding audit hypothesis; no broad security/JSON interoperability, new predicate-order science, performance, GUI/task effect, provider, GPU, or production claim.
