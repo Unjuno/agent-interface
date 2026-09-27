@@ -30,10 +30,10 @@ docker run --rm --pull=never --platform=linux/amd64 --network=none --read-only \
   -B /source/audit.py --source /source --out /out
 ```
 
-Host mount source was
-`C:\Users\junny\Documents\Codex\2026-09-19\goal-unjuno-agent-interface-github-mcp-2\research\doom\intrajectory_observability_2476_v1\construction_chain_r2_20260927`;
-the output mount was its `output` child. Image identity was checked before
-start: `sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419`.
+The actual local workspace path is intentionally omitted from this public
+record. The frozen source directory was mounted read-only at `/source`; its
+dedicated `output` child was mounted writable at `/out`. Image identity was
+checked before start: `sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419`.
 
 Runner exit: 0; 10 cases produced. Independent auditor exit: 1; 20 policy rows
 examined; final audit decision `FAIL_CUMULATIVE_DRIFT_GATE` with nine
@@ -67,4 +67,3 @@ audit was edited; no retry or repair occurred.
 Physical input emissions: 0. GUI/game/model/provider/network: none. Formal
 Issue #2476 trajectory cases: 0. This synthetic construction does not validate
 real image matching, target identity, task effect, or trajectory improvement.
-
