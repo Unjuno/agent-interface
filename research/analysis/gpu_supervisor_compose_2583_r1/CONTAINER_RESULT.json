@@ -1,0 +1,19 @@
+{
+  "status": "PASS_CONTAINER_CUDA_LABELS",
+  "scope": "container GPU construction/decision-boundary benchmark; not formal route evidence",
+  "image": "pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime",
+  "device": "NVIDIA GeForce RTX 3080 Laptop GPU",
+  "torch": "2.5.1+cu121",
+  "cuda_runtime": "12.1",
+  "rows": 1000,
+  "repetitions": 1000,
+  "label_agreement": true,
+  "max_abs_diff": 2.384185791015625e-07,
+  "cuda_ms_total": 50.068116004695185,
+  "cuda_ms_per_inference": 0.050068116004695185,
+  "output_sha256": "a42530af7a7941d354cc56aa02a76e77428fde428733438e2c157b13539b0929",
+  "authority_grants": 0,
+  "input_grants": 0,
+  "task_success_claims": 0,
+  "caveat": "Single local Docker run; no host-frame transfer or end-to-end route."
+}
