@@ -64,6 +64,20 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+### Issue #4563 — controlled MAP01 clock-boundary raw-audit addendum
+
+An independent raw-only audit rechecked the retained −1/0/+1 ns controlled
+timestamp rows against their source typed-observation events and verified the
+three preflight owner releases. OrbStack and host runs both returned
+`PASS_RAW_AUDIT`; 12/12 effective field-mutation controls were rejected. This
+does not reproduce the natural clock inversion or establish task effect. A
+current-main construction reproduction separately STOPped before assertions
+in 2/5 focused tests because the retained dependency chain cannot import
+`action_validity_admission_v1` in the pinned image; this does not overwrite the
+historical Docker construction/replay result. See the
+[audit addendum](research/doom/map01_policy_invalidation_clock_4559_v1/AUDIT_ADDENDUM_20260928.md)
+and [Issue #4563](https://github.com/Unjuno/agent-interface/issues/4563).
+
 ## Issue #4844 — partial-observation typed-mode successor to #4155
 
 One frozen 4,800-row CPU-only formal allocation was run locally in the pinned, network-disabled Docker image; a separate raw-only Docker audit verified all regenerated rows and predictions with zero errors. The result is **`FAIL_MODE_MISROUTES_RECOVERY`** under the preregistered control hierarchy: one complete LAYOUT_CHANGED prototype produced conservative DIRECT YIELD rather than exact REOBSERVE (14/15 exact prototype matches). On the three partial/composition blocks, wrong recovery was 165/960 vs 180/960 (single missing), 89/960 vs 73/960 (multi missing; 17.98% reduction, below the 25% gate), and 219/960 vs 222/960 (composition holdout). Safe coverage was higher for mode factorization, but no block passed the frozen recovery gate. No retry or post-result tuning. This synthetic classifier-family result does not establish GUI or cross-app performance.
