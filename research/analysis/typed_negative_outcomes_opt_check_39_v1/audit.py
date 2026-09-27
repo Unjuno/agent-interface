@@ -67,7 +67,7 @@ def audit(root):
         check((root / (mode + ".exit")).read_text(encoding="ascii").strip() == "0", mode + ":exit", errors)
         check((root / (mode + ".stderr")).read_bytes() == b"", mode + ":stderr", errors)
         check((root / (mode + "-tests.exit")).read_text(encoding="ascii").strip() == "0", mode + ":tests_exit", errors)
-        check(b"Ran 5 tests" in (root / (mode + "-tests.stderr")).read_bytes(), mode + ":tests_ran", errors)
+        check(b"Ran 6 tests" in (root / (mode + "-tests.stderr")).read_bytes(), mode + ":tests_ran", errors)
         check((root / (mode + "-tests.stdout")).read_bytes() == b"", mode + ":tests_stdout", errors)
     for mode in MODES:
         for control in CONTROL_NAMES:
@@ -80,6 +80,14 @@ def audit(root):
             check((root / (stem + ".exit")).read_text(encoding="ascii").strip() != "0", stem + ":raw_exit", errors)
             out = (root / (stem + ".stdout")).read_bytes()
             check(b"PASS_OPTIMIZATION_RESILIENT_CONTRACT_SCOPED" not in out, stem + ":raw_pass_marker", errors)
+    for mode in MODES:
+        stem = mode + "-legacy-assert-bypass"
+        receipt = json.loads((root / (stem + ".legacy-control")).read_text(encoding="utf-8"))
+        expected = mode in ("opt_flag", "env_opt")
+        check(receipt.get("expected_bypass") is expected, stem + ":expected", errors)
+        check(receipt.get("assert_bypass_reproduced") is expected, stem + ":observed", errors)
+        check(receipt.get("pass_marker_seen") is expected, stem + ":pass_marker", errors)
+        check((root / (stem + ".exit")).read_text(encoding="ascii").strip() == ("0" if expected else "1"), stem + ":raw_exit", errors)
     report = {"schema": "issue-4990-raw-audit-v1", "errors": errors, "pass": not errors,
               "replayed_rows": rows, "replayed_counts": counts, "replayed_digest": replay_digest,
               "modes": list(MODES), "corruption_controls_per_mode": len(CONTROL_NAMES)}
