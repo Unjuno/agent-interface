@@ -15,10 +15,19 @@ HERE = Path(__file__).resolve().parent
 # Direct script execution needs both local research modules and the runtime package.
 sys.path.insert(0, str(HERE.parents[1]))
 sys.path.insert(0, str(HERE.parent / "observation_gating"))
+# Select one exact built runtime before importing any runtime-backed wrappers.
+# The fixture and primary-review exchange stay in the research harness.
+_archive_parser = argparse.ArgumentParser(add_help=False)
+_archive_parser.add_argument('--runtime-archive', type=Path)
+_archive_args, _ = _archive_parser.parse_known_args()
+if _archive_args.runtime_archive:
+    _runtime_archive = _archive_args.runtime_archive.resolve(strict=True)
+    sys.path.insert(0, str(_runtime_archive))
+
 import gui_suite as suite
 from integrated_efficiency_fixture_v1 import Fixture
 import integrated_efficiency_runtime_v1 as integrated
-from native_handle_bridge_v1 import NativeHandleBridge, read_window_title
+from runtime.guarded_x11_v1.bridge import NativeHandleBridge, read_window_title
 from runtime.cli_v1.api import dispatch
 from runtime.core_v1.contract import SCHEMA_PROGRAM
 
@@ -49,6 +58,7 @@ class PrivateSession(suite.Session):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--runtime-archive", type=Path, help="explicit built runtime used for all runtime imports")
     parser.add_argument("--route", choices=["persistent", "direct"], default="persistent")
     parser.add_argument('--primary-review', action='store_true',
                         help='require primary image/receipt review before advancing each task')
@@ -97,6 +107,10 @@ def main():
         goal, history, server = integrated.prepare(session, 'chromium', args.seed, args.chromium)
         fixture = integrated._ACTIVE[str(history)]
         save('goal.json', goal)
+        import runtime.guarded_x11_v1.bridge as loaded_bridge
+        import runtime.cli_v1.api as loaded_api
+        save('runtime-origin.json', {'bridge': loaded_bridge.__file__, 'api': loaded_api.__file__,
+             'archive': str(args.runtime_archive.resolve()) if args.runtime_archive else None})
         save('allocation.json', {'negative_task': args.negative_task, 'route': args.route,
                                  'primary_review': args.primary_review})
         window = next(line.split()[0] for line in session.windows().splitlines()
@@ -175,7 +189,7 @@ def main():
                     raise RuntimeError('direct task feedback '+feedback['status']+'; no replay')
                 review(row)
                 continue
-            from native_guarded_form_v1 import fill_and_submit
+            from runtime.guarded_x11_v1.form import fill_and_submit
             before = bridge.backend.emissions
             started = time.monotonic_ns()
             token = task['token'] + ('-wrong' if task['task_id'] == args.negative_task else '')

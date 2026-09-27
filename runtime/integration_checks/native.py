@@ -15,7 +15,7 @@ SUITES = {
                  'test_native_allocation_v1', 'test_native_mcp_relay_v1', 'test_native_direct_task_v1',
                  'test_native_primary_review_v1', 'test_native_brief_review_v1', 'test_native_guarded_form_v1'],
     'harness': ['runtime.backends.x11_v1.test_focus', 'runtime.cli_v1.test_x11_target_review', 'runtime.backends.x11_v1.test_text_plan', 'runtime.backends.x11_v1.test_partial_execution', 'test_native_finish_after_v1', 'test_native_cleanup_v1',
-                'test_native_handle_bridge_v1', 'test_native_tail_v1'],
+                'test_native_handle_bridge_v1', 'test_native_tail_v1', 'runtime.distribution_v2.test_distribution', 'runtime.guarded_x11_v1.test_archive'],
 }
 
 def main():

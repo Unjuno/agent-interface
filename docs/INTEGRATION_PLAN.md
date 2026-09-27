@@ -1,3 +1,20 @@
+## Shared X11 runtime checkpoint (2026-09-28)
+
+The native scoped target store, guarded bridge and form method now live in
+`runtime/guarded_x11_v1`, included in the portable runtime. Historical research
+imports delegate to the same implementation. Existing admission, releases,
+review revocation and waits are unchanged. This supplies an explicit Linux/X11
+Python API; it does not add CLI/MCP method tools or semantic form validation.
+
+[Primary archive use](../runtime/results/shared-x11-runtime-primary-01/README.md)
+records six exact submissions from the built runtime, one zero-emission
+layout-change refusal, explicit re-grounding and continued reuse. The isolated
+archive import test excludes the checkout from Python's path. Local native
+checks pass 223 protocol and 106 harness/distribution tests after correcting
+CI sparse-checkout and optional-dependency test placement. Initial CI failures
+and the corrected local checks are retained alongside the primary-use evidence. Matched performance,
+actual primary model tokens and useful-feedback onset remain unmeasured.
+
 ## Native method reuse checkpoint (2026-09-28)
 
 The existing native enter/submit operation is now an importable

@@ -11,6 +11,7 @@ the action; these entry points do not require a second model or a subagent.
 | [Public CLI/API](cli_v1/README.md) | Existing target mappings and admitted programs; ordinary application integration | One-shot dispatch/observation |
 | [Public MCP transport](cli_v1/MCP.md) | The same explicit targets/programs through an MCP host, with native image blocks | One-shot API calls; no managed allocation |
 | [Native MCP adapter](../research/live_control/NATIVE_MCP.md) | Existing private native harness, or one explicitly managed allocation | Bound run, explicit stages and exact-request resume |
+| [Scoped X11 Python API](guarded_x11_v1/README.md) | Explicit image-grounded aliases and guarded input, also included in the portable archive | One caller-owned connection; explicit close and re-grounding |
 | [Local integration checks](integration_checks/README.md) | Verify the implementation without GUI or model calls | Fresh output directory with logs |
 
 A persistent Node-capable host can use the [reusable native relay client](../research/live_control/NATIVE_RELAY_CLIENT.md) to retain requests/replies and present text plus images in one response. Its same-request wait is not an input retry. [Primary two-app use](results/native-primary-twoapp-client-01/README.md) records actual saved effects and remaining observation handoffs, with host timing limits and unavailable token accounting made explicit.
