@@ -300,7 +300,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 </details>
 
-<!-- END GENERATED ANALYSIS RESULT INDEX -->
+
 
 
 ## Interpretation
