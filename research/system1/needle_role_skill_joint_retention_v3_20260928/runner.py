@@ -10,8 +10,8 @@ from pathlib import Path
 import torch
 import torch.nn.functional as F
 
-ALLOCATION = "needle-role-skill-joint-retention-20260928-v1"
-SEEDS = (736711, 736811, 736911)
+ALLOCATION = "needle-role-skill-joint-retention-20260928-v3"
+SEEDS = (9934211, 9934311, 9934411)
 ARMS = ("SHARED_B_ONLY", "SHARED_A_REPLAY", "ROUTED_SHARED_ADAPTER", "ROUTED_SEPARATE_SKILLS")
 SCHEMA = "needle-role-skill-joint-retention-raw-v2"
 ROLES = ("A", "B")
