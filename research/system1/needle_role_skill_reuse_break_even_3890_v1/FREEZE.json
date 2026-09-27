@@ -1,0 +1,36 @@
+{
+  "allocation": "needle-role-skill-reuse-break-even-3890-v1-20260928",
+  "issue": 4916,
+  "parent_main": "d0fc6e9de0f113f4160d80deb5f151c8a439144e",
+  "branch": "research/needle-role-skill-reuse-break-even-3890-v1-20260928",
+  "path": "research/system1/needle_role_skill_reuse_break_even_3890_v1/",
+  "source_manifest_sha256": "2ac1b0587b17a6d7be77842e9183a95a6c6997a4f3d0d42bccd643557b9f9291",
+  "construction_only": true,
+  "formal_blocks": 0,
+  "formal_seeds_consumed": [],
+  "input_package": {
+    "sha256": "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a",
+    "path": "research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/skill.json",
+    "bytes": 15279,
+    "git_blob": "45b80150dac503f4eb6f3cb5d82f9afa2c587107"
+  },
+  "input_fixture": {
+    "sha256": "5baca462abbcdd561dba4c790775a589f91a0fa15453e2f3e6c3bc74fb1b6f61",
+    "path": "research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/expected.json",
+    "bytes": 2018201,
+    "git_blob": "d1f982ecb142c1d6f59962b6b777615b8f1544b2"
+  },
+  "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+  "platform": "linux/amd64",
+  "limits": {
+    "source_read_only": true,
+    "root_read_only": true,
+    "network": "none",
+    "cpu": 1,
+    "pids": 64,
+    "inputs_read_only": true,
+    "memory": "2g"
+  },
+  "command": "python /src/reuse_break_even.py",
+  "decision_scope": "Construction compatibility/equivalence only; this allocation does not meet Issue #4916 formal break-even gate."
+}

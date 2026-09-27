@@ -1,0 +1,7 @@
+# Issue #4916 reuse lifecycle — construction_01
+
+This additive source probes one construction-only 1,000-request sequence using the exact seed-3788 package and held-out fixture already retained under Issue #3890. It runs `RELOAD_EACH_REQUEST` and `LOAD_ONCE_REUSE`, retains every response/logit, and independently recomputes all 1,000 outputs from the immutable package/input fixture. Four invalid-scope controls must yield before scoring.
+
+This is **not a formal timing block** and cannot decide break-even: there is one unpaired construction pass, no 30-block alternation, and no inferential timing claim. It tests source/package compatibility, repeated lifecycle execution, exact response identity, independent raw audit, and output-path separation before any formal source freeze. No training, optimizer step, network, model-provider, GUI or user input occurs.
+
+Pinned inputs are fetched from main commit `970be794823f08cf7189a5e0b95f6aa9e2402f1a`: `skill.json` Git blob `45b80150dac503f4eb6f3cb5d82f9afa2c587107`; seed-3788 `expected.json` Git blob `d1f982ecb142c1d6f59962b6b777615b8f1544b2`. The loader begins from #3890's `loader.py` (main Git blob `ecbaca839bd5866a6f52b412aad2136cda1c03ad`) with only deterministic file closure added around the package-byte read; validation predicates and numerical schema are unchanged. This construction hygiene fix is disclosed rather than attributed to #3890.
