@@ -1,6 +1,10 @@
 {
   "schema": "issue3152-local-appserver-preflight-v1",
-  "decision": "PASS_LOCAL_APPSERVER_JSON_TURN_PREFLIGHT",
+  "decision": "RETAINED_LOCAL_APPSERVER_PREFLIGHT_SUMMARY",
+  "evidence_boundary": {
+    "raw_app_server_transcript_retained": false,
+    "audit_claim": "summary shape and scope consistency only; not protocol integrity or independent proof of model execution"
+  },
   "formal_allocation_count": 0,
   "prospectively_frozen": false,
   "construction_attempts": 3,
@@ -80,4 +84,3 @@
   },
   "scope_limit": "Local app-server protocol and one minimal JSON model turn only; not typed admission, held-out recovery, task effect, or #3152 acceptance."
 }
-
