@@ -12,6 +12,7 @@
   "construction_raw_sha256": "cc9208e3ce726896d9d0f426aa1971cb3cb8e737ef06553f6392b613bd3ecdb7",
   "construction_audit_sha256": "69fae3c73cd627f93484f63a06f7edb6f7c29c2d1f02f495e4c07b957c8928da",
   "formal_seeds": [9970211, 9970311, 9970411],
+  "seeds": [9970211, 9970311, 9970411],
   "formal_orchestrations": 1,
   "retries": 0,
   "docker_image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
@@ -32,7 +33,8 @@
     "--mount", "type=bind,source=<formal-output>/raw,target=/out",
     "--workdir", "/src", "--env", "NEEDLE_OUTPUT=/out",
     "--env", "NEEDLE_SEEDS=9970211,9970311,9970411",
-    "needle-pilot05:local", "python", "-B", "runner.py"
+    "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "python", "-B", "runner.py"
   ],
   "audit": {
     "container_separate": true,
