@@ -91,4 +91,3 @@ GPU allocation, including #4754, is complete and a fresh GitHub + local
 process/container collision audit is recorded. This is a
 precondition, not an invitation to overlap when `nvidia-smi` happens to show
 0 MiB in use.
-
