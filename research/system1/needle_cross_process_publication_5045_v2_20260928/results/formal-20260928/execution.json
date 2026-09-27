@@ -1,0 +1,121 @@
+{
+  "allocation": "needle-cross-process-publication-5045-v2-20260928-01",
+  "auditor_command": [
+    "docker",
+    "run",
+    "--rm",
+    "--pull=never",
+    "--platform",
+    "linux/amd64",
+    "--network",
+    "none",
+    "--read-only",
+    "--cpus",
+    "0.25",
+    "--memory",
+    "256m",
+    "--pids-limit",
+    "32",
+    "--shm-size",
+    "32m",
+    "--cap-drop",
+    "ALL",
+    "--security-opt",
+    "no-new-privileges",
+    "--mount",
+    "type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\goal-unjuno-agent-interface-github-mcp-6\\work\\repo5066\\source,target=/src,readonly",
+    "--mount",
+    "type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\goal-unjuno-agent-interface-github-mcp-6\\outputs\\needle-5066-formal-20260928,target=/out",
+    "-e",
+    "FROZEN_IMAGE_ID=sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "python",
+    "/src/research/system1/needle_cross_process_publication_5045_v2_20260928/audit.py"
+  ],
+  "auditor_exit": 0,
+  "disposition": "AUDIT_EXIT_ZERO",
+  "docker_context": "desktop-linux",
+  "finished_unix_ns": 1790543414315425000,
+  "formal_orchestrations": 1,
+  "host_platform": "Windows-10-10.0.26200-SP0",
+  "image_identity": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 linux/amd64",
+  "input_sha256": "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a",
+  "issue": 5066,
+  "runner_command": [
+    "docker",
+    "run",
+    "--rm",
+    "--pull=never",
+    "--platform",
+    "linux/amd64",
+    "--network",
+    "none",
+    "--read-only",
+    "--cpus",
+    "0.25",
+    "--memory",
+    "256m",
+    "--pids-limit",
+    "32",
+    "--shm-size",
+    "32m",
+    "--cap-drop",
+    "ALL",
+    "--security-opt",
+    "no-new-privileges",
+    "--mount",
+    "type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\goal-unjuno-agent-interface-github-mcp-6\\work\\repo5066\\source,target=/src,readonly",
+    "--mount",
+    "type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\goal-unjuno-agent-interface-github-mcp-6\\outputs\\needle-5066-formal-20260928,target=/out",
+    "-e",
+    "FROZEN_IMAGE_ID=sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "python",
+    "/src/research/system1/needle_cross_process_publication_5045_v2_20260928/runner.py"
+  ],
+  "runner_exit": 0,
+  "source_sha256_checks": {
+    "PLAN.md": {
+      "actual": "dca05294dc21b3f99f6951111e252c0c145099849aa128abd1375186acc959ed",
+      "expected": "dca05294dc21b3f99f6951111e252c0c145099849aa128abd1375186acc959ed",
+      "matches": true
+    },
+    "audit.py": {
+      "actual": "1cdaefa4769e4f3f4c2864f437bbd20915100dc7e6b97c78f8c3350fb93d3b37",
+      "expected": "1cdaefa4769e4f3f4c2864f437bbd20915100dc7e6b97c78f8c3350fb93d3b37",
+      "matches": true
+    },
+    "formal.py": {
+      "actual": "fd1324fe9c2e9550cdc12cea9d9e3b9b58e43aad1d5233cd4abfbc0e0bf2ddaa",
+      "expected": "fd1324fe9c2e9550cdc12cea9d9e3b9b58e43aad1d5233cd4abfbc0e0bf2ddaa",
+      "matches": true
+    },
+    "protocol.py": {
+      "actual": "07abf2da45b50bb025ab6055fa92f9e630461cec46197f2a413f8bc89609ac5b",
+      "expected": "07abf2da45b50bb025ab6055fa92f9e630461cec46197f2a413f8bc89609ac5b",
+      "matches": true
+    },
+    "runner.py": {
+      "actual": "721b16f2f284ef91ac6aaab1ffbe23be4008fdcc291a234af65c090a64cc4edf",
+      "expected": "721b16f2f284ef91ac6aaab1ffbe23be4008fdcc291a234af65c090a64cc4edf",
+      "matches": true
+    },
+    "test_audit.py": {
+      "actual": "2548958d21cacec59a2e28fbda8856c50a76e763c4de63409ad9d903b07d34ce",
+      "expected": "2548958d21cacec59a2e28fbda8856c50a76e763c4de63409ad9d903b07d34ce",
+      "matches": true
+    },
+    "test_formal.py": {
+      "actual": "968474ae105294b0595150570e31d2c1b8a860436a69380551acfdac35277ed5",
+      "expected": "968474ae105294b0595150570e31d2c1b8a860436a69380551acfdac35277ed5",
+      "matches": true
+    },
+    "test_protocol.py": {
+      "actual": "ac51b23f0362bc2345cad87713b40d95179095f31c81a4c9ef4ec4939f98f858",
+      "expected": "ac51b23f0362bc2345cad87713b40d95179095f31c81a4c9ef4ec4939f98f858",
+      "matches": true
+    }
+  },
+  "started_unix_ns": 1790543410957120800
+}
+
