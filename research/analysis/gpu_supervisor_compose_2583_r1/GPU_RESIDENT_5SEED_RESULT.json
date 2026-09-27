@@ -1,0 +1,21 @@
+{
+  "status": "PASS_GPU_RESIDENT_5SEED",
+  "scope": "GPU-resident supervisor input contrast; five local seeds",
+  "image": "pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime",
+  "device": "NVIDIA GeForce RTX 3080 Laptop GPU",
+  "torch": "2.5.1+cu121",
+  "cuda_runtime": "12.1",
+  "seeds": [
+    {"seed": 2508, "label_agreement": true, "resident_ms": 0.048759540004539303, "transfer_ms": 0.13594937001471408},
+    {"seed": 2509, "label_agreement": true, "resident_ms": 0.057084469954133965, "transfer_ms": 0.1306709500204306},
+    {"seed": 2510, "label_agreement": true, "resident_ms": 0.08306058996822685, "transfer_ms": 0.1511102599761216},
+    {"seed": 2511, "label_agreement": true, "resident_ms": 0.0768644800700713, "transfer_ms": 0.12801113996829372},
+    {"seed": 2512, "label_agreement": true, "resident_ms": 0.07899251999333501, "transfer_ms": 0.11279461003141478}
+  ],
+  "resident_median_ms": 0.0768644800700713,
+  "transfer_median_ms": 0.1306709500204306,
+  "authority_grants": 0,
+  "input_grants": 0,
+  "task_success_claims": 0,
+  "caveat": "Local five-seed construction contrast; no GUI, real application, or end-to-end task claim."
+}
