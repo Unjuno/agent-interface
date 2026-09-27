@@ -8,6 +8,7 @@ from pathlib import Path
 
 OPTIONS = {
     "CONTINUE": "All required current evidence is verified and the permitted step may proceed.",
+    "WATCH": "The state is safe to observe, but a required condition is not yet met for proceeding.",
     "REPAIR": "A required field or prerequisite is missing or invalid and must be corrected.",
     "YIELD": "Evidence is insufficient, conflicting, stale, or cannot safely support a decision.",
     "REFUND": "The user explicitly requests a refund or money back.",
@@ -23,19 +24,39 @@ OPTIONS = {
     "MORNING": "Morning time.", "BASIC": "Basic plan.",
     "NORTH": "North pickup location.", "SMALL": "Small package.",
 }
-CHOICE = {k: OPTIONS[k] for k in OPTIONS}
+INTENT_LABELS = {k: OPTIONS[k] for k in ("REFUND", "BILLING", "REPLACE", "DAMAGE", "LOGIN", "SECURITY", "DELIVERY", "CARRIER", "TUESDAY", "MONTHLY", "BLUE", "EMAIL", "MORNING", "BASIC", "NORTH", "SMALL")}
+WORKFLOW_LABELS = {k: OPTIONS[k] for k in ("CONTINUE", "WATCH", "REPAIR", "YIELD")}
 
 
 def request_for(model, row):
-    labels = list(CHOICE)
+    criteria = INTENT_LABELS if row["stratum"] in ("same-state-different-intent", "close-choices") else WORKFLOW_LABELS
+    intent_prompt = row["intent"] + ". Choose the best matching intent; choose YIELD if the state does not support any choice."
+    questions = {"decision": {
+        "type": "choice",
+        "instructions": intent_prompt if criteria is INTENT_LABELS else row["intent"] + ". Choose only the best supported workflow decision.",
+        "criteria": criteria,
+    }}
+    if row["policy"] == "must-yield":
+        questions["evidence_safe"] = {
+            "type": "choice",
+            "instructions": "Does the provided evidence support a safe, current, unambiguous decision?",
+            "criteria": {"SAFE": "Evidence is current, authoritative, sufficient, and non-conflicting.", "UNSAFE": "Evidence is missing, stale, conflicting, or unverified."},
+        }
+    if row["stratum"] == "repeated-batched-predicates":
+        questions.update({
+            "has_id": {"type": "noul", "instructions": "Is the id present?"},
+            "has_consent": {"type": "noul", "instructions": "Is consent present?"},
+            "has_amount": {"type": "noul", "instructions": "Is the amount present?"},
+            "has_address": {"type": "noul", "instructions": "Is the address verified?"},
+            "status_current": {"type": "noul", "instructions": "Is the status current and non-conflicting?"},
+            "source_verified": {"type": "noul", "instructions": "Is the source verified?"},
+            "authorized": {"type": "noul", "instructions": "Is authorization present?"},
+            "timestamp_current": {"type": "noul", "instructions": "Is the timestamp current?"},
+        })
     return {
         "model": model,
         "state": row["state"],
-        "questions": {"decision": {
-            "type": "choice",
-            "instructions": row["intent"] + ". Select the best label; if evidence is insufficient, conflicting, or stale, choose YIELD.",
-            "criteria": {label: CHOICE[label] for label in labels},
-        }},
+        "questions": questions,
         "keep_alive": "0",
     }
 
@@ -63,12 +84,18 @@ def main():
                 error = repr(exc)
             elapsed_ms = (time.perf_counter_ns() - start) / 1e6
             answer = None
+            evidence_safe = None
+            predicate_answers = {}
             if response:
                 entry = response.get("answers", {}).get("decision", {})
                 answer = entry.get("choice") or entry.get("value")
+                safe = response.get("answers", {}).get("evidence_safe", {})
+                evidence_safe = safe.get("choice")
+                predicate_answers = {k: v.get("noul") for k, v in response.get("answers", {}).items() if k not in ("decision", "evidence_safe")}
             record = {"id": row["id"], "stratum": row["stratum"], "model": args.model,
                       "request": payload, "status": status, "response": response,
-                      "answer": answer, "elapsed_ms": elapsed_ms, "error": error}
+                      "answer": answer, "evidence_safe": evidence_safe, "predicate_answers": predicate_answers,
+                      "elapsed_ms": elapsed_ms, "error": error}
             out.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
             out.flush()
             print(json.dumps({"id": row["id"], "answer": answer, "status": status, "elapsed_ms": round(elapsed_ms, 2)}), flush=True)
