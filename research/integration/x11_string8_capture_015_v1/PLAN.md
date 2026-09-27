@@ -25,4 +25,3 @@ HOLD_NO_LIVE_STRING8_DISCRIMINATOR_PY015 if the complete audited matrix contains
 ## C / U
 
 This is a representation-boundary experiment on one locally built Linux/amd64 image and synthetic Xvfb drawables. It does not establish pixel-channel/endian interpretation beyond the independent fixture oracle, application semantics/freshness/effects, local-model quality or utility, latency/tokens, prevalence, other Python-Xlib versions, cross-platform behavior, or production reliability. No outcome here alone authorizes a runtime patch.
-
