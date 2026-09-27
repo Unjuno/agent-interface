@@ -3,7 +3,7 @@
 Date: 2026-09-27 (Asia/Tokyo)
 Allocation: `xdamage-temporal-boundary-3935-v2-20260927-01`
 Frozen source branch: `research/xdamage-temporal-formal-v2-20260927`
-Frozen head before launch: `764c84f94dd3dc86f6cb` (full commit `764c84f94dc84f498c1695572d2aa836f5f97d39`)
+Frozen head before launch: `764c84f94` (full commit `764c84f94829f8e9e84639a24a2f524e59da8bda`)
 
 ## Outcome
 
@@ -25,3 +25,4 @@ Frozen head before launch: `764c84f94dd3dc86f6cb` (full commit `764c84f94dc84f49
 The failure occurred at the host shell/working-directory handoff before evidence of container or runner startup. It provides no evidence for or against XDamage behavior. The formal allocation stays unconsumed at the runner level, but the preregistered no-retry rule is honored: no alternate shell or direct Docker launch was attempted. This stop is retained for review and must not be cited as PASS, FAIL, or HOLD on the scientific hypothesis.
 
 GPU was not used. The tested XDamage server/notification mechanism has no GPU-dependent treatment; the requested GPU preference was considered and documented in Issue #4893.
+
