@@ -72,32 +72,15 @@ class IntervalAuditTests(unittest.TestCase):
     def test_writer_envelope_rejects_invalid_and_outside_brackets(self):
         publications = [{"start_ns": 12, "end_ns": 18}]
         self.assertTrue(validate_writer_envelope(10, 20, publications))
-        invalid = (
-            (None, 20, publications),
-            (10, None, publications),
-            (True, 20, publications),
-            (20, 10, publications),
-            (10, 20, [{"start_ns": 9, "end_ns": 18}]),
-            (10, 20, [{"start_ns": 12, "end_ns": 21}]),
-            (10, 20, [{"start_ns": True, "end_ns": 18}]),
-            (10, 20, [{"start_ns": 12, "end_ns": 12}]),
-        )
-        for start, end, events in invalid:
-            with self.subTest(start=start, end=end, events=events):
-                self.assertFalse(validate_writer_envelope(start, end, events))
+        invalid = ((None,20,publications),(10,None,publications),(True,20,publications),(20,10,publications),(10,20,[{"start_ns":9,"end_ns":18}]),(10,20,[{"start_ns":12,"end_ns":21}]),(10,20,[{"start_ns":True,"end_ns":18}]),(10,20,[{"start_ns":12,"end_ns":12}]))
+        for start,end,events in invalid:
+            with self.subTest(start=start,end=end,events=events): self.assertFalse(validate_writer_envelope(start,end,events))
 
     def test_reader_exit_must_follow_every_recorded_read(self):
-        rows = [
-            {"read_end_ns": 25},
-            {"read_end_ns": 30},
-        ]
-        self.assertTrue(validate_reader_exit(30, rows))
-        self.assertTrue(validate_reader_exit(31, rows))
-        self.assertFalse(validate_reader_exit(29, rows))
-        self.assertFalse(validate_reader_exit(True, rows))
-        self.assertFalse(validate_reader_exit(31, [{"read_end_ns": True}]))
-        self.assertFalse(validate_reader_exit(31, []))
-
+        rows=[{"read_end_ns":25},{"read_end_ns":30}]
+        self.assertTrue(validate_reader_exit(30,rows)); self.assertTrue(validate_reader_exit(31,rows))
+        self.assertFalse(validate_reader_exit(29,rows)); self.assertFalse(validate_reader_exit(True,rows))
+        self.assertFalse(validate_reader_exit(31,[{"read_end_ns":True}])); self.assertFalse(validate_reader_exit(31,[]))
     def test_reader_attempts_bind_index_pid_and_follow_readiness(self):
         rows = [
             {"kind": "read", "reader_index": 0, "read_index": 0, "pid": 101,
