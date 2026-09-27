@@ -1,0 +1,31 @@
+{
+  "schema": "visual-encoding-570-local-r4-index-ci-repair-v1",
+  "pull_request": 4737,
+  "failed_head": "3f02e80fcc722b6fa441604e3b9ac72fb215ef38",
+  "workflow": "Analysis Index",
+  "run_id": 36294696663,
+  "job": "analysis-index",
+  "failed_step": "Check retained analytical results are indexed",
+  "classification": "repository_index_omission_not_CI_infrastructure_failure",
+  "initial_error": "Generated analytical result index is stale. Missing retained result/failure directories: visual_encoding_570_gpu_local_successor_v1",
+  "local_docker_reproduction": {
+    "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "platform": "linux/amd64",
+    "network": "none",
+    "source": "exact check_index.py from current main and exact generated index block from the PR branch; fixture retained the existing 164 indexed directory names and added the new REPORT directory",
+    "initial_check_exit": 1,
+    "write_check_exit": 0,
+    "write_output": "analysis index refreshed: 165 retained result/failure directories",
+    "post_write_check_exit": 0,
+    "post_write_output": "analysis index OK: 165 retained result/failure directories"
+  },
+  "repair": {
+    "path": "research/analysis/README.md",
+    "change": "exact check_index.py --write generated block with only the new retained directory added",
+    "branch_commit": "e9536e346939c32b1aa15907fa533d9f5f6d224b",
+    "readback_exact": true
+  },
+  "model_calls_or_formal_evidence_changed": false,
+  "source_freeze_changed": false
+}
+

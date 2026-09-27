@@ -1,0 +1,28 @@
+{
+  "schema": "visual-encoding-570-local-r4-preflight-v1",
+  "allocation": "visual-ruler-qwen25vl-570-r4-local-20260927-01",
+  "model_requests_at_start": 0,
+  "attempts": [
+    {
+      "id": "helper-audit-test-01",
+      "stage": "read-only pinned helper syntax/test check",
+      "command_template": "docker run --rm --platform linux/amd64 --network none --mount <FROZEN_SOURCE>:/src:ro --entrypoint python <PINNED_HELPER_IMAGE> -c '<py_compile all files; run unittest>'",
+      "exit_code": 1,
+      "stderr": "OSError: [Errno 30] Read-only file system: '/src/__pycache__/audit.cpython-311.pyc…'",
+      "cause": "py_compile attempted to write bytecode into the intentionally read-only source mount before unit tests began",
+      "formal_or_model_calls": 0,
+      "disposition": "PREFLIGHT_COMMAND_ERROR_NOT_SCIENTIFIC_RESULT"
+    },
+    {
+      "id": "helper-audit-test-02",
+      "stage": "read-only pinned helper syntax/test check, corrected to in-memory compile and no bytecode writes",
+      "command_template": "docker run --rm --platform linux/amd64 --network none -e PYTHONDONTWRITEBYTECODE=1 --mount <FROZEN_SOURCE>:/src:ro --entrypoint python <PINNED_HELPER_IMAGE> -c '<compile(source); unittest discover>'",
+      "exit_code": 0,
+      "tests": 4,
+      "result": "PASS"
+    }
+  ],
+  "source_unchanged": true,
+  "model_requests_still": 0
+}
+
