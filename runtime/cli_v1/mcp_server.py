@@ -41,6 +41,8 @@ PublicProgram = Annotated[dict, Field(description=(
     'End with exactly one {"op":"release_all"}. Expanded ops must fit 128. '
     'gap_ms is optional integer 0..1000; key_chord repeat is optional integer 1..126. '
     'Observation captures once and does not pause for a model decision. '
+    'Before replacing field text, inspect the selection and resulting value before committing. '
+    'Emitted clicks or CTRL+a are not acknowledgements that a widget has processed them. '
     'On X11, window_client uses target-client coordinates and may omit overlapping dialogs; '
     'screen_physical_px uses display coordinates and includes other visible windows in the explicit region. '
     'wait_update with timeout_ms is a fixed delay on X11, not a redraw acknowledgement.'
@@ -56,6 +58,16 @@ def content(result, *, error=False, include_image=True):
     if image is not None and include_image:
         blocks.append(ImageContent(**image))
     return CallToolResult(content=blocks, isError=error)
+
+
+def present_management_report(report, call_root):
+    row = dict(report)
+    if 'observation_report' in report:
+        shown = present_result(report['observation_report'], call_root)
+        for key in ('image', 'image_status', 'image_error'):
+            if key in shown:
+                row[key] = shown[key]
+    return row
 
 
 def create_server(targets, output_directory, *, display_name=None, session_mode="one-shot"):
@@ -139,7 +151,10 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     report = close_owner()
                 elif operation in ('inspect_target', 'review_target'):
                     try:
-                        report = getattr(owner, operation)(**kwargs)
+                        review_options = dict(kwargs)
+                        if operation == 'inspect_target':
+                            review_options['capture_directory'] = str(call_root / 'images')
+                        report = getattr(owner, operation)(**review_options)
                     except Exception as error:
                         report = {'status': 'needs_review', 'error': repr(error),
                                   'input_dispatched': False, 'authority_granted': False}
@@ -177,7 +192,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 persistence_error = repr(error)
                 with calls_lock:
                     calls[call_id]['persistence_failure'] = 'report'
-            result = (dict(report) if operation in ('close', 'inspect_target', 'review_target') else
+            result = (present_management_report(report, call_root) if operation in ('close', 'inspect_target', 'review_target') else
                       present_result(report, call_root, compact=compact, report_refs=report_refs))
             if owner is not None:
                 result['session'] = owner.snapshot()
@@ -218,13 +233,17 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
 
     if owner is not None:
         @server.tool()
-        async def interface_inspect_target(target: StrictStr) -> CallToolResult:
+        async def interface_inspect_target(target: StrictStr,
+                                           screen_region: list[StrictInt] | None = None) -> CallToolResult:
             """Read the focused managed client in this target's configured transient family.
 
             Does not select, focus or send input. Returns a one-use 30s review ID.
-            WM metadata is not authenticated identity or atomic with screenshots.
+            Optional screen_region=[x,y,width,height] returns a fresh screen image
+            in this call. Metadata is rechecked after capture; disagreement gives
+            no review ID. This is not an atomic snapshot or redraw acknowledgement.
+            WM metadata is not authenticated identity.
             """
-            return await submit('inspect_target', {'target': target}, False, False)
+            return await submit('inspect_target', {'target': target, 'screen_region': screen_region}, False, False)
 
         @server.tool()
         async def interface_review_target(target: StrictStr, window_id: StrictInt,
@@ -354,7 +373,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             return content({'status': 'receipt_unavailable', 'call': record,
                 'error': repr(error), 'operation_invoked': False,
                 'replay_allowed': False}, error=True)
-        result = (dict(report) if record['operation'] in ('close', 'inspect_target', 'review_target') else
+        result = (await asyncio.to_thread(present_management_report, report, call_root) if record['operation'] in ('close', 'inspect_target', 'review_target') else
                   await asyncio.to_thread(present_result, report, call_root, compact=compact, report_refs=report_refs))
         result.update(call_id=call_id, call_directory=str(call_root), retained_call=record,
                       operation_invoked=False)
