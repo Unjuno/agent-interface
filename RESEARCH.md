@@ -97,6 +97,10 @@ outputs, STOP record, and protocol are in
 A distinct successor allocation needs durable result collection and a corrected
 Successor v2 construction passed its seed-2002 smoke; its single frozen seed-2003 formal allocation then passed a separate raw-only audit with zero errors and zero leaks. The evaluator-only `/evidence` bind retained the report after container exit, which records the `w` key-down/up and natural `deadline_miss`; the controller had no mounts or seed/source/report paths, and the 1,923,179-byte XWD matched its capture digest. Disposition: `PASS_EVALUATOR_PROCESS_AND_SOURCE_ISOLATION_SCOPED`, limited to this inert-input single-seed isolation canary; this does not establish B0/C1 performance or hostile-X11 security, and does not retry or replace v1 formal/001 STOP.
 
+### Issue #4780 — Compact local Qwen action-call LoRA successor to #4205
+
+A single local Qwen2.5-0.5B-Instruct rank-8 LoRA fit on 32 synthetic examples completed in a network-disabled Docker container on the laptop RTX 3080. On 64 disjoint held-out settings cases, frozen base exact was 1/64 and adapted exact was 9/64; the candidate produced 15 unsafe negative-case outputs, with YIELD exact 0/10 and NO_ACTION exact 0/6. The independently computed disposition is `FAIL_YIELD_OR_SCOPE_REGRESSION`; training loss fell but did not generalize safely. Fit took 3.708 s (peak CUDA allocation 2.63 GiB); candidate p95 was 1.445 s. Untouched-input audit integrity passed, while only 4/5 shallow mutation controls rejected; this harness defect is disclosed. The sole formal seed is consumed, with no retries or adapter promotion. Exact dataset, paired raw predictions, audit, hashes, H/T/D/C/U and limitations are retained in [the successor evidence](research/experiments/qwen05b_action_sft_4205_v1/README.md) and [Issue #4780](https://github.com/Unjuno/agent-interface/issues/4780). This does not change prior #4205/#4204 evidence or establish live GUI/action use.
+
 ### Issue #4623 — GPU shared-prefix readout construction stop
 
 Successor [#4623](https://github.com/Unjuno/agent-interface/issues/4623)
