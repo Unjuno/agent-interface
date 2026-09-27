@@ -127,6 +127,24 @@ def audit(root: Path):
             or raw.get("schema") != "needle-role-rehearsal-raw-v1"
             or len(raw.get("runs", [])) != len(EXPECTED_SEEDS)):
         errors.append("raw_identity_or_denominator")
+    if [row.get("seed") for row in raw.get("runs", [])] != EXPECTED_SEEDS:
+        errors.append("run_seed_order_or_uniqueness")
+
+    argv = invocation.get("command_argv", [])
+    required_argv = {
+        "docker", "run", "--rm", "--pull=never", "--network=none", "--read-only",
+        "--cpus=1", "--memory=2g", "--pids-limit=64", "--security-opt=no-new-privileges",
+        "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+        "runner.py", "NEEDLE_SEEDS=735211,735311,735411",
+    }
+    mounts = [argv[index + 1] for index, item in enumerate(argv[:-1]) if item == "--mount"]
+    destinations = [mount.split(",dst=", 1)[1] if ",dst=" in mount else "" for mount in mounts]
+    if (not required_argv.issubset(set(argv))
+            or any(item == "--gpus" or item.startswith("--gpus=") for item in argv)
+            or invocation.get("image_id") != "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e"
+            or invocation.get("inspected_image") != "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e linux/amd64"
+            or len(mounts) != 2 or destinations != ["/src,readonly", "/out"]):
+        errors.append("formal_invocation_image_argv_or_mounts")
 
     expected_registered_errors = {"freeze_hash"} | {
         f"{seed}:duplicate_control_not_equivalent" for seed in EXPECTED_SEEDS
@@ -230,6 +248,9 @@ def audit(root: Path):
             "formal_exit_code": invocation.get("exit_code"),
             "formal_orchestrations": invocation.get("formal_orchestrations"),
             "retries": invocation.get("retries"),
+            "inspected_image": invocation.get("inspected_image"),
+            "formal_command_has_gpu_request": any(item == "--gpus" or item.startswith("--gpus=") for item in argv),
+            "mount_destinations": destinations,
             "checkpoint_rows": total_rows,
         },
         "registered_audit_errors": registered,
