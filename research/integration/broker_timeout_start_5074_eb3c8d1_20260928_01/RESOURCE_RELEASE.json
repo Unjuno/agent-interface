@@ -1,0 +1,17 @@
+{
+  "schema": "shared-docker-slot-transfer-v1",
+  "issue": 5074,
+  "allocation": "broker-fake-child-timeout-start-20260928-01",
+  "released": true,
+  "release_to_issue": 5074,
+  "coordinator_issue": 5085,
+  "coordinator_decision": "#5074 is next in the shared Docker CPU queue; the #5074 owner selected retain-through-formal-and-audit; queued lanes wait for explicit release",
+  "observed_main": "eb3c8d108b8ddd090e5e81a22c7d5db9c367552c",
+  "docker_context": "desktop-linux",
+  "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+  "platform": "linux/amd64",
+  "inventory_timestamp_utc": "2026-09-27T23:09:28Z",
+  "observed_running_containers": [],
+  "lease_scope": "one #5074 formal runner invocation and one distinct independent auditor invocation; release to queue after both terminate",
+  "source": "https://github.com/Unjuno/agent-interface/issues/5085"
+}
