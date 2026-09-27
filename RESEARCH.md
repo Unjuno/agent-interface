@@ -99,8 +99,7 @@ score-tolerance STOPs in #4623 and #4639. On the RTX 3080, all 1,024 eight-code
 winners matched; an independent GPU reconstruction rebuilt all 1,024 pairs
 with zero errors and zero mismatches. This scoped categorical-equivalence PASS
 does not establish semantic correctness, GUI task quality, or cache speedup and
-does not modify either predecessor result. Source-hash metadata normalization
-is disclosed in the [formal report and freeze audit](research/system1/typed_readout_decision_equivalence_1014_v3/formal/REPORT.md).
+does not modify either predecessor result. Corpus LF/CRLF byte provenance and source-hash metadata normalization are disclosed in the [formal report and freeze audit](research/system1/typed_readout_decision_equivalence_1014_v3/formal/REPORT.md).
 
 ### Issue #3849 — independent audit of retained #3442 intent-alignment result
 
