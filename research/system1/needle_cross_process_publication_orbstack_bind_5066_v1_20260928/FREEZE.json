@@ -5,7 +5,7 @@
   "predecessors": [5045, 5066],
   "branch": "research/needle-publication-orbstack-bind-5066-20260928",
   "path": "research/system1/needle_cross_process_publication_orbstack_bind_5066_v1_20260928/",
-  "base_main_sha": "a081e5d36e8298129f83bf22214d18dfa9e7717a",
+  "base_main_sha": "31e904c2529ed26d79897fa8e4b346eba4e60927",
   "H": "On the pinned macOS-host OrbStack bind mount, seven monotonic package transitions (3788 to 3789..3795) each use one validated same-directory os.replace. All four independent atomic readers per phase open ACTIVE before replacement, retain/read the old descriptor only after replace returns, then read exact digest-valid next-generation bytes through a fresh path open. Actual invalid-digest and stale-base proposal attempts yield without changing ACTIVE. Matched diagnostic in-place writes expose incomplete bytes.",
   "T": {
     "host": "macOS; Docker context orbstack",
