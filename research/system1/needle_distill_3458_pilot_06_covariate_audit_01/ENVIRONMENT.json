@@ -1,0 +1,29 @@
+{
+  "allocation": "needle-3869-full-shift-covariate-audit-01",
+  "host": {
+    "os": "Windows 11 Home",
+    "cpu": "12th Gen Intel(R) Core(TM) i7-12700H",
+    "physical_cores": 14,
+    "logical_processors": 20,
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "gpu_vram_mib": 16384,
+    "gpu_used": false
+  },
+  "docker": {
+    "engine": "29.8.0",
+    "context": "desktop-linux",
+    "platform": "linux/amd64",
+    "image": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "python": "3.12.14",
+    "torch": "2.5.1+cpu",
+    "network": "none",
+    "rootfs": "read-only",
+    "source_and_input_mounts": "read-only",
+    "audit_output_mount": "dedicated writable output only",
+    "tmpfs": "64m",
+    "pids_limit": 64,
+    "memory_limit": "4g",
+    "cpu_limit": 2
+  }
+}

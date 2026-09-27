@@ -31,7 +31,10 @@ class NativeDecision(BaseModel):
                      'For keyboard, choose a visible feature in the intended focused window, not a blank region. '
                      'This point guards context; it does not click or select the text destination.'))
     expected_title: StrictStr | None = Field(default=None,
-        description='Expected application title for feedback; required for an action, not a task success assertion.')
+        description=('Exact complete application window title for feedback (case-sensitive equality, not a substring); '
+                     'include the application suffix, e.g. "shape.svg - Inkscape". '
+                     'An unmatched title can wait until the feedback timeout and remain pending. '
+                     'Required for an action; a title match is not a task success assertion.'))
     interaction: Literal['click','keyboard','observe'] = Field(default='click',
         description='click then tail, keyboard-only tail, or observe for one fresh capture without input; observe consumes a stage.')
     tail: list[dict] = Field(default_factory=list, description=(

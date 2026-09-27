@@ -993,6 +993,8 @@ A candidate is promoted only when:
 
 Negative results are retained because they constrain the design space.
 
+- [Issue #3066 v4 preformal HOLD](research/integration/safety_graph_live_x11_3066_v4/PREFORMAL_HOLD.md) — bare Xvfb construction reached single-shot recovery; Openbox stopped before an independently observed press. No formal invocation or runtime claim; v3 failure remains unchanged.
+
 - fixed sleeps as a correctness mechanism — rejected;
 - method-wide invalidation for every route failure — rejected as default;
 - blind re-anchor-and-continue — unstable in fresh runs;
@@ -1545,3 +1547,7 @@ Three network-isolated local Docker seeds resumed all 16 rank-2 LoRA/AdamW feedb
 One frozen OrbStack linux/arm64 allocation completed 28/28 rows across screenshot, proxy-image, structured-proxy, and hybrid arms. Each arm produced one exact synthetic 0→1 effect and refused/yielded on its six negative controls; XRes PID plus stable `/proc` start ticks bound the selected XID to its fixture process. Representation-derived coordinates and hashes reconciled, two-target ambiguity was established before dispatch with zero input/effect, and all release/cleanup checks passed. A separate read-only primary auditor returned `PASS_INDEPENDENT_AUDIT` with seven of seven corruption probes detected; a post-formal cross-binding audit recomputed state/representation/action correspondence for all 28 rows and passed. This closes only the deterministic GTK/Xvfb allocation: no arm superiority, model/human benefit, production authority, general GUI safety, or integrated desktop claim. See [the preregistration, raw rows, freeze, and audits](research/experiments/issue_3631_proxy_effect_unit_v4/README.md).
 
 </details>
+
+## Issue #3311 — historical source provenance successor audit (2026-09-27)
+
+The clean-CI `git show` availability blocker now has an additive, snapshot-backed audit package at [research/live_control/issue_3311_transport_source_provenance_v1/](research/live_control/issue_3311_transport_source_provenance_v1/). Three historical broker/runner/test source sets (nine files) were byte-verified against the original run manifests. One network-disabled, read-only container invocation re-audited all three retained runs: 18/18 checks passed for each. See its [H/T/D/C/U plan](research/live_control/issue_3311_transport_source_provenance_v1/PLAN.md), [frozen preregistration](research/live_control/issue_3311_transport_source_provenance_v1/FREEZE.json), and [formal result](research/live_control/issue_3311_transport_source_provenance_v1/RESULT.json). This closes the historical-source provenance sub-gate only. The integrated live cold/warm/invalidation/repair comparison and actual usage accounting required by Issue #3311 remain pending. A post-formal review amendment also makes the runner exit nonzero on any failed report; its negative controls pass, and the formal run was not repeated. Original v1 evidence and audit reports were left unchanged.

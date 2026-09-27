@@ -1,0 +1,5 @@
+[mcp_servers.agent-interface-integration]
+command = "wsl.exe"
+args = ["-d", "Ubuntu", "--cd", "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review", "--exec", "env", "PYTHONDONTWRITEBYTECODE=1", "PYTHONPATH=.:research/live_control", "/tmp/agent-interface-mcp-venv/bin/python", "research/live_control/native_mcp_v1.py", "--allocation-directory", "results-local/native-host-integration-02", "--app", "inkscape", "--seed", "991284", "--max-stages", "8", "--text-gap-ms", "2", "--harness-python", "/usr/bin/python3"]
+startup_timeout_sec = 30
+tool_timeout_sec = 45

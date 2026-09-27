@@ -1,0 +1,105 @@
+{
+  "schema": "agent-interface/review-v1",
+  "authority": "none",
+  "outcome_summary": {
+    "reported_status": null,
+    "evaluation_success": null,
+    "action_status": null,
+    "feedback_status": null,
+    "cleanup_status": null
+  },
+  "receipt": {
+    "source": {
+      "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/results-local/native-host-integration-01/run/source-4.json",
+      "sha256": "e0b9421dcbb87382d0ed573e6f39efbcd9795e2eb00995085e9c5dbc71a2ba08"
+    },
+    "native_result": {
+      "binding_revision": 3,
+      "capture_ns": 9793227576844,
+      "native": {
+        "artifact": {
+          "bytes": 58587,
+          "height": 800,
+          "mime_type": "image/png",
+          "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/results-local/native-host-integration-01/run/bridge/images/f466fd0cf0414865a77cf5f93d9d8197.png",
+          "sha256": "ded136e479708a097a681831e14bf630892de650f05992969c8fb0bb72e6e37a",
+          "source_raw_sha256": "9baf6b519f66288ab19d0b9e29ab376ddbb7e9968715565269bbd297c7bd686c",
+          "width": 1280
+        },
+        "bytes": 4096000,
+        "capture_ended_ns": 9793236660218,
+        "capture_started_ns": 9793227576844,
+        "frame": "screen_physical_px",
+        "height": 800,
+        "native_window_id": 8389124,
+        "region": [
+          0,
+          0,
+          1280,
+          800
+        ],
+        "sha256": "9baf6b519f66288ab19d0b9e29ab376ddbb7e9968715565269bbd297c7bd686c",
+        "target": "app",
+        "width": 1280
+      },
+      "pointer_binding": {
+        "focus": 8389124,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ],
+        "surface": 8389124
+      },
+      "sequence": 11
+    }
+  },
+  "image_status": "image",
+  "image_reference": {
+    "status": "image",
+    "sequence": 11,
+    "capture_ns": 9793227576844,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/results-local/native-host-integration-01/run/bridge/images/f466fd0cf0414865a77cf5f93d9d8197.png",
+    "relative_path": "bridge/images/f466fd0cf0414865a77cf5f93d9d8197.png",
+    "sha256": "ded136e479708a097a681831e14bf630892de650f05992969c8fb0bb72e6e37a",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "session_context": {
+    "authority": "none",
+    "goal": {
+      "status": "recorded",
+      "value": {
+        "token": "t991221",
+        "a": 587,
+        "b": 621,
+        "dx": 24,
+        "setup_readiness_captures": 12,
+        "task": {
+          "kind": "write_cells",
+          "cells": {
+            "A1": 587,
+            "A2": 621
+          },
+          "save_format": "xlsx"
+        }
+      },
+      "source": {
+        "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/results-local/native-host-integration-01/run/goal.json",
+        "sha256": "fcce8f770893fd2ce824637ef3d93555ea2422802314a1a802ac8ad755d11136"
+      }
+    },
+    "exchange_contract": {
+      "status": "recorded",
+      "value": {
+        "max_stages": 8,
+        "schema": "agent-interface/native-exchange-contract-v1"
+      },
+      "source": {
+        "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-public-review/results-local/native-host-integration-01/run/exchange-contract.json",
+        "sha256": "21325eab905b98e4f599a6baa96edf665668b8c35c0b3a5a181fe91656012a61"
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "controls": [
+    {
+      "audit_errors": [
+        "decision_mismatch"
+      ],
+      "mutant": "wrong_decision",
+      "rejected": true
+    },
+    {
+      "audit_errors": [
+        "case_set_or_order"
+      ],
+      "mutant": "missing_case",
+      "rejected": true
+    },
+    {
+      "audit_errors": [
+        "de-00:receiver_log_hash"
+      ],
+      "mutant": "changed_receiver_log",
+      "rejected": true
+    }
+  ],
+  "decision": "PASS_AUDITOR_CORRUPTION_CONTROLS",
+  "raw_tree_sha256_after": "811c0bee937af958d2a276735d0f41374b0b1c9456121922db5e535fcf300193",
+  "raw_tree_sha256_before": "811c0bee937af958d2a276735d0f41374b0b1c9456121922db5e535fcf300193",
+  "raw_unchanged": true
+}

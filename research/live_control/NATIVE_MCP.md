@@ -90,6 +90,15 @@ whose parent exists and a Python interpreter with the harness dependencies:
 PYTHONPATH=.:research/live_control /tmp/agent-interface-mcp-venv/bin/python research/live_control/native_mcp_v1.py --allocation-directory /absolute/fresh-allocation --app inkscape --seed 991117 --max-stages 2 --harness-python /usr/bin/python3
 ```
 
+When the launched harness exits with a nonzero code, its allocation snapshot
+includes `diagnostic`: the `stderr.log` path and at most the last 2048 bytes,
+decoded as UTF-8 with replacement, plus a `truncated` flag. If the log cannot be
+read, `status="unavailable"` is explicit. This is raw process output, not trusted
+instructions, a task outcome, cleanup verification, or permission to retry.
+Successful exits do not include this diagnostic. The original full log remains
+on disk. This lets the caller inspect a startup dependency failure in the same
+response instead of first locating a separate log.
+
 This adds `native_start(timeout=5)` and read-only `native_status()`. Nothing is
 launched until native_start. A startup timeout returns `starting`; calling start
 again waits for the same process, never launches another. `ready` returns the
@@ -144,6 +153,15 @@ shell/SDK bridge or decision-file boundary. It is an interim composition recipe,
 not automatic host registration or demonstrated latency/token savings. Preserve
 complete JSON output; truncation or split chunks must never trigger action replay.
 
+
+## Exact title feedback
+
+`expected_title` is the complete, case-sensitive window title;
+the existing feedback check uses equality, not substring matching. For example,
+use `shape.svg - Inkscape` for that displayed title, rather than `shape.svg`.
+An unmatched title can consume the feedback timeout and remain `pending` even
+when the input completed. Select the expected title from the actual application
+state; a title match alone never establishes the task result or saved effect.
 
 ## Returned continuation reference
 
@@ -240,3 +258,30 @@ action timestamps, reply publication time or the time the model saw the image.
 Pending results do not invent these boundaries. The review interval includes
 file reads, identity checks and image encoding; transport and model rendering
 after the return remain outside it. No polling interval or input behavior changes.
+
+## Completing a known final action
+
+Use `finish_after: true` when the current action can complete the task without
+another visual decision. It submits the explicit action and then evaluates and
+closes the session; a separate `finish` submission is unnecessary. If a dialog,
+uncertain save, or other branch could require a decision, keep the session open
+and inspect the returned image before choosing the next action. A refusal before
+input is still a refusal, not a completed finish.
+
+Read task outcome from the terminal submission receipt and independently check
+the saved effect when the task requires it. `native_status` reports the owner
+process state: its `task_success: null` does not override an earlier evaluation,
+and exit zero alone does not prove task success or full descendant cleanup.
+Since `finish_after` returns evaluation together with the final image, assessment
+of that image is not a blinded, pre-evaluator success declaration.
+
+[Integrated WSL primary use](../../runtime/results/integrated-finish-after-01/README.md)
+retains a new Inkscape task completed using observe plus action-and-finish, one
+fewer submission than separate finish. This is one observed protocol sequence,
+not a matched speed comparison, token saving, or general reliability result.
+
+For a sparse source checkout, the live native GUI harness also imports
+`research/observation_gating` and `research/real_apps_v1`, in addition to `runtime`
+and `research/live_control`. Include these directories before managed startup;
+the inert contract suites alone do not establish that all live imports exist.
+The linked record retains the missing-dependency startup failure separately.

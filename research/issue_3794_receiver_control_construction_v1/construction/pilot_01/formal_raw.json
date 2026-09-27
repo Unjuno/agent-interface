@@ -1,0 +1,74 @@
+{
+  "allocation": "issue-3784-focused-explicit-receiver-formal-01",
+  "base_commit": "f5f9ff842fd061e6e1eb2f43a17cc7785b807fc7",
+  "container_image": "agent-interface-2972@sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+  "decision": "STOP_INFRASTRUCTURE",
+  "rows": [
+    {
+      "candidate": null,
+      "case": "de-00",
+      "control": null,
+      "emissions": null,
+      "error": "KeyError: 'class'",
+      "events": [],
+      "held_keycodes_after": null,
+      "layout_expected": "de",
+      "receiver_kind": "InputOnly",
+      "receiver_xid": 2097152,
+      "status": "STOP_EXCEPTION",
+      "unsupported": null,
+      "xvfb_noreset": true
+    },
+    {
+      "candidate": null,
+      "case": "de-01",
+      "control": null,
+      "emissions": null,
+      "error": "KeyError: 'class'",
+      "events": [],
+      "held_keycodes_after": null,
+      "layout_expected": "de",
+      "receiver_kind": "InputOnly",
+      "receiver_xid": 2097152,
+      "status": "STOP_EXCEPTION",
+      "unsupported": null,
+      "xvfb_noreset": true
+    },
+    {
+      "candidate": null,
+      "case": "de-02",
+      "control": null,
+      "emissions": null,
+      "error": "KeyError: 'class'",
+      "events": [],
+      "held_keycodes_after": null,
+      "layout_expected": "de",
+      "receiver_kind": "InputOnly",
+      "receiver_xid": 2097152,
+      "status": "STOP_EXCEPTION",
+      "unsupported": null,
+      "xvfb_noreset": true
+    },
+    {
+      "candidate": null,
+      "case": "us-control",
+      "control": null,
+      "emissions": null,
+      "error": "KeyError: 'class'",
+      "events": [],
+      "held_keycodes_after": null,
+      "layout_expected": "us",
+      "receiver_kind": "InputOnly",
+      "receiver_xid": 2097152,
+      "status": "STOP_EXCEPTION",
+      "unsupported": null,
+      "xvfb_noreset": true
+    }
+  ],
+  "source_integrity": {
+    "runtime/backends/x11_v1/__init__.py": true,
+    "runtime/backends/x11_v1/backend.py": true,
+    "runtime/core_v1/__init__.py": true,
+    "runtime/core_v1/contract.py": true
+  }
+}
