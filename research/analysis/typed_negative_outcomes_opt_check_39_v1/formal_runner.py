@@ -9,13 +9,15 @@ from pathlib import Path
 ROOT = Path("/src")
 OUT = Path("/out")
 MODES = ("normal", "opt_flag", "env_opt")
+FROZEN_SOURCES = ("candidate.py", "test_preformal.py", "audit.py",
+                  "predecessor_contract.py", "formal_runner.py")
 CONTROLS = {
     "stale_success": ('value = ("FAILED_UNKNOWN", False, "NEW_OBSERVATION")',
                       'value = ("SUCCEEDED", False, "NONE")'),
     "authority_success": ('value = ("AUTHORITY_REQUIRED", False, "FOCUS_OR_LEASE")',
                           'value = ("SUCCEEDED", False, "NONE")'),
-    "retry_nonblocked": ('elif e["blocked"] is True:\n        value = ("BLOCKED", budget > 0, "UNBLOCK_OR_WAIT")',
-                         'elif e["blocked"] is True:\n        value = ("BLOCKED", budget > 0, "UNBLOCK_OR_WAIT")\n    elif e["fresh"] is True:\n        value = ("NO_ACTION", True, "NONE")'),
+    "retry_nonblocked": ('elif e["blocked"] is True:\\n        value = ("BLOCKED", budget > 0, "UNBLOCK_OR_WAIT")',
+                         'elif e["blocked"] is True:\\n        value = ("BLOCKED", budget > 0, "UNBLOCK_OR_WAIT")\\n    elif e["fresh"] is True:\\n        value = ("NO_ACTION", True, "NONE")'),
     "row_count": ('if len(rows)!=384: fail("row_count",len(rows))',
                   'if len(rows)!=385: fail("row_count",len(rows))'),
     "outcome_count": ('if counts!=EXPECTED_COUNTS: fail("outcome_counts",counts)',
@@ -47,15 +49,19 @@ def invoke(mode, args, env=None):
 def save_process(stem, result):
     (OUT / (stem + ".stdout")).write_bytes(result.stdout)
     (OUT / (stem + ".stderr")).write_bytes(result.stderr)
-    (OUT / (stem + ".exit")).write_text(str(result.returncode) + "\n", encoding="ascii")
+    (OUT / (stem + ".exit")).write_text(str(result.returncode) + "\\n", encoding="ascii")
 
 
 def main():
     if OUT.exists() and any(OUT.iterdir()):
         raise RuntimeError("formal output must be new/empty; no overwrite")
+    freeze = json.loads((ROOT / "FREEZE.json").read_text(encoding="utf-8"))
+    for name in FROZEN_SOURCES:
+        actual = digest(ROOT / name)
+        if actual != freeze["source_sha256"][name]:
+            raise RuntimeError("frozen_source_hash_mismatch:" + name)
     OUT.mkdir(parents=True, exist_ok=True)
     candidate = ROOT / "candidate.py"
-    tests = ROOT / "test_preformal.py"
     source = candidate.read_text(encoding="utf-8")
     for mode in MODES:
         test = invoke(mode, ["-m", "unittest", "-v", "test_preformal"])
@@ -74,7 +80,7 @@ def main():
                 raise RuntimeError("mutation_anchor_missing:" + name)
             mutated = source.replace(before, after, 1)
             control_path = OUT / (mode + "-" + name + "-candidate.py")
-            control_path.write_text(mutated, encoding="utf-8", newline="\n")
+            control_path.write_text(mutated, encoding="utf-8", newline="\\n")
             result = invoke(mode, [str(control_path)])
             stem = mode + "-" + name
             save_process(stem, result)
@@ -87,7 +93,7 @@ def main():
                 "stderr_sha256": hashlib.sha256(result.stderr).hexdigest(),
             }
             (OUT / (stem + ".control")).write_text(
-                json.dumps(control, sort_keys=True) + "\n", encoding="utf-8")
+                json.dumps(control, sort_keys=True) + "\\n", encoding="utf-8")
             if control["passed"] or control["pass_marker_seen"]:
                 raise RuntimeError("corruption_control_not_rejected:" + stem)
         code = ("import runpy; ns=runpy.run_path('/src/candidate.py'); "
@@ -106,12 +112,13 @@ def main():
             "stderr_sha256": hashlib.sha256(budget.stderr).hexdigest(),
         }
         (OUT / (stem + ".control")).write_text(
-            json.dumps(control, sort_keys=True) + "\n", encoding="utf-8")
+            json.dumps(control, sort_keys=True) + "\\n", encoding="utf-8")
         if control["passed"] or "budget_changed_hard_outcome" not in control["error"]:
             raise RuntimeError("budget_control_not_rejected:" + mode)
     manifest = {p.name: digest(p) for p in sorted(ROOT.iterdir()) if p.is_file()}
+    manifest["FREEZE.json"] = digest(ROOT / "FREEZE.json")
     (OUT / "source-manifest.json").write_text(
-        json.dumps(manifest, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+        json.dumps(manifest, sort_keys=True, indent=2) + "\\n", encoding="utf-8")
     print(json.dumps({"formal_status": "COMPLETED", "modes": list(MODES),
                       "controls_per_mode": len(CONTROLS) + 1,
                       "source_manifest": manifest}, sort_keys=True))
