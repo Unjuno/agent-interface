@@ -1,0 +1,215 @@
+{
+  "authority_granted": false,
+  "backend_object_identity": 123209152091232,
+  "cleanup": {
+    "apps_terminated": 3,
+    "owned_pids": [
+      26,
+      68,
+      89,
+      113,
+      134,
+      135,
+      154,
+      159,
+      174,
+      213,
+      220,
+      221
+    ],
+    "xvfb_alive_before_cleanup": true
+  },
+  "dispatches": [
+    {
+      "case": "stale-observation",
+      "receipt": {
+        "result": {
+          "backend_emissions": 0,
+          "detail": "authority.expires_at_ns out of range [1, 9223372036854775807]",
+          "detail_source": "program_validation",
+          "error": "INVALID_PROGRAM",
+          "required_capabilities": [],
+          "status": "refused"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      }
+    },
+    {
+      "case": "fresh-neutral-no-lease",
+      "receipt": {
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "completed_ops": [
+              0,
+              1
+            ],
+            "emissions": 2,
+            "ended_ns": 20106511626201,
+            "observations": [],
+            "program_emissions": 2,
+            "releases": [
+              {
+                "buttons_down": [],
+                "keys_down": [],
+                "monotonic_ns": 20106511623686,
+                "verified": true
+              }
+            ],
+            "started_ns": 20106510809947,
+            "waits": []
+          },
+          "recovery_required": false,
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "status": "completed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "binding_revision": 1,
+      "image_sha256": null,
+      "input_dispatched": false,
+      "observation": {
+        "artifact": {
+          "bytes": 228,
+          "height": 160,
+          "mime_type": "image/png",
+          "path": "/evidence/construction03/images/f3fd9fb150984ef0a4934ccb8857cd4f.png",
+          "sha256": "b7adbfd93fc97a4eeeb76516e6477e819553601ed653466345a25d963e60fbc9",
+          "source_raw_sha256": "8eafc7bd411c1f02b9e972a83d2b0a4164eefc5ef51e6b63ad7acc78be4ad44f",
+          "timing_ns": {
+            "converted": 20106466764266,
+            "encoded": 20106481400856,
+            "hashed": 20106485043495,
+            "started": 20106466364333,
+            "written": 20106484921775
+          },
+          "width": 320
+        },
+        "bytes": 204800,
+        "capture_ended_ns": 20106466183267,
+        "capture_started_ns": 20106465659339,
+        "frame": "window_client",
+        "height": 160,
+        "native_window_id": 4194311,
+        "region": [
+          0,
+          0,
+          320,
+          160
+        ],
+        "sha256": "8eafc7bd411c1f02b9e972a83d2b0a4164eefc5ef51e6b63ad7acc78be4ad44f",
+        "target": "inkscape",
+        "width": 320
+      },
+      "sequence": 1,
+      "side_effect_authority": false,
+      "status": "returned",
+      "target": "inkscape",
+      "window_id": 4194311
+    },
+    {
+      "binding_revision": 1,
+      "image_sha256": null,
+      "input_dispatched": false,
+      "observation": {
+        "artifact": {
+          "bytes": 1260,
+          "height": 160,
+          "mime_type": "image/png",
+          "path": "/evidence/construction03/images/6575d52c63a74323a31b2a44e1a320c4.png",
+          "sha256": "0a97a9387f096eeab11c60153580ab66a53ba1482726935e9b9d515f93be00c9",
+          "source_raw_sha256": "d4cf9a2b0d9fe33ba48d54ccbec34de973c0462c566ce86d2a17f720bfdef313",
+          "timing_ns": {
+            "converted": 20106489561983,
+            "encoded": 20106490591394,
+            "hashed": 20106493256976,
+            "started": 20106489504087,
+            "written": 20106493140047
+          },
+          "width": 320
+        },
+        "bytes": 204800,
+        "capture_ended_ns": 20106489362609,
+        "capture_started_ns": 20106489062921,
+        "frame": "window_client",
+        "height": 160,
+        "native_window_id": 6292261,
+        "region": [
+          0,
+          0,
+          320,
+          160
+        ],
+        "sha256": "d4cf9a2b0d9fe33ba48d54ccbec34de973c0462c566ce86d2a17f720bfdef313",
+        "target": "calc",
+        "width": 320
+      },
+      "sequence": 2,
+      "side_effect_authority": false,
+      "status": "returned",
+      "target": "calc",
+      "window_id": 6292261
+    },
+    {
+      "binding_revision": 1,
+      "image_sha256": null,
+      "input_dispatched": false,
+      "observation": {
+        "artifact": {
+          "bytes": 10191,
+          "height": 160,
+          "mime_type": "image/png",
+          "path": "/evidence/construction03/images/e34b4ba1c5524e5fb9aa542b554874ea.png",
+          "sha256": "f9e88a2632511187324674cd7ac27cc95d3f5d0c43f4b7d97606e13c6e0bdab6",
+          "source_raw_sha256": "10b35f4d18c648498fffe90474dfa2eee5f5c59693fb0fa4518a11702b4468a8",
+          "timing_ns": {
+            "converted": 20106498021565,
+            "encoded": 20106499420893,
+            "hashed": 20106503498102,
+            "started": 20106497973065,
+            "written": 20106503378590
+          },
+          "width": 320
+        },
+        "bytes": 204800,
+        "capture_ended_ns": 20106497841154,
+        "capture_started_ns": 20106497493468,
+        "frame": "window_client",
+        "height": 160,
+        "native_window_id": 8388611,
+        "region": [
+          0,
+          0,
+          320,
+          160
+        ],
+        "sha256": "10b35f4d18c648498fffe90474dfa2eee5f5c59693fb0fa4518a11702b4468a8",
+        "target": "chromium",
+        "width": 320
+      },
+      "sequence": 3,
+      "side_effect_authority": false,
+      "status": "returned",
+      "target": "chromium",
+      "window_id": 8388611
+    }
+  ],
+  "release": {
+    "buttons_down": [],
+    "keys_down": [],
+    "monotonic_ns": 20106511853286,
+    "verified": true
+  },
+  "session_id": "70dd7e14bd178fc08bd3c41c",
+  "session_object_identity": 123209148805392
+}
+

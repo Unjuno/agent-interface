@@ -1,0 +1,37 @@
+{
+  "schema": "stop-evidence-4678-revalidation-execution-v1",
+  "issue": 4795,
+  "allocation": "stop-evidence-4678-revalidation-4795-20260927-01",
+  "freeze": "research/analysis/stop_evidence_4678_revalidation_v2/FREEZE.json",
+  "formal_invocations": 1,
+  "runner_exit": 0,
+  "decision": "PASS_SOURCE_BOUND_CHECKSUM_DISCREPANCY_REPRODUCED",
+  "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+  "platform": "linux/amd64",
+  "container_limits": {
+    "network": "none",
+    "rootfs": "read-only",
+    "cpus": 1,
+    "memory": "512m",
+    "pids": 64,
+    "capabilities": "all-dropped",
+    "no_new_privileges": true
+  },
+  "gpu": false,
+  "model": false,
+  "package_installs": 0,
+  "host_cache_access": false,
+  "retries": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "output": "research/analysis/stop_evidence_4678_revalidation_v2/AUDIT_RESULT.json",
+  "counts": {
+    "verified_git_blobs": 8,
+    "git_blob_mismatches": 0,
+    "sha256_manifest_mismatches": 7,
+    "raw_cache_inventory_files": 0,
+    "mutation_controls_rejected": 5,
+    "mutation_controls_total": 5
+  },
+  "interpretation": "Public snapshot checksum discrepancy reproduced; original host checkpoint absence remains unproven."
+}
