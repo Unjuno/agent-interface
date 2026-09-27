@@ -23,4 +23,3 @@ docker run --rm --pull=never --network none --read-only --gpus all --cpus=2 --me
 Rows are B00/B17/B63 × suffix slots 0/7/15 (nine pairs). The same cache helpers, tokenizer, prefixes, suffixes, and eight token IDs `[15,16,17,18,19,20,21,22]` are used across precisions. PASS requires at least one of BF16/FP32 to meet both max absolute and max relative error <=0.002 on all nine pairs, unchanged winners on every pair, suffix isolation, verified hashes, and a zero-error raw-only audit with all five corruption controls rejected. No formal 64×16 timing schedule runs here.
 
 Three raw-audit tests passed in the pinned CPU container before the freeze; see `FREEZE.json` for the exact invocation, image, hashes and test result.
-

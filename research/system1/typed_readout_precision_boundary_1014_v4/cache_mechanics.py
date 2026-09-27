@@ -45,4 +45,3 @@ def load_corpus(path: str) -> list[dict[str, Any]]:
     if len(rows) != 64 or any(len(row["suffixes"]) != 16 for row in rows):
         raise ValueError("frozen corpus dimensions differ")
     return rows
-

@@ -72,4 +72,3 @@ def corruption_controls(result: dict) -> int:
             rejected += 1
     assert rejected == len(controls)
     return rejected
-
