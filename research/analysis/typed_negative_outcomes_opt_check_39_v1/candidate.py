@@ -48,6 +48,10 @@ def oracle(e, budget):
 def fail(label, details=None):
     raise RuntimeError(label + (":" + repr(details) if details is not None else ""))
 
+def validate_budget_monotonicity(low, high, evidence):
+    if low["outcome"] != "BLOCKED" and (high["outcome"] != low["outcome"] or high["retryable"] or low["retryable"]):
+        fail("budget_changed_hard_outcome", evidence)
+
 def run():
     rows=[]
     for bits in itertools.product((False,True), repeat=len(FIELDS)):
@@ -64,7 +68,7 @@ def run():
         if result["outcome"] == "SUCCEEDED" and not (row["evidence"]["fresh"] and row["evidence"]["authority"]): fail("untrusted_success",row)
     for bits in itertools.product((False,True),repeat=len(FIELDS)):
         evidence=dict(zip(FIELDS,bits)); low=classify(evidence,0); high=classify(evidence,2)
-        if low["outcome"] != "BLOCKED" and (high["outcome"] != low["outcome"] or high["retryable"] or low["retryable"]): fail("budget_changed_hard_outcome",evidence)
+        validate_budget_monotonicity(low, high, evidence)
     encoded=json.dumps(rows,sort_keys=True,separators=(",",":")).encode()
     digest=hashlib.sha256(encoded).hexdigest()
     counts={name:sum(row["result"]["outcome"]==name for row in rows) for name in OUTCOMES}
