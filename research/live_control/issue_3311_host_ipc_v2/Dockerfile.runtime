@@ -1,6 +1,0 @@
-FROM mixed-formal-2992-debian:20260920@sha256:766abfd10382ab8b59ed793094a685481190f840d338b7bc4664ca162a2da619
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3-jsonschema python3-xlib python3-pil python3-openpyxl openbox wmctrl \
-    && rm -rf /var/lib/apt/lists/*
-ENTRYPOINT []
-CMD []

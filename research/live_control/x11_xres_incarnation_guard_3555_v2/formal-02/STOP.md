@@ -1,3 +1,0 @@
-# Allocation 02 stop
-
-Outcome: `STOP_BEFORE_INPUT` at bridge construction. The exact-main runner started fixture p1 (XID `2097152`, PID 22, start ticks `326064`) but `NativeHandleBridge` import reached `X11Backend.configure_capture_artifacts` and failed because `runtime.backends.x11_v1.capture_artifacts` was missing from the read-only source mount. No stale-alias decision, bridge click, or native input occurred. The raw JSON and container stderr are retained; the raw did not retain a complete p1 cleanup receipt, so cleanup evidence for this failed allocation is incomplete. This allocation was not retried.

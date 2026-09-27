@@ -1,8 +1,0 @@
-{
-  "task":"INKSCAPE-ZOOM-CENTER-CONTRACT-20260917-001",
-  "question":"Does a fixed native pinch center calibration preserve a target-centered similarity contract across held-out target positions, compared with pointer-centered Ctrl+wheel?",
-  "formal":{"layouts_x":[140,320,460],"routes":["ctrl_wheel","native_fixed80"],"reps":3,"cases":18,"seed":6712026091703},
-  "contract":{"scale_ratio":[0.45,0.55],"center_abs_dx_px_max":5,"center_abs_dy_px_max":5},
-  "decision":"PASS_CENTER_SEMANTIC_CAPABILITY_BOUNDARY_SCOPED iff ctrl_wheel satisfies full scale+center contract 9/9, native_fixed80 satisfies scale 9/9 but violates center contract 9/9, SVG unchanged and all terminal resources neutral 18/18. Otherwise FAIL/HOLD as applicable.",
-  "construction_excluded":"x=200 final-runner construction plus earlier offset/left-center-right probes; no formal position used by final-runner construction"
-}

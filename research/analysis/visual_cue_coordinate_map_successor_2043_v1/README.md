@@ -1,1 +1,0 @@
-# Successor #2057\n\nCompletes the missing source-coordinate audit from merged PR #2043. Every arm is checked: BORDER_RULER exact, TARGET_CONTEXT_CROP conservative coverage, and RAW/COARSE_GRID explicitly unavailable with raw fallback. No model, GUI, input, or network calls.\n

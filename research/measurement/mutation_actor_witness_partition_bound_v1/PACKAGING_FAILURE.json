@@ -1,9 +1,0 @@
-{
-  "stage": "postformal packaging",
-  "decision": "PACKAGING_HASH_COMMAND_INCLUDED_DIRECTORY",
-  "scientific_result": "UNCHANGED",
-  "formal_invocations": 1,
-  "reruns": 0,
-  "cause": "sha256sum wildcard included __pycache__ directory after successful formal and independent audit, causing shell exit 1",
-  "repair": "hash regular files only; do not rerun formal.py"
-}
