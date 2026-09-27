@@ -10,7 +10,9 @@ Python API; it does not add CLI/MCP method tools or semantic form validation.
 records six exact submissions from the built runtime, one zero-emission
 layout-change refusal, explicit re-grounding and continued reuse. The isolated
 archive import test excludes the checkout from Python's path. Local native
-checks pass 223 protocol and 105 harness/distribution tests. Matched performance,
+checks pass 223 protocol and 106 harness/distribution tests after correcting
+CI sparse-checkout and optional-dependency test placement. Initial CI failures
+and the corrected local checks are retained alongside the primary-use evidence. Matched performance,
 actual primary model tokens and useful-feedback onset remain unmeasured.
 
 ## Native method reuse checkpoint (2026-09-28)

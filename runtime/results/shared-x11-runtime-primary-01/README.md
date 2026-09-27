@@ -29,3 +29,17 @@ The manifest establishes internal byte consistency, not independent authorship.
 This closes shared implementation and archive availability. It does not establish
 semantic text acknowledgement before Submit, general form correctness, new MCP
 method exposure, matched speedup, actual model-token reduction or human tempo.
+
+## CI integration correction
+
+The first remote CI attempt on `18a212d8c` failed because CLI/X11 sparse checkouts
+omitted the new package, and the dependency-free distribution job tried the
+Pillow-dependent handle check. Full initial logs are retained in `ci-repair.tar.gz`.
+Commit `d2fa7807d` adds the required checkout paths/triggers and separates the
+no-site-package form availability test from the Linux dependency-bearing archive
+check. No runtime input implementation changed after the exercised build.
+
+Corrected local validation passed 223 protocol and 106 harness/distribution tests,
+plus the 8 distribution tests with `python -S`, 102 CLI tests and 8 additional
+X11 receipt/watch tests. The supplementary manifest and verifier preserve these
+results without modifying the original 317-file primary-use bundle.

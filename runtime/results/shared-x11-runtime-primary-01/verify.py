@@ -56,3 +56,18 @@ require(all(p['returncode'] is not None for p in read(c+'cleanup.json')),'tracke
 require(read(c+'EXIT.json')['exit_code']==0,'harness exit')
 require(read('shared-x11-runtime-check-02/result.json')['status']=='PASS','integration tests')
 print(f'PASS {len(files)} files; six exact submissions, one zero-emission refusal, explicit repair, verified releases')
+
+with tarfile.open(root/'ci-repair.tar.gz') as archive:
+    members=archive.getmembers()
+    require(all(m.isfile() for m in members), 'repair regular files')
+    require(len(members)==len({m.name for m in members}), 'repair unique paths')
+    repair={m.name:archive.extractfile(m).read() for m in members}
+repair_manifest=json.loads((root/'ci-repair-manifest.json').read_text())
+require(set(repair)==set(repair_manifest), 'repair inventory')
+for name,digest in repair_manifest.items():
+    require(hashlib.sha256(repair[name]).hexdigest()==digest, name)
+check=json.loads(repair['shared-x11-runtime-check-03/result.json'])
+require(check['status']=='PASS' and all(s['returncode']==0 for s in check['suites']), 'repaired local checks')
+for name in ('no-site-distribution.log', 'cli-local.log', 'x11-extra.log'):
+    require(repair['shared-x11-ci-repair-01/'+name].rstrip().endswith(b'OK'), name)
+print(f'PASS {len(repair)} supplementary files; initial CI failures and corrected local checks retained')
