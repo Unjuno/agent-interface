@@ -1,0 +1,59 @@
+{
+  "schema": "effect-receipt-wal-allocation-freeze-v1",
+  "issue": 4945,
+  "allocation": "effect-receipt-wal-vs-delete-3991-20260928-02",
+  "branch": "research/effect-receipt-wal-3991-20260928-v2",
+  "additive_path": "research/verification/effect_receipt_wal_mode_3991_v2/",
+  "base_main": "081403e352aa79a6ff0cd030fbb9d2fbbf28c7e6",
+  "hypothesis": "Changing only SQLite journal mode DELETE versus WAL does not alter the application transaction-scope boundary; only a shared local transaction prevents the registered split effect/receipt process-exit counterexamples.",
+  "formal_matrix": {
+    "modes": ["DELETE", "WAL"],
+    "protocols": ["EFFECT_FIRST", "RECEIPT_FIRST", "ATOMIC_LOCAL", "ATOMIC_EXTERNAL"],
+    "cuts": ["BEFORE", "AFTER_FIRST", "AFTER_SECOND", "AFTER_COMMIT", "NORMAL"],
+    "repetitions": 3,
+    "formal_rows": 120,
+    "identity_controls_per_mode": ["ALTERED_OPERATION_CONTENT", "WRONG_SESSION", "WRONG_RESOURCE", "WRONG_EPOCH", "BOOL_AS_INTEGER"],
+    "control_repetitions": 3,
+    "control_rows": 30,
+    "total_rows": 150
+  },
+  "expected_discriminator": {
+    "EFFECT_FIRST_AFTER_FIRST": "one committed effect without receipt; the sole NOT_FOUND retry creates a second effect",
+    "ATOMIC_EXTERNAL_AFTER_FIRST": "same split-database outcome as EFFECT_FIRST",
+    "AFTER_SECOND": "both independent commits precede the crash; one effect plus receipt and no retry",
+    "RECEIPT_FIRST_AFTER_FIRST": "receipt says COMPLETED while effect count remains zero; no retry",
+    "ATOMIC_LOCAL_ALL_CUTS": "exactly one effect and one completion receipt after optional retry"
+  },
+  "environment": {
+    "image": "python:3.13.5-slim-bookworm",
+    "image_id": "sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+    "platform_target": "linux/amd64",
+    "docker_daemon": "OrbStack linux/aarch64",
+    "emulation": "linux/amd64 container observed x86_64",
+    "runtime_preflight": {"python": "3.13.5", "sqlite": "3.40.1", "machine": "x86_64", "exit_code": 0},
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "resources": {"cpus": 0.25, "memory": "256m", "pids": 32},
+    "synchronous": "FULL",
+    "wal_autocheckpoint": 0
+  },
+  "host_paths": {
+    "source": "/private/tmp/effect-receipt-wal-3991-allocation-02-20260928/research/verification/effect_receipt_wal_mode_3991_v2",
+    "construction_output": "/private/tmp/effect-receipt-wal-3991-allocation-02-20260928/evidence/construction-01",
+    "formal_output": "/private/tmp/effect-receipt-wal-3991-allocation-02-20260928/evidence/formal-01",
+    "audit_output": "/private/tmp/effect-receipt-wal-3991-allocation-02-20260928/evidence/formal-01/AUDIT.json"
+  },
+  "construction_command": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --cpus=0.25 --memory=256m --pids-limit=32 --tmpfs /tmp:rw,noexec,nosuid,size=64m --mount type=bind,source=/private/tmp/effect-receipt-wal-3991-allocation-02-20260928/research/verification/effect_receipt_wal_mode_3991_v2,target=/src,readonly --mount type=bind,source=/private/tmp/effect-receipt-wal-3991-allocation-02-20260928/evidence/construction-01,target=/out python:3.13.5-slim-bookworm sh /src/construction.sh",
+  "formal_command": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --cpus=0.25 --memory=256m --pids-limit=32 --tmpfs /tmp:rw,noexec,nosuid,size=64m --mount type=bind,source=/private/tmp/effect-receipt-wal-3991-allocation-02-20260928/research/verification/effect_receipt_wal_mode_3991_v2,target=/src,readonly --mount type=bind,source=/private/tmp/effect-receipt-wal-3991-allocation-02-20260928/evidence/formal-01,target=/out python:3.13.5-slim-bookworm python /src/runner.py --run /out/raw /out",
+  "auditor_command": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --cpus=0.25 --memory=256m --pids-limit=32 --tmpfs /tmp:rw,noexec,nosuid,size=64m --mount type=bind,source=/private/tmp/effect-receipt-wal-3991-allocation-02-20260928/research/verification/effect_receipt_wal_mode_3991_v2,target=/src,readonly --mount type=bind,source=/private/tmp/effect-receipt-wal-3991-allocation-02-20260928/evidence/formal-01,target=/out python:3.13.5-slim-bookworm python /src/audit.py --result /out/RESULT.json --raw-root /out/raw --out /out/AUDIT.json",
+  "source_sha256": {
+    "PLAN.md": "aea055bdca89baa9230eeac7dedde1d7a4685a69f13e8bad39ae7933703b5d18",
+    "runner.py": "f5c09bccd6ea9a1d3e742595539078ee8359df91469245bc024af615903cd8b2",
+    "audit.py": "ac525e5b97158b42f072005a37caa5459e259629e7b8a9f30ac8591750e99403",
+    "test_audit.py": "dfba3c350c114ad3d7885c4a75ad8df25aa8e7f8e3179999a0fac219fe0b8d2f",
+    "construction.sh": "1a27fcc7f4c4128a0660560cd4d910827f1cd0a186056d7335987fb77b3bb500"
+  },
+  "pre_execution_counts": {"construction_invocations": 0, "formal_invocations": 0, "retries": 0, "replacements": 0, "tuning": 0},
+  "stop_rule": "Any construction failure permanently stops this allocation before formal. Formal is run exactly once; no retries, replacements, tuning, or pooling."
+}
