@@ -21,6 +21,15 @@ from runtime.cli_v1.api import dispatch_in_session
 from runtime.cli_v1.observe import observe_in_session
 
 
+def read_window_title(connection, window):
+    """Read a public title cue; never establishes input authority or task success."""
+    for name in ('_NET_WM_NAME', '_NET_WM_VISIBLE_NAME'):
+        value = window.get_full_property(connection.intern_atom(name),
+                                         connection.intern_atom('UTF8_STRING'))
+        if value is not None:
+            return bytes(value.value).decode('utf-8', errors='strict')
+    return window.get_wm_name()
+
 class _GuardedBackend(X11Backend):
     def focus(self, target):
         if self.owner.active is not None:
@@ -235,11 +244,7 @@ class NativeHandleBridge:
     def _window_title(self):
         window = self.backend.targets[self.target]
         d = self.backend.d
-        value = window.get_full_property(d.intern_atom('_NET_WM_NAME'),
-                                         d.intern_atom('UTF8_STRING'))
-        if value is not None:
-            return bytes(value.value).decode('utf-8', errors='strict')
-        return window.get_wm_name()
+        return read_window_title(d, window)
 
     def feedback(self, expected_title, *, rejected_titles=(), timeout_ms=2000):
         """Read-only application cue plus native image; never a task score.
