@@ -176,3 +176,40 @@ with patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=FakeBridge):
                     self.assertEqual(retained.content[1].data,action.content[1].data)
                     closed=metadata(await client.call_tool('interface_close',{}))
                     self.assertEqual(closed['status'],'closed')
+
+    async def test_review_updates_binding_and_retains_the_exact_returned_image(self):
+        with tempfile.TemporaryDirectory() as td:
+            bridge=FakeBridge(None,{'app':123},'app',Path(td)/'fixture')
+            def reviewed(window_id):
+                bridge.binding_revision+=1
+                bridge.backend.targets['app'].id=window_id
+                return {'status':'reviewed','observation':bridge.capture()}
+            bridge.review_window.side_effect=reviewed
+            with patch('runtime.cli_v1.mcp_guarded.open_bridge',return_value=bridge):
+                server=create_server({'app':123},td,session_mode='guarded-x11')
+                reply=await server.call_tool('interface_guarded_review_window',{'window_id':456})
+                row=metadata(reply)
+                self.assertEqual(row['status'],'reviewed')
+                self.assertFalse(row['input_dispatched'])
+                self.assertEqual(row['session']['targets'],{'app':456})
+                self.assertEqual(row['session']['binding_revision'],1)
+                self.assertEqual(row['source'],row['review']['observation'])
+                again=await server.call_tool('interface_results',{'call_id':row['call_id']})
+                self.assertEqual(reply.content[1].data,again.content[1].data)
+                bridge.review_window.assert_called_once_with(456)
+                bridge.click.assert_not_called();bridge.keyboard.assert_not_called()
+                await server.call_tool('interface_close',{})
+
+    async def test_malformed_mint_refuses_without_input_or_minting(self):
+        with tempfile.TemporaryDirectory() as td:
+            bridge=FakeBridge(None,{'app':123},'app',Path(td)/'fixture')
+            with patch('runtime.cli_v1.mcp_guarded.open_bridge',return_value=bridge):
+                server=create_server({'app':123},td,session_mode='guarded-x11')
+                for point,size in [([1],[24,14]),([1,2],[3,14]),([1,2],[97,14]),([1,2],[24])]:
+                    response=await server.call_tool('interface_guarded_mint',{
+                        'alias':'x','source_sequence':1,'point':point,'region_size':size})
+                    self.assertTrue(response.isError)
+                    self.assertFalse(metadata(response)['input_dispatched'])
+                bridge.mint.assert_not_called();bridge.click.assert_not_called()
+                bridge.keyboard.assert_not_called();bridge.observe.assert_not_called()
+                await server.call_tool('interface_close',{})

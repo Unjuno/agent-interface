@@ -530,3 +530,34 @@ revocation. Fresh primary use saved both [324,455] and SVG x=62; all ten stale
 target probes refused without input. The existing harness supports two-app
 setup and an explicit stage budget, not a separate control route. #2499's full
 three-app/four-transition controlled allocation remains open.
+
+
+### Public guarded X11 MCP integration checkpoint
+
+The public stdio server now offers opt-in `--session-mode guarded-x11`, reusing
+the shared scoped-X11 bridge and existing request/results/close lifecycle.
+One explicit target; no queued actions, helper model, sensor or automatic replay.
+The archive includes the adapter. Existing one-shot and persistent modes remain.
+
+Primary self-use against archive source `2998586f5497e12940fe89992a398a2098298887`
+completed six exact Chromium fixture saves, one zero-input stale-layout refusal
+and explicit re-grounding, with verified empty releases. 32 MCP calls included
+22 completed inputs, one refused input, five mints, one observation, two retained
+reads and close. All six entered values were reviewed before Save with explicit
+source-bound receipts. Read-after-close returned the identical final image.
+Transport and fixture runner exited zero; three tracked GUI children terminated,
+with recorded codes 0/1/0. No claim of all helper exit codes being zero.
+
+The interrupted preceding allocation is preserved unchanged, including its
+incorrect first-source review attribution. New host `recordRelayReview` derives
+identity from an explicit retained reply and refuses overwrite; it does not
+certify that the caller understood the image. The successful trial retains 20
+such declarations, independently scored submission history and every raw reply.
+See `runtime/results/guarded-mcp-primary-02` and
+`runtime/results/guarded-mcp-primary-interrupted-01`.
+
+Host send-to-return total 8,358.3 ms across 32 calls and first-send to final-save
+return 223,553.6 ms are instrumentation boundaries, not useful-feedback or model
+latency. Actual model input tokens/cost and a matched baseline remain unavailable.
+Do not infer speedup, human tempo or token savings. #5116 remains a separately
+owned trace-contract experiment, not a production GUI integration candidate.

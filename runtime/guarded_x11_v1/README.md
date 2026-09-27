@@ -91,5 +91,6 @@ focused-window contract, not authenticated identity or transient-family review.
 
 The first public-MCP primary trial was interrupted and has invalid review-source
 attribution; see [preserved evidence](../results/guarded-mcp-primary-interrupted-01/README.md).
-Contract tests do not substitute for a completed fresh primary trial. Production
-adoption and efficiency claims remain pending that validation.
+A fresh [completed primary trial](../results/guarded-mcp-primary-02/README.md)
+subsequently verified six exact saves and explicit recovery through the public
+mode. This supports opt-in integration; efficiency claims remain unproven.
