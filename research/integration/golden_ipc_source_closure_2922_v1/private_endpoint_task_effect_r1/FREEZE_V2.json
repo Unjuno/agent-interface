@@ -1,0 +1,77 @@
+{
+  "schema": "issue2924_chromium_fixture_task_effect_freeze_v2",
+  "issue": 4924,
+  "related_issue": 2922,
+  "latest_main_intake_sha": "f4fe81ae7864e16a63cdff7b16898a4f863382c3",
+  "branch": "research/issue-4924-chromium-task-effect-20260928-r1",
+  "branch_head_before_this_freeze": "892f6516fa3e3f9cad7a1de6fa1532a2811b4dde",
+  "branch_base_main_sha": "519f2c1bdb219697c2f5e92ae6c27714265d60e0",
+  "main_advanced_after_branch_creation": {
+    "commits": 8,
+    "diff": "research/README.md and research/event_delivery/gap_elapsed_clock_v1/** only",
+    "overlap_with_this_additive_namespace": false
+  },
+  "prior_freeze_preservation": {
+    "path": "research/integration/golden_ipc_source_closure_2922_v1/private_endpoint_task_effect_r1/FREEZE.json",
+    "construction_stop_path": "research/integration/golden_ipc_source_closure_2922_v1/private_endpoint_task_effect_r1/CONSTRUCTION_STOP_01.json",
+    "first_preformal_attempt": "STOP_PREFORMAL_AUDIT_TEST_SYNTAX",
+    "formal_attempts_consumed": 0,
+    "corrected_construction_is_new_revision": true
+  },
+  "allocation": "issue2922-chromium-task-effect-20260928-r1",
+  "seed": 992928,
+  "formal_invocations_before_v2": 0,
+  "source_commit": "01349d7bc76e5635f5568c53ffeec4d9ff49abb1",
+  "image": "sha256:436172d89b145c6a9f9a57e655422c9558b3b0235347dd77607e9d61bcfa6393",
+  "engine": "OrbStack Docker 29.4.0",
+  "platform": "linux/arm64",
+  "python": "3.11.2",
+  "source_sha256": {
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "research/live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+    "research/observation_gating/exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944",
+    "research/observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+    "research/observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e",
+    "research/observation_tiles/tile_transport.py": "f74caf4f2bea59fe3a73b3f04975384d8520bb06c296765566c4dd2542ef12b0",
+    "research/real_apps_v1/real_app_suite_v1.py": "22b4cc86af68a0ae866fe24735faaeefa40c0e1722238ab8c04723e1a564db24"
+  },
+  "harness_sha256": {
+    "runner": "258ba79c9530187ec3b6eb4bc752b0891d40d7e432bf6eaf84d9a5c41a89e3cd",
+    "auditor": "9704ea7fad000eb1d7212f4f0eef6c2d2a2583ceba31564af5425c371fd914f3",
+    "mutation_tests": "ccd90a881e91bc5bdec0e905462a177a5cbfc4791fc11ad90a8bd1c6ba6cee2b",
+    "preflight": "b3619a9730057193c6e6a76af095188f21f21d65615d1acc99fc5878586fe758"
+  },
+  "corrected_preformal_construction": {
+    "command": "docker run --rm --pull=never --network none --read-only --cpus=0.25 --memory=1024m --pids-limit=64 --security-opt=no-new-privileges --cap-drop=ALL --tmpfs /tmp:rw,nosuid,nodev,size=64m --mount type=bind,src=/tmp/unjuno-4924.XzoUGY/repo,dst=/repo,readonly --workdir /repo --entrypoint python3 sha256:436172d89b145c6a9f9a57e655422c9558b3b0235347dd77607e9d61bcfa6393 research/integration/golden_ipc_source_closure_2922_v1/private_endpoint_task_effect_r1/preflight_4924.py",
+    "exit_code": 0,
+    "verdict": "PASS_FROZEN_PREFORMAL_PREFLIGHT",
+    "checks": "8/8 historical source hashes and 3/3 harness hashes; AST 11 files; import closure; Xvfb/Openbox/wmctrl/Chromium",
+    "formal_seed_used": false
+  },
+  "parallel_resource_check": {
+    "previous_container": "cb270433a339",
+    "previous_container_exit": 0,
+    "docker_ps_at_freeze": [],
+    "concurrent_issue_4924_branch_count": 1,
+    "concurrent_worktree_path_collision": false
+  },
+  "output_mount": "/tmp/unjuno-4924-formal.oQdI3F",
+  "output_mount_was_empty_before_formal": true,
+  "formal_command": "docker run --rm --pull=never --network none --read-only --cpus=1 --memory=1536m --pids-limit=256 --security-opt=no-new-privileges --cap-drop=ALL --tmpfs /tmp:rw,nosuid,nodev,size=512m --tmpfs /dev/shm:rw,nosuid,nodev,size=256m --mount type=bind,src=/tmp/unjuno-4924.XzoUGY/repo,dst=/repo,readonly --mount type=bind,src=/tmp/unjuno-4924-formal.oQdI3F,dst=/out --workdir /repo --entrypoint python3 sha256:436172d89b145c6a9f9a57e655422c9558b3b0235347dd77607e9d61bcfa6393 research/integration/golden_ipc_source_closure_2922_v1/private_endpoint_task_effect_r1/session_cli_chromium_task_effect_probe.py",
+  "independent_audit_command": "docker run --rm --pull=never --network none --read-only --cpus=0.25 --memory=1024m --pids-limit=64 --security-opt=no-new-privileges --cap-drop=ALL --tmpfs /tmp:rw,nosuid,nodev,size=64m --mount type=bind,src=/tmp/unjuno-4924.XzoUGY/repo,dst=/repo,readonly --mount type=bind,src=/tmp/unjuno-4924-formal.oQdI3F,dst=/out --workdir /repo --entrypoint python3 sha256:436172d89b145c6a9f9a57e655422c9558b3b0235347dd77607e9d61bcfa6393 research/integration/golden_ipc_source_closure_2922_v1/private_endpoint_task_effect_r1/audit_task_effect.py",
+  "mutation_tests_command": "docker run --rm --pull=never --network none --read-only --cpus=0.25 --memory=1024m --pids-limit=64 --security-opt=no-new-privileges --cap-drop=ALL --tmpfs /tmp:rw,nosuid,nodev,size=64m --mount type=bind,src=/tmp/unjuno-4924.XzoUGY/repo,dst=/repo,readonly --mount type=bind,src=/tmp/unjuno-4924-formal.oQdI3F,dst=/out --workdir /repo --entrypoint python3 sha256:436172d89b145c6a9f9a57e655422c9558b3b0235347dd77607e9d61bcfa6393 research/integration/golden_ipc_source_closure_2922_v1/private_endpoint_task_effect_r1/test_audit_task_effect.py",
+  "controls": {
+    "network": "none",
+    "model_calls": 0,
+    "broker_calls": 0,
+    "submitted_programs": 1,
+    "steps": 9,
+    "validity_ns": 20000000000,
+    "retries": 0,
+    "server_POST_counter": "not instrumented"
+  },
+  "success": "Exactly one one-shot program ends completed with verified release/keys_down=[]; raw observations show READY and SAVED; URL-encoded output bytes are exactly value=<same ready-event token>; independent evaluator agrees; all sources/output hashes and raw-only audit pass.",
+  "failure": "An integrity-valid completed one-shot with wrong/missing submitted value, missing SAVED marker, or evaluator mismatch is FAIL_CHROMIUM_FIXTURE_TASK_EFFECT.",
+  "stop": "Any source/ready/sequence/URL/protocol/runtime/timeout/release/integrity failure is STOP_CHROMIUM_FIXTURE_TASK_EFFECT; preserve first partial artifact; no rerun or replacement seed."
+}
