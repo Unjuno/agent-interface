@@ -1,1 +1,11 @@
-Formal run #4853, seed 7866401: pinned offline Docker image needle-pilot05:local (sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e), Linux/amd64 CPU; read-only root and source, network none, 1 CPU, 2GiB, 64 PIDs. Construction passed before training with optimizer_updates=0. Then exactly one paired.py formal orchestration completed: A/B exactly unchanged; C control16=0.908447265625, treatment64=0.959716796875, delta=+0.05126953125; base immutable, updates base/B/C=400/120/120. Independent raw-only audit used audit.py with the dedicated output volume mounted read-only; PASS_RAW_AUDIT, errors=[], six role cells reconstructed, prefix exact, A_B_exact=true. No retry or seed substitution. Full raw local SHA256: control16 1DC71040E3E734DEE76DCCF144A4CAE88B705D0D4DE9E1EC9E959E3F80FD4FDB; treatment64 2DB2267FB4721F57177E66D039D75FA9AE86B9F294BEA75F1BCBD52D0B4C1C40; result DAE09F3704985252F8A83734EC051324D180181C4C951F58D5E721958771302A. Docker source-of-truth volume preserved: unjuno-needle-role-c-support64-diagnostic-4853-v1. This is a single-seed synthetic diagnostic only; no real-time learning, GUI transfer, generalization distribution, production or action-authority claim.
+# Execution record — Issue #4853
+
+Image: needle-pilot05:local, sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e, Linux/amd64 CPU. Offline, read-only root and source, 1 CPU, 2 GiB RAM, 64 PIDs. Dedicated writable formal volume; auditor mounts it read-only.
+
+Construction command and frozen formal command template are recorded in `../CONSTRUCTION_REPORT.md` and `../FREEZE.json`. Construction returned `CONSTRUCTION_PASS seed=7866401 prefix_exact=True sentinel_bytes=True corrupted_prefix_rejected=True optimizer_updates=0`.
+
+Exactly one formal invocation of `source/paired.py` completed: `prefix_exact=true`, `A_B_exactly_unchanged=true`, `base_immutable=true`; 400 base and 120 B/C updates per C arm. Control C=0.908447265625, treatment C=0.959716796875, delta=+0.05126953125. No retry.
+
+Independent invocation of `source/audit.py` over the formal volume returned `{"A_B_exact":true,"delta_C":0.05126953125,"disposition":"PASS_RAW_AUDIT","errors":[],"prefix_exact":true,"reconstructed_cells":6,"seed":7866401}`.
+
+The local output volume remains the source of truth. Exported raw-file digests are pinned in `SHA256SUMS.txt`; all matched hashes computed from the volume in a separate offline, read-only Docker invocation.
