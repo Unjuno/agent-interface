@@ -1,0 +1,82 @@
+{
+  "schema": "agent-interface-local-container-verification-v1",
+  "issue": 4932,
+  "historical_allocation": "predicate-read-tracing-4233-20260927-01",
+  "purpose": "Post-hoc reproducibility verification of the additive auditor repair; not a rerun of the historical formal allocation and produced no new scientific rows.",
+  "source": {
+    "repository": "Unjuno/agent-interface",
+    "source_branch": "research/predicate-readset-audit-revalidation-4932-20260928",
+    "source_commit": "56a92d27e44978fe2cfc517af6aac521179ae63f",
+    "files": {
+      "corrected_audit_py": "37aab0923612d01d7888cb31f6a4ecb06cf94f23",
+      "tests": "23b420317a01cb6a84d09e2c6b0378ba0ab49c06",
+      "independent_verifier": "0259fc0d050ebe8c9bb5e28172cf2896b4ab1f10",
+      "historical_audit_py": "d54458636c17c5d7b83cb57f11007b42bc35b21c",
+      "trace_json": "200b2a05a275f62819342ceaddaadc05097ee82c",
+      "raw_jsonl": "898a8bb2b7ee7e84d546b2a39c76e237dd1b324d"
+    },
+    "main_head_observed_after_run": "7229b2ef9e4d87b859f9452b0e790f0f6740cfbf"
+  },
+  "container": {
+    "image": "python:3.12-slim",
+    "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "pull": "never",
+    "network": "none",
+    "root_read_only": true,
+    "source_mount_read_only": true,
+    "writable_tmpfs": "/tmp 64 MiB",
+    "cpu_limit": 0.25,
+    "memory_limit_bytes": 805306368,
+    "pids_limit": 64,
+    "gpu_requested": false
+  },
+  "commands": [
+    "python -m unittest -v test_audit.py",
+    "python -B audit.py ../trace.json ../raw.jsonl audit.json",
+    "python -B verify_evidence.py",
+    "python -m py_compile audit.py test_audit.py verify_evidence.py"
+  ],
+  "outcome": {
+    "exit_code": 0,
+    "unit_tests": "4/4 passed",
+    "corrected_audit": "PASS_DYNAMIC_READSET_SCOPED",
+    "rows": 64,
+    "mutation_controls_rejected": "10/10",
+    "independent_audit": "PASS_INDEPENDENT_RECOMPUTE_VALUE_AUDIT",
+    "recomputed_rows_checked": 45,
+    "stale_static_declared_hit_preserved": 1,
+    "input_sha256": {
+      "historical_audit_py": "2f332c7a1f415d1990e76d00143ff15edf17ee9f4440e2afcaba767099041083",
+      "trace_json": "5a60df268a80551f860d2b7859356f677ea01278b27d41ed2ef82036ddb8bc97",
+      "raw_jsonl": "af9dace34a667a2e75c002c0848286801237de52e2c27b3f698fabb5010b565f"
+    },
+    "compile": "PASS"
+  },
+  "artifacts": {
+    "stdout_txt": {
+      "name": "stdout.txt",
+      "bytes": 866,
+      "sha256": "0911a7dd43a39eeda43090e2ef6d70cb14e5efd312761297cfaf4311a904b89a",
+      "base64": "UHl0aG9uIDMuMTIuMTQKeyJlcnJvcnMiOiBbXSwgIm1ldHJpY3MiOiB7ImR5bmFtaWNfZmFsc2VfaW52YWxpZGF0aW9ucyI6IDAsICJkeW5hbWljX3VucmVsYXRlZF9oaXRzIjogNCwgImR5bmFtaWNfdW5zYWZlX3JldXNlIjogMCwgIm11dGF0aW9uX2NvbnRyb2xzX3JlamVjdGVkIjogMTAsICJyb3dzIjogNjQsICJzdGF0aWNfYWxsX2ZhbHNlX2ludmFsaWRhdGlvbnMiOiA5LCAic3RhdGljX2RlY2xhcmVkX3Vuc2FmZV9yZXVzZSI6IDF9LCAicmVzdWx0IjogIlBBU1NfRFlOQU1JQ19SRUFEU0VUX1NDT1BFRCJ9CnsKICAiY2FuZGlkYXRlX2F1ZGl0X2NvbnRyb2xzX3JlamVjdGVkIjogMTAsCiAgImVycm9ycyI6IFtdLAogICJyZWNvbXB1dGVkX3Jvd3NfY2hlY2tlZCI6IDQ1LAogICJyZXN1bHQiOiAiUEFTU19JTkRFUEVOREVOVF9SRUNPTVBVVEVfVkFMVUVfQVVESVQiLAogICJyb3dzIjogNjQsCiAgInNvdXJjZV9zaGEyNTYiOiB7CiAgICAiYXVkaXQucHkiOiBbCiAgICAgICIyZjMzMmM3YTFmNDE1ZDE5OTBlNzZkMDAxNDNmZjE1ZWRmMTdlZTlmNDQ0MGUyYWZjYWJhNzY3MDk5MDQxMDgzIiwKICAgICAgImV4YWN0IgogICAgXSwKICAgICJyYXcuanNvbmwiOiBbCiAgICAgICJhZjlkYWNlMzRhNjY3YTJlNzVjMDAyYzA4NDgyODY4MDEyMzdkZTUyZTJjMjdiM2Y2OThmYWJiNTAxMGI1NjVmIiwKICAgICAgImV4YWN0IgogICAgXSwKICAgICJ0cmFjZS5qc29uIjogWwogICAgICAiNWE2MGRmMjY4YTgwNTUxZjg2MGQyYjc4NTkzNTZmNjc3ZWEwMTI3OGIyN2Q0MWVkMmVmODIwMzZkZGI4YmM5NyIsCiAgICAgICJleGFjdCIKICAgIF0KICB9LAogICJzdGF0aWNfZGVjbGFyZWRfc3RhbGVfaGl0X3ByZXNlcnZlZCI6IDEKfQo="
+    },
+    "stderr_txt": {
+      "name": "stderr.txt",
+      "bytes": 783,
+      "sha256": "d082eea0ef2e9b1cedc061cd460237a041d04ba0223366aecc1237fc62ec3384",
+      "base64": "dGVzdF9jb3JyZWN0ZWRfYXVkaXRvcl9yZWplY3RzX2V2ZXJ5X3JlY29tcHV0ZWRfdmFsdWVfY29ycnVwdGlvbiAodGVzdF9hdWRpdC5SZWNvbXB1dGVkVmFsdWVBdWRpdFRlc3RzLnRlc3RfY29ycmVjdGVkX2F1ZGl0b3JfcmVqZWN0c19ldmVyeV9yZWNvbXB1dGVkX3ZhbHVlX2NvcnJ1cHRpb24pIC4uLiBvaw0KdGVzdF9leHBlY3RlZF9zdGFsZV9zdGF0aWNfZGVjbGFyZWRfaGl0X3JlbWFpbnNfdmFsaWRfbmVnYXRpdmVfY29udHJvbCAodGVzdF9hdWRpdC5SZWNvbXB1dGVkVmFsdWVBdWRpdFRlc3RzLnRlc3RfZXhwZWN0ZWRfc3RhbGVfc3RhdGljX2RlY2xhcmVkX2hpdF9yZW1haW5zX3ZhbGlkX25lZ2F0aXZlX2NvbnRyb2wpIC4uLiBvaw0KdGVzdF9oaXN0b3JpY2FsX2F1ZGl0b3JfZmFsc2VfcGFzc19pc19yZXByb2R1Y2VkICh0ZXN0X2F1ZGl0LlJlY29tcHV0ZWRWYWx1ZUF1ZGl0VGVzdHMudGVzdF9oaXN0b3JpY2FsX2F1ZGl0b3JfZmFsc2VfcGFzc19pc19yZXByb2R1Y2VkKSAuLi4gb2sNCnRlc3RfdW5tb2RpZmllZF9mcm96ZW5fcm93c19zdGlsbF9wYXNzX2FsbF9leGlzdGluZ19jb250cm9scyAodGVzdF9hdWRpdC5SZWNvbXB1dGVkVmFsdWVBdWRpdFRlc3RzLnRlc3RfdW5tb2RpZmllZF9mcm96ZW5fcm93c19zdGlsbF9wYXNzX2FsbF9leGlzdGluZ19jb250cm9scykgLi4uIG9rDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NClJhbiA0IHRlc3RzIGluIDAuMjc3cw0KDQpPSw0K"
+    },
+    "exit_code_txt": {
+      "name": "exit_code.txt",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "base64": "MA=="
+    }
+  },
+  "limitations": [
+    "This verifies auditor and evidence-integrity code only; it does not change the original #4766 scientific interpretation.",
+    "No model, GUI, GPU, formal runner, or historical allocation was invoked.",
+    "The earlier STOP_DOCKER_ENGINE_UNRESPONSIVE in the original post-hoc record remains historically accurate; this is a later, separately recorded local Docker verification."
+  ]
+}
