@@ -1,0 +1,48 @@
+{
+  "schema": "effect-receipt-wal-partial-raw-audit-invocation-v1",
+  "allocation": "ISSUE4927-PARTIAL-RAW-AUDIT-20260928-01",
+  "finished_utc": "2026-09-27 17:32:33 UTC",
+  "container_invocations": 1,
+  "retry_count": 0,
+  "exit_code": 0,
+  "result_file": "AUDIT.json",
+  "result_classification": "PASS_PARTIAL_RAW_BYTE_AND_SQLITE_INTEGRITY_ONLY",
+  "docker_host": {
+    "engine_version": "29.8.0",
+    "daemon_platform": "linux/x86_64",
+    "image_id": "sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+    "container_platform": "linux/amd64"
+  },
+  "freeze_path": "research/verification/effect_receipt_wal_mode_3991_audit_4927_v1/FREEZE.json",
+  "freeze_github_blob": "3e4ead8e2e8bb05e4e4867fd0ef88b514eebaa3a",
+  "auditor_local_sha256": "1e2727409b8333db753c2e7312e280690a88b3a383df275b488b939d8889fdde",
+  "raw_before": {
+    "files": 62,
+    "bytes": 761856,
+    "case_directories": 31
+  },
+  "raw_after_host_check": {
+    "files": 62,
+    "bytes": 761856,
+    "case_directories": 31
+  },
+  "host_output_crosscheck": {
+    "audit_file_rows": 62,
+    "sqlite_rows": 62,
+    "sqlite_integrity_failures": 0,
+    "errors": 0,
+    "archive_sha256": "3c57aa270e8bd3309e3b8c5aaff005b3160b501fd1391c428bace7bccee5123e",
+    "audit_json_sha256": "1cfb628f49381166a4b23d1e81e114b796f20e4e396d823bffc92dff8fe86590",
+    "report_sha256": "c65fd0dc4e0fe858adae4003da2d08911c7729a95bd61aa14e7193e6721c20d9"
+  },
+  "post_run_docker_snapshot": {
+    "task_container_present": false,
+    "unrelated_persistent_containers_touched": false,
+    "gpu_utilization_percent": 0,
+    "gpu_memory_mib": 0
+  },
+  "docker_stdout_summary": "classification PASS_PARTIAL_RAW_BYTE_AND_SQLITE_INTEGRITY_ONLY; 62 files; 31 case directories; 62 SQLite integrity checks; decoded archive SHA-256 3c57aa270e8bd3309e3b8c5aaff005b3160b501fd1391c428bace7bccee5123e.",
+  "scientific_result": null,
+  "claim_limit": "Retained partial construction artifacts only; the original STOP_HARNESS_CONSTRUCTION remains unchanged and no WAL-versus-DELETE inference is made."
+}
+
