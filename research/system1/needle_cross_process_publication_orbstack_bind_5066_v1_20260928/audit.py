@@ -50,6 +50,14 @@ def audit(raw: object, receipt: object) -> list[str]:
     if receipt.get("environment") != {"OBSTAC_SOURCE_COMMIT":raw.get("source_commit"),"OBSTAC_IMAGE_ID":IMAGE,
                                          "OBSTAC_FREEZE_SHA256":raw.get("freeze_sha256"),"OBSTAC_CONSTRUCTION":"0"}:
         e.append("receipt_environment")
+    for key, env_name in (("source_commit","OBSTAC_SOURCE_COMMIT"),("image_id","OBSTAC_IMAGE_ID"),
+                          ("freeze_sha256","OBSTAC_FREEZE_SHA256"),("construction","OBSTAC_CONSTRUCTION")):
+        if os.environ.get(env_name)!=receipt.get(key): e.append("process_environment_"+key)
+    if receipt.get("image_platform")!="linux/arm64" or receipt.get("docker_context")!="orbstack":
+        e.append("platform_or_context")
+    if receipt.get("resource_limits")!={"cpus":"0.25","memory":"512m","pids":32,"network":"none",
+          "root_read_only":True,"source_read_only":True,"cap_drop":"ALL","no_new_privileges":True}:
+        e.append("resource_limits")
     for rel, expected in receipt.get("source_sha256",{}).items():
         path=Path("/src")/rel
         try: source_bytes=path.read_bytes()
@@ -71,7 +79,7 @@ def audit(raw: object, receipt: object) -> list[str]:
             if by_target["/out"].get("RW") is not True or by_target["/out"].get("Source") != receipt.get("output_mount"):
                 e.append("output_mount_identity")
     finfo=receipt.get("formal_container_inspect",{})
-    if finfo.get("ConfigImage")!=IMAGE or finfo.get("State",{}).get("ExitCode")!=0 or finfo.get("State",{}).get("Status")!="exited":
+    if finfo.get("ConfigImage")!=IMAGE or finfo.get("Image")!=IMAGE or finfo.get("State",{}).get("ExitCode")!=0 or finfo.get("State",{}).get("Status")!="exited":
         e.append("formal_container_state_or_image")
     if finfo.get("Id") is None or finfo.get("Image") is None: e.append("formal_container_identity")
     try:
