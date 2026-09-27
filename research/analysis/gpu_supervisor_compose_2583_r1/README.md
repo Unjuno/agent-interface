@@ -17,7 +17,7 @@ This directory is an additive evidence bundle. It does not modify runtime code, 
 ## Evidence index
 
 - `INDEPENDENT_FRESH_ORACLE_RESULT.json` and `gpu_independent_fresh_oracle.py`: 160 independently declared fresh-valid oracle rows, 96 independent blocked rows, CPU/GPU agreement.
-- `INDEPENDENT_CPU_CUDA_ADDENDUM.json` and `gpu_independent_cpu_cuda_addendum.py`: same-weight CPU/GUDA agreement and fail-closed blocked-row oracle.
+- `INDEPENDENT_CPU_CUDA_ADDENDUM.json` and `gpu_independent_cpu_cuda_addendum.py`: same-weight CPU/CUDA agreement and fail-closed blocked-row oracle.
 - `FORMAL_SCOPED_RESULT.json`: original 256 synthetic traces, retained unchanged; its fresh-row oracle was partly self-derived and is not treated as independent.
 - `MUTATION_CONTROL_RESULT.json`: 96 forced-row hint mutations, 0 gate bypasses.
 - `GPU_RESIDENT_RESULT.json`, `GPU_RESIDENT_5SEED_RESULT.json`: resident/transfer contrasts.
