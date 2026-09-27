@@ -23,7 +23,8 @@ def audit(root: Path, source: Path):
                 "status": "FAIL_RAW_MISSING", "errors": ["required_file_missing"]}
     result = json.loads(result_path.read_text())
     allocation = result.get("allocation_id", "")
-    freeze_path = (base / "FREEZE_FORMAL04.json" if allocation.endswith("-04") else
+    freeze_path = (base / "FREEZE_FORMAL05.json" if allocation.endswith("-05") else
+                   base / "FREEZE_FORMAL04.json" if allocation.endswith("-04") else
                    base / "FREEZE_FORMAL03.json" if allocation.endswith("-03") else
                    freeze_v2 if allocation.endswith("-02") else freeze_v1)
     freeze = json.loads(freeze_path.read_text())

@@ -1,0 +1,29 @@
+{
+  "allocation_id": "ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-05",
+  "issue": 3311,
+  "predecessors": [
+    {"allocation_id": "ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-01", "disposition": "STOP_CONTAINER_ENTRYPOINT_PREEMPTED_RUNNER"},
+    {"allocation_id": "ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-02", "disposition": "STOP_PID_LIMIT_PREVENTED_GUI_FIXTURE_START"},
+    {"allocation_id": "ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-03", "disposition": "STOP_INTERFACE_RUNTIME_LIMIT_CONTRACT"},
+    {"allocation_id": "ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-04", "disposition": "STOP_PREFLIGHT_AST_EVALUATION_NAME_ERROR"}
+  ],
+  "base_commit": "f0b9ed74736729a4fdd04f2205a834a777befde1",
+  "hypothesis": "One live local Chromium/X11 task can use a fresh intermediate window observation after Save to select Confirm, complete one exact fixture submission, and refuse when the required intermediate state is not present.",
+  "test": {"tasks": 1, "task_token": "AI-3311-UNIT-01", "runner_invocations": 1, "retries": 0,
+    "model_calls": 0, "external_network": false,
+    "route": ["observe_EDITING", "admit_and_click_Save", "observe_CONFIRMING", "admit_and_click_Confirm", "observe_SAVED", "independent_exact_submission_score"],
+    "negative_control": "Confirm admission is refused unless the active X11 window is the same fixture window and its current title is exactly CONFIRMING."},
+  "container": {"image_id": "sha256:dff1c7b56201b4c299883655d98aee3b3f8d7c0c6dd1e4ad6320b942fb5d17fb",
+    "platform": "linux/arm64", "entrypoint": ["python3.11"], "network": "none",
+    "source_mount": "read-only", "cpus": 1, "memory_bytes": 2147483648, "pids_limit": 512},
+  "runtime_source": {"path": "research/live_control/compiled_gui_interface_v1.py",
+    "sha256": "93e47e1ab5ae3450bb4acf9ec9d21c9abc44ca93ffaee25683b22039d9a722ca"},
+  "page_sha256": "ae253611acb9c2686dbafd471eacbe499d67470c88b0e23aad7a575731caca59",
+  "harness_sha256": {
+    "research/integration/issue3311_intermediate_feedback_x11_v1/runner.py": "624d551eeda3d787d5dfb881af19c08cf79e08e439483eb5eac39271b9a7740f",
+    "research/integration/issue3311_intermediate_feedback_x11_v1/audit_raw.py": "b8259f7cdf07b5d4af3e33fcf3f51bbc0c4df304f9c1e4bb71650765187ef08c"
+  },
+  "preflight_sha256": "931ae3773eeea196f0d7726247820c7a5ec0e075ed335a578a267642457ebb9f",
+  "stop_rule": "Run the exact interface preflight once before GUI allocation. If it fails, stop without launching the GUI. If it passes, run the formal runner once. Stop at first launch, observation, admission, execution, effect, timeout, ambiguous state, or audit failure; no retry. Success requires one matching exact server-side submission, TASK_SUCCEEDED after two transitions, two fresh admissions, independent stage checks, and X11 pointer Button1-up readback after both clicks.",
+  "scope_limit": "One synthetic Chromium fixture and title-based local X11 observation. No provider/model, user data, matched baseline, multi-task reuse, measured economics, or #3311 six-task acceptance claim. Does not consume or replace #4710 formal-01."
+}

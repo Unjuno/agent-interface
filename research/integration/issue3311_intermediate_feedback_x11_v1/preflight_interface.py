@@ -14,8 +14,12 @@ node = next(item for item in ast.walk(tree)
             if isinstance(item, ast.Assign)
             and any(isinstance(target, ast.Name) and target.id == "interface"
                     for target in item.targets))
-candidate = eval(compile(ast.Expression(node.value), str(RUNNER), "eval"),
-                 {"window": 424242})
+namespace = {"window": 424242, "SURFACE": "issue3311-chromium-unit-v1"}
+loads = {item.id for item in ast.walk(node.value)
+         if isinstance(item, ast.Name) and isinstance(item.ctx, ast.Load)}
+missing_names = sorted(loads - set(namespace))
+assert not missing_names, f"unbound interface expression names: {missing_names}"
+candidate = eval(compile(ast.Expression(node.value), str(RUNNER), "eval"), namespace)
 validated = validate(candidate)
 assert validated["method"]["max_runtime_ms"] <= 10_000
 assert validated["method"]["max_transitions"] == 2
