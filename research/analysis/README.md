@@ -321,4 +321,3 @@ python research/analysis/check_index.py --write  # refresh generated directory l
 ```
 
 The checker compares the generated block against every child directory with a retained `REPORT.md` or `FORMAL_FAILURE.md`. PLAN-only/in-progress directories do not enter the generated index until a retained result/failure artifact exists. The curated table above may remain selective because completeness is enforced by the generated block.
-
