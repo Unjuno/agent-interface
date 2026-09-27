@@ -20,7 +20,7 @@ No retries, tuning, alternate seeds, threshold changes, or substitute images aft
 
 ## Model definition
 
-Input channels are max-pooled 32×32 exact XGetImage per-pixel byte deltas plus the declared task ROI mask. The CPU CNN is Conv(2→4, 3×3), ReLU, Conv(4→4, 3×3), ReLU, adaptive max pool, and Linear(4→2); 194 trainable parameters. Seed 2188, Adam(lr=0.01), 120 full-batch steps, cross entropy. Suppress only if irrelevant probability ≥0.98; critical ROI overrides with FULL_FORWARD. This is an offline experiment, not a runtime gate.
+Input channels are max-pooled 32×32 exact XGetImage per-pixel byte deltas plus the declared task ROI mask. The CPU CNN is Conv(2→4, 3×3), ReLU, Conv(4→4, 3×3), ReLU, adaptive max pool, and Linear(4→2); 234 trainable parameters. Seed 2188, Adam(lr=0.01), 120 full-batch steps, cross entropy. Suppress only if irrelevant probability ≥0.98; critical ROI overrides with FULL_FORWARD. This is an offline experiment, not a runtime gate.
 
 ## Provenance boundaries
 
