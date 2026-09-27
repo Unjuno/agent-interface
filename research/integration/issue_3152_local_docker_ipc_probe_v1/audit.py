@@ -9,9 +9,10 @@ errors=[]
 if result.get("schema") != "issue3152-local-docker-ipc-probe-v1": errors.append("schema")
 if result.get("formal_allocation_count") != 0 or result.get("prospective_freeze") is not False: errors.append("formal scope")
 probe=result.get("ipc_probe", {})
-if hashlib.sha256(transcript).hexdigest() != probe.get("protocol_transcript_sha256"): errors.append("transcript sha256")
+normalized=transcript.replace(b"\r\n", b"\n")
+if hashlib.sha256(normalized).hexdigest() != probe.get("protocol_transcript_sha256"): errors.append("LF-normalized transcript sha256")
 try:
-    events=[json.loads(line) for line in transcript.decode("utf-8").splitlines() if line]
+    events=[json.loads(line) for line in normalized.decode("utf-8").splitlines() if line]
 except Exception as exc:
     events=[]; errors.append("transcript JSONL: "+type(exc).__name__)
 threads=[e for e in events if e.get("type")=="thread.started"]
