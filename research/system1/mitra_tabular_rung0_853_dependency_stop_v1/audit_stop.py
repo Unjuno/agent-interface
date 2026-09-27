@@ -8,6 +8,12 @@ import re
 import sys
 
 
+def normalized_text(data):
+    """Ignore GitHub's trailing-blank-line display normalization only."""
+    data = data.replace(b"\r\n", b"\n").rstrip(b"\n")
+    return data + (b"\n" if data else b"")
+
+
 def audit(root):
     root = pathlib.Path(root)
     errors = []
@@ -17,15 +23,15 @@ def audit(root):
     provenance_raw = base64.b64decode((root / "ACQUISITION_PROVENANCE.json.raw.b64").read_text(encoding="ascii"))
     lock = (root / "requirements.lock").read_bytes()
     provenance_text = (root / "ACQUISITION_PROVENANCE.json").read_bytes()
-    if provenance_text.replace(b"\r\n", b"\n") != provenance_raw.replace(b"\r\n", b"\n"):
+    if normalized_text(provenance_text) != normalized_text(provenance_raw):
         errors.append("provenance_raw_text_mismatch")
     prov = json.loads(provenance_raw.decode("utf-8"))
     log = (root / "offline-install-import-preflight.log").read_bytes()
-    if lock.replace(b"\r\n", b"\n") != lock_raw.replace(b"\r\n", b"\n"):
+    if normalized_text(lock) != normalized_text(lock_raw):
         errors.append("lock_raw_text_mismatch")
-    if manifest_raw.replace(b"\r\n", b"\n") != (root / "wheelhouse-manifest.json").read_bytes().replace(b"\r\n", b"\n"):
+    if normalized_text(manifest_raw) != normalized_text((root / "wheelhouse-manifest.json").read_bytes()):
         errors.append("manifest_raw_text_mismatch")
-    if log.replace(b"\r\n", b"\n") != log_raw.replace(b"\r\n", b"\n"):
+    if normalized_text(log) != normalized_text(log_raw):
         errors.append("log_raw_text_mismatch")
     log_text = log.decode("utf-8", "replace")
     try:
