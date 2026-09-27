@@ -103,6 +103,13 @@ def capture(root_or_window, x, y):
     return image_bytes(img)
 
 
+def clear_exposed(root, d):
+    gc = root.create_gc(foreground=0x000000)
+    root.fill_rectangle(gc, START[0], START[1], W, H)
+    gc.free()
+    d.sync()
+
+
 def run_case(case_id, policy, schedule, repetition):
     # Use a distinct display number per serial case; Xvfb TCP is disabled and
     # the server accepts only the one temporary MIT-MAGIC-COOKIE authority.
@@ -119,6 +126,7 @@ def run_case(case_id, policy, schedule, repetition):
             try:
                 d = display.Display(env["DISPLAY"])
                 root = d.screen().root
+                background_pixels = capture(root, START[0], START[1])
                 win = root.create_window(START[0], START[1], W, H, 0,
                     d.screen().root_depth, X.InputOutput, X.CopyFromParent,
                     background_pixel=0x000000, override_redirect=1,
@@ -130,6 +138,7 @@ def run_case(case_id, policy, schedule, repetition):
                 initial_pixels = capture(win, 0, 0)
                 if schedule == "MOVE_BEFORE":
                     win.configure(x=MOVED[0], y=MOVED[1]); d.sync()
+                    clear_exposed(root, d)
 
                 if policy == "PINNED_SCREEN":
                     candidate_xy = START
@@ -142,6 +151,9 @@ def run_case(case_id, policy, schedule, repetition):
                 if schedule == "MOVE_BETWEEN":
                     # Directed check/use gap after root-coordinate resolution.
                     win.configure(x=MOVED[0], y=MOVED[1]); d.sync()
+                    clear_exposed(root, d)
+
+                exposed_pixels = capture(root, START[0], START[1]) if schedule != "STABLE" else None
 
                 t0 = time.monotonic_ns()
                 if policy == "WINDOW_CLIENT":
@@ -162,6 +174,9 @@ def run_case(case_id, policy, schedule, repetition):
                 "repetition": repetition, "display": display_no,
                 "initial_xy": initial_xy, "candidate_xy": list(candidate_xy) if candidate_xy else None,
                 "final_xy": final_xy, "initial_target_sha256": sha(initial_pixels),
+                "background_sha256": sha(background_pixels),
+                "exposed_root_sha256": sha(exposed_pixels) if exposed_pixels is not None else None,
+                "exposed_root_bytes": packed(exposed_pixels) if exposed_pixels is not None else None,
                 "candidate_sha256": sha(candidate), "oracle_sha256": sha(oracle),
                 "candidate_matches_oracle": candidate == oracle,
                 "candidate_capture_ns": [t0, t1],

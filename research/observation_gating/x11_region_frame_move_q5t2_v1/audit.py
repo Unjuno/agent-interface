@@ -70,6 +70,16 @@ def validate(rows, mode):
                 errors.append(f"resolved_coordinate:{i}")
             cand = decode(row["candidate_bytes"])
             oracle = decode(row["oracle_bytes"])
+            background = bytes(120 * 80 * 4)
+            if row.get("background_sha256") != digest(background):
+                errors.append(f"background_identity:{i}")
+            if row["schedule"] == "STABLE":
+                if row.get("exposed_root_bytes") is not None or row.get("exposed_root_sha256") is not None:
+                    errors.append(f"unexpected_exposure:{i}")
+            else:
+                exposed = decode(row["exposed_root_bytes"])
+                if exposed != background or row.get("exposed_root_sha256") != digest(exposed):
+                    errors.append(f"exposed_region:{i}")
             actual_match = cand == oracle
             if row["candidate_matches_oracle"] is not actual_match:
                 errors.append(f"match_flag:{i}")
@@ -84,7 +94,7 @@ def validate(rows, mode):
             t0, t1 = row["candidate_capture_ns"]
             if isinstance(t0, bool) or isinstance(t1, bool) or not isinstance(t0, int) or not isinstance(t1, int) or t1 < t0:
                 errors.append(f"clock:{i}")
-            if not row.get("xvfb_pid") or row.get("xvfb_returncode") != -15:
+            if not row.get("xvfb_pid") or row.get("xvfb_returncode") != 0:
                 errors.append(f"process_exit:{i}")
             for log_key in ("xvfb_stdout_sha256", "xvfb_stderr_sha256"):
                 value = row.get(log_key, "")
@@ -121,7 +131,7 @@ def corruption_controls(rows):
     mutate("bad_compressed_digest", lambda x: x[0]["candidate_bytes"].update(gzip_sha256="f"*64))
     mutate("bad_bytes_count", lambda x: x[0]["oracle_bytes"].update(bytes=0))
     mutate("reversed_clock", lambda x: x[0].update(candidate_capture_ns=[9, 1]))
-    mutate("wrong_exit", lambda x: x[0].update(xvfb_returncode=0))
+    mutate("wrong_exit", lambda x: x[0].update(xvfb_returncode=7))
     mutate("unsafe_authority", lambda x: x[0].update(authority_file_mode="0o644"))
     mutate("pixel_tamper", lambda x: x[0]["candidate_bytes"].update(data=base64.b64encode(gzip.compress(b"tampered", mtime=0)).decode("ascii")))
     return cases
