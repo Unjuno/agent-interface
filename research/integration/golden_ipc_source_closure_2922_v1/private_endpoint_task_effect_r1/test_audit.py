@@ -52,7 +52,7 @@ class TaskEffectAuditTests(unittest.TestCase):
             copied = base / "raw"
             shutil.copytree(RAW, copied)
             shutil.copy2(HERE / "SHA256SUMS", base / "SHA256SUMS")
-            (copied / "submitted.txt").write_text("value=wrong")
+            (copied / "session/submitted.txt").write_text("value=wrong")
             self.assertFalse(audit(row, REPO, copied)["checks"]["raw_saved_output_exact"])
 
     def test_rejects_changed_saved_page_claim(self):

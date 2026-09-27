@@ -52,7 +52,7 @@ def audit(result, repo, raw):
     runner = Path(repo) / "research/integration/golden_ipc_source_closure_2922_v1/private_endpoint_task_effect_r1/run_task_effect.py"
     checks["runner_hash"] = runner.is_file() and hashlib.sha256(runner.read_bytes()).hexdigest() == RUNNER_SHA256
     events_file = Path(raw) / "session/events.jsonl"
-    output_file = Path(raw) / "submitted.txt"
+    output_file = Path(raw) / "session/submitted.txt"
     try:
         events = [json.loads(x) for x in events_file.read_text().splitlines() if x]
         names = [e.get("event") for e in events]
@@ -92,7 +92,7 @@ def audit(result, repo, raw):
         } == receipt
     except (OSError, ValueError):
         pass
-    runner_rel = "../run_task_effect.py"
+    runner_rel = "run_task_effect.py"
     sums = Path(raw).parent / "SHA256SUMS"
     try:
         entries = [line.split(maxsplit=1) for line in sums.read_text().splitlines() if line]
@@ -105,7 +105,7 @@ def audit(result, repo, raw):
                 manifest_ok = False
             seen.add(name)
         expected_raw = {str(p.relative_to(sums.parent)) for p in (Path(raw)).rglob("*") if p.is_file()}
-        expected = expected_raw | {runner_rel, "REPORT.md", "audit.py", "test_audit.py"}
+        expected = expected_raw | {runner_rel, "REPORT.md", "audit.py", "test_audit.py", "write_manifest.py"}
         checks["sha256_manifest"] = manifest_ok and seen == expected
     except (OSError, ValueError):
         checks["sha256_manifest"] = False
