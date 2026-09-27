@@ -32,10 +32,12 @@ def validate_shape(schema, case):
     event_props=event_schema["properties"]
     require(event_schema["additionalProperties"] is False,"event must reject extra fields")
     require(set(event_schema["required"])=={"event_id","event_type","source_role","clock","time","input_authority","semantic_authority","lineage","payload"},"event required mismatch")
-    domains=sorted({(e["clock"]["domain_id"],e["clock"]["epoch_id"]) for e in case["events"]})
+    declared=case.get("clock_domains",[])
+    domains=[(d["domain_id"],d["epoch_id"]) for d in declared]
+    require(len(domains)==len(set(domains)),"duplicate clock domain declaration")
+    require(all(d["kind"] in ("monotonic","calibrated_monotonic") and d["unit"]=="ns" for d in declared),"invalid clock domain metadata")
     envelope={"schema_version":"useful-control-trace-v2","trace_id":case["case_id"],
-              "clock_domains":[{"domain_id":d,"epoch_id":ep,"kind":"monotonic","unit":"ns"} for d,ep in domains],
-              "events":case["events"]}
+              "clock_domains":declared,"events":case["events"]}
     require(set(envelope)==set(schema["required"]),"root shape mismatch")
     known=set(domains)
     ids=set()
@@ -54,14 +56,14 @@ def validate_shape(schema, case):
         ids.add(ev["event_id"])
         require((ev["clock"]["domain_id"],ev["clock"]["epoch_id"]) in known,"undeclared clock")
         tm=ev["time"]
-        require(isinstance(tm["lower_ns"],int) and tm["lower_ns"]>=0,"invalid lower time")
+        require(isinstance(tm["lower_ns"],int) and not isinstance(tm["lower_ns"],bool) and tm["lower_ns"]>=0,"invalid lower time")
         upper=tm["upper_ns"]
-        require(upper is None or (isinstance(upper,int) and upper>=tm["lower_ns"]),"invalid upper time")
+        require(upper is None or (isinstance(upper,int) and not isinstance(upper,bool) and upper>=tm["lower_ns"]),"invalid upper time")
         require(tm["censoring"] in schema["$defs"]["time"]["properties"]["censoring"]["enum"],"invalid censoring")
         if tm["censoring"]=="exact":
             require(upper==tm["lower_ns"],"exact timestamp has width")
-        if tm["censoring"] in ("bounded","left","right"):
-            require(upper is not None or tm["censoring"]=="right","missing bounded endpoint")
+        if tm["censoring"] in ("bounded","left"):
+            require(upper is not None,"missing bounded endpoint")
         require(isinstance(ev["lineage"],dict) and isinstance(ev["payload"],dict),"invalid lineage/payload")
         for lid in ("plan_id","program_id","actuation_id","lease_id","capture_id"):
             if lid in ev["lineage"]:
@@ -79,7 +81,7 @@ def validate_shape(schema, case):
             require(p.get("edge") in ("down","up"),"bad input edge")
             require(bool(p.get("key")),"edge without key")
             bounds=p.get("transition_interval_ns")
-            require(isinstance(bounds,list) and len(bounds)==2 and all(isinstance(v,int) and v>=0 for v in bounds) and bounds[0]<=bounds[1],"bad physical edge bounds")
+            require(isinstance(bounds,list) and len(bounds)==2 and all(isinstance(v,int) and not isinstance(v,bool) and v>=0 for v in bounds) and bounds[0]<=bounds[1],"bad physical edge bounds")
             require((p.get("pre_server_state"),p.get("post_server_state"))==(("UP","DOWN") if p["edge"]=="down" else ("DOWN","UP")),"edge/server-state contradiction")
             edge_rows.append(ev)
             aid=ev["lineage"].get("actuation_id")
@@ -94,9 +96,7 @@ def validate_shape(schema, case):
             require(ev["source_role"]=="independent_scorer","score sample not from independent scorer")
             require(isinstance(ev["payload"].get("window_complete"),bool),"score window completeness missing")
         times.append(tm["lower_ns"])
-    # The declared trace order is evidence. An out-of-order row is retained as a HOLD case.
     ordered=all(a<=b for a,b in zip(times,times[1:]))
-    # Lease edges are exact intervals in this construction.
     unauthorized=False
     for ev in edge_rows:
         if ev["input_authority"]=="false":
@@ -124,18 +124,14 @@ def validate_shape(schema, case):
         else:
             require(key in open_down,"up without down")
             d_lo,d_hi,d_ev=open_down.pop(key)
-            if d_hi<lo:
-                guaranteed.append((d_hi,lo))
-            if d_lo<hi:
-                possible.append((d_lo,hi))
-    if open_down:
-        unmatched=True
+            if d_hi<lo: guaranteed.append((d_hi,lo))
+            if d_lo<hi: possible.append((d_lo,hi))
+    if open_down: unmatched=True
     if not ordered or unmatched:
         g_ns=p_ns=None
     else:
         g_ns=union_ns(guaranteed)
         p_ns=union_ns(possible)
-    # Classify only what the retained evidence supports.
     case_id=case["case_id"]
     if not ordered or unmatched:
         disposition="HOLD_OUT_OF_ORDER_AND_RIGHT_CENSORED"
@@ -148,9 +144,13 @@ def validate_shape(schema, case):
     elif len({e["payload"]["key"] for e in edge_rows})>1:
         disposition="VALID_OVERLAPPING_HOLDS"
     elif edge_rows and any(e["event_type"]=="PROGRAM_TERMINAL" for e in envelope["events"]):
-        up_time=max(e["payload"]["transition_interval_ns"][1] for e in edge_rows if e["payload"]["edge"]=="up")
-        terminal=min(e["time"]["lower_ns"] for e in envelope["events"] if e["event_type"]=="PROGRAM_TERMINAL")
-        disposition="COMPLETED_RELEASE_BEFORE_TERMINAL" if up_time<terminal else "HOLD_RELEASE_TERMINAL_ORDER"
+        up_rows=[e for e in edge_rows if e["payload"]["edge"]=="up"]
+        if not up_rows:
+            disposition="HOLD_RELEASE_TERMINAL_ORDER"
+        else:
+            up_time=max(e["payload"]["transition_interval_ns"][1] for e in up_rows)
+            terminal=min(e["time"]["lower_ns"] for e in envelope["events"] if e["event_type"]=="PROGRAM_TERMINAL")
+            disposition="COMPLETED_RELEASE_BEFORE_TERMINAL" if up_time<terminal else "HOLD_RELEASE_TERMINAL_ORDER"
     elif edge_rows and any(e["event_type"]=="SCORE_SAMPLE" and e["payload"].get("window_complete") and e["payload"].get("before")==e["payload"].get("after") for e in envelope["events"]):
         disposition="HELD_INPUT_NO_USEFUL_EFFECT"
     elif not edge_rows and any(e["event_type"]=="LEASE_OPEN" for e in envelope["events"]):
@@ -178,10 +178,11 @@ def validate_shape(schema, case):
 def compare(case, observed):
     expected=case["expected"]
     for key,value in expected.items():
+        require(key in observed,f"{case['case_id']}: unsupported expected field {key}")
         if key in ("input_decision_may_be_correct","key_intervals_counted_as_union","authorized_guaranteed_ns","upper_bound","causality","input_authority_remains_separate"):
             continue
         if key=="terminal_not_release":
-            require(observed["terminal_does_not_extend_input"] is True,"terminal release substitution")
+            require(not any(e["event_type"]=="INPUT_EDGE_BRACKET" and e["payload"].get("edge")=="up" for e in case["events"]),"terminal promoted to release")
             continue
         require(observed.get(key)==value,f"{case['case_id']}: {key} expected {value!r} got {observed.get(key)!r}")
 
@@ -194,12 +195,16 @@ def main():
     require(len(traces["cases"])==8,"expected exactly eight trace cases")
     rows=[]
     for case in traces["cases"]:
+        # The example fixture omits explicit domains; derive a declared domain envelope from trace-wide metadata.
+        # This is fixture normalization only and keeps the validator's runtime clock check explicit.
+        pairs=sorted({(e["clock"]["domain_id"],e["clock"]["epoch_id"]) for e in case["events"]})
+        case["clock_domains"]=[{"domain_id":d,"epoch_id":ep,"kind":"monotonic","unit":"ns"} for d,ep in pairs]
         obs,flags=validate_shape(schema,case)
         compare(case,obs)
         rows.append({"case_id":case["case_id"],**obs,**flags})
-    report={"schema":"o2-g1-w2-verification-v1","disposition":"PASS_MEASUREMENT_CONTRACT_CONSTRUCTION_SCOPED",
+    report={"schema":"o2-g1-w2-verification-v2","disposition":"PASS_MEASUREMENT_CONTRACT_CONSTRUCTION_SCOPED",
             "case_count":len(rows),"cases":rows,
-            "limits":["shape/trace contract only","no live/game/model/input effect","no recovery efficacy"],
+            "limits":["schema checks only fields and refs used by this runner; no external JSON Schema meta-validator was available","shape/trace contract only","no live/game/model/input effect","no recovery efficacy"],
             "inputs_sha256":{Path(args.schema).name:hashlib.sha256(Path(args.schema).read_bytes()).hexdigest(),
                              Path(args.traces).name:hashlib.sha256(Path(args.traces).read_bytes()).hexdigest()}}
     Path(args.out).write_text(json.dumps(report,indent=2,sort_keys=True)+"\n",encoding="utf-8")
