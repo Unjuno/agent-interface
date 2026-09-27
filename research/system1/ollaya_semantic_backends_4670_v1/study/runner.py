@@ -58,21 +58,14 @@ def request_for(model, row):
         "model": model,
         "state": row["state"],
         "questions": questions,
-        "keep_alive": "0",
+        "keep_alive": "-1",
     }
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--model", required=True)
-    ap.add_argument("--warmup-id", action="append", default=[])
-    ap.add_argument("--workload", default="study/workload.jsonl")
-    ap.add_argument("--output", required=True)
-    ap.add_argument("--base-url", default="http://127.0.0.1:11435")
-    args = ap.parse_args()
-    rows = [json.loads(line) for line in Path(args.workload).read_text(encoding="utf-8").splitlines() if line.strip()]
+def main_runner(args, rows):
+    warmup_rows = [row for row in rows if row["id"] in args.warmup_id]
     with Path(args.output).open("w", encoding="utf-8", newline="\n") as out:
-        for row in rows:
+        for row in (warmup_rows if args.warmup_only else rows):
             payload = request_for(args.model, row)
             raw = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode()
             req = urllib.request.Request(args.base_url + "/api/decide", data=raw, headers={"Content-Type": "application/json"})
@@ -87,7 +80,7 @@ def main():
             wall_ms = (time.perf_counter_ns() - start) / 1e6
             elapsed_ms = wall_ms
             if response and isinstance(response.get("total_duration"), (int, float)):
-                elapsed_ms = max(0.0, (response["total_duration"] - response.get("load_duration", 0)) / 1e6)
+                elapsed_ms = response["total_duration"] / 1e6
             answer = None
             evidence_safe = None
             predicate_answers = {}
@@ -101,11 +94,26 @@ def main():
                       "request": payload, "status": status, "response": response,
                       "answer": answer, "evidence_safe": evidence_safe, "predicate_answers": predicate_answers,
                       "elapsed_ms": elapsed_ms, "wall_ms": wall_ms, "error": error,
+                      "api_load_ms": (response.get("load_duration", 0) / 1e6) if response else None,
+                      "api_eval_ms": (response.get("eval_duration", 0) / 1e6) if response else None,
                       "workload_sha256": hashlib.sha256(Path(args.workload).read_bytes()).hexdigest(),
                       "warmup": row["id"] in args.warmup_id}
             out.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
             out.flush()
             print(json.dumps({"id": row["id"], "answer": answer, "status": status, "elapsed_ms": round(elapsed_ms, 2), "warmup": row["id"] in args.warmup_id}), flush=True)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--model", required=True)
+    ap.add_argument("--warmup-id", action="append", default=[])
+    ap.add_argument("--warmup-only", action="store_true")
+    ap.add_argument("--workload", default="study/workload.jsonl")
+    ap.add_argument("--output", required=True)
+    ap.add_argument("--base-url", default="http://127.0.0.1:11435")
+    args = ap.parse_args()
+    rows = [json.loads(line) for line in Path(args.workload).read_text(encoding="utf-8").splitlines() if line.strip()]
+    main_runner(args, rows)
 
 
 if __name__ == "__main__":
