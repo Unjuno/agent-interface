@@ -40,7 +40,7 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
             a=self.row(await server.call_tool('interface_observe',args))
             await server.call_tool('interface_dispatch', {'program':{},'current_observation_seq':1,'current_binding_revision':1})
             b=self.row(await server.call_tool('interface_observe',args))
-            c=self.row(await server.call_tool('interface_dispatch', {'program':{},'current_observation_seq':2,'current_binding_revision':2}))
+            c=self.row(await server.call_tool('interface_dispatch', {'program':{},'current_observation_seq':2,'current_binding_revision':1}))
             report=json.loads(Path(c['call_directory'],'report.json').read_text())
             self.assertEqual(report['result']['error'],'INPUT_RECOVERY_REQUIRED')
             self.assertEqual(a['session']['session_id'],b['session']['session_id'])
@@ -111,5 +111,62 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
             report=json.loads(next(Path(td).glob('session-*-close.json')).read_text())
             self.assertEqual(report['status'],'closed')
 
+
+    async def test_explicit_review_preserves_recovery_and_invalidates_old_binding(self):
+        session=self.fixture();session.recovery_required=True
+        session.backend.targets={'fixture':SimpleNamespace(id=123)}
+        session.backend.d.create_resource_object.side_effect=lambda kind,wid: SimpleNamespace(id=wid)
+        evidence={'window_id':456,'transient_chain':[456,123],'geometry':[1,2,30,40]}
+        with tempfile.TemporaryDirectory() as td, self.selection(), patch(
+                'runtime.cli_v1.mcp_session.open_session',return_value=session), patch(
+                'runtime.cli_v1.mcp_session.inspect_focused_target',return_value=evidence):
+            server=create_server({'fixture':123},td,session_mode='persistent-x11')
+            inspection=self.row(await server.call_tool('interface_inspect_target',{'target':'fixture'}))
+            self.assertEqual(session.backend.targets['fixture'].id,123)
+            args={'target':'fixture','window_id':456,'review_id':inspection['review_id']}
+            reviewed=self.row(await server.call_tool('interface_review_target',args))
+            self.assertEqual(reviewed['binding_revision'],2)
+            self.assertEqual(session.backend.targets['fixture'].id,456)
+            self.assertTrue(session.recovery_required)
+            session.backend.release_all.assert_not_called()
+            session.backend.focus.assert_not_called()
+            again=self.row(await server.call_tool('interface_review_target',args))
+            self.assertEqual(again['status'],'needs_review')
+            stale=self.row(await server.call_tool('interface_dispatch',{'program':{},'current_observation_seq':1,'current_binding_revision':1}))
+            report=json.loads(Path(stale['call_directory'],'report.json').read_text())
+            self.assertEqual(report['error'],'SESSION_BINDING_REVISION_MISMATCH')
+            session.dispatch.assert_not_called()
+            current=self.row(await server.call_tool('interface_dispatch',{'program':{},'current_observation_seq':2,'current_binding_revision':2}))
+            report=json.loads(Path(current['call_directory'],'report.json').read_text())
+            self.assertEqual(report['result']['error'],'INPUT_RECOVERY_REQUIRED')
+            await server.call_tool('interface_close',{})
+
+    async def test_changed_target_review_does_not_mutate_registry(self):
+        session=self.fixture();session.backend.targets={'fixture':SimpleNamespace(id=123)}
+        with self.selection(), patch('runtime.cli_v1.mcp_session.open_session',return_value=session), patch(
+                'runtime.cli_v1.mcp_session.inspect_focused_target',side_effect=[
+                    {'window_id':456,'geometry':[1,2,30,40]},
+                    {'window_id':456,'geometry':[2,2,30,40]}]):
+            owner=MCPSessionOwner({'fixture':123})
+            inspected=owner.inspect_target('fixture')
+            with self.assertRaisesRegex(ValueError,'changed'):
+                owner.review_target('fixture',456,inspected['review_id'])
+            self.assertEqual(owner.targets,{'fixture':123})
+            self.assertEqual(owner.binding_revision,1)
+            self.assertIsNone(owner.target_review)
+            session.backend.d.create_resource_object.assert_not_called()
+            owner.close()
+
+    async def test_expired_target_review_requires_new_inspection(self):
+        session=self.fixture()
+        with self.selection(), patch('runtime.cli_v1.mcp_session.open_session',return_value=session), patch(
+                'runtime.cli_v1.mcp_session.inspect_focused_target',return_value={'window_id':456}), patch(
+                'runtime.cli_v1.mcp_session.time.monotonic_ns',side_effect=[0,30_000_000_001]):
+            owner=MCPSessionOwner({'fixture':123})
+            inspected=owner.inspect_target('fixture')
+            with self.assertRaisesRegex(ValueError,'expired'):
+                owner.review_target('fixture',456,inspected['review_id'])
+            self.assertEqual(owner.targets,{'fixture':123})
+            owner.close()
 
 if __name__=='__main__': unittest.main()

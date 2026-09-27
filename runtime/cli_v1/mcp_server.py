@@ -114,7 +114,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                   "state": "running", "arguments": deepcopy(kwargs),
                                   "backend_attempted": False, "persistence_failure": None}
             # Serialize before calling the backend. A persistence failure here sends no input.
-            request = {'operation': operation, 'arguments': kwargs, 'targets': targets,
+            request = {'operation': operation, 'arguments': kwargs, 'targets': deepcopy(owner.targets) if owner else targets,
                        'display_name': display_name}
             if owner is not None:
                 request['session'] = owner.snapshot()
@@ -136,11 +136,20 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             try:
                 if operation == 'close':
                     report = close_owner()
+                elif operation in ('inspect_target', 'review_target'):
+                    try:
+                        report = getattr(owner, operation)(**kwargs)
+                    except Exception as error:
+                        report = {'status': 'needs_review', 'error': repr(error),
+                                  'input_dispatched': False, 'authority_granted': False}
                 elif owner is not None:
                     session = owner.get()
                     options.pop('display_name')
                     if operation == 'observe':
                         report = observe_in_session(session, **options)
+                    elif options['current_binding_revision'] != owner.binding_revision:
+                        report = {'status': 'invalid_request', 'error': 'SESSION_BINDING_REVISION_MISMATCH',
+                                  'input_dispatched': False, 'operation_invoked': False}
                     else:
                         owner.dispatch_attempted = True
                         program = options.pop('program')
@@ -167,7 +176,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 persistence_error = repr(error)
                 with calls_lock:
                     calls[call_id]['persistence_failure'] = 'report'
-            result = (dict(report) if operation == 'close' else
+            result = (dict(report) if operation in ('close', 'inspect_target', 'review_target') else
                       present_result(report, call_root, compact=compact, report_refs=report_refs))
             if owner is not None:
                 result['session'] = owner.snapshot()
@@ -205,6 +214,27 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         return await asyncio.shield(worker)
 
     if owner is not None:
+        @server.tool()
+        async def interface_inspect_target(target: StrictStr) -> CallToolResult:
+            """Read the focused managed client in this target's configured transient family.
+
+            Does not select, focus or send input. Returns a one-use 30s review ID.
+            WM metadata is not authenticated identity or atomic with screenshots.
+            """
+            return await submit('inspect_target', {'target': target}, False, False)
+
+        @server.tool()
+        async def interface_review_target(target: StrictStr, window_id: StrictInt,
+                                          review_id: StrictStr) -> CallToolResult:
+            """Explicitly select the inspected client after rechecking its evidence.
+
+            Sends no input, never clears recovery, consumes the review ID and
+            advances the session binding revision. Capture the selected surface
+            before dispatch; use the returned revision in new source assertions.
+            """
+            return await submit('review_target', {'target': target, 'window_id': window_id,
+                                                 'review_id': review_id}, False, False)
+
         @server.tool()
         async def interface_close() -> CallToolResult:
             """Close this owned connection, retaining cleanup evidence; never reopen.
