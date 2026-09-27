@@ -380,3 +380,5 @@ latency measurement, and no fresh GUI trial is implied. Real MCP retrieval on
 five retained stages preserved images and exact full receipts without modifying
 request bytes or modification times. Further primary-use evaluation is needed
 before changing the default.
+
+A subsequent [primary two-app trial](../../runtime/results/native-primary-brief-01/README.md) completed both saved effects using brief output, while retaining recovery errors and one caller schema failure. It does not establish a performance improvement.
