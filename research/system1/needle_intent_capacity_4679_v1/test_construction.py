@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Zero-optimizer construction checks for the frozen width comparison."""
 import unittest
+import tempfile
+from pathlib import Path
 
 import torch
 
@@ -64,6 +66,17 @@ class ConstructionTests(unittest.TestCase):
         self.assertEqual(runner.WIDTH_CANDIDATE, 64)
         self.assertEqual(runner.WIDTH_REFERENCE, 24)
         # No call to fit is made in this suite; optimizer-step count is zero.
+
+    def test_output_mount_accepts_empty_but_refuses_nonempty_directory(self):
+        with tempfile.TemporaryDirectory() as temp:
+            output = Path(temp) / "mounted-output"
+            output.mkdir()
+            self.assertEqual(runner.prepare_output(output), output)
+            sentinel = output / "preserve.txt"
+            sentinel.write_text("do not overwrite", encoding="utf-8")
+            with self.assertRaisesRegex(SystemExit, "STOP_OUTPUT_NOT_EMPTY"):
+                runner.prepare_output(output)
+            self.assertEqual(sentinel.read_text(encoding="utf-8"), "do not overwrite")
 
 
 if __name__ == "__main__":

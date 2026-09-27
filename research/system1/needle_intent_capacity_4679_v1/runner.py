@@ -116,6 +116,19 @@ def parameter_count(input_dim, width):
     return (input_dim * width + width) + (width * width + width) + (width * len(CLASSES) + len(CLASSES))
 
 
+def prepare_output(path):
+    """Accept a pre-created empty Docker bind mount, but never overwrite data."""
+    path = Path(path)
+    if path.exists():
+        if not path.is_dir():
+            raise SystemExit("STOP_OUTPUT_NOT_DIRECTORY")
+        if next(path.iterdir(), None) is not None:
+            raise SystemExit("STOP_OUTPUT_NOT_EMPTY")
+    else:
+        path.mkdir(parents=True)
+    return path
+
+
 def fit(train_x, train_y, input_dim, width, model_seed):
     torch.manual_seed(model_seed)
     model = Net(input_dim, width)
@@ -195,10 +208,7 @@ def main():
     args = parser.parse_args()
     if not args.formal:
         raise SystemExit("construction-only by default; pass --formal for the single preregistered allocation")
-    out = Path(args.out)
-    if out.exists():
-        raise SystemExit("STOP_OUTPUT_ALREADY_EXISTS")
-    out.mkdir(parents=True)
+    out = prepare_output(Path(args.out))
     for seed in SEEDS:
         result = run_seed(seed)
         path = out / f"seed_{seed}.json"

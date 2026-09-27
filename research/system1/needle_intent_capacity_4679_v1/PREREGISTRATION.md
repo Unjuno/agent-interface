@@ -12,7 +12,7 @@ Three fresh base seeds: 4153101, 4153103, 4153107. For each seed, train states u
 
 Arms: STATE_ONLY_24 (6→24→24→4), INTENT_AWARE_24 (10→24→24→4), and INTENT_AWARE_64 (10→64→64→4); two tanh hidden layers. Full-batch cross-entropy AdamW, lr 0.006, weight decay 1e-4, exactly 900 steps per fit. One fit per arm per seed, nine fits total. No retry, tuning, replacement seed, or post-result extension. Invalid/unknown intent interface controls YIELD without model calls.
 
-Authority-neutral synthetic shadow evaluation only. Docker image `sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e`, Docker 29.8.0, Linux/amd64 CPU, Python 3.12.14, PyTorch 2.5.1+cpu, one CPU/thread, 2 GiB, 64 PIDs, network none, read-only source and root. Trainer and independent auditor are separate containers with isolated output mounts. No GUI, user data, provider, action dispatch, or model promotion.
+Authority-neutral synthetic shadow evaluation only. Docker image `sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e`, Docker 29.8.0, Linux/amd64 CPU, Python 3.12.14, PyTorch 2.5.1+cpu, one CPU/thread, 2 GiB, 64 PIDs, network none, read-only source and root. Trainer and independent auditor are separate containers with isolated output mounts. The runner accepts a host-precreated empty output mount, refuses a nonempty mount, and never overwrites prior output. No GUI, user data, provider, action dispatch, or model promotion.
 
 ## D
 
