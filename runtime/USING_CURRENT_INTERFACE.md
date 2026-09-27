@@ -150,9 +150,14 @@ Native MCP checks explicitly supplied text gaps, key repetitions and their
 expanded tail capacity before publishing a stage request. Invalid compact
 syntax returns a tool validation error; the owner receives no request from
 that call. Valid requests keep their original compact representation.
-This checks explicit syntax only: configured default pacing can expand an
-otherwise unpaced tail further, and ordinary source, target, capability and
-lease checks still apply at execution. A passed syntax check is not admission.
+When text-policy.json records the harness pacing, submission also checks tail
+capacity after applying that default, while preserving the original request.
+Explicit per-operation gaps (including zero) still override the default. An invalid
+recorded policy rejects new input; observation, finish and exact-request resume
+remain available. Historical runs without a policy retain explicit-syntax checks
+only. The record is configuration evidence, not an atomic runtime guarantee;
+ordinary source, target, capability and lease checks still apply at execution.
+A passed syntax check is not admission.
 
 Initial native context includes the recorded `text_policy` when available.
 Its `value.gap_ms` is the harness default for text operations that omit

@@ -12,7 +12,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, Stri
 
 from agent_review import review_native
 from native_exchange_v1 import run
-from native_tail_v1 import expand_tail
+from native_tail_v1 import expand_tail, paced_text_tail
 
 
 WaitSeconds = Annotated[StrictInt | StrictFloat, Field(ge=0, le=30,
@@ -79,6 +79,22 @@ class NativeDecision(BaseModel):
             raise ValueError('keyboard requires explicit text or key_chord input; '
                              'for a fresh image use only source_sequence and interaction=observe')
         return self
+
+
+def validate_recorded_tail(root, decision):
+    """Check known harness pacing without changing the submitted decision."""
+    if decision.finish or decision.interaction == 'observe':
+        return
+    try:
+        policy = json.loads((root/'text-policy.json').read_bytes())
+    except FileNotFoundError:
+        return  # Historical attached runs may have no recorded policy.
+    if (not isinstance(policy, dict) or type(policy.get('gap_ms')) is not int
+            or policy['gap_ms'] not in (0, 2, 10)
+            or type(policy.get('default_changed')) is not bool):
+        raise ValueError('invalid recorded text policy; input was not published by this call')
+    expand_tail(paced_text_tail(decision.tail, policy['gap_ms']),
+                max_ops=123 if decision.interaction == 'click' else 126)
 
 
 def session_context(root):
@@ -245,6 +261,7 @@ def create_server(run_directory, *, allocation=None):
         def submit():
             if allocation is not None and allocation.status()['status'] != 'ready':
                 raise ValueError('managed input requires this server to own a live ready allocation')
+            validate_recorded_tail(root, decision)
             return with_process_snapshot(run(root, stage, decision.model_dump(mode='json', exclude_unset=True),
                        timeout=timeout, compact=True))
         return invoke(submit)
