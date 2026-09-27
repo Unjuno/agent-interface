@@ -19,10 +19,15 @@ def main(stop_path, freeze_path):
     observed = stop.get("observed_image", {})
     if expected.get("id") != freeze.get("image", {}).get("id") or observed.get("id") != expected.get("id"): errors.append("image_identity")
     if expected.get("numpy") != "1.24.2" or observed.get("numpy_spec") is not None: errors.append("numpy_observation")
+    runtime = stop.get("runtime_probe", {})
+    if runtime.get("exit_code") != 0 or "3.11.16" not in runtime.get("stdout", "") or "numpy None" not in runtime.get("stdout", ""):
+        errors.append("runtime_probe")
     preflight = stop.get("preflight", {})
     if preflight.get("exit_code") != 1 or "ModuleNotFoundError: No module named 'numpy'" not in preflight.get("stderr", ""): errors.append("preflight_trace")
     if preflight.get("training_started") is not False or preflight.get("gpu_requested") is not False: errors.append("execution_boundary")
-    result = {"schema": "tiny-visual-extent-readout-stop-audit-v1", "decision": "PASS_STOP_EVIDENCE_INTEGRITY" if not errors else "FAIL_STOP_EVIDENCE_INTEGRITY", "checks": 10, "errors": errors, "formal_fits": 0, "construction_fits": 0}
+    if preflight.get("network") != "none" or preflight.get("source_mount") != "read-only" or preflight.get("rootfs") != "read-only": errors.append("sandbox")
+    if preflight.get("cpu_limit") != 1 or preflight.get("memory_limit") != "2g" or preflight.get("pids_limit") != 64: errors.append("resource_limits")
+    result = {"schema": "tiny-visual-extent-readout-stop-audit-v1", "decision": "PASS_STOP_EVIDENCE_INTEGRITY" if not errors else "FAIL_STOP_EVIDENCE_INTEGRITY", "checks": 12, "errors": errors, "formal_fits": 0, "construction_fits": 0}
     print(json.dumps(result, sort_keys=True))
     return 0 if not errors else 2
 
