@@ -6,6 +6,7 @@ on:
       - main
       - integration/runtime-cli-v1-20260917
     paths:
+      - 'research/analysis/gpu_grounding_template_diversity_2912_v2/**'
       - 'runtime/cli_v1/**'
       - 'runtime/motor_state_v1/**'
       - 'runtime/selector_v1/**'
@@ -15,6 +16,7 @@ on:
       - '.github/workflows/runtime-cli-v1.yml'
   pull_request:
     paths:
+      - 'research/analysis/gpu_grounding_template_diversity_2912_v2/**'
       - 'runtime/cli_v1/**'
       - 'runtime/motor_state_v1/**'
       - 'runtime/selector_v1/**'
@@ -34,6 +36,9 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Enable Windows long paths
+        if: runner.os == 'Windows'
+        run: git config --global core.longpaths true
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1

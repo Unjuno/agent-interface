@@ -121,6 +121,13 @@ key repetitions and all other operations together must fit the 128-operation
 limit. Waits consume the caller's lease. See the
 [public text pacing contract](cli_v1/README.md) for validation and source mapping.
 
+[Calc pacing follow-ups](results/calc-text-pacing-01/README.md) reproduced repeated-digit
+loss through public dispatch despite completed receipts. In one held-out eight-string
+sample, explicit 1, 2 and 10-ms gaps each saved all values correctly; zero gaps saved
+four. A caller can try a small explicit gap under comparable conditions and verify
+the resulting text. This is not a universal default or an application-readiness
+barrier, and uncertain input should not be blindly repeated.
+
 Split a sequence when the next action depends on a new image: submit the first
 program, inspect its result, then choose the next. An `observe` inside a program
 records an image; it does not suspend the remaining operations for model judgment.

@@ -1,0 +1,47 @@
+{
+  "benchmark": false,
+  "binaries": {
+    "Xvfb": {
+      "path": "/usr/bin/Xvfb",
+      "sha256": "4efd5850f0d98c587195ef77be92916dd1578fb725ddd1b2d95d232042813c5e"
+    },
+    "xauth": {
+      "path": "/usr/bin/xauth",
+      "sha256": "39e89b8530af1402b6b6f845309fc5a578c9ef9105412fa7198927ce92e7199d"
+    }
+  },
+  "clock": {
+    "adjustable": false,
+    "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+    "monotonic": true,
+    "resolution": 1e-09
+  },
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+  "cpus": 5,
+  "docker": null,
+  "executable": "/opt/pyvenv/bin/python",
+  "executable_sha256": "17b78e0a93175e86f9ac03141924fd7a7f0c0c52e66b34bfa0de20ffef989df1",
+  "frequency_controlled": false,
+  "gh": null,
+  "image_attestation": null,
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "python_xlib": [
+    0,
+    15
+  ],
+  "screen": [
+    640,
+    360,
+    24
+  ],
+  "tk_interpreter": "8.6.16",
+  "xlib_init_sha256": "2799b37f544bfadf7173eb64649ac2c7d2fbe1cf6fd8a8bba35b3da0836a9893"
+}
