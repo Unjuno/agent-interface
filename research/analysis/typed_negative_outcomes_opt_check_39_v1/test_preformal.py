@@ -21,10 +21,11 @@ CONTROLS={
 
 class OptimizationControls(unittest.TestCase):
     def invoke(self, mode, candidate=CANDIDATE):
-        env=None
+        env=os.environ.copy()
+        env.pop("PYTHONOPTIMIZE",None)
         if mode=="opt_flag": args=[sys.executable,"-O",str(candidate)]
         elif mode=="env_opt":
-            env=os.environ.copy(); env["PYTHONOPTIMIZE"]="1"; args=[sys.executable,str(candidate)]
+            env["PYTHONOPTIMIZE"]="1"; args=[sys.executable,str(candidate)]
         else: args=[sys.executable,str(candidate)]
         return subprocess.run(args,capture_output=True,text=True,env=env)
 
@@ -69,11 +70,12 @@ class OptimizationControls(unittest.TestCase):
             "{'outcome':'BLOCKED','retryable':True},{'probe':'hard-outcome'})"
         )
         for mode in ("normal","opt_flag","env_opt"):
-            env=None
+            env=os.environ.copy()
+            env.pop("PYTHONOPTIMIZE",None)
             args=[sys.executable,"-c",code]
             if mode=="opt_flag": args=[sys.executable,"-O","-c",code]
             elif mode=="env_opt":
-                env=os.environ.copy(); env["PYTHONOPTIMIZE"]="1"
+                env["PYTHONOPTIMIZE"]="1"
             result=subprocess.run(args,capture_output=True,text=True,env=env)
             self.assertNotEqual(result.returncode,0,(mode,result.stdout,result.stderr))
             self.assertIn("budget_changed_hard_outcome",result.stderr)
