@@ -31,6 +31,8 @@ class PrivateSession(suite.Session):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--route", choices=["persistent", "direct"], default="persistent")
+    parser.add_argument('--primary-review', action='store_true',
+                        help='require primary image/receipt review before advancing each task')
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--seed", type=int, default=991083)
     parser.add_argument("--negative-task", choices=[f'task-{i}' for i in range(1, 7)],
@@ -75,11 +77,19 @@ def main():
         goal, history, server = integrated.prepare(session, 'chromium', args.seed, args.chromium)
         fixture = integrated._ACTIVE[str(history)]
         save('goal.json', goal)
-        save('allocation.json', {'negative_task': args.negative_task, 'route': args.route})
+        save('allocation.json', {'negative_task': args.negative_task, 'route': args.route,
+                                 'primary_review': args.primary_review})
         window = next(line.split()[0] for line in session.windows().splitlines()
                       if 'about:blank' in line)
         targets = {'browser': int(window, 16)}
         bridge = NativeHandleBridge(session.name, targets, 'browser', out/'bridge')
+
+        def review(row):
+            if args.primary_review:
+                from native_primary_review_v1 import review_task
+                source = bridge.observe()
+                row['primary_review'] = review_task(out, row['task_id'], source, row)
+                save('tasks.json', rows)
 
         def navigate(task):
             started = time.monotonic_ns()
@@ -129,6 +139,7 @@ def main():
                 result = dispatch(program, targets, current_observation_seq=source['sequence'],
                                   current_binding_revision=source['binding_revision'], display_name=session.name)
                 row = {'task_id': task['task_id'], 'navigation': navigation, 'direct': result,
+                       'action_started_ns': started,
                        'dispatch_ms': (time.monotonic_ns()-started)/1e6}
                 rows.append(row)
                 save('tasks.json', rows)
@@ -137,10 +148,12 @@ def main():
                 feedback = bridge.feedback('AI INTEGRATED SAVED - Google Chrome for Testing',
                                           rejected_titles=['AI INTEGRATED REJECTED - Google Chrome for Testing'])
                 row['feedback'] = feedback
+                row['feedback_received_ns'] = time.monotonic_ns()
                 row['through_feedback_ms'] = (time.monotonic_ns()-started)/1e6
                 save('tasks.json', rows)
                 if feedback['status'] != 'matched':
                     raise RuntimeError('direct task feedback '+feedback['status']+'; no replay')
+                review(row)
                 continue
             before = bridge.backend.emissions
             started = time.monotonic_ns()
@@ -149,7 +162,8 @@ def main():
                 {'op': 'key_chord', 'keys': ['CTRL', 'A']},
                 {'op': 'text', 'text': token},
                 {'op': 'wait_update', 'timeout_ms': 100}])
-            row = {'task_id': task['task_id'], 'navigation': navigation, 'entered': entered}
+            row = {'task_id': task['task_id'], 'navigation': navigation, 'entered': entered,
+                   'action_started_ns': started}
             rows.append(row)
             save('tasks.json', rows)
             if entered['status'] != 'completed':
@@ -178,10 +192,12 @@ def main():
             feedback = bridge.feedback('AI INTEGRATED SAVED - Google Chrome for Testing',
                                       rejected_titles=['AI INTEGRATED REJECTED - Google Chrome for Testing'])
             row['feedback'] = feedback
+            row['feedback_received_ns'] = time.monotonic_ns()
             row['through_feedback_ms'] = (time.monotonic_ns()-started)/1e6
             save('tasks.json', rows)
             if feedback['status'] != 'matched':
                 raise RuntimeError('application feedback '+feedback['status']+'; no next task or input replay')
+            review(row)
         final = bridge.observe()
         save('final-source.json', final)
         save('evaluation.json', fixture.evaluate())
