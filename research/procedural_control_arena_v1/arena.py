@@ -138,68 +138,93 @@ class ArenaApp:
                 outline = "#f8fafc"
             self._shape(obj.x, obj.y, obj.radius, obj.shape, fill=fill, outline=outline, width=2)
 
+    def _draw_objective_sample(self, obj, *, border: str = "#22c55e", key: str | None = None) -> None:
+        """Render desired state/constraint without naming the mechanic or prescribing a motor sequence."""
+        c = self.canvas
+        r = self.session.spec.difficulty.objective_sample_radius
+        if key is None:
+            c.create_rectangle(18, 15, 116, 92, fill="#17202b", outline=border, width=3)
+            self._shape(67, 54, r, obj.shape, fill=PALETTE[obj.color], outline="#f8fafc", width=2)
+            return
+        c.create_rectangle(18, 15, 220, 92, fill="#17202b", outline=border, width=3)
+        c.create_rectangle(31, 32, 103, 75, fill="#273548", outline="#cbd5e1", width=2)
+        c.create_text(67, 54, text=key.upper(), fill="#f8fafc", font=("TkFixedFont", 11, "bold"))
+        c.create_text(124, 54, text="+", fill="#94a3b8", font=("TkDefaultFont", 18, "bold"))
+        self._shape(174, 54, r, obj.shape, fill=PALETTE[obj.color], outline="#f8fafc", width=2)
+
     def _render(self) -> None:
         c = self.canvas
         c.delete("all")
-        d = self.session.spec.difficulty
-        instruction = self.session.instruction()
-        stage_name = "DONE" if self.session.done else self.session.stage.kind.upper()
-        remaining = 0.0 if self.session.done else max(0.0, self.session.deadline() - self.session.stage_elapsed)
-
         c.create_rectangle(0, 0, WIDTH, HEIGHT, fill="#10151c", outline="")
-        c.create_text(12, 10, anchor="nw", text=instruction, width=WIDTH-24, fill="#f8fafc",
-                      font=("TkDefaultFont", d.instruction_font_px, "bold"))
-        c.create_text(12, 76, anchor="nw", text=f"stage {self.session.stage_index+1 if not self.session.done else len(self.session.spec.stages)}/{len(self.session.spec.stages)}  {stage_name}  t={remaining:0.2f}s",
-                      fill="#93c5fd", font=("TkFixedFont", 11, "bold"))
         c.create_line(0, PLAY_TOP-2, WIDTH, PLAY_TOP-2, fill="#475569", width=2)
 
+        # Scorer result, failure reason, seed/fingerprint and hidden stage identity remain evaluator-only.
         if self.session.done:
-            fill = "#14532d" if self.session.success else "#7f1d1d"
-            title = "PASS" if self.session.success else f"FAIL · {self.session.failure_reason}"
-            c.create_rectangle(135, 180, WIDTH-135, 330, fill=fill, outline="#e2e8f0", width=3)
-            c.create_text(WIDTH/2, 225, text=title, fill="#f8fafc", font=("TkDefaultFont", 25, "bold"))
-            c.create_text(WIDTH/2, 275, text=f"fingerprint {self.session.spec.public_fingerprint()}", fill="#cbd5e1", font=("TkFixedFont", 11))
+            c.create_rectangle(165, 205, WIDTH-165, 305, fill="#17202b", outline="#64748b", width=2)
+            c.create_text(WIDTH/2, 255, text="SESSION COMPLETE", fill="#cbd5e1",
+                          font=("TkDefaultFont", 20, "bold"))
             return
 
+        d = self.session.spec.difficulty
         kind, p = self.session.stage.kind, self.session.stage.payload
+
         if kind == "move":
             x, y, r = p["zone_x"], p["zone_y"], p["zone_radius"]
             c.create_oval(x-r, y-r, x+r, y+r, outline="#e2e8f0", width=3, dash=(8,4))
-            c.create_text(x, y, text="GOAL", fill="#cbd5e1", font=("TkDefaultFont", 10, "bold"))
             px, py = self.session.player_x, self.session.player_y
             c.create_polygon(px, py-11, px-9, py+10, px+9, py+10, fill="#f8fafc", outline="#0f172a")
             return
 
-        if kind in {"target", "switch", "combo", "recovery"}:
+        if kind in {"target", "combo", "recovery"}:
+            target = self.session._object_by_id(p["target_id"])
+            self._draw_objective_sample(
+                target,
+                border="#22c55e",
+                key=str(p["required_key"]) if kind == "combo" else None,
+            )
             self._draw_objects()
-            if kind == "switch" and self.session.stage_elapsed < float(p["wait_seconds"]):
-                c.create_text(WIDTH/2, PLAY_TOP+28, text="WAIT — DO NOT CLICK", fill="#facc15", font=("TkDefaultFont", 16, "bold"))
-            if kind == "recovery" and self.session.recovery_triggered:
-                c.create_text(WIDTH/2, PLAY_TOP+28, text="INTERRUPTED — REACQUIRE", fill="#fb7185", font=("TkDefaultFont", 14, "bold"))
+            return
+
+        if kind == "switch":
+            pending = self.session.stage_elapsed < float(p["wait_seconds"])
+            target_id = p["prepared_id"] if pending else p["active_id"]
+            target = self.session._object_by_id(target_id)
+            self._draw_objective_sample(target, border="#f59e0b" if pending else "#22c55e")
+            # A status lamp exposes readiness as world state without imperative WAIT/SWITCH prose.
+            c.create_oval(WIDTH-58, 31, WIDTH-28, 61,
+                          fill="#f59e0b" if pending else "#22c55e", outline="#f8fafc", width=2)
+            self._draw_objects()
             return
 
         if kind == "typing":
+            # The code itself is task data; the physical input recipe is intentionally not stated.
+            code = str(p["code"])
+            card_w = max(180, 22 * len(code))
+            left = (WIDTH-card_w)/2
+            c.create_rectangle(left, 18, left+card_w, 86, fill="#17202b", outline="#94a3b8", width=2)
+            c.create_text(WIDTH/2, 52, text=code, fill="#f8fafc", font=("TkFixedFont", 18, "bold"))
             tx, ty, tw, th = p["terminal_x"], p["terminal_y"], p["terminal_w"], p["terminal_h"]
             outline = "#22c55e" if self.session.terminal_focused else "#94a3b8"
             c.create_rectangle(tx, ty, tx+tw, ty+th, fill="#202630", outline=outline, width=3)
-            shown = self.session.text_buffer if self.session.terminal_focused else "click terminal"
-            c.create_text(tx+10, ty+th/2, anchor="w", text=shown, fill="#f2f2f2", font=("TkFixedFont", 13, "bold"))
+            shown = self.session.text_buffer + ("|" if self.session.terminal_focused else "")
+            c.create_text(tx+10, ty+th/2, anchor="w", text=shown, fill="#f2f2f2",
+                          font=("TkFixedFont", 13, "bold"))
             return
 
         if kind == "drag":
             slot_x, slot_y, tol = p["slot_x"], p["slot_y"], p["tolerance"]
-            c.create_oval(slot_x-tol, slot_y-tol, slot_x+tol, slot_y+tol, outline="#94a3b8", width=3, dash=(6,4))
-            c.create_text(slot_x, slot_y, text="SOCKET", fill="#94a3b8", font=("TkDefaultFont", 9, "bold"))
+            piece = self.session.objects[0]
+            self._shape(slot_x, slot_y, max(tol, piece.radius), piece.shape,
+                        fill="", outline=PALETTE[piece.color], width=3, dash=(6,4))
             self._draw_objects()
             return
 
         if kind == "assembly":
             for slot in p["slots"]:
-                self._shape(slot["x"], slot["y"], slot["radius"], slot["shape"], fill="", outline=PALETTE[slot["color"]], width=2, dash=(5,4))
+                self._shape(slot["x"], slot["y"], slot["radius"], slot["shape"],
+                            fill="", outline=PALETTE[slot["color"]], width=2, dash=(5,4))
             self._draw_objects()
             c.create_line(WIDTH*0.5, PLAY_TOP+12, WIDTH*0.5, PLAY_BOTTOM-12, fill="#334155", width=2)
-            c.create_text(WIDTH*0.25, PLAY_TOP+20, text="PIECES", fill="#94a3b8", font=("TkDefaultFont", 10, "bold"))
-            c.create_text(WIDTH*0.75, PLAY_TOP+20, text="GHOST SLOTS", fill="#94a3b8", font=("TkDefaultFont", 10, "bold"))
             return
 
         if kind == "trace":
@@ -208,10 +233,16 @@ class ArenaApp:
             c.create_line(*flat, fill="#64748b", width=max(2, int(p["tolerance"]*0.65)), smooth=True)
             for idx, (x,y) in enumerate(pts):
                 r = max(5, p["tolerance"]*0.42)
-                fill = "#22c55e" if idx <= self.session.trace_checkpoint and self.session.trace_started else "#1e293b"
-                c.create_oval(x-r, y-r, x+r, y+r, fill=fill, outline="#cbd5e1", width=2)
-            c.create_text(pts[0][0], pts[0][1]-18, text="START", fill="#f8fafc", font=("TkDefaultFont", 9, "bold"))
-            c.create_text(pts[-1][0], pts[-1][1]-18, text="END", fill="#f8fafc", font=("TkDefaultFont", 9, "bold"))
+                if idx == 0:
+                    fill, outline = "#22c55e", "#dcfce7"
+                elif idx <= self.session.trace_checkpoint and self.session.trace_started:
+                    fill, outline = "#22c55e", "#cbd5e1"
+                else:
+                    fill, outline = "#1e293b", "#cbd5e1"
+                c.create_oval(x-r, y-r, x+r, y+r, fill=fill, outline=outline, width=2)
+            ex, ey = pts[-1]
+            c.create_line(ex, ey, ex, ey-25, fill="#f8fafc", width=2)
+            c.create_polygon(ex, ey-25, ex+18, ey-18, ex, ey-12, fill="#f8fafc", outline="#f8fafc")
             return
 
     def _write_report(self) -> None:
