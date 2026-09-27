@@ -3,7 +3,6 @@ import argparse
 import json
 import math
 import random
-import statistics
 import time
 from pathlib import Path
 
@@ -11,7 +10,7 @@ import torch
 
 LABELS = ("LEFT", "RIGHT", "HOLD", "REACQUIRE", "YIELD", "NO_ACTION")
 NAMES = ("dx", "dy", "vx", "vy", "confidence", "obs_age", "intent_track", "intent_settle", "phase", "target_visible", "scope_current", "goal_complete")
-FEATS = 11
+FEATS = 12
 
 
 def oracle(x):
@@ -136,14 +135,14 @@ def mlp_predict(state, x):
 
 def metrics(xs, ys, preds):
     safe = [i for i, x in enumerate(xs) if x[9] > .5 and x[10] > .5 and x[11] < .5 and x[4] >= .28 and x[5] <= .72]
-        return {"coverage": sum(preds[i] == ys[i] for i in safe) / len(safe),
+    return {"coverage": sum(preds[i] == ys[i] for i in safe) / len(safe),
             "actionable_precision": sum(preds[i] == ys[i] for i in safe) / max(1, sum(preds[i] in (0,1,2) for i in safe)),
             "controls_exact": all(preds[i] == ys[i] for i in range(len(xs)) if i not in safe)}
 
 
 def controls():
     base = [.3, .1, 0., 0., .9, .1, 1., 0., .5, 1., 1., 0.]
-    return [base[:9] + [0., 1., 0.], base[:9] + [1., 0., 0.], base[:9] + [0., 1., 0.], base[:11] + [1.]]
+    return [base[:9] + [0., 1., 0.], base[:9] + [1., 0., 0.], base[:4] + [.2, .1] + base[6:], base[:11] + [1.]]
 
 
 def run(seed, out):
