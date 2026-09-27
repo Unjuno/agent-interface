@@ -62,10 +62,13 @@ def main(path):
         audit_arm(seed, raw["fixed_batch2"][i], True)
         if raw["single_row"][i]["updates"] != 8 or raw["fixed_batch2"][i]["updates"] != 4:
             fail(f"update_count_{seed}")
-    out = {"decision": "PASS_CONSTRUCTION_AUDIT", "seeds": list(SEEDS),
+    out = {"decision": "PARTIAL_RAW_METRIC_CONSISTENCY_ONLY", "seeds": list(SEEDS),
            "arms": 6, "curves": 54, "recomputed_metric_cells": 108,
            "errors": [], "formal_invocations": 0,
-           "scope": "construction only; fixed synthetic support-count/cadence boundary"}
+           "limitations": ["base parameter tensors were not retained, so base digest cannot be independently recomputed",
+                           "held-out logits were not recomputed from model tensors; metric recomputation uses retained logits",
+                           "optimizer/update transitions were not independently replayed"],
+           "scope": "construction-only log consistency; not an independent model-output audit"}
     print(json.dumps(out, sort_keys=True))
 
 
