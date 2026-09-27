@@ -1,0 +1,38 @@
+{
+  "schema": "map01-2447-clock-correction-v1",
+  "supersedes_interpretation_in": "research/doom/map01_temporal_multisubgoal_2447_docker_stop_v1/REPORT.md",
+  "preserves_original_report": true,
+  "construction_only": true,
+  "formal_issue2447_rows": 0,
+  "formal_retries": 0,
+  "gate": "PASS_ASYNC_CLOCK_READINESS",
+  "environment": {
+    "image_id": "sha256:b99a3444e7b2b05d159976d9ba60d9e90f212d47406c4b7aa7773e5042a28713",
+    "mode": "ASYNC_SPECTATOR",
+    "map": "MAP01",
+    "skill": 1,
+    "ticrate": 35,
+    "seed": 2447002,
+    "iwad": "wheel-bundled freedoom2.wad",
+    "iwad_bytes": 28787748,
+    "iwad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+    "x11": "gui_suite.Session: Xvfb 1280x800x24 + Openbox + private Xauthority/XDG; Doom window focused",
+    "source": {
+      "session_map01_v12_blob": "0ac2d3c1d84e27f87c68dd6cbcbbd82f90209747",
+      "gui_suite_blob": "d2e62dcbf7f1ec8ff2ecbd41f6f50475b08b5de5",
+      "real_app_suite_blob": "080428eaca8b150b9e700de01af8de7326944248"
+    }
+  },
+  "sequence": {
+    "startup_advance_action_calls": 1,
+    "tic_before": 16,
+    "passive_wait_seconds": 2.028917913001351,
+    "advance_action_calls_during_wait": 0,
+    "ending_advance_action_calls": 1,
+    "tic_after": 87,
+    "tic_delta": 71,
+    "minimum_tic_delta": 35,
+    "passed": true
+  },
+  "interpretation": "The previous bare-sleep probes omitted the project launcher’s startup-unpause, exact X11 session/focus and clock sampling sequence; their clock-defect inference was invalid. Preserve raw outcomes; supersede only the conclusion."
+}
