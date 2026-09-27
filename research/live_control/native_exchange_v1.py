@@ -113,6 +113,11 @@ def continuation(root, stage, max_stages, displayed):
             raise ValueError('next source differs from delivered image reference')
     except (OSError, ValueError, TypeError, KeyError) as error:
         return dict(base, status='needs_review', reason=str(error))
+    if 'review_recovery' in source:
+        return dict(base, status='observation_required', stage=next_stage,
+                    source_sequence=source['sequence'], source_sha256=hashlib.sha256(data).hexdigest(),
+                    allowed_decisions=['observe', 'finish'],
+                    scope='previous retained image only; failed window review forbids input')
     return dict(base, status='source_available', stage=next_stage,
                 source_sequence=source['sequence'], source_sha256=hashlib.sha256(data).hexdigest(),
                 scope='retained source at read time; existing source/admission checks still apply')
@@ -157,6 +162,9 @@ def run(run_directory, stage, decision=None, *, timeout=5, resume=False, compact
     source = json.loads((root / f'source-{stage}.json').read_bytes())
     if type(decision.get('source_sequence')) is not int or decision['source_sequence'] != source['sequence']:
         raise ValueError('decision must name the presented source')
+    if not resume:
+        from native_review_recovery_v1 import validate_recovery_decision
+        validate_recovery_decision(source, decision)
     payload = encoded(decision)
     digest = hashlib.sha256(payload).hexdigest()
     reply = root / f'reply-{stage}.json'

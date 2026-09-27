@@ -154,7 +154,7 @@ def create_server(run_directory, *, allocation=None):
 
     def with_process_snapshot(result):
         continuation = result.get('continuation', {})
-        if continuation.get('status') == 'source_available':
+        if continuation.get('status') in ('source_available', 'observation_required'):
             result['window_inventory'] = window_inventory(root, continuation.get('stage'))
         # Do not wait for exit, retry input, or let a polling error hide its receipt.
         if allocation is not None:
@@ -234,6 +234,8 @@ def create_server(run_directory, *, allocation=None):
         When continuation.status=source_available, view the returned image and
         use its stage/source_sequence for a new decision; no source-file read is
         needed. This is retained evidence, not freshness or permission to replay.
+        When continuation.status=observation_required, the image is historical:
+        only explicit observe or finish is accepted; never repeat prior input.
         Managed responses include a process snapshot; it may still be live.
         interaction=observe requests one fresh capture without input; include only
         source_sequence and interaction. It consumes a stage and does not finish.

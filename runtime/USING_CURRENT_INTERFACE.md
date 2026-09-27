@@ -170,6 +170,16 @@ listing is historical and grants no input authority. Missing or malformed
 context stays explicit, and ordinary guards still decide admission. See the
 [two-app saved-file validation and retained first failure](results/native-window-context-01/README.md).
 
+A native Calc/Inkscape window-review failure can return
+`continuation.status: "observation_required"`. Its image is the previous retained
+capture, not a view of the state after the action. Use the returned stage and
+source sequence to submit only `interaction: "observe"`, or explicitly finish.
+Further input is rejected before request publication until that review succeeds.
+The completed input receipt remains available; do not resend it. Each explicit
+observation consumes a stage, and exhausting the bound still stops the session.
+An action's `finish_after` is not applied when its window review fails. See the
+[failed baseline and successful live recovery](results/native-review-recovery-01/README.md).
+
 For the six-task primary-use runner, add `--primary-review` to either
 `--route persistent` or `--route direct` to pause after each successful local
 feedback result. View the printed image and retained task receipt, then
