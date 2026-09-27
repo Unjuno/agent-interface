@@ -77,7 +77,8 @@ def main():
     invalid_ok = False
     try: invalid_ok = payload_ok(bytes(invalid))[0]
     except Exception: pass
-    invalid_active_unchanged = ACTIVE.read_bytes() == before
+    after_invalid = ACTIVE.read_bytes()
+    invalid_active_unchanged = after_invalid == before
     if invalid_ok or not invalid_active_unchanged: errors.append('invalid_candidate_control')
     # Reset the diagnostic arm to the exact baseline, then expose an in-place candidate write.
     reset = OUT / 'diagnostic_reset.tmp'
@@ -100,6 +101,7 @@ def main():
               'candidate_tensor_identity':cand_obj['tensors']==base_obj['tensors'],
               'readers':N_READERS,'phase_order':phases,'query_schedule':{'readers':list(range(N_READERS)),'queries_per_reader':len(phases),'phase_order':phases,'validation_delay_ms':validation_delay_ms},'events':events,'errors':errors,
               'invalid_candidate_rejected':not invalid_ok,'invalid_candidate_active_unchanged':invalid_active_unchanged,
+              'invalid_active_before_sha256':sha(before),'invalid_active_after_sha256':sha(after_invalid),
               'safe_atomic_observations_ok':all(e['parse_ok'] and e['payload_ok'] and e['generation']==(3788 if e['phase'] in ('baseline','safe_staged_before_publish') else 3789) for e in events if e['phase'] in ('baseline','safe_staged_before_publish','safe_after_publish')),
               'unsafe_midpoint_detected':all((not e['parse_ok'] or not e['payload_ok']) for e in events if e['phase']=='unsafe_mid_write_diagnostic'),
               'unsafe_after_write_recovered':all(e['parse_ok'] and e['payload_ok'] and e['generation']==3789 for e in events if e['phase']=='unsafe_after_write'),
