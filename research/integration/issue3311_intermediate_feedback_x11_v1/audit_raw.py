@@ -23,7 +23,8 @@ def audit(root: Path, source: Path):
                 "status": "FAIL_RAW_MISSING", "errors": ["required_file_missing"]}
     result = json.loads(result_path.read_text())
     allocation = result.get("allocation_id", "")
-    freeze_path = (base / "FREEZE_FORMAL05.json" if allocation.endswith("-05") else
+    freeze_path = (base / "FREEZE_FORMAL06.json" if allocation.endswith("-06") else
+                   base / "FREEZE_FORMAL05.json" if allocation.endswith("-05") else
                    base / "FREEZE_FORMAL04.json" if allocation.endswith("-04") else
                    base / "FREEZE_FORMAL03.json" if allocation.endswith("-03") else
                    freeze_v2 if allocation.endswith("-02") else freeze_v1)
@@ -57,6 +58,7 @@ def audit(root: Path, source: Path):
             check(f"observation_{index}_sha", sha(file) == row.get("observation", {}).get("evidence_digest"))
     admissions = result.get("admissions", [])
     check("two_fresh_admissions", len(admissions) == 2 and all(x.get("result", {}).get("eligible") is True for x in admissions))
+    check("focused_window_matches_fixture", len(admissions) == 2 and all(x.get("focused_window") == str(result.get("window_id")) for x in admissions))
     check("admission_state_order", [x.get("title") for x in admissions] == ["EDITING", "CONFIRMING"])
     check("admission_sequence_matches", [x.get("result", {}).get("expected_sequence") for x in admissions] == [1, 2])
     terminals = result.get("terminals", [])
