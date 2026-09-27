@@ -79,11 +79,15 @@ def main():
     except Exception: pass
     invalid_active_unchanged = ACTIVE.read_bytes() == before
     if invalid_ok or not invalid_active_unchanged: errors.append('invalid_candidate_control')
+    # Reset the diagnostic arm to the exact baseline, then expose an in-place candidate write.
+    reset = OUT / 'diagnostic_reset.tmp'
+    with reset.open('wb') as f: f.write(base); f.flush(); os.fsync(f.fileno())
+    os.replace(reset, ACTIVE)
     # UNSAFE diagnostic: deliberate in-place truncation with an observable midpoint.
     with ACTIVE.open('wb') as f:
-        half = len(base) // 2; f.write(base[:half]); f.flush(); os.fsync(f.fileno())
+        half = len(candidate) // 2; f.write(candidate[:half]); f.flush(); os.fsync(f.fileno())
         barrier.wait(); barrier.wait()
-        f.write(base[half:]); f.flush(); os.fsync(f.fileno())
+        f.write(candidate[half:]); f.flush(); os.fsync(f.fileno())
     barrier.wait(); barrier.wait()
     for t in ts: t.join(timeout=5)
     if any(t.is_alive() for t in ts): errors.append('reader_join_timeout')
@@ -98,7 +102,7 @@ def main():
               'invalid_candidate_rejected':not invalid_ok,'invalid_candidate_active_unchanged':invalid_active_unchanged,
               'safe_atomic_observations_ok':all(e['parse_ok'] and e['payload_ok'] and e['generation']==(3788 if e['phase'] in ('baseline','safe_staged_before_publish') else 3789) for e in events if e['phase'] in ('baseline','safe_staged_before_publish','safe_after_publish')),
               'unsafe_midpoint_detected':all((not e['parse_ok'] or not e['payload_ok']) for e in events if e['phase']=='unsafe_mid_write_diagnostic'),
-              'unsafe_after_write_recovered':all(e['parse_ok'] and e['payload_ok'] and e['generation']==3788 for e in events if e['phase']=='unsafe_after_write'),
+              'unsafe_after_write_recovered':all(e['parse_ok'] and e['payload_ok'] and e['generation']==3789 for e in events if e['phase']=='unsafe_after_write'),
               'model_calls':0,'optimizer_steps':0,'authority_emissions':0}
     result['disposition'] = 'PASS_ATOMIC_PUBLICATION_CONSTRUCTION_SCOPED' if not errors and result['safe_atomic_observations_ok'] and result['unsafe_midpoint_detected'] and result['unsafe_after_write_recovered'] and result['invalid_candidate_rejected'] and result['invalid_candidate_active_unchanged'] else 'STOP_CONSTRUCTION_CONTRACT'
     (OUT/'raw.json').write_bytes(json.dumps(result,sort_keys=True,indent=2).encode()+b'\n')
