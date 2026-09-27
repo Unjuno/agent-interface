@@ -1,5 +1,8 @@
 {
   "schema": "effect-receipt-wal-allocation-freeze-v1",
+  "freeze_revision": 2,
+  "supersedes_freeze_commit": "65e46e3974",
+  "supersession_reason": "Before any experiment, final command review caught that construction.sh omitted the --construction selector; revision 2 binds the excluded 40-case matrix rather than accidentally launching the 150-row formal matrix.",
   "issue": 4945,
   "allocation": "effect-receipt-wal-vs-delete-3991-20260928-02",
   "branch": "research/effect-receipt-wal-3991-20260928-v2",
@@ -52,7 +55,7 @@
     "runner.py": "f5c09bccd6ea9a1d3e742595539078ee8359df91469245bc024af615903cd8b2",
     "audit.py": "ac525e5b97158b42f072005a37caa5459e259629e7b8a9f30ac8591750e99403",
     "test_audit.py": "dfba3c350c114ad3d7885c4a75ad8df25aa8e7f8e3179999a0fac219fe0b8d2f",
-    "construction.sh": "1a27fcc7f4c4128a0660560cd4d910827f1cd0a186056d7335987fb77b3bb500"
+    "construction.sh": "a831498a50ea9d215832b90d9142ff81ff52421f3a5623ae41d58dae6db1cda7"
   },
   "pre_execution_counts": {"construction_invocations": 0, "formal_invocations": 0, "retries": 0, "replacements": 0, "tuning": 0},
   "stop_rule": "Any construction failure permanently stops this allocation before formal. Formal is run exactly once; no retries, replacements, tuning, or pooling."
