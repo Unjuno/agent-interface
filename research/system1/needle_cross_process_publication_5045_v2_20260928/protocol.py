@@ -1,4 +1,4 @@
-"""Shared schema rules for Issue #5045 construction tests; not a formal runner."""
+"""Shared schema rules for Issue #5066 construction tests; not a formal runner."""
 from __future__ import annotations
 
 import hashlib
@@ -49,9 +49,10 @@ def candidate_from(package: dict[str, Any]) -> dict[str, Any]:
     candidate = copy.deepcopy(package)
     candidate["generation"] = NEW_GENERATION
     candidate["provenance"] = dict(candidate["provenance"])
-    candidate["provenance"]["allocation"] = "needle-cross-process-publication-5045-v1"
+    candidate["provenance"]["allocation"] = "needle-cross-process-publication-5045-v2-20260928-01"
     candidate["provenance"]["predecessor_issue"] = 3890
     candidate["payload_sha256"] = payload_digest(candidate)
     return candidate
+
 
 
