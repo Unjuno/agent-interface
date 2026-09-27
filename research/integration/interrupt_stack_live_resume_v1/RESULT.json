@@ -1,0 +1,28 @@
+{
+  "decision": "PASS_INTERRUPT_STACK_LIVE_RESUME_SCOPED",
+  "rows": 24,
+  "formal_batches": 2,
+  "formal_reruns": 0,
+  "replacements": 0,
+  "post_freeze_tuning": 0,
+  "audit_errors": [],
+  "corruption_controls_rejected": 12,
+  "candidate_unsafe_resumes": 0,
+  "pop_only_unsafe_resumes": 8,
+  "all_app_exit0": true,
+  "all_xvfb_exit0": true,
+  "all_terminal_key_states_neutral": true,
+  "normal_task_success": {"POP_ONLY": 2, "EVIDENCE_BOUND_RESUME": 2},
+  "target_replaced": {"POP_ONLY_final_a": ["b", "b"], "candidate_decision": ["REVALIDATE_TARGET", "REVALIDATE_TARGET"]},
+  "queue_changed_candidate": ["REPLAN_QUEUE", "REPLAN_QUEUE"],
+  "source_stale_candidate": ["YIELD_STALE", "YIELD_STALE"],
+  "pending_unknown_candidate": ["RECONCILE_RESULT", "RECONCILE_RESULT"],
+  "task_canceled": {"POP_ONLY": ["CANCELED", "CANCELED"], "EVIDENCE_BOUND_RESUME": ["CANCELED", "CANCELED"]},
+  "evidence_pack": {
+    "members": 21,
+    "member_bytes": 247872,
+    "decoded_json_sha256": "2a5e7c6739b1061928eb3f836fc2ef779101ca50b7ac4f29509e3e1485c7c29f",
+    "compressed_sha256": "494614baf0eab5166269e69a4ea5a48369114d9c43831ec416ec12fc1740cd50",
+    "encoded_sha256": "bcfa016925f9cebbe2fb0e95746607bc57fda31a0fd23f4a4e77190f411ac3e8"
+  }
+}

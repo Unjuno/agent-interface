@@ -1,0 +1,49 @@
+{
+  "allocation": "issue3204-model-facing-recovery-orbstack-02",
+  "max_skew_ms": 50,
+  "policies": [
+    "TYPED_EPOCH_AWARE_COMPOSER",
+    "LATEST_CHANNEL_WINS",
+    "BEST_EFFORT_MERGE",
+    "EPOCH_REJECT_ONLY"
+  ],
+  "scenarios": [
+    {
+      "id": "aligned",
+      "expected": "READY",
+      "task_id": "task-A",
+      "image": {"color": "green", "status": "READY", "epoch": 4, "capture_ms": 100, "arrival_ms": 110, "task_id": "task-A"},
+      "channels": [
+        {"channel": "ui_tree", "status": "READY", "epoch": 4, "capture_ms": 100, "arrival_ms": 111, "task_id": "task-A"},
+        {"channel": "state", "status": "READY", "epoch": 4, "capture_ms": 100, "arrival_ms": 112, "task_id": "task-A"}
+      ]
+    },
+    {
+      "id": "bounded_skew",
+      "expected": "READY",
+      "task_id": "task-A",
+      "image": {"color": "green", "status": "READY", "epoch": 7, "capture_ms": 200, "arrival_ms": 205, "task_id": "task-A"},
+      "channels": [
+        {"channel": "ui_tree", "status": "READY", "epoch": 7, "capture_ms": 230, "arrival_ms": 235, "task_id": "task-A"},
+        {"channel": "state", "status": "READY", "epoch": 7, "capture_ms": 240, "arrival_ms": 245, "task_id": "task-A"}
+      ]
+    },
+    {
+      "id": "cross_epoch_conflict",
+      "expected": "ABSTAIN",
+      "task_id": "task-A",
+      "image": {"color": "red", "status": "BLOCKED", "epoch": 8, "capture_ms": 300, "arrival_ms": 400, "task_id": "task-A"},
+      "channels": [
+        {"channel": "ui_tree", "status": "READY", "epoch": 9, "capture_ms": 390, "arrival_ms": 395, "task_id": "task-A"},
+        {"channel": "state", "status": "READY", "epoch": 9, "capture_ms": 392, "arrival_ms": 398, "task_id": "task-A"},
+        {"channel": "state", "status": "BLOCKED", "epoch": 8, "capture_ms": 310, "arrival_ms": 410, "task_id": "task-A"}
+      ]
+    }
+  ],
+  "answer_schema": {
+    "type": "object",
+    "properties": {"answer": {"type": "string", "enum": ["READY", "BLOCKED", "ABSTAIN"]}},
+    "required": ["answer"],
+    "additionalProperties": false
+  }
+}

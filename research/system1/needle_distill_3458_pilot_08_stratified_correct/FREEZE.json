@@ -1,0 +1,71 @@
+{
+  "schema": "needle-pilot08-stratified-correct-freeze-v1",
+  "issue": 4462,
+  "allocation": "needle-intent-distill-3458-pilot-08-stratified-correct",
+  "branch": "research/needle-pilot08-stratified-correct-20260926",
+  "additive_path": "research/system1/needle_distill_3458_pilot_08_stratified_correct/",
+  "base_main_sha": "cb2445ad77d31b089eb4e43780b377c6eb054fd5",
+  "formal_freeze_parent_sha": "cb2445ad77d31b089eb4e43780b377c6eb054fd5",
+  "predecessor": {
+    "issue": 3869,
+    "pilot06_result_sha256": "0878c39a68fe2abea218132b307ceff77df1e9a52291ba14186f2c8c423e37a7",
+    "pilot06_disposition": "FAIL_NEAR_BOUNDARY_SHIFT",
+    "correct_recall_by_seed": [0.1866825208, 0.0257985258, 0.3006060606]
+  },
+  "seeds": [3480, 3481, 3482],
+  "paired_arms": ["balanced_control", "targeted_augmented"],
+  "training_contract": {
+    "architecture": "6->16->16->3 tanh MLP",
+    "optimizer": "AdamW",
+    "learning_rate": 0.008,
+    "steps_per_arm_seed": 700,
+    "batch_size": 64,
+    "total_optimizer_steps": 4200,
+    "same_initial_weights_per_seed": true,
+    "same_minibatch_index_stream_per_seed": true,
+    "only_treatment_change": "replace 1024 of 2048 CORRECT training rows with 512 band-A and 512 band-B near-boundary rows"
+  },
+  "data_seed_map": {
+    "balanced_training_class_c": "seed+10+c",
+    "targeted_training_shifted_correct_band_a": "seed+40",
+    "targeted_training_shifted_correct_band_b": "seed+41",
+    "held_out_shift_suite_class_c": "seed+100+c",
+    "held_out_iid_suite_class_c": "seed+200+c",
+    "latency_probe": "balanced_class(1,2000,seed+300)"
+  },
+  "source_sha256": {
+    "runner.py": "1f689be47424c337d4573ca5eebfff35f807ee0c6dc010d7ff8ec8904ab5619d",
+    "audit.py": "9da46640f663d7e28a26042e9ba8db42773cfd917e114db95bb0ede5b3cdc5c8",
+    "formal.py": "061e491a1fa73d38d9d9703242e9d3c63b045b706440e3d2f37e36ba36e952c3",
+    "test_construction.py": "b8111f7dc0b1f814821a8735e1b12e64fd9f2f1ff44ec7e5912aba23fc17daf4",
+    "test_audit.py": "9c59f1ea9dca78da9a465d21781032f0acde5538e2b8b3e2ca8fb3b2facbff18",
+    "PREREGISTRATION.md": "0062eff1fcddf1876da037f902b8fc5936b2d9e4c33cd78c38a8cb90eea4a478",
+    "README.md": "350c7c0d4baa41d5f5981cf9bef1b3ccd4ced4eda69f1a6631dcd74964aa86a1",
+    "ENVIRONMENT.json": "12b54df7de7c379e1a89ac766fadbaeb7dfff4140a555cfe9b49c4a044e0fcc1",
+    "CONSTRUCTION.md": "cd087a874ee59ab5a373ed7d97fd63aa6f3d23ea0af36cee4c297cedfd14f38f"
+  },
+  "formal_invocations_allowed": 1,
+  "formal_invocations_before_freeze": 0,
+  "retries_allowed": 0,
+  "construction": "11/11 Docker unit tests pass on 2026-09-26; no model training in construction",
+  "container": {
+    "docker_engine": "Docker Desktop 29.8.0",
+    "context": "desktop-linux",
+    "platform": "linux/amd64",
+    "image": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "python": "3.12.14",
+    "torch": "2.5.1+cpu",
+    "device": "CPU only",
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "output_mount": "dedicated writable formal-01",
+    "tmpfs": "64m",
+    "memory": "4g",
+    "cpus": 2,
+    "pids_limit": 64,
+    "wall_time_limit_seconds": 900
+  },
+  "formal_command": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=64m --pids-limit 64 --memory 4g --cpus 2 --mount type=bind,source=C:/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-3/work/issue-4462-pilot08/research/system1/needle_distill_3458_pilot_08_stratified_correct,target=/src,readonly --mount type=bind,source=C:/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-3/work/issue-4462-pilot08-output/formal-01,target=/out --workdir /src needle-pilot05:local -B formal.py --out /out"
+}

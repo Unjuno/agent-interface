@@ -1,0 +1,68 @@
+{
+  "allocation": "x11-text-lock-aba-20260922-01",
+  "batch_timeout_seconds": 25,
+  "commands": [
+    [
+      "/opt/pyvenv/bin/python",
+      "-B",
+      "/mnt/data/text_lock_aba/research/integration/x11_text_lock_aba_v1/execute_batch.py",
+      "--out",
+      "/mnt/data/text_lock_aba/research/integration/x11_text_lock_aba_v1/formal-01",
+      "--phase",
+      "formal",
+      "--batch",
+      "0"
+    ],
+    [
+      "/opt/pyvenv/bin/python",
+      "-B",
+      "/mnt/data/text_lock_aba/research/integration/x11_text_lock_aba_v1/execute_batch.py",
+      "--out",
+      "/mnt/data/text_lock_aba/research/integration/x11_text_lock_aba_v1/formal-01",
+      "--phase",
+      "formal",
+      "--batch",
+      "1"
+    ],
+    [
+      "/opt/pyvenv/bin/python",
+      "-B",
+      "/mnt/data/text_lock_aba/research/integration/x11_text_lock_aba_v1/execute_batch.py",
+      "--out",
+      "/mnt/data/text_lock_aba/research/integration/x11_text_lock_aba_v1/formal-01",
+      "--phase",
+      "formal",
+      "--batch",
+      "2"
+    ]
+  ],
+  "construction_data_excluded": true,
+  "expected_outcome": "PASS_LOCK_ABA_BOUNDARY_SCOPED",
+  "failure_rule": "complete scientific mismatch FAIL; missing source/process/raw evidence HOLD/STOP",
+  "formal_case_count_at_freeze": 0,
+  "formal_retries_permitted": false,
+  "frozen_utc": "2026-09-21T21:11:43.311705+00:00",
+  "outer_tool_timeout_ms": 35000,
+  "planned_batches": 3,
+  "planned_cases": 15,
+  "publication": "LOCAL_PRE_FORMAL_ONLY_NOT_GITHUB_PREREGISTRATION",
+  "repository_base": "1f798cbb60b929e738c6bf8a5912470b38b45ff4",
+  "source_changes_after_freeze_permitted": false,
+  "sources": {
+    "CONSTRUCTION.md": "0ee55dd4e5662f01ff9c2d934bafc8ef98b092eb1546e0910677238d61ef3b36",
+    "ENVIRONMENT.json": "673ddab78bb256ab4493e8e861bfb74c8fa7ade18ca202c213f5ec132324d509",
+    "PLAN.md": "defdb042223f6a8f07dde44d05cfb778f3c05ba8e07410ccec56d678391c88d4",
+    "app.py": "4a220156ce18e29ce77c7a5bb6eecb73753beff12ffc9a9d881193a70c6948a6",
+    "audit.py": "be875866c8fd22d3d79e0689c142602dfdd9ce234726c26b3c18c15d6c3b5930",
+    "candidate.py": "88021ce559b8f52e6482b3335133f5c2c6c3aacab2982413060ee8dfb8416a42",
+    "execute_batch.py": "dddcd0e8eb922481f9020b2476e7218ded0ce5ba04420d17e3d64d51594fc05f",
+    "loader.py": "858e2b87ff1949d04edd8c855c2e94786192b04e16952054490bf04263640dbf",
+    "native_state": "362ffca6b222780eff560367f9d162bedb71123efc2ad1b0df8edd3faec08f4f",
+    "native_state.c": "7662f584844c1a073fc4b5929a9dc6f19fd5866ca9a1696ab42955fc84b0538d",
+    "record_environment.py": "0edf42ccadaa3f683d809c1fb6c9441e5990d2651c29b8b0720f07edea4d03b1",
+    "run.py": "254b13be8bbeca303da416442ecc7eebcb21b8ad97f44ed9dd17e006a907f818",
+    "test_audit.py": "791bf1b422d5af3caa1428e02df3b1e1b14233a267c53620204a33b94e4bbc62",
+    "test_contract.py": "9cf5fb4ee46637a5436fb900ef4c7d4b9fec5b03641c243447f3ac6f4428d67e",
+    "vendor/backend.py": "3429a422e61ecb8b1f1f278540d0696842d8197d7967803e01bc8d9453bcb4a8"
+  }
+}

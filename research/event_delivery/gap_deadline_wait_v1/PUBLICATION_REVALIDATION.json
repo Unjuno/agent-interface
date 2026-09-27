@@ -1,0 +1,73 @@
+{
+  "checks": [
+    {
+      "name": "checksums",
+      "args": [
+        "sha256sum",
+        "-c",
+        "SHA256SUMS"
+      ],
+      "returncode": 0,
+      "elapsed_ns": 8508975,
+      "stdout_sha256": "04c5b5b4a08f0a30e2aea8c2e33b230e344956187cce99e9d50ad6eb46c711f7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "units",
+      "args": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_contract"
+      ],
+      "returncode": 0,
+      "elapsed_ns": 639985750,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "d45e7122910dad28cd2d49d8f3f7e78c6336ca3d9f18b777d7a78b432e093f7c"
+    },
+    {
+      "name": "audit",
+      "args": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "audit.py",
+        "--root",
+        "formal-01",
+        "--schedule",
+        "formal_schedule.json",
+        "--freeze",
+        "FREEZE.json",
+        "--out",
+        "/mnt/data/deadline_publication_review/REAUDIT.json"
+      ],
+      "returncode": 0,
+      "elapsed_ns": 711164683,
+      "stdout_sha256": "f176f40c2369023a9b021d5bddb6c91ebdd1e0e68fea10dfd33b48817852efdf",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "controls",
+      "args": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "audit.py",
+        "--root",
+        "formal-01",
+        "--schedule",
+        "formal_schedule.json",
+        "--controls",
+        "--out",
+        "/mnt/data/deadline_publication_review/RECONTROLS.json"
+      ],
+      "returncode": 0,
+      "elapsed_ns": 697746081,
+      "stdout_sha256": "51510fb334de0a47121447a9654ffd39ecec39840dd4382c6034000c4311d84b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "audit_byte_identical": true,
+  "controls_byte_identical": true,
+  "formal_reruns": 0
+}

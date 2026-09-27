@@ -1,0 +1,25 @@
+{
+  "container_engine": "Docker Engine 29.8.0",
+  "image": "python:3.13.5-slim-bookworm",
+  "image_id": "sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+  "platform": "linux/amd64",
+  "python": "3.13.5",
+  "dependencies": "Python standard library only",
+  "network": "none",
+  "image_pull": "never",
+  "root_filesystem": "read-only",
+  "source_mount": "read-only",
+  "output_mount": "dedicated writable directory",
+  "tmpfs": "/tmp, 16 MiB, noexec,nosuid",
+  "resource_limits": {
+    "cpus": 1,
+    "memory_bytes": 268435456,
+    "memory_swap_bytes": 268435456,
+    "pids": 32,
+    "capabilities": "all dropped",
+    "no_new_privileges": true
+  },
+  "gui_or_game": false,
+  "os_input": false,
+  "model_or_provider": false
+}

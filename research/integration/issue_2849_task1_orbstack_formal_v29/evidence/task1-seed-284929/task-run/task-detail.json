@@ -1,0 +1,326 @@
+{
+  "adaptive": {
+    "accounting": {
+      "attempted_calls": 1,
+      "cached_input_semantics": "subset of input_tokens; never added to input total",
+      "completed_calls": 1,
+      "cost": null,
+      "duplicate_call_ids": [],
+      "usage_coverage": {
+        "cache_write_input_tokens": 1,
+        "cached_input_tokens": 1,
+        "input_tokens": 1,
+        "output_tokens": 1,
+        "reasoning_output_tokens": 1
+      },
+      "usage_totals": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 11043,
+        "output_tokens": 115,
+        "reasoning_output_tokens": 51
+      }
+    },
+    "attempt_ledger": [
+      {
+        "attempt_id": "plain:task-1",
+        "call_id": "01a0c05d-fea2-7741-ad4f-b25ffa1ac9e7",
+        "completed_ns": 16003292860302,
+        "error": null,
+        "stage": "anchor_model",
+        "started_ns": 15994168289148,
+        "status": "completed",
+        "usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 11043,
+          "output_tokens": 115,
+          "reasoning_output_tokens": 51
+        }
+      }
+    ],
+    "cache_update": {
+      "aliases": null,
+      "grounding": {
+        "field_point": [
+          200,
+          401
+        ],
+        "submit_point": [
+          376,
+          401
+        ]
+      },
+      "layout": "A",
+      "needs_mint": false
+    },
+    "coarse_origin": "caller_provided",
+    "comparison": {
+      "class": "injected_subpath",
+      "comparable_to_full_cold": false,
+      "omitted_stages": [
+        "coarse_model"
+      ]
+    },
+    "delivery": "confirmed",
+    "execution_progress": {
+      "status": "completed"
+    },
+    "input_authority": "consumed_by_recorded_execute_stage",
+    "model_call_ledger": [
+      {
+        "attempt_id": "plain:task-1",
+        "call_id": "01a0c05d-fea2-7741-ad4f-b25ffa1ac9e7",
+        "cost": null,
+        "output": {
+          "status": "target_reference",
+          "target": {
+            "aliases": null,
+            "grounding": {
+              "field_point": [
+                200,
+                401
+              ],
+              "submit_point": [
+                376,
+                401
+              ]
+            },
+            "layout": "A",
+            "needs_mint": false
+          }
+        },
+        "requested_effort": "low",
+        "requested_model": "gpt-5.6-luna",
+        "stage": "anchor_model",
+        "usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 11043,
+          "output_tokens": 115,
+          "reasoning_output_tokens": 51
+        }
+      }
+    ],
+    "outcome": "TASK_SUCCEEDED",
+    "phase_timings": [
+      {
+        "elapsed_ns": 9000,
+        "ended_ns": 15994168279523,
+        "stage": "observe_source",
+        "started_ns": 15994168270523
+      },
+      {
+        "elapsed_ns": 2750,
+        "ended_ns": 15994168286815,
+        "stage": "acquire_anchor",
+        "started_ns": 15994168284065
+      },
+      {
+        "elapsed_ns": 9124571154,
+        "ended_ns": 16003292860302,
+        "stage": "anchor_model",
+        "started_ns": 15994168289148
+      },
+      {
+        "elapsed_ns": 7417,
+        "ended_ns": 16003292889635,
+        "stage": "final_revalidate",
+        "started_ns": 16003292882218
+      },
+      {
+        "elapsed_ns": 617552869,
+        "ended_ns": 16003910447379,
+        "stage": "execute",
+        "started_ns": 16003292894510
+      },
+      {
+        "elapsed_ns": 27334,
+        "ended_ns": 16003910491213,
+        "stage": "verify_effect",
+        "started_ns": 16003910463879
+      }
+    ],
+    "reason": "verified_effect",
+    "route": "cold",
+    "selected_target": {
+      "aliases": null,
+      "grounding": {
+        "field_point": [
+          200,
+          401
+        ],
+        "submit_point": [
+          376,
+          401
+        ]
+      },
+      "layout": "A",
+      "needs_mint": false
+    },
+    "stages": {
+      "acquire_anchor": {
+        "reason": null,
+        "status": "completed"
+      },
+      "acquire_expansion": {
+        "reason": "branch_not_reached",
+        "status": "skipped"
+      },
+      "anchor_model": {
+        "reason": null,
+        "status": "completed"
+      },
+      "coarse_model": {
+        "reason": "coarse_caller_provided",
+        "status": "skipped"
+      },
+      "execute": {
+        "reason": null,
+        "status": "completed"
+      },
+      "expanded_model": {
+        "reason": "branch_not_reached",
+        "status": "skipped"
+      },
+      "final_revalidate": {
+        "reason": null,
+        "status": "completed"
+      },
+      "observe_source": {
+        "reason": null,
+        "status": "completed"
+      },
+      "reuse_revalidate": {
+        "reason": "branch_not_reached",
+        "status": "skipped"
+      },
+      "verify_effect": {
+        "reason": null,
+        "status": "completed"
+      }
+    },
+    "task_effect": "succeeded"
+  },
+  "program_count": 3,
+  "resolved_target": {
+    "aliases": null,
+    "grounding": {
+      "field_point": [
+        200,
+        401
+      ],
+      "submit_point": [
+        376,
+        401
+      ]
+    },
+    "layout": "A",
+    "needs_mint": false
+  },
+  "source": {
+    "capture_ms": 4.494755,
+    "capture_ns": 15994159046842,
+    "context": [
+      [
+        "windows",
+        "0x00600003  0 f8a9c7440140 AI INTEGRATED task-1 READY - Chromium\n"
+      ],
+      [
+        "active_window",
+        6291459
+      ]
+    ],
+    "context_ns": 15994161195115,
+    "emit_started_ns": 15994162307793,
+    "event": "observation",
+    "exact": true,
+    "focus_samples_match": true,
+    "id": "durable-3e8d09a905bd4894a611a77933a6be9e",
+    "image": "/private/tmp/issue2849-work/research/integration/issue_2849_task1_orbstack_formal_v29/evidence/task1-seed-284929/task-run/runtime/runtime/006.png",
+    "image_prepare_ns": 14501,
+    "image_ready_ns": 15994162234043,
+    "image_reused": true,
+    "input_focus_after": 6291459,
+    "input_focus_before": 6291459,
+    "pointer_binding": {
+      "focus": 6291459,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ],
+      "surface": 6291459
+    },
+    "pointer_context_after": {
+      "focus": 6291459,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ],
+      "surface": 6291459
+    },
+    "pointer_context_before": {
+      "focus": 6291459,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ],
+      "surface": 6291459
+    },
+    "semantic_completion": "unknown",
+    "sequence": 10,
+    "step": 0,
+    "wire_bytes": 327
+  },
+  "submission_records": [],
+  "trace": {
+    "arm": "plain",
+    "durable_calls": 6,
+    "elapsed_ns": 10186099816,
+    "exact_submission": false,
+    "input_feedback_ns": [
+      87673464,
+      89199105
+    ],
+    "layout": "A",
+    "local_observations": 22,
+    "model_calls": [
+      {
+        "call_id": "01a0c05d-fea2-7741-ad4f-b25ffa1ac9e7",
+        "requested_effort": "low",
+        "requested_model": "gpt-5.6-luna",
+        "stage": "anchor_model",
+        "usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 11043,
+          "output_tokens": 115,
+          "reasoning_output_tokens": 51
+        }
+      }
+    ],
+    "model_visible_images": 1,
+    "old_target_pointer_admissions": 0,
+    "planner_generations": 1,
+    "pointer_admissions": 2,
+    "releases_verified": true,
+    "repair": {
+      "attempted": false,
+      "old_reference_pointer_admissions": 0,
+      "old_reference_status": null,
+      "required": false,
+      "succeeded": false
+    },
+    "route": "cold",
+    "source_to_completion_ns": null,
+    "submission_count": 0,
+    "task_id": "task-1",
+    "typed_outcome": "completed"
+  }
+}

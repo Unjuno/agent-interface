@@ -1,0 +1,40 @@
+name: Display-free static validation
+on:
+  pull_request:
+    paths:
+      - 'runtime/cli_v1/validate_program.py'
+      - 'runtime/cli_v1/test_validate_program.py'
+      - 'research/integration/display_free_validation_3850_v1/**'
+      - '.github/workflows/runtime-static-validation-v1.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'runtime/cli_v1/validate_program.py'
+      - 'runtime/cli_v1/test_validate_program.py'
+      - 'research/integration/display_free_validation_3850_v1/**'
+      - '.github/workflows/runtime-static-validation-v1.yml'
+permissions:
+  contents: read
+jobs:
+  static-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            runtime/cli_v1
+            runtime/core_v1
+            runtime/selector_v1
+            research/integration/display_free_validation_3850_v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.5'
+      - name: Display-free unit and subprocess tests
+        run: python -S -B -m unittest -v runtime.cli_v1.test_validate_program
+      - name: Read-only retained evidence audit
+        if: ${{ hashFiles('research/integration/display_free_validation_3850_v1/records.json') != '' }}
+        run: |
+          python -S -B research/integration/display_free_validation_3850_v1/audit.py research/integration/display_free_validation_3850_v1/records.json
+          python -S -B research/integration/display_free_validation_3850_v1/controls.py research/integration/display_free_validation_3850_v1/records.json

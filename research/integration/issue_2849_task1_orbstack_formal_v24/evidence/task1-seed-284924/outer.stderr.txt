@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/private/tmp/issue2849-work/research/integration/issue_2849_task1_orbstack_formal_v24/run_task1_v24.py", line 43, in <module>
+    result=main_globals["main"]()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/issue2849-work/research/integration/issue_2849_task1_orbstack_smoke_v2/run_task1_smoke.py", line 52, in main
+    with RuntimeClient(runtime_root, SEED) as client:
+  File "/private/tmp/issue2849-work/research/live_control/integrated_efficiency_client_v1.py", line 203, in __enter__
+    return self.start()
+           ^^^^^^^^^^^^
+  File "/private/tmp/issue2849-work/research/live_control/integrated_efficiency_client_v1.py", line 52, in start
+    self.endpoint = json.loads(self.process.stdout.readline())
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)

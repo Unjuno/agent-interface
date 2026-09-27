@@ -1,0 +1,72 @@
+{
+  "tool": "interface_dispatch",
+  "arguments": {
+    "current_observation_seq": 1,
+    "program": {
+      "program_id": "mcp-retention-primary-72",
+      "ops": [
+        {
+          "op": "focus",
+          "target": "fixture"
+        },
+        {
+          "y": 55,
+          "op": "pointer_move",
+          "x": 100,
+          "frame": "window_client"
+        },
+        {
+          "op": "pointer_button",
+          "button": "left",
+          "down": true
+        },
+        {
+          "op": "pointer_button",
+          "button": "left",
+          "down": false
+        },
+        {
+          "gap_ms": 20,
+          "op": "text",
+          "text": "receipt-72"
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "CTRL",
+            "s"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 250
+        },
+        {
+          "y": 0,
+          "frame": "window_client",
+          "x": 0,
+          "h": 180,
+          "op": "observe",
+          "w": 400
+        },
+        {
+          "op": "release_all"
+        }
+      ],
+      "authority": {
+        "lease_id": "private-mcp-retention-live-01",
+        "expires_at_ns": 3846567031959
+      },
+      "schema": "agent-interface/program-v1",
+      "terminal": {
+        "release_all_required": true
+      },
+      "source": {
+        "binding_revision": 0,
+        "observation_seq": 1
+      }
+    },
+    "compact": true,
+    "current_binding_revision": 0
+  }
+}

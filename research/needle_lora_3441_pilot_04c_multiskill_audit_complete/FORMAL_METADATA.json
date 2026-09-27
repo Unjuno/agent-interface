@@ -1,0 +1,78 @@
+{
+  "issue": 3895,
+  "allocation": "needle-lora-3441-pilot-04c-multiskill-audit-complete",
+  "seed": 3444,
+  "formalInvocations": 1,
+  "retries": 0,
+  "tuning": 0,
+  "exitCode": 0,
+  "execution": {
+    "host": "Windows local CUDA",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "torch": "2.5.1+cu121",
+    "cuda": "12.1",
+    "cublasWorkspaceConfig": ":4096:8",
+    "deterministic": true,
+    "tf32": false,
+    "containerClaim": false
+  },
+  "stdout": {
+    "rawBytes": 816919,
+    "rawSha256": "1324637a1f849d4a6fe3e7d31cc0c7b27e4e64ff980e90ba742b83a0f4d755c5",
+    "gzipBytes": 33233,
+    "gzipSha256": "977b51ff364e3bc483a9dc464116df9adf24d44cdd24c247e3277d4416565d8c",
+    "base64Characters": 44312,
+    "base64Sha256": "dae362d1f3423281aba1e9d80f5a240610f306e1bcd245015397acbae080ae93"
+  },
+  "stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "audit": {
+    "exitCode": 0,
+    "disposition": "PASS_MULTI_SKILL_ROUTING_SCOPED",
+    "integrity": true,
+    "errors": [],
+    "rowsRecomputed": 24576
+  },
+  "metrics": {
+    "routed": {
+      "A": 0.959228515625,
+      "B": 0.926025390625,
+      "C": 0.94677734375
+    },
+    "sharedSequential": {
+      "A": 0.01904296875,
+      "B": 0.000244140625,
+      "C": 0.96142578125
+    },
+    "setupMs": 0.7277,
+    "pretrainMs": 205.2279,
+    "updatesMs": {
+      "globalB": 143.398,
+      "globalC": 136.3524,
+      "adapterB": 149.1632,
+      "adapterC": 187.3515
+    },
+    "dispatcherOnlyMedianMs": 0.000136,
+    "cudaPeakAllocatedBytes": 69009408
+  },
+  "sourcePins": {
+    "runnerSha256": "11053b45101dbbb12510e73548e8817ae16148dee93aa80897ace9a196480057",
+    "runnerGitBlob": "a5b7e19d7bfc16123959ae873eec0bb4d4d2d535",
+    "auditorSha256": "fc4135d8de6cd74ed6d9048624633699c8de4e03391da209288bdce3979983a4",
+    "auditorGitBlob": "83c58359970a8f22c5ce10419f249f91b0369dd3"
+  },
+  "limits": [
+    "one fresh synthetic seed",
+    "no container claim",
+    "no task/GUI/runtime/action safety claim"
+  ],
+  "overallDisposition": "HOLD_PROTOCOL_DEVIATION",
+  "protocolDeviation": {
+    "issueDeclaredBasePretrainingUpdates": 400,
+    "sourceAndExecutedBasePretrainingUpdates": 120,
+    "discovered": "postformal",
+    "trainingRerun": false
+  }
+}

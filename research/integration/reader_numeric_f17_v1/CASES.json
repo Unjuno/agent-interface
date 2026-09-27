@@ -1,0 +1,98 @@
+[
+  {
+    "name": "finite_decimal",
+    "prefix": "{\"event\":\"prefix\",\"delivery_id\":\"delivery:1\",\"value\":7}\n",
+    "subject": "{\"event\":\"measurement\",\"delivery_id\":\"delivery:2\",\"value\":1.25}\n",
+    "suffix": "{\"event\":\"sentinel\",\"delivery_id\":\"delivery:3\",\"value\":3}\n"
+  },
+  {
+    "name": "finite_max",
+    "prefix": "{\"event\":\"prefix\",\"delivery_id\":\"delivery:1\",\"value\":7}\n",
+    "subject": "{\"event\":\"measurement\",\"delivery_id\":\"delivery:2\",\"value\":1.7976931348623157e308}\n",
+    "suffix": "{\"event\":\"sentinel\",\"delivery_id\":\"delivery:3\",\"value\":3}\n"
+  },
+  {
+    "name": "overflow_positive",
+    "prefix": "{\"event\":\"prefix\",\"delivery_id\":\"delivery:1\",\"value\":7}\n",
+    "subject": "{\"event\":\"measurement\",\"delivery_id\":\"delivery:2\",\"value\":1e309}\n",
+    "suffix": "{\"event\":\"sentinel\",\"delivery_id\":\"delivery:3\",\"value\":3}\n"
+  },
+  {
+    "name": "overflow_negative",
+    "prefix": "{\"event\":\"prefix\",\"delivery_id\":\"delivery:1\",\"value\":7}\n",
+    "subject": "{\"event\":\"measurement\",\"delivery_id\":\"delivery:2\",\"value\":-1e309}\n",
+    "suffix": "{\"event\":\"sentinel\",\"delivery_id\":\"delivery:3\",\"value\":3}\n"
+  },
+  {
+    "name": "overflow_object",
+    "prefix": "{\"event\":\"prefix\",\"delivery_id\":\"delivery:1\",\"value\":7}\n",
+    "subject": "{\"event\":\"measurement\",\"delivery_id\":\"delivery:2\",\"value\":{\"inner\":1e400}}\n",
+    "suffix": "{\"event\":\"sentinel\",\"delivery_id\":\"delivery:3\",\"value\":3}\n"
+  },
+  {
+    "name": "overflow_array",
+    "prefix": "{\"event\":\"prefix\",\"delivery_id\":\"delivery:1\",\"value\":7}\n",
+    "subject": "{\"event\":\"measurement\",\"delivery_id\":\"delivery:2\",\"value\":[0,1e400]}\n",
+    "suffix": "{\"event\":\"sentinel\",\"delivery_id\":\"delivery:3\",\"value\":3}\n"
+  },
+  {
+    "name": "overflow_boundary",
+    "prefix": "{\"event\":\"prefix\",\"delivery_id\":\"delivery:1\",\"value\":7}\n",
+    "subject": "{\"event\":\"measurement\",\"delivery_id\":\"delivery:2\",\"value\":1.7976931348623159e308}\n",
+    "suffix": "{\"event\":\"sentinel\",\"delivery_id\":\"delivery:3\",\"value\":3}\n"
+  },
+  {
+    "name": "underflow",
+    "prefix": "{\"event\":\"prefix\",\"delivery_id\":\"delivery:1\",\"value\":7}\n",
+    "subject": "{\"event\":\"measurement\",\"delivery_id\":\"delivery:2\",\"value\":1e-400}\n",
+    "suffix": "{\"event\":\"sentinel\",\"delivery_id\":\"delivery:3\",\"value\":3}\n"
+  },
+  {
+    "name": "subnormal",
+    "prefix": "{\"event\":\"prefix\",\"delivery_id\":\"delivery:1\",\"value\":7}\n",
+    "subject": "{\"event\":\"measurement\",\"delivery_id\":\"delivery:2\",\"value\":5e-324}\n",
+    "suffix": "{\"event\":\"sentinel\",\"delivery_id\":\"delivery:3\",\"value\":3}\n"
+  },
+  {
+    "name": "signed_zero",
+    "prefix": "{\"event\":\"prefix\",\"delivery_id\":\"delivery:1\",\"value\":7}\n",
+    "subject": "{\"event\":\"measurement\",\"delivery_id\":\"delivery:2\",\"value\":-0.0}\n",
+    "suffix": "{\"event\":\"sentinel\",\"delivery_id\":\"delivery:3\",\"value\":3}\n"
+  },
+  {
+    "name": "quoted",
+    "prefix": "{\"event\":\"prefix\",\"delivery_id\":\"delivery:1\",\"value\":7}\n",
+    "subject": "{\"event\":\"measurement\",\"delivery_id\":\"delivery:2\",\"value\":\"1e400\"}\n",
+    "suffix": "{\"event\":\"sentinel\",\"delivery_id\":\"delivery:3\",\"value\":3}\n"
+  },
+  {
+    "name": "nan_literal",
+    "prefix": "{\"event\":\"prefix\",\"delivery_id\":\"delivery:1\",\"value\":7}\n",
+    "subject": "{\"event\":\"measurement\",\"delivery_id\":\"delivery:2\",\"value\":NaN}\n",
+    "suffix": "{\"event\":\"sentinel\",\"delivery_id\":\"delivery:3\",\"value\":3}\n"
+  },
+  {
+    "name": "infinity_literal",
+    "prefix": "{\"event\":\"prefix\",\"delivery_id\":\"delivery:1\",\"value\":7}\n",
+    "subject": "{\"event\":\"measurement\",\"delivery_id\":\"delivery:2\",\"value\":Infinity}\n",
+    "suffix": "{\"event\":\"sentinel\",\"delivery_id\":\"delivery:3\",\"value\":3}\n"
+  },
+  {
+    "name": "negative_infinity",
+    "prefix": "{\"event\":\"prefix\",\"delivery_id\":\"delivery:1\",\"value\":7}\n",
+    "subject": "{\"event\":\"measurement\",\"delivery_id\":\"delivery:2\",\"value\":-Infinity}\n",
+    "suffix": "{\"event\":\"sentinel\",\"delivery_id\":\"delivery:3\",\"value\":3}\n"
+  },
+  {
+    "name": "duplicate",
+    "prefix": "{\"event\":\"prefix\",\"delivery_id\":\"delivery:1\",\"value\":7}\n",
+    "subject": "{\"event\":\"measurement\",\"delivery_id\":\"delivery:2\",\"value\":{\"x\":1,\"x\":2}}\n",
+    "suffix": "{\"event\":\"sentinel\",\"delivery_id\":\"delivery:3\",\"value\":3}\n"
+  },
+  {
+    "name": "incomplete_overflow",
+    "prefix": "{\"event\":\"prefix\",\"delivery_id\":\"delivery:1\",\"value\":7}\n",
+    "subject": "{\"event\":\"measurement\",\"delivery_id\":\"delivery:2\",\"value\":1e400}",
+    "suffix": ""
+  }
+]

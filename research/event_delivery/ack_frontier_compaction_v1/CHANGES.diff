@@ -1,0 +1,24 @@
+--- legacy.py
++++ frontier.py
+@@ -18,7 +18,8 @@
+     row=c.execute('SELECT seq,payload_sha FROM consumer WHERE event_id=?',(eid,)).fetchone()
+     if row: return 'EVENT_DUPLICATE' if row==(seq,sha) else 'EVENT_CONFLICT'
+     if c.execute('SELECT COUNT(*) FROM consumer').fetchone()[0] >= 3: return 'EVENT_BACKPRESSURE'
+-    mx=c.execute('SELECT COALESCE(MAX(seq),0) FROM consumer').fetchone()[0]
++    mx=max(c.execute('SELECT COALESCE(MAX(seq),0) FROM consumer').fetchone()[0],
++           c.execute('SELECT last_seq FROM ack').fetchone()[0])
+     if seq <= mx: return 'EVENT_NON_MONOTONIC'
+     if seq > mx + 1: return 'EVENT_PREDECESSOR_MISSING'
+     c.execute('INSERT INTO consumer VALUES(?,?,?)',(seq,eid,sha)); return 'EVENT_ACCEPTED'
+
+--- frontier.py
++++ bounded.py
+@@ -62,6 +62,8 @@
+ def ack_through(c, through, supplied_sha):
+     last,prefix=c.execute('SELECT last_seq,prefix_sha FROM ack').fetchone()
+     if through==last: return 'ACK_ALREADY_APPLIED' if supplied_sha==prefix else 'ACK_RECEIPT_CONFLICT'
++    frontier=max(c.execute('SELECT COALESCE(MAX(seq),0) FROM consumer').fetchone()[0],last)
++    if through > frontier: return 'ACK_BEYOND_ACCEPTED'
+     sha=ack_digest(c,through)
+     if supplied_sha!=sha: return 'ACK_RECEIPT_CONFLICT'
+     if through<last: return 'ACK_NON_MONOTONIC'

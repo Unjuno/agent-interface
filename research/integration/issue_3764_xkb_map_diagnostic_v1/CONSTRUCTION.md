@@ -1,0 +1,5 @@
+# Construction checks (not the formal allocation)
+
+The pinned image is present locally as `agent-interface-2972:20260920`, image ID `sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27`, platform linux/arm64. Its configured entrypoint is `python3`; an initial availability probe incorrectly overrode it with `python` and failed before container process creation. The corrected probe found Python 3.12.3, Python-Xlib, Xvfb, xkbcomp, setxkbmap and xdpyinfo. `xmodmap` is absent, so the preregistered independent channels are direct Xlib core mapping and xkbcomp server dump, with setxkbmap query as layout-state context.
+
+The exact pinned image was run network-disabled, read-only, with source mounted read-only against `construction_test.py`. Result: **3/3 passed**. Tests cover synthetic layout query parsing, keycode/level symbol extraction for Y/Z/equal/asterisk, and canonical/sensitive core-map fingerprinting. They start no X server and issue no XTEST/native input. Construction test Git blob and SHA-256 are in `FREEZE.json`.

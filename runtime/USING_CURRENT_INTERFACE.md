@@ -63,8 +63,10 @@ research reports use `agent_review.py --native` as described in the MCP guide.
 
 ## Retrieve an outcome or request a fresh image
 
-Public MCP offers three tools: `interface_dispatch`, `interface_observe`, and
-`interface_results`. Choose the next call according to what is missing:
+Public MCP offers `interface_dispatch`, `interface_observe`, `interface_results`,
+and optional draft checking with `interface_validate`. Validation performs no
+input and does not establish runtime admission. For action feedback, choose the
+next call according to what is missing:
 
 | Situation | Next call | Meaning |
 |---|---|---|
@@ -137,6 +139,49 @@ still requires a matched measurement.
 
 ## Native decision loop
 
+Native MCP checks explicitly supplied text gaps, key repetitions and their
+expanded tail capacity before publishing a stage request. Invalid compact
+syntax returns a tool validation error; the owner receives no request from
+that call. Valid requests keep their original compact representation.
+This checks explicit syntax only: configured default pacing can expand an
+otherwise unpaced tail further, and ordinary source, target, capability and
+lease checks still apply at execution. A passed syntax check is not admission.
+
+Initial native context includes the recorded `text_policy` when available.
+Its `value.gap_ms` is the harness default for text operations that omit
+`gap_ms`; an explicit per-operation value, including zero, takes precedence.
+The recorded harness defaults are 0, 2 or 10 ms, while explicit operation gaps
+accept 0..1000 ms. Missing records return `unavailable`; invalid records return
+`needs_review` without an invented default. The source path and byte hash are
+retained. This is historical configuration context, not runtime admission,
+application readiness or an optimal-typing-speed recommendation.
+
+Native MCP image responses include `window_inventory` when a stage's recorded
+listing is available. Read its complete application/dialog titles alongside the
+image for exact-title feedback; no separate shell discovery is needed. The
+listing is historical and grants no input authority. Missing or malformed
+context stays explicit, and ordinary guards still decide admission. See the
+[two-app saved-file validation and retained first failure](results/native-window-context-01/README.md).
+
+For the six-task primary-use runner, add `--primary-review` to either
+`--route persistent` or `--route direct` to pause after each successful local
+feedback result. View the printed image and retained task receipt, then
+atomically publish the requested JSON file with `task_id`, `source_sequence`,
+`outcome` (`complete`, `uncertain`, or `failed`) and a nonempty `reason`.
+Only an exact matching `complete` review advances. Other outcomes, malformed
+reviews and the 300-second timeout stop; they do not replay input. Primary
+interpretation is retained separately from independent task scoring. Timing
+includes tool and review waits, not just model inference. See the
+[retained six-task primary review](results/native-primary-review-01/README.md).
+
+Result and repair notices include `receipt_summary` next to the image path and
+`receipt_file` for full details. The summary preserves operation failures,
+recovery state and recorded releases; it does not turn title feedback into task
+success. A host can render the referenced image with this notice in one response
+before asking the primary model for its next decision. Consult the full receipt
+when guard, capture or wait details are needed. See the
+[actual combined-notice use and timing limits](results/native-review-notice-01/README.md).
+
 1. Start one explicitly managed allocation, or attach to an existing run. Read
    its goal and initial image using `native_observe(stage=1)`.
 2. Choose a decision from that image and submit its exact `source_sequence`.
@@ -187,3 +232,18 @@ These checks do not start an application or model. Passing them does not establi
 human-tempo operation, cross-application reliability, token/cost reduction or
 current-model compatibility. Frozen experiments remain evidence for their pinned
 sources; integration commits do not extend those claims to a newer build.
+
+### Choose a visually matchable point
+
+Native click and keyboard context checks match a local image patch around the
+specified point. A uniform fill can be refused even when a human recognizes the
+whole object. For clicks, choose a point inside the intended clickable target
+with a visible border or text nearby; choosing another control changes the action.
+For keyboard input, the point is a context anchor, not a click destination.
+
+If a response reports `visually_flat_source_region` and `input_dispatched=false`,
+inspect the returned image and explicitly choose a new point with its new source
+sequence. A refused action is not automatically replayed. See the
+[mixed Calc/Inkscape primary run](results/public-owned-mixed-live-01/README.md):
+a center-point refusal added one round trip before an edge-point correction.
+This observation motivates guidance; it does not measure the guidance's benefit.

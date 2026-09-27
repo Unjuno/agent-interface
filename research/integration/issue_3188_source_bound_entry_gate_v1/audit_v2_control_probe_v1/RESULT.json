@@ -1,0 +1,36 @@
+{
+  "base_commit": "eca4bcc1ee839b80442397e27f238c97d6dd6bb4",
+  "baseline_audit": {
+    "errors": [],
+    "status": "PASS_INDEPENDENT_AUDIT"
+  },
+  "formal_allocation_disposition_unchanged": "HOLD_FROZEN_AUDITOR_DEFECT",
+  "formal_raw_sha256_before_and_after": [
+    "8460a9ca79611929cbd6d2f6930067a06c6f177e7da3287ad07d1b7f483cb324",
+    "8460a9ca79611929cbd6d2f6930067a06c6f177e7da3287ad07d1b7f483cb324"
+  ],
+  "limitations": [
+    "finite mutation characterization of this exact frozen raw and audit-v2 only",
+    "host-process execution; not a Docker/OrbStack run",
+    "does not alter or replace the formal-02 HOLD",
+    "does not establish arbitrary independent-auditor soundness"
+  ],
+  "mutation_challenges": {
+    "boolean_false_replaced_with_integer_zero": {
+      "errors": [],
+      "status": "PASS_INDEPENDENT_AUDIT"
+    },
+    "missing_receipt_guard_swapped": {
+      "errors": [],
+      "status": "PASS_INDEPENDENT_AUDIT"
+    }
+  },
+  "schema": "issue-3188-audit-v2-control-schema-probe-v1",
+  "source_sha256": {
+    "research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py": "72a5f6dcffff0e9d3a5e2daa58937bb4ab440ca789d824f183f168abc57e458d",
+    "research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py": "e104bf12925ef7878e7972c768cb19ecfdfe699303667bebf0ee6a0276f05822",
+    "research/integration/issue_3188_source_bound_entry_gate_v1/independent_audit_v2.py": "b0785c9008f4873502be7fc90ba259b939fa1662fbd0efb89aff65c38b799d3e",
+    "research/integration/issue_3188_source_bound_entry_gate_v1/results/formal-02/raw.json": "8460a9ca79611929cbd6d2f6930067a06c6f177e7da3287ad07d1b7f483cb324"
+  },
+  "status": "GAP_REPRODUCED"
+}

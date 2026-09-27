@@ -1,0 +1,13 @@
+{
+  "allocation": "needle-intent-distill-3458-pilot-05-near-boundary-shift",
+  "formal_model_invocations": 1,
+  "audit_attempt": 1,
+  "disposition": "STOP_AUDITOR_IMPLEMENTATION_ERROR",
+  "formal_result_sha256": "39577a8750441f6b25c506d8dcc4bf74d6c696cfcd988a2d291dc7be0a95d901",
+  "preformal_auditor_sha256": "1a29c01bc7f68b0051611644571a152e61807f962894c131b83e391a13f3d944",
+  "exit_code": 1,
+  "exception": "TypeError: 'NoneType' object is not subscriptable",
+  "location": "audit.py:135; summarize() lacked its return because of a misplaced function boundary",
+  "model_training_or_evaluation_repeated": false,
+  "note": "Formal result remains immutable. This is a tooling STOP, not an experimental FAIL and no model outcome is yet claimed. A corrected independent audit operates only on the retained formal result."
+}

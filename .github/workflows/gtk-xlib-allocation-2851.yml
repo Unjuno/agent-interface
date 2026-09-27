@@ -1,14 +1,7 @@
 name: GTK Xlib-backed bounded allocation #2851
 
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/gtk-xlib-allocation-2851.yml"
-      - "research/integration/**"
-      - "runtime/**"
-  push:
-    branches:
-      - "research/gtk-xlib-allocation-2851"
+  workflow_dispatch:
 
 jobs:
   allocation:

@@ -1,0 +1,35 @@
+{
+  "candidate_false_abort_claims": 0,
+  "construction": false,
+  "corruption_controls": {
+    "boolean_counter": true,
+    "boolean_event_count": true,
+    "duplicate_case": true,
+    "effect_count": true,
+    "false_abort_claim": true,
+    "held_button": true,
+    "late_applied_response": true,
+    "missing_case": true,
+    "missing_child_exit": true,
+    "missing_release": true,
+    "pixel_mutation": true,
+    "receipt_wire": true,
+    "stale_applied_proof": true,
+    "terminal_wire": true
+  },
+  "decision": "PASS_LIVE_ABORT_ACK_BOUNDARY_SCOPED",
+  "errors": [],
+  "model_calls": 0,
+  "production_runtime_invocations": 0,
+  "raw_sha256": "2c7c7aedcc9d933d7d2159fea0cc3750abf94b332baa7d4440f4694d831112c2",
+  "rows": 18,
+  "scenario_counts": {
+    "applied": 3,
+    "complete": 3,
+    "request_only": 3,
+    "stale_receipt": 3,
+    "timeout": 3,
+    "unsupported": 3
+  },
+  "unsafe_reporting_control": "FAIL_FALSE_ABORT_CLAIM"
+}

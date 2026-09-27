@@ -1,0 +1,4 @@
+FROM agent-interface-native-checks:20260921 AS dependencies
+FROM agent-interface-x11-integration:20260921
+COPY --from=dependencies /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
+ENV PYTHONDONTWRITEBYTECODE=1

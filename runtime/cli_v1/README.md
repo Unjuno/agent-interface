@@ -2,6 +2,22 @@
 
 This is the model/vendor-neutral local entry point over promoted Agent Interface backends.
 
+Check a local program before attempting input:
+
+```sh
+python -m runtime.cli_v1 validate --program program.json
+```
+
+This uses the existing display-free validator and dispatch's sequence expanders.
+It returns bounded diagnostics and original/expanded operation positions when
+available, without opening a backend or modifying the file. Exit codes are
+0 for static validity, 1 for an invalid program, and 2 for input-loading errors.
+The file must be UTF-8 JSON, at most 1 MiB. This command does not accept stdin.
+Static validity does not check live capabilities, target identity, observation
+freshness, lease expiry, release or task success. Dispatch still performs its
+normal checks. Validation is optional; it is not an automatic extra round trip.
+The standalone `python -m runtime.cli_v1.validate_program` entry remains available.
+
 For a retained `prepared_exchange` action report, inspect the result and latest
 observation without printing the full routine event history:
 
@@ -386,6 +402,30 @@ redirect native file-descriptor writes. The direct Python API is unchanged.
 The CLI entry point temporarily changes Python's process-wide stdout, so use
 separate CLI processes rather than calling `main()` concurrently in threads.
 
+For a recorded `refused / INVALID_PROGRAM` result, the public dispatch API also
+checks the compiled program against the static contract. If that check fails,
+`result.detail` explains the first failure (at most 256 characters), with
+`detail_source=program_validation`. Review exposes it as
+`outcome_summary.execution_detail`. For example, an operation using
+`width/height` instead of `w/h` reports `observe w must be int`. An `observe`
+**operation** uses `frame, x, y, w, h`; the standalone CLI `observe` command
+instead takes `--region X Y W H`.
+
+The diagnostic follows the existing refusal; it does not change admission,
+execute again, grant authority or repair the program. It describes the compiled
+program after repeat/text-gap expansion. When the failure occurs while validating
+an individual operation, `result.validation_operation_index` and the review's
+`outcome_summary.validation_operation_index` identify its zero-based index in
+that compiled program. Global errors such as a wrong schema have no operation
+index. This is distinct from `failed_operation_index`, which refers to an
+execution failure; a static refusal does not imply an operation was executed.
+When retained repeat/text-gap expansion metadata can be reconstructed,
+`outcome_summary.validation_source_operation` also identifies the original
+source operation. Missing or inconsistent mappings produce no source location.
+If the program passes static validation, the API adds no program diagnostic:
+the refusal may concern the backend manifest. Unsupported operation names are
+not echoed. Input text and full programs are not added to this diagnostic.
+
 Remember the fresh `--run-directory` before issuing an operation. Keep the full
 stdout bytes outside the model context and deliver images through the host's
 image channel. A host output limit can hide a response that was produced in full;
@@ -486,3 +526,17 @@ null character index. Other operations use one-based `expanded_occurrence`.
 Malformed mappings produce null, and partial-effect uncertainty remains unchanged.
 A character location does not authorize retrying the remainder of an uncertain
 operation. The same program syntax works through CLI, Python API and public MCP.
+
+### Caller-owned Python sessions
+
+Use `dispatch_in_session(session, program, current_observation_seq=...,
+current_binding_revision=...)` when a caller already owns a backend session.
+It shares the public compiler, validation, result envelope and diagnostics with
+one-shot `dispatch`, while retaining that session after success, refusal or error.
+The caller must serialize access and close its backend when finished. The API
+does not clear recovery state, refresh targets or authority, or retry input.
+CLI and public MCP one-shot lifecycle remain unchanged.
+
+The native guarded bridge now uses this function and retains a public dispatch
+report alongside its guard receipts. See
+[the primary Calc run](../results/public-owned-session-live-01/README.md).

@@ -1,14 +1,7 @@
 name: GTK bounded allocation after startup repair #2836
 
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/gtk-bounded-allocation-2836.yml"
-      - "research/integration/**"
-      - "runtime/**"
-  push:
-    branches:
-      - "research/gtk-bounded-allocation-2836"
+  workflow_dispatch:
 
 jobs:
   allocation:

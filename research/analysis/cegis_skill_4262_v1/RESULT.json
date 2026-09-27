@@ -1,0 +1,36 @@
+{
+  "allocation": "cegis-skill-4262-20260923-01",
+  "audit_errors": [],
+  "authority": "none",
+  "cegis_rule_count": 6,
+  "corruption_controls_rejected": 12,
+  "counterexamples": [
+    1,
+    17,
+    7,
+    30,
+    51
+  ],
+  "decision": "PASS_CEGIS_SKILL_SYNTHESIS_SCOPED",
+  "formal_invocations": 1,
+  "formal_reruns": 0,
+  "heldout": {
+    "CEGIS": 16,
+    "ONE_SHOT": 5,
+    "total": 16
+  },
+  "limits": [
+    "finite typed grammar",
+    "complete oracle over 64 states",
+    "no new predicate discovery",
+    "no GUI/input/model/provider/network",
+    "no latency/token/product claim"
+  ],
+  "one_shot_rule_count": 2,
+  "rows": 128,
+  "schema": "agent-interface/cegis-skill-result-v1",
+  "unsafe_action_on_oracle_yield": {
+    "CEGIS": 0,
+    "ONE_SHOT": 45
+  }
+}

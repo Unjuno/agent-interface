@@ -1,0 +1,22 @@
+{
+  "allocation": "safety-graph-live-x11-3066-20260927-v4-01",
+  "container_image_id": "sha256:03bb8f908cc4d0bcfcda4e521c5318c651543bb8dffc2f6b09bb874a1d4f9adc",
+  "platform": "linux/amd64",
+  "python_runtime": "Python 3.13.5",
+  "python_xlib": "0.33",
+  "packages": {
+    "openbox": "3.6.1-10",
+    "xvfb": "2:21.1.7-3+deb12u13"
+  },
+  "engine": {"context": "desktop-linux", "kind": "Docker Desktop", "server_version": "29.8.0", "platform": "linux/x86_64"},
+  "formal_container": {
+    "network": "none",
+    "rootfs": "read-only",
+    "tmpfs": ["/tmp", "/run"],
+    "source_mount": "read-only at /src",
+    "experiment_mount": "read-only at /exp",
+    "raw_output_mount": "read-write at /work",
+    "limits": {"memory": "1g", "cpus": 2, "pids": 96}
+  },
+  "formal_invocation_before_freeze": 0
+}

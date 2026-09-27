@@ -1,0 +1,71 @@
+{
+  "allocation": "issue3668-german-xkb-text-v2",
+  "errors": [
+    "de-01.json: decoded formula mismatch",
+    "de-01.json: receiver observed events before the single valid delivery",
+    "de-02.json: decoded formula mismatch",
+    "de-02.json: receiver observed events before the single valid delivery",
+    "de-03.json: decoded formula mismatch",
+    "de-03.json: receiver observed events before the single valid delivery"
+  ],
+  "expected_backend_git_blob": "9cae101a219348077668c8fc086acf8e13154afe",
+  "required_rows": [
+    "de-01.json",
+    "de-02.json",
+    "de-03.json",
+    "us-control.json"
+  ],
+  "rows": [
+    {
+      "decoded_formula": ")B2}A2",
+      "emissions": 20,
+      "errors": [
+        "decoded formula mismatch",
+        "receiver observed events before the single valid delivery"
+      ],
+      "file": "de-01.json",
+      "layout": "de",
+      "row_sha256": "e8299e5eb307f795a3e6937991ff73d535ea81b3adb1df131af5814af19982fc",
+      "server_xkb_after_sha256": "71e9bec0040c9689a16a03f5647d73aec9433d11db31c35fcc016826d757ffd7",
+      "server_xkb_before_sha256": "0e0746bf5f507ac5d73d7614f65d4c1c6bafcebf64edff570957cc2ddc0a75e5"
+    },
+    {
+      "decoded_formula": ")B2}A2",
+      "emissions": 20,
+      "errors": [
+        "decoded formula mismatch",
+        "receiver observed events before the single valid delivery"
+      ],
+      "file": "de-02.json",
+      "layout": "de",
+      "row_sha256": "6a1e52568f0259b7e63c61bef07e6656c91c049a03cfc720f06ee32c047957aa",
+      "server_xkb_after_sha256": "71e9bec0040c9689a16a03f5647d73aec9433d11db31c35fcc016826d757ffd7",
+      "server_xkb_before_sha256": "0e0746bf5f507ac5d73d7614f65d4c1c6bafcebf64edff570957cc2ddc0a75e5"
+    },
+    {
+      "decoded_formula": ")B2}A2",
+      "emissions": 20,
+      "errors": [
+        "decoded formula mismatch",
+        "receiver observed events before the single valid delivery"
+      ],
+      "file": "de-03.json",
+      "layout": "de",
+      "row_sha256": "66a887868b5e4ebd28a34f07131fe0b207b6eab6c18111367e21f6264a3a7361",
+      "server_xkb_after_sha256": "71e9bec0040c9689a16a03f5647d73aec9433d11db31c35fcc016826d757ffd7",
+      "server_xkb_before_sha256": "0e0746bf5f507ac5d73d7614f65d4c1c6bafcebf64edff570957cc2ddc0a75e5"
+    },
+    {
+      "decoded_formula": "=B2*A2",
+      "emissions": 18,
+      "errors": [],
+      "file": "us-control.json",
+      "layout": "us",
+      "row_sha256": "e63c47125ddc4425cfcb69a7262d07f36e22e35ef042574ae87437f9e2f4d5cd",
+      "server_xkb_after_sha256": "0e0746bf5f507ac5d73d7614f65d4c1c6bafcebf64edff570957cc2ddc0a75e5",
+      "server_xkb_before_sha256": "0e0746bf5f507ac5d73d7614f65d4c1c6bafcebf64edff570957cc2ddc0a75e5"
+    }
+  ],
+  "scope": "private Xvfb XTEST only; no Calc/model/host-display or container claim",
+  "status": "FAIL_AUDIT"
+}

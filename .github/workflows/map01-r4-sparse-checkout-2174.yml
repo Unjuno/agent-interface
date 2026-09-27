@@ -1,8 +1,9 @@
 name: MAP01 r4 sparse checkout successor
 
 on:
-  pull_request:
-    types: [opened, synchronize, ready_for_review]
+  # Historical #2174 checkout experiment, not a runtime regression gate.
+  # An explicit dispatch preserves its PASS/STOP result without rerunning the
+  # research allocation for every unrelated production pull request.
   workflow_dispatch:
 
 permissions:

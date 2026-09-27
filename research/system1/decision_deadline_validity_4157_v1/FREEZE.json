@@ -1,0 +1,32 @@
+{
+  "branch": "research/decision-deadline-4157-20260923",
+  "formal_cases_executed": 0,
+  "gates": "PLAN.md",
+  "issue": 4157,
+  "path": "research/system1/decision_deadline_validity_4157_v1",
+  "schedule": {
+    "cases": 24,
+    "policies": [
+      "EXISTING_CURRENTNESS_ONLY",
+      "EXPLICIT_DECISION_DEADLINE"
+    ],
+    "repetitions": 3,
+    "scenarios_ns": {
+      "NEAR_AFTER": 150000000,
+      "NEAR_BEFORE": 90000000,
+      "ON_TIME": 20000000,
+      "WELL_AFTER": 260000000
+    }
+  },
+  "schema": "decision-deadline-freeze-v1",
+  "source_sha256": {
+    "ENVIRONMENT.json": "8d3a5455e79ad122dc369d4f79b042a363c069616ea2e223fa3cf22aa137c668",
+    "PLAN.md": "d1bd7f3511d323005af24b0a73a9a04087b908b1d9ea35787da98936fd917824",
+    "app.py": "1bcaa8b0da36737bd690b27fb8b82efbdc7ec6604c5bb44bc6969de80937121e",
+    "audit.py": "cf6f9df853f81cbd1cb0270bfdb4b87e3479356697aef2641c3c3e467163a78d",
+    "policy.py": "1aafced7a84a6c733af3f1e617218627adda1698a473a876c28665ba8f616407",
+    "run.py": "e47001ff9d003cf42e0d860d42685e2d2e0bc2661d59b17f7257eb36b35baf31",
+    "test_audit.py": "0263415ba834d7b5165237b335053c511dfdfee108a8d3ba496739a8c0b495a0",
+    "test_policy.py": "c99eb338c0bce60cd69aa46a6c4d99e1bbb35cba84061079403605fa5d667640"
+  }
+}

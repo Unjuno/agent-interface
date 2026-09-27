@@ -24,6 +24,25 @@ from runtime.core_v1.contract import (
 )
 
 
+class ValidationLocationTests(unittest.TestCase):
+    def test_operation_location_preserves_stateful_failure_and_message(self):
+        row = program()
+        row['ops'] = [{'op': 'key_state', 'key': 'CTRL', 'down': True},
+                      {'op': 'key_state', 'key': 'CTRL', 'down': True},
+                      {'op': 'release_all'}]
+        with self.assertRaises(ContractError) as caught:
+            validate_program(row)
+        self.assertEqual(caught.exception.operation_index, 1)
+        self.assertEqual(str(caught.exception), 'key CTRL already held')
+
+    def test_global_error_has_no_operation_location(self):
+        row = program()
+        row['schema'] = 'wrong'
+        with self.assertRaises(ContractError) as caught:
+            validate_program(row)
+        self.assertFalse(hasattr(caught.exception, 'operation_index'))
+
+
 def program() -> dict:
     return {
         "schema": SCHEMA_PROGRAM,

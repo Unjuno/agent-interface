@@ -1,0 +1,39 @@
+{
+  "issue": 4090,
+  "allocation": "undo-compare-commit-20260922-01",
+  "decision": "PASS_COMPARE_UNDO_REENTRANCY_BOUNDARY_SCOPED",
+  "cases": 40,
+  "correct_undo": 20,
+  "wrong_undo": 8,
+  "unresolved": 12,
+  "routes": {
+    "SPLIT_KEY": {
+      "correct": 4,
+      "wrong": 4,
+      "unresolved": 2
+    },
+    "INLINE_NO_YIELD": {
+      "correct": 8,
+      "wrong": 0,
+      "unresolved": 2
+    },
+    "INLINE_YIELD": {
+      "correct": 4,
+      "wrong": 4,
+      "unresolved": 2
+    },
+    "INLINE_RECHECK": {
+      "correct": 4,
+      "wrong": 0,
+      "unresolved": 6
+    }
+  },
+  "formal_batches": 2,
+  "formal_reruns": 0,
+  "source_hashes_unchanged": true,
+  "endpoint_server_key_button_neutral": "40/40",
+  "raw_audit": "20/20 + 20/20, errors=[]",
+  "corruption_controls": "12/12 each batch",
+  "old_gui_reruns": 0,
+  "product_or_runtime_promotion": false
+}

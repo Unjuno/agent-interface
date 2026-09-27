@@ -1,0 +1,48 @@
+{
+  "checks": 8,
+  "controls": [
+    {
+      "case": "existing_destination",
+      "reason": "ValueError: destination must be new",
+      "rejected": true
+    },
+    {
+      "case": "missing_part",
+      "reason": "ValueError: part type/length",
+      "rejected": true
+    },
+    {
+      "case": "changed_part",
+      "reason": "ValueError: part digest",
+      "rejected": true
+    },
+    {
+      "case": "reordered_parts",
+      "reason": "ValueError: part inventory",
+      "rejected": true
+    },
+    {
+      "case": "wrong_archive_digest",
+      "reason": "ValueError: archive identity",
+      "rejected": true
+    },
+    {
+      "case": "wrong_envelope",
+      "reason": "ValueError: unexpected fixed envelope",
+      "rejected": true
+    },
+    {
+      "case": "symlink_part",
+      "reason": "ValueError: part type/length",
+      "rejected": true
+    },
+    {
+      "case": "readable_copy_mismatch",
+      "reason": "readable copy differs",
+      "rejected": true
+    }
+  ],
+  "decision": "PASS_PACKAGING_REFUSAL_TESTS",
+  "gui_runs": 0,
+  "scientific_reruns": 0
+}

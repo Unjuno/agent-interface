@@ -1,0 +1,40 @@
+{
+  "kind": "engineering-trigger-repair",
+  "formal_temporal_reruns": 0,
+  "legacy_manual_dispatches": 0,
+  "initial_unplanned_remote_runner_invocations": 3,
+  "initial_unplanned_rows": 24,
+  "unplanned_native_emissions_recorded": 106,
+  "three_jobs_byte_identical": true,
+  "guard_tests": 8,
+  "guard_exit": 0,
+  "yaml_parser": "6.0.3",
+  "yaml_event_keys_and_job_equality": true,
+  "incident_restore": {
+    "files": 99,
+    "file_bytes": 158208,
+    "capsule_sha256": "36af73af4b8cfedf8334388321358afa1d8e4db01b1caf4de1accf26bcf8238c",
+    "experiment_executed": false
+  },
+  "all_original_artifact_members_exact": true,
+  "original_workflow_bindings": {
+    "gtk-bounded-allocation-2836.yml": {
+      "old_blob": "5105c93770b4fc09e0ee2aef2da716b9940413b3",
+      "new_blob": "577740a0ac429fd5e9fd012d9d6853c14366bac5",
+      "job_body_sha256": "b6fdf0bdf5811f68a200bcf71ac4f967297a4b2b4114c0189c5c6f0a2d422f11",
+      "name_line": "name: GTK bounded allocation after startup repair #2836"
+    },
+    "gtk-formal-allocation-2606-v1.yml": {
+      "old_blob": "e4235d4843018b538fa4931a2590acaff8cf1691",
+      "new_blob": "602dd8f6721f132934dd1fccbc2924fdd8a70974",
+      "job_body_sha256": "f0b038b8f3f0e71f6496a7c1334ea4a7cccb7481c63df68f8e8ae6fc4df1b229",
+      "name_line": "name: GTK bounded formal allocation #2606 v1"
+    },
+    "gtk-xlib-allocation-2851.yml": {
+      "old_blob": "3fdb6ac01678cd698d6dbcb81bdd8922435645ea",
+      "new_blob": "c5b3b16695bf2500d863b4149b9e21bfb5ff15d4",
+      "job_body_sha256": "988909a7c8bbd47f7693cd87ec62fb5dd2a158d9e7e855b90e855804a0be2a57",
+      "name_line": "name: GTK Xlib-backed bounded allocation #2851"
+    }
+  }
+}

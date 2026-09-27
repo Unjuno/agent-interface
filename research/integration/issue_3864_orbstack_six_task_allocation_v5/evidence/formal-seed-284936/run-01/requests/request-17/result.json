@@ -1,0 +1,57 @@
+{
+  "raw": {
+    "format": "compiled-form-grounding-v1",
+    "field": {
+      "point_space": "source_observation_pixels",
+      "point": {
+        "x": 650,
+        "y": 559
+      },
+      "motion_model": "surface_origin_translation"
+    },
+    "submit": {
+      "point_space": "source_observation_pixels",
+      "point": {
+        "x": 689,
+        "y": 634
+      },
+      "motion_model": "surface_origin_translation"
+    },
+    "method": {
+      "first_action": "enter_exact_token",
+      "continue_when": "field_pixels_changed_and_submit_revalidated",
+      "second_action": "activate_submit",
+      "complete_when": "submission_pixels_changed_then_independent_score"
+    }
+  },
+  "grounding": {
+    "field_point": [
+      650,
+      559
+    ],
+    "submit_point": [
+      689,
+      634
+    ],
+    "method": {
+      "first_action": "enter_exact_token",
+      "continue_when": "field_pixels_changed_and_submit_revalidated",
+      "second_action": "activate_submit",
+      "complete_when": "submission_pixels_changed_then_independent_score"
+    }
+  },
+  "usage": {
+    "input_tokens": 13747,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 113,
+    "reasoning_output_tokens": 0
+  },
+  "call_id": "01a0c0c2-1191-7101-9992-fd994e72400e",
+  "runner_ns": 9435659054,
+  "requested_model": "gpt-5.6-luna",
+  "requested_effort": "low",
+  "cost": null,
+  "image_sha256": "1d211e4d52e4302e6bcecd57549e7de0fc89297d508b4a79c437075af976a5c9",
+  "request_directory": "/private/tmp/issue2849-work/research/integration/issue_3864_orbstack_six_task_allocation_v5/evidence/formal-seed-284936/run-01/requests/request-17"
+}

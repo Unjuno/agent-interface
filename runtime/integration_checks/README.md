@@ -36,3 +36,37 @@ mutation, key-repeat expansion/capacity checks and lossless receipt-reference
 round trips. Reference-shaped literal data, unknown fields, booleans versus
 numbers, and malformed reference chains remain covered. Two interpreters are optional;
 CI uses a single installed environment. No sensor development is included.
+
+## Docker environment matching the native CI checks
+
+Build once from the repository root (dependency installation requires network):
+
+```sh
+docker build -f runtime/integration_checks/Dockerfile -t agent-interface-native-checks:local .
+```
+
+Then run offline with source read-only and a dedicated writable result directory.
+For PowerShell, from the repository root:
+
+```powershell
+$nativeSource = (Get-Location).Path
+$nativeOutput = (New-Item -ItemType Directory -Path results-local/native-docker-01).FullName
+docker run --name ai-native-check-01 --network none --read-only --memory 512m `
+  --tmpfs /tmp:rw,size=128m `
+  --mount "type=bind,source=$nativeSource,target=/src,readonly" `
+  --mount "type=bind,source=$nativeOutput,target=/out" `
+  agent-interface-native-checks:local --output /out/checks
+```
+
+Use new output/container names for each run and keep the checkout unchanged
+while checks run. The `/out/checks` directory must not already exist. Inspect
+`checks/result.json` and the retained logs; a container start alone is not a
+test result. Record `git rev-parse HEAD`, local changes and `docker image inspect
+agent-interface-native-checks:local --format '{{.Id}}'` with the evidence.
+
+The base image and direct dependency versions are pinned; transitive Python
+dependencies are resolved during build, so rebuilds are not claimed byte-identical.
+Record the built image ID or reuse the same image for a comparison. This image
+is for the fixed native contract suites, not broad test discovery, distribution
+building, a display server, GUI input or model inference. It needs no host display
+socket, Docker socket, credentials or network access during the checks.

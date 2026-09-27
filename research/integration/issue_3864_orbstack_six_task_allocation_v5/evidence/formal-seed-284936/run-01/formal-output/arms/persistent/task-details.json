@@ -1,0 +1,1899 @@
+[
+  {
+    "trace": {
+      "arm": "persistent",
+      "task_id": "task-1",
+      "layout": "A",
+      "route": "cold",
+      "model_calls": [
+        {
+          "call_id": "01a0c0c1-d40a-7f80-9884-bc5bf14c7d6b",
+          "stage": "anchor_model",
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "usage": {
+            "input_tokens": 11153,
+            "cached_input_tokens": 5888,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 168,
+            "reasoning_output_tokens": 53
+          }
+        }
+      ],
+      "planner_generations": 1,
+      "model_visible_images": 1,
+      "local_observations": 26,
+      "durable_calls": 16,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 11277052041,
+      "source_to_completion_ns": 10627579697,
+      "input_feedback_ns": [
+        90979624,
+        95206682
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    "source": {
+      "event": "observation",
+      "id": "durable-123d9445f5de488cbb7f233866570135",
+      "step": 0,
+      "sequence": 10,
+      "capture_ns": 22537209531364,
+      "context_ns": 22537211510133,
+      "context": [
+        [
+          "windows",
+          "0x00600003  0 9c3be521a5ca AI INTEGRATED task-1 READY - Chromium\n"
+        ],
+        [
+          "active_window",
+          6291459
+        ]
+      ],
+      "image": "/private/tmp/issue2849-work/research/integration/issue_3864_orbstack_six_task_allocation_v5/evidence/formal-seed-284936/run-01/formal-output/arms/persistent/runtime/006.png",
+      "image_reused": true,
+      "image_prepare_ns": 13750,
+      "image_ready_ns": 22537212502810,
+      "input_focus_before": 6291459,
+      "input_focus_after": 6291459,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "capture_ms": 4.003957,
+      "wire_bytes": 327,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 22537212575561
+    },
+    "adaptive": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "grounding": {
+          "field_point": [
+            225,
+            401
+          ],
+          "submit_point": [
+            377,
+            401
+          ],
+          "method": {
+            "first_action": "enter_exact_token",
+            "continue_when": "field_pixels_changed_and_submit_revalidated",
+            "second_action": "activate_submit",
+            "complete_when": "submission_pixels_changed_then_independent_score"
+          }
+        },
+        "aliases": null,
+        "needs_mint": true,
+        "layout": "A"
+      },
+      "cache_update": {
+        "grounding": {
+          "field_point": [
+            225,
+            401
+          ],
+          "submit_point": [
+            377,
+            401
+          ],
+          "method": {
+            "first_action": "enter_exact_token",
+            "continue_when": "field_pixels_changed_and_submit_revalidated",
+            "second_action": "activate_submit",
+            "complete_when": "submission_pixels_changed_then_independent_score"
+          }
+        },
+        "aliases": null,
+        "needs_mint": true,
+        "layout": "A"
+      },
+      "route": "cold",
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "injected_subpath",
+        "omitted_stages": [
+          "coarse_model"
+        ],
+        "comparable_to_full_cold": false
+      },
+      "stages": {
+        "observe_source": {
+          "status": "completed",
+          "reason": null
+        },
+        "coarse_model": {
+          "status": "skipped",
+          "reason": "coarse_caller_provided"
+        },
+        "acquire_anchor": {
+          "status": "completed",
+          "reason": null
+        },
+        "anchor_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "reuse_revalidate": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "persistent:task-1",
+          "stage": "anchor_model",
+          "status": "completed",
+          "started_ns": 22537218491036,
+          "completed_ns": 22547211865060,
+          "call_id": "01a0c0c1-d40a-7f80-9884-bc5bf14c7d6b",
+          "usage": {
+            "input_tokens": 11153,
+            "cached_input_tokens": 5888,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 168,
+            "reasoning_output_tokens": 53
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "persistent:task-1",
+          "stage": "anchor_model",
+          "call_id": "01a0c0c1-d40a-7f80-9884-bc5bf14c7d6b",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "grounding": {
+                "field_point": [
+                  225,
+                  401
+                ],
+                "submit_point": [
+                  377,
+                  401
+                ],
+                "method": {
+                  "first_action": "enter_exact_token",
+                  "continue_when": "field_pixels_changed_and_submit_revalidated",
+                  "second_action": "activate_submit",
+                  "complete_when": "submission_pixels_changed_then_independent_score"
+                }
+              },
+              "aliases": null,
+              "needs_mint": true,
+              "layout": "A"
+            }
+          },
+          "usage": {
+            "input_tokens": 11153,
+            "cached_input_tokens": 5888,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 168,
+            "reasoning_output_tokens": 53
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 1,
+        "completed_calls": 1,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 11153,
+          "cached_input_tokens": 5888,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 168,
+          "reasoning_output_tokens": 53
+        },
+        "usage_coverage": {
+          "input_tokens": 1,
+          "cached_input_tokens": 1,
+          "cache_write_input_tokens": 1,
+          "output_tokens": 1,
+          "reasoning_output_tokens": 1
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "observe_source",
+          "started_ns": 22537218472494,
+          "ended_ns": 22537218481244,
+          "elapsed_ns": 8750
+        },
+        {
+          "stage": "acquire_anchor",
+          "started_ns": 22537218485369,
+          "ended_ns": 22537218488328,
+          "elapsed_ns": 2959
+        },
+        {
+          "stage": "anchor_model",
+          "started_ns": 22537218491036,
+          "ended_ns": 22547211865060,
+          "elapsed_ns": 9993374024
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 22547211888894,
+          "ended_ns": 22547291316567,
+          "elapsed_ns": 79427673
+        },
+        {
+          "stage": "execute",
+          "started_ns": 22547291331859,
+          "ended_ns": 22548049867316,
+          "elapsed_ns": 758535457
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 22548049882608,
+          "ended_ns": 22548049919275,
+          "elapsed_ns": 36667
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "program_count": 8,
+    "submission_records": [
+      {
+        "exact": true,
+        "expected_token": "t284936-1",
+        "layout": "A",
+        "received_ns": 22547837111061,
+        "schema": "integrated_efficiency_submission_v1",
+        "submitted_values": [
+          "t284936-1"
+        ],
+        "task_id": "task-1"
+      }
+    ],
+    "resolved_target": {
+      "grounding": {
+        "field_point": [
+          225,
+          401
+        ],
+        "submit_point": [
+          377,
+          401
+        ],
+        "method": {
+          "first_action": "enter_exact_token",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "second_action": "activate_submit",
+          "complete_when": "submission_pixels_changed_then_independent_score"
+        }
+      },
+      "aliases": {
+        "field": "persistent_a_field",
+        "submit": "persistent_a_submit"
+      },
+      "needs_mint": false,
+      "layout": "A"
+    }
+  },
+  {
+    "trace": {
+      "arm": "persistent",
+      "task_id": "task-2",
+      "layout": "A",
+      "route": "reuse",
+      "model_calls": [],
+      "planner_generations": 0,
+      "model_visible_images": 0,
+      "local_observations": 28,
+      "durable_calls": 20,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 1592961913,
+      "source_to_completion_ns": 896065970,
+      "input_feedback_ns": [
+        91693717,
+        88267920
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    "source": {
+      "event": "observation",
+      "id": "durable-99d94bc45aed4ac8b29fe3f92a908ded",
+      "step": 0,
+      "sequence": 36,
+      "capture_ns": 22548525335928,
+      "context_ns": 22548527759586,
+      "context": [
+        [
+          "windows",
+          "0x00600003  0 9c3be521a5ca AI INTEGRATED task-2 READY - Chromium\n"
+        ],
+        [
+          "active_window",
+          6291459
+        ]
+      ],
+      "image": "/private/tmp/issue2849-work/research/integration/issue_3864_orbstack_six_task_allocation_v5/evidence/formal-seed-284936/run-01/formal-output/arms/persistent/runtime/032.png",
+      "image_reused": true,
+      "image_prepare_ns": 13292,
+      "image_ready_ns": 22548528734433,
+      "input_focus_before": 6291459,
+      "input_focus_after": 6291459,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "capture_ms": 3.5983,
+      "wire_bytes": 328,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 22548528809725
+    },
+    "adaptive": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "grounding": {
+          "field_point": [
+            225,
+            401
+          ],
+          "submit_point": [
+            377,
+            401
+          ],
+          "method": {
+            "first_action": "enter_exact_token",
+            "continue_when": "field_pixels_changed_and_submit_revalidated",
+            "second_action": "activate_submit",
+            "complete_when": "submission_pixels_changed_then_independent_score"
+          }
+        },
+        "aliases": {
+          "field": "persistent_a_field",
+          "submit": "persistent_a_submit"
+        },
+        "needs_mint": false,
+        "layout": "A"
+      },
+      "cache_update": {
+        "grounding": {
+          "field_point": [
+            225,
+            401
+          ],
+          "submit_point": [
+            377,
+            401
+          ],
+          "method": {
+            "first_action": "enter_exact_token",
+            "continue_when": "field_pixels_changed_and_submit_revalidated",
+            "second_action": "activate_submit",
+            "complete_when": "submission_pixels_changed_then_independent_score"
+          }
+        },
+        "aliases": {
+          "field": "persistent_a_field",
+          "submit": "persistent_a_submit"
+        },
+        "needs_mint": false,
+        "layout": "A"
+      },
+      "route": "reuse",
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "warm_reuse",
+        "omitted_stages": [
+          "observe_source",
+          "coarse_model",
+          "acquire_anchor",
+          "anchor_model"
+        ],
+        "comparable_to_full_cold": false
+      },
+      "stages": {
+        "observe_source": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "coarse_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_anchor": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "anchor_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "reuse_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [],
+      "model_call_ledger": [],
+      "accounting": {
+        "attempted_calls": 0,
+        "completed_calls": 0,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "usage_coverage": {
+          "input_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "cost": 0,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "reuse_revalidate",
+          "started_ns": 22548538390482,
+          "ended_ns": 22548638051600,
+          "elapsed_ns": 99661118
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 22548638088976,
+          "ended_ns": 22548761376710,
+          "elapsed_ns": 123287734
+        },
+        {
+          "stage": "execute",
+          "started_ns": 22548761392294,
+          "ended_ns": 22549643625865,
+          "elapsed_ns": 882233571
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 22549643642074,
+          "ended_ns": 22549643656283,
+          "elapsed_ns": 14209
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "program_count": 10,
+    "submission_records": [
+      {
+        "exact": true,
+        "expected_token": "t284936-2",
+        "layout": "A",
+        "received_ns": 22549421401898,
+        "schema": "integrated_efficiency_submission_v1",
+        "submitted_values": [
+          "t284936-2"
+        ],
+        "task_id": "task-2"
+      }
+    ],
+    "resolved_target": {
+      "grounding": {
+        "field_point": [
+          225,
+          401
+        ],
+        "submit_point": [
+          377,
+          401
+        ],
+        "method": {
+          "first_action": "enter_exact_token",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "second_action": "activate_submit",
+          "complete_when": "submission_pixels_changed_then_independent_score"
+        }
+      },
+      "aliases": {
+        "field": "persistent_a_field",
+        "submit": "persistent_a_submit"
+      },
+      "needs_mint": false,
+      "layout": "A"
+    }
+  },
+  {
+    "trace": {
+      "arm": "persistent",
+      "task_id": "task-3",
+      "layout": "A",
+      "route": "reuse",
+      "model_calls": [],
+      "planner_generations": 0,
+      "model_visible_images": 0,
+      "local_observations": 27,
+      "durable_calls": 20,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 2121924968,
+      "source_to_completion_ns": 1370597735,
+      "input_feedback_ns": [
+        112495170,
+        87399408
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    "source": {
+      "event": "observation",
+      "id": "durable-66b1a7f7b9b7480dbaf547ccbfe421f1",
+      "step": 0,
+      "sequence": 63,
+      "capture_ns": 22550168150401,
+      "context_ns": 22550170973939,
+      "context": [
+        [
+          "windows",
+          "0x00600003  0 9c3be521a5ca AI INTEGRATED task-3 READY - Chromium\n"
+        ],
+        [
+          "active_window",
+          6291459
+        ]
+      ],
+      "image": "/private/tmp/issue2849-work/research/integration/issue_3864_orbstack_six_task_allocation_v5/evidence/formal-seed-284936/run-01/formal-output/arms/persistent/runtime/059.png",
+      "image_reused": true,
+      "image_prepare_ns": 26501,
+      "image_ready_ns": 22550172081955,
+      "input_focus_before": 6291459,
+      "input_focus_after": 6291459,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "capture_ms": 2.951582,
+      "wire_bytes": 328,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 22550172180539
+    },
+    "adaptive": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "grounding": {
+          "field_point": [
+            225,
+            401
+          ],
+          "submit_point": [
+            377,
+            401
+          ],
+          "method": {
+            "first_action": "enter_exact_token",
+            "continue_when": "field_pixels_changed_and_submit_revalidated",
+            "second_action": "activate_submit",
+            "complete_when": "submission_pixels_changed_then_independent_score"
+          }
+        },
+        "aliases": {
+          "field": "persistent_a_field",
+          "submit": "persistent_a_submit"
+        },
+        "needs_mint": false,
+        "layout": "A"
+      },
+      "cache_update": {
+        "grounding": {
+          "field_point": [
+            225,
+            401
+          ],
+          "submit_point": [
+            377,
+            401
+          ],
+          "method": {
+            "first_action": "enter_exact_token",
+            "continue_when": "field_pixels_changed_and_submit_revalidated",
+            "second_action": "activate_submit",
+            "complete_when": "submission_pixels_changed_then_independent_score"
+          }
+        },
+        "aliases": {
+          "field": "persistent_a_field",
+          "submit": "persistent_a_submit"
+        },
+        "needs_mint": false,
+        "layout": "A"
+      },
+      "route": "reuse",
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "warm_reuse",
+        "omitted_stages": [
+          "observe_source",
+          "coarse_model",
+          "acquire_anchor",
+          "anchor_model"
+        ],
+        "comparable_to_full_cold": false
+      },
+      "stages": {
+        "observe_source": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "coarse_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_anchor": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "anchor_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "reuse_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [],
+      "model_call_ledger": [],
+      "accounting": {
+        "attempted_calls": 0,
+        "completed_calls": 0,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "usage_coverage": {
+          "input_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "cost": 0,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "reuse_revalidate",
+          "started_ns": 22550190282663,
+          "ended_ns": 22550394930181,
+          "elapsed_ns": 204647518
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 22550394975223,
+          "ended_ns": 22550626937950,
+          "elapsed_ns": 231962727
+        },
+        {
+          "stage": "execute",
+          "started_ns": 22550626954075,
+          "ended_ns": 22551766291719,
+          "elapsed_ns": 1139337644
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 22551766308261,
+          "ended_ns": 22551766322302,
+          "elapsed_ns": 14041
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "program_count": 10,
+    "submission_records": [
+      {
+        "exact": true,
+        "expected_token": "t284936-3",
+        "layout": "A",
+        "received_ns": 22551538748136,
+        "schema": "integrated_efficiency_submission_v1",
+        "submitted_values": [
+          "t284936-3"
+        ],
+        "task_id": "task-3"
+      }
+    ],
+    "resolved_target": {
+      "grounding": {
+        "field_point": [
+          225,
+          401
+        ],
+        "submit_point": [
+          377,
+          401
+        ],
+        "method": {
+          "first_action": "enter_exact_token",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "second_action": "activate_submit",
+          "complete_when": "submission_pixels_changed_then_independent_score"
+        }
+      },
+      "aliases": {
+        "field": "persistent_a_field",
+        "submit": "persistent_a_submit"
+      },
+      "needs_mint": false,
+      "layout": "A"
+    }
+  },
+  {
+    "trace": {
+      "arm": "persistent",
+      "task_id": "task-4",
+      "layout": "B",
+      "route": "repair",
+      "model_calls": [
+        {
+          "call_id": "01a0c0c2-1191-7101-9992-fd994e72400e",
+          "stage": "expanded_model",
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "usage": {
+            "input_tokens": 13747,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 113,
+            "reasoning_output_tokens": 0
+          }
+        }
+      ],
+      "planner_generations": 1,
+      "model_visible_images": 1,
+      "local_observations": 27,
+      "durable_calls": 18,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 12376983857,
+      "source_to_completion_ns": 11457217394,
+      "input_feedback_ns": [
+        88805552,
+        95112889
+      ],
+      "repair": {
+        "required": true,
+        "old_reference_status": "missing",
+        "old_reference_pointer_admissions": 0,
+        "attempted": true,
+        "succeeded": true
+      }
+    },
+    "source": {
+      "event": "observation",
+      "id": "durable-914401ad4f084a47be369908a72140fb",
+      "step": 0,
+      "sequence": 91,
+      "capture_ns": 22552438674951,
+      "context_ns": 22552441419738,
+      "context": [
+        [
+          "windows",
+          "0x00600003  0 9c3be521a5ca AI INTEGRATED task-4 READY - Chromium\n"
+        ],
+        [
+          "active_window",
+          6291459
+        ]
+      ],
+      "image": "/private/tmp/issue2849-work/research/integration/issue_3864_orbstack_six_task_allocation_v5/evidence/formal-seed-284936/run-01/formal-output/arms/persistent/runtime/087.png",
+      "image_reused": true,
+      "image_prepare_ns": 14959,
+      "image_ready_ns": 22552442622922,
+      "input_focus_before": 6291459,
+      "input_focus_after": 6291459,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "capture_ms": 3.418422,
+      "wire_bytes": 328,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 22552442699173
+    },
+    "adaptive": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "grounding": {
+          "field_point": [
+            650,
+            559
+          ],
+          "submit_point": [
+            689,
+            634
+          ],
+          "method": {
+            "first_action": "enter_exact_token",
+            "continue_when": "field_pixels_changed_and_submit_revalidated",
+            "second_action": "activate_submit",
+            "complete_when": "submission_pixels_changed_then_independent_score"
+          }
+        },
+        "aliases": null,
+        "needs_mint": true,
+        "layout": "B"
+      },
+      "cache_update": {
+        "grounding": {
+          "field_point": [
+            650,
+            559
+          ],
+          "submit_point": [
+            689,
+            634
+          ],
+          "method": {
+            "first_action": "enter_exact_token",
+            "continue_when": "field_pixels_changed_and_submit_revalidated",
+            "second_action": "activate_submit",
+            "complete_when": "submission_pixels_changed_then_independent_score"
+          }
+        },
+        "aliases": null,
+        "needs_mint": true,
+        "layout": "B"
+      },
+      "route": "reuse",
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "warm_reuse",
+        "omitted_stages": [
+          "observe_source",
+          "coarse_model",
+          "acquire_anchor",
+          "anchor_model"
+        ],
+        "comparable_to_full_cold": false
+      },
+      "stages": {
+        "observe_source": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "coarse_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_anchor": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "anchor_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "reuse_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_expansion": {
+          "status": "completed",
+          "reason": null
+        },
+        "expanded_model": {
+          "status": "completed",
+          "reason": null
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "persistent:task-4",
+          "stage": "expanded_model",
+          "status": "completed",
+          "started_ns": 22552623471113,
+          "completed_ns": 22562418396559,
+          "call_id": "01a0c0c2-1191-7101-9992-fd994e72400e",
+          "usage": {
+            "input_tokens": 13747,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 113,
+            "reasoning_output_tokens": 0
+          },
+          "error": null
+        }
+      ],
+      "model_call_ledger": [
+        {
+          "attempt_id": "persistent:task-4",
+          "stage": "expanded_model",
+          "call_id": "01a0c0c2-1191-7101-9992-fd994e72400e",
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "grounding": {
+                "field_point": [
+                  650,
+                  559
+                ],
+                "submit_point": [
+                  689,
+                  634
+                ],
+                "method": {
+                  "first_action": "enter_exact_token",
+                  "continue_when": "field_pixels_changed_and_submit_revalidated",
+                  "second_action": "activate_submit",
+                  "complete_when": "submission_pixels_changed_then_independent_score"
+                }
+              },
+              "aliases": null,
+              "needs_mint": true,
+              "layout": "B"
+            }
+          },
+          "usage": {
+            "input_tokens": 13747,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 113,
+            "reasoning_output_tokens": 0
+          },
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        }
+      ],
+      "accounting": {
+        "attempted_calls": 1,
+        "completed_calls": 1,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 13747,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 113,
+          "reasoning_output_tokens": 0
+        },
+        "usage_coverage": {
+          "input_tokens": 1,
+          "cached_input_tokens": 1,
+          "cache_write_input_tokens": 1,
+          "output_tokens": 1,
+          "reasoning_output_tokens": 1
+        },
+        "cost": null,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "reuse_revalidate",
+          "started_ns": 22552468863074,
+          "ended_ns": 22552623439654,
+          "elapsed_ns": 154576580
+        },
+        {
+          "stage": "acquire_expansion",
+          "started_ns": 22552623454113,
+          "ended_ns": 22552623467863,
+          "elapsed_ns": 13750
+        },
+        {
+          "stage": "expanded_model",
+          "started_ns": 22552623471113,
+          "ended_ns": 22562418396559,
+          "elapsed_ns": 9794925446
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 22562418422184,
+          "ended_ns": 22562779136345,
+          "elapsed_ns": 360714161
+        },
+        {
+          "stage": "execute",
+          "started_ns": 22562779152054,
+          "ended_ns": 22564144459925,
+          "elapsed_ns": 1365307871
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 22564144476800,
+          "ended_ns": 22564144494592,
+          "elapsed_ns": 17792
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "program_count": 9,
+    "submission_records": [
+      {
+        "exact": true,
+        "expected_token": "t284936-4",
+        "layout": "B",
+        "received_ns": 22563895892345,
+        "schema": "integrated_efficiency_submission_v1",
+        "submitted_values": [
+          "t284936-4"
+        ],
+        "task_id": "task-4"
+      }
+    ],
+    "resolved_target": {
+      "grounding": {
+        "field_point": [
+          650,
+          559
+        ],
+        "submit_point": [
+          689,
+          634
+        ],
+        "method": {
+          "first_action": "enter_exact_token",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "second_action": "activate_submit",
+          "complete_when": "submission_pixels_changed_then_independent_score"
+        }
+      },
+      "aliases": {
+        "field": "persistent_b_field",
+        "submit": "persistent_b_submit"
+      },
+      "needs_mint": false,
+      "layout": "B"
+    }
+  },
+  {
+    "trace": {
+      "arm": "persistent",
+      "task_id": "task-5",
+      "layout": "B",
+      "route": "reuse",
+      "model_calls": [],
+      "planner_generations": 0,
+      "model_visible_images": 0,
+      "local_observations": 27,
+      "durable_calls": 20,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 3724238427,
+      "source_to_completion_ns": 2708471272,
+      "input_feedback_ns": [
+        85878804,
+        89399978
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    "source": {
+      "event": "observation",
+      "id": "durable-11403f71f4744862b3f21617a25573a3",
+      "step": 0,
+      "sequence": 117,
+      "capture_ns": 22564896928173,
+      "context_ns": 22564899555376,
+      "context": [
+        [
+          "windows",
+          "0x00600003  0 9c3be521a5ca AI INTEGRATED task-5 READY - Chromium\n"
+        ],
+        [
+          "active_window",
+          6291459
+        ]
+      ],
+      "image": "/private/tmp/issue2849-work/research/integration/issue_3864_orbstack_six_task_allocation_v5/evidence/formal-seed-284936/run-01/formal-output/arms/persistent/runtime/113.png",
+      "image_reused": true,
+      "image_prepare_ns": 19083,
+      "image_ready_ns": 22564900800393,
+      "input_focus_before": 6291459,
+      "input_focus_after": 6291459,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "capture_ms": 3.525881,
+      "wire_bytes": 330,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 22564900894436
+    },
+    "adaptive": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "grounding": {
+          "field_point": [
+            650,
+            559
+          ],
+          "submit_point": [
+            689,
+            634
+          ],
+          "method": {
+            "first_action": "enter_exact_token",
+            "continue_when": "field_pixels_changed_and_submit_revalidated",
+            "second_action": "activate_submit",
+            "complete_when": "submission_pixels_changed_then_independent_score"
+          }
+        },
+        "aliases": {
+          "field": "persistent_b_field",
+          "submit": "persistent_b_submit"
+        },
+        "needs_mint": false,
+        "layout": "B"
+      },
+      "cache_update": {
+        "grounding": {
+          "field_point": [
+            650,
+            559
+          ],
+          "submit_point": [
+            689,
+            634
+          ],
+          "method": {
+            "first_action": "enter_exact_token",
+            "continue_when": "field_pixels_changed_and_submit_revalidated",
+            "second_action": "activate_submit",
+            "complete_when": "submission_pixels_changed_then_independent_score"
+          }
+        },
+        "aliases": {
+          "field": "persistent_b_field",
+          "submit": "persistent_b_submit"
+        },
+        "needs_mint": false,
+        "layout": "B"
+      },
+      "route": "reuse",
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "warm_reuse",
+        "omitted_stages": [
+          "observe_source",
+          "coarse_model",
+          "acquire_anchor",
+          "anchor_model"
+        ],
+        "comparable_to_full_cold": false
+      },
+      "stages": {
+        "observe_source": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "coarse_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_anchor": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "anchor_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "reuse_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [],
+      "model_call_ledger": [],
+      "accounting": {
+        "attempted_calls": 0,
+        "completed_calls": 0,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "usage_coverage": {
+          "input_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "cost": 0,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "reuse_revalidate",
+          "started_ns": 22564941463826,
+          "ended_ns": 22565543113504,
+          "elapsed_ns": 601649678
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 22565543159588,
+          "ended_ns": 22566085994458,
+          "elapsed_ns": 542834870
+        },
+        {
+          "stage": "execute",
+          "started_ns": 22566086020500,
+          "ended_ns": 22567870158372,
+          "elapsed_ns": 1784137872
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 22567870175830,
+          "ended_ns": 22567870191414,
+          "elapsed_ns": 15584
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "program_count": 10,
+    "submission_records": [
+      {
+        "exact": true,
+        "expected_token": "t284936-5",
+        "layout": "B",
+        "received_ns": 22567605399445,
+        "schema": "integrated_efficiency_submission_v1",
+        "submitted_values": [
+          "t284936-5"
+        ],
+        "task_id": "task-5"
+      }
+    ],
+    "resolved_target": {
+      "grounding": {
+        "field_point": [
+          650,
+          559
+        ],
+        "submit_point": [
+          689,
+          634
+        ],
+        "method": {
+          "first_action": "enter_exact_token",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "second_action": "activate_submit",
+          "complete_when": "submission_pixels_changed_then_independent_score"
+        }
+      },
+      "aliases": {
+        "field": "persistent_b_field",
+        "submit": "persistent_b_submit"
+      },
+      "needs_mint": false,
+      "layout": "B"
+    }
+  },
+  {
+    "trace": {
+      "arm": "persistent",
+      "task_id": "task-6",
+      "layout": "B",
+      "route": "reuse",
+      "model_calls": [],
+      "planner_generations": 0,
+      "model_visible_images": 0,
+      "local_observations": 27,
+      "durable_calls": 20,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 4756846771,
+      "source_to_completion_ns": 3538462835,
+      "input_feedback_ns": [
+        87096571,
+        90077070
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    "source": {
+      "event": "observation",
+      "id": "durable-2e001d99f248427ca7825c95de817316",
+      "step": 0,
+      "sequence": 144,
+      "capture_ns": 22568810061860,
+      "context_ns": 22568812149389,
+      "context": [
+        [
+          "windows",
+          "0x00600003  0 9c3be521a5ca AI INTEGRATED task-6 READY - Chromium\n"
+        ],
+        [
+          "active_window",
+          6291459
+        ]
+      ],
+      "image": "/private/tmp/issue2849-work/research/integration/issue_3864_orbstack_six_task_allocation_v5/evidence/formal-seed-284936/run-01/formal-output/arms/persistent/runtime/140.png",
+      "image_reused": true,
+      "image_prepare_ns": 14125,
+      "image_ready_ns": 22568813119319,
+      "input_focus_before": 6291459,
+      "input_focus_after": 6291459,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291459,
+        "surface": 6291459,
+        "geometry": [
+          10,
+          10,
+          1050,
+          780
+        ]
+      },
+      "capture_ms": 3.254253,
+      "wire_bytes": 330,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 22568813198528
+    },
+    "adaptive": {
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "task_effect": "succeeded",
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "selected_target": {
+        "grounding": {
+          "field_point": [
+            650,
+            559
+          ],
+          "submit_point": [
+            689,
+            634
+          ],
+          "method": {
+            "first_action": "enter_exact_token",
+            "continue_when": "field_pixels_changed_and_submit_revalidated",
+            "second_action": "activate_submit",
+            "complete_when": "submission_pixels_changed_then_independent_score"
+          }
+        },
+        "aliases": {
+          "field": "persistent_b_field",
+          "submit": "persistent_b_submit"
+        },
+        "needs_mint": false,
+        "layout": "B"
+      },
+      "cache_update": {
+        "grounding": {
+          "field_point": [
+            650,
+            559
+          ],
+          "submit_point": [
+            689,
+            634
+          ],
+          "method": {
+            "first_action": "enter_exact_token",
+            "continue_when": "field_pixels_changed_and_submit_revalidated",
+            "second_action": "activate_submit",
+            "complete_when": "submission_pixels_changed_then_independent_score"
+          }
+        },
+        "aliases": {
+          "field": "persistent_b_field",
+          "submit": "persistent_b_submit"
+        },
+        "needs_mint": false,
+        "layout": "B"
+      },
+      "route": "reuse",
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "warm_reuse",
+        "omitted_stages": [
+          "observe_source",
+          "coarse_model",
+          "acquire_anchor",
+          "anchor_model"
+        ],
+        "comparable_to_full_cold": false
+      },
+      "stages": {
+        "observe_source": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "coarse_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "acquire_anchor": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "anchor_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "reuse_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "acquire_expansion": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "expanded_model": {
+          "status": "skipped",
+          "reason": "branch_not_reached"
+        },
+        "final_revalidate": {
+          "status": "completed",
+          "reason": null
+        },
+        "execute": {
+          "status": "completed",
+          "reason": null
+        },
+        "verify_effect": {
+          "status": "completed",
+          "reason": null
+        }
+      },
+      "attempt_ledger": [],
+      "model_call_ledger": [],
+      "accounting": {
+        "attempted_calls": 0,
+        "completed_calls": 0,
+        "duplicate_call_ids": [],
+        "usage_totals": {
+          "input_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "usage_coverage": {
+          "input_tokens": 0,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "cost": 0,
+        "cached_input_semantics": "subset of input_tokens; never added to input total"
+      },
+      "phase_timings": [
+        {
+          "stage": "reuse_revalidate",
+          "started_ns": 22568868887585,
+          "ended_ns": 22569571568274,
+          "elapsed_ns": 702680689
+        },
+        {
+          "stage": "final_revalidate",
+          "started_ns": 22569571618108,
+          "ended_ns": 22570360219644,
+          "elapsed_ns": 788601536
+        },
+        {
+          "stage": "execute",
+          "started_ns": 22570360236811,
+          "ended_ns": 22572628588498,
+          "elapsed_ns": 2268351687
+        },
+        {
+          "stage": "verify_effect",
+          "started_ns": 22572628609290,
+          "ended_ns": 22572628622249,
+          "elapsed_ns": 12959
+        }
+      ],
+      "input_authority": "consumed_by_recorded_execute_stage"
+    },
+    "program_count": 10,
+    "submission_records": [
+      {
+        "exact": true,
+        "expected_token": "t284936-6",
+        "layout": "B",
+        "received_ns": 22572348524695,
+        "schema": "integrated_efficiency_submission_v1",
+        "submitted_values": [
+          "t284936-6"
+        ],
+        "task_id": "task-6"
+      }
+    ],
+    "resolved_target": {
+      "grounding": {
+        "field_point": [
+          650,
+          559
+        ],
+        "submit_point": [
+          689,
+          634
+        ],
+        "method": {
+          "first_action": "enter_exact_token",
+          "continue_when": "field_pixels_changed_and_submit_revalidated",
+          "second_action": "activate_submit",
+          "complete_when": "submission_pixels_changed_then_independent_score"
+        }
+      },
+      "aliases": {
+        "field": "persistent_b_field",
+        "submit": "persistent_b_submit"
+      },
+      "needs_mint": false,
+      "layout": "B"
+    }
+  }
+]

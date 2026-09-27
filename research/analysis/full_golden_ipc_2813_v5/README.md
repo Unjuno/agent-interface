@@ -1,7 +1,6 @@
 # Task-1 successor v5
 
 Fresh successor after v4 stopped at schema preflight because the host broker
-environment mapped `/repo` paths while the container published `/workspace`
-paths. v5 preserves the v3 wrapper and source pins for that single allocation.
-The absolute local `CODEX_EXE` path from the original preregistration is
-redacted in this public copy; the allocation outcome remains unchanged.
+environment did not pin `CODEX_EXE`. v5 preserves the v3 wrapper and current
+source pins, and requires the verified local Codex executable to be supplied to
+the host broker before allocation.

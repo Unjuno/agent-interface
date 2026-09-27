@@ -38,3 +38,12 @@ retain STOP/HOLD/FAIL and do not retry. The recorded allocation stopped before
 the first optimizer step because CUDA deterministic mode required
 `CUBLAS_WORKSPACE_CONFIG` before process startup. This frozen run is not
 retried, and no model-comparison result is claimed.
+
+## Superseded preallocation note (#3694)
+
+The closed preregistered branch #3694 separately recorded an earlier container
+image-pull storage stop before any model process ran; its note is retained in
+`PREALLOCATION_CONTAINER_STOP_3694.md`. That branch's proposed local-host
+amendment did not become a second allocation: it was superseded before model
+execution by the merged allocation documented above. Do not infer another run,
+or treat the preallocation note as evidence of training or evaluation.

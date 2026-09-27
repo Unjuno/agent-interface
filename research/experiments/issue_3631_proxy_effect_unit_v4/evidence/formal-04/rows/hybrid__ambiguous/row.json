@@ -1,0 +1,443 @@
+{
+  "after_state": {
+    "count": 2,
+    "status": "ambiguous",
+    "targets": [
+      {
+        "process": {
+          "cmdline": [
+            "/usr/bin/python3",
+            "-B",
+            "/src/fixture.py"
+          ],
+          "cmdline_sha256": "859f424e5dcf49e194e73a1acdfe25313d4bff8817cbfe5b9bb00b034ba75e65",
+          "pgid": 1,
+          "pid": 187,
+          "ppid": 1,
+          "sid": 1,
+          "stable_read": true,
+          "start_ticks": 504237,
+          "state": "S"
+        },
+        "title": "proxy-fixture:0:1",
+        "xid": 4194307,
+        "xres": {
+          "client_base": 4194304,
+          "mask": 2,
+          "pid": 187,
+          "value_length": 1
+        }
+      },
+      {
+        "process": {
+          "cmdline": [
+            "/usr/bin/python3",
+            "-B",
+            "/src/fixture.py"
+          ],
+          "cmdline_sha256": "859f424e5dcf49e194e73a1acdfe25313d4bff8817cbfe5b9bb00b034ba75e65",
+          "pgid": 1,
+          "pid": 190,
+          "ppid": 1,
+          "sid": 1,
+          "stable_read": true,
+          "start_ticks": 504251,
+          "state": "S"
+        },
+        "title": "proxy-fixture:0:1",
+        "xid": 6291459,
+        "xres": {
+          "client_base": 6291456,
+          "mask": 2,
+          "pid": 190,
+          "value_length": 1
+        }
+      }
+    ]
+  },
+  "ambiguous_setup": {
+    "count": 2,
+    "ready_pids": [
+      187,
+      190
+    ],
+    "status": "ambiguous",
+    "targets": [
+      {
+        "process": {
+          "cmdline": [
+            "/usr/bin/python3",
+            "-B",
+            "/src/fixture.py"
+          ],
+          "cmdline_sha256": "859f424e5dcf49e194e73a1acdfe25313d4bff8817cbfe5b9bb00b034ba75e65",
+          "pgid": 1,
+          "pid": 187,
+          "ppid": 1,
+          "sid": 1,
+          "stable_read": true,
+          "start_ticks": 504237,
+          "state": "S"
+        },
+        "title": "proxy-fixture:0:1",
+        "xid": 4194307,
+        "xres": {
+          "client_base": 4194304,
+          "mask": 2,
+          "pid": 187,
+          "value_length": 1
+        }
+      },
+      {
+        "process": {
+          "cmdline": [
+            "/usr/bin/python3",
+            "-B",
+            "/src/fixture.py"
+          ],
+          "cmdline_sha256": "859f424e5dcf49e194e73a1acdfe25313d4bff8817cbfe5b9bb00b034ba75e65",
+          "pgid": 1,
+          "pid": 190,
+          "ppid": 1,
+          "sid": 1,
+          "stable_read": true,
+          "start_ticks": 504251,
+          "state": "S"
+        },
+        "title": "proxy-fixture:0:1",
+        "xid": 6291459,
+        "xres": {
+          "client_base": 6291456,
+          "mask": 2,
+          "pid": 190,
+          "value_length": 1
+        }
+      }
+    ]
+  },
+  "arm": "hybrid",
+  "case": "ambiguous",
+  "current_state": {
+    "count": 2,
+    "status": "ambiguous",
+    "targets": [
+      {
+        "process": {
+          "cmdline": [
+            "/usr/bin/python3",
+            "-B",
+            "/src/fixture.py"
+          ],
+          "cmdline_sha256": "859f424e5dcf49e194e73a1acdfe25313d4bff8817cbfe5b9bb00b034ba75e65",
+          "pgid": 1,
+          "pid": 187,
+          "ppid": 1,
+          "sid": 1,
+          "stable_read": true,
+          "start_ticks": 504237,
+          "state": "S"
+        },
+        "title": "proxy-fixture:0:1",
+        "xid": 4194307,
+        "xres": {
+          "client_base": 4194304,
+          "mask": 2,
+          "pid": 187,
+          "value_length": 1
+        }
+      },
+      {
+        "process": {
+          "cmdline": [
+            "/usr/bin/python3",
+            "-B",
+            "/src/fixture.py"
+          ],
+          "cmdline_sha256": "859f424e5dcf49e194e73a1acdfe25313d4bff8817cbfe5b9bb00b034ba75e65",
+          "pgid": 1,
+          "pid": 190,
+          "ppid": 1,
+          "sid": 1,
+          "stable_read": true,
+          "start_ticks": 504251,
+          "state": "S"
+        },
+        "title": "proxy-fixture:0:1",
+        "xid": 6291459,
+        "xres": {
+          "client_base": 6291456,
+          "mask": 2,
+          "pid": 190,
+          "value_length": 1
+        }
+      }
+    ]
+  },
+  "decision": "YIELD_TARGET_AMBIGUOUS",
+  "emissions": 0,
+  "error": null,
+  "fixture_events": [
+    {
+      "button_rect": {
+        "height": 32,
+        "width": 120,
+        "x": 176,
+        "y": 72
+      },
+      "count": 0,
+      "kind": "ready",
+      "pid": 187,
+      "version": 1,
+      "window_size": [
+        320,
+        120
+      ]
+    },
+    {
+      "button_rect": {
+        "height": 32,
+        "width": 120,
+        "x": 176,
+        "y": 72
+      },
+      "count": 0,
+      "kind": "ready",
+      "pid": 190,
+      "version": 1,
+      "window_size": [
+        320,
+        120
+      ]
+    }
+  ],
+  "fixture_events_sha256": "51ca56996db32c128d74d1acf3df6f77046cd02812e1a534f6e4ee231775700f",
+  "initial_state": {
+    "counter": 0,
+    "frame_bytes": 153600,
+    "frame_path": "rows/hybrid__ambiguous/before.raw",
+    "frame_sha256": "ef392d6efa1ee9763599712c42a96c722b3e8d31fbd3e96ec2c558e4e9fa4d13",
+    "geometry": [
+      0,
+      0,
+      320,
+      120,
+      24
+    ],
+    "height": 120,
+    "pid": 187,
+    "pixel_meta": {
+      "bits_per_pixel": 32,
+      "image_byte_order": 0,
+      "scanline_pad": 32,
+      "visual_masks": {
+        "blue": 255,
+        "depth": 24,
+        "green": 65280,
+        "red": 16711680
+      }
+    },
+    "process": {
+      "cmdline": [
+        "/usr/bin/python3",
+        "-B",
+        "/src/fixture.py"
+      ],
+      "cmdline_sha256": "859f424e5dcf49e194e73a1acdfe25313d4bff8817cbfe5b9bb00b034ba75e65",
+      "pgid": 1,
+      "pid": 187,
+      "ppid": 1,
+      "sid": 1,
+      "stable_read": true,
+      "start_ticks": 504237,
+      "state": "S"
+    },
+    "ready_event": {
+      "button_rect": {
+        "height": 32,
+        "width": 120,
+        "x": 176,
+        "y": 72
+      },
+      "count": 0,
+      "kind": "ready",
+      "pid": 187,
+      "version": 1,
+      "window_size": [
+        320,
+        120
+      ]
+    },
+    "rgb_bytes": 115200,
+    "rgb_path": "rows/hybrid__ambiguous/before.rgb",
+    "rgb_sha256": "2411cb1a69546aae635f86c3845691ca4722178f60776b0e208514b0824769cd",
+    "start_ticks": 504237,
+    "status": "ok",
+    "title": "proxy-fixture:0:1",
+    "version": 1,
+    "width": 320,
+    "xid": 4194307,
+    "xres": {
+      "client_base": 4194304,
+      "mask": 2,
+      "pid": 187,
+      "value_length": 1
+    }
+  },
+  "input_ack": false,
+  "presentation": {
+    "coordinate": [
+      236,
+      88
+    ],
+    "derived_from_sha256": "28dcc174c4c5850d7513e52422a53c46a65e584fc82f056b7cce250f00460c1a",
+    "image_coordinate": [
+      236,
+      88
+    ],
+    "input_bytes": 115363,
+    "input_paths": [
+      "rows/hybrid__ambiguous/proxy.ppm",
+      "rows/hybrid__ambiguous/structured.json"
+    ],
+    "input_sha256": "28dcc174c4c5850d7513e52422a53c46a65e584fc82f056b7cce250f00460c1a",
+    "kind": "hybrid",
+    "method": "hybrid_image_and_structured_agreement",
+    "proxy_sha256": "2c70d06debf3da3afad07e7b1125af4b2cc581a7afaf7764cbd9ab5707cb162d",
+    "state": {
+      "control": {
+        "height": 32,
+        "width": 120,
+        "x": 176,
+        "y": 72
+      },
+      "counter": 0,
+      "operation": "increment",
+      "pid": 187,
+      "start_ticks": 504237,
+      "target": 4194307,
+      "version": 1
+    },
+    "structured_coordinate": [
+      236,
+      88
+    ]
+  },
+  "process_exit_codes": {
+    "duplicate_fixture": -15,
+    "fixture_current": -15,
+    "xvfb": 0
+  },
+  "processes": [
+    {
+      "pid": 184,
+      "role": "xvfb",
+      "start_ticks": 504234
+    },
+    {
+      "pid": 187,
+      "role": "fixture",
+      "start_ticks": 504237
+    },
+    {
+      "pid": 190,
+      "role": "duplicate_fixture",
+      "start_ticks": 504251
+    }
+  ],
+  "release_observation": {
+    "button1_mask": 256,
+    "mask": 0,
+    "verified": true
+  },
+  "release_verified": true,
+  "reply": {
+    "after_state": {
+      "count": 2,
+      "status": "ambiguous",
+      "targets": [
+        {
+          "process": {
+            "cmdline": [
+              "/usr/bin/python3",
+              "-B",
+              "/src/fixture.py"
+            ],
+            "cmdline_sha256": "859f424e5dcf49e194e73a1acdfe25313d4bff8817cbfe5b9bb00b034ba75e65",
+            "pgid": 1,
+            "pid": 187,
+            "ppid": 1,
+            "sid": 1,
+            "stable_read": true,
+            "start_ticks": 504237,
+            "state": "S"
+          },
+          "title": "proxy-fixture:0:1",
+          "xid": 4194307,
+          "xres": {
+            "client_base": 4194304,
+            "mask": 2,
+            "pid": 187,
+            "value_length": 1
+          }
+        },
+        {
+          "process": {
+            "cmdline": [
+              "/usr/bin/python3",
+              "-B",
+              "/src/fixture.py"
+            ],
+            "cmdline_sha256": "859f424e5dcf49e194e73a1acdfe25313d4bff8817cbfe5b9bb00b034ba75e65",
+            "pgid": 1,
+            "pid": 190,
+            "ppid": 1,
+            "sid": 1,
+            "stable_read": true,
+            "start_ticks": 504251,
+            "state": "S"
+          },
+          "title": "proxy-fixture:0:1",
+          "xid": 6291459,
+          "xres": {
+            "client_base": 6291456,
+            "mask": 2,
+            "pid": 190,
+            "value_length": 1
+          }
+        }
+      ]
+    },
+    "decision": "YIELD_TARGET_AMBIGUOUS",
+    "emissions": 0,
+    "input_ack": false
+  },
+  "request": {
+    "derived_coordinate": [
+      236,
+      88
+    ],
+    "derived_from_sha256": "28dcc174c4c5850d7513e52422a53c46a65e584fc82f056b7cce250f00460c1a",
+    "operation": "increment",
+    "representation_arm": "hybrid",
+    "representation_sha256": "28dcc174c4c5850d7513e52422a53c46a65e584fc82f056b7cce250f00460c1a",
+    "source_frame_sha256": "2411cb1a69546aae635f86c3845691ca4722178f60776b0e208514b0824769cd",
+    "source_token": {
+      "counter": 0,
+      "geometry": [
+        0,
+        0,
+        320,
+        120,
+        24
+      ],
+      "pid": 187,
+      "rgb_sha256": "2411cb1a69546aae635f86c3845691ca4722178f60776b0e208514b0824769cd",
+      "start_ticks": 504237,
+      "title": "proxy-fixture:0:1",
+      "version": 1,
+      "xid": 4194307
+    }
+  },
+  "row_id": "hybrid__ambiguous",
+  "socket_disappeared": true
+}

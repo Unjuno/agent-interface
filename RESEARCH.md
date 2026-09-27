@@ -64,6 +64,71 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+## Issue #4638 — Python-Xlib 0.15 XGetImage String8 boundary
+
+Successor to the unresolved historical-version question after #4455's
+Python-Xlib 0.33 `HOLD_NO_LIVE_STRING8_DISCRIMINATOR`. One frozen local Docker
+allocation on Python 3.11.16 / python3-xlib 0.15 completed 30/30 synthetic
+Xvfb cases: 12 payloads arrived as `str` and raised the legacy
+`bytes(image.data)` TypeError; 18 arrived as `bytes`. UTF-8/native byte and
+fixture pixel mismatches were zero. A same-author raw-only audit passed 18
+checks; 12/12 evidence-corruption controls were rejected. Disposition:
+`PASS_X11_STRING8_PY015_BOUNDARY_SCOPED`. This does not resolve current-version
+runtime compatibility, establish semantic image correctness or production
+reliability, or authorize changing the X11 backend. Preserve #4455's HOLD and
+#4304 unchanged. Full H/T/D/C/U, attempt history, source/environment hashes,
+raw rows and audits are in the [retained successor evidence](research/integration/x11_string8_capture_015_v1/formal/run01/REPORT.md)
+and [Issue #4638](https://github.com/Unjuno/agent-interface/issues/4638).
+
+### Issue #4623 — GPU shared-prefix readout construction stop
+
+Successor [#4623](https://github.com/Unjuno/agent-interface/issues/4623)
+preserves the earlier #1014/#1033 asset-unavailable record. A single pinned
+Qwen2.5-0.5B-Instruct revision was materialized and loaded in a network-disabled
+RTX 3080 Docker container. Three excluded synthetic bundles passed one-token
+vocabulary and cache-isolation construction checks, but full-prefill versus
+incremental-cache FP16 logits exceeded the preregistered 0.002 tolerance
+(max absolute delta 0.087–0.108). An independent audit reconstructed all three
+outcomes with zero errors; argmax did not change in those nine comparisons.
+Disposition: `STOP_CONSTRUCTION_LOGIT_TOLERANCE`; no formal timing block ran,
+so no cache speedup, semantic quality, or #1015 shadow capability is claimed.
+See the [retained stop record](research/system1/typed_readout_prefix_gpu_1014_v1/STOP_RECORD.md)
+  and [model asset hash manifest](research/system1/typed_readout_prefix_gpu_1014_v1/MODEL_MANIFEST.json).
+
+### Issue #4639 — selected answer-code projection STOP
+
+Successor [#4639](https://github.com/Unjuno/agent-interface/issues/4639)
+preserves #4623 and projects only the eight typed answer-code logits from the
+same pinned model, corpus, CUDA image and RTX 3080. Construction controls passed
+and all nine winners matched, but B00/slot 15 exceeded the frozen selected-score
+tolerance (max absolute `0.078125`, max relative `0.003224`). An independent
+implementation reconstructed all nine vectors with `errors=[]`; the preregistered
+all-comparisons gate therefore failed. No formal timing or semantic block ran.
+See the [successor STOP record](research/system1/typed_readout_code_projection_1014_v2/STOP_RECORD.md).
+
+### Issue #3849 — independent audit of retained #3442 intent-alignment result
+
+The [audit report](research/system1/intent_alignment_3442_audit_v1/REPORT.md)
+reconstructs 1,024 held-out paired rows, labels, categorical predictions and
+predictive metrics from the retained synthetic CPU result. It reproduces the
+original `HOLD_OR_FAIL_GATE_MISS`; three predictive gates remain false. The
+stale/unknown YIELD and matched PROPOSE controls are checked against stored
+aggregate gate counts rather than replayed, and p95 is recomputed from stored
+latency samples rather than measured anew. This is posthoc evidence auditing,
+not runtime/model-benefit or control-path validation.
+
+### Issue #3850 — bounded static validation detail, Obstac facade allocation
+
+The [retained experiment](research/experiments/issue_3850_static_validation_obstac_v1/RESULT.md)
+ran one four-row Linux/arm64 OrbStack allocation against the exact open PR
+#3853 head. The two observed malformed observe shapes returned bounded field
+diagnostics after `INVALID_PROGRAM`; valid-program refusal was not mislabeled,
+and unsupported caller text was not echoed. The independent raw-only audit
+passed all four retained rows. Scope is limited to the public dispatch facade
+with a mocked refusing session: `backend_emissions=0` is the mock's recorded
+value, not live native-backend evidence. User/model recovery benefit, actual
+native emission behavior and operation-index diagnostics remain untested.
+
 ### MAP01 admission-to-physical-input audit supplement
 
 The [v2 offline audit supplement](research/doom/map01_v12_physical_occupancy_audit_v2/README.md)
@@ -970,6 +1035,8 @@ A candidate is promoted only when:
 
 Negative results are retained because they constrain the design space.
 
+- [Issue #3066 v4 preformal HOLD](research/integration/safety_graph_live_x11_3066_v4/PREFORMAL_HOLD.md) — bare Xvfb construction reached single-shot recovery; Openbox stopped before an independently observed press. No formal invocation or runtime claim; v3 failure remains unchanged.
+
 - fixed sleeps as a correctness mechanism — rejected;
 - method-wide invalidation for every route failure — rejected as default;
 - blind re-anchor-and-continue — unstable in fresh runs;
@@ -1509,4 +1576,20 @@ without reinterpretation. See [formal result](research/issue_3784_focused_receiv
 [independent audit](research/issue_3784_focused_receiver_v1/results/audit-01/audit.json),
 and PR (to be added after evidence publication).
 
+### Cross-process role skill reload — Issue #3890
+
+The successor to #3780 passed a preregistered three-seed synthetic lifecycle in local network-isolated CPU Docker: each JSON tensor skill was independently loaded by two fresh containers, all 12,288 role predictions matched per seed, all roles met the 0.90 threshold, and both fresh graph generations completed receipt-gated A→B→C with fail-closed controls. Independent audit passed with zero errors. Seed 3789 / role C is a narrow pass (0.900635). Construction-only seeds and the post-formal auditor/path/hash correction are explicitly retained; no model rerun or production-authority claim. See [formal report](research/needle_role_skill_reload_3780_v1/REPORT.md), [raw evidence and checksums](research/needle_role_skill_reload_3780_v1/formal/SHA256SUMS.txt), and [Issue #3890](https://github.com/Unjuno/agent-interface/issues/3890).
+
+### Online LoRA skill snapshot/resume — Issue #3911
+
+Three network-isolated local Docker seeds resumed all 16 rank-2 LoRA/AdamW feedback arrivals in distinct fresh processes. Adapter tensors, optimizer moments/steps, cursor, base identity and hash chain matched the uninterrupted reference; all invalid/stale/duplicate/skipped controls yielded. The preregistered experiment is **FAIL**, not a promotion: strict bit-exact heldout logits differed by only 1.91e-6–3.82e-6 despite identical predictions, and update-only p95 was 68.32–209.22 ms against the 60 ms gate. B accuracy was 0.8613/0.9429/0.9314. The first independent-auditor invocation had a lookup bug; its correction and successful FAIL disposition are retained, with no training rerun or threshold relaxation. This supports synthetic state-resume equivalence only, not exact inference portability or the latency target. See [report and raw formal evidence](research/needle_online_lora_skill_stream_v1/REPORT.md), [audit correction](research/needle_online_lora_skill_stream_v1/AUDIT_SOURCE_CORRECTION.md), and [Issue #3911](https://github.com/Unjuno/agent-interface/issues/3911).
+
+### Representation-bound proxy effect unit — Issue #3631
+
+One frozen OrbStack linux/arm64 allocation completed 28/28 rows across screenshot, proxy-image, structured-proxy, and hybrid arms. Each arm produced one exact synthetic 0→1 effect and refused/yielded on its six negative controls; XRes PID plus stable `/proc` start ticks bound the selected XID to its fixture process. Representation-derived coordinates and hashes reconciled, two-target ambiguity was established before dispatch with zero input/effect, and all release/cleanup checks passed. A separate read-only primary auditor returned `PASS_INDEPENDENT_AUDIT` with seven of seven corruption probes detected; a post-formal cross-binding audit recomputed state/representation/action correspondence for all 28 rows and passed. This closes only the deterministic GTK/Xvfb allocation: no arm superiority, model/human benefit, production authority, general GUI safety, or integrated desktop claim. See [the preregistration, raw rows, freeze, and audits](research/experiments/issue_3631_proxy_effect_unit_v4/README.md).
+
 </details>
+
+## Issue #3311 — historical source provenance successor audit (2026-09-27)
+
+The clean-CI `git show` availability blocker now has an additive, snapshot-backed audit package at [research/live_control/issue_3311_transport_source_provenance_v1/](research/live_control/issue_3311_transport_source_provenance_v1/). Three historical broker/runner/test source sets (nine files) were byte-verified against the original run manifests. One network-disabled, read-only container invocation re-audited all three retained runs: 18/18 checks passed for each. See its [H/T/D/C/U plan](research/live_control/issue_3311_transport_source_provenance_v1/PLAN.md), [frozen preregistration](research/live_control/issue_3311_transport_source_provenance_v1/FREEZE.json), and [formal result](research/live_control/issue_3311_transport_source_provenance_v1/RESULT.json). This closes the historical-source provenance sub-gate only. The integrated live cold/warm/invalidation/repair comparison and actual usage accounting required by Issue #3311 remain pending. A post-formal review amendment also makes the runner exit nonzero on any failed report; its negative controls pass, and the formal run was not repeated. Original v1 evidence and audit reports were left unchanged.

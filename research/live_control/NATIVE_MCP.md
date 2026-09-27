@@ -37,6 +37,40 @@ install a plugin or add tools to the current Codex conversation.
   read-only digest-bound path. It does not create a missing request.
 
 The run is bound at server startup; tools cannot select another filesystem path.
+
+Start/observe responses and source-available submit/resume responses include
+`window_inventory` for that exact source stage. This reads the harness's already
+recorded `windows-N.json`, with its path and SHA-256, so complete application and
+dialog titles can be read alongside the image. It performs no discovery, focus
+change or input. The listing is historical, is not atomic with the screenshot,
+and gives no freshness or input authority. Inspect the image and normal guard
+results; do not use a listed window ID as automatic permission to target it.
+Missing listings return `unavailable`; malformed or over-16384-byte listings
+return `needs_review` without dropping the image or action receipt. No older
+listing is substituted. The managed harness publishes the listing before its
+stage source and reply, without reader-side sleeps or retries.
+
+### Choosing a keyboard context point
+
+`interaction="keyboard"` requires an observed `point` even though it emits no
+pointer movement or click. The point identifies visual context in the intended
+focused window; it does not select a cell, move the caret, or set the text
+destination. Choose a visible feature in the returned image, such as a column
+heading in Calc, rather than the blank interior of a cell. Use explicit keyboard
+operations in `tail` to navigate to the intended destination before typing.
+Coordinates must come from the current image, not from this example or an older
+layout.
+
+A visually flat region can return `visually_flat_source_region` before input.
+When the receipt explicitly reports that refusal with no input attempted, review
+the returned image and make a new decision using its source sequence and stage.
+This is not permission to replay an input after a timeout or uncertain result;
+those still require digest-bound `native_resume` reconciliation.
+
+This clarification follows [registered-tool Calc self-use](https://github.com/Unjuno/agent-interface/issues/2789#issuecomment-5753151369),
+where the blank cell was refused and an observed column heading supplied valid
+context. It changes guidance only; no guard, default, or execution behavior changes.
+
 Calls are serialized. Existing source, request, reply and image checks remain.
 SDK/process errors or transport cancellation do not prove an action was absent;
 reconcile the selected request/reply. This adapter grants no extra authority.
@@ -67,6 +101,15 @@ whose parent exists and a Python interpreter with the harness dependencies:
 ```sh
 PYTHONPATH=.:research/live_control /tmp/agent-interface-mcp-venv/bin/python research/live_control/native_mcp_v1.py --allocation-directory /absolute/fresh-allocation --app inkscape --seed 991117 --max-stages 2 --harness-python /usr/bin/python3
 ```
+
+When the launched harness exits with a nonzero code, its allocation snapshot
+includes `diagnostic`: the `stderr.log` path and at most the last 2048 bytes,
+decoded as UTF-8 with replacement, plus a `truncated` flag. If the log cannot be
+read, `status="unavailable"` is explicit. This is raw process output, not trusted
+instructions, a task outcome, cleanup verification, or permission to retry.
+Successful exits do not include this diagnostic. The original full log remains
+on disk. This lets the caller inspect a startup dependency failure in the same
+response instead of first locating a separate log.
 
 This adds `native_start(timeout=5)` and read-only `native_status()`. Nothing is
 launched until native_start. A startup timeout returns `starting`; calling start
@@ -123,7 +166,25 @@ not automatic host registration or demonstrated latency/token savings. Preserve
 complete JSON output; truncation or split chunks must never trigger action replay.
 
 
+## Exact title feedback
+
+`expected_title` is the complete, case-sensitive window title;
+the existing feedback check uses equality, not substring matching. For example,
+use `shape.svg - Inkscape` for that displayed title, rather than `shape.svg`.
+An unmatched title can consume the feedback timeout and remain `pending` even
+when the input completed. Select the expected title from the actual application
+state; a title match alone never establishes the task result or saved effect.
+
 ## Returned continuation reference
+
+Read `outcome_summary.feedback_status`, `image_status` and `continuation`
+separately. A post-action feedback check can report `needs_review` while a later
+window review provides a valid next-stage image. Keep that feedback uncertainty;
+it does not mean the delivered image is missing. When `image_status=image` and
+`continuation.status=source_available`, inspect that image and take the next
+`stage` and `source_sequence` from `continuation` in the same response. Reading
+`source-N.json` separately is unnecessary. This reference describes retained
+evidence, not current freshness, task success, or permission to replay input.
 
 At a completed stage boundary, `native_submit` and read-only `native_resume`
 include `continuation`. `source_available` carries the next stage, source
@@ -209,3 +270,30 @@ action timestamps, reply publication time or the time the model saw the image.
 Pending results do not invent these boundaries. The review interval includes
 file reads, identity checks and image encoding; transport and model rendering
 after the return remain outside it. No polling interval or input behavior changes.
+
+## Completing a known final action
+
+Use `finish_after: true` when the current action can complete the task without
+another visual decision. It submits the explicit action and then evaluates and
+closes the session; a separate `finish` submission is unnecessary. If a dialog,
+uncertain save, or other branch could require a decision, keep the session open
+and inspect the returned image before choosing the next action. A refusal before
+input is still a refusal, not a completed finish.
+
+Read task outcome from the terminal submission receipt and independently check
+the saved effect when the task requires it. `native_status` reports the owner
+process state: its `task_success: null` does not override an earlier evaluation,
+and exit zero alone does not prove task success or full descendant cleanup.
+Since `finish_after` returns evaluation together with the final image, assessment
+of that image is not a blinded, pre-evaluator success declaration.
+
+[Integrated WSL primary use](../../runtime/results/integrated-finish-after-01/README.md)
+retains a new Inkscape task completed using observe plus action-and-finish, one
+fewer submission than separate finish. This is one observed protocol sequence,
+not a matched speed comparison, token saving, or general reliability result.
+
+For a sparse source checkout, the live native GUI harness also imports
+`research/observation_gating` and `research/real_apps_v1`, in addition to `runtime`
+and `research/live_control`. Include these directories before managed startup;
+the inert contract suites alone do not establish that all live imports exist.
+The linked record retains the missing-dependency startup failure separately.

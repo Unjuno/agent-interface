@@ -10,15 +10,18 @@
   "network": "none",
   "controls": [
     "unexpected event",
+    "duplicate transition",
     "duplicate stale-admission transition",
     "would_call_bridge contradiction",
     "missing or reordered transition",
     "unsupported fields",
     "original three corruption controls",
-    "direct and documented CLI equivalence"
+    "direct and documented CLI equivalence",
+    "exact predecessor raw and freeze SHA-256 binding",
+    "boolean substitutions for counts and identity integers"
   ],
   "source_sha256": {
-    "audit.py": "c771624bc93ef66f516ccb35c510c5a46ba33a1ec5aef510dcebd98d28a41edd",
-    "test_audit.py": "0066dae870b60d030c062b8ac01e26b58cfcc5c91f998a95f51e08d225b14ce1"
+    "audit.py": "b03d7539e1d77c75a07cf3012b7f3614b8ad251eb1b7edcf6e9663e02b77a7f9",
+    "test_audit.py": "9cbec2bd644005f356af36cf395827e32525cd283c7face314f698eb8b21e8a9"
   }
 }

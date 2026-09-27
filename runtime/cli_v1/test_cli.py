@@ -24,6 +24,145 @@ class FakeSession:
 
 class ApiTests(unittest.TestCase):
 
+    def test_borrowed_session_compiles_without_opening_or_closing(self):
+        from runtime.cli_v1.api import dispatch_in_session
+        session = FakeSession()
+        session.backend = mock.Mock()
+        program = {'ops': [{'op': 'text', 'text': 'ab', 'gap_ms': 10}]}
+        with mock.patch('runtime.cli_v1.api.open_session') as opened:
+            for sequence in (1, 2):
+                result = dispatch_in_session(session, program,
+                    current_observation_seq=sequence, current_binding_revision=0)
+                self.assertEqual(result['status'], 'returned')
+                self.assertEqual(result['compilation']['kind'], 'bounded_text_gap')
+            opened.assert_not_called()
+        session.backend.close.assert_not_called()
+        self.assertEqual(len(session.calls), 2)
+        self.assertEqual(session.calls[0][0]['ops'], [
+            {'op': 'text', 'text': 'a'}, {'op': 'wait_update', 'timeout_ms': 10},
+            {'op': 'text', 'text': 'b'}])
+        self.assertEqual(program['ops'][0]['text'], 'ab')
+
+    def test_borrowed_session_preserves_recovery_refusal_and_exception(self):
+        from runtime.cli_v1.api import dispatch_in_session
+        session = mock.Mock()
+        session.recovery_required = True
+        refusal = {'status': 'refused', 'error': 'INPUT_RECOVERY_REQUIRED',
+                   'recovery_required': True}
+        session.dispatch.return_value = refusal
+        result = dispatch_in_session(session, {}, current_observation_seq=1,
+                                     current_binding_revision=0)
+        self.assertEqual(result['result'], refusal)
+        session.dispatch.side_effect = RuntimeError('controlled execution failure')
+        failed = dispatch_in_session(session, {}, current_observation_seq=1,
+                                     current_binding_revision=0)
+        self.assertEqual(failed['status'], 'runtime_failed')
+        self.assertIs(session.recovery_required, True)
+        session.backend.close.assert_not_called()
+
+    def test_invalid_borrowed_program_never_calls_session(self):
+        from runtime.cli_v1.api import dispatch_in_session
+        session = mock.Mock()
+        result = dispatch_in_session(session,
+            {'ops': [{'op': 'text', 'text': 'x', 'gap_ms': True}]},
+            current_observation_seq=1, current_binding_revision=0)
+        self.assertEqual(result['error'], 'INVALID_TEXT_GAP')
+        session.dispatch.assert_not_called()
+        session.backend.close.assert_not_called()
+
+    def test_public_validate_matches_standalone_without_site_or_display(self):
+        import os
+        env = dict(os.environ)
+        env.pop('DISPLAY', None)
+        env.pop('WAYLAND_DISPLAY', None)
+        valid = {'schema': 'agent-interface/program-v1', 'program_id': 'static-cli',
+                 'source': {'observation_seq': 0, 'binding_revision': 0},
+                 'authority': {'lease_id': 'expired', 'expires_at_ns': 1},
+                 'terminal': {'release_all_required': True},
+                 'ops': [{'op': 'release_all'}]}
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'program.json'
+            for raw, code in [(json.dumps(valid), 0), ('{}', 1), ('{', 2)]:
+                path.write_text(raw, encoding='utf-8')
+                outputs = []
+                for module, extra in [('runtime.cli_v1', ['validate']),
+                                      ('runtime.cli_v1.validate_program', [])]:
+                    result = subprocess.run([sys.executable, '-S', '-B', '-m', module,
+                                             *extra, '--program', str(path)],
+                                            env=env, capture_output=True, text=True, timeout=10)
+                    self.assertEqual(result.returncode, code, result.stderr)
+                    self.assertEqual(result.stderr, '')
+                    outputs.append(json.loads(result.stdout))
+                self.assertEqual(outputs[0], outputs[1])
+                self.assertIs(outputs[0]['side_effect_authority'], False)
+                self.assertEqual(outputs[0]['runtime_admission'], 'not_evaluated')
+                self.assertEqual(path.read_text(encoding='utf-8'), raw)
+
+    def test_recorded_invalid_program_gets_bounded_detail_without_readmission(self):
+        from copy import deepcopy
+        from runtime.cli_v1.review import outcome_summary
+        base = {'schema':'agent-interface/program-v1', 'program_id':'validation-test',
+                'source':{'observation_seq':1, 'binding_revision':0},
+                'authority':{'lease_id':'test', 'expires_at_ns':100},
+                'terminal':{'release_all_required':True}, 'ops':[]}
+        valid = {'op':'observe','frame':'window_client','x':0,'y':0,'w':400,'h':180}
+        for op, expected in [
+            ({'op':'observe','frame':'window_client','region':[0,0,400,180]}, 'observe x must be int'),
+            ({'op':'observe','frame':'window_client','x':0,'y':0,'width':400,'height':180}, 'observe w must be int'),
+            ({'op':'private-caller-text-' * 100}, 'unsupported operation'),
+            (valid, None),
+        ]:
+            with self.subTest(expected=expected):
+                program = deepcopy(base)
+                program['ops'] = [{'op':'focus','target':'fixture'}, op, {'op':'release_all'}]
+                before = deepcopy(program)
+                refusal = {'status':'refused','error':'INVALID_PROGRAM','backend_emissions':0}
+                session = mock.Mock()
+                session.dispatch.return_value = refusal
+                with mock.patch('runtime.cli_v1.api.open_session', return_value=session):
+                    row = dispatch(program, {'fixture':1}, current_observation_seq=1,
+                                   current_binding_revision=0)
+                session.dispatch.assert_called_once()
+                session.backend.close.assert_called_once()
+                self.assertEqual(program, before)
+                self.assertEqual(refusal, {'status':'refused','error':'INVALID_PROGRAM','backend_emissions':0})
+                self.assertEqual(row['result']['error'], 'INVALID_PROGRAM')
+                self.assertEqual(row['result']['backend_emissions'], 0)
+                self.assertEqual(row['result'].get('detail'), expected)
+                self.assertEqual(outcome_summary(row)['execution_detail'], expected)
+                if expected is not None:
+                    self.assertEqual(row['result']['detail_source'], 'program_validation')
+                    self.assertEqual(row['result']['validation_operation_index'], 1)
+                    self.assertEqual(outcome_summary(row)['validation_operation_index'], 1)
+                    self.assertIsNone(outcome_summary(row)['failed_operation_index'])
+                else:
+                    self.assertNotIn('detail_source', row['result'])
+                    self.assertNotIn('validation_operation_index', row['result'])
+
+    def test_validation_location_maps_to_source_after_expansion(self):
+        from runtime.cli_v1.review import outcome_summary
+        base = {'schema':'agent-interface/program-v1', 'program_id':'location',
+                'source':{'observation_seq':1, 'binding_revision':0},
+                'authority':{'lease_id':'test', 'expires_at_ns':100},
+                'terminal':{'release_all_required':True}}
+        malformed = {'op':'observe','frame':'window_client','x':0,'y':0,'w':True,'h':10}
+        for prefix, index in [({'op':'key_chord','keys':['Left'],'repeat':3}, 3),
+                              ({'op':'text','text':'abc','gap_ms':20}, 5)]:
+            with self.subTest(prefix=prefix):
+                session = mock.Mock()
+                session.dispatch.return_value = {'status':'refused','error':'INVALID_PROGRAM'}
+                with mock.patch('runtime.cli_v1.api.open_session', return_value=session):
+                    row = dispatch(dict(base, ops=[prefix, malformed, {'op':'release_all'}]),
+                                   {'fixture':1}, current_observation_seq=1, current_binding_revision=0)
+                summary = outcome_summary(row)
+                self.assertEqual(summary['validation_operation_index'], index)
+                self.assertEqual(summary['validation_source_operation']['source_operation_index'], 1)
+                self.assertIsNone(summary['failed_source_operation'])
+                row['compilation']['operation_sources'] = []
+                self.assertIsNone(outcome_summary(row)['validation_source_operation'])
+                row['result']['validation_operation_index'] = True
+                self.assertIsNone(outcome_summary(row)['validation_operation_index'])
+
     def test_explicit_text_gap_compiles_before_backend_and_maps_character_failure(self):
         from runtime.cli_v1.review import outcome_summary
         session = FakeSession()
