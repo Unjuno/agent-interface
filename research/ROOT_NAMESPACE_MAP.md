@@ -177,6 +177,7 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`needle_lora_3441_pilot_04f_seed_replication_v1/`](needle_lora_3441_pilot_04f_seed_replication_v1/) — Issue #4492 one-seed fresh replication PASS within the same synthetic task family; no population-reliability or runtime claim.
 
 - [`audits/`](audits/) — retained audit-only evidence bundles; currently includes the scoped #3688 exact raw-byte-binding audit and its independent revalidation.
+- [`event_delivery/`](event_delivery/) — retained event-delivery timing/gap/deadline research; consult each child result for scope and disposition.
 - [`chromium/`](chromium/) — retained Chromium live-control, identity, and recovery experiments; consult each child report for scope and disposition.
 - [`cli_fault_residue_3711_revalidation_v1/`](cli_fault_residue_3711_revalidation_v1/) — retained Issue #3711 CLI fault-residue revalidation; consult its report for exact scope and disposition.
 - [`cli_retention_3711_short_write_v1/`](cli_retention_3711_short_write_v1/) — retained Issue #3711 short-write protocol; Ubuntu's required CLI workflow failed on selector mock imports, so no three-OS construction PASS is claimed.
@@ -223,3 +224,5 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`needle_lora_3441_rank4_minibatch_seed_corrected_v1/`](needle_lora_3441_rank4_minibatch_seed_corrected_v1/) — Issue #3887 frozen sampler-stream successor HOLD; legacy collapse gate was not reproduced, and full independent audit STOP is retained.
 - [`needle_lora_3441_rank4_minibatch_seed_corrected_audit_v1/`](needle_lora_3441_rank4_minibatch_seed_corrected_audit_v1/) — Issue #3887 independent audit stopped before scoring because the frozen source/checksum pins do not match the committed artifacts; the original HOLD remains unchanged.
 - [`needle_lora_3441_rank4_online_multiseed_gpu_v1/`](needle_lora_3441_rank4_online_multiseed_gpu_v1/) — Issues #3807/#3819 GPU rank-capacity failure evidence; #3822 separately records the learning-curve HOLD.
+
+- [`procedural_control_arena_v0/`](procedural_control_arena_v0/) - Procedural control arena; consult its README and VALIDATION for scope and current evidence.

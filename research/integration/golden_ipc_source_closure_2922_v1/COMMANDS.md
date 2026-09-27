@@ -61,8 +61,9 @@ docker run --rm --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=64m
   --entrypoint python issue-3300-obstac-probe:v1 -m unittest -v test_audit
 ```
 
-Result: 6/6 tests passed (one baseline plus five mutation tests); the separate
-raw-only audit returned `errors=[]` and checked four event rows plus eight
-source files. The mutations cover ready identity, endpoint, submit, source
-digest, and event/input evidence. No experiment output was regenerated for
-this audit.
+Result before the separate no-GUI rung: 6/6 tests passed (one baseline plus
+five mutation tests); after recording that rung, two additional tests cover
+the import-only contract. The raw-only audit checks four event rows, eight
+source files, and the separate import-only result. The raw mutations cover
+ready identity, endpoint, submit, source digest, and event/input evidence.
+No experiment output was regenerated for this audit.

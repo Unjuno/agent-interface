@@ -139,6 +139,23 @@ still requires a matched measurement.
 
 ## Native decision loop
 
+Native MCP checks explicitly supplied text gaps, key repetitions and their
+expanded tail capacity before publishing a stage request. Invalid compact
+syntax returns a tool validation error; the owner receives no request from
+that call. Valid requests keep their original compact representation.
+This checks explicit syntax only: configured default pacing can expand an
+otherwise unpaced tail further, and ordinary source, target, capability and
+lease checks still apply at execution. A passed syntax check is not admission.
+
+Initial native context includes the recorded `text_policy` when available.
+Its `value.gap_ms` is the harness default for text operations that omit
+`gap_ms`; an explicit per-operation value, including zero, takes precedence.
+The recorded harness defaults are 0, 2 or 10 ms, while explicit operation gaps
+accept 0..1000 ms. Missing records return `unavailable`; invalid records return
+`needs_review` without an invented default. The source path and byte hash are
+retained. This is historical configuration context, not runtime admission,
+application readiness or an optimal-typing-speed recommendation.
+
 Native MCP image responses include `window_inventory` when a stage's recorded
 listing is available. Read its complete application/dialog titles alongside the
 image for exact-title feedback; no separate shell discovery is needed. The
