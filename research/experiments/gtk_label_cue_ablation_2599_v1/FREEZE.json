@@ -17,19 +17,29 @@
   "display": ":99",
   "screen": "320x180x24",
   "common_label": "FIXTURE ITEM",
-  "train_colors": {"target": "#22cc44", "other": "#2244cc"},
-  "heldout_colors": {"target": "#55dd66", "other": "#5566dd"},
+  "train_colors": {
+    "target": "#22cc44",
+    "other": "#2244cc"
+  },
+  "heldout_colors": {
+    "target": "#55dd66",
+    "other": "#5566dd"
+  },
   "train_captures": 8,
-  "init_seeds": [40, 41, 42, 43, 44],
+  "init_seeds": [
+    40,
+    41,
+    42,
+    43,
+    44
+  ],
   "gradient_steps": 100,
   "learning_rate": 0.3,
   "formal_retries": 0,
-  "preflight_command": "docker run --rm --pull=never --network=none --read-only --cpus=1 --memory=1g --pids-limit=32 --security-opt=no-new-privileges --tmpfs /tmp:rw,nosuid,nodev,size=64m --mount type=bind,source=<workspace>/work/gtk_label_cue_ablation_2599_v1,target=/src,readonly --mount type=bind,source=<workspace>/work/gtk_label_cue_ablation_2599_v1/construction-out,target=/out --mount type=bind,source=<workspace>/work/gtk_label_cue_ablation_2599_v1/x11,target=/tmp/.X11-unix,readonly -e DISPLAY=:99 -e GDK_BACKEND=x11 --entrypoint /usr/bin/python3 codex-gtk-model:local /src/run.py --preflight",
-  "xvfb_command": "docker run -d --rm --pull=never --network=none --read-only --cpus=1 --memory=512m --pids-limit=64 --security-opt=no-new-privileges --tmpfs /tmp:rw,nosuid,nodev,size=64m --mount type=bind,source=<workspace>/work/gtk_label_cue_ablation_2599_v1/x11,target=/tmp/.X11-unix --entrypoint sh agent-interface-golden-local:20260920 -c 'exec Xvfb :99 -screen 0 320x180x24 -nolisten tcp -ac -noreset'",
-  "learner_command": "docker run --rm --pull=never --network=none --read-only --cpus=2 --memory=2g --pids-limit=64 --security-opt=no-new-privileges --tmpfs /tmp:rw,nosuid,nodev,size=128m --mount type=bind,source=<workspace>/work/gtk_label_cue_ablation_2599_v1,target=/src,readonly --mount type=bind,source=<workspace>/work/gtk_label_cue_ablation_2599_v1/out,target=/out --mount type=bind,source=<workspace>/work/gtk_label_cue_ablation_2599_v1/x11,target=/tmp/.X11-unix,readonly -e DISPLAY=:99 -e GDK_BACKEND=x11 --entrypoint /usr/bin/python3 codex-gtk-model:local /src/run.py --formal",
-  "audit_command": "docker run --rm --pull=never --network=none --read-only --cpus=1 --memory=2g --pids-limit=64 --security-opt=no-new-privileges --tmpfs /tmp:rw,nosuid,nodev,size=128m --mount type=bind,source=<workspace>/work/gtk_label_cue_ablation_2599_v1,target=/src,readonly --mount type=bind,source=<workspace>/work/gtk_label_cue_ablation_2599_v1/out,target=/out,readonly --entrypoint /usr/bin/python3 codex-gtk-model:local /src/audit.py",
-  "governed_run": "one GTK window, one 16-capture balanced training corpus, five fits (seeds 40-44), two shifted X11 captures, ten paired predictions; no GPU/network/retry"
+  "preflight_command": "unchanged; see preceding commit",
+  "xvfb_command": "unchanged; see preceding commit",
+  "learner_command": "unchanged; see preceding commit",
+  "audit_command": "docker run --rm --pull=never --network=none --read-only --cpus=1 --memory=2g --pids-limit=64 --security-opt=no-new-privileges --tmpfs /tmp:rw,nosuid,nodev,size=128m --mount type=bind,source=<workspace>/work/gtk_label_cue_ablation_2599_v1,target=/src,readonly --mount type=bind,source=<workspace>/work/gtk_label_cue_ablation_2599_v1/out,target=/out --entrypoint /usr/bin/python3 codex-gtk-model:local /src/audit.py",
+  "governed_run": "one GTK window, one 16-capture balanced training corpus, five fits (seeds 40-44), two shifted X11 captures, ten paired predictions; no GPU/network/retry",
+  "audit_io_correction": "Discovered after the one-shot formal run and before audit: audit.py writes only independent-audit.json under /out. The audit container therefore mounts /out writable; formal-result.json and raw_frames_and_weights.npz are hashed before and after to prove they remain unchanged. No runner, auditor, data, fit, or prediction is changed."
 }
-
-
-
