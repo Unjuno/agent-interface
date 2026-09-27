@@ -88,6 +88,9 @@ def audit(root):
 
 if __name__ == "__main__":
     report = audit(Path(sys.argv[1]))
-    print(json.dumps(report, sort_keys=True))
+    encoded = json.dumps(report, sort_keys=True, indent=2) + "\n"
+    if len(sys.argv) > 2:
+        Path(sys.argv[2]).write_text(encoded, encoding="utf-8")
+    print(encoded, end="")
     if not report["pass"]:
         raise SystemExit(1)
