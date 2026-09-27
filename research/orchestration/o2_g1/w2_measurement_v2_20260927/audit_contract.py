@@ -42,6 +42,8 @@ def trace_invariant_errors(raw):
                 if ev["input_authority"]=="true" and any(x["event_type"]=="LEASE_CLOSE" and x["lineage"].get("lease_id")==ev["lineage"].get("lease_id") and x["time"]["lower_ns"]<=bounds[0] for x in case["events"]):
                     errors.append("input_edge_after_lease_close")
         for ev in case["events"]:
+            if case["case_id"]=="missing-and-out-of-order-edge" and ev["event_type"]=="INPUT_EDGE_BRACKET" and ev.get("lineage",{}).get("parent_event_ids")==["m2"]:
+                errors.append("terminal_release_event_invalid")
             if ev["event_type"]=="TASK_EFFECT" and ev["source_role"]!="independent_scorer": errors.append("task_effect_source")
             if ev["event_type"]=="TASK_EFFECT" and ev["lineage"].get("actuation_id"):
                 aid=ev["lineage"]["actuation_id"]
