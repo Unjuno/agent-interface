@@ -122,11 +122,18 @@ def audit(result, repo_root, artifact_root, events_override=None, submitted_byte
         errors.append("runner_hash")
     try:
         body = submitted_bytes_override if submitted_bytes_override is not None else (raw / "submitted.txt").read_bytes()
-        decoded = body.decode("ascii")
-        parsed_body = urllib.parse.parse_qs(decoded, keep_blank_values=True, strict_parsing=True)
-        output_ok = body == f"value={token}".encode("ascii") and parsed_body == {"value": [token]}
-    except (OSError, UnicodeDecodeError, ValueError):
+    except OSError:
+        body = None
+        errors.append("submitted_bytes_unavailable")
+    if body is None:
         output_ok = False
+    else:
+        try:
+            decoded = body.decode("ascii")
+            parsed_body = urllib.parse.parse_qs(decoded, keep_blank_values=True, strict_parsing=True)
+            output_ok = body == f"value={token}".encode("ascii") and parsed_body == {"value": [token]}
+        except (UnicodeDecodeError, ValueError):
+            output_ok = False
     if not output_ok:
         errors.append("submitted_bytes_exact_token")
     manifest_ok = True
@@ -154,6 +161,16 @@ def audit(result, repo_root, artifact_root, events_override=None, submitted_byte
         manifest_ok = False
     if not manifest_ok:
         errors.append("sha256_manifest")
+    semantic_failures = {
+        "saved_page_rendered", "evaluator_success", "evaluator_exact_value",
+        "submitted_bytes_exact_token",
+    }
+    stop_errors = [error for error in errors if error not in semantic_failures]
+    verdict = (
+        "STOP_CHROMIUM_FIXTURE_TASK_EFFECT" if stop_errors
+        else "FAIL_CHROMIUM_FIXTURE_TASK_EFFECT" if errors
+        else "PASS_CHROMIUM_FIXTURE_TASK_EFFECT_SCOPED"
+    )
     return {
         "schema": "issue2924_chromium_fixture_task_effect_audit_v1",
         "checks": result_checks | {"source_files_or_hashes": "source_files_or_hashes" not in errors,
@@ -163,7 +180,9 @@ def audit(result, repo_root, artifact_root, events_override=None, submitted_byte
                                    "submitted_bytes_exact_token": output_ok,
                                    "sha256_manifest": manifest_ok},
         "errors": errors,
-        "verdict": "PASS_CHROMIUM_FIXTURE_TASK_EFFECT_SCOPED" if not errors else "FAIL_OR_HOLD_RAW_AUDIT",
+        "stop_errors": stop_errors,
+        "semantic_failures": [error for error in errors if error in semantic_failures],
+        "verdict": verdict,
     }
 
 def main():
