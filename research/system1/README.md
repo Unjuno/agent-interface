@@ -71,6 +71,10 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 
 - [`needle_role_skill_reload_3780_v1/REPORT.md`](../needle_role_skill_reload_3780_v1/REPORT.md) — successor #3890; three-seed, CPU Docker, cross-process JSON-tensor reload PASS with two fresh loaders per seed and a scoped independent audit. Seed 3789 / role C is a narrow threshold pass; no production skill authority is claimed.
 
+## Role-C support-count diagnostic successor
+
+- [`needle_role_c_support64_diagnostic_4749_v2_7866201/STOP_REPORT.md`](needle_role_c_support64_diagnostic_4749_v2_7866201/STOP_REPORT.md) — Issue #4848's one-shot Docker allocation STOPPED before model construction on a byte-recorder TypeError; zero optimizer updates, no score, separate empty-output audit. Seed 7866201 is consumed; this does not revise #4749's formal PASS.
+
 ## Local decoder readout and cache mechanics
 
 - [`typed_readout_prefix_gpu_1014_v1/STOP_RECORD.md`](typed_readout_prefix_gpu_1014_v1/STOP_RECORD.md) — successor #4623 materialized a pinned Qwen2.5-0.5B model in a network-disabled RTX 3080 Docker container. Independent construction audit reproduced the FP16 full-vocabulary logit-tolerance failure; the formal latency block did not run. No typed-decision competence or runtime claim.
