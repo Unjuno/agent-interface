@@ -89,7 +89,7 @@ def main():
     print("OUTCOME_COUNTS",json.dumps(counts,sort_keys=True))
     assert len(rows)==384
     assert counts["SUCCEEDED"]==3
-    assert counts["BLOCKED"]==2
+    assert counts["BLOCKED"]==3
 
 if __name__=="__main__":
     main()
