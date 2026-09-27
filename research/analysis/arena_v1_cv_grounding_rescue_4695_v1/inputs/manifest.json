@@ -1,0 +1,127 @@
+{
+  "schema": "arena-v1-cv-grounding-rescue-suite-v1",
+  "width": 720,
+  "height": 520,
+  "orange_rgb": [
+    249,
+    115,
+    22
+  ],
+  "retained_frame_sha256": "24ae1b904c4742c21eee3855c2ea8c20a282786c461b0f0fdd1df0fe3600151e",
+  "rows": [
+    {
+      "id": "case-01-retained-arena",
+      "kind": "positive-retained",
+      "expected_box_xyxy": [
+        550,
+        418,
+        603,
+        471
+      ],
+      "bytes": 14771,
+      "sha256": "24ae1b904c4742c21eee3855c2ea8c20a282786c461b0f0fdd1df0fe3600151e"
+    },
+    {
+      "id": "case-02-positive",
+      "kind": "positive-synthetic",
+      "expected_box_xyxy": [
+        88,
+        202,
+        128,
+        242
+      ],
+      "bytes": 2846,
+      "sha256": "ecc733d8c4032a65ed68bc40a18046360f68f41b1741fbbdfdcb4c5741829974"
+    },
+    {
+      "id": "case-03-positive",
+      "kind": "positive-synthetic",
+      "expected_box_xyxy": [
+        584,
+        188,
+        628,
+        232
+      ],
+      "bytes": 2843,
+      "sha256": "3635051edbcc11fe8c52fdec3ee8bcebcc5343f6d9dbd0d96c461e00577e5766"
+    },
+    {
+      "id": "case-04-positive",
+      "kind": "positive-synthetic",
+      "expected_box_xyxy": [
+        306,
+        414,
+        354,
+        462
+      ],
+      "bytes": 2855,
+      "sha256": "fb9d4c94c4dc6f369e76264284c5ed095ae7724fc4a91b301ef9eb28fd41f695"
+    },
+    {
+      "id": "case-05-positive",
+      "kind": "positive-synthetic",
+      "expected_box_xyxy": [
+        134,
+        354,
+        190,
+        410
+      ],
+      "bytes": 2872,
+      "sha256": "8086647bd4aab7fa36e8ef4d9832b0088beefd97d49898a8f2fa35e65b0c52d1"
+    },
+    {
+      "id": "case-06-positive",
+      "kind": "positive-synthetic",
+      "expected_box_xyxy": [
+        504,
+        304,
+        556,
+        356
+      ],
+      "bytes": 2847,
+      "sha256": "af92d0a7c5f7e2cbf0e75e74eca5ee0a2170b00398289d222530bcc9e7518c13"
+    },
+    {
+      "id": "case-07-absent",
+      "kind": "absent",
+      "expected_box_xyxy": null,
+      "bytes": 2421,
+      "sha256": "c36dd664cdb0a956f13c58acf064a5f3e7061aa24969290d7028485cee0ef583"
+    },
+    {
+      "id": "case-08-orange-circle-only",
+      "kind": "absent-orange-nonsquare",
+      "expected_box_xyxy": null,
+      "bytes": 2828,
+      "sha256": "0f10203f929c479b4be0ea9c9d8c43ba6cafe66b3c85d8dea70ea7b2fd2cbf66"
+    },
+    {
+      "id": "case-09-orange-diamond-only",
+      "kind": "absent-orange-nonsquare",
+      "expected_box_xyxy": null,
+      "bytes": 2867,
+      "sha256": "d84bf2575ca6a5c8af1ed88890c305c9b09b1a5a2bbb0b9521324d4b56ff1884"
+    },
+    {
+      "id": "case-10-ambiguous-multiple",
+      "kind": "ambiguous-multiple-squares",
+      "expected_box_xyxy": null,
+      "bytes": 2471,
+      "sha256": "b7988785cf8987a3234dfd2eb30e26d0dec39afdfdef3fc6c650d2150991fa7c"
+    },
+    {
+      "id": "case-11-ambiguous-multiple",
+      "kind": "ambiguous-multiple-squares",
+      "expected_box_xyxy": null,
+      "bytes": 2528,
+      "sha256": "21ebf978ecd24d60016ef438672ede517dbcc0a1658900c8c37596a54687fee3"
+    },
+    {
+      "id": "case-12-ambiguous-multiple",
+      "kind": "ambiguous-multiple-squares",
+      "expected_box_xyxy": null,
+      "bytes": 2434,
+      "sha256": "6cf61b90079204f6e63d1acde6e9cf26f6e086abb7b2b90545f77c7f49ffb3f3"
+    }
+  ]
+}
