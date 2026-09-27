@@ -60,4 +60,3 @@ def main():
     Path('/out/audit.json').write_bytes(json.dumps(report,sort_keys=True,indent=2).encode()+b'\n')
     sys.exit(0 if not errors else 2)
 if __name__=='__main__': main()
-
