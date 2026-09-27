@@ -25,8 +25,8 @@ for seed in SEEDS:
     solve_with_oracle_for_test(oracle)
     rows.append({
       "seed": seed, "movement_px": round(movement, 6),
-      "stale": {"success": stale.success, "recovery_events": stale.metrics.recovery_events, "recovery_successes": stale.metrics.recovery_successes},
-      "reacquire": {"success": fresh.success, "recovery_events": fresh.metrics.recovery_events, "recovery_successes": fresh.metrics.recovery_successes, "state_matches": all(abs(a-b)<1e-9 for a,b in zip(moved_xy, after))},
-      "oracle": {"success": oracle.success, "recovery_events": oracle.metrics.recovery_events, "recovery_successes": oracle.metrics.recovery_successes},
+      "stale": {"done": stale.done, "success": stale.success, "recovery_events": stale.metrics.recovery_events, "recovery_successes": stale.metrics.recovery_successes},
+      "reacquire": {"done": fresh.done, "success": fresh.success, "recovery_events": fresh.metrics.recovery_events, "recovery_successes": fresh.metrics.recovery_successes, "moved_state_matches_spec": all(abs(a-b)<1e-9 for a,b in zip(moved_xy, after))},
+      "oracle": {"done": oracle.done, "success": oracle.success, "recovery_events": oracle.metrics.recovery_events, "recovery_successes": oracle.metrics.recovery_successes},
     })
 print(json.dumps({"schema":"arena-recovery-boundary-v1","rows":rows}, sort_keys=True, separators=(",",":")))
