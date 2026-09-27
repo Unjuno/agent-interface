@@ -95,7 +95,7 @@ is not a B0/C1 comparison or a hardened hostile-agent security boundary. Raw
 outputs, STOP record, and protocol are in
 [`research/procedural_control_arena_v0/evaluator_isolation_v1/`](research/procedural_control_arena_v0/evaluator_isolation_v1/).
 A distinct successor allocation needs durable result collection and a corrected
-independent auditor before another formal run. Successor v2 construction passed its seed-2002 smoke with an evaluator-only durable `/evidence` bind, no controller mounts, internal networking, cookie-hash agreement, retained `deadline_miss` report, and a hash-matched raw XWD. This construction result is not formal seed-2003 evidence; v2 freezes the source and images before its single successor allocation.
+Successor v2 construction passed its seed-2002 smoke; its single frozen seed-2003 formal allocation then passed a separate raw-only audit with zero errors and zero leaks. The evaluator-only `/evidence` bind retained the report after container exit, which records the `w` key-down/up and natural `deadline_miss`; the controller had no mounts or seed/source/report paths, and the 1,923,179-byte XWD matched its capture digest. Disposition: `PASS_EVALUATOR_PROCESS_AND_SOURCE_ISOLATION_SCOPED`, limited to this inert-input single-seed isolation canary; this does not establish B0/C1 performance or hostile-X11 security, and does not retry or replace v1 formal/001 STOP.
 
 ### Issue #4623 — GPU shared-prefix readout construction stop
 
