@@ -1,0 +1,52 @@
+{
+  "schema": "agent-interface/issue-3793-audit-input-manifest-v1",
+  "issue": 3793,
+  "allocation": "issue3711-downstream-truncation-audit-v3-01",
+  "frozen_pr_head": "8bac49525c93835a69b6d441740a1c424faaecb2",
+  "image": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "platform": "linux/arm64",
+  "network": "none",
+  "formal_experiment_invocations": 0,
+  "inputs": {
+    "audit_freeze": {
+      "path": "research/integration/issue_3711_downstream_truncation_v1/audit-v2-successor-02/FREEZE.json",
+      "sha256": "2d9b0e4ee289bad1402e5e6fe58f4734a788becd56d5e783dda1816518fbaf94"
+    },
+    "audit_plan": {
+      "path": "research/integration/issue_3711_downstream_truncation_v1/audit-v2-successor-02/PLAN.md",
+      "sha256": "79741322f5c4b43d7d6a5a7b847bf3505bf94d2bc2f486ff27e405925dd795"
+    },
+    "audit_source": {
+      "path": "research/integration/issue_3711_downstream_truncation_v1/audit-v2-successor-02/audit.py",
+      "sha256": "ca3ccf5191d876eeda824555589c4580537dc04ec771fc52ef8914300ec289be"
+    },
+    "audit_result": {
+      "path": "research/integration/issue_3711_downstream_truncation_v1/audit-v2-successor-02/result/RESULT.json",
+      "sha256": "4bb36c596ee85a48f79c21b18ae4dd6a08b09b7e6e72d351e89bb1188196ae54"
+    },
+    "formal_freeze": {
+      "path": "research/integration/issue_3711_downstream_truncation_v1/successor-02/FREEZE.json",
+      "sha256": "b7b2d2bebd24bfc54abc4a20bb00da452eafb084ed09fa7b2a2c57ad146658cd"
+    },
+    "formal_raw": {
+      "path": "research/integration/issue_3711_downstream_truncation_v1/formal-02/raw.json",
+      "sha256": "3f51dc5a4c9c8acb48fc2929a8219260575271e5794cd5bd4afedf6f712afc73"
+    },
+    "accepted": {
+      "path": "research/integration/issue_3711_downstream_truncation_v1/formal-02/accepted.json",
+      "sha256": "e8ef9f6dd897325a22b1927d27e7fba2948051bb309cc472bbf2a1bfaba863d1"
+    },
+    "delivered_prefix": {
+      "path": "research/integration/issue_3711_downstream_truncation_v1/formal-02/delivered-prefix.bin",
+      "sha256": "0450145d98f8ff197766d91827a438db1aa5800d556b4bee24eb57b33e168d4a"
+    },
+    "audit_v1_result": {
+      "path": "research/integration/issue_3711_downstream_truncation_v1/formal-02/audit.json",
+      "sha256": "69454ea54a9c3b6b91ca6331645e4b0a7dc071cd9da4abb9b88bff7888afa7ca"
+    },
+    "audit_v2_01_failure": {
+      "path": "research/integration/issue_3711_downstream_truncation_v1/audit-v2/formal-02-recheck/RESULT.json",
+      "sha256": "faeed58dc95b32ffc29add42f4e860ac5049db654b790d903b6ee3cb48931315"
+    }
+  }
+}

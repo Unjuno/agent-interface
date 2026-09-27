@@ -139,6 +139,25 @@ still requires a matched measurement.
 
 ## Native decision loop
 
+For the six-task primary-use runner, add `--primary-review` to either
+`--route persistent` or `--route direct` to pause after each successful local
+feedback result. View the printed image and retained task receipt, then
+atomically publish the requested JSON file with `task_id`, `source_sequence`,
+`outcome` (`complete`, `uncertain`, or `failed`) and a nonempty `reason`.
+Only an exact matching `complete` review advances. Other outcomes, malformed
+reviews and the 300-second timeout stop; they do not replay input. Primary
+interpretation is retained separately from independent task scoring. Timing
+includes tool and review waits, not just model inference. See the
+[retained six-task primary review](results/native-primary-review-01/README.md).
+
+Result and repair notices include `receipt_summary` next to the image path and
+`receipt_file` for full details. The summary preserves operation failures,
+recovery state and recorded releases; it does not turn title feedback into task
+success. A host can render the referenced image with this notice in one response
+before asking the primary model for its next decision. Consult the full receipt
+when guard, capture or wait details are needed. See the
+[actual combined-notice use and timing limits](results/native-review-notice-01/README.md).
+
 1. Start one explicitly managed allocation, or attach to an existing run. Read
    its goal and initial image using `native_observe(stage=1)`.
 2. Choose a decision from that image and submit its exact `source_sequence`.
