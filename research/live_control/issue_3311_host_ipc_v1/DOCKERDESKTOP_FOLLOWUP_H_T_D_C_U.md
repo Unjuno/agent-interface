@@ -23,3 +23,17 @@ No model call, GUI action, task input, or retry occurred. Host-context inspectio
 ## U — unresolved / stop conditions
 
 The next allocation remains unstarted until a dedicated, conflict-checked Docker Desktop invocation can pin `desktop-linux`, image identity, and the actual executed command receipt. Do not use this transport-only check as evidence for #3489's real Codex schema preflight or #3311's integrated six-task efficiency comparison.
+
+## Addendum — Windows bind permission boundary probes (2026-09-27)
+
+Two separate, frozen one-container allocations used a cached local image because the upstream transport test's pinned tag was absent. Both used `desktop-linux`, exact image ID `sha256:f82bbd2c087056f324794ca9b0de64c16f0ecaf9a84f30bb0aba17b5b1833786`, `--network none`, a unique Windows-backed temp path, fake IPC-shaped bytes only, and `--rm`.
+
+**Allocation 02 / T:** container root created the exact 53-byte request fixture mode `0600`; Windows host readback matched its hash, but WSL non-root received `Permission denied`. Independent audit: 8/8 checks; decision `STOP_WSL_NONROOT_CANNOT_READ_ROOT_0600_WINDOWS_BIND_FILE`.
+
+**Allocation 03 / explicit treatment delta:** the same fixture bytes were changed to mode `0644` in-container. Container, Windows, and WSL SHA-256 values matched; WSL could read. Independent audit: 10/10 checks; decision `PASS_MODE0644_MAKES_SYNTHETIC_FILE_READABLE_NOT_A_SECURE_FIX`.
+
+**D:** The paired construction evidence supports permission mode as a mechanism on this Docker Desktop Windows-backed bind mount. It does not establish a safe production fix: 0644 exposes request contents to all local users allowed by the mount. Keep the current runtime behavior unchanged pending a scoped ownership/ACL design and same-boundary broker/runner verification.
+
+**C:** Each allocation ran once with no retry, network, model, GUI, or input. Unrelated stopped containers were left untouched; named test containers were removed and post-run absence recorded. Raw outcomes and per-bundle hashes are retained separately.
+
+**U:** Remaining work is a secure least-privilege file-ownership/ACL treatment tested with the actual repository runner and host broker, followed by the distinct real host-Codex schema preflight gate and the #3311 integrated six-task matched comparison. Neither has been satisfied by these probes.
