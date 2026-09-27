@@ -95,6 +95,24 @@ that does not understand this format should leave `report_refs=false`.
 SDK-mediated input/save and read-only result comparison, including identical
 images and exact reconstruction. It does not establish token or speed savings.
 
+[Two-application compact use](../results/compact-mixed-app-01/README.md) retains
+a Calc/Inkscape trial with 11 v3 receipts, verified close and independent saved
+file checks, including one text-entry correction. To opt in, pass both flags on
+each supported call, for example:
+
+```json
+{"target":"calc","frame":"screen_physical_px","region":[0,0,1280,800],"compact":true,"report_refs":true}
+```
+
+Use this argument object with `interface_observe`; `interface_dispatch` accepts
+the same two presentation flags alongside its program and source assertions.
+Inspect the image and outcome separately. In v3, activation details remain at
+`receipt.source.raw_report.result.execution.activations`; do not interpret the
+reference marker as missing execution evidence or repeat an operation to read it.
+Management calls retain their own format. One offline replay reduced serialized
+text for 10 observe/dispatch reports by 30.09%, excluding image blocks and five
+management calls. Actual model tokens, cost and latency were not measured.
+
 `interface_validate(program)` optionally checks a draft using the same static
 inspector as CLI `validate`, without opening a backend or issuing input. It
 returns static validity, required capabilities or bounded diagnostics with
