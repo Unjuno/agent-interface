@@ -80,5 +80,6 @@
     "--out-dir",
     "/tmp/target-belief-audit-4150-posthoc-01"
   ],
-  "limits": "Audit-only. No model, inference, optimizer step, GUI, input, formal row, threshold change, or rewrite of ID003."
+  "limits": "Audit-only. No model, inference, optimizer step, GUI, input, formal row, threshold change, or rewrite of ID003.",
+  "command_template": "docker run --pull=never --rm --network none --read-only --cap-drop=ALL --security-opt=no-new-privileges --pids-limit=32 --memory=536870912 --cpus=1 --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,source=<LOCAL_EVIDENCE_ROOT>,target=/work,readonly --workdir /work sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 python -B audit_gap_probe.py --result formal/FORMAL_RESULT.json --source-dir source --frozen-audit source/audit.py --out-dir /tmp/target-belief-audit-4150-posthoc-01"
 }
