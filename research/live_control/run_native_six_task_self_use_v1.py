@@ -175,40 +175,40 @@ def main():
                     raise RuntimeError('direct task feedback '+feedback['status']+'; no replay')
                 review(row)
                 continue
+            from native_guarded_form_v1 import fill_and_submit
             before = bridge.backend.emissions
             started = time.monotonic_ns()
             token = task['token'] + ('-wrong' if task['task_id'] == args.negative_task else '')
-            entered = bridge.click(*handles['field'], tail=[
-                {'op': 'key_chord', 'keys': ['CTRL', 'A']},
-                {'op': 'text', 'text': token},
-                {'op': 'wait_update', 'timeout_ms': 100}])
-            row = {'task_id': task['task_id'], 'navigation': navigation, 'entered': entered,
+            row = {'task_id': task['task_id'], 'navigation': navigation,
                    'action_started_ns': started}
             rows.append(row)
+
+            def retain_step(name, result, *, repair=False):
+                row['repaired_enter' if repair and name == 'entered' else name] = result
+                save('tasks.json', rows)
+
+            method = fill_and_submit(bridge, handles, token, wait_ms=100, on_step=retain_step)
+            row['method'] = {k: v for k, v in method.items() if k != 'results'}
             save('tasks.json', rows)
-            if entered['status'] != 'completed':
+            if method['status'] != 'completed':
                 row['refusal_emissions'] = bridge.backend.emissions-before
                 save('tasks.json', rows)
-                if entered['status'] != 'refused' or repaired:
+                entered = row.get('entered', {})
+                if (method['stopped_at'] != 'entered' or entered.get('status') != 'refused'
+                        or row['refusal_emissions'] != 0 or repaired):
                     raise RuntimeError('unplanned partial or repeated refusal; inspect, no replay')
-                # One explicit assistant repair from a newly viewed source.
+                # One explicit assistant repair, only after zero-emission refusal.
                 source = bridge.observe()
                 handles = request_grounding('repair', source, prior_receipt=row)
                 repaired = True
-                entered = bridge.click(*handles['field'], tail=[
-                    {'op': 'key_chord', 'keys': ['CTRL', 'A']},
-                    {'op': 'text', 'text': token},
-                    {'op': 'wait_update', 'timeout_ms': 100}])
-                row['repaired_enter'] = entered
+                method = fill_and_submit(bridge, handles, token, wait_ms=100,
+                    on_step=lambda name, result: retain_step(name, result, repair=True))
+                row['repaired_method'] = {k: v for k, v in method.items() if k != 'results'}
                 save('tasks.json', rows)
-                if entered['status'] != 'completed':
+                if method['status'] != 'completed':
                     raise RuntimeError('repair did not complete; no further input')
-            saved = bridge.click(*handles['submit'], tail=[{'op': 'wait_update', 'timeout_ms': 100}])
-            row['saved'] = saved
             row['local_elapsed_ms'] = (time.monotonic_ns()-started)/1e6
             save('tasks.json', rows)
-            if saved['status'] != 'completed':
-                raise RuntimeError('Save did not complete; retain entered effect, no replay')
             feedback = bridge.feedback('AI INTEGRATED SAVED - Google Chrome for Testing',
                                       rejected_titles=['AI INTEGRATED REJECTED - Google Chrome for Testing'])
             row['feedback'] = feedback
