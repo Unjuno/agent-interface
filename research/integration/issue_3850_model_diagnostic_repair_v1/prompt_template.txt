@@ -1,0 +1,13 @@
+Continue this action-free request after the listed program was refused before execution.
+
+Task: {task}
+
+Original refused program:
+{program_json}
+
+Refusal result:
+{refusal_json}
+
+Preserve the ROI and all unrelated program fields. Use the refusal payload to repair only the malformed field names or shape. Return READY only with the complete corrected program. If the valid correction is uncertain, return YIELD and the original program unchanged. Do not claim that the program ran or that the task succeeded. Do not add task input.
+
+Return exactly one JSON object matching the supplied output schema.
