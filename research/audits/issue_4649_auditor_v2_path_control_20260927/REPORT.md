@@ -13,10 +13,12 @@
 Run from a clean checkout with the pinned image already available:
 
 ```sh
+out="$(mktemp -d)"
 docker run --rm --pull=never --network none --cpus=1 --memory=256m --pids-limit=32 --read-only \
+  -e EXPECTED_IMAGE_ID=sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 \
   -v "$PWD/research/audits/issue_4649_auditor_v2_path_control_20260927/source:/study:ro" \
   -v "$PWD/research/audits/issue_4649_auditor_v2_path_control_20260927/probe.py:/probe.py:ro" \
-  -v "$PWD/research/audits/issue_4649_auditor_v2_path_control_20260927/results/formal01:/out:rw" \
+  -v "$out:/out:rw" \
   --tmpfs /tmp:rw,noexec,nosuid,size=32m \
   sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 \
   python -B /probe.py
