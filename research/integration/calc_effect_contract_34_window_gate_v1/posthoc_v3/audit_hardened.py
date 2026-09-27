@@ -8,8 +8,9 @@ import io
 import json
 import pathlib
 import re
+import zipfile
 
-from openpyxl import load_workbook
+IMAGE = "issue-2849-task1-runtime@sha256:436172d89b145c6a9f9a57e655422c9558b3b0235347dd77607e9d61bcfa6393"
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -36,9 +37,17 @@ def read_workbook(raw_path: pathlib.Path, raw: dict) -> tuple[bytes, str]:
     return base64.b64decode(encoded.read_bytes(), validate=True), "base64"
 
 
-def classify(raw: dict, map_state: str, disk_cell: object, hash_stable: bool) -> str:
-    if map_state == "IsUnMapped":
+def classify(raw: dict, map_state: str, disk_cell: object, hash_stable: bool, errors: list[str]) -> str:
+    if (raw.get("allocation") != "calc-effect-contract-34-window-gate-20260927-01"
+            or raw.get("image") != IMAGE
+            or raw.get("harness_completed") is not True):
+        return "STOP_CONSTRUCTION"
+    if map_state in {"IsUnMapped", "IsUnviewable"}:
         return "CONTRADICTED_WINDOW_VISIBILITY"
+    if map_state != "IsViewable":
+        return "STOP_CONSTRUCTION"
+    if errors:
+        return "STOP_CONSTRUCTION"
     if raw.get("cell_after_edit_live") != 7 or disk_cell != 0 or not hash_stable:
         return "CONTRADICTED_EFFECT_STATE" if disk_cell is not None and hash_stable else "STOP_CONSTRUCTION"
     if map_state != "IsViewable":
@@ -49,14 +58,26 @@ def classify(raw: dict, map_state: str, disk_cell: object, hash_stable: bool) ->
 def audit(raw_path: pathlib.Path) -> dict:
     raw = json.loads(raw_path.read_text(encoding="utf-8"))
     errors = []
-    data, source_mode = read_workbook(raw_path, raw)
-    wb = load_workbook(io.BytesIO(data), read_only=True, data_only=True)
-    disk_cell = wb.active["A1"].value
-    wb.close()
-    current = sha256_bytes(data)
+    data = None
+    source_mode = "unavailable"
+    disk_cell = None
+    current = None
+    try:
+        data, source_mode = read_workbook(raw_path, raw)
+        from openpyxl import load_workbook
+
+        wb = load_workbook(io.BytesIO(data), read_only=True, data_only=True)
+        disk_cell = wb.active["A1"].value
+        wb.close()
+        current = sha256_bytes(data)
+    except (KeyError, OSError, ValueError, zipfile.BadZipFile):
+        errors.append("independent workbook evidence missing or invalid")
     stable = bool(raw.get("source_sha256_before") and raw.get("source_sha256_before") == raw.get("source_sha256_after") == current)
     state = visibility_state(raw)
     if raw.get("allocation") != "calc-effect-contract-34-window-gate-20260927-01": errors.append("allocation mismatch")
+    if raw.get("image") != IMAGE: errors.append("pinned image mismatch")
+    if raw.get("harness_completed") is not True: errors.append("harness completion missing")
+    if raw.get("source_file") != "baseline.xlsx": errors.append("source file identity mismatch")
     if raw.get("cell_before_edit") != 0 or raw.get("cell_after_edit_live") != 7: errors.append("live transition mismatch")
     if raw.get("document_modified_unsaved") is not True or raw.get("save_store_calls") != 0: errors.append("unsaved document condition mismatch")
     if disk_cell != 0 or raw.get("persisted_cell_after_independent_reopen") != 0: errors.append("independent disk value mismatch")
@@ -70,7 +91,7 @@ def audit(raw_path: pathlib.Path) -> dict:
         "independently_reopened_A1": disk_cell,
         "window_map_state": state,
         "errors": errors,
-        "disposition": classify(raw, state, disk_cell, stable),
+        "disposition": classify(raw, state, disk_cell, stable, errors),
         "formal_allocation_cases": 0,
         "claim_limit": "posthoc reclassification of one synthetic construction case; not formal Issue 34 or runtime evidence",
     }
