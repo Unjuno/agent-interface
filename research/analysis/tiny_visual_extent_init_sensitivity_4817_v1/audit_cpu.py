@@ -54,8 +54,11 @@ def verify(result):
     rb=(result/"RAW.json").read_bytes(); raw=json.loads(rb.decode("utf-8"))
     for fn,key in (("INPUTS.npz","input_sha256"),("WEIGHTS.npz","weights_sha256"),("INITIAL_WEIGHTS.npz","initial_weights_sha256")):
         if not (result/fn).is_file() or digest((result/fn).read_bytes())!=raw.get(key): errors.append("hash:"+fn)
+    if raw.get("schema")!="tiny-visual-extent-readout-cuda-v1": errors.append("schema")
     if raw.get("allocation")!=ALLOCATION or raw.get("data_seed")!=DATA_SEED or raw.get("init_seed")!=INIT_SEED: errors.append("identity_or_seed")
     if raw.get("steps")!=1000 or raw.get("learning_rate")!=.2 or raw.get("threshold")!=THRESHOLD: errors.append("protocol")
+    ft=raw.get("fit_seconds",{})
+    if set(ft)!={"max_only","max_mean"} or any(not math.isfinite(float(v)) or float(v)<0 for v in ft.values()): errors.append("fit_seconds")
     if raw.get("formal_fits")!=0 or raw.get("construction_fits")!=2: errors.append("fit_counts")
     fd=raw.get("finite_difference_probe",{})
     if not fd.get("pass") or fd.get("count")!=49 or fd.get("max_symmetric_relative_error",1)>=1e-4: errors.append("finite_difference")
