@@ -82,7 +82,7 @@ def main():
         start = time.perf_counter()
         proc = subprocess.run(argv, text=True, capture_output=True, check=False,
                               env={**os.environ, "HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1",
-                                   "TOKENIZERS_PARALLELISM": "false"})
+                                   "TOKENIZERS_PARALLELISM": "false", "PYTHONDONTWRITEBYTECODE": "1"})
         elapsed = time.perf_counter() - start
         (out / (label + ".stdout.txt")).write_text(proc.stdout, encoding="utf-8")
         (out / (label + ".stderr.txt")).write_text(proc.stderr, encoding="utf-8")
