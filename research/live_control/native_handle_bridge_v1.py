@@ -17,6 +17,7 @@ from scoped_target_handle_v3 import TargetHandleStore
 from runtime.backends.x11_v1.backend import X11Backend, X11BackendError
 from runtime.backends.x11_v1.session import X11RuntimeSession
 from runtime.core_v1.contract import SCHEMA_PROGRAM
+from runtime.cli_v1.api import dispatch_in_session
 
 
 class _GuardedBackend(X11Backend):
@@ -338,8 +339,14 @@ class NativeHandleBridge:
                             *tail, {"op": "release_all"}],
                 }
                 self._save("program-" + program["program_id"] + ".json", program)
-                row = self.session.dispatch(program, current_observation_seq=self.sequence,
-                                            current_binding_revision=self.binding_revision)
+                report = dispatch_in_session(self.session, program,
+                    current_observation_seq=self.sequence,
+                    current_binding_revision=self.binding_revision)
+                self._save("public-dispatch-" + program["program_id"] + ".json", report)
+                if report["status"] != "returned":
+                    raise RuntimeError("public dispatch failed; inspect retained report: "
+                                       + str(report.get("error", report["status"])))
+                row = report["result"]
             row["guard_checks"] = list(self.checks)
             self._save("result-" + uuid.uuid4().hex + ".json", row)
             return row
