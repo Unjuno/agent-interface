@@ -1,0 +1,52 @@
+{
+  "schema": "predicate-order-audit-hardening-freeze-v2",
+  "issue": 4959,
+  "allocation": "predicate-order-audit-hardening-4955-v2-20260928-01",
+  "base_main": "f0b9ed74736729a4fdd04f2205a834a777befde1",
+  "branch": "research/predicate-order-audit-hardening-4959-20260928",
+  "path": "research/analysis/predicate_order_drift_audit_integrity_4733_v5/",
+  "inputs": {
+    "legacy_audit_git_blob": "1a6cc0e46b32d4cd6989aed118d003cce4cfe399",
+    "archive_git_blob": "c38dd2002f201d49b6fc261caff019550a4bf4bc",
+    "raw_member": "RAW.json",
+    "raw_sha256": "5f48e0274f9fd800ac26af3dd70bd52171700b32ce159f3cdbe0f28c7ec35e7d",
+    "raw_bytes": 186739,
+    "producer_weight_serialization": "round(weight, 12)"
+  },
+  "source": {
+    "audit_hardened_py": {
+      "git_blob": "b314562f69633f2d4771d531ee747d7a856db2e4",
+      "sha256": "4da3d454175eb551de25901cec839a7fe62dfb14cdd86234b9b7caa2b7210178",
+      "bytes": 5975
+    },
+    "test_audit_hardened_py": {
+      "git_blob": "342b9c52c57335cd958ed1dce4a153cd98484ef3",
+      "sha256": "04d920fdddd0eebd1d88d7c380c46e897aecc0969892f34d5f59afbe67a709b5",
+      "bytes": 2318
+    },
+    "run_probe_py": {
+      "git_blob": "365f23deb9afcd6bbaeeeb3e32d33661d2d41b33",
+      "sha256": "2ec5bce7b1dc31b6747fc7cd6323088ea0c4faf229e8b298c22ed1099d05bb8f",
+      "bytes": 5358
+    }
+  },
+  "execution": {
+    "preferred": "Docker Desktop cached Python linux/amd64 image sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9; no pull/network; read-only root/source; 1 CPU/512 MiB/32 PIDs",
+    "fallback": "single standard-library host process if Docker Engine unavailable; explicitly not container evidence",
+    "formal_invocations": 1,
+    "retries": 0,
+    "post_result_tuning": 0
+  },
+  "decision": "PASS only if baseline passes; every prior gap mutation and non-finite/type/0.1 weight control rejects; raw hash stable; 336 rows and crossover recompute.",
+  "construction_preflight": "Frozen code will be syntax-compiled in memory; do not run tests before freeze.",
+  "forbidden": [
+    "model",
+    "provider",
+    "GUI",
+    "training",
+    "inference",
+    "external workflow",
+    "runtime authority",
+    "predecessor mutation"
+  ]
+}
