@@ -1,9 +1,7 @@
 [
   {
     "AppArmorProfile": "",
-    "Args": [
-      "/opt/probe.py"
-    ],
+    "Args": [],
     "Config": {
       "AttachStderr": false,
       "AttachStdin": false,
@@ -11,34 +9,36 @@
       "Cmd": null,
       "Domainname": "",
       "Entrypoint": [
-        "python",
-        "/opt/probe.py"
+        "/opt/entrypoint.sh"
       ],
       "Env": [
-        "DISPLAY=arena-isolation-v2-smoke-eval:0",
-        "X11_COOKIE_SHA256=b17c9982ff7384c8bc42acaa81a4ce01b9795c57912bea864c7d4852a5556baa",
+        "ARENA_SEED=2002",
+        "X11_COOKIE_SHA256=1cd60707dcb0b11cd41ebcdb4b413a6d54c4365071ea6fa9057af6533360ed13",
+        "ARENA_AUTOCLOSE=30",
         "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
         "LANG=C.UTF-8",
         "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
         "PYTHON_VERSION=3.12.14",
         "PYTHON_SHA256=5c8462af5790baf43a321a1559dbe0db06d1be4300fb85fb53c40060668e548a"
       ],
-      "Hostname": "4b078b941098",
-      "Image": "agent-arena-isolation-controller-v2:20260927",
+      "Hostname": "c653ee7f3212",
+      "Image": "agent-arena-isolation-evaluator-v2:20260927",
       "Labels": {},
       "OpenStdin": false,
       "StdinOnce": false,
       "Tty": false,
-      "User": "10000:10000",
+      "User": "",
       "Volumes": null,
-      "WorkingDir": ""
+      "WorkingDir": "/opt/arena"
     },
-    "Created": "2026-09-27T03:05:48.218092723Z",
+    "Created": "2026-09-27T03:09:04.335025419Z",
     "Driver": "overlayfs",
     "ExecIDs": null,
     "HostConfig": {
       "AutoRemove": false,
-      "Binds": [],
+      "Binds": [
+        "<redacted>/smoke-07:/evidence:rw"
+      ],
       "BlkioDeviceReadBps": [],
       "BlkioDeviceReadIOps": [],
       "BlkioDeviceWriteBps": [],
@@ -136,67 +136,76 @@
       "VolumeDriver": "",
       "VolumesFrom": null
     },
-    "HostnamePath": "/var/lib/docker/containers/4b078b9410989d37b741563bee3618289a9aef46e00e2c19c686ea9daf6aa660/hostname",
-    "HostsPath": "/var/lib/docker/containers/4b078b9410989d37b741563bee3618289a9aef46e00e2c19c686ea9daf6aa660/hosts",
-    "Id": "4b078b9410989d37b741563bee3618289a9aef46e00e2c19c686ea9daf6aa660",
-    "Image": "sha256:871f65d890fe4b0ad5d6cc6c14bc156f98b479f46d1a7852cb2d804fd4ed1acd",
+    "HostnamePath": "/var/lib/docker/containers/c653ee7f3212f8ee65905c84287ed26794277e696744bb776fb38ee1b1236bbf/hostname",
+    "HostsPath": "/var/lib/docker/containers/c653ee7f3212f8ee65905c84287ed26794277e696744bb776fb38ee1b1236bbf/hosts",
+    "Id": "c653ee7f3212f8ee65905c84287ed26794277e696744bb776fb38ee1b1236bbf",
+    "Image": "sha256:ed7cb174bbe07d676e5fd0c41dd869923f20559569ccfee55e336265ce6f4fe3",
     "ImageManifestDescriptor": {
-      "digest": "sha256:baf7ba9aca4418347bfecd3188cfe8e30a711b9ceeda986c9ffd1dd18f688942",
+      "digest": "sha256:7c1d9ceeda73c1bd0a57fccea043b3d272c5050fe1f8632b68ca98ffab009cb6",
       "mediaType": "application/vnd.oci.image.manifest.v1+json",
       "platform": {
         "architecture": "amd64",
         "os": "linux"
       },
-      "size": 1437
+      "size": 2001
     },
-    "LogPath": "/var/lib/docker/containers/4b078b9410989d37b741563bee3618289a9aef46e00e2c19c686ea9daf6aa660/4b078b9410989d37b741563bee3618289a9aef46e00e2c19c686ea9daf6aa660-json.log",
+    "LogPath": "/var/lib/docker/containers/c653ee7f3212f8ee65905c84287ed26794277e696744bb776fb38ee1b1236bbf/c653ee7f3212f8ee65905c84287ed26794277e696744bb776fb38ee1b1236bbf-json.log",
     "MountLabel": "",
-    "Mounts": [],
-    "Name": "/arena-isolation-v2-smoke-controller",
+    "Mounts": [
+      {
+        "Destination": "/evidence",
+        "Mode": "rw",
+        "Propagation": "rprivate",
+        "RW": true,
+        "Source": "<redacted>/smoke-07",
+        "Type": "bind"
+      }
+    ],
+    "Name": "/arena-isolation-v2-smoke-eval",
     "NetworkSettings": {
       "Networks": {
         "arena-isolation-v2-smoke": {
           "Aliases": null,
           "DNSNames": [
-            "arena-isolation-v2-smoke-controller",
-            "4b078b941098"
+            "arena-isolation-v2-smoke-eval",
+            "c653ee7f3212"
           ],
           "DriverOpts": null,
-          "EndpointID": "",
+          "EndpointID": "3289ff0c06a3e1ab99eb4b8685ba8a98b5c2864451e686b5ee0997aa2f7860be",
           "Gateway": "",
           "GlobalIPv6Address": "",
           "GlobalIPv6PrefixLen": 0,
           "GwPriority": 0,
           "IPAMConfig": null,
-          "IPAddress": "",
-          "IPPrefixLen": 0,
+          "IPAddress": "172.19.0.2",
+          "IPPrefixLen": 16,
           "IPv6Gateway": "",
           "Links": null,
-          "MacAddress": "",
-          "NetworkID": "af3d5e9cc5cfd699ad53cac29943f239217a1a03e93685f1d23716b4a9be1129"
+          "MacAddress": "1a:da:24:e7:73:3d",
+          "NetworkID": "cd35c2330fc13fe15751066e8d52e77d81aff586f0f6c3a1c85ca9f69d722913"
         }
       },
       "Ports": {},
-      "SandboxID": "",
-      "SandboxKey": ""
+      "SandboxID": "1ac001e5857b89e591dd77a7dae6550b94475b97b5fee747b2f5106882a5e4d5",
+      "SandboxKey": "/var/run/docker/netns/1ac001e5857b"
     },
-    "Path": "python",
+    "Path": "/opt/entrypoint.sh",
     "Platform": "linux",
     "ProcessLabel": "",
-    "ResolvConfPath": "/var/lib/docker/containers/4b078b9410989d37b741563bee3618289a9aef46e00e2c19c686ea9daf6aa660/resolv.conf",
+    "ResolvConfPath": "/var/lib/docker/containers/c653ee7f3212f8ee65905c84287ed26794277e696744bb776fb38ee1b1236bbf/resolv.conf",
     "RestartCount": 0,
     "State": {
       "Dead": false,
       "Error": "",
       "ExitCode": 0,
-      "FinishedAt": "2026-09-27T03:05:48.917372182Z",
+      "FinishedAt": "0001-01-01T00:00:00Z",
       "OOMKilled": false,
       "Paused": false,
-      "Pid": 0,
+      "Pid": 20376,
       "Restarting": false,
-      "Running": false,
-      "StartedAt": "2026-09-27T03:05:48.428559531Z",
-      "Status": "exited"
+      "Running": true,
+      "StartedAt": "2026-09-27T03:09:04.440995776Z",
+      "Status": "running"
     },
     "Storage": {
       "RootFS": {

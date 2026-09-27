@@ -6,7 +6,7 @@
     "capture_bytes": 1923179,
     "capture_exit": 0,
     "capture_header_size": 107,
-    "capture_sha256": "5cef814c91a3dd7528c61fdc6d65cc12a47b912813bb861feb206d4dfe1c6070",
+    "capture_sha256": "a0f004bf0a61c6172e843ba6285dcccebd4af94a87ee834005672134c1102716",
     "key_action": "w",
     "key_exit": 0,
     "key_stderr": "XGetInputFocus returned the focused window of 1. This is likely a bug in the X server.\nXGetInputFocus returned the focused window of 1. This is likely a bug in the X server.\n",
@@ -32,7 +32,7 @@
       "Mode": "rw",
       "Propagation": "rprivate",
       "RW": true,
-      "Source": "<redacted>/smoke-05",
+      "Source": "<redacted>/smoke-07",
       "Type": "bind"
     }
   ],
@@ -335,7 +335,7 @@
         "event": "stage_start",
         "sim_time": 0.0,
         "stage_index": 0,
-        "wall_offset": 2.6e-05
+        "wall_offset": 2e-05
       },
       {
         "detail": {
@@ -344,25 +344,25 @@
         "event": "episode_start",
         "sim_time": 0.0,
         "stage_index": 0,
-        "wall_offset": 0.000332
+        "wall_offset": 0.00024
       },
       {
         "detail": {
           "key": "w"
         },
         "event": "key_down",
-        "sim_time": 0.75,
+        "sim_time": 0.6,
         "stage_index": 0,
-        "wall_offset": 0.93998
+        "wall_offset": 0.691944
       },
       {
         "detail": {
           "key": "w"
         },
         "event": "key_up",
-        "sim_time": 0.766667,
+        "sim_time": 0.6,
         "stage_index": 0,
-        "wall_offset": 0.946929
+        "wall_offset": 0.69838
       },
       {
         "detail": {
@@ -372,17 +372,17 @@
         "event": "episode_failure",
         "sim_time": 2.616667,
         "stage_index": 0,
-        "wall_offset": 3.073164
+        "wall_offset": 2.859003
       }
     ],
     "failure_reason": "deadline_miss",
     "fingerprint": "836b8594fb654b0a",
-    "peak_rss_kb": 33736,
-    "process_cpu_seconds": 0.855789,
+    "peak_rss_kb": 33764,
+    "process_cpu_seconds": 0.539843,
     "schema": "procedural-control-arena-report-v0",
     "sim_time": 2.616667,
     "success": false,
-    "wall_time": 3.077574
+    "wall_time": 2.86125
   },
   "x11_cookie_sha256_match": true
 }
