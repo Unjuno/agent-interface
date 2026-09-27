@@ -1,0 +1,137 @@
+{
+  "cases": [
+    {
+      "case_id": "deadline-5s",
+      "clock_exchanges": 3,
+      "disposition": "HOLD",
+      "lease_decision": null,
+      "maximum_upper_offset_ns": 8155967,
+      "minimum_lower_offset_ns": -220600,
+      "post_probe_host_margin_ns": 4987364825,
+      "probe_intervals_ns": [
+        [
+          -199694,
+          825448
+        ],
+        [
+          -184344,
+          2983550
+        ],
+        [
+          -220600,
+          8155967
+        ]
+      ]
+    },
+    {
+      "case_id": "deadline-5s249ms",
+      "clock_exchanges": 3,
+      "disposition": "ACCEPTED",
+      "lease_decision": "accepted",
+      "maximum_upper_offset_ns": 8279139,
+      "minimum_lower_offset_ns": -276665,
+      "post_probe_host_margin_ns": 5224542331,
+      "probe_intervals_ns": [
+        [
+          -214927,
+          7392384
+        ],
+        [
+          -184908,
+          8059627
+        ],
+        [
+          -276665,
+          8279139
+        ]
+      ]
+    },
+    {
+      "case_id": "deadline-5s250ms",
+      "clock_exchanges": 3,
+      "disposition": "ACCEPTED",
+      "lease_decision": "accepted",
+      "maximum_upper_offset_ns": 10361924,
+      "minimum_lower_offset_ns": -282337,
+      "post_probe_host_margin_ns": 5228808196,
+      "probe_intervals_ns": [
+        [
+          -223203,
+          3576589
+        ],
+        [
+          -165953,
+          6533823
+        ],
+        [
+          -282337,
+          10361924
+        ]
+      ]
+    },
+    {
+      "case_id": "deadline-6s",
+      "clock_exchanges": 3,
+      "disposition": "ACCEPTED",
+      "lease_decision": "accepted",
+      "maximum_upper_offset_ns": 9970793,
+      "minimum_lower_offset_ns": -204788,
+      "post_probe_host_margin_ns": 5975194532,
+      "probe_intervals_ns": [
+        [
+          -200052,
+          4957541
+        ],
+        [
+          -184759,
+          9233347
+        ],
+        [
+          -204788,
+          9970793
+        ]
+      ]
+    },
+    {
+      "case_id": "deadline-31s",
+      "clock_exchanges": 3,
+      "disposition": "REJECTED",
+      "lease_decision": "rejected",
+      "maximum_upper_offset_ns": 9376236,
+      "minimum_lower_offset_ns": -213390,
+      "post_probe_host_margin_ns": 30977695374,
+      "probe_intervals_ns": [
+        [
+          -183211,
+          3621121
+        ],
+        [
+          -142884,
+          9376236
+        ],
+        [
+          -213390,
+          8719774
+        ]
+      ]
+    }
+  ],
+  "disposition": "FAIL_PREREGISTERED_PREDICTION",
+  "errors": [
+    "deadline-5s249ms: differs from preregistered prediction"
+  ],
+  "limits": [
+    "one WSL2 and Docker Desktop host session only",
+    "no game, model, GUI input, or network",
+    "the 5.249s prediction is evaluated against observed elapsed time, not retroactively altered"
+  ],
+  "raw_sha256": "1abd3fc7ea838101c13359da07c792ec6d524000b672fee487a9346de4020584",
+  "schema": "issue-5062-independent-audit-v1",
+  "source_git_blob_ids": {
+    "exchange": "267b5ccce24ca43b8a6e9b36219d50342888aa27",
+    "lease": "b9dac6bb4063928354733d79bf371909a288a3d1",
+    "sender": "096adf9b60eaf6a31fe92c836f57d1a4d26b177e",
+    "server": "7f1230258d52e567c2a05ea9b9852138cfbfd206"
+  }
+}
+
