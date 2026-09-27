@@ -1,0 +1,21 @@
+{
+  "status": "PASS_GPU_RESIDENT_LABELS",
+  "scope": "GPU-resident supervisor input contrast; single Docker allocation",
+  "image": "pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime",
+  "device": "NVIDIA GeForce RTX 3080 Laptop GPU",
+  "torch": "2.5.1+cu121",
+  "cuda_runtime": "12.1",
+  "rows": 4096,
+  "repetitions": 500,
+  "resident_label_agreement": true,
+  "transfer_label_agreement": true,
+  "resident_ms_total": 24.150705001375172,
+  "transfer_ms_total": 55.47021300299093,
+  "resident_ms_per_inference": 0.048301410002750345,
+  "transfer_ms_per_inference": 0.11094042600598186,
+  "resident_output_sha256": "29b35d676823fb00253ee1a7ea5a2dc4713ca316fd59bf603feeedda371077b3",
+  "authority_grants": 0,
+  "input_grants": 0,
+  "task_success_claims": 0,
+  "caveat": "Synthetic feature tensor and one host/GPU; timings are local construction measurements, not end-to-end product latency."
+}
