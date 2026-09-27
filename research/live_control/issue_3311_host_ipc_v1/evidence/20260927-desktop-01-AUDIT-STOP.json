@@ -1,0 +1,6 @@
+{
+  "attempt": "container-independent-audit-01",
+  "decision": "STOP_AUDIT_IMAGE_LACKS_DOCKER_CLI",
+  "details": "The auditor image could read evidence and evaluate prior checks but its final container-cleanup check tried to execute docker inside the isolated image; FileNotFoundError occurred before an audit report was emitted. No evidence was modified and no experiment rerun occurred.",
+  "followup": "Use WSL host only for independent file/receipt audit; check Docker cleanup separately through host Docker CLI."
+}

@@ -16,7 +16,7 @@ def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def atomic_json_write(path: Path, value: dict) -> None:
+def atomic_json_write(path: Path, value: dict, owner: tuple[int, int] | None = None) -> None:
     fd, temporary_name = tempfile.mkstemp(prefix=path.name + ".", suffix=".tmp", dir=path.parent)
     temporary = Path(temporary_name)
     try:
@@ -25,9 +25,33 @@ def atomic_json_write(path: Path, value: dict) -> None:
             stream.write("\n")
             stream.flush()
             os.fsync(stream.fileno())
+        if owner is not None:
+            # Publish only after assigning the WSL broker's identity, while
+            # retaining the request's owner-only permissions.
+            os.chown(temporary, owner[0], owner[1])
+            os.chmod(temporary, 0o600)
+            metadata = temporary.stat()
+            if (metadata.st_uid, metadata.st_gid) != owner or metadata.st_mode & 0o777 != 0o600:
+                raise PermissionError("IPC request owner/mode verification failed")
         os.replace(temporary, path)
     finally:
         temporary.unlink(missing_ok=True)
+
+
+def ipc_owner_from_environment() -> tuple[int, int] | None:
+    raw_uid = os.environ.get("HOST_MODEL_IPC_OWNER_UID")
+    raw_gid = os.environ.get("HOST_MODEL_IPC_OWNER_GID")
+    if raw_uid is None and raw_gid is None:
+        return None
+    if raw_uid is None or raw_gid is None:
+        raise ValueError("HOST_MODEL_IPC_OWNER_UID and GID must be set together")
+    try:
+        uid, gid = int(raw_uid), int(raw_gid)
+    except ValueError as exc:
+        raise ValueError("HOST_MODEL_IPC_OWNER_UID/GID must be non-negative integers") from exc
+    if uid < 0 or gid < 0:
+        raise ValueError("HOST_MODEL_IPC_OWNER_UID/GID must be non-negative integers")
+    return uid, gid
 
 
 def main() -> int:
@@ -39,6 +63,7 @@ def main() -> int:
     ipc = Path(os.environ.get("HOST_MODEL_IPC_DIR", "")).resolve()
     if not ipc.is_dir():
         raise RuntimeError("HOST_MODEL_IPC_DIR is missing or not a directory")
+    ipc_owner = ipc_owner_from_environment()
     image_path = None if image == "-" else Path(image).resolve()
     request_id = uuid.uuid4().hex
     request = {"request_id": request_id, "mode": mode, "prompt": prompt,
@@ -54,7 +79,7 @@ def main() -> int:
     request_path = ipc / f"{request_id}.request.json"
     response_path = ipc / f"{request_id}.response.jsonl"
     started_ns = time.perf_counter_ns()
-    atomic_json_write(request_path, request)
+    atomic_json_write(request_path, request, owner=ipc_owner)
     deadline = time.monotonic() + float(os.environ.get("HOST_MODEL_IPC_TIMEOUT_S", "120"))
     while not response_path.exists():
         if time.monotonic() >= deadline:

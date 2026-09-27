@@ -231,6 +231,9 @@ class DockerBackendTest(unittest.TestCase):
                 command=build_command(root/'out', prompt, image, 'compiled', workspace)
                 self.assertIn('test:local', command)
                 self.assertIn("HOST_MODEL_IPC_DIR=/ipc", command)
+                if hasattr(os, "getuid") and hasattr(os, "getgid"):
+                    self.assertIn(f"HOST_MODEL_IPC_OWNER_UID={os.getuid()}", command)
+                    self.assertIn(f"HOST_MODEL_IPC_OWNER_GID={os.getgid()}", command)
                 self.assertIn('coordinate', command)
             finally:
                 for k,v in old.items():
@@ -238,4 +241,3 @@ class DockerBackendTest(unittest.TestCase):
                     else: os.environ[k]=v
 
 if __name__=='__main__': unittest.main()
-
