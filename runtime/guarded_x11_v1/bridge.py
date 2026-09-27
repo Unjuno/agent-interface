@@ -139,7 +139,8 @@ class NativeHandleBridge:
             image = opened.convert("RGB")
         decoded_ns = time.monotonic_ns()
         self.sequence += 1
-        observation = {"sequence": self.sequence, "binding_revision": self.binding_revision,
+        observation = {"sequence": self.sequence, "observation_id": report["observation_id"],
+                       "binding_revision": self.binding_revision,
                        "capture_ns": native["capture_started_ns"],
                        "pointer_binding": before, "native": native,
                        # Ends before history publication; not model-visible latency.
