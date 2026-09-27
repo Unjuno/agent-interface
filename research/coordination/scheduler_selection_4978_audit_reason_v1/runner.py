@@ -121,7 +121,8 @@ def main():
                 row["worker_exit_code"]=run.returncode
                 rows.append(row)
     raw={"schema":"scheduler-selection-raw-v1","issue":2868,"allocation":freeze["allocation"],
-         "freeze_parent_commit":freeze["freeze_parent_commit"],"source_sha256":freeze["source_sha256"],
+         "freeze_parent_commit":freeze["freeze_parent_commit"],"freeze_sha256":sha((ROOT/"FREEZE.json").read_bytes()),
+         "source_sha256":freeze["source_sha256"],
          "fixture_sha256":sha((ROOT/"scenarios.json").read_bytes()),"runtime":{"python":sys.version,"platform":sys.platform},
          "worker_processes":len(rows),"scenarios":len(fixture["scenarios"]),"policies":list(POLICIES),"rows":rows}
     dest=Path(args.out); dest.mkdir(parents=True,exist_ok=True)

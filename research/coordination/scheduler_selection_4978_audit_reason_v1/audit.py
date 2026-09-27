@@ -57,6 +57,7 @@ def audit_doc(raw,fixture,freeze):
     elif allocation==freeze["allocation"]:expected_sources=freeze["source_sha256"]
     else:expected_sources=None
     if expected_sources is None or raw.get("source_sha256")!=expected_sources:errors.append("source_hash_manifest")
+    if allocation==freeze["allocation"] and raw.get("freeze_sha256")!=sha((ROOT/"FREEZE.json").read_bytes()):errors.append("freeze_hash")
     if raw.get("fixture_sha256")!=sha((ROOT/"scenarios.json").read_bytes()):errors.append("fixture_hash")
     rows=raw.get("rows")
     if not isinstance(rows,list) or len(rows)!=48 or raw.get("worker_processes")!=48:errors.append("row_inventory")
@@ -105,6 +106,7 @@ def corruption_controls(raw,fixture,freeze):
     m=copy.deepcopy(raw);m["rows"].pop();mutants["row_drop"]=m
     m=copy.deepcopy(raw);m["rows"].append(copy.deepcopy(m["rows"][0]));mutants["duplicate_row"]=m
     m=copy.deepcopy(raw);m["source_sha256"]["runner.py"]="0"*64;mutants["source_hash"]=m
+    m=copy.deepcopy(raw);m["allocation"]=freeze["allocation"];m["source_sha256"]=freeze["source_sha256"];m["freeze_sha256"]="0"*64;mutants["freeze_hash"]=m
     m=copy.deepcopy(raw);m["worker_processes"]=47;mutants["denominator"]=m
     m=copy.deepcopy(raw);m["rows"][0]["trace"][0]["selected"]="unknown";mutants["unknown_selection"]=m
     m=copy.deepcopy(raw);m["rows"][0]["worker_exit_code"]=1;mutants["worker_exit"]=m
@@ -118,7 +120,7 @@ def corruption_controls(raw,fixture,freeze):
 def main():
     raw_path=Path(sys.argv[1]);out=Path(sys.argv[2]);freeze=json.loads((ROOT/"FREEZE.json").read_text());fixture=json.loads((ROOT/"scenarios.json").read_text())
     raw_bytes=raw_path.read_bytes();raw=json.loads(raw_bytes);errors=audit_doc(raw,fixture,freeze);controls=corruption_controls(raw,fixture,freeze)
-    rejected=sum(controls.values());decision="PASS_SCHEDULER_SELECTION_SEMANTICS_SCOPED" if not errors and rejected==10 else "HOLD_OR_FAIL_SCHEDULER_SELECTION"
+    rejected=sum(controls.values());decision="PASS_SCHEDULER_SELECTION_SEMANTICS_SCOPED" if not errors and rejected==11 else "HOLD_OR_FAIL_SCHEDULER_SELECTION"
     report={"schema":"scheduler-selection-audit-v1","decision":decision,"errors":errors,"rows":len(raw.get("rows",[])),"worker_processes":raw.get("worker_processes"),"corruption_controls":controls,"corruption_controls_rejected":rejected,"raw_sha256":sha(raw_bytes)}
     data=(json.dumps(report,sort_keys=True,separators=(",",":"))+"\n").encode();out.mkdir(parents=True,exist_ok=True);(out/"audit.json").write_bytes(data);(out/"audit.sha256").write_text(sha(data)+"  audit.json\n",encoding="ascii");print(data.decode(),end="")
     raise SystemExit(0 if decision.startswith("PASS_") else 1)
