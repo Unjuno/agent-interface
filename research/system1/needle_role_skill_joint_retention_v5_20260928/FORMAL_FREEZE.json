@@ -1,0 +1,53 @@
+{
+  "schema": "needle-role-skill-joint-retention-formal-freeze-v1",
+  "allocation": "needle-role-skill-joint-retention-20260928-v5",
+  "issue": 4949,
+  "branch": "research/needle-role-skill-joint-retention-v5-20260928",
+  "base_main_sha": "7229b2ef9e4d87b859f9452b0e790f0f6740cfbf",
+  "source_pr": 4951,
+  "source_pr_head_before_formal_freeze": "8cc510f68f3bd452d34dfbfdb624f8ba1f9d8074",
+  "lineage_pr": 4911,
+  "prior_gate_pr": 4948,
+  "excluded_construction_seed": 9970014,
+  "construction_raw_sha256": "cc9208e3ce726896d9d0f426aa1971cb3cb8e737ef06553f6392b613bd3ecdb7",
+  "construction_audit_sha256": "69fae3c73cd627f93484f63a06f7edb6f7c29c2d1f02f495e4c07b957c8928da",
+  "formal_seeds": [9970211, 9970311, 9970411],
+  "formal_orchestrations": 1,
+  "retries": 0,
+  "docker_image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+  "platform": "linux/amd64",
+  "source_sha256": {
+    "runner.py": "0c978c7721da5f42d57a838a3d141c9781a19a981db5d50b8e028183bc14fcdf",
+    "audit.py": "6abf8cc48d81c5b4267d993e9d992a15d9015f39f0a50558acfcc6d11bcc4558"
+  },
+  "source_git_blob_sha": {
+    "runner.py": "367cf88448130ce997f55c02edb653a30d1176fe",
+    "audit.py": "c6be7b103cdc989fdac1e7cfa12657818fa5c03e"
+  },
+  "image_invocation": [
+    "docker", "run", "--pull=never", "--network=none", "--read-only",
+    "--cpus=1", "--memory=2g", "--pids-limit=64",
+    "--tmpfs", "/tmp:rw,nosuid,nodev,size=256m",
+    "--mount", "type=bind,source=<workspace>/scratch/needle-v5-container,target=/src,readonly",
+    "--mount", "type=bind,source=<formal-output>/raw,target=/out",
+    "--workdir", "/src", "--env", "NEEDLE_OUTPUT=/out",
+    "--env", "NEEDLE_SEEDS=9970211,9970311,9970411",
+    "needle-pilot05:local", "python", "-B", "runner.py"
+  ],
+  "audit": {
+    "container_separate": true,
+    "network": "none",
+    "raw_mount": "read-only",
+    "source": "auditor-only audit.py + formal FREEZE.json + sidecar",
+    "decision_thresholds": {
+      "routed_A_min": 0.9,
+      "routed_B_min": 0.9,
+      "routed_A_gain_each_shared_min": 0.1,
+      "routed_B_gap_to_best_shared_max": 0.1,
+      "max_update_ms_strict": 60
+    }
+  },
+  "formal_result_path": "raw/formal_result.json",
+  "interpretation": "Synthetic explicit-role task only; no natural-language routing, real-time deployment, GUI transfer, GPU, user data, or product-readiness claim."
+}
+
