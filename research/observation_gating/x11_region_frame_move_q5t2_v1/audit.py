@@ -120,7 +120,7 @@ def corruption_controls(rows):
     def mutate(name, fn):
         x = copy.deepcopy(rows)
         fn(x)
-        cases[name] = not validate(x, "formal")
+        cases[name] = bool(validate(x, "formal"))
     if not rows:
         return {"unavailable": False}
     mutate("missing_row", lambda x: x.pop())
