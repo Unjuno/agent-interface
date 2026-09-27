@@ -1,0 +1,46 @@
+{
+  "source_id": "cache-epoch-cross-product-v1:effect3*freshness3*receipt3*request_epoch3*dependency_completeness2;old=none&current&exact;oracle=old&same&complete",
+  "source_sha256": "0779f1830543a70a73b4f072d6dbc5103391439eeafb22def6d51162869ad84a",
+  "rows": 162,
+  "old_rule_reacquire": 6,
+  "oracle_allowed": 1,
+  "overgrant_states": 5,
+  "counterexamples": [
+    [
+      "no_effect",
+      "current",
+      "exact",
+      "same",
+      "incomplete"
+    ],
+    [
+      "no_effect",
+      "current",
+      "exact",
+      "changed",
+      "complete"
+    ],
+    [
+      "no_effect",
+      "current",
+      "exact",
+      "changed",
+      "incomplete"
+    ],
+    [
+      "no_effect",
+      "current",
+      "exact",
+      "missing",
+      "complete"
+    ],
+    [
+      "no_effect",
+      "current",
+      "exact",
+      "missing",
+      "incomplete"
+    ]
+  ],
+  "decision": "OLD_RULE_UNDER_SPECIFIED_FOR_EPOCH_AND_DEPENDENCY_COMPLETENESS"
+}
