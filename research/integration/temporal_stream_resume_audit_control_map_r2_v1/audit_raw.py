@@ -85,6 +85,8 @@ def validate(record: dict, evidence: Path) -> list[str]:
         for key, value in expected_base.items():
             if base_doc.get(key) != value:
                 errors.append(f"baseline {key}")
+        if base_doc.get("artifact_manifest_sha256") != MANIFEST_SHA:
+            errors.append("baseline manifest binding")
 
     controls = record.get("mutations")
     if not isinstance(controls, list) or len(controls) != 11:
@@ -98,17 +100,28 @@ def validate(record: dict, evidence: Path) -> list[str]:
             errors.append("mutation record type")
             continue
         name = item.get("name")
-        if item.get("bytes_changed") is not True or item.get("rejected") is not True:
+        changed_by_hash = item.get("copy_tree_sha256") != record.get("original_evidence_tree_sha256_before")
+        if item.get("bytes_changed") is not True or not changed_by_hash or item.get("rejected") is not True:
             errors.append(f"mutation disposition {name}")
         errors.extend(cleanup_errors(item, name))
-        if item.get("verifier", {}).get("returncode", 0) == 0:
+        verifier_rc = item.get("verifier", {}).get("returncode")
+        if type(verifier_rc) is not int or verifier_rc == 0 or item.get("rejected") is not (verifier_rc != 0):
             errors.append(f"mutation verifier accepted {name}")
-        if name == "control_accept_case48" and (item.get("case_id") != 48 or item.get("identity_asserted") is not True):
-            errors.append("case 48 identity")
+        if name == "control_accept_case48":
+            try:
+                batch5 = json.loads((evidence / "BATCH5.json").read_text(encoding="utf-8"))
+                source_row = [x for x in batch5["rows"] if x.get("case_id") == 48]
+                source_match = len(source_row) == 1 and source_row[0]["parsed"]["mutation"] == "foreign_epoch" and source_row[0]["parsed"]["candidate"]["parsed"]["status"] == "REFUSE_CHECKPOINT"
+            except Exception:
+                source_match = False
+            if item.get("case_id") != 48 or item.get("identity_asserted") is not True or not source_match:
+                errors.append("case 48 identity")
 
     positive = record.get("positive_control", {})
     if positive.get("bytes_changed") is not False or positive.get("tree_hash_unchanged_inside_scope") is not True:
         errors.append("positive unchanged bytes")
+    if positive.get("tree_sha256_before") != record.get("original_evidence_tree_sha256_before") or positive.get("tree_sha256_after") != record.get("original_evidence_tree_sha256_before"):
+        errors.append("positive tree identity")
     if positive.get("rejected") is not False or positive.get("verifier", {}).get("returncode") != 0:
         errors.append("positive accepted")
     errors.extend(cleanup_errors(positive, "positive"))
