@@ -154,7 +154,14 @@ def independent_mutation_controls(raw: dict) -> list[dict]:
 
 def reconcile(root: Path, control24_path: Path | None = None) -> dict:
     root = root.resolve(strict=True)
-    pkg = root if (root / "EVIDENCE_MANIFEST.json").is_file() else root / "research/analysis/versioned_predicate_specialist_switch_4284_v1"
+    if (root / "EVIDENCE_MANIFEST.json").is_file():
+        pkg = root
+    else:
+        candidates = (
+            root / "research/analysis/versioned_predicate_specialist_switch_4284_reconciled_4603_v1",
+            root / "research/analysis/versioned_predicate_specialist_switch_4284_v1",
+        )
+        pkg = next((candidate for candidate in candidates if (candidate / "EVIDENCE_MANIFEST.json").is_file()), candidates[0])
     manifest = load_json((pkg / "EVIDENCE_MANIFEST.json").read_bytes(), "manifest")
 
     chunks = []
@@ -308,7 +315,11 @@ def reconcile(root: Path, control24_path: Path | None = None) -> dict:
 
     control_path = control24_path or root / "control-24/FORMAL_RESULT.json.zlib.b64"
     if control24_path is None and not control_path.is_file():
-        control_path = root.parent / "predicate_specialist_switch_4284_v1/FORMAL_RESULT.json.zlib.b64"
+        candidates = (
+            root / "research/analysis/predicate_specialist_switch_4284_v1/FORMAL_RESULT.json.zlib.b64",
+            root.parent / "predicate_specialist_switch_4284_v1/FORMAL_RESULT.json.zlib.b64",
+        )
+        control_path = next((candidate for candidate in candidates if candidate.is_file()), candidates[0])
     control_encoded = control_path.read_bytes()
     if git_blob_sha1(control_encoded) != EXPECTED_CONTROL24_BLOB:
         raise ValueError("control24_current_main_blob_mismatch")

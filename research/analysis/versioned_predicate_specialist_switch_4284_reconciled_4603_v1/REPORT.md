@@ -8,7 +8,7 @@ The 60-case PR #4293 bundle is independently readable and internally consistent 
 
 ## Frozen inputs and preservation
 
-- Repository: `Unjuno/agent-interface`; intake `main` SHA: `d6dacd3507ea23a7c5aafe82788c0a9d8b452834`. During preparation, main advanced through `a1a9a7d0abdcdf65d5aba3b74e7f7caf171f2ca4`, `f5fdbcef6596e4d343492e1436642739566cae5b`, and `3842e8921bd587af6ce9c13664d087b377366747`. The unchanged #4292 raw/report blobs were verified at the delivery base; the PR branch was updated through GitHub's normal branch-update operation before the generated index was appended.
+- Repository: `Unjuno/agent-interface`; intake `main` SHA: `d6dacd3507ea23a7c5aafe82788c0a9d8b452834`. During preparation, main advanced through `a1a9a7d0abdcdf65d5aba3b74e7f7caf171f2ca4`, `f5fdbcef6596e4d343492e1436642739566cae5b`, `3842e8921bd587af6ce9c13664d087b377366747`, and delivery base `3c256e531ee0ef7d314fecd2c34217360b72c03c`. The unchanged #4292 raw/report blobs were verified at delivery base; its `research/analysis` subtree SHA is still `c056b4f932d9d3ac60ffb16bc56800c088a8b3d4`, identical to the tree used for index generation. The PR branch was updated through GitHub's normal branch-update operation.
 - Source PR #4293: head `393c4115add5e602ed279388a93dad4094daa687`, base `14cfdf1a5f31138b308f98fd0e80fa75e887e65d`; open and non-mergeable at intake. The head is not presented as current main.
 - Issue #4284 and #4295 were both open at intake. No prior allocation was run, changed, replaced, or rerun.
 - During this work, report-only PR #4612 was merged at `6fbd529f16d0ebe21548d1be3da83bac335ecba3`. It uses a distinct integration path and does not contain the 60-case bundle or independent verifier; this PR supplies those missing evidence artifacts additively without replacing #4612's report.
@@ -50,3 +50,5 @@ docker run --rm --network none --read-only `
 ```
 
 No formal runner, model/provider, GUI, or OS input is invoked.
+
+The verifier was also exercised with the repository root as its input and no explicit `--control24` argument; it resolved the delivered reconciled package and the separate #4292 control path correctly. Both package-directory and repository-root invocation modes return the same read-only reconciliation report.
