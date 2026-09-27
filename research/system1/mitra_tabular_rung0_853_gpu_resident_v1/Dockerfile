@@ -15,4 +15,3 @@ COPY requirements.lock /src/requirements.lock
 RUN python -m pip install --no-cache-dir --no-index --find-links=/wheelhouse \
     -r /src/requirements.lock
 ENTRYPOINT ["python", "/src/runner.py"]
-
