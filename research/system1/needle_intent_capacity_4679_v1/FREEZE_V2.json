@@ -59,11 +59,11 @@
     "optimizer_steps": 0,
     "output_mount_empty_accepted": true,
     "output_mount_nonempty_rejected_without_mutation": true,
-    "warning": "optional Numpy_initialization warning; no package installed"
+    "warning": "optional NumPy initialization warning; no package installed"
   },
   "formal_commands": {
-    "trainer": ["docker", "run", "--rm", "--network", "none", "--read-only", "--cpus=1", "--memory=2g", "--pids-limit=64", "--security-opt=no-new-privileges", "--workdir", "/src", "--tmpfs", "/tmp:rw,noexec,nosuiz,size=256m", "--mount", "type=bind,source=<frozen-source>,destination=/src,readonly", "--mount", "type=bind,source=<formal01>/training,destination=/out", "--entrypoint", "python", "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e", "-B", "/src/runner.py", "--formal", "--out", "/out"],
-    "auditor": ["docker", "run", "--rm", "--network", "none", "--read-only", "--cpus=1", "--memory=2g", "--pids-limit=64", "--security-opt=no-new-privileges", "--workdir", "/src", "--tmpfs", "/tmp:rw,noexec,nosuiz,size=256m", "--mount", "type=bind,source=<frozen-source>,destination=/src,readonly", "--mount", "type=bind,source=<formal01>/training,destination=/raw,readonly", "--mount", "type=bind,source=<formal01>/audit,destination=/audit", "--entrypoint", "python", "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e", "-B", "/src/audit.py", "--raw", "/raw", "--out", "/audit/AUDIT.json"]
+    "trainer": ["docker", "run", "--rm", "--network", "none", "--read-only", "--cpus=1", "--memory=2g", "--pids-limit=64", "--security-opt=no-new-privileges", "--workdir", "/src", "--tmpfs", "/tmp:rw,noexec,nosuid,size=256m", "--mount", "type=bind,source=<frozen-source>,destination=/src,readonly", "--mount", "type=bind,source=<formal01>/training,destination=/out", "--entrypoint", "python", "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e", "-B", "/src/runner.py", "--formal", "--out", "/out"],
+    "auditor": ["docker", "run", "--rm", "--network", "none", "--read-only", "--cpus=1", "--memory=2g", "--pids-limit=64", "--security-opt=no-new-privileges", "--workdir", "/src", "--tmpfs", "/tmp:rw,noexec,nosuid,size=256m", "--mount", "type=bind,source=<frozen-source>,destination=/src,readonly", "--mount", "type=bind,source=<formal01>/training,destination=/raw,readonly", "--mount", "type=bind,source=<formal01>/audit,destination=/audit", "--entrypoint", "python", "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e", "-B", "/src/audit.py", "--raw", "/raw", "--out", "/audit/AUDIT.json"]
   },
   "retry_policy": "one trainer + one separate auditor container; zero retries, tuning, seed replacement or post-result extension",
   "source_sha256": {

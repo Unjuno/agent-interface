@@ -24,6 +24,52 @@ class FakeSession:
 
 class ApiTests(unittest.TestCase):
 
+    def test_borrowed_session_compiles_without_opening_or_closing(self):
+        from runtime.cli_v1.api import dispatch_in_session
+        session = FakeSession()
+        session.backend = mock.Mock()
+        program = {'ops': [{'op': 'text', 'text': 'ab', 'gap_ms': 10}]}
+        with mock.patch('runtime.cli_v1.api.open_session') as opened:
+            for sequence in (1, 2):
+                result = dispatch_in_session(session, program,
+                    current_observation_seq=sequence, current_binding_revision=0)
+                self.assertEqual(result['status'], 'returned')
+                self.assertEqual(result['compilation']['kind'], 'bounded_text_gap')
+            opened.assert_not_called()
+        session.backend.close.assert_not_called()
+        self.assertEqual(len(session.calls), 2)
+        self.assertEqual(session.calls[0][0]['ops'], [
+            {'op': 'text', 'text': 'a'}, {'op': 'wait_update', 'timeout_ms': 10},
+            {'op': 'text', 'text': 'b'}])
+        self.assertEqual(program['ops'][0]['text'], 'ab')
+
+    def test_borrowed_session_preserves_recovery_refusal_and_exception(self):
+        from runtime.cli_v1.api import dispatch_in_session
+        session = mock.Mock()
+        session.recovery_required = True
+        refusal = {'status': 'refused', 'error': 'INPUT_RECOVERY_REQUIRED',
+                   'recovery_required': True}
+        session.dispatch.return_value = refusal
+        result = dispatch_in_session(session, {}, current_observation_seq=1,
+                                     current_binding_revision=0)
+        self.assertEqual(result['result'], refusal)
+        session.dispatch.side_effect = RuntimeError('controlled execution failure')
+        failed = dispatch_in_session(session, {}, current_observation_seq=1,
+                                     current_binding_revision=0)
+        self.assertEqual(failed['status'], 'runtime_failed')
+        self.assertIs(session.recovery_required, True)
+        session.backend.close.assert_not_called()
+
+    def test_invalid_borrowed_program_never_calls_session(self):
+        from runtime.cli_v1.api import dispatch_in_session
+        session = mock.Mock()
+        result = dispatch_in_session(session,
+            {'ops': [{'op': 'text', 'text': 'x', 'gap_ms': True}]},
+            current_observation_seq=1, current_binding_revision=0)
+        self.assertEqual(result['error'], 'INVALID_TEXT_GAP')
+        session.dispatch.assert_not_called()
+        session.backend.close.assert_not_called()
+
     def test_public_validate_matches_standalone_without_site_or_display(self):
         import os
         env = dict(os.environ)
