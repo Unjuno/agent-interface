@@ -15,7 +15,7 @@ EXP = Path(__file__).resolve().parent
 REPO = EXP.parents[2]
 IMAGE = "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9"
 EXPECTED_SEED = "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a"
-CONTAINER_EXP = "/src/research/system1/needle_cross_process_publication_5045_v1"
+CONTAINER_EXP = "/src/research/system1/needle_cross_process_publication_5045_v2_20260928"
 SEED = REPO / "research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/skill.json"
 
 
@@ -38,8 +38,10 @@ def frozen_input_sha(freeze: dict) -> str:
 
 
 def validate_freeze_identity(freeze: dict, seed_sha: str) -> None:
-    if freeze.get("schema") != "needle-cross-process-publication-freeze-v1":
+    if freeze.get("schema") != "needle-cross-process-publication-freeze-v2":
         raise RuntimeError("freeze schema mismatch")
+    if freeze.get("allocation") != "needle-cross-process-publication-5045-v2-20260928-01" or freeze.get("issue") != 5066:
+        raise RuntimeError("freeze allocation/issue mismatch")
     if freeze.get("image_id") != IMAGE:
         raise RuntimeError("freeze image identity mismatch")
     if frozen_input_sha(freeze) != seed_sha:
@@ -104,8 +106,8 @@ def main() -> int:
         (output / "auditor.stdout.txt").write_text(auditor.stdout, encoding="utf-8")
         (output / "auditor.stderr.txt").write_text(auditor.stderr, encoding="utf-8")
     execution = {
-        "allocation": "needle-cross-process-publication-5045-v1",
-        "issue": 5045,
+        "allocation": "needle-cross-process-publication-5045-v2-20260928-01",
+        "issue": 5066,
         "formal_orchestrations": 1,
         "runner_command": runner_command,
         "runner_exit": runner.returncode,
