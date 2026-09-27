@@ -15,6 +15,62 @@ from native_exchange_v1 import encoded
 
 
 class MCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_recorded_default_expansion_refuses_before_publication(self):
+        from native_mcp_v1 import create_server
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root/'text-policy.json').write_text(json.dumps({'gap_ms': 2, 'default_changed': False}))
+            server = create_server(root)
+            decision = {'source_sequence': 1, 'interaction': 'keyboard',
+                        'point': [1, 2], 'expected_title': 'app',
+                        'tail': [{'op': 'text', 'text': 'x' * 64}]}
+            with patch('native_mcp_v1.run', return_value={'image': None}) as run:
+                reply = await server.call_tool('native_submit', {'stage': 1, 'decision': decision, 'timeout': 0})
+            self.assertTrue(reply.isError)
+            run.assert_not_called()
+            self.assertFalse((root/'request-1.json').exists())
+            decision['tail'][0]['gap_ms'] = 0
+            with patch('native_mcp_v1.run', return_value={'image': None}) as run:
+                reply = await server.call_tool('native_submit', {'stage': 1, 'decision': decision, 'timeout': 0})
+            self.assertFalse(reply.isError)
+            self.assertEqual(run.call_args.args[2], decision)
+
+    async def test_recorded_pacing_boundaries_and_recovery_remain_available(self):
+        from native_mcp_v1 import create_server
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            server = create_server(root)
+            action = {'source_sequence': 1, 'point': [1, 2], 'expected_title': 'app'}
+            for policy in ({'gap_ms': True, 'default_changed': False},
+                           {'gap_ms': 3, 'default_changed': False}, []):
+                (root/'text-policy.json').write_text(json.dumps(policy))
+                with patch('native_mcp_v1.run', return_value={'image': None}) as run:
+                    reply = await server.call_tool('native_submit', {'stage': 1, 'decision': action})
+                self.assertTrue(reply.isError)
+                run.assert_not_called()
+            for decision in ({'source_sequence': 1, 'finish': True},
+                             {'source_sequence': 1, 'interaction': 'observe'}):
+                with patch('native_mcp_v1.run', return_value={'image': None}) as run:
+                    reply = await server.call_tool('native_submit', {'stage': 1, 'decision': decision})
+                self.assertFalse(reply.isError)
+                run.assert_called_once()
+            with patch('native_mcp_v1.run', return_value={'image': None}) as run:
+                reply = await server.call_tool('native_resume', {'stage': 1, 'decision_sha256': 'a' * 64})
+            self.assertFalse(reply.isError)
+            self.assertTrue(run.call_args.kwargs['resume'])
+            (root/'text-policy.json').unlink()
+            with patch('native_mcp_v1.run', return_value={'image': None}) as run:
+                reply = await server.call_tool('native_submit', {'stage': 1, 'decision': action})
+            self.assertFalse(reply.isError)
+            run.assert_called_once()
+            (root/'text-policy.json').write_text(json.dumps({'gap_ms': 10, 'default_changed': False}))
+            for size, rejected in ((62, False), (63, True)):
+                decision = dict(action, tail=[{'op': 'text', 'text': 'x' * size}])
+                with patch('native_mcp_v1.run', return_value={'image': None}) as run:
+                    reply = await server.call_tool('native_submit', {'stage': 1, 'decision': decision})
+                self.assertEqual(reply.isError, rejected)
+                self.assertEqual(run.call_count, 0 if rejected else 1)
+
     def test_window_inventory_uses_only_exact_stage_and_retains_raw_identity(self):
         from native_mcp_v1 import window_inventory
         with tempfile.TemporaryDirectory() as tmp:
