@@ -32,6 +32,16 @@ def receipt_summary(row):
             'task_success':None, 'authority':'none'}
 
 
+def grounding_notice(name, source, request_file, *, prior_receipt=None, receipt_file=None):
+    notice = {'needs_grounding':name, 'source_sequence':source['sequence'],
+              'image':source['native']['artifact']['path'], 'request_file':str(request_file)}
+    if prior_receipt is not None:
+        if receipt_file is None:
+            raise ValueError('full receipt reference required for grounding summary')
+        notice.update(receipt_file=str(receipt_file), receipt_summary=receipt_summary(prior_receipt))
+    return notice
+
+
 def validate_review(value, task_id, source_sequence):
     if not isinstance(value, dict) or set(value) != {'task_id', 'source_sequence', 'outcome', 'reason'}:
         raise ValueError('exact primary review fields required')

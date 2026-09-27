@@ -47,12 +47,13 @@ def main():
     def save(name, value):
         (out/name).write_text(json.dumps(value, indent=2)+'\n')
 
-    def request_grounding(name, source):
+    def request_grounding(name, source, *, prior_receipt=None):
+        from native_primary_review_v1 import grounding_notice
         grounding_started = time.monotonic_ns()
         request = out/(name+'-grounding.json')
         save(name+'-source.json', source)
-        print(json.dumps({'needs_grounding': name, 'source_sequence': source['sequence'],
-                          'image': source['native']['artifact']['path'], 'request_file': str(request)}), flush=True)
+        print(json.dumps(grounding_notice(name, source, request,
+                         prior_receipt=prior_receipt, receipt_file=out/'tasks.json')), flush=True)
         end = time.monotonic()+300
         while not request.exists():
             if time.monotonic()>end:
@@ -173,7 +174,7 @@ def main():
                     raise RuntimeError('unplanned partial or repeated refusal; inspect, no replay')
                 # One explicit assistant repair from a newly viewed source.
                 source = bridge.observe()
-                handles = request_grounding('repair', source)
+                handles = request_grounding('repair', source, prior_receipt=row)
                 repaired = True
                 entered = bridge.click(*handles['field'], tail=[
                     {'op': 'key_chord', 'keys': ['CTRL', 'A']},

@@ -7,10 +7,25 @@ import time
 import unittest
 from unittest.mock import patch
 
-from native_primary_review_v1 import receipt_summary, review_task, validate_review
+from native_primary_review_v1 import grounding_notice, receipt_summary, review_task, validate_review
 
 
 class PrimaryReviewTests(unittest.TestCase):
+    def test_repair_notice_carries_refusal_and_exact_source_without_changing_cold_notice(self):
+        source = {'sequence':37, 'native':{'artifact':{'path':'repair.png'}}}
+        row = {'entered':{'status':'refused', 'input_dispatched':False, 'error':'MISSING'},
+               'refusal_emissions':0}
+        notice = grounding_notice('repair', source, 'decision.json', prior_receipt=row, receipt_file='tasks.json')
+        self.assertEqual(notice['source_sequence'], 37)
+        self.assertEqual(notice['image'], 'repair.png')
+        self.assertEqual(notice['receipt_file'], 'tasks.json')
+        self.assertEqual(notice['receipt_summary']['refusal_emissions'], 0)
+        self.assertFalse(notice['receipt_summary']['operations']['entered']['input_dispatched'])
+        cold = grounding_notice('cold', source, 'decision.json')
+        self.assertEqual(set(cold), {'needs_grounding','source_sequence','image','request_file'})
+        with self.assertRaises(ValueError):
+            grounding_notice('repair', source, 'decision.json', prior_receipt=row)
+
     def test_notice_preserves_partial_failure_and_release_evidence_without_success_inference(self):
         failed = {'status':'partial', 'error':'interrupted', 'recovery_required':True,
                   'execution':{'program_emissions':2, 'error':'release failed',
