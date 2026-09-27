@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 164 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 165 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
@@ -274,6 +274,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`typed_resolve_dependency_v1/`](typed_resolve_dependency_v1/)
 - [`versioned_predicate_specialist_switch_4284_reconciled_4603_v1/`](versioned_predicate_specialist_switch_4284_reconciled_4603_v1/)
 - [`visual_cue_coordinate_map_successor_2043_v1/`](visual_cue_coordinate_map_successor_2043_v1/)
+- [`visual_encoding_570_gpu_local_successor_v1/`](visual_encoding_570_gpu_local_successor_v1/)
 - [`x11_adaptation_multiseed_2459_v1/`](x11_adaptation_multiseed_2459_v1/)
 - [`x11_augmentation_fail_2394_v1/`](x11_augmentation_fail_2394_v1/)
 - [`x11_composed_ood_gate_2419_v1/`](x11_composed_ood_gate_2419_v1/)
@@ -296,6 +297,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 </details>
 
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
+
 
 ## Interpretation
 
