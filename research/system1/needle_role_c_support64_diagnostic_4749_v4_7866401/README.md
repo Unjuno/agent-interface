@@ -1,7 +1,25 @@
-One paired synthetic support16/control versus support64/treatment diagnostic against the frozen #4749 main runner. Not a rerun of #4848's consumed seed and does not alter #4749's ten-seed result.
+# Issue #4853 — role-C support16/64 synthetic diagnostic (seed 7866401)
 
-Frozen upstream runner blob: ecd3a0414178f38535406573314793a40b353878. Seed 7866401. Pinned CPU Docker image sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10; network none, read-only root/source, 1 CPU, 2 GiB, 64 PIDs.
+This one-shot successor to the immutable pre-fit STOP in #4848 tests the narrow support-count question against the exact #4749 main runner. It does not alter #4749's ten-seed result.
 
-Construction passed with zero optimizer updates. Exactly one formal paired orchestration completed: support16 role-C accuracy 0.908447265625; support64 0.959716796875; paired delta +0.05126953125. A/B exactly unchanged (A 0.9658203125; B 0.9462890625). Base immutable; 400 base updates, 120 B and 120 C updates per arm. Independent raw-only audit reconstructed six role cells with zero errors and passed exact prefix/A-B checks.
+## Result
 
-This is one descriptive synthetic point only. It does not establish online real-time learning, GUI/task transfer, effect distribution, concurrent-update quality, natural-skill transfer, production readiness or action authority. No retry, substitution or seed reuse. See formal/ for result, commands and checksums. Full raw JSON files remain in the dedicated local Docker volume unjuno-needle-role-c-support64-diagnostic-4853-v1; checksums are published.
+Pinned CPU Docker construction passed with zero updates; exactly one paired formal orchestration then completed. Independent raw-only audit reconstructed all six role cells, regenerated labels/predictions, checked the exact prefix and A/B pairing, and returned `PASS_RAW_AUDIT` with zero errors.
+
+| Role | support16 | support64 |
+|---|---:|---:|
+| A | 0.9658203125 | 0.9658203125 |
+| B | 0.9462890625 | 0.9462890625 |
+| C | 0.908447265625 | 0.959716796875 |
+
+C delta (64−16): **+0.05126953125** (+5.13 percentage points). Base immutable; 400 base updates and 120 B/C updates per C arm. PyTorch 2.5.1+cpu, one thread.
+
+## Reproduction and provenance
+
+`source/` contains the paired runner, shared prefix contract, construction test, independent auditor, and an exact copy of #4749's public main runner (Git blob `ecd3a0414178f38535406573314793a40b353878`). `FREEZE.json` preserves the preregistration snapshot; its `formal_invocations: 0` is the before-run state and is intentionally not rewritten. Formal command template, outcome and raw output digests are in `formal/`.
+
+Image `needle-pilot05:local`, ID `sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e`, Linux/amd64 CPU; offline, read-only root/source, one CPU, 2 GiB RAM, 64 PIDs, dedicated output volume. No retry or seed substitution.
+
+## Scope
+
+One synthetic seed is descriptive only; no distribution/significance estimate, real-time online learning, GUI/task transfer, concurrency robustness, natural-skill transfer, product readiness, or action authority is established. Preserve #4848's STOP and #4749's independent formal result.
