@@ -8,4 +8,4 @@ The single formal Docker invocation exited with status 1 at `/src/run_formal.py:
 
 Formal seed fit invocations: 0. Retry count: 0. The frozen no-retry rule prohibits restarting this allocation. Host GPU remained 0 MiB / 0% at the post-run check. Existing containers were left untouched.
 
-Raw terminal trace: `../issue4988-host-logs-20260928/formal.stdout.log` (host-side local evidence; Docker wrote no output files).
+Raw terminal trace: `formal.stdout.log` (host-side local evidence; Docker wrote no output files).
