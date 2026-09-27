@@ -1,0 +1,19 @@
+{
+  "allocation": "predicate-order-drift-4258-20260927-01",
+  "intake_main": "21f81b3e6e41491bca9078a4d5adfd577c041f64",
+  "hypothesis": "The cost/selectivity order derived on a frozen development distribution preserves exact AND semantics but can become more expensive than the naive order under a bounded transfer of probability mass from a learned-order early-reject state to a learned-order late-reject state.",
+  "predicates": ["A", "B", "C", "D"],
+  "positive_costs": {"A": 1, "B": 2, "C": 4, "D": 8},
+  "naive_order": ["A", "B", "C", "D"],
+  "development_false_probability": {"A": "1/10", "B": "2/5", "C": "9/10", "D": "4/5"},
+  "learned_order_rule": "Sort ascending by exact Fraction(predicate_cost, development_false_probability), ties by predicate name.",
+  "truth_space": "All 16 Boolean assignments, generated in lexicographic A,B,C,D order with false before true.",
+  "drift_source_state": {"A": true, "B": true, "C": false, "D": true},
+  "drift_destination_state": {"A": false, "B": true, "C": true, "D": true},
+  "drift_grid": "0 through the development probability mass of the source state, inclusive, in 10 equal Fraction-valued increments. Subtract each delta from source and add it to destination.",
+  "metrics": ["exact semantic AND agreement for all states", "exact expected short-circuit weighted cost", "exact expected predicate evaluation count", "weighted nearest-rank p50/p95/p99 per-row cost"],
+  "execution": {"container_image": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9", "network": "none", "source_mount": "read-only", "rootfs": "read-only", "invocations": 1},
+  "audit": "Separate standard-library-only implementation; recompute from this freeze and raw state rows, without importing producer code. Two copied-evidence corruption controls: alter a cost and alter a semantic outcome; auditor must reject both.",
+  "decision": {"pass": "PASS_DRIFT_BOUNDARY_MAPPED if exact reconciliation holds, both corruption controls reject, and first crossover or no-crossover-on-grid is identified.", "fail": "FAIL_SEMANTIC_OR_COST_RECONCILIATION on any semantic or independent cost mismatch.", "hold": "HOLD_DRIFT_GRID_INSUFFICIENT if frozen source/destination mass endpoints are absent or crossover cannot be resolved at frozen grid resolution.", "stop": "STOP_SOURCE_IMAGE_OR_AUDIT if exact cached image/source/audit gate unavailable."},
+  "limits": ["Authored finite distribution and fixed cost units only", "Per-row percentiles are not end-to-end latency", "No real predicate/provider latency, GUI behavior, authority, online drift detector, optimality, or runtime/product benefit claim"]
+}
