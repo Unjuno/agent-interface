@@ -1,0 +1,47 @@
+{
+  "schema": "broker-timeout-start-docker-construction-v3",
+  "issue": 5074,
+  "allocation": "broker-fake-child-timeout-start-20260928-01",
+  "disposition": "PASS_CONSTRUCTION_ONLY_CURRENT_MAIN_SOURCE",
+  "timestamp_local": "2026-09-28 Asia/Tokyo",
+  "base_main": "b50f022548f8657035554eb7b1474e9f5c2ecbbd",
+  "research_branch": "research/broker-fake-child-timeout-start-5074-v4",
+  "source_commit": "a6aeceb63227f813bf6cbdd406fab8b7867237d1",
+  "additive_path": "research/integration/broker_fake_child_timeout_start_5074_v2/",
+  "docker_context": "desktop-linux",
+  "pinned_image": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+  "platform": "linux/amd64",
+  "preflight": {
+    "context_match": true,
+    "image_and_platform_match": true,
+    "main_ref_match": true,
+    "branch_ref_match": true,
+    "frozen_source_files_verified": 11,
+    "running_containers_before": []
+  },
+  "command": "docker --context desktop-linux run --rm --pull=never --platform linux/amd64 --network none --read-only --cpus=0.25 --memory=256m --pids-limit=32 --cap-drop=ALL --security-opt=no-new-privileges:true --tmpfs /tmp:rw,exec,nosuid,size=16m --mount type=bind,src=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\goal-unjuno-agent-interface-github-mcp-2\\work\\issue5074v4\\construction,dst=/study,readonly --workdir /study sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e python -B -m unittest discover -s /study -p 'test_*.py' -v",
+  "exit_code": 0,
+  "tests_passed": 15,
+  "tests_total": 15,
+  "recomputed_manifest_mutation_test": "passed: altered --network=host receipt rejected after matching raw receipt and recomputing the output manifest",
+  "resource_limits": {
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "cpus": 0.25,
+    "memory": "256m",
+    "pids_limit": 32,
+    "cap_drop": ["ALL"],
+    "security_opt": ["no-new-privileges:true"],
+    "tmpfs": "/tmp:rw,exec,nosuid,size=16m",
+    "pull": "never"
+  },
+  "broker_mounted_or_invoked": false,
+  "formal_cases_invoked": 0,
+  "formal_allocation_consumed": false,
+  "limitations": [
+    "construction/auditor contract only",
+    "no broker process, provider/model, GUI, input or application effect",
+    "not a scientific PASS or FAIL"
+  ]
+}
