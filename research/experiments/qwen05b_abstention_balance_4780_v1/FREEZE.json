@@ -1,0 +1,187 @@
+{
+  "schema": "qwen05b-abstention-balance-freeze-v1",
+  "issue": 4988,
+  "parent_issues": [
+    4792,
+    4780
+  ],
+  "parent_prs": [
+    4788,
+    4803
+  ],
+  "allocation": "qwen05b-abstention-balance-4780-20260928-01",
+  "base_main_sha": "7d1208cf323408897983ef2b5c75fd34f54d6815",
+  "branch": "research/qwen05b-abstention-balance-4780-20260928",
+  "path": "research/experiments/qwen05b_abstention_balance_4780_v1/",
+  "hypothesis": "Under the same 32-row support budget, base model, output contract, LoRA initialization, optimizer, updates, parser and held-out cases, a 4-per-class support sample will outperform the predecessor-shaped 16/4/4/1/1/1/1/4 sample in exact semantic action/effect quality and abstention safety.",
+  "H_T_D_C_U": {
+    "H": "Rare YIELD examples may be underrepresented in the earlier compact Qwen support set. Redistributing the same support budget evenly across set, save, toggle, four YIELD reasons, and already-satisfied NO_ACTION may improve held-out semantic exactness and abstention without changing the base model or optimizer.",
+    "T": "Generate a 128-row support pool and a disjoint held-out candidate pool from the exact #4792 protocol.py and fresh formal seed 73194019. Form two 32-row selections from the same pool: imbalanced 16/4/4/1/1/1/1/4 and balanced 4/4/4/4/4/4/4/4. Select eight held-out rows for each of the eight frozen semantic classes. Train two rank-8 LoRA adapters with the same seed, initial adapter parameters, optimizer state, 16 updates and batch size 2, changing only selected support rows. Evaluate the base once and both adapters on the same held-out set with greedy decoding. One RTX 3080 Docker orchestration; separate CPU-only raw audit and five corruption controls. No retry or tuning.",
+    "D": "PASS_BALANCED_SUPPORT_ABSTENTION_SCOPED requires independent reconstruction of every output row; five of five evidence mutations rejected; balanced exact action/effect >=80% and >=15 percentage points above both imbalanced and base; exact 8/8 in set, save, toggle, each YIELD subtype and NO_ACTION-already-satisfied; no forbidden/stale/unauthorized simulated effect; exact scope/generation binding from current state only; fit <=300 seconds each; peak CUDA allocation <=12 GiB; balanced candidate p95 <=1.2 seconds. Provenance/audit mismatch => STOP; resource miss => HOLD_LOCAL_ENVELOPE; audited quality miss => FAIL_BALANCED_SUPPORT_GATE.",
+    "C": "Both arms share the exact generated pool and held-out bytes, model/tokenizer revision, prompt/target rendering, parser/binder, simulator, model seed, adapter initialization, AdamW state/configuration, rank, batch, step count, and generation settings. Their only planned difference is the class-count selection of support rows. The independent auditor imports no candidate protocol code.",
+    "U": "One cached Qwen2.5-0.5B-Instruct snapshot, one synthetic settings simulator, one RTX 3080 laptop GPU, one formal seed and two paired fits. No live GUI/Astra, production authority, task-success, cross-model/device, deployment, or general model-capacity claim."
+  },
+  "seeds": {
+    "construction_excluded": 73194011,
+    "formal_seed": 73194019,
+    "support_pool_seed_derivation": "formal_seed XOR 0xA5A5A5A5",
+    "formal_seed_fit_invocations": 2,
+    "retries": 0,
+    "post_result_tuning": false
+  },
+  "data": {
+    "path": "formal-dataset.json",
+    "transport_path": "formal-dataset.json.gz.b64",
+    "formal_input_sha256": "028b2185bba788a423d456320835ce85c69b1359f22b2630c09c5f960981613a",
+    "formal_input_bytes": 803673,
+    "construction_input_sha256": "d03d4667342b950fc2d978bd846e2364451b69945e001c213ad6b40642139a5a",
+    "support_pool_rows": 128,
+    "heldout_candidate_pool_rows": 256,
+    "selected_heldout_rows": 64,
+    "classes": [
+      "set",
+      "save",
+      "toggle",
+      "yield:forbidden",
+      "yield:ambiguous",
+      "yield:stale_scope",
+      "yield:missing_evidence",
+      "no_action:already_satisfied"
+    ],
+    "support_counts": {
+      "imbalanced": {
+        "set": 16,
+        "save": 4,
+        "toggle": 4,
+        "yield:forbidden": 1,
+        "yield:ambiguous": 1,
+        "yield:stale_scope": 1,
+        "yield:missing_evidence": 1,
+        "no_action:already_satisfied": 4
+      },
+      "balanced": {
+        "set": 4,
+        "save": 4,
+        "toggle": 4,
+        "yield:forbidden": 4,
+        "yield:ambiguous": 4,
+        "yield:stale_scope": 4,
+        "yield:missing_evidence": 4,
+        "no_action:already_satisfied": 4
+      }
+    },
+    "training_case_order_sha256": {
+      "imbalanced": "f15ae3555eb7cb18b97b8d84346253be1e61ab82ff4f622047555207c241ac5b",
+      "balanced": "ec960347ca61906934b295be6decec6aaca343abda4b0e4c52ccb8ba91a98e50"
+    },
+    "transport_sha256": "28dc9a65faab00e4af37e08ef4ebc456a328aba513901293d7a35475f0a74ea0",
+    "transport_bytes": 48087
+  },
+  "model": {
+    "repo": "Qwen/Qwen2.5-0.5B-Instruct",
+    "snapshot_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "model_safetensors_sha256": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe",
+    "trust_remote_code": false,
+    "local_files_only": true
+  },
+  "training": {
+    "adapter": "LoRA",
+    "rank": 8,
+    "alpha": 16,
+    "dropout": 0.0,
+    "target_modules": [
+      "q_proj",
+      "v_proj"
+    ],
+    "epochs": 1,
+    "optimizer_steps_per_arm": 16,
+    "batch_size": 2,
+    "optimizer": "AdamW",
+    "learning_rate": 0.0002,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1E-08,
+    "weight_decay": 0.01,
+    "initial_optimizer_state": "empty",
+    "seed_reset_before_each_fit": true,
+    "strict_deterministic_algorithms": true
+  },
+  "evaluation": {
+    "base_rows": 64,
+    "imbalanced_rows": 64,
+    "balanced_rows": 64,
+    "base_evaluation_count": 1,
+    "candidate_evaluation_count_per_arm": 1,
+    "decoding": "greedy; do_sample=false; max_new_tokens=48",
+    "system_prompt": "Return only a compact intent JSON object; do not emit scope_id or generation."
+  },
+  "environment": {
+    "host": "Windows 11; Docker Desktop linux/amd64",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU, 16 GiB",
+    "docker_image_id": "sha256:63ce8205b5e0cf7daddac087d6c1bd5489d51e3af345cf923af925026bdd600c",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.49.0",
+    "peft": "0.14.0",
+    "network": "none",
+    "pull_policy": "never",
+    "root_fs": "read-only",
+    "source_model_and_input_mounts": "read-only",
+    "cpu_limit": 4,
+    "memory_limit": "8 GiB",
+    "pids_limit": 64,
+    "determinism": {
+      "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+      "torch_deterministic_algorithms": true,
+      "cudnn_deterministic": true,
+      "cudnn_benchmark": false,
+      "TF32": false
+    }
+  },
+  "source_files": [
+    "protocol.py",
+    "make_dataset.py",
+    "train_arm.py",
+    "evaluate_arm.py",
+    "run_formal.py",
+    "audit_raw.py",
+    "controls.py",
+    "test_protocol.py",
+    "requirements.lock",
+    "train_reference.py",
+    "evaluate_reference.py",
+    "audit_reference.py",
+    "reference_FREEZE.json"
+  ],
+  "source_sha256": {
+    "protocol.py": "3d324897c9e99abe453ed500c486780243efe9fcff87441197471b5b47d665b6",
+    "make_dataset.py": "b6c0445bdb50664bd51f1a53398b553241d123c0393785cebdd197476fb5d43e",
+    "train_arm.py": "ce049d3cd09601c3fcebb0485c67885b8ba99f62281308e178e81c9a15a2cf92",
+    "evaluate_arm.py": "72f976a8df524a94e2a67e2a71d254d10acd716cd7b014bc32418cc050d93201",
+    "run_formal.py": "bba4bcb84004b5be600064cf25c49187304e3d2a24d68a8cd01ce9f6a09db830",
+    "audit_raw.py": "e568fb6b1c7edff8c99f23a4fd1cc8220ac4855c37c8dfd333dd462b648dc57d",
+    "controls.py": "286a74830ff602664fa442f0026f63c7f8ab59b60a8f2248f99ad279f47c3a2d",
+    "test_protocol.py": "e48907c7bef7010e85d3333df3bdf1f565b221deff72bd50378c04b8630ed534",
+    "requirements.lock": "e39c0c0f1e67c52cc3feaa02707c0887ea68259abe221ac469dc7e6df4f52c09",
+    "train_reference.py": "4504ed1ea5c302756f5f732a33eaf0baf4791427126010c7c37a0da59fcfb0c7",
+    "evaluate_reference.py": "ba03ab03ac8cafa9142bf64545b71b483ec43e51f934fbba819699e99d77cf3f",
+    "audit_reference.py": "ff146e74efd80e736e807822f1eb97f39c6316ea47e346a33e4fc6497e2be422",
+    "reference_FREEZE.json": "7e2e22cf2aae6908a08beece6cd8d9871c2b0173eca4ce65527b65725c4b766b"
+  },
+  "source_provenance": {
+    "protocol.py_from_prior_github_blob": "5fe54d58164a0ed57e3f153c3c1e6faef5233419",
+    "training_reference_blob": "bdb2dddee5d97224306b777a2a114c8e806759ab",
+    "evaluation_reference_blob": "d03083348805edc9f995b603a478770e71730ae8",
+    "independent_audit_reference_blob": "70ca1521243df919b1839c5dc70ef77c061f46a4",
+    "references_read_from_branch": "research/qwen-intent-envelope-4780-20260927"
+  },
+  "commands": {
+    "construction_tests": "docker run --rm --pull=never --network none --read-only --cpus=1 --memory=2g --pids-limit=64 --tmpfs /tmp:rw,noexec,nosuid,size=256m --mount type=bind,source=<source>,target=/src,readonly --entrypoint python <image-id> -B -m unittest discover -s /src -p test_*.py -v",
+    "formal": "docker run --rm --pull=never --network none --gpus all --read-only --cpus=4 --memory=8g --pids-limit=64 --tmpfs /tmp:rw,noexec,nosuid,size=256m --mount type=bind,source=<source>,target=/src,readonly --mount type=bind,source=<model-cache>,target=/model-cache,readonly --mount type=bind,source=<input>,target=/input,readonly --mount type=bind,source=<fresh-output>,target=/out --env CUBLAS_WORKSPACE_CONFIG=:4096:8 --env HF_HUB_OFFLINE=1 --env TRANSFORMERS_OFFLINE=1 --env OMP_NUM_THREADS=2 --entrypoint python <image-id> -B /src/run_formal.py --source /src --model /model-cache/snapshots/7ae557604adf67be50417f59c2c2f167def9a775 --data /input/formal-dataset.json --out /out --seed 73194019",
+    "independent_audit": "docker run --rm --pull=never --network none --read-only --cpus=1 --memory=2g --pids-limit=64 --tmpfs /tmp:rw,noexec,nosuid,size=256m --mount type=bind,source=<source>,target=/src,readonly --mount type=bind,source=<input>,target=/input,readonly --mount type=bind,source=<formal-output>,target=/results,readonly --mount type=bind,source=<fresh-audit-output>,target=/audit --entrypoint python <image-id> -B /src/audit_raw.py --source /src --data /input/formal-dataset.json --results /results --audit-out /audit",
+    "corruption_controls": "docker run --rm --pull=never --network none --read-only --cpus=1 --memory=2g --pids-limit=64 --tmpfs /tmp:rw,noexec,nosuid,size=256m --mount type=bind,source=<source>,target=/src,readonly --mount type=bind,source=<input>,target=/input,readonly --mount type=bind,source=<formal-output>,target=/results,readonly --mount type=bind,source=<fresh-audit-output>,target=/audit --entrypoint python <image-id> -B /src/controls.py --source /src --data /input/formal-dataset.json --results /results --audit-out /audit"
+  },
+  "formal_output_policy": "One fresh empty output directory; retain partial STOP/FAIL evidence; never retry or substitute seeds.",
+  "evidence_scope": "A single paired synthetic support-sampling result on the stated local model/GPU. No live task, deployed adapter, or production authority."
+}
