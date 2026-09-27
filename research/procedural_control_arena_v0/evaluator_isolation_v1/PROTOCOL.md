@@ -11,7 +11,7 @@ PASS requires: valid XWD capture; evaluator report shows seed 2001, target-first
 ## Construction and formal sequence
 
 1. Run `python build_images.py`; it copies the exact tracked `arena.py` and `engine.py`, hashes them, builds separate pinned-base images and records their ids.
-2. Run `python construction_smoke.py` before freeze. It uses seed 2002 and is not formal evidence.
+2. Run `python construction_smoke.py` before freeze. It uses seed 2002 and is not formal evidence. Preserve each bring-up outcome in the construction attempt ledger; the passing smoke stores the raw XWD and its digest under `construction/smoke-02/`.
 3. Before any formal run, implement and independently inspect a one-shot runner, a frozen manifest, and a raw-artifact auditor. Freeze them in a pushed commit and inspect the GitHub commit first.
 4. A future formal run must use exclusive creation under `formal/001`, execute once, and preserve all raw evidence. Audit it in a separate network-disabled, read-only, pinned Python container.
 

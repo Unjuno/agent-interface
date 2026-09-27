@@ -1,4 +1,5 @@
 import hashlib
+import base64
 import json
 import os
 import subprocess
@@ -42,5 +43,6 @@ result = {
 }
 Path('/tmp/controller-probe.json').write_text(json.dumps(result, indent=2, sort_keys=True) + '\n')
 print(json.dumps(result, sort_keys=True))
+print('XWD_BASE64:' + base64.b64encode(raw).decode('ascii'))
 if info.returncode or capture.returncode or key.returncode:
     raise SystemExit(2)
