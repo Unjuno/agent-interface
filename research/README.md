@@ -65,6 +65,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 - [`live_control/`](live_control/) — shared/live GUI-control mechanisms and integration studies.
 - [`doom/`](doom/) — real-time/continuous-control studies and MAP01 evidence.
 - [`integration/`](integration/) — integration-focused experiments.
+- [`public_mcp_stale_effect_2907_allocation04_v1/`](integration/public_mcp_stale_effect_2907_allocation04_v1/REPORT.md) — Issue #2907 source-frozen local Docker stale-refusal/effect result and corrected read-only audit; remains a scoped component result, not the full multi-app integration gate.
 - [`measurement/`](measurement/) — scoped measurement and composition studies.
 - [`cross_domain/`](cross_domain/) — cross-domain transfer work.
 
