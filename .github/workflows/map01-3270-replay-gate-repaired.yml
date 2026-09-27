@@ -18,6 +18,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/doom/test_map01_scorer_scheduler_replay_3270.py
       - name: Run deterministic replay gate
         run: |
           python -m unittest -v research/doom/test_map01_scorer_scheduler_replay_3270.py
