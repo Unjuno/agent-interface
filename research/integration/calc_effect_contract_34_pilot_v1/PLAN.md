@@ -34,3 +34,7 @@ docker run --rm --platform linux/arm64 --network none --read-only \
 For a repository checkout after publication, replace both workspace paths above with `research/integration/calc_effect_contract_34_pilot_v1` (the read-only source mount) and its `results` child (the writable output mount).
 
 The first local run is a construction result, not a source-frozen formal allocation. Preserve every output and any first failure; do not reuse this identity for another case.
+
+### Publication-checkout path correction (post-run review response)
+
+The tracked `results/` directory already contains the retained allocation and must not be mounted as `/out` for a new construction. If only checking the retained evidence, run the independent audit against the saved `raw.json` and workbook in read-only mode and write to a separate new audit path. If a fresh construction is explicitly authorized under a distinct allocation, mount an empty disposable directory as `/out`; never point `/out` at the tracked results directory. This correction does not authorize rerunning the original allocation.
