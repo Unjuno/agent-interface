@@ -25,7 +25,7 @@ The candidate independently enumerates all states reachable from the initial sta
 
 ## Frozen source identities
 
-- `runner.py` SHA-256: `6e80ce bcea36c76427fad6797a302a2672e965bca280abd4166a3d13872f275c` (remove the display space: `6e80cebcea36c76427fad6797a302a2672e965bca280abd4166a3d13872f275c`).
+- `runner.py` SHA-256: `6e80cebcea36c76427fad6797a302a2672e965bca280abd4166a3d13872f275c`.
 - `audit.py` SHA-256: `a3b96773ebea184eb7741e467662203a9eeee7feea1186127b7c824e40c3c666`.
 - Image: `python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9`, linux/amd64.
 - Host: Docker Desktop 29.8.0, Docker Engine 29.8.0, daemon linux/x86_64.
