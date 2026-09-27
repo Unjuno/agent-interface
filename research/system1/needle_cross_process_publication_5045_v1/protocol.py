@@ -7,6 +7,8 @@ from typing import Any
 
 OLD_GENERATION = 3788
 NEW_GENERATION = 3789
+EXPECTED_SEED_PACKAGE_SHA256 = "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a"
+FROZEN_IMAGE_ID = "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9"
 READER_COUNT = 4
 PHASES = (
     "atomic_before_validation",
@@ -51,4 +53,5 @@ def candidate_from(package: dict[str, Any]) -> dict[str, Any]:
     candidate["provenance"]["predecessor_issue"] = 3890
     candidate["payload_sha256"] = payload_digest(candidate)
     return candidate
+
 
