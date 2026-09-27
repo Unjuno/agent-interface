@@ -22,6 +22,8 @@ PHASE_GENERATION = {
 }
 PHASES = tuple(PHASE_GENERATION)
 READERS = 4
+EXPECTED_INPUT_SHA256 = "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a"
+EXPECTED_IMAGE_ID = "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9"
 
 
 def validate(raw: Any) -> list[str]:
@@ -36,6 +38,9 @@ def validate(raw: Any) -> list[str]:
         "dispatch_count": 0,
         "authority_granted": False,
         "input_git_blob": "45b80150dac503f4eb6f3cb5d82f9afa2c587107",
+        "input_sha256": EXPECTED_INPUT_SHA256,
+        "old_raw_sha256": EXPECTED_INPUT_SHA256,
+        "image_id": EXPECTED_IMAGE_ID,
     }.items():
         if raw.get(key) != value:
             errors.append("top_" + key)
@@ -87,8 +92,19 @@ def validate(raw: Any) -> list[str]:
             if expected is not None:
                 if row.get("generation") != expected or row.get("package_valid") is not True:
                     errors.append(name + "_generation_" + phase)
+                expected_payload = raw.get("old_payload_sha256") if expected == OLD else raw.get("candidate_sha256")
+                expected_bytes = raw.get("old_raw_sha256") if expected == OLD else raw.get("candidate_raw_sha256")
+                expected_length = raw.get("input_bytes") if expected == OLD else raw.get("candidate_raw_bytes")
+                if (row.get("embedded_digest") != expected_payload or row.get("raw_sha256") != expected_bytes
+                        or row.get("bytes") != expected_length):
+                    errors.append(name + "_exact_package_" + phase)
             elif row.get("package_valid") is True:
                 errors.append("diagnostic_partial_not_observed")
+            else:
+                if row.get("parse_ok") is not False or row.get("generation") is not None:
+                    errors.append("diagnostic_partial_parse_state")
+                if not (0 < row.get("bytes", 0) < raw.get("candidate_raw_bytes", 0)):
+                    errors.append("diagnostic_partial_byte_range")
         if seen != {(phase, i) for phase in expected_phases for i in range(READERS)}:
             errors.append(name + "_schedule_incomplete")
     atomic = by_arm["atomic"]
@@ -142,6 +158,15 @@ def corruption_controls(raw: dict) -> dict[str, bool]:
     changed = copy.deepcopy(raw)
     changed["arms"][0]["reader_exit_codes"][0] = 137
     cases["reader_process_failed"] = changed
+    changed = copy.deepcopy(raw)
+    changed["candidate_raw_sha256"] = "0" * 64
+    cases["wrong_candidate_bytes"] = changed
+    changed = copy.deepcopy(raw)
+    changed["arms"][1]["observations"][5]["bytes"] = raw.get("candidate_raw_bytes")
+    cases["partial_full_length"] = changed
+    changed = copy.deepcopy(raw)
+    changed["arms"][0]["observations"][0]["bytes"] = raw.get("input_bytes", 0) + 1
+    cases["wrong_complete_length"] = changed
     return {name: bool(validate(case)) for name, case in cases.items()}
 
 
@@ -167,4 +192,5 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
 
