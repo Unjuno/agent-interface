@@ -18,7 +18,7 @@
     "construction": "exact source package; only generation and inert provenance allocation/predecessor metadata change; digest recomputed",
     "training": false
   },
-  "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a",
+  "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
   "platform": "linux/amd64",
   "docker_context": "desktop-linux",
   "network": "none",
@@ -88,7 +88,11 @@
     "host": "Windows CPython; exact version to be recorded before run",
     "regression_cases": "actual registered freeze; nested-key mutation; wrong image; wrong seed digest; source hash mismatch; preexisting output directory; --preflight-only must not invoke Docker or create output"
   },
+  "pre_freeze_corrections": [
+    "The initial draft FREEZE.json commit omitted the final 9 from image_id. The actual-freeze CLI integration test detected the mismatch before output creation or any Docker invocation. The corrected complete image ID is recorded here; the prior GitHub commit remains in branch history. No formal allocation was invoked or consumed."
+  ],
   "pre_run_gate": "Wait for the coordinated #5036 consumed-allocation disposition and the separately authorized, bounded Mindustry asset materialization/smoke container to finish. Immediately before formal, require current desktop-linux inventory plus explicit slot release; idle utilization alone is not release.",
   "retry_policy": "One formal orchestration only; after any formal invocation or output creation preserve exact result and never retry this allocation. V1 #5045 remains immutable and is not a retry target.",
   "freeze_file_self_hash": "omitted to avoid self-reference; GitHub file blob identity and branch commit are authoritative"
 }
+
