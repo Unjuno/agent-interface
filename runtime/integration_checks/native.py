@@ -14,7 +14,7 @@ SUITES = {
                  'runtime.cli_v1.test_mcp_server', 'runtime.cli_v1.test_mcp_session', 'runtime.cli_v1.test_cli', 'runtime.core_v1.test_contract', 'runtime.cli_v1.test_review', 'test_agent_review', 'test_receipt_references', 'test_native_exchange_v1', 'test_native_mcp_v1',
                  'test_native_allocation_v1', 'test_native_mcp_relay_v1', 'test_native_direct_task_v1',
                  'test_native_primary_review_v1'],
-    'harness': ['runtime.cli_v1.test_x11_target_review', 'runtime.backends.x11_v1.test_text_plan', 'runtime.backends.x11_v1.test_partial_execution', 'test_native_finish_after_v1', 'test_native_cleanup_v1',
+    'harness': ['runtime.backends.x11_v1.test_focus', 'runtime.cli_v1.test_x11_target_review', 'runtime.backends.x11_v1.test_text_plan', 'runtime.backends.x11_v1.test_partial_execution', 'test_native_finish_after_v1', 'test_native_cleanup_v1',
                 'test_native_handle_bridge_v1', 'test_native_tail_v1'],
 }
 
