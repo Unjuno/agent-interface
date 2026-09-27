@@ -70,7 +70,7 @@ retained submitted bytes independently, checks the public saved title and
 evaluator agreement, and verifies all eight historical source blobs and every
 artifact hash. Result: `PASS_RAW_AUDIT errors=[]`. The host and pinned-image,
 network-disabled OrbStack checks each passed 8/8 auditor tests (one positive,
-seven mutation controls); all 33 manifest entries verified. The mutation suite
+seven mutation controls); all 34 manifest entries verified. The mutation suite
 rejects altered disposition, release, evaluator, extra program, model call,
 output bytes, and saved-page evidence.
 
