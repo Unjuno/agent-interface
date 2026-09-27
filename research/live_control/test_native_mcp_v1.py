@@ -15,6 +15,30 @@ from native_exchange_v1 import encoded
 
 
 class MCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_window_inventory_uses_only_exact_stage_and_retains_raw_identity(self):
+        from native_mcp_v1 import window_inventory
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            raw = json.dumps('0x10  0 host book.xlsx - LibreOffice Calc\n').encode()
+            (root/'windows-2.json').write_bytes(raw)
+            result = window_inventory(root, 2)
+            self.assertEqual(result['text'], json.loads(raw))
+            self.assertEqual(result['source']['sha256'], hashlib.sha256(raw).hexdigest())
+            self.assertEqual(result['authority'], 'none')
+            self.assertEqual(window_inventory(root, 1)['status'], 'unavailable')
+            for stage in (True, 0, 65, '../2'):
+                self.assertEqual(window_inventory(root, stage)['status'], 'needs_review')
+
+    def test_window_inventory_malformed_or_large_is_explicit_without_fallback(self):
+        from native_mcp_v1 import window_inventory
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for raw in (b'not json', b'{}', b'"'+b'x'*16384+b'"', b'"\xff"'):
+                (root/'windows-1.json').write_bytes(raw)
+                result = window_inventory(root, 1)
+                self.assertEqual(result['status'], 'needs_review')
+                self.assertNotIn('text', result)
+
     @unittest.skipUnless(os.name == 'posix', 'executable harness fixture requires POSIX')
     async def test_failed_harness_stderr_reaches_stdio_client_without_relaunch(self):
         with tempfile.TemporaryDirectory() as tmp:

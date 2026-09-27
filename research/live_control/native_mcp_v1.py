@@ -93,6 +93,29 @@ def session_context(root):
     return context
 
 
+def window_inventory(root, stage):
+    """Read only the selected stage's existing listing; never discover/focus."""
+    result = {'authority':'none', 'stage':stage,
+              'scope':'recorded window listing; not atomic with image, freshness or input authority'}
+    if type(stage) is not int or not 1 <= stage <= 64:
+        return dict(result, status='needs_review', error='stage 1..64 required')
+    path = root/f'windows-{stage}.json'
+    try:
+        with path.open('rb') as stream:
+            raw = stream.read(16385)
+        if len(raw) > 16384:
+            raise ValueError('recorded listing exceeds 16384-byte presentation limit')
+        listing = json.loads(raw)
+        if not isinstance(listing, str):
+            raise ValueError('recorded listing must be a JSON string')
+        return dict(result, status='recorded', text=listing,
+                    source={'path':str(path), 'sha256':hashlib.sha256(raw).hexdigest()})
+    except FileNotFoundError:
+        return dict(result, status='unavailable')
+    except (OSError, ValueError) as error:
+        return dict(result, status='needs_review', error=str(error))
+
+
 def content(result):
     """Keep metadata complete; return image once as an MCP image block."""
     metadata = dict(result)
@@ -112,6 +135,9 @@ def create_server(run_directory, *, allocation=None):
     lock = threading.Lock()
 
     def with_process_snapshot(result):
+        continuation = result.get('continuation', {})
+        if continuation.get('status') == 'source_available':
+            result['window_inventory'] = window_inventory(root, continuation.get('stage'))
         # Do not wait for exit, retry input, or let a polling error hide its receipt.
         if allocation is not None:
             try:
@@ -150,6 +176,7 @@ def create_server(run_directory, *, allocation=None):
                     return {'allocation':state,'image':None,'authority':'none'}
                 result = review_native(root/'source-1.json',root,compact=True)
                 result.update(allocation=state, session_context=session_context(root))
+                result['window_inventory'] = window_inventory(root, 1)
                 return result
             return invoke(start)
 
@@ -171,6 +198,7 @@ def create_server(run_directory, *, allocation=None):
                 raise ValueError('stage 1..64 required')
             result = review_native(root/f'source-{stage}.json', root, compact=True)
             result['session_context'] = session_context(root)
+            result['window_inventory'] = window_inventory(root, stage)
             return result
         return invoke(observe)
 
