@@ -1,0 +1,87 @@
+{
+  "schema": "issue-5082-process-overlap-construction-freeze-v1",
+  "issue": 5082,
+  "allocation": "needle-cross-process-publication-overlap-5066-v5-20260928-01",
+  "base_main_sha": "8f41a5edba1acda9dcecfc4fb91cea5186b78087",
+  "branch": "research/needle-cross-process-publication-overlap-5066-v5-20260928",
+  "path": "research/system1/needle_cross_process_publication_5066_v5_20260928/",
+  "predecessor_v3": {
+    "branch": "research/needle-cross-process-publication-overlap-5066-v3-20260928",
+    "observed_sha": "d739d70bb1ea2210bdeef488f1385c93e5902715",
+    "disposition": "pre-existing stale ref preserved; no files changed"
+  },
+  "predecessor_v4": {
+    "branch": "research/needle-cross-process-publication-overlap-5066-v4-20260928",
+    "observed_sha": "34e42f84d56590fdda65c28c2b0692e42cc5a7f3",
+    "disposition": "empty ref created by this lane then superseded when main advanced; no files changed"
+  },
+  "input": {
+    "path": "research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/skill.json",
+    "git_blob": "45b80150dac503f4eb6f3cb5d82f9afa2c587107",
+    "bytes": 15279,
+    "sha256": "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a",
+    "handling": "Read exact blob bytes; do not normalize line endings. Baseline reader checks exact seed digest/length."
+  },
+  "runtime": {
+    "engine": "Docker Desktop desktop-linux",
+    "image": "python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "network": "none",
+    "pull": "never",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "formal_output_mount": "fresh writable, host-local",
+    "cpu": 0.25,
+    "memory": "256m",
+    "pids_limit": 32,
+    "cap_drop": ["ALL"],
+    "no_new_privileges": true,
+    "formal_runner_orchestrations": 1,
+    "independent_auditor_orchestrations": 1,
+    "retry_policy": "no retry, replacement, tuning, or pooling"
+  },
+  "schedule": {
+    "reader_processes": 4,
+    "reader_ready_gate": "all four distinct process PIDs acknowledge before publication starts",
+    "atomic_replacements": 4096,
+    "replacement_indices": "exactly 0..4095",
+    "overlap_definition": "half-open intervals: max(read_start, replace_start) < min(read_end, replace_end)",
+    "overlap_denominator": "unique reader open/read calls, not reader-by-replacement pairs",
+    "overlap_threshold": 32,
+    "minimum_distinct_reader_pids": 2,
+    "diagnostic": "separate truncate plus first-half write/flush; readers retain exact partial bytes before second half is written"
+  },
+  "decision": {
+    "pass": "PASS_ATOMIC_REPLACEMENT_OVERLAP_SCOPED only when every raw row reconciles, all 4096 replacement calls and reader process exits are present, at least 32 unique read intervals overlap replacements across at least two reader PIDs, all atomic reads match exact expected seed/generation bytes, all four diagnostic readers observe the exact invalid first-half bytes, and independent audit errors are zero",
+    "valid_zero_overlap": "HOLD_NO_OVERLAP_OBSERVED",
+    "contrary_complete_observation": "FAIL_PARTIAL_OR_INCONSISTENT_READ",
+    "missing_provenance_or_audit": "HOLD_EVIDENCE_INCOMPLETE"
+  },
+  "scope": {
+    "host": "one Windows PC running one local Linux/amd64 Docker Desktop container",
+    "claim_limits": [
+      "call intervals do not reveal kernel-internal linearization timestamps",
+      "directed fixed schedule is not a natural-race frequency estimate",
+      "no crash or power-loss durability claim",
+      "no network/shared-filesystem/cross-host claim",
+      "no model/training/GUI/dispatch/production-safety/performance claim"
+    ]
+  },
+  "construction_status": {
+    "formal_started": false,
+    "formal_outputs_created": false,
+    "container_run": false,
+    "local_tests": "8/8 passed; pure arithmetic and synthetic raw fixture/mutation tests only",
+    "active_resource_owner": "#5074 lane currently running local Docker construction checks; no release observed"
+  },
+  "sources": {
+    "audit_intervals.py": {"sha256": "972c00eeba3ff4e9c403d6d501502309403555059adbdc27da75b595ca8fd1ed", "git_blob": "b94511b1d1a300a1764c0556a29ca6820fb54c3a", "bytes": 2559},
+    "audit_v1.py": {"sha256": "6639fcc760705c740c9bfc37824b3fdb7c9a00bf3b6bb84c6a42731f07e69c0d", "git_blob": "0e41b0be70577caa6f330efc0b231e220b6624bd", "bytes": 7973},
+    "intervals.py": {"sha256": "1e5ef2995ebd2583c4521956b8338ca812f069786564df9fc88c8403e53ba216", "git_blob": "24cf378cd40bf6bce696ce38a67db1ac3cc1e949", "bytes": 2916},
+    "runner_design.md": {"sha256": "dfface9f5fd5e1e9d8e3ef8dca3482b15808f25352f93dd37a53542d1b0ee7e6", "git_blob": "bead2b19e015384442bae11731e1ee64bf773397", "bytes": 4402},
+    "runner_v1.py": {"sha256": "3e2cf52397fbe943e2b7c0f6c27a46e18a0681b4c4eb0a75eff59accda8cfe75", "git_blob": "fbd1a09f170f4770983443b634c03a271068152f", "bytes": 10018},
+    "test_audit_intervals.py": {"sha256": "3ada49d4b711eaf279f5e491a73ba829e5a6553e2171c74c24dbc1225f23a3be", "git_blob": "917f7f7d1f8a64e9994afb12f0b0a557f0ab11e1", "bytes": 2046},
+    "test_audit_v1.py": {"sha256": "8517d17fbde007aeed83c3c80b5d06aea99d3d99b82da7c7f686f2ff9ebf598b", "git_blob": "1292c72fd029aeede0a0e4a2c2e947158298b545", "bytes": 4468},
+    "test_intervals.py": {"sha256": "eff4feb0c2972cb37b1a103d6aecea218e73e6122db0bf9734b0121105832350", "git_blob": "55dc5e123ffbc6ee294c7ef94b358440139e2ed0", "bytes": 1928}
+  }
+}
