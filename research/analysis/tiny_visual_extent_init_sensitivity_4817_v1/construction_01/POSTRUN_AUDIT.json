@@ -4,25 +4,16 @@
   "scientific_disposition": "STOP_NO_CONSTRUCTION_COMPETENCE",
   "historical_integrity": "Original FREEZE.json, RAW.json, and AUDIT.json remain unchanged.",
   "checks": {
-    "raw_sha256": "27f2b35a6e1f99812c996e8e059b7484700e8dab512e435a80e11ea27f291e6e",
-    "initial_weights_sha256": "d62bdd9216c0b969b7872b1da7c11a517a376b04ff351b46d6629a5ef2cb32f9",
-    "declared_allocation": "tiny-visual-extent-init-sensitivity-4817-20260928-01",
-    "init_seed": 58100472,
+    "raw_sha256_matches_frozen": true,
+    "initial_weights_sha256_matches_frozen": true,
+    "allocation_matches": true,
+    "init_seed_matches": true,
     "all_initial_tensors_match_seed": true,
-    "initial_tensor_checks": 8,
-    "packed_held_centers_count": 8
+    "initial_tensor_count": 8,
+    "held_center_count_matches": true,
+    "known_label_mismatch_reproduced": true
   },
-  "seed_tensor_checks": {
-    "max_only_kernel": true,
-    "max_only_bias": true,
-    "max_only_dense": true,
-    "max_only_output_bias": true,
-    "max_mean_kernel": true,
-    "max_mean_bias": true,
-    "max_mean_dense": true,
-    "max_mean_output_bias": true
-  },
-  "held_centers": {
+  "held_center_correction": {
     "recorded_raw_order": [
       [
         8,
@@ -100,5 +91,7 @@
     ],
     "mislabel_count": 5
   },
-  "interpretation": "All retained initial tensors match the declared initialization seed. The raw per-center labels are misordered; use actual_packed_array_order when mapping held_i arrays. Aggregate held-positive ACCEPT remains 1.00 across all eight centers and the frozen scientific disposition remains STOP_NO_CONSTRUCTION_COMPETENCE. No fitting or CUDA run was repeated."
+  "interpretation": "All retained initial tensors match the declared initialization seed. The raw per-center labels are misordered; use actual_packed_array_order when mapping held_i arrays. Aggregate held-positive ACCEPT remains 1.00 across all eight centers and the frozen scientific disposition remains STOP_NO_CONSTRUCTION_COMPETENCE. No fitting or CUDA run was repeated.",
+  "raw_sha256": "27f2b35a6e1f99812c996e8e059b7484700e8dab512e435a80e11ea27f291e6e",
+  "initial_weights_sha256": "d62bdd9216c0b969b7872b1da7c11a517a376b04ff351b46d6629a5ef2cb32f9"
 }
