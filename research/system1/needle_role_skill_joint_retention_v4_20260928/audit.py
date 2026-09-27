@@ -246,7 +246,7 @@ def run(formal_path, audit_path):
         errors.append("formal_receipt_binding")
     argv = receipt.get("command_argv", [])
     required = ("--pull=never", "--network=none", "--read-only", "--cpus=1", "--memory=2g",
-                "--pids-limit=64", IMAGE, "runner.py", "NEEDLE_SEEDS=736711,736811,736911")
+                "--pids-limit=64", IMAGE, "runner.py", "NEEDLE_SEEDS=9944211,9944311,9944411")
     if any(part not in argv for part in required) or not invocation_mounts_valid(argv):
         errors.append("formal_argv_or_mounts")
     if (raw.get("schema") != "needle-role-skill-joint-retention-raw-v2" or raw.get("allocation") != ALLOCATION
