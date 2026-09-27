@@ -30,10 +30,10 @@ def valid(package: Any) -> bool:
     return isinstance(package, dict) and isinstance(package.get("generation"), int) and package.get("payload_sha256") == digest(package)
 
 
-def successor(seed: dict[str, Any]) -> dict[str, Any]:
+def successor(seed: dict[str, Any], generation: int = NEW) -> dict[str, Any]:
     import copy
     result = copy.deepcopy(seed)
-    result["generation"] = NEW
+    result["generation"] = generation
     result["provenance"] = dict(result["provenance"])
     result["provenance"]["allocation"] = "needle-publication-orbstack-bind-5066-20260928-01"
     result["provenance"]["predecessor_issue"] = 3890

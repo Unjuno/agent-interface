@@ -25,7 +25,7 @@ def git(*args):
     if p.returncode:raise RuntimeError("git command failed: "+repr(args)+" "+p.stderr)
     return p.stdout.strip()
 def inspect_container(name):
-    p=run(["docker","inspect",name])
+    p=run(["docker","--context",CONTEXT,"inspect",name])
     if p.returncode:raise RuntimeError("cannot inspect owned container: "+p.stderr)
     return json.loads(p.stdout)[0]
 def write_json(path,value):path.write_text(json.dumps(value,sort_keys=True,indent=2)+"\n")
@@ -41,16 +41,24 @@ def main():
     if source_actual!=source_expected:raise RuntimeError("source hash mismatch")
     commit=git("rev-parse","HEAD");tree=git("rev-parse","HEAD^{tree}")
     if git("status","--porcelain"):raise RuntimeError("checkout must be clean before allocation")
+    live_main=run(["git","ls-remote","origin","refs/heads/main"])
+    if live_main.returncode:raise RuntimeError("cannot verify live main ref")
+    live_main_sha=live_main.stdout.split()[0] if live_main.stdout.split() else ""
+    if freeze.get("base_main_sha")!=live_main_sha:raise RuntimeError("freeze base is not the current remote main")
+    if git("merge-base",commit,live_main_sha)!=live_main_sha:raise RuntimeError("source branch does not include exact current main")
     blob_ids={n:git("rev-parse",f"HEAD:{EXP.relative_to(REPO)}/{n}") for n in source_expected}
     seed_blob=git("hash-object",str(SEED))
     if seed_blob!="45b80150dac503f4eb6f3cb5d82f9afa2c587107":raise RuntimeError("seed Git blob identity mismatch")
     if args.preflight_only:
         print(json.dumps({"preflight":"PASS_STATIC","source_commit":commit,"source_tree_sha":tree,
-                          "docker_invocations":0,"output_created":False}));return 0
-    if run(["docker","context","show"]).stdout.strip()!=CONTEXT:raise RuntimeError("wrong Docker context")
-    image=run(["docker","image","inspect",IMAGE,"--format","{{.Id}} {{.Os}}/{{.Architecture}}"])
+                          "live_main_sha":live_main_sha,"docker_invocations":0,"output_created":False}));return 0
+    context=run(["docker","--context",CONTEXT,"context","show"])
+    if context.returncode or context.stdout.strip()!=CONTEXT:raise RuntimeError("wrong/unavailable Docker context")
+    image=run(["docker","--context",CONTEXT,"image","inspect",IMAGE,"--format","{{.Id}} {{.Os}}/{{.Architecture}}"])
     if image.returncode or image.stdout.strip()!=IMAGE+" linux/arm64":raise RuntimeError("pinned image/platform mismatch")
-    if run(["docker","ps","--quiet"]).stdout.strip():raise RuntimeError("OrbStack shared lane is occupied")
+    inventory=run(["docker","--context",CONTEXT,"ps","--quiet"])
+    if inventory.returncode:raise RuntimeError("cannot verify OrbStack container inventory: "+inventory.stderr)
+    if inventory.stdout.strip():raise RuntimeError("OrbStack shared lane is occupied")
     out.parent.mkdir(parents=True,exist_ok=True);out.mkdir()
     source_mount=str(REPO.resolve());output_mount=str(out.resolve())
     expected_mounts=[{"Type":"bind","Source":source_mount,"Destination":"/src","RW":False},
@@ -64,10 +72,11 @@ def main():
             "--security-opt","no-new-privileges","--mount",f"type=bind,source={source_mount},target=/src,readonly",
             "--mount",f"type=bind,source={output_mount},target=/out"]
     envargs=[v for k,value in env.items() for v in ("-e",f"{k}={value}")]
-    fargv=["docker","run","--name",cname,*common,*envargs,IMAGE,"python","-B",exp_container+"/runner.py"]
-    aargv=["docker","run","--name",aname,*common,*envargs,IMAGE,"python","-B",exp_container+"/audit.py"]
+    fargv=["docker","--context",CONTEXT,"run","--name",cname,*common,*envargs,IMAGE,"python","-B",exp_container+"/runner.py"]
+    aargv=["docker","--context",CONTEXT,"run","--name",aname,*common,*envargs,IMAGE,"python","-B",exp_container+"/audit.py"]
     receipt={"allocation":"needle-publication-orbstack-bind-5066-20260928-01","source_commit":commit,
              "source_tree_sha":tree,"source_sha256":source_actual,"source_blob_sha256":blob_ids,
+             "live_main_sha":live_main_sha,
              "seed_blob":"45b80150dac503f4eb6f3cb5d82f9afa2c587107","seed_sha256":sha(SEED.read_bytes()),
              "freeze_sha256":env["OBSTAC_FREEZE_SHA256"],"image_id":IMAGE,"image_platform":"linux/arm64",
              "construction":"0","environment":env,"source_mount":source_mount,"output_mount":output_mount,

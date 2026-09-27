@@ -13,19 +13,24 @@ is no model, network, GUI, dispatch, or authority grant.
 ## Corrected concurrency gate
 
 Eight persistent reader processes (four per arm) receive commands through
-independent queues. In each of seven atomic phases, all four readers open and
-retain the current ACTIVE descriptor before exactly one measured `os.replace`.
+independent queues. In each of seven atomic phases, the publisher validates the
+next monotonic package generation (3789 through 3795), and all four readers
+open and retain the current ACTIVE descriptor before exactly one measured
+`os.replace`.
 After replacement returns, each reader reads the held descriptor and then
 opens the path afresh. The auditor checks `fd_open < replace_start <
 replace_return < fd_read_end`, the exact old bytes through the retained handle,
-and exact candidate bytes through the fresh path handle. This matches the
+and exact next-generation bytes through the fresh path handle. This matches the
 append-only validity clarification on #5073 and closes the serialized
 pre/post-read defect in #5066.
 
-The unsafe arm has seven truncate/prefix/write/completion phases. In each,
+The unsafe arm has seven truncate/prefix/write/completion phases using the same
+generation-3789..3795 package sequence. In each,
 the writer pauses at a barrier after truncate and a strict prefix; each reader
 opens and retains the observed partial bytes before the writer completes. The
-readers then verify exact complete candidate bytes. All 56 phase-reader rows
+readers then verify exact complete next-generation bytes. Digest-invalid and
+stale-base proposals go through the same actual admission function and must
+not mutate ACTIVE. All 56 phase-reader rows
 retain raw bytes in base64 so the independent auditor can reconstruct hashes,
 JSON and package digests without importing the runner.
 

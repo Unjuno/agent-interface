@@ -113,20 +113,43 @@ def finish(workers):
     return exits
 
 
-def run_atomic(root: Path, old_raw: bytes, candidate: bytes) -> dict:
+def try_publish(active: Path, temporary: Path, base_generation: int, candidate_raw: bytes) -> dict:
+    before_raw=active.read_bytes(); before=decode(before_raw)
+    try: package=json.loads(candidate_raw)
+    except (UnicodeDecodeError,json.JSONDecodeError): package=None
+    if not valid(package): disposition="YIELD_INVALID_CANDIDATE"
+    elif before.get("generation")!=base_generation: disposition="YIELD_STALE_GENERATION"
+    elif package.get("generation")!=base_generation+1: disposition="YIELD_INVALID_TRANSITION"
+    else:
+        temporary.write_bytes(candidate_raw)
+        if not valid(json.loads(temporary.read_bytes())): raise RuntimeError("staged publication failed revalidation")
+        start=time.monotonic_ns();os.replace(temporary,active);returned=time.monotonic_ns()
+        after_raw=active.read_bytes()
+        return {"disposition":"PUBLISHED","active_before_generation":before.get("generation"),
+                "active_after_generation":json.loads(after_raw).get("generation"),
+                "before_sha256":sha(before_raw),"after_sha256":sha(after_raw),
+                "candidate_sha256":sha(candidate_raw),"replace_start_ns":start,"replace_return_ns":returned}
+    after_raw=active.read_bytes()
+    return {"disposition":disposition,"active_before_generation":before.get("generation"),
+            "active_after_generation":json.loads(after_raw).get("generation"),
+            "before_sha256":sha(before_raw),"after_sha256":sha(after_raw),
+            "candidate_sha256":sha(candidate_raw),"replace_start_ns":None,"replace_return_ns":None}
+
+
+def run_atomic(root: Path, old_raw: bytes, candidates: list[tuple[dict,bytes]]) -> dict:
     folder = root / "atomic"; folder.mkdir()
     active = folder / "ACTIVE.json"; active.write_bytes(old_raw)
     next_file = folder / "candidate.tmp"
     records, replacements, post_rows = [], [], []
     workers = launch(active)
     try:
-        for n in range(1, PHASES + 1):
+        for n, (package,candidate) in enumerate(candidates,1):
             phase = f"phase_{n}"
             held = ask(workers, "hold", phase, "open")
-            next_file.write_bytes(candidate)
-            start = time.monotonic_ns()
-            os.replace(next_file, active)
-            returned = time.monotonic_ns()
+            base_generation=OLD+n-1
+            publication=try_publish(active,next_file,base_generation,candidate)
+            if publication["disposition"]!="PUBLISHED":raise RuntimeError("candidate unexpectedly refused: "+repr(publication))
+            start,returned=publication["replace_start_ns"],publication["replace_return_ns"]
             replacements.append({"phase": phase, "replace_start_ns": start, "replace_return_ns": returned})
             post = ask(workers, "read_held_and_path", phase, "post")
             opens = {r["reader"]: r["fd_open_ns"] for r in held}
@@ -134,10 +157,13 @@ def run_atomic(root: Path, old_raw: bytes, candidate: bytes) -> dict:
                 records.append({"phase":phase,"reader":row["reader"],"pid":row["pid"],
                     "fd_open_ns":opens[row["reader"]],"replace_start_ns":start,
                     "replace_return_ns":returned,"fd_read_start_ns":row["fd_read_start_ns"],
-                    "fd_read_end_ns":row["fd_read_end_ns"],"held":row["held"]})
+                    "fd_read_end_ns":row["fd_read_end_ns"],"held":row["held"],
+                    "previous_generation":base_generation,"target_generation":package["generation"],
+                    "publication":publication})
                 post_rows.append({"phase":phase,"reader":row["reader"],"pid":row["pid"],
                     "replace_return_ns":returned,"path_read_start_ns":row["path_read_start_ns"],
-                    "path_read_end_ns":row["path_read_end_ns"],"path":row["path"]})
+                    "path_read_end_ns":row["path_read_end_ns"],"path":row["path"],
+                    "target_generation":package["generation"],"target_raw_sha256":sha(candidate)})
         return {"publisher_pid": os.getpid(), "reader_pids": [p.pid for p, _, _ in workers],
                 "exit_codes": finish(workers), "rows": records, "post_rows": post_rows,
                 "replacement_intervals": replacements}
@@ -145,24 +171,27 @@ def run_atomic(root: Path, old_raw: bytes, candidate: bytes) -> dict:
         if any(p.is_alive() for p, _, _ in workers): finish(workers)
 
 
-def run_unsafe(root: Path, candidate: bytes) -> dict:
+def run_unsafe(root: Path, old_raw: bytes, candidates: list[tuple[dict,bytes]]) -> dict:
     folder = root / "unsafe"; folder.mkdir()
-    active = folder / "ACTIVE.json"; active.write_bytes(candidate)
+    active = folder / "ACTIVE.json"; active.write_bytes(old_raw)
     workers = launch(active); records, intervals = [], []
     try:
-        for n in range(1, PHASES + 1):
+        for n,(_,candidate) in enumerate(candidates,1):
             phase = f"phase_{n}"
             prefix_ready, finish_write = threading.Event(), threading.Event()
             writer_errors = []
+            writer_bounds={}
             def writer():
                 try:
+                    writer_bounds["start_ns"]=time.monotonic_ns()
                     with active.open("wb") as stream:
                         stream.write(candidate[:len(candidate)//2]); stream.flush(); os.fsync(stream.fileno())
                         prefix_ready.set()
                         if not finish_write.wait(30): raise RuntimeError("unsafe write release timeout")
                         stream.write(candidate[len(candidate)//2:]); stream.flush(); os.fsync(stream.fileno())
+                    writer_bounds["end_ns"]=time.monotonic_ns()
                 except BaseException as exc: writer_errors.append(type(exc).__name__ + ":" + str(exc))
-            start = time.monotonic_ns(); thread = threading.Thread(target=writer); thread.start()
+            thread = threading.Thread(target=writer); thread.start()
             if not prefix_ready.wait(10): raise RuntimeError("partial prefix barrier missing")
             partial = ask(workers, "read_partial_and_complete", phase, "partial")
             finish_write.set(); thread.join(30)
@@ -174,14 +203,13 @@ def run_unsafe(root: Path, candidate: bytes) -> dict:
                 if row.get("request") != phase + ":partial" or row.get("reader") != i or row.get("action") != "read_complete":
                     raise RuntimeError("completion read mismatch: " + repr(row))
                 complete.append(row)
-            end = time.monotonic_ns()
             by_reader = {r["reader"]: r for r in complete}
             for row in partial:
                 row["complete"] = by_reader[row["reader"]]["complete"]
                 row["complete_start_ns"] = by_reader[row["reader"]]["complete_start_ns"]
                 row["complete_end_ns"] = by_reader[row["reader"]]["complete_end_ns"]
-                row["write_start_ns"], row["write_end_ns"] = start, end
-            records.extend(partial); intervals.append({"phase": phase, "start_ns": start, "end_ns": end})
+                row["write_start_ns"], row["write_end_ns"] = writer_bounds["start_ns"], writer_bounds["end_ns"]
+            records.extend(partial); intervals.append({"phase": phase, "start_ns": writer_bounds["start_ns"], "end_ns": writer_bounds["end_ns"]})
         return {"publisher_pid": os.getpid(), "reader_pids": [p.pid for p, _, _ in workers],
                 "exit_codes": finish(workers), "rows": records, "write_intervals": intervals}
     finally:
@@ -200,35 +228,41 @@ def main():
     if sha(old_raw) != SEED_SHA256: raise RuntimeError("seed digest mismatch")
     old = json.loads(old_raw)
     if old.get("generation") != OLD or not valid(old): raise RuntimeError("seed validation failed")
-    new = successor(old); candidate = canonical_bytes(new)
+    candidate_packages=[successor(old,NEW+n) for n in range(PHASES)]
+    candidates=[(obj,canonical_bytes(obj)) for obj in candidate_packages]
     root = OUT / "work"; root.mkdir()
-    atomic = run_atomic(root, old_raw, candidate)
+    atomic = run_atomic(root, old_raw, candidates)
     active_path = root / "atomic/ACTIVE.json"
-    before_reject = sha(active_path.read_bytes())
-    invalid = dict(new); invalid["payload_sha256"] = "0" * 64
+    final_obj,final_raw=candidates[-1]
+    invalid = dict(final_obj); invalid["payload_sha256"] = "0" * 64
     invalid_path = root / "atomic/invalid-proposal.json"
     invalid_raw = canonical_bytes(invalid); invalid_path.write_bytes(invalid_raw)
-    invalid_accepted = valid(json.loads(invalid_path.read_bytes()))
-    stale_disposition = "YIELD_STALE_GENERATION" if OLD != new["generation"] else "ELIGIBLE_PROPOSAL_ONLY"
-    after_reject = sha(active_path.read_bytes())
-    active_rejections = {"before_sha256": before_reject, "after_sha256": after_reject,
-                         "invalid_accepted": invalid_accepted,"invalid_proposal":{**decode(invalid_raw)},
-                         "stale_proposal_generation": OLD,
-                         "active_generation": new["generation"], "stale_disposition": stale_disposition}
-    if invalid_accepted or active_rejections["stale_disposition"] != "YIELD_STALE_GENERATION":
+    reject_path=root/"atomic/rejected.tmp"
+    invalid_result=try_publish(active_path,reject_path,final_obj["generation"],invalid_raw)
+    stale_obj,stale_raw=candidates[0]
+    stale_result=try_publish(active_path,reject_path,OLD,stale_raw)
+    active_rejections={"invalid_proposal":{**decode(invalid_raw)},"invalid_result":invalid_result,
+                       "stale_proposal":{"base_generation":OLD,"package":{**decode(stale_raw)},
+                                         "target_generation":stale_obj["generation"]},
+                       "stale_result":stale_result}
+    if invalid_result["disposition"]!="YIELD_INVALID_CANDIDATE" or stale_result["disposition"]!="YIELD_STALE_GENERATION" or invalid_result["before_sha256"]!=invalid_result["after_sha256"] or stale_result["before_sha256"]!=stale_result["after_sha256"]:
         raise RuntimeError("invalid/stale candidate gate failed")
-    unsafe = run_unsafe(root, candidate)
+    unsafe = run_unsafe(root, old_raw, candidates)
+    registry=[{"generation":obj["generation"],"raw_sha256":sha(raw),"bytes":len(raw),
+               "payload_sha256":obj["payload_sha256"]} for obj,raw in candidates]
     raw = {"allocation":"needle-publication-orbstack-bind-5066-20260928-01","issue":5073,
            "formal_invocations":1,"python":sys.version,
            "platform":"linux/arm64" if platform.machine() in ("aarch64","arm64") else platform.platform(),
            "image_id":receipt["image_id"],"source_commit":receipt["source_commit"],
+           "live_main_sha":receipt["live_main_sha"],
            "source_tree_sha":receipt["source_tree_sha"],"source_blob_sha256":receipt["source_blob_sha256"],
            "source_sha256":receipt["source_sha256"],
            "freeze_sha256":receipt["freeze_sha256"],"construction":"0",
            "mounts":receipt["mounts"],"input_git_blob":"45b80150dac503f4eb6f3cb5d82f9afa2c587107",
            "input_sha256":sha(old_raw),"input_bytes":len(old_raw),"old_raw_sha256":sha(old_raw),
-           "old_digest":old["payload_sha256"],"candidate_raw_sha256":sha(candidate),
-           "candidate_bytes":len(candidate),"candidate_digest":new["payload_sha256"],
+           "old_digest":old["payload_sha256"],"candidate_raw_sha256":sha(final_raw),
+           "candidate_bytes":len(final_raw),"candidate_digest":final_obj["payload_sha256"],
+           "candidate_registry":registry,
            "dispatch_count":0,"authority_granted":False,"atomic":atomic,"unsafe":unsafe,
            "rejection_gate":active_rejections}
     (OUT / "raw.json").write_text(json.dumps(raw,sort_keys=True,indent=2)+"\n")
