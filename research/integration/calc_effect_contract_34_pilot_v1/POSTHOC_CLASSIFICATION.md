@@ -1,1 +1,16 @@
-IyBQb3N0LWhvYyBjbGFzc2lmaWNhdGlvbiBzdXBwbGVtZW50CgpUaGlzIHN1cHBsZW1lbnQgY2xhc3NpZmllcyB0aGUgc2luZ2xlIHByZXNlcnZlZCBjb25zdHJ1Y3Rpb24gcm93IGluZGVwZW5kZW50bHkgb2YgdGhlIHJ1bm5lcidzIGxpdGVyYWwgb3V0Y29tZSB0YWdzLiBJdCBkb2VzIG5vdCBjaGFuZ2Ugb3IgcmVwbGFjZSB0aGUgb3JpZ2luYWwgcmF3IHJvdywgZnJvemVuIGF1ZGl0LCBvciBgU1RPUF9DT05TVFJVQ1RJT05gIGRpc3Bvc2l0aW9uLgoKIyMgUmVzdWx0CgotIEhhcm5lc3MgY29tcGxldGlvbjogYENPTVBMRVRFRGAgKHRoZSBoYXJuZXNzIGNvbXBsZXRlZCBpdHMgVU5PIGVkaXQgc2VxdWVuY2U7IHRoaXMgaXMgbm90IGFuIEFnZW50IEludGVyZmFjZSBydW50aW1lIHRlcm1pbmFsKS4KLSBMaXZlLXZpZXcgcHJlZGljYXRlOiBgTUFUQ0hgIChBMSB3YXMgNy4wIGluIHRoZSBpbi1tZW1vcnkgZG9jdW1lbnQpLgotIFNhdmVkIGVmZmVjdDogYENPTlRSQURJQ1RFRGAgKGluZGVwZW5kZW50IGRpc2sgcmVvcGVuIGZvdW5kIEExPTAuMCBhbmQgdGhlIHNvdXJjZSBTSEEtMjU2IHJlbWFpbmVkIHN0YWJsZSkuCi0gRnJvemVuIGNvbnN0cnVjdGlvbiBnYXRlOiBgU1RPUF9DT05TVFJVQ1RJT05gLCBiZWNhdXNlIHRoZSBhdWRpdCdzIHZpc2libGUtd2luZG93IHNlbGVjdG9yIGRldGVjdGVkIG5vIENhbGMgd2luZG93LgoKVGhlIHBvc3QtaG9jIGNsYXNzaWZpZXIgYW5kIGZvdXIgc3RhbmRhcmQtbGlicmFyeSB1bml0IHRlc3RzIHJhbiBpbiB0aGUgcGlubmVkIExpYnJlT2ZmaWNlIDcuNC43LjIgY29udGFpbmVyLiBBbGwgZm91ciB0ZXN0cyBwYXNzZWQuIFRoZSBmdWxsIGNsYXNzaWZpY2F0aW9uIHdhcyBlbWl0dGVkIGZyb20gdGhlIHJldGFpbmVkIHJhdy9hdWRpdCBKU09OIGluIGEgc2VwYXJhdGUgYWRkaXRpdmUgb3V0cHV0LiBUaGlzIHJlbWFpbnMgYSBvbmUtY2FzZSBjb25zdHJ1Y3Rpb24gcGlsb3QsIG5vdCBmb3JtYWwgYWxsb2NhdGlvbiwgcHVibGljIHJ1bnRpbWUgZXhlY3V0aW9uLCBvciBtb2RlbC1mYWNpbmcgcG9saWN5IHZhbGlkYXRpb24uCgojIyBSZXByb2R1Y3Rpb24KClJ1biBgcHl0aG9uMyAtbSB1bml0dGVzdCBkaXNjb3ZlciAtcyAuIC1wICd0ZXN0XyoucHknIC12YCBmcm9tIGBwb3N0aG9jX3YxL2AgYW5kIGludm9rZSBgcnVuX2NsYXNzaWZpY2F0aW9uLnB5IC0tcmF3IDxyYXcuanNvbj4gLS1hdWRpdCA8YXVkaXQuanNvbj4gLS1vdXQgPG5ldy1vdXRwdXQtcGF0aD5gLiBUaGUgY29udGFpbmVyIHNob3VsZCBiZSBwaW5uZWQgdG8gYGlzc3VlLTI4NDktdGFzazEtcnVudGltZTp2My0yMDI2MDkyMWAgKGxpbnV4L2FybTY0LCBpbWFnZSBkaWdlc3QgcmVjb3JkZWQgaW4gYFJFU1VMVC5tZGApLiBJbnB1dHMgYXJlIHJlYWQtb25seTsgY2hvb3NlIGEgbmV3IG91dHB1dCBwYXRoIGJlY2F1c2UgdGhlIENMSSByZWZ1c2VzIG92ZXJ3cml0ZS4K
+# Post-hoc classification supplement
+
+This supplement classifies the single preserved construction row independently of the runner's literal outcome tags. It does not change or replace the original raw row, frozen audit, or `STOP_CONSTRUCTION` disposition.
+
+## Result
+
+- Harness completion: `COMPLETED` (the harness completed its UNO edit sequence; this is not an Agent Interface runtime terminal).
+- Live-view predicate: `MATCH` (A1 was 7.0 in the in-memory document).
+- Saved effect: `CONTRADICTED` (independent disk reopen found A1=0.0 and the source SHA-256 remained stable).
+- Frozen construction gate: `STOP_CONSTRUCTION`, because the audit's visible-window selector detected no Calc window.
+
+The post-hoc classifier and four standard-library unit tests ran in the pinned LibreOffice 7.4.7.2 container. All four tests passed. The full classification was emitted from the retained raw/audit JSON in a separate additive output. This remains a one-case construction pilot, not formal allocation, public runtime execution, or model-facing policy validation.
+
+## Reproduction
+
+Run `python3 -m unittest discover -s . -p 'test_*.py' -v` from `posthoc_v1/` and invoke `run_classification.py --raw <raw.json> --audit <audit.json> --out <new-output-path>`. The container should be pinned to `issue-2849-task1-runtime:v3-20260921` (linux/arm64, image digest recorded in `RESULT.md`). Inputs are read-only; choose a new output path because the CLI refuses overwrite.
