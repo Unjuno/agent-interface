@@ -27,6 +27,11 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
             with patch('native_mcp_v1.run', return_value={'image': None}) as run:
                 reply = await server.call_tool('native_submit', {'stage': 1, 'decision': decision, 'timeout': 0})
             self.assertTrue(reply.isError)
+            diagnostic = json.loads(reply.content[0].text)
+            self.assertIn('capacity 126', diagnostic['error'])
+            self.assertIn('gap_ms=2', diagnostic['error'])
+            self.assertNotIn('x' * 64, diagnostic['error'])
+            self.assertIsNone(diagnostic['program_attempted'])
             run.assert_not_called()
             self.assertFalse((root/'request-1.json').exists())
             decision['tail'][0]['gap_ms'] = 0

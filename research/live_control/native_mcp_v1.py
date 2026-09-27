@@ -93,8 +93,16 @@ def validate_recorded_tail(root, decision):
             or policy['gap_ms'] not in (0, 2, 10)
             or type(policy.get('default_changed')) is not bool):
         raise ValueError('invalid recorded text policy; input was not published by this call')
-    expand_tail(paced_text_tail(decision.tail, policy['gap_ms']),
-                max_ops=123 if decision.interaction == 'click' else 126)
+    capacity = 123 if decision.interaction == 'click' else 126
+    try:
+        expand_tail(paced_text_tail(decision.tail, policy['gap_ms']), max_ops=capacity)
+    except ValueError as error:
+        # Explicit syntax already passed NativeDecision; add configuration context,
+        # never caller text. This does not reconcile a previous committed request.
+        raise ValueError(
+            f"native tail exceeds capacity {capacity} after applying recorded default "
+            f"gap_ms={policy['gap_ms']}; shorten the batch or explicitly choose per-operation "
+            "pacing, then review before a new submission") from error
 
 
 def session_context(root):
