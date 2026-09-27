@@ -1,0 +1,69 @@
+{
+  "schema": "agent-interface-posthoc-audit-revalidation-v1",
+  "issue": 4932,
+  "parent_issue": 4766,
+  "parent_pr": 4779,
+  "review_comment_id": 4114411753,
+  "base_main": "75abad3fd43cbc257a3d470510328c73659c45c5",
+  "publication_sync_main": "22f14899aba9a942c2de1ce6624e8d785e36553e",
+  "corrective_merge_parent": "4a8624f5e2fa1bfb03846ca10c4a6a5bd1280b3b",
+  "branch": "research/predicate-readset-audit-revalidation-4932-20260928",
+  "path": "research/analysis/predicate_readset_audit_revalidation_4766_v1/",
+  "registration": "Post-hoc deterministic diagnostic responding to a concrete review finding; not a new formal allocation.",
+  "historical_formal_allocation": "predicate-read-tracing-4233-20260927-01",
+  "historical_formal_runner_invocations": 0,
+  "historical_formal_reruns": 0,
+  "historical_artifacts_modified": false,
+  "inputs": {
+    "audit.py": {
+      "path": "research/analysis/predicate_readset_runtime_proxy_4233_v1/audit.py",
+      "git_blob": "d54458636c17c5d7b83cb57f11007b42bc35b21c",
+      "sha256": "2f332c7a1f415d1990e76d00143ff15edf17ee9f4440e2afcaba767099041083"
+    },
+    "trace.json": {
+      "path": "research/analysis/predicate_readset_runtime_proxy_4233_v1/trace.json",
+      "git_blob": "200b2a05a275f62819342ceaddaadc05097ee82c",
+      "sha256": "5a60df268a80551f860d2b7859356f677ea01278b27d41ed2ef82036ddb8bc97"
+    },
+    "raw.jsonl": {
+      "path": "research/analysis/predicate_readset_runtime_proxy_4233_v1/raw.jsonl",
+      "git_blob": "898a8bb2b7ee7e84d546b2a39c76e237dd1b324d",
+      "sha256": "af9dace34a667a2e75c002c0848286801237de52e2c27b3f698fabb5010b565f"
+    }
+  },
+  "local_environment": {
+    "os": "Windows",
+    "python": "3.12.10",
+    "docker_desktop_processes": "present",
+    "docker_engine": "STOP_DOCKER_ENGINE_UNRESPONSIVE",
+    "docker_attempts": [
+      {
+        "command": "docker info --format '{{.ServerVersion}}'",
+        "observation": "No Engine response after bounded wait; interrupted."
+      },
+      {
+        "command": "docker version --format '{{.Client.Version}} | {{.Server.Version}}'",
+        "observation": "No stdout after initial wait and an additional poll; interrupted with exit 1."
+      }
+    ],
+    "repository_size_kib": 3223320,
+    "free_c_bytes_at_inspection": 2100649984,
+    "full_clone_attempted": false
+  },
+  "executed": {
+    "historical_false_pass_mutations": 2,
+    "corrected_recomputed_rows_checked": 45,
+    "baseline_rows": 64,
+    "corrected_mutation_controls_rejected": 10,
+    "unit_tests": "4/4 passed",
+    "independent_audit": "PASS_INDEPENDENT_RECOMPUTE_VALUE_AUDIT",
+    "formal_runner_invocations": 0,
+    "disposition": "PASS_AUDIT_CONTROL_REPAIR_SCOPED"
+  },
+  "commands": [
+    "python -m unittest -v test_audit.py",
+    "python -B audit.py ../predicate_readset_runtime_proxy_4233_v1/trace.json ../predicate_readset_runtime_proxy_4233_v1/raw.jsonl audit.json",
+    "python -B verify_evidence.py",
+    "python -m py_compile audit.py test_audit.py verify_evidence.py"
+  ]
+}
