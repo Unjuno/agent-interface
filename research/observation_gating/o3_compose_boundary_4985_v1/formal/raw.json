@@ -1,0 +1,186 @@
+{
+  "action_emissions_total": 0,
+  "authority_grants": 0,
+  "gui_calls": 0,
+  "interpretation": "HOLD_CALLER_TYPE_CONTRACT",
+  "issue": 4985,
+  "main_commit": "7d1208cf323408897983ef2b5c75fd34f54d6815",
+  "model_calls": 0,
+  "rows": [
+    {
+      "adapter": {
+        "action_emissions": 0,
+        "admitted": true,
+        "model_escalation_eligible": false,
+        "reason": "admitted"
+      },
+      "case_id": "same_int",
+      "direct_gate": {
+        "admitted": true,
+        "reason": "admitted"
+      },
+      "receipt_type": "int",
+      "receipt_xid": 2097155,
+      "source_verifier": {
+        "admitted": true,
+        "reason": "source_window_bound"
+      },
+      "trusted_type": "int",
+      "trusted_xid": 2097155
+    },
+    {
+      "adapter": {
+        "action_emissions": 0,
+        "admitted": true,
+        "model_escalation_eligible": false,
+        "reason": "admitted"
+      },
+      "case_id": "same_string",
+      "direct_gate": {
+        "admitted": true,
+        "reason": "admitted"
+      },
+      "receipt_type": "str",
+      "receipt_xid": "2097155",
+      "source_verifier": {
+        "admitted": true,
+        "reason": "source_window_bound"
+      },
+      "trusted_type": "str",
+      "trusted_xid": "2097155"
+    },
+    {
+      "adapter": {
+        "action_emissions": 0,
+        "admitted": false,
+        "model_escalation_eligible": true,
+        "reason": "source_window_mismatch"
+      },
+      "case_id": "mixed_int_receipt_string_trusted",
+      "direct_gate": {
+        "admitted": true,
+        "reason": "admitted"
+      },
+      "receipt_type": "int",
+      "receipt_xid": 2097155,
+      "source_verifier": {
+        "admitted": true,
+        "reason": "source_window_bound"
+      },
+      "trusted_type": "str",
+      "trusted_xid": "2097155"
+    },
+    {
+      "adapter": {
+        "action_emissions": 0,
+        "admitted": false,
+        "model_escalation_eligible": true,
+        "reason": "source_window_mismatch"
+      },
+      "case_id": "mixed_string_receipt_int_trusted",
+      "direct_gate": {
+        "admitted": true,
+        "reason": "admitted"
+      },
+      "receipt_type": "str",
+      "receipt_xid": "2097155",
+      "source_verifier": {
+        "admitted": true,
+        "reason": "source_window_bound"
+      },
+      "trusted_type": "int",
+      "trusted_xid": 2097155
+    },
+    {
+      "adapter": {
+        "action_emissions": 0,
+        "admitted": false,
+        "model_escalation_eligible": true,
+        "reason": "source_window_mismatch;gate:source_window_mismatch"
+      },
+      "case_id": "unequal_int",
+      "direct_gate": {
+        "admitted": false,
+        "reason": "source_window_mismatch"
+      },
+      "receipt_type": "int",
+      "receipt_xid": 2097155,
+      "source_verifier": {
+        "admitted": false,
+        "reason": "source_window_mismatch"
+      },
+      "trusted_type": "int",
+      "trusted_xid": 2097156
+    },
+    {
+      "adapter": {
+        "action_emissions": 0,
+        "admitted": false,
+        "model_escalation_eligible": true,
+        "reason": "source_window_mismatch;gate:source_window_mismatch"
+      },
+      "case_id": "unequal_string",
+      "direct_gate": {
+        "admitted": false,
+        "reason": "source_window_mismatch"
+      },
+      "receipt_type": "str",
+      "receipt_xid": "2097155",
+      "source_verifier": {
+        "admitted": false,
+        "reason": "source_window_mismatch"
+      },
+      "trusted_type": "str",
+      "trusted_xid": "02097155"
+    },
+    {
+      "adapter": {
+        "action_emissions": 0,
+        "admitted": false,
+        "model_escalation_eligible": true,
+        "reason": "gate:source_window_mismatch"
+      },
+      "case_id": "bool_equals_int",
+      "direct_gate": {
+        "admitted": false,
+        "reason": "source_window_mismatch"
+      },
+      "receipt_type": "bool",
+      "receipt_xid": true,
+      "source_verifier": {
+        "admitted": false,
+        "reason": "source_window_mismatch"
+      },
+      "trusted_type": "int",
+      "trusted_xid": 1
+    },
+    {
+      "adapter": {
+        "action_emissions": 0,
+        "admitted": false,
+        "model_escalation_eligible": true,
+        "reason": "gate:source_window_mismatch"
+      },
+      "case_id": "float_equals_int",
+      "direct_gate": {
+        "admitted": false,
+        "reason": "source_window_mismatch"
+      },
+      "receipt_type": "float",
+      "receipt_xid": 1.0,
+      "source_verifier": {
+        "admitted": false,
+        "reason": "source_window_mismatch"
+      },
+      "trusted_type": "int",
+      "trusted_xid": 1
+    }
+  ],
+  "schema": "o3-compose-boundary-4985-raw-v1",
+  "source_hashes": {
+    "adapter.py": "aee2508f2bc2cbbad58df06c8fd035fb781b61c2b2d5ad2f20813106a6a4f222",
+    "gate.py": "042df7f03687680a0133cfe5ad0a208ec05d5dc27afa7e4e60543560dde9eb1a",
+    "source_window_verifier.py": "182292735cd58f19e5d4a0784194f2c9320efd77cbaa5f6cab24e65f66a66545",
+    "transport.py": "7e14fc38d0c7c93b3cb5c2df179db662395770283390ae7b23fd5b1df4d40eb9"
+  }
+}
