@@ -1,5 +1,6 @@
 """Zero-optimizer construction check for Issue #4913 pulse scheduling."""
 import json
+import threading
 from queue import Queue
 
 ARRIVALS = 12
@@ -25,23 +26,37 @@ def continuous():
 def pulsed():
     state = 0
     publications = [state]
-    pending = Queue()
-    active = 0
-    max_active = 0
+    completed = Queue()
+    active = {"count": 0, "max": 0}
+    guard = threading.Lock()
     for pulse, query_index in enumerate(PULSE_QUERIES):
         if query_index != pulse * 10:
             raise AssertionError("pulse boundary")
-        active += 1
-        max_active = max(max_active, active)
-        for step in range(STEPS):
-            state = apply(state, pulse, step)
-        pending.put((pulse + 1, state))
-        active -= 1
-        version, published_state = pending.get_nowait()
+
+        def work(arrival=pulse, initial=state):
+            with guard:
+                active["count"] += 1
+                active["max"] = max(active["max"], active["count"])
+            result = initial
+            for step in range(STEPS):
+                result = apply(result, arrival, step)
+            with guard:
+                active["count"] -= 1
+            completed.put((arrival + 1, result))
+
+        worker = threading.Thread(target=work, name=f"pulse-{pulse}")
+        worker.start()
+        version, published_state = completed.get(timeout=5)
+        worker.join(timeout=5)
+        if worker.is_alive():
+            raise AssertionError("pulse worker did not join before next boundary")
+        if active["count"] != 0:
+            raise AssertionError("worker remained active at publication")
         if version != len(publications):
             raise AssertionError("publication order")
+        state = published_state
         publications.append(published_state)
-    return publications, max_active
+    return publications, active["max"]
 
 
 def main():
@@ -57,7 +72,7 @@ def main():
         "pulse_boundaries": list(PULSE_QUERIES),
         "max_concurrent_workers": max_active,
         "query_deadline_measurements": 0,
-        "scope": "integer schedule surrogate only; not COW, AdamW, timing, or model evidence",
+        "scope": "threaded integer schedule surrogate only; not COW, AdamW, timing, or model evidence",
     }
     print(json.dumps(result, sort_keys=True))
     if result["classification"] != "CONSTRUCTION_ONLY_PASS":
