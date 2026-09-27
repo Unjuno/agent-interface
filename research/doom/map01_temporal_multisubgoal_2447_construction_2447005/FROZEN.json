@@ -1,0 +1,33 @@
+{
+  "schema": "issue2447-multisubgoal-construction-freeze-v1",
+  "issue": 2447,
+  "allocation": "construction-only; no formal rows authorized or consumed",
+  "same_id_reruns": 0,
+  "construction_plan_sha256": "d1a57d868952b34c97a370f1f0fe027b78c0e64dd3b5622759978dec59067044",
+  "source_index_sha256": "7e15fb8eb58f555c32e4b1ba743a8e0d2599e0b3452bdc5172e5805ff69659ad",
+  "docker_image_id": "sha256:b99a3444e7b2b05d159976d9ba60d9e90f212d47406c4b7aa7773e5042a28713",
+  "platform": "linux/amd64",
+  "run_network": "none",
+  "formal_schedule": [
+    {
+      "id": "issue2447-construction-2447005",
+      "class": "drop",
+      "seed": 2447005,
+      "gate": "temporal_gate",
+      "heading": 95
+    }
+  ],
+  "source_sha256": {
+    "src/audit.py": "cc5d6477a2d47699157c274af2777a7d0ead33594bdc72f532258e5ebc5f1494",
+    "src/base_fixture.py": "8afc317c13e69a90d53a9b398ef7210cb2bc6691e45bcc7d181cb5a6b94160cd",
+    "src/common.py": "0fd76e82c9bbdb0d560b2f04ae87d463ca48596f93597368dc64ba256f58a4f4",
+    "src/extra_forward.py": "15fa0eaf5c4fa5a0e7d6bf525a7771cef0c2630efeafdb65fc49827a9a9374e5",
+    "src/fixture.py": "d4117b56371f6394db6aba13e94c32375734f67704de2e7243da7e57d92a180d",
+    "src/next_turn.py": "473eb890185daed68e9150b17a3973676972110dd2ad9516cf1bba8476729aab",
+    "src/phase1.py": "149485c240dd931a134586a5b042dc8def925a54338e93e7f3858c2559e04e9e",
+    "src/run_case.py": "357be49d539e262bc5d2d94d9a6c4085a2c8104abcdb7f4cd07a2e375a35ea5d",
+    "src/test_contract.py": "074cf5f34a551fd1fec0b8952122560033849b1b23aaf91a2db417367ed9d985"
+  },
+  "command": "docker run --rm --network none --tmpfs /tmp -v <bundle>:/bundle:ro -v <construction-src>:/runner:ro -v <persistent-evidence>:/evidence agent-interface-map01-lab:2447-preflight-20260927 sh -lc 'mkdir -p /tmp/project && tar -xzf /bundle/source.tar.gz -C /tmp/project && cd /tmp/project && python -B /runner/run_case.py --out /evidence/seq-2447005 --class drop --seed 2447005 --gate temporal_gate --heading 95 --source /tmp/project'"
+}
+
