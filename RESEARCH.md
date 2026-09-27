@@ -64,6 +64,12 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+## Issue #4844 — partial-observation typed-mode successor to #4155
+
+One frozen 4,800-row CPU-only formal allocation was run locally in the pinned, network-disabled Docker image; a separate raw-only Docker audit verified all regenerated rows and predictions with zero errors. The result is **`FAIL_MODE_MISROUTES_RECOVERY`** under the preregistered control hierarchy: one complete LAYOUT_CHANGED prototype produced conservative DIRECT YIELD rather than exact REOBSERVE (14/15 exact prototype matches). On the three partial/composition blocks, wrong recovery was 165/960 vs 180/960 (single missing), 89/960 vs 73/960 (multi missing; 17.98% reduction, below the 25% gate), and 219/960 vs 222/960 (composition holdout). Safe coverage was higher for mode factorization, but no block passed the frozen recovery gate. No retry or post-result tuning. This synthetic classifier-family result does not establish GUI or cross-app performance.
+
+Protocol, immutable formal result, independent audit, checksums, construction failures, nonformal pilot, and lossless raw artifact reconstruction instructions are in [`research/analysis/typed_mode_generalization_4155_v1/`](research/analysis/typed_mode_generalization_4155_v1/) and [Issue #4844](https://github.com/Unjuno/agent-interface/issues/4844).
+
 ## Issue #4638 — Python-Xlib 0.15 XGetImage String8 boundary
 
 Successor to the unresolved historical-version question after #4455's
@@ -1611,6 +1617,10 @@ and PR (to be added after evidence publication).
 ### Cross-process role skill reload — Issue #3890
 
 The successor to #3780 passed a preregistered three-seed synthetic lifecycle in local network-isolated CPU Docker: each JSON tensor skill was independently loaded by two fresh containers, all 12,288 role predictions matched per seed, all roles met the 0.90 threshold, and both fresh graph generations completed receipt-gated A→B→C with fail-closed controls. Independent audit passed with zero errors. Seed 3789 / role C is a narrow pass (0.900635). Construction-only seeds and the post-formal auditor/path/hash correction are explicitly retained; no model rerun or production-authority claim. See [formal report](research/needle_role_skill_reload_3780_v1/REPORT.md), [raw evidence and checksums](research/needle_role_skill_reload_3780_v1/formal/SHA256SUMS.txt), and [Issue #3890](https://github.com/Unjuno/agent-interface/issues/3890).
+
+### Role-C support16/64 synthetic diagnostic — Issue #4853
+
+A fresh-seed CPU Docker paired diagnostic (7866401) used the frozen #4749 runner and exact 64→16 support prefix. Construction passed with zero optimizer updates; the sole formal run completed with 400 base and 120 B/C updates, and the independent raw-only auditor reconstructed all six role cells with zero errors. Role-C accuracy was 0.908447 (support16) vs 0.959717 (support64), paired delta +0.051270; A/B were exactly unchanged. This is one descriptive synthetic seed only, not a multi-seed effect estimate, online real-time learning, GUI/task transfer, or authority evidence; it does not change #4749's ten-seed result or #4848's immutable STOP. See [experiment index](research/system1/needle_role_c_support64_diagnostic_4749_v4_7866401/README.md), [result/commands/checksums](research/system1/needle_role_c_support64_diagnostic_4749_v4_7866401/formal/), and [Issue #4853](https://github.com/Unjuno/agent-interface/issues/4853).
 
 ### Single-query online Needle acknowledgement — Issue #4732
 

@@ -1,0 +1,152 @@
+{
+  "db_sha256": "792ef171bcf59857e33f523c5a135917d57c9c203094a89bbd726c1e37dfc4ca",
+  "end_ns": 859270145661,
+  "error": null,
+  "exits": {
+    "consumer": 0,
+    "producer": 0
+  },
+  "final": {
+    "ack": [
+      [
+        2,
+        "d80a79bc51654024d9b4eebe7077308236771c1e42aaa961e2b8bf460c333be4"
+      ]
+    ],
+    "consumer": [
+      [
+        3,
+        "E3",
+        "43bb00d0ce7790a53b91256b370c887b24791a5539a6fbfb70c5870e8c91ae5d"
+      ],
+      [
+        4,
+        "E4",
+        "ab71fc4c8a1c4d62b9202b36ee7c07dd398a0907a37037bd8c3959d6af573608"
+      ],
+      [
+        5,
+        "E5",
+        "536c351ae15e5f5e3dc37bcc5dea8ab641e70fc0431a088a1d684aef2ebf3e5b"
+      ]
+    ],
+    "pending": []
+  },
+  "initial": {
+    "ack": [
+      [
+        2,
+        "d80a79bc51654024d9b4eebe7077308236771c1e42aaa961e2b8bf460c333be4"
+      ]
+    ],
+    "consumer": [
+      [
+        3,
+        "E3",
+        "43bb00d0ce7790a53b91256b370c887b24791a5539a6fbfb70c5870e8c91ae5d"
+      ]
+    ],
+    "pending": []
+  },
+  "spec": {
+    "events": [
+      {
+        "ms": 0,
+        "op": "poll"
+      },
+      {
+        "ms": 5,
+        "op": "poll"
+      },
+      {
+        "ms": 10,
+        "op": "poll"
+      },
+      {
+        "ms": 20,
+        "op": "poll"
+      },
+      {
+        "ms": 40,
+        "op": "offer",
+        "seq": 4
+      },
+      {
+        "ms": 40,
+        "op": "poll"
+      },
+      {
+        "ms": 60,
+        "op": "poll"
+      },
+      {
+        "ms": 80,
+        "op": "poll"
+      },
+      {
+        "ms": 100,
+        "op": "poll"
+      },
+      {
+        "ms": 140,
+        "op": "poll"
+      },
+      {
+        "ms": 180,
+        "op": "poll"
+      },
+      {
+        "ms": 200,
+        "op": "poll"
+      },
+      {
+        "ms": 240,
+        "op": "poll"
+      },
+      {
+        "ms": 300,
+        "op": "poll"
+      }
+    ],
+    "id": "local-gap-clock-20260922-01-r1-late40-fast-ELAPSED_80MS",
+    "policy": "ELAPSED_80MS",
+    "profile": "fast",
+    "rep": 1,
+    "scenario": "late40"
+  },
+  "start_ns": 858702878418,
+  "workers": {
+    "consumer": {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "-u",
+        "/mnt/data/agent_interface_gap_study/research/event_delivery/gap_elapsed_clock_v1/worker.py",
+        "--db",
+        "local-formal-01/local-gap-clock-20260922-01-r1-late40-fast-ELAPSED_80MS/state.sqlite3",
+        "--role",
+        "consumer",
+        "--policy",
+        "ELAPSED_80MS"
+      ],
+      "pid": 1398,
+      "ready_line": "{\"ready\": true, \"pid\": 1398, \"role\": \"consumer\"}\n"
+    },
+    "producer": {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "-u",
+        "/mnt/data/agent_interface_gap_study/research/event_delivery/gap_elapsed_clock_v1/worker.py",
+        "--db",
+        "local-formal-01/local-gap-clock-20260922-01-r1-late40-fast-ELAPSED_80MS/state.sqlite3",
+        "--role",
+        "producer",
+        "--policy",
+        "ELAPSED_80MS"
+      ],
+      "pid": 1388,
+      "ready_line": "{\"ready\": true, \"pid\": 1388, \"role\": \"producer\"}\n"
+    }
+  }
+}

@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 176 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 179 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
@@ -270,6 +270,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`temporal_sample_cost_identifiability_v1/`](temporal_sample_cost_identifiability_v1/)
 - [`tiny_predicate_specialist_4218_v1/`](tiny_predicate_specialist_4218_v1/)
 - [`tiny_visual_equivariant_2564_v1/`](tiny_visual_equivariant_2564_v1/)
+- [`tiny_visual_extent_readout_4817_cuda_v3/`](tiny_visual_extent_readout_4817_cuda_v3/)
 - [`tiny_visual_extent_readout_4817_v1/`](tiny_visual_extent_readout_4817_v1/)
 - [`tiny_visual_extent_readout_4817_v2/`](tiny_visual_extent_readout_4817_v2/)
 - [`tiny_visual_target_position_2564_v1/`](tiny_visual_target_position_2564_v1/)
@@ -280,11 +281,13 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`typed_dynamic_branch_readset_v1/`](typed_dynamic_branch_readset_v1/)
 - [`typed_effect_outcome_successor_464_v1/`](typed_effect_outcome_successor_464_v1/)
 - [`typed_failure_mode_diagnosis_4155_v1/`](typed_failure_mode_diagnosis_4155_v1/)
+- [`typed_mode_generalization_4155_v1/`](typed_mode_generalization_4155_v1/)
 - [`typed_negative_outcome_contract_v1/`](typed_negative_outcome_contract_v1/)
 - [`typed_query_dependency_v1/`](typed_query_dependency_v1/)
 - [`typed_resolve_dependency_v1/`](typed_resolve_dependency_v1/)
 - [`versioned_predicate_specialist_switch_4284_reconciled_4603_v1/`](versioned_predicate_specialist_switch_4284_reconciled_4603_v1/)
 - [`visual_cue_coordinate_map_successor_2043_v1/`](visual_cue_coordinate_map_successor_2043_v1/)
+- [`visual_edge_aux_570_r8_v1/`](visual_edge_aux_570_r8_v1/)
 - [`visual_encoding_570_gpu_local_successor_v1/`](visual_encoding_570_gpu_local_successor_v1/)
 - [`x11_adaptation_multiseed_2459_v1/`](x11_adaptation_multiseed_2459_v1/)
 - [`x11_augmentation_fail_2394_v1/`](x11_augmentation_fail_2394_v1/)
