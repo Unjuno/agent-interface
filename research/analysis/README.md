@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 156 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 157 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
@@ -233,7 +233,6 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`safety_plane_data_cutset_r0_v1/`](safety_plane_data_cutset_r0_v1/)
 - [`safety_watchdog_claim_sink_cutset_r1_a2_v1/`](safety_watchdog_claim_sink_cutset_r1_a2_v1/)
 - [`safety_watchdog_claim_sink_cutset_r1_v1/`](safety_watchdog_claim_sink_cutset_r1_v1/)
-- [`target_belief_audit_4150_v1/`](target_belief_audit_4150_v1/)
 - [`semantic_delta_successor_2000_v1/`](semantic_delta_successor_2000_v1/)
 - [`semantic_mvcc_readset_4257_v1/`](semantic_mvcc_readset_4257_v1/)
 - [`semantic_predicate_fabric_4215_v1/`](semantic_predicate_fabric_4215_v1/)
@@ -245,6 +244,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`skill_router_adapter_selection_3446_v1/`](skill_router_adapter_selection_3446_v1/)
 - [`source_bound_gui_frame_preflight_2193_v1/`](source_bound_gui_frame_preflight_2193_v1/)
 - [`support_closed_crop_successor_1820_v1/`](support_closed_crop_successor_1820_v1/)
+- [`target_belief_audit_4150_v1/`](target_belief_audit_4150_v1/)
 - [`task_ownership_horizon_4152_reopen_review_v1/`](task_ownership_horizon_4152_reopen_review_v1/)
 - [`temporal_break_even_retained_identifiability_v1/`](temporal_break_even_retained_identifiability_v1/)
 - [`temporal_contract_monitor_compilation_a2_v1/`](temporal_contract_monitor_compilation_a2_v1/)
@@ -265,6 +265,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`typed_negative_outcome_contract_v1/`](typed_negative_outcome_contract_v1/)
 - [`typed_query_dependency_v1/`](typed_query_dependency_v1/)
 - [`typed_resolve_dependency_v1/`](typed_resolve_dependency_v1/)
+- [`versioned_predicate_specialist_switch_4284_reconciled_4603_v1/`](versioned_predicate_specialist_switch_4284_reconciled_4603_v1/)
 - [`visual_cue_coordinate_map_successor_2043_v1/`](visual_cue_coordinate_map_successor_2043_v1/)
 - [`x11_adaptation_multiseed_2459_v1/`](x11_adaptation_multiseed_2459_v1/)
 - [`x11_augmentation_fail_2394_v1/`](x11_augmentation_fail_2394_v1/)
