@@ -172,6 +172,19 @@ def create_server(run_directory, *, allocation=None):
         continuation = result.get('continuation', {})
         if continuation.get('status') in ('source_available', 'observation_required'):
             result['window_inventory'] = window_inventory(root, continuation.get('stage'))
+        if (continuation.get('status') == 'observation_required'
+                and 'observe' in continuation.get('allowed_decisions', [])
+                and type(continuation.get('stage')) is int
+                and 1 <= continuation['stage'] <= 64
+                and type(continuation.get('source_sequence')) is int
+                and continuation['source_sequence'] > 0):
+            # Describe the already-supported recovery choice; never invoke it.
+            # Publication still checks the source, stage bound and occupied slot.
+            continuation['fresh_observation_request'] = {
+                'tool': 'native_submit', 'arguments': {
+                    'stage': continuation['stage'],
+                    'decision': {'source_sequence': continuation['source_sequence'],
+                                 'interaction': 'observe'}}}
         # Do not wait for exit, retry input, or let a polling error hide its receipt.
         if allocation is not None:
             try:
@@ -268,6 +281,9 @@ def create_server(run_directory, *, allocation=None):
         detail=brief requests normal-result receipt projection; critical/unknown
         outcomes remain full. A brief response supplies exact-request full retrieval.
         Always inspect the unchanged image; projected completion is not task success.
+        observation_required includes fresh_observation_request for an explicit
+        input-free capture. It is not executed automatically; never resend it
+        after pending/error, and use exact-request resume to reconcile.
         When continuation.status=source_available, view the returned image and
         use its stage/source_sequence for a new decision; no source-file read is
         needed. This is retained evidence, not freshness or permission to replay.

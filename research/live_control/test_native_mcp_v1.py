@@ -15,6 +15,61 @@ from native_exchange_v1 import encoded
 
 
 class MCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_stdio_recovery_request_publishes_only_explicit_observation(self):
+        # Synthetic failed-review evidence, real transport and file publication.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            pixels = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a9xkAAAAASUVORK5CYII=')
+            (root/'frame.png').write_bytes(pixels)
+            source = {'sequence': 1, 'capture_ns': 123, 'native': {'sha256': 'raw',
+                'capture_started_ns': 123, 'artifact': {'path': str(root/'frame.png'),
+                'sha256': hashlib.sha256(pixels).hexdigest(),
+                'source_raw_sha256': 'raw', 'mime_type': 'image/png'}}}
+            recovery = dict(source, review_recovery={'status': 'observation_required'})
+            (root/'source-1.json').write_bytes(encoded(source))
+            (root/'source-2.json').write_bytes(encoded(recovery))
+            request = encoded({'source_sequence': 1, 'interaction': 'observe'})
+            digest = hashlib.sha256(request).hexdigest()
+            (root/'request-1.json').write_bytes(request)
+            (root/'reply-1.json').write_bytes(encoded({'stage': 1, 'status': 'boundary',
+                'decision_sha256': digest, 'observation': recovery}))
+            params = StdioServerParameters(command=sys.executable, args=[
+                str(Path(__file__).with_name('native_mcp_v1.py')), '--run-directory', tmp], env=dict(os.environ))
+            async with stdio_client(params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    args = {'stage': 1, 'decision_sha256': digest, 'timeout': 0, 'detail': 'brief'}
+                    response = await client.call_tool('native_resume', args)
+                    self.assertFalse(response.isError, response.content)
+                    view = json.loads(response.content[0].text)
+                    next_step = view['continuation']
+                    self.assertEqual(next_step['status'], 'observation_required')
+                    template = next_step['fresh_observation_request']
+                    self.assertEqual(template, {'tool': 'native_submit', 'arguments': {
+                        'stage': 2, 'decision': {'source_sequence': 1, 'interaction': 'observe'}}})
+                    self.assertEqual(view['presentation']['returned'], 'full')
+                    self.assertFalse((root/'request-2.json').exists())
+                    self.assertEqual((root/'request-1.json').read_bytes(), request)
+                    self.assertEqual(base64.b64decode(response.content[1].data), pixels)
+                    # A returned template is not authority if its source changes.
+                    (root/'source-2.json').write_bytes(encoded(dict(recovery, sequence=2)))
+                    stale = await client.call_tool(template['tool'], dict(template['arguments'], timeout=0))
+                    self.assertTrue(stale.isError)
+                    self.assertFalse((root/'request-2.json').exists())
+                    (root/'source-2.json').write_bytes(encoded(recovery))
+                    pending = await client.call_tool(template['tool'], dict(template['arguments'], timeout=0))
+                    self.assertFalse(pending.isError, pending.content)
+                    self.assertEqual(json.loads(pending.content[0].text)['status'], 'pending')
+                    self.assertEqual((root/'request-2.json').read_bytes(), encoded(template['arguments']['decision']))
+                    before = (root/'request-2.json').stat().st_mtime_ns
+                    duplicate = await client.call_tool(template['tool'], dict(template['arguments'], timeout=0))
+                    self.assertTrue(duplicate.isError)
+                    self.assertEqual((root/'request-2.json').stat().st_mtime_ns, before)
+                    resumed = await client.call_tool('native_resume', args)
+                    continuation = json.loads(resumed.content[0].text)['continuation']
+                    self.assertEqual(continuation['status'], 'already_submitted')
+                    self.assertNotIn('fresh_observation_request', continuation)
+
     async def test_stdio_brief_receipt_has_exact_full_retrieval_and_same_image(self):
         from test_native_brief_review_v1 import fixture
         with tempfile.TemporaryDirectory() as tmp:
@@ -461,6 +516,7 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                         'decision_sha256':row['decision_sha256'],'timeout':0})
                     next_step=json.loads(boundary.content[0].text)['continuation']
                     self.assertEqual(next_step['status'],'source_available')
+                    self.assertNotIn('fresh_observation_request', next_step)
                     self.assertEqual((next_step['stage'],next_step['source_sequence']),(2,2))
                     self.assertEqual(base64.b64decode(boundary.content[1].data),pixels)
                     self.assertEqual((root/'request-1.json').read_bytes(),raw)
@@ -472,6 +528,7 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     conflict_metadata=json.loads(conflicting.content[0].text)
                     self.assertEqual(conflict_metadata['continuation']['status'],'needs_review')
                     self.assertNotIn('source_sequence',conflict_metadata['continuation'])
+                    self.assertNotIn('fresh_observation_request', conflict_metadata['continuation'])
                     self.assertEqual(base64.b64decode(conflicting.content[1].data),pixels)
                     (root/'request-2.json').write_bytes(b'{}')
                     occupied=await client.call_tool('native_resume',{'stage':1,

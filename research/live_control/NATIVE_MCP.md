@@ -382,3 +382,28 @@ request bytes or modification times. Further primary-use evaluation is needed
 before changing the default.
 
 A subsequent [primary two-app trial](../../runtime/results/native-primary-brief-01/README.md) completed both saved effects using brief output, while retaining recovery errors and one caller schema failure. It does not establish a performance improvement.
+
+## Explicit recovery observation request
+
+When a failed post-input review returns `continuation.status="observation_required"`,
+that continuation includes `fresh_observation_request` with the existing
+`native_submit` tool and exact stage/source arguments for `interaction="observe"`.
+The caller may choose that request to obtain one new capture without repeating
+input. It is a description, not an automatic action or a guarantee that the
+request will still be accepted. Source, stage-bound, owner-state and occupied-slot
+checks still apply. If the call times out, use the returned exact-request resume
+contract; do not submit the template again. Finish remains a separate choice.
+
+The template is absent for normal boundaries, unknown/missing images, exhausted
+stages and already-submitted stages. `native_observe(stage)` continues to read a
+retained image and does not refresh it. There is no new tool, polling, sensor,
+input replay or wait policy.
+
+This addresses the primary caller's preserved `observe=true` schema mistake in
+[native brief self-use](../../runtime/results/native-primary-brief-01/README.md).
+The supported request uses `decision={source_sequence: N, interaction: "observe"}`.
+Real stdio regression checks show that presenting it publishes nothing, explicitly
+following it publishes only that observation, changed sources reject it, and an
+occupied stage rejects a repeated submission. This is usability/contract evidence;
+no latency or token saving is claimed. The template adds metadata only on the
+failed-review recovery path.
