@@ -53,7 +53,7 @@ class NativeTailTests(unittest.TestCase):
         self.assertEqual(request[0]['text'], '858')
 
     def test_explicit_gap_overrides_research_default(self):
-        from run_native_calc_self_use_v1 import paced_text_tail
+        from native_tail_v1 import paced_text_tail
         request = [{'op': 'text', 'text': 'ab', 'gap_ms': 0},
                    {'op': 'text', 'text': 'cd', 'gap_ms': 20},
                    {'op': 'text', 'text': 'ef'}]

@@ -16,3 +16,8 @@ Local CI: 248 tests passed (176 protocol, 72 harness), recorded separately in
 results-local/native-text-gap-parity-ci-01. Raw trial files and hashes are
 retained here; verify.py checks archived bytes, saved cells and input waits
 without starting an application or sending input.
+
+Publication CI initially failed because the default-policy unit test imported
+the GUI runner outside the CI sparse checkout. The unchanged pure policy was
+moved into native_tail_v1 and imported by the runner and test; 248 local tests
+passed again. This post-live refactor was not a second GUI trial.
