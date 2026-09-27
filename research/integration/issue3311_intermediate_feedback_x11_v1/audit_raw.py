@@ -21,7 +21,11 @@ def audit(root: Path, source: Path):
         return {"schema": "issue3311_intermediate_feedback_x11_audit_v1",
                 "status": "FAIL_RAW_MISSING", "errors": ["required_file_missing"]}
     result = json.loads(result_path.read_text())
-    freeze = json.loads((freeze_v2 if result.get("allocation_id", "").endswith("-02") else freeze_v1).read_text())
+    allocation = result.get("allocation_id", "")
+    freeze_path = (source / "research/integration/issue3311_intermediate_feedback_x11_v1/FREEZE_FORMAL03.json"
+                   if allocation.endswith("-03") else
+                   freeze_v2 if allocation.endswith("-02") else freeze_v1)
+    freeze = json.loads(freeze_path.read_text())
     check = lambda name, ok: None if ok else errors.append(name)
     check("allocation_id", result.get("allocation_id") == freeze["allocation_id"])
     check("container_image_id", result.get("container_image_id") == freeze["container"]["image_id"])

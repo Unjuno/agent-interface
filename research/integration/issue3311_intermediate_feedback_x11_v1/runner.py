@@ -43,6 +43,12 @@ confirmButton.onclick=async()=>{await post('/submit',{token:'AI-3311-UNIT-01'});
 </script>"""
 
 
+def server_snapshot():
+    with lock:
+        return {"events": json.loads(json.dumps(events)),
+                "submissions": json.loads(json.dumps(submissions))}
+
+
 class Handler(http.server.BaseHTTPRequestHandler):
     def log_message(self, *_args):
         pass
@@ -51,9 +57,8 @@ class Handler(http.server.BaseHTTPRequestHandler):
         if self.path == "/":
             body, kind = PAGE, "text/html; charset=utf-8"
         elif self.path == "/oracle":
-            with lock:
-                body = json.dumps({"events": events, "submissions": submissions},
-                                  sort_keys=True, separators=(",", ":")).encode()
+            body = json.dumps(server_snapshot(), sort_keys=True,
+                              separators=(",", ":")).encode()
             kind = "application/json"
         else:
             self.send_error(404)
@@ -275,7 +280,7 @@ def main():
     except Exception as error:
         out = {"schema": "issue3311_intermediate_feedback_x11_v1", "allocation_id": ALLOCATION_ID,
                "runner_exit": 1, "error": repr(error), "events": audit_log,
-               "server_oracle": oracle()}
+               "server_oracle": server_snapshot()}
         (ROOT / "RUNNER_RESULT.json").write_text(json.dumps(out, sort_keys=True, indent=2) + "\n")
         return 1
     finally:
