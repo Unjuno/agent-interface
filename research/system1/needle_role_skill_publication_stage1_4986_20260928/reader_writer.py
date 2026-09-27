@@ -47,7 +47,8 @@ def main():
                'schema':base_obj['schema'],'scope':base_obj['graph']['scope'],'intent':'intent-v1'}
     if receipt['validator_status'] != 'PASS' or receipt['candidate_sha256'] != sha(candidate) or receipt['active_sha256'] != sha(base):
         raise SystemExit('receipt_invalid')
-    OUT.mkdir(parents=True, exist_ok=True)
+    if not OUT.is_dir() or any(OUT.iterdir()):
+        raise SystemExit('output_not_empty_or_missing')
     ACTIVE.write_bytes(base)
     barrier = threading.Barrier(N_READERS + 1)
     events, errors = [], []
