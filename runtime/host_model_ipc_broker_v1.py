@@ -37,7 +37,10 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
             args = [cli, "exec", "--ignore-user-config", "--ignore-rules", "--ephemeral",
                     "--sandbox", "read-only", "--skip-git-repo-check", "--json",
                     "--model", "gpt-5.6-luna", "-c", 'model_reasoning_effort="low"',
-                    "-c", "project_doc_max_bytes=0", "--output-schema",
+                    "-c", "project_doc_max_bytes=0", "-c",
+                    "model_instructions_file=" + json.dumps(
+                        Path(host_path(request["instructions"], repo)).as_posix()),
+                    "--output-schema",
                     host_path(request["schema"], repo)]
             if request.get("image"):
                 args.extend(["--image", host_path(request["image"], repo)])
