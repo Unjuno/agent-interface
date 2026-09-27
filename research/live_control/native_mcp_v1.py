@@ -38,10 +38,10 @@ class NativeDecision(BaseModel):
     interaction: Literal['click','keyboard','observe'] = Field(default='click',
         description='click then tail, keyboard-only tail, or observe for one fresh capture without input; observe consumes a stage.')
     tail: list[dict] = Field(default_factory=list, description=(
-        'Explicit ordered native operations. Examples: {"op":"text","text":"190"}, '
+        'Explicit ordered native operations. Examples: {"op":"text","text":"190","gap_ms":10}, '
         '{"op":"key_chord","keys":["CTRL","s"]}, '
         '{"op":"key_chord","keys":["Right"],"repeat":18}, '
-        '{"op":"wait_update","timeout_ms":50}. No automatic waits or retries.'))
+        '{"op":"wait_update","timeout_ms":50}. Text gap_ms is an integer in 0..1000; it overrides the configured text-gap default (zero disables character gaps). Omit gap_ms to use that default. Text gaps and key repeats expand within the same tail limit: 123 operations for click, 126 for keyboard. No automatic retries.'))
     finish: StrictBool = Field(default=False,
         description='End and evaluate without new input; requires only source_sequence. Session closes even if scoring fails.')
     finish_after: StrictBool = Field(default=False,
