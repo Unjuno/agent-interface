@@ -247,3 +247,10 @@ sequence. A refused action is not automatically replayed. See the
 [mixed Calc/Inkscape primary run](results/public-owned-mixed-live-01/README.md):
 a center-point refusal added one round trip before an edge-point correction.
 This observation motivates guidance; it does not measure the guidance's benefit.
+
+When an input field has focus, avoid a patch containing its blinking caret or
+text that the planned action will change. A stable border inside the intended
+target may preserve context better. This is guidance for the primary model,
+not automatic point selection. The [six-task construction pair](results/stable-anchor-six-pair-01/README.md)
+retains both correctness and the tradeoff: fewer grounding requests, but more
+internal captures and slower local application-feedback handling.
