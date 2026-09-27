@@ -108,9 +108,9 @@ def run(args):
                      runner_sha256=sha(HERE/"run_formal.py"),gate_sha256=sha(HERE/"exact_gate.py"),
                      auditor_sha256=sha(HERE/"audit_formal.py"),protocol_sha256=sha(HERE/"temporal_protocol.py"),
                      test_sha256=sha(HERE/"test_temporal_protocol.py"),container_sha256=sha(HERE/"run_container.ps1"),
-                     source_commit=os.environ.get("SOURCE_GIT_COMMIT"),freeze_sha256=sha(HERE/"FREEZE.json") if args.mode=="formal" else None,
+                     source_commit=os.environ.get("SOURCE_GIT_COMMIT"),freeze_sha256=sha(HERE/"FREEZE.json"),
                      code_sha256=source_hashes(),
-                     frozen_source_sha256=freeze.get("source_sha256") if args.mode=="formal" else None,
+                     frozen_source_sha256=freeze.get("source_sha256"),
                      source_sha256=sha(HERE/"xdamage_native.c"),python=sys.version,platform=platform.platform(),
                      image=IMAGE,image_id=IMAGE_ID,network="none",gpu_used=False)
         write_json(out/"candidate_summary.json",state)
