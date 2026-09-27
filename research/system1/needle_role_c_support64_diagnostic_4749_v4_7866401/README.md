@@ -16,7 +16,7 @@ C delta (64−16): **+0.05126953125** (+5.13 percentage points). Base immutable;
 
 ## Reproduction and provenance
 
-`source/` contains the paired runner, shared prefix contract, construction test, independent auditor, and an exact copy of #4749's public main runner (Git blob `ecd3a0414178f38535406573314793a40b353878`). `FREEZE.json` preserves the preregistration snapshot; its `formal_invocations: 0` is the before-run state and is intentionally not rewritten. Formal command template, outcome and raw output digests are in `formal/`.
+`source/` contains the paired runner, shared prefix contract, construction test, independent auditor, and an exact copy of #4749's public main runner (Git blob `ecd3a0414178f38535406573314793a40b353878`). Read-back exact Git blob IDs for all five executable files are in [`SOURCE_BLOBS.md`](SOURCE_BLOBS.md). `FREEZE.json` preserves the preregistration snapshot; its `formal_invocations: 0` is the before-run state and is intentionally not rewritten. Formal command template, outcome and raw output digests are in `formal/`.
 
 Image `needle-pilot05:local`, ID `sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e`, Linux/amd64 CPU; offline, read-only root/source, one CPU, 2 GiB RAM, 64 PIDs, dedicated output volume. No retry or seed substitution.
 
