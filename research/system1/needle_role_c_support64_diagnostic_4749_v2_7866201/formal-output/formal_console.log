@@ -1,0 +1,8 @@
+/usr/local/lib/python3.12/site-packages/torch/_subclasses/functional_tensor.py:295: UserWarning: Failed to initialize NumPy: No module named 'numpy' (Triggered internally at ../torch/csrc/utils/tensor_numpy.cpp:84.)
+  _conversion_method_template(device=torch.device("cpu"))
+Traceback (most recent call last):
+  File "/src/paired.py", line 14, in <module>
+    assert torch.equal(xc64[:16],xc16) and bytes(xc64[:16].contiguous().view(torch.uint8).tolist())==bytes(xc16.contiguous().view(torch.uint8).tolist()),"STOP_SUPPORT_PREFIX"
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'list' object cannot be interpreted as an integer
+
