@@ -1,0 +1,36 @@
+{
+  "schema": "needle-role-c-support64-diagnostic-freeze-v1",
+  "issue": 4853,
+  "allocation": "needle-role-c-support64-diagnostic-4749-v4-seed7866401",
+  "branch": "research/needle-role-c-support64-diagnostic-4749-v4-20260927-seed7866401",
+  "base_main_sha": "81147ca699aac040b1d17b4f9cea9ec8d73f354b",
+  "path": "research/system1/needle_role_c_support64_diagnostic_4749_v4_7866401/",
+  "seed": 7866401,
+  "formal_invocations": 0,
+  "upstream_runner": {
+    "path": "research/system1/needle_role_skill_c_support64_4749_v1/source/runner.py",
+    "github_blob_sha1": "ecd3a0414178f38535406573314793a40b353878",
+    "local_sha256": "A0E99B991A8A3AB9B2F4B6F4F22F7C705989447CE64A14738026FCD763B55ABB"
+  },
+  "source_sha256": {
+    "paired_py": "DF0786A0DD4320E7E524936764697F2D05A73A2FC8C916409407848E6F812E60",
+    "prefix_contract_py": "5064F6DB181F9B97A9EE9B0F59D8D275291038BD26A3FCD7451424500ACD652F",
+    "construction_test_py": "DCD42EC36F7409732CD4F3E69232B8B85EE039F3EDD80FF3B628C21652009AEF",
+    "audit_py": "6C05A74D30BE7C195E6B649A98462D15A6A948D4BA97AC5FE1A7F919A034DC9C",
+    "preregistration_md": "E6D13E505FE598DBF400D30FE052655E000C88D44B38C5A61ED55EC91D8B8C09"
+  },
+  "construction": {
+    "status": "CONSTRUCTION_PASS",
+    "optimizer_updates": 0,
+    "prefix_values_bytes": true,
+    "byte_sentinel": true,
+    "corrupted_prefix_rejected": true,
+    "all_python_sources_ast_parsed": true
+  },
+  "image": "needle-pilot05:local",
+  "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+  "platform": "linux/amd64",
+  "isolation": "network none; read-only root; source bind read-only; fresh dedicated output volume; 1 CPU; 2 GiB RAM; 64 PIDs",
+  "formal_command_template": "docker run --rm --pull=never --network none --read-only --cpus=1 --memory=2g --pids-limit=64 --mount type=bind,source=<frozen-source>,target=/src,readonly --mount type=volume,source=unjuno-needle-role-c-support64-diagnostic-4853-v1,target=/out --tmpfs /tmp:rw,noexec,nosuid,size=64m -e NEEDLE_SEED=7866401 -e NEEDLE_OUTPUT=/out --entrypoint python needle-pilot05:local /src/paired.py",
+  "interpretation": "One seed descriptive only; no inference about #4749's ten-seed gates. No retry or seed reuse."
+}

@@ -1,0 +1,99 @@
+{
+  "all_path_checks_pass": true,
+  "allocation": "broker-path-confinement-4876-20260927-03",
+  "authority_granted": false,
+  "case_count": 10,
+  "cases": [
+    {
+      "accepted": true,
+      "actual": "/tmp/path4876-kl_zk52c/repo/schema.json",
+      "input": "/repo/schema.json",
+      "name": "repo-alias",
+      "pass": true,
+      "reason": null
+    },
+    {
+      "accepted": true,
+      "actual": "/tmp/path4876-kl_zk52c/repo/work",
+      "input": "/workspace/work",
+      "name": "workspace-alias",
+      "pass": true,
+      "reason": null
+    },
+    {
+      "accepted": true,
+      "actual": "/tmp/path4876-kl_zk52c/repo",
+      "input": "/repo",
+      "name": "root-alias",
+      "pass": true,
+      "reason": null
+    },
+    {
+      "accepted": true,
+      "actual": "/tmp/path4876-kl_zk52c/repo/schema.json",
+      "input": "/repo/in-link",
+      "name": "in-root-symlink",
+      "pass": true,
+      "reason": null
+    },
+    {
+      "accepted": false,
+      "actual": null,
+      "input": "/tmp/path4876-kl_zk52c/outside/secret",
+      "name": "absolute-host",
+      "pass": true,
+      "reason": "ValueError"
+    },
+    {
+      "accepted": false,
+      "actual": null,
+      "input": "/repo/../outside/secret",
+      "name": "parent-traversal",
+      "pass": true,
+      "reason": "ValueError"
+    },
+    {
+      "accepted": false,
+      "actual": null,
+      "input": "/repo/%252e%252e/outside/secret",
+      "name": "encoded-traversal",
+      "pass": true,
+      "reason": "ValueError"
+    },
+    {
+      "accepted": false,
+      "actual": null,
+      "input": "/repo/..\\\\outside\\\\secret",
+      "name": "backslash-traversal",
+      "pass": true,
+      "reason": "ValueError"
+    },
+    {
+      "accepted": false,
+      "actual": null,
+      "input": "/repo/out-link",
+      "name": "external-symlink",
+      "pass": true,
+      "reason": "ValueError"
+    },
+    {
+      "accepted": false,
+      "actual": null,
+      "input": "/repo/missing.json",
+      "name": "missing",
+      "pass": true,
+      "reason": "FileNotFoundError"
+    }
+  ],
+  "decision": "PASS_PATH_RESOLVER_CONSTRUCTION_SCOPED",
+  "response": "{\"ok\":true}\n",
+  "serve_valid_rc": 0,
+  "source_blob": "5734f54f318db9ac5e96b2bed6f6bed105ac39ff",
+  "subprocess_calls": 1,
+  "valid_broker_returncode": 0,
+  "valid_mapped_paths": [
+    "/tmp/path4876-kl_zk52c/repo/schema.json",
+    "/tmp/path4876-kl_zk52c/repo/work"
+  ]
+}
+

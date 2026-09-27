@@ -1,0 +1,27 @@
+{
+  "schema": "needle-role-c-support64-replication-freeze-v1",
+  "issue": 4884,
+  "allocation": "needle-role-c-support64-replication-4884-v1",
+  "branch": "research/needle-role-c-support64-replication-4884-v1",
+  "path": "research/system1/needle_role_c_support64_replication_4884_v1/",
+  "seeds": [7867401, 7867601, 7867801],
+  "source_runner_git_blob_sha1": "ecd3a0414178f38535406573314793a40b353878",
+  "image": "needle-pilot05:local",
+  "image_id": "sha256:6ab7a93188ddf4232a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+  "platform": "linux/amd64",
+  "isolation": "network none; read-only root/source; fresh dedicated output volume; 1 CPU; 2 GiB RAM; 64 PIDs",
+  "formal_invocations": 0,
+  "source_sha256": {
+    "paired.py": "882BA5277AD042FCC287B492DB933BF8A279D0C4CB46DFB5FD07B589A8EB10A6",
+    "audit.py": "26BB1FBD159B691FF8F889102E4ADCDABA20A025272A1A202E194BA169A16C50",
+    "construction_test.py": "B02AE13E4B0575523CE307D0553B3A542A875C528DCE7CF4ADF185272DF57B75",
+    "prefix_contract.py": "5064F6DB181F9B97A9EE9B0F59D8D275291038BD26A3FCD7451424500ACD652F",
+    "upstream_runner.py": "A0E99B991A8A3AB9B2F4B6F4F22F7C705989447CE64A14738026FCD763B55ABB",
+    "RUN_COMMANDS.md": "5F7D043F2C66CA1462A22B38317DC9E9998406B23C4CBB1C1D141E2F7FA74B82"
+  },
+  "import_environment": {"NEEDLE_SEED": "7867401", "NEEDLE_OUTPUT": "/out", "NEEDLE_SEEDS": "7867401,7867601,7867801"},
+  "decision": "raw audit + exact A/B and support-prefix invariance in all seeds + positive C delta in at least 2/3; otherwise exact mixed/fail/STOP; no retry",
+  "predecessors": [4853, 4881],
+  "limits": ["n=3 descriptive", "synthetic family only", "no online real-time learning", "no natural-skill/GUI transfer", "no concurrency or action authority"]
+}
+

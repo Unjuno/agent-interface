@@ -1,0 +1,69 @@
+{
+  "schema": "needle-online-correction-frontier-result-v4",
+  "issue": 4834,
+  "allocation": "needle-online-correction-frontier-3441-v4",
+  "source_commit": "9b4f163261877c7f46c6ba1d5c016247455e8ab5",
+  "decision": "FAIL_ONLINE_CORRECTION_FORGETTING",
+  "auditor": {
+    "decision": "AUDIT_PASS",
+    "errors": 0,
+    "curve_points": 99,
+    "corruption_controls_attempted": 9,
+    "corruption_controls_rejected": 9,
+    "base_immutable_all_seeds": true,
+    "invocations": 1
+  },
+  "trainer_invocations": 1,
+  "retries": 0,
+  "tuning": false,
+  "seeds": [
+    {
+      "seed": 65117,
+      "first_forgetting_step": 30,
+      "a_correct": 1,
+      "b_correct": 255,
+      "base_a_correct": 256,
+      "final_a_correct": 0,
+      "final_b_correct": 256
+    },
+    {
+      "seed": 65229,
+      "first_forgetting_step": 29,
+      "a_correct": 5,
+      "b_correct": 247,
+      "base_a_correct": 256,
+      "final_a_correct": 0,
+      "final_b_correct": 256
+    },
+    {
+      "seed": 65341,
+      "first_forgetting_step": 31,
+      "a_correct": 9,
+      "b_correct": 251,
+      "base_a_correct": 256,
+      "final_a_correct": 0,
+      "final_b_correct": 256
+    }
+  ],
+  "raw": {
+    "bytes": 4622354,
+    "sha256": "2ac9b2ddde61949888e08feabe152c20a3b6935f754214c83d509d6db7f9f93a"
+  },
+  "audit": {
+    "bytes": 775,
+    "sha256": "f1867a47d13aa3581ce60fb195575602424fa5a36f7502c442bb1a0c4e4a2fb9"
+  },
+  "environment": {
+    "image": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "torch": "2.5.1+cpu",
+    "device": "cpu",
+    "threads": 1,
+    "network": "none",
+    "gpu": false,
+    "pull": false,
+    "install": false
+  }
+}

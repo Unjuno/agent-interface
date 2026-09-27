@@ -1,0 +1,168 @@
+{
+  "schema": "mitra-dependency-closure-evidence-v1",
+  "issue": 4800,
+  "parent_issue": 4745,
+  "platform": "linux/amd64",
+  "base_image": "pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime",
+  "base_image_id": "sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067",
+  "python": "3.11.10",
+  "original_lock_path": "research/system1/mitra_tabular_rung0_853_dependency_stop_v1/requirements.lock",
+  "original_lock_sha256": "d871eb53e8ed38d5ee5d2c8fbae8ed0b2a3f265523bbf24b0573f42b17864ec9",
+  "cuda_device_requested": false,
+  "model_weights_loaded": false,
+  "formal_predictions": 0,
+  "wheelhouse_revisions": [
+    {
+      "bytes": 195565575,
+      "count": 62,
+      "revision": "rev2"
+    },
+    {
+      "bytes": 195629934,
+      "count": 63,
+      "revision": "rev3"
+    },
+    {
+      "bytes": 195793700,
+      "count": 64,
+      "revision": "rev4"
+    }
+  ],
+  "outcomes": [
+    {
+      "expected": "STOP_LOCAL_ARTIFACT_OR_RUNTIME",
+      "revision": "rev1",
+      "markers": [
+        "BASE_INSTALL_EXIT=0",
+        "SUCCESSOR_INSTALL_EXIT=0",
+        "No module named 'loguru'"
+      ]
+    },
+    {
+      "expected": "STOP_LOCAL_ARTIFACT_OR_RUNTIME",
+      "revision": "rev2",
+      "markers": [
+        "BASE_INSTALL_EXIT=0",
+        "SUCCESSOR_REV2_INSTALL_EXIT=0",
+        "No module named 'einops'"
+      ]
+    },
+    {
+      "expected": "STOP_LOCAL_ARTIFACT_OR_RUNTIME",
+      "revision": "rev3",
+      "markers": [
+        "BASE_INSTALL_EXIT=0",
+        "SUCCESSOR_REV3_INSTALL_EXIT=0",
+        "No module named 'einx'"
+      ]
+    },
+    {
+      "expected": "PASS_DEPENDENCY_IMPORT_GATE_ONLY",
+      "revision": "rev4",
+      "markers": [
+        "BASE_INSTALL_EXIT=0",
+        "SUCCESSOR_REV4_INSTALL_EXIT=0",
+        "DIRECT_IMPORT_OK MitraClassifier",
+        "IMPORT_EXIT=0"
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "revision": "rev1",
+      "role": "lock",
+      "source_name": "requirements.successor.lock",
+      "envelope": "rev1.lock.raw.b64",
+      "bytes": 205,
+      "sha256": "ae6820151ea76e5f6d98a66183202257669b5e853cdc63aa19c2697548786815"
+    },
+    {
+      "revision": "rev1",
+      "role": "log",
+      "source_name": "offline-dependency-import-gate.log",
+      "envelope": "rev1.log.raw.b64",
+      "bytes": 10966,
+      "sha256": "aed346e5ec697ebc67aa102ff5fe90698c9529834cc02f18a5c215102eda229f"
+    },
+    {
+      "revision": "rev2",
+      "role": "lock",
+      "source_name": "requirements.successor.rev2.lock",
+      "envelope": "rev2.lock.raw.b64",
+      "bytes": 298,
+      "sha256": "b2a1b48e14773d679c4f3096723cd7304e758911f5068054390702ff796c7a36"
+    },
+    {
+      "revision": "rev2",
+      "role": "manifest",
+      "source_name": "wheelhouse-manifest.rev2.json",
+      "envelope": "rev2.manifest.raw.b64",
+      "bytes": 10994,
+      "sha256": "8cb93a2bef9b133e04804945fd5e314d19e4341ffc627ca0acac6729e8a903cf"
+    },
+    {
+      "revision": "rev2",
+      "role": "log",
+      "source_name": "offline-dependency-import-gate.rev2.log",
+      "envelope": "rev2.log.raw.b64",
+      "bytes": 11290,
+      "sha256": "fb6404d7c70adb80f17b0e5aac55ad22edb90eec5acb73bbed416ba2204247d4"
+    },
+    {
+      "revision": "rev3",
+      "role": "lock",
+      "source_name": "requirements.successor.rev3.lock",
+      "envelope": "rev3.lock.raw.b64",
+      "bytes": 391,
+      "sha256": "df9d9636583ad7be2fc632c38bc7d79d0b3e7b9fcf6830aad4fd8f21d78038f0"
+    },
+    {
+      "revision": "rev3",
+      "role": "manifest",
+      "source_name": "wheelhouse-manifest.rev3.json",
+      "envelope": "rev3.manifest.raw.b64",
+      "bytes": 11154,
+      "sha256": "8c4783844502ef6b667011ae988096bd91a71cda676ac54212a62b8d9e67fbcd"
+    },
+    {
+      "revision": "rev3",
+      "role": "log",
+      "source_name": "offline-dependency-import-gate.rev3.log",
+      "envelope": "rev3.log.raw.b64",
+      "bytes": 2359,
+      "sha256": "8f494ae625b46f061d699f3533d6728c8e775d0439528d541224c46c8ff209da"
+    },
+    {
+      "revision": "rev4",
+      "role": "lock",
+      "source_name": "requirements.successor.rev4.lock",
+      "envelope": "rev4.lock.raw.b64",
+      "bytes": 482,
+      "sha256": "156c3c63d9b85a3ce32390cb656ae5859426e1ba3cbd85252b2e3496f4114ce3"
+    },
+    {
+      "revision": "rev4",
+      "role": "manifest",
+      "source_name": "wheelhouse-manifest.rev4.json",
+      "envelope": "rev4.manifest.raw.b64",
+      "bytes": 11313,
+      "sha256": "fa7adf1d755b7554c5ead16f9e64cb0d8d0db0f1cf153e44d9b1a32172d46d9c"
+    },
+    {
+      "revision": "rev4",
+      "role": "log",
+      "source_name": "offline-dependency-import-gate.rev4.log",
+      "envelope": "rev4.log.raw.b64",
+      "bytes": 2749,
+      "sha256": "4c7886d32a841cdc6aa8bc1c2a62208edb84d4a072d3b7b382ff5505ec9e5b92"
+    },
+    {
+      "revision": "rev4",
+      "role": "runner",
+      "source_name": "run_import_gate_rev4.sh",
+      "envelope": "rev4.runner.raw.b64",
+      "bytes": 501,
+      "sha256": "060d54d5d43663d1ba73d72b65afe7f32286c251decaa98e10999afa82e6a517"
+    }
+  ]
+}

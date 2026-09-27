@@ -1,0 +1,34 @@
+{
+  "schema": "needle-role-c-support64-diagnostic-freeze-v1",
+  "issue": 4848,
+  "allocation": "needle-role-c-support64-diagnostic-4749-v2-seed7866201",
+  "branch": "research/needle-role-c-support64-diagnostic-4749-v2-20260927-seed7866201",
+  "base_main_sha": "f02ff3234003edc9ae72104a015135aa0da23650",
+  "main_advanced_before_formal": {
+    "observed_sha": "a6329d5b211f0990b0bda29736b6d24f1063de28",
+    "intervening_commit": "research(#4828): retain frozen-image NumPy STOP for extent readout (#4832)",
+    "changed_paths": ["research/analysis/README.md", "research/analysis/tiny_visual_extent_readout_4817_v1/"],
+    "overlap_with_issue_path": false,
+    "frozen_experiment_branch_unchanged": true
+  },
+  "path": "research/system1/needle_role_c_support64_diagnostic_4749_v2_7866201/",
+  "seed": 7866201,
+  "formal_invocations": 0,
+  "upstream_runner": {
+    "path": "research/system1/needle_role_skill_c_support64_4749_v1/source/runner.py",
+    "github_blob_sha1": "ecd3a0414178f38535406573314793a40b353878",
+    "local_sha256": "A0E99B991A8A3AB9B2F4B6F4F22F7C705989447CE64A14738026FCD763B55ABB"
+  },
+  "source_sha256": {
+    "paired.py": "C03B7FEFD4D649CFBD00FDE8A9CB269C9EF977D7476B6636CC2B5B1789CD4AE7",
+    "audit.py": "9DF1BD1E9F89B97AAC3E37B017B83B46F48CDABD0D39C56C4139F1BE2A948F09",
+    "PREREGISTRATION.md": "8612CEA6D4706C505D0F4631BE6C9D926CDADA529B08C1949EB5FF22FD78DC8C"
+  },
+  "image": "needle-pilot05:local",
+  "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+  "platform": "linux/amd64",
+  "isolation": "network none; read-only root; source bind read-only; dedicated writable output volume; 1 CPU; 2 GiB RAM; 64 PIDs",
+  "formal_command_template": "docker run --rm --pull=never --network none --read-only --cpus=1 --memory=2g --pids-limit=64 --mount type=bind,source=<frozen-source>,target=/src,readonly --mount type=volume,source=unjuno-needle-role-c-support64-diagnostic-4848-v1,target=/out --tmpfs /tmp:rw,noexec,nosuid,size=64m -e NEEDLE_SEED=7866201 -e NEEDLE_OUTPUT=/out --entrypoint python needle-pilot05:local /src/paired.py",
+  "interpretation": "One seed is diagnostic only; no formal #4749 gate inference. Any integrity failure makes the numeric delta uninterpretable."
+}
+

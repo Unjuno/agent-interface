@@ -33,6 +33,7 @@ This is a navigation view, not a mandatory runtime pipeline. Individual studies 
 | Last-effect representation | [`map01_last_effect_representation_v1/`](map01_last_effect_representation_v1/), [`map01_last_effect_representation_v31_r2/`](map01_last_effect_representation_v31_r2/) |
 | Intent-preserving Needle distillation | [intent_distillation_3458_pilot_01/](intent_distillation_3458_pilot_01/) |
 | Online role-adapter update | [needle_lora_3441_online_stream_v1/](../needle_lora_3441_online_stream_v1/) — host-CPU online run; both online and batch misses the 0.90 gate; not container or runtime evidence. |
+| Online update generation fence | [`needle_adaptive_generation_fence_4840_v1/`](needle_adaptive_generation_fence_4840_v1/) — scoped 64-row envelope/oracle pass; no model training or runtime authority. |
 | Representation collision / ambiguity | [`map01_representation_collision_v1/`](map01_representation_collision_v1/) |
 
 For lower-level local decision mechanics, route cost, TTC admission, typed evidence, and useful-work-per-frontier-boundary studies, use [`../local_system1/`](../local_system1/).
@@ -69,6 +70,14 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Role graph as a reloadable skill
 
 - [`needle_role_skill_reload_3780_v1/REPORT.md`](../needle_role_skill_reload_3780_v1/REPORT.md) — successor #3890; three-seed, CPU Docker, cross-process JSON-tensor reload PASS with two fresh loaders per seed and a scoped independent audit. Seed 3789 / role C is a narrow threshold pass; no production skill authority is claimed.
+
+## Role-C support-count diagnostic successor
+
+- [`needle_role_c_support64_diagnostic_4749_v2_7866201/STOP_REPORT.md`](needle_role_c_support64_diagnostic_4749_v2_7866201/STOP_REPORT.md) — Issue #4848's one-shot Docker allocation STOPPED before model construction on a byte-recorder TypeError; zero optimizer updates, no score, separate empty-output audit. Seed 7866201 is consumed; this does not revise #4749's formal PASS.
+
+## Role-C support-count diagnostic successor (fresh seed)
+
+- [`needle_role_c_support64_diagnostic_4749_v4_7866401/README.md`](needle_role_c_support64_diagnostic_4749_v4_7866401/README.md) — Issue #4853, one fresh-seed CPU Docker paired run, independent raw audit PASS; support64 improves synthetic role-C accuracy by +0.05127 at seed 7866401, A/B exact. Descriptive single-seed result only; does not alter #4749's ten-seed PASS. Full raw outputs remain in the dedicated local Docker volume; SHA-256 digests and exact source blob IDs are recorded in the evidence bundle.
 
 ## Local decoder readout and cache mechanics
 

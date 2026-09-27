@@ -1,0 +1,38 @@
+{
+  "schema": "issue-4821-formal-invocation-v1",
+  "allocation": "mitra-gpu-rung0-853-label-encoding-successor-local-20260927-01",
+  "freeze_sha256": "22fd6923a81981194148c6a63b2814e6c2b2fb9c238de095283c2058b8978400",
+  "collision_evidence_sha256": "012c4d41da095fd58fb6f1525383ecc70e0c5adbe4799f896fb8ab436c1a9880",
+  "image_id": "sha256:01ea4e60b03e8a7d48644d0dce596bd2e42ab3815fdc52b0c7a6d4cbcf757dac",
+  "runner_container": "mitra4821-formal-run-01",
+  "runner_exit_code": 1,
+  "runner_state": {
+    "Status": "exited",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": false,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 1,
+    "Error": "",
+    "StartedAt": "2026-09-27T09:56:48.205336391Z",
+    "FinishedAt": "2026-09-27T09:57:39.269287805Z"
+  },
+  "runner_network_mode": "none",
+  "runner_readonly_rootfs": true,
+  "runner_memory_bytes": 4294967296,
+  "runner_pids_limit": 128,
+  "runner_log_sha256": "e6a728815656233b4fca0ad97cb92ade482ade4f66e63e98c891f4038f9c53b6",
+  "gpu_pre": [
+    "NVIDIA GeForce RTX 3080 Laptop GPU, 16384 MiB, 0 MiB, 0 %"
+  ],
+  "gpu_post": [
+    "NVIDIA GeForce RTX 3080 Laptop GPU, 16384 MiB, 0 MiB, 1 %"
+  ],
+  "audit_container": "mitra4821-formal-stop-audit-01",
+  "audit_exit_code": 0,
+  "audit_log_sha256": "d403ef791251d7fb3c2e25205acfdcd7528fe1511809988b23a736dc8636e22d",
+  "network_during_formal": "none",
+  "formal_gpu_requested": true
+}
