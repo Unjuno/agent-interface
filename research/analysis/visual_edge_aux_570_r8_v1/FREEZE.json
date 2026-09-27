@@ -1,0 +1,367 @@
+{
+  "additive_path": "research/analysis/visual_edge_aux_570_r8_v1/",
+  "allocation": "visual-edge-aux-570-r8-20260927-01",
+  "base_main": "cd7853030248c0d19293bf573cd7c90109b1a57e",
+  "branch": "research/visual-edge-aux-570-r8-20260927",
+  "construction_calls": 4,
+  "disjoint_main_paths_since_base": [
+    "research/integration/broker_path_confinement_4876_v3/",
+    "research/system1/needle_role_c_support64_replication_4884_v1/"
+  ],
+  "formal_calls": 24,
+  "formal_status_at_freeze": "NOT_RUN",
+  "format": "visual-edge-aux-570-r8-freeze-v1",
+  "gpu": {
+    "cuda_inference": true,
+    "name": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "vram_mib": 16384
+  },
+  "images": {
+    "helper": {
+      "id": "sha256:c429dd941b668e2689a99ecc6b9717093647489e755cdbd8eb6e1594e4497aaf",
+      "tag": "agent-interface-real-robustness-2912:cpu"
+    },
+    "ollama": {
+      "id": "sha256:8262851b2846b87c649eddf3e76beb270c52f4d1bc94559f47efde16b0841551",
+      "platform": "linux/amd64",
+      "tag": "ollama/ollama:0.34.4"
+    }
+  },
+  "inputs": {
+    "font_sha256": "b3658eadae55e682b5f69eb64c439c1ecc8f196c0bb8d4756d145d13bc86476a",
+    "format": "visual-edge-aux-570-r8-inputs-v1",
+    "pillow": "10.4.0",
+    "rows": [
+      {
+        "case_id": "C01",
+        "edge_file": "C01.edge.png",
+        "edge_sha256": "1cebe6660a89c2e731492d54f6a299c62a1527129beb710369e947ae71f63c68",
+        "height": 800,
+        "present": true,
+        "prompt": "You are inspecting a settings dashboard. You may receive one or two images. Image 1 is the authoritative source screenshot. If image 2 is present, it is a pixel-aligned grayscale edge view derived from image 1; use it only as supplementary geometry. Find the Archive button inside the card whose exact title is Retention 10 / North. If that exact card/button is absent, abstain. Return only JSON with present (boolean) and point ([integer x, integer y] at the button center in image-1 coordinates, or null when absent). Do not click anything.",
+        "seed": 5708811,
+        "source_file": "C01.source.png",
+        "source_sha256": "8dfcc0826fd86ed58d5d4ed2e86ba1d6cca1dd5280b57e65cfb820ec2ede636b",
+        "split": "construction",
+        "target_box": [
+          595,
+          727,
+          679,
+          756
+        ],
+        "target_index": 9,
+        "target_title": "Retention 10 / North",
+        "width": 1280
+      },
+      {
+        "case_id": "C02",
+        "edge_file": "C02.edge.png",
+        "edge_sha256": "4c18471012b3f0ba8facb3a5cab74fa1dac64a5a9039c516f6615b525a9cf07d",
+        "height": 800,
+        "present": true,
+        "prompt": "You are inspecting a settings dashboard. You may receive one or two images. Image 1 is the authoritative source screenshot. If image 2 is present, it is a pixel-aligned grayscale edge view derived from image 1; use it only as supplementary geometry. Find the Archive button inside the card whose exact title is Retention 10 / Delta. If that exact card/button is absent, abstain. Return only JSON with present (boolean) and point ([integer x, integer y] at the button center in image-1 coordinates, or null when absent). Do not click anything.",
+        "seed": 5708812,
+        "source_file": "C02.source.png",
+        "source_sha256": "6325b5de8c22ad2cbb937b4e3e3f8394df6d82c3d06f1cd2c8fc0ead4df14bb9",
+        "split": "construction",
+        "target_box": [
+          595,
+          727,
+          679,
+          756
+        ],
+        "target_index": 9,
+        "target_title": "Retention 10 / Delta",
+        "width": 1280
+      },
+      {
+        "case_id": "F01",
+        "edge_file": "F01.edge.png",
+        "edge_sha256": "49f4df64c13402948fbbda2a95314d259b295691c3d562d47778c2d63de613f8",
+        "height": 800,
+        "present": true,
+        "prompt": "You are inspecting a settings dashboard. You may receive one or two images. Image 1 is the authoritative source screenshot. If image 2 is present, it is a pixel-aligned grayscale edge view derived from image 1; use it only as supplementary geometry. Find the Archive button inside the card whose exact title is Retention 12 / Alpha. If that exact card/button is absent, abstain. Return only JSON with present (boolean) and point ([integer x, integer y] at the button center in image-1 coordinates, or null when absent). Do not click anything.",
+        "seed": 5708821,
+        "source_file": "F01.source.png",
+        "source_sha256": "843893e41e0f07d8fef4cb19b606a0e758f358e14c2f745c23a0da39977ac3b5",
+        "split": "formal",
+        "target_box": [
+          1151,
+          727,
+          1235,
+          756
+        ],
+        "target_index": 11,
+        "target_title": "Retention 12 / Alpha",
+        "width": 1280
+      },
+      {
+        "case_id": "F02",
+        "edge_file": "F02.edge.png",
+        "edge_sha256": "820dbef3f229a0834b342f982cc4c72606c7431354e333187bcd07af6b1dbd23",
+        "height": 800,
+        "present": true,
+        "prompt": "You are inspecting a settings dashboard. You may receive one or two images. Image 1 is the authoritative source screenshot. If image 2 is present, it is a pixel-aligned grayscale edge view derived from image 1; use it only as supplementary geometry. Find the Archive button inside the card whose exact title is Retention 10 / Beta. If that exact card/button is absent, abstain. Return only JSON with present (boolean) and point ([integer x, integer y] at the button center in image-1 coordinates, or null when absent). Do not click anything.",
+        "seed": 5708822,
+        "source_file": "F02.source.png",
+        "source_sha256": "356f53f62cfa2d6342a7f34e573c83d7c9115bbfee60cd3f77a06c053f1f5776",
+        "split": "formal",
+        "target_box": [
+          595,
+          727,
+          679,
+          756
+        ],
+        "target_index": 9,
+        "target_title": "Retention 10 / Beta",
+        "width": 1280
+      },
+      {
+        "case_id": "F03",
+        "edge_file": "F03.edge.png",
+        "edge_sha256": "76fa45f8bbd8319b86fd23da58660e6f770029bc6167bf8515c319ef172e69ec",
+        "height": 800,
+        "present": true,
+        "prompt": "You are inspecting a settings dashboard. You may receive one or two images. Image 1 is the authoritative source screenshot. If image 2 is present, it is a pixel-aligned grayscale edge view derived from image 1; use it only as supplementary geometry. Find the Archive button inside the card whose exact title is Retention 01 / Alpha. If that exact card/button is absent, abstain. Return only JSON with present (boolean) and point ([integer x, integer y] at the button center in image-1 coordinates, or null when absent). Do not click anything.",
+        "seed": 5708823,
+        "source_file": "F03.source.png",
+        "source_sha256": "1722e0f13f04bb3d5fe3f8124fd8435568bf7ee7cf35f2b069009f5e084e7d53",
+        "split": "formal",
+        "target_box": [
+          317,
+          281,
+          401,
+          310
+        ],
+        "target_index": 0,
+        "target_title": "Retention 01 / Alpha",
+        "width": 1280
+      },
+      {
+        "case_id": "F04",
+        "edge_file": "F04.edge.png",
+        "edge_sha256": "c58e348d483a4f19d01fdfb11c36c68a14dd0e4e463e00524d7d5168454340a7",
+        "height": 800,
+        "present": true,
+        "prompt": "You are inspecting a settings dashboard. You may receive one or two images. Image 1 is the authoritative source screenshot. If image 2 is present, it is a pixel-aligned grayscale edge view derived from image 1; use it only as supplementary geometry. Find the Archive button inside the card whose exact title is Retention 07 / Beta. If that exact card/button is absent, abstain. Return only JSON with present (boolean) and point ([integer x, integer y] at the button center in image-1 coordinates, or null when absent). Do not click anything.",
+        "seed": 5708824,
+        "source_file": "F04.source.png",
+        "source_sha256": "b57067ec8b368b211908e86552edb0488408d296115437e2bb481ebaf0aad0b1",
+        "split": "formal",
+        "target_box": [
+          873,
+          504,
+          957,
+          533
+        ],
+        "target_index": 6,
+        "target_title": "Retention 07 / Beta",
+        "width": 1280
+      },
+      {
+        "case_id": "F05",
+        "edge_file": "F05.edge.png",
+        "edge_sha256": "6aca377901d4d915acab1c4a7c29a326b789beb4723ab67e53ff9643a96db2ea",
+        "height": 800,
+        "present": true,
+        "prompt": "You are inspecting a settings dashboard. You may receive one or two images. Image 1 is the authoritative source screenshot. If image 2 is present, it is a pixel-aligned grayscale edge view derived from image 1; use it only as supplementary geometry. Find the Archive button inside the card whose exact title is Retention 02 / Delta. If that exact card/button is absent, abstain. Return only JSON with present (boolean) and point ([integer x, integer y] at the button center in image-1 coordinates, or null when absent). Do not click anything.",
+        "seed": 5708825,
+        "source_file": "F05.source.png",
+        "source_sha256": "fd0fef198320e8d705f151c9644db612d1186fbf0685d8d08dfbfc0586f4ef14",
+        "split": "formal",
+        "target_box": [
+          595,
+          281,
+          679,
+          310
+        ],
+        "target_index": 1,
+        "target_title": "Retention 02 / Delta",
+        "width": 1280
+      },
+      {
+        "case_id": "F06",
+        "edge_file": "F06.edge.png",
+        "edge_sha256": "7286a14b9ffa0920e6a7b1f8dad48c15e9f4f6dce519210151178e284254c2d5",
+        "height": 800,
+        "present": true,
+        "prompt": "You are inspecting a settings dashboard. You may receive one or two images. Image 1 is the authoritative source screenshot. If image 2 is present, it is a pixel-aligned grayscale edge view derived from image 1; use it only as supplementary geometry. Find the Archive button inside the card whose exact title is Retention 10 / Alpha. If that exact card/button is absent, abstain. Return only JSON with present (boolean) and point ([integer x, integer y] at the button center in image-1 coordinates, or null when absent). Do not click anything.",
+        "seed": 5708826,
+        "source_file": "F06.source.png",
+        "source_sha256": "b4e449e0656de35c07d6a2c68d3e2b13d607f08bc22aab3a37e4f1680aa772a5",
+        "split": "formal",
+        "target_box": [
+          595,
+          727,
+          679,
+          756
+        ],
+        "target_index": 9,
+        "target_title": "Retention 10 / Alpha",
+        "width": 1280
+      },
+      {
+        "case_id": "F07",
+        "edge_file": "F07.edge.png",
+        "edge_sha256": "f16aaf7b4a1fcdf9aa31a3b57474223480f5da7285feea39f2b5f94815e73fdb",
+        "height": 800,
+        "present": true,
+        "prompt": "You are inspecting a settings dashboard. You may receive one or two images. Image 1 is the authoritative source screenshot. If image 2 is present, it is a pixel-aligned grayscale edge view derived from image 1; use it only as supplementary geometry. Find the Archive button inside the card whose exact title is Retention 01 / North. If that exact card/button is absent, abstain. Return only JSON with present (boolean) and point ([integer x, integer y] at the button center in image-1 coordinates, or null when absent). Do not click anything.",
+        "seed": 5708827,
+        "source_file": "F07.source.png",
+        "source_sha256": "5599dccda5a6159c71d403d06a1ed9af410083cd74a1dc0a1c7b213624f1a7d1",
+        "split": "formal",
+        "target_box": [
+          317,
+          281,
+          401,
+          310
+        ],
+        "target_index": 0,
+        "target_title": "Retention 01 / North",
+        "width": 1280
+      },
+      {
+        "case_id": "F08",
+        "edge_file": "F08.edge.png",
+        "edge_sha256": "59642b8a550c7760eac379740f315a99fe4421d8fbf76e37e93d40a0f3c2ee50",
+        "height": 800,
+        "present": true,
+        "prompt": "You are inspecting a settings dashboard. You may receive one or two images. Image 1 is the authoritative source screenshot. If image 2 is present, it is a pixel-aligned grayscale edge view derived from image 1; use it only as supplementary geometry. Find the Archive button inside the card whose exact title is Retention 06 / Delta. If that exact card/button is absent, abstain. Return only JSON with present (boolean) and point ([integer x, integer y] at the button center in image-1 coordinates, or null when absent). Do not click anything.",
+        "seed": 5708828,
+        "source_file": "F08.source.png",
+        "source_sha256": "970f3e8064487531e6c4b5a8bb91eeeb75f212e61ffa5d2ea5a2a05bce12e167",
+        "split": "formal",
+        "target_box": [
+          595,
+          504,
+          679,
+          533
+        ],
+        "target_index": 5,
+        "target_title": "Retention 06 / Delta",
+        "width": 1280
+      },
+      {
+        "case_id": "F09",
+        "edge_file": "F09.edge.png",
+        "edge_sha256": "ec2dbd3763782b01e777072e643586bddc30703962870e3fbc2369c956779e85",
+        "height": 800,
+        "present": true,
+        "prompt": "You are inspecting a settings dashboard. You may receive one or two images. Image 1 is the authoritative source screenshot. If image 2 is present, it is a pixel-aligned grayscale edge view derived from image 1; use it only as supplementary geometry. Find the Archive button inside the card whose exact title is Retention 11 / North. If that exact card/button is absent, abstain. Return only JSON with present (boolean) and point ([integer x, integer y] at the button center in image-1 coordinates, or null when absent). Do not click anything.",
+        "seed": 5708829,
+        "source_file": "F09.source.png",
+        "source_sha256": "24bd10d5cfe3a013049c6da1a97aa6c7735cb309f836a073d7c9fdc6d3752767",
+        "split": "formal",
+        "target_box": [
+          873,
+          727,
+          957,
+          756
+        ],
+        "target_index": 10,
+        "target_title": "Retention 11 / North",
+        "width": 1280
+      },
+      {
+        "case_id": "F10",
+        "edge_file": "F10.edge.png",
+        "edge_sha256": "ef88b6d8b33f16e0f241c9c99882315a8ab239309e4f97c1982cbf0e3823f0e0",
+        "height": 800,
+        "present": true,
+        "prompt": "You are inspecting a settings dashboard. You may receive one or two images. Image 1 is the authoritative source screenshot. If image 2 is present, it is a pixel-aligned grayscale edge view derived from image 1; use it only as supplementary geometry. Find the Archive button inside the card whose exact title is Retention 08 / North. If that exact card/button is absent, abstain. Return only JSON with present (boolean) and point ([integer x, integer y] at the button center in image-1 coordinates, or null when absent). Do not click anything.",
+        "seed": 5708830,
+        "source_file": "F10.source.png",
+        "source_sha256": "1b5a713a384aa5200b7e9c5c952d77898d3c18503367c27b581fb4706ae09284",
+        "split": "formal",
+        "target_box": [
+          1151,
+          504,
+          1235,
+          533
+        ],
+        "target_index": 7,
+        "target_title": "Retention 08 / North",
+        "width": 1280
+      },
+      {
+        "case_id": "F11",
+        "edge_file": "F11.edge.png",
+        "edge_sha256": "d2c28dc6902e2b2c7cbcae3fa2bcba86908a985f6ea3fdbba61bdaa235488299",
+        "height": 800,
+        "present": false,
+        "prompt": "You are inspecting a settings dashboard. You may receive one or two images. Image 1 is the authoritative source screenshot. If image 2 is present, it is a pixel-aligned grayscale edge view derived from image 1; use it only as supplementary geometry. Find the Archive button inside the card whose exact title is Retention 64 / Missing. If that exact card/button is absent, abstain. Return only JSON with present (boolean) and point ([integer x, integer y] at the button center in image-1 coordinates, or null when absent). Do not click anything.",
+        "seed": 5708831,
+        "source_file": "F11.source.png",
+        "source_sha256": "b30241c8883e99bd57415323583b78466e7afb52fd30b6e4d8bc530ed90117bd",
+        "split": "formal",
+        "target_box": null,
+        "target_index": null,
+        "target_title": "Retention 64 / Missing",
+        "width": 1280
+      },
+      {
+        "case_id": "F12",
+        "edge_file": "F12.edge.png",
+        "edge_sha256": "13b0ab0b28751a61f56a616dad79b5a459fba1af453df9711316b5d3259551d6",
+        "height": 800,
+        "present": false,
+        "prompt": "You are inspecting a settings dashboard. You may receive one or two images. Image 1 is the authoritative source screenshot. If image 2 is present, it is a pixel-aligned grayscale edge view derived from image 1; use it only as supplementary geometry. Find the Archive button inside the card whose exact title is Retention 65 / Missing. If that exact card/button is absent, abstain. Return only JSON with present (boolean) and point ([integer x, integer y] at the button center in image-1 coordinates, or null when absent). Do not click anything.",
+        "seed": 5708832,
+        "source_file": "F12.source.png",
+        "source_sha256": "1e97e89ca19cbda12b0c6260afd0a823f6ce298a87142e00a0b9b58ee5177df5",
+        "split": "formal",
+        "target_box": null,
+        "target_index": null,
+        "target_title": "Retention 65 / Missing",
+        "width": 1280
+      }
+    ]
+  },
+  "issue": 4885,
+  "model": {
+    "digest": "fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1",
+    "name": "qwen2.5vl:3b",
+    "quantization": "Q4_K_M"
+  },
+  "pre_run_main_recheck": "055468a4831960f5647760d4f25c54923526c5a3",
+  "retries_permitted": 0,
+  "sha256": {
+    "inputs/C01.edge.png": "1cebe6660a89c2e731492d54f6a299c62a1527129beb710369e947ae71f63c68",
+    "inputs/C01.source.png": "8dfcc0826fd86ed58d5d4ed2e86ba1d6cca1dd5280b57e65cfb820ec2ede636b",
+    "inputs/C02.edge.png": "4c18471012b3f0ba8facb3a5cab74fa1dac64a5a9039c516f6615b525a9cf07d",
+    "inputs/C02.source.png": "6325b5de8c22ad2cbb937b4e3e3f8394df6d82c3d06f1cd2c8fc0ead4df14bb9",
+    "inputs/F01.edge.png": "49f4df64c13402948fbbda2a95314d259b295691c3d562d47778c2d63de613f8",
+    "inputs/F01.source.png": "843893e41e0f07d8fef4cb19b606a0e758f358e14c2f745c23a0da39977ac3b5",
+    "inputs/F02.edge.png": "820dbef3f229a0834b342f982cc4c72606c7431354e333187bcd07af6b1dbd23",
+    "inputs/F02.source.png": "356f53f62cfa2d6342a7f34e573c83d7c9115bbfee60cd3f77a06c053f1f5776",
+    "inputs/F03.edge.png": "76fa45f8bbd8319b86fd23da58660e6f770029bc6167bf8515c319ef172e69ec",
+    "inputs/F03.source.png": "1722e0f13f04bb3d5fe3f8124fd8435568bf7ee7cf35f2b069009f5e084e7d53",
+    "inputs/F04.edge.png": "c58e348d483a4f19d01fdfb11c36c68a14dd0e4e463e00524d7d5168454340a7",
+    "inputs/F04.source.png": "b57067ec8b368b211908e86552edb0488408d296115437e2bb481ebaf0aad0b1",
+    "inputs/F05.edge.png": "6aca377901d4d915acab1c4a7c29a326b789beb4723ab67e53ff9643a96db2ea",
+    "inputs/F05.source.png": "fd0fef198320e8d705f151c9644db612d1186fbf0685d8d08dfbfc0586f4ef14",
+    "inputs/F06.edge.png": "7286a14b9ffa0920e6a7b1f8dad48c15e9f4f6dce519210151178e284254c2d5",
+    "inputs/F06.source.png": "b4e449e0656de35c07d6a2c68d3e2b13d607f08bc22aab3a37e4f1680aa772a5",
+    "inputs/F07.edge.png": "f16aaf7b4a1fcdf9aa31a3b57474223480f5da7285feea39f2b5f94815e73fdb",
+    "inputs/F07.source.png": "5599dccda5a6159c71d403d06a1ed9af410083cd74a1dc0a1c7b213624f1a7d1",
+    "inputs/F08.edge.png": "59642b8a550c7760eac379740f315a99fe4421d8fbf76e37e93d40a0f3c2ee50",
+    "inputs/F08.source.png": "970f3e8064487531e6c4b5a8bb91eeeb75f212e61ffa5d2ea5a2a05bce12e167",
+    "inputs/F09.edge.png": "ec2dbd3763782b01e777072e643586bddc30703962870e3fbc2369c956779e85",
+    "inputs/F09.source.png": "24bd10d5cfe3a013049c6da1a97aa6c7735cb309f836a073d7c9fdc6d3752767",
+    "inputs/F10.edge.png": "ef88b6d8b33f16e0f241c9c99882315a8ab239309e4f97c1982cbf0e3823f0e0",
+    "inputs/F10.source.png": "1b5a713a384aa5200b7e9c5c952d77898d3c18503367c27b581fb4706ae09284",
+    "inputs/F11.edge.png": "d2c28dc6902e2b2c7cbcae3fa2bcba86908a985f6ea3fdbba61bdaa235488299",
+    "inputs/F11.source.png": "b30241c8883e99bd57415323583b78466e7afb52fd30b6e4d8bc530ed90117bd",
+    "inputs/F12.edge.png": "13b0ab0b28751a61f56a616dad79b5a459fba1af453df9711316b5d3259551d6",
+    "inputs/F12.source.png": "1e97e89ca19cbda12b0c6260afd0a823f6ce298a87142e00a0b9b58ee5177df5",
+    "inputs/manifest.json": "910e28e0e1901dc3779659f5a6af90a2189a080b0263cd8d12d29d60725479c0",
+    "src/audit.py": "d66f93cdd31ef1f40b2cc6d0682af4e7aa2ac96f45e4dcb2dd9d66e08d2bf550",
+    "src/build_inputs.py": "e493700615fe9be7e72549dfcfc4a1b637678d31e10b84ed07c34f35d3cdea75",
+    "src/run_local.py": "c9695d8cb51b23dc8147c2e66fd0f4a72b002d84f4ad65578b5b36abfd47a7ef",
+    "src/runner.py": "614695fa26640cf02d487505e5789953778db7050539f3dfce935aaed6bc2a7d",
+    "src/test_audit.py": "8134e7a070fe411d994528b0acf6aea486dcc3634fb0336126342e6297f784ca",
+    "src/verify_inputs.py": "9bcf27481ba4521fdf969155faf8b85da1715bfcf8f1b982731ae7de1daf5b32",
+    "src/write_freeze.py": "ee7afe9295874eaf36a6bb869a411050270037ebf532173c8f4055cf68191970"
+  }
+}
