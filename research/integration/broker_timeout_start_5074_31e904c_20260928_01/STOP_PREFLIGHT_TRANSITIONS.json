@@ -1,0 +1,29 @@
+{
+  "schema": "broker-timeout-start-main-transition-stops-v1",
+  "issue": 5074,
+  "allocation": "broker-fake-child-timeout-start-20260928-01",
+  "disposition": "STOP_PRECHECK_ONLY_NOT_FORMAL",
+  "recorded_utc": "2026-09-27T23:15:23Z",
+  "stops": [
+    {
+      "expected_main": "eb3c8d108b8ddd090e5e81a22c7d5db9c367552c",
+      "observed_main": "a081e5d36e8298129f83bf22214d18dfa9e7717a",
+      "reason": "main advanced after the passing dry preflight and before the one-shot formal invocation"
+    },
+    {
+      "planned_main": "a081e5d36e8298129f83bf22214d18dfa9e7717a",
+      "observed_main": "31e904c2529ed26d79897fa8e4b346eba4e60927",
+      "reason": "main advanced before construction revalidation on the a081e5d freeze"
+    },
+    {
+      "planned_branch": "research/broker-fake-child-timeout-start-5074-v5-20260928",
+      "reason": "branch name was occupied by a concurrent task; no existing branch was changed"
+    }
+  ],
+  "formal_cases_invoked": 0,
+  "formal_allocation_consumed": false,
+  "formal_output_created": false,
+  "audit_output_created": false,
+  "invocation_receipt_created": false,
+  "resume_state": "current unique additive freeze targets 31e904c; source commit and immediate main/inventory recheck still required"
+}
