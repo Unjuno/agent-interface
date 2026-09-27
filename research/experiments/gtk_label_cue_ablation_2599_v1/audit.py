@@ -10,7 +10,7 @@ ROOT = Path("/out")
 SOURCE = Path("/src/run.py")
 RESULT_PATH = ROOT / "formal-result.json"
 RAW_PATH = ROOT / "raw_frames_and_weights.npz"
-EXPECTED_SOURCE_SHA256 = "395b8851672e59e8499f31500661b4a5f8b2ad57556423d628252954ff44fd71"
+EXPECTED_SOURCE_SHA256 = "f42ce1c014a5c6a50dd13efdbed083b63fce284386665254559b280e9ff87e75"
 EXPECTED_COLORS = {"base-target": "#22cc44", "base-other": "#2244cc",
                    "shift-target": "#55dd66", "shift-other": "#5566dd"}
 EXPECTED_SEEDS = [40, 41, 42, 43, 44]
@@ -125,4 +125,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
