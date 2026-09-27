@@ -10,6 +10,31 @@ from runtime.core_v1.test_contract import program
 
 
 class PartialExecutionTests(unittest.TestCase):
+    def test_target_disappearing_after_session_preflight_returns_failure(self):
+        from runtime.backends.x11_v1.backend import X11BackendError
+        from runtime.core_v1.contract import WINDOW_ACTIVATE
+        backend = object.__new__(X11Backend)
+        backend.emissions = 0
+        backend.monotonic_ns = lambda: 9000
+        backend.manifest = lambda: capability_manifest(
+            'inert', 'linux', 'x11', OFFICE_FLOOR | {WINDOW_ACTIVATE})
+        backend.preflight = mock.Mock(side_effect=[None, X11BackendError('client withdrawn')])
+        backend.activate = mock.Mock()
+        backend.release_all = mock.Mock(return_value={
+            'verified': True, 'keys_down': [], 'buttons_down': []})
+        row = program()
+        row['ops'] = [{'op': 'activate', 'target': 'app', 'timeout_ms': 25},
+                      {'op': 'release_all'}]
+        session = X11RuntimeSession(backend)
+        result = session.dispatch(row, current_observation_seq=7, current_binding_revision=3)
+        self.assertEqual(result['status'], 'execution_failed')
+        self.assertFalse(session.recovery_required)
+        self.assertEqual(result['execution']['program_emissions'], 0)
+        self.assertEqual(result['execution']['completed_ops'], [])
+        self.assertEqual(result['execution']['activations'], [])
+        backend.activate.assert_not_called()
+        backend.release_all.assert_called_once()
+
     def test_activation_timeout_retains_request_and_stops_following_edit(self):
         from runtime.backends.x11_v1.backend import X11BackendError, X11ExecutionError
         backend = object.__new__(X11Backend)

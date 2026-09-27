@@ -353,7 +353,6 @@ class X11Backend:
         }
 
     def execute(self, program: dict[str, Any]) -> dict[str, Any]:
-        self.preflight(program)
         current_target: str | None = None
         observations: list[dict[str, Any]] = []
         releases: list[dict[str, Any]] = []
@@ -376,6 +375,9 @@ class X11Backend:
             }
 
         try:
+            # Recheck live targets inside the same failure/release boundary as
+            # execution: a client can disappear after session-level preflight.
+            self.preflight(program)
             for index, op in enumerate(program["ops"]):
                 kind = op["op"]
                 if kind == "focus":
