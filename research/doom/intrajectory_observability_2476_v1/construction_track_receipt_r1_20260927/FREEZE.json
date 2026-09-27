@@ -1,0 +1,32 @@
+{
+  "allocation": "issue2476-track-receipt-construction-r1-20260927",
+  "issue": 2476,
+  "parent_issue": 729,
+  "scope": "synthetic track-receipt and separate-authority construction only",
+  "intake_main": "d6dacd3507ea23a7c5aafe82788c0a9d8b452834",
+  "branch": "research/doom/intrajectory-observability-2476-v1",
+  "path": "research/doom/intrajectory_observability_2476_v1/construction_track_receipt_r1_20260927/",
+  "case_count": 15,
+  "formal_invocations": 0,
+  "construction_invocations": 1,
+  "reruns": 0,
+  "replacements": 0,
+  "post_freeze_tuning": 0,
+  "docker_image_id": "sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+  "docker_platform": "linux/amd64",
+  "sha256": {
+    "PLAN.md": "1410ffd884eb88c1a58bd0d6711f52b3e3fc159c8023d4e2e3a4630bffaefedb",
+    "ENVIRONMENT.json": "13570b452dcea67462ec30ac800bcf423a8a0024bc219291bcf1868b96d9798b",
+    "cases.json": "74ee42e5a007733c48e2784f8d0b07c875e8fd367e532db56497467fd6011bd8",
+    "run.py": "958238189172832b68b2ef4b837d59264ea92bc854fe50f6c13aa993de1a4041",
+    "audit.py": "cd5af5cc8fa194ca456179f52e46f7730f1a85e1e06648252d9d53fe38b266ae"
+  },
+  "gates": [
+    "all 15 raw rows match the separately coded auditor",
+    "only the two positive fresh-authority cases admit a non-emitting action candidate",
+    "receipt-only case admits no candidate",
+    "all invalidation controls, including strong full fallback after abrupt translation, abstain",
+    "physical_input_emissions=0"
+  ],
+  "formal_issue2476_allocation": "NOT_RUN; this construction is not the formal BASELINE/TRACKED/ABSTAIN trajectory study"
+}
