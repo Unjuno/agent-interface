@@ -23,7 +23,7 @@ RESEARCH = "research/integration/golden_ipc_source_closure_2922_v1/private_endpo
 EXPECTED_ARTIFACTS = {
     RESEARCH + "session_cli_chromium_task_effect_probe.py": "258ba79c9530187ec3b6eb4bc752b0891d40d7e432bf6eaf84d9a5c41a89e3cd",
     RESEARCH + "audit_task_effect.py": "9704ea7fad000eb1d7212f4f0eef6c2d2a2583ceba31564af5425c371fd914f3",
-    RESEARCH + "test_audit_task_effect.py": "85cb26995c7de69a85f4b66637517272617a4f15ef908ba68a5651ef8ef1251d",
+    RESEARCH + "test_audit_task_effect.py": "ccd90a881e91bc5bdec0e905462a177a5cbfc4791fc11ad90a8bd1c6ba6cee2b",
 }
 
 def main():
