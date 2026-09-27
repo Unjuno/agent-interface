@@ -134,4 +134,3 @@ class LiveTransport:
         with self.raw_jsonl.open("a", encoding="utf-8") as stream:
             stream.write(json.dumps(raw, sort_keys=True, separators=(",", ":")) + "\n")
         return raw
-

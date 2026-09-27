@@ -44,4 +44,3 @@ def evaluate_region(
     if evidence.get("ambiguous", False):
         return RegionDecision(False, "ambiguous")
     return RegionDecision(True, "admitted")
-

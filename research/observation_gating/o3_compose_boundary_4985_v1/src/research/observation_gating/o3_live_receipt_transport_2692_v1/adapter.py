@@ -65,4 +65,3 @@ def evaluate_delivery(request, receipt, source_event, trusted_window, frame_byte
             "reason": "admitted" if admitted else ";".join(reasons),
             "model_escalation_eligible": not admitted,
             "action_emissions": 0}
-
