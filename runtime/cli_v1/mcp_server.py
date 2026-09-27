@@ -41,6 +41,8 @@ PublicProgram = Annotated[dict, Field(description=(
     'End with exactly one {"op":"release_all"}. Expanded ops must fit 128. '
     'gap_ms is optional integer 0..1000; key_chord repeat is optional integer 1..126. '
     'Observation captures once and does not pause for a model decision. '
+    'Before replacing field text, inspect the selection and resulting value before committing. '
+    'Emitted clicks or CTRL+a are not acknowledgements that a widget has processed them. '
     'On X11, window_client uses target-client coordinates and may omit overlapping dialogs; '
     'screen_physical_px uses display coordinates and includes other visible windows in the explicit region. '
     'wait_update with timeout_ms is a fixed delay on X11, not a redraw acknowledgement.'
