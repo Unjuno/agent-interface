@@ -1,0 +1,108 @@
+{
+  "admissions": [
+    {
+      "action": "request_save",
+      "active_window": "",
+      "result": {
+        "authorization": null,
+        "eligible": false,
+        "expected_sequence": 1,
+        "status": "stale",
+        "valid_until_ns": 0
+      },
+      "symbol": "window:4194307/#save",
+      "title": "EDITING"
+    }
+  ],
+  "allocation_id": "ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-05",
+  "container_image_id": "sha256:dff1c7b56201b4c299883655d98aee3b3f8d7c0c6dd1e4ad6320b942fb5d17fb",
+  "independent_effect_checks": [],
+  "observations": [
+    {
+      "event": "observation",
+      "observation": {
+        "captured_ns": 43662773725785,
+        "evidence_digest": "22e51ed6617df5ac5625f4b32f7cda74dfff4095f6a14f2428b0280bcc13fe89",
+        "evidence_ref": "observation-01.png",
+        "predicates": {
+          "confirm_target_present": false,
+          "page_state": "EDITING",
+          "save_target_present": true
+        },
+        "sequence": 1,
+        "surface": "issue3311-chromium-unit-v1"
+      },
+      "window_id": 4194307,
+      "window_pid": "8",
+      "window_title": "EDITING"
+    }
+  ],
+  "page_sha256": "ae253611acb9c2686dbafd471eacbe499d67470c88b0e23aad7a575731caca59",
+  "runner_exit": 0,
+  "runtime_receipt": {
+    "completed_transitions": 0,
+    "critical_events": [
+      {
+        "action": "request_save",
+        "event": "branch_selected",
+        "evidence_ref": "observation-01.png",
+        "matched_conditions": {
+          "page_state": "EDITING",
+          "save_target_present": true
+        },
+        "outcome": "action",
+        "state": "editing"
+      },
+      {
+        "action": "request_save",
+        "event": "admission_refused",
+        "reason": "stale_symbol",
+        "status": "stale"
+      },
+      {
+        "completed_transitions": 0,
+        "event": "runtime_finished",
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    ],
+    "elapsed_ns": 501462991,
+    "ended_ns": 43662776278206,
+    "format": "compiled-gui-runtime-receipt-v1",
+    "frontier_model_resumptions": 0,
+    "input_authority": "admission_per_action_only",
+    "interface_id": "issue3311-unit-v1",
+    "latest_evidence_ref": "observation-01.png",
+    "method": "save_confirm_once",
+    "method_version": "1",
+    "observations": [
+      {
+        "captured_ns": 43662773725785,
+        "evidence_digest": "22e51ed6617df5ac5625f4b32f7cda74dfff4095f6a14f2428b0280bcc13fe89",
+        "evidence_ref": "observation-01.png",
+        "predicates": {
+          "confirm_target_present": false,
+          "page_state": "EDITING",
+          "save_target_present": true
+        },
+        "sequence": 1
+      }
+    ],
+    "outcome": "SAFE_YIELD",
+    "pending_effect": null,
+    "raw_evidence_retention": "adapter_responsibility_unverified",
+    "reason": "stale_symbol",
+    "session_scope": "single-local-x11-fixture",
+    "started_ns": 43662274815215,
+    "transitions": []
+  },
+  "runtime_source_sha256": "93e47e1ab5ae3450bb4acf9ec9d21c9abc44ca93ffaee25683b22039d9a722ca",
+  "schema": "issue3311_intermediate_feedback_x11_v1",
+  "server_oracle": {
+    "events": [],
+    "submissions": []
+  },
+  "terminals": [],
+  "window_id": 4194307,
+  "window_pid": 8
+}
