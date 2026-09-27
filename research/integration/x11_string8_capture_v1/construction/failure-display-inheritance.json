@@ -1,0 +1,8 @@
+{
+  "classification": "EXCLUDED_CONSTRUCTION_HARNESS_FAILURE",
+  "formal_cases_started": 0,
+  "image_id": "sha256:f82bbd2c087056f324794ca9b0de64c16f0ecaf9a84f30bb0aba17b5b1833786",
+  "failure": "runner parent opened Python-Xlib Display() without passing its case-local DISPLAY; inherited DISPLAY was empty",
+  "exception": "Xlib.error.DisplayNameError: Bad display name \"\"",
+  "disposition": "preserved; corrected runner to pass the explicit private display name to both Python-Xlib and native libX11; no formal allocation consumed"
+}
