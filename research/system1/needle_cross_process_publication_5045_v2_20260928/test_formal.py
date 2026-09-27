@@ -5,10 +5,17 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from formal import (
+    EXPECTED_SEED,
+    IMAGE,
+    frozen_input_sha,
+    validate_freeze_identity,
+    validate_output_path,
+    validate_sources,
+)
 
 ROOT = Path(__file__).resolve().parents[3]
 EXP = Path(__file__).resolve().parent
-EXPECTED_SEED = "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a"
 
 class FrozenPreflightTests(unittest.TestCase):
     def test_actual_registered_freeze_has_nested_input_digest(self):
@@ -28,10 +35,31 @@ class FrozenPreflightTests(unittest.TestCase):
             self.assertFalse(output.exists())
 
     def test_misnested_digest_is_rejected_by_contract(self):
-        freeze = {"image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
-                  "input_sha256": EXPECTED_SEED}
-        with self.assertRaises(KeyError):
-            _ = freeze["input"]["sha256"]
+        freeze = {"schema": "needle-cross-process-publication-freeze-v1",
+                  "image_id": IMAGE, "input_sha256": EXPECTED_SEED}
+        with self.assertRaisesRegex(RuntimeError, "input.sha256"):
+            validate_freeze_identity(freeze, EXPECTED_SEED)
+
+    def test_wrong_image_and_seed_fail_closed(self):
+        good = {"schema": "needle-cross-process-publication-freeze-v1",
+                "image_id": IMAGE, "input": {"sha256": EXPECTED_SEED}}
+        bad_image = dict(good, image_id="sha256:" + "0" * 64)
+        with self.assertRaisesRegex(RuntimeError, "image"):
+            validate_freeze_identity(bad_image, EXPECTED_SEED)
+        with self.assertRaisesRegex(RuntimeError, "input SHA"):
+            validate_freeze_identity(good, "0" * 64)
+
+    def test_source_mismatch_and_existing_output_fail_closed(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            (root / "sample.py").write_text("changed", encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "source mismatch"):
+                validate_sources(root, {"sample.py": "0" * 64})
+            output = root / "already-there"
+            output.mkdir()
+            with self.assertRaisesRegex(RuntimeError, "not exist"):
+                validate_output_path(output)
 
 if __name__ == "__main__":
     unittest.main()
+
