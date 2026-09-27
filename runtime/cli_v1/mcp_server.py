@@ -1,7 +1,9 @@
-"""Optional stdio MCP transport over the existing one-shot public API."""
+"""Optional stdio MCP transport; one-shot by default, explicit persistent X11 option."""
 import argparse
 import asyncio
 from copy import deepcopy
+from contextlib import asynccontextmanager
+import anyio
 import json
 from itertools import islice, dropwhile
 from pathlib import Path
@@ -13,9 +15,10 @@ from mcp.server.fastmcp import FastMCP
 from mcp.types import CallToolResult, ImageContent, TextContent
 from pydantic import Field, StrictBool, StrictInt, StrictStr
 
-from .api import dispatch
+from .api import dispatch, dispatch_in_session
+from .mcp_session import MCPSessionOwner
 from .attempt import _write_json
-from .observe import observe
+from .observe import observe, observe_in_session
 from .review import present_result
 from .validate_program import SCHEMA as VALIDATION_SCHEMA, inspect_program
 
@@ -55,7 +58,9 @@ def content(result, *, error=False, include_image=True):
     return CallToolResult(content=blocks, isError=error)
 
 
-def create_server(targets, output_directory, *, display_name=None):
+def create_server(targets, output_directory, *, display_name=None, session_mode="one-shot"):
+    if session_mode not in ("one-shot", "persistent-x11"):
+        raise ValueError("unknown session mode")
     if (not isinstance(targets, dict) or not targets or
             any(not isinstance(k, str) or not k or type(v) is not int or v <= 0
                 for k, v in targets.items())):
@@ -67,9 +72,34 @@ def create_server(targets, output_directory, *, display_name=None):
     workers = set()
     calls = {}
     calls_lock = threading.Lock()
-    server = FastMCP('Agent Interface public one-shot API', instructions=(
-        'Configured target names: ' + json.dumps(sorted(targets)) + '. '
-        'Each call owns one backend session. No source/lease is issued by this server. '
+    owner = MCPSessionOwner(targets, display_name) if session_mode == 'persistent-x11' else None
+    shutting_down = False
+
+    def close_owner():
+        report = owner.close()
+        _write_json(root / ('session-' + owner.session_id + '-close.json'), report)
+        return report
+
+    @asynccontextmanager
+    async def lifespan(_server):
+        nonlocal shutting_down
+        try:
+            yield {}
+        finally:
+            shutting_down = True
+            # Finish committed workers before touching their connection. No
+            # cancellation-based redispatch or close racing with active input.
+            with anyio.CancelScope(shield=True):
+                if workers:
+                    await asyncio.gather(*list(workers), return_exceptions=True)
+                if owner is not None:
+                    await asyncio.to_thread(close_owner)
+
+    server = FastMCP('Agent Interface public API', lifespan=lifespan, instructions=(
+        'Configured target names: ' + json.dumps(sorted(targets)) + '. ' +
+        ('Each call owns one backend session. ' if owner is None else
+         'One X11 connection is retained until interface_close or transport shutdown; no automatic reopen. ') +
+        'No source/lease is issued by this server. '
         'Caller supplies current observation and binding values. Inspect action, image and cleanup '
         'outcomes separately. Never replay an uncertain action automatically.'))
 
@@ -86,6 +116,8 @@ def create_server(targets, output_directory, *, display_name=None):
             # Serialize before calling the backend. A persistence failure here sends no input.
             request = {'operation': operation, 'arguments': kwargs, 'targets': targets,
                        'display_name': display_name}
+            if owner is not None:
+                request['session'] = owner.snapshot()
             try:
                 _write_json(call_root / 'request.json', request)
             except (OSError, ValueError, TypeError) as error:
@@ -102,7 +134,18 @@ def create_server(targets, output_directory, *, display_name=None):
             with calls_lock:
                 calls[call_id]['backend_attempted'] = True
             try:
-                if operation == 'observe':
+                if operation == 'close':
+                    report = close_owner()
+                elif owner is not None:
+                    session = owner.get()
+                    options.pop('display_name')
+                    if operation == 'observe':
+                        report = observe_in_session(session, **options)
+                    else:
+                        owner.dispatch_attempted = True
+                        program = options.pop('program')
+                        report = dispatch_in_session(session, program, **options)
+                elif operation == 'observe':
                     report = observe(deepcopy(targets), **options)
                 else:
                     program = options.pop('program')
@@ -112,6 +155,11 @@ def create_server(targets, output_directory, *, display_name=None):
                 report = {'status': 'runtime_failed', 'error': repr(error),
                           'operation': operation, 'operation_invoked': True,
                           'effect_status': 'unknown'}
+                if owner is not None and owner.state == 'failed' and owner.session is None:
+                    report.update(status='backend_unavailable', failure_phase='session_initialization',
+                                  operation_invoked=False, input_dispatched=False, effect_status='none')
+            if owner is not None:
+                report['session'] = owner.snapshot()
             try:
                 _write_json(call_root / 'report.json', report)
                 persistence_error = None
@@ -119,7 +167,10 @@ def create_server(targets, output_directory, *, display_name=None):
                 persistence_error = repr(error)
                 with calls_lock:
                     calls[call_id]['persistence_failure'] = 'report'
-            result = present_result(report, call_root, compact=compact, report_refs=report_refs)
+            result = (dict(report) if operation == 'close' else
+                      present_result(report, call_root, compact=compact, report_refs=report_refs))
+            if owner is not None:
+                result['session'] = owner.snapshot()
             result['call_directory'] = str(call_root)
             result['call_id'] = call_id
             if persistence_error is not None:
@@ -137,6 +188,9 @@ def create_server(targets, output_directory, *, display_name=None):
             return content({'status': 'invalid_request',
                 'error': 'report_refs requires compact=true',
                 'operation_invoked': False}, error=True)
+        if shutting_down or (owner is not None and owner.state == 'closed' and operation != 'close'):
+            return content({'status': 'session_closed', 'operation_invoked': False,
+                            'replay_allowed': False}, error=True)
         # Decide busy before scheduling a worker; thread-pool contention must not queue input.
         if not lock.acquire(blocking=False):
             return content({'status': 'busy', 'operation_invoked': False}, error=True)
@@ -149,6 +203,16 @@ def create_server(targets, output_directory, *, display_name=None):
         worker.add_done_callback(finished)
         # A cancelled transport must not cancel a queued worker and strand its lock.
         return await asyncio.shield(worker)
+
+    if owner is not None:
+        @server.tool()
+        async def interface_close() -> CallToolResult:
+            """Close this owned connection, retaining cleanup evidence; never reopen.
+
+            Busy refuses while an operation runs. Retained results remain readable.
+            Release/close failures are separate from prior task outcomes.
+            """
+            return await submit('close', {}, False, False)
 
     @server.tool()
     async def interface_validate(program: dict) -> CallToolResult:
@@ -268,9 +332,10 @@ def main():
     parser.add_argument('--targets', type=Path, required=True)
     parser.add_argument('--output-directory', type=Path, required=True)
     parser.add_argument('--display')
+    parser.add_argument('--session-mode', choices=('one-shot', 'persistent-x11'), default='one-shot')
     args = parser.parse_args()
     create_server(json.loads(args.targets.read_text(encoding='utf-8')),
-                  args.output_directory, display_name=args.display).run(transport='stdio')
+                  args.output_directory, display_name=args.display, session_mode=args.session_mode).run(transport='stdio')
 
 
 if __name__ == '__main__':
