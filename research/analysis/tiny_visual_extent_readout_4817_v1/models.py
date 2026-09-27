@@ -66,4 +66,3 @@ def fit(x, y, seed, steps=1000, lr=0.2, extent=False):
         for index, gradient in enumerate(gradients):
             model[index] -= lr * gradient
     return tuple(model)
-
