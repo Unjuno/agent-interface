@@ -1,3 +1,17 @@
+# Current integration checkpoint — primary host use, 2026-09-28
+
+Current exercised main: b3af4e85f8bf7d41da5251b1728a6ddab34c3476. Older dated checkpoints below remain historical and may describe limitations since repaired.
+
+- Explicit opt-in owner-lifetime and cooperative native_stop are integrated (#5072/#5077), with retained idle server-kill and stop checks. They do not guarantee immediate cancellation during active input or full descendant cleanup.
+- Relay stop forwarding and visible UTF-8 title fallback are integrated (#5083). The reusable persistent Node host client (#5088) retains requests/replies, rejects overlapping sends and lets the caller wait on the same request. Direct registered MCP was still unavailable in this host; Node-mediated MCP is the exercised path.
+- Native exact-request resume shares public image-delivery control (#5089): outcome-only retrieval can omit the image block while preserving validation and references. Default delivery is unchanged.
+- [Primary two-app use](../runtime/results/native-primary-twoapp-client-01/README.md) completed Calc 753/599 and Inkscape X56/Y50/W40/H30 in one bounded allocation. Eleven MCP calls included five input programs and two explicit observations; eight images were presented. Saved-file scorers and raw-file verification passed.
+
+The current bottleneck must be evaluated across the complete primary-host loop: first-start-send to finish callback was 94.966 seconds, of which 8.670 seconds lay inside send-to-callback intervals and 86.295 seconds between calls. The latter mixes reasoning, orchestration and commentary; it is not pure model wait. Callback timing is not useful-feedback or host-render timing. Exact model/token/cost accounting and matched comparison remain unavailable, so this does not complete #57 or prove human tempo.
+
+Next integration priority: preserve this working path and measure bounded observation/decision handoffs, especially valid-but-unpainted and stale-dialog images. Do not expand unrelated experiments, develop sensors in this task, or adopt a wait default from these examples. #3700 remains HOLD_PRODUCTION_ADOPTION. Registered-host recovery, true useful-feedback onset and comparison accounting remain explicit gaps.
+
+---
 # Integration priority — 2026-09-19
 
 ## Integration checkpoint — 2026-09-28
