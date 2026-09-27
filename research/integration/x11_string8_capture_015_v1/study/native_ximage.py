@@ -51,4 +51,3 @@ def capture(drawable_id: int, width: int, height: int, display_name: str) -> dic
             destroy = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.POINTER(_XImage))(image.contents.functions.destroy_image)
             destroy(image)
         x11.XCloseDisplay(display)
-
