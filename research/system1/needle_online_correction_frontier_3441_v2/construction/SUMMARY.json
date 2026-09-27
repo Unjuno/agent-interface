@@ -1,0 +1,16 @@
+{
+  "schema": "needle-online-correction-frontier-construction-v2",
+  "issue": 4826,
+  "formal": false,
+  "disposition": "CONSTRUCTION_SIGNAL_FAIL_ONLINE_CORRECTION_FORGETTING",
+  "seeds": [
+    {"seed":67117,"base_a_correct":256,"candidate_a_step0":256,"candidate_b_step0":0,"candidate_a_step32":0,"candidate_b_step32":256,"first_forgetting_crossing":29},
+    {"seed":67229,"base_a_correct":256,"candidate_a_step0":256,"candidate_b_step0":0,"candidate_a_step32":0,"candidate_b_step32":256,"first_forgetting_crossing":30},
+    {"seed":67341,"base_a_correct":256,"candidate_b_step0":0,"candidate_a_step0":256,"candidate_a_step32":0,"candidate_b_step32":256,"first_forgetting_crossing":30}
+  ],
+  "construction_tests":"3/3 PASS",
+  "audit":{"runs":3,"curve_points":99,"controls":9,"errors":0,"metric_corruption_rejected":true,"logit_corruption_rejected":true},
+  "raw":{"bytes":628723,"sha256":"1d70cae8f9e73bd6fee0fa49e0e177ddc29a4cf4c77c0fabe3bea3469b859404","parts":32},
+  "limit":"construction signal only; no formal confirmation, runtime, task, GUI or authority claim"
+}
+
