@@ -1,12 +1,12 @@
 {
   "schema": "predicate-order-audit-integrity-4733-freeze-v1",
   "issue": "Unjuno/agent-interface#4953",
-  "allocation": "predicate-order-audit-integrity-4733-20260928-01",
+  "allocation": "predicate-order-audit-integrity-4733-20260928-02",
   "base_main": "081403e352aa79a6ff0cd030fbb9d2fbbf28c7e6",
   "branch": "research/predicate-audit-integrity-4953-v1-20260928",
-  "freeze_revision": 2,
-  "supersedes_freeze_sha256": "4cc15fa549da97e9e7b5e7140b608451de57efc556e3d2333e0f75f397a9187d",
-  "correction": "Initial formal container command was rejected before runner startup due CLI argument mismatch. No formal invocation occurred. Revised command mounts only read-only input files/directories separately and keeps /out writable; output remains a fresh empty host directory.",
+  "freeze_revision": 3,
+  "supersedes_freeze_sha256": "d984ed129e96d3d57c9777bae0f467bb90781e18d8207057f6887a71c1fb4e1c",
+  "correction": "Revision 2 runner did start but found a pre-existing RESULT.json from the malformed CLI/mount attempt and STOPped before loading inputs. Preserve the old allocation unmodified; no scientific execution occurred. Revision 3 uses a fresh output allocation path; frozen hypothesis and inputs unchanged.",
   "path": "research/analysis/predicate_order_drift_audit_integrity_4733_v1/",
   "prereg_correction_comments": [
     "https://github.com/Unjuno/agent-interface/issues/4953#issuecomment-5858088457",
@@ -50,12 +50,12 @@
   },
   "paths": {
     "repo_root": "/tmp/agent-interface-3152-live",
-    "formal_output": "/tmp/agent-interface-4953-formal-001",
+    "formal_output": "/tmp/agent-interface-4953-formal-002",
     "independent_audit_output": "/tmp/agent-interface-4953-audit-001"
   },
   "commands": {
-    "formal": "docker run --rm --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cpus 1 --memory 512m --pids-limit 32 -e PYTHONDONTWRITEBYTECODE=1 -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_audit_integrity_4733_v1:/plan:ro -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_4258_v1/src:/source:ro -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_4258_v1/RAW_AND_AUDIT.zip.base64:/input/transport:ro -v /tmp/agent-interface-4953-formal-001:/out:rw sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 python -B /plan/run_probe.py /source/audit.py /input/transport /out/RESULT.json",
-    "independent_audit": "docker run --rm --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cpus 1 --memory 512m --pids-limit 32 -e PYTHONDONTWRITEBYTECODE=1 -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_audit_integrity_4733_v1:/plan:ro -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_4258_v1/src:/source:ro -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_4258_v1/RAW_AND_AUDIT.zip.base64:/input/transport:ro -v /tmp/agent-interface-4953-formal-001:/evidence:ro -v /tmp/agent-interface-4953-audit-001:/out:rw sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 python -B /plan/independent_audit.py /source /input/transport /evidence/RESULT.json /out/AUDIT.json"
+    "formal": "docker run --rm --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cpus 1 --memory 512m --pids-limit 32 -e PYTHONDONTWRITEBYTECODE=1 -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_audit_integrity_4733_v1:/plan:ro -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_4258_v1/src:/source:ro -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_4258_v1/RAW_AND_AUDIT.zip.base64:/input/transport:ro -v /tmp/agent-interface-4953-formal-002:/out:rw sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 python -B /plan/run_probe.py /source/audit.py /input/transport /out/RESULT.json",
+    "independent_audit": "docker run --rm --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cpus 1 --memory 512m --pids-limit 32 -e PYTHONDONTWRITEBYTECODE=1 -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_audit_integrity_4733_v1:/plan:ro -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_4258_v1/src:/source:ro -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_4258_v1/RAW_AND_AUDIT.zip.base64:/input/transport:ro -v /tmp/agent-interface-4953-formal-002:/evidence:ro -v /tmp/agent-interface-4953-audit-001:/out:rw sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 python -B /plan/independent_audit.py /source /input/transport /evidence/RESULT.json /out/AUDIT.json"
   },
   "formal": {
     "invocations": 0,
@@ -65,6 +65,10 @@
       "development_alpha_0_5",
       "truth_state_count_99"
     ],
-    "interpreter_modes": ["normal", "python_-O", "PYTHONOPTIMIZE=1"]
+    "interpreter_modes": [
+      "normal",
+      "python_-O",
+      "PYTHONOPTIMIZE=1"
+    ]
   }
 }
