@@ -64,4 +64,3 @@ def main():
     print(json.dumps({"seed":SEED,"artifact_sha256":artifact["payload_sha256"],"artifact_bytes":os.path.getsize(os.path.join(OUT,"skill.json")),"environment":{"platform":platform.platform(),"python":platform.python_version(),"torch":torch.__version__,"device":"cpu","threads":torch.get_num_threads()}},sort_keys=True))
 
 if __name__=="__main__": main()
-
