@@ -29,8 +29,13 @@ class NativeDecision(BaseModel):
     source_sequence: StrictInt = Field(ge=1, description='Exact sequence of the source image you viewed.')
     point: list[StrictInt | StrictFloat] | None = Field(default=None, min_length=2, max_length=2,
         description=('Observed [x,y] in screen physical pixels; required for click and keyboard context binding. '
-                     'For keyboard, choose a visible feature in the intended focused window, not a blank region. '
-                     'This point guards context; it does not click or select the text destination.'))
+                     'Local visual matching needs a distinctive surrounding patch: avoid uniform fill or blank space. '
+                     'For click, stay inside the intended clickable target near a visible border or text; '
+                     'do not move to a different control merely to obtain texture. '
+                     'For keyboard, choose a visible feature in the intended focused window; '
+                     'this point guards context and does not click or select the text destination. '
+                     'If visually_flat_source_region is returned with input_dispatched=false, inspect the '
+                     'returned image and choose a new point using its new source sequence. No automatic retry.'))
     expected_title: StrictStr | None = Field(default=None,
         description=('Exact complete application window title for feedback (case-sensitive equality, not a substring); '
                      'include the application suffix, e.g. "shape.svg - Inkscape". '

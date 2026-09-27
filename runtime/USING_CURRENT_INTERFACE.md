@@ -232,3 +232,18 @@ These checks do not start an application or model. Passing them does not establi
 human-tempo operation, cross-application reliability, token/cost reduction or
 current-model compatibility. Frozen experiments remain evidence for their pinned
 sources; integration commits do not extend those claims to a newer build.
+
+### Choose a visually matchable point
+
+Native click and keyboard context checks match a local image patch around the
+specified point. A uniform fill can be refused even when a human recognizes the
+whole object. For clicks, choose a point inside the intended clickable target
+with a visible border or text nearby; choosing another control changes the action.
+For keyboard input, the point is a context anchor, not a click destination.
+
+If a response reports `visually_flat_source_region` and `input_dispatched=false`,
+inspect the returned image and explicitly choose a new point with its new source
+sequence. A refused action is not automatically replayed. See the
+[mixed Calc/Inkscape primary run](results/public-owned-mixed-live-01/README.md):
+a center-point refusal added one round trip before an edge-point correction.
+This observation motivates guidance; it does not measure the guidance's benefit.
