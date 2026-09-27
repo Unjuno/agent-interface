@@ -1,0 +1,52 @@
+{
+  "schema": "needle-online-correction-frontier-freeze-v4",
+  "issue": 4834,
+  "allocation": "needle-online-correction-frontier-3441-v4",
+  "intake_main_sha": "add031e472d1ad8492ec6a47871c32a4300db298",
+  "branch": "research/needle-online-correction-frontier-3441-v4-20260927",
+  "path": "research/system1/needle_online_correction_frontier_3441_v4/",
+  "seeds": [65117, 65229, 65341],
+  "stream_salts": {
+    "train_A": 41017,
+    "heldout_A": 42043,
+    "heldout_B": 43051,
+    "support_B": 44059
+  },
+  "source_sha256": {
+    "needle_frontier_study.py": "d23dbc92a6e7c44191b61cc15e509d2eee6e62f8a00960815d414742505e16f6",
+    "needle_frontier_audit.py": "a21c4d4bd275e8e8761100f5e5f011363820ff7421bb223d8c5de2f1534e9ffb",
+    "test_needle_frontier.py": "0e3c761c2a35f187035a7dfbb40b08d2b441e78d5f98ceda9a916c94cca2a828",
+    "README.md": "780f6acf6e9f49d300f0307b45f75f7c88410bc8bcc4b1bad0bf1a8992c38df7"
+  },
+  "container": {
+    "image": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "torch": "2.5.1+cpu",
+    "device": "cpu",
+    "threads": 1,
+    "network": "none",
+    "source_mount": "read-only",
+    "rootfs": "read-only",
+    "memory": "2g",
+    "cpus": 1,
+    "pids": 64,
+    "gpu": false,
+    "pull": false,
+    "install": false
+  },
+  "construction": {
+    "test_count": 6,
+    "optimizer_updates": 0,
+    "corruption_controls_rejected": 9
+  },
+  "formal_invocations": {
+    "trainer": 1,
+    "independent_auditor": 1,
+    "retries": 0,
+    "tuning": false,
+    "seed_replacement": false
+  },
+  "scope": "synthetic shared rank-2 online-correction frontier; no external effects or action authority"
+}
