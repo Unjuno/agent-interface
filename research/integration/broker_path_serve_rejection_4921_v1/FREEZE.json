@@ -1,0 +1,60 @@
+{
+  "schema": "broker-path-serve-rejection-4921-freeze-v1",
+  "allocation": "broker-path-serve-rejection-4921-20260928-01",
+  "issue": 4921,
+  "intake_main_commit": "519f2c1bdb219697c2f5e92ae6c27714265d60e0",
+  "branch_base_commit": "d0fc6e9de0f113f4160d80deb5f151c8a439144e",
+  "source_git_blobs": {
+    "upstream_broker_py": "5734f54f318db9ac5e96b2bed6f6bed105ac39ff",
+    "broker_under_test_py": "30f8535dd082108b8c27ba277786a6c00bbcd052",
+    "path_policy_py": "ec95d4deec0ec65d798d34523be0a7b85bc2da3b",
+    "runner_py": "69c821fa8407eb5e7aea635c8f72a03319c21616",
+    "audit_py": "8ec2f43c41016fe4ec5f0244a1f6bc96dd2a2907"
+  },
+  "source_sha256": {
+    "upstream_broker_py": "e44822269b921aa6327563b27e48a6d8ef4ebe35a182f50de541cf66fce6199c",
+    "broker_under_test_py": "3069db5a0f57dece8d29e420c4911e0a72cf35be584701aa99c0e783a0e312da",
+    "path_policy_py": "ce4ae0240f5930d1021da1cc73eddce431e789627845d76bc2205a9b10055930",
+    "runner_py": "68910459a9e2d520dd5ecf85e08c09d4e1f3afd522ebd4432577f44938a0950b",
+    "audit_py": "5954eb8a48915c18e1fce5123fd4ca895cfaf5cc406c8d2ff7cd3d423e18952a"
+  },
+  "image": "python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0",
+  "platform": "linux/amd64",
+  "docker_limits": {
+    "network": "none",
+    "read_only_root": true,
+    "tmpfs": "/tmp:rw,nosuid,nodev,noexec,size=16777216",
+    "cpus": 1,
+    "memory": "256m",
+    "pids": 32,
+    "uid": "image-default"
+  },
+  "case_schedule": {
+    "valid_cases": 5,
+    "reject_cases": 18,
+    "total": 23,
+    "fields": [
+      "schema",
+      "image",
+      "working"
+    ],
+    "reject_classes": [
+      "traversal",
+      "encoded_traversal",
+      "absolute",
+      "missing",
+      "external_symlink",
+      "ambiguous_separator"
+    ],
+    "valid_classes": [
+      "valid_repo",
+      "valid_workspace",
+      "inside_symlink"
+    ]
+  },
+  "mock_only": true,
+  "formal_runner_invocations": 0,
+  "retries": 0,
+  "postfreeze_tuning": 0,
+  "decision_gate": "PASS_SERVE_PATH_REJECTION_SCOPED iff all 23 scheduled rows exist; 5 valid rows map canonical in-root args and call mocked subprocess once; 18 invalid rows emit InvalidHostPath/HOST_MODEL_PATH_REJECTED with returncode null, authority false, zero subprocess calls; independent audit and all 5 corruption controls pass."
+}
