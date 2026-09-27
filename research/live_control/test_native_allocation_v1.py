@@ -10,6 +10,53 @@ from native_exchange_v1 import current_owner_identity
 
 
 class AllocationTests(unittest.TestCase):
+    def test_owner_lifetime_pipe_closes_on_setup_and_spawn_failure(self):
+        real_pipe = os.pipe
+        for phase in ('launch_record', 'spawn'):
+            with self.subTest(phase=phase), tempfile.TemporaryDirectory() as tmp:
+                descriptors = []
+                def capture_pipe():
+                    pair = real_pipe()
+                    descriptors.extend(pair)
+                    return pair
+                allocation = NativeAllocation(Path(tmp)/'run', 'calc', owner_lifetime=True)
+                failing = (patch('pathlib.Path.write_text', side_effect=OSError('record failure'))
+                           if phase == 'launch_record' else
+                           patch('native_allocation_v1.subprocess.Popen', side_effect=OSError('spawn failure')))
+                with patch('native_allocation_v1.os.pipe', side_effect=capture_pipe), failing:
+                    self.assertEqual(allocation.start(timeout=0)['status'], 'needs_review')
+                self.assertEqual(len(descriptors), 2)
+                for fd in descriptors:
+                    with self.assertRaises(OSError):
+                        os.fstat(fd)
+                self.assertIsNone(allocation._owner_writer)
+
+    def test_only_reader_is_passed_and_terminal_poll_closes_writer(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            allocation = NativeAllocation(Path(tmp)/'run', 'calc', owner_lifetime=True)
+            process = Mock(pid=os.getpid())
+            process.poll.return_value = None
+            captured = {}
+            def spawn(argv, **options):
+                reader = options['pass_fds'][0]
+                captured.update(reader=reader, writer=allocation._owner_writer)
+                self.assertEqual(options['pass_fds'], (reader,))
+                self.assertEqual(argv[argv.index('--owner-lifetime-fd')+1], str(reader))
+                self.assertFalse(os.get_inheritable(allocation._owner_writer))
+                os.fstat(reader)
+                return process
+            with patch('native_allocation_v1.subprocess.Popen', side_effect=spawn):
+                self.assertEqual(allocation.start(timeout=0)['status'], 'starting')
+            with self.assertRaises(OSError):
+                os.fstat(captured['reader'])
+            os.fstat(captured['writer'])
+            process.poll.return_value = 0
+            self.assertEqual(allocation.status()['status'], 'terminal')
+            with self.assertRaises(OSError):
+                os.fstat(captured['writer'])
+            self.assertEqual(allocation.status()['status'], 'terminal')
+
+
     def test_explicit_text_policy_is_forwarded_and_reported(self):
         with tempfile.TemporaryDirectory() as tmp:
             for gap in (0,2,10):
