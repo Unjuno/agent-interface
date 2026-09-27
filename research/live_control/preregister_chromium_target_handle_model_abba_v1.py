@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 import subprocess
 
 
@@ -114,7 +115,7 @@ def main():
         ],
         "failure_policy": "retain first four sessions; no rerun, prompt, coordinate, box or order repair",
         "codex_cli": version,
-        "sources": {name: sha(HERE / name) for name in sources},
+        "sources": complete_guarded_hashes({name: sha(HERE / name) for name in sources}, base=HERE),
         "scope": (
             "four fresh private Chromium X11 sessions over two seeds; one final model "
             "choice per session; no causal latency, monetary cost, human-speed, "

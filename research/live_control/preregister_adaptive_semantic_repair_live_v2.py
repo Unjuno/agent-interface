@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -74,7 +75,7 @@ def main():
                   "latency or token comparison. It tests one natural local resize repair and one "
                   "hover-patch model fallback with independent task/release evidence. No general "
                   "repair rate, savings, portability or human-tempo claim follows."),
-        "source_sha256": {name: sha(ROOT / name) for name in SOURCES}}
+        "source_sha256": complete_guarded_hashes({name: sha(ROOT / name) for name in SOURCES}, base=ROOT)}
     OUT.write_text(json.dumps(plan, indent=2) + "\n", encoding="utf-8", newline="\n")
     print("adaptive_semantic_repair_live_v2_preregistered")
 
