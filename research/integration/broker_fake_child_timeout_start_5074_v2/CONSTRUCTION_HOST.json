@@ -1,0 +1,25 @@
+{
+  "schema": "broker-timeout-start-host-construction-v1",
+  "issue": 5074,
+  "allocation": "broker-fake-child-timeout-start-20260928-01",
+  "disposition": "PASS_HOST_CONSTRUCTION_ONLY",
+  "timestamp_local": "2026-09-28 Asia/Tokyo",
+  "base_main": "8f41a5edba1acda9dcecfc4fb91cea5186b78087",
+  "branch": "research/broker-fake-child-timeout-start-5074-v4",
+  "additive_path": "research/integration/broker_fake_child_timeout_start_5074_v2/",
+  "command": "python -B -m unittest discover -s work\\issue5074v4\\construction -p 'test_*.py' -v",
+  "exit_code": 0,
+  "tests_passed": 13,
+  "tests_total": 13,
+  "scope": "host-side construction harness and frozen-source/preflight helper tests only",
+  "docker_used_in_this_run": false,
+  "broker_mounted_or_invoked": false,
+  "formal_cases_invoked": 0,
+  "formal_allocation_consumed": false,
+  "shared_resource_gate": "Docker rerun withheld pending explicit shared-lane ownership confirmation; empty docker ps is not a lease",
+  "limitations": [
+    "does not validate the final source bundle inside the pinned Docker image",
+    "does not execute the broker or any formal case",
+    "does not establish a scientific PASS or FAIL"
+  ]
+}

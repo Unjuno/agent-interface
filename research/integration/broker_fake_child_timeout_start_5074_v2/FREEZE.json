@@ -1,0 +1,80 @@
+{
+  "schema": "broker-timeout-start-freeze-v1",
+  "issue": 5074,
+  "allocation": "broker-fake-child-timeout-start-20260928-01",
+  "base_main": "8f41a5edba1acda9dcecfc4fb91cea5186b78087",
+  "branch": "research/broker-fake-child-timeout-start-5074-v4",
+  "additive_path": "research/integration/broker_fake_child_timeout_start_5074_v2/",
+  "source": {
+    "broker_git_blob": "5734f54f318db9ac5e96b2bed6f6bed105ac39ff",
+    "broker_raw_sha256": "e44822269b921aa6327563b27e48a6d8ef4ebe35a182f50de541cf66fce6199c",
+    "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "platform": "linux/amd64",
+    "sha256": {
+      "audit.py": "69fea77ce94d2209d6def721a9c86b8a9beb97f4ae0761d41df257fb5660f50d",
+      "CONSTRUCTION_HOST.json": "aad034714427310c8c8720756df55ef9f83067786c35ac0e730f5a525f6ae616",
+      "formal.py": "1c3d2eac4d7d3342a2c3114c5922e92df22e3779029249d5b25a992b211c97e1",
+      "marker_probe.py": "c41bb1c130bbf2a01b930c17ecbe92de5987c974a0341e790a3346c1f928d649",
+      "protocol.py": "4989263bb509f6ecc17a0baf61be2a39e7e6fda8afcf9acea0e503ac3f761252",
+      "README.md": "c370d106e359684a15b9c0b8e527b2ac7c1e70024bbb4363db7e7068275c8724",
+      "runner.py": "6da1f801a90a1ebb0e8f963b9f3130c3d14774b03ef327831acf9787868619c4",
+      "test_audit_contract.py": "2a760eb20bbc3420f1c3852a2614730359291186f69f343748c8359cb60bae26",
+      "test_formal_helpers.py": "8d00ba50fb25e615e3c2c7883b44487ba3b861a3251ba3eb20b1fdbf3ca45680",
+      "test_marker_probe.py": "5183902d1e2fc3253f91e6b822318bed4faeb296428a7aa0fb397d101bc54442"
+    }
+  },
+  "case_order": [
+    "exit-0", "exit-23", "timeout-after-start", "missing-executable",
+    "malformed-json", "idle-once", "sorted-once"
+  ],
+  "timeout": {
+    "child_sleep_s": 8,
+    "broker_timeout_s": 5,
+    "marker_wait_s": 3,
+    "marker": "host-visible child.started; content exactly 'started\\n'",
+    "call_record": "one JSONL child_started record with child monotonic timestamp, flushed and fsync'd before marker",
+    "temporal_audit": "same-container time.perf_counter_ns clock: broker started_ns <= child started_ns and marker observation < broker started_ns + timeout_s; timeout_s in row equals timeout_s in broker receipt and frozen value 5"
+  },
+  "formal_invocation": {
+    "count": 1,
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "output_mount": "fresh writable host-only directory",
+    "cpu": 0.25,
+    "memory": "256m",
+    "pids_limit": 32,
+    "cap_drop": ["ALL"],
+    "security_opt": ["no-new-privileges:true"],
+    "tmpfs": "/tmp:rw,exec,nosuid,size=16m",
+    "pull": "never"
+  },
+  "audit_invocation": {
+    "count": 1,
+    "network": "none",
+    "rootfs": "read-only",
+    "audit_source": "read-only",
+    "raw_input": "read-only",
+    "audit_report": "separate fresh writable directory",
+    "corruption_controls": 11
+  },
+  "expected": {
+    "exit-0": 0,
+    "exit-23": 23,
+    "timeout-after-start": "HOST_BROKER_SUBPROCESS_TIMEOUT; returncode null; empty response; child marker present",
+    "missing-executable": "HOST_BROKER_EXECUTABLE_UNAVAILABLE; returncode null; empty response; no child call",
+    "malformed-json": "nonzero broker; no receipt, response, or child call",
+    "idle-once": "externally timed out; no receipt or response",
+    "sorted-once": "one call/receipt/response for a; z untouched"
+  },
+  "authority": "authority_granted false in every receipt",
+  "retry_policy": "no retry, replacement, tuning, or pooling after formal invocation begins",
+  "resource_gate": "explicit shared-lane release plus fresh inventory immediately before launch",
+  "fresh_output_gate": "both output destinations absent before formal launch",
+  "scope_limits": [
+    "one Windows host and Docker Desktop linux/amd64 image",
+    "synthetic fake-child process boundary only",
+    "no real Codex/provider/model/credentials/network/GPU/GUI/input/application effect",
+    "no product readiness, performance, or cross-engine parity claim"
+  ]
+}
