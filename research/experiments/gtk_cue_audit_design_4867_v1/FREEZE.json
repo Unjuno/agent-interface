@@ -1,0 +1,16 @@
+{
+  "allocation": "gtk-cue-audit-design-4867-20260927-01",
+  "issue": 4867,
+  "base_commit": "0b8019080c8bb3e389c2a5d11edcc72a82c1c7de",
+  "source": "challenge_design.py",
+  "source_sha256": "294400b6561d7b4b19e8b78530ff8411fe13f9ebf7112c917a2a9cffdbc300c3",
+  "container_image": "codex-gtk-model:local",
+  "container_id": "sha256:ba509e8a38d311c07539c49a7a2970b6f19869de42b8008be07a85568e2c9824",
+  "command": "docker run --rm --pull=never --network=none --read-only --cpus=1 --memory=1g --pids-limit=32 --security-opt=no-new-privileges --tmpfs /tmp:rw,nosuid,nodev,size=64m --mount type=bind,source=<workspace>/gtk_cue_audit_design_4867_v1,target=/src,readonly --entrypoint /usr/bin/python3 codex-gtk-model:local /src/challenge_design.py",
+  "inputs": "synthetic scalar/one-pixel arrays only; no #4862 raw or model formal artifact",
+  "expected": "adjacent float32 delta <= 1e-6 while substantial finite +2.0 perturbation delta > 1e-6",
+  "model_calls": 0,
+  "training": 0,
+  "predictions": 0,
+  "recaptures": 0
+}
