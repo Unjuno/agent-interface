@@ -1,0 +1,34 @@
+{
+  "audit_errors": [
+    "exit_0_process",
+    "exit_0_receipt",
+    "exit_0_response",
+    "exit_0_child",
+    "exit_23_propagation",
+    "exit_23_child",
+    "timeout_process",
+    "timeout_receipt",
+    "timeout_child",
+    "missing_process",
+    "sorted_first",
+    "sorted_child_count"
+  ],
+  "authority_granted": false,
+  "cases": 7,
+  "control_results": {
+    "authority_escalation": true,
+    "drop_case": true,
+    "idle_unbounded": true,
+    "malformed_child": true,
+    "missing_response": true,
+    "second_request_handled": true,
+    "timeout_relabel": true,
+    "wrong_exit_receipt": true
+  },
+  "corruption_controls_rejected": 8,
+  "corruption_controls_total": 8,
+  "raw_sha256": "f5be8cdab7fafae5686a947dfdfec0e0017be956afec52272d5b570d56a8357e",
+  "scope": "local fake executable and host broker subprocess boundary only",
+  "status": "FAIL_AUDIT"
+}
+
