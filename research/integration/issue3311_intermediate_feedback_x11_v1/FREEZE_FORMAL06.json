@@ -7,7 +7,7 @@
     "result": "one EDITING observation; getactivewindow empty; zero transitions, clicks, or submissions",
     "change": "Keep formal05 immutable. In fresh admission, separately record EWMH active XID and X input-focus XID, and require the exact focused XID to match the observed Chromium window, expected title, and target reference."
   },
-  "base_commit": "cead86be0ba4e66f8a9455c123d0834fa8511bbe",
+  "base_commit": "7d1208cf323408897983ef2b5c75fd34f54d6815",
   "hypothesis": "Under the pinned WM-less Xvfb fixture, xdotool getwindowfocus may identify the Chromium input-focus XID even when getactivewindow is empty, allowing the fresh identity gate to safely admit the Save click; if focus identity does not match, input remains refused.",
   "test": {
     "tasks": 1,
