@@ -114,7 +114,7 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                 json.dumps(broker) + "\n", encoding="utf-8", newline="\n")
             handled.add(request_id)
             if once:
-                return broker.get("returncode") or 1
+                return broker["returncode"] if broker["returncode"] is not None else 1
         time.sleep(.05)
 
 
