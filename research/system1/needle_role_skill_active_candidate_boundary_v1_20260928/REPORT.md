@@ -10,6 +10,8 @@
 
 **C.** One hand-authored finite lifecycle model, one reused synthetic package, and no concurrent readers/writers. The model has no filesystem/process crash or memory-ordering test. SHA-256 is an integrity identifier, not a signature. Stage 0 is construction evidence, not the separately registered Stage 1 concurrency probe.
 
+**Publication note.** The first GitHub MCP UTF-8 upload returned readbacks with an extra terminal CRLF. Before treating the bundle as delivered, every tree entry was replaced from the exact local bytes via Base64 and the local Git blob IDs were compared with the remote Git Data tree. The initial commits remain in PR history; the current branch head is the exact-byte correction.
+
 **U.** No claim about adapted Needle competence, Astra corrections, natural-language routing, real task effects, execution authority, hostile package security, concurrent runtime publication, performance, production safety, or product readiness. No consumed training allocation was reused and no model fitting occurred.
 
 ## Exact commands
@@ -24,6 +26,12 @@ Independent auditor (distinct invocation):
 
 ```powershell
 docker run --pull=never --rm --network=none --read-only --cpus=1 --memory=512m --pids-limit=64 --tmpfs /tmp:rw,nosuid,nodev,size=64m --mount "type=bind,source=<stage0-dir>,target=/src,readonly" --mount "type=bind,source=<stage0-dir>\raw,target=/raw,readonly" --mount "type=bind,source=<stage0-dir>\audit,target=/audit" --workdir /src python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 python -B audit.py
+```
+
+Auditor mutation controls (six independent corrupted copies, rejected 6/6):
+
+```powershell
+docker run --pull=never --rm --network=none --read-only --cpus=1 --memory=512m --pids-limit=64 --tmpfs /tmp:rw,nosuid,nodev,size=64m --mount "type=bind,source=<stage0-dir>,target=/src,readonly" --mount "type=bind,source=<stage0-dir>\raw,target=/raw,readonly" --workdir /src python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 python -B test_controls.py
 ```
 
 ## Evidence map
