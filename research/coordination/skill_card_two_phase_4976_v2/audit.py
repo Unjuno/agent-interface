@@ -10,7 +10,7 @@ EXPECTED_SOURCE_HASHES = {
     "base_model.py": "eb6f025b2557728683d54ebf86fcb0b32c48f3e12a9debbf736eddeb51c5774f",
     "cases.json": "75d26a48ca7ed3d24587170f2a66dd6c9da6027bc0602917b82ef9add796d84e",
     "candidate.py": "efbd1765a4d7fe331fcf37331b592497cd0ae5228b4a4756ad8992eb59e60194",
-    "runner.py": "96f81090666b7992724f4aaa5241334c2c026f3d1f8ceb3e7cd274edaf9c4915",
+    "runner.py": "9d290b3d0c46919a8590c42ff878e91fe6826a990f5ca711f58c4abce6e1f13c",
 }
 EXPECTED = [
     ("capability_touch_missing", "pointer_track_v2", "EXECUTABLE", False),
@@ -43,7 +43,7 @@ def audit(raw_path: Path, source_dir: Path) -> dict:
 
     check(payload.get("schema") == "skill-card-two-phase-4976-raw-v1", "schema")
     check(payload.get("issue") == 4998, "issue")
-    check(payload.get("allocation") == "skill-card-two-phase-4976-20260928-01", "allocation")
+    check(payload.get("allocation") == "skill-card-two-phase-4976-20260928-02", "allocation")
     check(payload.get("main_commit") == "4fa988e2872e20f4da840c91fbdd83a8d0ff8d12", "main_commit")
     actual_hashes = {
         name: hashlib.sha256((source_dir / name).read_bytes()).hexdigest()
