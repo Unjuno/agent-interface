@@ -8,7 +8,7 @@ COMMIT = "01349d7bc76e5635f5568c53ffeec4d9ff49abb1"
 SEED = 992928
 IMAGE = "sha256:436172d89b145c6a9f9a57e655422c9558b3b0235347dd77607e9d61bcfa6393"
 ALLOCATION = "issue2922-chromium-task-effect-20260928-r1"
-RUNNER_SHA256 = "5ad95e72a83f1ae0b7746d53ad1db13a33c6fd435a85855fa9c1dabaae8ba45e"
+RUNNER_SHA256 = "258ba79c9530187ec3b6eb4bc752b0891d40d7e432bf6eaf84d9a5c41a89e3cd"
 SOURCES = {
     "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
     "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
@@ -168,7 +168,7 @@ def audit(result, repo_root, artifact_root, events_override=None, submitted_byte
 
 def main():
     here = Path(__file__).resolve().parent
-    root = here.parents[4]
+    root = here.parents[3]
     out = Path("/out")
     result = json.loads((out / "session_cli_result.json").read_text())
     receipt = audit(result, root, out)
