@@ -73,6 +73,7 @@ def main():
         "source_sha256": actual,
         "task_allocated": True,
         "model_calls": 0,
+        "broker_calls": 0,
         "gui_input": True,
         "form_submit_steps_issued": 1,
         "server_POST_count": "not instrumented",
