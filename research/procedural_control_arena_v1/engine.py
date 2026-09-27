@@ -45,7 +45,7 @@ class DifficultyProfile:
     switch_deadline: float
     typing_length: int
     typing_deadline: float
-    instruction_font_px: int
+    objective_sample_radius: float
     drag_radius: float
     drag_tolerance: float
     drag_deadline: float
@@ -75,7 +75,7 @@ class DifficultyProfile:
             switch_deadline=_lerp(6.0, 2.0, d),
             typing_length=int(round(_lerp(3.0, 11.0, d))),
             typing_deadline=_lerp(10.0, 3.5, d),
-            instruction_font_px=int(round(_lerp(17.0, 11.0, d))),
+            objective_sample_radius=_lerp(24.0, 14.0, d),
             drag_radius=_lerp(30.0, 14.0, d),
             drag_tolerance=_lerp(42.0, 10.0, d),
             drag_deadline=_lerp(9.0, 3.0, d),
@@ -103,16 +103,16 @@ class DifficultyProfile:
             else:
                 values[key] = float(raw)
         candidate = replace(self, **values)
-        if candidate.target_radius <= 1 or candidate.drag_radius <= 1:
-            raise ValueError("radius overrides must be > 1")
+        if candidate.target_radius <= 1 or candidate.drag_radius <= 1 or candidate.objective_sample_radius <= 2:
+            raise ValueError("radius overrides must be > minimum")
         if candidate.distractor_count < 0 or candidate.assembly_pieces < 1 or candidate.trace_checkpoints < 2:
             raise ValueError("count overrides outside valid range")
         if not 0.0 <= candidate.visual_similarity <= 1.0:
             raise ValueError("visual_similarity must be in [0,1]")
         if candidate.switch_wait < 0 or candidate.recovery_displacement < 0:
             raise ValueError("wait/displacement overrides must be >= 0")
-        if candidate.typing_length < 1 or candidate.instruction_font_px < 6:
-            raise ValueError("typing_length/font overrides outside valid range")
+        if candidate.typing_length < 1:
+            raise ValueError("typing_length override outside valid range")
         for key in ("drag_tolerance", "assembly_tolerance", "trace_tolerance"):
             if getattr(candidate, key) <= 0:
                 raise ValueError(f"{key} must be > 0")
@@ -519,49 +519,12 @@ class BenchmarkSession:
     def deadline(self) -> float:
         return float(self.stage.payload["deadline"])
 
-    def instruction(self) -> str:
-        if self.done:
-            return "SUCCESS" if self.success else f"FAILED: {self.failure_reason}"
-        p = self.stage.payload
-        kind = self.stage.kind
-        if kind == "move":
-            return "MOVE: use WASD to enter the striped goal zone."
-        if kind in {"target", "combo", "recovery"}:
-            target = self._object_by_id(p["target_id"])
-            if kind == "target":
-                return f"TARGET: click the {target.color} {target.shape}."
-            if kind == "combo":
-                return f"COMBO: hold {str(p['required_key']).upper()} and click the {target.color} {target.shape}."
-            if not self.recovery_triggered:
-                return f"RECOVERY: click the {target.color} {target.shape}."
-            return f"INTERRUPTED: reacquire the moved {target.color} {target.shape} and click again."
-        if kind == "switch":
-            prepared = self._object_by_id(p["prepared_id"])
-            active = self._object_by_id(p["active_id"])
-            if self.stage_elapsed < float(p["wait_seconds"]):
-                return f"WAIT: do not click. Prepare for the {prepared.color} {prepared.shape}."
-            return f"SWITCH: prepared target is stale. Click the {active.color} {active.shape}."
-        if kind == "typing":
-            return f"TYPE: click terminal, type {p['code']}, then Enter."
-        if kind == "drag":
-            piece = self.objects[0]
-            return f"DRAG: move the {piece.color} {piece.shape} into its outlined socket."
-        if kind == "assembly":
-            return "ASSEMBLE: drag every solid piece into its matching ghost slot."
-        if kind == "trace":
-            return "TRACE: hold the mouse and follow the path from START through every checkpoint to END."
-        raise RuntimeError(f"unknown stage {kind}")
-
     def public_state(self) -> dict[str, Any]:
+        """Minimal transport state; task semantics remain in rendered pixels."""
         return {
             "schema": "procedural-control-arena-public-v1",
-            "suite": self.spec.suite,
             "sim_time": round(self.sim_time, 6),
-            "stage_index": self.stage_index,
-            "stage_count": len(self.spec.stages),
-            "instruction": self.instruction(),
             "done": self.done,
-            "success": self.success if self.done else None,
         }
 
     def _object_by_id(self, object_id: str) -> RuntimeObject:

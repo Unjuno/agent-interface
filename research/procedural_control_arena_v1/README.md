@@ -50,7 +50,7 @@ Current axes include:
 - `switch_deadline`
 - `typing_length`
 - `typing_deadline`
-- `instruction_font_px`
+- `objective_sample_radius`
 - `drag_radius`
 - `drag_tolerance`
 - `drag_deadline`
@@ -93,6 +93,21 @@ For real-time inference-gap/reaction work:
 ```bash
 python3 arena.py --clock realtime --suite full --difficulty 0.5
 ```
+
+## Presentation contract
+
+The evaluated surface separates **desired state** from **motor policy**.
+
+- moving-object tasks show a visual sample of the desired color/shape, not prose such as “click the blue circle”;
+- the SWITCH task changes the visual sample and readiness lamp from pending to active without naming WAIT/SWITCH/stale state;
+- COMBO shows a keycap constraint plus the visual target sample, but does not narrate the action sequence;
+- TYPE shows the code as task data and a terminal field, but does not say “click/type/Enter”;
+- DRAG and ASSEMBLY use solid pieces plus matching ghost geometry;
+- TRACE uses a path, checkpoints and endpoint glyphs instead of procedural text;
+- RECOVERY is expressed by the target actually moving after the first valid effect, with no “interrupted/reacquire” coaching;
+- stage names, stage counts, exact remaining deadlines, PASS/FAIL labels, failure reason and fingerprint are not rendered to the evaluated controller.
+
+The generic benchmark interface may declare that ordinary keyboard, pointer and text input are available. Per-episode presentation should specify the objective/constraint, not the physical recipe for satisfying it. Natural-language instruction following can be added later as an explicit independent axis rather than being baked into every primitive.
 
 ## Controller-visible boundary
 
