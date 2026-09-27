@@ -12,10 +12,10 @@ import runner
 
 class RoleRouterConstruction(unittest.TestCase):
     def test_fresh_seeds_and_role_conditioned_splits(self):
-        self.assertEqual(runner.SEEDS, (736711, 736811, 736911))
+        self.assertEqual(runner.SEEDS, (9934211, 9934311, 9934411))
         self.assertEqual(runner.ARMS, ("SHARED_B_ONLY", "SHARED_A_REPLAY",
                                        "ROUTED_SHARED_ADAPTER", "ROUTED_SEPARATE_SKILLS"))
-        data = [runner.sample(256, 736514, salt, role)
+        data = [runner.sample(256, 9934014, salt, role)
                 for salt, role in ((101, 0), (202, 0), (303, 1), (404, 0), (505, 1))]
         sets = [{tuple(row) for row in rows.tolist()} for rows in data]
         self.assertTrue(all(not sets[i] & sets[j] for i in range(5) for j in range(i + 1, 5)))
@@ -23,7 +23,7 @@ class RoleRouterConstruction(unittest.TestCase):
         self.assertTrue(torch.equal(data[2][:, 8], torch.ones(256)))
         self.assertTrue(torch.equal(runner.label_a(data[0]), data[0][:, 0].long()))
         self.assertTrue(torch.equal(runner.label_b(data[2]), 1 - data[2][:, 0].long()))
-        self.assertEqual(audit.sample(256, 736514, 303, 1).tolist(), data[2].tolist())
+        self.assertEqual(audit.sample(256, 9934014, 303, 1).tolist(), data[2].tolist())
 
     def test_dataset_hash_contract_requires_exact_keys_and_binds_schedule(self):
         fields = {key: [index, key] for index, key in enumerate(runner.DATASET_FIELDS)}
