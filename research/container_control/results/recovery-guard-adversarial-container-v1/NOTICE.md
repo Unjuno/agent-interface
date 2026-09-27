@@ -1,1 +1,0 @@
-Synthetic-only evidence. No model calls. No ViZDoom execution. No X11 timing claim. No live allocation consumed. Do not use this result to claim MAP01 efficacy, general safety, general speedup, or human-level reaction. The result only falsifies one weak guard family in the stated 1-D stress model and identifies a deadband/postcondition as the next rendered-container candidate.

@@ -1,1 +1,0 @@
-# Geometric sidecar construction gate (#2041)\n\nFinite provenance check for persistent geometric sidecars. Only matching OBSERVED identity/generation/epoch with non-occluded geometry is reusable; inferred, stale, replaced, occluded, or missing geometry yields UNKNOWN. No model or compaction utility claim.\n

@@ -1,8 +1,0 @@
-Return exactly one JSON object matching the supplied schema. The image contains
-one runtime-verified, click-free placement-preview receipt and its printed source
-point. The task requests one north-facing Conveyor in the empty tile directly
-above the small copper item source. Return target_reference only if the preview
-is visibly in that exact relative tile; copy receipt 1 and its exact printed
-point. Otherwise return needs_decision with the narrowest applicable reason.
-The negative result must contain no coordinates. Do not infer the relation from
-the prompt alone. The image grants no input authority.

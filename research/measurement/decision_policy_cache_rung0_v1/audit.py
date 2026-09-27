@@ -1,5 +1,0 @@
-import json
-from pathlib import Path
-H=Path(__file__).resolve().parent;r=json.loads((H/'RESULT.json').read_text())
-checks={'decision':r['decision']=='PASS_DECISION_POLICY_CACHE_RUNG0_SCOPED','supervisor':r['supervisor_disposition']=='HOLD_DETERMINISTIC_MONITOR_SUFFICIENT','formal':(r['formal_invocation'],r['reruns'])==(1,0),'traces':r['traces']==50000,'errors':all(r[k]==0 for k in ('mismatches','stale_continuation_attempts','missed_hard_invalidations','unnecessary_yields','authority_errors','wrong_effects')),'effect':r['candidate_effect']==r['reference_effect'],'calls':r['semantic_calls_avoided']>0 and 0<r['semantic_call_reduction_fraction']<1,'regimes':r['terminal_counts'].get('HARD_INVALIDATION',0)>0 and r['terminal_counts'].get('AMBIGUOUS_BOUNDARY',0)>0,'no_actions':all(r[k]==0 for k in ('model_calls','gui_actions','task_input_actions'))}
-o={'schema':'decision_policy_cache_rung0_audit_v1','checks':checks,'passed':all(checks.values()),'errors':[k for k,v in checks.items() if not v]};(H/'AUDIT.json').write_text(json.dumps(o,indent=2,sort_keys=True)+'\n');print('AUDIT_PASS' if o['passed'] else o)
