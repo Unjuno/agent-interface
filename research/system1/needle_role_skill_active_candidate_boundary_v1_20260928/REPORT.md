@@ -35,4 +35,3 @@ docker run --pull=never --rm --network=none --read-only --cpus=1 --memory=512m -
 - `audit/audit.json`: independently reconstructed decision and integrity result.
 
 Next scientific discriminator under #4986 is the separately frozen, bounded Stage 1 reader/writer boundary probe. It must not be inferred from this Stage-0 pass.
-

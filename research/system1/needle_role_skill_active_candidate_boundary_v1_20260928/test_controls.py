@@ -21,4 +21,3 @@ for label,change in [
     if proc.returncode==0: raise SystemExit('MUTATION_ACCEPTED:'+label)
     mutations.append(label)
 print(json.dumps({'controls':len(mutations),'rejected':mutations},sort_keys=True))
-

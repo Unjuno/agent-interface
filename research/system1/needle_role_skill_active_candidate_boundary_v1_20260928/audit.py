@@ -65,4 +65,3 @@ def main():
     Path(out_path).write_bytes(canon(out)+b'\n')
     print(json.dumps(out,sort_keys=True)); sys.exit(0 if not errors else 2)
 if __name__=='__main__': main()
-

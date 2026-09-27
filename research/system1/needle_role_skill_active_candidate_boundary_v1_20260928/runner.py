@@ -96,4 +96,3 @@ def run():
     print(json.dumps({'event_count':len(events),'raw_sha256':digest(out.read_bytes()),'raw_bytes':out.stat().st_size}))
 
 if __name__=='__main__': run()
-
