@@ -15,6 +15,32 @@ from native_exchange_v1 import encoded
 
 
 class MCPTests(unittest.IsolatedAsyncioTestCase):
+    @unittest.skipUnless(os.name == 'posix', 'executable harness fixture requires POSIX')
+    async def test_failed_harness_stderr_reaches_stdio_client_without_relaunch(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            harness = Path(tmp)/'failed-harness'
+            harness.write_text('#!/bin/sh\necho controlled-startup-failure >&2\nexit 17\n')
+            harness.chmod(0o700)
+            allocation = Path(tmp)/'allocation'
+            parameters = StdioServerParameters(command=sys.executable, args=[
+                str(Path(__file__).with_name('native_mcp_v1.py')),
+                '--allocation-directory', str(allocation), '--app', 'inkscape',
+                '--harness-python', str(harness)], env=dict(os.environ))
+            async with stdio_client(parameters) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    first = await client.call_tool('native_start', {'timeout': 5})
+                    state = json.loads(first.content[0].text)['allocation']
+                    self.assertEqual((state['status'], state['returncode']), ('terminal', 17))
+                    self.assertEqual(state['diagnostic']['tail'], 'controlled-startup-failure\n')
+                    self.assertFalse(state['restart_allowed'])
+                    self.assertIsNone(state['task_success'])
+                    for tool in ('native_status', 'native_start'):
+                        reply = await client.call_tool(tool, {})
+                        again = json.loads(reply.content[0].text)['allocation']
+                        self.assertEqual(again, state)
+                    self.assertFalse((allocation/'run'/'source-1.json').exists())
+
     def test_observe_decision_has_no_input_fields_or_implicit_defaults(self):
         from native_mcp_v1 import NativeDecision
         decision = {'source_sequence': 4, 'interaction': 'observe'}
